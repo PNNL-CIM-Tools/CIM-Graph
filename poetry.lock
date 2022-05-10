@@ -209,9 +209,9 @@ testing = ["coverage (>=4)", "coverage-enable-subprocess (>=1)", "flaky (>=3)", 
 
 [[package]]
 name = "xsdata"
-version = "22.2"
+version = "22.5"
 description = "Python XML Binding"
-category = "dev"
+category = "main"
 optional = false
 python-versions = ">=3.6"
 
@@ -246,7 +246,7 @@ test = ["codecov", "pre-commit", "pytest", "pytest-cov", "tox"]
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.8"
-content-hash = "ce67f00073b5aa62829c1d814d069178092486ce5792df252191376dd89ae823"
+content-hash = "c183d6cd6dd45ff30cebe1bbf8d5b0e42210be59060b47893982be8c367f175a"
 
 [metadata.files]
 cfgv = [
@@ -396,8 +396,8 @@ virtualenv = [
     {file = "virtualenv-20.13.3.tar.gz", hash = "sha256:e9dd1a1359d70137559034c0f5433b34caf504af2dc756367be86a5a32967134"},
 ]
 xsdata = [
-    {file = "xsdata-22.2-py3-none-any.whl", hash = "sha256:0060f4c70cc6aeedfb3141b772d34fe5decd80ef1bc8830234abc029009704bb"},
-    {file = "xsdata-22.2.tar.gz", hash = "sha256:a43e9f09f4cbb40df221a4550aaaf2fb42e2820bd27e16abacaa7d6a2ce7cfaa"},
+    {file = "xsdata-22.5-py3-none-any.whl", hash = "sha256:817f73bd0374305ebbef2de1a7c93b7ef8bfdeaf053d057436b037e026fad535"},
+    {file = "xsdata-22.5.tar.gz", hash = "sha256:701dcda5a4a07df3a642f8fb6f73f0e2e18224d359bcb7f4212b3c29d7af72c2"},
 ]
 xsdata-plantuml = [
     {file = "xsdata_plantuml-21.4-py3-none-any.whl", hash = "sha256:bdf35db9469dbd3234323b2e9b642cb4d6968e5bd0ecda90db4f048d4958e0f6"},
