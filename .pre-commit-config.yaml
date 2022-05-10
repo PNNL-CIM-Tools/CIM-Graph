@@ -1,0 +1,29 @@
+repos:
+- repo: https://github.com/pre-commit/pre-commit-hooks
+  rev: v4.1.0
+  hooks:
+  - id: check-yaml
+  - id: check-json
+  - id: check-toml
+  - id: check-xml
+  - id: forbid-new-submodules
+  - id: end-of-file-fixer
+  - id: trailing-whitespace
+  - id: check-merge-conflict
+  - id: no-commit-to-branch  # blocks main commits.  To bypass do git commit --allow-empty
+  - id: pretty-format-json
+
+#- repo: https://github.com/pre-commit/mirrors-autopep8
+#  rev: v1.6.0
+#  hooks:
+#    - id: autopep8
+
+- repo: https://github.com/craig8/mirrors-yapf
+  rev: b84f670025671a341d0afd2b06b877b195d65c0f  # Use the sha / tag you want to point at
+  hooks:
+  - id: yapf
+    name: yapf
+    description: "A formatter for Python files."
+    entry: yapf
+    language: python
+    types: [ python ]

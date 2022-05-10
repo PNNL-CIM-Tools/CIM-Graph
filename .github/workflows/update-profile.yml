@@ -1,0 +1,123 @@
+name: regenerated profile
+
+on:
+  push:
+    branches:
+      - develop
+
+defaults:
+  run:
+    shell: bash
+
+env:
+  LANG: en_US.utf-8
+  LC_ALL: en_US.utf-8
+  PYTHON_VERSION: '3.8'
+  PROJECT_NAME: gridappsd-cim-profiles
+
+jobs:
+
+  generate_python:
+
+    runs-on: ubuntu-20.04
+
+    steps:
+      - run: echo "🎉 The job was automatically triggered by a ${{ github.event_name }} event."
+      - run: echo "🐧 This job is now running on a ${{ runner.os }} server hosted by GitHub!"
+      - run: echo "🔎 The name of your branch is ${{ github.ref }} and your repository is ${{ github.repository }}."
+
+      #----------------------------------------------
+      #       check-out repo and set-up python
+      #----------------------------------------------
+      - name: Checkout code
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+      - name: Set up Python ${{ env.PYTHON_VERSION }}
+        id: setup-python
+        uses: actions/setup-python@v2
+        with:
+          python-version: ${{ env.PYTHON_VERSION }}
+
+      #----------------------------------------------
+      #  -----  install & configure poetry  -----
+      #----------------------------------------------
+      - name: Install Poetry
+        uses: snok/install-poetry@v1
+        with:
+          virtualenvs-create: true
+          virtualenvs-in-project: true
+          installer-parallel: true
+
+      - name: Install dependencies
+        run: poetry install --no-interaction
+
+      - name: Generate Python
+        run: |
+          poetry run xsdata --package gridappsd_cim --config xsd/config.yml xsd/gridappsd-cim-profile.xsd
+          # poetry run xsdata --package gridappsd_cim --config xsd/config.yml --output plantuml xsd/gridappsd-cim-profile.xsd
+
+      - name: Uninstall Dev Dependencies
+        run: |
+          poetry lock --no-dev --no-interaction && poetry install --no-dev --no-interaction
+
+      - name: Bump Version
+        run: |
+          # current_tag is the last tagged relese in the repository.   From there
+          # we need to remove the v from the begining of the tag.
+          if ! $(git tag -l "v*" = ''); then
+            current_tag=$(git tag -l "v*" | sort --reverse |sed -n 1p)
+          else
+            current_tag=v0.0.0
+          fi
+          current_tag=${current_tag#?}
+          # current_tag is now the version we want to set our poetry version so
+          # that we can bump the version
+          poetry version ${current_tag}
+          poetry version prerelease --no-interaction
+          NEW_TAG=v$(poetry version --short)
+          # Finally because we want to be able to use the variable in later
+          # steps we set a NEW_TAG environmental variable
+          echo "NEW_TAG=$(echo ${NEW_TAG})" >> $GITHUB_ENV
+
+          PROJECT_VERSION=$(poetry version --short)
+          echo "PROJECT_VERSION=$PROJECT_VERSION" >> $GITHUB_ENV
+
+      #---------------------------------------------------------------
+      # create build artifacts to be included as part of release
+      #---------------------------------------------------------------
+      - name: Create build artifacts
+        run: |
+          poetry build -vvv
+      #----------------------------------------------------------------
+      #       create release notes;
+      #       the git log command will check all commits since the last tag to HEAD.
+      #       For each commit, appends the commit hash, the commit message
+      #       subject, the author name, and the author email to the release template.
+      #----------------------------------------------------------------
+      - name: Release Notes
+        run: git log $(git describe HEAD~ --tags --abbrev=0)..HEAD --pretty='format:* %h %s%n  * %an <%ae>' --no-merges >> ".github/RELEASE-TEMPLATE.md"
+
+      - uses: ncipollo/release-action@v1
+        with:
+          artifacts: "dist/*.gz,dist/*.whl"
+          artifactErrorsFailBuild: true
+          generateReleaseNotes: true
+          commit: ${{ github.ref }}
+          prerelease: true
+          tag: ${{ env.NEW_TAG }}
+          token: ${{ secrets.GRIDAPPS_PAT }}
+
+      #----------------------------------------------------------------
+      #       create release draft which will be visible at https://github.com/VOLTTRON/volttron-core/releases
+      #----------------------------------------------------------------
+      - name: Create Release Draft
+        uses: softprops/action-gh-release@v1
+        with:
+          body_path: ".github/RELEASE-TEMPLATE.md"
+          draft: true
+          files: |
+            dist/${{ env.PROJECT_NAME }}-${{env.PROJECT_VERSION}}-py3-none-any.whl
+            dist/${{ env.PROJECT_NAME }}-${{env.PROJECT_VERSION}}.tar.gz
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
