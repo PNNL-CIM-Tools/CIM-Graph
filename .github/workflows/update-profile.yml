@@ -106,7 +106,7 @@ jobs:
           commit: ${{ github.ref }}
           prerelease: true
           tag: ${{ env.NEW_TAG }}
-          token: ${{ secrets.GRIDAPPS_PAT }}
+          token: ${{ secrets.GRIDAPPSD_PAT }}
 
       #----------------------------------------------------------------
       #       create release draft which will be visible at https://github.com/VOLTTRON/volttron-core/releases
