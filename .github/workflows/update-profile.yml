@@ -59,7 +59,7 @@ jobs:
 
       - name: Uninstall Dev Dependencies
         run: |
-          poetry lock --no-dev --no-interaction && poetry install --no-dev --no-interaction
+          poetry lock --no-interaction && poetry install --no-dev --no-interaction
 
       - name: Bump Version
         run: |
