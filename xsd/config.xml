@@ -10,11 +10,14 @@
     <PostponedAnnotations>true</PostponedAnnotations>
   </Output>
   <Conventions>
-    <ClassName case="pascalCase" safePrefix="type"/>
-    <FieldName case="snakeCase" safePrefix="value"/>
-    <ConstantName case="screamingSnakeCase" safePrefix="value"/>
+
+    <ClassName case="originalCase" safePrefix="type"/>
+    <FieldName case="originalCase" safePrefix="value"/>
+    <ConstantName case="originalCase" safePrefix="value"/>
+
     <ModuleName case="snakeCase" safePrefix="mod"/>
     <PackageName case="snakeCase" safePrefix="pkg"/>
+
   </Conventions>
   <Substitutions>
     <Substitution type="package" search="http://www.w3.org/2001/XMLSchema" replace="xs"/>

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="windows-1252"?>
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:sawsdl="http://www.w3.org/ns/sawsdl" xmlns:cim="http://iec.ch/TC57/" targetNamespace="http://iec.ch/TC57/" elementFormDefault="qualified" attributeFormDefault="unqualified">
-	<xs:element name="GAPPS-CIM-export" type="cim:GAPPS-CIM-export"/>
-	<xs:complexType name="GAPPS-CIM-export">
+	<xs:element name="GAPPS_CIM_export" type="cim:GGAPPS_CIM_export"/>
+	<xs:complexType name="GAPPS_CIM_export">
 		<xs:sequence>
 			<xs:element name="IdentifiedObject" type="cim:IdentifiedObject" minOccurs="0" maxOccurs="unbounded"/>
 		</xs:sequence>
