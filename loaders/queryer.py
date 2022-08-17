@@ -656,7 +656,7 @@ if __name__ == '__main__':
     areas = []
     for switch_area in switch_areas_response:
         areas.append(SwitchArea.load_from_topo_response(switch_area,
-                                                        BlazeGraphConnection("http://blazegraph:8080/bigdata/sparql",
+                                                        BlazeGraphConnection("http://localhost:8889/bigdata/namespace/kb/sparql",
                                                                              feeder_mrid="_EE71F6C9-56F0-4167-A14E-7F4C71F10EAA")))
 
     for index, a in enumerate(areas):
