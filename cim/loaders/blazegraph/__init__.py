@@ -2,7 +2,7 @@ from __future__ import annotations
 
 from typing import Dict, List, Optional
 
-from SPARQLWrapper import SPARQLWrapper, JSON
+from SPARQLWrapper import SPARQLWrapper, JSON, POST
 
 from cim.loaders import ConnectionInterface, ConnectionParameters, Parameter, QueryResponse
 import cim.data_profile as cim
@@ -92,6 +92,7 @@ class BlazegraphConnection(ConnectionInterface):
         #         output = results['data']['results']['bindings']
         self.connect()
         self.sparql.setQuery(query_message)
+        self.sparql.setMethod(POST)
 
         output = self.sparql.query().convert()
         #         print(output)
