@@ -1,9 +1,10 @@
-import os, json, time
+import os
 from __future__ import annotations
 from typing import List
 
-from gridappsd import GridAPPSD, topics as t
-from gridappsd_cim import Terminal, ConnectivityNode
+from gridappsd import GridAPPSD
+from gridappsd_cim import Terminal
+
 
 class BlazegraphConnection(ConnectionInterface):
  # insert blazegraph url for direct access

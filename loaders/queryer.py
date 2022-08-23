@@ -4,7 +4,7 @@ from dataclasses import dataclass, field
 from pprint import pprint
 from typing import Type, List, Dict, Set, Optional
 
-from gridappsd_cim import Terminal, Equipment, LinearShuntCompensator, RegulatingControl, ConnectivityNode, \
+from gridappsd_cim import Terminal, LinearShuntCompensator, ConnectivityNode, \
     TransformerTank
 
 from SPARQLWrapper import SPARQLWrapper, JSON

@@ -1,7 +1,5 @@
 from typing import List
 
-from gridappsd_cim import AKlineSegment
-
 
 def get_model():
     pass
