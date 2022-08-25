@@ -8,8 +8,8 @@ import cim.data_profile as cim
 from cim.loaders import ConnectionInterface, ConnectionParameters, Parameter, QueryResponse
 from gridappsd import GridAPPSD
 
-os.environ["GRIDAPPSD_ADDRESS"] = "gridappsd"
-os.environ["GRIDAPPSD_PORT"] = "61613"
+# os.environ["GRIDAPPSD_ADDRESS"] = "gridappsd"
+# os.environ["GRIDAPPSD_PORT"] = "61613"
 os.environ['GRIDAPPSD_APPLICATION_ID'] = 'gridappsd-cim-profile'
 os.environ['GRIDAPPSD_APPLICATION_STATUS'] = 'STARTED'
 os.environ['GRIDAPPSD_USER'] = 'app_user'
@@ -54,7 +54,7 @@ class GridappsdConnection(ConnectionInterface):
 def get_topology_response(feeder_mrid: str) -> QueryResponse:
     assert feeder_mrid is not None
 
-    gapps = GridappsdConnection([])
+    gapps = GridAPPSD()
     topic = "goss.gridappsd.request.data.topology"
     message = {
         "requestType": "GET_SWITCH_AREAS",
@@ -62,7 +62,7 @@ def get_topology_response(feeder_mrid: str) -> QueryResponse:
         "resultFormat": "JSON"
     }
 
-    topo_response = gapps.execute(topic=topic, message=message, timeout=30)
+    topo_response = gapps.get_response(topic=topic, message=message, timeout=30)
     return topo_response
 
 # Close gridappsd connection when exiting program.
