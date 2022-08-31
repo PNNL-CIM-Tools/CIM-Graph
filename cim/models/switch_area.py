@@ -54,3 +54,22 @@ class SwitchArea:
 
     def get_all_attributes(self, cim_class):
         self.connection.get_all_attributes(self.feeder_mrid, self.typed_catalog, cim_class)
+        
+    def __dumps__(self, cim_class):
+        mrid_list = list(self.typed_catalog[cim_class].keys())
+        attribute_list = list(cim_class().__dict__.keys())
+        json_dump = {}
+
+        for mrid in mrid_list:
+            json_dump[mrid] = {}
+            for attribute in attribute_list:
+                value = getattr(self.typed_catalog[cim_class][mrid], attribute)
+
+                if type(value) in [str, list]:
+                    json_dump[mrid][attribute] = value
+                elif value is None:
+                    json_dump[mrid][attribute] = ''
+                else:
+                    json_dump[mrid][attribute] = value.__dict__
+
+        return json.dumps(json_dump)

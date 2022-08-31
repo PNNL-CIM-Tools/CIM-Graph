@@ -12,26 +12,40 @@ import cim.loaders.sparql as sparql
 
 
 
-def query_string_parser(obj_dict: Dict, mRID: str, query: List, key: str):
+def query_string_parser(obj_dict: Dict, mRID: str, query: List, key: str, separator):
     try:
-        setattr(obj_dict[mRID], key, query[key]['value'])
+        value = query[key]['value']
+        if separator in value:
+            value = value.split(separator)
+        setattr(obj_dict[mRID], key, value)
     except:
         []
 
 
-def query_class_parser(typed_catalog, mRID, query, class_name):
+def query_class_parser(typed_catalog, mRID, query, class_name, separator):
     try: 
         cls = class_name
-        obj = eval(f"cim.{cls}(mRID='{query[class_name]['value']}')")
+        value = query[class_name]['value']
+        if separator in value:
+            values = value.split(separator)
+            obj = []
+            for mrid in values:
+                obj.append(eval(f"cim.{cls}(mRID='{mrid}')"))
+        else:
+            obj = eval(f"cim.{cls}(mRID='{value}')")
         setattr(typed_catalog[mRID], class_name, obj)
     except:
         []
 
 
 def query_list_parser(obj_dict: Dict, mRID: str, query: List, key, separator):
-    # print(query[key]['value'].split(separator))
+
     try:
-        setattr(obj_dict[mRID], key, query[key]['value'].split(separator))
+        value = query[key]['value'].split(separator)
+        if getattr(obj_dict[mRID], key) == None:
+            setattr(obj_dict[mRID], key, value)
+        else:
+            setattr(obj_dict[mRID], key, getattr(obj_dict[mRID], key) + value)
     except:
         []
         
@@ -79,23 +93,25 @@ class BlazegraphConnection(ConnectionInterface):
         self.sparql_obj.setQuery(query_message)
         self.sparql_obj.setMethod(POST)
         query_output = self.sparql_obj.query().convert()
-        print(query_output)
+#         print(query_output)
 #         attribute_list = list(cim_class().__dict__.keys())
         attribute_list = query_output['head']['vars']
         for result in query_output['results']['bindings']:
             mRID = result['mRID']['value']
             name = result['name']['value']
             for attribute in attribute_list:
-                if attribute in cim.__all__:
-                    query_class_parser(typed_catalog[cim_class], mRID, result, attribute)
+                if attribute == 'Measurements' or attribute == 'Terminals':
+                    query_list_parser(typed_catalog[cim_class], mRID, result, attribute, ';')
+                elif attribute in cim.__all__:
+                    query_class_parser(typed_catalog[cim_class], mRID, result, attribute, ';')
                     try:
                         add_to_typed_catalog(getattr(typed_catalog[cim_class][mRID], attribute), typed_catalog)
                     except:
                         []
                 else:
-                    query_string_parser(typed_catalog[cim_class], mRID, result, attribute)
-            query_list_parser(typed_catalog[cim_class], mRID, result, 'Measurements', ';')
-            query_list_parser(typed_catalog[cim_class], mRID, result, 'Terminals', ';')
+                    query_string_parser(typed_catalog[cim_class], mRID, result, attribute, ';')
+#             query_list_parser(typed_catalog[cim_class], mRID, result, 'Measurements', ';')
+#             query_list_parser(typed_catalog[cim_class], mRID, result, 'Terminals', ';')
             
 
 
@@ -119,7 +135,7 @@ class BlazegraphConnection(ConnectionInterface):
         mrid_list = list(typed_catalog[cim_class].keys())
         sparql_message = eval(f"sparql.{cim_class.__name__}SPARQL.get_all_attributes('{feeder_mrid}', {mrid_list})")
 #       sparql_message = sparql.LinearShuntCompensatorSPARQL.get_all_attributes(feeder_mrid, mrid_list)
-        print(sparql_message)
+#         print(sparql_message)
         self.query_attribute_builder(sparql_message, typed_catalog, cim_class)
         
         

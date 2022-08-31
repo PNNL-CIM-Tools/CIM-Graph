@@ -1,20 +1,23 @@
-from cim.loaders.sparql.ac_dc_terminal import ACDCTerminalSPARQL
-from cim.loaders.sparql.ac_line_segment import ACLineSegmentSPARQL
-from cim.loaders.sparql.ac_line_segment_phase import ACLineSegmentPhaseSPARQL
-from cim.loaders.sparql.asset import AssetSPARQL
-from cim.loaders.sparql.asset_container import AssetContainerSPARQL
-from cim.loaders.sparql.asset_info import AssetInfoSPARQL
-from cim.loaders.sparql.base_voltage import BaseVoltageSPARQL
-from cim.loaders.sparql.breaker import BreakerSPARQL
-# from cim.loaders.sparql.bus_bar_section import BusBarSectionSPARQL
-# from cim.loaders.sparql.bus_bar_section_info import BusBarSectionInfoSPARQL
-from cim.loaders.sparql.cable_info import CableInfoSPARQL
+import cim.loaders.sparql.ac_dc_terminal as ACDCTerminalSPARQL
+import cim.loaders.sparql.ac_line_segment as ACLineSegmentSPARQL
+import cim.loaders.sparql.ac_line_segment_phase as ACLineSegmentPhaseSPARQL
+import cim.loaders.sparql.asset as AssetSPARQL
+# import cim.loaders.sparql.asset_container as AssetContainerSPARQL
+import cim.loaders.sparql.asset_info as AssetInfoSPARQL
+import cim.loaders.sparql.base_voltage as BaseVoltageSPARQL
+import cim.loaders.sparql.breaker as BreakerSPARQL
+# import cim.loaders.sparql.bus_bar_section as BusBarSectionSPARQL
+# import cim.loaders.sparql.bus_bar_section_info as BusBarSectionInfoSPARQL
+import cim.loaders.sparql.cable_info as CableInfoSPARQL
 
-from cim.loaders.sparql.energy_consumer import EnergyConsumerSPARQL
+import cim.loaders.sparql.energy_consumer as EnergyConsumerSPARQL
+import cim.loaders.sparql.energy_consumer_phase as EnergyConsumerPhaseSPARQL
 
 
-from cim.loaders.sparql.linear_shunt_compensator import LinearShuntCompensatorSPARQL
+import cim.loaders.sparql.linear_shunt_compensator as LinearShuntCompensatorSPARQL
 
 
 from cim.loaders.sparql.create_default import create_default_sparql
 
+import cim.loaders.sparql.power_transformer as PowerTransformerSPARQL
+# import cim.loaders.sparql.transformer_tank as TransformerTankSPARQL

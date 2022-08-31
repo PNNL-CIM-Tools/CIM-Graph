@@ -2,7 +2,6 @@ from typing import List, Dict
 
 
 
-
 def add_to_catalog(obj: object, catalog: Dict) -> Dict:
     if obj.mRID == None:
         raise ValueError('Object must contain an mRID')
