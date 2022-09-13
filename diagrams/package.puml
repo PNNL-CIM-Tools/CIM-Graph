@@ -1,0 +1,27 @@
+@startuml
+'https://plantuml.com/class-diagram
+package "cim.models" {
+    [Exported by xsData]
+}
+
+package "cim.loaders" {
+    file connection.py
+}
+
+package "cim.loaders.blazegraph" {
+
+}
+package "cim.loaders.gridappsd" {
+}
+
+
+package "cim.loaders.sparql" {
+'    module terminal {
+'
+'
+'    }
+}
+
+
+
+@enduml
