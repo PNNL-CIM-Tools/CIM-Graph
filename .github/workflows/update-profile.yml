@@ -89,38 +89,15 @@ jobs:
       - name: Create build artifacts
         run: |
           poetry build -vvv
-      #----------------------------------------------------------------
-      #       create release notes;
-      #       the git log command will check all commits since the last tag to HEAD.
-      #       For each commit, appends the commit hash, the commit message
-      #       subject, the author name, and the author email to the release template.
-      #----------------------------------------------------------------
-#      - name: Release Notes
-#        run: git log $(git describe HEAD~ --tags --abbrev=0)..HEAD --pretty='format:* %h %s%n  * %an <%ae>' --no-merges >> ".github/RELEASE-TEMPLATE.md"
-#
-#      - uses: ncipollo/release-action@v1
-#        with:
-#          artifacts: "dist/*.gz,dist/*.whl"
-#          artifactErrorsFailBuild: true
-#          generateReleaseNotes: true
-#          commit: ${{ github.ref }}
-#          prerelease: true
-#          tag: ${{ env.NEW_TAG }}
-#          token: ${{ secrets.GRIDAPPSD_PAT }}
-#
-#      #----------------------------------------------------------------
-#      #       create release draft which will be visible at https://github.com/VOLTTRON/volttron-core/releases
-#      #----------------------------------------------------------------
-#      - name: Create Release Draft
-#        uses: softprops/action-gh-release@v1
-#        with:
-#          body_path: ".github/RELEASE-TEMPLATE.md"
-#          draft: true
-#          files: |
-#            dist/${{ env.PROJECT_NAME }}-${{env.PROJECT_VERSION}}-py3-none-any.whl
-#            dist/${{ env.PROJECT_NAME }}-${{env.PROJECT_VERSION}}.tar.gz
-#        env:
-#          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - uses: ncipollo/release-action@v1
+        with:
+          artifacts: "dist/*.gz,dist/*.whl"
+          artifactErrorsFailBuild: true
+          generateReleaseNotes: true
+          commit: ${{ github.ref }}
+          prerelease: true
+          tag: ${{ env.NEW_TAG }}
+          token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Publish pre-release to pypi
         if: github.repository == 'gridappsd/gridappsd-cim-profile'
