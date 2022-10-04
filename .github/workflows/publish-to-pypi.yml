@@ -1,0 +1,21 @@
+---
+# Documentation located
+# https://github.com/marketplace/actions/publish-python-poetry-package
+name: Publish Python package
+on:
+  push:
+    tags:
+      - 'v*.*.*'
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: Build and publish to pypi
+      uses: JRubics/poetry-publish@v1.7
+      with:
+        # These are only needed when using test.pypi
+        #repository_name: testpypi
+        #repository_url: https://test.pypi.org/legacy/
+        pypi_token: ${{ secrets.PYPI_TOKEN }}
+        ignore_dev_requirements: "yes"
