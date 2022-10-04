@@ -121,3 +121,9 @@ jobs:
             dist/${{ env.PROJECT_NAME }}-${{env.PROJECT_VERSION}}.tar.gz
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Publish pre-release to pypi
+        if: github.repository == 'gridappsd/gridappsd-cim-profile'
+        run: |
+          poetry config pypi-token.pypi ${{ secrets.PYPI_TOKEN }}
+          poetry publish
