@@ -54,7 +54,7 @@ jobs:
 
       - name: Generate Python
         run: |
-          poetry run xsdata --package gridappsd_cim --config xsd/config.yml xsd/gridappsd-cim-profile.xsd
+          poetry run xsdata --config xsd/config.yml xsd/gridappsd-cim-profile.xsd
           # poetry run xsdata --package gridappsd_cim --config xsd/config.yml --output plantuml xsd/gridappsd-cim-profile.xsd
 
       - name: Uninstall Dev Dependencies
