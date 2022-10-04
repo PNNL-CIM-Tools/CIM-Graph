@@ -1,10 +1,10 @@
 [tool.poetry]
 name = "gridappsd-cim-models"
-version = "0.1.0"
+version = "0.2.0"
 description = "CIM models used within gridappsd."
 authors = ["C. Allwardt <3979063+craig8@users.noreply.github.com>"]
 packages = [
-    { include = "gridappsd_cim" }
+    { include = "cim" }
 ]
 
 [tool.poetry.dependencies]
