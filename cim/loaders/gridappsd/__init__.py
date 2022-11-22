@@ -85,9 +85,10 @@ class GridappsdConnection(ConnectionInterface):
         return objects
     
     def get_all_attributes(self, feeder_mrid, typed_catalog, cim_class):
-        mrid_list = list(typed_catalog[cim_class].keys())
-        sparql_message = eval(f"sparql.{cim_class.__name__}SPARQL.get_all_attributes('{feeder_mrid}', {mrid_list})")
-        self.query_attribute_builder(sparql_message, typed_catalog, cim_class)
+        if cim_class in typed_catalog:
+            mrid_list = list(typed_catalog[cim_class].keys())
+            sparql_message = eval(f"sparql.{cim_class.__name__}SPARQL.get_all_attributes('{feeder_mrid}', {mrid_list})")
+            self.query_attribute_builder(sparql_message, typed_catalog, cim_class)
     
     def query_object_builder(self, query_message):
         self.connect()

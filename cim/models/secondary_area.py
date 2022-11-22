@@ -43,9 +43,10 @@ class SecondaryArea:
             add_to_typed_catalog(obj, self.typed_catalog)
             
     def get_all_attributes(self, cim_class):
-        self.connection.get_all_attributes(self.feeder_mrid, self.typed_catalog, cim_class)
-        return self.__dumps__(cim_class)
-        
+        if cim_class in self.typed_catalog:
+            self.connection.get_all_attributes(self.feeder_mrid, self.typed_catalog, cim_class)
+            return self.__dumps__(cim_class)
+            
     def __dumps__(self, cim_class):
         mrid_list = list(self.typed_catalog[cim_class].keys())
         attribute_list = list(cim_class().__dict__.keys())
