@@ -54,6 +54,7 @@ class SwitchArea:
 
     def get_all_attributes(self, cim_class):
         self.connection.get_all_attributes(self.feeder_mrid, self.typed_catalog, cim_class)
+        return self.__dumps__(cim_class)
         
     def __dumps__(self, cim_class):
         mrid_list = list(self.typed_catalog[cim_class].keys())
