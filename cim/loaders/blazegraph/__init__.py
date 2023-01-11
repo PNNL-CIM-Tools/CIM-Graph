@@ -135,7 +135,7 @@ class BlazegraphConnection(ConnectionInterface):
         mrid_list = list(typed_catalog[cim_class].keys())
         sparql_message = eval(f"sparql.{cim_class.__name__}SPARQL.get_all_attributes('{feeder_mrid}', {mrid_list})")
 #       sparql_message = sparql.LinearShuntCompensatorSPARQL.get_all_attributes(feeder_mrid, mrid_list)
-#         print(sparql_message)
+        print(sparql_message)
         self.query_attribute_builder(sparql_message, typed_catalog, cim_class)
         
         

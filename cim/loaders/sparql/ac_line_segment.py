@@ -7,7 +7,7 @@ def get_all_attributes(feeder_id: str, mrid_list: List[str]):
     query_message = """
         PREFIX r:  <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
         PREFIX cim:  <http://iec.ch/TC57/CIM100#>
-        SELECT ?mRID ?name ?BaseVoltage ?Location ?bch ?r ?x ?gch ?b0ch ?r0 ?x0 ?g0ch 
+        SELECT ?mRID ?name ?BaseVoltage ?Location ?length ?bch ?r ?x ?gch ?b0ch ?r0 ?x0 ?g0ch 
         ?PerLengthImpedance ?WireSpacingInfo
         (group_concat(distinct ?Terminal; separator=";") as ?Terminals) 
         (group_concat(distinct ?Measurement; separator=";") as ?Measurements) 
@@ -26,7 +26,7 @@ def get_all_attributes(feeder_id: str, mrid_list: List[str]):
         ?eq cim:IdentifiedObject.mRID ?mRID.
         ?eq cim:IdentifiedObject.name ?name.
         ?eq cim:ConductingEquipment.BaseVoltage ?bv.
-        ?bv cim:BaseVoltage.nominalVoltage ?BaseVoltage.
+        ?bv cim:IdentifiedObject.mRID ?BaseVoltage.
 
         OPTIONAL {?eq cim:PowerSystemResource.Location ?loc.
         ?loc cim:IdentifiedObject.mRID ?Location.}
@@ -37,6 +37,8 @@ def get_all_attributes(feeder_id: str, mrid_list: List[str]):
         OPTIONAL {?meas cim:Measurement.Terminal ?t.
           ?meas cim:IdentifiedObject.mRID ?Measurement}
 
+        OPTIONAL {?eq cim:Conductor.length ?length.}
+        
         OPTIONAL {?eq cim:ACLineSegment.bch ?bch.}
         OPTIONAL {?eq cim:ACLineSegment.r ?r0.}
         OPTIONAL {?eq cim:ACLineSegment.x ?x0.}
@@ -54,7 +56,7 @@ def get_all_attributes(feeder_id: str, mrid_list: List[str]):
                   ?aclsp cim:IdentifiedObject.mRID ?ACLineSegmentPhase.}
 
         }
-        GROUP by ?mRID ?name ?BaseVoltage ?Location ?bch ?r ?x ?gch ?b0ch ?r0 ?x0 ?g0ch 
+        GROUP by ?mRID ?name ?BaseVoltage ?Location ?length ?bch ?r ?x ?gch ?b0ch ?r0 ?x0 ?g0ch 
                 ?PerLengthImpedance ?WireSpacingInfo 
         ORDER by  ?name
         """
