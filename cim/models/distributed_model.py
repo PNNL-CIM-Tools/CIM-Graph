@@ -5,7 +5,7 @@ import json
 
 import cim.data_profile as cim
 from cim.loaders import ConnectionInterface, QueryResponse
-from cim.models import add_to_catalog, add_to_typed_catalog
+from cim.models.model_parsers import add_to_catalog, add_to_typed_catalog
 from cim.models.switch_area import SwitchArea
 
 

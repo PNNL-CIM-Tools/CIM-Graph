@@ -1,99 +1,109 @@
 from __future__ import annotations
-
 from typing import Dict, List, Optional
-
 from SPARQLWrapper import SPARQLWrapper, JSON, POST
-
+import re
 from cim.loaders import ConnectionInterface, ConnectionParameters, Parameter, QueryResponse
-from cim.models import add_to_catalog, add_to_typed_catalog
+from cim.loaders.blazegraph.query_parsers import query_parser, query_list_parser, build_cim_object
+import cim.loaders.sparql as sparql
 import cim.data_profile as cim
-import cim.loaders.blazegraph as blazegraph
+
 
 
 class BlazegraphConnection(ConnectionInterface):
-    sparql: Optional[SPARQLWrapper] = None
+    sparql_obj: Optional[SPARQLWrapper] = None
 
     def connect(self):
-        if not self.sparql:
+        if not self.sparql_obj:
             url = self.connection_params.parameters[0].value
-            self.sparql = SPARQLWrapper(url)
-            self.sparql.setReturnFormat(JSON)
+            self.sparql_obj = SPARQLWrapper(url)
+            self.sparql_obj.setReturnFormat(JSON)
 
     def disconnect(self):
-        self.sparql = None
-
-    def load_attributes(self, obj: object):
-        if isinstance(obj, cim.Terminal):
-            # load terminal stuff here
-            pass
-
-    def create_default_instances(self, feeder_mrid: str | cim.Feeder, mrid_list: List[str]) -> List[object]:
-        """ Creates an empty CIM object with the correct class type with mRID and name fields populated
-
-            @param: feeder_id: str:
-
-            """
-        """Example function with types documented in the docstring.
-        `PEP 484`_ type annotations are supported. If attribute, parameter, and
-        return types are annotated according to `PEP 484`_, they do not need to be
-        included in the docstring:
-        Args:
-            param1 (int): The first parameter.
-            param2 (str): The second parameter.
-        Returns:
-            bool: The return value. True for success, False otherwise.
-        .. _PEP 484:
-            https://www.python.org/dev/peps/pep-0484/
-        """
-
-        query_message = """
-                    PREFIX r:  <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
-                    PREFIX c:  <http://iec.ch/TC57/CIM100#>
-                    SELECT ?eqid ?eqname ?class
-                    {
-                      VALUES ?fdrid {"%s"}
-                      VALUES ?eqid {""" % feeder_mrid
-        for mrid in mrid_list:
-            query_message += ' "%s" \n' % mrid
-
-        query_message += """               } 
-                      ?fdr c:IdentifiedObject.mRID ?fdrid.
-                      ?eq c:IdentifiedObject.name ?eqname.
-                      ?eq c:IdentifiedObject.mRID ?eqid.
-                      ?eq a ?classraw.
-                      bind(strafter(str(?classraw),"CIM100#") as ?class)
-                    }
-                    GROUP BY  ?eqid ?eqname ?class
-                    ORDER by  ?fdrid
-                    """
-        # print(query_message)
-        #         results = gapps.query_data(query = query_message, timeout = 60)
-        #         output = results['data']['results']['bindings']
+        self.sparql_obj = None
+        
+    def execute(self, query_message: str) -> QueryResponse:
         self.connect()
-        self.sparql.setQuery(query_message)
-        self.sparql.setMethod(POST)
+        self.sparql_obj.setQuery(query_message)
+        self.sparql_obj.setMethod(POST)
+        query_output = self.sparql_obj.query().convert()
+        return query_output
 
-        output = self.sparql.query().convert()
-        #         print(output)
-
-        objects = []
-        for result in output['results']['bindings']:
+        
+    def create_default_instances(self, feeder_mrid: str | cim.Feeder, mrid_list: List[str]) -> List[object]:
+        """ 
+        Creates empty CIM objects with the correct class type with mRID and name fields populated based on 
+        a list of mRID strings.
+        Args:
+            feeder_mrid (str | Feeder object): The mRID of the feeder or feeder object
+            mrid_list (list[str]): A list of object mRID strings to be converted into CIM objects
+        Returns:
+            object_list: A list of CIM object instances
+        """
+        #generate correct sparql message using create_default.py
+        sparql_message = sparql.create_default_sparql(feeder_mrid, mrid_list)
+        #execute sparql query
+        query_output = self.execute(sparql_message)
+        # parse query results and add new CIM objects to list
+        object_list = [] 
+        for result in query_output['results']['bindings']:
            # print(result)
             cls = result['class']['value']
-            mrid = result['eqid']['value']
+            mRID = result['mRID']['value']
+            name = result['name']['value']
             try:
-                objects.append(eval(f"cim.{cls}(mRID='{mrid}')"))
+                object_list.append(eval(f"cim.{cls}(mRID='{mRID}', name = '{name}')"))
                 print(cls)
             except:
-                print('warning: object class missing:', cls)
-        return objects
+                print('warning: object class missing from data profile:', cls)
+        return object_list
+    
+    
+          
+    def get_all_attributes(self, feeder_mrid: str | cim.Feeder, typed_catalog: dict[type, dict[str, object]], cim_class: type):
+        """ Populates all available attribute fields of CIM objects in the typed catalog of a specified CIM class. 
+        Objects are stored in memory, so no values are returned.
+        Args:
+        feeder_mrid (str | Feeder object): The mRID of the feeder or feeder object
+        typed_catalog (dict[type, dict[str, object]]): The typed catalog of CIM objects organized by 
+            class type and object mRID
+        cim_class (type): The CIM class type (e.g. cim:ACLineSegment)
+        Returns:
+        none
+        """
+        mrid_list = list(typed_catalog[cim_class].keys()) #get all object mRIDs in switch area
+        #generate SPARQL message from correct loaders>sparql python script based on class name
+        sparql_message = eval(f"sparql.{cim_class.__name__}SPARQL.get_all_attributes('{feeder_mrid}', {mrid_list})") 
+        #execute sparql query
+        query_output = self.execute(sparql_message)
+#         print(query_output)
 
-    def execute(self, query: str) -> QueryResponse:
-        raise RuntimeError("Must have implemented query in the inherited class")
-        
-    def get_all_attributes(typed_catalog, cim_class):
-        if isinstance(cim_class, cim.ACLineSegment):
-            pass
-        elif isinstance(cim_class, cim.LinearShuntCompensator):
-            
-        
+#         attribute_list = query_output['head']['vars'] #list of attributes received in query response
+        for result in query_output['results']['bindings']: #iterate through rows of response
+            attribute_list = result.keys()
+            mRID = result['mRID']['value']
+            name = result['name']['value']
+            for attribute in attribute_list: 
+                try: #check if attribute is in data profile
+                    attribute_type = cim_class.__dataclass_fields__[attribute].type
+                except:
+                    #replace with warning message
+                    print('warning: attribute ', attribute, ' missing from ', cim_class)
+                    
+                if 'List' in attribute_type: #check if attribute is association to a list of class objects
+                    if '\'' in attribute_type: #handling inconsistent '' marks in data profile
+                        at_cls = re.match(r'List\[\'(.*)\']',attribute_type)
+                        attribute_class = at_cls.group(1)
+                    else:        
+                        at_cls = re.match(r'List\[(.*)]',attribute_type)
+                        attribute_class = at_cls.group(1)
+#                     print(attribute_class)
+                    # pass query response of associated objects to list parser
+                    query_list_parser(typed_catalog, cim_class, mRID, result, attribute, attribute_class, ';')
+
+                else: #otherwise assign query response
+#                     print(attribute)
+#                     print(result)
+                    query_parser(typed_catalog, cim_class, mRID, result, attribute, ';')
+                    
+
+  

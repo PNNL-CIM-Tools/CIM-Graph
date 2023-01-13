@@ -27,7 +27,7 @@ def get_all_attributes(feeder_id: str, mrid_list: List[str]):
         ?eq cim:IdentifiedObject.mRID ?mRID.
         ?eq cim:IdentifiedObject.name ?name.
 
-        OPTIONAL {?eq cim:WireSpacingInfo.usage ?usage.}
+        #OPTIONAL {?eq cim:WireSpacingInfo.usage ?usage.}
         OPTIONAL {?eq cim:WireSpacingInfo.phaseWireCount ?phaseWireCount.}
         OPTIONAL {?eq cim:WireSpacingInfo.phaseWireSpacing ?phaseWireSpacing.}
         OPTIONAL {?eq cim:WireSpacingInfo.isCable ?isCable.}
