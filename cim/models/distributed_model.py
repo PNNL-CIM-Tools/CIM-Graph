@@ -5,7 +5,7 @@ import json
 
 import cim.data_profile as cim
 from cim.loaders import ConnectionInterface, QueryResponse
-from cim.models.model_parsers import add_to_catalog, add_to_typed_catalog
+from cim.models.model_parsers import add_to_catalog, add_to_typed_catalog, cim_dump
 from cim.models.switch_area import SwitchArea
 
 
@@ -67,22 +67,15 @@ class DistributedModel:
     def get_all_attributes(self, cim_class):
         if cim_class in self.typed_catalog:
             self.connection.get_all_attributes(self.feeder.mRID, self.typed_catalog, cim_class)
+        else:
+            print('warning: ', cim_class, ' not found in catalog. try initializing a parent class first')
 #             return self.__dumps__(cim_class)
 
     def __dumps__(self, cim_class):
-        mrid_list = list(self.typed_catalog[cim_class].keys())
-        attribute_list = list(cim_class().__dict__.keys())
-        json_dump = {}
+        if cim_class in self.typed_catalog:
+            json_dump = cim_dump(self.typed_catalog, cim_class)
+        else:
+            json_dump = {}
+            print('warning: ', cim_class, ' not found in catalog. try initializing a parent class first')
 
-        for mrid in mrid_list:
-            json_dump[mrid] = {}
-            for attribute in attribute_list:
-                value = getattr(self.typed_catalog[cim_class][mrid], attribute)
-                if type(value) in [str, list]:
-                    json_dump[mrid][attribute] = value
-                elif value is None:
-                    json_dump[mrid][attribute] = ''
-                else:
-                    json_dump[mrid][attribute] = value.__dict__
-
-        return json.dumps(json_dump)
+        return json_dump

@@ -1,4 +1,4 @@
-def create_default_sparql(feeder_mrid, mrid_list, add_prefix=True):
+def get_class_type_sparql(feeder_mrid, mrid_list, add_prefix=True):
     prefix = """
             PREFIX r:  <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
             PREFIX c:  <http://iec.ch/TC57/CIM100#>

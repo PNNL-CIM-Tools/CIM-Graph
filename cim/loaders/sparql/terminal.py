@@ -3,18 +3,22 @@ from __future__ import annotations
 from cim.data_profile import Feeder
 
 
-def format_terminal_all_attributes_by_feeder(feeder_id: str | Feeder) -> str:
+def get_all_attributes(feeder_id: str | Feeder) -> str:
     query_message = """
-        # list all the terminals
         PREFIX r:  <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
-        PREFIX c:  <http://iec.ch/TC57/CIM100#>
-        SELECT ?tid ?tname ?fdrid ?cnid ?tpid ?coneqid ?txfid ?regcntl ?seq
-        {
-          VALUES ?fdrid {%s} 
-          ?fdr c:IdentifiedObject.mRID ?fdrid.
-
-          ?t c:Terminal.ConnectivityNode ?cn. 
-          bind(strafter(str(?cn),"#") as ?cnid).
+        PREFIX cim:  <http://iec.ch/TC57/CIM100#>
+        SELECT ?mRID ?name 
+        WHERE {          
+          ?eq r:type cim:Terminal.
+          VALUES ?fdrid {"%s"}
+          VALUES ?mRID {"""%feeder_id
+    # add all equipment mRID
+    for mrid in mrid_list:
+        query_message += ' "%s" \n'%mrid
+    # add all attributes
+    query_message += """               } 
+          ?eq c:Terminal.ConnectivityNode ?node. 
+          ?node IdentifiedObject.mRID ?ConnectivityNode
 
           ?t c:Terminal.ConductingEquipment ?coneq.
           bind(strafter(str(?coneq),"#") as ?coneqid).

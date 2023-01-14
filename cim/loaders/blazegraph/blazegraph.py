@@ -40,7 +40,7 @@ class BlazegraphConnection(ConnectionInterface):
             object_list: A list of CIM object instances
         """
         #generate correct sparql message using create_default.py
-        sparql_message = sparql.create_default_sparql(feeder_mrid, mrid_list)
+        sparql_message = sparql.get_class_type_sparql(feeder_mrid, mrid_list)
         #execute sparql query
         query_output = self.execute(sparql_message)
         # parse query results and add new CIM objects to list
@@ -74,6 +74,7 @@ class BlazegraphConnection(ConnectionInterface):
         #generate SPARQL message from correct loaders>sparql python script based on class name
         sparql_message = eval(f"sparql.{cim_class.__name__}SPARQL.get_all_attributes('{feeder_mrid}', {mrid_list})") 
         #execute sparql query
+#         print(sparql_message)
         query_output = self.execute(sparql_message)
 #         print(query_output)
 
@@ -98,12 +99,12 @@ class BlazegraphConnection(ConnectionInterface):
                         attribute_class = at_cls.group(1)
 #                     print(attribute_class)
                     # pass query response of associated objects to list parser
-                    query_list_parser(typed_catalog, cim_class, mRID, result, attribute, attribute_class, ';')
+                    query_list_parser(self, feeder_mrid, typed_catalog, cim_class, mRID, result, attribute, attribute_class, ';')
 
                 else: #otherwise assign query response
 #                     print(attribute)
 #                     print(result)
-                    query_parser(typed_catalog, cim_class, mRID, result, attribute, ';')
+                    query_parser(self, feeder_mrid, typed_catalog, cim_class, mRID, result, attribute, ';')
                     
 
   

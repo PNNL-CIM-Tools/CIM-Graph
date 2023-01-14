@@ -1,4 +1,4 @@
-from cim.loaders.sparql.create_default import create_default_sparql
+from cim.loaders.sparql.get_class_type import get_class_type_sparql
 
 import cim.loaders.sparql.ac_dc_terminal as ACDCTerminalSPARQL
 import cim.loaders.sparql.ac_line_segment as ACLineSegmentSPARQL
@@ -22,6 +22,9 @@ import cim.loaders.sparql.linear_shunt_compensator as LinearShuntCompensatorSPAR
 
 import cim.loaders.sparql.power_transformer as PowerTransformerSPARQL
 # import cim.loaders.sparql.transformer_tank as TransformerTankSPARQL
+import cim.loaders.sparql.tape_shield_cable_info as TapeShieldCableInfoSPARQL
+import cim.loaders.sparql.terminal as TerminalSPARQL
+
 
 import cim.loaders.sparql.wire_position as WirePositionSPARQL
 import cim.loaders.sparql.wire_spacing_info as WireSpacingInfoSPARQL
