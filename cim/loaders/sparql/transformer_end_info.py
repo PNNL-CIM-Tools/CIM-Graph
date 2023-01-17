@@ -7,9 +7,9 @@ def get_all_attributes(feeder_id: str, mrid_list: List[str]):
     query_message = """
         PREFIX r:  <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
         PREFIX cim:  <http://iec.ch/TC57/CIM100#>
-        SELECT ?mRID ?name ? ?ratedS ?ratedU ?r ?connectionKind ?phaseAngleClock ?endNumber
-        ?grounded ?rground ?xground ?Terminal ?BaseVoltage ?PhaseTapChanger ?RatioTapChanger
-        ?FromMeshImpedance ?ToMeshImpedance ?CoreAdmittance
+        SELECT ?mRID ?name ?ratedS ?ratedU ?r ?connectionKind ?phaseAngleClock ?endNumber
+        ?shortTermS ?emergencyS ?insulationU ?GroundedEndShortCircuitTests ?EnergisedEndShortCircuitTests
+        ?EnergisedEndNoLoadTests ?FromMeshImpedance ?ToMeshImpedance ?CoreAdmittance ?TransformerTankInfo
         (group_concat(distinct ?Asset; separator=";") as ?Assets) 
 
         WHERE {          
@@ -23,18 +23,19 @@ def get_all_attributes(feeder_id: str, mrid_list: List[str]):
     query_message += """          }
         #get feeder id from TransformerTank
         ?eq cim:TransformerEndInfo.TransformerTankInfo ?tankinfo.
-        ?asset cim:Asset.AssetInfo ?tankinfo
-        ?asset cim:Asset.PowerSystemResources ?tank
+        ?asset cim:Asset.AssetInfo ?tankinfo.
+        ?asset cim:Asset.PowerSystemResources ?tank.
         ?tank cim:Equipment.EquipmentContainer ?fdr.
         ?fdr cim:IdentifiedObject.mRID ?fdrid.
 
         ?eq cim:IdentifiedObject.mRID ?mRID.
         ?eq cim:IdentifiedObject.name ?name.
         
-        
+        ?tankinfo cim:IdentifiedObject.mRID ?TransformerTankInfo.
+        ?asset cim:IdentifiedObject.mRID ?Asset
        
         OPTIONAL {?eq cim:TransformerEndInfo.endNumber ?endNumber.}
-        OPTIONAL {?eq cim:TransformerEndInfo.connectionKind .
+        OPTIONAL {?eq cim:TransformerEndInfo.connectionKind ?conn.
                   bind(strafter(str(?conn),"WindingConnection.") as ?connectionKind).}
         OPTIONAL {?eq cim:TransformerEndInfo.phaseAngleClock ?phaseAngleClock.}
         OPTIONAL {?eq cim:TransformerEndInfo.ratedU ?ratedU.}
@@ -42,7 +43,7 @@ def get_all_attributes(feeder_id: str, mrid_list: List[str]):
         OPTIONAL {?eq cim:TransformerEndInfo.shortTermS ?shortTermS.}
         OPTIONAL {?eq cim:TransformerEndInfo.emergencyS ?emergencyS.}
         OPTIONAL {?eq cim:TransformerEndInfo.r ?r.}
-        OPTIONAL {?eq cim:TransformerEndInfo.insulationU ?insulatedU.}
+        OPTIONAL {?eq cim:TransformerEndInfo.insulationU ?insulationU.}
         
         OPTIONAL {?gsct cim:ShortCircuitTest.GroundedEnds ?eq.
                   ?gsct cim:IdentifiedObject.mRID ?GroundedEndShortCircuitTests.}
@@ -51,7 +52,7 @@ def get_all_attributes(feeder_id: str, mrid_list: List[str]):
                   ?esct cim:IdentifiedObject.mRID ?EnergisedEndShortCircuitTests.}
                   
         OPTIONAL {?enol cim:NoLoadTest.EnergisedEnd ?eq.
-                  ?sct cim:IdentifiedObject.mRID ?EnergisedEndNoLoadTests.}
+                  ?enol cim:IdentifiedObject.mRID ?EnergisedEndNoLoadTests.}
                   
         OPTIONAL {?tac cim:TransformerCoreAdmittace.TransformerEnd ?eq.
                   ?tac cim:IdentifiedObject.mRID ?CoreAdmittance.}
@@ -62,9 +63,10 @@ def get_all_attributes(feeder_id: str, mrid_list: List[str]):
         OPTIONAL {?frmesh cim:TransformerMeshImpedance.ToTransformerEnd ?eq.
                   ?frmesh cim:IdentifiedObject.mRID ?ToMeshImpedance.}
         }
-        GROUP by ?mRID ?name ?PowerTransformer ?ratedS ?ratedU ?r ?connectionKind ?phaseAngleClock ?endNumber
-        ?grounded ?rground ?xground ?Terminal ?BaseVoltage ?PhaseTapChanger ?RatioTapChanger
-        ?FromMeshImpedance ?ToMeshImpedance ?CoreAdmittance
+     
+        GROUP by ?mRID ?name ?ratedS ?ratedU ?r ?connectionKind ?phaseAngleClock ?endNumber
+        ?shortTermS ?emergencyS ?insulationU ?GroundedEndShortCircuitTests ?EnergisedEndShortCircuitTests
+        ?EnergisedEndNoLoadTests ?FromMeshImpedance ?ToMeshImpedance ?CoreAdmittance ?TransformerTankInfo
         ORDER by ?name
           """
     return query_message
