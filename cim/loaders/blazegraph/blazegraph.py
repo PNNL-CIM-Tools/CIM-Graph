@@ -70,9 +70,8 @@ class BlazegraphConnection(ConnectionInterface):
         Returns:
         none
         """
-        mrid_list = list(typed_catalog[cim_class].keys()) #get all object mRIDs in switch area
         #generate SPARQL message from correct loaders>sparql python script based on class name
-        sparql_message = eval(f"sparql.{cim_class.__name__}SPARQL.get_all_attributes('{feeder_mrid}', {mrid_list})") 
+        sparql_message = self.get_attributes_query(feeder_mrid, typed_catalog, cim_class)
         #execute sparql query
 #         print(sparql_message)
         query_output = self.execute(sparql_message)
@@ -106,5 +105,18 @@ class BlazegraphConnection(ConnectionInterface):
 #                     print(result)
                     query_parser(self, feeder_mrid, typed_catalog, cim_class, mRID, result, attribute, ';')
                     
-
-  
+    def get_attributes_query(self, feeder_mrid: str | cim.Feeder, typed_catalog: dict[type, dict[str, object]], cim_class: type):
+        """ Generates SPARQL query for a given catalog of objects and feeder id
+        Args:
+            feeder_mrid (str | Feeder object): The mRID of the feeder or feeder object
+            typed_catalog (dict[type, dict[str, object]]): The typed catalog of CIM objects organized by 
+                class type and object mRID
+            cim_class (type): The CIM class type (e.g. cim:ACLineSegment)
+        Returns:
+            sparql_message: query string that can be used in blazegraph connection or STOMP client
+        none
+        """
+        mrid_list = list(typed_catalog[cim_class].keys()) #get all object mRIDs in switch area
+        #generate SPARQL message from correct loaders>sparql python script based on class name
+        sparql_message = eval(f"sparql.{cim_class.__name__}SPARQL.get_all_attributes('{feeder_mrid}', {mrid_list})") 
+        return sparql_message

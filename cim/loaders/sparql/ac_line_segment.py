@@ -34,7 +34,7 @@ def get_all_attributes(feeder_id: str, mrid_list: List[str]):
         ?t cim:Terminal.ConductingEquipment ?eq.
         ?t cim:IdentifiedObject.mRID ?Terminal
 
-        OPTIONAL {?meas cim:Measurement.Terminal ?t.
+        OPTIONAL {?meas cim:Measurement.PowerSystemResource ?eq.
           ?meas cim:IdentifiedObject.mRID ?Measurement}
 
         OPTIONAL {?eq cim:Conductor.length ?length.}

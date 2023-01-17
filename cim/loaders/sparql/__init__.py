@@ -21,10 +21,15 @@ import cim.loaders.sparql.linear_shunt_compensator as LinearShuntCompensatorSPAR
 
 
 import cim.loaders.sparql.power_transformer as PowerTransformerSPARQL
-# import cim.loaders.sparql.transformer_tank as TransformerTankSPARQL
+import cim.loaders.sparql.power_transformer_end as PowerTransformerEndSPARQL
+# import cim.loaders.sparql.power_transformer_info as PowerTransformerInfoSPARQL
+
+
 import cim.loaders.sparql.tape_shield_cable_info as TapeShieldCableInfoSPARQL
 import cim.loaders.sparql.terminal as TerminalSPARQL
-
+import cim.loaders.sparql.transformer_tank as TransformerTankSPARQL
+import cim.loaders.sparql.transformer_tank_end as TransformerTankEndSPARQL
+# import cim.loaders.sparql.transformer_tank_info as TransformerTankInfoSPARQL
 
 import cim.loaders.sparql.wire_position as WirePositionSPARQL
 import cim.loaders.sparql.wire_spacing_info as WireSpacingInfoSPARQL

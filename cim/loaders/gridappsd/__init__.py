@@ -71,6 +71,13 @@ class GridappsdConnection(ConnectionInterface):
         if isinstance(obj, cim.Terminal):
             # load terminal stuff here
             pass
+        
+    def get_logger(self):
+        self.connect()
+        return self.__gapps__.get_logger()
+    
+    def query_data(self, query, database_type="powergridmodel", timeout=30):
+        return self.__gapps__.query_data(query, database_type, timeout)
 
     def create_default_instances(self, feeder_mrid: str | cim.Feeder, mrid_list: List[str]) -> List[object]:
         """ Creates an empty CIM object with the correct class type with mRID and name fields populated
