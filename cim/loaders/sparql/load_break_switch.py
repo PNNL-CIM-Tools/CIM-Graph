@@ -14,7 +14,7 @@ def get_all_attributes(feeder_id: str, mrid_list: List[str]):
         (group_concat(distinct ?Switch_Phase; separator=";") as ?SwitchPhase) 
 
         WHERE {          
-          ?eq r:type cim:Breaker.
+          ?eq r:type cim:LoadBreakSwitch.
           VALUES ?fdrid {"%s"}
           VALUES ?mRID {"""%feeder_id
     # add all equipment mRID
@@ -38,8 +38,6 @@ def get_all_attributes(feeder_id: str, mrid_list: List[str]):
 
         OPTIONAL {?meas cim:Measurement.PowerSystemResource ?eq.
           ?meas cim:IdentifiedObject.mRID ?Measurement}
-
-        OPTIONAL {?eq cim:Breaker.inTransitTime ?inTransitTime.}
         
         OPTIONAL {?eq cim:ProtectedSwitch.breakingCapacity ?breakingCapacity.}
         OPTIONAL {?eq cim:Switch.ratedCurrent ?ratedCurrent.}
@@ -50,7 +48,7 @@ def get_all_attributes(feeder_id: str, mrid_list: List[str]):
         OPTIONAL {?phs cim:SwitchPhase.Switch ?eq.
                   ?phs cim:IdentifiedObject ?Switch_Phase.}
         }
-        GROUP by ?mRID ?name ?BaseVoltage ?Location ?inTransitTime ?breakingCapacity ?ratedCurrent ?normalOpen 
+        GROUP by ?mRID ?name ?BaseVoltage ?Location ?inTransitTime ?breakingCapacity ?ratedCurrent ?normalOpen
         ?open ?retained
 
         ORDER by  ?name

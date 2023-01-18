@@ -44,14 +44,14 @@ class SecondaryArea:
             
     def get_all_attributes(self, cim_class):
         if cim_class in self.typed_catalog:
-            self.connection.get_all_attributes(self.feeder.mRID, self.typed_catalog, cim_class)
+            self.connection.get_all_attributes(self.feeder_mrid, self.typed_catalog, cim_class)
         else:
             print('warning: ', cim_class, ' not found in catalog. try initializing a parent class first')
 #             return self.__dumps__(cim_class)
 
     def get_attributes_query(self, cim_class):
         if cim_class in self.typed_catalog:
-            sparql_message = self.connection.get_attributes_query(self.feeder.mRID, self.typed_catalog, cim_class)
+            sparql_message = self.connection.get_attributes_query(self.feeder_mrid, self.typed_catalog, cim_class)
         else:
             print('warning: ', cim_class, ' not found in catalog. try initializing a parent class first')
             sparql_message = ''

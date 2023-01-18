@@ -25,8 +25,9 @@ def get_all_attributes(feeder_id: str, mrid_list: List[str]):
         ?fdr cim:IdentifiedObject.mRID ?fdrid.
         ?eq cim:IdentifiedObject.mRID ?mRID.
         ?eq cim:IdentifiedObject.name ?name.
-        ?eq cim:ConductingEquipment.BaseVoltage ?bv.
-        ?bv cim:IdentifiedObject.mRID ?BaseVoltage.
+        
+        OPTIONAL {?eq cim:ConductingEquipment.BaseVoltage ?bv.
+        ?bv cim:IdentifiedObject.mRID ?BaseVoltage.}
 
         OPTIONAL {?eq cim:PowerSystemResource.Location ?loc.
         ?loc cim:IdentifiedObject.mRID ?Location.}

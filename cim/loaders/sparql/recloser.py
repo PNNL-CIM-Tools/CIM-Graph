@@ -7,14 +7,14 @@ def get_all_attributes(feeder_id: str, mrid_list: List[str]):
     query_message = """
         PREFIX r:  <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
         PREFIX cim:  <http://iec.ch/TC57/CIM100#>
-        SELECT ?mRID ?name ?BaseVoltage ?Location ?inTransitTime ?breakingCapacity ?ratedCurrent ?normalOpen 
+        SELECT ?mRID ?name ?BaseVoltage ?Location ?breakingCapacity ?ratedCurrent ?normalOpen 
         ?open ?retained
         (group_concat(distinct ?Terminal; separator=";") as ?Terminals) 
         (group_concat(distinct ?Measurement; separator=";") as ?Measurements) 
         (group_concat(distinct ?Switch_Phase; separator=";") as ?SwitchPhase) 
 
         WHERE {          
-          ?eq r:type cim:Breaker.
+          ?eq r:type cim:Recloser.
           VALUES ?fdrid {"%s"}
           VALUES ?mRID {"""%feeder_id
     # add all equipment mRID
@@ -38,19 +38,18 @@ def get_all_attributes(feeder_id: str, mrid_list: List[str]):
 
         OPTIONAL {?meas cim:Measurement.PowerSystemResource ?eq.
           ?meas cim:IdentifiedObject.mRID ?Measurement}
-
-        OPTIONAL {?eq cim:Breaker.inTransitTime ?inTransitTime.}
         
         OPTIONAL {?eq cim:ProtectedSwitch.breakingCapacity ?breakingCapacity.}
         OPTIONAL {?eq cim:Switch.ratedCurrent ?ratedCurrent.}
         OPTIONAL {?eq cim:Switch.normalOpen ?normalOpen.}
         OPTIONAL {?eq cim:Switch.open ?open.}
         OPTIONAL {?eq cim:Switch.retained ?retained.}
-
+        
         OPTIONAL {?phs cim:SwitchPhase.Switch ?eq.
                   ?phs cim:IdentifiedObject ?Switch_Phase.}
+
         }
-        GROUP by ?mRID ?name ?BaseVoltage ?Location ?inTransitTime ?breakingCapacity ?ratedCurrent ?normalOpen 
+        GROUP by ?mRID ?name ?BaseVoltage ?Location ?breakingCapacity ?ratedCurrent ?normalOpen 
         ?open ?retained
 
         ORDER by  ?name

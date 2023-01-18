@@ -44,7 +44,7 @@ def get_all_attributes(feeder_id: str, mrid_list: List[str]):
         OPTIONAL {?regcntrl cim:RegulatingControl.Terminal ?eq.
                   ?regcntrl cim:IdentifiedObject.mRID ?RegulatingControl.}
         
-        OPTIONAL {?meas cim:Measurement.Terminal ?t.
+        OPTIONAL {?meas cim:Measurement.Terminal ?eq.
           ?meas cim:IdentifiedObject.mRID ?Measurement}
 
         }
