@@ -1,4 +1,4 @@
-from cim.data_profile.gridappsd_cim_profile import (
+from cimlab.data_profile.cimext_2022.gridappsd_cim_profile import (
     ACDCTerminal,
     ACLineSegment,
     ACLineSegmentPhase,

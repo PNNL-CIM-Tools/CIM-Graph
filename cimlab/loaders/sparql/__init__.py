@@ -27,6 +27,9 @@ import cim.loaders.sparql.load_break_switch as LoadBreakSwitchSPARQL
 
 #n
 import cim.loaders.sparql.no_load_test as NoLoadTestSPARQL
+#o
+import cim.loaders.sparql.overhead_wire_info as OverheadWireInfoSPARQL
+
 #p
 import cim.loaders.sparql.per_length_phase_impedance as PerLengthPhaseImpedanceSPARQL
 import cim.loaders.sparql.per_length_sequence_impedance as PerLengthPhaseImpedanceSPARQL

@@ -2,7 +2,7 @@ from __future__ import annotations
 from typing import Dict, List, Optional
 import json
 
-import cim.data_profile as cim
+import cimlab.data_profile as cim
 
 def add_to_catalog(obj: object, catalog: Dict) -> Dict:
     if obj.mRID == None:

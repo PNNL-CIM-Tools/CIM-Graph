@@ -3,10 +3,10 @@ from typing import List, Dict, Optional
 from dataclasses import dataclass, field
 import json
 
-import cim.data_profile as cim
-from cim.loaders import ConnectionInterface, QueryResponse
-from cim.models.model_parsers import add_to_catalog, add_to_typed_catalog, cim_dump
-from cim.models.switch_area import SwitchArea
+import cimlab.data_profile as cim
+from cimlab.loaders import ConnectionInterface, QueryResponse
+from cimlab.models.model_parsers import add_to_catalog, add_to_typed_catalog, cim_dump
+from cimlab.models.switch_area import SwitchArea
 
 
 @dataclass

@@ -1,4 +1,4 @@
-from generated.gridappsd_cim_profile_rc4_2021 import (
+from cimlab.data_profile.rc4_2021.gridappsd_cim_profile_rc4_2021 import (
     Acdcterminal,
     AclineSegment,
     AclineSegmentPhase,

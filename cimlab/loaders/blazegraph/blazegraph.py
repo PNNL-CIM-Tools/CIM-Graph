@@ -2,15 +2,18 @@ from __future__ import annotations
 from typing import Dict, List, Optional
 from SPARQLWrapper import SPARQLWrapper, JSON, POST
 import re
-from cim.loaders import ConnectionInterface, ConnectionParameters, Parameter, QueryResponse
-from cim.loaders.blazegraph.query_parsers import query_parser, query_list_parser, build_cim_object
-import cim.loaders.sparql as sparql
-import cim.data_profile as cim
+from cimlab.loaders import ConnectionInterface, ConnectionParameters, Parameter, QueryResponse
+from cimlab.loaders.blazegraph.query_parsers import query_parser, query_list_parser, build_cim_object
+
 
 
 
 class BlazegraphConnection(ConnectionInterface):
-    sparql_obj: Optional[SPARQLWrapper] = None
+    def __init__(self, cim_profile:str):
+        import cimlab.loaders.sparql.{cim_p as sparql
+        sparql = importlib.import_module('cimlab.loaders.sparql.' + cim_profile)
+        cim = importlib.import_module('cimlab.data_profile.' + cim_profile)
+        sparql_obj: Optional[SPARQLWrapper] = None
 
     def connect(self):
         if not self.sparql_obj:
