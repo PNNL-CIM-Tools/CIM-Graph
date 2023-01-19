@@ -11,7 +11,11 @@ packages = [
 python = "^3.8"
 xsdata = "^22.5"
 SPARQLWrapper = "^2.0.0"
-gridappsd-python = { git = "https://github.com/GRIDAPPSD/gridappsd-python.git", branch = "cim-profile" }
+
+gridappsd-python = { git = "https://github.com/GRIDAPPSD/gridappsd-python.git", branch = "cim-profile", optional = true }
+
+[tool.poetry.extras]
+gridappsd = ["gridappsd-python"]
 
 [tool.poetry.dev-dependencies]
 pre-commit = "^2.17.0"
