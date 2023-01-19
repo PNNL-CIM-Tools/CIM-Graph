@@ -66,7 +66,7 @@ def get_all_attributes(feeder_id: str, mrid_list: List[str]):
         OPTIONAL {?eq cim:ConcentricNeutralCableInfo.neutralStrandRadius ?neutralStrandRadius.}
         OPTIONAL {?eq cim:ConcentricNeutralCableInfo.neutralStrandGmr ?neutralStrandGmr.}
         OPTIONAL {?eq cim:ConcentricNeutralCableInfo.neutralStrandRDC20 ?neutralStrandRDC20.}
-        OPTIONAL {?eq <cim:ConcentricNeutralCableInfo.neutralStrandCount ?neutralStrandCount.}
+        OPTIONAL {?eq cim:ConcentricNeutralCableInfo.neutralStrandCount ?neutralStrandCount.}
 
         }
         GROUP BY ?mRID ?name ?coreRadius ?coreStrandCount ?gmr ?insulated ?insulationMaterial 

@@ -13,6 +13,7 @@ import cimlab.loaders.sparql.rc4_2021.breaker as BreakerSPARQL
 # import cimlab.loaders.sparql.rc4_2021.bus_bar_section_info as BusBarSectionInfoSPARQL
 #c
 import cimlab.loaders.sparql.rc4_2021.cable_info as CableInfoSPARQL
+import cimlab.loaders.sparql.rc4_2021.concentric_neutral_cable_info as ConcentricNeutralCableInfoSPARQL
 #d
 import cimlab.loaders.sparql.rc4_2021.disconnector as DisconnectorSPARQL
 #e
