@@ -1,11 +1,10 @@
 from __future__ import annotations
 from typing import Dict, List, Optional
 import traceback
-from cim.models.model_parsers import add_to_catalog, add_to_typed_catalog
-import cim.loaders.sparql as sparql
-import cim.data_profile as cim
+from cimlab.models.model_parsers import add_to_catalog, add_to_typed_catalog
 
-def query_parser(conn, feeder_mrid, typed_catalog:Dict, class_name:str, mRID:str, query:List, attribute:str, separator:str) -> object | str:
+
+def query_parser(conn, cim, feeder_mrid, typed_catalog:Dict, class_name:str, mRID:str, query:List, attribute:str, separator:str) -> object | str:
 #     try:
     value = query[attribute]['value']
 
@@ -13,7 +12,7 @@ def query_parser(conn, feeder_mrid, typed_catalog:Dict, class_name:str, mRID:str
 #         print(attribute)
     if attribute in cim.__all__:
         value = value.split(separator)
-        result = build_cim_object(conn,feeder_mrid, typed_catalog, value)
+        result = build_cim_object(conn, cim, feeder_mrid, typed_catalog, value)
         if len(result) == 1:
             result = result[0]
     else:
@@ -23,19 +22,19 @@ def query_parser(conn, feeder_mrid, typed_catalog:Dict, class_name:str, mRID:str
 #         traceback.print_exc()
 
 
-def query_list_parser(conn, feeder_mrid, typed_catalog:Dict, class_name:type, mRID:str, query:List, attribute:str, attribute_class:str, separator:str):
+def query_list_parser(conn, cim, feeder_mrid, typed_catalog:Dict, class_name:type, mRID:str, query:List, attribute:str, attribute_class:str, separator:str):
     value = query[attribute]['value']
     values = value.split(separator)
     #if attribute is CIM class, then build CIM objects. otherwise assign to obj_list
     if attribute_class in cim.__all__:
-        obj_list = build_cim_object(conn, feeder_mrid, typed_catalog, values)
+        obj_list = build_cim_object(conn, cim, feeder_mrid, typed_catalog, values)
     else:
         obj_list = values
     #set attribute of queried object to list parsed from query results
     setattr(typed_catalog[class_name][mRID], attribute, obj_list)
     
 
-def build_cim_object(conn, feeder_mrid, typed_catalog:Dict, mRID_list:List[str]) -> List(object):
+def build_cim_object(conn, cim, feeder_mrid, typed_catalog:Dict, mRID_list:List[str]) -> List(object):
     sparql_message = sparql.get_class_type_sparql(feeder_mrid, mRID_list)
     #execute sparql query
     query_output = conn.execute(sparql_message)

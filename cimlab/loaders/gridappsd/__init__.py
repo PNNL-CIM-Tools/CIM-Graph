@@ -4,12 +4,12 @@ import atexit
 import os
 from typing import Dict, List
 
-import cim.data_profile as cim
-from cim.loaders import ConnectionInterface, ConnectionParameters, Parameter, QueryResponse
-from cim.models import add_to_catalog, add_to_typed_catalog
+import cimlab.data_profile as cim
+from cimlab.loaders import ConnectionInterface, ConnectionParameters, Parameter, QueryResponse
+from cimlab.models import add_to_catalog, add_to_typed_catalog
 from gridappsd import GridAPPSD
 from SPARQLWrapper import SPARQLWrapper, JSON, POST
-import cim.loaders.sparql as sparql
+import cimlab.loaders.sparql as sparql
 
 
 # os.environ["GRIDAPPSD_ADDRESS"] = "gridappsd"

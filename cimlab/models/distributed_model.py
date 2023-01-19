@@ -68,14 +68,14 @@ class DistributedModel:
         if cim_class in self.typed_catalog:
             self.connection.get_all_attributes(self.feeder.mRID, self.typed_catalog, cim_class)
         else:
-            print('warning: ', cim_class, ' not found in catalog. try initializing a parent class first')
+            print('warning: no instances of ', cim_class.__name__, ' found in catalog.')
 #             return self.__dumps__(cim_class)
 
     def get_attributes_query(self, cim_class):
         if cim_class in self.typed_catalog:
             sparql_message = self.connection.get_attributes_query(self.feeder.mRID, self.typed_catalog, cim_class)
         else:
-            print('warning: ', cim_class, ' not found in catalog. try initializing a parent class first')
+            print('warning: no instances of ', cim_class.__name__, ' found in catalog.')
             sparql_message = ''
         return sparql_message
 
@@ -84,6 +84,6 @@ class DistributedModel:
             json_dump = cim_dump(self.typed_catalog, cim_class)
         else:
             json_dump = {}
-            print('warning: ', cim_class, ' not found in catalog. try initializing a parent class first')
+            print('warning: no instances of ', cim_class.__name__, ' found in catalog.')
 
         return json_dump

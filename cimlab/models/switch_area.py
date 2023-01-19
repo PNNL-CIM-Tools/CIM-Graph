@@ -6,7 +6,7 @@ from dataclasses import dataclass, field
 
 import cimlab.data_profile as cim
 from cimlab.loaders import ConnectionInterface
-from cimlab.models.model_parsers import add_to_catalog, add_to_typed_catalog
+from cimlab.models.model_parsers import add_to_catalog, add_to_typed_catalog, cim_dump
 from cimlab.models.secondary_area import SecondaryArea
 
 
@@ -56,14 +56,14 @@ class SwitchArea:
         if cim_class in self.typed_catalog:
             self.connection.get_all_attributes(self.feeder_mrid, self.typed_catalog, cim_class)
         else:
-            print('warning: ', cim_class, ' not found in catalog. try initializing a parent class first')
+            print('warning: no instances of ', cim_class.__name__, ' found in catalog.')
 #             return self.__dumps__(cim_class)
 
     def get_attributes_query(self, cim_class):
         if cim_class in self.typed_catalog:
             sparql_message = self.connection.get_attributes_query(self.feeder_mrid, self.typed_catalog, cim_class)
         else:
-            print('warning: ', cim_class, ' not found in catalog. try initializing a parent class first')
+            print('warning: no instances of ', cim_class.__name__, ' found in catalog.')
             sparql_message = ''
         return sparql_message
 
@@ -72,6 +72,6 @@ class SwitchArea:
             json_dump = cim_dump(self.typed_catalog, cim_class)
         else:
             json_dump = {}
-            print('warning: ', cim_class, ' not found in catalog. try initializing a parent class first')
+            print('warning: no instances of ', cim_class.__name__, ' found in catalog.')
 
         return json_dump

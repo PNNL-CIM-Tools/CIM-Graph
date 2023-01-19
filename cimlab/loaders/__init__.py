@@ -3,7 +3,6 @@ from __future__ import annotations
 from dataclasses import dataclass, field
 from typing import Any, List
 
-from cim.data_profile import Feeder
 
 
 @dataclass

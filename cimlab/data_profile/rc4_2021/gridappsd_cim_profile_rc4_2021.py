@@ -1,3 +1,4 @@
+from __future__ import annotations
 from dataclasses import dataclass, field
 from decimal import Decimal
 from enum import Enum
@@ -7,258 +8,69 @@ from xsdata.models.datatype import XmlDate, XmlDateTime, XmlDuration, XmlTime
 __NAMESPACE__ = "http://iec.ch/TC57/CIM100#"
 
 
-class ASTMStandardEditionKind(Enum):
-    """
-    List of editions of ASTM standards.
-    """
-    value_00(2005) = "00(2005)"
-    value_00(2005)e1 = "00(2005)e1"
-    value_00(2010) = "00(2010)"
-    value_01 = "01"
-    value_01a(2007) = "01a(2007)"
-    value_01e1 = "01e1"
-    value_02 = "02"
-    value_02(2007) = "02(2007)"
-    value_02(2008) = "02(2008)"
-    value_02(2009) = "02(2009)"
-    value_02(2012) = "02(2012)"
-    value_02(2014) = "02(2014)"
-    value_02a = "02a"
-    value_02b = "02b"
-    value_02e1 = "02e1"
-    value_03 = "03"
-    value_03(2008) = "03(2008)"
-    value_03(2014) = "03(2014)"
-    value_03a = "03a"
-    value_04 = "04"
-    value_04a = "04a"
-    value_04ae1 = "04ae1"
-    value_04e1 = "04e1"
-    value_04e2 = "04e2"
-    value_05 = "05"
-    value_05(2010) = "05(2010)"
-    value_05a = "05a"
-    value_05a(2010) = "05a(2010)"
-    value_06 = "06"
-    value_07 = "07"
-    value_07(2013) = "07(2013)"
-    value_08 = "08"
-    value_08e1 = "08e1"
-    value_09 = "09"
-    value_09(2013) = "09(2013)"
-    value_10 = "10"
-    value_10a = "10a"
-    value_11 = "11"
-    value_11a = "11a"
-    value_12 = "12"
-    value_12a = "12a"
-    value_12b = "12b"
-    value_13 = "13"
-    value_13e1 = "13e1"
-    value_14 = "14"
-    value_14a = "14a"
-    value_14e1 = "14e1"
-    value_14e2 = "14e2"
-    value_15 = "15"
-    value_15a = "15a"
-    value_65 = "65"
-    value_71 = "71"
-    value_74 = "74"
-    value_80e1 = "80e1"
-    value_82 = "82"
-    value_83(1996)e1 = "83(1996)e1"
-    value_85 = "85"
-    value_85(1990)e1 = "85(1990)e1"
-    value_87(1995) = "87(1995)"
-    value_87e1 = "87e1"
-    value_88 = "88"
-    value_90e1 = "90e1"
-    value_91 = "91"
-    value_92 = "92"
-    value_94 = "94"
-    value_94(1999) = "94(1999)"
-    value_94(2004) = "94(2004)"
-    value_94(2010) = "94(2010)"
-    value_94e1 = "94e1"
-    value_95 = "95"
-    value_95(2000)e1 = "95(2000)e1"
-    value_96 = "96"
-    value_96(2002)e1 = "96(2002)e1"
-    value_96a = "96a"
-    value_96e1 = "96e1"
-    value_97 = "97"
-    value_97(2002) = "97(2002)"
-    value_97(2003) = "97(2003)"
-    value_97(2008) = "97(2008)"
-    value_97a = "97a"
-    value_97a(2004) = "97a(2004)"
-    value_98 = "98"
-    value_98a = "98a"
-    value_99 = "99"
-    value_99(2004)e1 = "99(2004)e1"
-    value_99(2005) = "99(2005)"
-    value_99(2009) = "99(2009)"
-    value_99a = "99a"
-    value_99a(2004) = "99a(2004)"
-    value_99e1 = "99e1"
-    value_99e2 = "99e2"
-    none = "none"
-    unknown = "unknown"
 
-
-class ASTMStandardKind(Enum):
+@dataclass
+class IdentifiedObject:
     """
-    List of ASTM standards.
+    This is a root class to provide common identification for all classes
+    needing identification and naming attributes.
 
-    :cvar D1169: Standard Test Method for Specific Resistance
-        (Resistivity) of Electrical Insulating Liquids.
-    :cvar D1275: Standard Test Method for Corrosive Sulfur in Electrical
-        Insulating Oils.
-    :cvar D1298: Standard Test Method for Density, Relative Density, or
-        API Gravity of Crude Petroleum and Liquid Petroleum Products by
-        Hydrometer Method  -or- Standard Test Method for Density,
-        Relative Density (Specific Gravity), or API Gravity of Crude
-        Petroleum and Liquid Petroleum Products by Hydrometer Method.
-    :cvar D149: Standard Test Method for Dielectric Breakdown Voltage
-        and Dielectric Strength of Solid Electrical Insulating Materials
-        at Commercial Power Frequencies.
-    :cvar D1500: Standard Test Method for ASTM Color of Petroleum
-        Products (ASTM Color Scale).
-    :cvar D1524: Standard Test Method for Visual Examination of Used
-        Electrical Insulating Oils of Petroleum Origin in the Field.
-    :cvar D1533: Standard Test Method for Water in Insulating Liquids by
-        Coulometric Karl Fischer Titration.
-    :cvar D1816: Standard Test Method for Dielectric Breakdown Voltage
-        of Insulating Liquids Using VDE Electrodes.
-    :cvar D2029: Standard Test Methods for Water Vapor Content of
-        Electrical Insulating Gases by Measurement of Dew Point.
-    :cvar D2112: Standard Test Method for Oxidation Stability of
-        Inhibited Mineral Insulating Oil by Pressure Vessel.
-    :cvar D2129: Standard Test Method for Color of Clear Electrical
-        Insulating Liquids (Platinum-Cobalt Scale).
-    :cvar D2140: Standard Practice for Calculating Carbon-Type
-        Composition of Insulating Oils of Petroleum Origin  -or-
-        Standard Test Method for Carbon-Type Composition of Insulating
-        Oils of Petroleum Origin.
-    :cvar D2144: Standard Practices for Examination of Electrical
-        Insulating Oils by Infrared Absorption  -or- Standard Test
-        Methods for Examination of Electrical Insulating Oils by
-        Infrared Absorption.
-    :cvar D2668: Standard Test Method for 2,6-di-tert-Butyl- p-Cresol
-        and 2,6-di-tert-Butyl Phenol in Electrical Insulating Oil by
-        Infrared Absorption  -or- Standard Test Method for
-        2,6-Ditertiary-Butyl Para Cresol and 2,6-Ditertiary-Butyl Phenol
-        in Electrical Insulating Oil by Infrared Absorption.
-    :cvar D3612: Standard Test Method for Analysis of Gases Dissolved in
-        Electrical Insulating Oil by Gas Chromatography.
-    :cvar D4052: Standard Test Method for Density, Relative Density, and
-        API Gravity of Liquids by Digital Density Meter  -or- Standard
-        Test Method for Density and Relative Density of Liquids by
-        Digital Density Meter.
-    :cvar D4059: Standard Test Method for Analysis of Polychlorinated
-        Biphenyls in Insulating Liquids by Gas Chromatography.
-    :cvar D4230: Standard Test Method of Measuring Humidity with Cooled-
-        Surface Condensation (Dew-Point) Hygrometer.
-    :cvar D4243: Standard Test Method for Measurement of Average
-        Viscometric Degree of Polymerization of New and Aged Electrical
-        Papers and Boards.
-    :cvar D445: Standard Test Method for Kinematic Viscosity of
-        Transparent and Opaque Liquids (and Calculation of Dynamic
-        Viscosity)  -or- Standard Method Of Test For Viscosity Of
-        Transparent And Opaque Liquids (Kinematic And Dynamic
-        Viscosities).
-    :cvar D4768: Standard Test Method for Analysis of 2,6-Ditertiary-
-        Butyl Para-Cresol and 2,6-Ditertiary-Butyl Phenol in Insulating
-        Liquids by Gas Chromatography.
-    :cvar D5837: Standard Test Method for Furanic Compounds in
-        Electrical Insulating Liquids by High-Performance Liquid
-        Chromatography (HPLC).
-    :cvar D5853: Standard Test Method for Pour Point of Crude Oils.
-    :cvar D5949: Standard Test Method for Pour Point of Petroleum
-        Products (Automatic Pressure Pulsing Method).
-    :cvar D5950: Standard Test Method for Pour Point of Petroleum
-        Products (Automatic Tilt Method).
-    :cvar D5985: Standard Test Method for Pour Point of Petroleum
-        Products (Rotational Method).
-    :cvar D6304: Standard Test Method for Determination of Water in
-        Petroleum Products, Lubricating Oils, and Additives by
-        Coulometric Karl Fischer Titration.
-    :cvar D6749: Standard Test Method for Pour Point of Petroleum
-        Products (Automatic Air Pressure Method).
-    :cvar D6786: Standard Test Method for Particle Count in Mineral
-        Insulating Oil Using Automatic Optical Particle Counters.
-    :cvar D6892: Standard Test Method for Pour Point of Petroleum
-        Products (Robotic Tilt Method).
-    :cvar D7151: Standard Test Method for Determination of Elements in
-        Insulating Oils by Inductively Coupled Plasma Atomic Emission
-        Spectrometry (ICP-AES).
-    :cvar D7346: Standard Test Method for No Flow Point and Pour Point
-        of Petroleum Products and Liquid Fuels  -or- Standard Test
-        Method for No Flow Point and Pour Point of Petroleum Products
-        -or- Standard Test Method for No Flow Point of Petroleum
-        Products.
-    :cvar D828: Standard Test Method for Tensile Properties of Paper and
-        Paperboard Using Constant-Rate-of-Elongation Apparatus
-        (Withdrawn 2009).
-    :cvar D877: Standard Test Method for Dielectric Breakdown Voltage of
-        Insulating Liquids Using Disk Electrodes.
-    :cvar D877/D877M: Standard Test Method for Dielectric Breakdown
-        Voltage of Insulating Liquids Using Disk Electrodes.
-    :cvar D92: Standard Test Method for Flash and Fire Points by
-        Cleveland Open Cup Tester  -or- Standard Test Method for Flash
-        and Fire Points by Cleveland Open Cup.
-    :cvar D924: Standard Test Method for Dissipation Factor (or Power
-        Factor) and Relative Permittivity (Dielectric Constant) of
-        Electrical Insulating Liquids.
-    :cvar D93: Standard Test Methods for Flash Point by Pensky-Martens
-        Closed Cup Tester  -or- Standard Test Method for Flash Point by
-        Pensky-Martens Closed Tester  -or- Standard Method Of Test For
-        Flash Point by Pensky-Martens Closed Tester.
-    :cvar D97: Standard Test Method for Pour Point of Petroleum Products
-        -or- Standard Test Method for Pour Point of Petroleum Oils.
-    :cvar D974: Standard Test Method for Acid and Base Number by Color-
-        Indicator Titration.
+    :ivar mRID: Master resource identifier issued by a model authority.
+        The mRID is unique within an exchange context. Global uniqueness
+        is easily achieved by using a UUID,  as specified in RFC 4122,
+        for the mRID. The use of UUID is strongly recommended. For
+        CIMXML data files in RDF syntax conforming to IEC 61970-552
+        Edition 1, the mRID is mapped to rdf:ID or rdf:about attributes
+        that identify CIM object elements.
+    :ivar aliasName: The aliasName is free text human readable name of
+        the object alternative to IdentifiedObject.name. It may be non
+        unique and may not correlate to a naming hierarchy. The
+        attribute aliasName is retained because of backwards
+        compatibility between CIM relases. It is however recommended to
+        replace aliasName with the Name class as aliasName is planned
+        for retirement at a future time.
+    :ivar description: The description is a free human readable text
+        describing or naming the object. It may be non unique and may
+        not correlate to a naming hierarchy.
+    :ivar name: The name is any free human readable and possibly non
+        unique text naming the object.
+    :ivar Names: All names of this identified object.
     """
-    D1169 = "D1169"
-    D1275 = "D1275"
-    D1298 = "D1298"
-    D149 = "D149"
-    D1500 = "D1500"
-    D1524 = "D1524"
-    D1533 = "D1533"
-    D1816 = "D1816"
-    D2029 = "D2029"
-    D2112 = "D2112"
-    D2129 = "D2129"
-    D2140 = "D2140"
-    D2144 = "D2144"
-    D2668 = "D2668"
-    D3612 = "D3612"
-    D4052 = "D4052"
-    D4059 = "D4059"
-    D4230 = "D4230"
-    D4243 = "D4243"
-    D445 = "D445"
-    D4768 = "D4768"
-    D5837 = "D5837"
-    D5853 = "D5853"
-    D5949 = "D5949"
-    D5950 = "D5950"
-    D5985 = "D5985"
-    D6304 = "D6304"
-    D6749 = "D6749"
-    D6786 = "D6786"
-    D6892 = "D6892"
-    D7151 = "D7151"
-    D7346 = "D7346"
-    D828 = "D828"
-    D877 = "D877"
-    D877/D877M = "D877/D877M"
-    D92 = "D92"
-    D924 = "D924"
-    D93 = "D93"
-    D97 = "D97"
-    D974 = "D974"
+    mRID: Optional[str] = field(
+        default=None,
+        metadata={
+            "type": "Element",
+            "namespace": "http://iec.ch/TC57/CIM100#",
+        }
+    )
+    aliasName: Optional[str] = field(
+        default=None,
+        metadata={
+            "type": "Element",
+            "namespace": "http://iec.ch/TC57/CIM100#",
+        }
+    )
+    description: Optional[str] = field(
+        default=None,
+        metadata={
+            "type": "Element",
+            "namespace": "http://iec.ch/TC57/CIM100#",
+        }
+    )
+    name: Optional[str] = field(
+        default=None,
+        metadata={
+            "type": "Element",
+            "namespace": "http://iec.ch/TC57/CIM100#",
+        }
+    )
+    Names: List[Name] = field(
+        default_factory=list,
+        metadata={
+            "type": "Element",
+            "namespace": "http://iec.ch/TC57/CIM100#",
+        }
+    )
 
 
 @dataclass
@@ -854,25 +666,6 @@ class BushingInsulationKind(Enum):
     resinBondedPaper = "resinBondedPaper"
     resinImpregnatedPaper = "resinImpregnatedPaper"
     solidPorcelain = "solidPorcelain"
-
-
-class CIGREStandardEditionKind(Enum):
-    """
-    List of editions for CIGRE standards.
-    """
-    value_2000 = "2000"
-    none = "none"
-    unknown = "unknown"
-
-
-class CIGREStandardKind(Enum):
-    """
-    List of CIGRE standards.
-
-    :cvar TB 170: CIGRE Technical Brochure 170 Static Electrification in
-        Power Transformers.
-    """
-    TB 170 = "TB 170"
 
 
 class CableConstructionKind(Enum):
@@ -2677,132 +2470,6 @@ class HydrosphericAnalogKind(Enum):
     waveHeight = "waveHeight"
 
 
-@dataclass
-class IEC61970CIMVersion:
-    """
-    This is the IEC 61970 CIM version number assigned to this UML model.
-    """
-
-
-class IECStandardEditionKind(Enum):
-    """
-    List of editions for IEC standards.
-    """
-    value_1963 = "1963"
-    value_1967 = "1967"
-    value_1973 = "1973"
-    value_1974 = "1974"
-    value_1977 = "1977"
-    value_1978 = "1978"
-    value_1979 = "1979"
-    value_1985 = "1985"
-    value_1989 = "1989"
-    value_1992 = "1992"
-    value_1992/AMD1:2004 = "1992/AMD1:2004"
-    value_1992/COR1:1992 = "1992/COR1:1992"
-    value_1993 = "1993"
-    value_1995 = "1995"
-    value_1997 = "1997"
-    value_1998 = "1998"
-    value_2004 = "2004"
-    value_2004/AMD1:2007 = "2004/AMD1:2007"
-    value_2004/AMD1:2007CSV = "2004/AMD1:2007CSV"
-    value_2005 = "2005"
-    value_2007 = "2007"
-    value_2008 = "2008"
-    value_2010 = "2010"
-    value_2011 = "2011"
-    value_2012 = "2012"
-    value_2013 = "2013"
-    value_2013/COR:2013 = "2013/COR:2013"
-    none = "none"
-    unknown = "unknown"
-
-
-class IECStandardKind(Enum):
-    """
-    List of IEC standards.
-
-    :cvar value_60156: Insulating liquids - Determination of the
-        breakdown voltage at power frequency - Test method.
-    :cvar value_60243-1: Electric strength of insulating materials -
-        Test methods - Part 1: Tests at power frequencies.
-    :cvar value_60243-2: Electric strength of insulating materials -
-        Test methods - Part 2: Additional requirements for tests using
-        direct voltage.
-    :cvar value_60243-3: Electric strength of insulating materials -
-        Test methods - Part 3: Additional requirements for 1,2/50 ï¿½s
-        impulse tests.
-    :cvar value_60247: Insulating liquids - Measurement of relative
-        permittivity, dielectric dissipation factor (tan d) and d.c.
-        resistivity  -or- Measurement of relative permittivity,
-        dielectric dissipation factor and d.c. resistivity of insulating
-        liquids  -or- Recommended test cells for measuring the
-        resistivity of insulating liquids and methods of cleaning the
-        cells.
-    :cvar value_60422: Mineral insulating oils in electrical equipment -
-        Supervision and maintenance guidance.
-    :cvar value_60450: Measurement of the average viscometric degree of
-        polymerization of new and aged cellulosic electrically
-        insulating materials.
-    :cvar value_60567: Oil-filled electrical equipment - Sampling of
-        gases and analysis of free and dissolved gasses - Guidance  -or-
-        Oil-filled electrical equipment - Sampling of gases and of oil
-        for analysis of free and dissolved gases - Guidance  -or- Guide
-        for the sampling of gases and of oil form oil-filled electrical
-        equipment and for the analysis of free and dissolved gases.
-    :cvar value_60666: Detection and determination of specified
-        additives in mineral insulating oils  -or- Detection and
-        determination of specified anti-oxidant additives in insulating
-        oils.
-    :cvar value_60814: Insulating liquids - Oil-impregnated paper and
-        pressboard - Determination of water by automatic coulometric
-        Karl Fischer titration.
-    :cvar value_60970: Insulating liquids - Methods for counting and
-        sizing particles  -or- Methods for counting and sizing particles
-        in insulating liquids.
-    :cvar value_60997:
-    :cvar value_61125: Unused hydrocarbon based insulating liquids -
-        Test methods for evaluating the oxidation stability.
-    :cvar value_61198: Mineral insulating oils - Methods for the
-        determination of 2-furfural and related compounds.
-    :cvar value_61619: Insulating liquids - Contamination by
-        polychlorinated biphenyls (PCBs) - Method of determination by
-        capillary column gas chromatography.
-    :cvar value_61868: Mineral insulating oils ï¿½ Determination of
-        kinematic viscosity at very low temperatures.
-    :cvar value_62535: Insulating liquids ï¿½ Test method for detection
-        of potentially corrosive sulphur in used and unused insulating
-        oil.
-    :cvar value_62697-1: Test methods for quantitative determination of
-        corrosive sulfur compounds in unused and used insulating liquids
-        - Part 1: Test method for quantitative determination of
-        dibenzyldisulfide (DBDS).
-    :cvar value_62770: Fluids for electrotechnical applications ï¿½
-        Unused natural esters for transformers and similar electrical
-        equipment.
-    """
-    value_60156 = "60156"
-    value_60243-1 = "60243-1"
-    value_60243-2 = "60243-2"
-    value_60243-3 = "60243-3"
-    value_60247 = "60247"
-    value_60422 = "60422"
-    value_60450 = "60450"
-    value_60567 = "60567"
-    value_60666 = "60666"
-    value_60814 = "60814"
-    value_60970 = "60970"
-    value_60997 = "60997"
-    value_61125 = "61125"
-    value_61198 = "61198"
-    value_61619 = "61619"
-    value_61868 = "61868"
-    value_62535 = "62535"
-    value_62697-1 = "62697-1"
-    value_62770 = "62770"
-
-
 class IEEE1547AbnormalPerfomanceCategory(Enum):
     CategoryI = "CategoryI"
     CategoryII = "CategoryII"
@@ -2952,97 +2619,6 @@ class IEEE1547TripSettings:
             "namespace": "http://iec.ch/TC57/CIM100#",
         }
     )
-
-
-class IEEEStandardEditionKind(Enum):
-    """
-    List of editions for IEEE standards.
-    """
-    value_1978 = "1978"
-    value_1995 = "1995"
-    none = "none"
-    unknown = "unknown"
-
-
-class IEEEStandardKind(Enum):
-    """
-    List of IEEE standards.
-
-    :cvar value_62: IEEE Guide for Diagnostic Field Testing of Electric
-        Power Apparatus - Part 1: Oil Filled Power Transformers,
-        Regulators, and Reactors -or- IEEE Guide for Field Testing Power
-        Apparatus Insulation.
-    """
-    value_62 = "62"
-
-
-class ISOStandardEditionKind(Enum):
-    """
-    List of editions for ISO standards.
-    """
-    value_1973 = "1973"
-    value_1974 = "1974"
-    value_1976 = "1976"
-    value_1983 = "1983"
-    value_1985 = "1985"
-    value_1988 = "1988"
-    value_1992 = "1992"
-    value_1993 = "1993"
-    value_1994 = "1994"
-    value_1994/Cor1:1997 = "1994/Cor1:1997"
-    value_1998 = "1998"
-    value_2000 = "2000"
-    value_2002 = "2002"
-    value_2005 = "2005"
-    value_2008 = "2008"
-    none = "none"
-    unknown = "unknown"
-
-
-class ISOStandardKind(Enum):
-    """
-    List of ISO standards.
-
-    :cvar value_1924: Paper and board -- Determination of tensile
-        strength.
-    :cvar value_1924-1: Paper and board -- Determination of tensile
-        properties -- Part 1: Constant rate of loading method.
-    :cvar value_1924-2: Paper and board -- Determination of tensile
-        properties -- Part 2: Constant rate of elongation method (20
-        mm/min)  -or- Paper and board -- Determination of tensile
-        properties -- Part 2: Constant rate of elongation method.
-    :cvar value_1924-3: Paper and board -- Determination of tensile
-        properties -- Part 3: Constant rate of elongation method (100
-        mm/min).
-    :cvar value_2592: Determination of flash and fire points --
-        Cleveland open cup method (copied directly from ASTM D92).
-    :cvar value_2719: Determination of flash point -- Pensky-Martens
-        closed cup method (copied directly from ASTM D93)  -or-
-        Petroleum products and lubricants -- Determination of flash
-        point -- Pensky-Martens closed cup method (copied directly from
-        ASTM D93)  -or- Petroleum products -- Determination of flash
-        point -- Pensky-Martens closed cup method (copied directly from
-        ASTM D93).
-    :cvar value_3016: Petroleum products -- Determination of pour point
-        -or- Petroleum oils -- Determination of pour point.
-    :cvar value_3104: Petroleum products -- Transparent and opaque
-        liquids -- Determination of kinematic viscosity and calculation
-        of dynamic viscosity.
-    :cvar value_3675: Crude petroleum and liquid petroleum products --
-        Laboratory determination of density -- Hydrometer method  -or-
-        Crude petroleum and liquid petroleum products -- Laboratory
-        determination of density or relative density -- Hydrometer
-        method.
-    """
-    value_1924 = "1924"
-    value_1924-1 = "1924-1"
-    value_1924-2 = "1924-2"
-    value_1924-3 = "1924-3"
-    value_2592 = "2592"
-    value_2719 = "2719"
-    value_3016 = "3016"
-    value_3104 = "3104"
-    value_3675 = "3675"
 
 
 @dataclass
@@ -4218,7 +3794,7 @@ class PhaseConnectedFaultKind(Enum):
 
 
 @dataclass
-class PhaseImpedanceData:
+class PhaseImpedanceData(IdentifiedObject):
     """Impedance and conductance matrix element values.
 
     The diagonal elements are described by the elements having the same
@@ -5516,24 +5092,7 @@ class TroubleReportingKind(Enum):
     other = "other"
 
 
-class UKMinistryOfDefenceStandardEditionKind(Enum):
-    """
-    List of editions for UK Ministry of Defence standards.
-    """
-    Issue 1 = "Issue 1"
-    none = "none"
-    unknown = "unknown"
 
-
-class UKMinistryofDefenceStandardKind(Enum):
-    """
-    List of UK Ministry of Defence standards.
-
-    :cvar value_05-50 (Part 65): Ministry of Defence, Defence Standard
-        05-50 (Part 65)/Issue 1 METHODS FOR TESTING FUELS, LUBRICANTS
-        AND ASSOCIATED PRODUCTS.
-    """
-    value_05-50 (Part 65) = "05-50 (Part 65)"
 
 
 @dataclass
@@ -6166,21 +5725,6 @@ class VoltWattCurveData:
     )
 
 
-class WEPStandardEditionKind(Enum):
-    """
-    List of editions for WEP standards.
-    """
-    none = "none"
-    unknown = "unknown"
-
-
-class WEPStandardKind(Enum):
-    """
-    List of WEP standards.
-
-    :cvar value_12, 1254E: Westinghouse Engineering Procedure 12,1254E.
-    """
-    value_12, 1254E = "12, 1254E"
 
 
 @dataclass
@@ -6388,77 +5932,6 @@ class WireUsageKind(Enum):
     transmission = "transmission"
 
 
-@dataclass
-class ASTMStandard:
-    """
-    Standard published by ASTM (ASTM International).
-
-    :ivar standardEdition: Edition of ASTM standard.
-    :ivar standardNumber: ASTM standard number.
-    """
-    standardEdition: Optional[ASTMStandardEditionKind] = field(
-        default=None,
-        metadata={
-            "type": "Element",
-            "namespace": "http://iec.ch/TC57/CIM100#",
-        }
-    )
-    standardNumber: Optional[ASTMStandardKind] = field(
-        default=None,
-        metadata={
-            "type": "Element",
-            "namespace": "http://iec.ch/TC57/CIM100#",
-        }
-    )
-
-
-@dataclass
-class CIGREStandard:
-    """
-    Standard published by CIGRE (Council on Large Electric Systems).
-
-    :ivar standardEdition: Edition of CIGRE standard.
-    :ivar standardNumber: CIGRE standard number.
-    """
-    standardEdition: Optional[CIGREStandardEditionKind] = field(
-        default=None,
-        metadata={
-            "type": "Element",
-            "namespace": "http://iec.ch/TC57/CIM100#",
-        }
-    )
-    standardNumber: Optional[CIGREStandardKind] = field(
-        default=None,
-        metadata={
-            "type": "Element",
-            "namespace": "http://iec.ch/TC57/CIM100#",
-        }
-    )
-
-
-@dataclass
-class DINStandard:
-    """
-    Standard published by DIN (German Institute of Standards).
-
-    :ivar standardEdition: Edition of DIN standard.
-    :ivar standardNumber: DIN standard number.
-    """
-    standardEdition: Optional[DINStandardEditionKind] = field(
-        default=None,
-        metadata={
-            "type": "Element",
-            "namespace": "http://iec.ch/TC57/CIM100#",
-        }
-    )
-    standardNumber: Optional[DINStandardKind] = field(
-        default=None,
-        metadata={
-            "type": "Element",
-            "namespace": "http://iec.ch/TC57/CIM100#",
-        }
-    )
-
 
 @dataclass
 class DispatchSchedule:
@@ -6538,52 +6011,6 @@ class DispatchSchedule:
     )
 
 
-@dataclass
-class DobleStandard:
-    """
-    Standard published by Doble.
-
-    :ivar standardEdition: Edition of Doble standard.
-    :ivar standardNumber: Doble standard number.
-    """
-    standardEdition: Optional[DobleStandardEditionKind] = field(
-        default=None,
-        metadata={
-            "type": "Element",
-            "namespace": "http://iec.ch/TC57/CIM100#",
-        }
-    )
-    standardNumber: Optional[DobleStandardKind] = field(
-        default=None,
-        metadata={
-            "type": "Element",
-            "namespace": "http://iec.ch/TC57/CIM100#",
-        }
-    )
-
-
-@dataclass
-class EPAStandard:
-    """
-    Standard published by EPA (United States Environmental Protection Agency).
-
-    :ivar standardEdition: Edition of EPA standard.
-    :ivar standardNumber: EPA standard number.
-    """
-    standardEdition: Optional[EPAStandardEditionKind] = field(
-        default=None,
-        metadata={
-            "type": "Element",
-            "namespace": "http://iec.ch/TC57/CIM100#",
-        }
-    )
-    standardNumber: Optional[EPAStandardKind] = field(
-        default=None,
-        metadata={
-            "type": "Element",
-            "namespace": "http://iec.ch/TC57/CIM100#",
-        }
-    )
 
 
 @dataclass
@@ -6724,79 +6151,6 @@ class FloatQuantity:
 
 
 @dataclass
-class IECStandard:
-    """
-    Standard published by IEC (International Electrotechnical Commission).
-
-    :ivar standardEdition: Edition of IEC standard.
-    :ivar standardNumber: IEC standard number.
-    """
-    standardEdition: Optional[IECStandardEditionKind] = field(
-        default=None,
-        metadata={
-            "type": "Element",
-            "namespace": "http://iec.ch/TC57/CIM100#",
-        }
-    )
-    standardNumber: Optional[IECStandardKind] = field(
-        default=None,
-        metadata={
-            "type": "Element",
-            "namespace": "http://iec.ch/TC57/CIM100#",
-        }
-    )
-
-
-@dataclass
-class IEEEStandard:
-    """
-    Standard published by IEEE (Institute of Electrical and Electronics
-    Engineers).
-
-    :ivar standardEdition: Edition of IEEE standard.
-    :ivar standardNumber: IEEE standard number.
-    """
-    standardEdition: Optional[IEEEStandardEditionKind] = field(
-        default=None,
-        metadata={
-            "type": "Element",
-            "namespace": "http://iec.ch/TC57/CIM100#",
-        }
-    )
-    standardNumber: Optional[IEEEStandardKind] = field(
-        default=None,
-        metadata={
-            "type": "Element",
-            "namespace": "http://iec.ch/TC57/CIM100#",
-        }
-    )
-
-
-@dataclass
-class ISOStandard:
-    """
-    Standard published by ISO (International Organization for Standardization).
-
-    :ivar standardEdition: Edition of ISO standard.
-    :ivar standardNumber: ISO standard number.
-    """
-    standardEdition: Optional[ISOStandardEditionKind] = field(
-        default=None,
-        metadata={
-            "type": "Element",
-            "namespace": "http://iec.ch/TC57/CIM100#",
-        }
-    )
-    standardNumber: Optional[ISOStandardKind] = field(
-        default=None,
-        metadata={
-            "type": "Element",
-            "namespace": "http://iec.ch/TC57/CIM100#",
-        }
-    )
-
-
-@dataclass
 class IntegerQuantity:
     """
     Quantity with integer value and associated unit information.
@@ -6823,29 +6177,6 @@ class IntegerQuantity:
         }
     )
 
-
-@dataclass
-class LaborelecStandard:
-    """
-    Standard published by Laborelec.
-
-    :ivar standardEdition: Edition of Laborelec standard.
-    :ivar standardNumber: Laborelec standard number.
-    """
-    standardEdition: Optional[LaborelecStandardEditionKind] = field(
-        default=None,
-        metadata={
-            "type": "Element",
-            "namespace": "http://iec.ch/TC57/CIM100#",
-        }
-    )
-    standardNumber: Optional[LaborelecStandardKind] = field(
-        default=None,
-        metadata={
-            "type": "Element",
-            "namespace": "http://iec.ch/TC57/CIM100#",
-        }
-    )
 
 
 @dataclass
@@ -7669,76 +7000,6 @@ class SvVoltage(StateVariable):
     )
 
 
-@dataclass
-class TAPPIStandard:
-    """
-    Standard published by TAPPI.
-
-    :ivar standardEdition: Edition of TAPPI standard.
-    :ivar standardNumber: TAPPI standard number.
-    """
-    standardEdition: Optional[TAPPIStandardEditionKind] = field(
-        default=None,
-        metadata={
-            "type": "Element",
-            "namespace": "http://iec.ch/TC57/CIM100#",
-        }
-    )
-    standardNumber: Optional[TAPPIStandardKind] = field(
-        default=None,
-        metadata={
-            "type": "Element",
-            "namespace": "http://iec.ch/TC57/CIM100#",
-        }
-    )
-
-
-@dataclass
-class UKMinistryOfDefenceStandard:
-    """
-    Standard published by United Kingdom Ministry of Defence.
-
-    :ivar standardEdition: Edition of UK Ministry of Defence standard.
-    :ivar standardNumber: UK Ministry of Defence standard number.
-    """
-    standardEdition: Optional[UKMinistryOfDefenceStandardEditionKind] = field(
-        default=None,
-        metadata={
-            "type": "Element",
-            "namespace": "http://iec.ch/TC57/CIM100#",
-        }
-    )
-    standardNumber: Optional[UKMinistryofDefenceStandardKind] = field(
-        default=None,
-        metadata={
-            "type": "Element",
-            "namespace": "http://iec.ch/TC57/CIM100#",
-        }
-    )
-
-
-@dataclass
-class WEPStandard:
-    """Standard published by Westinghouse - a WEP (Westinghouse Engineering Procedure).
-
-    :ivar standardEdition: Edition of WEP standard.
-    :ivar standardNumber: WEP standard number.
-    """
-    standardEdition: Optional[WEPStandardEditionKind] = field(
-        default=None,
-        metadata={
-            "type": "Element",
-            "namespace": "http://iec.ch/TC57/CIM100#",
-        }
-    )
-    standardNumber: Optional[WEPStandardKind] = field(
-        default=None,
-        metadata={
-            "type": "Element",
-            "namespace": "http://iec.ch/TC57/CIM100#",
-        }
-    )
-
 
 @dataclass
 class DERCurveData:
@@ -8039,68 +7300,6 @@ class Estimate:
     )
 
 
-@dataclass
-class IdentifiedObject:
-    """
-    This is a root class to provide common identification for all classes
-    needing identification and naming attributes.
-
-    :ivar mRID: Master resource identifier issued by a model authority.
-        The mRID is unique within an exchange context. Global uniqueness
-        is easily achieved by using a UUID,  as specified in RFC 4122,
-        for the mRID. The use of UUID is strongly recommended. For
-        CIMXML data files in RDF syntax conforming to IEC 61970-552
-        Edition 1, the mRID is mapped to rdf:ID or rdf:about attributes
-        that identify CIM object elements.
-    :ivar aliasName: The aliasName is free text human readable name of
-        the object alternative to IdentifiedObject.name. It may be non
-        unique and may not correlate to a naming hierarchy. The
-        attribute aliasName is retained because of backwards
-        compatibility between CIM relases. It is however recommended to
-        replace aliasName with the Name class as aliasName is planned
-        for retirement at a future time.
-    :ivar description: The description is a free human readable text
-        describing or naming the object. It may be non unique and may
-        not correlate to a naming hierarchy.
-    :ivar name: The name is any free human readable and possibly non
-        unique text naming the object.
-    :ivar Names: All names of this identified object.
-    """
-    mRID: Optional[str] = field(
-        default=None,
-        metadata={
-            "type": "Element",
-            "namespace": "http://iec.ch/TC57/CIM100#",
-        }
-    )
-    aliasName: Optional[str] = field(
-        default=None,
-        metadata={
-            "type": "Element",
-            "namespace": "http://iec.ch/TC57/CIM100#",
-        }
-    )
-    description: Optional[str] = field(
-        default=None,
-        metadata={
-            "type": "Element",
-            "namespace": "http://iec.ch/TC57/CIM100#",
-        }
-    )
-    name: Optional[str] = field(
-        default=None,
-        metadata={
-            "type": "Element",
-            "namespace": "http://iec.ch/TC57/CIM100#",
-        }
-    )
-    Names: List[Name] = field(
-        default_factory=list,
-        metadata={
-            "type": "Element",
-            "namespace": "http://iec.ch/TC57/CIM100#",
-        }
-    )
 
 
 @dataclass
@@ -8423,7 +7622,7 @@ class BranchGroup(IdentifiedObject):
 
 
 @dataclass
-class CIM_GridAPPS-D_RC4_2021:
+class CIM_GridAPPS_D_RC4_2021:
     class Meta:
         namespace = "http://iec.ch/TC57/CIM100#"
 
@@ -23893,9 +23092,9 @@ class PhaseTapChangerTabular(PhaseTapChanger):
         }
     )
 
-
+#RENAMED TO MATCH CIM XML MODELS
 @dataclass
-class PhotoVoltaicUnit(PowerElectronicsUnit):
+class PhotovoltaicUnit(PowerElectronicsUnit):
     """
     A photovoltaic device or an aggregation of such devices.
     """
