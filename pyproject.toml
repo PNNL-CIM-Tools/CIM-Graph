@@ -12,7 +12,8 @@ python = ">=3.7.9,<4.0"
 xsdata = "^22.5"
 SPARQLWrapper = "^2.0.0"
 
-gridappsd-python = { git = "https://github.com/GRIDAPPSD/gridappsd-python.git", branch = "cim-profile", optional = true }
+gridappsd-python = { version="^2.2.2", optional=true}
+# git = "https://github.com/GRIDAPPSD/gridappsd-python.git", branch = "cim-profile", optional = true }
 
 [tool.poetry.extras]
 gridappsd = ["gridappsd-python"]
