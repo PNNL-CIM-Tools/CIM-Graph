@@ -1,0 +1,39 @@
+---
+# Documentation located
+# https://github.com/marketplace/actions/publish-python-poetry-package
+name: Dispatch to PyPi
+
+on:
+  workflow_dispatch:
+  
+defaults:
+  run:
+    shell: bash
+
+env:
+  LANG: en_US.utf-8
+  LC_ALL: en_US.utf-8
+  PYPI_TOKEN: ${{ secrets.PYPI_TOKEN }}
+
+jobs:
+
+  publish_to_pypi:
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - run: echo "🎉 The job was automatically triggered by a ${{ github.event_name }} event."
+      - run: echo "🐧 This job is now running on a ${{ runner.os }} server hosted by GitHub!"
+      - run: echo "🔎 The name of your branch is ${{ github.ref }} and your repository is ${{ github.repository }}."
+
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Build and publish to pypi
+        uses: JRubics/poetry-publish@v1.7
+        with:
+          # These are only needed when using test.pypi
+          #repository_name: testpypi
+          #repository_url: https://test.pypi.org/legacy/
+          pypi_token: ${{ secrets.PYPI_TOKEN }}
+          ignore_dev_requirements: "yes"
