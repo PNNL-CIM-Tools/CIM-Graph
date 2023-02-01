@@ -1,16 +1,19 @@
 from __future__ import annotations
 
 import atexit
+import importlib
 import os
 from typing import Dict, List
 
-import cimlab.data_profile as cim
 from cimlab.loaders import ConnectionInterface, ConnectionParameters, Parameter, QueryResponse
 from cimlab.models import add_to_catalog, add_to_typed_catalog
 from gridappsd import GridAPPSD
 from SPARQLWrapper import SPARQLWrapper, JSON, POST
-import cimlab.loaders.sparql as sparql
 
+
+cim_profile = 'rc4_2021'
+cim = importlib.import_module('cimlab.data_profile.' + cim_profile)
+sparql = importlib.import_module('cimlab.loaders.sparql.' + cim_profile)
 
 # os.environ["GRIDAPPSD_ADDRESS"] = "gridappsd"
 # os.environ["GRIDAPPSD_PORT"] = "61613"
@@ -87,7 +90,7 @@ class GridappsdConnection(ConnectionInterface):
         Returns:
             objects: A list of CIM object instances
         """
-        sparql_message = sparql.create_default_sparql(feeder_mrid, mrid_list, False)
+        sparql_message = sparql.get_class_type_sparql(feeder_mrid, mrid_list)
         objects = self.query_object_builder(sparql_message)
         return objects
     
