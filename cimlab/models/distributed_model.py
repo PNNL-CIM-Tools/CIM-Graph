@@ -36,17 +36,17 @@ class DistributedModel:
         # topo_message = DistributedModel.get_topology_response(feeder_mrid)
 
         # Initialize all CIM objects not contained in a switch area
-        addr_equip = self.connection.create_default_instances(self.feeder.mRID, self.topology['feeders']['addressable_equipment'])
+        addr_equip = self.connection.create_default_instances(self.feeder.mRID, self.topology['addressable_equipment'])
         for obj in addr_equip:
             add_to_catalog(obj, self.addressable_equipment)
             add_to_typed_catalog(obj, self.typed_catalog)
         unaddr_equip = self.connection.create_default_instances(self.feeder.mRID,
-                                                                self.topology['feeders']['unaddressable_equipment'])
+                                                                self.topology['unaddressable_equipment'])
         for obj in unaddr_equip:
             add_to_catalog(obj, self.unaddressable_equipment)
             add_to_typed_catalog(obj, self.typed_catalog)
         conn_nodes = self.connection.create_default_instances(self.feeder.mRID,
-                                                              self.topology['feeders']['connectivity_node'])
+                                                              self.topology['connectivity_node'])
         for obj in conn_nodes:
             add_to_catalog(obj, self.connectivity_nodes)
             add_to_typed_catalog(obj, self.typed_catalog)
@@ -54,7 +54,7 @@ class DistributedModel:
         # Initialize all CIM objects in a single switch area
         # def initialize_switch_areas(feeder_mrid) -> dict(str,object):
         sa_index = -1
-        for switch_msg in self.topology['feeders']['switch_areas']:
+        for switch_msg in self.topology['switch_areas']:
             # Add switch area
             switch_area = SwitchArea(self.feeder.mRID + '.' + str(sa_index), self.connection)
             switch_area.initialize_switch_area(switch_msg)
