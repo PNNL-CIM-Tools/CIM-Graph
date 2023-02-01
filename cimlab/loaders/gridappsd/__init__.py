@@ -5,15 +5,12 @@ import importlib
 import os
 from typing import Dict, List
 
+from cimlab.data_profile import CIM_PROFILE
 from cimlab.loaders import ConnectionInterface, ConnectionParameters, Parameter, QueryResponse
 from cimlab.models import add_to_catalog, add_to_typed_catalog
 from gridappsd import GridAPPSD
 from SPARQLWrapper import SPARQLWrapper, JSON, POST
 
-
-cim_profile = 'rc4_2021'
-cim = importlib.import_module('cimlab.data_profile.' + cim_profile)
-sparql = importlib.import_module('cimlab.loaders.sparql.' + cim_profile)
 
 # os.environ["GRIDAPPSD_ADDRESS"] = "gridappsd"
 # os.environ["GRIDAPPSD_PORT"] = "61613"
@@ -61,6 +58,7 @@ def query_list_parser(obj_dict: Dict, mRID: str, query: List, key, separator):
 
 class GridappsdConnection(ConnectionInterface):
     __gapps__ = None
+    cim_profile = None
 
     def connect(self):
         if self.__gapps__ is None:
@@ -69,9 +67,14 @@ class GridappsdConnection(ConnectionInterface):
     def disconnect(self):
         if self.__gapps__ is not None:
             self.__gapps__.disconnect()
+            
+    def set_cim_profile(self, cim_profile: CIM_PROFILE):
+        self.cim_profile = cim_profile
+        self.cim = importlib.import_module('cimlab.data_profile.' + cim_profile)
+        self.sparql = importlib.import_module('cimlab.loaders.sparql.' + cim_profile)
 
     def load_attributes(self, obj: object):
-        if isinstance(obj, cim.Terminal):
+        if isinstance(obj, self.cim.Terminal):
             # load terminal stuff here
             pass
         
@@ -82,7 +85,7 @@ class GridappsdConnection(ConnectionInterface):
     def query_data(self, query, database_type="powergridmodel", timeout=30):
         return self.__gapps__.query_data(query, database_type, timeout)
 
-    def create_default_instances(self, feeder_mrid: str | cim.Feeder, mrid_list: List[str]) -> List[object]:
+    def create_default_instances(self, feeder_mrid: str | self.cim.Feeder, mrid_list: List[str]) -> List[object]:
         """ Creates an empty CIM object with the correct class type with mRID and name fields populated
         Args:
             feeder_mrid (str | Feeder object): The mRID of the feeder or feeder object
@@ -90,14 +93,14 @@ class GridappsdConnection(ConnectionInterface):
         Returns:
             objects: A list of CIM object instances
         """
-        sparql_message = sparql.get_class_type_sparql(feeder_mrid, mrid_list)
+        sparql_message = self.sparql.get_class_type_sparql(feeder_mrid, mrid_list)
         objects = self.query_object_builder(sparql_message)
         return objects
     
     def get_all_attributes(self, feeder_mrid, typed_catalog, cim_class):
         if cim_class in typed_catalog:
             mrid_list = list(typed_catalog[cim_class].keys())
-            sparql_message = eval(f"sparql.{cim_class.__name__}SPARQL.get_all_attributes('{feeder_mrid}', {mrid_list})")
+            sparql_message = eval(f"self.sparql.{cim_class.__name__}SPARQL.get_all_attributes('{feeder_mrid}', {mrid_list})")
             self.query_attribute_builder(sparql_message, typed_catalog, cim_class)
     
     def query_object_builder(self, query_message):
@@ -139,7 +142,7 @@ class GridappsdConnection(ConnectionInterface):
             for attribute in attribute_list:
                 if attribute == 'Measurements' or attribute == 'Terminals':
                     query_list_parser(typed_catalog[cim_class], mRID, result, attribute, ';')
-                elif attribute in cim.__all__:
+                elif attribute in self.cim.__all__:
                     query_class_parser(typed_catalog[cim_class], mRID, result, attribute, ';')
                     try:
                         add_to_typed_catalog(getattr(typed_catalog[cim_class][mRID], attribute), typed_catalog)
