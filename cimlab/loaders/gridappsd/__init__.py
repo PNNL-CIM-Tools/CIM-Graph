@@ -147,7 +147,7 @@ class GridappsdConnection(ConnectionInterface):
             for attribute in attribute_list:
                 if attribute == 'Measurements' or attribute == 'Terminals':
                     query_list_parser(typed_catalog[cim_class], mRID, result, attribute, ';')
-                elif attribute in self.cim.__all__:
+                elif attribute in cim.__all__:
                     query_class_parser(typed_catalog[cim_class], mRID, result, attribute, ';')
                     try:
                         add_to_typed_catalog(getattr(typed_catalog[cim_class][mRID], attribute), typed_catalog)
