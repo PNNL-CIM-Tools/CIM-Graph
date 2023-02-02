@@ -5,15 +5,23 @@ import importlib
 import os
 from typing import Dict, List
 
+from cimlab.data_profile import CIM_PROFILE
 from cimlab.loaders import ConnectionInterface, ConnectionParameters, Parameter, QueryResponse
 from cimlab.models import add_to_catalog, add_to_typed_catalog
 from gridappsd import GridAPPSD
 from SPARQLWrapper import SPARQLWrapper, JSON, POST
 
 
-cim_profile = 'rc4_2021'
-cim = importlib.import_module('cimlab.data_profile.' + cim_profile)
-sparql = importlib.import_module('cimlab.loaders.sparql.' + cim_profile)
+
+cim = None
+sparql = None
+
+
+def set_cim_profile(cim_profile: CIM_PROFILE):
+    global cim
+    global sparql
+    cim = importlib.import_module('cimlab.data_profile.' + cim_profile)
+    sparql = importlib.import_module('cimlab.loaders.sparql.' + cim_profile)
 
 # os.environ["GRIDAPPSD_ADDRESS"] = "gridappsd"
 # os.environ["GRIDAPPSD_PORT"] = "61613"
@@ -69,7 +77,7 @@ class GridappsdConnection(ConnectionInterface):
     def disconnect(self):
         if self.__gapps__ is not None:
             self.__gapps__.disconnect()
-
+            
     def load_attributes(self, obj: object):
         if isinstance(obj, cim.Terminal):
             # load terminal stuff here
@@ -139,7 +147,7 @@ class GridappsdConnection(ConnectionInterface):
             for attribute in attribute_list:
                 if attribute == 'Measurements' or attribute == 'Terminals':
                     query_list_parser(typed_catalog[cim_class], mRID, result, attribute, ';')
-                elif attribute in cim.__all__:
+                elif attribute in self.cim.__all__:
                     query_class_parser(typed_catalog[cim_class], mRID, result, attribute, ';')
                     try:
                         add_to_typed_catalog(getattr(typed_catalog[cim_class][mRID], attribute), typed_catalog)
