@@ -1,9 +1,12 @@
-from typing import List
+from __future__ import annotations
+from typing import List, Dict, Optional
 from dataclasses import dataclass, field
+import cimlab.data_profile.rc4_2021 as cim
+def get_all_attributes(feeder_id: str, typed_catalog: dict[type, dict[str, object]]):
 
-# import cim.data_profile as cim
-
-def get_all_attributes(feeder_id: str, mrid_list: List[str]):
+    mrid_list = list(typed_catalog[cim.ACLineSegmentPhase].keys())
+    asset_list = list(typed_catalog[cim.ACLineSegment].keys())
+    
     query_message = """
         PREFIX r:  <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
         PREFIX cim:  <http://iec.ch/TC57/CIM100#>
@@ -17,6 +20,13 @@ def get_all_attributes(feeder_id: str, mrid_list: List[str]):
     # add all equipment mRID
     for mrid in mrid_list:
         query_message += ' "%s" \n'%mrid
+        
+    # add all assets
+    query_message += """               }
+        VALUES ?ACLineSegment {"""
+    for asset_mrid in asset_list:
+        query_message += ' "%s" \n' % asset_mrid
+        
     # add all attributes
     query_message += """               } 
         
@@ -42,7 +52,7 @@ def get_all_attributes(feeder_id: str, mrid_list: List[str]):
         OPTIONAL {?eq cim:ACLineSegmentPhase.WireInfo ?wire.
                   ?wire cim:IdentifiedObject.mRID ?WireInfo.}
 
-        FILTER regex(STR(?measphs), ?phase)
+        #FILTER regex(STR(?measphs), ?phase)
 
         }
         GROUP by ?mRID ?name ?Location ?phase ?sequenceNumber ?ACLineSegment ?WireInfo ?measphs

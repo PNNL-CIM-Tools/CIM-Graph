@@ -18,7 +18,7 @@ class DistributedModel:
     unaddressable_equipment: Dict[str, object] = field(default_factory=dict)
     connectivity_nodes: Dict[str, object] = field(default_factory=dict)
     switch_areas: List[SwitchArea] = field(default_factory=list)
-
+    assets: List[str] = field(default_factory=list)
     typed_catalog: dict[type, dict[str, object]] = field(default_factory=dict)
     is_loaded: Optional[set] = field(default_factory=set)
 
@@ -87,3 +87,5 @@ class DistributedModel:
             print('warning: no instances of ', cim_class.__name__, ' found in catalog.')
 
         return json_dump
+    
+    

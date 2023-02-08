@@ -117,7 +117,9 @@ class BlazegraphConnection(ConnectionInterface):
         """
         mrid_list = list(typed_catalog[cim_class].keys()) #get all object mRIDs in switch area
         #generate SPARQL message from correct loaders>sparql python script based on class name
-        sparql_message = eval(f"self.sparql.{cim_class.__name__}SPARQL.get_all_attributes('{feeder_mrid}', {mrid_list})") 
+#         sparql_message = eval(f"self.sparql.{cim_class.__name__}SPARQL.get_all_attributes('{feeder_mrid}', {mrid_list})")
+        sparql_message = eval(f"self.sparql.{cim_class.__name__}SPARQL.get_all_attributes('{feeder_mrid}', '{typed_catalog}')") 
+        
         return sparql_message
     
     

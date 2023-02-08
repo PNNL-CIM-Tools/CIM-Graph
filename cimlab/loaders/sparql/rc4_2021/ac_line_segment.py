@@ -1,7 +1,10 @@
-from typing import List
+from __future__ import annotations
+from typing import List, Dict, Optional
 from dataclasses import dataclass, field
-
-# import cim.data_profile as cim
+import cimlab.data_profile.rc4_2021 as cim
+def get_all_attributes(feeder_id: str, typed_catalog: dict[type, dict[str, object]]):
+    
+    mrid_list = list(typed_catalog[cim.ACLineSegment].keys())
 
 def get_all_attributes(feeder_id: str, mrid_list: List[str]):
     query_message = """
