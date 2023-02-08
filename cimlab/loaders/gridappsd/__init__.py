@@ -36,10 +36,9 @@ os.environ['GRIDAPPSD_PASSWORD'] = '1234App'
 
 
 class GridappsdConnection(ConnectionInterface):
-    __gapps__ = None #GridAPPSD()
-    print(sys.path)
-    params = ConnectionParameters([Parameter(key="url", value="http://localhost:8889/bigdata/namespace/kb/sparql")])
-    bg = BlazegraphConnection(params, 'rc4_2021')
+    __gapps__ = GridAPPSD()
+
+    
     def connect(self):
         if self.__gapps__ is None:
             self.__gapps__ = GridAPPSD()
@@ -58,10 +57,13 @@ class GridappsdConnection(ConnectionInterface):
         return self.__gapps__.get_logger()
     
     def query_data(self, query, database_type="powergridmodel", timeout=30):
-        return self.__gapps__.query_data(query, database_type, timeout)
+        response = self.__gapps__.query_data(query, database_type, timeout)
+        return response['data']
     
     def execute(self, sparql_message):
-        return self.bg.execute(sparql_message)
+        params = ConnectionParameters([Parameter(key="url", value="http://localhost:8889/bigdata/namespace/kb/sparql")])
+        bg = BlazegraphConnection(params, 'rc4_2021')
+        return bg.execute(sparql_message)
 
     def create_default_instances(self, feeder_mrid: str | cim.Feeder, mrid_list: List[str]) -> List[object]:
         """ Creates an empty CIM object with the correct class type with mRID and name fields populated
@@ -72,6 +74,7 @@ class GridappsdConnection(ConnectionInterface):
             objects: A list of CIM object instances
         """
         sparql_message = sparql.get_class_type_sparql(feeder_mrid, mrid_list)
+#         query_output = self.query_data(sparql_message)
         query_output = self.execute(sparql_message)
         
         # parse query results and add new CIM objects to list
@@ -92,9 +95,10 @@ class GridappsdConnection(ConnectionInterface):
          #generate SPARQL message from correct loaders>sparql python script based on class name
         sparql_message = self.get_attributes_query(feeder_mrid, typed_catalog, cim_class)
         #execute sparql query
-#         print(sparql_message)
+
         query_output = self.execute(sparql_message)
-#         print(query_output)
+#         query_output = self.query_data(sparql_message)
+
 
 #         attribute_list = query_output['head']['vars'] #list of attributes received in query response
         for result in query_output['results']['bindings']: #iterate through rows of response
@@ -135,9 +139,8 @@ class GridappsdConnection(ConnectionInterface):
             sparql_message: query string that can be used in blazegraph connection or STOMP client
         none
         """
-        mrid_list = list(typed_catalog[cim_class].keys()) #get all object mRIDs in switch area
-        #generate SPARQL message from correct loaders>sparql python script based on class name
-        sparql_message = eval(f"sparql.{cim_class.__name__}SPARQL.get_all_attributes('{feeder_mrid}', {mrid_list})") 
+        sparql_func = getattr(sparql, f"{cim_class.__name__}SPARQL")
+        sparql_message = sparql_func.get_all_attributes(feeder_mrid, typed_catalog) 
         return sparql_message
     
     
@@ -171,6 +174,7 @@ class GridappsdConnection(ConnectionInterface):
     def build_cim_object(self, feeder_mrid, typed_catalog:Dict, mRID_list:List[str], default_class = 'IdentifiedObject') -> List(object):
         sparql_message = sparql.get_class_type_sparql(feeder_mrid, mRID_list)
         #execute sparql query
+#         query_output = self.query_data(sparql_message)
         query_output = self.execute(sparql_message)
         # parse query results and add new CIM objects to list
         obj_list = [] 
