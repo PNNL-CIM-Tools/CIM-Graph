@@ -1,16 +1,18 @@
 from __future__ import annotations
-
+import sys
 import atexit
 import importlib
 import os
-from typing import Dict, List
 
+from typing import Dict, List
+from SPARQLWrapper import SPARQLWrapper, JSON, POST
+import re
 from cimlab.data_profile import CIM_PROFILE
 from cimlab.loaders import ConnectionInterface, ConnectionParameters, Parameter, QueryResponse
 from cimlab.models import add_to_catalog, add_to_typed_catalog
 from gridappsd import GridAPPSD
 from SPARQLWrapper import SPARQLWrapper, JSON, POST
-
+from cimlab.loaders.blazegraph.blazegraph import BlazegraphConnection
 
 
 cim = None
@@ -23,53 +25,20 @@ def set_cim_profile(cim_profile: CIM_PROFILE):
     cim = importlib.import_module('cimlab.data_profile.' + cim_profile)
     sparql = importlib.import_module('cimlab.loaders.sparql.' + cim_profile)
 
-# os.environ["GRIDAPPSD_ADDRESS"] = "gridappsd"
-# os.environ["GRIDAPPSD_PORT"] = "61613"
+os.environ["GRIDAPPSD_ADDRESS"] = "localhost"
+os.environ["GRIDAPPSD_PORT"] = "61613"
 os.environ['GRIDAPPSD_APPLICATION_ID'] = 'gridappsd-cim-profile'
 os.environ['GRIDAPPSD_APPLICATION_STATUS'] = 'STARTED'
 os.environ['GRIDAPPSD_USER'] = 'app_user'
 os.environ['GRIDAPPSD_PASSWORD'] = '1234App'
 
-def query_string_parser(obj_dict: Dict, mRID: str, query: List, key: str, separator):
-    try:
-        value = query[key]['value']
-        if separator in value:
-            value = value.split(separator)
-        setattr(obj_dict[mRID], key, value)
-    except:
-        []
 
-def query_class_parser(typed_catalog, mRID, query, class_name, separator):
-    try: 
-        cls = class_name
-        value = query[class_name]['value']
-        if separator in value:
-            values = value.split(separator)
-            obj = []
-            for mrid in values:
-                obj.append(eval(f"cim.{cls}(mRID='{mrid}')"))
-        else:
-            obj = eval(f"cim.{cls}(mRID='{value}')")
-        setattr(typed_catalog[mRID], class_name, obj)
-    except:
-        []
-    return typed_catalog
-
-def query_list_parser(obj_dict: Dict, mRID: str, query: List, key, separator):
-
-    try:
-        value = query[key]['value'].split(separator)
-        if getattr(obj_dict[mRID], key) == None:
-            setattr(obj_dict[mRID], key, value)
-        else:
-            setattr(obj_dict[mRID], key, getattr(obj_dict[mRID], key) + value)
-    except:
-        []
 
 
 class GridappsdConnection(ConnectionInterface):
-    __gapps__ = None
+    __gapps__ = GridAPPSD()
 
+    
     def connect(self):
         if self.__gapps__ is None:
             self.__gapps__ = GridAPPSD()
@@ -78,17 +47,23 @@ class GridappsdConnection(ConnectionInterface):
         if self.__gapps__ is not None:
             self.__gapps__.disconnect()
             
-    def load_attributes(self, obj: object):
-        if isinstance(obj, cim.Terminal):
-            # load terminal stuff here
-            pass
+#     def load_attributes(self, obj: object):
+#         if isinstance(obj, cim.Terminal):
+#             # load terminal stuff here
+#             pass
         
     def get_logger(self):
         self.connect()
         return self.__gapps__.get_logger()
     
     def query_data(self, query, database_type="powergridmodel", timeout=30):
-        return self.__gapps__.query_data(query, database_type, timeout)
+        response = self.__gapps__.query_data(query, database_type, timeout)
+        return response['data']
+    
+    def execute(self, sparql_message):
+        params = ConnectionParameters([Parameter(key="url", value="http://localhost:8889/bigdata/namespace/kb/sparql")])
+        bg = BlazegraphConnection(params, 'rc4_2021')
+        return bg.execute(sparql_message)
 
     def create_default_instances(self, feeder_mrid: str | cim.Feeder, mrid_list: List[str]) -> List[object]:
         """ Creates an empty CIM object with the correct class type with mRID and name fields populated
@@ -99,64 +74,144 @@ class GridappsdConnection(ConnectionInterface):
             objects: A list of CIM object instances
         """
         sparql_message = sparql.get_class_type_sparql(feeder_mrid, mrid_list)
-        objects = self.query_object_builder(sparql_message)
-        return objects
-    
-    def get_all_attributes(self, feeder_mrid, typed_catalog, cim_class):
-        if cim_class in typed_catalog:
-            mrid_list = list(typed_catalog[cim_class].keys())
-            sparql_message = eval(f"sparql.{cim_class.__name__}SPARQL.get_all_attributes('{feeder_mrid}', {mrid_list})")
-            self.query_attribute_builder(sparql_message, typed_catalog, cim_class)
-    
-    def query_object_builder(self, query_message):
-        self.connect()
-        request = {"requestType": "QUERY",
-                   "resultFormat": "JSON",
-                   "queryString": query_message}
-        query_output = self.execute(topic='goss.gridappsd.process.request.data.powergridmodel',message=request, timeout=5)
+#         query_output = self.query_data(sparql_message)
+        query_output = self.execute(sparql_message)
         
-        objects = []
-        for result in query_output['data']['results']['bindings']:
+        # parse query results and add new CIM objects to list
+        object_list = [] 
+        for result in query_output['results']['bindings']:
+           # print(result)
             cls = result['class']['value']
             mRID = result['mRID']['value']
             name = result['name']['value']
             try:
-                objects.append(eval(f"cim.{cls}(mRID='{mRID}', name = '{name}')"))
+                object_list.append(eval(f"cim.{cls}(mRID='{mRID}', name = '{name}')"))
             except:
-                print('warning: object class missing:', cls)
-        return objects
+                print('warning: object class missing from data profile:', cls)
+        return object_list
 
-    def execute(self, **kwargs) -> QueryResponse:
-        for x in ('topic', 'message', 'timeout'):
-            if x not in kwargs:
-                raise ValueError(f"Parameter {x} required")
-
-        response = self.__gapps__.get_response(**kwargs)
-        return response
     
-    def query_attribute_builder(self, query_message, typed_catalog, cim_class):
-        self.connect()
-        request = {"requestType": "QUERY",
-                   "resultFormat": "JSON",
-                   "queryString": query_message}
-        query_output = self.execute(topic='goss.gridappsd.process.request.data.powergridmodel',message=request, timeout=5)
-        attribute_list = query_output['data']['head']['vars']
-        for result in query_output['data']['results']['bindings']:
+    def get_all_attributes(self, feeder_mrid, typed_catalog, cim_class):
+         #generate SPARQL message from correct loaders>sparql python script based on class name
+        sparql_message = self.get_attributes_query(feeder_mrid, typed_catalog, cim_class)
+        #execute sparql query
+
+        query_output = self.execute(sparql_message)
+#         query_output = self.query_data(sparql_message)
+
+
+#         attribute_list = query_output['head']['vars'] #list of attributes received in query response
+        for result in query_output['results']['bindings']: #iterate through rows of response
+            attribute_list = result.keys()
+            mRID = result['mRID']['value']
+            for attribute in attribute_list: 
+                try: #check if attribute is in data profile
+                    attribute_type = cim_class.__dataclass_fields__[attribute].type
+                except:
+                    #replace with warning message
+                    print('warning: attribute ', attribute, ' missing from ', cim_class.__name__)
+                    
+                if 'List' in attribute_type: #check if attribute is association to a list of class objects
+                    if '\'' in attribute_type: #handling inconsistent '' marks in data profile
+                        at_cls = re.match(r'List\[\'(.*)\']',attribute_type)
+                        attribute_class = at_cls.group(1)
+                    else:        
+                        at_cls = re.match(r'List\[(.*)]',attribute_type)
+                        attribute_class = at_cls.group(1)
+#                     print(attribute_class)
+                    # pass query response of associated objects to list parser
+                    self.query_list_parser(feeder_mrid, typed_catalog, cim_class, mRID, result, attribute, attribute_class, ';')
+
+                else: #otherwise assign query response
+#                     print(attribute)
+#                     print(result)
+                    self.query_parser(feeder_mrid, typed_catalog, cim_class, mRID, result, attribute, ';')
+    
+    
+    def get_attributes_query(self, feeder_mrid: str | cim.Feeder, typed_catalog: dict[type, dict[str, object]], cim_class: type):
+        """ Generates SPARQL query for a given catalog of objects and feeder id
+        Args:
+            feeder_mrid (str | Feeder object): The mRID of the feeder or feeder object
+            typed_catalog (dict[type, dict[str, object]]): The typed catalog of CIM objects organized by 
+                class type and object mRID
+            cim_class (type): The CIM class type (e.g. cim:ACLineSegment)
+        Returns:
+            sparql_message: query string that can be used in blazegraph connection or STOMP client
+        none
+        """
+        sparql_func = getattr(sparql, f"{cim_class.__name__}SPARQL")
+        sparql_message = sparql_func.get_all_attributes(feeder_mrid, typed_catalog) 
+        return sparql_message
+    
+    
+    def query_parser(self, feeder_mrid, typed_catalog:Dict, class_name:str, mRID:str, query:List, attribute:str, separator:str) -> object | str:
+    #     try:
+        value = query[attribute]['value']
+
+        #if attribute is CIM class, then build CIM objects. otherwise assign to obj_list
+    #         print(attribute)
+        if attribute in cim.__all__:
+            value = value.split(separator)
+            result = self.build_cim_object(feeder_mrid, typed_catalog, value)
+            if len(result) == 1:
+                result = result[0]
+        else:
+            result = value
+        setattr(typed_catalog[class_name][mRID], attribute, result)
+
+    def query_list_parser(self, feeder_mrid, typed_catalog:Dict, class_name:type, mRID:str, query:List, attribute:str, attribute_class:str, separator:str):
+        value = query[attribute]['value']
+        values = value.split(separator)
+        #if attribute is CIM class, then build CIM objects. otherwise assign to obj_list
+        if attribute_class in cim.__all__:
+            obj_list = self.build_cim_object(feeder_mrid, typed_catalog, values, attribute_class)    
+        else:
+            obj_list = values
+        #set attribute of queried object to list parsed from query results
+        setattr(typed_catalog[class_name][mRID], attribute, obj_list)
+
+
+    def build_cim_object(self, feeder_mrid, typed_catalog:Dict, mRID_list:List[str], default_class = 'IdentifiedObject') -> List(object):
+        sparql_message = sparql.get_class_type_sparql(feeder_mrid, mRID_list)
+        #execute sparql query
+#         query_output = self.query_data(sparql_message)
+        query_output = self.execute(sparql_message)
+        # parse query results and add new CIM objects to list
+        obj_list = [] 
+        for result in query_output['results']['bindings']:
+            class_name = result['class']['value']
             mRID = result['mRID']['value']
             name = result['name']['value']
-            for attribute in attribute_list:
-                if attribute == 'Measurements' or attribute == 'Terminals':
-                    query_list_parser(typed_catalog[cim_class], mRID, result, attribute, ';')
-                elif attribute in cim.__all__:
-                    query_class_parser(typed_catalog[cim_class], mRID, result, attribute, ';')
-                    try:
-                        add_to_typed_catalog(getattr(typed_catalog[cim_class][mRID], attribute), typed_catalog)
-                    except:
-                        []
-                else:
-                    query_string_parser(typed_catalog[cim_class], mRID, result, attribute, ';')
-#             query_list_parser(typed_catalog[cim_class], mRID, result, 'Measurements', ';')
-#             query_list_parser(typed_catalog[cim_class], mRID, result, 'Terminals', ';')
+            obj = self.create_object(typed_catalog, class_name, mRID, name)
+            obj_list.append(obj)
+        
+        if '' not in mRID_list and not obj_list:
+            for mrid in mRID_list:
+                print('warning: could not locate mrid: ', mrid,'. creating default object of ', default_class)
+                obj = self.create_object(typed_catalog, default_class, mrid, None)
+                obj_list.append(obj)
+        return obj_list
+
+    def create_object(self, typed_catalog, class_name, mRID, name):
+        cls = class_name
+#         try: 
+        class_type = eval(f"cim.{cls}")
+        #add class to typed_catalog if not already defined
+        if class_type not in typed_catalog.keys():
+            typed_catalog[class_type] = {}
+
+        if mRID in typed_catalog[class_type].keys():
+            obj = typed_catalog[class_type][mRID]
+        else:
+#                 print(class_type)
+                obj = class_type(mRID = mRID, name = name)
+                add_to_typed_catalog(obj, typed_catalog)
+#         except:
+#         obj = mRID
+#         print('warning: object class missing from data profile:', cls)
+        return obj
+
+
 
 
 def get_topology_response(feeder_mrid: str) -> QueryResponse:

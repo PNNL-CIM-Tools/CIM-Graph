@@ -6,6 +6,7 @@ import importlib
 from cimlab.loaders import ConnectionInterface, ConnectionParameters, Parameter, QueryResponse
 from cimlab.models.model_parsers import add_to_catalog, add_to_typed_catalog
 
+
 class BlazegraphConnection(ConnectionInterface):
     def __init__(self, connection_params, cim_profile:str):
         self.sparql = importlib.import_module('cimlab.loaders.sparql.' + cim_profile)
@@ -115,9 +116,12 @@ class BlazegraphConnection(ConnectionInterface):
             sparql_message: query string that can be used in blazegraph connection or STOMP client
         none
         """
-        mrid_list = list(typed_catalog[cim_class].keys()) #get all object mRIDs in switch area
+#         mrid_list = list(typed_catalog[cim_class].keys()) #get all object mRIDs in switch area
         #generate SPARQL message from correct loaders>sparql python script based on class name
-        sparql_message = eval(f"self.sparql.{cim_class.__name__}SPARQL.get_all_attributes('{feeder_mrid}', {mrid_list})") 
+#         sparql_message = eval(f"self.sparql.{cim_class.__name__}SPARQL.get_all_attributes('{feeder_mrid}', {mrid_list})")
+        sparql_func = getattr(self.sparql, f"{cim_class.__name__}SPARQL")
+        sparql_message = sparql_func.get_all_attributes(feeder_mrid, typed_catalog)
+        
         return sparql_message
     
     

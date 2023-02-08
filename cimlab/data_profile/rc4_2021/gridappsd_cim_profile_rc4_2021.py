@@ -20892,6 +20892,13 @@ class TransformerTankInfo(AssetInfo):
             "min_occurs": 1,
         }
     )
+    TransformerTanks: List["TransformerTank"] = field(
+        default_factory=list,
+        metadata={
+            "type": "Element",
+            "namespace": "http://iec.ch/TC57/",
+        }
+    )
 
 
 @dataclass
@@ -22551,6 +22558,14 @@ class TransformerTank(Equipment):
             "type": "Element",
             "namespace": "http://iec.ch/TC57/CIM100#",
             "min_occurs": 1,
+        }
+    )
+    TransformerTankInfo: Optional["TransformerTankInfo"] = field(
+        default=None,
+        metadata={
+            "type": "Element",
+            "namespace": "http://iec.ch/TC57/",
+            "required": True,
         }
     )
 
