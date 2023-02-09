@@ -99,11 +99,20 @@ class BlazegraphConnection(ConnectionInterface):
 #                     print(attribute_class)
                     # pass query response of associated objects to list parser
                     self.query_list_parser(feeder_mrid, typed_catalog, cim_class, mRID, result, attribute, attribute_class, ';')
-
+                elif 'Optional' in attribute_type: #check if attribute is association to a class object
+                    if '\'' in attribute_type: #handling inconsistent '' marks in data profile
+                        at_cls = re.match(r'Optional\[\'(.*)\']',attribute_type)
+                        attribute_class = at_cls.group(1)
+                    else:        
+                        at_cls = re.match(r'Optional\[(.*)]',attribute_type)
+                        attribute_class = at_cls.group(1)
+#                     print(attribute_class)
+                    # pass query response of associated objects to list parser
+                    self.query_parser(feeder_mrid, typed_catalog, cim_class, mRID, result, attribute, attribute_class, ';')
                 else: #otherwise assign query response
 #                     print(attribute)
 #                     print(result)
-                    self.query_parser(feeder_mrid, typed_catalog, cim_class, mRID, result, attribute, ';')
+                    self.query_parser(feeder_mrid, typed_catalog, cim_class, mRID, result, attribute, attribute_class, ';')
                     
     def get_attributes_query(self, feeder_mrid: str | cim.Feeder, typed_catalog: dict[type, dict[str, object]], cim_class: type):
         """ Generates SPARQL query for a given catalog of objects and feeder id
@@ -125,15 +134,19 @@ class BlazegraphConnection(ConnectionInterface):
         return sparql_message
     
     
-    def query_parser(self, feeder_mrid, typed_catalog:Dict, class_name:str, mRID:str, query:List, attribute:str, separator:str) -> object | str:
+    def query_parser(self, feeder_mrid, typed_catalog:Dict, class_name:str, mRID:str, query:List, attribute:str, attribute_class:str, separator:str) -> object | str:
     #     try:
         value = query[attribute]['value']
 
         #if attribute is CIM class, then build CIM objects. otherwise assign to obj_list
     #         print(attribute)
-        if attribute in self.cim.__all__:
+        if attribute_class in self.cim.__all__:
             value = value.split(separator)
-            result = self.build_cim_object(feeder_mrid, typed_catalog, value)
+            class_type = eval(f"self.cim.{attribute_class}")
+            if type(class_type) is type:
+                result = self.build_cim_object(feeder_mrid, typed_catalog, value, attribute_class)  
+            else:
+                result = [value]
             if len(result) == 1:
                 result = result[0]
         else:
@@ -145,7 +158,11 @@ class BlazegraphConnection(ConnectionInterface):
         values = value.split(separator)
         #if attribute is CIM class, then build CIM objects. otherwise assign to obj_list
         if attribute_class in self.cim.__all__:
-            obj_list = self.build_cim_object(feeder_mrid, typed_catalog, values, attribute_class)    
+            class_type = eval(f"self.cim.{attribute_class}")
+            if type(class_type) is type:
+                obj_list = self.build_cim_object(feeder_mrid, typed_catalog, values, attribute_class)
+            else:
+                obj_list = values
         else:
             obj_list = values
         #set attribute of queried object to list parsed from query results
@@ -173,9 +190,8 @@ class BlazegraphConnection(ConnectionInterface):
         return obj_list
 
     def create_object(self, typed_catalog, class_name, mRID, name):
-        cls = class_name
-#         try: 
-        class_type = eval(f"self.cim.{cls}")
+        
+        class_type = eval(f"self.cim.{class_name}")
         #add class to typed_catalog if not already defined
         if class_type not in typed_catalog.keys():
             typed_catalog[class_type] = {}

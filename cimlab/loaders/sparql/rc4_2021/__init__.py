@@ -41,18 +41,22 @@ import cimlab.loaders.sparql.rc4_2021.power_transformer as PowerTransformerSPARQ
 import cimlab.loaders.sparql.rc4_2021.power_transformer_end as PowerTransformerEndSPARQL
 import cimlab.loaders.sparql.rc4_2021.power_transformer_info as PowerTransformerInfoSPARQL
 #r
+import cimlab.loaders.sparql.rc4_2021.ratio_tap_changer as RatioTapChangerSPARQL
 import cimlab.loaders.sparql.rc4_2021.recloser as RecloserSPARQL
 #s
 import cimlab.loaders.sparql.rc4_2021.sectionaliser as SectionaliserSPARQL
 import cimlab.loaders.sparql.rc4_2021.short_circuit_test as ShortCircuitTestSPARQL
 import cimlab.loaders.sparql.rc4_2021.switch_phase as SwitchPhaseSPARQL
 #t
+import cimlab.loaders.sparql.rc4_2021.tap_changer_control as TapChangerControlSPARQL
 import cimlab.loaders.sparql.rc4_2021.tape_shield_cable_info as TapeShieldCableInfoSPARQL
 import cimlab.loaders.sparql.rc4_2021.terminal as TerminalSPARQL
 import cimlab.loaders.sparql.rc4_2021.transformer_end_info as TransformerEndInfoSPARQL
 import cimlab.loaders.sparql.rc4_2021.transformer_tank as TransformerTankSPARQL
 import cimlab.loaders.sparql.rc4_2021.transformer_tank_end as TransformerTankEndSPARQL
 import cimlab.loaders.sparql.rc4_2021.transformer_tank_info as TransformerTankInfoSPARQL
+import cimlab.loaders.sparql.rc4_2021.transformer_mesh_impedance as TransformerMeshImpedanceSPARQL
+import cimlab.loaders.sparql.rc4_2021.transformer_core_admittance as TransformerCoreAdmittanceSPARQL
 
 #w
 import cimlab.loaders.sparql.rc4_2021.wire_position as WirePositionSPARQL

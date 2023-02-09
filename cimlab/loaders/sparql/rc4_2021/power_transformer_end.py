@@ -58,7 +58,7 @@ def get_all_attributes(feeder_mrid: str, typed_catalog: dict[type, dict[str, obj
         OPTIONAL {?eq cim:TransformerEnd.grounded ?grounded.}
         OPTIONAL {?eq cim:TransformerEnd.rground ?rground.}
         OPTIONAL {?eq cim:TransformerEnd.xground ?xground.}
-        OPTIONAL {?t cim:Terminal.ConductingEquipment ?eq.
+        OPTIONAL {?eq cim:TransformerEnd.Terminal ?t.
                   ?t cim:IdentifiedObject.mRID ?Terminal.}
         OPTIONAL {?eq cim:TransformerEnd.BaseVoltage ?bv.
                   ?bv cim:IdentifiedObject.mRID ?BaseVoltage.}
@@ -69,7 +69,7 @@ def get_all_attributes(feeder_mrid: str, typed_catalog: dict[type, dict[str, obj
         OPTIONAL {?rtc cim:RatioTapChanger.TransformerEnd ?eq.
                   ?rtc cim:IdentifiedObject.mRID ?RatioTapChanger.}
                   
-        OPTIONAL {?tac cim:TransformerCoreAdmittace.TransformerEnd ?eq.
+        OPTIONAL {?tac cim:TransformerCoreAdmittance.TransformerEnd ?eq.
                   ?tac cim:IdentifiedObject.mRID ?CoreAdmittance.}
           
         OPTIONAL {?frmesh cim:TransformerMeshImpedance.FromTransformerEnd ?eq.
