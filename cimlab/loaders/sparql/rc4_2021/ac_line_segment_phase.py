@@ -19,7 +19,6 @@ def get_all_attributes(feeder_mrid: str, typed_catalog: dict[type, dict[str, obj
         PREFIX r:  <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
         PREFIX cim:  <http://iec.ch/TC57/CIM100#>
         SELECT ?mRID ?name ?Location ?phase ?sequenceNumber ?ACLineSegment ?WireInfo
-        #(group_concat(distinct ?ACLineSegment; separator=';') as ?ACLineSegments)
         (group_concat(distinct ?Measurement; separator=";") as ?Measurements) 
         WHERE {          
           ?eq r:type cim:ACLineSegmentPhase.

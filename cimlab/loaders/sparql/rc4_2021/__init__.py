@@ -3,6 +3,7 @@ from cimlab.loaders.sparql.rc4_2021.get_class_type import get_class_type_sparql
 import cimlab.loaders.sparql.rc4_2021.ac_dc_terminal as ACDCTerminalSPARQL
 import cimlab.loaders.sparql.rc4_2021.ac_line_segment as ACLineSegmentSPARQL
 import cimlab.loaders.sparql.rc4_2021.ac_line_segment_phase as ACLineSegmentPhaseSPARQL
+import cimlab.loaders.sparql.rc4_2021.analog as AnalogSPARQL
 import cimlab.loaders.sparql.rc4_2021.asset as AssetSPARQL
 import cimlab.loaders.sparql.rc4_2021.asset_info as AssetInfoSPARQL
 #b
@@ -16,6 +17,7 @@ import cimlab.loaders.sparql.rc4_2021.cable_info as CableInfoSPARQL
 import cimlab.loaders.sparql.rc4_2021.concentric_neutral_cable_info as ConcentricNeutralCableInfoSPARQL
 #d
 import cimlab.loaders.sparql.rc4_2021.disconnector as DisconnectorSPARQL
+import cimlab.loaders.sparql.rc4_2021.discrete as DiscreteSPARQL
 #e
 import cimlab.loaders.sparql.rc4_2021.energy_consumer as EnergyConsumerSPARQL
 import cimlab.loaders.sparql.rc4_2021.energy_consumer_phase as EnergyConsumerPhaseSPARQL
@@ -46,6 +48,7 @@ import cimlab.loaders.sparql.rc4_2021.recloser as RecloserSPARQL
 #s
 import cimlab.loaders.sparql.rc4_2021.sectionaliser as SectionaliserSPARQL
 import cimlab.loaders.sparql.rc4_2021.short_circuit_test as ShortCircuitTestSPARQL
+import cimlab.loaders.sparql.rc4_2021.synchronous_machine as SynchronousMachineSPARQL
 import cimlab.loaders.sparql.rc4_2021.switch_phase as SwitchPhaseSPARQL
 #t
 import cimlab.loaders.sparql.rc4_2021.tap_changer_control as TapChangerControlSPARQL

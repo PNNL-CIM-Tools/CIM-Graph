@@ -12,17 +12,16 @@ def get_all_attributes(feeder_mrid: str, typed_catalog: dict[type, dict[str, obj
         query_message: query string that can be used in blazegraph connection or STOMP client
     """
 
-    mrid_list = list(typed_catalog[cim.EnergyConsumer].keys())
+    mrid_list = list(typed_catalog[cim.SynchronousMachine].keys())
     
     query_message = """
         PREFIX r:  <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
         PREFIX cim:  <http://iec.ch/TC57/CIM100#>
-        SELECT ?mRID ?name ?BaseVoltage ?Location ?p ?q ?customerCount ?grounded ?phaseConnection ?LoadResponse
+        SELECT ?mRID ?name ?BaseVoltage ?Location ?p ?q ?ratedS ?ratedU ?ratedPowerFactor ?ikk ?maxQ ?minQ
             (group_concat(distinct ?Terminal; separator=";") as ?Terminals) 
             (group_concat(distinct ?Measurement; separator=";") as ?Measurements) 
-            (group_concat(distinct ?EnergyConsumerPhase; separator=";") as ?EnergyConsumerPhase)
         WHERE {          
-          ?eq r:type cim:EnergyConsumer.
+          ?eq r:type cim:SynchronousMachine.
           VALUES ?fdrid {"%s"}
           VALUES ?mRID {"""%feeder_mrid
     # add all equipment mRID
@@ -47,21 +46,23 @@ def get_all_attributes(feeder_mrid: str, typed_catalog: dict[type, dict[str, obj
 
         OPTIONAL {?meas cim:Measurement.Terminal ?t.
         ?meas cim:IdentifiedObject.mRID ?Measurement}
-
-        OPTIONAL {?eq cim:EnergyConsumer.p ?p.}
-        OPTIONAL {?eq cim:EnergyConsumer.q ?q.}
-        OPTIONAL {?eq cim:EnergyConsumer.customerCount ?customerCount.}
-        OPTIONAL {?eq cim:EnergyConsumer.grounded ?grounded.}
         
-        OPTIONAL {?eq cim:EnergyConsumer.phaseConnection ?phs.
-                  bind(strafter(str(?phs),"PhaseShuntConnectionKind.") as ?phaseConnection) }
-        OPTIONAL {?eq cim:EnergyComsumer.LoadResponse ?lr.
-                  ?lr cim:IdentifiedObject.mRID ?LoadResponse}
-        OPTIONAL {?ecp cim:EnergyConsumerPhase.EnergyConsumer ?eq.
-                  ?ecp cim:IdentifiedObject.mRID ?EnergyConsumerPhase.}
+        OPTIONAL {?eq cim:SynchronousMachine.ikk ?ikk.}
+        OPTIONAL {?eq cim:SynchronousMachine.maxQ ?maxQ.}
+        OPTIONAL {?eq cim:SynchronousMachine.minQ ?minQ.}
+        # operatingMode
+        # type
+
+        # IN UML, THESE ATTRIBUTES BELONG TO ROTATINGMACHINE NOT SYNCHRNONOUSMACHINE
+        OPTIONAL {?eq cim:SynchronousMachine.p ?p.}
+        OPTIONAL {?eq cim:SynchronousMachine.q ?q.}
+        OPTIONAL {?eq cim:SynchronousMachine.ratedS ?ratedS.}
+        OPTIONAL {?eq cim:SynchronousMachine.ratedU ?ratedU.}
+        OPTIONAL {?eq cim:SynchronousMachine.ratedPowerFactor ?ratedPowerFactor.}
+
 
         }
-        GROUP by ?mRID ?name ?BaseVoltage ?Location ?p ?q ?customerCount ?grounded ?phaseConnection ?LoadResponse
+        GROUP by ?mRID ?name ?BaseVoltage ?Location ?p ?q ?ratedS ?ratedU ?ratedPowerFactor ?ikk ?maxQ ?minQ
         ORDER by  ?name
         """
     return query_message
