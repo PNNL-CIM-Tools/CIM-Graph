@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "gridappsd-cim-lab"
-version = "v0.11.230209"
+version = "v0.11.230210"
 description = "CIM models used within gridappsd."
 authors = ["C. Allwardt <3979063+craig8@users.noreply.github.com>"]
 packages = [
