@@ -48,7 +48,10 @@ def get_all_attributes(feeder_mrid: str, typed_catalog: dict[type, dict[str, obj
         ?t cim:IdentifiedObject.mRID ?Terminal
 
         OPTIONAL {?meas cim:Measurement.PowerSystemResource ?eq.
-          ?meas cim:IdentifiedObject.mRID ?Measurement}
+          ?meas cim:IdentifiedObject.mRID ?meas_id.
+          ?meas a ?meas_cls.
+          bind(concat(str(?meas_id),",",strafter(str(?meas_cls),"CIM100#")) as ?Measurement)}
+          
 
         OPTIONAL {?eq cim:Conductor.length ?length.}
         
@@ -62,9 +65,13 @@ def get_all_attributes(feeder_mrid: str, typed_catalog: dict[type, dict[str, obj
         OPTIONAL {?eq cim:ACLineSegment.g0ch ?b0.}
 
         OPTIONAL {?eq cim:ACLineSegment.PerLengthImpedance ?pli.
-                  ?pli cim:IdentifiedObject.mRID ?PerLengthImpedance.}
+                  ?pli cim:IdentifiedObject.mRID ?pli_id.
+                  ?pli a ?pli_cls.
+                  bind(concat(str(?pli_id),",",strafter(str(?pli_cls),"CIM100#")) as ?PerLengthImpedance).}
         OPTIONAL {?eq cim:ACLineSegment.WireSpacingInfo ?wsi.
-                  ?wsi cim:IdentifiedObject.mRID ?WireSpacingInfo.}
+                  ?wsi cim:IdentifiedObject.mRID ?wsi_id.
+                  ?wsi a ?wsi_cls.
+                  bind(concat(str(?wsi_id),",",strafter(str(?wsi_cls),"CIM100#")) as ?WireSpacingInfo).}
         OPTIONAL {?aclsp cim:ACLineSegmentPhase.ACLineSegment ?eq.
                   ?aclsp cim:IdentifiedObject.mRID ?ACLineSegmentPhase.}
 
