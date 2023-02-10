@@ -45,7 +45,9 @@ def get_all_attributes(feeder_mrid: str, typed_catalog: dict[type, dict[str, obj
         ?t cim:IdentifiedObject.mRID ?Terminal
 
         OPTIONAL {?meas cim:Measurement.Terminal ?t.
-        ?meas cim:IdentifiedObject.mRID ?Measurement}
+        ?meas cim:IdentifiedObject.mRID ?meas_id.
+        ?meas a ?meas_cls.
+        bind(concat(str(?meas_id),",",strafter(str(?meas_cls),"CIM100#")) as ?Measurement).}
         
         OPTIONAL {?eq cim:SynchronousMachine.ikk ?ikk.}
         OPTIONAL {?eq cim:SynchronousMachine.maxQ ?maxQ.}

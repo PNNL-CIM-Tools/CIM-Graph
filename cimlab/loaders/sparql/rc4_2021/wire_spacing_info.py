@@ -51,7 +51,9 @@ def get_all_attributes(feeder_mrid: str, typed_catalog: dict[type, dict[str, obj
         OPTIONAL {?eq cim:WireSpacingInfo.isCable ?isCable.}
 
         OPTIONAL {?wp cim:WirePosition.WireSpacingInfo ?eq.
-                  ?wp cim:IdentifiedObject.mRID ?WirePosition.}
+                  ?wp cim:IdentifiedObject.mRID ?wp_id.
+                  ?wp a ?wp_cls.
+                  bind(concat(str(?wp_id),",",strafter(str(?wp_cls),"CIM100#")) as ?WirePosition).}
         }
         GROUP by ?mRID ?name ?usage ?phaseWireCount ?phaseWireSpacing ?isCable
         ORDER by  ?name

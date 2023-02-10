@@ -51,13 +51,17 @@ def get_all_attributes(feeder_mrid: str, typed_catalog: dict[type, dict[str, obj
 
         OPTIONAL {?meas cim:Measurement.PowerSystemResource ?line.
                   ?meas cim:Measurement.phases ?measphs.
-                  ?meas cim:IdentifiedObject.mRID ?Measurement.}
+                  ?meas cim:IdentifiedObject.mRID ?meas_id.
+                  ?meas a ?meas_cls.
+                  bind(concat(str(?meas_id),",",strafter(str(?meas_cls),"CIM100#")) as ?Measurement).}
         
         OPTIONAL {?eq cim:ACLineSegmentPhase.phase ?phs.
                  bind(strafter(str(?phs),"SinglePhaseKind.") as ?phase)}
         OPTIONAL {?eq cim:ACLineSegmentPhase.sequenceNumber ?sequenceNumber.}
         OPTIONAL {?eq cim:ACLineSegmentPhase.WireInfo ?wire.
-                  ?wire cim:IdentifiedObject.mRID ?WireInfo.}
+                  ?wire cim:IdentifiedObject.mRID ?wire_id.
+                  ?wire a ?wire_cls.
+                  bind(concat(str(?wire_id),",",strafter(str(?wire_cls),"CIM100#")) as ?WireInfo).}
 
         #FILTER regex(STR(?measphs), ?phase)
 

@@ -49,10 +49,15 @@ def get_all_attributes(feeder_mrid: str, typed_catalog: dict[type, dict[str, obj
         ?t cim:IdentifiedObject.mRID ?Terminal
 
         OPTIONAL {?meas cim:Measurement.PowerSystemResource ?eq.
-          ?meas cim:IdentifiedObject.mRID ?Measurement}
+            ?meas cim:IdentifiedObject.mRID ?meas_id.
+            ?meas a ?meas_cls.
+            bind(concat(str(?meas_id),",",strafter(str(?meas_cls),"CIM100#")) as ?Measurement).}
 
         OPTIONAL {?eq cim:PowerElectronicsConnection.PowerElectronicsUnit ?pec.
-                  ?pec cim:IdentifiedObject.mRID ?PowerElectronicsU.}
+                  ?pec cim:IdentifiedObject.mRID ?pec_id.
+                  ?pec a ?meas_cls.
+                  bind(concat(str(?pec_id),",",strafter(str(?pec_cls),"CIM100#")) as ?PowerElectronicsU).}
+                  
         OPTIONAL {?eq cim:PowerElectronicsConnection.maxIFault ?maxIFault.}
         OPTIONAL {?eq cim:PowerElectronicsConnection.p ?p.}
         OPTIONAL {?eq cim:PowerElectronicsConnection.q ?q.}

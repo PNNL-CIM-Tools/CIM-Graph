@@ -279,4 +279,6 @@ def _main():
     get_load_buses(switch_area)
 
 if __name__ == "__main__":
+
     _main()
+
