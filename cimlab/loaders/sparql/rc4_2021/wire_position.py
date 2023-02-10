@@ -40,7 +40,7 @@ def get_all_attributes(feeder_mrid: str, typed_catalog: dict[type, dict[str, obj
         ?wsi cim:IdentifiedObject.mRID ?WireSpacingInfo.
         ?line cim:ACLineSegment.WireSpacingInfo ?wsi.
         ?line cim:Equipment.EquipmentContainer ?fdr.
-        ?line cim:IdentifedObject.mRID ?ACLineSegment.
+        ?line cim:IdentifiedObject.mRID ?ACLineSegment.
         ?fdr cim:IdentifiedObject.mRID ?fdrid.
         ?eq cim:IdentifiedObject.mRID ?mRID.
         ?eq cim:IdentifiedObject.name ?name.

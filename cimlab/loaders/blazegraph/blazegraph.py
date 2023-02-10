@@ -3,9 +3,10 @@ from typing import Dict, List, Optional
 from SPARQLWrapper import SPARQLWrapper, JSON, POST
 import re
 import importlib
+import logging
 from cimlab.loaders import ConnectionInterface, ConnectionParameters, Parameter, QueryResponse
 from cimlab.models.model_parsers import add_to_catalog, add_to_typed_catalog
-
+_log = logging.getLogger(__name__)
 
 class BlazegraphConnection(ConnectionInterface):
     def __init__(self, connection_params, cim_profile:str):
@@ -55,7 +56,7 @@ class BlazegraphConnection(ConnectionInterface):
             try:
                 object_list.append(eval(f"self.cim.{cls}(mRID='{mRID}', name = '{name}')"))
             except:
-                print('warning: object class missing from data profile:', cls)
+                _log.warning('object class missing from data profile:' + str(cls))
         return object_list
     
     
@@ -84,7 +85,7 @@ class BlazegraphConnection(ConnectionInterface):
                     attribute_type = cim_class.__dataclass_fields__[attribute].type
                 except:
                     #replace with warning message                       
-                    print('warning: attribute ', attribute, ' missing from ', cim_class.__name__)
+                    _log.warning('attribute '+str(attribute) +' missing from '+str(cim_class.__name__))
                     
                 if 'List' in attribute_type: #check if attribute is association to a list of class objects
                     if '\'' in attribute_type: #handling inconsistent '' marks in data profile
