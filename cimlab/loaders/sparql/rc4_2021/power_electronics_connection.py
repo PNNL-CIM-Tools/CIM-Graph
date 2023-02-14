@@ -55,7 +55,7 @@ def get_all_attributes(feeder_mrid: str, typed_catalog: dict[type, dict[str, obj
 
         OPTIONAL {?eq cim:PowerElectronicsConnection.PowerElectronicsUnit ?pec.
                   ?pec cim:IdentifiedObject.mRID ?pec_id.
-                  ?pec a ?meas_cls.
+                  ?pec a ?pec_cls.
                   bind(concat(str(?pec_id),",",strafter(str(?pec_cls),"CIM100#")) as ?PowerElectronicsU).}
                   
         OPTIONAL {?eq cim:PowerElectronicsConnection.maxIFault ?maxIFault.}

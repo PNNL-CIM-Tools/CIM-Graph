@@ -37,6 +37,7 @@ import cimlab.loaders.sparql.rc4_2021.overhead_wire_info as OverheadWireInfoSPAR
 import cimlab.loaders.sparql.rc4_2021.per_length_phase_impedance as PerLengthPhaseImpedanceSPARQL
 import cimlab.loaders.sparql.rc4_2021.per_length_sequence_impedance as PerLengthSequenceImpedanceSPARQL
 import cimlab.loaders.sparql.rc4_2021.phase_impedance_data as PhaseImpedanceDataSPARQL
+import cimlab.loaders.sparql.rc4_2021.photovoltaic_unit as PhotovoltaicUnitSPARQL
 import cimlab.loaders.sparql.rc4_2021.power_electronics_connection as PowerElectronicsConnectionSPARQL
 import cimlab.loaders.sparql.rc4_2021.power_electronics_connection_phase as PowerElectronicsConnectionPhaseSPARQL
 import cimlab.loaders.sparql.rc4_2021.power_transformer as PowerTransformerSPARQL

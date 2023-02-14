@@ -22,7 +22,7 @@ def get_all_attributes(feeder_mrid: str, typed_catalog: dict[type, dict[str, obj
         (group_concat(distinct ?Measurement; separator=";") as ?Measurements) 
  
         WHERE {          
-          ?eq r:type cim:PowerElectronicsConnection.
+          ?eq r:type cim:BatteryUnit.
           VALUES ?fdrid {"%s"}
           VALUES ?mRID {"""%feeder_mrid
     # add all equipment mRID
