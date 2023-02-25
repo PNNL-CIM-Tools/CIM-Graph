@@ -3,7 +3,8 @@ from typing import List, Dict, Optional
 from dataclasses import dataclass, field
 import json
 import logging
-import cimlab.data_profile as cim
+import re
+
 from cimlab.loaders import ConnectionInterface, QueryResponse
 from cimlab.models.model_parsers import add_to_catalog, add_to_typed_catalog, cim_dump, item_dump
 
@@ -19,7 +20,7 @@ class NewModel:
 
     # Initialize all CIM objects in feeder model
     def __initialize_network__(self) -> Dict[str, object]:
-        pass
+        self.cim = self.connection.cim
     
     def add_to_typed_catalog(self, obj_list: List[object]) -> Dict:
         if type(obj_list) is not list:
@@ -58,5 +59,62 @@ class NewModel:
     
     def upload(self):
         query = self.connection.upload(self.typed_catalog)
-        return query
+#         return query
+    
+    def write_xml(self, filename, schema):
+        
+        f = open(filename, "w", encoding="utf-8")
+        header="""
+<?xml version="1.0" encoding="utf-8"?>
+<rdf:RDF xmlns:cim="{schema}" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+"""
+        f.write(header.format(schema = schema))
+        for cim_class in list(self.typed_catalog.keys()):
+
+            for obj in self.typed_catalog[cim_class].values():
+                header = """
+<cim:{class_name} rdf:about="urn:uuid:{mRID}">"""         
+                f.write(header.format(class_name=cim_class.__name__, mRID = obj.mRID))
+
+                parent_classes = list(cim_class.__mro__)
+                parent_classes.pop(len(parent_classes)-1)
+
+                for pclass in parent_classes:
+                    attribute_list = list(pclass.__annotations__.keys())
+                    for attribute in attribute_list:
+
+                        try: #check if attribute is in data profile
+                            attribute_type = cim_class.__dataclass_fields__[attribute].type
+                        except:
+                            #replace with warning message                       
+                            _log.warning('attribute '+str(attribute) +' missing from '+str(cim_class.__name__))
+
+                        if 'List' not in attribute_type: #check if attribute is association to a class object
+                            if '\'' in attribute_type: #handling inconsistent '' marks in data profile
+                                at_cls = re.match(r'Optional\[\'(.*)\']',attribute_type)
+                                attribute_class = at_cls.group(1)
+                            else:        
+                                at_cls = re.match(r'Optional\[(.*)]',attribute_type)
+                                attribute_class = at_cls.group(1)
+                            if attribute_class in self.cim.__all__:
+                                attr_obj = getattr(obj,attribute)
+                                if attr_obj is not None:
+                                    value = attr_obj.mRID
+                                    body = """
+  <cim:{pclass}.{attr} rdf:resource="urn:uuid:{value}"/>"""
+
+                                    f.write(body.format(pclass=pclass.__name__, attr=attribute, value = value))
+
+                            else:
+                                value = item_dump(getattr(obj, attribute))
+                                if value:
+                                    body = """
+  <cim:{pclass}.{attr}>{value}</cim:{pclass}.{attr}>"""
+                                    f.write(body.format(pclass=pclass.__name__, attr = attribute, value = value))
+                tail = """
+</cim:{class_name}>"""
+                f.write(tail.format(class_name = cim_class.__name__))
+        
+        f.write("""
+</rdf:RDF>""")
         
