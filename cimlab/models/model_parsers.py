@@ -40,6 +40,8 @@ def cim_dump(typed_catalog:Dict, cim_class:type):
 def item_dump(value):
     if type(value) is str:
         result = value
+    elif type(value) is float:
+        result = value
     elif type(value) is list:
         result = []
         for item in value:

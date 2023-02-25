@@ -5,7 +5,8 @@ import re
 import importlib
 import logging
 from cimlab.loaders import ConnectionInterface, ConnectionParameters, Parameter, QueryResponse
-from cimlab.models.model_parsers import add_to_catalog, add_to_typed_catalog
+from cimlab.models.model_parsers import add_to_catalog, add_to_typed_catalog, cim_dump, item_dump
+
 _log = logging.getLogger(__name__)
 
 class BlazegraphConnection(ConnectionInterface):
@@ -185,3 +186,67 @@ class BlazegraphConnection(ConnectionInterface):
                 add_to_typed_catalog(obj, typed_catalog)
 
         return obj
+    
+    def upload(self, typed_catalog):
+        url = "http://localhost:8889/bigdata/namespace/kb/sparql"
+        
+        prefix = """PREFIX r: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+        PREFIX cim: <http://iec.ch/TC57/CIM100#>
+        PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+        """
+        triples = []
+        for cim_class in list(typed_catalog.keys()):
+            
+            for obj in typed_catalog[cim_class].values():
+#                 obj_triple = "<{url}#_{mRID}> a cim:{class_type}."
+                obj_triple = """
+        <urn:uuid:{mRID}> a cim:{class_type}.
+                """
+                triple = obj_triple.format(url = url, mRID = obj.mRID, class_type = cim_class.__name__)
+                triples.append(triple)
+                parent_classes = list(cim_class.__mro__)
+                parent_classes.pop(len(parent_classes)-1)
+                for class_type in parent_classes:
+                    attribute_list = list(class_type.__annotations__.keys())
+                    for attribute in attribute_list:
+                        
+                        try: #check if attribute is in data profile
+                            attribute_type = cim_class.__dataclass_fields__[attribute].type
+                        except:
+                            #replace with warning message                       
+                            _log.warning('attribute '+str(attribute) +' missing from '+str(cim_class.__name__))
+                        
+                        if 'List' not in attribute_type: #check if attribute is association to a class object
+                            if '\'' in attribute_type: #handling inconsistent '' marks in data profile
+                                at_cls = re.match(r'Optional\[\'(.*)\']',attribute_type)
+                                attribute_class = at_cls.group(1)
+                            else:        
+                                at_cls = re.match(r'Optional\[(.*)]',attribute_type)
+                                attribute_class = at_cls.group(1)
+
+                            if attribute_class in self.cim.__all__:
+                                attr_obj = getattr(obj,attribute)
+                                if attr_obj is not None:
+                                    value = attr_obj.mRID
+                                    attr = """
+        <urn:uuid:{mRID}> cim:{class_type}.{att} <urn:uuid:{value}>.
+                                    """
+
+                                    triple = attr.format(url = url, mRID = obj.mRID, class_type = class_type.__name__, att = attribute, value = value)
+                                    triples.append(triple)
+
+                            else:
+                                value = item_dump(getattr(obj, attribute))
+                                if value:
+        #                              <{url}#_{mRID}> cim:{class_type}.{attr} \"{value}\".
+                                    attr = """
+        <urn:uuid:{mRID}> cim:{class_type}.{attr} \"{value}\".
+                                     """
+                                    triple = attr.format(url = url, mRID = obj.mRID, class_type = class_type.__name__, attr = attribute, value = value)
+                                    triples.append(triple)
+        triples.append ('}')
+        query = prefix + ' INSERT DATA { ' + ''.join(triples)
+
+        self.execute(query)
+        return query
+
