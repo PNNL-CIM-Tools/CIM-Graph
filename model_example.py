@@ -1,10 +1,12 @@
-from cimlab.loaders import Parameter, ConnectionParameters
-from cimlab.loaders.blazegraph.blazegraph import BlazegraphConnection
-from cimlab.loaders.gridappsd import GridappsdConnection, get_topology_response
-from cimlab.models import DistributedModel
-
-import cimlab.data_profile.rc4_2021 as cim
 import json
+
+import cimgraph.data_profile.rc4_2021 as cim
+from cimgraph.loaders import ConnectionParameters, Parameter
+from cimgraph.loaders.blazegraph.blazegraph import BlazegraphConnection
+from cimgraph.loaders.gridappsd import (GridappsdConnection,
+                                        get_topology_response)
+from cimgraph.models import DistributedModel
+
 
 # print line name, phase, and bus
 def get_lines_buses(network_area):
