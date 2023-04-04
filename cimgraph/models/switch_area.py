@@ -48,7 +48,7 @@ class SwitchArea:
             add_to_catalog(obj, self.boundary_switches)
             add_to_typed_catalog(obj, self.typed_catalog)
 
-        sa_index = -1
+        sa_index = 0
         for sec_area_msg in switch_msg['secondary_areas']:
             # Add switch area
             sec_area = SecondaryArea(self.area_id + '.' + str(sa_index), self.connection)
