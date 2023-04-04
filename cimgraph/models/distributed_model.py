@@ -57,7 +57,7 @@ class DistributedModel:
 
         # Initialize all CIM objects in a single switch area
         # def initialize_switch_areas(feeder_mrid) -> dict(str,object):
-        sa_index = -1
+        sa_index = 0
         for switch_msg in self.topology['switch_areas']:
             # Add switch area
             switch_area = SwitchArea(self.feeder.mRID + '.' + str(sa_index), self.connection)
