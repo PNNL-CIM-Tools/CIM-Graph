@@ -15,8 +15,8 @@ _log = logging.getLogger(__name__)
 
 class BlazegraphConnection(ConnectionInterface):
     def __init__(self, connection_params, cim_profile:str):
-        self.sparql = importlib.import_module('cimlab.loaders.sparql.' + cim_profile)
-        self.cim = importlib.import_module('cimlab.data_profile.' + cim_profile)
+        self.sparql = importlib.import_module('cimgraph.loaders.sparql.' + cim_profile)
+        self.cim = importlib.import_module('cimgraph.data_profile.' + cim_profile)
         self.sparql_obj: Optional[SPARQLWrapper] = None
         self.connection_params = connection_params
 
