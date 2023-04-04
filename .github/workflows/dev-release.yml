@@ -13,11 +13,10 @@ defaults:
 env:
   LANG: en_US.utf-8
   LC_ALL: en_US.utf-8
-  PYTHON_VERSION: '3.10'
+  PYTHON_VERSION: "3.10"
   RUNS_ON: ubuntu-latest
 
 jobs:
-
   bump_version:
     runs-on: ubuntu-latest
     steps:
@@ -29,13 +28,13 @@ jobs:
       #       check-out repo and set-up python
       #----------------------------------------------
       - name: Checkout code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
         with:
           fetch-depth: 0
 
       - name: Set up Python ${{ env.PYTHON_VERSION }}
         id: setup-python
-        uses: actions/setup-python@v2
+        uses: actions/setup-python@v4
         with:
           python-version: ${{ env.PYTHON_VERSION }}
 
@@ -55,7 +54,7 @@ jobs:
       #----------------------------------------------
       - name: Load cached venv
         id: cached-poetry-dependencies
-        uses: actions/cache@v2.1.7
+        uses: actions/cache@v3
         with:
           path: .venv
           key: venv-${{ runner.os }}-${{ steps.setup-python.outputs.python-version }}-${{ hashFiles('**/poetry.lock') }}
@@ -92,11 +91,11 @@ jobs:
           NEW_TAG="v$(poetry version --short)"
           echo "NEW_TAG=$(echo ${NEW_TAG})" >> $GITHUB_ENV
 
-#           while [[ ! $(git tag -l "$tag_in_question") = '' ]]
-#           do
-#             poetry version prerelease
-#             tag_in_question="v$(poetry version --short)"
-#           loop
+      #           while [[ ! $(git tag -l "$tag_in_question") = '' ]]
+      #           do
+      #             poetry version prerelease
+      #             tag_in_question="v$(poetry version --short)"
+      #           loop
 
       #---------------------------------------------------------------
       # create build artifacts to be included as part of release
@@ -105,7 +104,9 @@ jobs:
         run: |
           poetry build -vvv
 
-      - uses: ncipollo/release-action@v1
+      - name: Create Release
+        uses: ncipollo/release-action@v1.12.0
+
         with:
           artifacts: "dist/*.gz,dist/*.whl"
           artifactErrorsFailBuild: true
@@ -116,7 +117,7 @@ jobs:
           token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Publish pre-release to pypi
-        if: github.repository_owner == 'GRIDAPPSD'
+        if: github.repository_owner == 'PNNL-CIM-Tools'
         run: |
           poetry config pypi-token.pypi ${{ secrets.PYPI_TOKEN }}
           poetry publish
