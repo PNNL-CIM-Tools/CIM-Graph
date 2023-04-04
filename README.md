@@ -1,4 +1,4 @@
-# CIM-Graph Library
+# CIMantic Graphs Library
 
 Python library for creating in-memory labeled property graphs for creating, parsing, and editing CIM power system models. It creates Python object instances in memory using a data profile exported from a specified CIM profile (e.g. IEC61970cim18v01 or GridAPPS-D CIM100 RC4_2021).
 
