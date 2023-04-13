@@ -7,14 +7,14 @@ import re
 import sys
 from typing import Dict, List
 
-from gridappsd import GridAPPSD
-from SPARQLWrapper import JSON, POST, SPARQLWrapper
-
 from cimgraph.data_profile import CIM_PROFILE
 from cimgraph.loaders import (ConnectionInterface, ConnectionParameters,
                               Parameter, QueryResponse)
 from cimgraph.loaders.blazegraph.blazegraph import BlazegraphConnection
 from cimgraph.models import add_to_catalog, add_to_typed_catalog
+from SPARQLWrapper import JSON, POST, SPARQLWrapper
+
+from gridappsd import GridAPPSD
 
 cim = None
 sparql = None
@@ -23,8 +23,8 @@ sparql = None
 def set_cim_profile(cim_profile: CIM_PROFILE):
     global cim
     global sparql
-    cim = importlib.import_module('cimlab.data_profile.' + cim_profile)
-    sparql = importlib.import_module('cimlab.loaders.sparql.' + cim_profile)
+    cim = importlib.import_module('cimgraph.data_profile.' + cim_profile)
+    sparql = importlib.import_module('cimgraph.loaders.sparql.' + cim_profile)
 
 os.environ["GRIDAPPSD_ADDRESS"] = "localhost"
 os.environ["GRIDAPPSD_PORT"] = "61613"

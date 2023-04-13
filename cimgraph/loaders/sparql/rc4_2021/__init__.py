@@ -9,8 +9,8 @@ import cimgraph.loaders.sparql.rc4_2021.asset_info as AssetInfoSPARQL
 import cimgraph.loaders.sparql.rc4_2021.base_voltage as BaseVoltageSPARQL
 import cimgraph.loaders.sparql.rc4_2021.battery_unit as BatteryUnitSPARQL
 import cimgraph.loaders.sparql.rc4_2021.breaker as BreakerSPARQL
-# import cimlab.loaders.sparql.rc4_2021.bus_bar_section as BusBarSectionSPARQL
-# import cimlab.loaders.sparql.rc4_2021.bus_bar_section_info as BusBarSectionInfoSPARQL
+# import cimgraph.loaders.sparql.rc4_2021.bus_bar_section as BusBarSectionSPARQL
+# import cimgraph.loaders.sparql.rc4_2021.bus_bar_section_info as BusBarSectionInfoSPARQL
 #c
 import cimgraph.loaders.sparql.rc4_2021.cable_info as CableInfoSPARQL
 import cimgraph.loaders.sparql.rc4_2021.concentric_neutral_cable_info as ConcentricNeutralCableInfoSPARQL

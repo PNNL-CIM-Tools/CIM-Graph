@@ -33,7 +33,7 @@ The CIM-Graph library supports multiple CIM profiles, which can be exported usin
 When importing the library, the CIM profile must be specified using the gridappsd-python constructor or directly as
 
 ```python
-import cimlab.data_profile.rc4_2021 as cim
+import cimgraph.data_profile.rc4_2021 as cim
 ```
 
 or by using `importlib`:
@@ -41,7 +41,7 @@ or by using `importlib`:
 ```python
 import importlib
 cim_profile = 'rc4_2021'
-cim = importlib.import_module('cimlab.data_profile.' + cim_profile)
+cim = importlib.import_module('cimgraph.data_profile.' + cim_profile)
 ```
 
 ## Model Initialization

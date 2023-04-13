@@ -5,18 +5,17 @@ import logging
 import re
 from typing import Dict, List, Optional
 
-from SPARQLWrapper import JSON, POST, SPARQLWrapper
-
 from cimgraph.loaders import (ConnectionInterface, ConnectionParameters,
                               Parameter, QueryResponse)
 from cimgraph.models.model_parsers import add_to_catalog, add_to_typed_catalog
+from SPARQLWrapper import JSON, POST, SPARQLWrapper
 
 _log = logging.getLogger(__name__)
 
 class BlazegraphConnection(ConnectionInterface):
     def __init__(self, connection_params, cim_profile:str):
-        self.sparql = importlib.import_module('cimlab.loaders.sparql.' + cim_profile)
-        self.cim = importlib.import_module('cimlab.data_profile.' + cim_profile)
+        self.sparql = importlib.import_module('cimgraph.loaders.sparql.' + cim_profile)
+        self.cim = importlib.import_module('cimgraph.data_profile.' + cim_profile)
         self.sparql_obj: Optional[SPARQLWrapper] = None
         self.connection_params = connection_params
 
