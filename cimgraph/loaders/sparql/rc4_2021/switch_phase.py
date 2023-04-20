@@ -22,7 +22,6 @@ def get_all_attributes(feeder_mrid: str, typed_catalog: dict[type, dict[str, obj
         PREFIX r:  <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
         PREFIX cim:  <http://iec.ch/TC57/CIM100#>
         SELECT ?mRID ?name ?Location ?Switch ?closed ?normalOpen ?phaseSide1 ?phaseSide2
-        (group_concat(distinct ?Terminal; separator=";") as ?Terminals) 
         (group_concat(distinct ?Measurement; separator=";") as ?Measurements) 
 
 
@@ -36,7 +35,7 @@ def get_all_attributes(feeder_mrid: str, typed_catalog: dict[type, dict[str, obj
     # add all attributes
     query_message += """               } 
         ?eq cim:SwitchPhase.Switch ?sw.
-        ?sw cim:IdentifiedObject ?Switch.
+        ?sw cim:IdentifiedObject.mRID ?Switch.
         ?sw cim:Equipment.EquipmentContainer ?fdr.
         ?fdr cim:IdentifiedObject.mRID ?fdrid.
         ?eq cim:IdentifiedObject.mRID ?mRID.
@@ -45,25 +44,22 @@ def get_all_attributes(feeder_mrid: str, typed_catalog: dict[type, dict[str, obj
         OPTIONAL {?eq cim:PowerSystemResource.Location ?loc.
         ?loc cim:IdentifiedObject.mRID ?Location.}
 
-        OPTIONAL {?t cim:Terminal.ConductingEquipment ?eq.
-                  ?t cim:IdentifiedObject.mRID ?Terminal.}
-
-        OPTIONAL {?meas cim:Measurement.PowerSystemResource ?switch.
+        OPTIONAL {?meas cim:Measurement.PowerSystemResource ?sw.
                   ?meas cim:Measurement.phases ?measphs.
+                  bind(strafter(str(?measphs),"PhaseCode.") as ?measphase)
                   ?meas cim:IdentifiedObject.mRID ?meas_id.
                   ?meas a ?meas_cls.
                   bind(concat(str(?meas_id),",",strafter(str(?meas_cls),"CIM100#")) as ?Measurement).}
 
-        OPTIONAL {?eq cim:SwitchPhase.closed ?closed>
-        OPTIONAL {?eq cim:SwitchPhase.normalOpen ?normalOpen>
+        OPTIONAL {?eq cim:SwitchPhase.closed ?closed.}
+        OPTIONAL {?eq cim:SwitchPhase.normalOpen ?normalOpen.}
         OPTIONAL {?eq cim:SwitchPhase.phaseSide1 ?phs1.
                  bind(strafter(str(?phs1),"SinglePhaseKind.") as ?phaseSide1)}
-        OPTIONAL {?eq <cim:SwitchPhase.phaseSide2 ?ph2.
+        OPTIONAL {?eq cim:SwitchPhase.phaseSide1 ?phs2.
                  bind(strafter(str(?phs2),"SinglePhaseKind.") as ?phaseSide2)}
 
-        FILTER regex(STR(?measphs), ?phase)
-
-        OPTIONAL {
+		FILTER (regex(STR(?measphase), ?phaseSide1)  || regex(STR(?measphase), ?phaseSide2))
+        
         }
         GROUP by ?mRID ?name ?Location ?Switch ?closed ?normalOpen ?phaseSide1 ?phaseSide2
 

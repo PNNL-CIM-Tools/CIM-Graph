@@ -60,7 +60,7 @@ def get_all_attributes(feeder_mrid: str, typed_catalog: dict[type, dict[str, obj
         OPTIONAL {?eq cim:Switch.retained ?retained.}
 
         OPTIONAL {?phs cim:SwitchPhase.Switch ?eq.
-                  ?phs cim:IdentifiedObject ?Switch_Phase.}
+                  ?phs cim:IdentifiedObject.mRID ?Switch_Phase.}
         }
         GROUP by ?mRID ?name ?BaseVoltage ?Location ?ratedCurrent ?normalOpen ?open ?retained
 

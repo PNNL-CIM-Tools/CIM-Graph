@@ -14,6 +14,7 @@ import cimgraph.loaders.sparql.rc4_2021.breaker as BreakerSPARQL
 #c
 import cimgraph.loaders.sparql.rc4_2021.cable_info as CableInfoSPARQL
 import cimgraph.loaders.sparql.rc4_2021.concentric_neutral_cable_info as ConcentricNeutralCableInfoSPARQL
+import cimgraph.loaders.sparql.rc4_2021.connectivity_node as ConnectivityNodeSPARQL
 #d
 import cimgraph.loaders.sparql.rc4_2021.disconnector as DisconnectorSPARQL
 import cimgraph.loaders.sparql.rc4_2021.discrete as DiscreteSPARQL
