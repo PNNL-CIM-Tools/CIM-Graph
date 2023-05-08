@@ -55,7 +55,7 @@ def get_all_attributes(feeder_mrid: str, typed_catalog: dict[type, dict[str, obj
         OPTIONAL {?eq cim:SwitchPhase.normalOpen ?normalOpen.}
         OPTIONAL {?eq cim:SwitchPhase.phaseSide1 ?phs1.
                  bind(strafter(str(?phs1),"SinglePhaseKind.") as ?phaseSide1)}
-        OPTIONAL {?eq cim:SwitchPhase.phaseSide1 ?phs2.
+        OPTIONAL {?eq cim:SwitchPhase.phaseSide2 ?phs2.
                  bind(strafter(str(?phs2),"SinglePhaseKind.") as ?phaseSide2)}
 
 		FILTER (regex(STR(?measphase), ?phaseSide1)  || regex(STR(?measphase), ?phaseSide2))

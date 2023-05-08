@@ -77,7 +77,7 @@ def get_all_attributes(feeder_mrid: str, typed_catalog: dict[type, dict[str, obj
         OPTIONAL {?enol cim:NoLoadTest.EnergisedEnd ?eq.
                   ?enol cim:IdentifiedObject.mRID ?EnergisedEndNoLoadTests.}
                   
-        OPTIONAL {?tac cim:TransformerCoreAdmittace.TransformerEnd ?eq.
+        OPTIONAL {?tac cim:TransformerCoreAdmittance.TransformerEnd ?eq.
                   ?tac cim:IdentifiedObject.mRID ?CoreAdmittance.}
           
         OPTIONAL {?frmesh cim:TransformerMeshImpedance.FromTransformerEnd ?eq.
