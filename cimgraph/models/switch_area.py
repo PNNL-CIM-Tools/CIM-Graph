@@ -43,10 +43,10 @@ class SwitchArea:
         for obj in conn_nodes:
             add_to_catalog(obj, self.connectivity_nodes)
             add_to_typed_catalog(obj, self.typed_catalog)
-        bound_sw = self.connection.create_default_instances(self.feeder_mrid, switch_msg['boundary_switches'])
-        for obj in bound_sw:
-            add_to_catalog(obj, self.boundary_switches)
-            add_to_typed_catalog(obj, self.typed_catalog)
+#        bound_sw = self.connection.create_default_instances(self.feeder_mrid, switch_msg['boundary_switches'])
+#        for obj in bound_sw:
+#            add_to_catalog(obj, self.boundary_switches)
+#            add_to_typed_catalog(obj, self.typed_catalog)
 
         sa_index = 0
         for sec_area_msg in switch_msg['secondary_areas']:

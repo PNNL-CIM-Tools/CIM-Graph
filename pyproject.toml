@@ -4,7 +4,7 @@ version = "v0.1.230404"
 description = "CIM Graph"
 authors = ["C. Allwardt <3979063+craig8@users.noreply.github.com>"]
 packages = [
-    { include = "cimlab" }
+    { include = "cimgraph" }
 ]
 readme = "README.md"
 
