@@ -1,6 +1,6 @@
-# CIM-Graph Library
+# CIMantic Graphs Library
 
-Python library for parsing CIM power system models in distributed ADMS applications. It creates Python object instances in memory using a data profile exported from a specified CIM profile (e.g. GridAPPS-D CIM100 RC4_2021 profile).
+Python library for creating in-memory labeled property graphs for creating, parsing, and editing CIM power system models. It creates Python object instances in memory using a data profile exported from a specified CIM profile (e.g. IEC61970cim18v01 or GridAPPS-D CIM100 RC4_2021).
 
 The library is being expanded to cover centralized applications, transmission models, and real-time editing of CIM XML models natively.
 
@@ -47,6 +47,20 @@ cim = importlib.import_module('cimgraph.data_profile.' + cim_profile)
 ## Model Initialization
 
 The CIM-Graph library creates object instances populated with the attributes of `name` and `mRID` for all addressable and unaddressable equipment in each distributed area. All other attributes are `None` or `[]` by default.
+
+## Transmission Node-Breaker Models
+
+[in development]
+
+## Transmission Bus-Branch Models
+
+[in development]
+
+## Centralized Feeder Models
+
+[in development]
+
+## Distributed Feeder Models
 
 ### Usage with GridAPPS-D Context Manager
 
