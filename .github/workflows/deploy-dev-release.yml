@@ -1,0 +1,29 @@
+---
+  name: Deploy Pre-Release Artifacts
+  
+  on:
+    push:
+      branches:
+      - develop
+    workflow_dispatch:
+      
+  defaults:
+    run:
+      shell: bash
+  
+  env:
+    LANG: en_US.utf-8
+    LC_ALL: en_US.utf-8
+    PYTHON_VERSION: '3.10'
+  
+  jobs:
+    call-deploy-release:
+      permissions:
+        contents: write  # To push a branch
+        pull-requests: write  # To create a PR from that branch
+  
+      uses: GRIDAPPSD/.github/.github/workflows/deploy-dev-release.yml@main
+      secrets:
+        git-token: ${{ secrets.GITHUB_TOKEN }}
+        pypi-token: ${{ secrets.PYPI_TOKEN }}
+  
