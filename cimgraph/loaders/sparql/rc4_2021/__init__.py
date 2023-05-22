@@ -25,6 +25,7 @@ import cimgraph.loaders.sparql.rc4_2021.energy_consumer_phase as EnergyConsumerP
 import cimgraph.loaders.sparql.rc4_2021.fuse as FuseSPARQL
 #l
 import cimgraph.loaders.sparql.rc4_2021.linear_shunt_compensator as LinearShuntCompensatorSPARQL
+import cimgraph.loaders.sparql.rc4_2021.linear_shunt_compensator_phase as LinearShuntCompensatorPhaseSPARQL
 import cimgraph.loaders.sparql.rc4_2021.load_break_switch as LoadBreakSwitchSPARQL
 #n
 import cimgraph.loaders.sparql.rc4_2021.no_load_test as NoLoadTestSPARQL
@@ -46,6 +47,7 @@ import cimgraph.loaders.sparql.rc4_2021.recloser as RecloserSPARQL
 #s
 import cimgraph.loaders.sparql.rc4_2021.sectionaliser as SectionaliserSPARQL
 import cimgraph.loaders.sparql.rc4_2021.short_circuit_test as ShortCircuitTestSPARQL
+import cimgraph.loaders.sparql.rc4_2021.shunt_compensator_phase as ShuntCompensatorPhaseSPARQL
 import cimgraph.loaders.sparql.rc4_2021.switch_phase as SwitchPhaseSPARQL
 import cimgraph.loaders.sparql.rc4_2021.synchronous_machine as SynchronousMachineSPARQL
 #t
