@@ -53,7 +53,7 @@ def get_all_attributes(feeder_mrid: str, typed_catalog: dict[type, dict[str, obj
         ?tank cim:IdentifiedObject.mRID ?TransformerTank.
 
         OPTIONAL {?eq cim:TransformerTankEnd.phases ?phs.
-                  bind(strafter(str(?conn),"#PhaseCode.") as ?phases).}
+                  bind(strafter(str(?phs),"#PhaseCode.") as ?phases).}
 
         OPTIONAL {?eq cim:TransformerEnd.endNumber ?endNumber.}
         OPTIONAL {?eq cim:TransformerEnd.grounded ?grounded.}
