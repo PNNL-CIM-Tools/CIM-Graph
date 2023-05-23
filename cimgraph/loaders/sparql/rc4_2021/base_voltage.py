@@ -22,6 +22,11 @@ def get_all_attributes(feeder_mrid: str, typed_catalog: dict[type, dict[str, obj
         PREFIX r:  <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
         PREFIX cim:  <http://iec.ch/TC57/CIM100#>
         SELECT ?mRID ?name ?nominalVoltage
+        (group_concat(distinct ?ConductingEq; separator=';') as ?ConductingEquipment)
+        (group_concat(distinct ?TransformerEnd; separator=';') as ?TransformerEnds)
+        (group_concat(distinct ?TopoNode; separator=';') as ?TopologicalNode)
+        (group_concat(distinct ?VoltLevel; separator=';') as ?VoltageLevel)
+        (group_concat(distinct ?NetworkAsset; separator=';') as ?NetworkAssetDeployment)
         WHERE {          
           ?eq r:type cim:BaseVoltage.
           VALUES ?fdrid {"%s"}
@@ -31,15 +36,27 @@ def get_all_attributes(feeder_mrid: str, typed_catalog: dict[type, dict[str, obj
         query_message += ' "%s" \n'%mrid
     # add all attributes
     query_message += """               } 
-        ?eq cim:Equipment.EquipmentContainer ?fdr.
+        ?condeq cim:ConductingEquipment.BaseVoltage ?eq.
+        ?condeq cim:IdentifiedObject.mRID ?ConductingEq.
+        ?condeq cim:Equipment.EquipmentContainer ?fdr.
         ?fdr cim:IdentifiedObject.mRID ?fdrid.
         ?eq cim:IdentifiedObject.mRID ?mRID.
         ?eq cim:IdentifiedObject.name ?name.
         
         OPTIONAL {?eq cim:BaseVoltage.nominalVoltage ?nominalVoltage.}
-        
+
+                  
+        OPTIONAL {?xfend cim:TransformerEnd.BaseVoltage ?eq.
+                  ?xfend cim:IdentifiedObject.mRID ?TransformerEnd.}
+                  
+        OPTIONAL {?level cim:VoltageLevel.BaseVoltage ?eq.
+                  ?level cim:IdentifiedObject.mRID ?VoltLevel.}
+                  
+        OPTIONAL {?asset cim:AssetDeployment.BaseVoltage ?eq.
+                  ?asset cim:IdentifiedObject.mRID ?NetworkAsset.}
 
         }
+        GROUP by  ?name ?mRID ?nominalVoltage
         ORDER by  ?name
         """
     return query_message
