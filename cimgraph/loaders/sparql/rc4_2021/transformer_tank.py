@@ -22,7 +22,7 @@ def get_all_attributes(feeder_mrid: str, typed_catalog: dict[type, dict[str, obj
     query_message = """
         PREFIX r:  <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
         PREFIX cim:  <http://iec.ch/TC57/CIM100#>
-        SELECT ?mRID ?name ?Location ?vectorGroup ?aggregate ?inService ?TransformerTankInfo
+        SELECT ?mRID ?name ?Location ?vectorGroup ?aggregate ?inService ?TransformerTankInfo ?PowerTransformer
         (group_concat(distinct ?TransformerTankEnd; separator=";") as ?TransformerTankEnds) 
         (group_concat(distinct ?Measurement; separator=";") as ?Measurements) 
         (group_concat(distinct ?Asset; separator=";") as ?Assets) 
@@ -67,7 +67,7 @@ def get_all_attributes(feeder_mrid: str, typed_catalog: dict[type, dict[str, obj
                   bind(concat(str(?meas_id),",",strafter(str(?meas_cls),"CIM100#")) as ?Measurement).}
         
         }
-        GROUP by ?mRID ?name ?Location ?vectorGroup ?aggregate ?inService ?TransformerTankInfo
+        GROUP by ?mRID ?name ?Location ?vectorGroup ?aggregate ?inService ?TransformerTankInfo ?PowerTransformer
         ORDER by ?name
         """
     return query_message

@@ -172,7 +172,7 @@ class GridappsdConnection(ConnectionInterface):
             except:
                 obj_class = attribute_class
             class_type = eval(f"cim.{obj_class}")
-            if type(class_type) is type:
+            if type(class_type) is type and len(obj_mrid) > 0:
                 result = self.create_object(typed_catalog, class_type, obj_mrid)
 
             else:
@@ -196,7 +196,7 @@ class GridappsdConnection(ConnectionInterface):
                 except:
                     obj_class = attribute_class
                 class_type = eval(f"cim.{obj_class}")
-                if type(class_type) is type:
+                if type(class_type) is type and len(obj_mrid) > 0:
                     result = self.create_object(typed_catalog, class_type, obj_mrid)
                     obj_list.append(result)
                 else:

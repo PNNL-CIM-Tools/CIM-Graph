@@ -49,24 +49,25 @@ def build_cim_object(conn, cim, feeder_mrid, typed_catalog:Dict, mRID_list:List[
         cls = class_name
         mRID = result['mRID']['value']
         name = result['name']['value']
-        try: 
-            class_type = eval(f"cim.{cls}")
-            #add class to typed_catalog if not already defined
-            if class_type not in typed_catalog.keys():
-                typed_catalog[class_type] = {}
+        if len(mRID) > 0:
+            try: 
+                class_type = eval(f"cim.{cls}")
+                #add class to typed_catalog if not already defined
+                if class_type not in typed_catalog.keys():
+                    typed_catalog[class_type] = {}
 
-    #         for mRID in mRID_list:
-                #add object to typed_catalog if not already included
-            if mRID in typed_catalog[class_type].keys():
-                obj = typed_catalog[class_type][mRID]
-            else:
-                    obj = class_type(mRID = mRID, name = name)
-                    add_to_typed_catalog(obj, typed_catalog)
-        except:
-            obj = mRID
-            print('warning: object class missing from data profile:', cls)
+        #         for mRID in mRID_list:
+                    #add object to typed_catalog if not already included
+                if mRID in typed_catalog[class_type].keys():
+                    obj = typed_catalog[class_type][mRID]
+                else:
+                        obj = class_type(mRID = mRID, name = name)
+                        add_to_typed_catalog(obj, typed_catalog)
+            except:
+                obj = mRID
+                print('warning: object class missing from data profile:', cls)
 
-        obj_list.append(obj)
+            obj_list.append(obj)
     return obj_list
 
 
