@@ -21,7 +21,7 @@ def get_all_attributes(feeder_mrid: str, typed_catalog: dict[type, dict[str, obj
     query_message = """
         PREFIX r:  <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
         PREFIX cim:  <http://iec.ch/TC57/CIM100#>
-        SELECT ?mRID ?name 
+        SELECT ?mRID ?name ?nominalVoltage
         WHERE {          
           ?eq r:type cim:BaseVoltage.
           VALUES ?fdrid {"%s"}
@@ -35,8 +35,9 @@ def get_all_attributes(feeder_mrid: str, typed_catalog: dict[type, dict[str, obj
         ?fdr cim:IdentifiedObject.mRID ?fdrid.
         ?eq cim:IdentifiedObject.mRID ?mRID.
         ?eq cim:IdentifiedObject.name ?name.
-
-
+        
+        OPTIONAL {?eq cim:BaseVoltage.nominalVoltage ?nominalVoltage.}
+        
 
         }
         ORDER by  ?name
