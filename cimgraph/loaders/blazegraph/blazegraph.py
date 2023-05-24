@@ -169,8 +169,7 @@ class BlazegraphConnection(ConnectionInterface):
                 if type(class_type) is type and len(obj_mrid) > 0:
                     result = self.create_object(typed_catalog, class_type, obj_mrid)
                     obj_list.append(result)
-                else:
-                    obj_list = values
+
         else:
             obj_list = values
         #set attribute of queried object to list parsed from query results
