@@ -41,10 +41,10 @@ class SecondaryArea:
         for obj in conn_nodes:
             add_to_catalog(obj, self.connectivity_nodes)
             add_to_typed_catalog(obj, self.typed_catalog)
-        xfmr = self.connection.create_default_instances(self.feeder_mrid, switch_msg['distribution_transformer'])
-        for obj in xfmr:
-            add_to_catalog(obj, self.distribution_transformer)
-            add_to_typed_catalog(obj, self.typed_catalog)
+#        xfmr = self.connection.create_default_instances(self.feeder_mrid, switch_msg['distribution_transformer'])
+#        for obj in xfmr:
+#            add_to_catalog(obj, self.distribution_transformer)
+#            add_to_typed_catalog(obj, self.typed_catalog)
             
     def get_all_attributes(self, cim_class):
         if cim_class in self.typed_catalog:

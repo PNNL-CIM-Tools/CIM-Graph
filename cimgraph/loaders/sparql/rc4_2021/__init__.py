@@ -9,11 +9,12 @@ import cimgraph.loaders.sparql.rc4_2021.asset_info as AssetInfoSPARQL
 import cimgraph.loaders.sparql.rc4_2021.base_voltage as BaseVoltageSPARQL
 import cimgraph.loaders.sparql.rc4_2021.battery_unit as BatteryUnitSPARQL
 import cimgraph.loaders.sparql.rc4_2021.breaker as BreakerSPARQL
-# import cimlab.loaders.sparql.rc4_2021.bus_bar_section as BusBarSectionSPARQL
-# import cimlab.loaders.sparql.rc4_2021.bus_bar_section_info as BusBarSectionInfoSPARQL
+# import cimgraph.loaders.sparql.rc4_2021.bus_bar_section as BusBarSectionSPARQL
+# import cimgraph.loaders.sparql.rc4_2021.bus_bar_section_info as BusBarSectionInfoSPARQL
 #c
 import cimgraph.loaders.sparql.rc4_2021.cable_info as CableInfoSPARQL
 import cimgraph.loaders.sparql.rc4_2021.concentric_neutral_cable_info as ConcentricNeutralCableInfoSPARQL
+import cimgraph.loaders.sparql.rc4_2021.connectivity_node as ConnectivityNodeSPARQL
 #d
 import cimgraph.loaders.sparql.rc4_2021.disconnector as DisconnectorSPARQL
 import cimgraph.loaders.sparql.rc4_2021.discrete as DiscreteSPARQL
@@ -24,6 +25,7 @@ import cimgraph.loaders.sparql.rc4_2021.energy_consumer_phase as EnergyConsumerP
 import cimgraph.loaders.sparql.rc4_2021.fuse as FuseSPARQL
 #l
 import cimgraph.loaders.sparql.rc4_2021.linear_shunt_compensator as LinearShuntCompensatorSPARQL
+import cimgraph.loaders.sparql.rc4_2021.linear_shunt_compensator_phase as LinearShuntCompensatorPhaseSPARQL
 import cimgraph.loaders.sparql.rc4_2021.load_break_switch as LoadBreakSwitchSPARQL
 #n
 import cimgraph.loaders.sparql.rc4_2021.no_load_test as NoLoadTestSPARQL
@@ -45,6 +47,7 @@ import cimgraph.loaders.sparql.rc4_2021.recloser as RecloserSPARQL
 #s
 import cimgraph.loaders.sparql.rc4_2021.sectionaliser as SectionaliserSPARQL
 import cimgraph.loaders.sparql.rc4_2021.short_circuit_test as ShortCircuitTestSPARQL
+import cimgraph.loaders.sparql.rc4_2021.shunt_compensator_phase as ShuntCompensatorPhaseSPARQL
 import cimgraph.loaders.sparql.rc4_2021.switch_phase as SwitchPhaseSPARQL
 import cimgraph.loaders.sparql.rc4_2021.synchronous_machine as SynchronousMachineSPARQL
 #t

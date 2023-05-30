@@ -15,60 +15,62 @@ def get_all_attributes(feeder_mrid: str, typed_catalog: dict[type, dict[str, obj
     Returns:
         query_message: query string that can be used in blazegraph connection or STOMP client
     """
-    
-    mrid_list = list(typed_catalog[cim.Breaker].keys())
+
+    mrid_list = list(typed_catalog[cim.ShuntCompensatorPhase].keys())
+    asset_list = list(typed_catalog[cim.LinearShuntCompensator].keys())
     
     query_message = """
         PREFIX r:  <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
         PREFIX cim:  <http://iec.ch/TC57/CIM100#>
-        SELECT ?mRID ?name ?BaseVoltage ?Location ?inTransitTime ?breakingCapacity ?ratedCurrent ?normalOpen 
-        ?open ?retained
-        (group_concat(distinct ?Terminal; separator=";") as ?Terminals) 
+        SELECT ?mRID ?name ?Location ?phase ?ShuntCompensator ?maximumSections 
+        ?normalSections ?sections
         (group_concat(distinct ?Measurement; separator=";") as ?Measurements) 
-        (group_concat(distinct ?Switch_Phase; separator=";") as ?SwitchPhase) 
-
         WHERE {          
-          ?eq r:type cim:Breaker.
+          ?eq r:type cim:ShuntCompensatorPhase.
           VALUES ?fdrid {"%s"}
           VALUES ?mRID {"""%feeder_mrid
     # add all equipment mRID
     for mrid in mrid_list:
         query_message += ' "%s" \n'%mrid
+        
+    # add all assets
+    query_message += """               }
+        VALUES ?ShuntCompensator {"""
+    for asset_mrid in asset_list:
+        query_message += ' "%s" \n' % asset_mrid
+        
     # add all attributes
     query_message += """               } 
-        ?eq cim:Equipment.EquipmentContainer ?fdr.
+        
+        #trace back up to EquipmentContainer via ShuntCompensator
         ?fdr cim:IdentifiedObject.mRID ?fdrid.
+        ?cap cim:Equipment.EquipmentContainer ?fdr.
+        ?eq cim:ShuntCompensatorPhase.ShuntCompensator ?cap.
+        ?cap cim:IdentifiedObject.mRID ?ShuntCompensator.
+
         ?eq cim:IdentifiedObject.mRID ?mRID.
         ?eq cim:IdentifiedObject.name ?name.
         
-        OPTIONAL {?eq cim:ConductingEquipment.BaseVoltage ?bv.
-        ?bv cim:IdentifiedObject.mRID ?BaseVoltage.}
-
         OPTIONAL {?eq cim:PowerSystemResource.Location ?loc.
-        ?loc cim:IdentifiedObject.mRID ?Location.}
+                  ?loc cim:IdentifiedObject.mRID ?Location.}
 
-        ?t cim:Terminal.ConductingEquipment ?eq.
-        ?t cim:IdentifiedObject.mRID ?Terminal
-
-        OPTIONAL {?meas cim:Measurement.PowerSystemResource ?eq.
+        OPTIONAL {?meas cim:Measurement.PowerSystemResource ?line.
+                  ?meas cim:Measurement.phases ?measphs.
                   ?meas cim:IdentifiedObject.mRID ?meas_id.
                   ?meas a ?meas_cls.
                   bind(concat(str(?meas_id),",",strafter(str(?meas_cls),"CIM100#")) as ?Measurement).}
-
-        OPTIONAL {?eq cim:Breaker.inTransitTime ?inTransitTime.}
         
-        OPTIONAL {?eq cim:ProtectedSwitch.breakingCapacity ?breakingCapacity.}
-        OPTIONAL {?eq cim:Switch.ratedCurrent ?ratedCurrent.}
-        OPTIONAL {?eq cim:Switch.normalOpen ?normalOpen.}
-        OPTIONAL {?eq cim:Switch.open ?open.}
-        OPTIONAL {?eq cim:Switch.retained ?retained.}
+        OPTIONAL {?eq cim:ShuntCompensatorPhase.phase ?phs.
+                 bind(strafter(str(?phs),"SinglePhaseKind.") as ?phase)}
+        OPTIONAL {?eq cim:ShuntCompensatorPhase.maximumSections ?maximumSections.}
+        OPTIONAL {?eq cim:ShuntCompensatorPhase.normalSections ?normalSections.}
+        OPTIONAL {?eq cim:ShuntCompensatorPhase.sections ?sections.}
 
-        OPTIONAL {?phs cim:SwitchPhase.Switch ?eq.
-                  ?phs cim:IdentifiedObject.mRID ?Switch_Phase.}
+        #FILTER regex(STR(?measphs), ?phase)
+
         }
-        GROUP by ?mRID ?name ?BaseVoltage ?Location ?inTransitTime ?breakingCapacity ?ratedCurrent ?normalOpen 
-        ?open ?retained
-
+        GROUP by ?mRID ?name ?Location ?phase ?ShuntCompensator ?maximumSections ?normalSections ?sections ?measphs
         ORDER by  ?name
+
         """
     return query_message
