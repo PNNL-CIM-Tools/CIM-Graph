@@ -63,5 +63,7 @@ import cimgraph.loaders.sparql.rc4_2021.transformer_tank_info as TransformerTank
 #w
 import cimgraph.loaders.sparql.rc4_2021.wire_position as WirePositionSPARQL
 import cimgraph.loaders.sparql.rc4_2021.wire_spacing_info as WireSpacingInfoSPARQL
-from cimgraph.loaders.sparql.rc4_2021.get_class_type import \
-    get_class_type_sparql
+
+from cimgraph.loaders.sparql.rc4_2021.get_class_type import get_class_type_sparql
+from cimgraph.loaders.sparql.rc4_2021.get_all_edges import get_all_edges_sparql
+

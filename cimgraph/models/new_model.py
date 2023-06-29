@@ -5,8 +5,8 @@ import json
 import logging
 import re
 
-from cimlab.loaders import ConnectionInterface, QueryResponse
-from cimlab.models.model_parsers import add_to_catalog, add_to_typed_catalog, cim_dump, item_dump
+from cimgraph.loaders import ConnectionInterface, QueryResponse
+from cimgraph.models.model_parsers import add_to_catalog, add_to_typed_catalog, cim_dump, item_dump
 
 _log = logging.getLogger(__name__)
 

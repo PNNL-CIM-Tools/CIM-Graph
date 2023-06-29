@@ -92,4 +92,9 @@ class DistributedModel:
 
         return json_dump
     
-    
+    def get_all_edges(self, cim_class):
+        if cim_class in self.typed_catalog:
+            self.connection.get_all_edges(self.feeder.mRID, self.typed_catalog, cim_class)
+        else:
+            _log.info('no instances of '+str(cim_class.__name__)+' found in catalog.')
+
