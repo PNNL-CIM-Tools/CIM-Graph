@@ -8,7 +8,7 @@ from typing import Dict, List, Optional
 import cimgraph.data_profile as cim
 from cimgraph.loaders import ConnectionInterface, QueryResponse
 from cimgraph.models.model_parsers import (add_to_catalog,
-                                           add_to_typed_catalog, cim_dump)
+                                           add_to_typed_catalog, cim_dump, cim_print)
 from cimgraph.models.switch_area import SwitchArea
 
 _log = logging.getLogger(__name__)
@@ -91,6 +91,15 @@ class DistributedModel:
             _log.info('no instances of '+str(cim_class.__name__)+' found in catalog.')
 
         return json_dump
+
+     def pprint(self, cim_class):
+        if cim_class in self.typed_catalog:
+            json_dump = cim_print(self.typed_catalog, cim_class)
+        else:
+            json_dump = {}
+            _log.info('no instances of '+str(cim_class.__name__)+' found in catalog.')
+
+        print(json_dump)
     
     def get_all_edges(self, cim_class):
         if cim_class in self.typed_catalog:

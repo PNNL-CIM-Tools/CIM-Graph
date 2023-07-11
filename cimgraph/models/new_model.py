@@ -6,7 +6,7 @@ import logging
 import re
 
 from cimgraph.loaders import ConnectionInterface, QueryResponse
-from cimgraph.models.model_parsers import add_to_catalog, add_to_typed_catalog, cim_dump, item_dump
+from cimgraph.models.model_parsers import add_to_catalog, add_to_typed_catalog, cim_dump, item_dump, cim_print
 
 _log = logging.getLogger(__name__)
 
@@ -56,6 +56,15 @@ class NewModel:
             _log.info('no instances of '+str(cim_class.__name__)+' found in catalog.')
 
         return json_dump
+
+    def pprint(self, cim_class):
+        if cim_class in self.typed_catalog:
+            json_dump = cim_print(self.typed_catalog, cim_class)
+        else:
+            json_dump = {}
+            _log.info('no instances of '+str(cim_class.__name__)+' found in catalog.')
+
+        print(json_dump)
     
     def upload(self):
         query = self.connection.upload(self.typed_catalog)
