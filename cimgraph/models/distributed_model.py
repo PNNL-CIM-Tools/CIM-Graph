@@ -92,7 +92,7 @@ class DistributedModel:
 
         return json_dump
 
-     def pprint(self, cim_class):
+    def pprint(self, cim_class):
         if cim_class in self.typed_catalog:
             json_dump = cim_print(self.typed_catalog, cim_class)
         else:
