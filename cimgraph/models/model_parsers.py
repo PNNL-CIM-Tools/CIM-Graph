@@ -38,7 +38,7 @@ def cim_print(typed_catalog:Dict, cim_class:type):
             value = getattr(typed_catalog[cim_class][mrid], attribute)
             if value is not None and value != []:
                 json_dump[mrid][attribute] = item_dump(value)
-    print(json_dump))
+    return json_dump
                         
 def item_dump(value):
     if type(value) is str:
@@ -57,19 +57,14 @@ def item_dump(value):
         result = value
     return result
 
-def item_print(value):
-    if type(value) is str:
-        result = value
-    elif type(value) is float:
-        result = value
-    elif type(value) is list:
-        result = []
-        for item in value:
-            result.append(item_dump(item))
-    elif value is None:
-        result = ''
-    elif type(type(value)) is type:
-        result = value.mRID
-    else:
-        result = value
-    return result
+def cim_dump(typed_catalog:Dict, cim_class:type):
+    mrid_list = list(typed_catalog[cim_class].keys())
+    attribute_list = list(cim_class().__dict__.keys())
+    json_dump = {}
+
+    for mrid in mrid_list:
+        json_dump[mrid] = {}
+        for attribute in attribute_list:
+            value = getattr(typed_catalog[cim_class][mrid], attribute)
+            json_dump[mrid][attribute] = item_dump(value)
+    return json.dumps(json_dump)

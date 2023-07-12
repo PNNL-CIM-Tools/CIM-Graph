@@ -7,7 +7,7 @@ from typing import Dict, List, Optional
 
 from cimgraph.loaders import (ConnectionInterface, ConnectionParameters,
                               Parameter, QueryResponse)
-from cimgraph.models.model_parsers import add_to_catalog, add_to_typed_catalog
+from cimgraph.models.model_parsers import add_to_catalog, add_to_typed_catalog, item_dump
 from SPARQLWrapper import JSON, POST, SPARQLWrapper
 
 _log = logging.getLogger(__name__)
