@@ -7,7 +7,7 @@ import re
 
 from cimgraph.loaders import ConnectionInterface, QueryResponse
 from cimgraph.models.model_parsers import add_to_catalog, add_to_typed_catalog, cim_dump, item_dump, cim_print
-
+from pprint import pprint as pyprint
 _log = logging.getLogger(__name__)
 
 @dataclass
@@ -64,7 +64,7 @@ class NewModel:
             json_dump = {}
             _log.info('no instances of '+str(cim_class.__name__)+' found in catalog.')
 
-        print(json_dump)
+        pyprint(json_dump)
     
     def upload(self):
         query = self.connection.upload(self.typed_catalog)
