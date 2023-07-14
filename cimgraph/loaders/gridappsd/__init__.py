@@ -54,10 +54,6 @@ class GridappsdConnection(ConnectionInterface):
         response = self.__gapps__.query_data(query, database_type, timeout)
         return response['data']
     
-    def execute(self, sparql_message):
-        params = ConnectionParameters([Parameter(key="url", value="http://localhost:8889/bigdata/namespace/kb/sparql")])
-        bg = BlazegraphConnection(params, 'rc4_2021')
-        return bg.execute(sparql_message)
 
     def create_default_instances(self, feeder_mrid: str | cim.Feeder, mrid_list: List[str]) -> List[object]:
         """ 
@@ -72,7 +68,7 @@ class GridappsdConnection(ConnectionInterface):
         #generate correct sparql message using create_default.py
         sparql_message = sparql.get_class_type_sparql(feeder_mrid, mrid_list)
         #execute sparql query
-        query_output = self.execute(sparql_message)
+        query_output = self.query_data(sparql_message)
         # parse query results and add new CIM objects to list
         object_list = [] 
         for result in query_output['results']['bindings']:
@@ -102,7 +98,7 @@ class GridappsdConnection(ConnectionInterface):
         #generate SPARQL message from correct loaders>sparql python script based on class name
         sparql_message = self.get_attributes_query(feeder_mrid, typed_catalog, cim_class)
         #execute sparql query
-        query_output = self.execute(sparql_message)
+        query_output = self.query_data(sparql_message)
 
         for result in query_output['results']['bindings']: #iterate through rows of response
             attribute_list = result.keys()
