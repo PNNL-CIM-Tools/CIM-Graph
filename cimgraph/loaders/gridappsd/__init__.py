@@ -26,15 +26,8 @@ def set_cim_profile(cim_profile: CIM_PROFILE):
     cim = importlib.import_module('cimgraph.data_profile.' + cim_profile)
     sparql = importlib.import_module('cimgraph.loaders.sparql.' + cim_profile)
 
-os.environ["GRIDAPPSD_ADDRESS"] = "localhost"
-os.environ["GRIDAPPSD_PORT"] = "61613"
 os.environ['GRIDAPPSD_APPLICATION_ID'] = 'gridappsd-cim-profile'
 os.environ['GRIDAPPSD_APPLICATION_STATUS'] = 'STARTED'
-os.environ['GRIDAPPSD_USER'] = 'app_user'
-os.environ['GRIDAPPSD_PASSWORD'] = '1234App'
-
-
-
 
 class GridappsdConnection(ConnectionInterface):
     __gapps__ = GridAPPSD()
