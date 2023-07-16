@@ -5,6 +5,25 @@ from typing import Dict, List, Optional
 
 import cimgraph.data_profile as cim
 
+def add_to_graph(obj: object, graph: Dict) -> Dict:
+    if type(obj) not in graph:
+        graph[type(obj)] = {}
+    if obj.mRID not in graph[type(obj)]:
+        graph[type(obj)][obj.mRID] = obj
+    return graph
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 def add_to_catalog(obj: object, catalog: Dict) -> Dict:
     if obj.mRID == None:

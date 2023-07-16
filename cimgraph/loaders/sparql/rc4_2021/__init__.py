@@ -66,4 +66,5 @@ import cimgraph.loaders.sparql.rc4_2021.wire_spacing_info as WireSpacingInfoSPAR
 
 from cimgraph.loaders.sparql.rc4_2021.get_class_type import get_class_type_sparql
 from cimgraph.loaders.sparql.rc4_2021.get_all_edges import get_all_edges_sparql
+from cimgraph.loaders.sparql.rc4_2021.get_all_nodes import get_all_nodes_sparql
 

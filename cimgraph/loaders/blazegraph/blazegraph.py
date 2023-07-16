@@ -5,9 +5,8 @@ import logging
 import re
 from typing import Dict, List, Optional
 
-from cimgraph.loaders import (ConnectionInterface, ConnectionParameters,
-                              Parameter, QueryResponse)
-from cimgraph.models.model_parsers import add_to_catalog, add_to_typed_catalog, item_dump
+from cimgraph.loaders import ConnectionInterface, ConnectionParameters, Parameter, QueryResponse
+from cimgraph.models.model_parsers import add_to_graph, add_to_catalog, add_to_typed_catalog, item_dump
 from SPARQLWrapper import JSON, POST, SPARQLWrapper
 
 _log = logging.getLogger(__name__)
@@ -34,6 +33,42 @@ class BlazegraphConnection(ConnectionInterface):
         self.sparql_obj.setMethod(POST)
         query_output = self.sparql_obj.query().convert()
         return query_output
+
+            
+    def create_new_graph(self, container:object) -> dict[type, dict[str, object]] :
+        graph = {}
+        # Generate SPARQL message from correct loaders>sparql python script based on class name
+        sparql_message = self.sparql.get_all_nodes_sparql(container)
+        # Execute sparql query
+        query_output = self.execute(sparql_message)
+        
+        for result in query_output['results']['bindings']:
+            # Parse query results
+            node = result['ConnectivityNode']['value']
+            terminal = result['Terminal']['value']
+            eq = result['Equipment']['value'].split(';')
+            eq_id = eq[0]
+            eq_class = eq[1]
+            # Add each object to graph
+            self.create_object(graph, self.cim.ConnectivityNode, node)
+            self.create_object(graph, self.cim.Terminal, terminal)
+            if eq_class in self.cim.__all__:
+                eq_class = eval(f"self.cim.{eq_class}")
+                self.create_object(graph, eq_class, eq_id)
+            else:
+                _log.warning('object class missing from data profile:' + str(eq_class))
+                continue
+            # Link objects in graph
+            graph[eq_class][eq_id].Terminals.append(graph[self.cim.Terminal][terminal])
+            graph[self.cim.ConnectivityNode][node].Terminals.append(graph[self.cim.Terminal][terminal])
+            setattr(graph[self.cim.Terminal][terminal], "ConnectivityNode", graph[self.cim.ConnectivityNode][node])
+            setattr(graph[self.cim.Terminal][terminal], "ConductingEquipment", graph[eq_class][eq_id])
+            
+        return graph
+    
+    
+    
+    
     
     def get_all_edges(self, feeder_mrid: str | cim.Feeder, typed_catalog: dict[type, dict[str, object]], cim_class: type):
         #generate SPARQL message from correct loaders>sparql python script based on class name
@@ -99,6 +134,21 @@ class BlazegraphConnection(ConnectionInterface):
                     setattr(typed_catalog[cim_class][mRID], edge[1], edge_object)
             else:
                 setattr(typed_catalog[cim_class][mRID], edge[1], value)
+
+
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
         
     def create_default_instances(self, feeder_mrid: str | cim.Feeder, mrid_list: List[str]) -> List[object]:
         """ 
@@ -327,3 +377,4 @@ class BlazegraphConnection(ConnectionInterface):
             setattr(typed_catalog[cim_class][mRID], attribute, obj_list)
         else:
             setattr(typed_catalog[cim_class][mRID], attribute, edge_object)
+            

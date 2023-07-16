@@ -17,13 +17,14 @@ _log = logging.getLogger(__name__)
 @dataclass
 class SecondaryArea:
     area_id: str
-    connection: ConnectionInterface
-    distribution_transformer: dict[str, object] = field(default_factory=dict)
-    addressable_equipment: dict[str, object] = field(default_factory=dict)
-    unaddressable_equipment: dict[str, object] = field(default_factory=dict)
-    connectivity_nodes: dict[str, object] = field(default_factory=dict)
+    uuid: str
+#     connection: ConnectionInterface
+    distribution_transformer: list[str] = field(default_factory=list)
+#     addressable_equipment: dict[str, object] = field(default_factory=dict)
+#     unaddressable_equipment: dict[str, object] = field(default_factory=dict)
+    connectivity_nodes: list[str] = field(default_factory=list)
     secondary_areas: list[object] = field(default_factory=list)
-    typed_catalog: dict[type, dict[str, object]] = field(default_factory=dict)
+    graph: dict[type, dict[str, object]] = field(default_factory=dict)
 
     # Initialize empty CIM objects for all equipment in secondary area
     def initialize_secondary_area(self, switch_msg: dict):

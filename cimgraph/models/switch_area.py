@@ -5,6 +5,7 @@ import logging
 import os
 import sys
 import time
+import uuid
 from dataclasses import dataclass, field
 from typing import List
 
@@ -20,13 +21,20 @@ _log = logging.getLogger(__name__)
 @dataclass
 class SwitchArea:
     area_id: str
+    uuid: str
     connection: ConnectionInterface
-    addressable_equipment: dict[str, object] = field(default_factory=dict)
-    unaddressable_equipment: dict[str, object] = field(default_factory=dict)
-    boundary_switches: dict[str, object] = field(default_factory=dict)
-    connectivity_nodes: dict[str, object] = field(default_factory=dict)
+#     addressable_equipment: dict[str, object] = field(default_factory=dict)
+#     unaddressable_equipment: dict[str, object] = field(default_factory=dict)
+    boundary_switches: list[str] = field(default_factory=list)
+    connectivity_nodes: list[str] = field(default_factory=list)
     secondary_areas: list[object] = field(default_factory=list)
-    typed_catalog: dict[type, dict[str, object]] = field(default_factory=dict)
+    graph: dict[type, dict[str, object]] = field(default_factory=dict)
+#     typed_catalog: dict[type, dict[str, object]] = field(default_factory=dict)
+
+    
+
+
+
 
     # Initialize empty CIM objects for all equipment in switch area
     def initialize_switch_area(self, switch_msg: dict):
@@ -82,10 +90,18 @@ class SwitchArea:
         return json_dump
 
     def pprint(self, cim_class):
-        if cim_class in self.typed_catalog:
-            json_dump = cim_print(self.typed_catalog, cim_class)
+        if cim_class in self.graph:
+            json_dump = cim_print(self.graph, cim_class)
         else:
             json_dump = {}
             _log.info('no instances of '+str(cim_class.__name__)+' found in catalog.')
 
         pyprint(json_dump)
+        
+    def get_all_edges(self, cim_class):
+        self.feeder_mrid = self.area_id.split('.')[0]  # get feeder mRID from area id
+        
+        if cim_class in self.graph:
+            self.connection.get_all_edges(self.feeder_mrid, self.graph, cim_class)
+        else:
+            _log.info('no instances of '+str(cim_class.__name__)+' found in graph.')

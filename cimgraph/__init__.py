@@ -7,3 +7,7 @@ from cimgraph.models.model_parsers import (add_to_catalog,
 from cimgraph.models.new_model import NewModel
 from cimgraph.models.secondary_area import SecondaryArea
 from cimgraph.models.switch_area import SwitchArea
+
+from cimgraph.models import FeederModel
+from cimgraph.topology_processor import LinkNet
+
