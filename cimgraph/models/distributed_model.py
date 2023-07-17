@@ -99,7 +99,7 @@ class DistributedModel:
             json_dump = {}
             _log.info('no instances of '+str(cim_class.__name__)+' found in catalog.')
 
-        pyprint(json_dump)
+        print(json.dumps(json_dump, indent=4))
 
     
     def get_all_edges(self, cim_class):
