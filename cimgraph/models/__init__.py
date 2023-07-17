@@ -10,5 +10,6 @@ from cimgraph.models.switch_area import SwitchArea
 
 from cimgraph.models.new_model import NewModel
 from cimgraph.models.feeder_model import FeederModel
+from cimgraph.models.bus_branch_model import BusBranchModel
 
 from cimgraph.models.model_parsers import add_to_graph
