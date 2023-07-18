@@ -27,13 +27,13 @@ def get_all_attributes(feeder_mrid: str, typed_catalog: dict[type, dict[str, obj
         WHERE {          
           ?eq r:type cim:PhaseImpedanceData.
           VALUES ?fdrid {"%s"}
-          VALUES ?mRID {"""%feeder_mrid
+          """%feeder_mrid
     # add all equipment mRID
-    for mrid in mrid_list:
-        query_message += ' "%s" \n'%mrid
+#     for mrid in mrid_list:
+#         query_message += ' "%s" \n'%mrid
         
     # add all assets
-    query_message += """               }
+    query_message += """               
         VALUES ?ACLineSegment {"""
     for asset_mrid in asset_list:
         query_message += ' "%s" \n' % asset_mrid
