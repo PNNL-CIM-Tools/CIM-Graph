@@ -23,9 +23,9 @@ def get_all_attributes(feeder_mrid: str, typed_catalog: dict[type, dict[str, obj
         PREFIX r:  <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
         PREFIX cim:  <http://iec.ch/TC57/CIM100#>
         SELECT ?mRID ?name ?Location ?vectorGroup ?aggregate ?inService
-        (group_concat(distinct ?PowerTransformerEnd; separator=";") as ?PowerTransformerEnd) 
-        (group_concat(distinct ?TransformerTank; separator=';') as ?TransformerTanks)
-        (group_concat(distinct ?Terminal; separator=';') as ?Terminals)
+        (group_concat(distinct ?PowerTransformerE; separator=";") as ?PowerTransformerEnd) 
+        (group_concat(distinct ?TransformerTank; separator=";") as ?TransformerTanks)
+        (group_concat(distinct ?Terminal; separator=";") as ?Terminals)
         (group_concat(distinct ?Measurement; separator=";") as ?Measurements) 
         (group_concat(distinct ?Asset; separator=";") as ?Assets) 
         
@@ -35,7 +35,7 @@ def get_all_attributes(feeder_mrid: str, typed_catalog: dict[type, dict[str, obj
           VALUES ?mRID {"""%feeder_mrid
     # add all equipment mRID
     for mrid in mrid_list:
-        query_message += ' "%s" \n'%mrid
+        query_message += """ "%s" \n"""%mrid
     # add all attributes
     query_message += """               } 
          ?eq cim:Equipment.EquipmentContainer ?fdr.
@@ -60,7 +60,7 @@ def get_all_attributes(feeder_mrid: str, typed_catalog: dict[type, dict[str, obj
                   ?tank cim:IdentifiedObject.mRID ?TransformerTank.}
 
         OPTIONAL {?end cim:PowerTransformerEnd.PowerTransformer ?eq.
-                  ?end cim:IdentifiedObject.mRID ?PowerTransformerEnd.}
+                  ?end cim:IdentifiedObject.mRID ?PowerTransformerE.}
                   
         OPTIONAL {?t cim:Terminal.ConductingEquipment ?eq.
                   ?t cim:IdentifiedObject.mRID ?Terminal.}
