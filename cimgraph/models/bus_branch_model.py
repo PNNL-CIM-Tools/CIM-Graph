@@ -7,6 +7,7 @@ from dataclasses import dataclass, field
 from typing import Dict, List, Optional
 
 from cimgraph.loaders import ConnectionInterface
+from cimgraph.models.graph_model import GraphModel
 from cimgraph.models.model_parsers import add_to_graph, cim_dump, cim_print
 from cimgraph.topology_processor.linknet import LinkNet
 from cimgraph.topology_processor.distributed_feeder_areas import DistributedFeederTopology
@@ -15,7 +16,7 @@ from pprint import pprint as pypprint
 _log = logging.getLogger(__name__)
 
 @dataclass
-class BusBranchModel:
+class BusBranchModel(GraphModel):
     container: cim.ConnectivityNodeContainer
     connection: ConnectionInterface
     distributed: bool #TODO: cannot find correct typing class
@@ -37,7 +38,7 @@ class BusBranchModel:
         
     def initialize_distributed_model(self, container) -> None:
         if len(self.distributed_hierarchy) > 0:
-            for container_class in distributed_hierarchy:
+            for container_class in self.distributed_hierarchy:
                 container_type = container_class.__class__.__name__
                 setattr(self, container_type + 's', []) 
                 #TODO: create subclasses based on pre-defined topology        

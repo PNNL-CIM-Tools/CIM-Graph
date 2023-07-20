@@ -19,7 +19,7 @@ class LinkNet():
         # Intialize counter objects
         index = 0
         counter = 0
-        # Build LinkNetList for all specified CIM classes:
+        # Build __linknet_list__ for all specified CIM classes:
         for i0 in range(len(EqTypes)): 
             [index, counter] = self.build_class_lists(EqTypes[i0], index, counter)
         # Add floating nodes not connected to a branch:
@@ -32,10 +32,10 @@ class LinkNet():
         for i1 in range(len(MissingNodes)):
             node = self.graph[self.cim.ConnectivityNode][MissingNodes[i1]]
             try:
-                getattr(node, 'linknetList')
+                getattr(node, '__linknet_list__')
             except:
-                setattr(node, 'linknetNode', index+1)
-                setattr(node, 'linknetList', 0)
+                setattr(node, '__linknet_node__', index+1)
+                setattr(node, '__linknet_list__', 0)
                 index = index+1
                 self.NodeList.append(node)
                 
@@ -62,10 +62,10 @@ class LinkNet():
             node1=term1.ConnectivityNode
             # If node1 not in LinkNet , create new keys
             try:
-                getattr(node1, "linknetNode")
+                getattr(node1, "__linknet_node__")
             except:
-                setattr(node1, 'linknetNode', index+1)
-                setattr(node1, 'linknetList', 0)
+                setattr(node1, '__linknet_node__', index+1)
+                setattr(node1, '__linknet_list__', 0)
                 index = index+1
                 self.NodeList.append(node1)
 
@@ -77,34 +77,34 @@ class LinkNet():
                 # Create keys for new terminals
 #                 self.graph[self.cim.Terminal][term2] = {}
 #                 self.graph[self.cim.Terminal][term2]['ConnectivityNode'] = node2
-                setattr(term1, 'linknetTerm', 2*i2+old_counter+1)
-                setattr(term2, 'linknetTerm', 2*i2+old_counter+2)
+                setattr(term1, '__linknet_term__', 2*i2+old_counter+1)
+                setattr(term2, '__linknet_term__', 2*i2+old_counter+2)
                 self.TermList.append(term2)
                 # If node2 not in LinkNet , create new keys
                 try:
-                    getattr(node2, "linknet_node")
+                    getattr(node2, "__linknet_node__")
                 except:
-                    setattr(node2, 'linknetNode', index+1)
-                    setattr(node2, 'linknetList', 0)
+                    setattr(node2, '__linknet_node__', index+1)
+                    setattr(node2, '__linknet_list__', 0)
                     index = index+1
                     self.NodeList.append(node2)
 
                 # 1. Move node list variables to terinal next    
-                setattr(term1, 'LinknetNext', getattr(node1, 'linknetList'))
-                setattr(term2, 'linknetNext', getattr(node2, 'linknetList'))
+                setattr(term1, '__linknet_next__', getattr(node1, '__linknet_list__'))
+                setattr(term2, '__linknet_next__', getattr(node2, '__linknet_list__'))
                 # 2. Populate Terminal list far field with nodes
-                setattr(term1, 'linknetFar', getattr(node2, 'linknetNode'))
-                setattr(term2, 'linknetFar', getattr(node1, 'linknetNode'))
+                setattr(term1, '__linknet_far__', getattr(node2, '__linknet_node__'))
+                setattr(term2, '__linknet_far__', getattr(node1, '__linknet_node__'))
                 # 3. Populate Connectivity nodes list with terminals
-                setattr(node1,'linknetList', getattr(term1,'linknetTerm'))
-                setattr(node2, 'linknetList', getattr(term2, 'linknetTerm'))
+                setattr(node1,'__linknet_list__', getattr(term1,'__linknet_term__'))
+                setattr(node2, '__linknet_list__', getattr(term2, '__linknet_term__'))
                 index2 = index2 + 2
             # If one-terminal device, process only single terminal
             else:
-                setattr(term1, 'linknetTerm', i2+(old_counter)+1)
-                setattr(term1, 'linknetNext', getattr(node1, 'linknetList'))
-                setattr(term1, 'linknetFar', getattr(node1, 'linknetNode'))
-                setattr(node1, 'linknetList', getattr(term1, 'linknetTerm'))
+                setattr(term1, '__linknet_term__', i2+(old_counter)+1)
+                setattr(term1, '__linknet_next__', getattr(node1, '__linknet_list__'))
+                setattr(term1, '__linknet_far__', getattr(node1, '__linknet_node__'))
+                setattr(node1, '__linknet_list__', getattr(term1, '__linknet_term__'))
                 index2 = index2 + 1
 
             _log.info("Processed " + str(i2+1) + ' ' + str(eqtype) + " objects in " + str(round(1000*(time.perf_counter() - StartTime))) + " ms")
@@ -153,12 +153,12 @@ class LinkNet():
                 else:
                     break
             while LastNode != FirstNode:
-                NextTerm = getattr(Tree[root][FirstNode],'linknetList')
+                NextTerm = getattr(Tree[root][FirstNode],'__linknet_list__')
                 FirstNode = FirstNode + 1
                 while NextTerm != 0:
                     # Get next node and terminal for current node
-                    NextNode = getattr(self.TermList[NextTerm-1], 'linknetFar')
-                    NextTerm = getattr(self.TermList[NextTerm-1], 'linknetNext')
+                    NextNode = getattr(self.TermList[NextTerm-1], '__linknet_far__')
+                    NextTerm = getattr(self.TermList[NextTerm-1], '__linknet_next__')
                     node = self.NodeList[NextNode-1]
                     [not_in_tree, found] = self.check_tree(node, Tree, Scope, root)
                     # Add node if not in another tree        
