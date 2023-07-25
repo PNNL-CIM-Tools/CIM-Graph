@@ -1,4 +1,5 @@
 from typing import Dict, List
+from cimgraph.models.graph_model import GraphModel
 
 from cimgraph.models.deprecated.distributed_model import DistributedModel
 from cimgraph.models.model_parsers import (add_to_catalog,

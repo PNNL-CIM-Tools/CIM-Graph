@@ -18,8 +18,9 @@ _log = logging.getLogger(__name__)
 @dataclass
 class BusBranchModel(GraphModel):
     container: cim.ConnectivityNodeContainer
-    connection: ConnectionInterface
-    distributed: bool #TODO: cannot find correct typing class
+    read_connection: ConnectionInterface = None
+    write_connection: ConnectionInterface = None
+    distributed: bool = field(default_factory=False) #TODO: cannot find correct typing class
     distributed_hierarchy: list[type] = field(default_factory=list)
     graph: dict[type, dict[str, object]] = field(default_factory=dict)
     cim_profile: str = field(default_factory='rc4_2021')
@@ -27,13 +28,16 @@ class BusBranchModel(GraphModel):
     def __post_init__(self):
         self.cim = importlib.import_module('cimgraph.data_profile.' + self.cim_profile)
 
-        if self.distributed:
-            self.initialize_distributed_model(self.container)
-        else:
-            self.initialize_centralized_model(self.container)
+        if self.read_connection is not None:
+            if self.distributed:
+                self.initialize_distributed_model(self.container)
+            else:
+                self.initialize_centralized_model(self.container)
+
+
 
     def initialize_centralized_model(self, container) -> None:
-        self.graph = self.connection.create_new_graph(container)
+        self.graph = self.read_connection.create_new_graph(container)
 
         
     def initialize_distributed_model(self, container) -> None:
@@ -52,23 +56,7 @@ class BusBranchModel(GraphModel):
             self.switch_areas, self.graph = DistTopo.create_distributed_graph()
 #             self.linknet = LinkNet(self.cim_profile, centralized_graph)
 #             self.linknet.build_linknet([self.cim.ACLineSegment])
-            
-    def get_all_edges(self, cim_class, graph=None):
-        if graph is None:
-            graph = self.graph
-        if cim_class in graph:
-            self.connection.get_all_edges(self.container.mRID, graph, cim_class)
-        else:
-            _log.info('no instances of '+str(cim_class.__name__)+' found in graph.')
-    
-    def pprint(self, cim_class):
-        if cim_class in self.graph:
-            json_dump = cim_print(self.graph, cim_class)
-        else:
-            json_dump = {}
-            _log.info('no instances of '+str(cim_class.__name__)+' found in graph.')
-        print(json.dumps(json_dump,indent=4))
-    
+
     
         
             
