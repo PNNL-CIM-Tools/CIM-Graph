@@ -1,12 +1,12 @@
 from __future__ import annotations
-
+import math
 import importlib
 import logging
 import re
 from typing import Dict, List, Optional
 
 from cimgraph.loaders import ConnectionInterface, ConnectionParameters, Parameter, QueryResponse
-from cimgraph.models.model_parsers import add_to_graph, add_to_catalog, add_to_typed_catalog, item_dump
+from cimgraph.models.model_parsers import add_to_graph, add_to_catalog, item_dump
 from SPARQLWrapper import JSON, POST, SPARQLWrapper
 
 _log = logging.getLogger(__name__)
@@ -70,75 +70,88 @@ class BlazegraphConnection(ConnectionInterface):
     
     
     
-    def get_all_edges(self, feeder_mrid: str | cim.Feeder, typed_catalog: dict[type, dict[str, object]], cim_class: type):
-        #generate SPARQL message from correct loaders>sparql python script based on class name
-        sparql_message = self.sparql.get_all_edges_sparql(feeder_mrid, typed_catalog, cim_class)
-#         get_edges_query(feeder_mrid, typed_catalog, cim_class)
-        #execute sparql query
-        query_output = self.execute(sparql_message)
-        
+    def get_all_edges(self, container: str | cim.ConnectivityNodeContainer, graph: dict[type, dict[str, object]], cim_class: type):
+        mrid_list = list(graph[cim_class].keys())
+        num_nodes = len(mrid_list)
+        # if  num_nodes > 100:
+        for index in range(math.ceil(len(mrid_list)/100)):
+            eq_mrids = mrid_list[index*100: (index+1)*100]
+            #generate SPARQL message from correct loaders>sparql python script based on class name
+            sparql_message = self.sparql.get_all_edges_sparql(cim_class, eq_mrids)
+    #         get_edges_query(feeder_mrid, graph, cim_class)
+            #execute sparql query
+            query_output = self.execute(sparql_message)
+            self.edge_query_parser(query_output, container, graph, cim_class)
+
+    def edge_query_parser(self, query_output, container: str | cim.ConnectivityNodeContainer, graph: dict[type, dict[str, object]], cim_class: type):
         for result in query_output['results']['bindings']:
-            is_association = False
-            is_enumeration = False
-            mRID = result['mRID']['value'] #get mRID
-            name = result['name']['value'] #get name
-            edge = result['attribute']['value'].split('.') #split edge attribute
-            value = result['value']['value'] #get edge value
-            value_split = value.split('.') 
+            if result['attribute']['value'] != "type": #skip 'type' and other single attributes
+                    
+                is_association = False
+                is_enumeration = False
+                mRID = result['mRID']['value'] #get mRID
+                name = result['name']['value'] #get name
+                edge = result['attribute']['value'].split('.') #split edge attribute
+                value = result['value']['value'] #get edge value
+                value_split = value.split('.') 
 
-            if len(edge) == 1: #skip 'type' and other single attributes
-                continue
+                
 
-            if len(value_split) == 3: #check if enumeration
-                enum_class = value_split[1].split('#')[1]
-                enum_value = value_split[2]
-                is_enumeration = True
+                if len(value_split) == 3: #check if enumeration
+                    enum_class = value_split[1].split('#')[1]
+                    enum_value = value_split[2]
+                    is_enumeration = True
 
-            if 'edge_mRID' in result: #check if association
-                is_association = True
-                edge_mRID = result['edge_mRID']['value']
-                edge_class = result['edge_class']['value']
-                if edge_class in self.cim.__all__:
-                    edge_class = eval(f"self.cim.{edge_class}")
+                if 'edge_mRID' in result: #check if association
+                    is_association = True
+                    edge_mRID = result['edge_mRID']['value']
+                    edge_class = result['edge_class']['value']
+                    if edge_class in self.cim.__all__:
+                        edge_class = eval(f"self.cim.{edge_class}")
+                    else:
+                        print('unknown class', edge_class)
+                        continue
+
+                if is_association: # if association to another CIM object
+
+                    if edge[0] in cim_class.__dataclass_fields__: #check if first name is the attribute
+                        self.create_edge(graph, cim_class, mRID, edge[0], edge_class, edge_mRID)
+                        
+                    elif edge[1] in cim_class.__dataclass_fields__: #check if second name is the attribute
+                        self.create_edge(graph, cim_class, mRID, edge[1], edge_class, edge_mRID)
+
+                    elif edge[0]+'s' in cim_class.__dataclass_fields__: #check if attribute spelling is plural
+                        self.create_edge(graph, cim_class, mRID, edge[0]+'s', edge_class, edge_mRID)
+                    
+                    elif edge[1]+'s' in cim_class.__dataclass_fields__: #check if attribute spelling is plural
+                        self.create_edge(graph, cim_class, mRID, edge[1]+'s', edge_class, edge_mRID)
+                        
+                    else: #fallback: match class type until a suitable parent edge class is found
+                        for node_attr in list(cim_class.__dataclass_fields__.keys()):
+                            attr_str = cim_class.__dataclass_fields__[node_attr].type
+                            edge_parent = attr_str.split('[')[1].split(']')[0]
+                            if edge_parent in self.cim.__all__:
+                                parent_class = eval(f"self.cim.{edge_parent}")
+                                if issubclass(edge_class, parent_class):
+                                    self.create_edge(graph, cim_class, mRID, node_attr, edge_class, edge_mRID)
+                                    break
+
+                elif is_enumeration:
+                    if enum_class in self.cim.__all__: # if enumeration
+                        edge_enum = eval(f"self.cim.{enum_class}(enum_value)")
+                        setattr(graph[cim_class][mRID], edge[1], edge_enum)
                 else:
-                    print('unknown class', edge_class)
-                    continue
-
-            if is_association: # if association to another CIM object
-
-                if edge[0] in cim_class.__dataclass_fields__: #check if first name is the attribute
-                    self.create_edge(typed_catalog, cim_class, mRID, edge[0], edge_class, edge_mRID)
-                    
-                elif edge[1] in cim_class.__dataclass_fields__: #check if second name is the attribute
-                    self.create_edge(typed_catalog, cim_class, mRID, edge[1], edge_class, edge_mRID)
-
-                elif edge[0]+'s' in cim_class.__dataclass_fields__: #check if attribute spelling is plural
-                    self.create_edge(typed_catalog, cim_class, mRID, edge[0]+'s', edge_class, edge_mRID)
-                
-                elif edge[1]+'s' in cim_class.__dataclass_fields__: #check if attribute spelling is plural
-                    self.create_edge(typed_catalog, cim_class, mRID, edge[1]+'s', edge_class, edge_mRID)
-                    
-                else: #fallback: match class type until a suitable parent edge class is found
-                    for node_attr in list(cim_class.__dataclass_fields__.keys()):
-                        attr_str = cim_class.__dataclass_fields__[node_attr].type
-                        edge_parent = edge.split('[')[1].split(']')[0]
-                        if edge_parent in self.cim.__all__:
-                            parent_class = eval(f"self.cim.{edge_parent}")
-                            if issubclass(edge_class, parent_class):
-                                self.create_edge(typed_catalog, cim_class, mRID, node_attr, edge_class, edge_mRID)
-                                break
-
-            elif is_enumeration:
-                if enum_class in cim.__all__: # if enumeration
-                    edge_enum = eval(f"self.cim.{enum_class}(enum_value)")
-                    setattr(typed_catalog[cim_class][mRID], edge[1], edge_object)
-            else:
-                setattr(typed_catalog[cim_class][mRID], edge[1], value)
+                    setattr(graph[cim_class][mRID], edge[1], value)
 
 
                 
                 
-                
+    def get_edges_query(self, container: str | cim.ConnectivityNodeContainer, graph: dict[type, dict[str, object]], cim_class: type):
+
+        eq_mrids=list(graph[cim_class].keys())[0:100]
+        sparql_message = self.sparql.get_all_edges_sparql(cim_class, eq_mrids)
+
+        return sparql_message
                 
                 
                 
@@ -179,19 +192,19 @@ class BlazegraphConnection(ConnectionInterface):
     
     
           
-    def get_all_attributes(self, feeder_mrid: str | cim.Feeder, typed_catalog: dict[type, dict[str, object]], cim_class: type):
+    def get_all_attributes(self, feeder_mrid: str | cim.Feeder, graph: dict[type, dict[str, object]], cim_class: type):
         """ Populates all available attribute fields of CIM objects in the typed catalog of a specified CIM class. 
         Objects are stored in memory, so no values are returned.
         Args:
         feeder_mrid (str | Feeder object): The mRID of the feeder or feeder object
-        typed_catalog (dict[type, dict[str, object]]): The typed catalog of CIM objects organized by 
+        graph (dict[type, dict[str, object]]): The typed catalog of CIM objects organized by 
             class type and object mRID
         cim_class (type): The CIM class type (e.g. cim:ACLineSegment)
         Returns:
         none
         """
         #generate SPARQL message from correct loaders>sparql python script based on class name
-        sparql_message = self.get_attributes_query(feeder_mrid, typed_catalog, cim_class)
+        sparql_message = self.get_attributes_query(feeder_mrid, graph, cim_class)
         #execute sparql query
         query_output = self.execute(sparql_message)
 
@@ -213,7 +226,7 @@ class BlazegraphConnection(ConnectionInterface):
                         at_cls = re.match(r'List\[(.*)]',attribute_type)
                         attribute_class = at_cls.group(1)
                     # pass query response of associated objects to list parser
-                    self.query_list_parser(feeder_mrid, typed_catalog, cim_class, mRID, result, attribute, attribute_class, ';')
+                    self.query_list_parser(feeder_mrid, graph, cim_class, mRID, result, attribute, attribute_class, ';')
                 elif 'Optional' in attribute_type: #check if attribute is association to a class object
                     if '\'' in attribute_type: #handling inconsistent '' marks in data profile
                         at_cls = re.match(r'Optional\[\'(.*)\']',attribute_type)
@@ -223,18 +236,18 @@ class BlazegraphConnection(ConnectionInterface):
                         attribute_class = at_cls.group(1)
 
                     # pass query response of associated objects to list parser
-                    self.query_parser(feeder_mrid, typed_catalog, cim_class, mRID, result, attribute, attribute_class, ';')
+                    self.query_parser(feeder_mrid, graph, cim_class, mRID, result, attribute, attribute_class, ';')
                 else: #otherwise assign query response
 
-                    self.query_parser(feeder_mrid, typed_catalog, cim_class, mRID, result, attribute, attribute_class, ';')
+                    self.query_parser(feeder_mrid, graph, cim_class, mRID, result, attribute, attribute_class, ';')
                     
 
     
-    def get_attributes_query(self, feeder_mrid: str | cim.Feeder, typed_catalog: dict[type, dict[str, object]], cim_class: type):
+    def get_attributes_query(self, feeder_mrid: str | cim.Feeder, graph: dict[type, dict[str, object]], cim_class: type):
         """ Generates SPARQL edges query for a given catalog of objects and feeder id
         Args:
             feeder_mrid (str | Feeder object): The mRID of the feeder or feeder object
-            typed_catalog (dict[type, dict[str, object]]): The typed catalog of CIM objects organized by 
+            graph (dict[type, dict[str, object]]): The typed catalog of CIM objects organized by 
                 class type and object mRID
             cim_class (type): The CIM class type (e.g. cim:ACLineSegment)
         Returns:
@@ -242,12 +255,12 @@ class BlazegraphConnection(ConnectionInterface):
         none
         """
         sparql_func = getattr(self.sparql, f"{cim_class.__name__}SPARQL")
-        sparql_message = sparql_func.get_all_attributes(feeder_mrid, typed_catalog)
+        sparql_message = sparql_func.get_all_attributes(feeder_mrid, graph)
         
         return sparql_message
     
     
-    def query_parser(self, feeder_mrid, typed_catalog:Dict, class_name:str, mRID:str, query:List, attribute:str, attribute_class:str, separator:str) -> object | str:
+    def query_parser(self, feeder_mrid, graph:Dict, class_name:str, mRID:str, query:List, attribute:str, attribute_class:str, separator:str) -> object | str:
         value = query[attribute]['value']
         #if attribute is CIM class, then build CIM objects. otherwise assign to obj_list
         if attribute_class in self.cim.__all__:
@@ -259,16 +272,16 @@ class BlazegraphConnection(ConnectionInterface):
                 obj_class = attribute_class
             class_type = eval(f"self.cim.{obj_class}")
             if type(class_type) is type and len(obj_mrid) > 0:
-                result = self.create_object(typed_catalog, class_type, obj_mrid)
+                result = self.create_object(graph, class_type, obj_mrid)
 
             else:
                 result = value
 
         else:
             result = value
-        setattr(typed_catalog[class_name][mRID], attribute, result)
+        setattr(graph[class_name][mRID], attribute, result)
 
-    def query_list_parser(self, feeder_mrid, typed_catalog:Dict, class_name:type, mRID:str, query:List, attribute:str, attribute_class:str, separator:str):
+    def query_list_parser(self, feeder_mrid, graph:Dict, class_name:type, mRID:str, query:List, attribute:str, attribute_class:str, separator:str):
         value = query[attribute]['value']
         values = value.split(separator)
         obj_list = []
@@ -283,29 +296,29 @@ class BlazegraphConnection(ConnectionInterface):
                     obj_class = attribute_class
                 class_type = eval(f"self.cim.{obj_class}")
                 if type(class_type) is type and len(obj_mrid) > 0:
-                    result = self.create_object(typed_catalog, class_type, obj_mrid)
+                    result = self.create_object(graph, class_type, obj_mrid)
                     obj_list.append(result)
 
         else:
             obj_list = values
         #set attribute of queried object to list parsed from query results
-        setattr(typed_catalog[class_name][mRID], attribute, obj_list)
+        setattr(graph[class_name][mRID], attribute, obj_list)
 
 
-    def create_object(self, typed_catalog, class_type, mRID):
+    def create_object(self, graph, class_type, mRID):
         
-        if class_type not in typed_catalog.keys():
-            typed_catalog[class_type] = {}
+        if class_type not in graph.keys():
+            graph[class_type] = {}
 
-        if mRID in typed_catalog[class_type].keys():
-            obj = typed_catalog[class_type][mRID]
+        if mRID in graph[class_type].keys():
+            obj = graph[class_type][mRID]
         else:
                 obj = class_type(mRID = mRID)
-                add_to_typed_catalog(obj, typed_catalog)
+                add_to_graph(obj, graph)
 
         return obj
     
-    def upload(self, typed_catalog):
+    def upload(self, graph):
         url = "http://localhost:8889/bigdata/namespace/kb/sparql"
         
         prefix = """PREFIX r: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
@@ -313,9 +326,9 @@ class BlazegraphConnection(ConnectionInterface):
         PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
         """
         triples = []
-        for cim_class in list(typed_catalog.keys()):
+        for cim_class in list(graph.keys()):
             
-            for obj in typed_catalog[cim_class].values():
+            for obj in graph[cim_class].values():
 #                 obj_triple = "<{url}#_{mRID}> a cim:{class_type}."
                 obj_triple = """
         <urn:uuid:{mRID}> a cim:{class_type}.
@@ -368,13 +381,13 @@ class BlazegraphConnection(ConnectionInterface):
         self.execute(query)
         return query
 
-    def create_edge(self, typed_catalog, cim_class, mRID, attribute, edge_class, edge_mRID):
-        edge_object = self.create_object(typed_catalog, edge_class, edge_mRID)
+    def create_edge(self, graph, cim_class, mRID, attribute, edge_class, edge_mRID):
+        edge_object = self.create_object(graph, edge_class, edge_mRID)
         attribute_type = cim_class.__dataclass_fields__[attribute].type
         if "List" in attribute_type:
-            obj_list = getattr(typed_catalog[cim_class][mRID], attribute)
+            obj_list = getattr(graph[cim_class][mRID], attribute)
             obj_list.append(edge_object)
-            setattr(typed_catalog[cim_class][mRID], attribute, obj_list)
+            setattr(graph[cim_class][mRID], attribute, obj_list)
         else:
-            setattr(typed_catalog[cim_class][mRID], attribute, edge_object)
+            setattr(graph[cim_class][mRID], attribute, edge_object)
             

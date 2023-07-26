@@ -7,7 +7,6 @@ from dataclasses import dataclass, field
 from typing import Dict, List, Optional
 
 from cimgraph.loaders import ConnectionInterface
-from cimgraph.models.model_parsers import add_to_graph, cim_dump, cim_print
 
 
 _log = logging.getLogger(__name__)
@@ -26,13 +25,13 @@ class GraphModel:
         if graph is None:
             graph = self.graph
         if cim_class in graph:
-            self.connection.get_all_edges(self.container.mRID, graph, cim_class)
+            self.read_connection.get_all_edges(self.container.mRID, graph, cim_class)
         else:
             _log.info('no instances of '+str(cim_class.__name__)+' found in graph.')
     
     def pprint(self, cim_class):
         if cim_class in self.graph:
-            json_dump = cim_print(self.graph, cim_class)
+            json_dump = self.cim_print(self.graph, cim_class)
         else:
             json_dump = {}
             _log.info('no instances of '+str(cim_class.__name__)+' found in graph.')
@@ -40,7 +39,16 @@ class GraphModel:
     
     def get_attributes_query(self, cim_class):
         if cim_class in self.graph:
-            sparql_message = self.connection.get_attributes_query(self.feeder.mRID, self.graph, cim_class)
+            sparql_message = self.read_connection.get_attributes_query(self.container.mRID, self.graph, cim_class)
+        else:
+            _log.info('no instances of '+str(cim_class.__name__)+' found in catalog.')
+            sparql_message = ''
+        return sparql_message
+    
+    def get_edges_query(self, cim_class):
+        if cim_class in self.graph:
+            sparql_message = self.read_connection.get_edges_query(self.container.mRID, self.graph, cim_class)
+            
         else:
             _log.info('no instances of '+str(cim_class.__name__)+' found in catalog.')
             sparql_message = ''
@@ -56,7 +64,7 @@ class GraphModel:
         return json_dump
     
     def upload(self):
-        query = self.connection.upload(self.graph)
+        query = self.write_connection.upload(self.graph)
 #         return query
     
     def write_xml(self, filename, schema):
@@ -146,7 +154,7 @@ class GraphModel:
         elif type(type(value)) is type:
             result = value.mRID
         else:
-            result = value
+            result = str(value)
         return result
 
     def cim_dump(self, graph:Dict, cim_class:type):
@@ -159,4 +167,4 @@ class GraphModel:
             for attribute in attribute_list:
                 value = getattr(graph[cim_class][mrid], attribute)
                 json_dump[mrid][attribute] = self.item_dump(value)
-        return json.dumps(json_dump)
+        return (json_dump)
