@@ -16,12 +16,11 @@ class BlazegraphConnection(ConnectionInterface):
         self.sparql = importlib.import_module('cimgraph.loaders.sparql.' + cim_profile)
         self.cim = importlib.import_module('cimgraph.data_profile.' + cim_profile)
         self.sparql_obj: Optional[SPARQLWrapper] = None
-        self.connection_params = connection_params
+        self.connection_parameters = connection_params
 
     def connect(self):
         if not self.sparql_obj:
-            url = self.connection_params.parameters[0].value
-            self.sparql_obj = SPARQLWrapper(url)
+            self.sparql_obj = SPARQLWrapper(self.connection_parameters.url)
             self.sparql_obj.setReturnFormat(JSON)
 
     def disconnect(self):
@@ -90,7 +89,6 @@ class BlazegraphConnection(ConnectionInterface):
                 is_association = False
                 is_enumeration = False
                 mRID = result['mRID']['value'] #get mRID
-                name = result['name']['value'] #get name
                 edge = result['attribute']['value'].split('.') #split edge attribute
                 value = result['value']['value'] #get edge value
                 value_split = value.split('.') 
@@ -313,7 +311,8 @@ class BlazegraphConnection(ConnectionInterface):
         if mRID in graph[class_type].keys():
             obj = graph[class_type][mRID]
         else:
-                obj = class_type(mRID = mRID)
+                obj = class_type()
+                setattr(obj, "mRID", mRID)
                 add_to_graph(obj, graph)
 
         return obj

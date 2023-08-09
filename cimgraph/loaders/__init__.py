@@ -13,7 +13,10 @@ class Parameter:
 
 @dataclass
 class ConnectionParameters:
-    parameters: List[Parameter] = field(default_factory=list)
+    url: str = field(default_factory=str)
+    username: str = field(default_factory=str)
+    password: str = field(default_factory=str)
+    # parameters: List[Parameter] = field(default_factory=list)
 
 
 @dataclass
