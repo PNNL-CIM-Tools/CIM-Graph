@@ -24,7 +24,7 @@ def get_all_attributes(feeder_mrid: str, typed_catalog: dict[type, dict[str, obj
         SELECT ?mRID ?name ?BaseVoltage ?Location ?p ?q ?customerCount ?grounded ?phaseConnection ?LoadResponse
             (group_concat(distinct ?Terminal; separator=";") as ?Terminals) 
             (group_concat(distinct ?Measurement; separator=";") as ?Measurements) 
-            (group_concat(distinct ?EnergyConsumerPhase; separator=";") as ?EnergyConsumerPhase)
+            (group_concat(distinct ?EnergyConsumerPhs; separator=";") as ?EnergyConsumerPhase)
         WHERE {          
           ?eq r:type cim:EnergyConsumer.
           VALUES ?fdrid {"%s"}
@@ -64,7 +64,7 @@ def get_all_attributes(feeder_mrid: str, typed_catalog: dict[type, dict[str, obj
         OPTIONAL {?eq cim:EnergyComsumer.LoadResponse ?lr.
                   ?lr cim:IdentifiedObject.mRID ?LoadResponse}
         OPTIONAL {?ecp cim:EnergyConsumerPhase.EnergyConsumer ?eq.
-                  ?ecp cim:IdentifiedObject.mRID ?EnergyConsumerPhase.}
+                  ?ecp cim:IdentifiedObject.mRID ?EnergyConsumerPhs.}
 
         }
         GROUP by ?mRID ?name ?BaseVoltage ?Location ?p ?q ?customerCount ?grounded ?phaseConnection ?LoadResponse
