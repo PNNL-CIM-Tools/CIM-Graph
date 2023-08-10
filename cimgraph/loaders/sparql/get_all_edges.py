@@ -3,12 +3,12 @@ from __future__ import annotations
 from dataclasses import dataclass, field
 from typing import Dict, List, Optional
 
-from apt import ProblemResolver
+
 
 from cimgraph.data_profile.known_problem_classes import ClassesWithoutMRID
 
 
-def get_all_edges_sparql(cim_class: str, mrid_list) -> str: 
+def get_all_edges_sparql(cim_class: str, mrid_list: List, namespace: str) -> str: 
     """ 
     Generates SPARQL query string for a given catalog of objects and feeder id
     Args:
@@ -24,7 +24,9 @@ def get_all_edges_sparql(cim_class: str, mrid_list) -> str:
 
     query_message = """
         PREFIX r:  <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
-        PREFIX cim:  <http://iec.ch/TC57/CIM100#>
+        PREFIX cim:  %s""" %namespace
+    
+    query_message += """
         SELECT DISTINCT ?mRID ?attribute ?value ?edge_mRID ?edge_class
         WHERE {          
           ?eq r:type cim:%s."""%class_name

@@ -5,16 +5,19 @@ import logging
 import re
 from typing import Dict, List, Optional
 
+import cimgraph.loaders.sparql as sparql
 from cimgraph.loaders import ConnectionInterface, ConnectionParameters, Parameter, QueryResponse
 from cimgraph.models.model_parsers import add_to_graph, add_to_catalog, item_dump
+
 from SPARQLWrapper import JSON, POST, SPARQLWrapper
 
 _log = logging.getLogger(__name__)
 
 class BlazegraphConnection(ConnectionInterface):
     def __init__(self, connection_params, cim_profile:str):
-        self.sparql = importlib.import_module('cimgraph.loaders.sparql.' + cim_profile)
+        self.legacy_sparql = importlib.import_module('cimgraph.loaders.sparql.' + cim_profile)
         self.cim = importlib.import_module('cimgraph.data_profile.' + cim_profile)
+        self.namespace = connection_params.namespace
         self.sparql_obj: Optional[SPARQLWrapper] = None
         self.connection_parameters = connection_params
 
@@ -37,7 +40,7 @@ class BlazegraphConnection(ConnectionInterface):
     def create_new_graph(self, container:object) -> dict[type, dict[str, object]] :
         graph = {}
         # Generate SPARQL message from correct loaders>sparql python script based on class name
-        sparql_message = self.sparql.get_all_nodes_sparql(container)
+        sparql_message = sparql.get_all_nodes_sparql(container)
         # Execute sparql query
         query_output = self.execute(sparql_message)
         
@@ -66,7 +69,12 @@ class BlazegraphConnection(ConnectionInterface):
         return graph
     
     
-    
+    def get_edges_query(self, container: str | cim.ConnectivityNodeContainer, graph: dict[type, dict[str, object]], cim_class: type):
+
+        eq_mrids=list(graph[cim_class].keys())[0:100]
+        sparql_message = sparql.get_all_edges_sparql(cim_class, eq_mrids, self.namespace)
+
+        return sparql_message
     
     
     def get_all_edges(self, container: str | cim.ConnectivityNodeContainer, graph: dict[type, dict[str, object]], cim_class: type):
@@ -76,7 +84,7 @@ class BlazegraphConnection(ConnectionInterface):
         for index in range(math.ceil(len(mrid_list)/100)):
             eq_mrids = mrid_list[index*100: (index+1)*100]
             #generate SPARQL message from correct loaders>sparql python script based on class name
-            sparql_message = self.sparql.get_all_edges_sparql(cim_class, eq_mrids)
+            sparql_message = sparql.get_all_edges_sparql(cim_class, eq_mrids, self.namespace)
     #         get_edges_query(feeder_mrid, graph, cim_class)
             #execute sparql query
             query_output = self.execute(sparql_message)
@@ -144,12 +152,7 @@ class BlazegraphConnection(ConnectionInterface):
 
                 
                 
-    def get_edges_query(self, container: str | cim.ConnectivityNodeContainer, graph: dict[type, dict[str, object]], cim_class: type):
-
-        eq_mrids=list(graph[cim_class].keys())[0:100]
-        sparql_message = self.sparql.get_all_edges_sparql(cim_class, eq_mrids)
-
-        return sparql_message
+    
                 
                 
                 
@@ -172,7 +175,7 @@ class BlazegraphConnection(ConnectionInterface):
             object_list: A list of CIM object instances
         """
         #generate correct sparql message using create_default.py
-        sparql_message = self.sparql.get_class_type_sparql(feeder_mrid, mrid_list)
+        sparql_message = self.legacy_sparql.get_class_type_sparql(feeder_mrid, mrid_list)
         #execute sparql query
         query_output = self.execute(sparql_message)
         # parse query results and add new CIM objects to list
@@ -252,7 +255,7 @@ class BlazegraphConnection(ConnectionInterface):
             sparql_message: query string that can be used in blazegraph connection or STOMP client
         none
         """
-        sparql_func = getattr(self.sparql, f"{cim_class.__name__}SPARQL")
+        sparql_func = getattr(self.legacy_sparql, f"{cim_class.__name__}SPARQL")
         sparql_message = sparql_func.get_all_attributes(feeder_mrid, graph)
         
         return sparql_message
