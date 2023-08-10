@@ -1,9 +1,9 @@
 import json
 
 import cimgraph.data_profile.rc4_2021 as cim
-from cimgraph.loaders import ConnectionParameters, Parameter
-from cimgraph.loaders.blazegraph.blazegraph import BlazegraphConnection
-from cimgraph.loaders.gridappsd import (GridappsdConnection,
+from cimgraph.databases import ConnectionParameters, Parameter
+from cimgraph.databases.blazegraph.blazegraph import BlazegraphConnection
+from cimgraph.databases.gridappsd import (GridappsdConnection,
                                         get_topology_response)
 from cimgraph.models import DistributedModel
 

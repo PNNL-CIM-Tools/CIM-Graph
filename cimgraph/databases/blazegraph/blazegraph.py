@@ -5,8 +5,8 @@ import logging
 import re
 from typing import Dict, List, Optional
 
-import cimgraph.loaders.sparql as sparql
-from cimgraph.loaders import ConnectionInterface, ConnectionParameters, Parameter, QueryResponse
+import cimgraph.queries.sparql as sparql
+from cimgraph.databases import ConnectionInterface, ConnectionParameters, Parameter, QueryResponse
 from cimgraph.models.model_parsers import add_to_graph, add_to_catalog, item_dump
 
 from SPARQLWrapper import JSON, POST, SPARQLWrapper
@@ -15,7 +15,7 @@ _log = logging.getLogger(__name__)
 
 class BlazegraphConnection(ConnectionInterface):
     def __init__(self, connection_params, cim_profile:str):
-        self.legacy_sparql = importlib.import_module('cimgraph.loaders.sparql.' + cim_profile)
+        self.legacy_sparql = importlib.import_module('cimgraph.queries.sparql.' + cim_profile)
         self.cim = importlib.import_module('cimgraph.data_profile.' + cim_profile)
         self.namespace = connection_params.namespace
         self.sparql_obj: Optional[SPARQLWrapper] = None
@@ -40,7 +40,7 @@ class BlazegraphConnection(ConnectionInterface):
     def create_new_graph(self, container:object) -> dict[type, dict[str, object]] :
         graph = {}
         # Generate SPARQL message from correct loaders>sparql python script based on class name
-        sparql_message = sparql.get_all_nodes_sparql(container)
+        sparql_message = sparql.get_all_nodes_sparql(container, self.namespace)
         # Execute sparql query
         query_output = self.execute(sparql_message)
         
@@ -80,12 +80,10 @@ class BlazegraphConnection(ConnectionInterface):
     def get_all_edges(self, container: str | cim.ConnectivityNodeContainer, graph: dict[type, dict[str, object]], cim_class: type):
         mrid_list = list(graph[cim_class].keys())
         num_nodes = len(mrid_list)
-        # if  num_nodes > 100:
         for index in range(math.ceil(len(mrid_list)/100)):
             eq_mrids = mrid_list[index*100: (index+1)*100]
             #generate SPARQL message from correct loaders>sparql python script based on class name
             sparql_message = sparql.get_all_edges_sparql(cim_class, eq_mrids, self.namespace)
-    #         get_edges_query(feeder_mrid, graph, cim_class)
             #execute sparql query
             query_output = self.execute(sparql_message)
             self.edge_query_parser(query_output, container, graph, cim_class)

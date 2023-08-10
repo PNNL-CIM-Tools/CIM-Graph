@@ -7,7 +7,7 @@ from dataclasses import dataclass, field
 from typing import Dict, List, Optional
 
 from cimgraph.models.graph_model import GraphModel
-from cimgraph.loaders import ConnectionInterface
+from cimgraph.databases import ConnectionInterface
 from cimgraph.topology_processor.linknet import LinkNet
 from cimgraph.topology_processor.distributed_feeder_areas import DistributedFeederTopology
 from pprint import pprint as pypprint

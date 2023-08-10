@@ -1,9 +1,9 @@
 from __future__ import annotations
 from dataclasses import dataclass, field
 from typing import Dict, List, Optional
-import cimgraph.data_profile.rc4_2021 as cim
 
-def get_all_nodes_sparql(container):
+
+def get_all_nodes_sparql(container, namespace):
     """ 
     Generates SPARQL query string for all nodes, terminals, and conducting equipment
     Args:
@@ -16,7 +16,8 @@ def get_all_nodes_sparql(container):
 
     query_message = """
         PREFIX r:  <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
-        PREFIX cim:  <http://iec.ch/TC57/CIM100#>
+        PREFIX cim:  %s"""%namespace
+    query_message += """
         SELECT  ?ConnectivityNode ?Terminal ?Equipment
         WHERE {          
           ?c r:type cim:%s."""%container_class

@@ -6,7 +6,7 @@ from dataclasses import dataclass, field
 from typing import Dict, List, Optional
 
 import cimgraph.data_profile as cim
-from cimgraph.loaders import ConnectionInterface, QueryResponse
+from cimgraph.databases import ConnectionInterface, QueryResponse
 from cimgraph.models.model_parsers import (add_to_catalog,
                                            add_to_typed_catalog, cim_dump, cim_print)
 from cimgraph.models.switch_area import SwitchArea

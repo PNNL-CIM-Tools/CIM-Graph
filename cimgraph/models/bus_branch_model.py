@@ -6,7 +6,7 @@ import importlib
 from dataclasses import dataclass, field
 from typing import Dict, List, Optional
 
-from cimgraph.loaders import ConnectionInterface
+from cimgraph.databases import ConnectionInterface
 from cimgraph.models.graph_model import GraphModel
 from cimgraph.models.model_parsers import add_to_graph, cim_dump, cim_print
 from cimgraph.topology_processor.linknet import LinkNet

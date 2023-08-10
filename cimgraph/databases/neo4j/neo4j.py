@@ -5,8 +5,8 @@ import logging
 import re
 from typing import Dict, List, Optional
 
-import cimgraph.loaders.cypher as cypher
-from cimgraph.loaders import ConnectionInterface, ConnectionParameters, Parameter, QueryResponse
+import cimgraph.queries.cypher as cypher
+from cimgraph.databases import ConnectionInterface, ConnectionParameters, Parameter, QueryResponse
 from cimgraph.models.model_parsers import add_to_graph, add_to_catalog, item_dump
 
 from neo4j import GraphDatabase

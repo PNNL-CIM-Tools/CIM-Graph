@@ -6,7 +6,7 @@ import importlib
 from dataclasses import dataclass, field
 from typing import Dict, List, Optional
 
-from cimgraph.loaders import ConnectionInterface
+from cimgraph.databases import ConnectionInterface
 
 
 _log = logging.getLogger(__name__)

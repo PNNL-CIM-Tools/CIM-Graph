@@ -8,9 +8,9 @@ import sys
 from typing import Dict, List
 
 from cimgraph.data_profile import CIM_PROFILE
-from cimgraph.loaders import (ConnectionInterface, ConnectionParameters,
+from cimgraph.databases import (ConnectionInterface, ConnectionParameters,
                               Parameter, QueryResponse)
-from cimgraph.loaders.blazegraph.blazegraph import BlazegraphConnection
+from cimgraph.databases.blazegraph.blazegraph import BlazegraphConnection
 from cimgraph.models import add_to_catalog, add_to_typed_catalog
 from SPARQLWrapper import JSON, POST, SPARQLWrapper
 
