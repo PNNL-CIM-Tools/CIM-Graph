@@ -18,7 +18,7 @@ _log = logging.getLogger(__name__)
 @dataclass
 class NodeBreakerModel(GraphModel):
     container: cim.ConnectivityNodeContainer
-    read_connection: ConnectionInterface = None
+    connection: ConnectionInterface = None
     write_connection: ConnectionInterface = None
     distributed: bool = field(default_factory=False) #TODO: cannot find correct typing class
     distributed_hierarchy: list[type] = field(default_factory=list)
@@ -28,7 +28,7 @@ class NodeBreakerModel(GraphModel):
     def __post_init__(self):
         self.cim = importlib.import_module('cimgraph.data_profile.' + self.cim_profile)
 
-        if self.read_connection is not None:
+        if self.connection is not None:
             if self.distributed:
                 self.initialize_distributed_model(self.container)
             else:
@@ -37,7 +37,7 @@ class NodeBreakerModel(GraphModel):
 
 
     def initialize_centralized_model(self, container) -> None:
-        self.graph = self.read_connection.create_new_graph(container)
+        self.graph = self.connection.create_new_graph(container)
 
         
     def initialize_distributed_model(self, container) -> None:
@@ -48,6 +48,9 @@ class NodeBreakerModel(GraphModel):
                 #TODO: create subclasses based on pre-defined topology        
         else:
             centralized_graph = self.connection.create_new_graph(container)
+            self.get_all_edges(self.cim.Substation, centralized_graph)
+            self.get_all_edges(self.cim.VoltageLevel, centralized_graph)
+            self.get_all_edges(self.cim.Bay, centralized_graph)
             self.get_all_edges(self.cim.PowerTransformer, centralized_graph)
             self.get_all_edges(self.cim.TransformerTank, centralized_graph)
             self.get_all_edges(self.cim.BaseVoltage, centralized_graph)

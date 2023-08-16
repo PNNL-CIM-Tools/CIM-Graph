@@ -25,7 +25,7 @@ class GraphModel:
         if graph is None:
             graph = self.graph
         if cim_class in graph:
-            self.read_connection.get_all_edges(self.container.mRID, graph, cim_class)
+            self.connection.get_all_edges(self.container.mRID, graph, cim_class)
         else:
             _log.info('no instances of '+str(cim_class.__name__)+' found in graph.')
     
@@ -39,7 +39,7 @@ class GraphModel:
     
     def get_attributes_query(self, cim_class):
         if cim_class in self.graph:
-            sparql_message = self.read_connection.get_attributes_query(self.container.mRID, self.graph, cim_class)
+            sparql_message = self.connection.get_attributes_query(self.container.mRID, self.graph, cim_class)
         else:
             _log.info('no instances of '+str(cim_class.__name__)+' found in catalog.')
             sparql_message = ''
@@ -47,7 +47,7 @@ class GraphModel:
     
     def get_edges_query(self, cim_class):
         if cim_class in self.graph:
-            sparql_message = self.read_connection.get_edges_query(self.container.mRID, self.graph, cim_class)
+            sparql_message = self.connection.get_edges_query(self.container.mRID, self.graph, cim_class)
             
         else:
             _log.info('no instances of '+str(cim_class.__name__)+' found in catalog.')
