@@ -1,0 +1,145 @@
+{
+    "substations": 
+    [
+        {
+            "substation_id": "sub1-mrid",
+            "addressable_equipment": [],
+            "unaddressable_equipment": ["xfmr115-34-mrid", "xfmr34-12-mrid"],
+            "connectivity_node": [],
+            "bays": [],
+            "voltage_levels": [
+                {
+                    "voltage_level_id": "34kv1-mrid",
+                    "addressable_equipment": ["tap115-34-mrid", "breaker34-1-mrid", "breaker34-2-mrid"],
+                    "unaddressable_equipment": ["busbar34-1-mrid", "busbar34-2-mrid"],
+                    "connectivity_node": ["node34-1-mrid", "node34-2-mrid"]
+                },
+                {
+                    "voltage_level_id": "12kv1-mrid",
+                    "addressable_equipment": ["tap34-12-mrid", "breaker12-1-mrid", "breaker12-2-mrid"],
+                    "unaddressable_equipment": ["busbar34-1-mrid", "busbar34-2-mrid"],
+                    "connectivity_node": ["node34-1-mrid", "node34-2-mrid"]
+                }
+            ],
+            "feeders":
+            [
+                {
+                    "feeder_id": "feeder-1-mrid",
+                    "addressable_equipment": ["recloser-1-mrid", "recloser-2-mrid"],
+                    "unaddressable_equipment": ["aclinesegment-f1-mrid"],
+                    "connectivity_node": ["nodef1-1-mrid", "nodef1-2-mrid"],
+                    "switch_areas": [
+                        {
+                            "switch_area_id": "f1-da1-mrid",
+                            "boundary_switches": ["recloser-1-mrid", "recloser-2-mrid"],
+                            "addressable_equipment": ["mv-der1-mrid"],
+                            "unaddressable_equipment": ["custxmfr-1-mrid","aclinesegment-f1-sa1-mrid"],
+                            "connectivity_node": ["nodef1-sa-1-mrid", "nodef2-sa-2-mrid"],
+                            "secondary_areas": 
+                            [
+                                {
+                                    "secondary_area_id": "f1-sa1-se1-mrid",
+                                    "addressable_equipment": ["cust-ess-1-mrid", "cust-ess-2-mrid"],
+                                    "unaddressable_equipment": ["house-1-mrid", "house-2-mrid"],
+                                    "connectivity_node": ["nodef1-sa1-se1-1-mrid"]
+                                },
+                                {
+                                    "secondary_area_id": "f1-sa1-se1-mrid",
+                                    "addressable_equipment": ["cust-ess-1-mrid", "cust-ess-2-mrid"],
+                                    "unaddressable_equipment": ["house-1-mrid", "house-2-mrid"],
+                                    "connectivity_node": ["nodef1-sa1-se1-1-mrid"]
+                                }
+                            ]
+                        } 
+                    ]
+                },
+                {
+                    "feeder_id": "feeder-4-mrid",
+                    "addressable_equipment": ["recloser-3-mrid", "recloser-4-mrid"],
+                    "unaddressable_equipment": ["aclinesegment-f4-mrid"],
+                    "connectivity_node": ["nodef4-1-mrid", "nodef4-2-mrid"],
+                    "switch_areas": []
+                }
+
+            ]
+        },
+        {
+            "substation_id": "sub2-mrid",
+            "addressable_equipment": [],
+            "unaddressable_equipment": ["xfmr69-34-mrid", "xfmr34-12-mrid"],
+            "connectivity_node": [],
+            "bays": [],
+            "voltage_levels": [
+                {
+                    "voltage_level_id": "34kv1-mrid",
+                    "addressable_equipment": ["tap69-34-mrid", "breaker69-1-mrid", "breaker34-2-mrid"],
+                    "unaddressable_equipment": ["busbar34-1-mrid", "busbar34-2-mrid"],
+                    "connectivity_node": ["node34-1-mrid", "node34-2-mrid"]
+                },
+                {
+                    "voltage_level_id": "12kv1-mrid",
+                    "addressable_equipment": ["tap34-12-mrid", "breaker12-1-mrid", "breaker12-2-mrid"],
+                    "unaddressable_equipment": ["busbar34-1-mrid", "busbar34-2-mrid"],
+                    "connectivity_node": ["node34-1-mrid", "node34-2-mrid"]
+                }
+            ],
+            "feeders":
+            [
+                {
+                    "feeder_id": "feeder-3-mrid",
+                    "addressable_equipment": ["recloser-1-mrid", "recloser-2-mrid"],
+                    "unaddressable_equipment": ["aclinesegment-f3-mrid"],
+                    "connectivity_node": ["nodef3-1-mrid", "nodef3-2-mrid"],
+                    "switch_areas": [
+                        {
+                            "switch_area_id": "f3-da1-mrid",
+                            "boundary_switches": ["recloser-1-mrid", "recloser-2-mrid"],
+                            "addressable_equipment": ["mv-der1-mrid"],
+                            "unaddressable_equipment": ["custxmfr-1-mrid","aclinesegment-f3-sa1-mrid"],
+                            "connectivity_node": ["nodef3-sa-1-mrid", "nodef2-sa-2-mrid"],
+                            "secondary_areas": 
+                            [
+                                {
+                                    "secondary_area_id": "f3-sa1-se1-mrid",
+                                    "addressable_equipment": ["cust-ess-1-mrid", "cust-ess-2-mrid"],
+                                    "unaddressable_equipment": ["house-1-mrid", "house-2-mrid"],
+                                    "connectivity_node": ["nodef3-sa1-se1-1-mrid"]
+                                },
+                                {
+                                    "secondary_area_id": "f3-sa1-se1-mrid",
+                                    "addressable_equipment": ["cust-ess-1-mrid", "cust-ess-2-mrid"],
+                                    "unaddressable_equipment": ["house-1-mrid", "house-2-mrid"],
+                                    "connectivity_node": ["nodef3-sa1-se1-1-mrid"]
+                                }
+                            ]
+                        } 
+                    ]
+                },
+                {
+                    "feeder_id": "feeder-2-mrid",
+                    "addressable_equipment": ["recloser-3-mrid", "recloser-4-mrid"],
+                    "unaddressable_equipment": ["aclinesegment-f2-mrid"],
+                    "connectivity_node": ["nodef2-1-mrid", "nodef2-2-mrid"],
+                    "switch_areas": []
+                }
+
+            ]
+        }
+    ],
+
+    "lines": 
+    [
+        {
+            "line_id": "line115-1-mrid",
+            "addressable_equipment": [],
+            "unaddressable_equipment": ["aclinesegment115-1-mrid"],
+            "connectivity_node": []
+        },
+        {
+            "line_id": "line34-1-mrid",
+            "addressable_equipment": [],
+            "unaddressable_equipment": ["aclinesegment34-1-mrid"],
+            "connectivity_node": []
+        }
+    ]
+}
