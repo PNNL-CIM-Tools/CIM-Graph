@@ -39,11 +39,14 @@ class BlazegraphConnection(ConnectionInterface):
             
     def create_new_graph(self, container:object) -> dict[type, dict[str, object]] :
         graph = {}
-        # Generate SPARQL message from correct loaders>sparql python script based on class name
+        # Get all nodes, terminal, and equipment by 
         sparql_message = sparql.get_all_nodes_sparql(container, self.namespace)
-        # Execute sparql query
         query_output = self.execute(sparql_message)
+        graph = self.new_graph_parser
+
+        return graph
         
+    def new_graph_parser(self, query_output, graph):
         for result in query_output['results']['bindings']:
             # Parse query results
             node = result['ConnectivityNode']['value']
