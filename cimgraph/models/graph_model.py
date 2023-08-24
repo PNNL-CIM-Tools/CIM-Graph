@@ -56,7 +56,7 @@ class GraphModel:
 
     def __dumps__(self, cim_class):
         if cim_class in self.graph:
-            json_dump = cim_dump(self.graph, cim_class)
+            json_dump = self.cim_dump(self.graph, cim_class)
         else:
             json_dump = {}
             _log.info('no instances of '+str(cim_class.__name__)+' found in catalog.')

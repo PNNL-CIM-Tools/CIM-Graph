@@ -19,6 +19,7 @@ class ConnectionParameters:
     database: str = field(default_factory=str)
     namespace: str = field(default="<http://iec.ch/TC57/CIM100#>")
     cim_profile: str = field(default_factory=str)
+    filename: str = field(default_factory=str)
     # parameters: List[Parameter] = field(default_factory=list)
 
 
