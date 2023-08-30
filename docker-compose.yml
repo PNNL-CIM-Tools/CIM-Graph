@@ -1,0 +1,37 @@
+version: '2'
+
+services:
+
+  blazegraph:
+    # image: gridappsd/blazegraph:develop
+    image: gridappsd/blazegraph:seto
+    container_name: blazegraph
+    ports:
+      - 8889:8080
+
+  neo4j-apoc:
+    image: neo4j:5.7.0
+    cpus: 20
+    ports:
+      - 7474:7474
+      - 7687:7687
+    environment:
+      - NEO4J_PLUGINS= ["apoc", "n10s"]
+      - NEO4J_AUTH=none
+      - NEO4J_dbms_memory_transaction_total_max=10g
+      - NEO4J_server_memory_heap_max__size=10g
+      - NEO4J_apoc_export_file_enabled=true
+      - NEO4J_apoc_import_file_enabled=true
+      - NEO4J_apoc_import_file_use__neo4j__config=true
+
+    volumes:
+      - ./neo4j/data:/data 
+      - ./neo4j/plugins:/plugins 
+      # - ./gridappsd-docker/neo4j/import:/import
+      # - ~/Powergrid-Models/platform/cimxml:/import
+
+
+  graphdb:
+    image: ontotext/graphdb:10.2.4
+    ports:
+      - 7200:7200

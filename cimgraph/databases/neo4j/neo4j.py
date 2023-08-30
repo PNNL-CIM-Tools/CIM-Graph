@@ -3,16 +3,18 @@ import math
 import importlib
 import logging
 import re
+import asyncio
 from typing import Dict, List, Optional
 
 import cimgraph.queries.cypher as cypher
 from cimgraph.databases import ConnectionInterface, ConnectionParameters, Parameter, QueryResponse
 from cimgraph.models.model_parsers import add_to_graph, add_to_catalog, item_dump
 
-from neo4j import GraphDatabase
+from neo4j import GraphDatabase, AsyncGraphDatabase
 from neo4j.exceptions import DriverError, Neo4jError
 
-
+import nest_asyncio
+nest_asyncio.apply()
 
 _log = logging.getLogger(__name__)
 
@@ -30,14 +32,14 @@ class Neo4jConnection(ConnectionInterface):
 
     def connect(self):
         if not self.driver:
-            self.driver = GraphDatabase.driver(self.url, auth=(self.username, self.password))
-            self.driver.verify_connectivity()
+            self.driver = AsyncGraphDatabase.driver(self.url, auth=(self.username, self.password))
+            # self.driver.verify_connectivity()
 
     def disconnect(self):
         self.driver.close()
         self.driver = None
         
-    def execute(self, query_message: str) -> QueryResponse:
+    async def execute(self, query_message: str) -> QueryResponse:
         self.connect()
 
         # try:
@@ -47,18 +49,24 @@ class Neo4jConnection(ConnectionInterface):
         # except (DriverError, Neo4jError) as exception:
         #     _log.error("%s raised an error: \n%s", query_message, exception)
 
-        with self.driver.session() as session:
-            result = session.read_transaction(
-                lambda tx: tx.run(query_message).data()
-            )
+        async with self.driver.session(database = self.database) as session:
+            result = await session.read_transaction(lambda tx: self.query_tx(tx,query_message))
+            #     await lambda tx: tx.run(query_message).data()
+            # )
         return result
+    
+    async def query_tx(self, tx, query_message):
+        result = await tx.run(query_message)
+        records = await result.data()
+        return records
             
     def create_new_graph(self, container:object) -> dict[type, dict[str, object]] :
         graph = {}
         # Generate cypher message from correct loaders>cypher python script based on class name
         cypher_message = cypher.get_all_nodes_cypher(container, self.namespace)
         # Execute cypher query
-        query_output = self.execute(cypher_message)
+        
+        query_output = asyncio.run(self.execute(cypher_message))
         parsed = {}
         for result in query_output:
 
@@ -107,7 +115,7 @@ class Neo4jConnection(ConnectionInterface):
             #generate cypher message from correct loaders>cypher python script based on class name
             cypher_message = cypher.get_all_edges_cypher(cim_class, eq_mrids, self.namespace)
             #execute cypher query
-            query_output = self.execute(cypher_message)
+            query_output = asyncio.run(self.execute(cypher_message))
             self.edge_query_parser(query_output, container, graph, cim_class)
 
     def edge_query_parser(self, query_output, container: str | cim.ConnectivityNodeContainer, graph: dict[type, dict[str, object]], cim_class: type):

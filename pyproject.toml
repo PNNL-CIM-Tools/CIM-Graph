@@ -9,9 +9,12 @@ packages = [
 readme = "README.md"
 
 [tool.poetry.dependencies]
-python = ">=3.7.9,<4.0"
+python = ">=3.8.1,<4.0"
 xsdata = "^22.5"
 SPARQLWrapper = "^2.0.0"
+neo4j = "^5.10.0"
+rdflib = "^7.0.0"
+rdflib-neo4j = "^0.0.1b6"
 
 gridappsd-python = "^2.7.230209"
 # git = "https://github.com/GRIDAPPSD/gridappsd-python.git", branch = "cim-profile", optional = true }
