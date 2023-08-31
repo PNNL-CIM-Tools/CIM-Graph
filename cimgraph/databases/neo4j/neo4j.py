@@ -41,7 +41,9 @@ class Neo4jConnection(ConnectionInterface):
         
     async def execute(self, query_message: str) -> QueryResponse:
         self.connect()
-
+        # driver = AsyncGraphDatabase.driver(self.url, auth=(self.username, self.password))
+        # result = self.read_transaction(driver, query_message)
+        # driver.close()
         # try:
         #     records, summary, keys = self.driver.execute_query(query_message, database_=self.database )
         #     return records, summary, keys
@@ -51,9 +53,16 @@ class Neo4jConnection(ConnectionInterface):
 
         async with self.driver.session(database = self.database) as session:
             result = await session.read_transaction(lambda tx: self.query_tx(tx,query_message))
+            # driver.close()
             #     await lambda tx: tx.run(query_message).data()
             # )
+        
         return result
+    
+    # async def read_transaction(self, driver, query_message):
+    #     async with driver.session(database = self.database) as session:
+    #         result = await session.read_transaction(lambda tx: self.query_tx(tx,query_message))
+    #     return result
     
     async def query_tx(self, tx, query_message):
         result = await tx.run(query_message)
@@ -110,15 +119,23 @@ class Neo4jConnection(ConnectionInterface):
     def get_all_edges(self, container: str | cim.ConnectivityNodeContainer, graph: dict[type, dict[str, object]], cim_class: type):
         mrid_list = list(graph[cim_class].keys())
         num_nodes = len(mrid_list)
-        for index in range(math.ceil(len(mrid_list)/100)):
-            eq_mrids = mrid_list[index*100: (index+1)*100]
-            #generate cypher message from correct loaders>cypher python script based on class name
-            cypher_message = cypher.get_all_edges_cypher(cim_class, eq_mrids, self.namespace)
-            #execute cypher query
-            query_output = asyncio.run(self.execute(cypher_message))
-            self.edge_query_parser(query_output, container, graph, cim_class)
+        asyncio.run(self.get_all_edges_async(mrid_list, container, graph, cim_class))
+        
+        
+        
+    async def get_all_edges_async(self, mrid_list, container: str | cim.ConnectivityNodeContainer, graph: dict[type, dict[str, object]], cim_class: type):
+        for f in asyncio.as_completed([self.edge_query_parser(mrid_list, index, container, graph, cim_class) 
+                                       for index in range(math.ceil(len(mrid_list)/100))]):
+            await f
 
-    def edge_query_parser(self, query_output, container: str | cim.ConnectivityNodeContainer, graph: dict[type, dict[str, object]], cim_class: type):
+        
+
+    async def edge_query_parser(self, mrid_list, index, container: str | cim.ConnectivityNodeContainer, graph: dict[type, dict[str, object]], cim_class: type):
+        eq_mrids = mrid_list[index*100: (index+1)*100]
+        #generate cypher message from correct loaders>cypher python script based on class name
+        cypher_message = cypher.get_all_edges_cypher(cim_class, eq_mrids, self.namespace)
+        #execute cypher query
+        query_output = asyncio.run(self.execute(cypher_message))
         parsed = []
         for result in query_output:
             is_association = False
