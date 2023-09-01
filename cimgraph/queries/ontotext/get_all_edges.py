@@ -73,7 +73,7 @@ def get_all_edges_ontotext(cim_class: str, mrid_list: List, namespace: str) -> s
                   bind(strafter(str(?classraw),"CIM100#") as ?edge_class)
                   OPTIONAL {?value cim:IdentifiedObject.mRID ?edge_id.}
                  bind(exists{?value cim:IdentifiedObject.mRID ?edge_id} as ?mRID_exists)
-                 {bind(if(?mRID_exists, ?edge_id, strafter(str(?value),"urn:uuid:")) as ?edge_mRID)}.}
+                 {bind(if(?mRID_exists, strafter(str(?value),"urn:uuid:"), ?edge_id) as ?edge_mRID)}.}
         }
 
         ORDER by  ?mRID ?attribute

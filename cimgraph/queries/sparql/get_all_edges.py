@@ -49,7 +49,7 @@ def get_all_edges_sparql(cim_class: str, mrid_list: List, namespace: str) -> str
         ?eq cim:IdentifiedObject.mRID ?mRID."""
     else:
         query_message += """               }
-        {bind(strafter(str(?eq),"#") as ?mRID)}."""
+        {bind(strafter(str(?eq),"uuid:") as ?mRID)}."""
         
     # add all attributes
     query_message += """        
@@ -65,7 +65,7 @@ def get_all_edges_sparql(cim_class: str, mrid_list: List, namespace: str) -> str
                   bind(strafter(str(?classraw),"CIM100#") as ?edge_class)
                   OPTIONAL {?value cim:IdentifiedObject.mRID ?edge_id.}
                  bind(exists{?value a cim:IdentifiedObject.mRID} as ?mRID_exists)
-                 {bind(if(?mRID_exists, ?edge_id, strafter(str(?value),"#")) as ?edge_mRID)}.}
+                 {bind(if(?mRID_exists, strafter(str(?value),"uuid:"), ?edge_id) as ?edge_mRID)}.}
         }
 
         ORDER by  ?mRID ?attribute

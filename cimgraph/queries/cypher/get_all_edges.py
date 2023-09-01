@@ -22,11 +22,12 @@ def get_all_edges_cypher(cim_class: str, mrid_list: List, namespace: str) -> str
     class_name = cim_class.__name__
     classes_without_mrid = ClassesWithoutMRID()
 
-    query_message = f"""MATCH (eq:{class_name}) - [edge] - (edge_node)
+    query_message = f"""MATCH (eq:{class_name})
     """
        
     if class_name not in classes_without_mrid.classes:
         query_message += f"""WHERE eq.`IdentifiedObject.mRID` in {mrid_list}
+        MATCH (eq:{class_name}) - [edge] - (edge_node)
         RETURN eq.`IdentifiedObject.mRID` as mRID, eq, type(edge) as attribute, (COALESCE(edge_node.`IdentifiedObject.mRID`,edge_node.uri)) as edge_mrid, labels(edge_node) as edge_class"""
     else:
         index = 0
@@ -42,7 +43,8 @@ def get_all_edges_cypher(cim_class: str, mrid_list: List, namespace: str) -> str
                 query_message += f"""eq.uri contains "{mrid}"
                 """
 
-        query_message += """RETURN eq.uri as mRID, eq, type(edge) as attribute, (COALESCE(edge_node.`IdentifiedObject.mRID`,edge_node.uri)) as edge_mrid, labels(edge_node) as edge_class"""
+        query_message += """MATCH (eq:{class_name}) - [edge] - (edge_node)
+        RETURN eq.uri as mRID, eq, type(edge) as attribute, (COALESCE(edge_node.`IdentifiedObject.mRID`,edge_node.uri)) as edge_mrid, labels(edge_node) as edge_class"""
 
         
 
