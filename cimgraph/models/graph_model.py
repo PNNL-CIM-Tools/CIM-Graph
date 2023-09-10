@@ -30,6 +30,14 @@ class GraphModel:
             self.connection.get_all_edges(self.container.mRID, graph, cim_class)
         else:
             _log.info('no instances of '+str(cim_class.__name__)+' found in graph.')
+
+    def get_all_attributes(self, cim_class, graph=None):
+        if graph is None:
+            graph = self.graph
+        if cim_class in graph:
+            self.connection.get_all_attributes(self.container.mRID, graph, cim_class)
+        else:
+            _log.info('no instances of '+str(cim_class.__name__)+' found in graph.')
     
     def pprint(self, cim_class):
         if cim_class in self.graph:
@@ -56,18 +64,14 @@ class GraphModel:
             sparql_message = ''
         return sparql_message
 
-    def __dumps__(self, cim_class):
-        if cim_class in self.graph:
-            json_dump = self.cim_dump(self.graph, cim_class)
-        else:
-            json_dump = {}
-            _log.info('no instances of '+str(cim_class.__name__)+' found in catalog.')
 
-        return json_dump
     
     def upload(self):
         query = self.write_connection.upload(self.graph)
-#         return query
+
+
+
+
     
     def write_xml(self, filename, schema):
         
@@ -158,15 +162,51 @@ class GraphModel:
         else:
             result = str(value)
         return result
+    
+    def json_ld_dump(self, value):
+        if type(value) is str:
+            result = value
+        elif type(value) is float:
+            result = value
+        elif type(value) is list:
+            result = []
+            for item in value:
+                result.append(self.json_ld_dump(item))
+        elif value is None:
+            result = ''
+        elif type(type(value)) is type:
+            result = json.dumps({"@type": value.__class__.__name__, "@id": value.mRID})
+        else:
+            result = str(value)
+        return result
 
-    def cim_dump(self, graph:Dict, cim_class:type):
-        mrid_list = list(graph[cim_class].keys())
+    def cim_dump(self, cim_class:type):
+        mrid_list = list(self.graph[cim_class].keys())
         attribute_list = list(cim_class().__dict__.keys())
         json_dump = {}
 
         for mrid in mrid_list:
             json_dump[mrid] = {}
             for attribute in attribute_list:
-                value = getattr(graph[cim_class][mrid], attribute)
-                json_dump[mrid][attribute] = self.item_dump(value)
+                value = getattr(self.graph[cim_class][mrid], attribute)
+                if value is not None and value != []:
+                    json_dump[mrid][attribute] = self.json_ld_dump(value)
+
         return (json_dump)
+    
+    def __dumps__(self, cim_class):
+        if cim_class in self.graph:
+            mrid_list = list(self.graph[cim_class].keys())
+            attribute_list = list(cim_class().__dict__.keys())
+            json_dump = {}
+
+            for mrid in mrid_list:
+                json_dump[mrid] = {}
+                for attribute in attribute_list:
+                    value = getattr(self.graph[cim_class][mrid], attribute)
+                    json_dump[mrid][attribute] = self.item_dump(value)
+        else:
+            json_dump = {}
+            _log.info('no instances of '+str(cim_class.__name__)+' found in catalog.')
+
+        return json_dump

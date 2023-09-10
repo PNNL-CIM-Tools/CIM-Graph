@@ -7,8 +7,8 @@ from typing import List
 
 import cimgraph.data_profile as cim
 from cimgraph.databases import ConnectionInterface
-from cimgraph.models.model_parsers import (add_to_catalog,
-                                           add_to_typed_catalog, cim_dump, cim_print)
+# from cimgraph.models.model_parsers import (add_to_catalog,
+#                                            add_to_typed_catalog, cim_dump, cim_print)
 from pprint import pprint as pyprint
 _log = logging.getLogger(__name__)
 

@@ -5,7 +5,7 @@ import uuid
 
 from cimgraph.topology_processor.linknet import LinkNet
 from cimgraph.models import SwitchArea, SecondaryArea
-from cimgraph.models.model_parsers import add_to_graph
+# from cimgraph.models.model_parsers import add_to_graph
 
 class DistributedFeederTopology():
     

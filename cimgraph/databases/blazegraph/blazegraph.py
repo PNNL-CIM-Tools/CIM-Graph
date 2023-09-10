@@ -7,7 +7,8 @@ from typing import Dict, List, Optional
 
 import cimgraph.queries.sparql as sparql
 from cimgraph.databases import ConnectionInterface, ConnectionParameters, Parameter, QueryResponse
-from cimgraph.models.model_parsers import add_to_graph, add_to_catalog, item_dump
+from cimgraph.models.graph_model import GraphModel
+
 
 from SPARQLWrapper import JSON, POST, SPARQLWrapper
 
@@ -59,7 +60,8 @@ class BlazegraphConnection(ConnectionInterface):
             self.create_object(graph, self.cim.Terminal, terminal)
             if eq_class in self.cim.__all__:
                 eq_class = eval(f"self.cim.{eq_class}")
-                self.create_object(graph, eq_class, eq_id)
+                obj = self.create_object(graph, eq_class, eq_id)
+                
             else:
                 _log.warning('object class missing from data profile:' + str(eq_class))
                 continue
@@ -152,45 +154,9 @@ class BlazegraphConnection(ConnectionInterface):
 
 
                 
-                
-    
-                
+
                 
                 
-                
-                
-                
-                
-                
-                
-                
-        
-    def create_default_instances(self, feeder_mrid: str | cim.Feeder, mrid_list: List[str]) -> List[object]:
-        """ 
-        Creates empty CIM objects with the correct class type with mRID and name fields populated based on 
-        a list of mRID strings.
-        Args:
-            feeder_mrid (str | Feeder object): The mRID of the feeder or feeder object
-            mrid_list (list[str]): A list of object mRID strings to be converted into CIM objects
-        Returns:
-            object_list: A list of CIM object instances
-        """
-        #generate correct sparql message using create_default.py
-        sparql_message = self.legacy_sparql.get_class_type_sparql(feeder_mrid, mrid_list)
-        #execute sparql query
-        query_output = self.execute(sparql_message)
-        # parse query results and add new CIM objects to list
-        object_list = [] 
-        for result in query_output['results']['bindings']:
-           # print(result)
-            cls = result['class']['value']
-            mRID = result['mRID']['value']
-            name = result['name']['value']
-            try:
-                object_list.append(eval(f"self.cim.{cls}(mRID='{mRID}', name = '{name}')"))
-            except:
-                _log.warning('object class missing from data profile:' + str(cls))
-        return object_list
     
     
           
@@ -315,17 +281,17 @@ class BlazegraphConnection(ConnectionInterface):
         if mRID in graph[class_type].keys():
             obj = graph[class_type][mRID]
         else:
-                obj = class_type()
-                setattr(obj, "mRID", mRID)
-                add_to_graph(obj, graph)
+            obj = class_type()
+            setattr(obj, "mRID", mRID)
+            graph[class_type][mRID] = obj
 
         return obj
     
     def upload(self, graph):
-        url = "http://localhost:8889/bigdata/namespace/kb/sparql"
+        url = self.url
         
-        prefix = """PREFIX r: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
-        PREFIX cim: <http://iec.ch/TC57/CIM100#>
+        prefix = f"""PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+        PREFIX cim: <self.namespace>
         PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
         """
         triples = []
@@ -370,7 +336,7 @@ class BlazegraphConnection(ConnectionInterface):
                                     triples.append(triple)
 
                             else:
-                                value = item_dump(getattr(obj, attribute))
+                                value = GraphModel.item_dump(getattr(obj, attribute))
                                 if value:
         #                              <{url}#_{mRID}> cim:{class_type}.{attr} \"{value}\".
                                     attr = """
@@ -389,8 +355,9 @@ class BlazegraphConnection(ConnectionInterface):
         attribute_type = cim_class.__dataclass_fields__[attribute].type
         if "List" in attribute_type:
             obj_list = getattr(graph[cim_class][mRID], attribute)
-            obj_list.append(edge_object)
-            setattr(graph[cim_class][mRID], attribute, obj_list)
+            if edge_object not in obj_list:
+                obj_list.append(edge_object)
+                setattr(graph[cim_class][mRID], attribute, obj_list)
         else:
             setattr(graph[cim_class][mRID], attribute, edge_object)
             

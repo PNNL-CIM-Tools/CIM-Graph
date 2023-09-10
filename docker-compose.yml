@@ -3,8 +3,8 @@ version: '2'
 services:
 
   blazegraph:
-    # image: gridappsd/blazegraph:develop
-    image: gridappsd/blazegraph:seto4
+    image: gridappsd/blazegraph:develop
+    # image: gridappsd/blazegraph:seto4
     container_name: blazegraph
     ports:
       - 8889:8080
@@ -25,8 +25,8 @@ services:
       - NEO4J_apoc_import_file_use__neo4j__config=true
 
     volumes:
-      - ./neo4j/data:/data 
-      - ./neo4j/plugins:/plugins 
+      - ./neo4j/data:/data
+      - ./neo4j/plugins:/plugins
       # - ./gridappsd-docker/neo4j/import:/import
       # - ~/Powergrid-Models/platform/cimxml:/import
 
@@ -35,3 +35,13 @@ services:
     image: ontotext/graphdb:10.2.4
     ports:
       - 7200:7200
+
+  mysql:
+    image: mysql:8.1.0
+    container_name: mysql
+    ports:
+      - 3306:3306
+
+    environment:
+      MYSQL_ROOT_PASSWORD: password
+      MYSQL_PORT: 3306

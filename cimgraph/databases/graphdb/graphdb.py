@@ -7,7 +7,7 @@ from typing import Dict, List, Optional
 
 import cimgraph.queries.ontotext as ontotext
 from cimgraph.databases import ConnectionInterface, ConnectionParameters, Parameter, QueryResponse
-from cimgraph.models.model_parsers import add_to_graph, add_to_catalog, item_dump
+# from cimgraph.models.model_parsers import add_to_graph, add_to_catalog, item_dump
 
 from SPARQLWrapper import JSON, POST, SPARQLWrapper
 
