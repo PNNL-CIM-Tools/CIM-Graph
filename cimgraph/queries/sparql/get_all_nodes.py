@@ -16,7 +16,7 @@ def get_all_nodes_sparql(container, namespace):
 
     query_message = """
         PREFIX r:  <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
-        PREFIX cim:  %s"""%namespace
+        PREFIX cim:  <%s>"""%namespace
     query_message += """
         SELECT  ?ConnectivityNode ?Terminal ?Equipment
         WHERE {          
@@ -26,6 +26,7 @@ def get_all_nodes_sparql(container, namespace):
 
     # add all attributes
     query_message += """
+                {
         ?c cim:IdentifiedObject.mRID ?cid.
         ?node cim:ConnectivityNode.ConnectivityNodeContainer ?c.
         ?node cim:IdentifiedObject.mRID ?ConnectivityNode.
@@ -36,7 +37,24 @@ def get_all_nodes_sparql(container, namespace):
 
         ?eq cim:IdentifiedObject.mRID ?eq_id.
         ?eq a ?eq_cls.
-        bind(concat(str(?eq_id),";",strafter(str(?eq_cls),"CIM100#")) as ?Equipment)     
+        bind(concat("{\\"@id\\":\\"", str(?eq_id),"\\",\\"@type\\":\\"",strafter(str(?eq_cls),"%s"), "\\"}") as ?Equipment)    
         }
-        """
+        UNION
+        {
+        ?c cim:IdentifiedObject.mRID ?cid.
+        ?eq cim:Equipment.EquipmentContainer ?c.
+        ?eq cim:IdentifiedObject.mRID ?eq_id.
+        
+        
+        ?t cim:Terminal.ConnectivityNode ?node.
+        ?t cim:IdentifiedObject.mRID ?Terminal.
+        ?t cim:Terminal.ConductingEquipment ?eq.
+        ?node cim:IdentifiedObject.mRID ?ConnectivityNode.
+        ?eq cim:IdentifiedObject.mRID ?eq_id.
+        ?eq a ?eq_cls.
+        bind(concat("{\\"@id\\":\\"", str(?eq_id),"\\",\\"@type\\":\\"",strafter(str(?eq_cls),"%s"), "\\"}") as ?Equipment)    
+        }
+        }
+        """%(namespace, namespace)
+    
     return query_message

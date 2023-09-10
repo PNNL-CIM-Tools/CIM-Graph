@@ -8,7 +8,7 @@ from typing import Dict, List, Optional
 from cimgraph.data_profile.known_problem_classes import ClassesWithoutMRID
 
 
-def get_all_edges_sparql(cim_class: str, mrid_list: List, namespace: str) -> str: 
+def get_all_edges_sparql(cim_class: str, mrid_list: List, namespace: str, iec61970_301: int) -> str: 
     """ 
     Generates SPARQL query string for a given catalog of objects and feeder id
     Args:
@@ -21,13 +21,18 @@ def get_all_edges_sparql(cim_class: str, mrid_list: List, namespace: str) -> str
     class_name = cim_class.__name__
     classes_without_mrid = ClassesWithoutMRID()
 
+    if int(iec61970_301) > 7:
+        split = "uuid:"
+    else:
+        split = "#"
+
 
     query_message = """
         PREFIX r:  <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
-        PREFIX cim:  %s""" %namespace
+        PREFIX cim:  <%s>""" %namespace
     
     query_message += """
-        SELECT DISTINCT ?mRID ?attribute ?value ?edge_mRID ?edge_class
+        SELECT DISTINCT ?mRID ?attribute ?value ?edge
         WHERE {          
           ?eq r:type cim:%s."""%class_name
     # query_message += """
@@ -53,21 +58,22 @@ def get_all_edges_sparql(cim_class: str, mrid_list: List, namespace: str) -> str
         
     # add all attributes
     query_message += """        
-        {?eq (cim:|!cim:) ?value.
-         ?eq ?attr ?value.}
+        {?eq (cim:|!cim:) ?val.
+         ?eq ?attr ?val.}
         UNION
-        {?value (cim:|!cim:) ?eq.
-         ?value ?attr ?eq.}
+        {?val (cim:|!cim:) ?eq.
+         ?val ?attr ?eq.}
         
         {bind(strafter(str(?attr),"#") as ?attribute)}
+        {bind(strafter(str(?val),"%s") as ?uri)}
+        {bind(if(?uri = "", ?val, ?uri) as ?value)}
           
-        OPTIONAL {?value a ?classraw.
-                  bind(strafter(str(?classraw),"CIM100#") as ?edge_class)
-                  OPTIONAL {?value cim:IdentifiedObject.mRID ?edge_id.}
-                 bind(exists{?value a cim:IdentifiedObject.mRID} as ?mRID_exists)
-                 {bind(if(?mRID_exists, strafter(str(?value),"uuid:"), ?edge_id) as ?edge_mRID)}.}
+        OPTIONAL {?val a ?classraw.
+                  bind(strafter(str(?classraw),"%s") as ?edge_class)
+                  ?val cim:IdentifiedObject.mRID ?edge_mRID. 
+                  bind(concat("{\\"@id\\":\\"", ?edge_mRID,"\\",\\"@type\\":\\"", ?edge_class, "\\"}") as ?edge)}
         }
 
         ORDER by  ?mRID ?attribute
-        """
+        """ %(split, namespace)
     return query_message

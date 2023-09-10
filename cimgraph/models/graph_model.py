@@ -16,12 +16,14 @@ _log = logging.getLogger(__name__)
 @dataclass
 class GraphModel:
    
-    def add_to_graph(obj: object, graph: Dict) -> Dict:
-        if type(obj) not in graph:
+    def add_to_graph(self, obj: object, graph: Dict = None) -> Dict:
+        if graph is None:
+            graph = self.graph
+        if type(obj) not in graph.keys():
             graph[type(obj)] = {}
-        if obj.mRID not in graph[type(obj)]:
+        if obj.mRID not in graph[type(obj)].keys():
             graph[type(obj)][obj.mRID] = obj
-        return graph
+
 
     def get_all_edges(self, cim_class, graph=None):
         if graph is None:
@@ -210,3 +212,7 @@ class GraphModel:
             _log.info('no instances of '+str(cim_class.__name__)+' found in catalog.')
 
         return json_dump
+    
+    # def build_full_model(self):
+
+    #     # Get all PowerSystemResources

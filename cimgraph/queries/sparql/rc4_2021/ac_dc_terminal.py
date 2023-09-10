@@ -6,7 +6,7 @@ from typing import Dict, List, Optional
 import cimgraph.data_profile.rc4_2021 as cim
 
 
-def get_all_attributes(feeder_mrid: str, typed_catalog: dict[type, dict[str, object]]) -> str: 
+def get_all_attributes(feeder_mrid: str, typed_catalog: dict[type, dict[str, object]], asset_list) -> str: 
     """ Generates SPARQL query string for a given catalog of objects and feeder id
     Args:
         feeder_mrid (str | Feeder object): The mRID of the feeder or feeder object
@@ -16,7 +16,7 @@ def get_all_attributes(feeder_mrid: str, typed_catalog: dict[type, dict[str, obj
         sparql_message: query string that can be used in blazegraph connection or STOMP client
     """
     
-    mrid_list = list(typed_catalog[cim.ACDCTerminal].keys())
+    # asset_list = list(typed_catalog[cim.ACDCTerminal].keys())
 
     
     query_message = """
@@ -28,7 +28,7 @@ def get_all_attributes(feeder_mrid: str, typed_catalog: dict[type, dict[str, obj
           VALUES ?fdrid {"%s"}
           VALUES ?mRID {"""%feeder_id
     # add all equipment mRID
-    for mrid in mrid_list:
+    for mrid in asset_list:
         query_message += ' "%s" \n'%mrid
     # add all attributes
     query_message += """               } 

@@ -13,13 +13,17 @@ class Parameter:
 
 @dataclass
 class ConnectionParameters:
+    cim_profile: str = field(default_factory=str)
     url: str = field(default_factory=str)
+    host: str = field(default_factory=str)
+    port: str = field(default_factory=str)
     username: str = field(default_factory=str)
     password: str = field(default_factory=str)
     database: str = field(default_factory=str)
-    namespace: str = field(default="<http://iec.ch/TC57/CIM100#>")
-    cim_profile: str = field(default_factory=str)
+    namespace: str = field(default="http://iec.ch/TC57/CIM100#")
+    iec61970_301: int = field(default = 7)
     filename: str = field(default_factory=str)
+
     # parameters: List[Parameter] = field(default_factory=list)
 
 
