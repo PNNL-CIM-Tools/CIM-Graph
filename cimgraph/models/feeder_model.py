@@ -23,9 +23,9 @@ class FeederModel(GraphModel):
     distributed: bool #TODO: cannot find correct typing class
     distributed_hierarchy: list[type] = field(default_factory=list)
     graph: dict[type, dict[str, object]] = field(default_factory=dict)
-    cim_profile: str = field(default_factory='rc4_2021')
     
     def __post_init__(self):
+        self.cim_profile = self.connection.connection_params.cim_profile
         self.cim = importlib.import_module('cimgraph.data_profile.' + self.cim_profile)
 
         if self.distributed:

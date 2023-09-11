@@ -32,7 +32,7 @@ def get_all_edges_sparql(cim_class: str, mrid_list: List, namespace: str, iec619
         PREFIX cim:  <%s>""" %namespace
     
     query_message += """
-        SELECT DISTINCT ?mRID ?attribute ?value ?edge
+        SELECT DISTINCT ?mRID ?attr ?val ?edge_class ?edge_mRID
         WHERE {          
           ?eq r:type cim:%s."""%class_name
     # query_message += """
@@ -63,21 +63,19 @@ def get_all_edges_sparql(cim_class: str, mrid_list: List, namespace: str, iec619
         UNION
         {?val (cim:|!cim:) ?eq.
          ?val ?attr ?eq.}
-        
-        {bind(strafter(str(?attr),"#") as ?attribute)}
-        {bind(strafter(str(?val),"%s") as ?uri)}
-        {bind(if(?uri = "", ?val, ?uri) as ?value)}
+
+        # {bind(strafter(str(?attr),"#") as ?attribute).}
+        # {bind(strafter(str(?val),"%s") as ?uri).}
+        # {bind(if(?uri = "", ?val, ?uri) as ?value).}
           
         OPTIONAL {?val a ?classraw.
-                  bind(strafter(str(?classraw),"%s") as ?edge_class)
-                  {bind(strafter(str(?val),"%s") as ?uri)}
-                  OPTIONAL {?val cim:IdentifiedObject.mRID ?edge_id.}
-                  bind(exists{?val cim:IdentifiedObject.mRID ?edge_id} as ?mRID_exists)
-                 {bind(if(?mRID_exists, ?edge_id, ?uri) as ?edge_mRID)}.
-
-                  bind(concat("{\\"@id\\":\\"", ?edge_mRID,"\\",\\"@type\\":\\"", ?edge_class, "\\"}") as ?edge)}
+                  bind(strafter(str(?classraw),"%s") as ?edge_class).}
+        OPTIONAL {?val cim:IdentifiedObject.mRID ?edge_mRID. 
+                #   {bind(if(EXISTS(?edge_id), ?val, ?edge_id)) as ?edge_mRID)}.
+                #   bind(concat("{\\"@id\\":\\"", ?edge_mRID,"\\",\\"@type\\":\\"", ?edge_class, "\\"}") as ?edge)
+                  }
         }
 
         ORDER by  ?mRID ?attribute
-        """ %(split, namespace, split)
+        """ %(split, namespace)
     return query_message
