@@ -14,9 +14,10 @@ from SPARQLWrapper import JSON, POST, SPARQLWrapper
 _log = logging.getLogger(__name__)
 
 class GraphDBConnection(ConnectionInterface):
-    def __init__(self, connection_params, cim_profile:str):
-        self.legacy_sparql = importlib.import_module('cimgraph.queries.sparql.' + cim_profile)
-        self.cim = importlib.import_module('cimgraph.data_profile.' + cim_profile)
+    def __init__(self, connection_params):
+        self.cim_profile = connection_params.cim_profile
+        self.legacy_sparql = importlib.import_module('cimgraph.queries.sparql.' + self.cim_profile)
+        self.cim = importlib.import_module('cimgraph.data_profile.' + self.cim_profile)
         self.namespace = connection_params.namespace
         self.sparql_obj: Optional[SPARQLWrapper] = None
         self.connection_parameters = connection_params

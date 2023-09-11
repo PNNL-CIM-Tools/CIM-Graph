@@ -24,7 +24,6 @@ class BlazegraphConnection(ConnectionInterface):
         self.namespace = connection_params.namespace
         self.iec61970_301 = connection_params.iec61970_301
         self.url = connection_params.url
-        self.connection_params = connection_params
         self.sparql_obj: Optional[SPARQLWrapper] = None
 
 

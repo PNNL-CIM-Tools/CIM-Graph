@@ -25,7 +25,7 @@ class FeederModel(GraphModel):
     graph: dict[type, dict[str, object]] = field(default_factory=dict)
     
     def __post_init__(self):
-        self.cim_profile = self.connection.connection_params.cim_profile
+        self.cim_profile = self.connection.cim_profile
         self.cim = importlib.import_module('cimgraph.data_profile.' + self.cim_profile)
 
         if self.distributed:

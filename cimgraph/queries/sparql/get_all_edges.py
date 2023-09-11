@@ -22,7 +22,7 @@ def get_all_edges_sparql(cim_class: str, mrid_list: List, namespace: str, iec619
     classes_without_mrid = ClassesWithoutMRID()
 
     if int(iec61970_301) > 7:
-        split = "uuid:"
+        split = "urn:uuid:"
     else:
         split = "#"
 
@@ -43,18 +43,24 @@ def get_all_edges_sparql(cim_class: str, mrid_list: List, namespace: str, iec619
     #      {[cim:Equipment.EquipmentContainer ?fdr] (cim:|!cim:)?  ?eq}}.
     #       """ %feeder_mrid
     
-    query_message += """
-        VALUES ?mRID {"""
-    # add all equipment mRID
-    for mrid in mrid_list:
-        query_message += ' "%s" \n'%mrid
+  
     
     if class_name not in classes_without_mrid.classes:
+        query_message += """
+        VALUES ?mRID {"""
+        # add all equipment mRID
+        for mrid in mrid_list:
+            query_message += ' "%s" \n'%mrid
         query_message += """               } 
         ?eq cim:IdentifiedObject.mRID ?mRID."""
     else:
+        query_message += """
+        VALUES ?eq {"""
+        # add all equipment mRID
+        for mrid in mrid_list:
+            query_message += """ <%s%s> \n"""%(split,mrid)
         query_message += """               }
-        {bind(strafter(str(?eq),"uuid:") as ?mRID)}."""
+        {bind(strafter(str(?eq),"%s") as ?mRID)}."""%split
         
     # add all attributes
     query_message += """        
