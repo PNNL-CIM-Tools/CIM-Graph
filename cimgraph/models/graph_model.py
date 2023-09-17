@@ -16,7 +16,7 @@ _log = logging.getLogger(__name__)
 @dataclass
 class GraphModel:
    
-    def add_to_graph(self, obj: object, graph: Dict = None) -> Dict:
+    def add_to_graph(self, obj: object, graph:GraphModel = None) -> Dict:
         if graph is None:
             graph = self.graph
         if type(obj) not in graph.keys():
@@ -25,7 +25,7 @@ class GraphModel:
             graph[type(obj)][obj.mRID] = obj
 
 
-    def get_all_edges(self, cim_class, graph=None):
+    def get_all_edges(self, cim_class, graph:GraphModel=None):
         if graph is None:
             graph = self.graph
         if cim_class in graph:
@@ -33,13 +33,13 @@ class GraphModel:
         else:
             _log.info('no instances of '+str(cim_class.__name__)+' found in graph.')
 
-    def get_all_attributes(self, cim_class, graph=None):
-        if graph is None:
-            graph = self.graph
-        if cim_class in graph:
-            self.connection.get_all_attributes(self.container.mRID, graph, cim_class)
-        else:
-            _log.info('no instances of '+str(cim_class.__name__)+' found in graph.')
+    # def get_all_attributes(self, cim_class, graph=None):
+    #     if graph is None:
+    #         graph = self.graph
+    #     if cim_class in graph:
+    #         self.connection.get_all_attributes(self.container.mRID, graph, cim_class)
+    #     else:
+    #         _log.info('no instances of '+str(cim_class.__name__)+' found in graph.')
     
     def pprint(self, cim_class):
         if cim_class in self.graph:

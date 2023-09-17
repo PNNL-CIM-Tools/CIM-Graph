@@ -4,6 +4,8 @@ import importlib
 import logging
 import re
 import json
+import time
+import mysql.connector
 
 from typing import Dict, List, Optional
 
@@ -16,31 +18,39 @@ from SPARQLWrapper import JSON, POST, SPARQLWrapper
 
 _log = logging.getLogger(__name__)
 
-class BlazegraphConnection(ConnectionInterface):
-    def __init__(self, connection_params):
-        self.cim_profile = connection_params.cim_profile
-        self.legacy_sparql = importlib.import_module('cimgraph.queries.sparql.' + self.cim_profile)
+class MySQLJSONConnection(ConnectionInterface):
+    def __init__(self, connection_parameters):
+        self.connection_parameters = connection_parameters
+        self.cim_profile = connection_parameters.cim_profile
         self.cim = importlib.import_module('cimgraph.data_profile.' + self.cim_profile)
-        self.namespace = connection_params.namespace
-        self.iec61970_301 = connection_params.iec61970_301
-        self.url = connection_params.url
-        self.sparql_obj: Optional[SPARQLWrapper] = None
+        self.namespace = connection_parameters.namespace
+        self.host = connection_parameters.host
+        self.port = connection_parameters.port
+        self.username = connection_parameters.username
+        self.password = connection_parameters.password
+        self.database = connection_parameters.database
+        self.connection = None
+        self.cursor = None
 
 
     def connect(self):
-        if not self.sparql_obj:
-            self.sparql_obj = SPARQLWrapper(self.url)
-            self.sparql_obj.setReturnFormat(JSON)
+        if not self.cursor:
+            if not self.database: # Set database name to CIM Profile name if not specified
+                self.database = self.cim_profile 
+            try:
+                self.connection = mysql.connector.connect(host = self.host, user = self.username, password = self.password, database = self.database)
+                self.cursor = self.connection.cursor(buffered = True)
+            except:
+                _log.error('Could not connect to database')
 
     def disconnect(self):
-        self.sparql_obj = None
+        self.cursor = None
         
     def execute(self, query_message: str) -> QueryResponse:
         self.connect()
-        self.sparql_obj.setQuery(query_message)
-        self.sparql_obj.setMethod(POST)
-        query_output = self.sparql_obj.query().convert()
-        return query_output
+        self.cursor.execute(query_message)
+        response = self.cursor.fetchall()
+        return response
 
             
     def create_new_graph(self, container:object) -> dict[type, dict[str, object]] :
@@ -51,28 +61,26 @@ class BlazegraphConnection(ConnectionInterface):
 
         for result in query_output['results']['bindings']:
             # Parse query results
-            node_mrid = result['ConnectivityNode']['value']
-            term_mrid = result['Terminal']['value']
+            node = result['ConnectivityNode']['value']
+            terminal = result['Terminal']['value']
             eq = json.loads(result['Equipment']['value'])
             eq_id = eq["@id"]
             eq_class = eq["@type"]
             # Add each object to graph
-            node = self.create_object(graph, self.cim.ConnectivityNode, node_mrid)
-            terminal = self.create_object(graph, self.cim.Terminal, term_mrid)
+            self.create_object(graph, self.cim.ConnectivityNode, node)
+            self.create_object(graph, self.cim.Terminal, terminal)
             if eq_class in self.cim.__all__:
                 eq_class = eval(f"self.cim.{eq_class}")
-                equipment = self.create_object(graph, eq_class, eq_id)
+                obj = self.create_object(graph, eq_class, eq_id)
                 
             else:
                 _log.warning('object class missing from data profile:' + str(eq_class))
                 continue
             # Link objects in graph
-            if terminal not in equipment.Terminals:
-                equipment.Terminals.append(terminal)
-            if terminal not in node.Terminals:
-                node.Terminals.append(terminal)
-            setattr(terminal, "ConnectivityNode", node)
-            setattr(terminal, "ConductingEquipment", equipment)
+            graph[eq_class][eq_id].Terminals.append(graph[self.cim.Terminal][terminal])
+            graph[self.cim.ConnectivityNode][node].Terminals.append(graph[self.cim.Terminal][terminal])
+            setattr(graph[self.cim.Terminal][terminal], "ConnectivityNode", graph[self.cim.ConnectivityNode][node])
+            setattr(graph[self.cim.Terminal][terminal], "ConductingEquipment", graph[eq_class][eq_id])
             
         return graph
     

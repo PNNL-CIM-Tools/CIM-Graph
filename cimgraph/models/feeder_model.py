@@ -3,7 +3,7 @@ from __future__ import annotations
 import json
 import logging
 import importlib
-import asyncio
+
 
 from dataclasses import dataclass, field
 from typing import Dict, List, Optional
@@ -12,7 +12,7 @@ from cimgraph.models.graph_model import GraphModel
 from cimgraph.databases import ConnectionInterface
 from cimgraph.topology_processor.linknet import LinkNet
 from cimgraph.topology_processor.distributed_feeder_areas import DistributedFeederTopology
-from pprint import pprint as pypprint
+
 
 _log = logging.getLogger(__name__)
 
@@ -20,7 +20,7 @@ _log = logging.getLogger(__name__)
 class FeederModel(GraphModel):
     container: cim.Feeder
     connection: ConnectionInterface
-    distributed: bool #TODO: cannot find correct typing class
+    distributed: bool 
     distributed_hierarchy: list[type] = field(default_factory=list)
     graph: dict[type, dict[str, object]] = field(default_factory=dict)
     
@@ -39,7 +39,7 @@ class FeederModel(GraphModel):
         
     def initialize_distributed_model(self, container) -> None:
         if len(self.distributed_hierarchy) > 0:
-            for container_class in distributed_hierarchy:
+            for container_class in self.distributed_hierarchy:
                 container_type = container_class.__class__.__name__
                 setattr(self, container_type + 's', []) 
                 #TODO: create subclasses based on pre-defined topology        
