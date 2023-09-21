@@ -13,7 +13,7 @@ class FeederTopology():
         self.cim = importlib.import_module('cimgraph.data_profile.' + cim_profile)
 
 
-    def parse_switches(self, graph, switch_list:list[str] = None, switch_classes:list[type] = None):
+    def build_switch_areas(self, graph, switch_list:list[str] = None, switch_classes:list[type] = None):
 
         if switch_classes is None:
             switch_classes = [self.cim.Breaker, self.cim.Sectionaliser]

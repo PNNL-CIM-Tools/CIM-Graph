@@ -12,16 +12,26 @@ _log = logging.getLogger(__name__)
 
 @dataclass
 class DistributedArea(GraphModel):
-
     connection: ConnectionInterface
-    distributed: bool
-    distributed_hierarchy: list[type] = field(default_factory=list)
+    container: object
     graph: dict[type, dict[str, object]] = field(default_factory=dict)
 
     def __post_init__(self):
         self.cim_profile = self.connection.cim_profile
         self.cim = importlib.import_module('cimgraph.data_profile.' + self.cim_profile)
-        self.container = self.cim.EquipmentContainer(mRID = str(uuid.uuid4()))
+        
+        self.graph = {}
 
     
 
+    def build_from_topo_message(self, topology_dict, centralized_graph):
+        for node_mrid in topology_dict["connectivity_node"]:
+            # try:
+            node = centralized_graph[self.cim.ConnectivityNode][node_mrid]
+            # except:
+            # _log.warning("node " + node_mrid + " not in feeder")
+                # continue
+            self.add_to_graph(node)
+            for terminal in node.Terminals:
+                self.add_to_graph(terminal)
+                self.add_to_graph(terminal.ConductingEquipment)
