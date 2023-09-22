@@ -23,9 +23,10 @@ class BusBranchModel(GraphModel):
     distributed: bool = field(default_factory=False) #TODO: cannot find correct typing class
     distributed_hierarchy: list[type] = field(default_factory=list)
     graph: dict[type, dict[str, object]] = field(default_factory=dict)
-    cim_profile: str = field(default_factory='rc4_2021')
+
     
     def __post_init__(self):
+        self.cim_profile = self.connection.cim_profile
         self.cim = importlib.import_module('cimgraph.data_profile.' + self.cim_profile)
 
         if self.connection is not None:

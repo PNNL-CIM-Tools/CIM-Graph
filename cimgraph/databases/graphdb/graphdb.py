@@ -3,6 +3,7 @@ import math
 import importlib
 import logging
 import re
+import json
 from typing import Dict, List, Optional
 
 import cimgraph.queries.ontotext as ontotext
@@ -19,6 +20,7 @@ class GraphDBConnection(ConnectionInterface):
         self.legacy_sparql = importlib.import_module('cimgraph.queries.sparql.' + self.cim_profile)
         self.cim = importlib.import_module('cimgraph.data_profile.' + self.cim_profile)
         self.namespace = connection_params.namespace
+        self.iec61970_301 = connection_params.iec61970_301
         self.sparql_obj: Optional[SPARQLWrapper] = None
         self.connection_parameters = connection_params
 
@@ -40,32 +42,35 @@ class GraphDBConnection(ConnectionInterface):
             
     def create_new_graph(self, container:object) -> dict[type, dict[str, object]] :
         graph = {}
-        # Generate SPARQL message from correct loaders>sparql python script based on class name
+        # Get all nodes, terminal, and equipment by 
         sparql_message = ontotext.get_all_nodes_ontotext(container, self.namespace)
-        # Execute sparql query
+
         query_output = self.execute(sparql_message)
-        
+
         for result in query_output['results']['bindings']:
             # Parse query results
-            node = result['ConnectivityNode']['value']
-            terminal = result['Terminal']['value']
-            eq = result['Equipment']['value'].split(';')
-            eq_id = eq[0]
-            eq_class = eq[1]
+            node_mrid = result['ConnectivityNode']['value']
+            term_mrid = result['Terminal']['value']
+            eq = json.loads(result['Equipment']['value'])
+            eq_id = eq["@id"]
+            eq_class = eq["@type"]
             # Add each object to graph
-            self.create_object(graph, self.cim.ConnectivityNode, node)
-            self.create_object(graph, self.cim.Terminal, terminal)
+            node = self.create_object(graph, self.cim.ConnectivityNode, node_mrid)
+            terminal = self.create_object(graph, self.cim.Terminal, term_mrid)
             if eq_class in self.cim.__all__:
                 eq_class = eval(f"self.cim.{eq_class}")
-                self.create_object(graph, eq_class, eq_id)
+                equipment = self.create_object(graph, eq_class, eq_id)
+                
             else:
                 _log.warning('object class missing from data profile:' + str(eq_class))
                 continue
             # Link objects in graph
-            graph[eq_class][eq_id].Terminals.append(graph[self.cim.Terminal][terminal])
-            graph[self.cim.ConnectivityNode][node].Terminals.append(graph[self.cim.Terminal][terminal])
-            setattr(graph[self.cim.Terminal][terminal], "ConnectivityNode", graph[self.cim.ConnectivityNode][node])
-            setattr(graph[self.cim.Terminal][terminal], "ConductingEquipment", graph[eq_class][eq_id])
+            if terminal not in equipment.Terminals:
+                equipment.Terminals.append(terminal)
+            if terminal not in node.Terminals:
+                node.Terminals.append(terminal)
+            setattr(terminal, "ConnectivityNode", node)
+            setattr(terminal, "ConductingEquipment", equipment)
             
         return graph
     
@@ -73,7 +78,7 @@ class GraphDBConnection(ConnectionInterface):
     def get_edges_query(self, container: str | cim.ConnectivityNodeContainer, graph: dict[type, dict[str, object]], cim_class: type):
 
         eq_mrids=list(graph[cim_class].keys())[0:100]
-        sparql_message = ontotext.get_all_edges_ontotext(cim_class, eq_mrids, self.namespace)
+        sparql_message = ontotext.get_all_edges_ontotext(cim_class, eq_mrids, self.namespace, self.iec61970_301)
 
         return sparql_message
     
@@ -84,7 +89,7 @@ class GraphDBConnection(ConnectionInterface):
         for index in range(math.ceil(len(mrid_list)/100)):
             eq_mrids = mrid_list[index*100: (index+1)*100]
             #generate SPARQL message from correct loaders>sparql python script based on class name
-            sparql_message = ontotext.get_all_edges_ontotext(cim_class, eq_mrids, self.namespace)
+            sparql_message = ontotext.get_all_edges_ontotext(cim_class, eq_mrids, self.namespace, self.iec61970_301)
             #execute sparql query
             query_output = self.execute(sparql_message)
             self.edge_query_parser(query_output, container, graph, cim_class)
@@ -96,21 +101,22 @@ class GraphDBConnection(ConnectionInterface):
                 is_association = False
                 is_enumeration = False
                 mRID = result['mRID']['value'] #get mRID
-                edge = result['attribute']['value'].split('.') #split edge attribute
+                attribute = result['attribute']['value'].split('.') #split edge attribute
                 value = result['value']['value'] #get edge value
-                value_split = value.split('.') 
-
                 
 
-                if len(value_split) == 3: #check if enumeration
-                    enum_class = value_split[1].split('#')[1]
-                    enum_value = value_split[2]
+                if self.namespace in value: #check if enumeration
+                    enum_text = value.split(self.namespace)[1]
+                    enum_text = enum_text.split(">")[0]
+                    enum_class = enum_text.split(".")[0]
+                    enum_value = enum_text.split(".")[1]
                     is_enumeration = True
 
-                if 'edge_mRID' in result: #check if association
+                if 'edge' in result: #check if association
                     is_association = True
-                    edge_mRID = result['edge_mRID']['value']
-                    edge_class = result['edge_class']['value']
+                    edge = json.loads(result['edge']['value'])
+                    edge_mRID = edge['@id']
+                    edge_class = edge['@type']
                     if edge_class in self.cim.__all__:
                         edge_class = eval(f"self.cim.{edge_class}")
                     else:
@@ -119,17 +125,17 @@ class GraphDBConnection(ConnectionInterface):
 
                 if is_association: # if association to another CIM object
 
-                    if edge[0] in cim_class.__dataclass_fields__: #check if first name is the attribute
-                        self.create_edge(graph, cim_class, mRID, edge[0], edge_class, edge_mRID)
+                    if attribute[0] in cim_class.__dataclass_fields__: #check if first name is the attribute
+                        self.create_edge(graph, cim_class, mRID, attribute[0], edge_class, edge_mRID)
                         
-                    elif edge[1] in cim_class.__dataclass_fields__: #check if second name is the attribute
-                        self.create_edge(graph, cim_class, mRID, edge[1], edge_class, edge_mRID)
+                    elif attribute[1] in cim_class.__dataclass_fields__: #check if second name is the attribute
+                        self.create_edge(graph, cim_class, mRID, attribute[1], edge_class, edge_mRID)
 
-                    elif edge[0]+'s' in cim_class.__dataclass_fields__: #check if attribute spelling is plural
-                        self.create_edge(graph, cim_class, mRID, edge[0]+'s', edge_class, edge_mRID)
+                    elif attribute[0]+'s' in cim_class.__dataclass_fields__: #check if attribute spelling is plural
+                        self.create_edge(graph, cim_class, mRID, attribute[0]+'s', edge_class, edge_mRID)
                     
-                    elif edge[1]+'s' in cim_class.__dataclass_fields__: #check if attribute spelling is plural
-                        self.create_edge(graph, cim_class, mRID, edge[1]+'s', edge_class, edge_mRID)
+                    elif attribute[1]+'s' in cim_class.__dataclass_fields__: #check if attribute spelling is plural
+                        self.create_edge(graph, cim_class, mRID, attribute[1]+'s', edge_class, edge_mRID)
                         
                     else: #fallback: match class type until a suitable parent edge class is found
                         for node_attr in list(cim_class.__dataclass_fields__.keys()):
@@ -144,18 +150,22 @@ class GraphDBConnection(ConnectionInterface):
                 elif is_enumeration:
                     if enum_class in self.cim.__all__: # if enumeration
                         edge_enum = eval(f"self.cim.{enum_class}(enum_value)")
-                        setattr(graph[cim_class][mRID], edge[1], edge_enum)
+                        setattr(graph[cim_class][mRID], attribute[1], edge_enum)
                 else:
-                    setattr(graph[cim_class][mRID], edge[1], value)
+                    setattr(graph[cim_class][mRID], attribute[1], value)
 
 
-                
-                
-    
-                
-                
-                
-                
+
+    def create_edge(self, graph, cim_class, mRID, attribute, edge_class, edge_mRID):
+        edge_object = self.create_object(graph, edge_class, edge_mRID)
+        attribute_type = cim_class.__dataclass_fields__[attribute].type
+        if "List" in attribute_type:
+            obj_list = getattr(graph[cim_class][mRID], attribute)
+            if edge_object not in obj_list:
+                obj_list.append(edge_object)
+                setattr(graph[cim_class][mRID], attribute, obj_list)
+        else:
+            setattr(graph[cim_class][mRID], attribute, edge_object)   
                 
                 
                 
@@ -313,9 +323,9 @@ class GraphDBConnection(ConnectionInterface):
         if mRID in graph[class_type].keys():
             obj = graph[class_type][mRID]
         else:
-                obj = class_type()
-                setattr(obj, "mRID", mRID)
-                add_to_graph(obj, graph)
+            obj = class_type()
+            setattr(obj, "mRID", mRID)
+            graph[class_type][mRID] = obj
 
         return obj
     
@@ -382,13 +392,4 @@ class GraphDBConnection(ConnectionInterface):
         self.execute(query)
         return query
 
-    def create_edge(self, graph, cim_class, mRID, attribute, edge_class, edge_mRID):
-        edge_object = self.create_object(graph, edge_class, edge_mRID)
-        attribute_type = cim_class.__dataclass_fields__[attribute].type
-        if "List" in attribute_type:
-            obj_list = getattr(graph[cim_class][mRID], attribute)
-            obj_list.append(edge_object)
-            setattr(graph[cim_class][mRID], attribute, obj_list)
-        else:
-            setattr(graph[cim_class][mRID], attribute, edge_object)
             

@@ -8,7 +8,7 @@ from typing import Dict, List, Optional
 from cimgraph.data_profile.known_problem_classes import ClassesWithoutMRID
 
 
-def get_all_edges_ontotext(cim_class: str, mrid_list: List, namespace: str) -> str: 
+def get_all_edges_ontotext(cim_class: str, mrid_list: List, namespace: str, iec61970_301: int) -> str: 
     """ 
     Generates SPARQL query string for a given catalog of objects and feeder id
     Args:
@@ -21,14 +21,18 @@ def get_all_edges_ontotext(cim_class: str, mrid_list: List, namespace: str) -> s
     class_name = cim_class.__name__
     classes_without_mrid = ClassesWithoutMRID()
 
+    if int(iec61970_301) > 7:
+        split = "urn:uuid:"
+    else:
+        split = "#"
+
 
     query_message = """
         PREFIX r:  <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
-        PREFIX path: <http://www.ontotext.com/path#>
-        PREFIX cim:  %s""" %namespace
+        PREFIX cim:  <%s>""" %namespace
     
     query_message += """
-        SELECT DISTINCT ?mRID ?attribute ?value ?edge_mRID ?edge_class
+        SELECT DISTINCT ?mRID ?attribute ?value ?edge
         WHERE {          
           ?eq r:type cim:%s."""%class_name
     # query_message += """
@@ -39,22 +43,27 @@ def get_all_edges_ontotext(cim_class: str, mrid_list: List, namespace: str) -> s
     #      {[cim:Equipment.EquipmentContainer ?fdr] (cim:|!cim:)?  ?eq}}.
     #       """ %feeder_mrid
     
-    query_message += """
-        VALUES ?mRID {"""
-    # add all equipment mRID
-    for mrid in mrid_list:
-        query_message += ' "%s" \n'%mrid
+  
     
     if class_name not in classes_without_mrid.classes:
+        query_message += """
+        VALUES ?mRID {"""
+        # add all equipment mRID
+        for mrid in mrid_list:
+            query_message += ' "%s" \n'%mrid
         query_message += """               } 
         ?eq cim:IdentifiedObject.mRID ?mRID."""
     else:
+        query_message += """
+        VALUES ?eq {"""
+        # add all equipment mRID
+        for mrid in mrid_list:
+            query_message += """ <%s%s> \n"""%(split,mrid)
         query_message += """               }
-        {bind(strafter(str(?eq),"#") as ?mRID)}."""
+        {bind(strafter(str(?eq),"%s") as ?mRID)}."""%split
         
     # add all attributes
     query_message += """        
-        
         SERVICE <http://www.ontotext.com/path#search> {
         <urn:path> path:findPath path:allPaths ;
                    path:sourceNode ?eq ;
@@ -68,14 +77,19 @@ def get_all_edges_ontotext(cim_class: str, mrid_list: List, namespace: str) -> s
         }
         
         {bind(strafter(str(?attr),"#") as ?attribute)}
+        {bind(strafter(str(?val),"%s") as ?uri)}
+        {bind(if(?uri = "", ?val, ?uri) as ?value)}
           
-        OPTIONAL {?value a ?classraw.
-                  bind(strafter(str(?classraw),"CIM100#") as ?edge_class)
-                  OPTIONAL {?value cim:IdentifiedObject.mRID ?edge_id.}
-                 bind(exists{?value cim:IdentifiedObject.mRID ?edge_id} as ?mRID_exists)
-                 {bind(if(?mRID_exists, strafter(str(?value),"urn:uuid:"), ?edge_id) as ?edge_mRID)}.}
+        OPTIONAL {?val a ?classraw.
+                  bind(strafter(str(?classraw),"%s") as ?edge_class)
+                  {bind(strafter(str(?val),"%s") as ?uri)}
+                  OPTIONAL {?val cim:IdentifiedObject.mRID ?edge_id.}
+                  bind(exists{?val cim:IdentifiedObject.mRID ?edge_id} as ?mRID_exists)
+                 {bind(if(?mRID_exists, ?edge_id, ?uri) as ?edge_mRID)}.
+
+                  bind(concat("{\\"@id\\":\\"", ?edge_mRID,"\\",\\"@type\\":\\"", ?edge_class, "\\"}") as ?edge)}
         }
 
         ORDER by  ?mRID ?attribute
-        """
+        """ %(split, namespace, split)
     return query_message

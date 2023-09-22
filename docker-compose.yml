@@ -3,15 +3,14 @@ version: '2'
 services:
 
   blazegraph:
-    image: gridappsd/blazegraph:develop
-    # image: gridappsd/blazegraph:seto4
+    # image: gridappsd/blazegraph:develop
+    image: gridappsd/blazegraph:seto4
     container_name: blazegraph
     ports:
       - 8889:8080
 
   neo4j-apoc:
     image: neo4j:5.7.0
-    cpus: 20
     ports:
       - 7474:7474
       - 7687:7687
@@ -32,7 +31,7 @@ services:
 
 
   graphdb:
-    image: ontotext/graphdb:10.2.4
+    image: ontotext/graphdb:10.3.0
     ports:
       - 7200:7200
 
