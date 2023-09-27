@@ -69,7 +69,7 @@ class GraphModel:
 
     
     def upload(self):
-        query = self.write_connection.upload(self.graph)
+        self.connection.upload(self.graph)
 
 
 
@@ -177,7 +177,7 @@ class GraphModel:
         elif value is None:
             result = ''
         elif type(type(value)) is type:
-            result = json.dumps({"@type": value.__class__.__name__, "@id": value.mRID})
+            result = {"@type": value.__class__.__name__, "@id": value.mRID}
         else:
             result = str(value)
         return result
