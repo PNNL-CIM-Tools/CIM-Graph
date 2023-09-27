@@ -9,7 +9,7 @@ from typing import Dict, List, Optional
 
 import cimgraph.queries.sparql as sparql
 from cimgraph.databases import ConnectionInterface, ConnectionParameters, Parameter, QueryResponse
-from cimgraph.models.graph_model import GraphModel
+from cimgraph.models.graph_model import item_dump
 
 
 from SPARQLWrapper import JSON, POST, SPARQLWrapper
@@ -364,7 +364,7 @@ class BlazegraphConnection(ConnectionInterface):
                                     triples.append(triple)
 
                             else:
-                                value = GraphModel.item_dump(getattr(obj, attribute))
+                                value = str(item_dump(getattr(obj, attribute)))
                                 if value:
         #                              <{url}#_{mRID}> cim:{class_type}.{attr} \"{value}\".
                                     attr = """

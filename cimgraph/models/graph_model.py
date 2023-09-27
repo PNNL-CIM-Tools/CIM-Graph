@@ -212,6 +212,24 @@ class GraphModel:
             _log.info('no instances of '+str(cim_class.__name__)+' found in catalog.')
 
         return json_dump
+
+
+def item_dump(self, value):
+    if type(value) is str:
+        result = value
+    elif type(value) is float:
+        result = value
+    elif type(value) is list:
+        result = []
+        for item in value:
+            result.append(self.item_dump(item))
+    elif value is None:
+        result = ''
+    elif type(type(value)) is type:
+        result = value.mRID
+    else:
+        result = str(value)
+    return result
     
     # def build_full_model(self):
 
