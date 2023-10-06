@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="windows-1252"?>
-<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:sawsdl="http://www.w3.org/ns/sawsdl" xmlns:cim="http://iec.ch/TC57/CIMHub_Profile_2023#" targetNamespace="http://iec.ch/TC57/CIMHub_Profile_2023#" elementFormDefault="qualified" attributeFormDefault="unqualified">
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:sawsdl="http://www.w3.org/ns/sawsdl" xmlns:cim="http://iec.ch/TC57/CIM100#" targetNamespace="http://iec.ch/TC57/CIM100#" elementFormDefault="qualified" attributeFormDefault="unqualified">
 	<xs:element name="CIMHub_Profile_2023" type="cim:CIMHub_Profile_2023"/>
 	<xs:complexType name="CIMHub_Profile_2023">
 		<xs:sequence>
@@ -1699,6 +1699,61 @@
 			</xs:extension>
 		</xs:complexContent>
 	</xs:complexType>
+	<xs:simpleType name="BatteryStateKind" sawsdl:modelReference="http://iec.ch/TC57/CIM-generic#BatteryStateKind">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="charging" sawsdl:modelReference="http://iec.ch/TC57/CIM-generic#BatteryStateKind.charging">
+				<xs:annotation>
+					<xs:documentation>storedE is increasing</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="discharging" sawsdl:modelReference="http://iec.ch/TC57/CIM-generic#BatteryStateKind.discharging">
+				<xs:annotation>
+					<xs:documentation>storedE is decreasing</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="empty" sawsdl:modelReference="http://iec.ch/TC57/CIM-generic#BatteryStateKind.empty">
+				<xs:annotation>
+					<xs:documentation>unable to Discharge, and not Charging</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="full" sawsdl:modelReference="http://iec.ch/TC57/CIM-generic#BatteryStateKind.full">
+				<xs:annotation>
+					<xs:documentation>unable to Charge, and not Discharging</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="waiting" sawsdl:modelReference="http://iec.ch/TC57/CIM-generic#BatteryStateKind.waiting">
+				<xs:annotation>
+					<xs:documentation>neither Charging nor Discharging, but able to do so</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:complexType name="BatteryUnit" sawsdl:modelReference="http://iec.ch/TC57/CIM-generic#BatteryUnit">
+		<xs:annotation>
+			<xs:documentation>An electrochemical energy storage device</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="cim:PowerElectronicsUnit">
+				<xs:sequence>
+					<xs:element name="batteryState" minOccurs="0" maxOccurs="1" type="cim:BatteryStateKind" sawsdl:modelReference="http://iec.ch/TC57/CIM-generic#BatteryUnit.batteryState">
+						<xs:annotation>
+							<xs:documentation>indicates whether the battery is charging, discharging or idle</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="ratedE" minOccurs="0" maxOccurs="1" type="cim:RealEnergy" sawsdl:modelReference="http://iec.ch/TC57/CIM-generic#BatteryUnit.ratedE">
+						<xs:annotation>
+							<xs:documentation>full energy storage capacity of the battery</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="storedE" minOccurs="0" maxOccurs="1" type="cim:RealEnergy" sawsdl:modelReference="http://iec.ch/TC57/CIM-generic#BatteryUnit.storedE">
+						<xs:annotation>
+							<xs:documentation>amount of energy currently stored; no more than ratedE</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
 	<xs:complexType name="Bay" sawsdl:modelReference="http://iec.ch/TC57/CIM-generic#Bay">
 		<xs:annotation>
 			<xs:documentation>A collection of power system resources (within a given substation) including conducting equipment, protection relays, measurements, and telemetry.  A bay typically represents a physical grouping related to modularization of equipment.</xs:documentation>
@@ -2438,6 +2493,9 @@
 			</xs:extension>
 		</xs:complexContent>
 	</xs:complexType>
+	<xs:simpleType name="Class1" sawsdl:modelReference="http://iec.ch/TC57/CIM-generic#Class1">
+		<xs:restriction base="xs:string"/>
+	</xs:simpleType>
 	<xs:simpleType name="Classification" sawsdl:modelReference="http://iec.ch/TC57/CIM-generic#Classification">
 		<xs:annotation>
 			<xs:documentation>Classification of level.  Specify as 1..n, with 1 being the most detailed, highest priority, etc as described on the attribue using this data type.</xs:documentation>
@@ -9257,6 +9315,58 @@
 			</xs:extension>
 		</xs:complexContent>
 	</xs:complexType>
+	<xs:complexType name="LinearShuntCompensator" sawsdl:modelReference="http://iec.ch/TC57/CIM-generic#LinearShuntCompensator">
+		<xs:annotation>
+			<xs:documentation>A linear shunt compensator has banks or sections with equal admittance values.</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="cim:ShuntCompensator">
+				<xs:sequence>
+					<xs:element name="b0PerSection" minOccurs="0" maxOccurs="1" type="cim:Susceptance" sawsdl:modelReference="http://iec.ch/TC57/CIM-generic#LinearShuntCompensator.b0PerSection">
+						<xs:annotation>
+							<xs:documentation>Zero sequence shunt (charging) susceptance per section</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="bPerSection" minOccurs="0" maxOccurs="1" type="cim:Susceptance" sawsdl:modelReference="http://iec.ch/TC57/CIM-generic#LinearShuntCompensator.bPerSection">
+						<xs:annotation>
+							<xs:documentation>Positive sequence shunt (charging) susceptance per section</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="g0PerSection" minOccurs="0" maxOccurs="1" type="cim:Conductance" sawsdl:modelReference="http://iec.ch/TC57/CIM-generic#LinearShuntCompensator.g0PerSection">
+						<xs:annotation>
+							<xs:documentation>Zero sequence shunt (charging) conductance per section</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="gPerSection" minOccurs="0" maxOccurs="1" type="cim:Conductance" sawsdl:modelReference="http://iec.ch/TC57/CIM-generic#LinearShuntCompensator.gPerSection">
+						<xs:annotation>
+							<xs:documentation>Positive sequence shunt (charging) conductance per section</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="LinearShuntCompensatorPhase" sawsdl:modelReference="http://iec.ch/TC57/CIM-generic#LinearShuntCompensatorPhase">
+		<xs:annotation>
+			<xs:documentation>A per phase linear shunt compensator has banks or sections with equal admittance values.</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="cim:ShuntCompensatorPhase">
+				<xs:sequence>
+					<xs:element name="bPerSection" minOccurs="0" maxOccurs="1" type="cim:Susceptance" sawsdl:modelReference="http://iec.ch/TC57/CIM-generic#LinearShuntCompensatorPhase.bPerSection">
+						<xs:annotation>
+							<xs:documentation>Susceptance per section of the phase if shunt compensator is wye connected.   Susceptance per section phase to phase if shunt compensator is delta connected.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="gPerSection" minOccurs="0" maxOccurs="1" type="cim:Conductance" sawsdl:modelReference="http://iec.ch/TC57/CIM-generic#LinearShuntCompensatorPhase.gPerSection">
+						<xs:annotation>
+							<xs:documentation>Conductance per section for this phase if shunt compensator is wye connected.  Conductance per section phase to phase if shunt compensator is delta connected.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
 	<xs:complexType name="LoadArea" sawsdl:modelReference="http://iec.ch/TC57/CIM-generic#LoadArea">
 		<xs:annotation>
 			<xs:documentation>The class is the root or first level in a hierarchical structure for grouping of loads for the purpose of load flow load scaling.</xs:documentation>
@@ -9340,6 +9450,7 @@
 							<xs:documentation>Portion of active power load modeled as constant power.</xs:documentation>
 						</xs:annotation>
 					</xs:element>
+					<xs:element name="pFrequencyExponent" minOccurs="1" maxOccurs="1" type="xs:float" sawsdl:modelReference="http://iec.ch/TC57/CIM-generic#LoadResponseCharacteristic.pFrequencyExponent"/>
 					<xs:element name="pVoltageExponent" minOccurs="0" maxOccurs="1" type="xs:float" sawsdl:modelReference="http://iec.ch/TC57/CIM-generic#LoadResponseCharacteristic.pVoltageExponent">
 						<xs:annotation>
 							<xs:documentation>Exponent of per unit voltage effecting real power.</xs:documentation>
@@ -9360,6 +9471,7 @@
 							<xs:documentation>Portion of reactive power load modeled as constant power.</xs:documentation>
 						</xs:annotation>
 					</xs:element>
+					<xs:element name="qFrequencyExponent" minOccurs="1" maxOccurs="1" type="xs:float" sawsdl:modelReference="http://iec.ch/TC57/CIM-generic#LoadResponseCharacteristic.qFrequencyExponent"/>
 					<xs:element name="qVoltageExponent" minOccurs="0" maxOccurs="1" type="xs:float" sawsdl:modelReference="http://iec.ch/TC57/CIM-generic#LoadResponseCharacteristic.qVoltageExponent">
 						<xs:annotation>
 							<xs:documentation>Exponent of per unit voltage effecting reactive power.</xs:documentation>
@@ -10894,6 +11006,61 @@
 			</xs:extension>
 		</xs:complexContent>
 	</xs:complexType>
+	<xs:simpleType name="OrderedPhaseCodeKind" sawsdl:modelReference="http://iec.ch/TC57/CIM-generic#OrderedPhaseCodeKind">
+		<xs:annotation>
+			<xs:documentation>In some use cases, the ordering of phases is important. The PhaseCode class does not represent order, but this class addresses such use cases. When two or more phases are present, the individual phases may occur in any order, but the neutral must always occur last. When only one phase and the neutral is present, that phase and the neutral may be re-ordered.</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="A" sawsdl:modelReference="http://iec.ch/TC57/CIM-generic#OrderedPhaseCodeKind.A"/>
+			<xs:enumeration value="AB" sawsdl:modelReference="http://iec.ch/TC57/CIM-generic#OrderedPhaseCodeKind.AB"/>
+			<xs:enumeration value="ABC" sawsdl:modelReference="http://iec.ch/TC57/CIM-generic#OrderedPhaseCodeKind.ABC"/>
+			<xs:enumeration value="ABCN" sawsdl:modelReference="http://iec.ch/TC57/CIM-generic#OrderedPhaseCodeKind.ABCN"/>
+			<xs:enumeration value="ABN" sawsdl:modelReference="http://iec.ch/TC57/CIM-generic#OrderedPhaseCodeKind.ABN"/>
+			<xs:enumeration value="AC" sawsdl:modelReference="http://iec.ch/TC57/CIM-generic#OrderedPhaseCodeKind.AC"/>
+			<xs:enumeration value="ACB" sawsdl:modelReference="http://iec.ch/TC57/CIM-generic#OrderedPhaseCodeKind.ACB"/>
+			<xs:enumeration value="ACBN" sawsdl:modelReference="http://iec.ch/TC57/CIM-generic#OrderedPhaseCodeKind.ACBN"/>
+			<xs:enumeration value="ACN" sawsdl:modelReference="http://iec.ch/TC57/CIM-generic#OrderedPhaseCodeKind.ACN"/>
+			<xs:enumeration value="AN" sawsdl:modelReference="http://iec.ch/TC57/CIM-generic#OrderedPhaseCodeKind.AN"/>
+			<xs:enumeration value="B" sawsdl:modelReference="http://iec.ch/TC57/CIM-generic#OrderedPhaseCodeKind.B"/>
+			<xs:enumeration value="BA" sawsdl:modelReference="http://iec.ch/TC57/CIM-generic#OrderedPhaseCodeKind.BA"/>
+			<xs:enumeration value="BAC" sawsdl:modelReference="http://iec.ch/TC57/CIM-generic#OrderedPhaseCodeKind.BAC"/>
+			<xs:enumeration value="BACN" sawsdl:modelReference="http://iec.ch/TC57/CIM-generic#OrderedPhaseCodeKind.BACN"/>
+			<xs:enumeration value="BAN" sawsdl:modelReference="http://iec.ch/TC57/CIM-generic#OrderedPhaseCodeKind.BAN"/>
+			<xs:enumeration value="BC" sawsdl:modelReference="http://iec.ch/TC57/CIM-generic#OrderedPhaseCodeKind.BC"/>
+			<xs:enumeration value="BCA" sawsdl:modelReference="http://iec.ch/TC57/CIM-generic#OrderedPhaseCodeKind.BCA"/>
+			<xs:enumeration value="BCAN" sawsdl:modelReference="http://iec.ch/TC57/CIM-generic#OrderedPhaseCodeKind.BCAN"/>
+			<xs:enumeration value="BCN" sawsdl:modelReference="http://iec.ch/TC57/CIM-generic#OrderedPhaseCodeKind.BCN"/>
+			<xs:enumeration value="BN" sawsdl:modelReference="http://iec.ch/TC57/CIM-generic#OrderedPhaseCodeKind.BN"/>
+			<xs:enumeration value="C" sawsdl:modelReference="http://iec.ch/TC57/CIM-generic#OrderedPhaseCodeKind.C"/>
+			<xs:enumeration value="CA" sawsdl:modelReference="http://iec.ch/TC57/CIM-generic#OrderedPhaseCodeKind.CA"/>
+			<xs:enumeration value="CAB" sawsdl:modelReference="http://iec.ch/TC57/CIM-generic#OrderedPhaseCodeKind.CAB"/>
+			<xs:enumeration value="CABN" sawsdl:modelReference="http://iec.ch/TC57/CIM-generic#OrderedPhaseCodeKind.CABN"/>
+			<xs:enumeration value="CAN" sawsdl:modelReference="http://iec.ch/TC57/CIM-generic#OrderedPhaseCodeKind.CAN"/>
+			<xs:enumeration value="CB" sawsdl:modelReference="http://iec.ch/TC57/CIM-generic#OrderedPhaseCodeKind.CB"/>
+			<xs:enumeration value="CBA" sawsdl:modelReference="http://iec.ch/TC57/CIM-generic#OrderedPhaseCodeKind.CBA"/>
+			<xs:enumeration value="CBAN" sawsdl:modelReference="http://iec.ch/TC57/CIM-generic#OrderedPhaseCodeKind.CBAN"/>
+			<xs:enumeration value="CBN" sawsdl:modelReference="http://iec.ch/TC57/CIM-generic#OrderedPhaseCodeKind.CBN"/>
+			<xs:enumeration value="CN" sawsdl:modelReference="http://iec.ch/TC57/CIM-generic#OrderedPhaseCodeKind.CN"/>
+			<xs:enumeration value="NA" sawsdl:modelReference="http://iec.ch/TC57/CIM-generic#OrderedPhaseCodeKind.NA"/>
+			<xs:enumeration value="NB" sawsdl:modelReference="http://iec.ch/TC57/CIM-generic#OrderedPhaseCodeKind.NB"/>
+			<xs:enumeration value="NC" sawsdl:modelReference="http://iec.ch/TC57/CIM-generic#OrderedPhaseCodeKind.NC"/>
+			<xs:enumeration value="Ns1" sawsdl:modelReference="http://iec.ch/TC57/CIM-generic#OrderedPhaseCodeKind.Ns1"/>
+			<xs:enumeration value="Ns2" sawsdl:modelReference="http://iec.ch/TC57/CIM-generic#OrderedPhaseCodeKind.Ns2"/>
+			<xs:enumeration value="X" sawsdl:modelReference="http://iec.ch/TC57/CIM-generic#OrderedPhaseCodeKind.X"/>
+			<xs:enumeration value="XN" sawsdl:modelReference="http://iec.ch/TC57/CIM-generic#OrderedPhaseCodeKind.XN"/>
+			<xs:enumeration value="XY" sawsdl:modelReference="http://iec.ch/TC57/CIM-generic#OrderedPhaseCodeKind.XY"/>
+			<xs:enumeration value="XYN" sawsdl:modelReference="http://iec.ch/TC57/CIM-generic#OrderedPhaseCodeKind.XYN"/>
+			<xs:enumeration value="none" sawsdl:modelReference="http://iec.ch/TC57/CIM-generic#OrderedPhaseCodeKind.none"/>
+			<xs:enumeration value="s1" sawsdl:modelReference="http://iec.ch/TC57/CIM-generic#OrderedPhaseCodeKind.s1"/>
+			<xs:enumeration value="s12" sawsdl:modelReference="http://iec.ch/TC57/CIM-generic#OrderedPhaseCodeKind.s12"/>
+			<xs:enumeration value="s12N" sawsdl:modelReference="http://iec.ch/TC57/CIM-generic#OrderedPhaseCodeKind.s12N"/>
+			<xs:enumeration value="s1N" sawsdl:modelReference="http://iec.ch/TC57/CIM-generic#OrderedPhaseCodeKind.s1N"/>
+			<xs:enumeration value="s2" sawsdl:modelReference="http://iec.ch/TC57/CIM-generic#OrderedPhaseCodeKind.s2"/>
+			<xs:enumeration value="s21" sawsdl:modelReference="http://iec.ch/TC57/CIM-generic#OrderedPhaseCodeKind.s21"/>
+			<xs:enumeration value="s21N" sawsdl:modelReference="http://iec.ch/TC57/CIM-generic#OrderedPhaseCodeKind.s21N"/>
+			<xs:enumeration value="s2N" sawsdl:modelReference="http://iec.ch/TC57/CIM-generic#OrderedPhaseCodeKind.s2N"/>
+		</xs:restriction>
+	</xs:simpleType>
 	<xs:complexType name="Organisation" sawsdl:modelReference="http://iec.ch/TC57/CIM-generic#Organisation">
 		<xs:annotation>
 			<xs:documentation>Organisation that might have roles as utility, contractor, supplier, manufacturer, customer, etc.</xs:documentation>
@@ -11924,6 +12091,14 @@
 			</xs:extension>
 		</xs:complexContent>
 	</xs:complexType>
+	<xs:complexType name="PhotovoltaicUnit" sawsdl:modelReference="http://iec.ch/TC57/CIM-generic#PhotovoltaicUnit">
+		<xs:annotation>
+			<xs:documentation>A photovoltaic device or an aggregation of such devices</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="cim:PowerElectronicsUnit"/>
+		</xs:complexContent>
+	</xs:complexType>
 	<xs:complexType name="Plant" sawsdl:modelReference="http://iec.ch/TC57/CIM-generic#Plant">
 		<xs:annotation>
 			<xs:documentation>A Plant is a collection of equipment for purposes of generation.</xs:documentation>
@@ -12100,6 +12275,14 @@
 					<xs:element name="PowerElectronicsConnection" minOccurs="1" maxOccurs="1" type="cim:PowerElectronicsConnection" sawsdl:modelReference="http://iec.ch/TC57/CIM-generic#PowerElectronicsUnit.PowerElectronicsConnection"/>
 				</xs:sequence>
 			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="PowerElectronicsWindUnit" sawsdl:modelReference="http://iec.ch/TC57/CIM-generic#PowerElectronicsWindUnit">
+		<xs:annotation>
+			<xs:documentation>A wind generating unit that connects to the AC network with power electronics rather than rotating machines or an aggregation of such units.</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="cim:PowerElectronicsUnit"/>
 		</xs:complexContent>
 	</xs:complexType>
 	<xs:complexType name="PowerLimitSettings" sawsdl:modelReference="http://iec.ch/TC57/CIM-generic#PowerLimitSettings">
@@ -14592,6 +14775,11 @@
 			</xs:enumeration>
 		</xs:restriction>
 	</xs:simpleType>
+	<xs:complexType name="SolarGeneratingUnit" sawsdl:modelReference="http://iec.ch/TC57/CIM-generic#SolarGeneratingUnit">
+		<xs:annotation>
+			<xs:documentation>A solar thermal generating unit, connected to the grid by means of a rotating machine.  This class does not represent photovoltaic (PV) generation.</xs:documentation>
+		</xs:annotation>
+	</xs:complexType>
 	<xs:simpleType name="Speed" sawsdl:modelReference="http://iec.ch/TC57/CIM-generic#Speed">
 		<xs:annotation>
 			<xs:documentation>Distance per unit of time.</xs:documentation>
@@ -16879,11 +17067,6 @@
 							<xs:documentation>Resistance of the transformer end.</xs:documentation>
 						</xs:annotation>
 					</xs:element>
-					<xs:element name="r0" minOccurs="0" maxOccurs="1" type="cim:Resistance" sawsdl:modelReference="http://iec.ch/TC57/CIM-generic#TransformerStarImpedance.r0">
-						<xs:annotation>
-							<xs:documentation>Zero sequence series resistance of the transformer end.</xs:documentation>
-						</xs:annotation>
-					</xs:element>
 					<xs:element name="x" minOccurs="0" maxOccurs="1" type="cim:Reactance" sawsdl:modelReference="http://iec.ch/TC57/CIM-generic#TransformerStarImpedance.x">
 						<xs:annotation>
 							<xs:documentation>Positive sequence series reactance of the transformer end.</xs:documentation>
@@ -16937,7 +17120,7 @@
 		<xs:complexContent>
 			<xs:extension base="cim:TransformerEnd">
 				<xs:sequence>
-					<xs:element name="orderedPhases" minOccurs="0" maxOccurs="1" type="" sawsdl:modelReference="http://iec.ch/TC57/CIM-generic#TransformerTankEnd.orderedPhases">
+					<xs:element name="orderedPhases" minOccurs="0" maxOccurs="1" type="cim:OrderedPhaseCodeKind" sawsdl:modelReference="http://iec.ch/TC57/CIM-generic#TransformerTankEnd.orderedPhases">
 						<xs:annotation>
 							<xs:documentation>Identifies the phases present and the order of their connection on this winding (end) of the transformer. In some use cases, such as open-wye, open-delta transformers and single-phase, center-tap secondary transformers, the order of phase connection is important, so the OrderedPhaseCodeKind enumeration is used instead of PhaseCode.</xs:documentation>
 						</xs:annotation>

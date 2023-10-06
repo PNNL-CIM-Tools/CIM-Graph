@@ -7,3 +7,4 @@ dist/
 generated/
 poetry.lock
 /neo4j/
+/docker/

@@ -19,12 +19,10 @@ _log = logging.getLogger(__name__)
 
 @dataclass
 class FeederModel(GraphModel):
-    container: object
-    connection: ConnectionInterface
-    distributed: bool 
+
     distributed_topology: dict = field(default_factory=dict)
     distributed_hierarchy: list[type] = field(default_factory=list)
-    graph: dict[type, dict[str, object]] = field(default_factory=dict)
+
     
     def __post_init__(self):
         self.cim_profile = self.connection.cim_profile

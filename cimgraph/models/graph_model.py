@@ -3,6 +3,7 @@ import re
 import json
 import logging
 import importlib
+import enum
 
 
 from dataclasses import dataclass, field
@@ -13,9 +14,50 @@ from cimgraph.databases import ConnectionInterface
 
 _log = logging.getLogger(__name__)
 
+
+def json_dump(value, cim:__package__, json_ld:bool = False):
+    class_type = value.__class__
+    if class_type is enum.EnumMeta:
+        result = str(value)
+    elif class_type is list:
+        result = []
+        for item in value:
+            result.append(json_dump(item, cim, json_ld))
+    elif value is None:
+        result = ''
+    elif class_type.__name__ in cim.__all__:
+        if json_ld:
+            result = {"@type": {value.__class__.__name__}, "@id": {value.mRID}}
+        else:
+            result = value.mRID
+    else:
+        result = str(value)
+    return result
+
+
 @dataclass
 class GraphModel:
-   
+    container: object
+    connection: ConnectionInterface
+    distributed: bool = field(default_factory=False)
+    graph: dict[type, dict[str, object]] = field(default_factory=dict)
+    """ 
+    Underlying root class for all knowledge graph models, inlcuding 
+    FeederModel, BusBranchModel, and NodeBreakerModel
+    Args:
+        container: a CIM container object inheriting from ConnectivityNodeContainer
+        connection: a ConnectionInterface object, such as BlazegraphConnection
+        distributed: a boolean to indicate if the graph is distributed
+    Returns:
+        none
+    Methods:
+        add_to_graph(object): adds a new CIM object to the knowledge graph
+        get_all_edges(cim.ClassName): universal database query to expand graph by one edge
+        graph[cim.ClassName]: access to graph dictionary sorted by class and mRID
+        pprint(cim.ClassName): pretty-print method for showing graph of a class type
+        get_edges_query(cim.ClassName): returns query text for debugging
+    """
+
     def add_to_graph(self, obj: object, graph:GraphModel = None) -> Dict:
         if graph is None:
             graph = self.graph
@@ -33,30 +75,6 @@ class GraphModel:
         else:
             _log.info('no instances of '+str(cim_class.__name__)+' found in graph.')
 
-    # def get_all_attributes(self, cim_class, graph=None):
-    #     if graph is None:
-    #         graph = self.graph
-    #     if cim_class in graph:
-    #         self.connection.get_all_attributes(self.container.mRID, graph, cim_class)
-    #     else:
-    #         _log.info('no instances of '+str(cim_class.__name__)+' found in graph.')
-    
-    def pprint(self, cim_class):
-        if cim_class in self.graph:
-            json_dump = self.cim_print(self.graph, cim_class)
-        else:
-            json_dump = {}
-            _log.info('no instances of '+str(cim_class.__name__)+' found in graph.')
-        print(json.dumps(json_dump,indent=4))
-    
-    def get_attributes_query(self, cim_class):
-        if cim_class in self.graph:
-            sparql_message = self.connection.get_attributes_query(self.container.mRID, self.graph, cim_class)
-        else:
-            _log.info('no instances of '+str(cim_class.__name__)+' found in catalog.')
-            sparql_message = ''
-        return sparql_message
-    
     def get_edges_query(self, cim_class):
         if cim_class in self.graph:
             sparql_message = self.connection.get_edges_query(self.container.mRID, self.graph, cim_class)
@@ -65,8 +83,15 @@ class GraphModel:
             _log.info('no instances of '+str(cim_class.__name__)+' found in catalog.')
             sparql_message = ''
         return sparql_message
-
-
+    
+    def pprint(self, cim_class:type, show_empty:bool = False, json_ld:bool = False):
+        if cim_class in self.graph:
+            json_dump = self.__dumps__(cim_class, show_empty, json_ld)
+        else:
+            json_dump = {}
+            _log.info('no instances of '+str(cim_class.__name__)+' found in graph.')
+        print(json.dumps(json_dump,indent=4))
+    
     
     def upload(self):
         self.connection.upload(self.graph)
@@ -75,20 +100,34 @@ class GraphModel:
 
 
     
-    def write_xml(self, filename, schema):
-        
+    def write_xml(self, filename):
+        namespace = self.connection.namespace
+        iec61970_301 = self.connection.iec61970_301
+
+        if int(iec61970_301) > 7:
+            rdf_header = """rdf:about="urn:uuid:"""
+            rdf_resource = """urn:uuid:"""
+        else:
+            rdf_header = """rdf:ID=\""""
+            rdf_resource = """#"""
+
         f = open(filename, "w", encoding="utf-8")
-        header="""
+        header=f"""
 <?xml version="1.0" encoding="utf-8"?>
-<rdf:RDF xmlns:cim="{schema}" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+<!-- un-comment this line to enable validation
+-->
+<rdf:RDF xmlns:cim="{namespace}" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+<!--
+-->
 """
-        f.write(header.format(schema = schema))
+        f.write(header)
+
         for cim_class in list(self.graph.keys()):
 
             for obj in self.graph[cim_class].values():
-                header = """
-<cim:{class_name} rdf:about="urn:uuid:{mRID}">"""         
-                f.write(header.format(class_name=cim_class.__name__, mRID = obj.mRID))
+                header = f"""
+<cim:{cim_class.__name__} {rdf_header}{obj.mRID}">"""         
+                f.write(header)
 
                 parent_classes = list(cim_class.__mro__)
                 parent_classes.pop(len(parent_classes)-1)
@@ -113,124 +152,53 @@ class GraphModel:
                             if attribute_class in self.cim.__all__:
                                 attr_obj = getattr(obj,attribute)
                                 if attr_obj is not None:
-                                    value = attr_obj.mRID
-                                    body = """
-  <cim:{pclass}.{attr} rdf:resource="urn:uuid:{value}"/>"""
+                                    if type(type(attr_obj)) is not enum.EnumMeta:
+                                        value = """rdf:resource=\""""+rdf_resource+attr_obj.mRID
+                                    else:
+                                        value = """rdf:resource=\""""+namespace+str(attr_obj)
+                                    body = f"""
+  <cim:{pclass.__name__}.{attribute} {value}"/>"""
 
-                                    f.write(body.format(pclass=pclass.__name__, attr=attribute, value = value))
+                                    f.write(body)
 
                             else:
-                                value = self.item_dump(getattr(obj, attribute))
+                                value = json_dump(getattr(obj, attribute), self.cim)
                                 if value:
-                                    body = """
-  <cim:{pclass}.{attr}>{value}</cim:{pclass}.{attr}>"""
-                                    f.write(body.format(pclass=pclass.__name__, attr = attribute, value = value))
-                tail = """
-</cim:{class_name}>"""
-                f.write(tail.format(class_name = cim_class.__name__))
+                                    body = f"""
+  <cim:{pclass.__name__}.{attribute}>{value}</cim:{pclass.__name__}.{attribute}>"""
+                                    f.write(body)
+                tail = f"""
+</cim:{cim_class.__name__}>"""
+                f.write(tail)
         
         f.write("""
 </rdf:RDF>""")
         
 
 
-
-    def cim_print(self, graph:Dict, cim_class:type):
-        mrid_list = list(graph[cim_class].keys())
-        attribute_list = list(cim_class().__dict__.keys())
-        json_dump = {}
-
-        for mrid in mrid_list:
-            json_dump[mrid] = {}
-            for attribute in attribute_list:
-                value = getattr(graph[cim_class][mrid], attribute)
-                if value is not None and value != []:
-                    json_dump[mrid][attribute] = self.item_dump(value)
-        return json_dump
-                            
-    def item_dump(self, value):
-        if type(value) is str:
-            result = value
-        elif type(value) is float:
-            result = value
-        elif type(value) is list:
-            result = []
-            for item in value:
-                result.append(self.item_dump(item))
-        elif value is None:
-            result = ''
-        elif type(type(value)) is type:
-            result = value.mRID
-        else:
-            result = str(value)
-        return result
     
-    def json_ld_dump(self, value):
-        if type(value) is str:
-            result = value
-        elif type(value) is float:
-            result = value
-        elif type(value) is list:
-            result = []
-            for item in value:
-                result.append(self.json_ld_dump(item))
-        elif value is None:
-            result = ''
-        elif type(type(value)) is type:
-            result = {"@type": value.__class__.__name__, "@id": value.mRID}
-        else:
-            result = str(value)
-        return result
-
-    def cim_dump(self, cim_class:type):
-        mrid_list = list(self.graph[cim_class].keys())
-        attribute_list = list(cim_class().__dict__.keys())
-        json_dump = {}
-
-        for mrid in mrid_list:
-            json_dump[mrid] = {}
-            for attribute in attribute_list:
-                value = getattr(self.graph[cim_class][mrid], attribute)
-                if value is not None and value != []:
-                    json_dump[mrid][attribute] = self.json_ld_dump(value)
-
-        return (json_dump)
-    
-    def __dumps__(self, cim_class):
+    def __dumps__(self, cim_class:type, show_empty:bool = False, json_ld:bool = True):
         if cim_class in self.graph:
             mrid_list = list(self.graph[cim_class].keys())
-            attribute_list = list(cim_class().__dict__.keys())
-            json_dump = {}
+            attribute_list = list(cim_class.__dataclass_fields__.keys())
+            dump = {}
 
             for mrid in mrid_list:
-                json_dump[mrid] = {}
+                dump[mrid] = {}
                 for attribute in attribute_list:
                     value = getattr(self.graph[cim_class][mrid], attribute)
-                    json_dump[mrid][attribute] = self.item_dump(value)
+                    if value is None or value == []:
+                        if show_empty:
+                            dump[mrid][attribute] = ''
+                    else:
+                        result = json_dump(value=value, cim=self.connection.cim, json_ld=json_ld)
+                        dump[mrid][attribute] = str(result)
+
         else:
-            json_dump = {}
+            dump = {}
             _log.info('no instances of '+str(cim_class.__name__)+' found in catalog.')
 
-        return json_dump
+        return dump
 
 
-def item_dump(self, value):
-    if type(value) is str:
-        result = value
-    elif type(value) is float:
-        result = value
-    elif type(value) is list:
-        result = []
-        for item in value:
-            result.append(self.item_dump(item))
-    elif value is None:
-        result = ''
-    elif type(type(value)) is type:
-        result = value.mRID
-    else:
-        result = str(value)
-    return result
-    
-    # def build_full_model(self):
 
-    #     # Get all PowerSystemResources
