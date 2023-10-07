@@ -11,9 +11,9 @@ from typing import List
 
 import cimgraph.data_profile as cim
 from cimgraph.databases import ConnectionInterface
-# from cimgraph.models.model_parsers import (add_to_catalog,
-#                                            add_to_typed_catalog, cim_dump, cim_print)
-from cimgraph.models.secondary_area import SecondaryArea
+from cimgraph.deprecated.models.model_parsers import (add_to_catalog,
+                                            add_to_typed_catalog, cim_dump, cim_print)
+from cimgraph.deprecated.models.secondary_area import SecondaryArea
 from pprint import pprint as pyprint
 _log = logging.getLogger(__name__)
 
@@ -68,13 +68,13 @@ class SwitchArea:
 
     def get_all_attributes(self, cim_class):
         if cim_class in self.typed_catalog:
-            self.connection.get_all_attributes(self.feeder_mrid, self.typed_catalog, cim_class)
+            self.connection.get_all_edges(self.feeder_mrid, self.typed_catalog, cim_class)
         else:
             _log.info('no instances of '+str(cim_class.__name__)+' found in catalog.')
 
     def get_attributes_query(self, cim_class):
         if cim_class in self.typed_catalog:
-            sparql_message = self.connection.get_attributes_query(self.feeder_mrid, self.typed_catalog, cim_class)
+            sparql_message = self.connection.get_edges_query(self.feeder_mrid, self.typed_catalog, cim_class)
         else:
             _log.info('no instances of '+str(cim_class.__name__)+' found in catalog.')
             sparql_message = ''

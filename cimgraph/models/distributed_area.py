@@ -12,17 +12,11 @@ _log = logging.getLogger(__name__)
 
 @dataclass
 class DistributedArea(GraphModel):
-    connection: ConnectionInterface
-    container: object
-    graph: dict[type, dict[str, object]] = field(default_factory=dict)
 
     def __post_init__(self):
         self.cim_profile = self.connection.cim_profile
-        self.cim = importlib.import_module('cimgraph.data_profile.' + self.cim_profile)
-        
+        self.cim = self.connection.cim    
         self.graph = {}
-
-    
 
     def build_from_topo_message(self, topology_dict, centralized_graph):
         for node_mrid in topology_dict["connectivity_node"]:

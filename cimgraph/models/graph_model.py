@@ -44,7 +44,7 @@ class GraphModel:
     """ 
     Underlying root class for all knowledge graph models, inlcuding 
     FeederModel, BusBranchModel, and NodeBreakerModel
-    Args:
+    Required Args:
         container: a CIM container object inheriting from ConnectivityNodeContainer
         connection: a ConnectionInterface object, such as BlazegraphConnection
         distributed: a boolean to indicate if the graph is distributed

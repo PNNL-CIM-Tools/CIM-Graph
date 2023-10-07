@@ -19,8 +19,25 @@ _log = logging.getLogger(__name__)
 
 @dataclass
 class FeederModel(GraphModel):
-
-    distributed_topology: dict = field(default_factory=dict)
+    """ 
+    Knowledge graph class for distribution feeder objects
+    Args:
+        container: a CIM Feeder object with specified mRID
+        connection: a ConnectionInterface object, such as BlazegraphConnection
+        distributed: a boolean to indicate if the graph is distributed
+    Optional Args:
+        distributed_hierarchy: Custom inheritance structure for defining distributed areas
+        topology_message: JSON message from GridAPPS-D Topology Proccessor Service
+    Returns:
+        none
+    Methods:
+        add_to_graph(object): adds a new CIM object to the knowledge graph
+        get_all_edges(cim.ClassName): universal database query to expand graph by one edge
+        graph[cim.ClassName]: access to graph dictionary sorted by class and mRID
+        pprint(cim.ClassName): pretty-print method for showing graph of a class type
+        get_edges_query(cim.ClassName): returns query text for debugging
+    """
+    topology_message: dict = field(default_factory=dict)
     distributed_hierarchy: list[type] = field(default_factory=list)
 
     
@@ -41,9 +58,9 @@ class FeederModel(GraphModel):
         centralized_graph = self.connection.create_new_graph(container) # Initialize centralized graph model
         
         # Use output from GridAPPS-D Topology Processor if given
-        if self.distributed_topology is not None: 
+        if self.topology_message is not None: 
             self.switch_areas = []
-            topo = self.distributed_topology["feeders"]
+            topo = self.topology_message["feeders"]
             # for feeder in self.distributed_topology["feeders"]:
                 # if feeder["feeder_id"] == self.container.mRID:
 
