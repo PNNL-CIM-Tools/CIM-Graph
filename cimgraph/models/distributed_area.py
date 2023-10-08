@@ -101,23 +101,51 @@ class DistributedTopology():
                         equipment = terminal.ConductingEquipment
                         DistArea.add_to_graph(terminal)
                         DistArea.add_to_graph(equipment)
-                        # if type(equipment) == self.cim.PowerTransformer:
-                        #     print('regulator')
-                        #     if equipment.TransformerEndInfo is not None:
-                        #         voltages = []
-                        #         # Iterate through xfmr ends to get winding voltage
-                        #         for end in equipment.TransformerTankInfo.TransformerEndInfos:
-                        #             print(end.ratedU)
-                        #             voltages.append(end.ratedU)
-                        if terminal.TransformerEnd is not None:
+
+                        if equipment.__class__ == self.cim.PowerTransformer:
+                            print(equipment.name)
+                            found_voltages = False
                             voltages = []
-                            for end in terminal.TransformerEnd:
-                                voltages.append(end.BaseVoltage.nominalVoltage)
-                                # If all xfmr ends have the same voltage, then it is a regulator
+                            if equipment.PowerTransformerEnd is not None:
+                                for end in equipment.PowerTransformerEnd:
+                                    voltages.append(end.ratedU)
+                                    found_voltages = True
                                 if len(set(voltages)) == 1:
                                     self.expand_terminal(terminal, DistArea)
-                                else:
-                                    continue
+
+                            if equipment.TransformerTanks is not None and not found_voltages:
+                                for tank in equipment.TransformerTanks:
+                                    # print('tank', tank.name)
+                                    if "TransformerTankInfo" in self.cim.TransformerTank.__dataclass_fields__.keys():
+                                        if tank.TransformerTankInfo is not None:
+                                            # Iterate through xfmr ends to get winding voltage
+                                            for end in equipment.TransformerTankInfo.TransformerEndInfos:
+                                                voltages = end.ratedU
+                                                found_voltages = True
+                                            if len(set(voltages)) == 1:
+                                                self.expand_terminal(terminal, DistArea)
+                                    
+                                    if tank.Assets is not None and not found_voltages:
+                                        for asset in tank.Assets:
+                                            # print(asset.name)
+                                            if asset.AssetInfo is not None:
+                                                for end in asset.AssetInfo.TransformerEndInfos:
+                                                    print(end.ratedU)
+                                                    voltages.append(end.ratedU)
+                                                    found_voltages = True
+                                                if len(set(voltages)) == 1:
+                                                    print('regulator')
+                                                    self.expand_terminal(terminal, DistArea)
+
+                        # if terminal.TransformerEnd is not None:
+                        #     voltages = []
+                        #     for end in terminal.TransformerEnd:
+                        #         voltages.append(end.BaseVoltage.nominalVoltage)
+                        #         # If all xfmr ends have the same voltage, then it is a regulator
+                        #         if len(set(voltages)) == 1:
+                        #             self.expand_terminal(terminal, DistArea)
+                        #         else:
+                        #             continue
                         
                                         
                         if type(equipment) in self.lower_boundaries:

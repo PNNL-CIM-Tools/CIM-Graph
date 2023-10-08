@@ -101,15 +101,15 @@ class FeederModel(GraphModel):
                     setattr(self, container_type + 's', []) 
                     #TODO: create subclasses based on pre-defined topology        
             else:
-                self.get_all_edges(self.cim.Terminal, centralized_graph)
-                self.get_all_edges(self.cim.TransformerTankEnd, centralized_graph)
-                self.get_all_edges(self.cim.PowerTransformerEnd, centralized_graph)
-                self.get_all_edges(self.cim.BaseVoltage, centralized_graph)
-                # self.get_all_edges(self.cim.PowerTransformer, centralized_graph)
-                # self.get_all_edges(self.cim.TransformerTank, centralized_graph)
-                # self.get_all_edges(self.cim.Asset, centralized_graph)
+                # self.get_all_edges(self.cim.Terminal, centralized_graph)
                 # self.get_all_edges(self.cim.TransformerTankEnd, centralized_graph)
-                # self.get_all_edges(self.cim.TransformerEndInfo, centralized_graph)
+                # self.get_all_edges(self.cim.PowerTransformerEnd, centralized_graph)
+                # self.get_all_edges(self.cim.BaseVoltage, centralized_graph)
+                self.get_all_edges(self.cim.PowerTransformer, centralized_graph)
+                self.get_all_edges(self.cim.TransformerTank, centralized_graph)
+                self.get_all_edges(self.cim.Asset, centralized_graph)
+                self.get_all_edges(self.cim.TransformerTankInfo, centralized_graph)
+                self.get_all_edges(self.cim.TransformerEndInfo, centralized_graph)
                 
                 switch_classes = [self.cim.Breaker, self.cim.Sectionaliser, self.cim.Recloser,
                                       self.cim.LoadBreakSwitch, self.cim.Switch] # default switch classes
