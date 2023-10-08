@@ -17,7 +17,7 @@ _log = logging.getLogger(__name__)
 class GraphDBConnection(ConnectionInterface):
     def __init__(self, connection_params):
         self.cim_profile = connection_params.cim_profile
-        self.legacy_sparql = importlib.import_module('cimgraph.queries.sparql.' + self.cim_profile)
+        # self.legacy_sparql = importlib.import_module('cimgraph.queries.sparql.' + self.cim_profile)
         self.cim = importlib.import_module('cimgraph.data_profile.' + self.cim_profile)
         self.namespace = connection_params.namespace
         self.iec61970_301 = connection_params.iec61970_301

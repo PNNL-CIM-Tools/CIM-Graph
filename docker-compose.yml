@@ -3,8 +3,8 @@ version: '2'
 services:
 
   blazegraph:
-    # image: gridappsd/blazegraph:develop
-    image: gridappsd/blazegraph:seto4
+    image: gridappsd/blazegraph:develop
+    # image: gridappsd/blazegraph:seto4
     container_name: blazegraph
     ports:
       - 8889:8080

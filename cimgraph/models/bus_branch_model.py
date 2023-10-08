@@ -6,12 +6,9 @@ import importlib
 from dataclasses import dataclass, field
 from typing import Dict, List, Optional
 
-from cimgraph.databases import ConnectionInterface
+
 from cimgraph.models.graph_model import GraphModel
-# from cimgraph.models.graph_model import add_to_graph, cim_dump, cim_print
-from cimgraph.topology_processor.linknet import LinkNet
-from cimgraph.topology_processor.distributed_feeder_areas import DistributedFeederTopology
-from pprint import pprint as pypprint
+
 
 _log = logging.getLogger(__name__)
 
@@ -31,6 +28,8 @@ class BusBranchModel(GraphModel):
                 self.initialize_distributed_model(self.container)
             else:
                 self.initialize_centralized_model(self.container)
+        else:
+            _log.error('A ConnectionInterface must be specified')
 
 
 

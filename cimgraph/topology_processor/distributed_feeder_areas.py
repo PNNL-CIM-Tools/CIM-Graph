@@ -4,7 +4,7 @@ import importlib
 import uuid
 
 from cimgraph.topology_processor.linknet import LinkNet
-from cimgraph.models import SwitchArea, SecondaryArea
+from cimgraph.deprecated.models import SwitchArea, SecondaryArea
 from cimgraph.models import GraphModel
 # from cimgraph.models.model_parsers import GraphModel.add_to_graph
 

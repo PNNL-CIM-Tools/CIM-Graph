@@ -52,3 +52,6 @@ def item_dump(value):
     else:
         result = value
     return result
+
+def cim_print():
+    pass

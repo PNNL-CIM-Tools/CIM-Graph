@@ -4,6 +4,7 @@ import json
 import logging
 import importlib
 import enum
+import uuid
 
 
 from dataclasses import dataclass, field
@@ -14,10 +15,13 @@ from cimgraph.databases import ConnectionInterface
 
 _log = logging.getLogger(__name__)
 
+def new_mrid():
+    mRID = str(uuid.uuid4())
+    return mRID
 
 def json_dump(value, cim:__package__, json_ld:bool = False):
     class_type = value.__class__
-    if class_type is enum.EnumMeta:
+    if type(class_type) is enum.EnumMeta:
         result = str(value)
     elif class_type is list:
         result = []

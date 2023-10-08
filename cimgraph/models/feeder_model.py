@@ -8,11 +8,10 @@ import importlib
 from dataclasses import dataclass, field
 from typing import Dict, List, Optional
 
+from cimgraph.models.graph_model import new_mrid
 from cimgraph.models.graph_model import GraphModel
-from cimgraph.models.distributed_area import DistributedArea
-from cimgraph.databases import ConnectionInterface
-from cimgraph.topology_processor.linknet import LinkNet
-from cimgraph.topology_processor.distributed_feeder_areas import DistributedFeederTopology
+from cimgraph.models.distributed_area import DistributedArea, DistributedTopology
+from cimgraph.topology_processor.distributed_feeder import DistributedFeederTopology
 
 
 _log = logging.getLogger(__name__)
@@ -20,7 +19,8 @@ _log = logging.getLogger(__name__)
 @dataclass
 class FeederModel(GraphModel):
     """ 
-    Knowledge graph class for distribution feeder objects
+    Knowledge graph class for distribution feeder objects. This should class 
+    should be used for all feeder models and distribution data.
     Args:
         container: a CIM Feeder object with specified mRID
         connection: a ConnectionInterface object, such as BlazegraphConnection
@@ -42,15 +42,22 @@ class FeederModel(GraphModel):
 
     
     def __post_init__(self):
-        self.cim_profile = self.connection.cim_profile
-        self.cim = importlib.import_module('cimgraph.data_profile.' + self.cim_profile)
+        
+        if self.connection is not None: # Check if connection has been specified
+            self.cim = self.connection.cim # Set CIM data profile
+            if self.distributed: # Check if distributed flag is true
+                # Build distributed network model
+                self.initialize_distributed_model(self.container)
+            else:
+                # Otherwise build centralized network model
+                self.initialize_centralized_model(self.container)
+        else: # Log error thant no connection was specified
+            _log.error('A ConnectionInterface must be specified')
 
-        if self.distributed:
-            self.initialize_distributed_model(self.container)
-        else:
-            self.initialize_centralized_model(self.container)
+
 
     def initialize_centralized_model(self, container) -> None:
+        # Build graph model using database-specific routine
         self.graph = self.connection.create_new_graph(container)
 
         
@@ -58,26 +65,32 @@ class FeederModel(GraphModel):
         centralized_graph = self.connection.create_new_graph(container) # Initialize centralized graph model
         
         # Use output from GridAPPS-D Topology Processor if given
-        if self.topology_message is not None: 
-            self.switch_areas = []
-            topo = self.topology_message["feeders"]
+        if self.topology_message != {}: 
+            # Ingest topology message
+            feeder_topo = self.topology_message["feeders"]
             # for feeder in self.distributed_topology["feeders"]:
                 # if feeder["feeder_id"] == self.container.mRID:
-
-            self.FeederArea = DistributedArea(self.connection, self.cim_profile)
-            self.FeederArea.build_from_topo_message(topo, centralized_graph)
+            # Created DistributedArea object for feeder area
+            self.FeederArea = DistributedArea(container = self.container, connection=self.connection, distributed=True)
+            self.FeederArea.build_from_topo_message(feeder_topo, centralized_graph)
             self.graph = self.FeederArea.graph
-
-            for switch_topo in topo["switch_areas"]:
-                switch_container = self.cim.EquipmentContainer(mRID=str(uuid.uuid4()))
-                SwitchArea = DistributedArea(connection=self.connection, container=switch_container)
+            
+            self.switch_areas = [] # Initialize list of switch areas
+            for switch_topo in feeder_topo["switch_areas"]: 
+                # Create a new DistributedArea object for each switch area in message
+                switch_container = self.cim.EquipmentContainer(mRID=new_mrid())
+                SwitchArea = DistributedArea(connection=self.connection, container=switch_container, distributed=True)
                 SwitchArea.build_from_topo_message(switch_topo, centralized_graph)
-                self.switch_areas.append(SwitchArea)
+                SwitchArea.secondary_areas = [] # Initialize secondary areas list
+                self.switch_areas.append(SwitchArea) # Add new DistributedArea class to list
+
                 for secondary_topo in switch_topo["secondary_areas"]:
-                    SwitchArea.secondary_areas = []
-                    secondary_container = self.cim.EquipmentContainer(mRID=str(uuid.uuid4()))
-                    SecondaryArea = DistributedArea(connection=self.connection, container=secondary_container)
+                    # Create a new DistributedArea object for each secondary area
+                    secondary_container = self.cim.EquipmentContainer(mRID=new_mrid())
+                    SecondaryArea = DistributedArea(connection=self.connection, container=secondary_container, distributed=True)
                     SecondaryArea.build_from_topo_message(secondary_topo, centralized_graph)
+                    SwitchArea.secondary_areas.append(SecondaryArea)
+
 
         # If GridAPPS-D Topology Processor output is not provided, build new topology:
         else:
@@ -88,14 +101,25 @@ class FeederModel(GraphModel):
                     setattr(self, container_type + 's', []) 
                     #TODO: create subclasses based on pre-defined topology        
             else:
-                self.get_all_edges(self.cim.PowerTransformer, centralized_graph)
-                self.get_all_edges(self.cim.TransformerTank, centralized_graph)
+                self.get_all_edges(self.cim.Terminal, centralized_graph)
+                self.get_all_edges(self.cim.TransformerTankEnd, centralized_graph)
+                self.get_all_edges(self.cim.PowerTransformerEnd, centralized_graph)
                 self.get_all_edges(self.cim.BaseVoltage, centralized_graph)
+                # self.get_all_edges(self.cim.PowerTransformer, centralized_graph)
+                # self.get_all_edges(self.cim.TransformerTank, centralized_graph)
+                # self.get_all_edges(self.cim.Asset, centralized_graph)
+                # self.get_all_edges(self.cim.TransformerTankEnd, centralized_graph)
+                # self.get_all_edges(self.cim.TransformerEndInfo, centralized_graph)
                 
-                DistTopo = DistributedFeederTopology(self.connection, self.cim_profile, centralized_graph)
-                self.switch_areas, self.graph = DistTopo.create_distributed_graph()
-    #             self.linknet = LinkNet(self.cim_profile, centralized_graph)
-    #             self.linknet.build_linknet([self.cim.ACLineSegment])
+                switch_classes = [self.cim.Breaker, self.cim.Sectionaliser, self.cim.Recloser,
+                                      self.cim.LoadBreakSwitch, self.cim.Switch] # default switch classes
+                upper_boundaries = switch_classes + [self.cim.PowerTransformer]
+                lower_boundaries = [self.cim.TransformerTank]
+                
+                DistTopo = DistributedTopology(connection=self.connection, centralized_graph=centralized_graph,
+                                               root_classes=switch_classes, upper_boundaries=upper_boundaries, lower_boundaries=lower_boundaries                                               )
+                self.distributed_areas = DistTopo.create_distributed_areas()
+
             
 
         

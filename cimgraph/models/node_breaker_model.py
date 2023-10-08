@@ -53,8 +53,6 @@ class NodeBreakerModel(GraphModel):
             
             DistTopo = DistributedFeederTopology(self.connection, self.cim_profile, centralized_graph)
             self.switch_areas, self.graph = DistTopo.create_distributed_graph()
-#             self.linknet = LinkNet(self.cim_profile, centralized_graph)
-#             self.linknet.build_linknet([self.cim.ACLineSegment])
 
     
         
