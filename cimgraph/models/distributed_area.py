@@ -185,7 +185,6 @@ class DistributedTopology():
                     DistArea.add_to_graph(next_terminal)
 
 def create_hierarchy_level(network:GraphModel, hierarchy:dict, top_level:bool):
-    network.distributed_areas = {}
     for level in hierarchy:
         try:
             container_type = level["container"]
@@ -203,8 +202,9 @@ def create_hierarchy_level(network:GraphModel, hierarchy:dict, top_level:bool):
         if container_class in network.graph:
             for container in network.graph[container_class].values():
                 if not top_level:
-                    _log.warning("creating new area for " + container_type + ' ' + container.name)
+                    _log.info("creating new area for " + container_type + ' ' + container.name)
                     NewArea = DistributedArea(container = container, connection=network.connection, distributed = True)
+                    NewArea.distributed_areas = {}
                     if container_class not in network.distributed_areas:
                         network.distributed_areas[container_class] = {}
                     network.distributed_areas[container_class][container.mRID] = NewArea
