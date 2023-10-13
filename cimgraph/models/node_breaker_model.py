@@ -8,27 +8,48 @@ from typing import Dict, List, Optional
 
 from cimgraph.databases import ConnectionInterface
 from cimgraph.models.graph_model import GraphModel
-# from cimgraph.models.model_parsers import add_to_graph, cim_dump, cim_print
-from cimgraph.topology_processor.linknet import LinkNet
-from cimgraph.topology_processor.distributed_feeder_areas import DistributedFeederTopology
+from cimgraph.models.distributed_area import DistributedArea, create_hierarchy_level
+
 from pprint import pprint as pypprint
 
 _log = logging.getLogger(__name__)
 
 @dataclass
 class NodeBreakerModel(GraphModel):
-
+    """ 
+    Knowledge graph class for transmission node-breaker models. This should class 
+    should be used for all models with detailed substation representations.
+    Args:
+        container: a CIM object inheriting from EquipmentContainer with specified mRID
+        connection: a ConnectionInterface object, such as BlazegraphConnection
+        distributed: a boolean to indicate if the graph is distributed
+    Optional Args:
+        distributed_hierarchy: Custom inheritance structure for defining distributed areas
+        topology_message: JSON message from GridAPPS-D Topology Proccessor Service
+    Returns:
+        none
+    Methods:
+        add_to_graph(object): adds a new CIM object to the knowledge graph
+        get_all_edges(cim.ClassName): universal database query to expand graph by one edge
+        graph[cim.ClassName]: access to graph dictionary sorted by class and mRID
+        pprint(cim.ClassName): pretty-print method for showing graph of a class type
+        get_edges_query(cim.ClassName): returns query text for debugging
+    """
+    topology_message: dict = field(default_factory=dict)
     distributed_hierarchy: list[type] = field(default_factory=list)
 
     
     def __post_init__(self):
-        self.cim = importlib.import_module('cimgraph.data_profile.' + self.cim_profile)
-
-        if self.connection is not None:
-            if self.distributed:
+        if self.connection is not None: # Check if connection has been specified
+            self.cim = self.connection.cim # Set CIM data profile
+            if self.distributed: # Check if distributed flag is true
+                # Build distributed network model
                 self.initialize_distributed_model(self.container)
             else:
+                # Otherwise build centralized network model
                 self.initialize_centralized_model(self.container)
+        else: # Log error thant no connection was specified
+            _log.error('A ConnectionInterface must be specified')
 
 
 
@@ -37,22 +58,21 @@ class NodeBreakerModel(GraphModel):
 
         
     def initialize_distributed_model(self, container) -> None:
-        if len(self.distributed_hierarchy) > 0:
-            for container_class in self.distributed_hierarchy:
-                container_type = container_class.__class__.__name__
-                setattr(self, container_type + 's', []) 
-                #TODO: create subclasses based on pre-defined topology        
+        
+        # Use output from GridAPPS-D Topology Processor if given
+        if self.topology_message != {}:
+            pass
         else:
-            centralized_graph = self.connection.create_new_graph(container)
-            self.get_all_edges(self.cim.Substation, centralized_graph)
-            self.get_all_edges(self.cim.VoltageLevel, centralized_graph)
-            self.get_all_edges(self.cim.Bay, centralized_graph)
-            self.get_all_edges(self.cim.PowerTransformer, centralized_graph)
-            self.get_all_edges(self.cim.TransformerTank, centralized_graph)
-            self.get_all_edges(self.cim.BaseVoltage, centralized_graph)
-            
-            DistTopo = DistributedFeederTopology(self.connection, self.cim_profile, centralized_graph)
-            self.switch_areas, self.graph = DistTopo.create_distributed_graph()
+
+            if len(self.distributed_hierarchy) > 0:
+                self.add_to_graph(self.container)
+                self.get_all_edges(self.container.__class__)
+
+                self.distristributed_areas = create_hierarchy_level(self, self.distributed_hierarchy, top_level=True)        
+            else:
+                pass
+                
+
 
     
         

@@ -11,7 +11,6 @@ from typing import Dict, List, Optional
 from cimgraph.models.graph_model import new_mrid
 from cimgraph.models.graph_model import GraphModel
 from cimgraph.models.distributed_area import DistributedArea, DistributedTopology
-from cimgraph.topology_processor.distributed_feeder import DistributedFeederTopology
 
 
 _log = logging.getLogger(__name__)

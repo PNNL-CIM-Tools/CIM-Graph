@@ -1,6 +1,7 @@
 import json
 import logging
 import importlib
+from math import dist
 import uuid
 
 from dataclasses import dataclass, field
@@ -21,17 +22,19 @@ class DistributedArea(GraphModel):
 
     def build_from_topo_message(self, topology_dict, centralized_graph):
         for node_mrid in topology_dict["connectivity_node"]:
-            # try:
-            node = centralized_graph[self.cim.ConnectivityNode][node_mrid]
-            # except:
-            # _log.warning("node " + node_mrid + " not in feeder")
-                # continue
+            try:
+                node = centralized_graph[self.cim.ConnectivityNode][node_mrid]
+            except:
+                _log.warning("node " + str(node_mrid) + " not in feeder")
+
             self.add_to_graph(node)
             for terminal in node.Terminals:
                 self.add_to_graph(terminal)
                 self.add_to_graph(terminal.ConductingEquipment)
 
-    
+
+            
+
 
 class DistributedTopology():
     def __init__(self, connection:ConnectionInterface, centralized_graph,
@@ -180,3 +183,36 @@ class DistributedTopology():
                 if next_node.mRID not in DistArea.graph[self.cim.ConnectivityNode].keys():
                     DistArea.add_to_graph(next_node)
                     DistArea.add_to_graph(next_terminal)
+
+def create_hierarchy_level(network:GraphModel, hierarchy:dict, top_level:bool):
+    network.distributed_areas = {}
+    for level in hierarchy:
+        try:
+            container_type = level["container"]
+            lower_hierarchy = level["contains"]
+        except:
+            _log.error("""distributed hierarchy must contain "container" and "contains" keys""")
+        # Determine container class
+        try:
+            container_class = eval(f"""network.cim.{container_type}""")
+        except:
+            _log.error("container is not a valid CIM class")
+        
+        
+        network.get_all_edges(container_class)
+        if container_class in network.graph:
+            for container in network.graph[container_class].values():
+                if not top_level:
+                    _log.warning("creating new area for " + container_type + ' ' + container.name)
+                    NewArea = DistributedArea(container = container, connection=network.connection, distributed = True)
+                    if container_class not in network.distributed_areas:
+                        network.distributed_areas[container_class] = {}
+                    network.distributed_areas[container_class][container.mRID] = NewArea
+                    NewArea.add_to_graph(container)  
+                else:
+                    NewArea = network
+
+                NewArea.get_all_edges(container_class)
+                if lower_hierarchy is not None and lower_hierarchy != []:
+                    NewArea.distributed_areas = create_hierarchy_level(NewArea, lower_hierarchy, top_level=False)
+    return network.distributed_areas
