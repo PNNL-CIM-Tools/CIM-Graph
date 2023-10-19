@@ -4,6 +4,7 @@ import importlib
 import logging
 import re
 import json
+import enum
 
 from typing import Dict, List, Optional
 
@@ -204,13 +205,13 @@ class BlazegraphConnection(ConnectionInterface):
 
         if int(self.iec61970_301) > 7:
             rdf_header = """rdf:about="urn:uuid:"""
-            rdf_resource = """rdf:resource="urn:uuid:"""
+            rdf_resource = """rdf:resource:urn:uuid:"""
             rdf_triple = """urn:uuid:"""
         else:
             rdf_header = """rdf:ID=\""""
-            rdf_resource = """rdf:resource="#"""
+            rdf_resource = """rdf:resource:#"""
             rdf_triple = f"""{self.url}#_"""
-
+        rdf_enum = f"""{self.namespace}#"""
 
         prefix = f"""PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
         PREFIX cim: <{self.namespace}>
@@ -249,16 +250,20 @@ class BlazegraphConnection(ConnectionInterface):
                             if attribute_class in self.cim.__all__:
                                 attr_obj = getattr(obj,attribute)
                                 if attr_obj is not None:
-                                    value = attr_obj.mRID
-                                    triple = f"""
-        <{rdf_triple}{obj.mRID}> cim:{class_type.__name__}.{attribute} <urn:uuid:{value}>.
-                                    """
-
-                                    
+                                    if type(attr_obj.__class__) is enum.EnumMeta:
+                                        value = str(attr_obj)
+                                        triple = f"""
+        <{rdf_triple}{obj.mRID}> cim:{class_type.__name__}.{attribute} <{rdf_enum}{value}>.
+                                        """
+                                    else:
+                                        value = attr_obj.mRID
+                                        triple = f"""
+        <{rdf_triple}{obj.mRID}> cim:{class_type.__name__}.{attribute} <{rdf_resource}{value}>.
+                                        """
                                     triples.append(triple)
 
                             else:
-                                value = str(json_dump(getattr(obj, attribute), json_ld= False))
+                                value = str(json_dump(getattr(obj, attribute), self.cim, json_ld= False))
                                 if value:
         #                              <{url}#_{mRID}> cim:{class_type}.{attr} \"{value}\".
                                     triple = f"""
