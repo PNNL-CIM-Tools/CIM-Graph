@@ -17,7 +17,7 @@ from rdflib.namespace import RDF
 _log = logging.getLogger(__name__)
 
 class RDFlibConnection(ConnectionInterface):
-    def __init__(self, connection_params:ConnectionParameters):
+    def __init__(self, connection_params:ConnectionParameters, use_oxigraph:bool = True):
         self.cim_profile = connection_params.cim_profile
         self.cim = importlib.import_module('cimgraph.data_profile.' + self.cim_profile)
         self.namespace = connection_params.namespace
@@ -25,10 +25,15 @@ class RDFlibConnection(ConnectionInterface):
         self.filename = connection_params.filename
         self.connection_params = connection_params
         self.libgraph = None
+        self.use_oxigraph = use_oxigraph
 
     def connect(self):
         if not self.libgraph:
-            self.libgraph = Graph()
+            if self.use_oxigraph:
+                self.libgraph = Graph(store="Oxigraph")
+            else:
+                self.libgraph = Graph()
+
             self.libgraph.parse(self.filename)
             self.libgraph.bind("cim", Namespace(self.namespace))
             self.libgraph.bind("rdf", RDF)
@@ -50,33 +55,36 @@ class RDFlibConnection(ConnectionInterface):
 
         for result in query_output:
             # Parse query results
-            node = result.ConnectivityNode
-            terminal = result.Terminal
+            node_mrid = str(result.ConnectivityNode)
+            term_mrid = str(result.Terminal)
             eq = json.loads(result.Equipment)
             eq_id = eq["@id"]
             eq_class = eq["@type"]
             # Add each object to graph
-            self.create_object(graph, self.cim.ConnectivityNode, node)
-            self.create_object(graph, self.cim.Terminal, terminal)
+            node = self.create_object(graph, self.cim.ConnectivityNode, node_mrid)
+            terminal = self.create_object(graph, self.cim.Terminal, term_mrid)
             if eq_class in self.cim.__all__:
                 eq_class = eval(f"self.cim.{eq_class}")
-                obj = self.create_object(graph, eq_class, eq_id)
+                equipment = self.create_object(graph, eq_class, eq_id)
                 
             else:
                 _log.warning('object class missing from data profile:' + str(eq_class))
                 continue
             # Link objects in graph
-            graph[eq_class][eq_id].Terminals.append(graph[self.cim.Terminal][terminal])
-            graph[self.cim.ConnectivityNode][node].Terminals.append(graph[self.cim.Terminal][terminal])
-            setattr(graph[self.cim.Terminal][terminal], "ConnectivityNode", graph[self.cim.ConnectivityNode][node])
-            setattr(graph[self.cim.Terminal][terminal], "ConductingEquipment", graph[eq_class][eq_id])
+            # Link objects in graph
+            if terminal not in equipment.Terminals:
+                equipment.Terminals.append(terminal)
+            if terminal not in node.Terminals:
+                node.Terminals.append(terminal)
+            setattr(terminal, "ConnectivityNode", node)
+            setattr(terminal, "ConductingEquipment", equipment)
             
         return graph
     
     
     def get_edges_query(self, container: str | cim.ConnectivityNodeContainer, graph: dict[type, dict[str, object]], cim_class: type):
 
-        eq_mrids=list(graph[cim_class].keys())[0:100]
+        eq_mrids=list(graph[cim_class].keys())[0:10]
         sparql_message = sparql.get_all_edges_sparql(cim_class, eq_mrids, self.namespace, self.iec61970_301)
 
         return sparql_message
@@ -99,7 +107,14 @@ class RDFlibConnection(ConnectionInterface):
                     
                 is_association = False
                 is_enumeration = False
-                mRID = str(result.mRID) #get mRID
+                if result.mRID is not None: #get mRID
+                    mRID = str(result.mRID)
+                else:
+                    iri = str(result.eq)
+                    if self.iec61970_301 > 7:
+                        mRID = iri.split("uuid:")[1]
+                    else:
+                        mRID = iri.split("rdf:id:")[1]
                 attribute = str(result.attr).split(self.namespace)[1]
                 attribute = attribute.split('.') #split edge attribute
                 value = str(result.val) #get edge value
@@ -128,7 +143,7 @@ class RDFlibConnection(ConnectionInterface):
                     if edge_class in self.cim.__all__:
                         edge_class = eval(f"self.cim.{edge_class}")
                     else:
-                        print('unknown class', edge_class)
+                        _log.warning('unknown class', edge_class)
                         continue
 
                 if is_association: # if association to another CIM object
@@ -144,6 +159,12 @@ class RDFlibConnection(ConnectionInterface):
                     
                     elif attribute[1]+'s' in cim_class.__dataclass_fields__: #check if attribute spelling is plural
                         self.create_edge(graph, cim_class, mRID, attribute[1]+'s', edge_class, edge_mRID)
+
+                    elif edge_class.__name__ in cim_class.__dataclass_fields__: #check if attribute spelling is plural
+                        self.create_edge(graph, cim_class, mRID, edge_class.__name__, edge_class, edge_mRID)
+
+                    elif edge_class.__name__+'s' in cim_class.__dataclass_fields__: #check if attribute spelling is plural
+                        self.create_edge(graph, cim_class, mRID, edge_class.__name__+'s', edge_class, edge_mRID)
                         
                     else: #fallback: match class type until a suitable parent edge class is found
                         for node_attr in list(cim_class.__dataclass_fields__.keys()):
@@ -166,10 +187,14 @@ class RDFlibConnection(ConnectionInterface):
 
     def create_edge(self, graph, cim_class, mRID, attribute, edge_class, edge_mRID):
         edge_object = self.create_object(graph, edge_class, edge_mRID)
+        setattr(edge_object, "mRID", edge_mRID)
         attribute_type = cim_class.__dataclass_fields__[attribute].type
         if "List" in attribute_type:
             obj_list = getattr(graph[cim_class][mRID], attribute)
-            if edge_object not in obj_list:
+            mrid_list = []
+            for obj in obj_list:
+                mrid_list.append(obj.mRID)
+            if edge_mRID not in mrid_list:
                 obj_list.append(edge_object)
                 setattr(graph[cim_class][mRID], attribute, obj_list)
         else:
@@ -191,67 +216,7 @@ class RDFlibConnection(ConnectionInterface):
         return obj
     
     def upload(self, graph):
-        url = self.url
-        
-        prefix = f"""PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
-        PREFIX cim: <{self.namespace}>
-        PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
-        """
-        triples = []
-        for cim_class in list(graph.keys()):
-            
-            for obj in graph[cim_class].values():
-#                 obj_triple = "<{url}#_{mRID}> a cim:{class_type}."
-                obj_triple = """
-        <urn:uuid:{mRID}> a cim:{class_type}.
-                """
-                triple = obj_triple.format(url = url, mRID = obj.mRID, class_type = cim_class.__name__)
-                triples.append(triple)
-                parent_classes = list(cim_class.__mro__)
-                parent_classes.pop(len(parent_classes)-1)
-                for class_type in parent_classes:
-                    attribute_list = list(class_type.__annotations__.keys())
-                    for attribute in attribute_list:
-                        
-                        try: #check if attribute is in data profile
-                            attribute_type = cim_class.__dataclass_fields__[attribute].type
-                        except:
-                            #replace with warning message                       
-                            _log.warning('attribute '+str(attribute) +' missing from '+str(cim_class.__name__))
-                        
-                        if 'List' not in attribute_type: #check if attribute is association to a class object
-                            if '\'' in attribute_type: #handling inconsistent '' marks in data profile
-                                at_cls = re.match(r'Optional\[\'(.*)\']',attribute_type)
-                                attribute_class = at_cls.group(1)
-                            else:        
-                                at_cls = re.match(r'Optional\[(.*)]',attribute_type)
-                                attribute_class = at_cls.group(1)
-
-                            if attribute_class in self.cim.__all__:
-                                attr_obj = getattr(obj,attribute)
-                                if attr_obj is not None:
-                                    value = attr_obj.mRID
-                                    attr = """
-        <urn:uuid:{mRID}> cim:{class_type}.{att} <urn:uuid:{value}>.
-                                    """
-
-                                    triple = attr.format(url = url, mRID = obj.mRID, class_type = class_type.__name__, att = attribute, value = value)
-                                    triples.append(triple)
-
-                            else:
-                                value = GraphModel.item_dump(getattr(obj, attribute))
-                                if value:
-        #                              <{url}#_{mRID}> cim:{class_type}.{attr} \"{value}\".
-                                    attr = """
-        <urn:uuid:{mRID}> cim:{class_type}.{attr} \"{value}\".
-                                     """
-                                    triple = attr.format(url = url, mRID = obj.mRID, class_type = class_type.__name__, attr = attribute, value = value)
-                                    triples.append(triple)
-        triples.append ('}')
-        query = prefix + ' INSERT DATA { ' + ''.join(triples)
-
-        self.execute(query)
-        return query
+        pass
 
 
             

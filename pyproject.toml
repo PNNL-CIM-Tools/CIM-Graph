@@ -14,6 +14,7 @@ xsdata = "^22.5"
 SPARQLWrapper = "^2.0.0"
 neo4j = "^5.10.0"
 rdflib = "^7.0.0"
+oxrdflib = "^0.3.6"
 rdflib-neo4j = "^0.0.1b6"
 mysql-connector-python = "^8.0.0"
 

@@ -34,8 +34,7 @@ def test_get_all_edges(network, cim):
 
     network.get_all_edges(cim.ConnectivityNode)
     network.get_all_edges(cim.Terminal)
-    network.get_all_edges(cim.Location)
-    network.get_all_edges(cim.PositionPoint)
+
     network.get_all_edges(cim.OperationalLimitSet)
     network.get_all_edges(cim.OperationalLimitType)
     network.get_all_edges(cim.VoltageLimit)
@@ -43,3 +42,5 @@ def test_get_all_edges(network, cim):
     network.get_all_edges(cim.Feeder)
     network.get_all_edges(cim.BaseVoltage)
     network.get_all_edges(cim.CoordinateSystem)
+    network.get_all_edges(cim.Location)
+    network.get_all_edges(cim.PositionPoint)

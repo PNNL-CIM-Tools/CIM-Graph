@@ -59,18 +59,43 @@ class NodeBreakerModel(GraphModel):
         
     def initialize_distributed_model(self, container) -> None:
         
-        # Use output from GridAPPS-D Topology Processor if given
-        if self.topology_message != {}:
-            pass
-        else:
+        # # Use output from GridAPPS-D Topology Processor if given
+        # if self.topology_message != {}:
+        #     pass
+        # else:
 
-            if len(self.distributed_hierarchy) > 0:
-                self.add_to_graph(self.container)
-                self.get_all_edges(self.container.__class__)
-                self.distributed_areas = {}
-                self.distristributed_areas = create_hierarchy_level(self, self.distributed_hierarchy, top_level=True)        
-            else:
-                pass
+        if self.distributed_hierarchy == []:
+            feeder = {}
+            feeder["container"] = "Feeder"
+            feeder["contains"] = []
+
+            bay = {}
+            bay["container"] = "Bay"
+            bay["contains"] = []
+
+            voltage_level = {}
+            voltage_level["container"] = "VoltageLevel"
+            voltage_level["contains"] = [bay]
+
+            sub_area = {}
+            sub_area["container"] = "Substation"
+            sub_area["contains"] = [voltage_level, feeder, bay]
+
+            subregion = {}
+            subregion["container"] = "SubGeographicalRegion"
+            subregion["contains"] = [sub_area]
+
+            region = {}
+            region["container"] = "GeographicalRegion"
+            region["contains"] = [subregion]
+
+            self.distributed_hierarchy = [region]
+
+        self.add_to_graph(self.container)
+        self.get_all_edges(self.container.__class__)
+        self.distributed_areas = {}
+        self.distristributed_areas = create_hierarchy_level(self, self.distributed_hierarchy, top_level=True)        
+
                 
 
 

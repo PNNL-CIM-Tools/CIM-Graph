@@ -98,7 +98,6 @@ class DistributedTopology():
             for node_mrid in list(all_nodes - parsed_nodes):
                 node = DistArea.graph[self.cim.ConnectivityNode][node_mrid]
                 if node.mRID not in parsed_nodes:
-                    # print('start', node.mRID)
 
                     for terminal in node.Terminals:
                         equipment = terminal.ConductingEquipment
@@ -106,7 +105,6 @@ class DistributedTopology():
                         DistArea.add_to_graph(equipment)
 
                         if equipment.__class__ == self.cim.PowerTransformer:
-                            print(equipment.name)
                             found_voltages = False
                             voltages = []
                             if equipment.PowerTransformerEnd is not None:
@@ -118,11 +116,10 @@ class DistributedTopology():
 
                             if equipment.TransformerTanks is not None and not found_voltages:
                                 for tank in equipment.TransformerTanks:
-                                    # print('tank', tank.name)
                                     if "TransformerTankInfo" in self.cim.TransformerTank.__dataclass_fields__.keys():
                                         if tank.TransformerTankInfo is not None:
                                             # Iterate through xfmr ends to get winding voltage
-                                            for end in equipment.TransformerTankInfo.TransformerEndInfos:
+                                            for end in tank.TransformerTankInfo.TransformerEndInfos:
                                                 voltages = end.ratedU
                                                 found_voltages = True
                                             if len(set(voltages)) == 1:
@@ -130,14 +127,11 @@ class DistributedTopology():
                                     
                                     if tank.Assets is not None and not found_voltages:
                                         for asset in tank.Assets:
-                                            # print(asset.name)
                                             if asset.AssetInfo is not None:
                                                 for end in asset.AssetInfo.TransformerEndInfos:
-                                                    print(end.ratedU)
                                                     voltages.append(end.ratedU)
                                                     found_voltages = True
                                                 if len(set(voltages)) == 1:
-                                                    print('regulator')
                                                     self.expand_terminal(terminal, DistArea)
 
                         # if terminal.TransformerEnd is not None:
