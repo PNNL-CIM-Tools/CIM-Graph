@@ -9,9 +9,7 @@ import enum
 from typing import Dict, List, Optional
 
 import cimgraph.queries.sparql as sparql
-from cimgraph.databases import ConnectionInterface, ConnectionParameters, Parameter, QueryResponse
-from cimgraph.models.graph_model import json_dump
-
+from cimgraph.databases import ConnectionInterface, QueryResponse
 
 from SPARQLWrapper import JSON, POST, SPARQLWrapper
 
@@ -202,80 +200,8 @@ class BlazegraphConnection(ConnectionInterface):
         return obj
     
     def upload(self, graph):
-
-        if int(self.iec61970_301) > 7:
-            rdf_header = """rdf:about="urn:uuid:"""
-            rdf_resource = """rdf:resource:urn:uuid:"""
-            rdf_triple = """urn:uuid:"""
-        else:
-            rdf_header = """rdf:ID=\""""
-            rdf_resource = """rdf:resource:#"""
-            rdf_triple = f"""{self.url}#_"""
-        rdf_enum = f"""{self.namespace}#"""
-
-        prefix = f"""PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
-        PREFIX cim: <{self.namespace}>
-        PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
-        """
-        triples = []
-        for cim_class in list(graph.keys()):
-            
-            for obj in graph[cim_class].values():
-
-                triple = f"""
-        <{rdf_triple}{obj.mRID}> a cim:{cim_class.__name__}.
-                """
-                triples.append(triple)
-
-                parent_classes = list(cim_class.__mro__)
-                parent_classes.pop(len(parent_classes)-1)
-                for class_type in parent_classes:
-                    attribute_list = list(class_type.__annotations__.keys())
-                    for attribute in attribute_list:
-                        
-                        try: #check if attribute is in data profile
-                            attribute_type = cim_class.__dataclass_fields__[attribute].type
-                        except:
-                            #replace with warning message                       
-                            _log.warning('attribute '+str(attribute) +' missing from '+str(cim_class.__name__))
-                        
-                        if 'List' not in attribute_type: #check if attribute is association to a class object
-                            if '\'' in attribute_type: #handling inconsistent '' marks in data profile
-                                at_cls = re.match(r'Optional\[\'(.*)\']',attribute_type)
-                                attribute_class = at_cls.group(1)
-                            else:        
-                                at_cls = re.match(r'Optional\[(.*)]',attribute_type)
-                                attribute_class = at_cls.group(1)
-
-                            if attribute_class in self.cim.__all__:
-                                attr_obj = getattr(obj,attribute)
-                                if attr_obj is not None:
-                                    if type(attr_obj.__class__) is enum.EnumMeta:
-                                        value = str(attr_obj)
-                                        triple = f"""
-        <{rdf_triple}{obj.mRID}> cim:{class_type.__name__}.{attribute} <{rdf_enum}{value}>.
-                                        """
-                                    else:
-                                        value = attr_obj.mRID
-                                        triple = f"""
-        <{rdf_triple}{obj.mRID}> cim:{class_type.__name__}.{attribute} <{rdf_resource}{value}>.
-                                        """
-                                    triples.append(triple)
-
-                            else:
-                                value = str(json_dump(getattr(obj, attribute), self.cim, json_ld= False))
-                                if value:
-        #                              <{url}#_{mRID}> cim:{class_type}.{attr} \"{value}\".
-                                    triple = f"""
-        <{rdf_triple}{obj.mRID}> cim:{class_type.__name__}.{attribute} \"{value}\".
-                                     """
-                                    
-                                    triples.append(triple)
-        triples.append ('}')
-        query = prefix + ' INSERT DATA { ' + ''.join(triples)
-
+        query = sparql.upload_triples(graph, self.connection_params)
         self.execute(query)
-        return query
 
 
             

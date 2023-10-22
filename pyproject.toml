@@ -19,7 +19,6 @@ mysql-connector-python = "^8.0.0"
 
 
 gridappsd-python = "^2.7.230209"
-# git = "https://github.com/GRIDAPPSD/gridappsd-python.git", branch = "cim-profile", optional = true }
 
 [tool.poetry.extras]
 gridappsd = ["gridappsd-python"]

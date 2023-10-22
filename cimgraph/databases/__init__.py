@@ -47,3 +47,10 @@ class ConnectionInterface:
 
     def execute(self, query: str) -> QueryResponse:
         raise RuntimeError("Must have implemented query in the inherited class")
+
+
+from cimgraph.databases.blazegraph import BlazegraphConnection
+from cimgraph.databases.graphdb import GraphDBConnection
+from cimgraph.databases.neo4j import Neo4jConnection
+# from cimgraph.databases.rdflib import RDFlibConnection
+from cimgraph.databases.gridappsd import GridappsdConnection
