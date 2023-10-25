@@ -1,14 +1,17 @@
 from __future__ import annotations
 
 from dataclasses import dataclass, field
+from multiprocessing import connection
 from typing import Dict, List, Optional
+
+from debugpy import connect
 
 
 
 from cimgraph.data_profile.known_problem_classes import ClassesWithoutMRID
 
 
-def get_all_edges_sparql(cim_class: str, mrid_list: List, namespace: str, iec61970_301: int) -> str: 
+def get_all_edges_sparql(cim_class: str, mrid_list: List, connection_params) -> str: 
     """ 
     Generates SPARQL query string for a given catalog of objects and feeder id
     Args:
@@ -21,15 +24,15 @@ def get_all_edges_sparql(cim_class: str, mrid_list: List, namespace: str, iec619
     class_name = cim_class.__name__
     classes_without_mrid = ClassesWithoutMRID()
 
-    if int(iec61970_301) > 7:
+    if int(connection_params.iec61970_301) > 7:
         split = "urn:uuid:"
     else:
-        split = "#"
+        split = f"{connection_params.url}#"
 
 
     query_message = """
         PREFIX r:  <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
-        PREFIX cim:  <%s>""" %namespace
+        PREFIX cim:  <%s>""" %connection_params.namespace
     
     query_message += """
         SELECT DISTINCT ?mRID ?attribute ?value ?edge
@@ -85,5 +88,5 @@ def get_all_edges_sparql(cim_class: str, mrid_list: List, namespace: str, iec619
         }
 
         ORDER by  ?mRID ?attribute
-        """ %(split, namespace, split)
+        """ %(split, connection_params.namespace, split)
     return query_message

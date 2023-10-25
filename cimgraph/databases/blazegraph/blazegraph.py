@@ -23,6 +23,7 @@ class BlazegraphConnection(ConnectionInterface):
         self.namespace = connection_params.namespace
         self.iec61970_301 = connection_params.iec61970_301
         self.url = connection_params.url
+        self.connection_params = connection_params
         self.sparql_obj: Optional[SPARQLWrapper] = None
 
 
@@ -79,7 +80,7 @@ class BlazegraphConnection(ConnectionInterface):
     def get_edges_query(self, container: str | cim.ConnectivityNodeContainer, graph: dict[type, dict[str, object]], cim_class: type):
 
         eq_mrids=list(graph[cim_class].keys())[0:100]
-        sparql_message = sparql.get_all_edges_sparql(cim_class, eq_mrids, self.namespace, self.iec61970_301)
+        sparql_message = sparql.get_all_edges_sparql(cim_class, eq_mrids, self.connection_params)
 
         return sparql_message
     
@@ -90,7 +91,7 @@ class BlazegraphConnection(ConnectionInterface):
         for index in range(math.ceil(len(mrid_list)/100)):
             eq_mrids = mrid_list[index*100: (index+1)*100]
             #generate SPARQL message from correct loaders>sparql python script based on class name
-            sparql_message = sparql.get_all_edges_sparql(cim_class, eq_mrids, self.namespace, self.iec61970_301)
+            sparql_message = sparql.get_all_edges_sparql(cim_class, eq_mrids, self.connection_params)
             #execute sparql query
             query_output = self.execute(sparql_message)
             self.edge_query_parser(query_output, container, graph, cim_class)
