@@ -201,7 +201,7 @@ class BlazegraphConnection(ConnectionInterface):
         return obj
     
     def upload(self, graph):
-        query = sparql.upload_triples(graph, self.connection_params)
+        query = sparql.upload_triples_sparql(graph, self.connection_params)
         self.execute(query)
 
 
