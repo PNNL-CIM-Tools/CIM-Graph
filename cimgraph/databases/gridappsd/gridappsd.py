@@ -218,8 +218,10 @@ class GridappsdConnection(ConnectionInterface):
         return obj
     
     def upload(self, graph):
-        query = sparql.upload_triples(graph, self.connection_params)
-        self.execute(query)
+        for cim_class in graph.keys():
+            for obj in graph[cim_class].values():
+                query = sparql.upload_triples_sparql(obj, self.connection_params)
+                self.execute(query)
 
 
             

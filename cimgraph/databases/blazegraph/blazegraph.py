@@ -31,9 +31,11 @@ class BlazegraphConnection(ConnectionInterface):
         if not self.sparql_obj:
             self.sparql_obj = SPARQLWrapper(self.url)
             self.sparql_obj.setReturnFormat(JSON)
+            
 
     def disconnect(self):
         self.sparql_obj = None
+
         
     def execute(self, query_message: str) -> QueryResponse:
         self.connect()
@@ -95,6 +97,7 @@ class BlazegraphConnection(ConnectionInterface):
             #execute sparql query
             query_output = self.execute(sparql_message)
             self.edge_query_parser(query_output, container, graph, cim_class)
+
 
     def edge_query_parser(self, query_output, container: str | cim.ConnectivityNodeContainer, graph: dict[type, dict[str, object]], cim_class: type):
         for result in query_output['results']['bindings']:
@@ -170,7 +173,6 @@ class BlazegraphConnection(ConnectionInterface):
                     setattr(graph[cim_class][mRID], attribute[1], value)
 
 
-
     def create_edge(self, graph, cim_class, mRID, attribute, edge_class, edge_mRID):
         edge_object = self.create_object(graph, edge_class, edge_mRID)
         attribute_type = cim_class.__dataclass_fields__[attribute].type
@@ -181,9 +183,6 @@ class BlazegraphConnection(ConnectionInterface):
                 setattr(graph[cim_class][mRID], attribute, obj_list)
         else:
             setattr(graph[cim_class][mRID], attribute, edge_object)
-
-
-
 
 
     def create_object(self, graph, class_type, mRID):
@@ -199,10 +198,10 @@ class BlazegraphConnection(ConnectionInterface):
             graph[class_type][mRID] = obj
 
         return obj
-    
+
+
     def upload(self, graph):
-        query = sparql.upload_triples_sparql(graph, self.connection_params)
-        self.execute(query)
-
-
-            
+        for cim_class in graph.keys():
+            for obj in graph[cim_class].values():
+                query = sparql.upload_triples_sparql(obj, self.connection_params)
+                self.execute(query)
