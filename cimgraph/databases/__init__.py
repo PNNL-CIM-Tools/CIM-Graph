@@ -4,10 +4,6 @@ from dataclasses import dataclass, field
 from typing import Any, List
 
 
-
-
-
-
 @dataclass
 class Parameter:
     key: Any
@@ -24,7 +20,7 @@ class ConnectionParameters:
     password: str = field(default_factory=str)
     database: str = field(default_factory=str)
     namespace: str = field(default="http://iec.ch/TC57/CIM100#")
-    iec61970_301: int = field(default = 7)
+    iec61970_301: int = field(default=7)
     filename: str = field(default_factory=str)
 
     # parameters: List[Parameter] = field(default_factory=list)
@@ -52,5 +48,5 @@ class ConnectionInterface:
 from cimgraph.databases.blazegraph import BlazegraphConnection
 from cimgraph.databases.graphdb import GraphDBConnection
 from cimgraph.databases.neo4j import Neo4jConnection
-# from cimgraph.databases.rdflib import RDFlibConnection
+from cimgraph.databases.rdflib import RDFlibConnection
 from cimgraph.databases.gridappsd import GridappsdConnection
