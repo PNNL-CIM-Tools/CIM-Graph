@@ -24,10 +24,10 @@ def upload_triples_sparql(obj, params):
         rdf_resource = "rdf:resource:urn:uuid:"
         rdf_triple = "urn:uuid:"
     else:
-        rdf_header = "rdf:ID=\""
-        rdf_resource = f"{params.url}#"
-        rdf_triple = f"{params.url}#"
-    rdf_enum = f"{params.namespace}#"
+        rdf_header = """rdf:ID=\""""
+        rdf_resource = f"""{params.url}#"""
+        rdf_triple = f"""{params.url}#"""
+    rdf_enum = f"""{params.namespace}"""
 
     prefix = "PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>\n"
     prefix += f"PREFIX cim: <{params.namespace}>\n"
