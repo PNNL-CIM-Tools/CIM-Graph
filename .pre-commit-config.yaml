@@ -12,7 +12,7 @@ repos:
   - id: trailing-whitespace
   - id: check-merge-conflict
   - id: no-commit-to-branch  # blocks main commits.  To bypass do git commit --allow-empty
-  - id: pretty-format-json
+
 
 
 - repo: https://github.com/google/yapf
