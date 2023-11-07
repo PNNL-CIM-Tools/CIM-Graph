@@ -4,13 +4,13 @@ import json
 from typing import Dict, List, Optional
 
 
-
 def add_to_catalog(obj: object, catalog: Dict) -> Dict:
     if obj.mRID == None:
         raise ValueError('Object must contain an mRID')
     if obj.mRID not in catalog:
         catalog[obj.mRID] = obj
     return catalog
+
 
 def add_to_typed_catalog(obj: object, typed_catalog: Dict) -> Dict:
     if type(obj) not in typed_catalog:
@@ -25,8 +25,9 @@ def get_all_by_type(typed_catalog: Dict, obj_type: type) -> List[object]:
     for obj in objects:
         if obj.mRID not in self.is_loaded:
             load_all_attributes(obj)
-            
-def cim_dump(typed_catalog:Dict, cim_class:type):
+
+
+def cim_dump(typed_catalog: Dict, cim_class: type):
     mrid_list = list(typed_catalog[cim_class].keys())
     attribute_list = list(cim_class().__dict__.keys())
     json_dump = {}
@@ -37,7 +38,8 @@ def cim_dump(typed_catalog:Dict, cim_class:type):
             value = getattr(typed_catalog[cim_class][mrid], attribute)
             json_dump[mrid][attribute] = item_dump(value)
     return json.dumps(json_dump)
-                        
+
+
 def item_dump(value):
     if type(value) is str:
         result = value
@@ -52,6 +54,7 @@ def item_dump(value):
     else:
         result = value
     return result
+
 
 def cim_print():
     pass

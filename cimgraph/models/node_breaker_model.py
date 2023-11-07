@@ -14,10 +14,11 @@ from pprint import pprint as pypprint
 
 _log = logging.getLogger(__name__)
 
+
 @dataclass
 class NodeBreakerModel(GraphModel):
-    """ 
-    Knowledge graph class for transmission node-breaker models. This should class 
+    """
+    Knowledge graph class for transmission node-breaker models. This should class
     should be used for all models with detailed substation representations.
     Args:
         container: a CIM object inheriting from EquipmentContainer with specified mRID
@@ -38,27 +39,23 @@ class NodeBreakerModel(GraphModel):
     topology_message: dict = field(default_factory=dict)
     distributed_hierarchy: list[type] = field(default_factory=list)
 
-    
     def __post_init__(self):
-        if self.connection is not None: # Check if connection has been specified
-            self.cim = self.connection.cim # Set CIM data profile
-            if self.distributed: # Check if distributed flag is true
+        if self.connection is not None:    # Check if connection has been specified
+            self.cim = self.connection.cim    # Set CIM data profile
+            if self.distributed:    # Check if distributed flag is true
                 # Build distributed network model
                 self.initialize_distributed_model(self.container)
             else:
                 # Otherwise build centralized network model
                 self.initialize_centralized_model(self.container)
-        else: # Log error thant no connection was specified
+        else:    # Log error thant no connection was specified
             _log.error('A ConnectionInterface must be specified')
-
-
 
     def initialize_centralized_model(self, container) -> None:
         self.graph = self.connection.create_new_graph(container)
 
-        
     def initialize_distributed_model(self, container) -> None:
-        
+
         # # Use output from GridAPPS-D Topology Processor if given
         # if self.topology_message != {}:
         #     pass
@@ -66,39 +63,34 @@ class NodeBreakerModel(GraphModel):
 
         if self.distributed_hierarchy == []:
             feeder = {}
-            feeder["container"] = "Feeder"
-            feeder["contains"] = []
+            feeder['container'] = 'Feeder'
+            feeder['contains'] = []
 
             bay = {}
-            bay["container"] = "Bay"
-            bay["contains"] = []
+            bay['container'] = 'Bay'
+            bay['contains'] = []
 
             voltage_level = {}
-            voltage_level["container"] = "VoltageLevel"
-            voltage_level["contains"] = [bay]
+            voltage_level['container'] = 'VoltageLevel'
+            voltage_level['contains'] = [bay]
 
             sub_area = {}
-            sub_area["container"] = "Substation"
-            sub_area["contains"] = [voltage_level, feeder, bay]
+            sub_area['container'] = 'Substation'
+            sub_area['contains'] = [voltage_level, feeder, bay]
 
             subregion = {}
-            subregion["container"] = "SubGeographicalRegion"
-            subregion["contains"] = [sub_area]
+            subregion['container'] = 'SubGeographicalRegion'
+            subregion['contains'] = [sub_area]
 
             region = {}
-            region["container"] = "GeographicalRegion"
-            region["contains"] = [subregion]
+            region['container'] = 'GeographicalRegion'
+            region['contains'] = [subregion]
 
             self.distributed_hierarchy = [region]
 
         self.add_to_graph(self.container)
         self.get_all_edges(self.container.__class__)
         self.distributed_areas = {}
-        self.distristributed_areas = create_hierarchy_level(self, self.distributed_hierarchy, top_level=True)        
-
-                
-
-
-    
-        
-            
+        self.distristributed_areas = create_hierarchy_level(self,
+                                                            self.distributed_hierarchy,
+                                                            top_level=True)

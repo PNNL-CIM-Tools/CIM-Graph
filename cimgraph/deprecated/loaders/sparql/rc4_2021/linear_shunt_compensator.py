@@ -6,41 +6,41 @@ from typing import Dict, List, Optional
 import cimgraph.data_profile.rc4_2021 as cim
 
 
-def get_all_attributes(feeder_mrid: str, typed_catalog: dict[type, dict[str, object]]) -> str: 
+def get_all_attributes(feeder_mrid: str, typed_catalog: dict[type, dict[str, object]]) -> str:
     """ Generates SPARQL query string for a given catalog of objects and feeder id
     Args:
         feeder_mrid (str | Feeder object): The mRID of the feeder or feeder object
-        typed_catalog (dict[type, dict[str, object]]): The typed catalog of CIM objects organized by 
+        typed_catalog (dict[type, dict[str, object]]): The typed catalog of CIM objects organized by
             class type and object mRID
     Returns:
         query_message: query string that can be used in blazegraph connection or STOMP client
     """
 
     mrid_list = list(typed_catalog[cim.LinearShuntCompensator].keys())
-    
+
     query_message = """
         PREFIX r:  <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
         PREFIX cim:  <http://iec.ch/TC57/CIM100#>
-        SELECT ?mRID ?name ?BaseVoltage ?Location ?RegulatingControl ?aVRDelay ?b0PerSection 
-        ?bPerSection ?controlEnabled ?g0PerSection ?gPerSection ?grounded ?maximumSections ?nomU 
-        ?normalSections ?phaseConnection ?sections ?Terminals ?ShuntCompensatorPhase 
-        (group_concat(distinct ?Measurement; separator=";") as ?Measurements) 
-        WHERE { 
+        SELECT ?mRID ?name ?BaseVoltage ?Location ?RegulatingControl ?aVRDelay ?b0PerSection
+        ?bPerSection ?controlEnabled ?g0PerSection ?gPerSection ?grounded ?maximumSections ?nomU
+        ?normalSections ?phaseConnection ?sections ?Terminals ?ShuntCompensatorPhase
+        (group_concat(distinct ?Measurement; separator=";") as ?Measurements)
+        WHERE {
           ?eq r:type cim:LinearShuntCompensator.
           VALUES ?fdrid {"%s"}
-          VALUES ?mRID {"""%feeder_mrid
+          VALUES ?mRID {""" % feeder_mrid
     # add all equipment mRID
     for mrid in mrid_list:
-        query_message += ' "%s" \n'%mrid
+        query_message += ' "%s" \n' % mrid
     # add all attributes
-    query_message += """               } 
+    query_message += """               }
         ?eq cim:Equipment.EquipmentContainer ?fdr. #filter by feeder
         ?fdr cim:IdentifiedObject.mRID ?fdrid. #filter by feeder
         ?eq cim:IdentifiedObject.mRID ?mRID. #get cap mrid
         ?eq cim:IdentifiedObject.name ?name. #get cap name
 
         ?eq cim:ConductingEquipment.BaseVoltage ?bv. #get basevoltage object
-        ?bv cim:IdentifiedObject.mRID ?BaseVoltage. 
+        ?bv cim:IdentifiedObject.mRID ?BaseVoltage.
 
         OPTIONAL {?eq cim:PowerSystemResource.Location ?loc. #get location object
             ?loc cim:IdentifiedObject.mRID ?Location.} #get location mrid
@@ -71,7 +71,7 @@ def get_all_attributes(feeder_mrid: str, typed_catalog: dict[type, dict[str, obj
         OPTIONAL {?eq cim:LinearShuntCompensator.g0PerSection ?g0PerSection.}
         OPTIONAL {?eq cim:LinearShuntCompensator.gPerSection ?gPerSection.}
         }
-        GROUP by  ?mRID ?name ?BaseVoltage ?Location ?RegulatingControl ?aVRDelay ?b0PerSection 
+        GROUP by  ?mRID ?name ?BaseVoltage ?Location ?RegulatingControl ?aVRDelay ?b0PerSection
         ?bPerSection ?controlEnabled ?g0PerSection ?gPerSection ?grounded ?maximumSections ?nomU
         ?normalSections ?phaseConnection ?sections ?Terminals ?ShuntCompensatorPhase
         ORDER by  ?name

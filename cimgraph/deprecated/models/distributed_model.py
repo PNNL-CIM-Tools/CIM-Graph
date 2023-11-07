@@ -7,11 +7,12 @@ from typing import Dict, List, Optional
 
 import cimgraph.data_profile as cim
 from cimgraph.databases import ConnectionInterface, QueryResponse
-from cimgraph.deprecated.models.model_parsers import (add_to_catalog,
-                                           add_to_typed_catalog, cim_dump)
+from cimgraph.deprecated.models.model_parsers import (add_to_catalog, add_to_typed_catalog,
+                                                      cim_dump)
 from cimgraph.deprecated.models.switch_area import SwitchArea
 
 _log = logging.getLogger(__name__)
+
 
 @dataclass
 class DistributedModel:
@@ -31,8 +32,6 @@ class DistributedModel:
 
     # REPLACE WITH CONNECTION OBJECT
 
-
-
     # Initialize all CIM objects in feeder model
     def __initialize_network__(self) -> Dict[str, object]:
         # Get switch area message from Topology Processor
@@ -40,12 +39,13 @@ class DistributedModel:
         # topo_message = DistributedModel.get_topology_response(feeder_mrid)
 
         # Initialize all CIM objects not contained in a switch area
-        addr_equip = self.connection.create_default_instances(self.feeder.mRID, self.topology['addressable_equipment'])
+        addr_equip = self.connection.create_default_instances(
+            self.feeder.mRID, self.topology['addressable_equipment'])
         for obj in addr_equip:
             add_to_catalog(obj, self.addressable_equipment)
             add_to_typed_catalog(obj, self.typed_catalog)
-        unaddr_equip = self.connection.create_default_instances(self.feeder.mRID,
-                                                                self.topology['unaddressable_equipment'])
+        unaddr_equip = self.connection.create_default_instances(
+            self.feeder.mRID, self.topology['unaddressable_equipment'])
         for obj in unaddr_equip:
             add_to_catalog(obj, self.unaddressable_equipment)
             add_to_typed_catalog(obj, self.typed_catalog)
@@ -67,19 +67,18 @@ class DistributedModel:
             self.unaddressable_equipment.update(switch_area.unaddressable_equipment)
             sa_index = sa_index + 1
 
-
     def get_all_attributes(self, cim_class):
         if cim_class in self.typed_catalog:
             self.connection.get_all_attributes(self.feeder.mRID, self.typed_catalog, cim_class)
         else:
-            _log.info('no instances of '+str(cim_class.__name__)+' found in catalog.')
-
+            _log.info('no instances of ' + str(cim_class.__name__) + ' found in catalog.')
 
     def get_attributes_query(self, cim_class):
         if cim_class in self.typed_catalog:
-            sparql_message = self.connection.get_attributes_query(self.feeder.mRID, self.typed_catalog, cim_class)
+            sparql_message = self.connection.get_attributes_query(self.feeder.mRID,
+                                                                  self.typed_catalog, cim_class)
         else:
-            _log.info('no instances of '+str(cim_class.__name__)+' found in catalog.')
+            _log.info('no instances of ' + str(cim_class.__name__) + ' found in catalog.')
             sparql_message = ''
         return sparql_message
 
@@ -88,8 +87,6 @@ class DistributedModel:
             json_dump = cim_dump(self.typed_catalog, cim_class)
         else:
             json_dump = {}
-            _log.info('no instances of '+str(cim_class.__name__)+' found in catalog.')
+            _log.info('no instances of ' + str(cim_class.__name__) + ' found in catalog.')
 
         return json_dump
-    
-    

@@ -1,4 +1,3 @@
-
 def test_get_all_edges(network, cim):
     network.get_all_edges(cim.ACLineSegment)
     network.get_all_edges(cim.ACLineSegmentPhase)
@@ -26,7 +25,6 @@ def test_get_all_edges(network, cim):
     network.get_all_edges(cim.TapChanger)
     network.get_all_edges(cim.TapChangerControl)
     network.get_all_edges(cim.TapChangerInfo)
-
 
     network.get_all_edges(cim.EnergyConsumer)
     network.get_all_edges(cim.EnergyConsumerPhase)

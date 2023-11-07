@@ -6,12 +6,12 @@ from typing import Dict, List, Optional
 import cimgraph.data_profile.rc4_2021 as cim
 
 
-def get_all_attributes(feeder_mrid: str, graph: dict[type, dict[str, object]], asset_list) -> str: 
-    """ 
+def get_all_attributes(feeder_mrid: str, graph: dict[type, dict[str, object]], asset_list) -> str:
+    """
     Generates SPARQL query string for a given catalog of objects and feeder id
     Args:
         feeder_mrid (str | Feeder object): The mRID of the feeder or feeder object
-        typed_catalog (dict[type, dict[str, object]]): The typed catalog of CIM objects organized by 
+        typed_catalog (dict[type, dict[str, object]]): The typed catalog of CIM objects organized by
             class type and object mRID
     Returns:
         query_message: query string that can be used in blazegraph connection or STOMP client
@@ -19,29 +19,28 @@ def get_all_attributes(feeder_mrid: str, graph: dict[type, dict[str, object]], a
 
     # mrid_list = list(graph[cim.ACLineSegment].keys())
 
-
     query_message = """
         PREFIX r:  <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
         PREFIX cim:  <http://iec.ch/TC57/CIM100#>
-        SELECT ?mRID ?name ?BaseVoltage ?Location ?length ?bch ?r ?x ?gch ?b0ch ?r0 ?x0 ?g0ch 
+        SELECT ?mRID ?name ?BaseVoltage ?Location ?length ?bch ?r ?x ?gch ?b0ch ?r0 ?x0 ?g0ch
         ?PerLengthImpedance ?WireSpacingInfo
-        (group_concat(distinct ?Terminal; separator=";") as ?Terminals) 
-        (group_concat(distinct ?Measurement; separator=";") as ?Measurements) 
-        (group_concat(distinct ?ACLineSegmentPhase; separator=';') as ?ACLineSegmentPhases)  
-        WHERE {          
+        (group_concat(distinct ?Terminal; separator=";") as ?Terminals)
+        (group_concat(distinct ?Measurement; separator=";") as ?Measurements)
+        (group_concat(distinct ?ACLineSegmentPhase; separator=';') as ?ACLineSegmentPhases)
+        WHERE {
           ?eq r:type cim:ACLineSegment.
           VALUES ?fdrid {"%s"}
-          VALUES ?mRID {"""%feeder_mrid
+          VALUES ?mRID {""" % feeder_mrid
     # add all equipment mRID
     for mrid in asset_list:
-        query_message += ' "%s" \n'%mrid
+        query_message += ' "%s" \n' % mrid
     # add all attributes
-    query_message += """               } 
+    query_message += """               }
         ?eq cim:Equipment.EquipmentContainer ?fdr.
         ?fdr cim:IdentifiedObject.mRID ?fdrid.
         ?eq cim:IdentifiedObject.mRID ?mRID.
         ?eq cim:IdentifiedObject.name ?name.
-        
+
         OPTIONAL {?eq cim:ConductingEquipment.BaseVoltage ?bv.
         ?bv cim:IdentifiedObject.mRID ?BaseVoltage.}
 
@@ -55,10 +54,10 @@ def get_all_attributes(feeder_mrid: str, graph: dict[type, dict[str, object]], a
           ?meas cim:IdentifiedObject.mRID ?meas_id.
           ?meas a ?meas_cls.
           bind(concat(str(?meas_id),",",strafter(str(?meas_cls),"CIM100#")) as ?Measurement)}
-          
+
 
         OPTIONAL {?eq cim:Conductor.length ?length.}
-        
+
         OPTIONAL {?eq cim:ACLineSegment.bch ?bch.}
         OPTIONAL {?eq cim:ACLineSegment.r ?r0.}
         OPTIONAL {?eq cim:ACLineSegment.x ?x0.}
@@ -80,8 +79,8 @@ def get_all_attributes(feeder_mrid: str, graph: dict[type, dict[str, object]], a
                   ?aclsp cim:IdentifiedObject.mRID ?ACLineSegmentPhase.}
 
         }
-        GROUP by ?mRID ?name ?BaseVoltage ?Location ?length ?bch ?r ?x ?gch ?b0ch ?r0 ?x0 ?g0ch 
-                ?PerLengthImpedance ?WireSpacingInfo 
+        GROUP by ?mRID ?name ?BaseVoltage ?Location ?length ?bch ?r ?x ?gch ?b0ch ?r0 ?x0 ?g0ch
+                ?PerLengthImpedance ?WireSpacingInfo
         ORDER by  ?name
         """
     return query_message

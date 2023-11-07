@@ -10,55 +10,60 @@ from cimgraph.databases import ConnectionInterface
 # from cimgraph.models.model_parsers import (add_to_catalog,
 #                                            add_to_typed_catalog, cim_dump, cim_print)
 from pprint import pprint as pyprint
-_log = logging.getLogger(__name__)
 
+_log = logging.getLogger(__name__)
 
 
 @dataclass
 class SecondaryArea:
     area_id: str
     uuid: str
-#     connection: ConnectionInterface
+    #     connection: ConnectionInterface
     distribution_transformer: list[str] = field(default_factory=list)
-#     addressable_equipment: dict[str, object] = field(default_factory=dict)
-#     unaddressable_equipment: dict[str, object] = field(default_factory=dict)
+    #     addressable_equipment: dict[str, object] = field(default_factory=dict)
+    #     unaddressable_equipment: dict[str, object] = field(default_factory=dict)
     connectivity_nodes: list[str] = field(default_factory=list)
     secondary_areas: list[object] = field(default_factory=list)
     graph: dict[type, dict[str, object]] = field(default_factory=dict)
 
     # Initialize empty CIM objects for all equipment in secondary area
     def initialize_secondary_area(self, switch_msg: dict):
-        self.feeder_mrid = self.area_id.split('.')[0]  # get feeder mRID from area id
+        self.feeder_mrid = self.area_id.split('.')[0]    # get feeder mRID from area id
 
-        addr_equip = self.connection.create_default_instances(self.feeder_mrid, switch_msg['addressable_equipment'])
+        addr_equip = self.connection.create_default_instances(self.feeder_mrid,
+                                                              switch_msg['addressable_equipment'])
         for obj in addr_equip:
             add_to_catalog(obj, self.addressable_equipment)
             add_to_typed_catalog(obj, self.typed_catalog)
-        unaddr_equip = self.connection.create_default_instances(self.feeder_mrid, switch_msg['unaddressable_equipment'])
+        unaddr_equip = self.connection.create_default_instances(
+            self.feeder_mrid, switch_msg['unaddressable_equipment'])
         for obj in unaddr_equip:
             add_to_catalog(obj, self.unaddressable_equipment)
             add_to_typed_catalog(obj, self.typed_catalog)
-        conn_nodes = self.connection.create_default_instances(self.feeder_mrid, switch_msg['connectivity_node'])
+        conn_nodes = self.connection.create_default_instances(self.feeder_mrid,
+                                                              switch_msg['connectivity_node'])
         for obj in conn_nodes:
             add_to_catalog(obj, self.connectivity_nodes)
             add_to_typed_catalog(obj, self.typed_catalog)
+
+
 #        xfmr = self.connection.create_default_instances(self.feeder_mrid, switch_msg['distribution_transformer'])
 #        for obj in xfmr:
 #            add_to_catalog(obj, self.distribution_transformer)
 #            add_to_typed_catalog(obj, self.typed_catalog)
-            
+
     def get_all_attributes(self, cim_class):
         if cim_class in self.typed_catalog:
             self.connection.get_all_attributes(self.feeder_mrid, self.typed_catalog, cim_class)
         else:
-            _log.info('no instances of '+str(cim_class.__name__)+' found in catalog.')
-
+            _log.info('no instances of ' + str(cim_class.__name__) + ' found in catalog.')
 
     def get_attributes_query(self, cim_class):
         if cim_class in self.typed_catalog:
-            sparql_message = self.connection.get_attributes_query(self.feeder_mrid, self.typed_catalog, cim_class)
+            sparql_message = self.connection.get_attributes_query(self.feeder_mrid,
+                                                                  self.typed_catalog, cim_class)
         else:
-            _log.info('no instances of '+str(cim_class.__name__)+' found in catalog.')
+            _log.info('no instances of ' + str(cim_class.__name__) + ' found in catalog.')
             sparql_message = ''
         return sparql_message
 
@@ -66,9 +71,8 @@ class SecondaryArea:
         if cim_class in self.typed_catalog:
             json_dump = cim_dump(self.typed_catalog, cim_class)
         else:
-            json_dump = {}    
-            _log.info('no instances of '+str(cim_class.__name__)+' found in catalog.')
-
+            json_dump = {}
+            _log.info('no instances of ' + str(cim_class.__name__) + ' found in catalog.')
 
         return json_dump
 
@@ -77,6 +81,6 @@ class SecondaryArea:
             json_dump = cim_print(self.typed_catalog, cim_class)
         else:
             json_dump = {}
-            _log.info('no instances of '+str(cim_class.__name__)+' found in catalog.')
+            _log.info('no instances of ' + str(cim_class.__name__) + ' found in catalog.')
 
         pyprint(json_dump)

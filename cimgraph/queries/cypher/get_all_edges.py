@@ -3,19 +3,17 @@ from __future__ import annotations
 from dataclasses import dataclass, field
 from typing import Dict, List, Optional
 
-
-
 from cimgraph.data_profile.known_problem_classes import ClassesWithoutMRID
 
 
-def get_all_edges_cypher(cim_class: str, mrid_list: List, namespace: str) -> str: 
-    """ 
+def get_all_edges_cypher(cim_class: str, mrid_list: List, namespace: str) -> str:
+    """
     Generates Cypher query string for a given CIM class, list of mRIDs, and namespace
     Args:
         cim_class (CIM object): CIM Class Object to be queried
         mrid_list (list[str]): List of mRID of objects
         name_space
-  
+
     Returns:
         query_message: query string that can be used in blazegraph connection or STOMP client
     """
@@ -24,7 +22,7 @@ def get_all_edges_cypher(cim_class: str, mrid_list: List, namespace: str) -> str
 
     query_message = f"""MATCH (eq:{class_name})
     """
-       
+
     if class_name not in classes_without_mrid.classes:
         query_message += f"""WHERE eq.`IdentifiedObject.mRID` in {mrid_list}
         MATCH (eq:{class_name}) - [edge] - (edge_node)
@@ -46,8 +44,4 @@ def get_all_edges_cypher(cim_class: str, mrid_list: List, namespace: str) -> str
         query_message += """MATCH (eq:{class_name}) - [edge] - (edge_node)
         RETURN eq.uri as mRID, eq, type(edge) as attribute, (COALESCE(edge_node.`IdentifiedObject.mRID`,edge_node.uri)) as edge_mrid, labels(edge_node) as edge_class"""
 
-        
-
-
     return query_message
-

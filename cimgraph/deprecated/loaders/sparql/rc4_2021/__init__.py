@@ -65,4 +65,3 @@ import cimgraph.deprecated.loaders.sparql.rc4_2021.wire_position as WirePosition
 import cimgraph.deprecated.loaders.sparql.rc4_2021.wire_spacing_info as WireSpacingInfoSPARQL
 
 from cimgraph.deprecated.loaders.sparql.rc4_2021.get_class_type import get_class_type_sparql
-
