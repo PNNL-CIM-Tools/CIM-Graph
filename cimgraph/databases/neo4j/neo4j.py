@@ -242,7 +242,7 @@ class Neo4jConnection(ConnectionInterface):
         else:
             obj = class_type()
             setattr(obj, 'mRID', mRID)
-            add_to_graph(obj, graph)
+            graph[class_type][mRID] = obj
 
         return obj
 

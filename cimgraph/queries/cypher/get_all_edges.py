@@ -41,7 +41,7 @@ def get_all_edges_cypher(cim_class: str, mrid_list: List, namespace: str) -> str
                 query_message += f"""eq.uri contains "{mrid}"
                 """
 
-        query_message += """MATCH (eq:{class_name}) - [edge] - (edge_node)
+        query_message += f"""MATCH (eq:{class_name}) - [edge] - (edge_node)
         RETURN eq.uri as mRID, eq, type(edge) as attribute, (COALESCE(edge_node.`IdentifiedObject.mRID`,edge_node.uri)) as edge_mrid, labels(edge_node) as edge_class"""
 
     return query_message
