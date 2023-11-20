@@ -72,7 +72,7 @@ class FeederModel(GraphModel):
             self.FeederArea.build_from_topo_message(feeder_topo, centralized_graph)
             self.graph = self.FeederArea.graph
 
-            self.switch_areas = []    # Initialize list of switch areas
+            self.distributed_areas = []    # Initialize list of switch areas
             for switch_topo in feeder_topo['switch_areas']:
                 # Create a new DistributedArea object for each switch area in message
                 switch_container = self.cim.EquipmentContainer(mRID=new_mrid())
@@ -80,8 +80,9 @@ class FeederModel(GraphModel):
                                              container=switch_container,
                                              distributed=True)
                 SwitchArea.build_from_topo_message(switch_topo, centralized_graph)
-                SwitchArea.secondary_areas = []    # Initialize secondary areas list
-                self.switch_areas.append(SwitchArea)    # Add new DistributedArea class to list
+                SwitchArea.distributed_areas = []    # Initialize secondary areas list
+                self.distributed_areas.append(
+                    SwitchArea)    # Add new DistributedArea class to list
 
                 for secondary_topo in switch_topo['secondary_areas']:
                     # Create a new DistributedArea object for each secondary area
@@ -90,7 +91,7 @@ class FeederModel(GraphModel):
                                                     container=secondary_container,
                                                     distributed=True)
                     SecondaryArea.build_from_topo_message(secondary_topo, centralized_graph)
-                    SwitchArea.secondary_areas.append(SecondaryArea)
+                    SwitchArea.distributed_areas.append(SecondaryArea)
 
         # If GridAPPS-D Topology Processor output is not provided, build new topology:
         else:
