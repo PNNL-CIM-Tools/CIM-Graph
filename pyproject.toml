@@ -2,7 +2,8 @@
 name = "cim-graph"
 version = "1.0.0a0"
 description = "CIM Graph"
-authors = ["C. Allwardt <3979063+craig8@users.noreply.github.com>"]
+authors = ["A. Anderson <19935503+AAndersn@users.noreply.github.com>",
+           "C. Allwardt <3979063+craig8@users.noreply.github.com>"]
 packages = [
     { include = "cimgraph" }
 ]
