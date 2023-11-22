@@ -10061,7 +10061,7 @@ Some devices may use an optical port that conforms to the ANSI C12.18 standard f
 		<rdfs:domain rdf:resource="#EnergyConsumer"/>
 		<rdfs:range rdf:resource="#House"/>
 		<cims:multiplicity rdf:resource="http://iec.ch/TC57/1999/rdf-schema-extensions-19990926#M:0..1"/>
-		<cims:inverseRoleName rdf:resource="#House.ServicePanel"/>
+		<cims:inverseRoleName rdf:resource="#House.EnergyConsumer"/>
 	</rdf:Description>
 	<rdf:Description rdf:about="#EnergyConsumer.LoadResponse">
 		<rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
@@ -12615,9 +12615,9 @@ In single phase metering, the formulas for “Total” and “Total by phase” 
 		<cims:belongsToCategory rdf:resource="#Package_Houses"/>
 		<rdfs:subClassOf rdf:resource="#IdentifiedObject"/>
 	</rdf:Description>
-	<rdf:Description rdf:about="#House.ServicePanel">
+	<rdf:Description rdf:about="#House.EnergyConsumer">
 		<rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
-		<rdfs:label>ServicePanel</rdfs:label>
+		<rdfs:label>EnergyConsumer</rdfs:label>
 		<rdfs:domain rdf:resource="#House"/>
 		<rdfs:range rdf:resource="#EnergyConsumer"/>
 		<cims:multiplicity rdf:resource="http://iec.ch/TC57/1999/rdf-schema-extensions-19990926#M:1"/>

@@ -12,6 +12,7 @@ from cimgraph.databases import ConnectionInterface, ConnectionParameters, Parame
 
 from neo4j import GraphDatabase, AsyncGraphDatabase
 from neo4j.exceptions import DriverError, Neo4jError
+from rdflib import Graph, URIRef
 
 import nest_asyncio
 
@@ -32,6 +33,14 @@ class Neo4jConnection(ConnectionInterface):
         self.password = connection_parameters.password
         self.database = connection_parameters.database
         self.driver = None
+
+        try:
+            self.data_profile = Graph(store = 'Oxigraph')
+            self.data_profile.parse(f'../data_profile/{self.cim_profile}/{self.cim_profile}.rdfs',format='xml')
+            self.reverse = URIRef('http://iec.ch/TC57/1999/rdf-schema-extensions-19990926#inverseRoleName')
+        except:
+            _log.warning='No RDFS schema found, reverting to default logic'
+            self.data_profile = None
 
     def connect(self):
         if not self.driver:
@@ -164,8 +173,8 @@ class Neo4jConnection(ConnectionInterface):
                             setattr(graph[cim_class][mRID], attribute, value)
                         except:
                             _log.warning(f'attribute {attribute} not recognized')
-
-            edge = result['attribute'].split('.')    #split edge attribute
+            attr = result['attribute']
+            attribute = result['attribute'].split('.')    #split edge attribute
             edge_node = result['edge_mrid']    #get edge value
             # edge_node = result['edge_node'] #get edge value
             edge_class = result['edge_class']
@@ -188,12 +197,6 @@ class Neo4jConnection(ConnectionInterface):
 
             if is_association:    # if association to another CIM object
 
-                # if 'IdentifiedObject.mRID' in edge_node:
-                #     edge_mRID = edge_node['IdentifiedObject.mRID']
-                # if "urn:uuid" in edge_node['uri']:
-                #     edge_mRID = edge_node['uri'].split('urn:uuid:')[1]
-                # elif "#" in edge_node['uri']:
-                #     edge_mRID = edge_node['uri'].split('#')[1]
                 if 'urn:uuid' in edge_node:
                     edge_mRID = edge_node.split('urn:uuid:')[1]
                 elif '#' in edge_node:
@@ -201,36 +204,52 @@ class Neo4jConnection(ConnectionInterface):
                 else:
                     edge_mRID = edge_node
 
-                if edge[0] in cim_class.__dataclass_fields__:    #check if first name is the attribute
-                    self.create_edge(graph, cim_class, mRID, edge[0], edge_class, edge_mRID)
+                if attribute[1] in cim_class.__dataclass_fields__:    #check if forward attribute
+                        self.create_edge(graph, cim_class, mRID, attribute[1], edge_class, edge_mRID)
 
-                elif edge[
-                        1] in cim_class.__dataclass_fields__:    #check if second name is the attribute
-                    self.create_edge(graph, cim_class, mRID, edge[1], edge_class, edge_mRID)
+                elif self.data_profile is not None:    # use data profile to look up reverse attribute
+                    attr_uri = URIRef(f'{self.namespace}{attr}')
+                    reverse_uri = self.data_profile.value(object=attr_uri, predicate=self.reverse)
+                    try:
+                        reverse_attribute = reverse_uri.split('#')[1].split('.')[1]     # split string
+                        self.create_edge(graph, cim_class, mRID, reverse_attribute, edge_class, edge_mRID)
+                    except:
+                        _log.warning(f'attribute {attr} missing from data profile')
 
-                elif edge[
-                        0] + 's' in cim_class.__dataclass_fields__:    #check if attribute spelling is plural
-                    self.create_edge(graph, cim_class, mRID, edge[0] + 's', edge_class, edge_mRID)
+                else:    # fallback to use basic logic to identify
+                    if attribute[0] in cim_class.__dataclass_fields__:    #check if first name is the attribute
+                        self.create_edge(graph, cim_class, mRID, attribute[0], edge_class, edge_mRID)
 
-                elif edge[
-                        1] + 's' in cim_class.__dataclass_fields__:    #check if attribute spelling is plural
-                    self.create_edge(graph, cim_class, mRID, edge[1] + 's', edge_class, edge_mRID)
+                    elif attribute[0] + 's' in cim_class.__dataclass_fields__:    #check if attribute spelling is plural
+                        self.create_edge(graph, cim_class, mRID, attribute[0] + 's', edge_class, edge_mRID)
 
-                else:    #fallback: match class type until a suitable parent edge class is found
-                    for node_attr in list(cim_class.__dataclass_fields__.keys()):
-                        attr_str = cim_class.__dataclass_fields__[node_attr].type
-                        edge_parent = attr_str.split('[')[1].split(']')[0]
-                        if edge_parent in self.cim.__all__:
-                            parent_class = eval(f'self.cim.{edge_parent}')
-                            if issubclass(edge_class, parent_class):
-                                self.create_edge(graph, cim_class, mRID, node_attr, edge_class,
-                                                 edge_mRID)
-                                break
+                    elif attribute[1] + 's' in cim_class.__dataclass_fields__:    #check if attribute spelling is plural
+                        self.create_edge(graph, cim_class, mRID, attribute[1] + 's', edge_class,edge_mRID)
+
+                    elif edge_class.__name__ in cim_class.__dataclass_fields__:    #check if attribute spelling is plural
+                        self.create_edge(graph, cim_class, mRID, edge_class.__name__, edge_class, edge_mRID)
+
+                    elif edge_class.__name__ + 's' in cim_class.__dataclass_fields__:    #check if attribute spelling is plural
+                        self.create_edge(graph, cim_class, mRID, edge_class.__name__ + 's', edge_class, edge_mRID)
+
+                    else:    #fallback: match class type until a suitable parent edge class is found
+                        parsed = False
+                        for node_attr in list(cim_class.__dataclass_fields__.keys()):
+                            attr_str = cim_class.__dataclass_fields__[node_attr].type
+                            edge_parent = attr_str.split('[')[1].split(']')[0]
+                            if edge_parent in self.cim.__all__:
+                                parent_class = eval(f'self.cim.{edge_parent}')
+                                if issubclass(edge_class, parent_class):
+                                    self.create_edge(graph, cim_class, mRID, node_attr, edge_class, edge_mRID)
+                                    parsed = True
+                                    break
+                        if not parsed:
+                            _log.warning(f'unable to find match for {attr} for {mRID}')
 
             elif is_enumeration:
                 if enum_class in self.cim.__all__:    # if enumeration
                     edge_enum = eval(f'self.cim.{enum_class}(enum_value)')
-                    setattr(graph[cim_class][mRID], edge[1], edge_enum)
+                    setattr(graph[cim_class][mRID], attribute[1], edge_enum)
 
     def create_object(self, graph, class_type, mRID):
 
