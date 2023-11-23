@@ -8,3 +8,4 @@ generated/
 poetry.lock
 /neo4j/
 /docker/
+/cimgraph/tests/tests_output
