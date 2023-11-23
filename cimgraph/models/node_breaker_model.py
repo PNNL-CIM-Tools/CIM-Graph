@@ -91,6 +91,4 @@ class NodeBreakerModel(GraphModel):
         self.add_to_graph(self.container)
         self.get_all_edges(self.container.__class__)
         self.distributed_areas = {}
-        self.distristributed_areas = create_hierarchy_level(self,
-                                                            self.distributed_hierarchy,
-                                                            top_level=True)
+        self.distristributed_areas = create_hierarchy_level(self, self.distributed_hierarchy, top_level=True)

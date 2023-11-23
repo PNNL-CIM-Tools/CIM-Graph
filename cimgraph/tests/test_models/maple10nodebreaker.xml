@@ -50,61 +50,51 @@
   <cim:IdentifiedObject.mRID>_9E985101-27AD-4FE4-B36A-EBECC98CDFA2</cim:IdentifiedObject.mRID>
   <cim:IdentifiedObject.name>feeder_2</cim:IdentifiedObject.name>
   <cim:Feeder.NormalEnergizingSubstation rdf:resource="#_FBE667A8-D26D-4B6B-AF9D-74AE20E96040"/>
-  <cim:PowerSystemResource.Location rdf:resource="#_0EED2A4D-0D77-4D41-88BF-A99175C1C3AE"/>
 </cim:Feeder>
 <cim:Feeder rdf:ID="_9E985101-27AD-4FE4-B36A-EBECC98CDFA3">
   <cim:IdentifiedObject.mRID>_9E985101-27AD-4FE4-B36A-EBECC98CDFA3</cim:IdentifiedObject.mRID>
   <cim:IdentifiedObject.name>feeder_3</cim:IdentifiedObject.name>
   <cim:Feeder.NormalEnergizingSubstation rdf:resource="#_FBE667A8-D26D-4B6B-AF9D-74AE20E96040"/>
-  <cim:PowerSystemResource.Location rdf:resource="#_0EED2A4D-0D77-4D41-88BF-A99175C1C3AE"/>
 </cim:Feeder>
 <cim:Feeder rdf:ID="_9E985101-27AD-4FE4-B36A-EBECC98CDFA4">
   <cim:IdentifiedObject.mRID>_9E985101-27AD-4FE4-B36A-EBECC98CDFA4</cim:IdentifiedObject.mRID>
   <cim:IdentifiedObject.name>feeder_4</cim:IdentifiedObject.name>
   <cim:Feeder.NormalEnergizingSubstation rdf:resource="#_FBE667A8-D26D-4B6B-AF9D-74AE20E96040"/>
-  <cim:PowerSystemResource.Location rdf:resource="#_0EED2A4D-0D77-4D41-88BF-A99175C1C3AE"/>
 </cim:Feeder>
 <cim:Feeder rdf:ID="_9E985101-27AD-4FE4-B36A-EBECC98CDFA5">
   <cim:IdentifiedObject.mRID>_9E985101-27AD-4FE4-B36A-EBECC98CDFA5</cim:IdentifiedObject.mRID>
   <cim:IdentifiedObject.name>feeder_5</cim:IdentifiedObject.name>
   <cim:Feeder.NormalEnergizingSubstation rdf:resource="#_FBE667A8-D26D-4B6B-AF9D-74AE20E96040"/>
-  <cim:PowerSystemResource.Location rdf:resource="#_0EED2A4D-0D77-4D41-88BF-A99175C1C3AE"/>
 </cim:Feeder>
 <cim:Feeder rdf:ID="_9E985101-27AD-4FE4-B36A-EBECC98CDFA6">
   <cim:IdentifiedObject.mRID>_9E985101-27AD-4FE4-B36A-EBECC98CDFA6</cim:IdentifiedObject.mRID>
   <cim:IdentifiedObject.name>feeder_6</cim:IdentifiedObject.name>
   <cim:Feeder.NormalEnergizingSubstation rdf:resource="#_FBE667A8-D26D-4B6B-AF9D-74AE20E96040"/>
-  <cim:PowerSystemResource.Location rdf:resource="#_0EED2A4D-0D77-4D41-88BF-A99175C1C3AE"/>
 </cim:Feeder>
 <cim:Feeder rdf:ID="_9E985101-27AD-4FE4-B36A-EBECC98CDFA7">
   <cim:IdentifiedObject.mRID>_9E985101-27AD-4FE4-B36A-EBECC98CDFA7</cim:IdentifiedObject.mRID>
   <cim:IdentifiedObject.name>feeder_7</cim:IdentifiedObject.name>
   <cim:Feeder.NormalEnergizingSubstation rdf:resource="#_FBE667A8-D26D-4B6B-AF9D-74AE20E96040"/>
-  <cim:PowerSystemResource.Location rdf:resource="#_0EED2A4D-0D77-4D41-88BF-A99175C1C3AE"/>
 </cim:Feeder>
 <cim:Feeder rdf:ID="_9E985101-27AD-4FE4-B36A-EBECC98CDFB1">
   <cim:IdentifiedObject.mRID>_9E985101-27AD-4FE4-B36A-EBECC98CDFB1</cim:IdentifiedObject.mRID>
   <cim:IdentifiedObject.name>feeder_8</cim:IdentifiedObject.name>
   <cim:Feeder.NormalEnergizingSubstation rdf:resource="#_FBE667A8-D26D-4B6B-AF9D-74AE20E96041"/>
-  <cim:PowerSystemResource.Location rdf:resource="#_0EED2A4D-0D77-4D41-88BF-A99175C1C3AE"/>
 </cim:Feeder>
 <cim:Feeder rdf:ID="_9E985101-27AD-4FE4-B36A-EBECC98CDFB2">
   <cim:IdentifiedObject.mRID>_9E985101-27AD-4FE4-B36A-EBECC98CDFB2</cim:IdentifiedObject.mRID>
   <cim:IdentifiedObject.name>feeder_9</cim:IdentifiedObject.name>
   <cim:Feeder.NormalEnergizingSubstation rdf:resource="#_FBE667A8-D26D-4B6B-AF9D-74AE20E96041"/>
-  <cim:PowerSystemResource.Location rdf:resource="#_0EED2A4D-0D77-4D41-88BF-A99175C1C3AE"/>
 </cim:Feeder>
 <cim:Feeder rdf:ID="_9E985101-27AD-4FE4-B36A-EBECC98CDFB3">
   <cim:IdentifiedObject.mRID>_9E985101-27AD-4FE4-B36A-EBECC98CDFB3</cim:IdentifiedObject.mRID>
   <cim:IdentifiedObject.name>feeder_10</cim:IdentifiedObject.name>
   <cim:Feeder.NormalEnergizingSubstation rdf:resource="#_FBE667A8-D26D-4B6B-AF9D-74AE20E96041"/>
-  <cim:PowerSystemResource.Location rdf:resource="#_0EED2A4D-0D77-4D41-88BF-A99175C1C3AE"/>
 </cim:Feeder>
 <cim:Feeder rdf:ID="_9E985101-27AD-4FE4-B36A-EBECC98CDFB4">
   <cim:IdentifiedObject.mRID>_9E985101-27AD-4FE4-B36A-EBECC98CDFB4</cim:IdentifiedObject.mRID>
   <cim:IdentifiedObject.name>feeder_11</cim:IdentifiedObject.name>
   <cim:Feeder.NormalEnergizingSubstation rdf:resource="#_FBE667A8-D26D-4B6B-AF9D-74AE20E96041"/>
-  <cim:PowerSystemResource.Location rdf:resource="#_0EED2A4D-0D77-4D41-88BF-A99175C1C3AE"/>
 </cim:Feeder>
 
 
