@@ -141,13 +141,15 @@ def get_all_bus_locations(network:GraphModel):
             if equipment.Location is None:
                 network.get_all_edges(equipment.__class__)
                 network.get_all_edges(cim.Location)
-            try:
-                for point in equipment.Location.PositionPoints:
-                    if seq == point.sequenceNumber:
-                        node_positions[node.mRID]['x'] = point.xPosition
-                        node_positions[node.mRID]['y'] = point.yPosition
-            except:
-                _log.warning(f'No position for {node.name}')
+                network.get_all_edges(cim.PositionPoint)
+
+            # try:
+            for point in equipment.Location.PositionPoints:
+                if seq == point.sequenceNumber:
+                    node_positions[node.mRID]['x'] = point.xPosition
+                    node_positions[node.mRID]['y'] = point.yPosition
+            # except:
+            #     _log.warning(f'No position for {node.name}')
     return node_positions
 
 def get_all_data(network:GraphModel):
@@ -174,6 +176,7 @@ def get_all_data(network:GraphModel):
         for class_name in all_classes:
             if class_name not in parsed_classes:
                 class_type = eval(f'cim.{class_name}')
+                print(class_name)
                 network.get_all_edges(class_type)
                 parsed_classes.append(class_name)
                 all_classes = []

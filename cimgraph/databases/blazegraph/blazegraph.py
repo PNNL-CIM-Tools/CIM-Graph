@@ -2,9 +2,9 @@ from __future__ import annotations
 import math
 import importlib
 import logging
-import re
 import json
 import enum
+import os
 
 from typing import Dict, List, Optional
 
@@ -31,7 +31,8 @@ class BlazegraphConnection(ConnectionInterface):
 
         try:
             self.data_profile = Graph(store = 'Oxigraph')
-            self.data_profile.parse(f'../data_profile/{self.cim_profile}/{self.cim_profile}.rdfs',format='xml')
+            path = os.path.dirname(self.cim.__file__)
+            self.data_profile.parse(f'{path}/{self.cim_profile}.rdfs',format='xml')
             self.reverse = URIRef('http://iec.ch/TC57/1999/rdf-schema-extensions-19990926#inverseRoleName')
         except:
             _log.warning='No RDFS schema found, reverting to default logic'

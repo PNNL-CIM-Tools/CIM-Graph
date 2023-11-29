@@ -53,6 +53,7 @@ class NodeBreakerModel(GraphModel):
 
     def initialize_centralized_model(self, container) -> None:
         self.graph = self.connection.create_new_graph(container)
+        self.add_to_graph(container)
 
     def initialize_distributed_model(self, container) -> None:
 

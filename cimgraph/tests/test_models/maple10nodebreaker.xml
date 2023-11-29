@@ -1819,7 +1819,7 @@
   <cim:PowerTransformer.vectorGroup>Yy</cim:PowerTransformer.vectorGroup>
   <cim:PowerSystemResource.Location rdf:resource="#_6033D474-7807-4CD6-A975-F251C8787E6D"/>
 </cim:PowerTransformer>
-<cim:LoadBreakSwitch rdf:ID="_276809DF-6493-4DAE-A7BB-AD78A5F0DA95">
+<cim:Breaker rdf:ID="_276809DF-6493-4DAE-A7BB-AD78A5F0DA95">
   <cim:IdentifiedObject.mRID>_276809DF-6493-4DAE-A7BB-AD78A5F0DA95</cim:IdentifiedObject.mRID>
   <cim:IdentifiedObject.name>hv_bk_1</cim:IdentifiedObject.name>
   <cim:Equipment.EquipmentContainer rdf:resource="#_BB020444-ED1C-4F8A-B47B-1EC9EAB81445"/>
@@ -1830,7 +1830,7 @@
   <cim:Switch.open>false</cim:Switch.open>
   <cim:Switch.retained>true</cim:Switch.retained>
   <cim:PowerSystemResource.Location rdf:resource="#_6A85EE07-4564-475C-896E-C8D4E6832607"/>
-</cim:LoadBreakSwitch>
+</cim:Breaker>
 <cim:Terminal rdf:ID="_CE6DD7CA-00BF-483F-AEB3-6EFCB2658A3D">
   <cim:IdentifiedObject.mRID>_CE6DD7CA-00BF-483F-AEB3-6EFCB2658A3D</cim:IdentifiedObject.mRID>
   <cim:IdentifiedObject.name>hv_bk_1_T1</cim:IdentifiedObject.name>
@@ -1957,7 +1957,7 @@
   <cim:PositionPoint.xPosition>40</cim:PositionPoint.xPosition>
   <cim:PositionPoint.yPosition>20</cim:PositionPoint.yPosition>
 </cim:PositionPoint>
-<cim:LoadBreakSwitch rdf:ID="_90B9E60D-92E8-48AD-A5BB-430685A6D52E">
+<cim:Breaker rdf:ID="_90B9E60D-92E8-48AD-A5BB-430685A6D52E">
   <cim:IdentifiedObject.mRID>_90B9E60D-92E8-48AD-A5BB-430685A6D52E</cim:IdentifiedObject.mRID>
   <cim:IdentifiedObject.name>s7_b1</cim:IdentifiedObject.name>
   <cim:Equipment.EquipmentContainer rdf:resource="#_9E985101-27AD-4FE4-B36A-EBECC98CDFA1"/>
@@ -1968,7 +1968,7 @@
   <cim:Switch.open>false</cim:Switch.open>
   <cim:Switch.retained>true</cim:Switch.retained>
   <cim:PowerSystemResource.Location rdf:resource="#_19679A32-A363-4CEE-8BDD-0F4DAD653D68"/>
-</cim:LoadBreakSwitch>
+</cim:Breaker>
 <cim:Terminal rdf:ID="_470114C1-5165-40AD-876D-89F29CAF26A5">
   <cim:IdentifiedObject.mRID>_470114C1-5165-40AD-876D-89F29CAF26A5</cim:IdentifiedObject.mRID>
   <cim:IdentifiedObject.name>s7_b1_T1</cim:IdentifiedObject.name>
@@ -2001,7 +2001,7 @@
   <cim:PositionPoint.xPosition>2</cim:PositionPoint.xPosition>
   <cim:PositionPoint.yPosition>70</cim:PositionPoint.yPosition>
 </cim:PositionPoint>
-<cim:LoadBreakSwitch rdf:ID="_63952C14-0121-4EC1-B001-29B7FA4FEB59">
+<cim:Breaker rdf:ID="_63952C14-0121-4EC1-B001-29B7FA4FEB59">
   <cim:IdentifiedObject.mRID>_63952C14-0121-4EC1-B001-29B7FA4FEB59</cim:IdentifiedObject.mRID>
   <cim:IdentifiedObject.name>s7_b2</cim:IdentifiedObject.name>
   <cim:Equipment.EquipmentContainer rdf:resource="#_9E985101-27AD-4FE4-B36A-EBECC98CDFA2"/>
@@ -2012,7 +2012,7 @@
   <cim:Switch.open>false</cim:Switch.open>
   <cim:Switch.retained>true</cim:Switch.retained>
   <cim:PowerSystemResource.Location rdf:resource="#_9ED6334F-519E-4E3D-8E83-67529C842A79"/>
-</cim:LoadBreakSwitch>
+</cim:Breaker>
 <cim:Terminal rdf:ID="_4C7403C7-9B50-463C-9012-67F15BD41A67">
   <cim:IdentifiedObject.mRID>_4C7403C7-9B50-463C-9012-67F15BD41A67</cim:IdentifiedObject.mRID>
   <cim:IdentifiedObject.name>s7_b2_T1</cim:IdentifiedObject.name>
@@ -2045,7 +2045,7 @@
   <cim:PositionPoint.xPosition>4</cim:PositionPoint.xPosition>
   <cim:PositionPoint.yPosition>70</cim:PositionPoint.yPosition>
 </cim:PositionPoint>
-<cim:LoadBreakSwitch rdf:ID="_6EB19C31-B0A1-434A-BC13-A176A83FAD29">
+<cim:Breaker rdf:ID="_6EB19C31-B0A1-434A-BC13-A176A83FAD29">
   <cim:IdentifiedObject.mRID>_6EB19C31-B0A1-434A-BC13-A176A83FAD29</cim:IdentifiedObject.mRID>
   <cim:IdentifiedObject.name>s7_b3</cim:IdentifiedObject.name>
   <cim:Equipment.EquipmentContainer rdf:resource="#_9E985101-27AD-4FE4-B36A-EBECC98CDFA3"/>
@@ -2056,7 +2056,7 @@
   <cim:Switch.open>false</cim:Switch.open>
   <cim:Switch.retained>true</cim:Switch.retained>
   <cim:PowerSystemResource.Location rdf:resource="#_13668973-A8CC-4A22-BA26-95809641C0F9"/>
-</cim:LoadBreakSwitch>
+</cim:Breaker>
 <cim:Terminal rdf:ID="_87739A68-1A8A-4881-BC35-39F3B6038C38">
   <cim:IdentifiedObject.mRID>_87739A68-1A8A-4881-BC35-39F3B6038C38</cim:IdentifiedObject.mRID>
   <cim:IdentifiedObject.name>s7_b3_T1</cim:IdentifiedObject.name>
@@ -2089,7 +2089,7 @@
   <cim:PositionPoint.xPosition>6</cim:PositionPoint.xPosition>
   <cim:PositionPoint.yPosition>70</cim:PositionPoint.yPosition>
 </cim:PositionPoint>
-<cim:LoadBreakSwitch rdf:ID="_C63A16AB-72F2-4A84-905F-DA9462CF9943">
+<cim:Breaker rdf:ID="_C63A16AB-72F2-4A84-905F-DA9462CF9943">
   <cim:IdentifiedObject.mRID>_C63A16AB-72F2-4A84-905F-DA9462CF9943</cim:IdentifiedObject.mRID>
   <cim:IdentifiedObject.name>s7_b4</cim:IdentifiedObject.name>
   <cim:Equipment.EquipmentContainer rdf:resource="#_9E985101-27AD-4FE4-B36A-EBECC98CDFA4"/>
@@ -2100,7 +2100,7 @@
   <cim:Switch.open>false</cim:Switch.open>
   <cim:Switch.retained>true</cim:Switch.retained>
   <cim:PowerSystemResource.Location rdf:resource="#_B959F003-24D1-441C-8B4E-0FB030A68612"/>
-</cim:LoadBreakSwitch>
+</cim:Breaker>
 <cim:Terminal rdf:ID="_CF6A23E2-87B3-4110-B0AD-C56273694437">
   <cim:IdentifiedObject.mRID>_CF6A23E2-87B3-4110-B0AD-C56273694437</cim:IdentifiedObject.mRID>
   <cim:IdentifiedObject.name>s7_b4_T1</cim:IdentifiedObject.name>
@@ -2133,7 +2133,7 @@
   <cim:PositionPoint.xPosition>8</cim:PositionPoint.xPosition>
   <cim:PositionPoint.yPosition>70</cim:PositionPoint.yPosition>
 </cim:PositionPoint>
-<cim:LoadBreakSwitch rdf:ID="_4E444BD4-AC52-49BC-8520-FE3372B8CD5F">
+<cim:Breaker rdf:ID="_4E444BD4-AC52-49BC-8520-FE3372B8CD5F">
   <cim:IdentifiedObject.mRID>_4E444BD4-AC52-49BC-8520-FE3372B8CD5F</cim:IdentifiedObject.mRID>
   <cim:IdentifiedObject.name>s8_b1</cim:IdentifiedObject.name>
   <cim:Equipment.EquipmentContainer rdf:resource="#_9E985101-27AD-4FE4-B36A-EBECC98CDFA5"/>
@@ -2144,7 +2144,7 @@
   <cim:Switch.open>false</cim:Switch.open>
   <cim:Switch.retained>true</cim:Switch.retained>
   <cim:PowerSystemResource.Location rdf:resource="#_6D81FC9B-B507-4F35-ADB9-8BC803D9E2CE"/>
-</cim:LoadBreakSwitch>
+</cim:Breaker>
 <cim:Terminal rdf:ID="_06A8FA2A-8D9D-43E3-9B2F-0FD3F50B3D23">
   <cim:IdentifiedObject.mRID>_06A8FA2A-8D9D-43E3-9B2F-0FD3F50B3D23</cim:IdentifiedObject.mRID>
   <cim:IdentifiedObject.name>s8_b1_T1</cim:IdentifiedObject.name>
@@ -2177,7 +2177,7 @@
   <cim:PositionPoint.xPosition>13</cim:PositionPoint.xPosition>
   <cim:PositionPoint.yPosition>70</cim:PositionPoint.yPosition>
 </cim:PositionPoint>
-<cim:LoadBreakSwitch rdf:ID="_AD2D6921-A1B0-4346-B941-365501A472CE">
+<cim:Breaker rdf:ID="_AD2D6921-A1B0-4346-B941-365501A472CE">
   <cim:IdentifiedObject.mRID>_AD2D6921-A1B0-4346-B941-365501A472CE</cim:IdentifiedObject.mRID>
   <cim:IdentifiedObject.name>s8_b2</cim:IdentifiedObject.name>
   <cim:Equipment.EquipmentContainer rdf:resource="#_9E985101-27AD-4FE4-B36A-EBECC98CDFA6"/>
@@ -2188,7 +2188,7 @@
   <cim:Switch.open>false</cim:Switch.open>
   <cim:Switch.retained>true</cim:Switch.retained>
   <cim:PowerSystemResource.Location rdf:resource="#_9EC4F392-19D5-4870-B434-C3E87E366341"/>
-</cim:LoadBreakSwitch>
+</cim:Breaker>
 <cim:Terminal rdf:ID="_62B57B1F-A519-4FFB-B5DF-424583C3FD8D">
   <cim:IdentifiedObject.mRID>_62B57B1F-A519-4FFB-B5DF-424583C3FD8D</cim:IdentifiedObject.mRID>
   <cim:IdentifiedObject.name>s8_b2_T1</cim:IdentifiedObject.name>
@@ -2221,7 +2221,7 @@
   <cim:PositionPoint.xPosition>15</cim:PositionPoint.xPosition>
   <cim:PositionPoint.yPosition>70</cim:PositionPoint.yPosition>
 </cim:PositionPoint>
-<cim:LoadBreakSwitch rdf:ID="_97238F75-6FC2-4128-82AB-D39C0875449F">
+<cim:Breaker rdf:ID="_97238F75-6FC2-4128-82AB-D39C0875449F">
   <cim:IdentifiedObject.mRID>_97238F75-6FC2-4128-82AB-D39C0875449F</cim:IdentifiedObject.mRID>
   <cim:IdentifiedObject.name>s8_b3</cim:IdentifiedObject.name>
   <cim:Equipment.EquipmentContainer rdf:resource="#_9E985101-27AD-4FE4-B36A-EBECC98CDFA7"/>
@@ -2232,7 +2232,7 @@
   <cim:Switch.open>false</cim:Switch.open>
   <cim:Switch.retained>true</cim:Switch.retained>
   <cim:PowerSystemResource.Location rdf:resource="#_4699B923-D89F-4922-8928-75E66F1C44E3"/>
-</cim:LoadBreakSwitch>
+</cim:Breaker>
 <cim:Terminal rdf:ID="_2F62FA93-4F39-443E-A559-8A86D89BBF11">
   <cim:IdentifiedObject.mRID>_2F62FA93-4F39-443E-A559-8A86D89BBF11</cim:IdentifiedObject.mRID>
   <cim:IdentifiedObject.name>s8_b3_T1</cim:IdentifiedObject.name>
@@ -2265,7 +2265,7 @@
   <cim:PositionPoint.xPosition>17</cim:PositionPoint.xPosition>
   <cim:PositionPoint.yPosition>70</cim:PositionPoint.yPosition>
 </cim:PositionPoint>
-<cim:LoadBreakSwitch rdf:ID="_536036DC-B1AE-4185-A41C-DB82E003DA32">
+<cim:Breaker rdf:ID="_536036DC-B1AE-4185-A41C-DB82E003DA32">
   <cim:IdentifiedObject.mRID>_536036DC-B1AE-4185-A41C-DB82E003DA32</cim:IdentifiedObject.mRID>
   <cim:IdentifiedObject.name>s9_b1</cim:IdentifiedObject.name>
   <cim:Equipment.EquipmentContainer rdf:resource="#_9E985101-27AD-4FE4-B36A-EBECC98CDFB1"/>
@@ -2276,7 +2276,7 @@
   <cim:Switch.open>false</cim:Switch.open>
   <cim:Switch.retained>true</cim:Switch.retained>
   <cim:PowerSystemResource.Location rdf:resource="#_0E0F99D5-7AF8-471D-AF68-4E6082A88BC5"/>
-</cim:LoadBreakSwitch>
+</cim:Breaker>
 <cim:Terminal rdf:ID="_DF993964-E3E1-4279-BD75-133BDA0460CC">
   <cim:IdentifiedObject.mRID>_DF993964-E3E1-4279-BD75-133BDA0460CC</cim:IdentifiedObject.mRID>
   <cim:IdentifiedObject.name>s9_b1_T1</cim:IdentifiedObject.name>
@@ -2309,7 +2309,7 @@
   <cim:PositionPoint.xPosition>33</cim:PositionPoint.xPosition>
   <cim:PositionPoint.yPosition>70</cim:PositionPoint.yPosition>
 </cim:PositionPoint>
-<cim:LoadBreakSwitch rdf:ID="_AEC27F44-AA56-47BE-B3F1-2F5D6C6EEB3E">
+<cim:Breaker rdf:ID="_AEC27F44-AA56-47BE-B3F1-2F5D6C6EEB3E">
   <cim:IdentifiedObject.mRID>_AEC27F44-AA56-47BE-B3F1-2F5D6C6EEB3E</cim:IdentifiedObject.mRID>
   <cim:IdentifiedObject.name>s9_b2</cim:IdentifiedObject.name>
   <cim:Equipment.EquipmentContainer rdf:resource="#_9E985101-27AD-4FE4-B36A-EBECC98CDFB2"/>
@@ -2320,7 +2320,7 @@
   <cim:Switch.open>false</cim:Switch.open>
   <cim:Switch.retained>true</cim:Switch.retained>
   <cim:PowerSystemResource.Location rdf:resource="#_1206B795-C167-4F77-B13B-696B1DD1FFF7"/>
-</cim:LoadBreakSwitch>
+</cim:Breaker>
 <cim:Terminal rdf:ID="_48125BCA-9AAE-481A-AB0C-87F7936CB46D">
   <cim:IdentifiedObject.mRID>_48125BCA-9AAE-481A-AB0C-87F7936CB46D</cim:IdentifiedObject.mRID>
   <cim:IdentifiedObject.name>s9_b2_T1</cim:IdentifiedObject.name>
@@ -2353,7 +2353,7 @@
   <cim:PositionPoint.xPosition>37</cim:PositionPoint.xPosition>
   <cim:PositionPoint.yPosition>70</cim:PositionPoint.yPosition>
 </cim:PositionPoint>
-<cim:LoadBreakSwitch rdf:ID="_EE4088E9-BF5B-429B-9DEB-1C2CA1856023">
+<cim:Breaker rdf:ID="_EE4088E9-BF5B-429B-9DEB-1C2CA1856023">
   <cim:IdentifiedObject.mRID>_EE4088E9-BF5B-429B-9DEB-1C2CA1856023</cim:IdentifiedObject.mRID>
   <cim:IdentifiedObject.name>s10_b1</cim:IdentifiedObject.name>
   <cim:Equipment.EquipmentContainer rdf:resource="#_9E985101-27AD-4FE4-B36A-EBECC98CDFB3"/>
@@ -2364,7 +2364,7 @@
   <cim:Switch.open>false</cim:Switch.open>
   <cim:Switch.retained>true</cim:Switch.retained>
   <cim:PowerSystemResource.Location rdf:resource="#_C4697A27-D379-4835-8796-E66C41EC12AD"/>
-</cim:LoadBreakSwitch>
+</cim:Breaker>
 <cim:Terminal rdf:ID="_9F1726BE-84D8-4F70-AD88-E984F4D63ED6">
   <cim:IdentifiedObject.mRID>_9F1726BE-84D8-4F70-AD88-E984F4D63ED6</cim:IdentifiedObject.mRID>
   <cim:IdentifiedObject.name>s10_b1_T1</cim:IdentifiedObject.name>
@@ -2397,7 +2397,7 @@
   <cim:PositionPoint.xPosition>43</cim:PositionPoint.xPosition>
   <cim:PositionPoint.yPosition>70</cim:PositionPoint.yPosition>
 </cim:PositionPoint>
-<cim:LoadBreakSwitch rdf:ID="_C173C171-30D6-45FE-82E6-274C3B8AFD22">
+<cim:Breaker rdf:ID="_C173C171-30D6-45FE-82E6-274C3B8AFD22">
   <cim:IdentifiedObject.mRID>_C173C171-30D6-45FE-82E6-274C3B8AFD22</cim:IdentifiedObject.mRID>
   <cim:IdentifiedObject.name>s10_b2</cim:IdentifiedObject.name>
   <cim:Equipment.EquipmentContainer rdf:resource="#_9E985101-27AD-4FE4-B36A-EBECC98CDFB4"/>
@@ -2408,7 +2408,7 @@
   <cim:Switch.open>false</cim:Switch.open>
   <cim:Switch.retained>true</cim:Switch.retained>
   <cim:PowerSystemResource.Location rdf:resource="#_C8FE341B-D8C6-44C6-B2AE-7B760A2E2589"/>
-</cim:LoadBreakSwitch>
+</cim:Breaker>
 <cim:Terminal rdf:ID="_AFEBE33D-E98D-44A5-AB25-6276DB9B9725">
   <cim:IdentifiedObject.mRID>_AFEBE33D-E98D-44A5-AB25-6276DB9B9725</cim:IdentifiedObject.mRID>
   <cim:IdentifiedObject.name>s10_b2_T1</cim:IdentifiedObject.name>

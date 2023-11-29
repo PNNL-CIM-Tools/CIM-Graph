@@ -1,5 +1,5 @@
 from cimgraph.utils.write_xml import write_xml as write_xml
-# from cimgraph.utils.write_csv import write_csv
+from cimgraph.utils.write_csv import write_csv
 # from cimgraph.utils.write_json import write_json_ld
 from cimgraph.utils.get_all_data import get_all_data as get_all_data
 from cimgraph.utils.get_all_data import get_all_bus_data as get_all_bus_data
