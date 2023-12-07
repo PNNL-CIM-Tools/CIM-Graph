@@ -3891,4 +3891,3 @@
     cim:IdentifiedObject.mRID "49AD8E07-3BF9-A4E2-CB8F-C3722F837B62" ;
     cim:IdentifiedObject.name "ieee13nodeckt" ;
     cim:PowerSystemResource.Location <urn:uuid:8E4E3C92-0B7A-4F74-8FD2-CC10F74E452F> .
-

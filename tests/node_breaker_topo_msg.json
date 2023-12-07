@@ -1,13 +1,13 @@
 {
-    "regions": 
+    "regions":
     [
         {
             "region_id": "geographic-region1-mrid",
-            "subregions": 
+            "subregions":
             [
                 {
                     "subregion_id": "subgeographic-region1-mrid",
-                    "substations": 
+                    "substations":
                     [
                         {
                             "substation_id": "sub1-mrid",
@@ -45,7 +45,7 @@
                                             "addressable_equipment": ["mv-der1-mrid"],
                                             "unaddressable_equipment": ["custxmfr-1-mrid","aclinesegment-f1-sa1-mrid"],
                                             "connectivity_node": ["nodef1-sa-1-mrid", "nodef2-sa-2-mrid"],
-                                            "secondary_areas": 
+                                            "secondary_areas":
                                             [
                                                 {
                                                     "secondary_area_id": "f1-sa1-se1-mrid",
@@ -60,7 +60,7 @@
                                                     "connectivity_node": ["nodef1-sa1-se2-1-mrid"]
                                                 }
                                             ]
-                                        } 
+                                        }
                                     ]
                                 },
                                 {
@@ -109,7 +109,7 @@
                                             "addressable_equipment": ["mv-der1-mrid"],
                                             "unaddressable_equipment": ["custxmfr-311-mrid","aclinesegment-f3-sa1-mrid"],
                                             "connectivity_node": ["nodef3-sa-1-mrid", "nodef2-sa-2-mrid"],
-                                            "secondary_areas": 
+                                            "secondary_areas":
                                             [
                                                 {
                                                     "secondary_area_id": "f3-sa1-se1-mrid",
@@ -126,7 +126,7 @@
                                                     "connectivity_node": ["nodef3-sa1-se2-1-mrid"]
                                                 }
                                             ]
-                                        } 
+                                        }
                                     ]
                                 },
                                 {
@@ -141,7 +141,7 @@
                         }
                     ],
 
-                    "lines": 
+                    "lines":
                     [
                         {
                             "line_id": "line115-1-mrid",
@@ -159,7 +159,7 @@
                 },
                 {
                     "subregion_id": "subgeographic-region2-mrid",
-                    "substations": 
+                    "substations":
                     [
                         {
                             "substation_id": "sub5-mrid",
@@ -197,7 +197,7 @@
                                             "addressable_equipment": ["mv-der1-mrid"],
                                             "unaddressable_equipment": ["custxmfr-511-mrid","aclinesegment-f5-sa1-mrid"],
                                             "connectivity_node": ["nodef5-sa-1-mrid", "nodef5-sa-2-mrid"],
-                                            "secondary_areas": 
+                                            "secondary_areas":
                                             [
                                                 {
                                                     "secondary_area_id": "f5-sa1-se1-mrid",
@@ -214,7 +214,7 @@
                                                     "connectivity_node": ["nodef5-sa1-se2-1-mrid"]
                                                 }
                                             ]
-                                        } 
+                                        }
                                     ]
                                 },
                                 {
@@ -263,7 +263,7 @@
                                             "addressable_equipment": ["mv-der1-mrid"],
                                             "unaddressable_equipment": ["custxmfr-1-mrid","aclinesegment-f3-sa1-mrid"],
                                             "connectivity_node": ["nodef3-sa-1-mrid", "nodef2-sa-2-mrid"],
-                                            "secondary_areas": 
+                                            "secondary_areas":
                                             [
                                                 {
                                                     "secondary_area_id": "f7-sa1-se1-mrid",
@@ -278,7 +278,7 @@
                                                     "connectivity_node": ["nodef7-sa1-se2-1-mrid"]
                                                 }
                                             ]
-                                        } 
+                                        }
                                     ]
                                 },
                                 {
@@ -293,7 +293,7 @@
                         }
                     ],
 
-                    "lines": 
+                    "lines":
                     [
                         {
                             "line_id": "line115-4-mrid",

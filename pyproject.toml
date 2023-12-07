@@ -52,3 +52,6 @@ based_on_style = "pep8"
 spaces_before_comment = 4
 column_limit = 99
 split_before_logical_operator = true
+
+[tool.isort]
+line_length = 99
