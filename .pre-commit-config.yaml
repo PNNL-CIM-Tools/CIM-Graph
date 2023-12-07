@@ -22,3 +22,13 @@ repos:
     entry: yapf
     language: python
     types: [ python ]
+
+- repo: https://github.com/PyCQA/isort
+  rev: 5.12.0
+  hooks:
+  - id: isort
+    name: isort
+    description: "A Python utility / library to sort imports."
+    entry: isort
+    language: python
+    types: [ python ]
