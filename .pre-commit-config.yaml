@@ -11,16 +11,14 @@ repos:
   - id: end-of-file-fixer
   - id: trailing-whitespace
   - id: check-merge-conflict
-  # - id: no-commit-to-branch  # blocks main commits.  To bypass do git commit --allow-empty
+  - id: no-commit-to-branch  # blocks main commits.  To bypass do git commit --allow-empty
 
-
-
-# - repo: https://github.com/google/yapf
-#   rev: v0.40.2  # Use the sha / tag you want to point at
-#   hooks:
-#   - id: yapf
-#     name: yapf
-#     description: "A formatter for Python files."
-#     entry: yapf
-#     language: python
-#     types: [ python ]
+- repo: https://github.com/google/yapf
+  rev: v0.40.2  # Use the sha / tag you want to point at
+  hooks:
+  - id: yapf
+    name: yapf
+    description: "A formatter for Python files."
+    entry: yapf
+    language: python
+    types: [ python ]
