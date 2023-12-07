@@ -30,25 +30,16 @@ from __future__ import annotations
 import os
 from typing import Dict
 
-try:
-    from gridappsd import GridAPPSD
-    HAS_GRIDAPPSD = True
-    os.environ['CIMGRAPH_HAS_GRIDAPPSD'] = '1'
-except ImportError:
-    HAS_GRIDAPPSD = False
+from gridappsd import GridAPPSD
 
-if HAS_GRIDAPPSD:
-    from cimgraph.databases.gridappsd.gridappsd import GridappsdConnection
+from cimgraph.databases.gridappsd.gridappsd import GridappsdConnection
 
-    def get_topology_response(feeder_mrid: str, gapps: GridAPPSD) -> Dict:
-        assert feeder_mrid is not None
 
-        topic = 'goss.gridappsd.request.data.topology'
-        message = {
-            'requestType': 'GET_SWITCH_AREAS',
-            'modelID': feeder_mrid,
-            'resultFormat': 'JSON'
-        }
+def get_topology_response(feeder_mrid: str, gapps: GridAPPSD) -> Dict:
+    assert feeder_mrid is not None
 
-        topo_response = gapps.get_response(topic=topic, message=message, timeout=30)
-        return topo_response
+    topic = 'goss.gridappsd.request.data.topology'
+    message = {'requestType': 'GET_SWITCH_AREAS', 'modelID': feeder_mrid, 'resultFormat': 'JSON'}
+
+    topo_response = gapps.get_response(topic=topic, message=message, timeout=30)
+    return topo_response

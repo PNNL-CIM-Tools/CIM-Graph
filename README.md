@@ -31,9 +31,6 @@ Support is currently offered for GridAPPS-D, Blazegraph, Neo4J, GraphDB, and jso
 
 ```bash
 pip install cim-graph
-
-# With gridappsd-python support
-pip install cim-graph -e .[gridappsd]
 ```
 
 ## Specifying the CIM Profile

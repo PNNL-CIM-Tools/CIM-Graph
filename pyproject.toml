@@ -18,10 +18,11 @@ rdflib = "^7.0.0"
 oxrdflib = "^0.3.6"
 rdflib-neo4j = "^0.0.1b6"
 mysql-connector-python = "^8.0.0"
-gridappsd-python = { version="^2023.9.1", optional=true, markers="extra == 'repo'"}
+gridappsd-python = "^2023.9.1"
 
 [tool.poetry.extras]
 gridappsd = ["gridappsd-python"]
+all = ["gridappsd-python", "neo4j"]
 #gridappsd = ["gridappsd-python"]
 #neo4j = ["neo4j"]
 
