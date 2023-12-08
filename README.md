@@ -19,7 +19,6 @@ Key features:
 
 ![summary-image](./cim_graph_structure.png)
 
-
 ## Requirements
 
 CIM-Graph requires a python version >=3.8 and <4. No testing has been done with other versions.
@@ -27,7 +26,6 @@ CIM-Graph requires a python version >=3.8 and <4. No testing has been done with 
 Support is currently offered for opening XML, JSON-LD, and CSV files
 
 Support is currently offered for GridAPPS-D, Blazegraph, Neo4J, GraphDB, and json-formatted MySQL databases. More databases will be added in the future.
-
 
 ## Installation
 
@@ -52,6 +50,7 @@ import importlib
 cim_profile = 'rc4_2021'
 cim = importlib.import_module('cimgraph.data_profile.' + cim_profile)
 ```
+
 ## Specifying the Connection Parameters
 
 The CIM-Graph library supports multiple databases. The ConnectionParameters specify how to read the CIM model:
@@ -91,6 +90,7 @@ network = NodeBreakerModel(connection=database, container=geo_region, distribute
 ```
 
 ### Transmission Bus-Branch Models
+
 ```python
 from cimgraph.models import BusBranchModel
 
@@ -108,6 +108,7 @@ feeder_mrid = "49AD8E07-3BF9-A4E2-CB8F-C3722F837B62"
 feeder = cim.Feeder(mRID = feeder_mrid)
 network = FeederModel(connection=database, container=feeder, distributed=False)
 ```
+
 ### Centralized vs Distributed Models
 
 If the `distributed` flag is set to `False`, then all equipment are contained within a single knowledge graph. If set to `True`, a `DistributedArea` graph model is created for each topological area inside the power system model.
@@ -121,7 +122,6 @@ for switch_area in network.distributed_areas:
          secondary_area.get_all_edges(cim.ACLineSegement)
 ```
 
-
 ### Usage with GridAPPS-D Context Manager
 
 If an application is built using the GridAPPS-D Context Manager and Field Interface in gridappsd-python, initialization of the `FeederModel` and `DistributedArea` graphs is performed automatically.
@@ -131,9 +131,11 @@ Internally, the GridAPPS-D Context Manager initializes distributed areas as `dis
 ## Core Library Methods
 
 ### .get_all_edges(cim.ClassName)
+
 The CIM power system model can then be parsed by invoking the `.get_all_edges(cim.ClassName)` method. The method populates all available attributes of the given class and creates default instances of all associated class object instances that are one association away in the CIM UML. Associated default instances are only populated with `mRID` attribute. The `.get_all_edges` method must be invoked in sequential order following the inheritance hierarchy in the CIM UML, starting with the particular equiment class (e.g. ACLineSegment) and then each child class inheriting from the previous class.
 
 ### .graph[cim.ClassName]
+
 The Python object instances can be accessed using the `graph` dictionary of each distributed area class instance. The typed catalog is organized by the class type and then mRID of each object. The attributes of each class can be accessed directly or through any associated class. These two calls are equivalent:
 
 ```python
@@ -162,12 +164,11 @@ json_dump = network.__dumps__(cim.ACLineSegment)
 
 Additional examples of usage are available on ReadTheDocs.
 
-## Attribution and Disclaimer: 
+## Attribution and Disclaimer
 
 This software was created under a project sponsored by the U.S. Department of Energy’s Office of Electricity, an agency of the United States Government.  Neither the United States Government nor the United States Department of Energy, nor Battelle, nor any of their employees, nor any jurisdiction or organization that has cooperated in the development of these materials, makes any warranty, express or implied, or assumes any legal liability or responsibility for the accuracy, completeness, or usefulness or any information, apparatus, product, software, or process disclosed, or represents that its use would not infringe privately owned rights.
 
 Reference herein to any specific commercial product, process, or service by trade name, trademark, manufacturer, or otherwise does not necessarily constitute or imply its endorsement, recommendation, or favoring by the United States Government or any agency thereof, or Battelle Memorial Institute. The views and opinions of authors expressed herein do not necessarily state or reflect those of the United States Government or any agency thereof.
-
 
 PACIFIC NORTHWEST NATIONAL LABORATORY
 
