@@ -1,4 +1,10 @@
+<<<<<<< HEAD
 # Byte-compiled / optimized / DLL files
+=======
+/.venv/
+/.idea/
+/.vscode/
+>>>>>>> origin/develop
 __pycache__/
 *.py[cod]
 *$py.class
@@ -15,6 +21,7 @@ env/
 build/
 develop-eggs/
 dist/
+<<<<<<< HEAD
 downloads/
 eggs/
 .eggs/
@@ -111,3 +118,8 @@ ENV/
 
 # pytest cache
 .pytest_cache
+=======
+generated/
+poetry.lock
+*.ipynb
+>>>>>>> origin/develop
