@@ -115,8 +115,7 @@ ENV/
 
 # pytest cache
 .pytest_cache
-=======
+
 generated/
 poetry.lock
 *.ipynb
->>>>>>> origin/develop
