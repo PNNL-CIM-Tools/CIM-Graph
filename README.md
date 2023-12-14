@@ -1,10 +1,6 @@
 # CIMantic Graphs Library
 
-<<<<<<< HEAD
 CIMantic Graphs is an open-source library for for creating, parsing, and editing CIM power system models using in-memory knowledge graphs to reduce the burden and learning curve associated with using the Common Information Model.
-=======
-Python library for creating in-memory labeled property graphs for creating, parsing, and editing CIM power system models. It creates Python object instances in memory using a data profile exported from a specified CIM profile (e.g. IEC61970cim18v01 or GridAPPS-D CIM100 RC4_2021).
->>>>>>> origin/develop
 
 Key features:
 
@@ -126,20 +122,6 @@ for switch_area in network.distributed_areas:
          secondary_area.get_all_edges(cim.ACLineSegement)
 ```
 
-## Transmission Node-Breaker Models
-
-[in development]
-
-## Transmission Bus-Branch Models
-
-[in development]
-
-## Centralized Feeder Models
-
-[in development]
-
-## Distributed Feeder Models
-
 ### Usage with GridAPPS-D Context Manager
 
 If an application is built using the GridAPPS-D Context Manager and Field Interface in gridappsd-python, initialization of the `FeederModel` and `DistributedArea` graphs is performed automatically.
@@ -189,13 +171,8 @@ This software was created under a project sponsored by the U.S. Department of En
 Reference herein to any specific commercial product, process, or service by trade name, trademark, manufacturer, or otherwise does not necessarily constitute or imply its endorsement, recommendation, or favoring by the United States Government or any agency thereof, or Battelle Memorial Institute. The views and opinions of authors expressed herein do not necessarily state or reflect those of the United States Government or any agency thereof.
 
 PACIFIC NORTHWEST NATIONAL LABORATORY
-
-_operated by_
-
-  BATTELLE
-
-  _for the_
-
+operated by
+BATTELLE
+for the
 UNITED STATES DEPARTMENT OF ENERGY
-
-_under Contract DE-AC05-76RL01830_
+under Contract DE-AC05-76RL01830
