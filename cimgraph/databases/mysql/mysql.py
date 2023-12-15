@@ -1,19 +1,18 @@
 from __future__ import annotations
-import math
-import importlib
-import logging
-import re
-import json
-import time
-import mysql.connector
 
-from typing import Dict, List, Optional
+import importlib
+import json
+import logging
+import math
+import re
+import time
+
+import mysql.connector
+from SPARQLWrapper import JSON, POST, SPARQLWrapper
 
 import cimgraph.queries.sparql as sparql
 from cimgraph.databases import ConnectionInterface, ConnectionParameters, Parameter, QueryResponse
 from cimgraph.models.graph_model import GraphModel
-
-from SPARQLWrapper import JSON, POST, SPARQLWrapper
 
 _log = logging.getLogger(__name__)
 
@@ -142,7 +141,8 @@ class MySQLJSONConnection(ConnectionInterface):
 
                 if is_association:    # if association to another CIM object
 
-                    if attribute[0] in cim_class.__dataclass_fields__:    #check if first name is the attribute
+                    if attribute[
+                            0] in cim_class.__dataclass_fields__:    #check if first name is the attribute
                         self.create_edge(graph, cim_class, mRID, attribute[0], edge_class,
                                          edge_mRID)
 
@@ -189,9 +189,6 @@ class MySQLJSONConnection(ConnectionInterface):
                 setattr(graph[cim_class][mRID], attribute, obj_list)
         else:
             setattr(graph[cim_class][mRID], attribute, edge_object)
-
-
-
 
     def create_object(self, graph, class_type, mRID):
 

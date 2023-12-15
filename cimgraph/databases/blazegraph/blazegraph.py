@@ -1,49 +1,47 @@
 from __future__ import annotations
-import math
+
 import importlib
-import logging
 import json
-import enum
+import logging
+import math
 import os
 
-from typing import Dict, List, Optional
+from rdflib import Graph, Namespace, URIRef
+from SPARQLWrapper import JSON, POST, SPARQLWrapper
 
 import cimgraph.queries.sparql as sparql
 from cimgraph.databases import ConnectionInterface, QueryResponse
-
-from SPARQLWrapper import JSON, POST, SPARQLWrapper
-from rdflib import Graph, Namespace, URIRef
 
 _log = logging.getLogger(__name__)
 
 
 class BlazegraphConnection(ConnectionInterface):
 
-    def __init__(self, connection_params):
+    def __init__(self, connection_params: ConnectionInterface) -> None:
         self.cim_profile = connection_params.cim_profile
-        # self.legacy_sparql = importlib.import_module('cimgraph.queries.sparql.' + self.cim_profile)
         self.cim = importlib.import_module('cimgraph.data_profile.' + self.cim_profile)
         self.namespace = connection_params.namespace
         self.iec61970_301 = connection_params.iec61970_301
         self.url = connection_params.url
         self.connection_params = connection_params
-        self.sparql_obj: Optional[SPARQLWrapper] = None
+        self.sparql_obj = None
 
         try:
-            self.data_profile = Graph(store = 'Oxigraph')
+            self.data_profile = Graph(store='Oxigraph')
             path = os.path.dirname(self.cim.__file__)
-            self.data_profile.parse(f'{path}/{self.cim_profile}.rdfs',format='xml')
-            self.reverse = URIRef('http://iec.ch/TC57/1999/rdf-schema-extensions-19990926#inverseRoleName')
+            self.data_profile.parse(f'{path}/{self.cim_profile}.rdfs', format='xml')
+            self.reverse = URIRef(
+                'http://iec.ch/TC57/1999/rdf-schema-extensions-19990926#inverseRoleName')
         except:
-            _log.warning='No RDFS schema found, reverting to default logic'
+            _log.warning('No RDFS schema found, reverting to default logic')
             self.data_profile = None
 
-    def connect(self):
+    def connect(self) -> None:
         if not self.sparql_obj:
             self.sparql_obj = SPARQLWrapper(self.url)
             self.sparql_obj.setReturnFormat(JSON)
 
-    def disconnect(self):
+    def disconnect(self) -> None:
         self.sparql_obj = None
 
     def execute(self, query_message: str) -> QueryResponse:
@@ -86,16 +84,14 @@ class BlazegraphConnection(ConnectionInterface):
 
         return graph
 
-    def get_edges_query(self, container: str | cim.ConnectivityNodeContainer,
-                        graph: dict[type, dict[str, object]], cim_class: type):
+    def get_edges_query(self, graph: dict[type, dict[str, object]], cim_class: type) -> str:
 
         eq_mrids = list(graph[cim_class].keys())[0:100]
         sparql_message = sparql.get_all_edges_sparql(cim_class, eq_mrids, self.connection_params)
 
         return sparql_message
 
-    def get_all_edges(self, container: str | cim.ConnectivityNodeContainer,
-                      graph: dict[type, dict[str, object]], cim_class: type):
+    def get_all_edges(self, graph: dict[type, dict[str, object]], cim_class: type) -> None:
         mrid_list = list(graph[cim_class].keys())
         num_nodes = len(mrid_list)
         for index in range(math.ceil(len(mrid_list) / 100)):
@@ -105,10 +101,10 @@ class BlazegraphConnection(ConnectionInterface):
                                                          self.connection_params)
             #execute sparql query
             query_output = self.execute(sparql_message)
-            self.edge_query_parser(query_output, container, graph, cim_class)
+            self.edge_query_parser(query_output, graph, cim_class)
 
-    def edge_query_parser(self, query_output, container: str | cim.ConnectivityNodeContainer,
-                          graph: dict[type, dict[str, object]], cim_class: type):
+    def edge_query_parser(self, query_output: QueryResponse, graph: dict[type, dict[str, object]],
+                          cim_class: type) -> None:
         for result in query_output['results']['bindings']:
             is_association = False
             is_enumeration = False
@@ -134,38 +130,52 @@ class BlazegraphConnection(ConnectionInterface):
                     if edge_class in self.cim.__all__:
                         edge_class = eval(f'self.cim.{edge_class}')
                     else:
-                        _log.warning('unknown class', edge_class)
+                        _log.warning(f'unknown class {edge_class}')
                         continue
 
                 if is_association:    # if association to another CIM object
 
-                    if attribute[1] in cim_class.__dataclass_fields__:    #check if forward attribute
-                        self.create_edge(graph, cim_class, mRID, attribute[1], edge_class, edge_mRID)
+                    if attribute[
+                            1] in cim_class.__dataclass_fields__:    #check if forward attribute
+                        self.create_edge(graph, cim_class, mRID, attribute[1], edge_class,
+                                         edge_mRID)
 
                     elif self.data_profile is not None:    # use data profile to look up reverse attribute
                         attr_uri = URIRef(f'{self.namespace}{attr}')
-                        reverse_uri = self.data_profile.value(object=attr_uri, predicate=self.reverse)
+                        reverse_uri = self.data_profile.value(object=attr_uri,
+                                                              predicate=self.reverse)
                         try:
-                            reverse_attribute = reverse_uri.split('#')[1].split('.')[1]     # split string
-                            self.create_edge(graph, cim_class, mRID, reverse_attribute, edge_class, edge_mRID)
+                            reverse_attribute = reverse_uri.split('#')[1].split('.')[
+                                1]    # split string
                         except:
-                            _log.warning(f'attribute {attr} missing from data profile')
+                            _log.warning(f'{cim_class.__name__} does not have attribute {attr}')
+
+                        self.create_edge(graph, cim_class, mRID, reverse_attribute, edge_class,
+                                         edge_mRID)
 
                     else:    # fallback to use basic logic to identify
-                        if attribute[0] in cim_class.__dataclass_fields__:    #check if first name is the attribute
-                            self.create_edge(graph, cim_class, mRID, attribute[0], edge_class, edge_mRID)
+                        if attribute[
+                                0] in cim_class.__dataclass_fields__:    #check if first name is the attribute
+                            self.create_edge(graph, cim_class, mRID, attribute[0], edge_class,
+                                             edge_mRID)
 
-                        elif attribute[0] + 's' in cim_class.__dataclass_fields__:    #check if attribute spelling is plural
-                            self.create_edge(graph, cim_class, mRID, attribute[0] + 's', edge_class, edge_mRID)
+                        elif attribute[
+                                0] + 's' in cim_class.__dataclass_fields__:    #check if attribute spelling is plural
+                            self.create_edge(graph, cim_class, mRID, attribute[0] + 's',
+                                             edge_class, edge_mRID)
 
-                        elif attribute[1] + 's' in cim_class.__dataclass_fields__:    #check if attribute spelling is plural
-                            self.create_edge(graph, cim_class, mRID, attribute[1] + 's', edge_class,edge_mRID)
+                        elif attribute[
+                                1] + 's' in cim_class.__dataclass_fields__:    #check if attribute spelling is plural
+                            self.create_edge(graph, cim_class, mRID, attribute[1] + 's',
+                                             edge_class, edge_mRID)
 
                         elif edge_class.__name__ in cim_class.__dataclass_fields__:    #check if attribute spelling is plural
-                            self.create_edge(graph, cim_class, mRID, edge_class.__name__, edge_class, edge_mRID)
+                            self.create_edge(graph, cim_class, mRID, edge_class.__name__,
+                                             edge_class, edge_mRID)
 
                         elif edge_class.__name__ + 's' in cim_class.__dataclass_fields__:    #check if attribute spelling is plural
-                            self.create_edge(graph, cim_class, mRID, edge_class.__name__ + 's', edge_class, edge_mRID)
+                            self.create_edge(graph, cim_class, mRID, edge_class.__name__ + 's',
+                                             edge_class, edge_mRID)
 
                         else:    #fallback: match class type until a suitable parent edge class is found
                             parsed = False
@@ -175,7 +185,8 @@ class BlazegraphConnection(ConnectionInterface):
                                 if edge_parent in self.cim.__all__:
                                     parent_class = eval(f'self.cim.{edge_parent}')
                                     if issubclass(edge_class, parent_class):
-                                        self.create_edge(graph, cim_class, mRID, node_attr, edge_class, edge_mRID)
+                                        self.create_edge(graph, cim_class, mRID, node_attr,
+                                                         edge_class, edge_mRID)
                                         parsed = True
                                         break
                             if not parsed:
@@ -188,18 +199,25 @@ class BlazegraphConnection(ConnectionInterface):
                 else:
                     setattr(graph[cim_class][mRID], attribute[1], value)
 
-    def create_edge(self, graph, cim_class, mRID, attribute, edge_class, edge_mRID):
-        edge_object = self.create_object(graph, edge_class, edge_mRID)
+    def create_edge(self, graph: dict[type, dict[str, object]], cim_class: type, mRID: str,
+                    attribute: str, edge_class: type, edge_mRID: str) -> None:
         attribute_type = cim_class.__dataclass_fields__[attribute].type
         if 'List' in attribute_type:
             obj_list = getattr(graph[cim_class][mRID], attribute)
-            if edge_object not in obj_list:
+            found = False
+            for obj in obj_list:
+                if obj.mRID == edge_mRID:
+                    found = True
+            if not found:
+                edge_object = self.create_object(graph, edge_class, edge_mRID)
                 obj_list.append(edge_object)
                 setattr(graph[cim_class][mRID], attribute, obj_list)
         else:
+            edge_object = self.create_object(graph, edge_class, edge_mRID)
             setattr(graph[cim_class][mRID], attribute, edge_object)
 
-    def create_object(self, graph, class_type, mRID):
+    def create_object(self, graph: dict[type, dict[str, object]], class_type: type,
+                      mRID: str) -> object:
 
         if class_type not in graph.keys():
             graph[class_type] = {}
@@ -213,7 +231,7 @@ class BlazegraphConnection(ConnectionInterface):
 
         return obj
 
-    def upload(self, graph):
+    def upload(self, graph: dict[type, dict[str, object]]) -> None:
         for cim_class in graph.keys():
             for obj in graph[cim_class].values():
                 query = sparql.upload_triples_sparql(obj, self.connection_params)

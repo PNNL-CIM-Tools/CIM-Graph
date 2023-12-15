@@ -1,13 +1,9 @@
 import json
 import logging
-import importlib
-from math import dist
-import uuid
-
 from dataclasses import dataclass, field
 
-from cimgraph.models.graph_model import GraphModel, new_mrid
 from cimgraph.databases import ConnectionInterface
+from cimgraph.models.graph_model import GraphModel, new_mrid
 
 _log = logging.getLogger(__name__)
 
@@ -56,7 +52,8 @@ class DistributedTopology():
 
         return distributed_areas
 
-    def expand_area(self, root_class, distributed_areas):
+    def expand_area(self, root_class: type,
+                    distributed_areas: list[DistributedArea]) -> list[DistributedArea]:
         # Iterate through all instances of a switch class
         if root_class in self.centralized_graph:
             for equipment in self.centralized_graph[root_class].values():
@@ -73,7 +70,7 @@ class DistributedTopology():
                         distributed_areas.append(NewArea)
         return distributed_areas
 
-    def expand_node(self, root_node):
+    def expand_node(self, root_node: object) -> DistributedArea:
         """
         Creates graph for a switch area
             Args:
@@ -183,7 +180,8 @@ class DistributedTopology():
                     DistArea.add_to_graph(next_terminal)
 
 
-def create_hierarchy_level(network: GraphModel, hierarchy: dict, top_level: bool):
+def create_hierarchy_level(network: GraphModel, hierarchy: dict,
+                           top_level: bool) -> list[DistributedArea]:
     for level in hierarchy:
         try:
             container_type = level['container']

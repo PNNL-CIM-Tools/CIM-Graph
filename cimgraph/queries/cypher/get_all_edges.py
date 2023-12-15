@@ -1,12 +1,9 @@
 from __future__ import annotations
 
-from dataclasses import dataclass, field
-from typing import Dict, List, Optional
-
 from cimgraph.data_profile.known_problem_classes import ClassesWithoutMRID
 
 
-def get_all_edges_cypher(cim_class: str, mrid_list: List, namespace: str) -> str:
+def get_all_edges_cypher(cim_class: str, mrid_list: list, namespace: str) -> str:
     """
     Generates Cypher query string for a given CIM class, list of mRIDs, and namespace
     Args:

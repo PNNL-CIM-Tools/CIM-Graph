@@ -1,9 +1,9 @@
 from __future__ import annotations
+
 from dataclasses import dataclass, field
-from typing import Dict, List, Optional
 
 
-def get_all_nodes_ontotext(container, namespace):
+def get_all_nodes_ontotext(container: object, namespace: str) -> str:
     """
     Generates SPARQL query string for all nodes, terminals, and conducting equipment
     Args:

@@ -27,15 +27,12 @@ get_topology_response(feeder_mrid: str, gapps: GridAPPSD) -> Dict:
 """
 from __future__ import annotations
 
-import os
-from typing import Dict
-
 from gridappsd import GridAPPSD
 
 from cimgraph.databases.gridappsd.gridappsd import GridappsdConnection
 
 
-def get_topology_response(feeder_mrid: str, gapps: GridAPPSD) -> Dict:
+def get_topology_response(feeder_mrid: str, gapps: GridAPPSD) -> dict:
     assert feeder_mrid is not None
 
     topic = 'goss.gridappsd.request.data.topology'
