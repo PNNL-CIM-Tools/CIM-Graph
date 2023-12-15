@@ -1,13 +1,6 @@
 from __future__ import annotations
 
 from dataclasses import dataclass, field
-from typing import Any, List
-
-
-@dataclass
-class Parameter:
-    key: Any
-    value: Any
 
 
 @dataclass
@@ -28,7 +21,7 @@ class ConnectionParameters:
 
 @dataclass
 class QueryResponse:
-    response: Any
+    response: str
 
 
 @dataclass

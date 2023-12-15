@@ -1,10 +1,9 @@
 from __future__ import annotations
 
+import importlib
 import json
 import logging
-import importlib
 from dataclasses import dataclass, field
-from typing import Dict, List, Optional
 
 from cimgraph.models.graph_model import GraphModel
 
@@ -32,20 +31,17 @@ class BusBranchModel(GraphModel):
         self.graph = self.connection.create_new_graph(container)
 
     def initialize_distributed_model(self, container) -> None:
-        if len(self.distributed_hierarchy) > 0:
-            for container_class in self.distributed_hierarchy:
-                container_type = container_class.__class__.__name__
-                setattr(self, container_type + 's', [])
-                #TODO: create subclasses based on pre-defined topology
-        else:
-            centralized_graph = self.connection.create_new_graph(container)
-            self.get_all_edges(self.cim.PowerTransformer, centralized_graph)
-            self.get_all_edges(self.cim.TransformerTank, centralized_graph)
-            self.get_all_edges(self.cim.BaseVoltage, centralized_graph)
-
-            DistTopo = DistributedFeederTopology(self.connection, self.cim_profile,
-                                                 centralized_graph)
-            self.switch_areas, self.graph = DistTopo.create_distributed_graph()
+        pass
+        # if len(self.distributed_hierarchy) > 0:
+        #     for container_class in self.distributed_hierarchy:
+        #         container_type = container_class.__class__.__name__
+        #         setattr(self, container_type + 's', [])
+        #         #TODO: create subclasses based on pre-defined topology
+        # else:
+        #     centralized_graph = self.connection.create_new_graph(container)
+        #     self.get_all_edges(self.cim.PowerTransformer, centralized_graph)
+        #     self.get_all_edges(self.cim.TransformerTank, centralized_graph)
+        #     self.get_all_edges(self.cim.BaseVoltage, centralized_graph)
 
 
 #             self.linknet = LinkNet(self.cim_profile, centralized_graph)

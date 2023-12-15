@@ -1,15 +1,11 @@
 from __future__ import annotations
 
-from dataclasses import dataclass, field
-from multiprocessing import connection
-from typing import Dict, List, Optional
-
-from debugpy import connect
-
 from cimgraph.data_profile.known_problem_classes import ClassesWithoutMRID
+from cimgraph.databases import ConnectionInterface
 
 
-def get_all_edges_sparql(cim_class: str, mrid_list: List, connection_params) -> str:
+def get_all_edges_sparql(cim_class: str, mrid_list: list[str],
+                         connection_params: ConnectionInterface) -> str:
     """
     Generates SPARQL query string for a given catalog of objects and feeder id
     Args:

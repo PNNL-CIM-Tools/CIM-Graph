@@ -1,16 +1,11 @@
 from __future__ import annotations
 
-import json
 import logging
-import importlib
 from dataclasses import dataclass, field
-from typing import Dict, List, Optional
 
 from cimgraph.databases import ConnectionInterface
-from cimgraph.models.graph_model import GraphModel
 from cimgraph.models.distributed_area import DistributedArea, create_hierarchy_level
-
-from pprint import pprint as pypprint
+from cimgraph.models.graph_model import GraphModel
 
 _log = logging.getLogger(__name__)
 
@@ -51,11 +46,11 @@ class NodeBreakerModel(GraphModel):
         else:    # Log error thant no connection was specified
             _log.error('A ConnectionInterface must be specified')
 
-    def initialize_centralized_model(self, container) -> None:
+    def initialize_centralized_model(self, container: object) -> None:
         self.graph = self.connection.create_new_graph(container)
         self.add_to_graph(container)
 
-    def initialize_distributed_model(self, container) -> None:
+    def initialize_distributed_model(self, container: object) -> None:
 
         # # Use output from GridAPPS-D Topology Processor if given
         # if self.topology_message != {}:
@@ -92,4 +87,6 @@ class NodeBreakerModel(GraphModel):
         self.add_to_graph(self.container)
         self.get_all_edges(self.container.__class__)
         self.distributed_areas = {}
-        self.distristributed_areas = create_hierarchy_level(self, self.distributed_hierarchy, top_level=True)
+        self.distristributed_areas = create_hierarchy_level(self,
+                                                            self.distributed_hierarchy,
+                                                            top_level=True)

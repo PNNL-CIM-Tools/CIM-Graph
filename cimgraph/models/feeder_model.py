@@ -1,15 +1,13 @@
 from __future__ import annotations
-import uuid
+
+import importlib
 import json
 import logging
-import importlib
-
+import uuid
 from dataclasses import dataclass, field
-from typing import Dict, List, Optional
 
-from cimgraph.models.graph_model import new_mrid
-from cimgraph.models.graph_model import GraphModel
 from cimgraph.models.distributed_area import DistributedArea, DistributedTopology
+from cimgraph.models.graph_model import GraphModel, new_mrid
 
 _log = logging.getLogger(__name__)
 
@@ -51,11 +49,11 @@ class FeederModel(GraphModel):
         else:    # Log error thant no connection was specified
             _log.error('A ConnectionInterface must be specified')
 
-    def initialize_centralized_model(self, container) -> None:
+    def initialize_centralized_model(self, container: object) -> None:
         # Build graph model using database-specific routine
         self.graph = self.connection.create_new_graph(container)
 
-    def initialize_distributed_model(self, container) -> None:
+    def initialize_distributed_model(self, container: object) -> None:
         centralized_graph = self.connection.create_new_graph(
             container)    # Initialize centralized graph model
 

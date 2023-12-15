@@ -1,12 +1,11 @@
 from __future__ import annotations
 
 from dataclasses import dataclass, field
-from typing import Dict, List, Optional
 
 from cimgraph.data_profile.known_problem_classes import ClassesWithoutMRID
 
 
-def get_all_edges_ontotext(cim_class: str, mrid_list: List, namespace: str,
+def get_all_edges_ontotext(cim_class: type, mrid_list: list[str], namespace: str,
                            iec61970_301: int) -> str:
     """
     Generates SPARQL query string for a given catalog of objects and feeder id

@@ -5,17 +5,14 @@ import importlib
 import logging
 import math
 import os
-from typing import Dict, List
 
 import nest_asyncio
-from neo4j import AsyncGraphDatabase, GraphDatabase
 from neo4j.exceptions import DriverError, Neo4jError
 from rdflib import Graph, URIRef
 
 import cimgraph.queries.cypher as cypher
 from cimgraph.databases import ConnectionInterface, ConnectionParameters, QueryResponse
-
-# from cimgraph.models.model_parsers import add_to_graph, add_to_catalog, item_dump
+from neo4j import AsyncGraphDatabase, GraphDatabase
 
 nest_asyncio.apply()
 
@@ -125,30 +122,27 @@ class Neo4jConnection(ConnectionInterface):
 
         return graph
 
-    def get_edges_query(self, container: str | cim.ConnectivityNodeContainer,
-                        graph: dict[type, dict[str, object]], cim_class: type):
+    def get_edges_query(self, graph: dict[type, dict[str, object]], cim_class: type) -> str:
 
         eq_mrids = list(graph[cim_class].keys())[0:100]
         cypher_message = cypher.get_all_edges_cypher(cim_class, eq_mrids, self.namespace)
 
         return cypher_message
 
-    def get_all_edges(self, container: str | cim.ConnectivityNodeContainer,
-                      graph: dict[type, dict[str, object]], cim_class: type):
+    def get_all_edges(self, graph: dict[type, dict[str, object]], cim_class: type) -> None:
         mrid_list = list(graph[cim_class].keys())
         num_nodes = len(mrid_list)
-        asyncio.run(self.get_all_edges_async(mrid_list, container, graph, cim_class))
+        asyncio.run(self.get_all_edges_async(mrid_list, graph, cim_class))
 
-    async def get_all_edges_async(self, mrid_list, container: str | cim.ConnectivityNodeContainer,
-                                  graph: dict[type, dict[str, object]], cim_class: type):
+    async def get_all_edges_async(self, mrid_list, graph: dict[type, dict[str, object]],
+                                  cim_class: type):
         for f in asyncio.as_completed([
-                self.edge_query_parser(mrid_list, index, container, graph, cim_class)
+                self.edge_query_parser(mrid_list, index, graph, cim_class)
                 for index in range(math.ceil(len(mrid_list) / 100))
         ]):
             await f
 
-    async def edge_query_parser(self, mrid_list, index,
-                                container: str | cim.ConnectivityNodeContainer,
+    async def edge_query_parser(self, mrid_list: list[str], index: int,
                                 graph: dict[type, dict[str, object]], cim_class: type):
         eq_mrids = mrid_list[index * 100:(index + 1) * 100]
         #generate cypher message from correct loaders>cypher python script based on class name
@@ -217,10 +211,11 @@ class Neo4jConnection(ConnectionInterface):
                     try:
                         reverse_attribute = reverse_uri.split('#')[1].split('.')[
                             1]    # split string
-                        self.create_edge(graph, cim_class, mRID, reverse_attribute, edge_class,
-                                         edge_mRID)
                     except:
-                        _log.warning(f'attribute {attr} missing from data profile')
+                        _log.warning(f'{cim_class.__name__} does not have attribute {attr}')
+
+                    self.create_edge(graph, cim_class, mRID, reverse_attribute, edge_class,
+                                     edge_mRID)
 
                 else:    # fallback to use basic logic to identify
                     if attribute[

@@ -1,14 +1,15 @@
 from __future__ import annotations
-import math
-import importlib
+
 import logging
 import os
-from zipfile import ZipFile, ZIP_DEFLATED
+from zipfile import ZIP_DEFLATED, ZipFile
 
 from cimgraph.models.graph_model import GraphModel, json_dump
+
 _log = logging.getLogger(__name__)
 
-def write_csv(network:GraphModel, destination) -> None:
+
+def write_csv(network: GraphModel, destination: str) -> None:
 
     try:
         os.remove(f'{destination}/{network.container.mRID}.zip')
@@ -36,11 +37,11 @@ def write_csv(network:GraphModel, destination) -> None:
                 for attr in list(obj.keys()):
 
                     if 'List' in fields[attr].type:
-                        row.append(f'"{obj[attr]}"') # JSON-LD List of RDF links
+                        row.append(f'"{obj[attr]}"')    # JSON-LD List of RDF links
                     elif 'float' in fields[attr].type:
-                        row.append(obj[attr]) # float
+                        row.append(obj[attr])    # float
                     else:
-                        row.append(f'"{obj[attr]}"') # free text
+                        row.append(f'"{obj[attr]}"')    # free text
                 csv_row = ','.join(row)
                 csv_file.write(f'{csv_row}\n')
 

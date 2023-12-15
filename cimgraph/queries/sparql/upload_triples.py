@@ -1,15 +1,17 @@
 from __future__ import annotations
-import re
-import logging
+
 import enum
 import importlib
+import logging
+import re
 
+from cimgraph.databases import ConnectionInterface
 from cimgraph.models.graph_model import json_dump
 
 _log = logging.getLogger(__name__)
 
 
-def upload_triples_sparql(obj, params):
+def upload_triples_sparql(obj: object, params: ConnectionInterface) -> str:
     """
     Generates SPARQL query string to upload graph model changes to database
     Args:
