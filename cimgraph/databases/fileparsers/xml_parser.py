@@ -12,7 +12,7 @@ from xsdata.formats.dataclass.serializers import XmlSerializer
 from xsdata.formats.dataclass.serializers.config import SerializerConfig
 
 import cimgraph.queries.sparql as sparql
-from cimgraph.databases import ConnectionInterface, ConnectionParameters, Parameter, QueryResponse
+from cimgraph.databases import ConnectionInterface, QueryResponse
 
 __xml_context__ = XmlContext()
 __parser_config__ = ParserConfig(fail_on_unknown_attributes=True, fail_on_unknown_properties=True)

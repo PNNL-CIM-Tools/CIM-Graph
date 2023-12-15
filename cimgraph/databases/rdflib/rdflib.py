@@ -10,7 +10,7 @@ from rdflib import Graph, Namespace, URIRef
 from rdflib.namespace import RDF
 
 import cimgraph.queries.rdflib as sparql
-from cimgraph.databases import ConnectionInterface, ConnectionParameters, Parameter, QueryResponse
+from cimgraph.databases import ConnectionInterface, ConnectionParameters, QueryResponse
 from cimgraph.models.graph_model import GraphModel
 
 _log = logging.getLogger(__name__)
