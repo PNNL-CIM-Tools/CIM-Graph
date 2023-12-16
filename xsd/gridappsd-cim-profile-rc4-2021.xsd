@@ -9440,7 +9440,7 @@
 					<xs:element name="heatingSystem" minOccurs="1" maxOccurs="1" type="cim:HouseHeating" sawsdl:modelReference="http://iec.ch/TC57/CIM#House.heatingSystem"/>
 					<xs:element name="hvacPowerFactor" minOccurs="1" maxOccurs="1" type="xs:float" sawsdl:modelReference="http://iec.ch/TC57/CIM#House.hvacPowerFactor"/>
 					<xs:element name="numberOfStories" minOccurs="1" maxOccurs="1" type="xs:integer" sawsdl:modelReference="http://iec.ch/TC57/CIM#House.numberOfStories"/>
-					<xs:element name="ServicePanel" minOccurs="1" maxOccurs="1" type="cim:EnergyConsumer" sawsdl:modelReference="http://iec.ch/TC57/CIM#House.ServicePanel"/>
+					<xs:element name="EnergyConsumer" minOccurs="1" maxOccurs="1" type="cim:EnergyConsumer" sawsdl:modelReference="http://iec.ch/TC57/CIM#House.EnergyConsumer"/>
 					<xs:element name="ThermostatController" minOccurs="0" maxOccurs="1" type="cim:ThermostatController" sawsdl:modelReference="http://iec.ch/TC57/CIM#House.ThermostatController"/>
 				</xs:sequence>
 			</xs:extension>
