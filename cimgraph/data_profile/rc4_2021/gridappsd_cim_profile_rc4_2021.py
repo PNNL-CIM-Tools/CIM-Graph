@@ -11041,7 +11041,7 @@ class House(IdentifiedObject):
             "required": True,
         }
     )
-    ServicePanel: Optional["EnergyConsumer"] = field(
+    EnergyConsumer: Optional["EnergyConsumer"] = field(
         default=None,
         metadata={
             "type": "Element",
