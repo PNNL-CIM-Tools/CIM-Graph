@@ -21,6 +21,10 @@
           description: "Is this a dry-run?"
           type: boolean
           default: false
+        letter:
+          description: "Letter for pre-release"
+          type: string
+          default: b
       
   defaults:
     run:
@@ -41,6 +45,7 @@
       with:
         version-strategy: ${{inputs.version-strategy}}
         dry-run: ${{inputs.dry-run}}
+        letter: ${{inputs.letter}}
       secrets:
         git-token: ${{ secrets.GITHUB_TOKEN }}
         pypi-token: ${{ secrets.PYPI_TOKEN }}
