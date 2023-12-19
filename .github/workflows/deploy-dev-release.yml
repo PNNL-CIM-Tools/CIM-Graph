@@ -6,6 +6,21 @@
       branches:
       - develop
     workflow_dispatch:
+      inputs:
+        version-strategy:
+          description: "Strategy for next version"
+          type: string
+          options:
+            - DATE
+            - PATCH
+            - MINOR
+            - MAJOR
+            -
+          default: ''
+        dry-run:
+          description: "Publish artifacts or just print out results?"
+          type: boolean
+          default: true
       
   defaults:
     run:
@@ -22,7 +37,10 @@
         contents: write  # To push a branch
         pull-requests: write  # To create a PR from that branch
   
-      uses: GRIDAPPSD/.github/.github/workflows/deploy-dev-release.yml@main
+      uses: GRIDAPPSD/.github/.github/workflows/deploy-dev-release.yml@v2
+      with:
+        version-strategy: ${{inputs.version-strategy}}
+        dry-run: ${{inputs.dry-run}}
       secrets:
         git-token: ${{ secrets.GITHUB_TOKEN }}
         pypi-token: ${{ secrets.PYPI_TOKEN }}
