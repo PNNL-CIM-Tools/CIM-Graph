@@ -18,9 +18,9 @@
             -
           default: ''
         dry-run:
-          description: "Publish artifacts or just print out results?"
+          description: "Is this a dry-run?"
           type: boolean
-          default: true
+          default: false
       
   defaults:
     run:
