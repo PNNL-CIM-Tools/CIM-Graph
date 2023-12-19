@@ -9,13 +9,12 @@
       inputs:
         version-strategy:
           description: "Strategy for next version"
-          type: string
+          type: choice
           options:
             - DATE
             - PATCH
             - MINOR
             - MAJOR
-            -
           default: ''
         dry-run:
           description: "Is this a dry-run?"
