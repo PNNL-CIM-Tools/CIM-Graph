@@ -8,14 +8,15 @@
     workflow_dispatch:
       inputs:
         version-strategy:
-          description: "Strategy for next version"
+          description: "Strategy for next version (NONE just increments patch release)"
           type: choice
           options:
             - DATE
             - PATCH
             - MINOR
             - MAJOR
-          default: ''
+            - NONE
+          default: 'NONE'
         dry-run:
           description: "Is this a dry-run?"
           type: boolean
