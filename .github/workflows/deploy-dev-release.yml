@@ -25,7 +25,6 @@
           description: "Letter for pre-release"
           type: string
           default: b
-      
   defaults:
     run:
       shell: bash
@@ -40,7 +39,6 @@
       permissions:
         contents: write  # To push a branch
         pull-requests: write  # To create a PR from that branch
-  
       uses: GRIDAPPSD/.github/.github/workflows/deploy-dev-release.yml@v2
       with:
         version-strategy: ${{inputs.version-strategy}}
