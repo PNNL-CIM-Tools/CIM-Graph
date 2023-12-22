@@ -84,7 +84,7 @@ class Neo4jConnection(ConnectionInterface):
     def create_new_graph(self, container: object) -> dict[type, dict[str, object]]:
         graph = {}
         # Generate cypher message from correct loaders>cypher python script based on class name
-        cypher_message = cypher.get_all_nodes_cypher(container, self.namespace)
+        cypher_message = cypher.get_all_nodes_from_container(container, self.namespace)
         # Execute cypher query
 
         query_output = asyncio.run(self.execute(cypher_message))
@@ -120,6 +120,11 @@ class Neo4jConnection(ConnectionInterface):
             setattr(graph[self.cim.Terminal][terminal], 'ConductingEquipment',
                     graph[eq_class][eq_id])
 
+        return graph
+
+    def create_graph_from_list(self, mrid_list: list[str]) -> dict[type, dict[str, object]]:
+        graph = {}
+        _log.warning('not supported yet for neo4j')
         return graph
 
     def get_edges_query(self, graph: dict[type, dict[str, object]], cim_class: type) -> str:

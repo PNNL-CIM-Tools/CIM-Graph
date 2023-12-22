@@ -3,7 +3,7 @@ from __future__ import annotations
 from dataclasses import dataclass, field
 
 
-def get_all_nodes_cypher(container: object, namespace: str):
+def get_all_nodes_from_container(container: object, namespace: str):
     """
     Generates SPARQL query string for all nodes, terminals, and conducting equipment
     Args:
