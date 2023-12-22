@@ -326,7 +326,7 @@ def create_hierarchy_level(network: GraphModel, hierarchy: dict,
 
 
 @dataclass
-class AddressableEquipment():
+class AddressableEquipment:
 
     def __init__(self, cim):
         self.cim = cim
