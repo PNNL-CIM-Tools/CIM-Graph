@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 
-def get_all_nodes_sparql(container: object, namespace: str) -> str:
+def get_all_nodes_from_container(container: object, namespace: str) -> str:
     """
     Generates SPARQL query string for all nodes, terminals, and conducting equipment
     Args:
@@ -16,7 +16,7 @@ def get_all_nodes_sparql(container: object, namespace: str) -> str:
         PREFIX r:  <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
         PREFIX cim:  <%s>""" % namespace
     query_message += """
-        SELECT  ?ConnectivityNode ?Terminal ?Equipment
+        SELECT DISTINCT ?ConnectivityNode ?Terminal ?Equipment
         WHERE {
           ?c r:type cim:%s.""" % container_class
     query_message += """
@@ -54,5 +54,46 @@ def get_all_nodes_sparql(container: object, namespace: str) -> str:
         }
         }
         """ % (namespace, namespace)
+
+    return query_message
+
+
+def get_all_nodes_from_list(mrid_list: list[str], namespace: str) -> str:
+    """
+    Generates SPARQL query string for all nodes, terminals, and conducting equipment
+    Args:
+
+    Returns:
+        query_message: query string that can be used in blazegraph connection or STOMP client
+    """
+    query_message = f"""
+        PREFIX r:  <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+        PREFIX cim:  <{namespace}>"""
+    query_message += """
+        SELECT DISTINCT ?ConnectivityNode ?Terminal ?Equipment
+        WHERE {
+          ?c r:type cim:ConnectivityNode"""
+    query_message += """
+        VALUES ?ConnectivityNode {"""
+    # add all equipment mRID
+    for mrid in mrid_list:
+        query_message += f' "{mrid}" \n'
+    query_message += '               }'
+
+    # add all attributes
+    query_message += """
+                {
+        ?node cim:IdentifiedObject.mRID ?ConnectivityNode.
+
+        ?t cim:Terminal.ConnectivityNode ?node.
+        ?t cim:IdentifiedObject.mRID ?Terminal.
+        ?t cim:Terminal.ConductingEquipment ?eq.
+
+        ?eq cim:IdentifiedObject.mRID ?eq_id.
+        ?eq a ?eq_cls.
+        bind(concat("{\\"@id\\":\\"", str(?eq_id),"\\",\\"@type\\":\\"",strafter(str(?eq_cls),"%s"), "\\"}") as ?Equipment)
+        }
+        }
+        """ % namespace
 
     return query_message

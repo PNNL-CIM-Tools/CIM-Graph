@@ -17,17 +17,124 @@ class DistributedArea(GraphModel):
         self.graph = {}
         self.distributed_areas = []
 
-    def build_from_topo_message(self, topology_dict, centralized_graph):
-        for node_mrid in topology_dict['connectivity_node']:
-            try:
-                node = centralized_graph[self.cim.ConnectivityNode][node_mrid]
-            except:
-                _log.warning('node ' + str(node_mrid) + ' not in feeder')
+    def build_from_topo_message(self, topology_dict: dict, centralized_graph: dict = {}):
+        AddrEquip = AddressableEquipment(self.cim)
+        UnaddrEquip = UnaddressableEquipment(self.cim)
+        if centralized_graph:
+            for node_mrid in topology_dict['connectivity_node']:
+                try:
+                    node = centralized_graph[self.cim.ConnectivityNode][node_mrid]
+                except:
+                    _log.warning('node ' + str(node_mrid) + ' not in feeder')
 
-            self.add_to_graph(node)
-            for terminal in node.Terminals:
-                self.add_to_graph(terminal)
-                self.add_to_graph(terminal.ConductingEquipment)
+                self.add_to_graph(node)
+                for terminal in node.Terminals:
+                    self.add_to_graph(terminal)
+                    self.add_to_graph(terminal.ConductingEquipment)
+        else:
+            node_list = topology_dict['connectivity_node']
+            self.connection.build_graph_from_list(self.graph, node_list)
+            self.addressable_equipment = {}
+            self.unaddressable_equipment = {}
+            AddrEquip.identify_addressable(addressable_equipment=self.addressable_equipment,
+                                           graph=self.graph)
+            UnaddrEquip.identify_unaddressable(
+                unaddressable_equipment=self.unaddressable_equipment, graph=self.graph)
+
+            if 'switch_areas' in topology_dict:
+                sw_counter = -1
+                for switch_topo in topology_dict['switch_areas']:
+                    sw_counter = sw_counter + 1
+                    node_list = switch_topo['connectivity_node']
+                    self.connection.build_graph_from_list(self.graph, node_list)
+                    # Create a new DistributedArea object for each switch area in message
+                    switch_area_id = str(self.container.mRID) + '.' + str(sw_counter)
+                    switch_container = self.cim.EquipmentContainer(mRID=switch_area_id)
+                    SwitchArea = DistributedArea(connection=self.connection,
+                                                 container=switch_container,
+                                                 distributed=True)
+                    SwitchArea.build_from_topo_message(switch_topo, self.graph)
+                    # Identify addressable and unaddressable
+                    SwitchArea.addressable_equipment = {}
+                    SwitchArea.unaddressable_equipment = {}
+                    UnaddrEquip.identify_unaddressable(
+                        unaddressable_equipment=self.unaddressable_equipment,
+                        graph=SwitchArea.graph)
+                    UnaddrEquip.identify_unaddressable(
+                        unaddressable_equipment=SwitchArea.unaddressable_equipment,
+                        graph=SwitchArea.graph)
+                    AddrEquip.identify_addressable(
+                        addressable_equipment=SwitchArea.addressable_equipment,
+                        graph=SwitchArea.graph)
+                    AddrEquip.identify_addressable(
+                        addressable_equipment=self.unaddressable_equipment, graph=SwitchArea.graph)
+                    # Add to FeederArea
+                    SwitchArea.distributed_areas = []    # Initialize secondary areas list
+                    self.distributed_areas.append(
+                        SwitchArea)    # Add new DistributedArea class to list
+
+                    if 'secondary_areas' in switch_topo:
+                        sa_counter = -1
+                        for secondary_topo in switch_topo['secondary_areas']:
+                            sa_counter = sa_counter + 1
+                            node_list = secondary_topo['connectivity_node']
+                            self.connection.build_graph_from_list(self.graph, node_list)
+                            sec_area_id = str(self.container.mRID) + '.' + str(
+                                sw_counter) + '.' + str(sa_counter)
+                            secondary_container = self.cim.EquipmentContainer(mRID=sec_area_id)
+                            SecondaryArea = DistributedArea(connection=self.connection,
+                                                            container=secondary_container,
+                                                            distributed=True)
+                            SecondaryArea.build_from_topo_message(secondary_topo, self.graph)
+                            SwitchArea.distributed_areas.append(SecondaryArea)
+                            SecondaryArea.addressable_equipment = {}
+                            SecondaryArea.unaddressable_equipment = {}
+                            UnaddrEquip.identify_unaddressable(
+                                unaddressable_equipment=self.unaddressable_equipment,
+                                graph=SecondaryArea.graph)
+                            UnaddrEquip.identify_unaddressable(
+                                unaddressable_equipment=SwitchArea.unaddressable_equipment,
+                                graph=SecondaryArea.graph)
+                            UnaddrEquip.identify_unaddressable(
+                                unaddressable_equipment=SecondaryArea.unaddressable_equipment,
+                                graph=SecondaryArea.graph)
+                            AddrEquip.identify_addressable(
+                                addressable_equipment=self.unaddressable_equipment,
+                                graph=SecondaryArea.graph)
+                            AddrEquip.identify_addressable(
+                                addressable_equipment=SwitchArea.unaddressable_equipment,
+                                graph=SecondaryArea.graph)
+                            AddrEquip.identify_addressable(
+                                addressable_equipment=SecondaryArea.addressable_equipment,
+                                graph=SecondaryArea.graph)
+
+            if 'secondary_areas' in topology_dict:
+                sa_counter = -1
+                for secondary_topo in topology_dict['secondary_areas']:
+                    sa_counter = sa_counter + 1
+                    node_list = secondary_topo['connectivity_node']
+                    self.connection.build_graph_from_list(self.graph, node_list)
+                    secondary_container = self.cim.EquipmentContainer(mRID=self.container.mRID +
+                                                                      '.' + str(sa_counter))
+                    SecondaryArea = DistributedArea(connection=self.connection,
+                                                    container=secondary_container,
+                                                    distributed=True)
+                    SecondaryArea.build_from_topo_message(secondary_topo, self.graph)
+                    SecondaryArea.addressable_equipment = {}
+                    SecondaryArea.unaddressable_equipment = {}
+                    UnaddrEquip.identify_unaddressable(
+                        unaddressable_equipment=self.unaddressable_equipment,
+                        graph=SecondaryArea.graph)
+                    UnaddrEquip.identify_unaddressable(
+                        unaddressable_equipment=SecondaryArea.unaddressable_equipment,
+                        graph=SecondaryArea.graph)
+                    AddrEquip.identify_addressable(
+                        addressable_equipment=self.unaddressable_equipment,
+                        graph=SecondaryArea.graph)
+                    AddrEquip.identify_addressable(
+                        addressable_equipment=SecondaryArea.addressable_equipment,
+                        graph=SecondaryArea.graph)
+                    self.distributed_areas.append(SecondaryArea)
 
 
 class DistributedTopology():
@@ -216,3 +323,43 @@ def create_hierarchy_level(network: GraphModel, hierarchy: dict,
                                                                        lower_hierarchy,
                                                                        top_level=False)
     return network.distributed_areas
+
+
+@dataclass
+class AddressableEquipment():
+
+    def __init__(self, cim):
+        self.cim = cim
+        self.addressable_classes = [
+            self.cim.AsynchronousMachine, self.cim.Breaker, self.cim.Disconnector,
+            self.cim.EnergyConsumer, self.cim.LinearShuntCompensator, self.cim.LoadBreakSwitch,
+            self.cim.PowerElectronicsConnection, self.cim.RatioTapChanger, self.cim.Sectionaliser,
+            self.cim.ShuntCompensator, self.cim.Switch, self.cim.SynchronousMachine
+        ]
+
+    def identify_addressable(self, addressable_equipment: dict, graph: dict) -> None:
+        for class_type in self.addressable_classes:
+            if class_type in graph:
+                if class_type not in addressable_equipment:
+                    addressable_equipment[class_type] = {}
+                for mrid in graph[class_type]:
+                    addressable_equipment[class_type][mrid] = graph[class_type][mrid]
+
+
+@dataclass
+class UnaddressableEquipment():
+
+    def __init__(self, cim):
+        self.cim = cim
+        self.unaddressable_classes = [
+            self.cim.ACLineSegment, self.cim.EnergySource, self.cim.Fuse,
+            self.cim.PowerTransformer, self.cim.TransformerTank
+        ]
+
+    def identify_unaddressable(self, unaddressable_equipment: dict, graph: dict) -> None:
+        for class_type in self.unaddressable_classes:
+            if class_type in graph:
+                if class_type not in unaddressable_equipment:
+                    unaddressable_equipment[class_type] = {}
+                for mrid in graph[class_type]:
+                    unaddressable_equipment[class_type][mrid] = graph[class_type][mrid]

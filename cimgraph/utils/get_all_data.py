@@ -95,8 +95,8 @@ def get_all_bus_data(network: GraphModel) -> None:
     cim = importlib.import_module(f'cimgraph.data_profile.{cim_profile}')
     network.get_all_edges(cim.ConnectivityNode)
     network.get_all_edges(cim.Terminal)
-    network.get_all_edges(cim.TopologicalNode)
-    network.get_all_edges(cim.TopologicalIsland)
+    # network.get_all_edges(cim.TopologicalNode)
+    # network.get_all_edges(cim.TopologicalIsland)
 
 
 def get_all_measurement_data(network: GraphModel) -> None:
