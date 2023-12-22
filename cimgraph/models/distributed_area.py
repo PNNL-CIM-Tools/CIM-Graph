@@ -347,7 +347,7 @@ class AddressableEquipment:
 
 
 @dataclass
-class UnaddressableEquipment():
+class UnaddressableEquipment:
 
     def __init__(self, cim):
         self.cim = cim
