@@ -37,6 +37,10 @@
   jobs:
     setup-defaults:
       runs-on: ubuntu-22.04
+      outputs:
+        dry_run: ${{ steps.defaults.dry_run }}
+        letter: ${{ steps.defaults.letter }}
+        strategy: ${{ steps.defaults.strategy }}
       steps:
         - name: Create output variables for call-deploy-release
           id: defaults
