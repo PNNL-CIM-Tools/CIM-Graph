@@ -1,5 +1,5 @@
 ---
-  name: Deploy Pre-Release Artifacts
+  name: Pre-Release Package
 
   on:
     push:
@@ -57,7 +57,7 @@
         pull-requests: write  # To create a PR from that branch
       with:
         version-strategy: ${{ needs.setup-defaults.outputs.strategy }}
-        dry-run: ${{ needs.setup-defaults.outputs.dry_run |}
+        dry-run: ${{ needs.setup-defaults.outputs.dry_run }}
         letter: ${{ needs.setup-defaults.outputs.letter }}
       secrets:
         git-token: ${{ secrets.GITHUB_TOKEN }}
