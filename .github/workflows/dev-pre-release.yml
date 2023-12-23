@@ -55,7 +55,7 @@
             echo "letter=${LETTER:-b}" >> "$GITHUB_OUTPUT"
             echo "strategy=${VERSION_STRATEGY:-PATCH}" >> "$GITHUB_OUTPUT"
 
-            echo "Dry Run AFTER $DRY_RUN"
+            echo "Dry Run AFTER ${{ env.dry_run }}"
 
     echo-output:
       needs: setup-defaults
