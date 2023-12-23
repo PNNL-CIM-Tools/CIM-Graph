@@ -71,9 +71,12 @@ class FeederModel(GraphModel):
             self.graph = self.FeederArea.graph
 
             self.distributed_areas = []    # Initialize list of switch areas
+            sw_counter = -1
             for switch_topo in feeder_topo['switch_areas']:
+                sw_counter = sw_counter + 1
                 # Create a new DistributedArea object for each switch area in message
-                switch_container = self.cim.EquipmentContainer(mRID=new_mrid())
+                switch_area_id = str(self.container.mRID) + '.' + str(sw_counter)
+                switch_container = self.cim.EquipmentContainer(mRID=switch_area_id)
                 SwitchArea = DistributedArea(connection=self.connection,
                                              container=switch_container,
                                              distributed=True)
@@ -81,10 +84,13 @@ class FeederModel(GraphModel):
                 SwitchArea.distributed_areas = []    # Initialize secondary areas list
                 self.distributed_areas.append(
                     SwitchArea)    # Add new DistributedArea class to list
-
+                sa_counter = -1
                 for secondary_topo in switch_topo['secondary_areas']:
+                    sa_counter = sa_counter + 1
                     # Create a new DistributedArea object for each secondary area
-                    secondary_container = self.cim.EquipmentContainer(mRID=new_mrid())
+                    sec_area_id = str(
+                        self.container.mRID) + '.' + str(sw_counter) + '.' + str(sa_counter)
+                    secondary_container = self.cim.EquipmentContainer(mRID=sec_area_id)
                     SecondaryArea = DistributedArea(connection=self.connection,
                                                     container=secondary_container,
                                                     distributed=True)

@@ -74,8 +74,12 @@ class GridappsdConnection(ConnectionInterface):
     def create_new_graph(self, container: object) -> dict[type, dict[str, object]]:
         graph = {}
         # Get all nodes, terminal, and equipment by
-        sparql_message = sparql.get_all_nodes_sparql(container, self.namespace)
+        sparql_message = sparql.get_all_nodes_from_container(container, self.namespace)
         query_output = self.execute(sparql_message)
+        graph = self.parse_node_query(graph, query_output)
+        return graph
+
+    def parse_node_query(self, graph: dict, query_output: dict) -> dict[type, dict[str, object]]:
 
         for result in query_output['results']['bindings']:
             # Parse query results
@@ -92,7 +96,7 @@ class GridappsdConnection(ConnectionInterface):
                 equipment = self.create_object(graph, eq_class, eq_id)
 
             else:
-                _log.warning(f'object class missing from data profile: {eq_class}')
+                _log.warning('object class missing from data profile:' + str(eq_class))
                 continue
             # Link objects in graph
             if terminal not in equipment.Terminals:
@@ -102,6 +106,16 @@ class GridappsdConnection(ConnectionInterface):
             setattr(terminal, 'ConnectivityNode', node)
             setattr(terminal, 'ConductingEquipment', equipment)
 
+        return graph
+
+    def build_graph_from_list(self, graph, mrid_list: list[str]) -> dict[type, dict[str, object]]:
+        for index in range(math.ceil(len(mrid_list) / 100)):
+            eq_mrids = mrid_list[index * 100:(index + 1) * 100]
+            #generate SPARQL message from correct loaders>sparql python script based on class name
+            sparql_message = sparql.get_all_nodes_from_list(eq_mrids, self.namespace)
+            # print(sparql_message)
+            query_output = self.execute(sparql_message)
+            graph = self.parse_node_query(graph, query_output)
         return graph
 
     def get_edges_query(self, graph: dict[type, dict[str, object]], cim_class: type):

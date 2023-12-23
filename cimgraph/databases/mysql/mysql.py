@@ -57,7 +57,7 @@ class MySQLJSONConnection(ConnectionInterface):
     def create_new_graph(self, container: object) -> dict[type, dict[str, object]]:
         graph = {}
         # Get all nodes, terminal, and equipment by
-        sparql_message = sparql.get_all_nodes_sparql(container, self.namespace)
+        sparql_message = sparql.get_all_nodes_from_container(container, self.namespace)
         query_output = self.execute(sparql_message)
 
         for result in query_output['results']['bindings']:
