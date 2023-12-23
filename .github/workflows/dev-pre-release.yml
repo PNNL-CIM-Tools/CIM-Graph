@@ -51,9 +51,9 @@
 
             echo "Dry Run Before $DRY_RUN"
 
-            echo "dry_run=${DRY_RUN:-"false"}" >> "$GITHUB_OUTPUT"
-            echo "letter=${LETTER:-"b"}" >> "$GITHUB_OUTPUT"
-            echo "strategy=${VERSION_STRATEGY:-"PATCH"}" >> "$GITHUB_OUTPUT"
+            echo "dry_run=${DRY_RUN:-false}" >> "$GITHUB_OUTPUT"
+            echo "letter=${LETTER:-b}" >> "$GITHUB_OUTPUT"
+            echo "strategy=${VERSION_STRATEGY:-PATCH}" >> "$GITHUB_OUTPUT"
 
             echo "Dry Run AFTER $DRY_RUN"
 
