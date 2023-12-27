@@ -70,7 +70,7 @@
         id: echo
         run: |
           echo "Dry Run: ${{ needs.setup-defaults.outputs.dry_run }}"
-          echo "Leter: ${{ needs.setup-defaults.outputs.letter }}"
+          echo "Leter: ${{ needs.setup-defaults.outputs.letter == 'true' }}"
           echo "strategy: ${{ needs.setup-defaults.outputs.strategy }}"
       
     call-deploy-release:
@@ -81,7 +81,8 @@
         pull-requests: write  # To create a PR from that branch
       with:
         version-strategy: ${{ needs.setup-defaults.outputs.strategy }}
-        dry-run: ${{ needs.setup-defaults.outputs.dry_run }}
+        # This seems like the only way to make it a true boolean
+        dry-run: ${{ needs.setup-defaults.outputs.dry_run == 'true' }}
         letter: ${{ needs.setup-defaults.outputs.letter }}
       secrets:
         git-token: ${{ secrets.GITHUB_TOKEN }}
