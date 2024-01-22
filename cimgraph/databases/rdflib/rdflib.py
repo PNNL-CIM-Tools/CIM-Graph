@@ -45,9 +45,15 @@ class RDFlibConnection(ConnectionInterface):
             else:
                 self.libgraph = Graph()
 
-            self.libgraph.parse(self.filename)
-            self.libgraph.bind('cim', Namespace(self.namespace))
-            self.libgraph.bind('rdf', RDF)
+            if self.filename is not None:
+                try:
+                    self.libgraph.parse(self.filename)
+                    self.libgraph.bind('cim', Namespace(self.namespace))
+                    self.libgraph.bind('rdf', RDF)
+                except:
+                    _log.warning(
+                        f'File {self.filename} not found. Defaulting to empty network graph')
+                    self.filename = None
 
     def disconnect(self):
         self.libgraph = None
@@ -59,35 +65,36 @@ class RDFlibConnection(ConnectionInterface):
 
     def create_new_graph(self, container: object) -> dict[type, dict[str, object]]:
         graph = {}
-        # Get all nodes, terminal, and equipment by
-        sparql_message = sparql.get_all_nodes_sparql(container, self.namespace)
-        query_output = self.execute(sparql_message)
+        if self.filename is not None:
+            # Get all nodes, terminal, and equipment by
+            sparql_message = sparql.get_all_nodes_sparql(container, self.namespace)
+            query_output = self.execute(sparql_message)
 
-        for result in query_output:
-            # Parse query results
-            node_mrid = str(result.ConnectivityNode)
-            term_mrid = str(result.Terminal)
-            eq = json.loads(result.Equipment)
-            eq_id = eq['@id']
-            eq_class = eq['@type']
-            # Add each object to graph
-            node = self.create_object(graph, self.cim.ConnectivityNode, node_mrid)
-            terminal = self.create_object(graph, self.cim.Terminal, term_mrid)
-            if eq_class in self.cim.__all__:
-                eq_class = eval(f'self.cim.{eq_class}')
-                equipment = self.create_object(graph, eq_class, eq_id)
+            for result in query_output:
+                # Parse query results
+                node_mrid = str(result.ConnectivityNode)
+                term_mrid = str(result.Terminal)
+                eq = json.loads(result.Equipment)
+                eq_id = eq['@id']
+                eq_class = eq['@type']
+                # Add each object to graph
+                node = self.create_object(graph, self.cim.ConnectivityNode, node_mrid)
+                terminal = self.create_object(graph, self.cim.Terminal, term_mrid)
+                if eq_class in self.cim.__all__:
+                    eq_class = eval(f'self.cim.{eq_class}')
+                    equipment = self.create_object(graph, eq_class, eq_id)
 
-            else:
-                _log.warning('object class missing from data profile:' + str(eq_class))
-                continue
-            # Link objects in graph
-            # Link objects in graph
-            if terminal not in equipment.Terminals:
-                equipment.Terminals.append(terminal)
-            if terminal not in node.Terminals:
-                node.Terminals.append(terminal)
-            setattr(terminal, 'ConnectivityNode', node)
-            setattr(terminal, 'ConductingEquipment', equipment)
+                else:
+                    _log.warning('object class missing from data profile:' + str(eq_class))
+                    continue
+                # Link objects in graph
+                # Link objects in graph
+                if terminal not in equipment.Terminals:
+                    equipment.Terminals.append(terminal)
+                if terminal not in node.Terminals:
+                    node.Terminals.append(terminal)
+                setattr(terminal, 'ConnectivityNode', node)
+                setattr(terminal, 'ConductingEquipment', equipment)
 
         return graph
 
