@@ -25,7 +25,7 @@ class GridappsdConnection(ConnectionInterface):
         self.cim = importlib.import_module('cimgraph.data_profile.' + self.cim_profile)
         self.namespace = connection_params.namespace
         self.iec61970_301 = connection_params.iec61970_301
-        self.params = connection_params
+        self.connection_params = connection_params
 
         if connection_params.host:
             os.environ['GRIDAPPSD_ADDRESS'] = connection_params.host
@@ -64,7 +64,7 @@ class GridappsdConnection(ConnectionInterface):
             self.gapps = GridAPPSD()
 
     def disconnect(self):
-        self.sparql_obj.disconnect()
+        self.gapps.disconnect()
 
     def execute(self, query_message: str) -> QueryResponse:
         self.connect()
@@ -132,7 +132,7 @@ class GridappsdConnection(ConnectionInterface):
         for index in range(math.ceil(len(mrid_list) / 100)):
             eq_mrids = mrid_list[index * 100:(index + 1) * 100]
             #generate SPARQL message from correct loaders>sparql python script based on class name
-            sparql_message = sparql.get_all_edges_sparql(cim_class, eq_mrids, self.params)
+            sparql_message = sparql.get_all_edges_sparql(cim_class, eq_mrids, self.connection_params)
             #execute sparql query
             query_output = self.execute(sparql_message)
             self.edge_query_parser(query_output, graph, cim_class)
