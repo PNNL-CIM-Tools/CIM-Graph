@@ -303,7 +303,9 @@ def create_hierarchy_level(network: GraphModel, hierarchy: dict,
 
         network.get_all_edges(container_class)
         if container_class in network.graph:
-            for container in network.graph[container_class].values():
+            containers = list(network.graph[container_class].keys())
+            for container_id in containers:
+                container = network.graph[container_class][container_id]
                 if not top_level:
                     _log.info('creating new area for ' + container_type + ' ' + container.name)
                     NewArea = DistributedArea(container=container,
