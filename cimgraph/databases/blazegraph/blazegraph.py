@@ -222,6 +222,7 @@ class BlazegraphConnection(ConnectionInterface):
             for obj in obj_list:
                 if obj.mRID == edge_mRID:
                     found = True
+                    self.add_to_graph(obj, graph)
             if not found:
                 edge_object = self.create_object(graph, edge_class, edge_mRID)
                 obj_list.append(edge_object)
@@ -250,3 +251,9 @@ class BlazegraphConnection(ConnectionInterface):
             for obj in graph[cim_class].values():
                 query = sparql.upload_triples_sparql(obj, self.connection_params)
                 self.execute(query)
+
+    def add_to_graph(self, obj: object, graph: dict[type, dict[str, object]]) -> None:
+        if type(obj) not in graph.keys():
+            graph[type(obj)] = {}
+        if obj.mRID not in graph[type(obj)].keys():
+            graph[type(obj)][obj.mRID] = obj
