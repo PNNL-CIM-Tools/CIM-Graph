@@ -2,10 +2,12 @@ from __future__ import annotations
 
 import importlib
 import logging
+import time
 
 from rdflib import Graph
 
 from cimgraph.models.graph_model import GraphModel
+from cimgraph.utils.write_xml import write_xml
 
 _log = logging.getLogger(__name__)
 
@@ -54,8 +56,8 @@ def get_all_load_data(network: GraphModel) -> None:
     network.get_all_edges(cim.ConformLoad)
     network.get_all_edges(cim.NonConformLoad)
     network.get_all_edges(cim.EnergyConsumerPhase)
-    network.get_all_edges(cim.LoadResponseCharacteristic)
-    network.get_all_edges(cim.PowerCutZone)
+    network.get_all_attributes(cim.LoadResponseCharacteristic)
+    network.get_all_attributes(cim.PowerCutZone)
     if 'House' in cim.__all__:
         network.get_all_edges(cim.House)
         network.get_all_edges(cim.ThermostatController)
@@ -113,12 +115,12 @@ def get_all_measurement_data(network: GraphModel) -> None:
 def get_all_limit_data(network: GraphModel) -> None:
     cim_profile = network.connection.connection_params.cim_profile
     cim = importlib.import_module(f'cimgraph.data_profile.{cim_profile}')
-    network.get_all_edges(cim.OperationalLimitSet)
-    network.get_all_edges(cim.ActivePowerLimit)
-    network.get_all_edges(cim.ApparentPowerLimit)
-    network.get_all_edges(cim.VoltageLimit)
-    network.get_all_edges(cim.CurrentLimit)
-    network.get_all_edges(cim.OperationalLimitType)
+    network.get_all_attributes(cim.OperationalLimitSet)
+    network.get_all_attributes(cim.ActivePowerLimit)
+    network.get_all_attributes(cim.ApparentPowerLimit)
+    network.get_all_attributes(cim.VoltageLimit)
+    network.get_all_attributes(cim.CurrentLimit)
+    network.get_all_attributes(cim.OperationalLimitType)
 
 
 def get_all_location_data(network: GraphModel):
@@ -173,6 +175,11 @@ def get_all_data(network: GraphModel):
     get_all_location_data(network)
     get_all_measurement_data(network)
 
+    attr_only = [
+        cim.BaseVoltage, cim.Substation, cim.SubGeographicalRegion,
+        cim.GeographicalRegion, cim.LoadResponseCharacteristic
+    ]
+
     # Do recursive search for missing data
     all_classes = []
     parsed_classes = []
@@ -183,8 +190,17 @@ def get_all_data(network: GraphModel):
         for class_name in all_classes:
             if class_name not in parsed_classes:
                 class_type = eval(f'cim.{class_name}')
-                print(class_name)
-                network.get_all_edges(class_type)
+                if class_type not in attr_only:
+                    network.get_all_edges(class_type)
+                    # print('edges', class_name)
+
+                else:
+                    network.get_all_attributes(class_type)
+                    # print('attributes', class_name)
+
+                # write_xml(network, '/home/ande188/sub.xml')
+                # time.sleep(5)
+
                 parsed_classes.append(class_name)
                 all_classes = []
                 for class_type in list(network.graph.keys()):

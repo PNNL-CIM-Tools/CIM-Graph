@@ -69,34 +69,58 @@ class GraphModel:
         if obj.mRID not in graph[type(obj)].keys():
             graph[type(obj)][obj.mRID] = obj
 
-    def get_all_edges(self, cim_class: type, graph: dict[type, dict[str, object]] = None) -> None:
+    def get_all_edges(self,
+                      cim_class: type,
+                      graph: dict[type, dict[str, object]] = None) -> None:
         if graph is None:
             graph = self.graph
         if cim_class in graph:
             self.connection.get_all_edges(graph, cim_class)
         else:
-            _log.info('no instances of ' + str(cim_class.__name__) + ' found in graph.')
+            _log.info('no instances of ' + str(cim_class.__name__) +
+                      ' found in graph.')
 
     def get_edges_query(self, cim_class: type) -> str:
         if cim_class in self.graph:
-            sparql_message = self.connection.get_edges_query(self.graph, cim_class)
+            sparql_message = self.connection.get_edges_query(
+                self.graph, cim_class)
         else:
-            _log.info('no instances of ' + str(cim_class.__name__) + ' found in catalog.')
+            _log.info('no instances of ' + str(cim_class.__name__) +
+                      ' found in catalog.')
             sparql_message = ''
         return sparql_message
 
-    def pprint(self, cim_class: type, show_empty: bool = False, json_ld: bool = False) -> None:
+    def get_all_attributes(
+            self,
+            cim_class: type,
+            graph: dict[type, dict[str, object]] = None) -> None:
+        if graph is None:
+            graph = self.graph
+        if cim_class in graph:
+            self.connection.get_all_attributes(graph, cim_class)
+        else:
+            _log.info('no instances of ' + str(cim_class.__name__) +
+                      ' found in graph.')
+
+    def pprint(self,
+               cim_class: type,
+               show_empty: bool = False,
+               json_ld: bool = False) -> None:
         if cim_class in self.graph:
             json_dump = self.__dumps__(cim_class, show_empty, json_ld)
         else:
             json_dump = {}
-            _log.info('no instances of ' + str(cim_class.__name__) + ' found in graph.')
+            _log.info('no instances of ' + str(cim_class.__name__) +
+                      ' found in graph.')
         print(json.dumps(json_dump, indent=4))
 
     def upload(self) -> None:
         self.connection.upload(self.graph)
 
-    def __dumps__(self, cim_class: type, show_empty: bool = False, json_ld: bool = True) -> str:
+    def __dumps__(self,
+                  cim_class: type,
+                  show_empty: bool = False,
+                  json_ld: bool = True) -> str:
         if cim_class in self.graph:
             mrid_list = list(self.graph[cim_class].keys())
             attribute_list = list(cim_class.__dataclass_fields__.keys())
@@ -110,11 +134,14 @@ class GraphModel:
                         if show_empty:
                             dump[mrid][attribute] = ''
                     else:
-                        result = json_dump(value=value, cim=self.connection.cim, json_ld=json_ld)
+                        result = json_dump(value=value,
+                                           cim=self.connection.cim,
+                                           json_ld=json_ld)
                         dump[mrid][attribute] = str(result)
 
         else:
             dump = {}
-            _log.info('no instances of ' + str(cim_class.__name__) + ' found in catalog.')
+            _log.info('no instances of ' + str(cim_class.__name__) +
+                      ' found in catalog.')
 
         return dump

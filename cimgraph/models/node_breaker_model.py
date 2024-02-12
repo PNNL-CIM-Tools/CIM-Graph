@@ -4,7 +4,9 @@ import logging
 from dataclasses import dataclass, field
 
 from cimgraph.databases import ConnectionInterface
-from cimgraph.models.distributed_area import DistributedArea, create_hierarchy_level
+from cimgraph.models.distributed_area import (DistributedArea, aggregate_equipment,
+                                              create_bay_area, create_subgeographical_area,
+                                              create_substation_area, create_voltage_level_area)
 from cimgraph.models.graph_model import GraphModel
 
 _log = logging.getLogger(__name__)
@@ -25,14 +27,17 @@ class NodeBreakerModel(GraphModel):
     Returns:
         none
     Methods:
+        graph[cim.ClassName]: access to graph dictionary sorted by class and mRID
         add_to_graph(object): adds a new CIM object to the knowledge graph
         get_all_edges(cim.ClassName): universal database query to expand graph by one edge
-        graph[cim.ClassName]: access to graph dictionary sorted by class and mRID
-        pprint(cim.ClassName): pretty-print method for showing graph of a class type
+        get_all_attributes(cim.ClassName): universal query to get attributes without expanding graph
         get_edges_query(cim.ClassName): returns query text for debugging
+        pprint(cim.ClassName): pretty-print method for showing graph of a class type
+
     """
-    topology_message: dict = field(default_factory=dict)
-    distributed_hierarchy: list[type] = field(default_factory=list)
+    # topology_message: dict = field(default_factory=dict)
+    # distributed_hierarchy: list[type] = field(default_factory=list)
+    aggregate_lower_areas: bool = field(default=True)
 
     def __post_init__(self):
         if self.connection is not None:    # Check if connection has been specified
@@ -51,42 +56,36 @@ class NodeBreakerModel(GraphModel):
         self.add_to_graph(container)
 
     def initialize_distributed_model(self, container: object) -> None:
-
-        # # Use output from GridAPPS-D Topology Processor if given
-        # if self.topology_message != {}:
-        #     pass
-        # else:
-
-        if self.distributed_hierarchy == []:
-            feeder = {}
-            feeder['container'] = 'Feeder'
-            feeder['contains'] = []
-
-            bay = {}
-            bay['container'] = 'Bay'
-            bay['contains'] = []
-
-            voltage_level = {}
-            voltage_level['container'] = 'VoltageLevel'
-            voltage_level['contains'] = [bay]
-
-            sub_area = {}
-            sub_area['container'] = 'Substation'
-            sub_area['contains'] = [voltage_level, feeder, bay]
-
-            subregion = {}
-            subregion['container'] = 'SubGeographicalRegion'
-            subregion['contains'] = [sub_area]
-
-            region = {}
-            region['container'] = 'GeographicalRegion'
-            region['contains'] = [subregion]
-
-            self.distributed_hierarchy = [region]
-
+        self.graph = {}
         self.add_to_graph(self.container)
-        self.get_all_edges(self.container.__class__)
         self.distributed_areas = {}
-        self.distristributed_areas = create_hierarchy_level(self,
-                                                            self.distributed_hierarchy,
-                                                            top_level=True)
+
+        if container.__class__ == self.cim.GeographicalRegion:
+            self.get_all_edges(self.cim.GeographicalRegion)
+            self.distributed_areas[self.cim.SubGeographicalRegion] = {}
+            self.distributed_areas[self.cim.Substation] = {}
+            sub_geo_list = list(
+                self.graph[self.cim.SubGeographicalRegion].keys())
+            for sub_geo_mrid in sub_geo_list:
+                sub_geo = self.graph[
+                    self.cim.SubGeographicalRegion][sub_geo_mrid]
+                SubGeographicalArea = create_subgeographical_area(
+                    self.connection, sub_geo)
+                self.distributed_areas[self.cim.SubGeographicalRegion][
+                    sub_geo_mrid] = SubGeographicalArea
+                if self.aggregate_lower_areas:
+                    aggregate_equipment(self.graph, SubGeographicalArea.graph)
+                    self.distributed_areas.update(
+                        SubGeographicalArea.distributed_areas)
+
+        elif container.__class__ == self.cim.SubGeographicalRegion:
+            self.get_all_edges(self.cim.SubGeographicalRegion)
+
+            for substation in self.graph[self.cim.Substation].values():
+                SubstationArea = create_substation_area(
+                    self.connection, substation)
+                self.distributed_areas.append(SubstationArea)
+                if self.aggregate_lower_areas:
+                    aggregate_equipment(self.graph, SubstationArea.graph)
+
+        # self.distristributed_areas = create_hierarchy_level(self, self.distributed_hierarchy, top_level=True)

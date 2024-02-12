@@ -1,18 +1,19 @@
 from __future__ import annotations
-import math
-import importlib
-import logging
-import json
+
 import enum
+import importlib
+import json
+import logging
+import math
 import uuid
 
 from cimgraph.data_profile.known_problem_classes import ClassesWithManytoMany
-
 from cimgraph.models.graph_model import GraphModel, json_dump
+
 _log = logging.getLogger(__name__)
 
 
-def write_xml(network:GraphModel, filename:str) -> None:
+def write_xml(network: GraphModel, filename: str) -> None:
     namespace = network.connection.namespace
     iec61970_301 = network.connection.iec61970_301
     classes_with_many_to_many = ClassesWithManytoMany()
@@ -49,17 +50,21 @@ def write_xml(network:GraphModel, filename:str) -> None:
                 for attribute in attribute_list:
 
                     try:    #check if attribute is in data profile
-                        attribute_type = cim_class.__dataclass_fields__[attribute].type
+                        attribute_type = cim_class.__dataclass_fields__[
+                            attribute].type
                     except:
-                        _log.warning(f'attribute {attribute} missing from {cim_class.__name__}')
+                        _log.warning(
+                            f'attribute {attribute} missing from {cim_class.__name__}'
+                        )
 
                     if '\'' in attribute_type:    #handling inconsistent ''marks in data profile
                         attribute_class = attribute_type.split('\'')[1]
                     else:
-                        attribute_class = attribute_type.split('[')[1].split(']')[0]
+                        attribute_class = attribute_type.split('[')[1].split(
+                            ']')[0]
 
                     serialize = True
-                    if 'List' not in attribute_type: #don't write one-to-many
+                    if 'List' not in attribute_type:    #don't write one-to-many
                         attr_obj = getattr(obj, attribute)
                     elif f'{pclass.__name__}.{attribute}' in problem_attributes or f'{cim_class.__name__}.{attribute}' in problem_attributes:    # write select many-to-many
                         attr_obj = getattr(obj, attribute)
@@ -74,10 +79,13 @@ def write_xml(network:GraphModel, filename:str) -> None:
                     if serialize:
                         if attribute_class in network.cim.__all__:    #check if attribute is association to a class object
                             if attr_obj is not None:
-                                if type(type(attr_obj)) is not enum.EnumMeta:
+                                # if type(type(attr_obj)) is not enum.EnumMeta:
+                                try:
                                     value = """rdf:resource=\"""" + rdf_resource + attr_obj.mRID
-                                else:
-                                    value = """rdf:resource=\"""" + namespace + str(attr_obj)
+                                # else:
+                                except:
+                                    value = """rdf:resource=\"""" + namespace + str(
+                                        attr_obj)
                                 body = f"""
   <cim:{pclass.__name__}.{attribute} {value}"/>"""
 

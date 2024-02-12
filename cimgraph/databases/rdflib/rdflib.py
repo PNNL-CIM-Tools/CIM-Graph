@@ -18,9 +18,12 @@ _log = logging.getLogger(__name__)
 
 class RDFlibConnection(ConnectionInterface):
 
-    def __init__(self, connection_params: ConnectionParameters, use_oxigraph: bool = True):
+    def __init__(self,
+                 connection_params: ConnectionParameters,
+                 use_oxigraph: bool = True):
         self.cim_profile = connection_params.cim_profile
-        self.cim = importlib.import_module('cimgraph.data_profile.' + self.cim_profile)
+        self.cim = importlib.import_module('cimgraph.data_profile.' +
+                                           self.cim_profile)
         self.namespace = connection_params.namespace
         self.iec61970_301 = connection_params.iec61970_301
         self.filename = connection_params.filename
@@ -31,9 +34,11 @@ class RDFlibConnection(ConnectionInterface):
         try:
             self.data_profile = Graph(store='Oxigraph')
             path = os.path.dirname(self.cim.__file__)
-            self.data_profile.parse(f'{path}/{self.cim_profile}.rdfs', format='xml')
+            self.data_profile.parse(f'{path}/{self.cim_profile}.rdfs',
+                                    format='xml')
             self.reverse = URIRef(
-                'http://iec.ch/TC57/1999/rdf-schema-extensions-19990926#inverseRoleName')
+                'http://iec.ch/TC57/1999/rdf-schema-extensions-19990926#inverseRoleName'
+            )
         except:
             _log.warning('No RDFS schema found, reverting to default logic')
             self.data_profile = None
@@ -52,7 +57,8 @@ class RDFlibConnection(ConnectionInterface):
                     self.libgraph.bind('rdf', RDF)
                 except:
                     _log.warning(
-                        f'File {self.filename} not found. Defaulting to empty network graph')
+                        f'File {self.filename} not found. Defaulting to empty network graph'
+                    )
                     self.filename = None
 
     def disconnect(self):
@@ -63,11 +69,13 @@ class RDFlibConnection(ConnectionInterface):
         query_output = self.libgraph.query(query_message)
         return query_output
 
-    def create_new_graph(self, container: object) -> dict[type, dict[str, object]]:
+    def create_new_graph(self,
+                         container: object) -> dict[type, dict[str, object]]:
         graph = {}
         if self.filename is not None:
             # Get all nodes, terminal, and equipment by
-            sparql_message = sparql.get_all_nodes_sparql(container, self.namespace)
+            sparql_message = sparql.get_all_nodes_sparql(
+                container, self.namespace)
             query_output = self.execute(sparql_message)
 
             for result in query_output:
@@ -78,14 +86,17 @@ class RDFlibConnection(ConnectionInterface):
                 eq_id = eq['@id']
                 eq_class = eq['@type']
                 # Add each object to graph
-                node = self.create_object(graph, self.cim.ConnectivityNode, node_mrid)
-                terminal = self.create_object(graph, self.cim.Terminal, term_mrid)
+                node = self.create_object(graph, self.cim.ConnectivityNode,
+                                          node_mrid)
+                terminal = self.create_object(graph, self.cim.Terminal,
+                                              term_mrid)
                 if eq_class in self.cim.__all__:
                     eq_class = eval(f'self.cim.{eq_class}')
                     equipment = self.create_object(graph, eq_class, eq_id)
 
                 else:
-                    _log.warning('object class missing from data profile:' + str(eq_class))
+                    _log.warning('object class missing from data profile:' +
+                                 str(eq_class))
                     continue
                 # Link objects in graph
                 # Link objects in graph
@@ -98,27 +109,31 @@ class RDFlibConnection(ConnectionInterface):
 
         return graph
 
-    def get_edges_query(self, graph: dict[type, dict[str, object]], cim_class: type) -> str:
+    def get_edges_query(self, graph: dict[type, dict[str, object]],
+                        cim_class: type) -> str:
 
         eq_mrids = list(graph[cim_class].keys())[0:10]
-        sparql_message = sparql.get_all_edges_sparql(cim_class, eq_mrids, self.namespace,
+        sparql_message = sparql.get_all_edges_sparql(cim_class, eq_mrids,
+                                                     self.namespace,
                                                      self.iec61970_301)
 
         return sparql_message
 
-    def get_all_edges(self, graph: dict[type, dict[str, object]], cim_class: type) -> None:
+    def get_all_edges(self, graph: dict[type, dict[str, object]],
+                      cim_class: type) -> None:
         mrid_list = list(graph[cim_class].keys())
         num_nodes = len(mrid_list)
         for index in range(math.ceil(len(mrid_list) / 100)):
             eq_mrids = mrid_list[index * 100:(index + 1) * 100]
             #generate SPARQL message from correct loaders>sparql python script based on class name
-            sparql_message = sparql.get_all_edges_sparql(cim_class, eq_mrids, self.namespace,
-                                                         self.iec61970_301)
+            sparql_message = sparql.get_all_edges_sparql(
+                cim_class, eq_mrids, self.namespace, self.iec61970_301)
             #execute sparql query
             query_output = self.execute(sparql_message)
             self.edge_query_parser(query_output, graph, cim_class)
 
-    def edge_query_parser(self, query_output: QueryResponse, graph: dict[type, dict[str, object]],
+    def edge_query_parser(self, query_output: QueryResponse,
+                          graph: dict[type, dict[str, object]],
                           cim_class: type) -> None:
         for result in query_output:
             if 'type' not in result.attr:    #skip 'type' and other single attributes
@@ -165,72 +180,77 @@ class RDFlibConnection(ConnectionInterface):
                         continue
 
                 if is_association:    # if association to another CIM object
+                    self.create_assocation(graph, attribute, cim_class, mRID,
+                                           attr, edge_class, edge_mRID)
 
-                    if attribute[
-                            1] in cim_class.__dataclass_fields__:    #check if forward attribute
-                        self.create_edge(graph, cim_class, mRID, attribute[1], edge_class,
-                                         edge_mRID)
+                    # if attribute[
+                    #         1] in cim_class.__dataclass_fields__:    #check if forward attribute
+                    #     self.create_edge(graph, cim_class, mRID, attribute[1], edge_class,
+                    #                      edge_mRID)
 
-                    elif self.data_profile is not None:    # use data profile to look up reverse attribute
-                        attr_uri = URIRef(f'{self.namespace}{attr}')
-                        reverse_uri = self.data_profile.value(object=attr_uri,
-                                                              predicate=self.reverse)
-                        try:
-                            reverse_attribute = reverse_uri.split('#')[1].split('.')[
-                                1]    # split string
-                        except:
-                            _log.warning(f'{cim_class.__name__} does not have attribute {attr}')
+                    # elif self.data_profile is not None:    # use data profile to look up reverse attribute
+                    #     attr_uri = URIRef(f'{self.namespace}{attr}')
+                    #     reverse_uri = self.data_profile.value(object=attr_uri,
+                    #                                           predicate=self.reverse)
+                    #     try:
+                    #         reverse_attribute = reverse_uri.split('#')[1].split('.')[
+                    #             1]    # split string
+                    #     except:
+                    #         _log.warning(f'{cim_class.__name__} does not have attribute {attr}')
 
-                        self.create_edge(graph, cim_class, mRID, reverse_attribute, edge_class,
-                                         edge_mRID)
+                    #     self.create_edge(graph, cim_class, mRID, reverse_attribute, edge_class,
+                    #                      edge_mRID)
 
-                    else:    # fallback to use basic logic to identify
-                        if attribute[
-                                0] in cim_class.__dataclass_fields__:    #check if first name is the attribute
-                            self.create_edge(graph, cim_class, mRID, attribute[0], edge_class,
-                                             edge_mRID)
+                    # else:    # fallback to use basic logic to identify
+                    #     if attribute[
+                    #             0] in cim_class.__dataclass_fields__:    #check if first name is the attribute
+                    #         self.create_edge(graph, cim_class, mRID, attribute[0], edge_class,
+                    #                          edge_mRID)
 
-                        elif attribute[
-                                0] + 's' in cim_class.__dataclass_fields__:    #check if attribute spelling is plural
-                            self.create_edge(graph, cim_class, mRID, attribute[0] + 's',
-                                             edge_class, edge_mRID)
+                    #     elif attribute[
+                    #             0] + 's' in cim_class.__dataclass_fields__:    #check if attribute spelling is plural
+                    #         self.create_edge(graph, cim_class, mRID, attribute[0] + 's',
+                    #                          edge_class, edge_mRID)
 
-                        elif attribute[
-                                1] + 's' in cim_class.__dataclass_fields__:    #check if attribute spelling is plural
-                            self.create_edge(graph, cim_class, mRID, attribute[1] + 's',
-                                             edge_class, edge_mRID)
+                    #     elif attribute[
+                    #             1] + 's' in cim_class.__dataclass_fields__:    #check if attribute spelling is plural
+                    #         self.create_edge(graph, cim_class, mRID, attribute[1] + 's',
+                    #                          edge_class, edge_mRID)
 
-                        elif edge_class.__name__ in cim_class.__dataclass_fields__:    #check if attribute spelling is plural
-                            self.create_edge(graph, cim_class, mRID, edge_class.__name__,
-                                             edge_class, edge_mRID)
+                    #     elif edge_class.__name__ in cim_class.__dataclass_fields__:    #check if attribute spelling is plural
+                    #         self.create_edge(graph, cim_class, mRID, edge_class.__name__,
+                    #                          edge_class, edge_mRID)
 
-                        elif edge_class.__name__ + 's' in cim_class.__dataclass_fields__:    #check if attribute spelling is plural
-                            self.create_edge(graph, cim_class, mRID, edge_class.__name__ + 's',
-                                             edge_class, edge_mRID)
+                    #     elif edge_class.__name__ + 's' in cim_class.__dataclass_fields__:    #check if attribute spelling is plural
+                    #         self.create_edge(graph, cim_class, mRID, edge_class.__name__ + 's',
+                    #                          edge_class, edge_mRID)
 
-                        else:    #fallback: match class type until a suitable parent edge class is found
-                            parsed = False
-                            for node_attr in list(cim_class.__dataclass_fields__.keys()):
-                                attr_str = cim_class.__dataclass_fields__[node_attr].type
-                                edge_parent = attr_str.split('[')[1].split(']')[0]
-                                if edge_parent in self.cim.__all__:
-                                    parent_class = eval(f'self.cim.{edge_parent}')
-                                    if issubclass(edge_class, parent_class):
-                                        self.create_edge(graph, cim_class, mRID, node_attr,
-                                                         edge_class, edge_mRID)
-                                        parsed = True
-                                        break
-                            if not parsed:
-                                _log.warning(f'unable to find match for {attr} for {mRID}')
+                    #     else:    #fallback: match class type until a suitable parent edge class is found
+                    #         parsed = False
+                    #         for node_attr in list(cim_class.__dataclass_fields__.keys()):
+                    #             attr_str = cim_class.__dataclass_fields__[node_attr].type
+                    #             edge_parent = attr_str.split('[')[1].split(']')[0]
+                    #             if edge_parent in self.cim.__all__:
+                    #                 parent_class = eval(f'self.cim.{edge_parent}')
+                    #                 if issubclass(edge_class, parent_class):
+                    #                     self.create_edge(graph, cim_class, mRID, node_attr,
+                    #                                      edge_class, edge_mRID)
+                    #                     parsed = True
+                    #                     break
+                    #         if not parsed:
+                    #             _log.warning(f'unable to find match for {attr} for {mRID}')
 
                 elif is_enumeration:
                     if enum_class in self.cim.__all__:    # if enumeration
-                        edge_enum = eval(f'self.cim.{enum_class}(enum_value)')
-                        setattr(graph[cim_class][mRID], attribute[1], edge_enum)
+                        edge_enum = eval(
+                            f'self.cim.{enum_class}({enum_value})')
+                        setattr(graph[cim_class][mRID], attribute[1],
+                                edge_enum)
                 else:
                     setattr(graph[cim_class][mRID], attribute[1], value)
 
-    def create_edge(self, graph, cim_class, mRID, attribute, edge_class, edge_mRID):
+    def create_edge(self, graph, cim_class, mRID, attribute, edge_class,
+                    edge_mRID):
         edge_object = self.create_object(graph, edge_class, edge_mRID)
         setattr(edge_object, 'mRID', edge_mRID)
         attribute_type = cim_class.__dataclass_fields__[attribute].type
@@ -261,3 +281,10 @@ class RDFlibConnection(ConnectionInterface):
 
     def upload(self, graph):
         pass
+
+    def add_to_graph(self, obj: object,
+                     graph: dict[type, dict[str, object]]) -> None:
+        if type(obj) not in graph.keys():
+            graph[type(obj)] = {}
+        if obj.mRID not in graph[type(obj)].keys():
+            graph[type(obj)][obj.mRID] = obj

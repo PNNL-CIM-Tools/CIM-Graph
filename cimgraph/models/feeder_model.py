@@ -54,20 +54,19 @@ class FeederModel(GraphModel):
         self.graph = self.connection.create_new_graph(container)
 
     def initialize_distributed_model(self, container: object) -> None:
-        centralized_graph = self.connection.create_new_graph(
-            container)    # Initialize centralized graph model
-
+        # Initialize centralized graph model
+        centralized_graph = self.connection.create_new_graph(container)
         # Use output from GridAPPS-D Topology Processor if given
         if self.topology_message != {}:
             # Ingest topology message
             feeder_topo = self.topology_message['feeders']
-            # for feeder in self.distributed_topology["feeders"]:
-            # if feeder["feeder_id"] == self.container.mRID:
+
             # Created DistributedArea object for feeder area
             self.FeederArea = DistributedArea(container=self.container,
                                               connection=self.connection,
                                               distributed=True)
-            self.FeederArea.build_from_topo_message(feeder_topo, centralized_graph)
+            self.FeederArea.build_from_topo_message(feeder_topo,
+                                                    centralized_graph)
             self.graph = self.FeederArea.graph
 
             self.distributed_areas = []    # Initialize list of switch areas
@@ -75,26 +74,33 @@ class FeederModel(GraphModel):
             for switch_topo in feeder_topo['switch_areas']:
                 sw_counter = sw_counter + 1
                 # Create a new DistributedArea object for each switch area in message
-                switch_area_id = str(self.container.mRID) + '.' + str(sw_counter)
-                switch_container = self.cim.EquipmentContainer(mRID=switch_area_id)
+                switch_area_id = str(
+                    self.container.mRID) + '.' + str(sw_counter)
+                switch_container = self.cim.EquipmentContainer(
+                    mRID=switch_area_id)
                 SwitchArea = DistributedArea(connection=self.connection,
                                              container=switch_container,
                                              distributed=True)
-                SwitchArea.build_from_topo_message(switch_topo, centralized_graph)
-                SwitchArea.distributed_areas = []    # Initialize secondary areas list
+                SwitchArea.build_from_topo_message(switch_topo,
+                                                   centralized_graph)
+                SwitchArea.distributed_areas = [
+                ]    # Initialize secondary areas list
                 self.distributed_areas.append(
                     SwitchArea)    # Add new DistributedArea class to list
                 sa_counter = -1
                 for secondary_topo in switch_topo['secondary_areas']:
                     sa_counter = sa_counter + 1
                     # Create a new DistributedArea object for each secondary area
-                    sec_area_id = str(
-                        self.container.mRID) + '.' + str(sw_counter) + '.' + str(sa_counter)
-                    secondary_container = self.cim.EquipmentContainer(mRID=sec_area_id)
-                    SecondaryArea = DistributedArea(connection=self.connection,
-                                                    container=secondary_container,
-                                                    distributed=True)
-                    SecondaryArea.build_from_topo_message(secondary_topo, centralized_graph)
+                    sec_area_id = str(self.container.mRID) + '.' + str(
+                        sw_counter) + '.' + str(sa_counter)
+                    secondary_container = self.cim.EquipmentContainer(
+                        mRID=sec_area_id)
+                    SecondaryArea = DistributedArea(
+                        connection=self.connection,
+                        container=secondary_container,
+                        distributed=True)
+                    SecondaryArea.build_from_topo_message(
+                        secondary_topo, centralized_graph)
                     SwitchArea.distributed_areas.append(SecondaryArea)
 
         # If GridAPPS-D Topology Processor output is not provided, build new topology:
@@ -110,22 +116,27 @@ class FeederModel(GraphModel):
                 # self.get_all_edges(self.cim.TransformerTankEnd, centralized_graph)
                 # self.get_all_edges(self.cim.PowerTransformerEnd, centralized_graph)
                 # self.get_all_edges(self.cim.BaseVoltage, centralized_graph)
-                self.get_all_edges(self.cim.PowerTransformer, centralized_graph)
+                self.get_all_edges(self.cim.PowerTransformer,
+                                   centralized_graph)
                 self.get_all_edges(self.cim.TransformerTank, centralized_graph)
                 self.get_all_edges(self.cim.Asset, centralized_graph)
-                self.get_all_edges(self.cim.TransformerTankInfo, centralized_graph)
-                self.get_all_edges(self.cim.TransformerEndInfo, centralized_graph)
+                self.get_all_edges(self.cim.TransformerTankInfo,
+                                   centralized_graph)
+                self.get_all_edges(self.cim.TransformerEndInfo,
+                                   centralized_graph)
 
                 switch_classes = [
-                    self.cim.Breaker, self.cim.Sectionaliser, self.cim.Recloser,
-                    self.cim.LoadBreakSwitch, self.cim.Switch
+                    self.cim.Breaker, self.cim.Sectionaliser,
+                    self.cim.Recloser, self.cim.LoadBreakSwitch,
+                    self.cim.Switch
                 ]    # default switch classes
                 upper_boundaries = switch_classes + [self.cim.PowerTransformer]
                 lower_boundaries = [self.cim.TransformerTank]
 
-                DistTopo = DistributedTopology(connection=self.connection,
-                                               centralized_graph=centralized_graph,
-                                               root_classes=switch_classes,
-                                               upper_boundaries=upper_boundaries,
-                                               lower_boundaries=lower_boundaries)
+                DistTopo = DistributedTopology(
+                    connection=self.connection,
+                    centralized_graph=centralized_graph,
+                    root_classes=switch_classes,
+                    upper_boundaries=upper_boundaries,
+                    lower_boundaries=lower_boundaries)
                 self.distributed_areas = DistTopo.create_distributed_areas()
