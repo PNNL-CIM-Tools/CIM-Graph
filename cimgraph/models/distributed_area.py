@@ -81,9 +81,9 @@ class DistributedArea(GraphModel):
                         graph=SwitchArea.graph)
                     # Add to FeederArea
                     SwitchArea.distributed_areas = [
-                    ]    # Initialize secondary areas list
+                    ]  # Initialize secondary areas list
                     self.distributed_areas.append(
-                        SwitchArea)    # Add new DistributedArea class to list
+                        SwitchArea)  # Add new DistributedArea class to list
 
                     if 'secondary_areas' in switch_topo:
                         sa_counter = -1
@@ -200,7 +200,7 @@ class DistributedTopology():
                         if terminal.ConnectivityNode.mRID in DistArea.graph[
                                 self.cim.ConnectivityNode].keys():
                             parsed = True
-                    if not parsed:    # If not parsed, build switch areas from this switch
+                    if not parsed:  # If not parsed, build switch areas from this switch
                         NewArea = self.expand_node(terminal.ConnectivityNode)
                         distributed_areas.append(NewArea)
         return distributed_areas

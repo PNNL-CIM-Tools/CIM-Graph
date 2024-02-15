@@ -42,7 +42,7 @@ def json_dump(value: object, cim: __package__, json_ld: bool = False) -> str:
 class GraphModel:
     container: object
     connection: ConnectionInterface
-    distributed: bool = field(default_factory=False)
+    distributed: bool = field(default=False)
     graph: dict[type, dict[str, object]] = field(default_factory=dict)
     """
     Underlying root class for all knowledge graph models, inlcuding

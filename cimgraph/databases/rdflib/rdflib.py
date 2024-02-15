@@ -10,7 +10,8 @@ from rdflib import Graph, Namespace, URIRef
 from rdflib.namespace import RDF
 
 import cimgraph.queries.rdflib as sparql
-from cimgraph.databases import ConnectionInterface, ConnectionParameters, QueryResponse
+from cimgraph.databases import (ConnectionInterface, ConnectionParameters,
+                                QueryResponse)
 from cimgraph.models.graph_model import GraphModel
 
 _log = logging.getLogger(__name__)
@@ -72,6 +73,8 @@ class RDFlibConnection(ConnectionInterface):
     def create_new_graph(self,
                          container: object) -> dict[type, dict[str, object]]:
         graph = {}
+        self.add_to_graph(graph=graph, obj=container)
+
         if self.filename is not None:
             # Get all nodes, terminal, and equipment by
             sparql_message = sparql.get_all_nodes_sparql(
@@ -136,11 +139,11 @@ class RDFlibConnection(ConnectionInterface):
                           graph: dict[type, dict[str, object]],
                           cim_class: type) -> None:
         for result in query_output:
-            if 'type' not in result.attr:    #skip 'type' and other single attributes
+            if 'type' not in result.attr:  #skip 'type' and other single attributes
 
                 is_association = False
                 is_enumeration = False
-                if result.mRID is not None:    #get mRID
+                if result.mRID is not None:  #get mRID
                     mRID = str(result.mRID)
                 else:
                     iri = str(result.eq)
@@ -150,17 +153,17 @@ class RDFlibConnection(ConnectionInterface):
                         mRID = iri.split('rdf:id:')[1]
                 attr_uri = result.attr
                 attr = str(result.attr).split(self.namespace)[1]
-                attribute = attr.split('.')    #split edge attribute
-                value = str(result.val)    #get edge value
+                attribute = attr.split('.')  #split edge attribute
+                value = str(result.val)  #get edge value
 
-                if self.namespace in value:    #check if enumeration
+                if self.namespace in value:  #check if enumeration
                     enum_text = value.split(self.namespace)[1]
                     enum_text = enum_text.split('>')[0]
                     enum_class = enum_text.split('.')[0]
                     enum_value = enum_text.split('.')[1]
                     is_enumeration = True
 
-                if result.edge_class is not None:    #check if association
+                if result.edge_class is not None:  #check if association
                     is_association = True
                     # edge = json.loads(result.edge)
                     # edge_mRID = edge['@id']
@@ -179,7 +182,7 @@ class RDFlibConnection(ConnectionInterface):
                         _log.warning(f'unknown class {edge_class}')
                         continue
 
-                if is_association:    # if association to another CIM object
+                if is_association:  # if association to another CIM object
                     self.create_assocation(graph, attribute, cim_class, mRID,
                                            attr, edge_class, edge_mRID)
 
@@ -241,7 +244,7 @@ class RDFlibConnection(ConnectionInterface):
                     #             _log.warning(f'unable to find match for {attr} for {mRID}')
 
                 elif is_enumeration:
-                    if enum_class in self.cim.__all__:    # if enumeration
+                    if enum_class in self.cim.__all__:  # if enumeration
                         edge_enum = eval(
                             f'self.cim.{enum_class}({enum_value})')
                         setattr(graph[cim_class][mRID], attribute[1],

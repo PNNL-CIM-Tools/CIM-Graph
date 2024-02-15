@@ -19,7 +19,8 @@ class BlazegraphConnection(ConnectionInterface):
 
     def __init__(self, connection_params: ConnectionInterface) -> None:
         self.cim_profile = connection_params.cim_profile
-        self.cim = importlib.import_module('cimgraph.data_profile.' + self.cim_profile)
+        self.cim = importlib.import_module('cimgraph.data_profile.' +
+                                           self.cim_profile)
         self.namespace = connection_params.namespace
         self.iec61970_301 = connection_params.iec61970_301
         self.url = connection_params.url
@@ -29,9 +30,11 @@ class BlazegraphConnection(ConnectionInterface):
         try:
             self.data_profile = Graph(store='Oxigraph')
             path = os.path.dirname(self.cim.__file__)
-            self.data_profile.parse(f'{path}/{self.cim_profile}.rdfs', format='xml')
+            self.data_profile.parse(f'{path}/{self.cim_profile}.rdfs',
+                                    format='xml')
             self.reverse = URIRef(
-                'http://iec.ch/TC57/1999/rdf-schema-extensions-19990926#inverseRoleName')
+                'http://iec.ch/TC57/1999/rdf-schema-extensions-19990926#inverseRoleName'
+            )
         except:
             _log.warning('No RDFS schema found, reverting to default logic')
             self.data_profile = None
@@ -51,15 +54,19 @@ class BlazegraphConnection(ConnectionInterface):
         query_output = self.sparql_obj.query().convert()
         return query_output
 
-    def create_new_graph(self, container: object) -> dict[type, dict[str, object]]:
+    def create_new_graph(self,
+                         container: object) -> dict[type, dict[str, object]]:
         graph = {}
+        self.add_to_graph(graph=graph, obj=container)
         # Get all nodes, terminal, and equipment by
-        sparql_message = sparql.get_all_nodes_from_container(container, self.namespace)
+        sparql_message = sparql.get_all_nodes_from_container(
+            container, self.namespace)
         query_output = self.execute(sparql_message)
         graph = self.parse_node_query(graph, query_output)
         return graph
 
-    def parse_node_query(self, graph: dict, query_output: dict) -> dict[type, dict[str, object]]:
+    def parse_node_query(self, graph: dict,
+                         query_output: dict) -> dict[type, dict[str, object]]:
 
         for result in query_output['results']['bindings']:
             # Parse query results
@@ -69,14 +76,16 @@ class BlazegraphConnection(ConnectionInterface):
             eq_id = eq['@id']
             eq_class = eq['@type']
             # Add each object to graph
-            node = self.create_object(graph, self.cim.ConnectivityNode, node_mrid)
+            node = self.create_object(graph, self.cim.ConnectivityNode,
+                                      node_mrid)
             terminal = self.create_object(graph, self.cim.Terminal, term_mrid)
             if eq_class in self.cim.__all__:
                 eq_class = eval(f'self.cim.{eq_class}')
                 equipment = self.create_object(graph, eq_class, eq_id)
 
             else:
-                _log.warning('object class missing from data profile:' + str(eq_class))
+                _log.warning('object class missing from data profile:' +
+                             str(eq_class))
                 continue
             # Link objects in graph
             if terminal not in equipment.Terminals:
@@ -88,11 +97,14 @@ class BlazegraphConnection(ConnectionInterface):
 
         return graph
 
-    def build_graph_from_list(self, graph, mrid_list: list[str]) -> dict[type, dict[str, object]]:
+    def build_graph_from_list(
+            self, graph,
+            mrid_list: list[str]) -> dict[type, dict[str, object]]:
         for index in range(math.ceil(len(mrid_list) / 100)):
             eq_mrids = mrid_list[index * 100:(index + 1) * 100]
             #generate SPARQL message from correct loaders>sparql python script based on class name
-            sparql_message = sparql.get_all_nodes_from_list(eq_mrids, self.namespace)
+            sparql_message = sparql.get_all_nodes_from_list(
+                eq_mrids, self.namespace)
             # print(sparql_message)
             query_output = self.execute(sparql_message)
             graph = self.parse_node_query(graph, query_output)
@@ -102,7 +114,8 @@ class BlazegraphConnection(ConnectionInterface):
                         cim_class: type) -> str:
 
         eq_mrids = list(graph[cim_class].keys())[0:100]
-        sparql_message = sparql.get_all_edges_sparql(cim_class, eq_mrids, self.connection_params)
+        sparql_message = sparql.get_all_edges_sparql(cim_class, eq_mrids,
+                                                     self.connection_params)
 
         return sparql_message
 
@@ -139,22 +152,22 @@ class BlazegraphConnection(ConnectionInterface):
             is_association = False
             is_enumeration = False
             if result['attribute'][
-                    'value'] != 'type':    #skip 'type' and other single attributes
+                    'value'] != 'type':  #skip 'type' and other single attributes
 
-                mRID = result['mRID']['value']    #get mRID
-                attr = result['attribute']['value']    #edge attribute
+                mRID = result['mRID']['value']  #get mRID
+                attr = result['attribute']['value']  #edge attribute
                 attribute = result['attribute']['value'].split(
-                    '.')    #split edge attribute
-                value = result['value']['value']    #get edge value
+                    '.')  #split edge attribute
+                value = result['value']['value']  #get edge value
 
-                if self.namespace in value:    #check if enumeration
+                if self.namespace in value:  #check if enumeration
                     enum_text = value.split(self.namespace)[1]
                     enum_text = enum_text.split('>')[0]
                     enum_class = enum_text.split('.')[0]
                     enum_value = enum_text.split('.')[1]
                     is_enumeration = True
 
-                if 'edge' in result:    #check if association
+                if 'edge' in result:  #check if association
                     is_association = True
                     edge = json.loads(result['edge']['value'])
                     edge_mRID = edge['@id']
@@ -165,7 +178,7 @@ class BlazegraphConnection(ConnectionInterface):
                         _log.warning(f'unknown class {edge_class}')
                         continue
 
-                if is_association:    # if association to another CIM object
+                if is_association:  # if association to another CIM object
                     self.create_assocation(graph, attribute, cim_class, mRID,
                                            attr, edge_class, edge_mRID)
                     # if attribute[1] in cim_class.__dataclass_fields__:    #check if forward attribute
@@ -213,7 +226,7 @@ class BlazegraphConnection(ConnectionInterface):
                     #             _log.warning(f'unable to find match for {attr} for {mRID}')
 
                 elif is_enumeration:
-                    if enum_class in self.cim.__all__:    # if enumeration
+                    if enum_class in self.cim.__all__:  # if enumeration
                         edge_enum = eval(f'self.cim.{enum_class}(enum_value)')
                         setattr(graph[cim_class][mRID], attribute[1],
                                 edge_enum)
