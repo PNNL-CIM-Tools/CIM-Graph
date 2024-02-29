@@ -18,19 +18,24 @@ def new_mrid():
     return mRID
 
 
-def json_dump(value: object, cim: __package__, json_ld: bool = False) -> str:
+def json_dump(value: object,
+              cim: __package__,
+              json_ld: bool = False,
+              use_names=False) -> str:
     class_type = value.__class__
     if type(class_type) is enum.EnumMeta:
         result = str(value)
     elif class_type is list:
         result = []
         for item in value:
-            result.append(json_dump(item, cim, json_ld))
+            result.append(json_dump(item, cim, json_ld, use_names))
     elif value is None:
         result = ''
     elif class_type.__name__ in cim.__all__:
         if json_ld:
             result = {'@type': {value.__class__.__name__}, '@id': {value.mRID}}
+        elif use_names:
+            result = value.name
         else:
             result = value.mRID
     else:
@@ -105,9 +110,11 @@ class GraphModel:
     def pprint(self,
                cim_class: type,
                show_empty: bool = False,
-               json_ld: bool = False) -> None:
+               json_ld: bool = False,
+               use_names: bool = False) -> None:
         if cim_class in self.graph:
-            json_dump = self.__dumps__(cim_class, show_empty, json_ld)
+            json_dump = self.__dumps__(cim_class, show_empty, json_ld,
+                                       use_names)
         else:
             json_dump = {}
             _log.info('no instances of ' + str(cim_class.__name__) +
@@ -120,7 +127,8 @@ class GraphModel:
     def __dumps__(self,
                   cim_class: type,
                   show_empty: bool = False,
-                  json_ld: bool = True) -> str:
+                  json_ld: bool = True,
+                  use_names=False) -> str:
         if cim_class in self.graph:
             mrid_list = list(self.graph[cim_class].keys())
             attribute_list = list(cim_class.__dataclass_fields__.keys())
@@ -136,7 +144,8 @@ class GraphModel:
                     else:
                         result = json_dump(value=value,
                                            cim=self.connection.cim,
-                                           json_ld=json_ld)
+                                           json_ld=json_ld,
+                                           use_names=use_names)
                         dump[mrid][attribute] = str(result)
 
         else:
