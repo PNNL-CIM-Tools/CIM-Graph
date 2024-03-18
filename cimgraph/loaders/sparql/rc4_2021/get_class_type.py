@@ -8,14 +8,14 @@ def get_class_type_sparql(feeder_mrid, mrid_list, add_prefix=True):
                 {
                   VALUES ?fdrid {"%s"}
                   VALUES ?mRID {""" % feeder_mrid
-        
+
     if add_prefix:
         query_message = prefix+query_message
-        
+
     for mrid in mrid_list:
         query_message += ' "%s" \n' % mrid
 
-    query_message += """               } 
+    query_message += """               }
                   ?fdr c:IdentifiedObject.mRID ?fdrid.
                   ?eq c:IdentifiedObject.name ?name.
                   ?eq c:IdentifiedObject.mRID ?mRID.
