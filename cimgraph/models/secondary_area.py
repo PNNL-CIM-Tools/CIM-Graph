@@ -45,7 +45,7 @@ class SecondaryArea:
 #        for obj in xfmr:
 #            add_to_catalog(obj, self.distribution_transformer)
 #            add_to_typed_catalog(obj, self.typed_catalog)
-            
+
     def get_all_attributes(self, cim_class):
         if cim_class in self.typed_catalog:
             self.connection.get_all_attributes(self.feeder_mrid, self.typed_catalog, cim_class)
@@ -65,7 +65,7 @@ class SecondaryArea:
         if cim_class in self.typed_catalog:
             json_dump = cim_dump(self.typed_catalog, cim_class)
         else:
-            json_dump = {}    
+            json_dump = {}
             _log.info('no instances of '+str(cim_class.__name__)+' found in catalog.')
 
 
