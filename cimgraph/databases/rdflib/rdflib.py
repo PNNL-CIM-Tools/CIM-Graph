@@ -245,8 +245,7 @@ class RDFlibConnection(ConnectionInterface):
 
                 elif is_enumeration:
                     if enum_class in self.cim.__all__:  # if enumeration
-                        edge_enum = eval(
-                            f'self.cim.{enum_class}({enum_value})')
+                        edge_enum = eval(f'self.cim.{enum_class}(enum_value)')
                         setattr(graph[cim_class][mRID], attribute[1],
                                 edge_enum)
                 else:
