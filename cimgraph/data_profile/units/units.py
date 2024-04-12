@@ -3,11 +3,16 @@ from __future__ import annotations
 
 from dataclasses import dataclass, field
 from enum import Enum
+from importlib import resources as impresources
 from typing import Optional
 
 from pint import Quantity, UnitRegistry
 
+import cimgraph.data_profile.units.cim_units as cim_units
+
+units_file = impresources.files(cim_units) / 'units.txt'
 ureg = UnitRegistry()
+ureg.load_definitions(units_file)
 
 class UnitMultiplier( Enum ):
     '''
@@ -775,6 +780,59 @@ class Resistance():
         })
     unit: UnitSymbol = field(
         default=UnitSymbol.ohm,
+        metadata={
+            'type': 'enumeration'
+        })
+    value: float = field(
+        default=None,
+        metadata={
+            'type': 'attribute'
+        })
+
+    def pint(self) -> Quantity:
+        if self.unitMultiplier.value != 'none':
+            value_str = str(self.value) + self.unitMultiplier.value + self.unit.value
+        else:
+            value_str = str(self.value) + self.unit.value
+        self.pvalue = ureg.Quantity(value_str)
+        return self.pvalue
+
+@dataclass
+class Reactance():
+    unitMultiplier: UnitMultiplier | str = field(
+        default=UnitMultiplier.none,
+        metadata={
+            'type': 'enumeration'
+        })
+    unit: UnitSymbol = field(
+        default=UnitSymbol.ohm,
+        metadata={
+            'type': 'enumeration'
+        })
+    value: float = field(
+        default=None,
+        metadata={
+            'type': 'attribute'
+        })
+
+    def pint(self) -> Quantity:
+        if self.unitMultiplier.value != 'none':
+            value_str = str(self.value) + self.unitMultiplier.value + self.unit.value
+        else:
+            value_str = str(self.value) + self.unit.value
+        self.pvalue = ureg.Quantity(value_str)
+        return self.pvalue
+
+
+@dataclass
+class Susceptance():
+    unitMultiplier: UnitMultiplier | str = field(
+        default=UnitMultiplier.none,
+        metadata={
+            'type': 'enumeration'
+        })
+    unit: UnitSymbol = field(
+        default=UnitSymbol.S,
         metadata={
             'type': 'enumeration'
         })
