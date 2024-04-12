@@ -1,0 +1,2 @@
+imaginary = [] = i = reactive
+VAr = watt * imaginary = ReactivePower = var = VAR
