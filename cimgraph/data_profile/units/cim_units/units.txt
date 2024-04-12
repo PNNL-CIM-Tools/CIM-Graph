@@ -15,15 +15,15 @@ HzPerHz = hertz / hertz = Hz/Hz
 HzPers = herts / second = Hz/s
 JPerK = joule / kelvin = J/K
 JPerkg = joule / kilogram = J/kg
-JPerkgK = joule / kilogram / kelvin = J/kgK
+JPerkgK = joule / kilogram / kelvin = J/kg·K
 JPerm2 = joule / meter / meter = J/m²
 JPerm3 = joule / meter / meter = J/m³
 JPermol = joule / mol = J/mol
-JPermolK = joule / mol / kelvin = J/molK
+JPermolK = joule / mol / kelvin = J/mol·K
 JPers = joule / second = J/s
 KPers = kelvin / second = K/s
 NPerm = newton / meter = N/m
-Nm = newton * meter = Nm
+Nm = newton * meter = N·m
 PaPers = pascal / second = Pa/s
 Pas = pascal * second = Pas
 Q = imaginary * watt = Q
@@ -31,9 +31,9 @@ Qh = imaginary * watt * hour = Qh
 SPerm = siemens / meter = S/m
 V2 = volt * volt = V²
 V2h = volt * volt * hour = V²h
-VAh = volt * amp * hour = VAh
+VAh = volt * amp * hour = VA·h
 VAr = watt * imaginary = VAr
-VArh = watt * hour * imaginary = VArh
+VArh = watt * hour * imaginary = VAr·h
 VPerHz = volt / hertz = V/Hz
 VPerV = volt / volt = V/V
 VPerVA = volt / volt / amp = V/VA
@@ -42,10 +42,11 @@ VPerm = volt / meter = V/m
 Vh = volt * hour = Vh
 Vs = volt * second = Vs
 WPerA = watt / amp = W/A
+WPerHz = watt / hertz = W/Hz
 WPerW = watt / watt = W/W
 WPerm2 = watt / meter / meter = W/m²
 WPerm2sr = watt / meter / meter / steradian = W/m²sr
-WPermK = watt / meter / kelvin = W/mK
+WPermK = watt / meter / kelvin = W/m·K
 WPers = watt / second = W/s
 WPersr = watt / steradian = W/sr
 anglemin = arcminute = arcmin
@@ -80,7 +81,7 @@ molPerm3 = mol / meter / meter / meter = mol/m³
 molPermol = mol / mol = mol/mol
 none = [] = _
 ohmPerm = ohm / meter = ohm/m
-ohmm = ohm * meter = ohmm
+ohmm = ohm * meter = ohm·m
 onePerHz = 1 / hertz = Hz_1
 onePerm = 1 / meter = m_1
 radPers = radian / second = rad/s

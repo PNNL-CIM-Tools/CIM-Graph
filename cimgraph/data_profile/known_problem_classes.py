@@ -195,7 +195,10 @@ class ClassesWithoutMRID:
             'SubstitutionResourceList',
             'PackageDependenciesCIMVersion',
             'Model/TC57CIM/IEC61968/Work WorkTimeScheduleKind' ]
-
+        self.units = [
+            'WPerHz',
+            'g'
+        ]
 
 @dataclass
 class ClassesWithManytoMany:

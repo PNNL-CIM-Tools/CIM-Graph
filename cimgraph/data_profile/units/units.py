@@ -13,6 +13,15 @@ import cimgraph.data_profile.units.cim_units as cim_units
 units_file = impresources.files(cim_units) / 'units.txt'
 ureg = UnitRegistry()
 ureg.load_definitions(units_file)
+ureg.default_format = '~P'
+
+def pint(obj):
+    if obj.multiplier.value != 'none':
+        value_str = str(obj.value) + obj.multiplier.value + obj.unit.value
+    else:
+        value_str = str(obj.value) + obj.unit.value
+    obj.pvalue = ureg.Quantity(value_str)
+    return obj.pvalue
 
 class UnitMultiplier( Enum ):
     '''
@@ -219,6 +228,10 @@ class UnitSymbol( Enum ):
     FPerm = 'FPerm'
     '''
     Permittivity, farads per metre.
+    '''
+    g = 'g'
+    '''
+    Mass in grams
     '''
     G = 'G'
     '''
@@ -440,6 +453,10 @@ class UnitSymbol( Enum ):
     WPerA = 'WPerA'
     '''
     Active power per current flow, watts per Ampere.
+    '''
+    WPerHz = 'WPerHz'
+    '''
+    Active power per change in frequency.
     '''
     WPerW = 'WPerW'
     '''
@@ -770,108 +787,598 @@ class UnitSymbol( Enum ):
     Mass in tons, “tonne” or “metric ton” (1000 kg = 1 Mg).
     '''
 
+@dataclass
+class ActivePower():
+    '''
+    Product of RMS value of the voltage and the RMS value of the in-phase
+    component of the current.
+    '''
+    value: float = field(default=None)
+    multiplier: UnitMultiplier = field(default=UnitMultiplier.none)
+    unit: UnitSymbol = field(default=UnitSymbol.W)
+    def __post_init__(self):
+        pint(self)
 
 @dataclass
-class Resistance():
-    unitMultiplier: UnitMultiplier | str = field(
-        default=UnitMultiplier.none,
-        metadata={
-            'type': 'enumeration'
-        })
-    unit: UnitSymbol = field(
-        default=UnitSymbol.ohm,
-        metadata={
-            'type': 'enumeration'
-        })
-    value: float = field(
-        default=None,
-        metadata={
-            'type': 'attribute'
-        })
+class ActivePowerChangeRate():
+    '''
+    Rate of change of active power per time.
+    '''
+    value: float = field(default=None)
+    multiplier: UnitMultiplier = field(default=UnitMultiplier.none)
+    unit: UnitSymbol = field(default=UnitSymbol.WPers)
+    def __post_init__(self):
+        pint(self)
 
-    def pint(self) -> Quantity:
-        if self.unitMultiplier.value != 'none':
-            value_str = str(self.value) + self.unitMultiplier.value + self.unit.value
-        else:
-            value_str = str(self.value) + self.unit.value
-        self.pvalue = ureg.Quantity(value_str)
-        return self.pvalue
+@dataclass
+class ActivePowerPerCurrentFlow():
+    '''
+    Active power variation with current flow.
+    '''
+    value: float = field(default=None)
+    multiplier: UnitMultiplier = field(default=UnitMultiplier.none)
+    unit: UnitSymbol = field(default=UnitSymbol.WPerA)
+    def __post_init__(self):
+        pint(self)
+
+@dataclass
+class ActivePowerPerFrequency():
+    '''
+    Active power variation with frequency.
+    '''
+    value: float = field(default=None)
+    multiplier: UnitMultiplier = field(default=UnitMultiplier.none)
+    unit: UnitSymbol = field(default=UnitSymbol.WPerHz)
+    def __post_init__(self):
+        pint(self)
+
+@dataclass
+class Admittance():
+    '''
+    Ratio of current to voltage.
+    '''
+    value: float = field(default=None)
+    multiplier: UnitMultiplier = field(default=UnitMultiplier.none)
+    unit: UnitSymbol = field(default=UnitSymbol.S)
+    def __post_init__(self):
+        pint(self)
+
+@dataclass
+class AngleDegrees():
+    '''
+    Ratio of current to voltage.
+    '''
+    value: float = field(default=None)
+    @property #read-only
+    def multiplier(self):
+        return UnitMultiplier.none
+    @property #read-only
+    def unit(self):
+        return UnitSymbol.deg
+    def __post_init__(self):
+        pint(self)
+
+@dataclass
+class AngleRadians():
+    '''
+    Ratio of current to voltage.
+    '''
+    value: float = field(default=None)
+    @property #read-only
+    def multiplier(self):
+        return UnitMultiplier.none
+    @property #read-only
+    def unit(self):
+        return UnitSymbol.rad
+    def __post_init__(self):
+        pint(self)
+
+@dataclass
+class ApparentPower():
+    '''
+    Product of the RMS value of the voltage and the RMS value of the current.
+    '''
+    value: float = field(default=None)
+    multiplier: UnitMultiplier = field(default=UnitMultiplier.none)
+    unit: UnitSymbol = field(default=UnitSymbol.VA)
+    def __post_init__(self):
+        pint(self)
+
+@dataclass
+class Area():
+    '''
+    Area.
+    '''
+    value: float = field(default=None)
+    multiplier: UnitMultiplier = field(default=UnitMultiplier.none)
+    @property #read-only
+    def unit(self):
+        return UnitSymbol.m2
+    def __post_init__(self):
+        pint(self)
+
+@dataclass
+class Capacitance():
+    '''
+    Capacitive part of reactance (imaginary part of impedance), at rated frequency.
+    '''
+    value: float = field(default=None)
+    multiplier: UnitMultiplier = field(default=UnitMultiplier.none)
+    unit: UnitSymbol = field(default=UnitSymbol.F)
+    def __post_init__(self):
+        pint(self)
+
+@dataclass
+class CapacitancePerLength():
+    '''
+    Capacitance per unit length.
+    '''
+    value: float = field(default=None)
+    multiplier: UnitMultiplier = field(default=UnitMultiplier.none)
+    unit: UnitSymbol = field(default=UnitSymbol.FPerm)
+    def __post_init__(self):
+        pint(self)
+
+@dataclass
+class Classification():
+    '''
+    Classification of level.  Specify as 1..n, with 1 being the most detailed,
+    highest priority, etc as described on the attribute using this data type.
+    '''
+    value: int = field(default=None)
+    @property #read-only
+    def multiplier(self):
+        return UnitMultiplier.none
+    @property #read-only
+    def unit(self):
+        return UnitSymbol.rad
+    def __post_init__(self):
+        pint(self)
+
+@dataclass
+class Conductance():
+    '''
+    Factor by which voltage must be multiplied to give corresponding power lost
+    from a circuit. Real part of admittance.
+    '''
+    value: float = field(default=None)
+    multiplier: UnitMultiplier = field(default=UnitMultiplier.none)
+    unit: UnitSymbol = field(default=UnitSymbol.S)
+    def __post_init__(self):
+        pint(self)
+
+@dataclass
+class ConductancePerLength():
+    '''
+    Real part of admittance per unit of length.
+    '''
+    value: float = field(default=None)
+    multiplier: UnitMultiplier = field(default=UnitMultiplier.none)
+    unit: UnitSymbol = field(default=UnitSymbol.SPerm)
+    def __post_init__(self):
+        pint(self)
+
+@dataclass
+class CurrentFlow():
+    '''
+    Electrical current with sign convention: positive flow is out of the
+    conducting equipment into the connectivity node. Can be both AC and DC.
+    '''
+    value: float = field(default=None)
+    multiplier: UnitMultiplier = field(default=UnitMultiplier.none)
+    unit: UnitSymbol = field(default=UnitSymbol.A)
+    def __post_init__(self):
+        pint(self)
+
+@dataclass
+class Damping():
+    '''
+    Per-unit active power variation with frequency referenced on the system
+    apparent power base. Typical values are in the range 1,0 - 2,0.
+    '''
+    value: float = field(default=None)
+    @property #read-only
+    def multiplier(self):
+        return UnitMultiplier.none
+    @property #read-only
+    def unit(self):
+        return UnitSymbol.onePerHz
+    def __post_init__(self):
+        pint(self)
+
+@dataclass
+class Displacement():
+    '''
+    Unit of displacement relative to a reference position,
+    hence can be negative.
+    '''
+    value: float = field(default=None)
+    @property #read-only
+    def multiplier(self):
+        return UnitMultiplier.none
+    @property #read-only
+    def unit(self):
+        return UnitSymbol.m
+    def __post_init__(self):
+        pint(self)
+
+@dataclass
+class Emission():
+    '''
+    Quantity of emission per fuel heat content.
+    '''
+    value: float = field(default=None)
+    @property #read-only
+    def multiplier(self):
+        return UnitMultiplier.none
+    @property #read-only
+    def unit(self):
+        return UnitSymbol.kgPerJ
+    def __post_init__(self):
+        pint(self)
+
+@dataclass
+class Frequency():
+    '''
+    Cycles per second.
+    '''
+    value: float = field(default=None)
+    multiplier: UnitMultiplier = field(default=UnitMultiplier.none)
+    @property #read-only
+    def unit(self):
+        return UnitSymbol.Hz
+    def __post_init__(self):
+        pint(self)
+
+@dataclass
+class HeatRate():
+    '''
+    Heat generated, in energy per time unit of elapsed time.
+    '''
+    value: float = field(default=None)
+    multiplier: UnitMultiplier = field(default=UnitMultiplier.none)
+    @property #read-only
+    def unit(self):
+        return UnitSymbol.JPers
+    def __post_init__(self):
+        pint(self)
+
+@dataclass
+class Hours():
+    '''
+    Time specified in hours
+    '''
+    value: float = field(default=None)
+    @property #read-only
+    def multiplier(self):
+        return UnitMultiplier.none
+    @property #read-only
+    def unit(self):
+        return UnitSymbol.h
+    def __post_init__(self):
+        pint(self)
+
+@dataclass
+class Impedance():
+    '''
+    Ratio of voltage to current.
+    '''
+    value: float = field(default=None)
+    multiplier: UnitMultiplier = field(default=UnitMultiplier.none)
+    unit: UnitSymbol = field(default=UnitSymbol.ohm)
+    def __post_init__(self):
+        pint(self)
+
+@dataclass
+class Inductance():
+    '''
+    Inductive part of reactance (imaginary part of impedance), at rated frequency.
+    '''
+    value: float = field(default=None)
+    multiplier: UnitMultiplier = field(default=UnitMultiplier.none)
+    unit: UnitSymbol = field(default=UnitSymbol.H)
+    def __post_init__(self):
+        pint(self)
+
+
+@dataclass
+class InductancePerLength():
+    '''
+    Inductance per unit of length.
+    '''
+    value: float = field(default=None)
+    multiplier: UnitMultiplier = field(default=UnitMultiplier.none)
+    unit: UnitSymbol = field(default=UnitSymbol.HPerm)
+    def __post_init__(self):
+        pint(self)
+
+@dataclass
+class KiloActivePower():
+    '''
+    Inductance per unit of length.
+    '''
+    value: float = field(default=None)
+    multiplier: UnitMultiplier = field(default=UnitMultiplier.k)
+    unit: UnitSymbol = field(default=UnitSymbol.W)
+    def __post_init__(self):
+        pint(self)
+
+@dataclass
+class Length():
+    '''
+    Unit of length. It shall be a positive value or zero.
+    '''
+    value: float = field(default=None)
+    multiplier: UnitMultiplier = field(default=UnitMultiplier.none)
+    @property #read-only
+    def unit(self):
+        return UnitSymbol.m
+    def __post_init__(self):
+        pint(self)
+
+@dataclass
+class Mass():
+    '''
+    Heat generated, in energy per time unit of elapsed time.
+    '''
+    value: float = field(default=None)
+    multiplier: UnitMultiplier = field(default=UnitMultiplier.k)
+    @property #read-only
+    def unit(self):
+        return UnitSymbol.g
+    def __post_init__(self):
+        pint(self)
+
+@dataclass
+class Minutes():
+    '''
+    Time in minutes.
+    '''
+    value: float = field(default=None)
+    multiplier: UnitMultiplier = field(default=UnitMultiplier.k)
+    @property #read-only
+    def unit(self):
+        return UnitSymbol.min
+    def __post_init__(self):
+        pint(self)
+
+@dataclass
+class PU():
+    '''
+    Per Unit - a positive or negative value referred to a defined base. Values typically range from -10 to +10.
+    '''
+    value: float = field(default=None)
+    multiplier: UnitMultiplier = field(default=UnitMultiplier.none)
+    unit: UnitSymbol = field(default=UnitSymbol.none)
+    def __post_init__(self):
+        pint(self)
+
+@dataclass
+class PerCent():
+    '''
+    Percentage on a defined base. For example, specify as 100 to indicate at the defined base.
+    '''
+    value: float = field(default=None)
+    @property #read-only
+    def multiplier(self):
+        return UnitMultiplier.none
+    @property #read-only
+    def unit(self):
+        return UnitSymbol.none
+    def __post_init__(self):
+        pint(self)
+
+@dataclass
+class Pressure():
+    '''
+    Time in minutes.
+    '''
+    value: float = field(default=None)
+    multiplier: UnitMultiplier = field(default=UnitMultiplier.none)
+    @property #read-only
+    def unit(self):
+        return UnitSymbol.Pa
+    def __post_init__(self):
+        pint(self)
 
 @dataclass
 class Reactance():
-    unitMultiplier: UnitMultiplier | str = field(
-        default=UnitMultiplier.none,
-        metadata={
-            'type': 'enumeration'
-        })
-    unit: UnitSymbol = field(
-        default=UnitSymbol.ohm,
-        metadata={
-            'type': 'enumeration'
-        })
-    value: float = field(
-        default=None,
-        metadata={
-            'type': 'attribute'
-        })
-
-    def pint(self) -> Quantity:
-        if self.unitMultiplier.value != 'none':
-            value_str = str(self.value) + self.unitMultiplier.value + self.unit.value
-        else:
-            value_str = str(self.value) + self.unit.value
-        self.pvalue = ureg.Quantity(value_str)
-        return self.pvalue
+    '''
+    Reactance (imaginary part of impedance), at rated frequency.
+    '''
+    value: float = field(default=None)
+    multiplier: UnitMultiplier = field(default=UnitMultiplier.none)
+    unit: UnitSymbol = field(default=UnitSymbol.ohm)
+    def __post_init__(self):
+        pint(self)
 
 
 @dataclass
-class Susceptance():
-    unitMultiplier: UnitMultiplier | str = field(
-        default=UnitMultiplier.none,
-        metadata={
-            'type': 'enumeration'
-        })
-    unit: UnitSymbol = field(
-        default=UnitSymbol.S,
-        metadata={
-            'type': 'enumeration'
-        })
-    value: float = field(
-        default=None,
-        metadata={
-            'type': 'attribute'
-        })
+class ReactancePerLength():
+    '''
+    Reactance (imaginary part of impedance) per unit of length, at rated frequency.
+    '''
+    value: float = field(default=None)
+    multiplier: UnitMultiplier = field(default=UnitMultiplier.none)
+    unit: UnitSymbol = field(default=UnitSymbol.ohmPerm)
+    def __post_init__(self):
+        pint(self)
 
-    def pint(self) -> Quantity:
-        if self.unitMultiplier.value != 'none':
-            value_str = str(self.value) + self.unitMultiplier.value + self.unit.value
-        else:
-            value_str = str(self.value) + self.unit.value
-        self.pvalue = ureg.Quantity(value_str)
-        return self.pvalue
+@dataclass
+class ReactivePower():
+    '''
+    Product of RMS value of the voltage and the RMS value of the quadrature
+    component of the current.
+    '''
+    value: float = field(default=None)
+    multiplier: UnitMultiplier = field(default=UnitMultiplier.none)
+    unit: UnitSymbol = field(default=UnitSymbol.VAr)
+    def __post_init__(self):
+        pint(self)
+
+@dataclass
+class Resistance():
+    '''
+    Resistance (real part of impedance).
+    '''
+    value: float = field(default=None)
+    multiplier: UnitMultiplier = field(default=UnitMultiplier.none)
+    unit: UnitSymbol = field(default=UnitSymbol.ohm)
+    def __post_init__(self):
+        pint(self)
+
+@dataclass
+class ResistancePerLength():
+    '''
+    Resistance (real part of impedance) per unit of length.
+    '''
+    value: float = field(default=None)
+    multiplier: UnitMultiplier = field(default=UnitMultiplier.none)
+    unit: UnitSymbol = field(default=UnitSymbol.ohmPerm)
+    def __post_init__(self):
+        pint(self)
+
+@dataclass
+class RotationSpeed():
+    '''
+    Number of revolutions per second.
+    '''
+    value: float = field(default=None)
+    @property #read-only
+    def multiplier(self):
+        return UnitMultiplier.none
+    @property #read-only
+    def unit(self):
+        return UnitSymbol.none
+    def __post_init__(self):
+        pint(self)
+
+@dataclass
+class Seconds():
+    '''
+    Time specified in seconds
+    '''
+    value: float = field(default=None)
+    @property #read-only
+    def multiplier(self):
+        return UnitMultiplier.none
+    @property #read-only
+    def unit(self):
+        return UnitSymbol.s
+    def __post_init__(self):
+        pint(self)
+
+@dataclass
+class Speed():
+    '''
+    Distance per unit of time
+    '''
+    value: float = field(default=None)
+    @property #read-only
+    def multiplier(self):
+        return UnitMultiplier.none
+    @property #read-only
+    def unit(self):
+        return UnitSymbol.mPers
+    def __post_init__(self):
+        pint(self)
 
 @dataclass
 class Susceptance():
-    unitMultiplier: UnitMultiplier | str = field(
-        default=UnitMultiplier.none,
-        metadata={
-            'type': 'enumeration'
-        })
-    unit: UnitSymbol = field(
-        default=UnitSymbol.S,
-        metadata={
-            'type': 'enumeration'
-        })
-    value: float = field(
-        default=None,
-        metadata={
-            'type': 'attribute'
-        })
+    '''
+    Imaginary part of admittance.
+    '''
+    value: float = field(default=None)
+    multiplier: UnitMultiplier = field(default=UnitMultiplier.none)
+    unit: UnitSymbol = field(default=UnitSymbol.S)
+    def __post_init__(self):
+        pint(self)
 
-    def pint(self) -> Quantity:
-        if self.unitMultiplier.value != 'none':
-            value_str = str(self.value) + self.unitMultiplier.value + self.unit.value
-        else:
-            value_str = str(self.value) + self.unit.value
-        self.pvalue = ureg.Quantity(value_str)
-        return self.pvalue
+@dataclass
+class SusceptancePerLength():
+    '''
+    Imaginary part of admittance per unit of length.
+    '''
+    value: float = field(default=None)
+    multiplier: UnitMultiplier = field(default=UnitMultiplier.none)
+    unit: UnitSymbol = field(default=UnitSymbol.SPerm)
+    def __post_init__(self):
+        pint(self)
+
+@dataclass
+class Temperature():
+    '''
+    Distance per unit of time
+    '''
+    value: float = field(default=None)
+    @property #read-only
+    def multiplier(self):
+        return UnitMultiplier.none
+    @property #read-only
+    def unit(self):
+        return UnitSymbol.degC
+    def __post_init__(self):
+        pint(self)
+
+@dataclass
+class Voltage():
+    '''
+    Electrical voltage, can be both AC and DC.
+    '''
+    value: float = field(default=None)
+    multiplier: UnitMultiplier = field(default=UnitMultiplier.none)
+    unit: UnitSymbol = field(default=UnitSymbol.V)
+    def __post_init__(self):
+        pint(self)
+
+@dataclass
+class VoltagePerReactivePower():
+    '''
+    Voltage variation with reactive power.
+    '''
+    value: float = field(default=None)
+    multiplier: UnitMultiplier = field(default=UnitMultiplier.none)
+    unit: UnitSymbol = field(default=UnitSymbol.VPerVAr)
+    def __post_init__(self):
+        pint(self)
+
+@dataclass
+class Volume():
+    '''
+    Volume.
+    '''
+    value: float = field(default=None)
+    multiplier: UnitMultiplier = field(default=UnitMultiplier.none)
+    @property #read-only
+    def unit(self):
+        return UnitSymbol.m3
+    def __post_init__(self):
+        pint(self)
+
+@dataclass
+class VolumeFlowRate():
+    '''
+    Volume per time
+    '''
+    value: float = field(default=None)
+    @property #read-only
+    def multiplier(self):
+        return UnitMultiplier.none
+    @property #read-only
+    def unit(self):
+        return UnitSymbol.m3Pers
+    def __post_init__(self):
+        pint(self)
+
+@dataclass
+class WaterLevel():
+    '''
+    Reservoir water level referred to a given datum such as mean sea level.
+    '''
+    value: float = field(default=None)
+    multiplier: UnitMultiplier = field(default=UnitMultiplier.none)
+    @property #read-only
+    def unit(self):
+        return UnitSymbol.m
+    def __post_init__(self):
+        pint(self)
