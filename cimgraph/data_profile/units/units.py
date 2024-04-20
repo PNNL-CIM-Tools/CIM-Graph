@@ -987,6 +987,22 @@ class Damping():
         pint(self)
 
 @dataclass
+class Date():
+    '''
+    Date as "yyyy-mm-dd", which conforms with ISO 8601. UTC time zone is
+    specified as "yyyy-mm-ddZ". A local timezone relative UTC is specified as
+    "yyyy-mm-dd(+/-)hh:mm".
+    '''
+
+@dataclass
+class DateInterval():
+    '''
+    Interval between two dates.
+    '''
+    start: MonthDay = field(default=None)
+    end: MonthDay = field(default=None)
+
+@dataclass
 class Displacement():
     '''
     Unit of displacement relative to a reference position,
@@ -1001,6 +1017,17 @@ class Displacement():
         return UnitSymbol.m
     def __post_init__(self):
         pint(self)
+
+@dataclass
+class Duration():
+    '''
+    Duration as "PnYnMnDTnHnMnS" which conforms to ISO 8601, where nY expresses
+    a number of years, nM a number of months, nD a number of days. The letter
+    T separates the date expression from the time expression and, after it,
+    nH identifies a number of hours, nM a number of minutes and nS a number
+    of seconds. The number of seconds could be expressed as a decimal number,
+    but all other numbers are integers.
+    '''
 
 @dataclass
 class Emission():
@@ -1141,6 +1168,20 @@ class Minutes():
         return UnitSymbol.min
     def __post_init__(self):
         pint(self)
+
+@dataclass
+class MonthDay():
+    '''
+    MonthDay format as "--mm-dd", which conforms with XSD data type gMonthDay.
+    '''
+
+@dataclass
+class MonthDayInterval():
+    '''
+    Interval between two times specified as month and day.
+    '''
+    start: MonthDay = field(default=None)
+    end: MonthDay = field(default=None)
 
 @dataclass
 class PU():
@@ -1319,6 +1360,24 @@ class Temperature():
         return UnitSymbol.degC
     def __post_init__(self):
         pint(self)
+
+@dataclass
+class Time():
+    '''
+    Time as "hh:mm:ss.sss", which conforms with ISO 8601. UTC time zone is
+    specified as "hh:mm:ss.sssZ". A local timezone relative UTC is specified
+    as "hh:mm:ss.sss±hh:mm". The second component (shown here as "ss.sss")
+    could have any number of digits in its fractional part to allow any
+    kind of precision beyond seconds.
+    '''
+
+@dataclass
+class TimeInterval():
+    '''
+    Interval between two times.
+    '''
+    start: MonthDay = field(default=None)
+    end: MonthDay = field(default=None)
 
 @dataclass
 class Voltage():
