@@ -11,7 +11,6 @@ readme = "README.md"
 
 [tool.poetry.dependencies]
 python = ">=3.8.1,<4.0"
-xsdata = "^22.5"
 SPARQLWrapper = "^2.0.0"
 neo4j = "^5.10.0"
 rdflib = "^7.0.0"
@@ -20,10 +19,10 @@ rdflib-neo4j = "^0.0.1b6"
 mysql-connector-python = "^8.0.0"
 gridappsd-python = "^2024"
 nest-asyncio = "^1.5.8"
+xsdata = "^24.5"
 
 [tool.poetry.group.dev.dependencies]
 pre-commit = "^2.17.0"
-xsdata = {extras = ["cli"], version = "^22.2"}
 xsdata-plantuml = "^21.4"
 graphviz = "^0.19.1"
 ipykernel = "^6.27.1"
