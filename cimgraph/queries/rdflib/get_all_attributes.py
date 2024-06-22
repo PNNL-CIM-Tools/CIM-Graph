@@ -4,7 +4,7 @@ from cimgraph.data_profile.known_problem_classes import ClassesWithoutMRID
 
 
 def get_all_attributes_sparql(cim_class: str, mrid_list: list[str],
-                              namespace: str, iec61970_301: int) -> str:
+                              connection_params) -> str:
     """
     Generates SPARQL query string for a given catalog of objects and feeder id
     Args:
@@ -14,6 +14,8 @@ def get_all_attributes_sparql(cim_class: str, mrid_list: list[str],
     Returns:
         query_message: query string that can be used in blazegraph connection or STOMP client
     """
+    namespace = connection_params.namespace
+    iec61970_301 = connection_params.iec61970_301
     class_name = cim_class.__name__
     classes_without_mrid = ClassesWithoutMRID()
 

@@ -135,6 +135,19 @@ class RDFlibConnection(ConnectionInterface):
             query_output = self.execute(sparql_message)
             self.edge_query_parser(query_output, graph, cim_class)
 
+    def get_all_attributes(self, graph: dict[type, dict[str, object]],
+                           cim_class: type) -> None:
+        mrid_list = list(graph[cim_class].keys())
+        num_nodes = len(mrid_list)
+        for index in range(math.ceil(len(mrid_list) / 100)):
+            eq_mrids = mrid_list[index * 100:(index + 1) * 100]
+            #generate SPARQL message from correct loaders>sparql python script based on class name
+            sparql_message = sparql.get_all_edges_sparql(
+                cim_class, eq_mrids, self.namespace, self.iec61970_301)
+            #execute sparql query
+            query_output = self.execute(sparql_message)
+            self.edge_query_parser(query_output, graph, cim_class)
+
     def edge_query_parser(self, query_output: QueryResponse,
                           graph: dict[type, dict[str, object]],
                           cim_class: type) -> None:

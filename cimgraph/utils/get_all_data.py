@@ -167,7 +167,7 @@ def get_all_data(network: GraphModel):
 
     # Get base data
     get_all_bus_data(network)
-    get_all_line_data(network)
+    #get_all_line_data(network)
     get_all_transformer_data(network)
     get_all_load_data(network)
     get_all_inverter_data(network)
@@ -195,8 +195,8 @@ def get_all_data(network: GraphModel):
                     # print('edges', class_name)
 
                 else:
-                    network.get_all_attributes(class_type)
                     # print('attributes', class_name)
+                    network.get_all_attributes(class_type)
 
                 # write_xml(network, '/home/ande188/sub.xml')
                 # time.sleep(5)
