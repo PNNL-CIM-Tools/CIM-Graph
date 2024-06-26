@@ -1,5 +1,5 @@
 from __future__ import annotations
-from dataclasses import dataclass, field
+from dataclasses import dataclass, field, is_dataclass
 from typing import Optional
 from enum import Enum
 from uuid import UUID, uuid4
@@ -14,7 +14,7 @@ _log = logging.getLogger(__name__)
 @dataclass
 class Identity():
     '''
-    This is the new root class from CIM 18 to provide common identificationcim17v40
+    This is the new root class from CIM 18 to provide common identification
     for all classes needing identification and naming attributes.
     IdentifiedObject is now a child class of Identity.
     mRID is superseded by Identity.identifier, which is typed to be a UUID.
@@ -30,16 +30,27 @@ class Identity():
     # This is needed to avoid infinite loops in object previews
     def __repr__(self) -> str:
         return json.dumps({'@id': f'{str(self.identifier)}', '@type': f'{self.__class__.__name__}'})
-    
     # Override python string for printing with JSON representation
     def __str__(self) -> str:
         # Create JSON-LD dump with repr and all attributes
         dump = dict(json.loads(self.__repr__()) | self.__dict__)
         attribute_list = list(self.__dataclass_fields__.keys())
         for attribute in attribute_list:
+            # Delete attributes from print that are empty
             if dump[attribute] is None or dump[attribute] == []:
-                # Delete attributes from print that are empty
                 del dump[attribute]
+            # If a dataclass, replace with custom repr
+            elif is_dataclass(dump[attribute]):
+                dump[attribute] = json.loads(dump[attribute].__repr__())
+            # If a list, convert elements to string
+            elif type(dump[attribute]) == list:
+                values = []
+                for value in dump[attribute]:
+                    # If a dataclass, replace with custom repr
+                    if is_dataclass(dump[attribute]):
+                        values.append(json.loads(value.__repr__()))
+                    else:
+                        values.append(str(value))
             elif type[dump[attribute]] != str:
                 # Reformat all attributes as string for JSON
                 dump[attribute] = str(dump[attribute])
@@ -48,7 +59,6 @@ class Identity():
         # Add 4 spaces indentation
         dump = json.dumps(json.loads(dump), indent=4)
         return dump
-    
     # Create UUID from inconsistent mRIDs
     def uuid(self, mRID:str = None, name:str = None) -> UUID:
         invalid_mrid = False

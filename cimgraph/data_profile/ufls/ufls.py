@@ -14,7 +14,7 @@ _log = logging.getLogger(__name__)
 @dataclass
 class Identity():
     '''
-    This is the new root class from CIM 18 to provide common identificationufls
+    This is the new root class from CIM 18 to provide common identification
     for all classes needing identification and naming attributes.
     IdentifiedObject is now a child class of Identity.
     mRID is superseded by Identity.identifier, which is typed to be a UUID.

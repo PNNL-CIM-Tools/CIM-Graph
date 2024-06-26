@@ -434,7 +434,7 @@
         <item>@dataclass</item>
         <item>class Identity():</item>
         <list begin="    '''" indent="    " end="    '''">
-            <item>This is the new root class from CIM 18 to provide common identification<xsl:value-of select="$envelope" /></item>
+            <item>This is the new root class from CIM 18 to provide common identification</item>
             <item>for all classes needing identification and naming attributes.</item>
             <item>IdentifiedObject is now a child class of Identity.</item>
             <item>mRID is superseded by Identity.identifier, which is typed to be a UUID.</item>
