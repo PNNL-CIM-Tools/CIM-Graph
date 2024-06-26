@@ -21,7 +21,7 @@
         <document>
             <!-- Header text with library imports -->
             <item>from __future__ import annotations</item>
-            <item>from dataclasses import dataclass, field</item>
+            <item>from dataclasses import dataclass, field, is_dataclass</item>
             <item>from typing import Optional</item>
             <item>from enum import Enum</item>
             <item>from uuid import UUID, uuid4</item>
@@ -430,6 +430,7 @@
 
 
     <xsl:template name="identity">
+
         <item>@dataclass</item>
         <item>class Identity():</item>
         <list begin="    '''" indent="    " end="    '''">
@@ -450,14 +451,12 @@
                 </list>
                 <item>}) </item>
             </list>
-            <item> </item>
             <item># Override python __repr__ method with JSON-LD representation</item>
             <item># This is needed to avoid infinite loops in object previews </item>
             <item>def __repr__(self) -> str:</item>
             <list begin="" indent="    " end="">
                 <item>return json.dumps({'@id': f'{str(self.identifier)}', '@type': f'{self.__class__.__name__}'})</item>
             </list>
-            <item> </item>
             <item># Override python string for printing with JSON representation</item>
             <item>def __str__(self) -> str: </item>
             <list begin="" indent="    " end="">
@@ -466,10 +465,34 @@
                 <item>attribute_list = list(self.__dataclass_fields__.keys())</item>
                 <item>for attribute in attribute_list:</item>
                 <list begin="" indent="    " end="">
+                    <item># Delete attributes from print that are empty</item>
                     <item>if dump[attribute] is None or dump[attribute] == []:</item>
                     <list begin="" indent="    " end="">
-                        <item># Delete attributes from print that are empty</item>
                         <item>del dump[attribute]</item>
+                    </list>
+                    <item># If a dataclass, replace with custom repr</item>
+                    <item>elif is_dataclass(dump[attribute]):</item>
+                    <list begin="" indent="    " end="">
+                        <item>dump[attribute] = json.loads(dump[attribute].__repr__())</item>
+                    </list>
+                    <item># If a list, convert elements to string</item>
+                    <item>elif type(dump[attribute]) == list:</item>
+                    <list begin="" indent="    " end="">
+                        <item>values = []</item>
+                        <item>for value in dump[attribute]:</item>
+                        <list begin="" indent="    " end="">
+                            <item># If a dataclass, replace with custom repr</item>
+                            <item>if is_dataclass(dump[attribute]):</item>
+                            <list begin="" indent="    " end="">
+                                <item>values.append(json.loads(value.__repr__()))</item>
+                            </list>
+                        </list>
+                        <list begin="" indent="    " end="">
+                            <item>else:</item>
+                            <list begin="" indent="    " end="">
+                                <item>values.append(str(value))</item>
+                            </list>
+                        </list>
                     </list>
                     <item>elif type[dump[attribute]] != str:</item>
                     <list begin="" indent="    " end="">
@@ -483,7 +506,7 @@
                 <item>dump = json.dumps(json.loads(dump), indent=4)</item>
                 <item>return dump</item>
             </list>
-            <item> </item>
+
             <item># Create UUID from inconsistent mRIDs</item>
             <item>def uuid(self, mRID:str = None, name:str = None) -> UUID:</item>
             <list begin="" indent="    " end="">
@@ -532,6 +555,8 @@
                 <!-- </list> -->
 
             </list>
+
+
         </list>
         
     </xsl:template>
