@@ -34,6 +34,8 @@ class Identity():
     def __str__(self) -> str:
         # Create JSON-LD dump with repr and all attributes
         dump = dict(json.loads(self.__repr__()) | self.__dict__)
+        if '__uuid__' in dump:
+            del dump['__uuid__']
         attribute_list = list(self.__dataclass_fields__.keys())
         for attribute in attribute_list:
             # Delete attributes from print that are empty
@@ -60,28 +62,72 @@ class Identity():
         dump = json.dumps(json.loads(dump), indent=4)
         return dump
     # Create UUID from inconsistent mRIDs
-    def uuid(self, mRID:str = None, name:str = None) -> UUID:
-        invalid_mrid = False
-        # If mRID is specified, try creating from UUID from mRID
-        if mRID is not None:
+    def uuid(self, uri:str = None, mRID:str = None, name:str = None) -> UUID:
+        seed = ''
+        invalid = True
+        self.__uuid__ = self.__uuid_meta__()
+        # If uri is specified, try creating from UUID from mRID
+        if uri is not None:
+            if uri.strip('_') != uri:
+                self.__uuid__.uri_has_underscore = True
+            if uri.lower() != uri:
+                self.__uuid__.uri_is_capitalized = True
             try:
-                self.identifier = UUID(mRID.strip('_').lower(), version=4)
+                self.__uuid__.uuid = UUID(uri.strip('_').lower(), version=4)
+                invalid = False
             except:
-                invalid_mrid = True
-                name = mRID
-                _log.warning(f'mRID {mRID} not a valid UUID, generating new UUID')
-        # Otherwise, build UUID using unique name as a seed
-        elif invalid_mrid or name is not None:
-            seedStr = f"{self.__class__.__name__}:{name}"
-            randomGenerator = Random(seedStr)
-            self.identifier = UUID(int=randomGenerator.getrandbits(128), version=4)
-        else:
-            self.identifier = uuid4()
+                seed = seed + uri
+                _log.warning(f'URI {uri} not a valid UUID, generating new UUID')
+
+        if mRID is not None:
+            if mRID.strip('_') != mRID:
+                self.__uuid__.mrid_has_underscore = True
+            if mRID.lower() != mRID:
+                self.__uuid__.mrid_is_capitalized = True
+            if self.__uuid__.uuid is None:
+                try:
+                    self.__uuid__.uuid = UUID(mRID.strip('_').lower(), version=4)
+                    invalid = False
+                except:
+                    self.mRID = mRID
+                    seed = seed + mRID
+                    _log.warning(f'mRID {mRID} not a valid UUID, generating new UUID')
+
+        if invalid:
+            if name is not None:
+                seed = seed + f"{self.__class__.__name__}:{name}"
+                randomGenerator = Random(seed)
+                self.__uuid__.uuid = UUID(int=randomGenerator.getrandbits(128), version=4)
+            else: 
+                self.__uuid__.uuid = uuid4()
+
+        self.identifier = self.__uuid__.uuid
+
+                
+
         if 'mRID' in self.__dataclass_fields__:
             if mRID is not None:
                 self.mRID = mRID
             else:
                 self.mRID = str(self.identifier)
+
+    def uri(self):
+        uri = str(self.identifier)
+        try:
+            if self.__uuid__.uri_is_capitalized:
+                uri = uri.upper()
+            if self.__uuid__.uri_has_underscore:
+                uri = '_'+uri
+        except:
+            pass
+        return uri
+
+    class __uuid_meta__():
+        uuid:UUID = None
+        uri_has_underscore:bool = False
+        uri_is_capitalized:bool = False
+        mrid_has_underscore:bool = False
+        mrid_is_capitalized:bool = False
         
 @dataclass(repr=False)
 class IdentifiedObject(Identity):
