@@ -34,8 +34,6 @@ class Identity():
     def __str__(self) -> str:
         # Create JSON-LD dump with repr and all attributes
         dump = dict(json.loads(self.__repr__()) | self.__dict__)
-        if '__uuid__' in dump:
-            del dump['__uuid__']
         attribute_list = list(self.__dataclass_fields__.keys())
         for attribute in attribute_list:
             # Delete attributes from print that are empty
@@ -62,72 +60,28 @@ class Identity():
         dump = json.dumps(json.loads(dump), indent=4)
         return dump
     # Create UUID from inconsistent mRIDs
-    def uuid(self, uri:str = None, mRID:str = None, name:str = None) -> UUID:
-        seed = ''
-        invalid = True
-        self.__uuid__ = self.__uuid_meta__()
-        # If uri is specified, try creating from UUID from mRID
-        if uri is not None:
-            if uri.strip('_') != uri:
-                self.__uuid__.uri_has_underscore = True
-            if uri.lower() != uri:
-                self.__uuid__.uri_is_capitalized = True
-            try:
-                self.__uuid__.uuid = UUID(uri.strip('_').lower(), version=4)
-                invalid = False
-            except:
-                seed = seed + uri
-                _log.warning(f'URI {uri} not a valid UUID, generating new UUID')
-
+    def uuid(self, mRID:str = None, name:str = None) -> UUID:
+        invalid_mrid = False
+        # If mRID is specified, try creating from UUID from mRID
         if mRID is not None:
-            if mRID.strip('_') != mRID:
-                self.__uuid__.mrid_has_underscore = True
-            if mRID.lower() != mRID:
-                self.__uuid__.mrid_is_capitalized = True
-            if self.__uuid__.uuid is None:
-                try:
-                    self.__uuid__.uuid = UUID(mRID.strip('_').lower(), version=4)
-                    invalid = False
-                except:
-                    self.mRID = mRID
-                    seed = seed + mRID
-                    _log.warning(f'mRID {mRID} not a valid UUID, generating new UUID')
-
-        if invalid:
-            if name is not None:
-                seed = seed + f"{self.__class__.__name__}:{name}"
-                randomGenerator = Random(seed)
-                self.__uuid__.uuid = UUID(int=randomGenerator.getrandbits(128), version=4)
-            else: 
-                self.__uuid__.uuid = uuid4()
-
-        self.identifier = self.__uuid__.uuid
-
-                
-
+            try:
+                self.identifier = UUID(mRID.strip('_').lower(), version=4)
+            except:
+                invalid_mrid = True
+                name = mRID
+                _log.warning(f'mRID {mRID} not a valid UUID, generating new UUID')
+        # Otherwise, build UUID using unique name as a seed
+        elif invalid_mrid or name is not None:
+            seedStr = f"{self.__class__.__name__}:{name}"
+            randomGenerator = Random(seedStr)
+            self.identifier = UUID(int=randomGenerator.getrandbits(128), version=4)
+        else:
+            self.identifier = uuid4()
         if 'mRID' in self.__dataclass_fields__:
             if mRID is not None:
                 self.mRID = mRID
             else:
                 self.mRID = str(self.identifier)
-
-    def uri(self):
-        uri = str(self.identifier)
-        try:
-            if self.__uuid__.uri_is_capitalized:
-                uri = uri.upper()
-            if self.__uuid__.uri_has_underscore:
-                uri = '_'+uri
-        except:
-            pass
-        return uri
-
-    class __uuid_meta__():
-        uuid:UUID = None
-        uri_has_underscore:bool = False
-        uri_is_capitalized:bool = False
-        mrid_has_underscore:bool = False
-        mrid_is_capitalized:bool = False
         
 @dataclass(repr=False)
 class IdentifiedObject(Identity):
@@ -140,7 +94,17 @@ class IdentifiedObject(Identity):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1'
+            'maxOccurs': '1',
+            'docstring':
+            '''
+            Master resource identifier issued by a model authority. The mRID is unique
+            within an exchange context. Global uniqueness is easily achieved by using
+            a UUID, as specified in RFC 4122, for the mRID. The use of UUID is strongly
+            recommended.
+            For CIMXML data files in RDF syntax conforming to IEC 61970-552 Edition
+            1, the mRID is mapped to rdf:ID or rdf:about attributes that identify CIM
+            object elements.
+            '''
         })
     '''
     Master resource identifier issued by a model authority. The mRID is unique
@@ -156,7 +120,16 @@ class IdentifiedObject(Identity):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1'
+            'maxOccurs': '1',
+            'docstring':
+            '''
+            The aliasName is free text human readable name of the object alternative
+            to IdentifiedObject.name. It may be non unique and may not correlate to
+            a naming hierarchy.
+            The attribute aliasName is retained because of backwards compatibility
+            between CIM relases. It is however recommended to replace aliasName with
+            the Name class as aliasName is planned for retirement at a future time.
+            '''
         })
     '''
     The aliasName is free text human readable name of the object alternative
@@ -171,7 +144,12 @@ class IdentifiedObject(Identity):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1'
+            'maxOccurs': '1',
+            'docstring':
+            '''
+            The description is a free human readable text describing or naming the
+            object. It may be non unique and may not correlate to a naming hierarchy.
+            '''
         })
     '''
     The description is a free human readable text describing or naming the
@@ -182,7 +160,12 @@ class IdentifiedObject(Identity):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1'
+            'maxOccurs': '1',
+            'docstring':
+            '''
+            The name is any free human readable and possibly non unique text naming
+            the object.
+            '''
         })
     '''
     The name is any free human readable and possibly non unique text naming
@@ -200,7 +183,19 @@ class ACDCTerminal(IdentifiedObject):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1'
+            'maxOccurs': '1',
+            'docstring':
+            '''
+            The connected status is related to a bus-branch model and the topological
+            node to terminal relation. True implies the terminal is connected to the
+            related topological node and false implies it is not.
+            In a bus-branch model, the connected status is used to tell if equipment
+            is disconnected without having to change the connectivity described by
+            the topological node to terminal relation. A valid case is that conducting
+            equipment can be connected in one end and open in the other. In particular
+            for an AC line segment, where the reactive line charging can be significant,
+            this is a relevant case.
+            '''
         })
     '''
     The connected status is related to a bus-branch model and the topological
@@ -218,7 +213,14 @@ class ACDCTerminal(IdentifiedObject):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1'
+            'maxOccurs': '1',
+            'docstring':
+            '''
+            The orientation of the terminal connections for a multiple terminal conducting
+            equipment. The sequence numbering starts with 1 and additional terminals
+            should follow in increasing order. The first terminal is the "starting
+            point" for a two terminal branch.
+            '''
         })
     '''
     The orientation of the terminal connections for a multiple terminal conducting
@@ -232,7 +234,14 @@ class ACDCTerminal(IdentifiedObject):
             'type': 'Association',
             'minOccurs': '0',
             'maxOccurs': 'unbounded',
-            'inverse': 'Measurement.Terminal'
+            'inverse': 'Measurement.Terminal',
+            'docstring':
+            '''
+            Measurements associated with this terminal defining where the measurement
+            is placed in the network topology. It may be used, for instance, to capture
+            the sensor position, such as a voltage transformer (PT) at a busbar or
+            a current transformer (CT) at the bar between a breaker and an isolator.
+            '''
         })
     '''
     Measurements associated with this terminal defining where the measurement
@@ -252,7 +261,13 @@ class Terminal(ACDCTerminal):
             'type': 'Association',
             'minOccurs': '0',
             'maxOccurs': '1',
-            'inverse': 'ConductingEquipment.Terminals'
+            'inverse': 'ConductingEquipment.Terminals',
+            'docstring':
+            '''
+            The conducting equipment of the terminal. Conducting equipment have terminals
+            that may be connected to other conducting equipment terminals via connectivity
+            nodes or topological nodes.
+            '''
         })
     '''
     The conducting equipment of the terminal. Conducting equipment have terminals
@@ -265,7 +280,11 @@ class Terminal(ACDCTerminal):
             'type': 'Association',
             'minOccurs': '0',
             'maxOccurs': '1',
-            'inverse': 'ConnectivityNode.Terminals'
+            'inverse': 'ConnectivityNode.Terminals',
+            'docstring':
+            '''
+            The connectivity node to which this terminal connects with zero impedance.
+            '''
         })
     '''
     The connectivity node to which this terminal connects with zero impedance.
@@ -276,7 +295,12 @@ class Terminal(ACDCTerminal):
             'type': 'Association',
             'minOccurs': '0',
             'maxOccurs': '1',
-            'inverse': 'Feeder.NormalHeadTerminal'
+            'inverse': 'Feeder.NormalHeadTerminal',
+            'docstring':
+            '''
+            The feeder that this terminal normally feeds. Only specifed for the terminals
+            at head of feeders.
+            '''
         })
     '''
     The feeder that this terminal normally feeds. Only specifed for the terminals
@@ -288,7 +312,15 @@ class Terminal(ACDCTerminal):
             'type': 'Of Aggregate',
             'minOccurs': '0',
             'maxOccurs': '1',
-            'inverse': 'TopologicalNode.Terminal'
+            'inverse': 'TopologicalNode.Terminal',
+            'docstring':
+            '''
+            The topological node associated with the terminal. This can be used as
+            an alternative to the connectivity node path to topological node, thus
+            making it unneccesary to model connectivity nodes in some cases. Note that
+            the if connectivity nodes are in the model, this association would probably
+            not be used as an input specification.
+            '''
         })
     '''
     The topological node associated with the terminal. This can be used as
@@ -314,7 +346,11 @@ class ConnectivityNode(IdentifiedObject):
             'type': 'Association',
             'minOccurs': '0',
             'maxOccurs': '1',
-            'inverse': 'ConnectivityNodeContainer.ConnectivityNodes'
+            'inverse': 'ConnectivityNodeContainer.ConnectivityNodes',
+            'docstring':
+            '''
+            Container of this connectivity node.
+            '''
         })
     '''
     Container of this connectivity node.
@@ -325,7 +361,11 @@ class ConnectivityNode(IdentifiedObject):
             'type': 'Association',
             'minOccurs': '0',
             'maxOccurs': 'unbounded',
-            'inverse': 'Terminal.ConnectivityNode'
+            'inverse': 'Terminal.ConnectivityNode',
+            'docstring':
+            '''
+            Terminals interconnected with zero impedance at a this connectivity node.
+            '''
         })
     '''
     Terminals interconnected with zero impedance at a this connectivity node.
@@ -336,7 +376,12 @@ class ConnectivityNode(IdentifiedObject):
             'type': 'Of Aggregate',
             'minOccurs': '0',
             'maxOccurs': '1',
-            'inverse': 'TopologicalNode.ConnectivityNodes'
+            'inverse': 'TopologicalNode.ConnectivityNodes',
+            'docstring':
+            '''
+            The topological node to which this connectivity node is assigned. May depend
+            on the current state of switches in the network.
+            '''
         })
     '''
     The topological node to which this connectivity node is assigned. May depend
@@ -353,7 +398,11 @@ class FunctionBlock(IdentifiedObject):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1'
+            'maxOccurs': '1',
+            'docstring':
+            '''
+            True, if the function block is enabled (active). Otherwise false.
+            '''
         })
     '''
     True, if the function block is enabled (active). Otherwise false.
@@ -363,7 +412,12 @@ class FunctionBlock(IdentifiedObject):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1'
+            'maxOccurs': '1',
+            'docstring':
+            '''
+            Value 0 means ignore priority. 1 means the highest priority, 2 is the second
+            highest priority.
+            '''
         })
     '''
     Value 0 means ignore priority. 1 means the highest priority, 2 is the second
@@ -375,7 +429,12 @@ class FunctionBlock(IdentifiedObject):
             'type': 'Aggregate Of',
             'minOccurs': '0',
             'maxOccurs': 'unbounded',
-            'inverse': 'FunctionOutputVariable.FunctionBlock'
+            'inverse': 'FunctionOutputVariable.FunctionBlock',
+            'docstring':
+            '''
+            Function output variable describe the output or codomain to the function
+            block.
+            '''
         })
     '''
     Function output variable describe the output or codomain to the function
@@ -387,7 +446,11 @@ class FunctionBlock(IdentifiedObject):
             'type': 'Association',
             'minOccurs': '0',
             'maxOccurs': 'unbounded',
-            'inverse': 'FunctionInputVariable.Function'
+            'inverse': 'FunctionInputVariable.Function',
+            'docstring':
+            '''
+            Function input variable describe the input or domain to the function block.
+            '''
         })
     '''
     Function input variable describe the input or domain to the function block.
@@ -401,7 +464,10 @@ class ProtectionFunctionBlock(FunctionBlock):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1'
+            'maxOccurs': '1',
+            'docstring':
+            '''
+            '''
         })
     '''
     '''
@@ -410,7 +476,10 @@ class ProtectionFunctionBlock(FunctionBlock):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1'
+            'maxOccurs': '1',
+            'docstring':
+            '''
+            '''
         })
     '''
     '''
@@ -419,7 +488,10 @@ class ProtectionFunctionBlock(FunctionBlock):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1'
+            'maxOccurs': '1',
+            'docstring':
+            '''
+            '''
         })
     '''
     '''
@@ -428,7 +500,10 @@ class ProtectionFunctionBlock(FunctionBlock):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1'
+            'maxOccurs': '1',
+            'docstring':
+            '''
+            '''
         })
     '''
     '''
@@ -437,7 +512,10 @@ class ProtectionFunctionBlock(FunctionBlock):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1'
+            'maxOccurs': '1',
+            'docstring':
+            '''
+            '''
         })
     '''
     '''
@@ -446,7 +524,10 @@ class ProtectionFunctionBlock(FunctionBlock):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1'
+            'maxOccurs': '1',
+            'docstring':
+            '''
+            '''
         })
     '''
     '''
@@ -455,7 +536,10 @@ class ProtectionFunctionBlock(FunctionBlock):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1'
+            'maxOccurs': '1',
+            'docstring':
+            '''
+            '''
         })
     '''
     '''
@@ -465,7 +549,10 @@ class ProtectionFunctionBlock(FunctionBlock):
             'type': 'Association',
             'minOccurs': '0',
             'maxOccurs': '1',
-            'inverse': 'ProtectedSwitch.ProtectionRelayFunction'
+            'inverse': 'ProtectedSwitch.ProtectionRelayFunction',
+            'docstring':
+            '''
+            '''
         })
     '''
     '''
@@ -475,7 +562,10 @@ class ProtectionFunctionBlock(FunctionBlock):
             'type': 'Association',
             'minOccurs': '0',
             'maxOccurs': 'unbounded',
-            'inverse': 'ProtectionSettingsGroup.ProtectionFunctionBlock'
+            'inverse': 'ProtectionSettingsGroup.ProtectionFunctionBlock',
+            'docstring':
+            '''
+            '''
         })
     '''
     '''
@@ -492,7 +582,10 @@ class FrequencyProtectionFunctionBlock(WideAreaProtectionFunctionBlock):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1'
+            'maxOccurs': '1',
+            'docstring':
+            '''
+            '''
         })
     '''
     '''
@@ -505,7 +598,10 @@ class UnderFrequencyProtectionFunctionBlock(FrequencyProtectionFunctionBlock):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1'
+            'maxOccurs': '1',
+            'docstring':
+            '''
+            '''
         })
     '''
     '''
@@ -520,7 +616,12 @@ class FunctionInputVariable(IdentifiedObject):
             'type': 'Association',
             'minOccurs': '0',
             'maxOccurs': '1',
-            'inverse': 'FunctionBlock.Input'
+            'inverse': 'FunctionBlock.Input',
+            'docstring':
+            '''
+            Function block describe the function that function input variable provides
+            the domain for.
+            '''
         })
     '''
     Function block describe the function that function input variable provides
@@ -537,7 +638,12 @@ class FunctionOutputVariable(IdentifiedObject):
             'type': 'Of Aggregate',
             'minOccurs': '0',
             'maxOccurs': '1',
-            'inverse': 'FunctionBlock.FunctionOutputVariable'
+            'inverse': 'FunctionBlock.FunctionOutputVariable',
+            'docstring':
+            '''
+            Function block describe the function that function output variable provides
+            the codomain for.
+            '''
         })
     '''
     Function block describe the function that function output variable provides
@@ -554,7 +660,11 @@ class GeographicalRegion(IdentifiedObject):
             'type': 'Aggregate Of',
             'minOccurs': '0',
             'maxOccurs': 'unbounded',
-            'inverse': 'SubGeographicalRegion.Region'
+            'inverse': 'SubGeographicalRegion.Region',
+            'docstring':
+            '''
+            All sub-geograhpical regions within this geographical region.
+            '''
         })
     '''
     All sub-geograhpical regions within this geographical region.
@@ -588,7 +698,16 @@ class Measurement(IdentifiedObject):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1'
+            'maxOccurs': '1',
+            'docstring':
+            '''
+            Specifies the type of measurement. For example, this specifies if the measurement
+            represents an indoor temperature, outdoor temperature, bus voltage, line
+            flow, etc.
+            When the measurementType is set to "Specialization", the type of Measurement
+            is defined in more detail by the specialized class which inherits from
+            Measurement.
+            '''
         })
     '''
     Specifies the type of measurement. For example, this specifies if the measurement
@@ -604,7 +723,11 @@ class Measurement(IdentifiedObject):
             'type': 'Of Aggregate',
             'minOccurs': '0',
             'maxOccurs': '1',
-            'inverse': 'PowerSystemResource.Measurements'
+            'inverse': 'PowerSystemResource.Measurements',
+            'docstring':
+            '''
+            The power system resource that contains the measurement.
+            '''
         })
     '''
     The power system resource that contains the measurement.
@@ -615,7 +738,11 @@ class Measurement(IdentifiedObject):
             'type': 'Association',
             'minOccurs': '0',
             'maxOccurs': '1',
-            'inverse': 'ACDCTerminal.Measurements'
+            'inverse': 'ACDCTerminal.Measurements',
+            'docstring':
+            '''
+            One or more measurements may be associated with a terminal in the network.
+            '''
         })
     '''
     One or more measurements may be associated with a terminal in the network.
@@ -630,7 +757,12 @@ class Analog(Measurement):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1'
+            'maxOccurs': '1',
+            'docstring':
+            '''
+            Normal value range maximum for any of the MeasurementValue.values. Used
+            for scaling, e.g. in bar graphs or of telemetered raw values.
+            '''
         })
     '''
     Normal value range maximum for any of the MeasurementValue.values. Used
@@ -641,7 +773,12 @@ class Analog(Measurement):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1'
+            'maxOccurs': '1',
+            'docstring':
+            '''
+            Normal value range minimum for any of the MeasurementValue.values. Used
+            for scaling, e.g. in bar graphs or of telemetered raw values.
+            '''
         })
     '''
     Normal value range minimum for any of the MeasurementValue.values. Used
@@ -652,7 +789,11 @@ class Analog(Measurement):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1'
+            'maxOccurs': '1',
+            'docstring':
+            '''
+            Normal measurement value, e.g., used for percentage calculations.
+            '''
         })
     '''
     Normal measurement value, e.g., used for percentage calculations.
@@ -662,7 +803,13 @@ class Analog(Measurement):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1'
+            'maxOccurs': '1',
+            'docstring':
+            '''
+            If true then this measurement is an active power, reactive power or current
+            with the convention that a positive value measured at the Terminal means
+            power is flowing into the related PowerSystemResource.
+            '''
         })
     '''
     If true then this measurement is an active power, reactive power or current
@@ -680,7 +827,12 @@ class Discrete(Measurement):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1'
+            'maxOccurs': '1',
+            'docstring':
+            '''
+            Normal value range maximum for any of the MeasurementValue.values. Used
+            for scaling, e.g. in bar graphs or of telemetered raw values.
+            '''
         })
     '''
     Normal value range maximum for any of the MeasurementValue.values. Used
@@ -691,7 +843,12 @@ class Discrete(Measurement):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1'
+            'maxOccurs': '1',
+            'docstring':
+            '''
+            Normal value range minimum for any of the MeasurementValue.values. Used
+            for scaling, e.g. in bar graphs or of telemetered raw values.
+            '''
         })
     '''
     Normal value range minimum for any of the MeasurementValue.values. Used
@@ -702,7 +859,11 @@ class Discrete(Measurement):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1'
+            'maxOccurs': '1',
+            'docstring':
+            '''
+            Normal measurement value, e.g., used for percentage calculations.
+            '''
         })
     '''
     Normal measurement value, e.g., used for percentage calculations.
@@ -721,7 +882,11 @@ class PowerSystemResource(IdentifiedObject):
             'type': 'Aggregate Of',
             'minOccurs': '0',
             'maxOccurs': 'unbounded',
-            'inverse': 'Measurement.PowerSystemResource'
+            'inverse': 'Measurement.PowerSystemResource',
+            'docstring':
+            '''
+            The measurements associated with this power system resource.
+            '''
         })
     '''
     The measurements associated with this power system resource.
@@ -738,7 +903,11 @@ class ConnectivityNodeContainer(PowerSystemResource):
             'type': 'Association',
             'minOccurs': '0',
             'maxOccurs': 'unbounded',
-            'inverse': 'ConnectivityNode.ConnectivityNodeContainer'
+            'inverse': 'ConnectivityNode.ConnectivityNodeContainer',
+            'docstring':
+            '''
+            Connectivity nodes which belong to this connectivity node container.
+            '''
         })
     '''
     Connectivity nodes which belong to this connectivity node container.
@@ -749,7 +918,11 @@ class ConnectivityNodeContainer(PowerSystemResource):
             'type': 'Association',
             'minOccurs': '0',
             'maxOccurs': 'unbounded',
-            'inverse': 'TopologicalNode.ConnectivityNodeContainer'
+            'inverse': 'TopologicalNode.ConnectivityNodeContainer',
+            'docstring':
+            '''
+            The topological nodes which belong to this connectivity node container.
+            '''
         })
     '''
     The topological nodes which belong to this connectivity node container.
@@ -765,7 +938,16 @@ class EquipmentContainer(ConnectivityNodeContainer):
             'type': 'Association',
             'minOccurs': '0',
             'maxOccurs': 'unbounded',
-            'inverse': 'Equipment.AdditionalEquipmentContainer'
+            'inverse': 'Equipment.AdditionalEquipmentContainer',
+            'docstring':
+            '''
+            The additonal contained equipment. The equipment belong to the equipment
+            container. The equipment is contained in another equipment container, but
+            also grouped with this equipment container. Examples include when a switch
+            contained in a substation is also desired to be grouped with a line contianer
+            or when a switch is included in a secondary substation and also grouped
+            in a feeder.
+            '''
         })
     '''
     The additonal contained equipment. The equipment belong to the equipment
@@ -781,7 +963,11 @@ class EquipmentContainer(ConnectivityNodeContainer):
             'type': 'Aggregate Of',
             'minOccurs': '0',
             'maxOccurs': 'unbounded',
-            'inverse': 'Equipment.EquipmentContainer'
+            'inverse': 'Equipment.EquipmentContainer',
+            'docstring':
+            '''
+            Contained equipment.
+            '''
         })
     '''
     Contained equipment.
@@ -800,7 +986,13 @@ class Feeder(EquipmentContainer):
             'type': 'Aggregate Of',
             'minOccurs': '0',
             'maxOccurs': 'unbounded',
-            'inverse': 'Substation.NamingFeeder'
+            'inverse': 'Substation.NamingFeeder',
+            'docstring':
+            '''
+            The secondary substations that are normally energized from the feeder.
+            Used for naming purposes. Should be consistent with the other associations
+            for energizing terminal specification and the feeder energization specification.
+            '''
         })
     '''
     The secondary substations that are normally energized from the feeder.
@@ -813,7 +1005,11 @@ class Feeder(EquipmentContainer):
             'type': 'Association',
             'minOccurs': '0',
             'maxOccurs': 'unbounded',
-            'inverse': 'Substation.NormalEnergizingFeeder'
+            'inverse': 'Substation.NormalEnergizingFeeder',
+            'docstring':
+            '''
+            The substations that are normally energized by the feeder.
+            '''
         })
     '''
     The substations that are normally energized by the feeder.
@@ -824,7 +1020,12 @@ class Feeder(EquipmentContainer):
             'type': 'Of Aggregate',
             'minOccurs': '0',
             'maxOccurs': '1',
-            'inverse': 'Substation.NormalEnergizedFeeder'
+            'inverse': 'Substation.NormalEnergizedFeeder',
+            'docstring':
+            '''
+            The substation that nominally energizes the feeder. Also used for naming
+            purposes.
+            '''
         })
     '''
     The substation that nominally energizes the feeder. Also used for naming
@@ -836,7 +1037,11 @@ class Feeder(EquipmentContainer):
             'type': 'Association',
             'minOccurs': '0',
             'maxOccurs': 'unbounded',
-            'inverse': 'Terminal.NormalHeadFeeder'
+            'inverse': 'Terminal.NormalHeadFeeder',
+            'docstring':
+            '''
+            The normal head terminal or terminals of the feeder.
+            '''
         })
     '''
     The normal head terminal or terminals of the feeder.
@@ -854,7 +1059,13 @@ class Substation(EquipmentContainer):
             'type': 'Of Aggregate',
             'minOccurs': '0',
             'maxOccurs': '1',
-            'inverse': 'Feeder.NamingSecondarySubstation'
+            'inverse': 'Feeder.NamingSecondarySubstation',
+            'docstring':
+            '''
+            The primary feeder that normally energizes the secondary substation. Used
+            for naming purposes. Either this association or the substation to subgeographical
+            region should be used for hiearchical containment specification.
+            '''
         })
     '''
     The primary feeder that normally energizes the secondary substation. Used
@@ -867,7 +1078,11 @@ class Substation(EquipmentContainer):
             'type': 'Aggregate Of',
             'minOccurs': '0',
             'maxOccurs': 'unbounded',
-            'inverse': 'Feeder.NormalEnergizingSubstation'
+            'inverse': 'Feeder.NormalEnergizingSubstation',
+            'docstring':
+            '''
+            The normal energized feeders of the substation. Also used for naming purposes.
+            '''
         })
     '''
     The normal energized feeders of the substation. Also used for naming purposes.
@@ -878,7 +1093,12 @@ class Substation(EquipmentContainer):
             'type': 'Association',
             'minOccurs': '0',
             'maxOccurs': 'unbounded',
-            'inverse': 'Feeder.NormalEnergizedSubstation'
+            'inverse': 'Feeder.NormalEnergizedSubstation',
+            'docstring':
+            '''
+            The feeders that potentially energize the downstream substation. Should
+            be consistent with the associations that describe the naming hiearchy.
+            '''
         })
     '''
     The feeders that potentially energize the downstream substation. Should
@@ -890,7 +1110,11 @@ class Substation(EquipmentContainer):
             'type': 'Of Aggregate',
             'minOccurs': '0',
             'maxOccurs': '1',
-            'inverse': 'SubGeographicalRegion.Substations'
+            'inverse': 'SubGeographicalRegion.Substations',
+            'docstring':
+            '''
+            The SubGeographicalRegion containing the substation.
+            '''
         })
     '''
     The SubGeographicalRegion containing the substation.
@@ -905,7 +1129,16 @@ class Equipment(PowerSystemResource):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1'
+            'maxOccurs': '1',
+            'docstring':
+            '''
+            The single instance of equipment represents multiple pieces of equipment
+            that have been modeled together as an aggregate. Examples would be power
+            transformers or synchronous machines operating in parallel modeled as a
+            single aggregate power transformer or aggregate synchronous machine. This
+            is not to be used to indicate equipment that is part of a group of interdependent
+            equipment produced by a network production program.
+            '''
         })
     '''
     The single instance of equipment represents multiple pieces of equipment
@@ -920,7 +1153,11 @@ class Equipment(PowerSystemResource):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1'
+            'maxOccurs': '1',
+            'docstring':
+            '''
+            If true, the equipment is in service.
+            '''
         })
     '''
     If true, the equipment is in service.
@@ -930,7 +1167,12 @@ class Equipment(PowerSystemResource):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1'
+            'maxOccurs': '1',
+            'docstring':
+            '''
+            The equipment is enabled to participate in network analysis. If unspecified,
+            the value is assumed to be true.
+            '''
         })
     '''
     The equipment is enabled to participate in network analysis. If unspecified,
@@ -941,7 +1183,11 @@ class Equipment(PowerSystemResource):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1'
+            'maxOccurs': '1',
+            'docstring':
+            '''
+            If true, the equipment is normally in service.
+            '''
         })
     '''
     If true, the equipment is normally in service.
@@ -952,7 +1198,13 @@ class Equipment(PowerSystemResource):
             'type': 'Association',
             'minOccurs': '0',
             'maxOccurs': 'unbounded',
-            'inverse': 'EquipmentContainer.AdditionalGroupedEquipment'
+            'inverse': 'EquipmentContainer.AdditionalGroupedEquipment',
+            'docstring':
+            '''
+            Additional equipment container beyond the primary equipment container.
+            The equipment is contained in another equipment container, but also grouped
+            with this equipment container.
+            '''
         })
     '''
     Additional equipment container beyond the primary equipment container.
@@ -965,7 +1217,11 @@ class Equipment(PowerSystemResource):
             'type': 'Of Aggregate',
             'minOccurs': '0',
             'maxOccurs': '1',
-            'inverse': 'EquipmentContainer.Equipments'
+            'inverse': 'EquipmentContainer.Equipments',
+            'docstring':
+            '''
+            Container of this equipment.
+            '''
         })
     '''
     Container of this equipment.
@@ -982,7 +1238,13 @@ class ConductingEquipment(Equipment):
             'type': 'Association',
             'minOccurs': '0',
             'maxOccurs': '1',
-            'inverse': 'BaseVoltage.ConductingEquipment'
+            'inverse': 'BaseVoltage.ConductingEquipment',
+            'docstring':
+            '''
+            Base voltage of this conducting equipment. Use only when there is no voltage
+            level container used and only one base voltage applies. For example, not
+            used for transformers.
+            '''
         })
     '''
     Base voltage of this conducting equipment. Use only when there is no voltage
@@ -995,7 +1257,12 @@ class ConductingEquipment(Equipment):
             'type': 'Association',
             'minOccurs': '0',
             'maxOccurs': 'unbounded',
-            'inverse': 'Terminal.ConductingEquipment'
+            'inverse': 'Terminal.ConductingEquipment',
+            'docstring':
+            '''
+            Conducting equipment have terminals that may be connected to other conducting
+            equipment terminals via connectivity nodes or topological nodes.
+            '''
         })
     '''
     Conducting equipment have terminals that may be connected to other conducting
@@ -1015,7 +1282,11 @@ class EnergyConsumer(EnergyConnection):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1'
+            'maxOccurs': '1',
+            'docstring':
+            '''
+            Number of individual customers represented by this demand.
+            '''
         })
     '''
     Number of individual customers represented by this demand.
@@ -1025,7 +1296,11 @@ class EnergyConsumer(EnergyConnection):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1'
+            'maxOccurs': '1',
+            'docstring':
+            '''
+            Used for Yn and Zn connections. True if the neutral is solidly grounded.
+            '''
         })
     '''
     Used for Yn and Zn connections. True if the neutral is solidly grounded.
@@ -1035,7 +1310,14 @@ class EnergyConsumer(EnergyConnection):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1'
+            'maxOccurs': '1',
+            'docstring':
+            '''
+            Active power of the load. Load sign convention is used, i.e. positive sign
+            means flow out from a node.
+            For voltage dependent loads the value is at rated voltage.
+            Starting value for a steady state solution.
+            '''
         })
     '''
     Active power of the load. Load sign convention is used, i.e. positive sign
@@ -1048,7 +1330,14 @@ class EnergyConsumer(EnergyConnection):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1'
+            'maxOccurs': '1',
+            'docstring':
+            '''
+            Reactive power of the load. Load sign convention is used, i.e. positive
+            sign means flow out from a node.
+            For voltage dependent loads the value is at rated voltage.
+            Starting value for a steady state solution.
+            '''
         })
     '''
     Reactive power of the load. Load sign convention is used, i.e. positive
@@ -1062,7 +1351,11 @@ class EnergyConsumer(EnergyConnection):
             'type': 'Of Aggregate',
             'minOccurs': '0',
             'maxOccurs': '1',
-            'inverse': 'PowerCutZone.EnergyConsumers'
+            'inverse': 'PowerCutZone.EnergyConsumers',
+            'docstring':
+            '''
+            The energy consumer is assigned to this power cut zone.
+            '''
         })
     '''
     The energy consumer is assigned to this power cut zone.
@@ -1078,7 +1371,12 @@ class RegulatingCondEq(EnergyConnection):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1'
+            'maxOccurs': '1',
+            'docstring':
+            '''
+            Specifies the regulation status of the equipment. True is regulating, false
+            is not regulating.
+            '''
         })
     '''
     Specifies the regulation status of the equipment. True is regulating, false
@@ -1095,7 +1393,10 @@ class PowerElectronicsConnection(RegulatingCondEq):
         metadata = {
             'type': 'Enumeration',
             'minOccurs': '0',
-            'maxOccurs': '1'
+            'maxOccurs': '1',
+            'docstring':
+            '''
+            '''
         })
     '''
     '''
@@ -1104,7 +1405,12 @@ class PowerElectronicsConnection(RegulatingCondEq):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1'
+            'maxOccurs': '1',
+            'docstring':
+            '''
+            Maximum fault current this device will contribute, in per-unit of rated
+            current, before the converter protection will trip or bypass.
+            '''
         })
     '''
     Maximum fault current this device will contribute, in per-unit of rated
@@ -1115,7 +1421,12 @@ class PowerElectronicsConnection(RegulatingCondEq):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1'
+            'maxOccurs': '1',
+            'docstring':
+            '''
+            Maximum reactive power limit. This is the maximum (nameplate) limit for
+            the unit.
+            '''
         })
     '''
     Maximum reactive power limit. This is the maximum (nameplate) limit for
@@ -1126,7 +1437,12 @@ class PowerElectronicsConnection(RegulatingCondEq):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1'
+            'maxOccurs': '1',
+            'docstring':
+            '''
+            Minimum reactive power limit for the unit. This is the minimum (nameplate)
+            limit for the unit.
+            '''
         })
     '''
     Minimum reactive power limit for the unit. This is the minimum (nameplate)
@@ -1137,7 +1453,13 @@ class PowerElectronicsConnection(RegulatingCondEq):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1'
+            'maxOccurs': '1',
+            'docstring':
+            '''
+            Active power injection. Load sign convention is used, i.e. positive sign
+            means flow out from a node.
+            Starting value for a steady state solution.
+            '''
         })
     '''
     Active power injection. Load sign convention is used, i.e. positive sign
@@ -1149,7 +1471,13 @@ class PowerElectronicsConnection(RegulatingCondEq):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1'
+            'maxOccurs': '1',
+            'docstring':
+            '''
+            Reactive power injection. Load sign convention is used, i.e. positive sign
+            means flow out from a node.
+            Starting value for a steady state solution.
+            '''
         })
     '''
     Reactive power injection. Load sign convention is used, i.e. positive sign
@@ -1161,7 +1489,12 @@ class PowerElectronicsConnection(RegulatingCondEq):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1'
+            'maxOccurs': '1',
+            'docstring':
+            '''
+            Nameplate apparent power rating for the unit.
+            The attribute shall have a positive value.
+            '''
         })
     '''
     Nameplate apparent power rating for the unit.
@@ -1172,7 +1505,12 @@ class PowerElectronicsConnection(RegulatingCondEq):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1'
+            'maxOccurs': '1',
+            'docstring':
+            '''
+            Rated voltage (nameplate data, Ur in IEC 60909-0). It is primarily used
+            for short circuit data exchange according to IEC 60909.
+            '''
         })
     '''
     Rated voltage (nameplate data, Ur in IEC 60909-0). It is primarily used
@@ -1184,7 +1522,10 @@ class PowerElectronicsConnection(RegulatingCondEq):
             'type': 'Association',
             'minOccurs': '0',
             'maxOccurs': 'unbounded',
-            'inverse': 'PowerElectronicsUnit.PowerElectronicsConnection'
+            'inverse': 'PowerElectronicsUnit.PowerElectronicsConnection',
+            'docstring':
+            '''
+            '''
         })
     '''
     '''
@@ -1199,7 +1540,13 @@ class Switch(ConductingEquipment):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1'
+            'maxOccurs': '1',
+            'docstring':
+            '''
+            The attribute is used in cases when no Measurement for the status value
+            is present. If the Switch has a status measurement the Discrete.normalValue
+            is expected to match with the Switch.normalOpen.
+            '''
         })
     '''
     The attribute is used in cases when no Measurement for the status value
@@ -1211,7 +1558,12 @@ class Switch(ConductingEquipment):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1'
+            'maxOccurs': '1',
+            'docstring':
+            '''
+            The attribute tells if the switch is considered open when used as input
+            to topology processing.
+            '''
         })
     '''
     The attribute tells if the switch is considered open when used as input
@@ -1222,7 +1574,12 @@ class Switch(ConductingEquipment):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1'
+            'maxOccurs': '1',
+            'docstring':
+            '''
+            Branch is retained in a bus branch model. The flow through retained switches
+            will normally be calculated in power flow.
+            '''
         })
     '''
     Branch is retained in a bus branch model. The flow through retained switches
@@ -1233,7 +1590,12 @@ class Switch(ConductingEquipment):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1'
+            'maxOccurs': '1',
+            'docstring':
+            '''
+            The maximum continuous current carrying capacity in amps governed by the
+            device material and construction.
+            '''
         })
     '''
     The maximum continuous current carrying capacity in amps governed by the
@@ -1249,7 +1611,12 @@ class ProtectedSwitch(Switch):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1'
+            'maxOccurs': '1',
+            'docstring':
+            '''
+            The maximum fault current a breaking device can break safely under prescribed
+            conditions of use.
+            '''
         })
     '''
     The maximum fault current a breaking device can break safely under prescribed
@@ -1261,7 +1628,10 @@ class ProtectedSwitch(Switch):
             'type': 'Association',
             'minOccurs': '0',
             'maxOccurs': 'unbounded',
-            'inverse': 'ProtectionFunctionBlock.ProtectedSwitch'
+            'inverse': 'ProtectionFunctionBlock.ProtectedSwitch',
+            'docstring':
+            '''
+            '''
         })
     '''
     '''
@@ -1278,7 +1648,11 @@ class Breaker(ProtectedSwitch):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1'
+            'maxOccurs': '1',
+            'docstring':
+            '''
+            The transition time from open to close.
+            '''
         })
     '''
     The transition time from open to close.
@@ -1294,7 +1668,12 @@ class PowerElectronicsUnit(Equipment):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1'
+            'maxOccurs': '1',
+            'docstring':
+            '''
+            Maximum active power limit. This is the maximum (nameplate) limit for the
+            unit.
+            '''
         })
     '''
     Maximum active power limit. This is the maximum (nameplate) limit for the
@@ -1305,7 +1684,12 @@ class PowerElectronicsUnit(Equipment):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1'
+            'maxOccurs': '1',
+            'docstring':
+            '''
+            Minimum active power limit. This is the minimum (nameplate) limit for the
+            unit.
+            '''
         })
     '''
     Minimum active power limit. This is the minimum (nameplate) limit for the
@@ -1317,7 +1701,10 @@ class PowerElectronicsUnit(Equipment):
             'type': 'Association',
             'minOccurs': '0',
             'maxOccurs': '1',
-            'inverse': 'PowerElectronicsConnection.PowerElectronicsUnit'
+            'inverse': 'PowerElectronicsConnection.PowerElectronicsUnit',
+            'docstring':
+            '''
+            '''
         })
     '''
     '''
@@ -1331,7 +1718,11 @@ class BatteryUnit(PowerElectronicsUnit):
         metadata = {
             'type': 'Enumeration',
             'minOccurs': '0',
-            'maxOccurs': '1'
+            'maxOccurs': '1',
+            'docstring':
+            '''
+            indicates whether the battery is charging, discharging or idle
+            '''
         })
     '''
     indicates whether the battery is charging, discharging or idle
@@ -1341,7 +1732,11 @@ class BatteryUnit(PowerElectronicsUnit):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1'
+            'maxOccurs': '1',
+            'docstring':
+            '''
+            full energy storage capacity of the battery
+            '''
         })
     '''
     full energy storage capacity of the battery
@@ -1351,7 +1746,11 @@ class BatteryUnit(PowerElectronicsUnit):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1'
+            'maxOccurs': '1',
+            'docstring':
+            '''
+            amount of energy currently stored; no more than ratedE
+            '''
         })
     '''
     amount of energy currently stored; no more than ratedE
@@ -1371,7 +1770,11 @@ class PowerCutZone(PowerSystemResource):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1'
+            'maxOccurs': '1',
+            'docstring':
+            '''
+            First level (amount) of load to cut as a percentage of total zone load.
+            '''
         })
     '''
     First level (amount) of load to cut as a percentage of total zone load.
@@ -1381,7 +1784,11 @@ class PowerCutZone(PowerSystemResource):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1'
+            'maxOccurs': '1',
+            'docstring':
+            '''
+            Second level (amount) of load to cut as a percentage of total zone load.
+            '''
         })
     '''
     Second level (amount) of load to cut as a percentage of total zone load.
@@ -1392,7 +1799,11 @@ class PowerCutZone(PowerSystemResource):
             'type': 'Aggregate Of',
             'minOccurs': '0',
             'maxOccurs': 'unbounded',
-            'inverse': 'EnergyConsumer.PowerCutZone'
+            'inverse': 'EnergyConsumer.PowerCutZone',
+            'docstring':
+            '''
+            Energy consumer is assigned to the power cut zone.
+            '''
         })
     '''
     Energy consumer is assigned to the power cut zone.
@@ -1406,7 +1817,10 @@ class ProtectionSettingsGroup(IdentifiedObject):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1'
+            'maxOccurs': '1',
+            'docstring':
+            '''
+            '''
         })
     '''
     '''
@@ -1415,7 +1829,10 @@ class ProtectionSettingsGroup(IdentifiedObject):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1'
+            'maxOccurs': '1',
+            'docstring':
+            '''
+            '''
         })
     '''
     '''
@@ -1424,7 +1841,10 @@ class ProtectionSettingsGroup(IdentifiedObject):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1'
+            'maxOccurs': '1',
+            'docstring':
+            '''
+            '''
         })
     '''
     '''
@@ -1434,7 +1854,10 @@ class ProtectionSettingsGroup(IdentifiedObject):
             'type': 'Association',
             'minOccurs': '0',
             'maxOccurs': 'unbounded',
-            'inverse': 'ProtectionFunctionBlock.SettingsGroup'
+            'inverse': 'ProtectionFunctionBlock.SettingsGroup',
+            'docstring':
+            '''
+            '''
         })
     '''
     '''
@@ -1449,7 +1872,11 @@ class SubGeographicalRegion(IdentifiedObject):
             'type': 'Of Aggregate',
             'minOccurs': '0',
             'maxOccurs': '1',
-            'inverse': 'GeographicalRegion.Regions'
+            'inverse': 'GeographicalRegion.Regions',
+            'docstring':
+            '''
+            The geographical region to which this sub-geographical region is within.
+            '''
         })
     '''
     The geographical region to which this sub-geographical region is within.
@@ -1460,7 +1887,11 @@ class SubGeographicalRegion(IdentifiedObject):
             'type': 'Aggregate Of',
             'minOccurs': '0',
             'maxOccurs': 'unbounded',
-            'inverse': 'Substation.Region'
+            'inverse': 'Substation.Region',
+            'docstring':
+            '''
+            The substations in this sub-geographical region.
+            '''
         })
     '''
     The substations in this sub-geographical region.
@@ -1482,7 +1913,14 @@ class TopologicalNode(IdentifiedObject):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1'
+            'maxOccurs': '1',
+            'docstring':
+            '''
+            The active power injected into the bus at this location in addition to
+            injections from equipment. Positive sign means injection into the TopologicalNode
+            (bus).
+            Starting value for a steady state solution.
+            '''
         })
     '''
     The active power injected into the bus at this location in addition to
@@ -1495,7 +1933,14 @@ class TopologicalNode(IdentifiedObject):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1'
+            'maxOccurs': '1',
+            'docstring':
+            '''
+            The reactive power injected into the bus at this location in addition to
+            injections from equipment. Positive sign means injection into the TopologicalNode
+            (bus).
+            Starting value for a steady state solution.
+            '''
         })
     '''
     The reactive power injected into the bus at this location in addition to
@@ -1509,7 +1954,11 @@ class TopologicalNode(IdentifiedObject):
             'type': 'Association',
             'minOccurs': '0',
             'maxOccurs': '1',
-            'inverse': 'BaseVoltage.TopologicalNode'
+            'inverse': 'BaseVoltage.TopologicalNode',
+            'docstring':
+            '''
+            The base voltage of the topologocial node.
+            '''
         })
     '''
     The base voltage of the topologocial node.
@@ -1520,7 +1969,11 @@ class TopologicalNode(IdentifiedObject):
             'type': 'Association',
             'minOccurs': '0',
             'maxOccurs': '1',
-            'inverse': 'ConnectivityNodeContainer.TopologicalNode'
+            'inverse': 'ConnectivityNodeContainer.TopologicalNode',
+            'docstring':
+            '''
+            The connectivity node container to which the toplogical node belongs.
+            '''
         })
     '''
     The connectivity node container to which the toplogical node belongs.
@@ -1531,7 +1984,12 @@ class TopologicalNode(IdentifiedObject):
             'type': 'Aggregate Of',
             'minOccurs': '0',
             'maxOccurs': 'unbounded',
-            'inverse': 'ConnectivityNode.TopologicalNode'
+            'inverse': 'ConnectivityNode.TopologicalNode',
+            'docstring':
+            '''
+            The connectivity nodes combine together to form this topological node.
+            May depend on the current state of switches in the network.
+            '''
         })
     '''
     The connectivity nodes combine together to form this topological node.
@@ -1543,7 +2001,15 @@ class TopologicalNode(IdentifiedObject):
             'type': 'Aggregate Of',
             'minOccurs': '0',
             'maxOccurs': 'unbounded',
-            'inverse': 'Terminal.TopologicalNode'
+            'inverse': 'Terminal.TopologicalNode',
+            'docstring':
+            '''
+            The terminals associated with the topological node. This can be used as
+            an alternative to the connectivity node path to terminal, thus making it
+            unneccesary to model connectivity nodes in some cases. Note that if connectivity
+            nodes are in the model, this association would probably not be used as
+            an input specification.
+            '''
         })
     '''
     The terminals associated with the topological node. This can be used as

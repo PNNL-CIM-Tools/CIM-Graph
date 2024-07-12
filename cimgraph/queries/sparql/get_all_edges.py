@@ -41,12 +41,12 @@ def get_all_edges_sparql(cim_class: str, mrid_list: list[str],
 
     if class_name not in classes_without_mrid.classes:
         query_message += """
-        VALUES ?mRID {"""
+        VALUES ?identifier {"""
         # add all equipment mRID
         for mrid in mrid_list:
             query_message += ' "%s" \n' % mrid
         query_message += """               }
-        ?eq cim:IdentifiedObject.mRID ?mRID."""
+        bind(iri(concat("http://localhost:8889/bigdata/namespace/kb/sparql#", ?identifier)) as ?eq)"""
     else:
         query_message += """
         VALUES ?eq {"""
