@@ -36,13 +36,17 @@ class Identity():
         for attribute in attribute_list:
             if dump[attribute] is None or dump[attribute] == []:
                 del dump[attribute]
-            elif type[dump[attribute]] != str:
+            elif is_dataclass(dump[attribute]):
+                dump[attribute] = (dump[attribute]).__repr__()
+            elif type(dump[attribute]) != str:
                 dump[attribute] = str(dump[attribute])
         dump = json.dumps(dump)
         # bugfix - TODO correct list quotes
         dump = str(dump).replace('\\\"','\"' )
         dump = str(dump).replace('\"[','[' )
         dump = str(dump).replace(']\"',']' )
+        dump = str(dump).replace('\"{','{' )
+        dump = str(dump).replace('}\"','}' )
         return dump
 
     def __repr__(self) -> str:

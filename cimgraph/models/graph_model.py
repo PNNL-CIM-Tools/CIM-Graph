@@ -131,10 +131,11 @@ class GraphModel:
             attribute_list = list(cim_class.__dataclass_fields__.keys())
             dump = {}
 
-            for mrid in mrid_list:
+            for uuid in mrid_list:
+                mrid = str(uuid)
                 dump[mrid] = {}
                 for attribute in attribute_list:
-                    value = getattr(self.graph[cim_class][mrid], attribute)
+                    value = getattr(self.graph[cim_class][uuid], attribute)
                     if value is None or value == []:
                         if show_empty:
                             dump[mrid][attribute] = ''

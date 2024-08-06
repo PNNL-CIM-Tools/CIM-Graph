@@ -1,10 +1,11 @@
 from __future__ import annotations
+from uuid import UUID
 
 # from cimgraph.data_profile.known_problem_classes import ClassesWithoutMRID
 from cimgraph.databases import ConnectionInterface
 
 
-def get_all_edges_sparql(cim_class: type, mrid_list: list[str],
+def get_all_edges_sparql(graph:dict[type, dict[UUID, object]], cim_class: type, uuid_list: list[UUID],
                          connection_params: ConnectionInterface) -> str:
     """
     Generates SPARQL query string for a given catalog of objects and feeder id
@@ -28,36 +29,19 @@ def get_all_edges_sparql(cim_class: type, mrid_list: list[str],
         PREFIX cim:  <%s>""" % connection_params.namespace
 
     query_message += """
-        SELECT DISTINCT ?mRID ?attribute ?value ?edge
+        SELECT DISTINCT ?identifier ?attribute ?value ?edge
         WHERE {
           ?eq r:type cim:%s.""" % class_name
-    # query_message += """
-    #     VALUES ?fdrid {"%s"}
-    #     {?fdr cim:IdentifiedObject.mRID ?fdrid.
-    #     {?eq (cim:|!cim:)?  [ cim:Equipment.EquipmentContainer ?fdr]}
-    #      UNION
-    #      {[cim:Equipment.EquipmentContainer ?fdr] (cim:|!cim:)?  ?eq}}.
-    #       """ %feeder_mrid
 
-    # if class_name not in classes_without_mrid.classes:
     query_message += """
     VALUES ?identifier {"""
     # add all equipment mRID
-    for mrid in mrid_list:
-        query_message += ' "%s" \n' % mrid
+    for uuid in uuid_list:
+        query_message += ' "%s" \n' % graph[cim_class][uuid].uri()
     query_message += '               }'
-    query_message += f'''bind(iri(concat("{split}", ?identifier)) as ?eq)'''
+    query_message += f'''
+        bind(iri(concat("{split}", ?identifier)) as ?eq)'''
 
-    # else:
-    #     query_message += """
-    #     VALUES ?eq {"""
-    #     # add all equipment mRID
-    #     for mrid in mrid_list:
-    #         query_message += """ <%s%s> \n""" % (split, mrid)
-    #     query_message += """               }
-    #     {bind(strafter(str(?eq),"%s") as ?mRID)}.""" % split
-
-    # add all attributes
     query_message += """
         {?eq (cim:|!cim:) ?val.
          ?eq ?attr ?val.}
@@ -72,13 +56,10 @@ def get_all_edges_sparql(cim_class: type, mrid_list: list[str],
         OPTIONAL {?val a ?classraw.
                   bind(strafter(str(?classraw),"%s") as ?edge_class)
                   {bind(strafter(str(?val),"%s") as ?uri)}
-                  OPTIONAL {?val cim:IdentifiedObject.mRID ?edge_id.}
-                  bind(exists{?val cim:IdentifiedObject.mRID ?edge_id} as ?mRID_exists)
-                 {bind(if(?mRID_exists, ?edge_id, ?uri) as ?edge_mRID)}.
 
-                  bind(concat("{\\"@id\\":\\"", ?edge_mRID,"\\",\\"@type\\":\\"", ?edge_class, "\\"}") as ?edge)}
+                  bind(concat("{\\"@id\\":\\"", ?uri,"\\",\\"@type\\":\\"", ?edge_class, "\\"}") as ?edge)}
         }
 
-        ORDER by  ?mRID ?attribute
+        ORDER by  ?identifier ?attribute
         """ % (split, connection_params.namespace, split)
     return query_message

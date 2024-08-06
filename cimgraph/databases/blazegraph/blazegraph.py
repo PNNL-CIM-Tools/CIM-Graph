@@ -5,6 +5,7 @@ import json
 import logging
 import math
 import os
+from uuid import UUID
 
 from rdflib import Graph, Namespace, URIRef
 from SPARQLWrapper import JSON, POST, SPARQLWrapper
@@ -53,8 +54,7 @@ class BlazegraphConnection(ConnectionInterface):
         query_output = self.sparql_obj.query().convert()
         return query_output
 
-    def create_new_graph(self,
-                         container: object) -> dict[type, dict[str, object]]:
+    def create_new_graph(self, container: object) -> dict[type, dict[UUID, object]]:
         graph = {}
         self.add_to_graph(graph=graph, obj=container)
         # Get all nodes, terminal, and equipment by
@@ -63,8 +63,7 @@ class BlazegraphConnection(ConnectionInterface):
         graph = self.parse_node_query(graph, query_output)
         return graph
 
-    def parse_node_query(self, graph: dict,
-                         query_output: dict) -> dict[type, dict[str, object]]:
+    def parse_node_query(self, graph: dict, query_output: dict) -> dict[type, dict[UUID, object]]:
 
         for result in query_output['results']['bindings']:
             # Parse query results
@@ -74,8 +73,7 @@ class BlazegraphConnection(ConnectionInterface):
             eq_id = eq['@id']
             eq_class = eq['@type']
             # Add each object to graph
-            node = self.create_object(graph, self.cim.ConnectivityNode,
-                                      node_mrid)
+            node = self.create_object(graph, self.cim.ConnectivityNode, node_mrid)
             terminal = self.create_object(graph, self.cim.Terminal, term_mrid)
             if eq_class in self.cim.__all__:
                 eq_class = eval(f'self.cim.{eq_class}')
@@ -94,9 +92,7 @@ class BlazegraphConnection(ConnectionInterface):
 
         return graph
 
-    def build_graph_from_list(
-            self, graph,
-            mrid_list: list[str]) -> dict[type, dict[str, object]]:
+    def build_graph_from_list(self, graph, mrid_list: list[str]) -> dict[type, dict[UUID, object]]:
         for index in range(math.ceil(len(mrid_list) / 100)):
             eq_mrids = mrid_list[index * 100:(index + 1) * 100]
             #generate SPARQL message from correct loaders>sparql python script based on class name
@@ -107,29 +103,27 @@ class BlazegraphConnection(ConnectionInterface):
             graph = self.parse_node_query(graph, query_output)
         return graph
 
-    def get_edges_query(self, graph: dict[type, dict[str, object]],
+    def get_edges_query(self, graph: dict[type, dict[UUID, object]],
                         cim_class: type) -> str:
 
         eq_mrids = list(graph[cim_class].keys())[0:100]
-        sparql_message = sparql.get_all_edges_sparql(cim_class, eq_mrids,
+        sparql_message = sparql.get_all_edges_sparql(graph, cim_class, eq_mrids,
                                                      self.connection_params)
 
         return sparql_message
 
-    def get_all_edges(self, graph: dict[type, dict[str, object]],
-                      cim_class: type) -> None:
-        mrid_list = list(graph[cim_class].keys())
-        num_nodes = len(mrid_list)
-        for index in range(math.ceil(len(mrid_list) / 100)):
-            eq_mrids = mrid_list[index * 100:(index + 1) * 100]
-            #generate SPARQL message from correct loaders>sparql python script based on class name
-            sparql_message = sparql.get_all_edges_sparql(
+    def get_all_edges(self, graph: dict[type, dict[UUID, object]], cim_class: type) -> None:
+        uuid_list = list(graph[cim_class].keys())
+        for index in range(math.ceil(len(uuid_list) / 100)):
+            eq_mrids = uuid_list[index * 100:(index + 1) * 100]
+            #generate SPARQL message from correct queries>sparql python script based on class name
+            sparql_message = sparql.get_all_edges_sparql(graph,
                 cim_class, eq_mrids, self.connection_params)
             #execute sparql query
             query_output = self.execute(sparql_message)
             self.edge_query_parser(query_output, graph, cim_class)
 
-    def get_all_attributes(self, graph: dict[type, dict[str, object]],
+    def get_all_attributes(self, graph: dict[type, dict[UUID, object]],
                            cim_class: type) -> None:
         mrid_list = list(graph[cim_class].keys())
         num_nodes = len(mrid_list)
@@ -143,14 +137,15 @@ class BlazegraphConnection(ConnectionInterface):
             self.edge_query_parser(query_output, graph, cim_class)
 
     def edge_query_parser(self, query_output: QueryResponse,
-                          graph: dict[type, dict[str, object]],
+                          graph: dict[type, dict[UUID, object]],
                           cim_class: type) -> None:
         for result in query_output['results']['bindings']:
             is_association = False
             is_enumeration = False
             if result['attribute']['value'] != 'type':  #skip 'type' and other single attributes
 
-                mRID = result['mRID']['value']  #get mRID
+                uri = result['identifier']['value']  #get mRID
+                identifier = UUID(uri.strip('_').lower(), version=4)
                 attr = result['attribute']['value']  #edge attribute
                 attribute = result['attribute']['value'].split('.')  #split edge attribute
                 value = result['value']['value']  #get edge value
@@ -174,19 +169,25 @@ class BlazegraphConnection(ConnectionInterface):
                         continue
 
                 if is_association:  # if association to another CIM object
-                    self.create_assocation(graph, attribute, cim_class, mRID,
+                     # Old method, this will be deprecated in a future release
+                    if self.rdfs_profile is not None:
+                        self.create_assocation(graph, attribute, cim_class, identifier,
                                            attr, edge_class, edge_mRID)
+                        
+                    else:
+                        self.create_edge(graph, cim_class, identifier, attr, edge_class, edge_mRID)
+                        
    
 
                 elif is_enumeration:
                     if enum_class in self.cim.__all__:  # if enumeration
                         edge_enum = eval(f'self.cim.{enum_class}(enum_value)')
-                        setattr(graph[cim_class][mRID], attribute[1],
+                        setattr(graph[cim_class][identifier], attribute[1],
                                 edge_enum)
                 else:
-                    setattr(graph[cim_class][mRID], attribute[1], value)
+                    setattr(graph[cim_class][identifier], attribute[1], value)
 
-    def upload(self, graph: dict[type, dict[str, object]]) -> None:
+    def upload(self, graph: dict[type, dict[UUID, object]]) -> None:
         for cim_class in graph.keys():
             for obj in graph[cim_class].values():
                 query = sparql.upload_triples_sparql(obj,
