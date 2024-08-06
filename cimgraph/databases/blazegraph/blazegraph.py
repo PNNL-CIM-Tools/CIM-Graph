@@ -20,8 +20,7 @@ class BlazegraphConnection(ConnectionInterface):
 
     def __init__(self, connection_params: ConnectionInterface) -> None:
         self.cim_profile = connection_params.cim_profile
-        self.cim = importlib.import_module('cimgraph.data_profile.' +
-                                           self.cim_profile)
+        self.cim = importlib.import_module('cimgraph.data_profile.' + self.cim_profile)
         self.namespace = connection_params.namespace
         self.iec61970_301 = connection_params.iec61970_301
         self.url = connection_params.url
@@ -126,7 +125,7 @@ class BlazegraphConnection(ConnectionInterface):
     def get_all_attributes(self, graph: dict[type, dict[UUID, object]],
                            cim_class: type) -> None:
         mrid_list = list(graph[cim_class].keys())
-        num_nodes = len(mrid_list)
+
         for index in range(math.ceil(len(mrid_list) / 100)):
             eq_mrids = mrid_list[index * 100:(index + 1) * 100]
             #generate SPARQL message from correct loaders>sparql python script based on class name
@@ -140,50 +139,44 @@ class BlazegraphConnection(ConnectionInterface):
                           graph: dict[type, dict[UUID, object]],
                           cim_class: type) -> None:
         for result in query_output['results']['bindings']:
-            is_association = False
-            is_enumeration = False
+
             if result['attribute']['value'] != 'type':  #skip 'type' and other single attributes
 
                 uri = result['identifier']['value']  #get mRID
-                identifier = UUID(uri.strip('_').lower(), version=4)
+                identifier = UUID(uri.strip('_').lower())
                 attr = result['attribute']['value']  #edge attribute
                 attribute = result['attribute']['value'].split('.')  #split edge attribute
                 value = result['value']['value']  #get edge value
 
-                if self.namespace in value:  #check if enumeration
-                    enum_text = value.split(self.namespace)[1]
-                    enum_text = enum_text.split('>')[0]
-                    enum_class = enum_text.split('.')[0]
-                    enum_value = enum_text.split('.')[1]
-                    is_enumeration = True
+                
 
                 if 'edge' in result:  #check if association
-                    is_association = True
                     edge = json.loads(result['edge']['value'])
                     edge_mRID = edge['@id']
                     edge_class = edge['@type']
                     if edge_class in self.cim.__all__:
                         edge_class = eval(f'self.cim.{edge_class}')
                     else:
-                        _log.warning(f'unknown class {edge_class}')
+                        _log.warning(f'Class {edge_class} not in data profile')
                         continue
 
-                if is_association:  # if association to another CIM object
                      # Old method, this will be deprecated in a future release
                     if self.rdfs_profile is not None:
                         self.create_assocation(graph, attribute, cim_class, identifier,
                                            attr, edge_class, edge_mRID)
-                        
+                       
                     else:
                         self.create_edge(graph, cim_class, identifier, attr, edge_class, edge_mRID)
-                        
-   
 
-                elif is_enumeration:
+                elif self.namespace in value:  #check if enumeration
+                    enum_text = value.split(self.namespace)[1]
+                    enum_text = enum_text.split('>')[0]
+                    enum_class = enum_text.split('.')[0]
+                    enum_value = enum_text.split('.')[1]
+
                     if enum_class in self.cim.__all__:  # if enumeration
                         edge_enum = eval(f'self.cim.{enum_class}(enum_value)')
-                        setattr(graph[cim_class][identifier], attribute[1],
-                                edge_enum)
+                        setattr(graph[cim_class][identifier], attribute[1], edge_enum)
                 else:
                     setattr(graph[cim_class][identifier], attribute[1], value)
 

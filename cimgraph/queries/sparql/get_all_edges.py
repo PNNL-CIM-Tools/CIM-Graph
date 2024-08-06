@@ -31,7 +31,7 @@ def get_all_edges_sparql(graph:dict[type, dict[UUID, object]], cim_class: type, 
     query_message += """
         SELECT DISTINCT ?identifier ?attribute ?value ?edge
         WHERE {
-          ?eq r:type cim:%s.""" % class_name
+          """
 
     query_message += """
     VALUES ?identifier {"""
@@ -43,6 +43,9 @@ def get_all_edges_sparql(graph:dict[type, dict[UUID, object]], cim_class: type, 
         bind(iri(concat("{split}", ?identifier)) as ?eq)'''
 
     query_message += """
+
+        ?eq r:type cim:%s.
+    
         {?eq (cim:|!cim:) ?val.
          ?eq ?attr ?val.}
         UNION
@@ -61,5 +64,5 @@ def get_all_edges_sparql(graph:dict[type, dict[UUID, object]], cim_class: type, 
         }
 
         ORDER by  ?identifier ?attribute
-        """ % (split, connection_params.namespace, split)
+        """ % (class_name, split, connection_params.namespace, split)
     return query_message

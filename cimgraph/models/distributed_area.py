@@ -1,6 +1,7 @@
 import importlib
 import logging
 from dataclasses import dataclass, field
+from uuid import UUID
 
 from cimgraph.databases import ConnectionInterface
 from cimgraph.models.graph_model import GraphModel, new_mrid
@@ -18,47 +19,40 @@ class DistributedArea(GraphModel):
         self.add_to_graph(self.container)
         self.distributed_areas = []
 
-    def build_from_topo_message(self,
-                                topology_dict: dict,
-                                centralized_graph: dict = {}):
+    def build_from_topo_message(self, topology_dict: dict, centralized_graph: dict = {}):
         AddrEquip = AddressableEquipment(self.cim)
         UnaddrEquip = UnaddressableEquipment(self.cim)
         if centralized_graph:
             for node_mrid in topology_dict['connectivity_node']:
                 try:
-                    node = centralized_graph[
-                        self.cim.ConnectivityNode][node_mrid]
+                    uuid = UUID(node_mrid.strip('_').lower())
+                    node = centralized_graph[self.cim.ConnectivityNode][uuid]
+                    self.add_to_graph(node)
+                    for terminal in node.Terminals:
+                        self.add_to_graph(terminal)
+                        self.add_to_graph(terminal.ConductingEquipment)
                 except:
-                    _log.warning('node ' + str(node_mrid) + ' not in feeder')
+                    _log.warning('node ' + str(uuid) + ' not in feeder')
 
-                self.add_to_graph(node)
-                for terminal in node.Terminals:
-                    self.add_to_graph(terminal)
-                    self.add_to_graph(terminal.ConductingEquipment)
+                
         else:
             node_list = topology_dict['connectivity_node']
             self.connection.build_graph_from_list(self.graph, node_list)
             self.addressable_equipment = {}
             self.unaddressable_equipment = {}
-            AddrEquip.identify_addressable(
-                addressable_equipment=self.addressable_equipment,
-                graph=self.graph)
-            UnaddrEquip.identify_unaddressable(
-                unaddressable_equipment=self.unaddressable_equipment,
-                graph=self.graph)
+            AddrEquip.identify_addressable(addressable_equipment=self.addressable_equipment, graph=self.graph)
+            UnaddrEquip.identify_unaddressable(unaddressable_equipment=self.unaddressable_equipment, graph=self.graph)
 
             if 'switch_areas' in topology_dict:
                 sw_counter = -1
                 for switch_topo in topology_dict['switch_areas']:
                     sw_counter = sw_counter + 1
                     node_list = switch_topo['connectivity_node']
-                    self.connection.build_graph_from_list(
-                        self.graph, node_list)
+                    self.connection.build_graph_from_list(self.graph, node_list)
                     # Create a new DistributedArea object for each switch area in message
                     switch_area_id = str(
                         self.container.mRID) + '.' + str(sw_counter)
-                    switch_container = self.cim.EquipmentContainer(
-                        mRID=switch_area_id)
+                    switch_container = self.cim.EquipmentContainer(mRID=switch_area_id)
                     SwitchArea = DistributedArea(connection=self.connection,
                                                  container=switch_container,
                                                  distributed=True)

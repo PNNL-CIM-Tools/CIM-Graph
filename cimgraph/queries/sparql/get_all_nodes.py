@@ -28,7 +28,7 @@ def get_all_nodes_from_container(container: object, connection_params: Connectio
     query_message += """
         SELECT DISTINCT ?ConnectivityNode ?Terminal ?Equipment
         WHERE {
-          ?c r:type cim:%s.""" % container_class
+          """ #
     query_message += """
         VALUES ?identifier {"%s"}
         bind(iri(concat("%s", ?identifier)) as ?c).
@@ -36,6 +36,7 @@ def get_all_nodes_from_container(container: object, connection_params: Connectio
 
     # get ConnectivityNode objects associated with Container
     query_message += '''     {
+        
         ?node cim:ConnectivityNode.ConnectivityNodeContainer ?c.
         ?t cim:Terminal.ConnectivityNode ?node.
         ?t cim:Terminal.ConductingEquipment ?eq.

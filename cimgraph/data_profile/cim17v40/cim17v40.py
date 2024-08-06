@@ -27,6 +27,11 @@ class Identity():
             'maxOccurs': '1'
         })
     
+    def __post_init__(self):
+        if 'mRID' in self.__dataclass_fields__:
+            if self.mRID is not None:
+                self.uuid(mRID = self.mRID)
+    
     # Override python string for printing with JSON representation 
     def __str__(self) -> str:
         # Create JSON-LD dump with repr and all attributes
