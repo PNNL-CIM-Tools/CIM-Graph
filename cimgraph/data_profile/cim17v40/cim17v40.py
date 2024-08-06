@@ -38,12 +38,18 @@ class Identity():
                 del dump[attribute]
             elif type[dump[attribute]] != str:
                 dump[attribute] = str(dump[attribute])
-        dump = str(dump).replace('\'','\"' )
-        dump = json.dumps(json.loads(dump), indent=4)
+        dump = json.dumps(dump)
+        # bugfix - TODO correct list quotes
+        dump = str(dump).replace('\\\"','\"' )
+        dump = str(dump).replace('\"[','[' )
+        dump = str(dump).replace(']\"',']' )
         return dump
 
     def __repr__(self) -> str:
         return json.dumps({'@id': f'{str(self.identifier)}', '@type': f'{self.__class__.__name__}'})
+    
+    def pprint(self) -> None:
+        print(json.dumps(json.loads(self.__str__()), indent=4))
 
     def uuid(self, uri:str = None, mRID:str = None, name:str = None) -> UUID:
         seed = ''
@@ -56,31 +62,37 @@ class Identity():
             if uri.lower() != uri:
                 self.__uuid__.uri_is_capitalized = True
             try:
-                self.__uuid__.uuid = UUID(uri.strip('_').lower(), version=4)
+                self.__uuid__.uuid = UUID(uri.strip('_').lower())
                 invalid = False
             except:
                 seed = seed + uri
-                _log.warning(f'URI {uri} not a valid UUID, generating new UUID')
+                _log.warning(f'Warning: URI {uri} not a valid UUID, generating new UUID')
 
         if mRID is not None:
             if mRID.strip('_') != mRID:
                 self.__uuid__.mrid_has_underscore = True
+                if uri is None:
+                    self.__uuid__.uri_has_underscore = True
             if mRID.lower() != mRID:
                 self.__uuid__.mrid_is_capitalized = True
+                if uri is None:
+                    self.__uuid__.uri_is_capitalized = True
+                
             if self.__uuid__.uuid is None:
                 try:
-                    self.__uuid__.uuid = UUID(mRID.strip('_').lower(), version=4)
+                    self.__uuid__.uuid = UUID(mRID.strip('_').lower())
                     invalid = False
                 except:
                     self.mRID = mRID
                     seed = seed + mRID
-                    _log.warning(f'mRID {mRID} not a valid UUID, generating new UUID')
+                    _log.warning(f'Warning: mRID {mRID} not a valid UUID, generating new UUID')
 
         if invalid:
             if name is not None:
                 seed = seed + f"{self.__class__.__name__}:{name}"
                 randomGenerator = Random(seed)
                 self.__uuid__.uuid = UUID(int=randomGenerator.getrandbits(128), version=4)
+                self.name = name
             else: 
                 self.__uuid__.uuid = uuid4()
 

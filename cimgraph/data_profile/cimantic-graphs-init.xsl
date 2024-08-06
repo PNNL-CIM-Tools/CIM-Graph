@@ -40,12 +40,12 @@
             <!-- List all CIM classes to be imported, in alphabetical order -->
             <item> __all__ = [ </item>
             <list begin="" indent="    " end="">
-                <item>Identity,</item>
+                <item>'Identity',</item>
             </list>
             <xsl:for-each select="a:Root|a:ComplexType|a:EnumeratedType|a:CompoundType|a:SimpleType">
                 <xsl:sort select="name" data-type="text" order="ascending"/>
                 <list begin="" indent="    " end="">
-                    <xsl:value-of select="@name" />
+                    '<xsl:value-of select="@name" />'
                     <xsl:if test="position()!=last()">, </xsl:if>
                 </list>
             </xsl:for-each>

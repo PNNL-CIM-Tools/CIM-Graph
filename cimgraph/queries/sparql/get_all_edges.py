@@ -1,10 +1,10 @@
 from __future__ import annotations
 
-from cimgraph.data_profile.known_problem_classes import ClassesWithoutMRID
+# from cimgraph.data_profile.known_problem_classes import ClassesWithoutMRID
 from cimgraph.databases import ConnectionInterface
 
 
-def get_all_edges_sparql(cim_class: str, mrid_list: list[str],
+def get_all_edges_sparql(cim_class: type, mrid_list: list[str],
                          connection_params: ConnectionInterface) -> str:
     """
     Generates SPARQL query string for a given catalog of objects and feeder id
@@ -16,7 +16,7 @@ def get_all_edges_sparql(cim_class: str, mrid_list: list[str],
         query_message: query string that can be used in blazegraph connection or STOMP client
     """
     class_name = cim_class.__name__
-    classes_without_mrid = ClassesWithoutMRID()
+    # classes_without_mrid = ClassesWithoutMRID()
 
     if int(connection_params.iec61970_301) > 7:
         split = 'urn:uuid:'
@@ -39,22 +39,23 @@ def get_all_edges_sparql(cim_class: str, mrid_list: list[str],
     #      {[cim:Equipment.EquipmentContainer ?fdr] (cim:|!cim:)?  ?eq}}.
     #       """ %feeder_mrid
 
-    if class_name not in classes_without_mrid.classes:
-        query_message += """
-        VALUES ?identifier {"""
-        # add all equipment mRID
-        for mrid in mrid_list:
-            query_message += ' "%s" \n' % mrid
-        query_message += """               }
-        bind(iri(concat("http://localhost:8889/bigdata/namespace/kb/sparql#", ?identifier)) as ?eq)"""
-    else:
-        query_message += """
-        VALUES ?eq {"""
-        # add all equipment mRID
-        for mrid in mrid_list:
-            query_message += """ <%s%s> \n""" % (split, mrid)
-        query_message += """               }
-        {bind(strafter(str(?eq),"%s") as ?mRID)}.""" % split
+    # if class_name not in classes_without_mrid.classes:
+    query_message += """
+    VALUES ?identifier {"""
+    # add all equipment mRID
+    for mrid in mrid_list:
+        query_message += ' "%s" \n' % mrid
+    query_message += '               }'
+    query_message += f'''bind(iri(concat("{split}", ?identifier)) as ?eq)'''
+
+    # else:
+    #     query_message += """
+    #     VALUES ?eq {"""
+    #     # add all equipment mRID
+    #     for mrid in mrid_list:
+    #         query_message += """ <%s%s> \n""" % (split, mrid)
+    #     query_message += """               }
+    #     {bind(strafter(str(?eq),"%s") as ?mRID)}.""" % split
 
     # add all attributes
     query_message += """

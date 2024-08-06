@@ -74,8 +74,7 @@ class GraphModel:
         if obj.mRID not in graph[type(obj)].keys():
             graph[type(obj)][obj.mRID] = obj
 
-    def get_all_edges(self,
-                      cim_class: type,
+    def get_all_edges(self, cim_class: type,
                       graph: dict[type, dict[str, object]] = None) -> None:
         if graph is None:
             graph = self.graph
@@ -95,9 +94,7 @@ class GraphModel:
             sparql_message = ''
         return sparql_message
 
-    def get_all_attributes(
-            self,
-            cim_class: type,
+    def get_all_attributes(self, cim_class: type,
             graph: dict[type, dict[str, object]] = None) -> None:
         if graph is None:
             graph = self.graph

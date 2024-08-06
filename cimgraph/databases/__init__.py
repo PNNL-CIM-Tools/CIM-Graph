@@ -1,7 +1,10 @@
 from __future__ import annotations
 
 import logging
+
 from dataclasses import dataclass, field
+from re import I
+from uuid import UUID
 
 from rdflib import Graph, Namespace, URIRef
 
@@ -46,6 +49,7 @@ class ConnectionInterface:
                     cim_class: type, mRID: str, attribute: str,
                     edge_class: type, edge_mRID: str) -> None:
         attribute_type = cim_class.__dataclass_fields__[attribute].type
+
         if 'List' in attribute_type:
             obj_list = getattr(graph[cim_class][mRID], attribute)
             found = False
@@ -61,29 +65,53 @@ class ConnectionInterface:
             edge_object = self.create_object(graph, edge_class, edge_mRID)
             setattr(graph[cim_class][mRID], attribute, edge_object)
 
-    def create_object(self, graph: dict[type, dict[str, object]],
-                      class_type: type, mRID: str) -> object:
+    def create_object(self, graph:dict[type, dict[UUID, object]],
+                      class_type:type, uri:str) -> object:
+        """
+        Method for creating new objects and adding them to the graph
+        Required Args:
+            graph: an LPG graph from a GraphModel object
+            class_type: a dataclass type, such as cim.ACLineSegment
+            uri: the RDF ID or mRID of the object
+        Returns:
+            obj: a dataclass instance with the correct identifier
+        """
+        # Convert uri string to a uuid
+        identifier = UUID(uri.strip('_').lower(), version=4)
 
-        if class_type not in graph.keys():
+        # Add class type to graph keys if not there
+        if class_type not in graph:
             graph[class_type] = {}
 
-        if mRID in graph[class_type].keys():
-            obj = graph[class_type][mRID]
+        # Check if object exists in graph
+        if uri in graph[class_type]:
+            obj = graph[class_type][identifier]
+
+        # If not there, create a new object and add to graph
         else:
             obj = class_type()
-            setattr(obj, 'mRID', mRID)
-            graph[class_type][mRID] = obj
-
+            obj.uuid(uri = uri)
+            graph[class_type][identifier] = obj
+    
         return obj
 
-    def add_to_graph(self, obj: object,
-                     graph: dict[type, dict[str, object]]) -> None:
-        if type(obj) not in graph.keys():
+    def add_to_graph(self, obj: object, graph: dict[type, dict[UUID, object]]) -> None:
+        """
+        Method for adding existing objects to the graph
+        Required Args:
+            obj: a dataclass instance inheriting from the Identity class
+        Returns:
+            none
+        """
+        # Add class type to graph if not there
+        if type(obj) not in graph:
             graph[type(obj)] = {}
-        if obj.mRID not in graph[type(obj)].keys():
-            graph[type(obj)][obj.mRID] = obj
 
-    def create_assocation(self, graph: dict[type, dict[str, object]], attribute: str,
+        # Add instance to graph keys if not there
+        if obj.identifier not in graph[type(obj)]:
+            graph[type(obj)][obj.identifier] = obj
+
+    def create_assocation(self, graph: dict[type, dict[UUID, object]], attribute: str,
                           cim_class: type, mRID: str, attr_text: str,
                           edge_class: type, edge_mRID: str) -> None:
         

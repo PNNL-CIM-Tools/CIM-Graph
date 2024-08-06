@@ -58,8 +58,7 @@ class BlazegraphConnection(ConnectionInterface):
         graph = {}
         self.add_to_graph(graph=graph, obj=container)
         # Get all nodes, terminal, and equipment by
-        sparql_message = sparql.get_all_nodes_from_container(
-            container, self.namespace)
+        sparql_message = sparql.get_all_nodes_from_container(container, self.connection_params)
         query_output = self.execute(sparql_message)
         graph = self.parse_node_query(graph, query_output)
         return graph
