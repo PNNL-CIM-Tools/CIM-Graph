@@ -52,6 +52,18 @@ class BlazegraphConnection(ConnectionInterface):
         self.sparql_obj.setMethod(POST)
         query_output = self.sparql_obj.query().convert()
         return query_output
+    
+    def get_object(self, mrid:str, graph = {}) -> object:
+        sparql_message = sparql.get_object_sparql(mrid, self.connection_params)
+        query_output = self.execute(sparql_message)
+        obj = None
+        for result in query_output['results']['bindings']:
+            uri = result['identifier']['value']
+            obj_class = result['obj_class']['value']
+            class_type = eval(f'self.cim.{obj_class}')
+            obj = self.create_object(graph, class_type, uri)
+        return obj
+            
 
     def create_new_graph(self, container: object) -> dict[type, dict[UUID, object]]:
         graph = {}
@@ -129,23 +141,23 @@ class BlazegraphConnection(ConnectionInterface):
         for index in range(math.ceil(len(mrid_list) / 100)):
             eq_mrids = mrid_list[index * 100:(index + 1) * 100]
             #generate SPARQL message from correct loaders>sparql python script based on class name
-            sparql_message = sparql.get_all_attributes_sparql(
+            sparql_message = sparql.get_all_attributes_sparql(graph,
                 cim_class, eq_mrids, self.connection_params)
             #execute sparql query
             query_output = self.execute(sparql_message)
-            self.edge_query_parser(query_output, graph, cim_class)
+            self.edge_query_parser(query_output, graph, cim_class, expand_graph = False)
 
     def edge_query_parser(self, query_output: QueryResponse,
                           graph: dict[type, dict[UUID, object]],
-                          cim_class: type) -> None:
+                          cim_class: type, expand_graph = True) -> None:
         for result in query_output['results']['bindings']:
 
             if result['attribute']['value'] != 'type':  #skip 'type' and other single attributes
 
                 uri = result['identifier']['value']  #get mRID
                 identifier = UUID(uri.strip('_').lower())
-                attr = result['attribute']['value']  #edge attribute
-                attribute = result['attribute']['value'].split('.')  #split edge attribute
+                attribute = result['attribute']['value']  #edge attribute
+                # attr = result['attribute']['value'].split('.')  #split edge attribute
                 value = result['value']['value']  #get edge value
 
                 
@@ -160,13 +172,17 @@ class BlazegraphConnection(ConnectionInterface):
                         _log.warning(f'Class {edge_class} not in data profile')
                         continue
 
-                     # Old method, this will be deprecated in a future release
-                    if self.rdfs_profile is not None:
-                        self.create_assocation(graph, attribute, cim_class, identifier,
-                                           attr, edge_class, edge_mRID)
+                    #  # Old method, this will be deprecated in a future release
+                    # if self.rdfs_profile is not None:
+                    #     self.create_assocation(graph, attr, cim_class, identifier,
+                    #                        attr, edge_class, edge_mRID)
                        
+                    # else:
+                    if expand_graph:
+                        self.create_edge(graph, cim_class, identifier, attribute, edge_class, edge_mRID)
                     else:
-                        self.create_edge(graph, cim_class, identifier, attr, edge_class, edge_mRID)
+                        self.create_value(graph, cim_class, identifier, attribute, value)
+
 
                 elif self.namespace in value:  #check if enumeration
                     enum_text = value.split(self.namespace)[1]
@@ -176,14 +192,17 @@ class BlazegraphConnection(ConnectionInterface):
 
                     if enum_class in self.cim.__all__:  # if enumeration
                         edge_enum = eval(f'self.cim.{enum_class}(enum_value)')
-                        setattr(graph[cim_class][identifier], attribute[1], edge_enum)
+                        association = self.check_attribute(cim_class, attribute)
+                        if association is not None:
+                            setattr(graph[cim_class][identifier], association, edge_enum)
                 else:
-                    setattr(graph[cim_class][identifier], attribute[1], value)
+                    association = self.check_attribute(cim_class, attribute)
+                    if association is not None:
+                        self.create_value(graph, cim_class, identifier, attribute, value)
 
     def upload(self, graph: dict[type, dict[UUID, object]]) -> None:
         for cim_class in graph.keys():
             for obj in graph[cim_class].values():
-                query = sparql.upload_triples_sparql(obj,
-                                                     self.connection_params)
+                query = sparql.upload_triples_sparql(obj, self.connection_params)
                 self.execute(query)
 

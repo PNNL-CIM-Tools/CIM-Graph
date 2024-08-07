@@ -2,8 +2,9 @@ from __future__ import annotations
 
 import logging
 
-from dataclasses import dataclass, field
+from dataclasses import dataclass, field, is_dataclass
 from re import I
+from tabnanny import check
 from uuid import UUID
 
 from rdflib import Graph, Namespace, URIRef
@@ -45,14 +46,20 @@ class ConnectionInterface:
 
     def execute(self, query: str) -> QueryResponse:
         raise RuntimeError('Must have implemented query in the inherited class')
+    
+    def upload(self, graph: dict[type, dict[UUID, object]]) -> None:
+        raise RuntimeError('Must have implemented query in the inherited class')
 
+    def get_all_edges(self, graph: dict[type, dict[UUID, object]], cim_class: type) -> None:
+        raise RuntimeError('Must have implemented query in the inherited class')
     
-    
-    
-    def create_edge(self, graph: dict[type, dict[str, object]],
-                    cim_class: type, identifier: UUID, attribute: str,
-                    edge_class: type, edge_mRID: str) -> None:
-        
+    def get_all_attributes(self, graph: dict[type, dict[UUID, object]], cim_class: type) -> None:
+        raise RuntimeError('Must have implemented query in the inherited class')
+
+    def get_object(self, mRID:str, graph: dict[type, dict[UUID, object]]) -> None:
+        raise RuntimeError('Must have implemented query in the inherited class')
+
+    def check_attribute(self, cim_class:type, attribute:str) -> str:
         attr_class = attribute.split('.')[0]
         attr_link = attribute.split('.')[1]
         association = None
@@ -65,30 +72,58 @@ class ConnectionInterface:
                 _log.warning(f'Association {attr_link} missing from class {attr_class} in data profile')
                 
             else:
-                # try:
-                reverse = from_class.__dataclass_fields__[attr_link].metadata['inverse']
-                reverse_assc = reverse.split('.')[1]
-                if reverse_assc in cim_class.__dataclass_fields__:
-                    association = reverse_assc
-                else:
-                    _log.warning(f'Association {reverse_assc} missing from class {attr_class} in data profile')
+                try:
+                    reverse = from_class.__dataclass_fields__[attr_link].metadata['inverse']
+                    reverse_assc = reverse.split('.')[1]
+                    if reverse_assc in cim_class.__dataclass_fields__:
+                        association = reverse_assc
+                    else:
+                        _log.warning(f'Association {reverse_assc} missing from class {attr_class} in data profile')
+                except:
+                    _log.warning(f'Unable to find inverse of {attribute} for {cim_class.__name__}')
+        # if association is None:
+        #     _log.warning(f'unable to determine {attribute}')
+            # association = attr_link
+        _log.warning(f'Association {association} for {attribute}')
 
-                # except:
-                #     _log.warning(f'Unable to find inverse of {attribute} for {cim_class.__name__} {str(identifier)}')
+        return association
+    
 
-
+    def create_value(self, graph: dict[type, dict[str, object]],
+                    cim_class: type, identifier: UUID, attribute: str,
+                    value: str) -> None:
+        
+        association = self.check_attribute(cim_class, attribute)
         if association is not None:
             attribute_type = cim_class.__dataclass_fields__[association].type
-
             if 'List' in attribute_type or 'list' in attribute_type:
                 obj_list = getattr(graph[cim_class][identifier], association)
-                found = False
-                for obj in obj_list:
-                    if obj.uri() == edge_mRID:
-                        found = True
-                        self.add_to_graph(obj, graph)
-                        break
-                if not found:
+                if value not in str(obj_list):
+                    obj_list.append(value)
+
+            elif 'bool' in attribute_type:
+                setattr(graph[cim_class][identifier], association, bool(value))
+
+            elif 'float' in attribute_type:
+                setattr(graph[cim_class][identifier], association, float(value))
+            else:
+                setattr(graph[cim_class][identifier], association, value)
+
+
+
+
+    
+    def create_edge(self, graph: dict[type, dict[str, object]],
+                    cim_class: type, identifier: UUID, attribute: str,
+                    edge_class: type, edge_mRID: str) -> None:
+        
+        association = self.check_attribute(cim_class, attribute)
+        if association is not None:
+            attribute_type = cim_class.__dataclass_fields__[association].type
+            if 'List' in attribute_type or 'list' in attribute_type:
+                obj_list = getattr(graph[cim_class][identifier], association)
+                edge_uuid = (edge_mRID.strip('_').lower())
+                if edge_uuid not in str(obj_list):
                     edge_object = self.create_object(graph, edge_class, edge_mRID)
                     obj_list.append(edge_object)
                     setattr(graph[cim_class][identifier], association, obj_list)
@@ -108,14 +143,14 @@ class ConnectionInterface:
             obj: a dataclass instance with the correct identifier
         """
         # Convert uri string to a uuid
-        identifier = UUID(uri.strip('_').lower(), version=4)
+        identifier = UUID(uri.strip('_').lower())
 
         # Add class type to graph keys if not there
         if class_type not in graph:
             graph[class_type] = {}
 
         # Check if object exists in graph
-        if uri in graph[class_type]:
+        if identifier in graph[class_type]:
             obj = graph[class_type][identifier]
 
         # If not there, create a new object and add to graph

@@ -4,8 +4,7 @@ from uuid import UUID
 from cimgraph.databases import ConnectionInterface
 
 
-def get_all_attributes_sparql(graph:dict[type, dict[UUID, object]], cim_class: str, uuid_list: list[UUID],
-                              connection_params: ConnectionInterface) -> str:
+def get_object_sparql(mrid: str, connection_params: ConnectionInterface) -> str:
     """
     Generates SPARQL query string for a given catalog of objects and feeder id
     Args:
@@ -15,7 +14,6 @@ def get_all_attributes_sparql(graph:dict[type, dict[UUID, object]], cim_class: s
     Returns:
         query_message: query string that can be used in blazegraph connection or STOMP client
     """
-    class_name = cim_class.__name__
 
     if int(connection_params.iec61970_301) > 7:
         split = 'urn:uuid:'
@@ -27,34 +25,22 @@ def get_all_attributes_sparql(graph:dict[type, dict[UUID, object]], cim_class: s
         PREFIX cim:  <%s>""" % connection_params.namespace
 
     query_message += """
-        SELECT DISTINCT ?identifier ?attribute ?value ?edge
+        SELECT DISTINCT ?identifier ?obj_class
         WHERE {
           """
 
-    query_message += """
-    VALUES ?identifier {"""
+    query_message += '''
+    VALUES ?identifier {"%s"}''' %mrid
     # add all equipment mRID
-    for uuid in uuid_list:
-        query_message += ' "%s" \n' % graph[cim_class][uuid].uri()
-    query_message += '               }'
+    
     query_message += f'''
         bind(iri(concat("{split}", ?identifier)) as ?eq)'''
 
     query_message += """
 
-        ?eq r:type cim:%s.
-    
-        {?eq (cim:|!cim:) ?val.
-         ?eq ?attr ?val.}
-        UNION
-        {?val (cim:|!cim:) ?eq.
-         ?val ?attr ?eq.}
-
-        {bind(strafter(str(?attr),"#") as ?attribute)}
-        {bind(strafter(str(?val),"%s") as ?uri)}
-        {bind(if(?uri = "", ?val, ?uri) as ?value)}
+        ?eq a ?classraw.
+        bind(strafter(str(?classraw),"%s") as ?obj_class)
         }
-
-        ORDER by  ?identifier ?attribute
-        """ % (class_name, split)
+        ORDER by  ?identifier
+        """ % (connection_params.namespace)
     return query_message

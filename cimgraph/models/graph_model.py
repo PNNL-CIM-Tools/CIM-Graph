@@ -1,11 +1,9 @@
 from __future__ import annotations
 
 import enum
-import importlib
 import json
 import logging
-import re
-import uuid
+from uuid import UUID, uuid4
 from dataclasses import dataclass, field
 
 from cimgraph.databases import ConnectionInterface
@@ -14,7 +12,7 @@ _log = logging.getLogger(__name__)
 
 
 def new_mrid():
-    mRID = str(uuid.uuid4())
+    mRID = str(uuid4())
     return mRID
 
 
@@ -66,13 +64,13 @@ class GraphModel:
         get_edges_query(cim.ClassName): returns query text for debugging
     """
 
-    def add_to_graph(self, obj: object, graph: GraphModel = None) -> None:
+    def add_to_graph(self, obj: object, graph: dict[type, dict[UUID, object]] = None) -> None:
         if graph is None:
             graph = self.graph
-        if type(obj) not in graph.keys():
+        if type(obj) not in graph:
             graph[type(obj)] = {}
-        if obj.mRID not in graph[type(obj)].keys():
-            graph[type(obj)][obj.mRID] = obj
+        if obj.identifier not in graph[type(obj)]:
+            graph[type(obj)][obj.identifier] = obj
 
     def get_all_edges(self, cim_class: type,
                       graph: dict[type, dict[str, object]] = None) -> None:
@@ -103,6 +101,20 @@ class GraphModel:
         else:
             _log.info('no instances of ' + str(cim_class.__name__) +
                       ' found in graph.')
+            
+    def get_object(self, mRID:str|UUID) -> object:
+        if type(mRID) != str:
+            mRID = str(mRID)
+        obj = self.connection.get_object(mRID, self.graph)
+        if obj is None:
+            obj = self.connection.get_object(mRID.upper(), self.graph)
+        if obj is None:
+            obj = self.connection.get_object('_' + mRID, self.graph)    
+        if obj is None:
+            obj = self.connection.get_object('_' + mRID.upper(), self.graph)  
+        if obj is None:
+            _log.warning(f'Could not find any objects matching {mRID}')
+        return obj
 
     def pprint(self,
                cim_class: type,

@@ -1,20 +1,12 @@
 from __future__ import annotations
-
-import importlib
-import logging
-import time
-
-from rdflib import Graph
-
 from cimgraph.models.graph_model import GraphModel
-from cimgraph.utils.write_xml import write_xml
 
+import logging
 _log = logging.getLogger(__name__)
 
 
 def get_all_line_data(network: GraphModel) -> None:
-    cim_profile = network.connection.connection_params.cim_profile
-    cim = importlib.import_module(f'cimgraph.data_profile.{cim_profile}')
+    cim = network.connection.cim
     network.get_all_edges(cim.ACLineSegment)
     network.get_all_edges(cim.ACLineSegmentPhase)
     network.get_all_edges(cim.PerLengthPhaseImpedance)
@@ -27,8 +19,7 @@ def get_all_line_data(network: GraphModel) -> None:
 
 
 def get_all_transformer_data(network: GraphModel) -> None:
-    cim_profile = network.connection.connection_params.cim_profile
-    cim = importlib.import_module(f'cimgraph.data_profile.{cim_profile}')
+    cim = network.connection.cim
     network.get_all_edges(cim.PowerTransformer)
     network.get_all_edges(cim.TransformerTank)
     network.get_all_edges(cim.Asset)
@@ -49,8 +40,7 @@ def get_all_transformer_data(network: GraphModel) -> None:
 
 
 def get_all_load_data(network: GraphModel) -> None:
-    cim_profile = network.connection.connection_params.cim_profile
-    cim = importlib.import_module(f'cimgraph.data_profile.{cim_profile}')
+    cim = network.connection.cim
     network.get_all_edges(cim.EnergySource)
     network.get_all_edges(cim.EnergyConsumer)
     network.get_all_edges(cim.ConformLoad)
@@ -64,8 +54,7 @@ def get_all_load_data(network: GraphModel) -> None:
 
 
 def get_all_inverter_data(network: GraphModel) -> None:
-    cim_profile = network.connection.connection_params.cim_profile
-    cim = importlib.import_module(f'cimgraph.data_profile.{cim_profile}')
+    cim = network.connection.cim
     network.get_all_edges(cim.PowerElectronicsConnection)
     network.get_all_edges(cim.PowerElectronicsConnectionPhase)
     network.get_all_edges(cim.BatteryUnit)
@@ -77,8 +66,7 @@ def get_all_inverter_data(network: GraphModel) -> None:
 
 
 def get_all_switch_data(network: GraphModel) -> None:
-    cim_profile = network.connection.connection_params.cim_profile
-    cim = importlib.import_module(f'cimgraph.data_profile.{cim_profile}')
+    cim = network.connection.cim
     network.get_all_edges(cim.Switch)
     network.get_all_edges(cim.Sectionaliser)
     network.get_all_edges(cim.Jumper)
@@ -93,8 +81,7 @@ def get_all_switch_data(network: GraphModel) -> None:
 
 
 def get_all_bus_data(network: GraphModel) -> None:
-    cim_profile = network.connection.connection_params.cim_profile
-    cim = importlib.import_module(f'cimgraph.data_profile.{cim_profile}')
+    cim = network.connection.cim
     network.get_all_edges(cim.ConnectivityNode)
     network.get_all_edges(cim.Terminal)
     # network.get_all_edges(cim.TopologicalNode)
@@ -102,8 +89,7 @@ def get_all_bus_data(network: GraphModel) -> None:
 
 
 def get_all_measurement_data(network: GraphModel) -> None:
-    cim_profile = network.connection.connection_params.cim_profile
-    cim = importlib.import_module(f'cimgraph.data_profile.{cim_profile}')
+    cim = network.connection.cim
     network.get_all_edges(cim.Terminal)
     network.get_all_edges(cim.Measurement)
     network.get_all_edges(cim.Analog)
@@ -113,8 +99,7 @@ def get_all_measurement_data(network: GraphModel) -> None:
 
 
 def get_all_limit_data(network: GraphModel) -> None:
-    cim_profile = network.connection.connection_params.cim_profile
-    cim = importlib.import_module(f'cimgraph.data_profile.{cim_profile}')
+    cim = network.connection.cim
     network.get_all_attributes(cim.OperationalLimitSet)
     network.get_all_attributes(cim.ActivePowerLimit)
     network.get_all_attributes(cim.ApparentPowerLimit)
@@ -124,16 +109,14 @@ def get_all_limit_data(network: GraphModel) -> None:
 
 
 def get_all_location_data(network: GraphModel):
-    cim_profile = network.connection.connection_params.cim_profile
-    cim = importlib.import_module(f'cimgraph.data_profile.{cim_profile}')
+    cim = network.connection.cim
     network.get_all_edges(cim.CoordinateSystem)
     network.get_all_edges(cim.Location)
     network.get_all_edges(cim.PositionPoint)
 
 
 def get_all_bus_locations(network: GraphModel):
-    cim_profile = network.connection.connection_params.cim_profile
-    cim = importlib.import_module(f'cimgraph.data_profile.{cim_profile}')
+    cim = network.connection.cim
 
     node_positions = {}
     network.get_all_edges(cim.ConnectivityNode)
@@ -162,12 +145,11 @@ def get_all_bus_locations(network: GraphModel):
 
 
 def get_all_data(network: GraphModel):
-    cim_profile = network.connection.connection_params.cim_profile
-    cim = importlib.import_module(f'cimgraph.data_profile.{cim_profile}')
+    cim = network.connection.cim
 
     # Get base data
     get_all_bus_data(network)
-    #get_all_line_data(network)
+    get_all_line_data(network)
     get_all_transformer_data(network)
     get_all_load_data(network)
     get_all_inverter_data(network)
@@ -191,8 +173,8 @@ def get_all_data(network: GraphModel):
             if class_name not in parsed_classes:
                 class_type = eval(f'cim.{class_name}')
                 if class_type not in attr_only:
-                    network.get_all_edges(class_type)
                     # print('edges', class_name)
+                    network.get_all_edges(class_type)
 
                 else:
                     # print('attributes', class_name)

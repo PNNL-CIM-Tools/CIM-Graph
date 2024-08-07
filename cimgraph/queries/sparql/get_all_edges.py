@@ -1,7 +1,6 @@
 from __future__ import annotations
 from uuid import UUID
 
-# from cimgraph.data_profile.known_problem_classes import ClassesWithoutMRID
 from cimgraph.databases import ConnectionInterface
 
 
@@ -17,7 +16,6 @@ def get_all_edges_sparql(graph:dict[type, dict[UUID, object]], cim_class: type, 
         query_message: query string that can be used in blazegraph connection or STOMP client
     """
     class_name = cim_class.__name__
-    # classes_without_mrid = ClassesWithoutMRID()
 
     if int(connection_params.iec61970_301) > 7:
         split = 'urn:uuid:'

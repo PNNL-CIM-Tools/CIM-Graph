@@ -78,6 +78,8 @@
                 <xsl:call-template name="comment"/>
             </xsl:for-each>
         </list>
+        <item></item>
+
         <!-- Parse all simple attributes -->
         <xsl:for-each select="a:Simple">
             <list begin="" indent="    " end="">
@@ -119,6 +121,8 @@
                         <xsl:call-template name="comment"/>
                     </xsl:for-each>
                 </list>
+                <item></item>
+
                 <!-- Parse all simple attributes -->
                 <xsl:for-each select="a:Simple">
                     <list begin="" indent="    " end="">
@@ -178,6 +182,8 @@
                     <xsl:call-template name="comment"/>
                 </xsl:for-each>
             </list>
+            <item></item>
+
         </xsl:if>
     </xsl:template>
 
@@ -221,6 +227,8 @@
                     <xsl:call-template name="comment"/>
                 </xsl:for-each>
             </list>
+            <item></item>
+
         </xsl:if>
     </xsl:template>
 
@@ -277,7 +285,9 @@
             <xsl:for-each select="a:Comment">
                 <xsl:call-template name="comment"/>
             </xsl:for-each>
-        </list>       
+        </list> 
+        <item></item>
+
     </xsl:template>
 
     <!-- Template for enumerations -->
@@ -290,6 +300,8 @@
                 <xsl:call-template name="comment"/>
             </xsl:for-each>
         </list>
+        <item></item>
+
         <!-- Parse enumeration value -->
         <xsl:for-each select="a:EnumeratedValue">
             <list begin="" indent="    " end="">
@@ -317,6 +329,8 @@
                 <xsl:call-template name="comment"/>
             </xsl:for-each>
         </list>
+        <item></item>
+
 
     </xsl:template>
 
@@ -372,6 +386,8 @@
                 <xsl:call-template name="comment"/>
             </xsl:for-each>
         </list>
+        <item></item>
+
     </xsl:template>
 
     <!-- Template for converting primitives to python spelling -->
@@ -451,17 +467,27 @@
                 </list>
                 <item>}) </item>
             </list>
-            <item># Override python __repr__ method with JSON-LD representation</item>
-            <item># This is needed to avoid infinite loops in object previews </item>
-            <item>def __repr__(self) -> str:</item>
+            <item></item>
+
+            <item># Backwards support for objects created with mRID</item>
+            <item>def __post_init__(self) -> None:</item>
             <list begin="" indent="    " end="">
-                <item>return json.dumps({'@id': f'{str(self.identifier)}', '@type': f'{self.__class__.__name__}'})</item>
+                <item>if 'mRID' in self.__dataclass_fields__:</item>
+                <list begin="" indent="    " end="">
+                    <item>if self.mRID is not None:</item>
+                    <list begin="" indent="    " end="">
+                        <item>self.uuid(mRID = self.mRID)</item>
+                    </list>
+                </list>
             </list>
+            <item></item>
+            
             <item># Override python string for printing with JSON representation</item>
             <item>def __str__(self) -> str: </item>
             <list begin="" indent="    " end="">
                 <item># Create JSON-LD dump with repr and all attributes </item>
                 <item>dump = dict(json.loads(self.__repr__()) | self.__dict__)</item>
+                <item>del dump['__uuid__']</item>
                 <item>attribute_list = list(self.__dataclass_fields__.keys())</item>
                 <item>for attribute in attribute_list:</item>
                 <list begin="" indent="    " end="">
@@ -473,26 +499,7 @@
                     <item># If a dataclass, replace with custom repr</item>
                     <item>elif is_dataclass(dump[attribute]):</item>
                     <list begin="" indent="    " end="">
-                        <item>dump[attribute] = json.loads(dump[attribute].__repr__())</item>
-                    </list>
-                    <item># If a list, convert elements to string</item>
-                    <item>elif type(dump[attribute]) == list:</item>
-                    <list begin="" indent="    " end="">
-                        <item>values = []</item>
-                        <item>for value in dump[attribute]:</item>
-                        <list begin="" indent="    " end="">
-                            <item># If a dataclass, replace with custom repr</item>
-                            <item>if is_dataclass(dump[attribute]):</item>
-                            <list begin="" indent="    " end="">
-                                <item>values.append(json.loads(value.__repr__()))</item>
-                            </list>
-                        </list>
-                        <list begin="" indent="    " end="">
-                            <item>else:</item>
-                            <list begin="" indent="    " end="">
-                                <item>values.append(str(value))</item>
-                            </list>
-                        </list>
+                        <item>dump[attribute] = dump[attribute].__repr__()</item>
                     </list>
                     <item>elif type[dump[attribute]] != str:</item>
                     <list begin="" indent="    " end="">
@@ -500,43 +507,112 @@
                         <item>dump[attribute] = str(dump[attribute])</item>
                     </list>
                 </list>
+
                 <item># Fix python ' vs JSON " </item>
-                <item>dump = str(dump).replace('\'','\"' )</item>
-                <item># Add 4 spaces indentation</item>
-                <item>dump = json.dumps(json.loads(dump), indent=4)</item>
+                <item>dump = json.dumps(dump)</item>
+                <item>dump = str(dump).replace('\\\"','\"' )</item>
+                <item>dump = str(dump).replace('\"[','[' )</item>
+                <item>dump = str(dump).replace(']\"',']' )</item>
+                <item>dump = str(dump).replace('\"{','{' )</item>
+                <item>dump = str(dump).replace('}\"','}' )</item>
+
                 <item>return dump</item>
             </list>
+            <item></item>
+
+            <item># Override python __repr__ method with JSON-LD representation</item>
+            <item># This is needed to avoid infinite loops in object previews </item>
+            <item>def __repr__(self) -> str:</item>
+            <list begin="" indent="    " end="">
+                <item>return json.dumps({'@id': f'{str(self.identifier)}', '@type': f'{self.__class__.__name__}'})</item>
+            </list>
+            <item></item>
+
+            <item># Add indentation of json for pretty print </item>
+            <item>def pprint(self) -> None:</item>
+            <list begin="" indent="    " end="">
+                <item>print(json.dumps(json.loads(self.__str__()), indent=4))</item>
+            </list>
+            <item></item>
 
             <item># Create UUID from inconsistent mRIDs</item>
-            <item>def uuid(self, mRID:str = None, name:str = None) -> UUID:</item>
+            <item>def uuid(self, mRID:str = None, uri:str = None, name:str = None) -> UUID:</item>
             <list begin="" indent="    " end="">
-                <item>invalid_mrid = False</item>
-                <item># If mRID is specified, try creating from UUID from mRID</item>
-                <item>if mRID is not None:</item>
+                <item>seed = ''</item>
+                <item>invalid_mrid = True</item>
+                <item>self.__uuid__ = self.__uuid_meta__()</item>
+                <item># If URI is specified, try creating from UUID from URI</item>
+                <item>if uri is not None:</item>
                 <list begin="" indent="    " end="">
+                    <item># Handle inconsistent capitalization / underscores</item>
+                    <item>if uri.strip('_') != uri:</item>
+                    <list begin="" indent="    " end="">
+                        <item>self.__uuid__.uri_has_underscore = True</item>
+                    </list>
+                    <item>if uri.lower() != uri:</item>
+                    <list begin="" indent="    " end="">
+                        <item>self.__uuid__.uri_is_capitalized = True</item>
+                    </list>
                     <item>try:</item>
                     <list begin="" indent="    " end="">
-                        <item>self.identifier = UUID(mRID.strip('_').lower(), version=4)</item>
+                        <item>self.identifier = UUID(uri.strip('_').lower())</item>
+                        <item>invalid_mrid = False</item>
                     </list>
                     <item>except:</item>
                     <list begin="" indent="    " end="">
-                        <item>invalid_mrid = True</item>
-                        <item>name = mRID</item>
-                        <item>_log.warning(f'mRID {mRID} not a valid UUID, generating new UUID')</item>
+                        <item>seed = seed + uri</item>
+                        <item>_log.warning(f'URI {uri} not a valid UUID, generating new UUID')</item>
+                    </list>
+                </list>
+                <item>if mRID is not None:</item>
+                <list begin="" indent="    " end="">
+                    <item># Handle inconsistent capitalization / underscores</item>
+                    <item>if mRID.strip('_') != mRID:</item>
+                    <list begin="" indent="    " end="">
+                        <item>self.__uuid__.mrid_has_underscore = True</item>
+                        <item>if uri is None:</item>
+                        <list begin="" indent="    " end="">
+                            <item>self.__uuid__.uri_has_underscore = True</item>
+                        </list>
+                    </list>
+                    <item>if mRID.lower() != mRID:</item>
+                    <list begin="" indent="    " end="">
+                        <item>self.__uuid__.mrid_is_capitalized = True</item>
+                        <item>if uri is None:</item>
+                        <list begin="" indent="    " end="">
+                            <item>self.__uuid__.uri_is_capitalized = True</item>
+                        </list>
+                    </list>
+                    <list begin="" indent="    " end="">
+                        <item>try:</item>
+                        <list begin="" indent="    " end="">
+                            <item>self.identifier = UUID(mRID.strip('_').lower())</item>
+                            <item>invalid_mrid = False</item>
+                        </list>
+                        <item>except:</item>
+                        <list begin="" indent="    " end="">
+                            <item>self.mRID = mRID</item>
+                            <item>seed = seed + mRID</item>
+                            <item>_log.warning(f'mRID {mRID} not a valid UUID, generating new UUID')</item>
+                        </list>
                     </list>
                 </list>
                 <item># Otherwise, build UUID using unique name as a seed</item>
-                <item>elif invalid_mrid or name is not None:</item>
+                <item>if invalid_mrid:</item>
                 <list begin="" indent="    " end="">
-                    <item>seedStr = f"{self.__class__.__name__}:{name}"</item>
-                    <item>randomGenerator = Random(seedStr)</item>
-                    <item>self.identifier = UUID(int=randomGenerator.getrandbits(128), version=4)</item>
+                    <item>if name is not None:</item>
+                    <list begin="" indent="    " end="">
+                        <item>seed = seed + f"{self.__class__.__name__}:{name}"</item>
+                        <item>randomGenerator = Random(seed)</item>
+                        <item>self.__uuid__.uuid = UUID(int=randomGenerator.getrandbits(128), version=4)</item>
+                        <item>self.name = name</item>
                 </list>
                 <item>else:</item>
                 <list begin="" indent="    " end="">
-                    <item>self.identifier = uuid4()</item>
+                    <item>self.__uuid__.uuid = uuid4()</item>
                 </list>
-
+                <item>self.identifier = self.__uuid__.uuid</item>
+                <item># Write mRID string for backwards compatibility</item>
                 <item>if 'mRID' in self.__dataclass_fields__:</item>
                 <list begin="" indent="    " end="">
                     <item>if mRID is not None:</item>
@@ -548,17 +624,52 @@
                         <item>self.mRID = str(self.identifier)</item>
                     </list>
                 </list>
-                <item> </item>
-
-                <!-- <list begin="" indent="    " end=""> -->
-                    <!-- <item> </item> -->
-                <!-- </list> -->
-
             </list>
+        </list>
+        <item></item>
 
+        <item># Method to reconstitute URI from UUID </item>
+        <item>def uri(self) -> str:</item>
+        <list begin="" indent="    " end="">
+            <item>uri = str(self.identifier)</item>
+            <item>try:</item>
+            <list begin="" indent="    " end="">
+                <item>if self.__uuid__.uri_is_capitalized:</item>
+                <list begin="" indent="    " end="">
+                    <item>uri = uri.upper()</item>
+                </list>
+                <item>if self.__uuid__.uri_has_underscore:</item>
+                <list begin="" indent="    " end="">
+                    <item>uri = '_' + uri</item>
+                </list>
+            </list>
+            <item>except:</item>
+            <list begin="" indent="    " end="">
+                <item>pass</item>
+            </list>
+            <item>return uri</item>
+        </list>
+        
+        <item></item>
 
+        <item># Metadata for inconsistent uri and mRID </item>
+        <item>class __uuid_meta__():</item>
+        <list begin="" indent="    " end="">
+            <item>uuid:UUID = None</item>
+            <item>uri_has_underscore:bool = False</item>
+            <item>uri_is_capitalized:bool = False</item>
+            <item>mrid_has_underscore:bool = False</item>
+            <item>mrid_is_capitalized:bool = False</item> 
+        </list>
+        <item></item>
+           
+        
         </list>
         
     </xsl:template>
 
 </xsl:stylesheet>
+
+<!-- <list begin="" indent="    " end=""> -->
+    <!-- <item> </item> -->
+<!-- </list> -->
