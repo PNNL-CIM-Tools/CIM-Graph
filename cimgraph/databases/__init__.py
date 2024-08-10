@@ -26,13 +26,9 @@ class ConnectionParameters:
     filename: str = field(default_factory=str)
     use_units: bool = field(default=False)
 
-    # parameters: List[Parameter] = field(default_factory=list)
-
-
 @dataclass
 class QueryResponse:
     response: str
-
 
 @dataclass
 class ConnectionInterface:
@@ -101,10 +97,18 @@ class ConnectionInterface:
             elif 'bool' in attribute_type:
                 setattr(graph[cim_class][identifier], association, bool(value))
 
+            elif 'int' in attribute_type:
+                setattr(graph[cim_class][identifier], association, int(value))
+
             elif 'float' in attribute_type:
                 setattr(graph[cim_class][identifier], association, float(value))
+
             else:
-                setattr(graph[cim_class][identifier], association, value)
+                if self.connection_params.use_units:
+                    pass
+                    #TODO: Implement evaluation of units
+                else:
+                    setattr(graph[cim_class][identifier], association, value)
 
 
 
