@@ -12,6 +12,7 @@ readme = "README.md"
 [tool.poetry.dependencies]
 python = ">=3.8.1,<4.0"
 xsdata = "^22.5"
+defusedxml = "^0.7.1"
 SPARQLWrapper = "^2.0.0"
 neo4j = "^5.10.0"
 rdflib = "^7.0.0"

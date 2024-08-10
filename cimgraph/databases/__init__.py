@@ -81,10 +81,7 @@ class ConnectionInterface:
                         _log.warning(f'Association {reverse_assc} missing from class {attr_class} in data profile')
                 except:
                     _log.warning(f'Unable to find inverse of {attribute} for {cim_class.__name__}')
-        # if association is None:
-        #     _log.warning(f'unable to determine {attribute}')
-            # association = attr_link
-        _log.warning(f'Association {association} for {attribute}')
+
 
         return association
     
@@ -122,6 +119,8 @@ class ConnectionInterface:
             attribute_type = cim_class.__dataclass_fields__[association].type
             if 'List' in attribute_type or 'list' in attribute_type:
                 obj_list = getattr(graph[cim_class][identifier], association)
+                if type(obj_list) is not list:
+                    obj_list = [obj_list]
                 edge_uuid = (edge_mRID.strip('_').lower())
                 if edge_uuid not in str(obj_list):
                     edge_object = self.create_object(graph, edge_class, edge_mRID)
