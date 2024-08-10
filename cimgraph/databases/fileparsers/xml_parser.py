@@ -99,7 +99,9 @@ class XMLFile(ConnectionInterface):
                                 setattr(self.graph[cim_class][identifier], association, edge_enum)
                     else:
                         if association is not None:
-                            setattr(obj, association, sub_element.text)
+                            # setattr(obj, association, sub_element.text)
+                            self.create_value(self.graph, cim_class, identifier, sub_tag, sub_element.text)
+
         return self.graph
 
     def parse_node_query(self, graph: dict, query_output: dict) -> dict[type, dict[UUID, object]]:
