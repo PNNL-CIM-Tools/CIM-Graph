@@ -6,6 +6,7 @@ import logging
 import math
 import os
 from uuid import UUID
+import concurrent.futures
 
 from rdflib import Graph, Namespace, URIRef
 from SPARQLWrapper import JSON, POST, SPARQLWrapper
@@ -123,16 +124,35 @@ class BlazegraphConnection(ConnectionInterface):
 
         return sparql_message
 
-    def get_all_edges(self, graph: dict[type, dict[UUID, object]], cim_class: type) -> None:
-        uuid_list = list(graph[cim_class].keys())
-        for index in range(math.ceil(len(uuid_list) / 100)):
-            eq_mrids = uuid_list[index * 100:(index + 1) * 100]
-            #generate SPARQL message from correct queries>sparql python script based on class name
-            sparql_message = sparql.get_all_edges_sparql(graph,
-                cim_class, eq_mrids, self.connection_params)
-            #execute sparql query
+    # def get_all_edges(self, graph: dict[type, dict[UUID, object]], cim_class: type) -> None:
+    #     uuid_list = list(graph[cim_class].keys())
+    #     for index in range(math.ceil(len(uuid_list) / 100)):
+    #         eq_mrids = uuid_list[index * 100:(index + 1) * 100]
+    #         #generate SPARQL message from correct queries>sparql python script based on class name
+    #         sparql_message = sparql.get_all_edges_sparql(graph,
+    #             cim_class, eq_mrids, self.connection_params)
+    #         #execute sparql query
+    #         query_output = self.execute(sparql_message)
+    #         self.edge_query_parser(query_output, graph, cim_class)
+
+    def get_all_edges(self, graph, cim_class) -> None:
+        def process_batch(eq_mrids):
+            # Generate SPARQL message from correct queries>sparql python script based on class name
+            sparql_message = sparql.get_all_edges_sparql(graph, cim_class, eq_mrids, self.connection_params)
+            # Execute SPARQL query
             query_output = self.execute(sparql_message)
+            # Parse the query output
             self.edge_query_parser(query_output, graph, cim_class)
+        
+        uuid_list = list(graph[cim_class].keys())
+        num_batches = math.ceil(len(uuid_list) / 100)
+        eq_mrids_batches = [uuid_list[i * 100:(i + 1) * 100] for i in range(num_batches)]
+
+        with concurrent.futures.ThreadPoolExecutor(max_workers=10) as executor:
+            futures = [executor.submit(process_batch, batch) for batch in eq_mrids_batches]
+            for future in concurrent.futures.as_completed(futures):
+                # Ensuring all futures are processed
+                future.result()
 
     def get_all_attributes(self, graph: dict[type, dict[UUID, object]],
                            cim_class: type) -> None:

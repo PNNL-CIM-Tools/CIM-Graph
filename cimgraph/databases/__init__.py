@@ -95,13 +95,25 @@ class ConnectionInterface:
                     obj_list.append(value)
 
             elif 'bool' in attribute_type:
-                setattr(graph[cim_class][identifier], association, bool(value))
+                try:
+                    setattr(graph[cim_class][identifier], association, bool(value))
+                except:
+                    _log.warning(f'{value} for {cim_class.__name__}.{association} is not a boolean')
+                    setattr(graph[cim_class][identifier], association, value)
 
             elif 'int' in attribute_type:
-                setattr(graph[cim_class][identifier], association, int(value))
+                try:
+                    setattr(graph[cim_class][identifier], association, int(float(value)))
+                except:
+                    _log.warning(f'{value} for {cim_class.__name__}.{association} is not an integer')
+                    setattr(graph[cim_class][identifier], association, value)
 
             elif 'float' in attribute_type:
-                setattr(graph[cim_class][identifier], association, float(value))
+                try:
+                    setattr(graph[cim_class][identifier], association, float(value))
+                except:
+                    _log.warning(f'{value} for {cim_class.__name__}.{association} is not a float')
+                    setattr(graph[cim_class][identifier], association, value)
 
             else:
                 if self.connection_params.use_units:
@@ -120,19 +132,22 @@ class ConnectionInterface:
         
         association = self.check_attribute(cim_class, attribute)
         if association is not None:
-            attribute_type = cim_class.__dataclass_fields__[association].type
-            if 'List' in attribute_type or 'list' in attribute_type:
-                obj_list = getattr(graph[cim_class][identifier], association)
-                if type(obj_list) is not list:
-                    obj_list = [obj_list]
-                edge_uuid = (edge_mRID.strip('_').lower())
-                if edge_uuid not in str(obj_list):
+            if association in cim_class.__dataclass_fields__:
+                attribute_type = cim_class.__dataclass_fields__[association].type
+                if 'List' in attribute_type or 'list' in attribute_type:
+                    obj_list = getattr(graph[cim_class][identifier], association)
+                    if type(obj_list) is not list:
+                        obj_list = [obj_list]
+                    edge_uuid = (edge_mRID.strip('_').lower())
+                    if edge_uuid not in str(obj_list):
+                        edge_object = self.create_object(graph, edge_class, edge_mRID)
+                        obj_list.append(edge_object)
+                        setattr(graph[cim_class][identifier], association, obj_list)
+                else:
                     edge_object = self.create_object(graph, edge_class, edge_mRID)
-                    obj_list.append(edge_object)
-                    setattr(graph[cim_class][identifier], association, obj_list)
+                    setattr(graph[cim_class][identifier], association, edge_object)
             else:
-                edge_object = self.create_object(graph, edge_class, edge_mRID)
-                setattr(graph[cim_class][identifier], association, edge_object)
+                _log.warning(f'{cim_class.__name__} does not have attribute {association}')
 
     def create_object(self, graph:dict[type, dict[UUID, object]],
                       class_type:type, uri:str) -> object:

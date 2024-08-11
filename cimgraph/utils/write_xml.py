@@ -39,7 +39,8 @@ def write_xml(network: GraphModel, filename: str) -> None:
         counter = 0
         for obj in network.graph[cim_class].values():
             header = f"""
-<cim:{cim_class.__name__} {rdf_header}{obj.mRID}">"""
+<cim:{cim_class.__name__} {rdf_header}{obj.uri()}">"""
+# <cim:{cim_class.__name__} {rdf_header}{obj.mRID}">"""
             f.write(header)
 
             parent_classes = list(cim_class.__mro__)
