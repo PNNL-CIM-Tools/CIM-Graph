@@ -17,25 +17,25 @@ from cimgraph.databases import ConnectionInterface, ConnectionParameters, QueryR
 
 _log = logging.getLogger(__name__)
 
-def parse_nodes(chunks, params, graph, class_index, lock):
-    db = ConnectionInterface(params)
-    # Iterate over the elements and create dataclass instances
-    for element in chunks:
-        class_name = element.tag.split('{'+params.namespace+'}')[1]
-        cim = importlib.import_module('cimgraph.data_profile.' + params.cim_profile)
-        rdf = '''{http://www.w3.org/1999/02/22-rdf-syntax-ns#}'''
-        if class_name in cim.__all__:
-            cim_class = eval(f'cim.{class_name}')
-            uri = element.get(f'{rdf}about')
-            identifier = UUID(uri.strip('_').lower())
-            uri = uri.split(':')[-1]  # Extract UUID from the full URI
+# def parse_nodes(chunks, params, graph, class_index, lock):
+#     db = ConnectionInterface(params)
+#     # Iterate over the elements and create dataclass instances
+#     for element in chunks:
+#         class_name = element.tag.split('{'+params.namespace+'}')[1]
+#         cim = importlib.import_module('cimgraph.data_profile.' + params.cim_profile)
+#         rdf = '''{http://www.w3.org/1999/02/22-rdf-syntax-ns#}'''
+#         if class_name in cim.__all__:
+#             cim_class = eval(f'cim.{class_name}')
+#             uri = element.get(f'{rdf}about')
+#             identifier = UUID(uri.strip('_').lower())
+#             uri = uri.split(':')[-1]  # Extract UUID from the full URI
             
-            with lock:
-                class_index[identifier] = cim_class
-                obj = db.create_object(graph, cim_class, uri)
-        else:
-            _log.warning(f'{class_name} not in data profile')
-    return None
+#             with lock:
+#                 class_index[identifier] = cim_class
+#                 obj = db.create_object(graph, cim_class, uri)
+#         else:
+#             _log.warning(f'{class_name} not in data profile')
+#     return None
 
 
 class XMLFile(ConnectionInterface):
@@ -154,10 +154,9 @@ class XMLFile(ConnectionInterface):
         
         
     def parse_nodes(self, element):
+
         # Iterate over the elements and create dataclass instances
-        # for element in self.root:
         class_name = element.tag.split('{'+self.namespace+'}')[1]
-        # self.cim = importlib.import_module('cimgraph.data_profile.' + self.cim_profile)
 
         if class_name in self.cim.__all__:
             # print(class_name)
@@ -166,26 +165,22 @@ class XMLFile(ConnectionInterface):
             identifier = UUID(uri.strip('_').lower())
             uri = uri.split(':')[-1]  # Extract UUID from the full URI
             self.class_index[identifier] = cim_class
-            # with lock:
-            obj = self.create_object(self.graph, cim_class, uri)
+            self.create_object(self.graph, cim_class, uri)
         else:
             _log.warning(f'{class_name} not in data profile')
-        return None
+
 
     def parse_edges(self, element):
-        
-        # for element in self.root:      
+           
         class_name = element.tag.split('{'+self.namespace+'}')[1]
 
 
         if class_name in self.cim.__all__:
             cim_class = eval(f'self.cim.{class_name}')
             uri = element.get(f'{self.rdf}about')
-            # print(class_name)
             
             identifier = UUID(uri.strip('_').lower())
             uri = uri.split(':')[-1]  # Extract UUID from the full URI
-            # with lock:
             obj = self.graph[cim_class][UUID(uri)]
             for sub_element in element:
                 sub_tag = sub_element.tag.split('}')[-1]
@@ -198,11 +193,9 @@ class XMLFile(ConnectionInterface):
                 if edge_uri is not None:
                     if self.namespace not in edge_uri:
                         edge_uuid = UUID(edge_uri.strip('_').lower())                  
-                        edge_class = self.class_index[edge_uuid]
-                        
-                        # self.create_edge(graph, cim_class, identifier, sub_tag, edge_class, edge_uri)
+                        edge_class = self.class_index[edge_uuid]   
+                        self.create_edge(self.graph, cim_class, identifier, sub_tag, edge_class, edge_uri)
                         reverse = cim_class.__dataclass_fields__[association].metadata['inverse']
-                        # with lock:
                         self.create_edge(self.graph, edge_class, edge_uuid, reverse,
                                             cim_class, self.graph[cim_class][identifier].uri())
                     else:
@@ -212,13 +205,10 @@ class XMLFile(ConnectionInterface):
                         enum_value = enum_text.split('.')[1]
                         edge_enum = eval(f'self.cim.{enum_class}(enum_value)')
                         if association is not None:
-                            # with lock:
                             setattr(self.graph[cim_class][identifier], association, edge_enum)
                 else:
                     if association is not None:
-                        # setattr(obj, association, sub_element.text)
-                        # with lock:
-                            self.create_value(self.graph, cim_class, identifier, sub_tag, sub_element.text)
+                        self.create_value(self.graph, cim_class, identifier, sub_tag, sub_element.text)
         else:
             _log.warning(f'{class_name} not in data profile')
         return None

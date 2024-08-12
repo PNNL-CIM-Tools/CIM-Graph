@@ -100,12 +100,12 @@ def get_all_measurement_data(network: GraphModel) -> None:
 
 def get_all_limit_data(network: GraphModel) -> None:
     cim = network.connection.cim
-    network.get_all_attributes(cim.OperationalLimitSet)
-    network.get_all_attributes(cim.ActivePowerLimit)
-    network.get_all_attributes(cim.ApparentPowerLimit)
-    network.get_all_attributes(cim.VoltageLimit)
-    network.get_all_attributes(cim.CurrentLimit)
-    network.get_all_attributes(cim.OperationalLimitType)
+    network.get_all_edges(cim.OperationalLimitSet)
+    network.get_all_edges(cim.ActivePowerLimit)
+    network.get_all_edges(cim.ApparentPowerLimit)
+    network.get_all_edges(cim.VoltageLimit)
+    network.get_all_edges(cim.CurrentLimit)
+    network.get_all_edges(cim.OperationalLimitType)
 
 
 def get_all_location_data(network: GraphModel):
