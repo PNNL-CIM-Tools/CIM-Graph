@@ -10,7 +10,7 @@ services:
       - 8889:8080
 
   neo4j-apoc:
-    image: neo4j:5.11-community
+    image: neo4j:5.22-community
     ports:
       - 7474:7474
       - 7687:7687
@@ -25,12 +25,10 @@ services:
     volumes:
       - ./docker/neo4j/data:/data
       - ./docker/neo4j/plugins:/plugins
-      # - ./gridappsd-docker/neo4j/import:/import
-      # - ~/Powergrid-Models/platform/cimxml:/import
 
 
   graphdb:
-    image: ontotext/graphdb:10.4.1
+    image: ontotext/graphdb:10.7.3
     ports:
       - 7200:7200
     volumes:
