@@ -54,8 +54,10 @@ def get_all_nodes_from_container(container: object, connection_params: Connectio
         UNION
         {
         ?eq cim:Equipment.EquipmentContainer ?c.
-        ?t cim:Terminal.ConductingEquipment ?eq.
-        ?t cim:Terminal.ConnectivityNode ?node.
+        OPTIONAL {
+            ?t cim:Terminal.ConductingEquipment ?eq.
+            ?t cim:Terminal.ConnectivityNode ?node.
+            }
         ?eq a ?eq_cls.
           
         bind(strafter(str(?node),"%s") as ?ConnectivityNode).

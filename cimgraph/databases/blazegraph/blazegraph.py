@@ -156,16 +156,12 @@ class BlazegraphConnection(ConnectionInterface):
         """
         # Iterate through all rows of query output
         for result in query_output['results']['bindings']:
-            # Get uri strings of nodes and terminals
-            node_mrid = result['ConnectivityNode']['value']
-            term_mrid = result['Terminal']['value']
+            
             # Associated conducting equipment are JSON-LD strings
             eq = json.loads(result['Equipment']['value'])
             eq_id = eq['@id']
             eq_class = eq['@type']
-            # Add each object to graph
-            node = self.create_object(graph, self.cim.ConnectivityNode, node_mrid)
-            terminal = self.create_object(graph, self.cim.Terminal, term_mrid)
+            
             # If equipment class is in data profile, add it to the graph also
             if eq_class in self.cim.__all__:
                 eq_class = eval(f'self.cim.{eq_class}')
@@ -175,14 +171,21 @@ class BlazegraphConnection(ConnectionInterface):
                 _log.warning(
                     f'object class missing from data profile: {eq_class}')
                 continue
-            # Associate the node and equipment with the terminal
-            if terminal not in equipment.Terminals:
-                equipment.Terminals.append(terminal)
-            if terminal not in node.Terminals:
-                node.Terminals.append(terminal)
-            # Associate the terminal with the equipment and node
-            setattr(terminal, 'ConnectivityNode', node)
-            setattr(terminal, 'ConductingEquipment', equipment)
+            if 'ConnectivityNode' in result:
+                # Get uri strings of nodes and terminals
+                node_mrid = result['ConnectivityNode']['value']
+                term_mrid = result['Terminal']['value']
+                # Add each object to graph
+                node = self.create_object(graph, self.cim.ConnectivityNode, node_mrid)
+                terminal = self.create_object(graph, self.cim.Terminal, term_mrid)
+                # Associate the node and equipment with the terminal
+                if terminal not in equipment.Terminals:
+                    equipment.Terminals.append(terminal)
+                if terminal not in node.Terminals:
+                    node.Terminals.append(terminal)
+                # Associate the terminal with the equipment and node
+                setattr(terminal, 'ConnectivityNode', node)
+                setattr(terminal, 'ConductingEquipment', equipment)
 
         return graph
 
