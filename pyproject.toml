@@ -29,22 +29,3 @@ ipykernel = "^6.27.1"
 [build-system]
 requires = ["poetry-core>=1.2.0"]
 build-backend = "poetry.core.masonry.api"
-
-[tool.yapfignore]
-ignore_patterns = [
-    ".venv/**",
-    ".pytest_cache/**",
-    "dist/**",
-    "docs/**",
-    "docker/**",
-    "cimgraph/data_profile/**"
-]
-
-#[tool.yapf]
-#based_on_style = "pep8"
-#spaces_before_comment = 4
-column_limit = 999
-#split_before_logical_operator = true
-
-[tool.isort]
-line_length = 999

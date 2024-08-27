@@ -5,13 +5,13 @@ import importlib
 import json
 import logging
 import math
-import os
 from uuid import UUID
 
 from SPARQLWrapper import JSON, POST, SPARQLWrapper
 
 import cimgraph.queries.sparql as sparql
-from cimgraph.databases import ConnectionInterface, QueryResponse
+from cimgraph.databases import (ConnectionInterface, ConnectionParameters,
+                                QueryResponse)
 
 _log = logging.getLogger(__name__)
 
@@ -24,7 +24,7 @@ class BlazegraphConnection(ConnectionInterface):
         connection_params (ConnectionInterface): Connection parameters with details like cim_profile, namespace, etc.
     """
 
-    def __init__(self, connection_params: ConnectionInterface) -> None:
+    def __init__(self, connection_params: ConnectionParameters) -> None:
         """
         Initialize a new BlazegraphConnection.
 
@@ -32,8 +32,7 @@ class BlazegraphConnection(ConnectionInterface):
             connection_params (ConnectionInterface): The connection parameters containing CIM profile, namespace, etc.
         """
         self.cim_profile = connection_params.cim_profile
-        self.cim = importlib.import_module('cimgraph.data_profile.' +
-                                           self.cim_profile)
+        self.cim = importlib.import_module('cimgraph.data_profile.' + self.cim_profile)
         self.namespace = connection_params.namespace
         self.iec61970_301 = connection_params.iec61970_301
         self.url = connection_params.url
@@ -63,13 +62,29 @@ class BlazegraphConnection(ConnectionInterface):
             query_message (str): The SPARQL query to be executed.
 
         Returns:
-            QueryResponse: The response from the query execution.
+            query_output (QueryResponse): The response from the query execution.
         """
         self.connect()
         self.sparql_obj.setQuery(query_message)
         self.sparql_obj.setMethod(POST)
         query_output = self.sparql_obj.query().convert()
         return query_output
+
+    def update(self, update_message:str) -> str:
+        """
+        Execute SPARQL update on the Blazegraph endpoint.
+
+        Args:
+            update_message (str): The SPARQL query to be executed.
+
+        Returns:
+            output (str): The response from the update statement.
+        """
+        self.connect()
+        self.sparql_obj.setQuery(update_message)
+        self.sparql_obj.setMethod(POST)
+        output = self.sparql_obj.query()
+        return output
 
     def get_object(self, mrid: str, graph: dict = {}) -> object:
         """
@@ -103,9 +118,7 @@ class BlazegraphConnection(ConnectionInterface):
 
         return obj
 
-    def create_new_graph(self,
-                         container: object,
-                         graph: dict = {}) -> dict[type, dict[UUID, object]]:
+    def create_new_graph(self, container: object, graph: dict = {}) -> dict[type, dict[UUID, object]]:
         """
         Create a new graph structure for a CIM EquipmentContainer object.
         The method uses a SPARQL query to obtain all terminals in the graph,
@@ -130,8 +143,7 @@ class BlazegraphConnection(ConnectionInterface):
         graph = self.parse_node_query(graph, query_output)
         return graph
 
-    def parse_node_query(self, graph: dict,
-                         query_output: dict) -> dict[type, dict[UUID, object]]:
+    def parse_node_query(self, graph: dict, query_output: dict) -> dict[type, dict[UUID, object]]:
         """
         Parse the results of a node query to update a graph structure.
 
@@ -152,8 +164,7 @@ class BlazegraphConnection(ConnectionInterface):
             eq_id = eq['@id']
             eq_class = eq['@type']
             # Add each object to graph
-            node = self.create_object(graph, self.cim.ConnectivityNode,
-                                      node_mrid)
+            node = self.create_object(graph, self.cim.ConnectivityNode, node_mrid)
             terminal = self.create_object(graph, self.cim.Terminal, term_mrid)
             # If equipment class is in data profile, add it to the graph also
             if eq_class in self.cim.__all__:
@@ -175,8 +186,7 @@ class BlazegraphConnection(ConnectionInterface):
 
         return graph
 
-    def build_graph_from_list(
-            self, graph: dict[type, dict[UUID, object]],
+    def build_graph_from_list(self, graph: dict[type, dict[UUID, object]],
             mrid_list: list[str]) -> dict[type, dict[UUID, object]]:
         """
         Build a graph structure based on a list of mRIDs. This method is used
@@ -193,8 +203,7 @@ class BlazegraphConnection(ConnectionInterface):
         # mRID list needs to be broken into groups of 100 uri strings per query
         for index in range(math.ceil(len(mrid_list) / 100)):
             eq_mrids = mrid_list[index * 100:(index + 1) * 100]
-            sparql_message = sparql.get_all_nodes_from_list(
-                eq_mrids, self.namespace)
+            sparql_message = sparql.get_all_nodes_from_list(eq_mrids, self.namespace)
             query_output = self.execute(sparql_message)
             graph = self.parse_node_query(graph, query_output)
         return graph
@@ -213,14 +222,11 @@ class BlazegraphConnection(ConnectionInterface):
             str: SPARQL query string.
         """
         eq_mrids = list(graph[cim_class].keys())[0:100]
-        sparql_message = sparql.get_all_edges_sparql(graph, cim_class,
-                                                     eq_mrids,
-                                                     self.connection_params)
+        sparql_message = sparql.get_all_edges_sparql(graph, cim_class, eq_mrids, self.connection_params)
 
         return sparql_message
 
-    def get_all_edges(self, graph: dict[type, dict[UUID, object]],
-                      cim_class: type) -> None:
+    def get_all_edges(self, graph: dict[type, dict[UUID, object]], cim_class: type) -> None:
         """
         Expands the knowledge graph by one edge for all instances of the
         requested CIM class. Associated objects are added to the graph
@@ -245,15 +251,11 @@ class BlazegraphConnection(ConnectionInterface):
         uuid_list = list(graph[cim_class].keys())
         # Parallel process in batches of 100 uuids per query
         num_batches = math.ceil(len(uuid_list) / 100)
-        eq_mrids_batches = [
-            uuid_list[i * 100:(i + 1) * 100] for i in range(num_batches)
-        ]
+        eq_mrids_batches = [uuid_list[i * 100:(i + 1) * 100] for i in range(num_batches)]
 
         with concurrent.futures.ThreadPoolExecutor(max_workers=10) as executor:
-            futures = [
-                executor.submit(process_batch, batch)
-                for batch in eq_mrids_batches
-            ]
+            futures = [executor.submit(process_batch, batch)
+                for batch in eq_mrids_batches]
             for future in concurrent.futures.as_completed(futures):
                 # Ensuring all futures are processed
                 future.result()
@@ -277,16 +279,11 @@ class BlazegraphConnection(ConnectionInterface):
                 graph, cim_class, eq_mrids, self.connection_params)
             # Execute sparql query and parse results
             query_output = self.execute(sparql_message)
-            self.edge_query_parser(query_output,
-                                   graph,
-                                   cim_class,
-                                   expand_graph=False)
+            self.edge_query_parser(query_output, graph, cim_class, expand_graph=False)
 
-    def edge_query_parser(self,
-                          query_output: QueryResponse,
+    def edge_query_parser(self, query_output: QueryResponse,
                           graph: dict[type, dict[UUID, object]],
-                          cim_class: type,
-                          expand_graph=True) -> None:
+                          cim_class: type, expand_graph=True) -> None:
         """
         Parse the results of an edge query to update a graph structure.
 
@@ -298,13 +295,11 @@ class BlazegraphConnection(ConnectionInterface):
         """
         for result in query_output['results']['bindings']:
 
-            if result['attribute'][
-                    'value'] != 'type':  #skip 'type' and other single attributes
+            if result['attribute']['value'] != 'type':  #skip 'type' and other single attributes
 
                 uri = result['identifier']['value']  #get mRID
                 identifier = UUID(uri.strip('_').lower())
                 attribute = result['attribute']['value']  #edge attribute
-                # attr = result['attribute']['value'].split('.')  #split edge attribute
                 value = result['value']['value']  #get edge value
 
                 if 'edge' in result:  #check if association
@@ -321,8 +316,7 @@ class BlazegraphConnection(ConnectionInterface):
                         self.create_edge(graph, cim_class, identifier,
                                          attribute, edge_class, edge_mRID)
                     else:
-                        self.create_value(graph, cim_class, identifier,
-                                          attribute, value)
+                        self.create_value(graph, cim_class, identifier, attribute, value)
 
                 elif self.namespace in value:  #check if enumeration
                     enum_text = value.split(self.namespace)[1]
@@ -335,13 +329,11 @@ class BlazegraphConnection(ConnectionInterface):
                         association = self.check_attribute(
                             cim_class, attribute)
                         if association is not None:
-                            setattr(graph[cim_class][identifier], association,
-                                    edge_enum)
+                            setattr(graph[cim_class][identifier], association, edge_enum)
                 else:
                     association = self.check_attribute(cim_class, attribute)
                     if association is not None:
-                        self.create_value(graph, cim_class, identifier,
-                                          attribute, value)
+                        self.create_value(graph, cim_class, identifier, attribute, value)
 
     def upload(self, graph: dict[type, dict[UUID, object]]) -> None:
         """
@@ -352,6 +344,5 @@ class BlazegraphConnection(ConnectionInterface):
         """
         for cim_class in graph.keys():
             for obj in graph[cim_class].values():
-                query = sparql.upload_triples_sparql(obj,
-                                                     self.connection_params)
-                self.execute(query)
+                query = sparql.upload_triples_sparql(obj, self.connection_params)
+                self.update(query)

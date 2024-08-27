@@ -1,7 +1,9 @@
 from __future__ import annotations
-from cimgraph.models.graph_model import GraphModel
 
 import logging
+
+from cimgraph.models.graph_model import GraphModel
+
 _log = logging.getLogger(__name__)
 
 
@@ -84,8 +86,8 @@ def get_all_bus_data(network: GraphModel) -> None:
     cim = network.connection.cim
     network.get_all_edges(cim.ConnectivityNode)
     network.get_all_edges(cim.Terminal)
-    # network.get_all_edges(cim.TopologicalNode)
-    # network.get_all_edges(cim.TopologicalIsland)
+    network.get_all_edges(cim.TopologicalNode)
+    network.get_all_edges(cim.TopologicalIsland)
 
 
 def get_all_measurement_data(network: GraphModel) -> None:
@@ -95,7 +97,7 @@ def get_all_measurement_data(network: GraphModel) -> None:
     network.get_all_edges(cim.Analog)
     network.get_all_edges(cim.Discrete)
     # network.get_all_edges(cim.Accumlator)
-    # network.get_all_edges(cim.StringMeasurement)
+    network.get_all_edges(cim.StringMeasurement)
 
 
 def get_all_limit_data(network: GraphModel) -> None:
@@ -113,36 +115,6 @@ def get_all_location_data(network: GraphModel):
     network.get_all_edges(cim.CoordinateSystem)
     network.get_all_edges(cim.Location)
     network.get_all_edges(cim.PositionPoint)
-
-
-def get_all_bus_locations(network: GraphModel):
-    cim = network.connection.cim
-
-    node_positions = {}
-    network.get_all_edges(cim.ConnectivityNode)
-    network.get_all_edges(cim.Terminal)
-
-    for node in network.graph[cim.ConnectivityNode].values():
-        node_positions[node.mRID] = {}
-        node_positions[node.mRID]['name'] = node.name
-
-        for terminal in node.Terminals:
-            seq = terminal.sequenceNumber
-            equipment = terminal.ConductingEquipment
-            if equipment.Location is None:
-                network.get_all_edges(equipment.__class__)
-                network.get_all_edges(cim.Location)
-                network.get_all_edges(cim.PositionPoint)
-
-            # try:
-            for point in equipment.Location.PositionPoints:
-                if seq == point.sequenceNumber:
-                    node_positions[node.mRID]['x'] = point.xPosition
-                    node_positions[node.mRID]['y'] = point.yPosition
-            # except:
-            #     _log.warning(f'No position for {node.name}')
-    return node_positions
-
 
 def get_all_data(network: GraphModel):
     cim = network.connection.cim
@@ -179,9 +151,6 @@ def get_all_data(network: GraphModel):
                 else:
                     # print('attributes', class_name)
                     network.get_all_attributes(class_type)
-
-                # write_xml(network, '/home/ande188/sub.xml')
-                # time.sleep(5)
 
                 parsed_classes.append(class_name)
                 all_classes = []

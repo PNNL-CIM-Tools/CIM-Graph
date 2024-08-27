@@ -1,6 +1,5 @@
 # from cimgraph.utils.write_json import write_json_ld
 from cimgraph.utils.get_all_data import get_all_bus_data as get_all_bus_data
-from cimgraph.utils.get_all_data import get_all_bus_locations as get_all_bus_locations
 from cimgraph.utils.get_all_data import get_all_data as get_all_data
 from cimgraph.utils.get_all_data import get_all_inverter_data as get_all_inverter_data
 from cimgraph.utils.get_all_data import get_all_limit_data as get_all_limit_data
