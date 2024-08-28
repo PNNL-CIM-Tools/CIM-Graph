@@ -12024,7 +12024,7 @@ class BatteryUnit(PowerElectronicsUnit):
     '''
     
 @dataclass(repr=False)
-class PhotoVoltaicUnit(PowerElectronicsUnit):
+class PhotovoltaicUnit(PowerElectronicsUnit):
     '''
     A photovoltaic device or an aggregation of such devices
     '''
