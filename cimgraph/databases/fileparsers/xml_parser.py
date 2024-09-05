@@ -1,19 +1,18 @@
 from __future__ import annotations
 
-import os
 import concurrent.futures
-from concurrent.futures import ThreadPoolExecutor
-from concurrent.futures import ProcessPoolExecutor
-
-import multiprocessing
 import importlib
 import logging
+import multiprocessing
+import os
 import threading
+from concurrent.futures import ProcessPoolExecutor, ThreadPoolExecutor
 from uuid import UUID
+
 from defusedxml.ElementTree import parse
 
-from cimgraph.databases import ConnectionInterface, ConnectionParameters, QueryResponse
-
+from cimgraph.databases import (ConnectionInterface, ConnectionParameters,
+                                QueryResponse)
 
 _log = logging.getLogger(__name__)
 
@@ -29,7 +28,7 @@ _log = logging.getLogger(__name__)
 #             uri = element.get(f'{rdf}about')
 #             identifier = UUID(uri.strip('_').lower())
 #             uri = uri.split(':')[-1]  # Extract UUID from the full URI
-            
+
 #             with lock:
 #                 class_index[identifier] = cim_class
 #                 obj = db.create_object(graph, cim_class, uri)
@@ -50,7 +49,7 @@ class XMLFile(ConnectionInterface):
         self.graph = None
         # self.lock = threading.Lock()
         self.connect()
-        
+
 
     def connect(self):
         # if not graph:
@@ -70,7 +69,7 @@ class XMLFile(ConnectionInterface):
 
     def execute(self, query_message: str) -> QueryResponse:
         pass
-    
+
     def get_object(self, mrid:str, graph = {}) -> object:
         pass
 
@@ -83,7 +82,7 @@ class XMLFile(ConnectionInterface):
 
         #     tree = parse(self.filename)
         #     root = tree.getroot()
-            
+
         #     num_cores = multiprocessing.cpu_count()
         #     elements = list(root)
         #     chunk_size = len(elements) // num_cores
@@ -93,9 +92,9 @@ class XMLFile(ConnectionInterface):
             # # Use ProcessPoolExecutor to process elements in parallel
             # with multiprocessing.Pool(processes=multiprocessing.cpu_count()) as pool:
             #     pool.map(parse_nodes, [(self.connection_params, graph, element, class_index, lock) for element in root])
-            
 
-       
+
+
             # with multiprocessing.Pool(num_cores) as pool:
             # #     pool.starmap(parse_nodes, [(self.connection_params, graph, element, class_index, lock) for element in root])
             #     results = pool.map(parse_nodes, chunks)
@@ -140,19 +139,19 @@ class XMLFile(ConnectionInterface):
         #     self.parse_nodes(element)
 
         return self.graph
-    
+
     # async def create_new_graph_async(self):
     #     for f in asyncio.as_completed([
     #             asyncio.to_thread(self.parse_nodes(element))
     #             for element in self.root]):
     #         await f
-        
+
     #     for f in asyncio.as_completed([
     #             asyncio.to_thread(self.parse_edges(element))
     #             for element in self.root]):
     #         await f
-        
-        
+
+
     def parse_nodes(self, element):
 
         # Iterate over the elements and create dataclass instances
@@ -171,14 +170,14 @@ class XMLFile(ConnectionInterface):
 
 
     def parse_edges(self, element):
-           
+
         class_name = element.tag.split('{'+self.namespace+'}')[1]
 
 
         if class_name in self.cim.__all__:
             cim_class = eval(f'self.cim.{class_name}')
             uri = element.get(f'{self.rdf}about')
-            
+
             identifier = UUID(uri.strip('_').lower())
             uri = uri.split(':')[-1]  # Extract UUID from the full URI
             obj = self.graph[cim_class][UUID(uri)]
@@ -192,20 +191,26 @@ class XMLFile(ConnectionInterface):
 
                 if edge_uri is not None:
                     if self.namespace not in edge_uri:
-                        edge_uuid = UUID(edge_uri.strip('_').lower())                  
-                        edge_class = self.class_index[edge_uuid]   
-                        self.create_edge(self.graph, cim_class, identifier, sub_tag, edge_class, edge_uri)
-                        reverse = cim_class.__dataclass_fields__[association].metadata['inverse']
-                        self.create_edge(self.graph, edge_class, edge_uuid, reverse,
-                                            cim_class, self.graph[cim_class][identifier].uri())
+                        try:
+                            edge_uuid = UUID(edge_uri.strip('_').lower())
+                            edge_class = self.class_index[edge_uuid]
+                            self.create_edge(self.graph, cim_class, identifier, sub_tag, edge_class, edge_uri)
+                            reverse = cim_class.__dataclass_fields__[association].metadata['inverse']
+                            self.create_edge(self.graph, edge_class, edge_uuid, reverse,
+                                                cim_class, self.graph[cim_class][identifier].uri())
+                        except:
+                            pass
                     else:
-                        enum_text = edge_uri.split(self.namespace)[1]
-                        enum_text = enum_text.split('>')[0]
-                        enum_class = enum_text.split('.')[0]
-                        enum_value = enum_text.split('.')[1]
-                        edge_enum = eval(f'self.cim.{enum_class}(enum_value)')
-                        if association is not None:
-                            setattr(self.graph[cim_class][identifier], association, edge_enum)
+                        try:
+                            enum_text = edge_uri.split(self.namespace)[1]
+                            enum_text = enum_text.split('>')[0]
+                            enum_class = enum_text.split('.')[0]
+                            enum_value = enum_text.split('.')[1]
+                            edge_enum = eval(f'self.cim.{enum_class}(enum_value)')
+                            if association is not None:
+                                setattr(self.graph[cim_class][identifier], association, edge_enum)
+                        except:
+                            pass
                 else:
                     if association is not None:
                         self.create_value(self.graph, cim_class, identifier, sub_tag, sub_element.text)
@@ -233,10 +238,8 @@ class XMLFile(ConnectionInterface):
                           graph: dict[type, dict[UUID, object]],
                           cim_class: type, expand_graph = True) -> None:
         pass
-                   
-             
-   
+
+
+
     def upload(self, graph):
         pass
-
-

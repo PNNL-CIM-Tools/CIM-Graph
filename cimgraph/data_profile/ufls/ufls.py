@@ -1,11 +1,13 @@
 from __future__ import annotations
-from dataclasses import dataclass, field, is_dataclass
-from typing import Optional
-from enum import Enum
-from uuid import UUID, uuid4
-from random import Random
+
 import json
 import logging
+from dataclasses import dataclass, field, is_dataclass
+from enum import Enum
+from random import Random
+from typing import Optional
+from uuid import UUID, uuid4
+
 _log = logging.getLogger(__name__)
 '''
     Annotated CIMantic Graphs data profile for ufls
@@ -19,21 +21,25 @@ class Identity():
     IdentifiedObject is now a child class of Identity.
     mRID is superseded by Identity.identifier, which is typed to be a UUID.
     '''
-    identifier: Optional[ str | UUID ] = field(
+    identifier: Optional[ UUID ] = field(
         default = None,
         metadata = {
             'type': 'Attribute',
             'minOccurs': '1',
             'maxOccurs': '1'
         })
-    # Override python __repr__ method with JSON-LD representation
-    # This is needed to avoid infinite loops in object previews
-    def __repr__(self) -> str:
-        return json.dumps({'@id': f'{str(self.identifier)}', '@type': f'{self.__class__.__name__}'})
+
+    # Backwards support for objects created with mRID
+    def __post_init__(self) -> None:
+        if 'mRID' in self.__dataclass_fields__:
+            if self.mRID is not None:
+                self.uuid(mRID = self.mRID)
+
     # Override python string for printing with JSON representation
     def __str__(self) -> str:
         # Create JSON-LD dump with repr and all attributes
         dump = dict(json.loads(self.__repr__()) | self.__dict__)
+        del dump['__uuid__']
         attribute_list = list(self.__dataclass_fields__.keys())
         for attribute in attribute_list:
             # Delete attributes from print that are empty
@@ -41,54 +47,107 @@ class Identity():
                 del dump[attribute]
             # If a dataclass, replace with custom repr
             elif is_dataclass(dump[attribute]):
-                dump[attribute] = json.loads(dump[attribute].__repr__())
-            # If a list, convert elements to string
-            elif type(dump[attribute]) == list:
-                values = []
-                for value in dump[attribute]:
-                    # If a dataclass, replace with custom repr
-                    if is_dataclass(dump[attribute]):
-                        values.append(json.loads(value.__repr__()))
-                    else:
-                        values.append(str(value))
+                dump[attribute] = dump[attribute].__repr__()
             elif type[dump[attribute]] != str:
                 # Reformat all attributes as string for JSON
                 dump[attribute] = str(dump[attribute])
         # Fix python ' vs JSON "
-        dump = str(dump).replace('\'','\"' )
-        # Add 4 spaces indentation
-        dump = json.dumps(json.loads(dump), indent=4)
+        dump = json.dumps(dump)
+        dump = str(dump).replace('\\\"','\"' )
+        dump = str(dump).replace('\"[','[' )
+        dump = str(dump).replace(']\"',']' )
+        dump = str(dump).replace('\"{','{' )
+        dump = str(dump).replace('}\"','}' )
         return dump
+
+    # Override python __repr__ method with JSON-LD representation
+    # This is needed to avoid infinite loops in object previews
+    def __repr__(self) -> str:
+        return json.dumps({'@id': f'{str(self.identifier)}', '@type': f'{self.__class__.__name__}'})
+
+    # Add indentation of json for pretty print
+    def pprint(self) -> None:
+        print(json.dumps(json.loads(self.__str__()), indent=4))
+
     # Create UUID from inconsistent mRIDs
-    def uuid(self, mRID:str = None, name:str = None) -> UUID:
-        invalid_mrid = False
-        # If mRID is specified, try creating from UUID from mRID
-        if mRID is not None:
+    def uuid(self, mRID:str = None, uri:str = None, name:str = None) -> UUID:
+        seed = ''
+        invalid_mrid = True
+        self.__uuid__ = self.__uuid_meta__()
+        # If URI is specified, try creating from UUID from URI
+        if uri is not None:
+            # Handle inconsistent capitalization / underscores
+            if uri.strip('_') != uri:
+                self.__uuid__.uri_has_underscore = True
+            if uri.lower() != uri:
+                self.__uuid__.uri_is_capitalized = True
             try:
-                self.identifier = UUID(mRID.strip('_').lower(), version=4)
+                self.identifier = UUID(uri.strip('_').lower())
+                invalid_mrid = False
             except:
-                invalid_mrid = True
-                name = mRID
-                _log.warning(f'mRID {mRID} not a valid UUID, generating new UUID')
+                seed = seed + uri
+                _log.warning(f'URI {uri} not a valid UUID, generating new UUID')
+        if mRID is not None:
+            # Handle inconsistent capitalization / underscores
+            if mRID.strip('_') != mRID:
+                self.__uuid__.mrid_has_underscore = True
+                if uri is None:
+                    self.__uuid__.uri_has_underscore = True
+            if mRID.lower() != mRID:
+                self.__uuid__.mrid_is_capitalized = True
+                if uri is None:
+                    self.__uuid__.uri_is_capitalized = True
+                try:
+                    self.identifier = UUID(mRID.strip('_').lower())
+                    invalid_mrid = False
+                except:
+                    self.mRID = mRID
+                    seed = seed + mRID
+                    _log.warning(f'mRID {mRID} not a valid UUID, generating new UUID')
         # Otherwise, build UUID using unique name as a seed
-        elif invalid_mrid or name is not None:
-            seedStr = f"{self.__class__.__name__}:{name}"
-            randomGenerator = Random(seedStr)
-            self.identifier = UUID(int=randomGenerator.getrandbits(128), version=4)
-        else:
-            self.identifier = uuid4()
-        if 'mRID' in self.__dataclass_fields__:
-            if mRID is not None:
-                self.mRID = mRID
+        if invalid_mrid:
+            if name is not None:
+                seed = seed + f'{self.__class__.__name__}:{name}'
+                randomGenerator = Random(seed)
+                self.__uuid__.uuid = UUID(int=randomGenerator.getrandbits(128), version=4)
+                self.name = name
             else:
-                self.mRID = str(self.identifier)
-        
+                self.__uuid__.uuid = uuid4()
+            self.identifier = self.__uuid__.uuid
+            # Write mRID string for backwards compatibility
+            if 'mRID' in self.__dataclass_fields__:
+                if mRID is not None:
+                    self.mRID = mRID
+                else:
+                    self.mRID = str(self.identifier)
+
+    # Method to reconstitute URI from UUID
+    def uri(self) -> str:
+        uri = str(self.identifier)
+        try:
+            if self.__uuid__.uri_is_capitalized:
+                uri = uri.upper()
+            if self.__uuid__.uri_has_underscore:
+                uri = '_' + uri
+        except:
+            pass
+        return uri
+
+    # Metadata for inconsistent uri and mRID
+    class __uuid_meta__():
+        uuid:UUID = None
+        uri_has_underscore:bool = False
+        uri_is_capitalized:bool = False
+        mrid_has_underscore:bool = False
+        mrid_is_capitalized:bool = False
+
 @dataclass(repr=False)
 class IdentifiedObject(Identity):
     '''
     This is a root class to provide common identification for all classes needing
     identification and naming attributes.
     '''
+
     mRID: Optional[ str ] = field(
         default = None,
         metadata = {
@@ -96,15 +155,15 @@ class IdentifiedObject(Identity):
             'minOccurs': '0',
             'maxOccurs': '1',
             'docstring':
-            '''
-            Master resource identifier issued by a model authority. The mRID is unique
-            within an exchange context. Global uniqueness is easily achieved by using
-            a UUID, as specified in RFC 4122, for the mRID. The use of UUID is strongly
-            recommended.
-            For CIMXML data files in RDF syntax conforming to IEC 61970-552 Edition
-            1, the mRID is mapped to rdf:ID or rdf:about attributes that identify CIM
-            object elements.
-            '''
+                '''
+                Master resource identifier issued by a model authority. The mRID is unique
+                within an exchange context. Global uniqueness is easily achieved by using
+                a UUID, as specified in RFC 4122, for the mRID. The use of UUID is strongly
+                recommended.
+                For CIMXML data files in RDF syntax conforming to IEC 61970-552 Edition
+                1, the mRID is mapped to rdf:ID or rdf:about attributes that identify CIM
+                object elements.
+                '''
         })
     '''
     Master resource identifier issued by a model authority. The mRID is unique
@@ -115,6 +174,7 @@ class IdentifiedObject(Identity):
     1, the mRID is mapped to rdf:ID or rdf:about attributes that identify CIM
     object elements.
     '''
+
     aliasName: Optional[ str ] = field(
         default = None,
         metadata = {
@@ -122,14 +182,14 @@ class IdentifiedObject(Identity):
             'minOccurs': '0',
             'maxOccurs': '1',
             'docstring':
-            '''
-            The aliasName is free text human readable name of the object alternative
-            to IdentifiedObject.name. It may be non unique and may not correlate to
-            a naming hierarchy.
-            The attribute aliasName is retained because of backwards compatibility
-            between CIM relases. It is however recommended to replace aliasName with
-            the Name class as aliasName is planned for retirement at a future time.
-            '''
+                '''
+                The aliasName is free text human readable name of the object alternative
+                to IdentifiedObject.name. It may be non unique and may not correlate to
+                a naming hierarchy.
+                The attribute aliasName is retained because of backwards compatibility
+                between CIM relases. It is however recommended to replace aliasName with
+                the Name class as aliasName is planned for retirement at a future time.
+                '''
         })
     '''
     The aliasName is free text human readable name of the object alternative
@@ -139,6 +199,7 @@ class IdentifiedObject(Identity):
     between CIM relases. It is however recommended to replace aliasName with
     the Name class as aliasName is planned for retirement at a future time.
     '''
+
     description: Optional[ str ] = field(
         default = None,
         metadata = {
@@ -146,15 +207,16 @@ class IdentifiedObject(Identity):
             'minOccurs': '0',
             'maxOccurs': '1',
             'docstring':
-            '''
-            The description is a free human readable text describing or naming the
-            object. It may be non unique and may not correlate to a naming hierarchy.
-            '''
+                '''
+                The description is a free human readable text describing or naming the
+                object. It may be non unique and may not correlate to a naming hierarchy.
+                '''
         })
     '''
     The description is a free human readable text describing or naming the
     object. It may be non unique and may not correlate to a naming hierarchy.
     '''
+
     name: Optional[ str ] = field(
         default = None,
         metadata = {
@@ -162,15 +224,16 @@ class IdentifiedObject(Identity):
             'minOccurs': '0',
             'maxOccurs': '1',
             'docstring':
-            '''
-            The name is any free human readable and possibly non unique text naming
-            the object.
-            '''
+                '''
+                The name is any free human readable and possibly non unique text naming
+                the object.
+                '''
         })
     '''
     The name is any free human readable and possibly non unique text naming
     the object.
     '''
+
 @dataclass(repr=False)
 class ACDCTerminal(IdentifiedObject):
     '''
@@ -178,6 +241,7 @@ class ACDCTerminal(IdentifiedObject):
     Terminals are connected at physical connection points called connectivity
     nodes.
     '''
+
     connected: Optional[ bool ] = field(
         default = None,
         metadata = {
@@ -185,17 +249,17 @@ class ACDCTerminal(IdentifiedObject):
             'minOccurs': '0',
             'maxOccurs': '1',
             'docstring':
-            '''
-            The connected status is related to a bus-branch model and the topological
-            node to terminal relation. True implies the terminal is connected to the
-            related topological node and false implies it is not.
-            In a bus-branch model, the connected status is used to tell if equipment
-            is disconnected without having to change the connectivity described by
-            the topological node to terminal relation. A valid case is that conducting
-            equipment can be connected in one end and open in the other. In particular
-            for an AC line segment, where the reactive line charging can be significant,
-            this is a relevant case.
-            '''
+                '''
+                The connected status is related to a bus-branch model and the topological
+                node to terminal relation. True implies the terminal is connected to the
+                related topological node and false implies it is not.
+                In a bus-branch model, the connected status is used to tell if equipment
+                is disconnected without having to change the connectivity described by
+                the topological node to terminal relation. A valid case is that conducting
+                equipment can be connected in one end and open in the other. In particular
+                for an AC line segment, where the reactive line charging can be significant,
+                this is a relevant case.
+                '''
         })
     '''
     The connected status is related to a bus-branch model and the topological
@@ -208,6 +272,7 @@ class ACDCTerminal(IdentifiedObject):
     for an AC line segment, where the reactive line charging can be significant,
     this is a relevant case.
     '''
+
     sequenceNumber: Optional[ int ] = field(
         default = None,
         metadata = {
@@ -215,12 +280,12 @@ class ACDCTerminal(IdentifiedObject):
             'minOccurs': '0',
             'maxOccurs': '1',
             'docstring':
-            '''
-            The orientation of the terminal connections for a multiple terminal conducting
-            equipment. The sequence numbering starts with 1 and additional terminals
-            should follow in increasing order. The first terminal is the "starting
-            point" for a two terminal branch.
-            '''
+                '''
+                The orientation of the terminal connections for a multiple terminal conducting
+                equipment. The sequence numbering starts with 1 and additional terminals
+                should follow in increasing order. The first terminal is the "starting
+                point" for a two terminal branch.
+                '''
         })
     '''
     The orientation of the terminal connections for a multiple terminal conducting
@@ -228,7 +293,8 @@ class ACDCTerminal(IdentifiedObject):
     should follow in increasing order. The first terminal is the "starting
     point" for a two terminal branch.
     '''
-    Measurements: list[ str | Measurement ] = field(
+
+    Measurements: list[ Measurement ] = field(
         default_factory = list,
         metadata = {
             'type': 'Association',
@@ -236,12 +302,12 @@ class ACDCTerminal(IdentifiedObject):
             'maxOccurs': 'unbounded',
             'inverse': 'Measurement.Terminal',
             'docstring':
-            '''
-            Measurements associated with this terminal defining where the measurement
-            is placed in the network topology. It may be used, for instance, to capture
-            the sensor position, such as a voltage transformer (PT) at a busbar or
-            a current transformer (CT) at the bar between a breaker and an isolator.
-            '''
+                '''
+                Measurements associated with this terminal defining where the measurement
+                is placed in the network topology. It may be used, for instance, to capture
+                the sensor position, such as a voltage transformer (PT) at a busbar or
+                a current transformer (CT) at the bar between a breaker and an isolator.
+                '''
         })
     '''
     Measurements associated with this terminal defining where the measurement
@@ -249,13 +315,15 @@ class ACDCTerminal(IdentifiedObject):
     the sensor position, such as a voltage transformer (PT) at a busbar or
     a current transformer (CT) at the bar between a breaker and an isolator.
     '''
+
 @dataclass(repr=False)
 class Terminal(ACDCTerminal):
     '''
     An AC electrical connection point to a piece of conducting equipment. Terminals
     are connected at physical connection points called connectivity nodes.
     '''
-    ConductingEquipment: Optional[ str | ConductingEquipment ] = field(
+
+    ConductingEquipment: Optional[ ConductingEquipment ] = field(
         default = None,
         metadata = {
             'type': 'Association',
@@ -263,18 +331,19 @@ class Terminal(ACDCTerminal):
             'maxOccurs': '1',
             'inverse': 'ConductingEquipment.Terminals',
             'docstring':
-            '''
-            The conducting equipment of the terminal. Conducting equipment have terminals
-            that may be connected to other conducting equipment terminals via connectivity
-            nodes or topological nodes.
-            '''
+                '''
+                The conducting equipment of the terminal. Conducting equipment have terminals
+                that may be connected to other conducting equipment terminals via connectivity
+                nodes or topological nodes.
+                '''
         })
     '''
     The conducting equipment of the terminal. Conducting equipment have terminals
     that may be connected to other conducting equipment terminals via connectivity
     nodes or topological nodes.
     '''
-    ConnectivityNode: Optional[ str | ConnectivityNode ] = field(
+
+    ConnectivityNode: Optional[ ConnectivityNode ] = field(
         default = None,
         metadata = {
             'type': 'Association',
@@ -282,14 +351,15 @@ class Terminal(ACDCTerminal):
             'maxOccurs': '1',
             'inverse': 'ConnectivityNode.Terminals',
             'docstring':
-            '''
-            The connectivity node to which this terminal connects with zero impedance.
-            '''
+                '''
+                The connectivity node to which this terminal connects with zero impedance.
+                '''
         })
     '''
     The connectivity node to which this terminal connects with zero impedance.
     '''
-    NormalHeadFeeder: Optional[ str | Feeder ] = field(
+
+    NormalHeadFeeder: Optional[ Feeder ] = field(
         default = None,
         metadata = {
             'type': 'Association',
@@ -297,16 +367,17 @@ class Terminal(ACDCTerminal):
             'maxOccurs': '1',
             'inverse': 'Feeder.NormalHeadTerminal',
             'docstring':
-            '''
-            The feeder that this terminal normally feeds. Only specifed for the terminals
-            at head of feeders.
-            '''
+                '''
+                The feeder that this terminal normally feeds. Only specifed for the terminals
+                at head of feeders.
+                '''
         })
     '''
     The feeder that this terminal normally feeds. Only specifed for the terminals
     at head of feeders.
     '''
-    TopologicalNode: Optional[ str | TopologicalNode ] = field(
+
+    TopologicalNode: Optional[ TopologicalNode ] = field(
         default = None,
         metadata = {
             'type': 'Of Aggregate',
@@ -314,13 +385,13 @@ class Terminal(ACDCTerminal):
             'maxOccurs': '1',
             'inverse': 'TopologicalNode.Terminal',
             'docstring':
-            '''
-            The topological node associated with the terminal. This can be used as
-            an alternative to the connectivity node path to topological node, thus
-            making it unneccesary to model connectivity nodes in some cases. Note that
-            the if connectivity nodes are in the model, this association would probably
-            not be used as an input specification.
-            '''
+                '''
+                The topological node associated with the terminal. This can be used as
+                an alternative to the connectivity node path to topological node, thus
+                making it unneccesary to model connectivity nodes in some cases. Note that
+                the if connectivity nodes are in the model, this association would probably
+                not be used as an input specification.
+                '''
         })
     '''
     The topological node associated with the terminal. This can be used as
@@ -329,18 +400,21 @@ class Terminal(ACDCTerminal):
     the if connectivity nodes are in the model, this association would probably
     not be used as an input specification.
     '''
+
 @dataclass(repr=False)
 class BaseVoltage(IdentifiedObject):
     '''
     Defines a system base voltage which is referenced.
     '''
+
 @dataclass(repr=False)
 class ConnectivityNode(IdentifiedObject):
     '''
     Connectivity nodes are points where terminals of AC conducting equipment
     are connected together with zero impedance.
     '''
-    ConnectivityNodeContainer: Optional[ str | ConnectivityNodeContainer ] = field(
+
+    ConnectivityNodeContainer: Optional[ ConnectivityNodeContainer ] = field(
         default = None,
         metadata = {
             'type': 'Association',
@@ -348,14 +422,15 @@ class ConnectivityNode(IdentifiedObject):
             'maxOccurs': '1',
             'inverse': 'ConnectivityNodeContainer.ConnectivityNodes',
             'docstring':
-            '''
-            Container of this connectivity node.
-            '''
+                '''
+                Container of this connectivity node.
+                '''
         })
     '''
     Container of this connectivity node.
     '''
-    Terminals: list[ str | Terminal ] = field(
+
+    Terminals: list[ Terminal ] = field(
         default_factory = list,
         metadata = {
             'type': 'Association',
@@ -363,14 +438,15 @@ class ConnectivityNode(IdentifiedObject):
             'maxOccurs': 'unbounded',
             'inverse': 'Terminal.ConnectivityNode',
             'docstring':
-            '''
-            Terminals interconnected with zero impedance at a this connectivity node.
-            '''
+                '''
+                Terminals interconnected with zero impedance at a this connectivity node.
+                '''
         })
     '''
     Terminals interconnected with zero impedance at a this connectivity node.
     '''
-    TopologicalNode: Optional[ str | TopologicalNode ] = field(
+
+    TopologicalNode: Optional[ TopologicalNode ] = field(
         default = None,
         metadata = {
             'type': 'Of Aggregate',
@@ -378,21 +454,23 @@ class ConnectivityNode(IdentifiedObject):
             'maxOccurs': '1',
             'inverse': 'TopologicalNode.ConnectivityNodes',
             'docstring':
-            '''
-            The topological node to which this connectivity node is assigned. May depend
-            on the current state of switches in the network.
-            '''
+                '''
+                The topological node to which this connectivity node is assigned. May depend
+                on the current state of switches in the network.
+                '''
         })
     '''
     The topological node to which this connectivity node is assigned. May depend
     on the current state of switches in the network.
     '''
+
 @dataclass(repr=False)
 class FunctionBlock(IdentifiedObject):
     '''
     Function block is a function described as a set of elementary blocks. The
     blocks describe the function between input variables and output variables.
     '''
+
     enabled: Optional[ bool ] = field(
         default = None,
         metadata = {
@@ -400,13 +478,14 @@ class FunctionBlock(IdentifiedObject):
             'minOccurs': '0',
             'maxOccurs': '1',
             'docstring':
-            '''
-            True, if the function block is enabled (active). Otherwise false.
-            '''
+                '''
+                True, if the function block is enabled (active). Otherwise false.
+                '''
         })
     '''
     True, if the function block is enabled (active). Otherwise false.
     '''
+
     priority: Optional[ int ] = field(
         default = None,
         metadata = {
@@ -414,16 +493,17 @@ class FunctionBlock(IdentifiedObject):
             'minOccurs': '0',
             'maxOccurs': '1',
             'docstring':
-            '''
-            Value 0 means ignore priority. 1 means the highest priority, 2 is the second
-            highest priority.
-            '''
+                '''
+                Value 0 means ignore priority. 1 means the highest priority, 2 is the second
+                highest priority.
+                '''
         })
     '''
     Value 0 means ignore priority. 1 means the highest priority, 2 is the second
     highest priority.
     '''
-    FunctionOutputVariable: list[ str | FunctionOutputVariable ] = field(
+
+    FunctionOutputVariable: list[ FunctionOutputVariable ] = field(
         default_factory = list,
         metadata = {
             'type': 'Aggregate Of',
@@ -431,16 +511,17 @@ class FunctionBlock(IdentifiedObject):
             'maxOccurs': 'unbounded',
             'inverse': 'FunctionOutputVariable.FunctionBlock',
             'docstring':
-            '''
-            Function output variable describe the output or codomain to the function
-            block.
-            '''
+                '''
+                Function output variable describe the output or codomain to the function
+                block.
+                '''
         })
     '''
     Function output variable describe the output or codomain to the function
     block.
     '''
-    Input: list[ str | FunctionInputVariable ] = field(
+
+    Input: list[ FunctionInputVariable ] = field(
         default_factory = list,
         metadata = {
             'type': 'Association',
@@ -448,17 +529,19 @@ class FunctionBlock(IdentifiedObject):
             'maxOccurs': 'unbounded',
             'inverse': 'FunctionInputVariable.Function',
             'docstring':
-            '''
-            Function input variable describe the input or domain to the function block.
-            '''
+                '''
+                Function input variable describe the input or domain to the function block.
+                '''
         })
     '''
     Function input variable describe the input or domain to the function block.
     '''
+
 @dataclass(repr=False)
 class ProtectionFunctionBlock(FunctionBlock):
     '''
     '''
+
     isEnabled: Optional[ bool ] = field(
         default = None,
         metadata = {
@@ -466,11 +549,12 @@ class ProtectionFunctionBlock(FunctionBlock):
             'minOccurs': '0',
             'maxOccurs': '1',
             'docstring':
-            '''
-            '''
+                '''
+                '''
         })
     '''
     '''
+
     usage: Optional[ str ] = field(
         default = None,
         metadata = {
@@ -478,11 +562,12 @@ class ProtectionFunctionBlock(FunctionBlock):
             'minOccurs': '0',
             'maxOccurs': '1',
             'docstring':
-            '''
-            '''
+                '''
+                '''
         })
     '''
     '''
+
     operateDelayTime: Optional[ float | Seconds ] = field(
         default = None,
         metadata = {
@@ -490,11 +575,12 @@ class ProtectionFunctionBlock(FunctionBlock):
             'minOccurs': '0',
             'maxOccurs': '1',
             'docstring':
-            '''
-            '''
+                '''
+                '''
         })
     '''
     '''
+
     operateTime: Optional[ float | Seconds ] = field(
         default = None,
         metadata = {
@@ -502,11 +588,12 @@ class ProtectionFunctionBlock(FunctionBlock):
             'minOccurs': '0',
             'maxOccurs': '1',
             'docstring':
-            '''
-            '''
+                '''
+                '''
         })
     '''
     '''
+
     resetDelayTime: Optional[ float | Seconds ] = field(
         default = None,
         metadata = {
@@ -514,11 +601,12 @@ class ProtectionFunctionBlock(FunctionBlock):
             'minOccurs': '0',
             'maxOccurs': '1',
             'docstring':
-            '''
-            '''
+                '''
+                '''
         })
     '''
     '''
+
     resetTime: Optional[ float | Seconds ] = field(
         default = None,
         metadata = {
@@ -526,11 +614,12 @@ class ProtectionFunctionBlock(FunctionBlock):
             'minOccurs': '0',
             'maxOccurs': '1',
             'docstring':
-            '''
-            '''
+                '''
+                '''
         })
     '''
     '''
+
     startTime: Optional[ float | Seconds ] = field(
         default = None,
         metadata = {
@@ -538,12 +627,13 @@ class ProtectionFunctionBlock(FunctionBlock):
             'minOccurs': '0',
             'maxOccurs': '1',
             'docstring':
-            '''
-            '''
+                '''
+                '''
         })
     '''
     '''
-    ProtectedSwitch: Optional[ str | ProtectedSwitch ] = field(
+
+    ProtectedSwitch: Optional[ ProtectedSwitch ] = field(
         default = None,
         metadata = {
             'type': 'Association',
@@ -551,12 +641,13 @@ class ProtectionFunctionBlock(FunctionBlock):
             'maxOccurs': '1',
             'inverse': 'ProtectedSwitch.ProtectionRelayFunction',
             'docstring':
-            '''
-            '''
+                '''
+                '''
         })
     '''
     '''
-    SettingsGroup: list[ str | ProtectionSettingsGroup ] = field(
+
+    SettingsGroup: list[ ProtectionSettingsGroup ] = field(
         default_factory = list,
         metadata = {
             'type': 'Association',
@@ -564,19 +655,22 @@ class ProtectionFunctionBlock(FunctionBlock):
             'maxOccurs': 'unbounded',
             'inverse': 'ProtectionSettingsGroup.ProtectionFunctionBlock',
             'docstring':
-            '''
-            '''
+                '''
+                '''
         })
     '''
     '''
+
 @dataclass(repr=False)
 class WideAreaProtectionFunctionBlock(ProtectionFunctionBlock):
     '''
     '''
+
 @dataclass(repr=False)
 class FrequencyProtectionFunctionBlock(WideAreaProtectionFunctionBlock):
     '''
     '''
+
     voltageBlockValue: Optional[ float | Voltage ] = field(
         default = None,
         metadata = {
@@ -584,15 +678,17 @@ class FrequencyProtectionFunctionBlock(WideAreaProtectionFunctionBlock):
             'minOccurs': '0',
             'maxOccurs': '1',
             'docstring':
-            '''
-            '''
+                '''
+                '''
         })
     '''
     '''
+
 @dataclass(repr=False)
 class UnderFrequencyProtectionFunctionBlock(FrequencyProtectionFunctionBlock):
     '''
     '''
+
     operateValue: Optional[ float | Frequency ] = field(
         default = None,
         metadata = {
@@ -600,17 +696,19 @@ class UnderFrequencyProtectionFunctionBlock(FrequencyProtectionFunctionBlock):
             'minOccurs': '0',
             'maxOccurs': '1',
             'docstring':
-            '''
-            '''
+                '''
+                '''
         })
     '''
     '''
+
 @dataclass(repr=False)
 class FunctionInputVariable(IdentifiedObject):
     '''
     Functional input variable defines the domain of the function.
     '''
-    Function: Optional[ str | FunctionBlock ] = field(
+
+    Function: Optional[ FunctionBlock ] = field(
         default = None,
         metadata = {
             'type': 'Association',
@@ -618,21 +716,23 @@ class FunctionInputVariable(IdentifiedObject):
             'maxOccurs': '1',
             'inverse': 'FunctionBlock.Input',
             'docstring':
-            '''
-            Function block describe the function that function input variable provides
-            the domain for.
-            '''
+                '''
+                Function block describe the function that function input variable provides
+                the domain for.
+                '''
         })
     '''
     Function block describe the function that function input variable provides
     the domain for.
     '''
+
 @dataclass(repr=False)
 class FunctionOutputVariable(IdentifiedObject):
     '''
     Functional output variable defines the codomain of the function.
     '''
-    FunctionBlock: Optional[ str | FunctionBlock ] = field(
+
+    FunctionBlock: Optional[ FunctionBlock ] = field(
         default = None,
         metadata = {
             'type': 'Of Aggregate',
@@ -640,21 +740,23 @@ class FunctionOutputVariable(IdentifiedObject):
             'maxOccurs': '1',
             'inverse': 'FunctionBlock.FunctionOutputVariable',
             'docstring':
-            '''
-            Function block describe the function that function output variable provides
-            the codomain for.
-            '''
+                '''
+                Function block describe the function that function output variable provides
+                the codomain for.
+                '''
         })
     '''
     Function block describe the function that function output variable provides
     the codomain for.
     '''
+
 @dataclass(repr=False)
 class GeographicalRegion(IdentifiedObject):
     '''
     A geographical region of a power system network model.
     '''
-    Regions: list[ str | SubGeographicalRegion ] = field(
+
+    Regions: list[ SubGeographicalRegion ] = field(
         default_factory = list,
         metadata = {
             'type': 'Aggregate Of',
@@ -662,13 +764,14 @@ class GeographicalRegion(IdentifiedObject):
             'maxOccurs': 'unbounded',
             'inverse': 'SubGeographicalRegion.Region',
             'docstring':
-            '''
-            All sub-geograhpical regions within this geographical region.
-            '''
+                '''
+                All sub-geograhpical regions within this geographical region.
+                '''
         })
     '''
     All sub-geograhpical regions within this geographical region.
     '''
+
 @dataclass(repr=False)
 class Measurement(IdentifiedObject):
     '''
@@ -693,6 +796,7 @@ class Measurement(IdentifiedObject):
     When the sensor location is needed both Measurement-PSR and Measurement-Terminal
     are used. The Measurement-Terminal association is never used alone.
     '''
+
     measurementType: Optional[ str ] = field(
         default = None,
         metadata = {
@@ -700,14 +804,14 @@ class Measurement(IdentifiedObject):
             'minOccurs': '0',
             'maxOccurs': '1',
             'docstring':
-            '''
-            Specifies the type of measurement. For example, this specifies if the measurement
-            represents an indoor temperature, outdoor temperature, bus voltage, line
-            flow, etc.
-            When the measurementType is set to "Specialization", the type of Measurement
-            is defined in more detail by the specialized class which inherits from
-            Measurement.
-            '''
+                '''
+                Specifies the type of measurement. For example, this specifies if the measurement
+                represents an indoor temperature, outdoor temperature, bus voltage, line
+                flow, etc.
+                When the measurementType is set to "Specialization", the type of Measurement
+                is defined in more detail by the specialized class which inherits from
+                Measurement.
+                '''
         })
     '''
     Specifies the type of measurement. For example, this specifies if the measurement
@@ -717,7 +821,8 @@ class Measurement(IdentifiedObject):
     is defined in more detail by the specialized class which inherits from
     Measurement.
     '''
-    PowerSystemResource: Optional[ str | PowerSystemResource ] = field(
+
+    PowerSystemResource: Optional[ PowerSystemResource ] = field(
         default = None,
         metadata = {
             'type': 'Of Aggregate',
@@ -725,14 +830,15 @@ class Measurement(IdentifiedObject):
             'maxOccurs': '1',
             'inverse': 'PowerSystemResource.Measurements',
             'docstring':
-            '''
-            The power system resource that contains the measurement.
-            '''
+                '''
+                The power system resource that contains the measurement.
+                '''
         })
     '''
     The power system resource that contains the measurement.
     '''
-    Terminal: Optional[ str | ACDCTerminal ] = field(
+
+    Terminal: Optional[ ACDCTerminal ] = field(
         default = None,
         metadata = {
             'type': 'Association',
@@ -740,18 +846,20 @@ class Measurement(IdentifiedObject):
             'maxOccurs': '1',
             'inverse': 'ACDCTerminal.Measurements',
             'docstring':
-            '''
-            One or more measurements may be associated with a terminal in the network.
-            '''
+                '''
+                One or more measurements may be associated with a terminal in the network.
+                '''
         })
     '''
     One or more measurements may be associated with a terminal in the network.
     '''
+
 @dataclass(repr=False)
 class Analog(Measurement):
     '''
     Analog represents an analog Measurement.
     '''
+
     maxValue: Optional[ float ] = field(
         default = None,
         metadata = {
@@ -759,15 +867,16 @@ class Analog(Measurement):
             'minOccurs': '0',
             'maxOccurs': '1',
             'docstring':
-            '''
-            Normal value range maximum for any of the MeasurementValue.values. Used
-            for scaling, e.g. in bar graphs or of telemetered raw values.
-            '''
+                '''
+                Normal value range maximum for any of the MeasurementValue.values. Used
+                for scaling, e.g. in bar graphs or of telemetered raw values.
+                '''
         })
     '''
     Normal value range maximum for any of the MeasurementValue.values. Used
     for scaling, e.g. in bar graphs or of telemetered raw values.
     '''
+
     minValue: Optional[ float ] = field(
         default = None,
         metadata = {
@@ -775,15 +884,16 @@ class Analog(Measurement):
             'minOccurs': '0',
             'maxOccurs': '1',
             'docstring':
-            '''
-            Normal value range minimum for any of the MeasurementValue.values. Used
-            for scaling, e.g. in bar graphs or of telemetered raw values.
-            '''
+                '''
+                Normal value range minimum for any of the MeasurementValue.values. Used
+                for scaling, e.g. in bar graphs or of telemetered raw values.
+                '''
         })
     '''
     Normal value range minimum for any of the MeasurementValue.values. Used
     for scaling, e.g. in bar graphs or of telemetered raw values.
     '''
+
     normalValue: Optional[ float ] = field(
         default = None,
         metadata = {
@@ -791,13 +901,14 @@ class Analog(Measurement):
             'minOccurs': '0',
             'maxOccurs': '1',
             'docstring':
-            '''
-            Normal measurement value, e.g., used for percentage calculations.
-            '''
+                '''
+                Normal measurement value, e.g., used for percentage calculations.
+                '''
         })
     '''
     Normal measurement value, e.g., used for percentage calculations.
     '''
+
     positiveFlowIn: Optional[ bool ] = field(
         default = None,
         metadata = {
@@ -805,23 +916,25 @@ class Analog(Measurement):
             'minOccurs': '0',
             'maxOccurs': '1',
             'docstring':
-            '''
-            If true then this measurement is an active power, reactive power or current
-            with the convention that a positive value measured at the Terminal means
-            power is flowing into the related PowerSystemResource.
-            '''
+                '''
+                If true then this measurement is an active power, reactive power or current
+                with the convention that a positive value measured at the Terminal means
+                power is flowing into the related PowerSystemResource.
+                '''
         })
     '''
     If true then this measurement is an active power, reactive power or current
     with the convention that a positive value measured at the Terminal means
     power is flowing into the related PowerSystemResource.
     '''
+
 @dataclass(repr=False)
 class Discrete(Measurement):
     '''
     Discrete represents a discrete Measurement, i.e. a Measurement representing
     discrete values, e.g. a Breaker position.
     '''
+
     maxValue: Optional[ int ] = field(
         default = None,
         metadata = {
@@ -829,15 +942,16 @@ class Discrete(Measurement):
             'minOccurs': '0',
             'maxOccurs': '1',
             'docstring':
-            '''
-            Normal value range maximum for any of the MeasurementValue.values. Used
-            for scaling, e.g. in bar graphs or of telemetered raw values.
-            '''
+                '''
+                Normal value range maximum for any of the MeasurementValue.values. Used
+                for scaling, e.g. in bar graphs or of telemetered raw values.
+                '''
         })
     '''
     Normal value range maximum for any of the MeasurementValue.values. Used
     for scaling, e.g. in bar graphs or of telemetered raw values.
     '''
+
     minValue: Optional[ int ] = field(
         default = None,
         metadata = {
@@ -845,15 +959,16 @@ class Discrete(Measurement):
             'minOccurs': '0',
             'maxOccurs': '1',
             'docstring':
-            '''
-            Normal value range minimum for any of the MeasurementValue.values. Used
-            for scaling, e.g. in bar graphs or of telemetered raw values.
-            '''
+                '''
+                Normal value range minimum for any of the MeasurementValue.values. Used
+                for scaling, e.g. in bar graphs or of telemetered raw values.
+                '''
         })
     '''
     Normal value range minimum for any of the MeasurementValue.values. Used
     for scaling, e.g. in bar graphs or of telemetered raw values.
     '''
+
     normalValue: Optional[ int ] = field(
         default = None,
         metadata = {
@@ -861,13 +976,14 @@ class Discrete(Measurement):
             'minOccurs': '0',
             'maxOccurs': '1',
             'docstring':
-            '''
-            Normal measurement value, e.g., used for percentage calculations.
-            '''
+                '''
+                Normal measurement value, e.g., used for percentage calculations.
+                '''
         })
     '''
     Normal measurement value, e.g., used for percentage calculations.
     '''
+
 @dataclass(repr=False)
 class PowerSystemResource(IdentifiedObject):
     '''
@@ -876,7 +992,8 @@ class PowerSystemResource(IdentifiedObject):
     as a substation, or an organisational entity such as sub-control area.
     Power system resources can have measurements associated.
     '''
-    Measurements: list[ str | Measurement ] = field(
+
+    Measurements: list[ Measurement ] = field(
         default_factory = list,
         metadata = {
             'type': 'Aggregate Of',
@@ -884,20 +1001,22 @@ class PowerSystemResource(IdentifiedObject):
             'maxOccurs': 'unbounded',
             'inverse': 'Measurement.PowerSystemResource',
             'docstring':
-            '''
-            The measurements associated with this power system resource.
-            '''
+                '''
+                The measurements associated with this power system resource.
+                '''
         })
     '''
     The measurements associated with this power system resource.
     '''
+
 @dataclass(repr=False)
 class ConnectivityNodeContainer(PowerSystemResource):
     '''
     A base class for all objects that may contain connectivity nodes or topological
     nodes.
     '''
-    ConnectivityNodes: list[ str | ConnectivityNode ] = field(
+
+    ConnectivityNodes: list[ ConnectivityNode ] = field(
         default_factory = list,
         metadata = {
             'type': 'Association',
@@ -905,14 +1024,15 @@ class ConnectivityNodeContainer(PowerSystemResource):
             'maxOccurs': 'unbounded',
             'inverse': 'ConnectivityNode.ConnectivityNodeContainer',
             'docstring':
-            '''
-            Connectivity nodes which belong to this connectivity node container.
-            '''
+                '''
+                Connectivity nodes which belong to this connectivity node container.
+                '''
         })
     '''
     Connectivity nodes which belong to this connectivity node container.
     '''
-    TopologicalNode: list[ str | TopologicalNode ] = field(
+
+    TopologicalNode: list[ TopologicalNode ] = field(
         default_factory = list,
         metadata = {
             'type': 'Association',
@@ -920,19 +1040,21 @@ class ConnectivityNodeContainer(PowerSystemResource):
             'maxOccurs': 'unbounded',
             'inverse': 'TopologicalNode.ConnectivityNodeContainer',
             'docstring':
-            '''
-            The topological nodes which belong to this connectivity node container.
-            '''
+                '''
+                The topological nodes which belong to this connectivity node container.
+                '''
         })
     '''
     The topological nodes which belong to this connectivity node container.
     '''
+
 @dataclass(repr=False)
 class EquipmentContainer(ConnectivityNodeContainer):
     '''
     A modeling construct to provide a root class for containing equipment.
     '''
-    AdditionalGroupedEquipment: list[ str | Equipment ] = field(
+
+    AdditionalGroupedEquipment: list[ Equipment ] = field(
         default_factory = list,
         metadata = {
             'type': 'Association',
@@ -940,14 +1062,14 @@ class EquipmentContainer(ConnectivityNodeContainer):
             'maxOccurs': 'unbounded',
             'inverse': 'Equipment.AdditionalEquipmentContainer',
             'docstring':
-            '''
-            The additonal contained equipment. The equipment belong to the equipment
-            container. The equipment is contained in another equipment container, but
-            also grouped with this equipment container. Examples include when a switch
-            contained in a substation is also desired to be grouped with a line contianer
-            or when a switch is included in a secondary substation and also grouped
-            in a feeder.
-            '''
+                '''
+                The additonal contained equipment. The equipment belong to the equipment
+                container. The equipment is contained in another equipment container, but
+                also grouped with this equipment container. Examples include when a switch
+                contained in a substation is also desired to be grouped with a line contianer
+                or when a switch is included in a secondary substation and also grouped
+                in a feeder.
+                '''
         })
     '''
     The additonal contained equipment. The equipment belong to the equipment
@@ -957,7 +1079,8 @@ class EquipmentContainer(ConnectivityNodeContainer):
     or when a switch is included in a secondary substation and also grouped
     in a feeder.
     '''
-    Equipments: list[ str | Equipment ] = field(
+
+    Equipments: list[ Equipment ] = field(
         default_factory = list,
         metadata = {
             'type': 'Aggregate Of',
@@ -965,13 +1088,14 @@ class EquipmentContainer(ConnectivityNodeContainer):
             'maxOccurs': 'unbounded',
             'inverse': 'Equipment.EquipmentContainer',
             'docstring':
-            '''
-            Contained equipment.
-            '''
+                '''
+                Contained equipment.
+                '''
         })
     '''
     Contained equipment.
     '''
+
 @dataclass(repr=False)
 class Feeder(EquipmentContainer):
     '''
@@ -980,7 +1104,8 @@ class Feeder(EquipmentContainer):
     The organization a feeder does not necessarily reflect connectivity or
     current operation state.
     '''
-    NamingSecondarySubstation: list[ str | Substation ] = field(
+
+    NamingSecondarySubstation: list[ Substation ] = field(
         default_factory = list,
         metadata = {
             'type': 'Aggregate Of',
@@ -988,18 +1113,19 @@ class Feeder(EquipmentContainer):
             'maxOccurs': 'unbounded',
             'inverse': 'Substation.NamingFeeder',
             'docstring':
-            '''
-            The secondary substations that are normally energized from the feeder.
-            Used for naming purposes. Should be consistent with the other associations
-            for energizing terminal specification and the feeder energization specification.
-            '''
+                '''
+                The secondary substations that are normally energized from the feeder.
+                Used for naming purposes. Should be consistent with the other associations
+                for energizing terminal specification and the feeder energization specification.
+                '''
         })
     '''
     The secondary substations that are normally energized from the feeder.
     Used for naming purposes. Should be consistent with the other associations
     for energizing terminal specification and the feeder energization specification.
     '''
-    NormalEnergizedSubstation: list[ str | Substation ] = field(
+
+    NormalEnergizedSubstation: list[ Substation ] = field(
         default_factory = list,
         metadata = {
             'type': 'Association',
@@ -1007,14 +1133,15 @@ class Feeder(EquipmentContainer):
             'maxOccurs': 'unbounded',
             'inverse': 'Substation.NormalEnergizingFeeder',
             'docstring':
-            '''
-            The substations that are normally energized by the feeder.
-            '''
+                '''
+                The substations that are normally energized by the feeder.
+                '''
         })
     '''
     The substations that are normally energized by the feeder.
     '''
-    NormalEnergizingSubstation: Optional[ str | Substation ] = field(
+
+    NormalEnergizingSubstation: Optional[ Substation ] = field(
         default = None,
         metadata = {
             'type': 'Of Aggregate',
@@ -1022,16 +1149,17 @@ class Feeder(EquipmentContainer):
             'maxOccurs': '1',
             'inverse': 'Substation.NormalEnergizedFeeder',
             'docstring':
-            '''
-            The substation that nominally energizes the feeder. Also used for naming
-            purposes.
-            '''
+                '''
+                The substation that nominally energizes the feeder. Also used for naming
+                purposes.
+                '''
         })
     '''
     The substation that nominally energizes the feeder. Also used for naming
     purposes.
     '''
-    NormalHeadTerminal: list[ str | Terminal ] = field(
+
+    NormalHeadTerminal: list[ Terminal ] = field(
         default_factory = list,
         metadata = {
             'type': 'Association',
@@ -1039,13 +1167,14 @@ class Feeder(EquipmentContainer):
             'maxOccurs': 'unbounded',
             'inverse': 'Terminal.NormalHeadFeeder',
             'docstring':
-            '''
-            The normal head terminal or terminals of the feeder.
-            '''
+                '''
+                The normal head terminal or terminals of the feeder.
+                '''
         })
     '''
     The normal head terminal or terminals of the feeder.
     '''
+
 @dataclass(repr=False)
 class Substation(EquipmentContainer):
     '''
@@ -1053,7 +1182,8 @@ class Substation(EquipmentContainer):
     through which electric energy in bulk is passed for the purposes of switching
     or modifying its characteristics.
     '''
-    NamingFeeder: Optional[ str | Feeder ] = field(
+
+    NamingFeeder: Optional[ Feeder ] = field(
         default = None,
         metadata = {
             'type': 'Of Aggregate',
@@ -1061,18 +1191,19 @@ class Substation(EquipmentContainer):
             'maxOccurs': '1',
             'inverse': 'Feeder.NamingSecondarySubstation',
             'docstring':
-            '''
-            The primary feeder that normally energizes the secondary substation. Used
-            for naming purposes. Either this association or the substation to subgeographical
-            region should be used for hiearchical containment specification.
-            '''
+                '''
+                The primary feeder that normally energizes the secondary substation. Used
+                for naming purposes. Either this association or the substation to subgeographical
+                region should be used for hiearchical containment specification.
+                '''
         })
     '''
     The primary feeder that normally energizes the secondary substation. Used
     for naming purposes. Either this association or the substation to subgeographical
     region should be used for hiearchical containment specification.
     '''
-    NormalEnergizedFeeder: list[ str | Feeder ] = field(
+
+    NormalEnergizedFeeder: list[ Feeder ] = field(
         default_factory = list,
         metadata = {
             'type': 'Aggregate Of',
@@ -1080,14 +1211,15 @@ class Substation(EquipmentContainer):
             'maxOccurs': 'unbounded',
             'inverse': 'Feeder.NormalEnergizingSubstation',
             'docstring':
-            '''
-            The normal energized feeders of the substation. Also used for naming purposes.
-            '''
+                '''
+                The normal energized feeders of the substation. Also used for naming purposes.
+                '''
         })
     '''
     The normal energized feeders of the substation. Also used for naming purposes.
     '''
-    NormalEnergizingFeeder: list[ str | Feeder ] = field(
+
+    NormalEnergizingFeeder: list[ Feeder ] = field(
         default_factory = list,
         metadata = {
             'type': 'Association',
@@ -1095,16 +1227,17 @@ class Substation(EquipmentContainer):
             'maxOccurs': 'unbounded',
             'inverse': 'Feeder.NormalEnergizedSubstation',
             'docstring':
-            '''
-            The feeders that potentially energize the downstream substation. Should
-            be consistent with the associations that describe the naming hiearchy.
-            '''
+                '''
+                The feeders that potentially energize the downstream substation. Should
+                be consistent with the associations that describe the naming hiearchy.
+                '''
         })
     '''
     The feeders that potentially energize the downstream substation. Should
     be consistent with the associations that describe the naming hiearchy.
     '''
-    Region: Optional[ str | SubGeographicalRegion ] = field(
+
+    Region: Optional[ SubGeographicalRegion ] = field(
         default = None,
         metadata = {
             'type': 'Of Aggregate',
@@ -1112,18 +1245,20 @@ class Substation(EquipmentContainer):
             'maxOccurs': '1',
             'inverse': 'SubGeographicalRegion.Substations',
             'docstring':
-            '''
-            The SubGeographicalRegion containing the substation.
-            '''
+                '''
+                The SubGeographicalRegion containing the substation.
+                '''
         })
     '''
     The SubGeographicalRegion containing the substation.
     '''
+
 @dataclass(repr=False)
 class Equipment(PowerSystemResource):
     '''
     The parts of a power system that are physical devices, electronic or mechanical.
     '''
+
     aggregate: Optional[ bool ] = field(
         default = None,
         metadata = {
@@ -1131,14 +1266,14 @@ class Equipment(PowerSystemResource):
             'minOccurs': '0',
             'maxOccurs': '1',
             'docstring':
-            '''
-            The single instance of equipment represents multiple pieces of equipment
-            that have been modeled together as an aggregate. Examples would be power
-            transformers or synchronous machines operating in parallel modeled as a
-            single aggregate power transformer or aggregate synchronous machine. This
-            is not to be used to indicate equipment that is part of a group of interdependent
-            equipment produced by a network production program.
-            '''
+                '''
+                The single instance of equipment represents multiple pieces of equipment
+                that have been modeled together as an aggregate. Examples would be power
+                transformers or synchronous machines operating in parallel modeled as a
+                single aggregate power transformer or aggregate synchronous machine. This
+                is not to be used to indicate equipment that is part of a group of interdependent
+                equipment produced by a network production program.
+                '''
         })
     '''
     The single instance of equipment represents multiple pieces of equipment
@@ -1148,6 +1283,7 @@ class Equipment(PowerSystemResource):
     is not to be used to indicate equipment that is part of a group of interdependent
     equipment produced by a network production program.
     '''
+
     inService: Optional[ bool ] = field(
         default = None,
         metadata = {
@@ -1155,13 +1291,14 @@ class Equipment(PowerSystemResource):
             'minOccurs': '0',
             'maxOccurs': '1',
             'docstring':
-            '''
-            If true, the equipment is in service.
-            '''
+                '''
+                If true, the equipment is in service.
+                '''
         })
     '''
     If true, the equipment is in service.
     '''
+
     networkAnalysisEnabled: Optional[ bool ] = field(
         default = None,
         metadata = {
@@ -1169,15 +1306,16 @@ class Equipment(PowerSystemResource):
             'minOccurs': '0',
             'maxOccurs': '1',
             'docstring':
-            '''
-            The equipment is enabled to participate in network analysis. If unspecified,
-            the value is assumed to be true.
-            '''
+                '''
+                The equipment is enabled to participate in network analysis. If unspecified,
+                the value is assumed to be true.
+                '''
         })
     '''
     The equipment is enabled to participate in network analysis. If unspecified,
     the value is assumed to be true.
     '''
+
     normallyInService: Optional[ bool ] = field(
         default = None,
         metadata = {
@@ -1185,14 +1323,15 @@ class Equipment(PowerSystemResource):
             'minOccurs': '0',
             'maxOccurs': '1',
             'docstring':
-            '''
-            If true, the equipment is normally in service.
-            '''
+                '''
+                If true, the equipment is normally in service.
+                '''
         })
     '''
     If true, the equipment is normally in service.
     '''
-    AdditionalEquipmentContainer: list[ str | EquipmentContainer ] = field(
+
+    AdditionalEquipmentContainer: list[ EquipmentContainer ] = field(
         default_factory = list,
         metadata = {
             'type': 'Association',
@@ -1200,18 +1339,19 @@ class Equipment(PowerSystemResource):
             'maxOccurs': 'unbounded',
             'inverse': 'EquipmentContainer.AdditionalGroupedEquipment',
             'docstring':
-            '''
-            Additional equipment container beyond the primary equipment container.
-            The equipment is contained in another equipment container, but also grouped
-            with this equipment container.
-            '''
+                '''
+                Additional equipment container beyond the primary equipment container.
+                The equipment is contained in another equipment container, but also grouped
+                with this equipment container.
+                '''
         })
     '''
     Additional equipment container beyond the primary equipment container.
     The equipment is contained in another equipment container, but also grouped
     with this equipment container.
     '''
-    EquipmentContainer: Optional[ str | EquipmentContainer ] = field(
+
+    EquipmentContainer: Optional[ EquipmentContainer ] = field(
         default = None,
         metadata = {
             'type': 'Of Aggregate',
@@ -1219,20 +1359,22 @@ class Equipment(PowerSystemResource):
             'maxOccurs': '1',
             'inverse': 'EquipmentContainer.Equipments',
             'docstring':
-            '''
-            Container of this equipment.
-            '''
+                '''
+                Container of this equipment.
+                '''
         })
     '''
     Container of this equipment.
     '''
+
 @dataclass(repr=False)
 class ConductingEquipment(Equipment):
     '''
     The parts of the AC power system that are designed to carry current or
     that are conductively connected through terminals.
     '''
-    BaseVoltage: Optional[ str | BaseVoltage ] = field(
+
+    BaseVoltage: Optional[ BaseVoltage ] = field(
         default = None,
         metadata = {
             'type': 'Association',
@@ -1240,18 +1382,19 @@ class ConductingEquipment(Equipment):
             'maxOccurs': '1',
             'inverse': 'BaseVoltage.ConductingEquipment',
             'docstring':
-            '''
-            Base voltage of this conducting equipment. Use only when there is no voltage
-            level container used and only one base voltage applies. For example, not
-            used for transformers.
-            '''
+                '''
+                Base voltage of this conducting equipment. Use only when there is no voltage
+                level container used and only one base voltage applies. For example, not
+                used for transformers.
+                '''
         })
     '''
     Base voltage of this conducting equipment. Use only when there is no voltage
     level container used and only one base voltage applies. For example, not
     used for transformers.
     '''
-    Terminals: list[ str | Terminal ] = field(
+
+    Terminals: list[ Terminal ] = field(
         default_factory = list,
         metadata = {
             'type': 'Association',
@@ -1259,24 +1402,27 @@ class ConductingEquipment(Equipment):
             'maxOccurs': 'unbounded',
             'inverse': 'Terminal.ConductingEquipment',
             'docstring':
-            '''
-            Conducting equipment have terminals that may be connected to other conducting
-            equipment terminals via connectivity nodes or topological nodes.
-            '''
+                '''
+                Conducting equipment have terminals that may be connected to other conducting
+                equipment terminals via connectivity nodes or topological nodes.
+                '''
         })
     '''
     Conducting equipment have terminals that may be connected to other conducting
     equipment terminals via connectivity nodes or topological nodes.
     '''
+
 @dataclass(repr=False)
 class EnergyConnection(ConductingEquipment):
     '''
     '''
+
 @dataclass(repr=False)
 class EnergyConsumer(EnergyConnection):
     '''
     Generic user of energy - a point of consumption on the power system model.
     '''
+
     customerCount: Optional[ int ] = field(
         default = None,
         metadata = {
@@ -1284,13 +1430,14 @@ class EnergyConsumer(EnergyConnection):
             'minOccurs': '0',
             'maxOccurs': '1',
             'docstring':
-            '''
-            Number of individual customers represented by this demand.
-            '''
+                '''
+                Number of individual customers represented by this demand.
+                '''
         })
     '''
     Number of individual customers represented by this demand.
     '''
+
     grounded: Optional[ bool ] = field(
         default = None,
         metadata = {
@@ -1298,13 +1445,14 @@ class EnergyConsumer(EnergyConnection):
             'minOccurs': '0',
             'maxOccurs': '1',
             'docstring':
-            '''
-            Used for Yn and Zn connections. True if the neutral is solidly grounded.
-            '''
+                '''
+                Used for Yn and Zn connections. True if the neutral is solidly grounded.
+                '''
         })
     '''
     Used for Yn and Zn connections. True if the neutral is solidly grounded.
     '''
+
     p: Optional[ float | ActivePower ] = field(
         default = None,
         metadata = {
@@ -1312,12 +1460,12 @@ class EnergyConsumer(EnergyConnection):
             'minOccurs': '0',
             'maxOccurs': '1',
             'docstring':
-            '''
-            Active power of the load. Load sign convention is used, i.e. positive sign
-            means flow out from a node.
-            For voltage dependent loads the value is at rated voltage.
-            Starting value for a steady state solution.
-            '''
+                '''
+                Active power of the load. Load sign convention is used, i.e. positive sign
+                means flow out from a node.
+                For voltage dependent loads the value is at rated voltage.
+                Starting value for a steady state solution.
+                '''
         })
     '''
     Active power of the load. Load sign convention is used, i.e. positive sign
@@ -1325,6 +1473,7 @@ class EnergyConsumer(EnergyConnection):
     For voltage dependent loads the value is at rated voltage.
     Starting value for a steady state solution.
     '''
+
     q: Optional[ float | ReactivePower ] = field(
         default = None,
         metadata = {
@@ -1332,12 +1481,12 @@ class EnergyConsumer(EnergyConnection):
             'minOccurs': '0',
             'maxOccurs': '1',
             'docstring':
-            '''
-            Reactive power of the load. Load sign convention is used, i.e. positive
-            sign means flow out from a node.
-            For voltage dependent loads the value is at rated voltage.
-            Starting value for a steady state solution.
-            '''
+                '''
+                Reactive power of the load. Load sign convention is used, i.e. positive
+                sign means flow out from a node.
+                For voltage dependent loads the value is at rated voltage.
+                Starting value for a steady state solution.
+                '''
         })
     '''
     Reactive power of the load. Load sign convention is used, i.e. positive
@@ -1345,7 +1494,8 @@ class EnergyConsumer(EnergyConnection):
     For voltage dependent loads the value is at rated voltage.
     Starting value for a steady state solution.
     '''
-    PowerCutZone: Optional[ str | PowerCutZone ] = field(
+
+    PowerCutZone: Optional[ PowerCutZone ] = field(
         default = None,
         metadata = {
             'type': 'Of Aggregate',
@@ -1353,19 +1503,21 @@ class EnergyConsumer(EnergyConnection):
             'maxOccurs': '1',
             'inverse': 'PowerCutZone.EnergyConsumers',
             'docstring':
-            '''
-            The energy consumer is assigned to this power cut zone.
-            '''
+                '''
+                The energy consumer is assigned to this power cut zone.
+                '''
         })
     '''
     The energy consumer is assigned to this power cut zone.
     '''
+
 @dataclass(repr=False)
 class RegulatingCondEq(EnergyConnection):
     '''
     A type of conducting equipment that can regulate a quantity (i.e. voltage
     or flow) at a specific point in the network.
     '''
+
     controlEnabled: Optional[ bool ] = field(
         default = None,
         metadata = {
@@ -1373,33 +1525,36 @@ class RegulatingCondEq(EnergyConnection):
             'minOccurs': '0',
             'maxOccurs': '1',
             'docstring':
-            '''
-            Specifies the regulation status of the equipment. True is regulating, false
-            is not regulating.
-            '''
+                '''
+                Specifies the regulation status of the equipment. True is regulating, false
+                is not regulating.
+                '''
         })
     '''
     Specifies the regulation status of the equipment. True is regulating, false
     is not regulating.
     '''
+
 @dataclass(repr=False)
 class PowerElectronicsConnection(RegulatingCondEq):
     '''
     A connection to the AC network for energy production or consumption that
     uses power electronics rather than rotating machines.
     '''
+
     controlMode: Optional[ str | ConverterControlModeKind ] = field(
         default = None,
         metadata = {
-            'type': 'Enumeration',
+            'type': 'enumeration',
             'minOccurs': '0',
             'maxOccurs': '1',
             'docstring':
-            '''
-            '''
+                '''
+                '''
         })
     '''
     '''
+
     maxIFault: Optional[ float | PU ] = field(
         default = None,
         metadata = {
@@ -1407,15 +1562,16 @@ class PowerElectronicsConnection(RegulatingCondEq):
             'minOccurs': '0',
             'maxOccurs': '1',
             'docstring':
-            '''
-            Maximum fault current this device will contribute, in per-unit of rated
-            current, before the converter protection will trip or bypass.
-            '''
+                '''
+                Maximum fault current this device will contribute, in per-unit of rated
+                current, before the converter protection will trip or bypass.
+                '''
         })
     '''
     Maximum fault current this device will contribute, in per-unit of rated
     current, before the converter protection will trip or bypass.
     '''
+
     maxQ: Optional[ float | ReactivePower ] = field(
         default = None,
         metadata = {
@@ -1423,15 +1579,16 @@ class PowerElectronicsConnection(RegulatingCondEq):
             'minOccurs': '0',
             'maxOccurs': '1',
             'docstring':
-            '''
-            Maximum reactive power limit. This is the maximum (nameplate) limit for
-            the unit.
-            '''
+                '''
+                Maximum reactive power limit. This is the maximum (nameplate) limit for
+                the unit.
+                '''
         })
     '''
     Maximum reactive power limit. This is the maximum (nameplate) limit for
     the unit.
     '''
+
     minQ: Optional[ float | ReactivePower ] = field(
         default = None,
         metadata = {
@@ -1439,15 +1596,16 @@ class PowerElectronicsConnection(RegulatingCondEq):
             'minOccurs': '0',
             'maxOccurs': '1',
             'docstring':
-            '''
-            Minimum reactive power limit for the unit. This is the minimum (nameplate)
-            limit for the unit.
-            '''
+                '''
+                Minimum reactive power limit for the unit. This is the minimum (nameplate)
+                limit for the unit.
+                '''
         })
     '''
     Minimum reactive power limit for the unit. This is the minimum (nameplate)
     limit for the unit.
     '''
+
     p: Optional[ float | ActivePower ] = field(
         default = None,
         metadata = {
@@ -1455,17 +1613,18 @@ class PowerElectronicsConnection(RegulatingCondEq):
             'minOccurs': '0',
             'maxOccurs': '1',
             'docstring':
-            '''
-            Active power injection. Load sign convention is used, i.e. positive sign
-            means flow out from a node.
-            Starting value for a steady state solution.
-            '''
+                '''
+                Active power injection. Load sign convention is used, i.e. positive sign
+                means flow out from a node.
+                Starting value for a steady state solution.
+                '''
         })
     '''
     Active power injection. Load sign convention is used, i.e. positive sign
     means flow out from a node.
     Starting value for a steady state solution.
     '''
+
     q: Optional[ float | ReactivePower ] = field(
         default = None,
         metadata = {
@@ -1473,17 +1632,18 @@ class PowerElectronicsConnection(RegulatingCondEq):
             'minOccurs': '0',
             'maxOccurs': '1',
             'docstring':
-            '''
-            Reactive power injection. Load sign convention is used, i.e. positive sign
-            means flow out from a node.
-            Starting value for a steady state solution.
-            '''
+                '''
+                Reactive power injection. Load sign convention is used, i.e. positive sign
+                means flow out from a node.
+                Starting value for a steady state solution.
+                '''
         })
     '''
     Reactive power injection. Load sign convention is used, i.e. positive sign
     means flow out from a node.
     Starting value for a steady state solution.
     '''
+
     ratedS: Optional[ float | ApparentPower ] = field(
         default = None,
         metadata = {
@@ -1491,15 +1651,16 @@ class PowerElectronicsConnection(RegulatingCondEq):
             'minOccurs': '0',
             'maxOccurs': '1',
             'docstring':
-            '''
-            Nameplate apparent power rating for the unit.
-            The attribute shall have a positive value.
-            '''
+                '''
+                Nameplate apparent power rating for the unit.
+                The attribute shall have a positive value.
+                '''
         })
     '''
     Nameplate apparent power rating for the unit.
     The attribute shall have a positive value.
     '''
+
     ratedU: Optional[ float | Voltage ] = field(
         default = None,
         metadata = {
@@ -1507,16 +1668,17 @@ class PowerElectronicsConnection(RegulatingCondEq):
             'minOccurs': '0',
             'maxOccurs': '1',
             'docstring':
-            '''
-            Rated voltage (nameplate data, Ur in IEC 60909-0). It is primarily used
-            for short circuit data exchange according to IEC 60909.
-            '''
+                '''
+                Rated voltage (nameplate data, Ur in IEC 60909-0). It is primarily used
+                for short circuit data exchange according to IEC 60909.
+                '''
         })
     '''
     Rated voltage (nameplate data, Ur in IEC 60909-0). It is primarily used
     for short circuit data exchange according to IEC 60909.
     '''
-    PowerElectronicsUnit: list[ str | PowerElectronicsUnit ] = field(
+
+    PowerElectronicsUnit: list[ PowerElectronicsUnit ] = field(
         default_factory = list,
         metadata = {
             'type': 'Association',
@@ -1524,17 +1686,19 @@ class PowerElectronicsConnection(RegulatingCondEq):
             'maxOccurs': 'unbounded',
             'inverse': 'PowerElectronicsUnit.PowerElectronicsConnection',
             'docstring':
-            '''
-            '''
+                '''
+                '''
         })
     '''
     '''
+
 @dataclass(repr=False)
 class Switch(ConductingEquipment):
     '''
     A generic device designed to close, or open, or both, one or more electric
     circuits. All switches are two terminal devices including grounding switches.
     '''
+
     normalOpen: Optional[ bool ] = field(
         default = None,
         metadata = {
@@ -1542,17 +1706,18 @@ class Switch(ConductingEquipment):
             'minOccurs': '0',
             'maxOccurs': '1',
             'docstring':
-            '''
-            The attribute is used in cases when no Measurement for the status value
-            is present. If the Switch has a status measurement the Discrete.normalValue
-            is expected to match with the Switch.normalOpen.
-            '''
+                '''
+                The attribute is used in cases when no Measurement for the status value
+                is present. If the Switch has a status measurement the Discrete.normalValue
+                is expected to match with the Switch.normalOpen.
+                '''
         })
     '''
     The attribute is used in cases when no Measurement for the status value
     is present. If the Switch has a status measurement the Discrete.normalValue
     is expected to match with the Switch.normalOpen.
     '''
+
     open: Optional[ bool ] = field(
         default = None,
         metadata = {
@@ -1560,15 +1725,16 @@ class Switch(ConductingEquipment):
             'minOccurs': '0',
             'maxOccurs': '1',
             'docstring':
-            '''
-            The attribute tells if the switch is considered open when used as input
-            to topology processing.
-            '''
+                '''
+                The attribute tells if the switch is considered open when used as input
+                to topology processing.
+                '''
         })
     '''
     The attribute tells if the switch is considered open when used as input
     to topology processing.
     '''
+
     retained: Optional[ bool ] = field(
         default = None,
         metadata = {
@@ -1576,15 +1742,16 @@ class Switch(ConductingEquipment):
             'minOccurs': '0',
             'maxOccurs': '1',
             'docstring':
-            '''
-            Branch is retained in a bus branch model. The flow through retained switches
-            will normally be calculated in power flow.
-            '''
+                '''
+                Branch is retained in a bus branch model. The flow through retained switches
+                will normally be calculated in power flow.
+                '''
         })
     '''
     Branch is retained in a bus branch model. The flow through retained switches
     will normally be calculated in power flow.
     '''
+
     ratedCurrent: Optional[ float | CurrentFlow ] = field(
         default = None,
         metadata = {
@@ -1592,20 +1759,22 @@ class Switch(ConductingEquipment):
             'minOccurs': '0',
             'maxOccurs': '1',
             'docstring':
-            '''
-            The maximum continuous current carrying capacity in amps governed by the
-            device material and construction.
-            '''
+                '''
+                The maximum continuous current carrying capacity in amps governed by the
+                device material and construction.
+                '''
         })
     '''
     The maximum continuous current carrying capacity in amps governed by the
     device material and construction.
     '''
+
 @dataclass(repr=False)
 class ProtectedSwitch(Switch):
     '''
     A ProtectedSwitch is a switching device that can be operated by ProtectionEquipment.
     '''
+
     breakingCapacity: Optional[ float | CurrentFlow ] = field(
         default = None,
         metadata = {
@@ -1613,16 +1782,33 @@ class ProtectedSwitch(Switch):
             'minOccurs': '0',
             'maxOccurs': '1',
             'docstring':
-            '''
-            The maximum fault current a breaking device can break safely under prescribed
-            conditions of use.
-            '''
+                '''
+                The maximum fault current a breaking device can break safely under prescribed
+                conditions of use.
+                '''
         })
     '''
     The maximum fault current a breaking device can break safely under prescribed
     conditions of use.
     '''
-    ProtectionRelayFunction: list[ str | ProtectionFunctionBlock ] = field(
+
+    OperatedByProtectionEquipment: list[ ProtectionEquipment ] = field(
+        default_factory = list,
+        metadata = {
+            'type': 'Association',
+            'minOccurs': '0',
+            'maxOccurs': 'unbounded',
+            'inverse': 'ProtectionEquipment.ProtectedSwitches',
+            'docstring':
+                '''
+                Protection equipments that operate this ProtectedSwitch.
+                '''
+        })
+    '''
+    Protection equipments that operate this ProtectedSwitch.
+    '''
+
+    ProtectionRelayFunction: list[ ProtectionFunctionBlock ] = field(
         default_factory = list,
         metadata = {
             'type': 'Association',
@@ -1630,11 +1816,12 @@ class ProtectedSwitch(Switch):
             'maxOccurs': 'unbounded',
             'inverse': 'ProtectionFunctionBlock.ProtectedSwitch',
             'docstring':
-            '''
-            '''
+                '''
+                '''
         })
     '''
     '''
+
 @dataclass(repr=False)
 class Breaker(ProtectedSwitch):
     '''
@@ -1643,6 +1830,7 @@ class Breaker(ProtectedSwitch):
     a specified time, and breaking currents under specified abnormal circuit
     conditions e.g. those of short circuit.
     '''
+
     inTransitTime: Optional[ float | Seconds ] = field(
         default = None,
         metadata = {
@@ -1650,19 +1838,21 @@ class Breaker(ProtectedSwitch):
             'minOccurs': '0',
             'maxOccurs': '1',
             'docstring':
-            '''
-            The transition time from open to close.
-            '''
+                '''
+                The transition time from open to close.
+                '''
         })
     '''
     The transition time from open to close.
     '''
+
 @dataclass(repr=False)
 class PowerElectronicsUnit(Equipment):
     '''
     A generating unit or battery or aggregation that connects to the AC network
     using power electronics rather than rotating machines.
     '''
+
     maxP: Optional[ float | ActivePower ] = field(
         default = None,
         metadata = {
@@ -1670,15 +1860,16 @@ class PowerElectronicsUnit(Equipment):
             'minOccurs': '0',
             'maxOccurs': '1',
             'docstring':
-            '''
-            Maximum active power limit. This is the maximum (nameplate) limit for the
-            unit.
-            '''
+                '''
+                Maximum active power limit. This is the maximum (nameplate) limit for the
+                unit.
+                '''
         })
     '''
     Maximum active power limit. This is the maximum (nameplate) limit for the
     unit.
     '''
+
     minP: Optional[ float | ActivePower ] = field(
         default = None,
         metadata = {
@@ -1686,16 +1877,17 @@ class PowerElectronicsUnit(Equipment):
             'minOccurs': '0',
             'maxOccurs': '1',
             'docstring':
-            '''
-            Minimum active power limit. This is the minimum (nameplate) limit for the
-            unit.
-            '''
+                '''
+                Minimum active power limit. This is the minimum (nameplate) limit for the
+                unit.
+                '''
         })
     '''
     Minimum active power limit. This is the minimum (nameplate) limit for the
     unit.
     '''
-    PowerElectronicsConnection: Optional[ str | PowerElectronicsConnection ] = field(
+
+    PowerElectronicsConnection: Optional[ PowerElectronicsConnection ] = field(
         default = None,
         metadata = {
             'type': 'Association',
@@ -1703,30 +1895,33 @@ class PowerElectronicsUnit(Equipment):
             'maxOccurs': '1',
             'inverse': 'PowerElectronicsConnection.PowerElectronicsUnit',
             'docstring':
-            '''
-            '''
+                '''
+                '''
         })
     '''
     '''
+
 @dataclass(repr=False)
 class BatteryUnit(PowerElectronicsUnit):
     '''
     An electrochemical energy storage device
     '''
+
     batteryState: Optional[ str | BatteryStateKind ] = field(
         default = None,
         metadata = {
-            'type': 'Enumeration',
+            'type': 'enumeration',
             'minOccurs': '0',
             'maxOccurs': '1',
             'docstring':
-            '''
-            indicates whether the battery is charging, discharging or idle
-            '''
+                '''
+                indicates whether the battery is charging, discharging or idle
+                '''
         })
     '''
     indicates whether the battery is charging, discharging or idle
     '''
+
     ratedE: Optional[ float | RealEnergy ] = field(
         default = None,
         metadata = {
@@ -1734,13 +1929,14 @@ class BatteryUnit(PowerElectronicsUnit):
             'minOccurs': '0',
             'maxOccurs': '1',
             'docstring':
-            '''
-            full energy storage capacity of the battery
-            '''
+                '''
+                full energy storage capacity of the battery
+                '''
         })
     '''
     full energy storage capacity of the battery
     '''
+
     storedE: Optional[ float | RealEnergy ] = field(
         default = None,
         metadata = {
@@ -1748,23 +1944,156 @@ class BatteryUnit(PowerElectronicsUnit):
             'minOccurs': '0',
             'maxOccurs': '1',
             'docstring':
-            '''
-            amount of energy currently stored; no more than ratedE
-            '''
+                '''
+                amount of energy currently stored; no more than ratedE
+                '''
         })
     '''
     amount of energy currently stored; no more than ratedE
     '''
+
 @dataclass(repr=False)
 class PhotovoltaicUnit(PowerElectronicsUnit):
     '''
     A photovoltaic device or an aggregation of such devices
     '''
+
+@dataclass(repr=False)
+class ProtectionEquipment(Equipment):
+    '''
+    An electrical device designed to respond to input conditions in a prescribed
+    manner and after specified conditions are met to cause contact operation
+    or similar abrupt change in associated electric control circuits, or simply
+    to display the detected condition. Protection equipment is associated with
+    conducting equipment and usually operate circuit breakers.
+    '''
+
+    highLimit: Optional[ float ] = field(
+        default = None,
+        metadata = {
+            'type': 'Attribute',
+            'minOccurs': '0',
+            'maxOccurs': '1',
+            'docstring':
+                '''
+                The maximum allowable value.
+                '''
+        })
+    '''
+    The maximum allowable value.
+    '''
+
+    lowLimit: Optional[ float ] = field(
+        default = None,
+        metadata = {
+            'type': 'Attribute',
+            'minOccurs': '0',
+            'maxOccurs': '1',
+            'docstring':
+                '''
+                The minimum allowable value.
+                '''
+        })
+    '''
+    The minimum allowable value.
+    '''
+
+    powerDirectionFlag: Optional[ bool ] = field(
+        default = None,
+        metadata = {
+            'type': 'Attribute',
+            'minOccurs': '0',
+            'maxOccurs': '1',
+            'docstring':
+                '''
+                Direction same as positive active power flow value.
+                '''
+        })
+    '''
+    Direction same as positive active power flow value.
+    '''
+
+    relayDelayTime: Optional[ float | Seconds ] = field(
+        default = None,
+        metadata = {
+            'type': 'Attribute',
+            'minOccurs': '0',
+            'maxOccurs': '1',
+            'docstring':
+                '''
+                The time delay from detection of abnormal conditions to relay operation.
+                '''
+        })
+    '''
+    The time delay from detection of abnormal conditions to relay operation.
+    '''
+
+    unitMultiplier: Optional[ str | UnitMultiplier ] = field(
+        default = None,
+        metadata = {
+            'type': 'enumeration',
+            'minOccurs': '0',
+            'maxOccurs': '1',
+            'docstring':
+                '''
+                The unit multiplier of the value.
+                '''
+        })
+    '''
+    The unit multiplier of the value.
+    '''
+
+    unitSymbol: Optional[ str | UnitSymbol ] = field(
+        default = None,
+        metadata = {
+            'type': 'enumeration',
+            'minOccurs': '0',
+            'maxOccurs': '1',
+            'docstring':
+                '''
+                The unit of measure of the value.
+                '''
+        })
+    '''
+    The unit of measure of the value.
+    '''
+
+    ProtectedSwitches: list[ ProtectedSwitch ] = field(
+        default_factory = list,
+        metadata = {
+            'type': 'Association',
+            'minOccurs': '0',
+            'maxOccurs': 'unbounded',
+            'inverse': 'ProtectedSwitch.OperatedByProtectionEquipment',
+            'docstring':
+                '''
+                Protected switches operated by this ProtectionEquipment.
+                '''
+        })
+    '''
+    Protected switches operated by this ProtectionEquipment.
+    '''
+
+    ProtectionFunctionBlock: list[ ProtectionFunctionBlock ] = field(
+        default_factory = list,
+        metadata = {
+            'type': 'Association',
+            'minOccurs': '0',
+            'maxOccurs': 'unbounded',
+            'inverse': 'ProtectionFunctionBlock.ProtectionEquipment',
+            'docstring':
+                '''
+                '''
+        })
+    '''
+    '''
+
 @dataclass(repr=False)
 class PowerCutZone(PowerSystemResource):
     '''
     An area or zone of the power system which is used for load shedding purposes.
     '''
+
     cutLevel1: Optional[ float | PerCent ] = field(
         default = None,
         metadata = {
@@ -1772,13 +2101,14 @@ class PowerCutZone(PowerSystemResource):
             'minOccurs': '0',
             'maxOccurs': '1',
             'docstring':
-            '''
-            First level (amount) of load to cut as a percentage of total zone load.
-            '''
+                '''
+                First level (amount) of load to cut as a percentage of total zone load.
+                '''
         })
     '''
     First level (amount) of load to cut as a percentage of total zone load.
     '''
+
     cutLevel2: Optional[ float | PerCent ] = field(
         default = None,
         metadata = {
@@ -1786,14 +2116,15 @@ class PowerCutZone(PowerSystemResource):
             'minOccurs': '0',
             'maxOccurs': '1',
             'docstring':
-            '''
-            Second level (amount) of load to cut as a percentage of total zone load.
-            '''
+                '''
+                Second level (amount) of load to cut as a percentage of total zone load.
+                '''
         })
     '''
     Second level (amount) of load to cut as a percentage of total zone load.
     '''
-    EnergyConsumers: list[ str | EnergyConsumer ] = field(
+
+    EnergyConsumers: list[ EnergyConsumer ] = field(
         default_factory = list,
         metadata = {
             'type': 'Aggregate Of',
@@ -1801,17 +2132,19 @@ class PowerCutZone(PowerSystemResource):
             'maxOccurs': 'unbounded',
             'inverse': 'EnergyConsumer.PowerCutZone',
             'docstring':
-            '''
-            Energy consumer is assigned to the power cut zone.
-            '''
+                '''
+                Energy consumer is assigned to the power cut zone.
+                '''
         })
     '''
     Energy consumer is assigned to the power cut zone.
     '''
+
 @dataclass(repr=False)
 class ProtectionSettingsGroup(IdentifiedObject):
     '''
     '''
+
     caseName: Optional[ str ] = field(
         default = None,
         metadata = {
@@ -1819,11 +2152,12 @@ class ProtectionSettingsGroup(IdentifiedObject):
             'minOccurs': '0',
             'maxOccurs': '1',
             'docstring':
-            '''
-            '''
+                '''
+                '''
         })
     '''
     '''
+
     groupNumber: Optional[ int ] = field(
         default = None,
         metadata = {
@@ -1831,11 +2165,12 @@ class ProtectionSettingsGroup(IdentifiedObject):
             'minOccurs': '0',
             'maxOccurs': '1',
             'docstring':
-            '''
-            '''
+                '''
+                '''
         })
     '''
     '''
+
     inService: Optional[ bool ] = field(
         default = None,
         metadata = {
@@ -1843,12 +2178,13 @@ class ProtectionSettingsGroup(IdentifiedObject):
             'minOccurs': '0',
             'maxOccurs': '1',
             'docstring':
-            '''
-            '''
+                '''
+                '''
         })
     '''
     '''
-    ProtectionFunctionBlock: list[ str | ProtectionFunctionBlock ] = field(
+
+    ProtectionFunctionBlock: list[ ProtectionFunctionBlock ] = field(
         default_factory = list,
         metadata = {
             'type': 'Association',
@@ -1856,17 +2192,19 @@ class ProtectionSettingsGroup(IdentifiedObject):
             'maxOccurs': 'unbounded',
             'inverse': 'ProtectionFunctionBlock.SettingsGroup',
             'docstring':
-            '''
-            '''
+                '''
+                '''
         })
     '''
     '''
+
 @dataclass(repr=False)
 class SubGeographicalRegion(IdentifiedObject):
     '''
     A subset of a geographical region of a power system network model.
     '''
-    Region: Optional[ str | GeographicalRegion ] = field(
+
+    Region: Optional[ GeographicalRegion ] = field(
         default = None,
         metadata = {
             'type': 'Of Aggregate',
@@ -1874,14 +2212,15 @@ class SubGeographicalRegion(IdentifiedObject):
             'maxOccurs': '1',
             'inverse': 'GeographicalRegion.Regions',
             'docstring':
-            '''
-            The geographical region to which this sub-geographical region is within.
-            '''
+                '''
+                The geographical region to which this sub-geographical region is within.
+                '''
         })
     '''
     The geographical region to which this sub-geographical region is within.
     '''
-    Substations: list[ str | Substation ] = field(
+
+    Substations: list[ Substation ] = field(
         default_factory = list,
         metadata = {
             'type': 'Aggregate Of',
@@ -1889,13 +2228,14 @@ class SubGeographicalRegion(IdentifiedObject):
             'maxOccurs': 'unbounded',
             'inverse': 'Substation.Region',
             'docstring':
-            '''
-            The substations in this sub-geographical region.
-            '''
+                '''
+                The substations in this sub-geographical region.
+                '''
         })
     '''
     The substations in this sub-geographical region.
     '''
+
 @dataclass(repr=False)
 class TopologicalNode(IdentifiedObject):
     '''
@@ -1908,6 +2248,7 @@ class TopologicalNode(IdentifiedObject):
     nodes. Instead they are manually created or deleted in a model builder
     tool. Topological nodes maintained this way are also called "busses".
     '''
+
     pInjection: Optional[ float | ActivePower ] = field(
         default = None,
         metadata = {
@@ -1915,12 +2256,12 @@ class TopologicalNode(IdentifiedObject):
             'minOccurs': '0',
             'maxOccurs': '1',
             'docstring':
-            '''
-            The active power injected into the bus at this location in addition to
-            injections from equipment. Positive sign means injection into the TopologicalNode
-            (bus).
-            Starting value for a steady state solution.
-            '''
+                '''
+                The active power injected into the bus at this location in addition to
+                injections from equipment. Positive sign means injection into the TopologicalNode
+                (bus).
+                Starting value for a steady state solution.
+                '''
         })
     '''
     The active power injected into the bus at this location in addition to
@@ -1928,6 +2269,7 @@ class TopologicalNode(IdentifiedObject):
     (bus).
     Starting value for a steady state solution.
     '''
+
     qInjection: Optional[ float | ReactivePower ] = field(
         default = None,
         metadata = {
@@ -1935,12 +2277,12 @@ class TopologicalNode(IdentifiedObject):
             'minOccurs': '0',
             'maxOccurs': '1',
             'docstring':
-            '''
-            The reactive power injected into the bus at this location in addition to
-            injections from equipment. Positive sign means injection into the TopologicalNode
-            (bus).
-            Starting value for a steady state solution.
-            '''
+                '''
+                The reactive power injected into the bus at this location in addition to
+                injections from equipment. Positive sign means injection into the TopologicalNode
+                (bus).
+                Starting value for a steady state solution.
+                '''
         })
     '''
     The reactive power injected into the bus at this location in addition to
@@ -1948,7 +2290,8 @@ class TopologicalNode(IdentifiedObject):
     (bus).
     Starting value for a steady state solution.
     '''
-    BaseVoltage: Optional[ str | BaseVoltage ] = field(
+
+    BaseVoltage: Optional[ BaseVoltage ] = field(
         default = None,
         metadata = {
             'type': 'Association',
@@ -1956,14 +2299,15 @@ class TopologicalNode(IdentifiedObject):
             'maxOccurs': '1',
             'inverse': 'BaseVoltage.TopologicalNode',
             'docstring':
-            '''
-            The base voltage of the topologocial node.
-            '''
+                '''
+                The base voltage of the topologocial node.
+                '''
         })
     '''
     The base voltage of the topologocial node.
     '''
-    ConnectivityNodeContainer: Optional[ str | ConnectivityNodeContainer ] = field(
+
+    ConnectivityNodeContainer: Optional[ ConnectivityNodeContainer ] = field(
         default = None,
         metadata = {
             'type': 'Association',
@@ -1971,14 +2315,15 @@ class TopologicalNode(IdentifiedObject):
             'maxOccurs': '1',
             'inverse': 'ConnectivityNodeContainer.TopologicalNode',
             'docstring':
-            '''
-            The connectivity node container to which the toplogical node belongs.
-            '''
+                '''
+                The connectivity node container to which the toplogical node belongs.
+                '''
         })
     '''
     The connectivity node container to which the toplogical node belongs.
     '''
-    ConnectivityNodes: list[ str | ConnectivityNode ] = field(
+
+    ConnectivityNodes: list[ ConnectivityNode ] = field(
         default_factory = list,
         metadata = {
             'type': 'Aggregate Of',
@@ -1986,16 +2331,17 @@ class TopologicalNode(IdentifiedObject):
             'maxOccurs': 'unbounded',
             'inverse': 'ConnectivityNode.TopologicalNode',
             'docstring':
-            '''
-            The connectivity nodes combine together to form this topological node.
-            May depend on the current state of switches in the network.
-            '''
+                '''
+                The connectivity nodes combine together to form this topological node.
+                May depend on the current state of switches in the network.
+                '''
         })
     '''
     The connectivity nodes combine together to form this topological node.
     May depend on the current state of switches in the network.
     '''
-    Terminal: list[ str | Terminal ] = field(
+
+    Terminal: list[ Terminal ] = field(
         default_factory = list,
         metadata = {
             'type': 'Aggregate Of',
@@ -2003,13 +2349,13 @@ class TopologicalNode(IdentifiedObject):
             'maxOccurs': 'unbounded',
             'inverse': 'Terminal.TopologicalNode',
             'docstring':
-            '''
-            The terminals associated with the topological node. This can be used as
-            an alternative to the connectivity node path to terminal, thus making it
-            unneccesary to model connectivity nodes in some cases. Note that if connectivity
-            nodes are in the model, this association would probably not be used as
-            an input specification.
-            '''
+                '''
+                The terminals associated with the topological node. This can be used as
+                an alternative to the connectivity node path to terminal, thus making it
+                unneccesary to model connectivity nodes in some cases. Note that if connectivity
+                nodes are in the model, this association would probably not be used as
+                an input specification.
+                '''
         })
     '''
     The terminals associated with the topological node. This can be used as
@@ -2018,66 +2364,970 @@ class TopologicalNode(IdentifiedObject):
     nodes are in the model, this association would probably not be used as
     an input specification.
     '''
+
 class BatteryStateKind( Enum ):
+    '''
+    '''
+
+    charging = 'charging'
+    '''
+    storedE is increasing
+    '''
+
+    discharging = 'discharging'
+    '''
+    storedE is decreasing
+    '''
+
+    empty = 'empty'
+    '''
+    unable to Discharge, and not Charging
+    '''
+
+    full = 'full'
     '''
     unable to Charge, and not Discharging
     '''
+
+    waiting = 'waiting'
+    '''
+    neither Charging nor Discharging, but able to do so
+    '''
+
 class ConverterControlModeKind( Enum ):
+    '''
+    '''
+
+    constantPowerFactor = 'constantPowerFactor'
+    '''
+    hold q/p constant
+    '''
+
+    constantReactivePower = 'constantReactivePower'
     '''
     Holds constant Q; may change both P and Q by dispatch commands
     '''
-@dataclass
-class ActivePower():
-    value: float = field(default=None)
+
+    dynamic = 'dynamic'
     '''
-    Product of RMS value of the voltage and the RMS value of the in-phase component
-    of the current.
+    use association with DERIEEEType1
     '''
-@dataclass
-class PerCent():
-    value: float = field(default=None)
+
+class UnitMultiplier( Enum ):
     '''
-    Percentage on a defined base. For example, specify as 100 to indicate at
-    the defined base.
+    The unit multipliers defined for the CIM. When applied to unit symbols,
+    the unit symbol is treated as a derived unit. Regardless of the contents
+    of the unit symbol text, the unit symbol shall be treated as if it were
+    a single-character unit symbol. Unit symbols should not contain multipliers,
+    and it should be left to the multiplier to define the multiple for an entire
+    data type.
+    For example, if a unit symbol is "A2Perh" and the multiplier is "k", then
+    the value is k(A^2/h), and the multiplier applies to the entire final value,
+    not to any individual part of the value. This can be conceptualized by
+    substituting a derived unit symbol for the unit type. If one imagines that
+    the symbol "Þ" represents the derived unit "A2Perh", then applying the
+    multiplier "k" can be conceptualized simply as "kÞ".
+    For example, the SI unit for mass is "kg" and not "g". If the unit symbol
+    is defined as "kg", then the multiplier is applied to "kg" as a whole and
+    does not replace the "k" in front of the "g". In this case, the multiplier
+    of "m" would be used with the unit symbol of "kg" to represent one gram.
+    As a text string, this violates the instructions in IEC 80000-1. However,
+    because the unit symbol in CIM is treated as a derived unit instead of
+    as an SI unit, it makes more sense to conceptualize the "kg" as if it were
+    replaced by one of the proposed replacements for the SI mass symbol. If
+    one imagines that the "kg" were replaced by a symbol "Þ", then it is easier
+    to conceptualize the multiplier "m" as creating the proper unit "mÞ", and
+    not the forbidden unit "mkg".
     '''
-@dataclass
-class CurrentFlow():
-    value: float = field(default=None)
+
+    E = 'E'
     '''
-    Electrical current with sign convention: positive flow is out of the conducting
-    equipment into the connectivity node. Can be both AC and DC.
+    Exa 10**18.
     '''
-@dataclass
-class PU():
-    value: float = field(default=None)
+
+    G = 'G'
     '''
-    Per Unit - a positive or negative value referred to a defined base. Values
-    typically range from -10 to +10.
+    Giga 10**9.
     '''
-@dataclass
-class RealEnergy():
-    value: float = field(default=None)
+
+    M = 'M'
     '''
-    Real electrical energy.
+    Mega 10**6.
     '''
-@dataclass
-class Voltage():
-    value: float = field(default=None)
+
+    P = 'P'
     '''
-    Electrical voltage, can be both AC and DC.
+    Peta 10**15
     '''
-@dataclass
-class Frequency():
-    value: float = field(default=None)
+
+    T = 'T'
     '''
-    Cycles per second.
+    Tera 10**12.
     '''
-@dataclass
-class Seconds():
-    value: float = field(default=None)
+
+    Y = 'Y'
     '''
-    Time, in seconds.
+    Yotta 10**24
     '''
+
+    Z = 'Z'
+    '''
+    Zetta 10**21
+    '''
+
+    a = 'a'
+    '''
+    atto 10**-18.
+    '''
+
+    c = 'c'
+    '''
+    Centi 10**-2.
+    '''
+
+    d = 'd'
+    '''
+    Deci 10**-1.
+    '''
+
+    da = 'da'
+    '''
+    deca 10**1.
+    '''
+
+    f = 'f'
+    '''
+    femto 10**-15.
+    '''
+
+    h = 'h'
+    '''
+    hecto 10**2.
+    '''
+
+    k = 'k'
+    '''
+    Kilo 10**3.
+    '''
+
+    m = 'm'
+    '''
+    Milli 10**-3.
+    '''
+
+    micro = 'micro'
+    '''
+    Micro 10**-6.
+    '''
+
+    n = 'n'
+    '''
+    Nano 10**-9.
+    '''
+
+    none = 'none'
+    '''
+    No multiplier or equivalently multiply by 1.
+    '''
+
+    p = 'p'
+    '''
+    Pico 10**-12.
+    '''
+
+    y = 'y'
+    '''
+    yocto 10**-24.
+    '''
+
+    z = 'z'
+    '''
+    zepto 10**-21.
+    '''
+
+class UnitSymbol( Enum ):
+    '''
+    The derived units defined for usage in the CIM. In some cases, the derived
+    unit is equal to an SI unit. Whenever possible, the standard derived symbol
+    is used instead of the formula for the derived unit. For example, the unit
+    symbol Farad is defined as "F" instead of "CPerV". In cases where a standard
+    symbol does not exist for a derived unit, the formula for the unit is used
+    as the unit symbol. For example, density does not have a standard symbol
+    and so it is represented as "kgPerm3". With the exception of the "kg",
+    which is an SI unit, the unit symbols do not contain multipliers and therefore
+    represent the base derived unit to which a multiplier can be applied as
+    a whole.
+    Every unit symbol is treated as an unparseable text as if it were a single-letter
+    symbol. The meaning of each unit symbol is defined by the accompanying
+    descriptive text and not by the text contents of the unit symbol.
+    To allow the widest possible range of serializations without requiring
+    special character handling, several substitutions are made which deviate
+    from the format described in IEC 80000-1. The division symbol "/" is replaced
+    by the letters"Per". Exponents are written in plain text after the unit
+    as "m3" instead of being formatted as in "m<sup>3</sup>" or introducing
+    a symbol as in "m^3". The degree symbol "°" is replaced with the letters
+    "deg". Any clarification of the meaning for a substitution is included
+    in the description for the unit symbol.
+    Non-SI units are included in list of unit symbols to allow sources of data
+    to be correctly labeled with their non-SI units (for example, a GPS sensor
+    that is reporting numbers that represent feet instead of meters). This
+    allows software to use the unit symbol information correctly convert and
+    scale the raw data of those sources into SI-based units.
+    '''
+
+    A = 'A'
+    '''
+    Current in Ampere.
+    '''
+
+    A2 = 'A2'
+    '''
+    Ampere squared (A²).
+    '''
+
+    A2h = 'A2h'
+    '''
+    ampere-squared hour, Ampere-squared hour.
+    '''
+
+    A2s = 'A2s'
+    '''
+    Ampere squared time in square ampere (A²s).
+    '''
+
+    APerA = 'APerA'
+    '''
+    Current, Ratio of Amperages Note: Users may need to supply a prefix such
+    as ‘m’ to show rates such as ‘mA/A’.
+    '''
+
+    APerm = 'APerm'
+    '''
+    A/m, magnetic field strength, Ampere per metre.
+    '''
+
+    Ah = 'Ah'
+    '''
+    Ampere-hours, Ampere-hours.
+    '''
+
+    As = 'As'
+    '''
+    Ampere seconds (A·s).
+    '''
+
+    Bq = 'Bq'
+    '''
+    Radioactivity in Becquerel (1/s).
+    '''
+
+    Btu = 'Btu'
+    '''
+    Energy, British Thermal Unit.
+    '''
+
+    C = 'C'
+    '''
+    Electric charge in Coulomb (A·s).
+    '''
+
+    CPerkg = 'CPerkg'
+    '''
+    exposure (x rays), Coulomb per kilogram.
+    '''
+
+    CPerm2 = 'CPerm2'
+    '''
+    surface charge density, Coulomb per square metre.
+    '''
+
+    CPerm3 = 'CPerm3'
+    '''
+    electric charge density, Coulomb per cubic metre.
+    '''
+
+    F = 'F'
+    '''
+    Electric capacitance in Farad (C/V).
+    '''
+
+    FPerm = 'FPerm'
+    '''
+    permittivity, Farad per metre.
+    '''
+
+    G = 'G'
+    '''
+    Magnetic flux density, Gauss (1 G = 10-4 T).
+    '''
+
+    Gy = 'Gy'
+    '''
+    Absorbed dose in Gray (J/kg).
+    '''
+
+    GyPers = 'GyPers'
+    '''
+    absorbed dose rate, Gray per second.
+    '''
+
+    H = 'H'
+    '''
+    Electric inductance in Henry (Wb/A).
+    '''
+
+    HPerm = 'HPerm'
+    '''
+    permeability, Henry per metre.
+    '''
+
+    Hz = 'Hz'
+    '''
+    Frequency in Hertz (1/s).
+    '''
+
+    HzPerHz = 'HzPerHz'
+    '''
+    Frequency, Rate of frequency change Note: Users may need to supply a prefix
+    such as ‘m’ to show rates such as ‘mHz/Hz’.
+    '''
+
+    HzPers = 'HzPers'
+    '''
+    Rate of change of frequency in Hertz per second.
+    '''
+
+    J = 'J'
+    '''
+    Energy in joule (N·m = C·V = W·s).
+    '''
+
+    JPerK = 'JPerK'
+    '''
+    Heat capacity in Joule/Kelvin.
+    '''
+
+    JPerkg = 'JPerkg'
+    '''
+    Specific energy, Joule / kg.
+    '''
+
+    JPerkgK = 'JPerkgK'
+    '''
+    Specific heat capacity, specific entropy, Joule per kilogram Kelvin.
+    '''
+
+    JPerm2 = 'JPerm2'
+    '''
+    Insulation energy density, Joule per square metre or watt second per square
+    metre.
+    '''
+
+    JPerm3 = 'JPerm3'
+    '''
+    energy density, Joule per cubic metre.
+    '''
+
+    JPermol = 'JPermol'
+    '''
+    molar energy, Joule per mole.
+    '''
+
+    JPermolK = 'JPermolK'
+    '''
+    molar entropy, molar heat capacity, Joule per mole kelvin.
+    '''
+
+    JPers = 'JPers'
+    '''
+    Energy rate joule per second (J/s),
+    '''
+
+    K = 'K'
+    '''
+    Temperature in Kelvin.
+    '''
+
+    KPers = 'KPers'
+    '''
+    Temperature change rate in Kelvin per second.
+    '''
+
+    M = 'M'
+    '''
+    Length, nautical mile (1 M = 1852 m).
+    '''
+
+    Mx = 'Mx'
+    '''
+    Magnetic flux, Maxwell (1 Mx = 10-8 Wb).
+    '''
+
+    N = 'N'
+    '''
+    Force in Newton (kg·m/s²).
+    '''
+
+    NPerm = 'NPerm'
+    '''
+    Surface tension, Newton per metre.
+    '''
+
+    Nm = 'Nm'
+    '''
+    Moment of force, Newton metre.
+    '''
+
+    Oe = 'Oe'
+    '''
+    Magnetic field, Œrsted (1 Oe = (103/4p) A/m).
+    '''
+
+    Pa = 'Pa'
+    '''
+    Pressure in Pascal (N/m²). Note: the absolute or relative measurement of
+    pressure is implied with this entry. See below for more explicit forms.
+    '''
+
+    PaPers = 'PaPers'
+    '''
+    Pressure change rate in Pascal per second.
+    '''
+
+    Pas = 'Pas'
+    '''
+    Dynamic viscosity, Pascal second.
+    '''
+
+    Q = 'Q'
+    '''
+    Quantity power, Q.
+    '''
+
+    Qh = 'Qh'
+    '''
+    Quantity energy, Qh.
+    '''
+
+    S = 'S'
+    '''
+    Conductance in Siemens.
+    '''
+
+    SPerm = 'SPerm'
+    '''
+    Conductance per length (F/m).
+    '''
+
+    Sv = 'Sv'
+    '''
+    Dose equivalent in Sievert (J/kg).
+    '''
+
+    T = 'T'
+    '''
+    Magnetic flux density in Tesla (Wb/m2).
+    '''
+
+    V = 'V'
+    '''
+    Electric potential in Volt (W/A).
+    '''
+
+    V2 = 'V2'
+    '''
+    Volt squared (W²/A²).
+    '''
+
+    V2h = 'V2h'
+    '''
+    volt-squared hour, Volt-squared-hours.
+    '''
+
+    VA = 'VA'
+    '''
+    Apparent power in Volt Ampere (See also real power and reactive power.)
+    '''
+
+    VAh = 'VAh'
+    '''
+    Apparent energy in Volt Ampere hours.
+    '''
+
+    VAr = 'VAr'
+    '''
+    Reactive power in Volt Ampere reactive. The “reactive” or “imaginary” component
+    of electrical power (VIsin(phi)). (See also real power and apparent power).
+    Note: Different meter designs use different methods to arrive at their
+    results. Some meters may compute reactive power as an arithmetic value,
+    while others compute the value vectorially. The data consumer should determine
+    the method in use and the suitability of the measurement for the intended
+    purpose.
+    '''
+
+    VArh = 'VArh'
+    '''
+    Reactive energy in Volt Ampere reactive hours.
+    '''
+
+    VPerHz = 'VPerHz'
+    '''
+    Magnetic flux in Volt per Hertz.
+    '''
+
+    VPerV = 'VPerV'
+    '''
+    Voltage, Ratio of voltages Note: Users may need to supply a prefix such
+    as ‘m’ to show rates such as ‘mV/V’.
+    '''
+
+    VPerVA = 'VPerVA'
+    '''
+    Power factor, PF, the ratio of the active power to the apparent power.
+    Note: The sign convention used for power factor will differ between IEC
+    meters and EEI (ANSI) meters. It is assumed that the data consumers understand
+    the type of meter being used and agree on the sign convention in use at
+    any given utility.
+    '''
+
+    VPerVAr = 'VPerVAr'
+    '''
+    Power factor, PF, the ratio of the active power to the apparent power.
+    Note: The sign convention used for power factor will differ between IEC
+    meters and EEI (ANSI) meters. It is assumed that the data consumers understand
+    the type of meter being used and agree on the sign convention in use at
+    any given utility.
+    '''
+
+    VPerm = 'VPerm'
+    '''
+    electric field strength, Volt per metre.
+    '''
+
+    Vh = 'Vh'
+    '''
+    Volt-hour, Volt hours.
+    '''
+
+    Vs = 'Vs'
+    '''
+    Volt second (Ws/A).
+    '''
+
+    W = 'W'
+    '''
+    Real power in Watt (J/s). Electrical power may have real and reactive components.
+    The real portion of electrical power (I²R or VIcos(phi)), is expressed
+    in Watts. (See also apparent power and reactive power.)
+    '''
+
+    WPerA = 'WPerA'
+    '''
+    Active power per current flow, watt per Ampere.
+    '''
+
+    WPerW = 'WPerW'
+    '''
+    Signal Strength, Ratio of power Note: Users may need to supply a prefix
+    such as ‘m’ to show rates such as ‘mW/W’.
+    '''
+
+    WPerm2 = 'WPerm2'
+    '''
+    Heat flux density, irradiance, Watt per square metre.
+    '''
+
+    WPerm2sr = 'WPerm2sr'
+    '''
+    radiance, Watt per square metre steradian.
+    '''
+
+    WPermK = 'WPermK'
+    '''
+    Thermal conductivity in Watt/metre Kelvin.
+    '''
+
+    WPers = 'WPers'
+    '''
+    Ramp rate in Watt per second.
+    '''
+
+    WPersr = 'WPersr'
+    '''
+    Radiant intensity, Watt per steradian.
+    '''
+
+    Wb = 'Wb'
+    '''
+    Magnetic flux in Weber (V·s).
+    '''
+
+    Wh = 'Wh'
+    '''
+    Real energy in Watt hours.
+    '''
+
+    anglemin = 'anglemin'
+    '''
+    Plane angle, minute.
+    '''
+
+    anglesec = 'anglesec'
+    '''
+    Plane angle, second.
+    '''
+
+    bar = 'bar'
+    '''
+    Pressure, bar (1 bar = 100 kPa).
+    '''
+
+    cd = 'cd'
+    '''
+    Luminous intensity in candela.
+    '''
+
+    charPers = 'charPers'
+    '''
+    Data rate (baud) in characters per second.
+    '''
+
+    character = 'character'
+    '''
+    Number of characters.
+    '''
+
+    cosPhi = 'cosPhi'
+    '''
+    Power factor, dimensionless.
+    Note 1: This definition of power factor only holds for balanced systems.
+    See the alternative definition under code 153.
+    Note 2 : Beware of differing sign conventions in use between the IEC and
+    EEI. It is assumed that the data consumer understands the type of meter
+    in use and the sign convention in use by the utility.
+    '''
+
+    count = 'count'
+    '''
+    Amount of substance, Counter value.
+    '''
+
+    d = 'd'
+    '''
+    Time, day = 24 h = 86400 s.
+    '''
+
+    dB = 'dB'
+    '''
+    Sound pressure level in decibel. Note: multiplier “d” is included in this
+    unit symbol for compatibility with IEC 61850-7-3.
+    '''
+
+    dBm = 'dBm'
+    '''
+    Power level (logrithmic ratio of signal strength , Bel-mW), normalized
+    to 1mW. Note: multiplier “d” is included in this unit symbol for compatibility
+    with IEC 61850-7-3.
+    '''
+
+    deg = 'deg'
+    '''
+    Plane angle in degrees.
+    '''
+
+    degC = 'degC'
+    '''
+    Relative temperature in degrees Celsius.
+    In the SI unit system the symbol is ºC. Electric charge is measured in
+    coulomb that has the unit symbol C. To distinguish degree Celsius form
+    coulomb the symbol used in the UML is degC. Reason for not using ºC is
+    the special character º is difficult to manage in software.
+    '''
+
+    ft3 = 'ft3'
+    '''
+    Volume, cubic foot.
+    '''
+
+    gPerg = 'gPerg'
+    '''
+    Concentration, The ratio of the mass of a solute divided by the mass of
+    the solution. Note: Users may need use a prefix such a ‘µ’ to express a
+    quantity such as ‘µg/g’.
+    '''
+
+    gal = 'gal'
+    '''
+    Volume, US gallon (1 gal = 231 in3 = 128 fl ounce).
+    '''
+
+    h = 'h'
+    '''
+    Time, hour = 60 min = 3600 s.
+    '''
+
+    ha = 'ha'
+    '''
+    Area, hectare.
+    '''
+
+    kat = 'kat'
+    '''
+    Catalytic activity, katal = mol / s.
+    '''
+
+    katPerm3 = 'katPerm3'
+    '''
+    catalytic activity concentration, katal per cubic metre.
+    '''
+
+    kg = 'kg'
+    '''
+    Mass in kilogram. Note: multiplier “k” is included in this unit symbol
+    for compatibility with IEC 61850-7-3.
+    '''
+
+    kgPerJ = 'kgPerJ'
+    '''
+    Weigh per energy in kilogram/joule (kg/J). Note: multiplier “k” is included
+    in this unit symbol for compatibility with IEC 61850-7-3.
+    '''
+
+    kgPerm3 = 'kgPerm3'
+    '''
+    Density in kilogram/cubic metre (kg/m³). Note: multiplier “k” is included
+    in this unit symbol for compatibility with IEC 61850-7-3.
+    '''
+
+    kgm = 'kgm'
+    '''
+    Moment of mass in kilogram metre (kg·m) (first moment of mass). Note: multiplier
+    “k” is included in this unit symbol for compatibility with IEC 61850-7-3.
+    '''
+
+    kgm2 = 'kgm2'
+    '''
+    Moment of mass in kilogram square metre (kg·m²) (Second moment of mass,
+    commonly called the moment of inertia). Note: multiplier “k” is included
+    in this unit symbol for compatibility with IEC 61850-7-3.
+    '''
+
+    kn = 'kn'
+    '''
+    Speed, knot (1 kn = 1852/3600) m/s.
+    '''
+
+    l = 'l'
+    '''
+    Volume, litre = dm3 = m3/1000.
+    '''
+
+    lPerh = 'lPerh'
+    '''
+    Volumetric flow rate, litre per hour.
+    '''
+
+    lPerl = 'lPerl'
+    '''
+    Concentration, The ratio of the volume of a solute divided by the volume
+    of the solution. Note: Users may need use a prefix such a ‘µ’ to express
+    a quantity such as ‘µL/L’.
+    '''
+
+    lPers = 'lPers'
+    '''
+    Volumetric flow rate in litre per second.
+    '''
+
+    lm = 'lm'
+    '''
+    Luminous flux in lumen (cd·sr).
+    '''
+
+    lx = 'lx'
+    '''
+    Illuminance in lux (lm/m²).
+    '''
+
+    m = 'm'
+    '''
+    Length in meter.
+    '''
+
+    m2 = 'm2'
+    '''
+    Area in square metre (m²).
+    '''
+
+    m2Pers = 'm2Pers'
+    '''
+    Viscosity in metre square / second (m²/s).
+    '''
+
+    m3 = 'm3'
+    '''
+    Volume in cubic metre (m³).
+    '''
+
+    m3Compensated = 'm3Compensated'
+    '''
+    Volume, cubic metre, with the value compensated for weather effects.
+    '''
+
+    m3Perh = 'm3Perh'
+    '''
+    Volumetric flow rate, cubic metre per hour.
+    '''
+
+    m3Perkg = 'm3Perkg'
+    '''
+    Specific volume, cubic metre per kilogram, v.
+    '''
+
+    m3Pers = 'm3Pers'
+    '''
+    Volumetric flow rate in cubic metres per second (m³/s).
+    '''
+
+    m3Uncompensated = 'm3Uncompensated'
+    '''
+    Volume, cubic metre, with the value uncompensated for weather effects.
+    '''
+
+    mPerm3 = 'mPerm3'
+    '''
+    Fuel efficiency in metre per cubic metre (m/m³).
+    '''
+
+    mPers = 'mPers'
+    '''
+    Velocity in metre per second (m/s).
+    '''
+
+    mPers2 = 'mPers2'
+    '''
+    Acceleration in metre per second squared (m/s²).
+    '''
+
+    min = 'min'
+    '''
+    Time, minute = 60 s.
+    '''
+
+    mmHg = 'mmHg'
+    '''
+    Pressure, millimeter of mercury (1 mmHg is approximately 133.3 Pa).
+    '''
+
+    mol = 'mol'
+    '''
+    Amount of substance in mole.
+    '''
+
+    molPerkg = 'molPerkg'
+    '''
+    Concentration, Molality, the amount of solute in moles and the amount of
+    solvent in kilograms.
+    '''
+
+    molPerm3 = 'molPerm3'
+    '''
+    Concentration, The amount of substance concentration, (c), the amount of
+    solvent in moles divided by the volume of solution in m³.
+    '''
+
+    molPermol = 'molPermol'
+    '''
+    Concentration, Molar fraction (?), the ratio of the molar amount of a solute
+    divided by the molar amount of the solution.
+    '''
+
+    none = 'none'
+    '''
+    Dimension less quantity, e.g. count, per unit, etc.
+    '''
+
+    ohm = 'ohm'
+    '''
+    Electric resistance in ohm (V/A).
+    '''
+
+    ohmPerm = 'ohmPerm'
+    '''
+    Electric resistance per length in ohm per metre ((V/A)/m).
+    '''
+
+    ohmm = 'ohmm'
+    '''
+    resistivity, Ohm metre, (rho).
+    '''
+
+    onePerHz = 'onePerHz'
+    '''
+    Reciprocal of frequency (1/Hz).
+    '''
+
+    onePerm = 'onePerm'
+    '''
+    Wavenumber, reciprocal metre, (1/m).
+    '''
+
+    ppm = 'ppm'
+    '''
+    Concentration in parts per million.
+    '''
+
+    rad = 'rad'
+    '''
+    Plane angle in radian (m/m).
+    '''
+
+    radPers = 'radPers'
+    '''
+    Angular velocity in radians per second (rad/s).
+    '''
+
+    radPers2 = 'radPers2'
+    '''
+    Angular acceleration, radian per second squared.
+    '''
+
+    rev = 'rev'
+    '''
+    Amount of rotation, Revolutions.
+    '''
+
+    rotPers = 'rotPers'
+    '''
+    Rotations per second (1/s). See also Hz (1/s).
+    '''
+
+    s = 's'
+    '''
+    Time in seconds.
+    '''
+
+    sPers = 'sPers'
+    '''
+    Time, Ratio of time Note: Users may need to supply a prefix such as ‘µ’
+    to show rates such as ‘µs/s’
+    '''
+
+    sr = 'sr'
+    '''
+    Solid angle in steradian (m2/m2).
+    '''
+
+    therm = 'therm'
+    '''
+    Energy, Therm.
+    '''
+
+    tonne = 'tonne'
+    '''
+    mass, “tonne” or “metric ton” (1000 kg = 1 Mg).
+    '''
+
 @dataclass
 class ReactivePower():
     value: float = field(default=None)
@@ -2085,9 +3335,70 @@ class ReactivePower():
     Product of RMS value of the voltage and the RMS value of the quadrature
     component of the current.
     '''
+
+@dataclass
+class Seconds():
+    value: float = field(default=None)
+    '''
+    Time, in seconds.
+    '''
+
+@dataclass
+class Voltage():
+    value: float = field(default=None)
+    '''
+    Electrical voltage, can be both AC and DC.
+    '''
+
+@dataclass
+class PerCent():
+    value: float = field(default=None)
+    '''
+    Percentage on a defined base. For example, specify as 100 to indicate at
+    the defined base.
+    '''
+
 @dataclass
 class ApparentPower():
     value: float = field(default=None)
     '''
     Product of the RMS value of the voltage and the RMS value of the current.
+    '''
+
+@dataclass
+class RealEnergy():
+    value: float = field(default=None)
+    '''
+    Real electrical energy.
+    '''
+
+@dataclass
+class CurrentFlow():
+    value: float = field(default=None)
+    '''
+    Electrical current with sign convention: positive flow is out of the conducting
+    equipment into the connectivity node. Can be both AC and DC.
+    '''
+
+@dataclass
+class PU():
+    value: float = field(default=None)
+    '''
+    Per Unit - a positive or negative value referred to a defined base. Values
+    typically range from -10 to +10.
+    '''
+
+@dataclass
+class Frequency():
+    value: float = field(default=None)
+    '''
+    Cycles per second.
+    '''
+
+@dataclass
+class ActivePower():
+    value: float = field(default=None)
+    '''
+    Product of RMS value of the voltage and the RMS value of the in-phase component
+    of the current.
     '''

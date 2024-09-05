@@ -18,6 +18,7 @@ class DistributedArea(GraphModel):
         self.graph = {}
         self.add_to_graph(self.container)
         self.distributed_areas = []
+        self.boundaries = []
 
     def build_from_topo_message(self, topology_dict: dict, centralized_graph: dict = {}):
         AddrEquip = AddressableEquipment(self.cim)
@@ -34,7 +35,7 @@ class DistributedArea(GraphModel):
                 except:
                     _log.warning('node ' + str(uuid) + ' not in feeder')
 
-                
+
         else:
             node_list = topology_dict['connectivity_node']
             self.connection.build_graph_from_list(self.graph, node_list)
