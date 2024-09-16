@@ -55,7 +55,7 @@ def upload_triples_sparql(obj: object, params: ConnectionParameters) -> str:
                     edge = getattr(obj, attribute)
                     # Check if typed to a class within CIM profile
                     if edge_class in cim.__all__:
-                        if edge:
+                        if edge is not None and edge != []:
                             # Check if edge is an enumeration
                             if type(edge.__class__) is enum.EnumMeta:
                                 triple = f'\n\t<{rdf_resource}{obj.uri()}> cim:{parent.__name__}.{attribute} <{rdf_enum}{str(edge)}>.\n'
@@ -75,7 +75,7 @@ def upload_triples_sparql(obj: object, params: ConnectionParameters) -> str:
                                     triple = f'\n\t<{rdf_resource}{obj.uri()}> cim:{parent.__name__}.{attribute} <{rdf_resource}{edge.uri()}>.\n'
                                     triples.append(triple)
                     else:
-                        if edge and rdf != 'Identity.identifier':
+                        if edge is not None and edge != [] and rdf != 'Identity.identifier':
                             triple = f"\n\t<{rdf_resource}{obj.uri()}> cim:{parent.__name__}.{attribute} \"{str(edge)}\".\n"
                             triples.append(triple)
             except:

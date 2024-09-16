@@ -58,7 +58,7 @@ def write_xml(network: GraphModel, filename: str) -> None:
 
                         # Check if attribute is association to a class object
                         if edge_class in network.cim.__all__:
-                            if edge:
+                            if edge is not None and edge != []:
                                 if type(edge.__class__) is enum.EnumMeta:
                                     resource = f'rdf:resource="{namespace}{str(edge)}"'
                                     row = f'  <cim:{parent.__name__}.{attribute} {resource}/>\n'
@@ -85,7 +85,7 @@ def write_xml(network: GraphModel, filename: str) -> None:
                                     row = f'  <cim:{parent.__name__}.{attribute} {resource}/>\n'
                                     f.write(row)
                         else:
-                            if edge and rdf != 'Identity.identifier':
+                            if edge is not None and edge != [] and rdf != 'Identity.identifier':
                                 row = f'  <cim:{parent.__name__}.{attribute}>{str(edge)}</cim:{parent.__name__}.{attribute}>\n'
                                 f.write(row)
 
