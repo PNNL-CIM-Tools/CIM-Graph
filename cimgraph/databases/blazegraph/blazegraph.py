@@ -11,7 +11,7 @@ from SPARQLWrapper import JSON, POST, SPARQLWrapper
 
 import cimgraph.queries.sparql as sparql
 from cimgraph.databases import (ConnectionInterface, ConnectionParameters,
-                                QueryResponse)
+                                QueryResponse, Graph)
 
 _log = logging.getLogger(__name__)
 
@@ -118,7 +118,7 @@ class BlazegraphConnection(ConnectionInterface):
 
         return obj
 
-    def create_new_graph(self, container: object, graph: dict = {}) -> dict[type, dict[UUID, object]]:
+    def create_new_graph(self, container: object, graph: dict = {}) -> Graph:
         """
         Create a new graph structure for a CIM EquipmentContainer object.
         The method uses a SPARQL query to obtain all terminals in the graph,
@@ -142,8 +142,39 @@ class BlazegraphConnection(ConnectionInterface):
         # Parse query results and create new graph
         graph = self.parse_node_query(graph, query_output)
         return graph
+    
+    def create_feeder_area(self, container: object, graph: dict = {}) -> Graph:
+        self.add_to_graph(graph=graph, obj=container)
+        if not isinstance(container, self.cim.Feeder):
+            _log.error(f'Container is not a Feeder')
+            return graph
+        
+        sparql_message = sparql.get_triple_sparql(container, 'Feeder.FeederArea', self.connection_params)
+        # Execute SPARQL query
+        query_output = self.execute(sparql_message)
+        # Parse the query output
+        self.edge_query_parser(query_output, graph, self.cim.Feeder)
+        
+        return graph
+    
+    def create_distributed_graph(self, area: object, graph: dict = {}) -> Graph:
+        self.add_to_graph(graph=graph, obj=area)
+        if not isinstance(area, self.cim.SubSchedulingArea):
+            _log.error(f'Area object is not a SubSchedulingArea')
+            return graph
+        
+        sparql_message = sparql.get_all_nodes_from_area(area, self.connection_params)
+        # Execute SPARQL query
+        query_output = self.execute(sparql_message)
+        # Parse query results and create new graph
+        graph = self.parse_node_query(graph, query_output)
+        return graph
 
-    def parse_node_query(self, graph: dict, query_output: dict) -> dict[type, dict[UUID, object]]:
+
+
+        
+
+    def parse_node_query(self, graph: dict, query_output: dict) -> Graph:
         """
         Parse the results of a node query to update a graph structure.
 
@@ -189,8 +220,8 @@ class BlazegraphConnection(ConnectionInterface):
 
         return graph
 
-    def build_graph_from_list(self, graph: dict[type, dict[UUID, object]],
-            mrid_list: list[str]) -> dict[type, dict[UUID, object]]:
+    def build_graph_from_list(self, graph: Graph,
+            mrid_list: list[str]) -> Graph:
         """
         Build a graph structure based on a list of mRIDs. This method is used
         with original GridAPPS-D Topology Processor, which provided a list
@@ -211,7 +242,7 @@ class BlazegraphConnection(ConnectionInterface):
             graph = self.parse_node_query(graph, query_output)
         return graph
 
-    def get_edges_query(self, graph: dict[type, dict[UUID, object]],
+    def get_edges_query(self, graph: Graph,
                         cim_class: type) -> str:
         """
         Generate a SPARQL query to get edges from the graph for a specific CIM class.
@@ -229,7 +260,7 @@ class BlazegraphConnection(ConnectionInterface):
 
         return sparql_message
 
-    def get_all_edges(self, graph: dict[type, dict[UUID, object]], cim_class: type) -> None:
+    def get_all_edges(self, graph: Graph, cim_class: type) -> None:
         """
         Expands the knowledge graph by one edge for all instances of the
         requested CIM class. Associated objects are added to the graph
@@ -263,7 +294,7 @@ class BlazegraphConnection(ConnectionInterface):
                 # Ensuring all futures are processed
                 future.result()
 
-    def get_all_attributes(self, graph: dict[type, dict[UUID, object]],
+    def get_all_attributes(self, graph: Graph,
                            cim_class: type) -> None:
         """
         Retrieve all attributes for a given CIM class in the graph. Associated
@@ -285,8 +316,7 @@ class BlazegraphConnection(ConnectionInterface):
             self.edge_query_parser(query_output, graph, cim_class, expand_graph=False)
 
     def edge_query_parser(self, query_output: QueryResponse,
-                          graph: dict[type, dict[UUID, object]],
-                          cim_class: type, expand_graph=True) -> None:
+                          graph: Graph, cim_class: type, expand_graph=True) -> None:
         """
         Parse the results of an edge query to update a graph structure.
 
@@ -338,7 +368,7 @@ class BlazegraphConnection(ConnectionInterface):
                     if association is not None:
                         self.create_value(graph, cim_class, identifier, attribute, value)
 
-    def upload(self, graph: dict[type, dict[UUID, object]]) -> None:
+    def upload(self, graph: Graph) -> None:
         """
         Upload a graph structure to the Blazegraph database.
 

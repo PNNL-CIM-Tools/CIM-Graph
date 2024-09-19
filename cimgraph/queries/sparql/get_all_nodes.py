@@ -1,8 +1,11 @@
 from __future__ import annotations
-from cimgraph.databases import ConnectionInterface
+from cimgraph.databases import ConnectionParameters
+import logging
+_log = logging.getLogger(__name__)
 
 
-def get_all_nodes_from_container(container: object, connection_params: ConnectionInterface) -> str:
+
+def get_all_nodes_from_container(container: object, connection_params: ConnectionParameters) -> str:
     """
     Generates SPARQL query string for all nodes, terminals, and conducting equipment
     Args:
@@ -110,5 +113,73 @@ def get_all_nodes_from_list(mrid_list: list[str], namespace: str) -> str:
         }
         }
         """ % namespace
+
+    return query_message
+
+
+def get_all_nodes_from_area(area: object, connection_params: ConnectionParameters) -> str:
+    """
+    Generates SPARQL query string for all nodes, terminals, and conducting equipment
+    Args:
+        area: object of type SubSchedulingArea
+    Returns:
+        query_message: query string that can be used in blazegraph connection or STOMP client
+    """
+    # if 'SubSchedulingArea' not in connection_params.cim.__all__:
+    #     _log.error("No SubSchedulingArea classes in profile")
+    # else:
+    #     if not isinstance(area, connection_params.cim.SubSchedulingArea):
+    #         _log.error("Area is not a SubSchedulingArea")
+
+    area_class = area.__class__.__name__
+    try:
+        container_uri = area.uri()
+    except:
+        container_uri = area.mRID
+
+    if int(connection_params.iec61970_301) > 7:
+        split = 'urn:uuid:'
+    else:
+        split = f'{connection_params.url}#'
+
+
+    query_message = """
+        PREFIX r:  <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+        PREFIX cim:  <%s>""" % connection_params.namespace
+    query_message += """
+        SELECT DISTINCT ?ConnectivityNode ?Terminal ?Equipment ?Measurement
+        WHERE {
+          """ #
+    query_message += """
+        VALUES ?identifier {"%s"}
+        bind(iri(concat("%s", ?identifier)) as ?c).
+        """ % (container_uri, split)
+
+    
+    # get Equipment objects associated with Container
+    query_message += '''
+
+        ?eq cim:Equipment.SubSchedulingArea ?c.
+        ?eq a ?eq_cls.
+
+        OPTIONAL {
+            ?t cim:Terminal.ConductingEquipment ?eq.
+            ?t cim:Terminal.ConnectivityNode ?node.
+        }
+        OPTIONAL {?meas cim:Measurement.Terminal ?t.
+        ?meas a ?m_cls.
+        }
+          
+        bind(strafter(str(?node),"%s") as ?ConnectivityNode).
+        bind(strafter(str(?t),"%s") as ?Terminal).
+        bind(strafter(str(?meas),"%s") as ?meas_id).
+        bind(strafter(str(?eq),"%s") as ?eq_id).
+
+        bind(concat("{\\"@id\\":\\"", str(?eq_id),"\\",\\"@type\\":\\"",strafter(str(?eq_cls),"%s"), "\\"}") as ?Equipment)
+        bind(concat("{\\"@id\\":\\"", str(?meas_id),"\\",\\"@type\\":\\"",strafter(str(?m_cls),"%s"), "\\"}") as ?Measurement)
+
+    }
+        ORDER by ?Equipment
+        ''' % (split, split, split, split,  connection_params.namespace, connection_params.namespace)
 
     return query_message

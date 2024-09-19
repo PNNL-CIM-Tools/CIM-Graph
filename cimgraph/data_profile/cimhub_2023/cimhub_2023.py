@@ -376,9 +376,11 @@ class Terminal(ACDCTerminal):
             'inverse': 'SubSchedulingArea.BoundaryTerminals',
             'docstring':
                 '''
+                The SubSchedulingArea bounded by the specific Terminal
                 '''
         })
     '''
+    The SubSchedulingArea bounded by the specific Terminal
     '''
     
     Bushing: Optional[ Bushing ] = field(
@@ -8144,6 +8146,38 @@ class Feeder(EquipmentContainer):
     current operation state.
     '''
 
+    DistributionArea: Optional[ DistributionArea ] = field(
+        default = None,
+        metadata = {
+            'type': 'Association',
+            'minOccurs': '0',
+            'maxOccurs': '1',
+            'inverse': 'DistributionArea.Feeders',
+            'docstring':
+                '''
+                The DistributionArea to which the feeder belongs
+                '''
+        })
+    '''
+    The DistributionArea to which the feeder belongs
+    '''
+    
+    FeederArea: Optional[ FeederArea ] = field(
+        default = None,
+        metadata = {
+            'type': 'Association',
+            'minOccurs': '0',
+            'maxOccurs': '1',
+            'inverse': 'FeederArea.Feeder',
+            'docstring':
+                '''
+                The FeederArea (which contains Equipment not contained in
+                '''
+        })
+    '''
+    The FeederArea (which contains Equipment not contained in
+    '''
+    
     NamingSecondarySubstation: list[ Substation ] = field(
         default_factory = list,
         metadata = {
@@ -8455,29 +8489,6 @@ class VoltageLevel(EquipmentContainer):
     '''
     
 @dataclass(repr=False)
-class DistributionArea(PowerSystemResource):
-    '''
-    A persistent connectivity-based containment of medium-voltage and high-voltage
-    distribution ConductingEquipment with clearly defined electrical boundaries
-    based on electrical connectivity of a distribution substation or multiple
-    substations.
-    '''
-
-    FeederAreas: list[ FeederArea ] = field(
-        default_factory = list,
-        metadata = {
-            'type': 'Aggregate Of',
-            'minOccurs': '0',
-            'maxOccurs': 'unbounded',
-            'inverse': 'FeederArea.DistributionArea',
-            'docstring':
-                '''
-                '''
-        })
-    '''
-    '''
-    
-@dataclass(repr=False)
 class EnergyConsumerPhase(PowerSystemResource):
     '''
     A single phase of an energy consumer.
@@ -8740,7 +8751,7 @@ class Equipment(PowerSystemResource):
     The operational limit sets associated with this equipment.
     '''
     
-    SchedulingArea: Optional[ SubSchedulingArea ] = field(
+    SubSchedulingArea: Optional[ SubSchedulingArea ] = field(
         default = None,
         metadata = {
             'type': 'Of Aggregate',
@@ -8749,9 +8760,11 @@ class Equipment(PowerSystemResource):
             'inverse': 'SubSchedulingArea.ContainedEquipment',
             'docstring':
                 '''
+                The SubSchedulingArea in which the equipment is contained and controlled.
                 '''
         })
     '''
+    The SubSchedulingArea in which the equipment is contained and controlled.
     '''
     
 @dataclass(repr=False)
@@ -12129,46 +12142,6 @@ class TransformerTank(Equipment):
     '''
     
 @dataclass(repr=False)
-class FeederArea(PowerSystemResource):
-    '''
-    A persistent connectivity-based containment of medium-voltage distribution
-    ConductingEquipment with clearly defined electrical boundaries based on
-    electrical connectivity of a distribution feeder.
-    The FeederArea contains all medium voltage equipment not contained in a
-    SwitchArea or Substation / Bay. It also includes all Sectionalisers, Reclosers,
-    and all other poletop and pad-mounted switchgear that form the boundary
-    of a SwitchArea.
-    '''
-
-    DistributionArea: Optional[ DistributionArea ] = field(
-        default = None,
-        metadata = {
-            'type': 'Of Aggregate',
-            'minOccurs': '0',
-            'maxOccurs': '1',
-            'inverse': 'DistributionArea.FeederAreas',
-            'docstring':
-                '''
-                '''
-        })
-    '''
-    '''
-    
-    SwitchAreas: list[ SwitchArea ] = field(
-        default_factory = list,
-        metadata = {
-            'type': 'Aggregate Of',
-            'minOccurs': '0',
-            'maxOccurs': 'unbounded',
-            'inverse': 'SwitchArea.FeederArea',
-            'docstring':
-                '''
-                '''
-        })
-    '''
-    '''
-    
-@dataclass(repr=False)
 class PowerCutZone(PowerSystemResource):
     '''
     An area or zone of the power system which is used for load shedding purposes.
@@ -12720,9 +12693,11 @@ class SubSchedulingArea(SchedulingArea):
             'inverse': 'Terminal.BoundedSchedulingArea',
             'docstring':
                 '''
+                The set of terminals that define the persistent boundaries of the SubSchedulingArea
                 '''
         })
     '''
+    The set of terminals that define the persistent boundaries of the SubSchedulingArea
     '''
     
     ContainedEquipment: list[ Equipment ] = field(
@@ -12731,46 +12706,64 @@ class SubSchedulingArea(SchedulingArea):
             'type': 'Aggregate Of',
             'minOccurs': '0',
             'maxOccurs': 'unbounded',
-            'inverse': 'Equipment.SchedulingArea',
+            'inverse': 'Equipment.SubSchedulingArea',
             'docstring':
                 '''
+                The Equipment contained within the SubSchedulingArea.
                 '''
         })
     '''
+    The Equipment contained within the SubSchedulingArea.
+    '''
+    
+    SinkConfiguration: list[ AreaConfiguration ] = field(
+        default_factory = list,
+        metadata = {
+            'type': 'Association',
+            'minOccurs': '0',
+            'maxOccurs': 'unbounded',
+            'inverse': 'AreaConfiguration.EnergizedArea',
+            'docstring':
+                '''
+                Set of possible configurations for the sink area.
+                '''
+        })
+    '''
+    Set of possible configurations for the sink area.
+    '''
+    
+    SourceConfiguration: list[ AreaConfiguration ] = field(
+        default_factory = list,
+        metadata = {
+            'type': 'Association',
+            'minOccurs': '0',
+            'maxOccurs': 'unbounded',
+            'inverse': 'AreaConfiguration.EnergizingArea',
+            'docstring':
+                '''
+                The set of possible configurations for the source area
+                '''
+        })
+    '''
+    The set of possible configurations for the source area
     '''
     
 @dataclass(repr=False)
-class SwitchArea(SubSchedulingArea):
+class DistributionArea(SubSchedulingArea):
     '''
-    A persistent connectivity-based containment of medium-voltage distribution
-    ConductingEquipment with clearly defined electrical boundaries formed by
-    one or more Switch objects.
-    The SwitchArea contains all conductors, fuses, poletop equipment, and vault
-    equipment. It also contains all secondary service transformers not contained
-    in a SecondarySubstation.
+    A persistent connectivity-based containment of medium-voltage and high-voltage
+    distribution ConductingEquipment with clearly defined electrical boundaries
+    based on electrical connectivity of a distribution substation or multiple
+    substations.
     '''
 
-    FeederArea: Optional[ FeederArea ] = field(
-        default = None,
-        metadata = {
-            'type': 'Of Aggregate',
-            'minOccurs': '0',
-            'maxOccurs': '1',
-            'inverse': 'FeederArea.SwitchAreas',
-            'docstring':
-                '''
-                '''
-        })
-    '''
-    '''
-    
-    SecondaryAreas: list[ SecondaryArea ] = field(
+    FeederAreas: list[ FeederArea ] = field(
         default_factory = list,
         metadata = {
             'type': 'Aggregate Of',
             'minOccurs': '0',
             'maxOccurs': 'unbounded',
-            'inverse': 'SecondaryArea.SwitchArea',
+            'inverse': 'FeederArea.DistributionArea',
             'docstring':
                 '''
                 '''
@@ -12778,17 +12771,86 @@ class SwitchArea(SubSchedulingArea):
     '''
     '''
     
-@dataclass(repr=False)
-class Microgrid(SwitchArea):
+    Feeders: list[ Feeder ] = field(
+        default_factory = list,
+        metadata = {
+            'type': 'Association',
+            'minOccurs': '0',
+            'maxOccurs': 'unbounded',
+            'inverse': 'Feeder.DistributionArea',
+            'docstring':
+                '''
+                Feeders within the service territory of the DistributionArea of a particular
+                Distribution System Operator (DSO)
+                '''
+        })
     '''
-    A persistent connectivity-based containment of distribution ConductingEquipment
-    that 1) has clearly-defined electrical boundaries formed by one or more
-    point of common coupling Switch objects and 2) that acts as a single controllable
-    entity which can be operated in grid-connected or islanded mode.
+    Feeders within the service territory of the DistributionArea of a particular
+    Distribution System Operator (DSO)
+    '''
+    
+@dataclass(repr=False)
+class FeederArea(SubSchedulingArea):
+    '''
+    A persistent connectivity-based containment of medium-voltage distribution
+    ConductingEquipment with clearly defined electrical boundaries based on
+    electrical connectivity of a distribution feeder.
+    The FeederArea contains all medium voltage equipment not contained in a
+    SwitchArea or Substation / Bay. It also includes all Sectionalisers, Reclosers,
+    and all other poletop and pad-mounted switchgear that form the boundary
+    of a SwitchArea.
     '''
 
+    DistributionArea: Optional[ DistributionArea ] = field(
+        default = None,
+        metadata = {
+            'type': 'Of Aggregate',
+            'minOccurs': '0',
+            'maxOccurs': '1',
+            'inverse': 'DistributionArea.FeederAreas',
+            'docstring':
+                '''
+                '''
+        })
+    '''
+    '''
+    
+    Feeder: Optional[ Feeder ] = field(
+        default = None,
+        metadata = {
+            'type': 'Association',
+            'minOccurs': '0',
+            'maxOccurs': '1',
+            'inverse': 'Feeder.FeederArea',
+            'docstring':
+                '''
+                The Feeder (which contains the ConnectivityNode and all Equipment) associated
+                with the FeeederArea
+                '''
+        })
+    '''
+    The Feeder (which contains the ConnectivityNode and all Equipment) associated
+    with the FeeederArea
+    '''
+    
+    SwitchAreas: list[ SwitchArea ] = field(
+        default_factory = list,
+        metadata = {
+            'type': 'Aggregate Of',
+            'minOccurs': '0',
+            'maxOccurs': 'unbounded',
+            'inverse': 'SwitchArea.FeederArea',
+            'docstring':
+                '''
+                The set of SwitchArea normally energized by the FeederArea
+                '''
+        })
+    '''
+    The set of SwitchArea normally energized by the FeederArea
+    '''
+    
 @dataclass(repr=False)
-class SecondaryArea(PowerSystemResource):
+class SecondaryArea(SubSchedulingArea):
     '''
     A persistent connectivity-based containment of low-voltage distribution
     ConductingEquipment with clearly defined electrical boundaries formed by
@@ -12827,11 +12889,65 @@ class SecondaryArea(PowerSystemResource):
             'inverse': 'SwitchArea.SecondaryAreas',
             'docstring':
                 '''
+                The SwitchArea that normally energizes the SecondaryArea
                 '''
         })
     '''
+    The SwitchArea that normally energizes the SecondaryArea
     '''
     
+@dataclass(repr=False)
+class SwitchArea(SubSchedulingArea):
+    '''
+    A persistent connectivity-based containment of medium-voltage distribution
+    ConductingEquipment with clearly defined electrical boundaries formed by
+    one or more Switch objects.
+    The SwitchArea contains all conductors, fuses, poletop equipment, and vault
+    equipment. It also contains all secondary service transformers not contained
+    in a SecondarySubstation.
+    '''
+
+    FeederArea: Optional[ FeederArea ] = field(
+        default = None,
+        metadata = {
+            'type': 'Of Aggregate',
+            'minOccurs': '0',
+            'maxOccurs': '1',
+            'inverse': 'FeederArea.SwitchAreas',
+            'docstring':
+                '''
+                The FeederArea that normally energizes the SwitchArea
+                '''
+        })
+    '''
+    The FeederArea that normally energizes the SwitchArea
+    '''
+    
+    SecondaryAreas: list[ SecondaryArea ] = field(
+        default_factory = list,
+        metadata = {
+            'type': 'Aggregate Of',
+            'minOccurs': '0',
+            'maxOccurs': 'unbounded',
+            'inverse': 'SecondaryArea.SwitchArea',
+            'docstring':
+                '''
+                The set of SecondAreas normally energized by the SwitchArea
+                '''
+        })
+    '''
+    The set of SecondAreas normally energized by the SwitchArea
+    '''
+    
+@dataclass(repr=False)
+class Microgrid(SwitchArea):
+    '''
+    A persistent connectivity-based containment of distribution ConductingEquipment
+    that 1) has clearly-defined electrical boundaries formed by one or more
+    point of common coupling Switch objects and 2) that acts as a single controllable
+    entity which can be operated in grid-connected or islanded mode.
+    '''
+
 @dataclass(repr=False)
 class ShuntCompensatorPhase(PowerSystemResource):
     '''
@@ -15707,6 +15823,63 @@ class WirePosition(IdentifiedObject):
         })
     '''
     Wire spacing data this wire position belongs to.
+    '''
+    
+@dataclass(repr=False)
+class AreaConfiguration(Identity):
+    '''
+    Alternate configurations for abnormal feeder switching conditions. The
+    distribution feeder can be segmented into source and sink SubSchedulingArea
+    to represent upstream and downstream sections relative to the head terminal.
+    '''
+
+    priority: Optional[ int ] = field(
+        default = None,
+        metadata = {
+            'type': 'Attribute',
+            'minOccurs': '0',
+            'maxOccurs': '1',
+            'docstring':
+                '''
+                Value 0 means ignore priority. 1 means the highest priority, 2 is the second
+                highest priority.
+                '''
+        })
+    '''
+    Value 0 means ignore priority. 1 means the highest priority, 2 is the second
+    highest priority.
+    '''
+    
+    EnergizedArea: Optional[ SubSchedulingArea ] = field(
+        default = None,
+        metadata = {
+            'type': 'Association',
+            'minOccurs': '0',
+            'maxOccurs': '1',
+            'inverse': 'SubSchedulingArea.SinkConfiguration',
+            'docstring':
+                '''
+                The sink area being energized by the source area.
+                '''
+        })
+    '''
+    The sink area being energized by the source area.
+    '''
+    
+    EnergizingArea: Optional[ SubSchedulingArea ] = field(
+        default = None,
+        metadata = {
+            'type': 'Association',
+            'minOccurs': '0',
+            'maxOccurs': '1',
+            'inverse': 'SubSchedulingArea.SourceConfiguration',
+            'docstring':
+                '''
+                The source area which is energizing the sink area
+                '''
+        })
+    '''
+    The source area which is energizing the sink area
     '''
     
 @dataclass(repr=False)

@@ -12,7 +12,7 @@ from uuid import UUID
 from defusedxml.ElementTree import parse
 
 from cimgraph.databases import (ConnectionInterface, ConnectionParameters,
-                                QueryResponse)
+                                QueryResponse, Graph)
 
 _log = logging.getLogger(__name__)
 
@@ -73,7 +73,17 @@ class XMLFile(ConnectionInterface):
     def get_object(self, mrid:str, graph = {}) -> object:
         pass
 
-    def create_new_graph(self, container: object) -> dict[type, dict[UUID, object]]:
+    def create_feeder_area(self, container: object, graph: dict = {}) -> Graph:
+        _log.error('distributed models not supported for XML file read')
+        
+    
+
+    def create_distributed_graph(self, area: object, graph: dict = {}) -> Graph:
+        _log.error('distributed models not supported for XML file read')
+        
+
+
+    def create_new_graph(self, container: object) -> Graph:
 
         # with multiprocessing.Manager() as manager:
         #     graph = manager.dict()
@@ -219,24 +229,20 @@ class XMLFile(ConnectionInterface):
         return None
         # return graph
 
-    def parse_node_query(self, graph: dict, query_output: dict) -> dict[type, dict[UUID, object]]:
-
+    def parse_node_query(self, graph: dict, query_output: dict) -> Graph:
         pass
 
-    def get_edges_query(self, graph: dict[type, dict[UUID, object]],
-                        cim_class: type) -> str:
+    def get_edges_query(self, graph: Graph, cim_class: type) -> str:
         pass
 
-    def get_all_edges(self, graph: dict[type, dict[UUID, object]], cim_class: type) -> None:
+    def get_all_edges(self, graph: Graph, cim_class: type) -> None:
         pass
 
-    def get_all_attributes(self, graph: dict[type, dict[UUID, object]],
-                           cim_class: type) -> None:
+    def get_all_attributes(self, graph: Graph, cim_class: type) -> None:
         pass
 
     def edge_query_parser(self, query_output: QueryResponse,
-                          graph: dict[type, dict[UUID, object]],
-                          cim_class: type, expand_graph = True) -> None:
+                          graph: Graph, cim_class: type, expand_graph = True) -> None:
         pass
 
 

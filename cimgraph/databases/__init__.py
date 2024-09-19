@@ -1,16 +1,17 @@
 from __future__ import annotations
 
+from abc import ABC, abstractmethod
 import logging
 
 from dataclasses import dataclass, field, is_dataclass
-from re import I
-from tabnanny import check
+
 from uuid import UUID
 
-from rdflib import Graph, Namespace, URIRef
+from rdflib import URIRef
 
 _log = logging.getLogger(__name__)
 
+Graph = dict[type, dict[UUID, object]]
 
 @dataclass
 class ConnectionParameters:
@@ -30,30 +31,47 @@ class ConnectionParameters:
 class QueryResponse:
     response: str
 
-@dataclass
-class ConnectionInterface:
-    connection_params: ConnectionParameters
 
+class ConnectionInterface(ABC):
+    connection_params: ConnectionParameters
+    
+    @abstractmethod
     def connect(self):
         raise RuntimeError('Must have implemented connect in inherited class')
 
+    @abstractmethod
     def disconnect(self):
         raise RuntimeError('Must have implemented disconnect in inherited class')
 
+    @abstractmethod
     def execute(self, query: str) -> QueryResponse:
         raise RuntimeError('Must have implemented query in the inherited class')
     
-    def upload(self, graph: dict[type, dict[UUID, object]]) -> None:
+    @abstractmethod
+    def upload(self, graph: Graph) -> None:
         raise RuntimeError('Must have implemented query in the inherited class')
 
-    def get_all_edges(self, graph: dict[type, dict[UUID, object]], cim_class: type) -> None:
+    @abstractmethod
+    def get_all_edges(self, graph: Graph, cim_class: type) -> None:
         raise RuntimeError('Must have implemented query in the inherited class')
     
-    def get_all_attributes(self, graph: dict[type, dict[UUID, object]], cim_class: type) -> None:
+    @abstractmethod
+    def get_all_attributes(self, graph: Graph, cim_class: type) -> None:
         raise RuntimeError('Must have implemented query in the inherited class')
 
-    def get_object(self, mRID:str, graph: dict[type, dict[UUID, object]]) -> None:
+    @abstractmethod
+    def get_object(self, mRID:str, graph: Graph) -> None:
         raise RuntimeError('Must have implemented query in the inherited class')
+    
+    @abstractmethod
+    def create_feeder_area(self, container: object, graph: dict = {}) -> Graph:
+        raise RuntimeError('Must have implemented query in the inherited class')
+    
+    @abstractmethod
+    def create_distributed_graph(self, area: object, graph: dict = {}) -> Graph:
+        raise RuntimeError('Must have implemented query in the inherited class')
+
+
 
     def check_attribute(self, cim_class:type, attribute:str) -> str:
         attr_class = attribute.split('.')[0]
@@ -149,7 +167,7 @@ class ConnectionInterface:
             else:
                 _log.warning(f'{cim_class.__name__} does not have attribute {association}')
 
-    def create_object(self, graph:dict[type, dict[UUID, object]],
+    def create_object(self, graph:Graph,
                       class_type:type, uri:str) -> object:
         """
         Method for creating new objects and adding them to the graph
@@ -179,7 +197,7 @@ class ConnectionInterface:
     
         return obj
 
-    def add_to_graph(self, obj: object, graph: dict[type, dict[UUID, object]]) -> None:
+    def add_to_graph(self, obj: object, graph: Graph) -> None:
         """
         Method for adding existing objects to the graph
         Required Args:
@@ -195,7 +213,7 @@ class ConnectionInterface:
         if obj.identifier not in graph[type(obj)]:
             graph[type(obj)][obj.identifier] = obj
 
-    def create_assocation(self, graph: dict[type, dict[UUID, object]], attribute: str,
+    def create_assocation(self, graph: Graph, attribute: str,
                           cim_class: type, mRID: str, attr_text: str,
                           edge_class: type, edge_mRID: str) -> None:
         
@@ -259,3 +277,4 @@ from cimgraph.databases.graphdb import GraphDBConnection
 from cimgraph.databases.gridappsd import GridappsdConnection
 from cimgraph.databases.neo4j import Neo4jConnection
 from cimgraph.databases.rdflib import RDFlibConnection
+from cimgraph.databases.fileparsers import XMLFile

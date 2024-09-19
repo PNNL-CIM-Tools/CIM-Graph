@@ -20,6 +20,12 @@ class DistributedArea(GraphModel):
         self.distributed_areas = []
         self.boundaries = []
 
+    def build_from_area(self):
+        self.get_all_edges(self.container.__class__)
+        self.connection.create_distributed_graph(area=self.container, graph=self.graph)
+
+
+
     def build_from_topo_message(self, topology_dict: dict, centralized_graph: dict = {}):
         AddrEquip = AddressableEquipment(self.cim)
         UnaddrEquip = UnaddressableEquipment(self.cim)
@@ -367,7 +373,8 @@ class AddressableEquipment:
             self.cim.AsynchronousMachine, self.cim.Breaker,
             self.cim.Disconnector, self.cim.EnergyConsumer,
             self.cim.LinearShuntCompensator, self.cim.LoadBreakSwitch,
-            self.cim.PowerElectronicsConnection, self.cim.RatioTapChanger,
+            self.cim.PowerElectronicsConnection, 
+            self.cim.RatioTapChanger, self.cim.Recloser,
             self.cim.Sectionaliser, self.cim.ShuntCompensator, self.cim.Switch,
             self.cim.SynchronousMachine
         ]
@@ -376,11 +383,9 @@ class AddressableEquipment:
                              graph: dict) -> None:
         for class_type in self.addressable_classes:
             if class_type in graph:
-                if class_type not in addressable_equipment:
-                    addressable_equipment[class_type] = {}
-                for mrid in graph[class_type]:
-                    addressable_equipment[class_type][mrid] = graph[
-                        class_type][mrid]
+
+                for uuid in graph[class_type]:
+                    addressable_equipment.append(graph[class_type][uuid])
 
 
 @dataclass
@@ -397,11 +402,10 @@ class UnaddressableEquipment:
                                graph: dict) -> None:
         for class_type in self.unaddressable_classes:
             if class_type in graph:
-                if class_type not in unaddressable_equipment:
-                    unaddressable_equipment[class_type] = {}
-                for mrid in graph[class_type]:
-                    unaddressable_equipment[class_type][mrid] = graph[
-                        class_type][mrid]
+                # if class_type not in unaddressable_equipment:
+                #     unaddressable_equipment[class_type] = {}
+                for uuid in graph[class_type]:
+                    unaddressable_equipment.append(graph[class_type][uuid])
 
 
 def create_subgeographical_area(
