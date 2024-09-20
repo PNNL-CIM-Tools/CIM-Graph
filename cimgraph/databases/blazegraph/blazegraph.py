@@ -11,7 +11,7 @@ from SPARQLWrapper import JSON, POST, SPARQLWrapper
 
 import cimgraph.queries.sparql as sparql
 from cimgraph.databases import (ConnectionInterface, ConnectionParameters,
-                                QueryResponse, Graph)
+                                Graph, QueryResponse)
 
 _log = logging.getLogger(__name__)
 
@@ -118,6 +118,17 @@ class BlazegraphConnection(ConnectionInterface):
 
         return obj
 
+    def get_from_triple(self, subject:object, predicate:str, graph: Graph = {}) -> list[object]:
+        if not graph:
+            self.add_to_graph(subject, graph)
+        # Generate SPARQL query for user-specified triple string
+        sparql_message = sparql.get_triple_sparql(subject, predicate, self.connection_params)
+        # Execute SPARQL query
+        query_output = self.execute(sparql_message)
+        # Parse the query output
+        new_edges = self.edge_query_parser(query_output, graph, subject.__class__)
+        return new_edges
+
     def create_new_graph(self, container: object, graph: dict = {}) -> Graph:
         """
         Create a new graph structure for a CIM EquipmentContainer object.
@@ -142,27 +153,15 @@ class BlazegraphConnection(ConnectionInterface):
         # Parse query results and create new graph
         graph = self.parse_node_query(graph, query_output)
         return graph
-    
-    def create_feeder_area(self, container: object, graph: dict = {}) -> Graph:
-        self.add_to_graph(graph=graph, obj=container)
-        if not isinstance(container, self.cim.Feeder):
-            _log.error(f'Container is not a Feeder')
-            return graph
-        
-        sparql_message = sparql.get_triple_sparql(container, 'Feeder.FeederArea', self.connection_params)
-        # Execute SPARQL query
-        query_output = self.execute(sparql_message)
-        # Parse the query output
-        self.edge_query_parser(query_output, graph, self.cim.Feeder)
-        
-        return graph
-    
+
+
     def create_distributed_graph(self, area: object, graph: dict = {}) -> Graph:
         self.add_to_graph(graph=graph, obj=area)
+
         if not isinstance(area, self.cim.SubSchedulingArea):
             _log.error(f'Area object is not a SubSchedulingArea')
-            return graph
-        
+            raise TypeError('Area object is not a SubSchedulingArea')
+
         sparql_message = sparql.get_all_nodes_from_area(area, self.connection_params)
         # Execute SPARQL query
         query_output = self.execute(sparql_message)
@@ -172,7 +171,7 @@ class BlazegraphConnection(ConnectionInterface):
 
 
 
-        
+
 
     def parse_node_query(self, graph: dict, query_output: dict) -> Graph:
         """
@@ -187,12 +186,12 @@ class BlazegraphConnection(ConnectionInterface):
         """
         # Iterate through all rows of query output
         for result in query_output['results']['bindings']:
-            
+
             # Associated conducting equipment are JSON-LD strings
             eq = json.loads(result['Equipment']['value'])
             eq_id = eq['@id']
             eq_class = eq['@type']
-            
+
             # If equipment class is in data profile, add it to the graph also
             if eq_class in self.cim.__all__:
                 eq_class = eval(f'self.cim.{eq_class}')
@@ -217,6 +216,18 @@ class BlazegraphConnection(ConnectionInterface):
                 # Associate the terminal with the equipment and node
                 setattr(terminal, 'ConnectivityNode', node)
                 setattr(terminal, 'ConductingEquipment', equipment)
+            if 'Measurement' in result:
+                # Associated conducting equipment are JSON-LD strings
+                meas = json.loads(result['Measurement']['value'])
+                meas_id = meas['@id']
+                meas_class = meas['@type']
+                # Get uri strings of nodes and terminals
+                if meas_class in self.cim.__all__:
+                    meas_class = eval(f'self.cim.{meas_class}')
+                    measurement = self.create_object(graph, meas_class, meas_id)
+
+
+
 
         return graph
 
@@ -316,7 +327,7 @@ class BlazegraphConnection(ConnectionInterface):
             self.edge_query_parser(query_output, graph, cim_class, expand_graph=False)
 
     def edge_query_parser(self, query_output: QueryResponse,
-                          graph: Graph, cim_class: type, expand_graph=True) -> None:
+                          graph: Graph, cim_class: type, expand_graph=True) -> list[object]:
         """
         Parse the results of an edge query to update a graph structure.
 
@@ -326,6 +337,7 @@ class BlazegraphConnection(ConnectionInterface):
             cim_class (type): The CIM class for which to parse edges.
             expand_graph (bool, optional): Whether to expand the graph with new edges. Defaults to True.
         """
+        new_edges = []
         for result in query_output['results']['bindings']:
 
             if result['attribute']['value'] != 'type':  #skip 'type' and other single attributes
@@ -346,8 +358,9 @@ class BlazegraphConnection(ConnectionInterface):
                         continue
 
                     if expand_graph:
-                        self.create_edge(graph, cim_class, identifier,
+                        edge_object = self.create_edge(graph, cim_class, identifier,
                                          attribute, edge_class, edge_mRID)
+                        new_edges.append(edge_object)
                     else:
                         self.create_value(graph, cim_class, identifier, attribute, value)
 
@@ -359,6 +372,7 @@ class BlazegraphConnection(ConnectionInterface):
 
                     if enum_class in self.cim.__all__:  # if enumeration
                         edge_enum = eval(f'self.cim.{enum_class}(enum_value)')
+                        new_edges.append(edge_enum)
                         association = self.check_attribute(
                             cim_class, attribute)
                         if association is not None:
@@ -366,7 +380,9 @@ class BlazegraphConnection(ConnectionInterface):
                 else:
                     association = self.check_attribute(cim_class, attribute)
                     if association is not None:
+                        new_edges.append(value)
                         self.create_value(graph, cim_class, identifier, attribute, value)
+        return new_edges
 
     def upload(self, graph: Graph) -> None:
         """

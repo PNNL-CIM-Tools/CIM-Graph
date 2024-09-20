@@ -12,7 +12,7 @@ from uuid import UUID
 from defusedxml.ElementTree import parse
 
 from cimgraph.databases import (ConnectionInterface, ConnectionParameters,
-                                QueryResponse, Graph)
+                                Graph, QueryResponse)
 
 _log = logging.getLogger(__name__)
 
@@ -73,14 +73,14 @@ class XMLFile(ConnectionInterface):
     def get_object(self, mrid:str, graph = {}) -> object:
         pass
 
-    def create_feeder_area(self, container: object, graph: dict = {}) -> Graph:
-        _log.error('distributed models not supported for XML file read')
-        
-    
+    def get_from_triple(self, subject:object, predicate:str, graph: Graph = {}) -> list[object]:
+        pass
+
+
 
     def create_distributed_graph(self, area: object, graph: dict = {}) -> Graph:
         _log.error('distributed models not supported for XML file read')
-        
+
 
 
     def create_new_graph(self, container: object) -> Graph:

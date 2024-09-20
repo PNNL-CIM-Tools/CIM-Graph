@@ -3,8 +3,8 @@ from __future__ import annotations
 import enum
 import json
 import logging
-from uuid import UUID, uuid4
 from dataclasses import dataclass, field
+from uuid import UUID, uuid4
 
 from cimgraph.databases import ConnectionInterface
 
@@ -101,7 +101,7 @@ class GraphModel:
         else:
             _log.info('no instances of ' + str(cim_class.__name__) +
                       ' found in graph.')
-            
+
     def get_object(self, mRID:str|UUID) -> object:
         if type(mRID) != str:
             mRID = str(mRID)
@@ -109,25 +109,30 @@ class GraphModel:
         if obj is None:
             obj = self.connection.get_object(mRID.upper(), self.graph)
         if obj is None:
-            obj = self.connection.get_object('_' + mRID, self.graph)    
+            obj = self.connection.get_object('_' + mRID, self.graph)
         if obj is None:
-            obj = self.connection.get_object('_' + mRID.upper(), self.graph)  
+            obj = self.connection.get_object('_' + mRID.upper(), self.graph)
         if obj is None:
             _log.warning(f'Could not find any objects matching {mRID}')
         return obj
 
-    def pprint(self,
-               cim_class: type,
-               show_empty: bool = False,
-               json_ld: bool = False,
-               use_names: bool = False) -> None:
+    def get_from_triple(self, subject:object, predicate:str, add_to_graph = True) -> list[object|str]:
+        if add_to_graph:
+            new_edges = self.connection.get_from_triple(subject, predicate, self.graph)
+        else:
+            new_edges = self.connection.get_from_triple(subject, predicate)
+        return new_edges
+
+
+
+
+    def pprint(self, cim_class: type, show_empty: bool = False,
+               json_ld: bool = False, use_names: bool = False) -> None:
         if cim_class in self.graph:
-            json_dump = self.__dumps__(cim_class, show_empty, json_ld,
-                                       use_names)
+            json_dump = self.__dumps__(cim_class, show_empty, json_ld, use_names)
         else:
             json_dump = {}
-            _log.info('no instances of ' + str(cim_class.__name__) +
-                      ' found in graph.')
+            _log.info(f'no instances of {cim_class.__name__} found in graph.')
         print(json.dumps(json_dump, indent=4))
 
     def upload(self) -> None:
@@ -160,7 +165,6 @@ class GraphModel:
 
         else:
             dump = {}
-            _log.info('no instances of ' + str(cim_class.__name__) +
-                      ' found in catalog.')
+            _log.info(f'no instances of {cim_class.__name__} found in graph.')
 
         return dump

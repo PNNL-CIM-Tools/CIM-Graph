@@ -1,11 +1,12 @@
 from __future__ import annotations
+
 from uuid import UUID
 
-from cimgraph.databases import ConnectionInterface
+from cimgraph.databases import ConnectionParameters
 
 
 def get_all_attributes_sparql(graph:dict[type, dict[UUID, object]], cim_class: str, uuid_list: list[UUID],
-                              connection_params: ConnectionInterface) -> str:
+                              connection_params: ConnectionParameters) -> str:
     """
     Generates SPARQL query string for a given catalog of objects and feeder id
     Args:
@@ -43,7 +44,7 @@ def get_all_attributes_sparql(graph:dict[type, dict[UUID, object]], cim_class: s
     query_message += """
 
         ?eq r:type cim:%s.
-    
+
         {?eq (cim:|!cim:) ?val.
          ?eq ?attr ?val.}
         UNION

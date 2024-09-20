@@ -1,6 +1,9 @@
 from __future__ import annotations
-from cimgraph.databases import ConnectionParameters
+
 import logging
+
+from cimgraph.databases import ConnectionParameters
+
 _log = logging.getLogger(__name__)
 
 
@@ -39,7 +42,7 @@ def get_all_nodes_from_container(container: object, connection_params: Connectio
 
     # get ConnectivityNode objects associated with Container
     query_message += '''     {
-        
+
         ?node cim:ConnectivityNode.ConnectivityNodeContainer ?c.
         ?t cim:Terminal.ConnectivityNode ?node.
         ?t cim:Terminal.ConductingEquipment ?eq.
@@ -62,7 +65,7 @@ def get_all_nodes_from_container(container: object, connection_params: Connectio
             ?t cim:Terminal.ConnectivityNode ?node.
             }
         ?eq a ?eq_cls.
-          
+
         bind(strafter(str(?node),"%s") as ?ConnectivityNode).
         bind(strafter(str(?t),"%s") as ?Terminal).
         bind(strafter(str(?eq),"%s") as ?eq_id).
@@ -155,7 +158,7 @@ def get_all_nodes_from_area(area: object, connection_params: ConnectionParameter
         bind(iri(concat("%s", ?identifier)) as ?c).
         """ % (container_uri, split)
 
-    
+
     # get Equipment objects associated with Container
     query_message += '''
 
@@ -168,11 +171,12 @@ def get_all_nodes_from_area(area: object, connection_params: ConnectionParameter
         }
         OPTIONAL {?meas cim:Measurement.Terminal ?t.
         ?meas a ?m_cls.
+        bind(strafter(str(?meas),"%s") as ?meas_id).
         }
-          
+
         bind(strafter(str(?node),"%s") as ?ConnectivityNode).
         bind(strafter(str(?t),"%s") as ?Terminal).
-        bind(strafter(str(?meas),"%s") as ?meas_id).
+
         bind(strafter(str(?eq),"%s") as ?eq_id).
 
         bind(concat("{\\"@id\\":\\"", str(?eq_id),"\\",\\"@type\\":\\"",strafter(str(?eq_cls),"%s"), "\\"}") as ?Equipment)

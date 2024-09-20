@@ -1,10 +1,11 @@
 from __future__ import annotations
+
 from uuid import UUID
 
-from cimgraph.databases import ConnectionInterface
+from cimgraph.databases import ConnectionParameters
 
 
-def get_object_sparql(mrid: str, connection_params: ConnectionInterface) -> str:
+def get_object_sparql(mrid: str, connection_params: ConnectionParameters) -> str:
     """
     Generates SPARQL query string for a given catalog of objects and feeder id
     Args:
@@ -32,7 +33,7 @@ def get_object_sparql(mrid: str, connection_params: ConnectionInterface) -> str:
     query_message += '''
     VALUES ?identifier {"%s"}''' %mrid
     # add all equipment mRID
-    
+
     query_message += f'''
         bind(iri(concat("{split}", ?identifier)) as ?eq)'''
 
