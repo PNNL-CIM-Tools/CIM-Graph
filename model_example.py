@@ -15,7 +15,7 @@ def get_lines_buses(network_area):
         network_area.get_all_attributes(cim.ACLineSegment)
         network_area.get_all_attributes(cim.ACLineSegmentPhase)
         network_area.get_all_attributes(cim.Terminal)
-        
+
         line_ids = list(network_area.typed_catalog[cim.ACLineSegment].keys())
         for line_id in line_ids:
             line = network_area.typed_catalog[cim.ACLineSegment][line_id]
@@ -64,7 +64,7 @@ def sort_impedance_by_line(network_area):
 
             if line.WireSpacingInfo is not None:
                 for position in line.WireSpacingInfo.WirePositions:
-                    print('seq:', position.sequenceNumber, ' x:', position.xCoord, ' y:', position.yCoord)    
+                    print('seq:', position.sequenceNumber, ' x:', position.xCoord, ' y:', position.yCoord)
 
             if line.PerLengthImpedance is not None:
                 for data in line.PerLengthImpedance.PhaseImpedanceData:
@@ -119,7 +119,7 @@ def sort_line_by_impedance(network_area):
     else:
         print('no PerLengthPhaseImpedance objects in area')
 
-        
+
 # get transformertank data
 def get_tank_impedances(network_area):
     print('EXAMPLE 5: GET TRANSFORMER TANK IMPEDANCES')
@@ -132,7 +132,7 @@ def get_tank_impedances(network_area):
         network_area.get_all_attributes(cim.ShortCircuitTest)
         network_area.get_all_attributes(cim.NoLoadTest)
         network_area.get_all_attributes(cim.Terminal)
-        
+
         for tank in network_area.typed_catalog[cim.TransformerTank].values():
             print('\n name:', tank.name)
             for end in tank.TransformerTankEnds:
@@ -157,8 +157,8 @@ def get_tank_impedances(network_area):
                     print('energisedEndStep:', short_circuit_test.energisedEndStep)
                     print('groundedEndStep:', short_circuit_test.groundedEndStep)
                     print('leakageImpedance:', short_circuit_test.leakageImpedance)
-        
-        
+
+
 # sort PowerElectronicsUnits
 def get_inverter_buses(network_area):
     if cim.PowerElectronicsConnection in network_area.typed_catalog:
@@ -166,7 +166,7 @@ def get_inverter_buses(network_area):
         network_area.get_all_attributes(cim.PowerElectronicsConnectionPhase)
         network_area.get_all_attributes(cim.Terminal)
         network_area.get_all_attributes(cim.Analog)
-        
+
         print('\n \n EXAMPLE 6: GET ALL INVERTER PHASES AND BUSES')
         for pec in network_area.typed_catalog[cim.PowerElectronicsConnection].values():
             print('\n name: ', pec.name, pec.mRID)
@@ -175,11 +175,11 @@ def get_inverter_buses(network_area):
             print('bus: ', node1.name, node1.mRID)
             for pec_phs in pec.PowerElectronicsConnectionPhases:
                 print('phase ', pec_phs.phase, ': ', pec_phs.mRID)
-                
+
             for meas in pec.Measurements:
                 print('Measurement: ', meas.name, meas.mRID)
                 print('type:', meas.measurementType, 'phases:', meas.phases)
-            
+
 #sort EnergyConsumers
 def get_load_buses(network_area):
     if cim.EnergyConsumer in network_area.typed_catalog:
@@ -195,16 +195,16 @@ def get_load_buses(network_area):
             print('p = ', load.p, 'q = ', load.q)
             node1 = load.Terminals[0].ConnectivityNode
             print('bus: ', node1.name, node1.mRID)
-            
+
             for load_phs in load.EnergyConsumerPhase:
                 print('phases: ', load_phs.phase)
                 print('p = ', load_phs.p, 'q = ', load_phs.q)
-                
+
             for meas in load.Measurements:
                 print('Measurement: ', meas.name, meas.mRID)
                 print('type:', meas.measurementType, 'phases:', meas.phases)
-                
-                
+
+
 def get_power_transformers(network_area):
     if cim.PowerTransformer in network_area.typed_catalog:
         network_area.get_all_attributes(cim.PowerTransformer)
@@ -215,7 +215,7 @@ def get_power_transformers(network_area):
         network_area.get_all_attributes(cim.Terminal)
         network_area.get_all_attributes(cim.Analog)
         network_area.get_all_attributes(cim.Discrete)
-        
+
 
         for xfmr in network_area.typed_catalog[cim.PowerTransformer].values():
             print('\n name: ', xfmr.name, xfmr.mRID)
@@ -234,7 +234,7 @@ def get_power_transformers(network_area):
             for meas in xfmr.Measurements:
                 print('Measurement: ', meas.name, meas.mRID)
                 print('type:', meas.measurementType, 'phases:', meas.phases)
-                
+
 def _main():
     #feeder_mrid = "_C1C3E687-6FFD-C753-582B-632A27E28507"  # 123 bus
     feeder_mrid = "_49AD8E07-3BF9-A4E2-CB8F-C3722F837B62"  # 13 bus
@@ -243,20 +243,20 @@ def _main():
     #feeder_mrid = "_67AB291F-DCCD-31B7-B499-338206B9828F" # J1
     #feeder_mrid = "_9CE150A8-8CC5-A0F9-B67E-BBD8C79D3095"  # R2 12.47 3
     #feeder_mrid = "_EE71F6C9-56F0-4167-A14E-7F4C71F10EAA" #9500 node
-    
+
     # Get Topology Message
     gapps = GridappsdConnection(feeder_mrid)
     topology_response = get_topology_response(feeder_mrid)
-    
-    
+
+
     # Blazegraph connection for running outside the container
     params = ConnectionParameters([Parameter(key="url", value="http://localhost:8889/bigdata/namespace/kb/sparql")])
     bg = BlazegraphConnection(params, 'rc4_2021')
-    
+
     # Initialize Model
     feeder = cim.Feeder(mRID=feeder_mrid)
     network = DistributedModel(connection=bg, feeder=feeder, topology=topology_response['feeders'])
-    
+
     # Run examples
     switch_area = network.switch_areas[0]
     # EXAMPLE 1 - Get phase, bus info about ACLineSegments
@@ -283,4 +283,3 @@ def _main():
 if __name__ == "__main__":
 
     _main()
-

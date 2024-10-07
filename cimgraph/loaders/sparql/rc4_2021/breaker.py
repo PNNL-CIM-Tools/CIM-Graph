@@ -6,28 +6,28 @@ from typing import Dict, List, Optional
 import cimgraph.data_profile.rc4_2021 as cim
 
 
-def get_all_attributes(feeder_mrid: str, typed_catalog: dict[type, dict[str, object]]) -> str: 
+def get_all_attributes(feeder_mrid: str, typed_catalog: dict[type, dict[str, object]]) -> str:
     """ Generates SPARQL query string for a given catalog of objects and feeder id
     Args:
         feeder_mrid (str | Feeder object): The mRID of the feeder or feeder object
-        typed_catalog (dict[type, dict[str, object]]): The typed catalog of CIM objects organized by 
+        typed_catalog (dict[type, dict[str, object]]): The typed catalog of CIM objects organized by
             class type and object mRID
     Returns:
         query_message: query string that can be used in blazegraph connection or STOMP client
     """
-    
+
     mrid_list = list(typed_catalog[cim.Breaker].keys())
-    
+
     query_message = """
         PREFIX r:  <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
         PREFIX cim:  <http://iec.ch/TC57/CIM100#>
-        SELECT ?mRID ?name ?BaseVoltage ?Location ?inTransitTime ?breakingCapacity ?ratedCurrent ?normalOpen 
+        SELECT ?mRID ?name ?BaseVoltage ?Location ?inTransitTime ?breakingCapacity ?ratedCurrent ?normalOpen
         ?open ?retained
-        (group_concat(distinct ?Terminal; separator=";") as ?Terminals) 
-        (group_concat(distinct ?Measurement; separator=";") as ?Measurements) 
-        (group_concat(distinct ?Switch_Phase; separator=";") as ?SwitchPhase) 
+        (group_concat(distinct ?Terminal; separator=";") as ?Terminals)
+        (group_concat(distinct ?Measurement; separator=";") as ?Measurements)
+        (group_concat(distinct ?Switch_Phase; separator=";") as ?SwitchPhase)
 
-        WHERE {          
+        WHERE {
           ?eq r:type cim:Breaker.
           VALUES ?fdrid {"%s"}
           VALUES ?mRID {"""%feeder_mrid
@@ -35,12 +35,12 @@ def get_all_attributes(feeder_mrid: str, typed_catalog: dict[type, dict[str, obj
     for mrid in mrid_list:
         query_message += ' "%s" \n'%mrid
     # add all attributes
-    query_message += """               } 
+    query_message += """               }
         ?eq cim:Equipment.EquipmentContainer ?fdr.
         ?fdr cim:IdentifiedObject.mRID ?fdrid.
         ?eq cim:IdentifiedObject.mRID ?mRID.
         ?eq cim:IdentifiedObject.name ?name.
-        
+
         OPTIONAL {?eq cim:ConductingEquipment.BaseVoltage ?bv.
         ?bv cim:IdentifiedObject.mRID ?BaseVoltage.}
 
@@ -56,7 +56,7 @@ def get_all_attributes(feeder_mrid: str, typed_catalog: dict[type, dict[str, obj
                   bind(concat(str(?meas_id),",",strafter(str(?meas_cls),"CIM100#")) as ?Measurement).}
 
         OPTIONAL {?eq cim:Breaker.inTransitTime ?inTransitTime.}
-        
+
         OPTIONAL {?eq cim:ProtectedSwitch.breakingCapacity ?breakingCapacity.}
         OPTIONAL {?eq cim:Switch.ratedCurrent ?ratedCurrent.}
         OPTIONAL {?eq cim:Switch.normalOpen ?normalOpen.}
@@ -66,7 +66,7 @@ def get_all_attributes(feeder_mrid: str, typed_catalog: dict[type, dict[str, obj
         OPTIONAL {?phs cim:SwitchPhase.Switch ?eq.
                   ?phs cim:IdentifiedObject.mRID ?Switch_Phase.}
         }
-        GROUP by ?mRID ?name ?BaseVoltage ?Location ?inTransitTime ?breakingCapacity ?ratedCurrent ?normalOpen 
+        GROUP by ?mRID ?name ?BaseVoltage ?Location ?inTransitTime ?breakingCapacity ?ratedCurrent ?normalOpen
         ?open ?retained
 
         ORDER by  ?name

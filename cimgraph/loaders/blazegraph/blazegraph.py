@@ -27,7 +27,7 @@ class BlazegraphConnection(ConnectionInterface):
 
     def disconnect(self):
         self.sparql_obj = None
-        
+
     def execute(self, query_message: str) -> QueryResponse:
         self.connect()
         self.sparql_obj.setQuery(query_message)
@@ -35,10 +35,10 @@ class BlazegraphConnection(ConnectionInterface):
         query_output = self.sparql_obj.query().convert()
         return query_output
 
-        
+
     def create_default_instances(self, feeder_mrid: str | cim.Feeder, mrid_list: List[str]) -> List[object]:
-        """ 
-        Creates empty CIM objects with the correct class type with mRID and name fields populated based on 
+        """
+        Creates empty CIM objects with the correct class type with mRID and name fields populated based on
         a list of mRID strings.
         Args:
             feeder_mrid (str | Feeder object): The mRID of the feeder or feeder object
@@ -51,7 +51,7 @@ class BlazegraphConnection(ConnectionInterface):
         #execute sparql query
         query_output = self.execute(sparql_message)
         # parse query results and add new CIM objects to list
-        object_list = [] 
+        object_list = []
         for result in query_output['results']['bindings']:
            # print(result)
             cls = result['class']['value']
@@ -62,15 +62,15 @@ class BlazegraphConnection(ConnectionInterface):
             except:
                 _log.warning('object class missing from data profile:' + str(cls))
         return object_list
-    
-    
-          
+
+
+
     def get_all_attributes(self, feeder_mrid: str | cim.Feeder, typed_catalog: dict[type, dict[str, object]], cim_class: type):
-        """ Populates all available attribute fields of CIM objects in the typed catalog of a specified CIM class. 
+        """ Populates all available attribute fields of CIM objects in the typed catalog of a specified CIM class.
         Objects are stored in memory, so no values are returned.
         Args:
         feeder_mrid (str | Feeder object): The mRID of the feeder or feeder object
-        typed_catalog (dict[type, dict[str, object]]): The typed catalog of CIM objects organized by 
+        typed_catalog (dict[type, dict[str, object]]): The typed catalog of CIM objects organized by
             class type and object mRID
         cim_class (type): The CIM class type (e.g. cim:ACLineSegment)
         Returns:
@@ -84,18 +84,18 @@ class BlazegraphConnection(ConnectionInterface):
         for result in query_output['results']['bindings']: #iterate through rows of response
             attribute_list = result.keys()
             mRID = result['mRID']['value']
-            for attribute in attribute_list: 
+            for attribute in attribute_list:
                 try: #check if attribute is in data profile
                     attribute_type = cim_class.__dataclass_fields__[attribute].type
                 except:
-                    #replace with warning message                       
+                    #replace with warning message
                     _log.warning('attribute '+str(attribute) +' missing from '+str(cim_class.__name__))
-                    
+
                 if 'List' in attribute_type: #check if attribute is association to a list of class objects
                     if '\'' in attribute_type: #handling inconsistent '' marks in data profile
                         at_cls = re.match(r'List\[\'(.*)\']',attribute_type)
                         attribute_class = at_cls.group(1)
-                    else:        
+                    else:
                         at_cls = re.match(r'List\[(.*)]',attribute_type)
                         attribute_class = at_cls.group(1)
                     # pass query response of associated objects to list parser
@@ -104,7 +104,7 @@ class BlazegraphConnection(ConnectionInterface):
                     if '\'' in attribute_type: #handling inconsistent '' marks in data profile
                         at_cls = re.match(r'Optional\[\'(.*)\']',attribute_type)
                         attribute_class = at_cls.group(1)
-                    else:        
+                    else:
                         at_cls = re.match(r'Optional\[(.*)]',attribute_type)
                         attribute_class = at_cls.group(1)
 
@@ -113,12 +113,12 @@ class BlazegraphConnection(ConnectionInterface):
                 else: #otherwise assign query response
 
                     self.query_parser(feeder_mrid, typed_catalog, cim_class, mRID, result, attribute, attribute_class, ';')
-                    
+
     def get_attributes_query(self, feeder_mrid: str | cim.Feeder, typed_catalog: dict[type, dict[str, object]], cim_class: type):
         """ Generates SPARQL query for a given catalog of objects and feeder id
         Args:
             feeder_mrid (str | Feeder object): The mRID of the feeder or feeder object
-            typed_catalog (dict[type, dict[str, object]]): The typed catalog of CIM objects organized by 
+            typed_catalog (dict[type, dict[str, object]]): The typed catalog of CIM objects organized by
                 class type and object mRID
             cim_class (type): The CIM class type (e.g. cim:ACLineSegment)
         Returns:
@@ -127,10 +127,10 @@ class BlazegraphConnection(ConnectionInterface):
         """
         sparql_func = getattr(self.sparql, f"{cim_class.__name__}SPARQL")
         sparql_message = sparql_func.get_all_attributes(feeder_mrid, typed_catalog)
-        
+
         return sparql_message
-    
-    
+
+
     def query_parser(self, feeder_mrid, typed_catalog:Dict, class_name:str, mRID:str, query:List, attribute:str, attribute_class:str, separator:str) -> object | str:
         value = query[attribute]['value']
         #if attribute is CIM class, then build CIM objects. otherwise assign to obj_list
@@ -178,7 +178,7 @@ class BlazegraphConnection(ConnectionInterface):
 
 
     def create_object(self, typed_catalog, class_type, mRID):
-        
+
         if class_type not in typed_catalog.keys():
             typed_catalog[class_type] = {}
 
