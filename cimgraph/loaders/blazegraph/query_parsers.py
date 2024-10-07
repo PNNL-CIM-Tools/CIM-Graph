@@ -34,14 +34,14 @@ def query_list_parser(conn, cim, feeder_mrid, typed_catalog:Dict, class_name:typ
         obj_list = values
     #set attribute of queried object to list parsed from query results
     setattr(typed_catalog[class_name][mRID], attribute, obj_list)
-    
+
 
 def build_cim_object(conn, cim, feeder_mrid, typed_catalog:Dict, mRID_list:List[str]) -> List(object):
     sparql_message = sparql.get_class_type_sparql(feeder_mrid, mRID_list)
     #execute sparql query
     query_output = conn.execute(sparql_message)
     # parse query results and add new CIM objects to list
-    obj_list = [] 
+    obj_list = []
 #     print(query_output)
     for result in query_output['results']['bindings']:
        # print(result)
@@ -50,7 +50,7 @@ def build_cim_object(conn, cim, feeder_mrid, typed_catalog:Dict, mRID_list:List[
         mRID = result['mRID']['value']
         name = result['name']['value']
         if len(mRID) > 0:
-            try: 
+            try:
                 class_type = eval(f"cim.{cls}")
                 #add class to typed_catalog if not already defined
                 if class_type not in typed_catalog.keys():
@@ -69,5 +69,3 @@ def build_cim_object(conn, cim, feeder_mrid, typed_catalog:Dict, mRID_list:List[
 
             obj_list.append(obj)
     return obj_list
-
-
