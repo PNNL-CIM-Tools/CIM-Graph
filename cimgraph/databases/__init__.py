@@ -115,11 +115,15 @@ class ConnectionInterface(ABC):
                     obj_list.append(value)
 
             elif 'bool' in attribute_type:
-                try:
-                    setattr(graph[cim_class][identifier], association, bool(value))
-                except:
+                if str(value).lower() == 'true' or str(value).lower() == '1':
+                    value = True
+                elif str(value).lower() == 'false' or str(value).lower() == '0':
+                    value = False
+                else:
                     _log.warning(f'{value} for {cim_class.__name__}.{association} is not a boolean')
-                    setattr(graph[cim_class][identifier], association, value)
+
+                setattr(graph[cim_class][identifier], association, value)
+
 
             elif 'int' in attribute_type:
                 try:

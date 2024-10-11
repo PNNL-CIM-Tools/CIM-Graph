@@ -142,6 +142,77 @@ class Identity():
         mrid_is_capitalized:bool = False
 
 @dataclass(repr=False)
+class AreaConfiguration(Identity):
+    '''
+    Alternate configurations for abnormal feeder switching conditions. The
+    distribution feeder can be segmented into source and sink SubSchedulingArea
+    to represent upstream and downstream sections relative to the head terminal.
+    '''
+
+    priority: Optional[ int ] = field(
+        default = None,
+        metadata = {
+            'type': 'Attribute',
+            'minOccurs': '0',
+            'maxOccurs': '1',
+            'docstring':
+                '''
+                Value 0 means ignore priority. 1 means the highest priority, 2 is the second
+                highest priority.
+                '''
+        })
+    '''
+    Value 0 means ignore priority. 1 means the highest priority, 2 is the second
+    highest priority.
+    '''
+
+    EnergizedArea: Optional[ SubSchedulingArea ] = field(
+        default = None,
+        metadata = {
+            'type': 'Association',
+            'minOccurs': '0',
+            'maxOccurs': '1',
+            'inverse': 'SubSchedulingArea.SinkConfiguration',
+            'docstring':
+                '''
+                The sink area being energized by the source area.
+                '''
+        })
+    '''
+    The sink area being energized by the source area.
+    '''
+
+    EnergizingArea: Optional[ SubSchedulingArea ] = field(
+        default = None,
+        metadata = {
+            'type': 'Association',
+            'minOccurs': '0',
+            'maxOccurs': '1',
+            'inverse': 'SubSchedulingArea.SourceConfiguration',
+            'docstring':
+                '''
+                The source area which is energizing the sink area
+                '''
+        })
+    '''
+    The source area which is energizing the sink area
+    '''
+
+@dataclass(repr=False)
+class CompositeSwitch(Identity):
+    '''
+    A model of a set of individual Switches normally enclosed within the same
+    cabinet and possibly with interlocks that restrict the combination of switch
+    positions. These are typically found in medium voltage distribution networks.
+    A CompositeSwitch could represent a Ring-Main-Unit (RMU), or pad-mounted
+    switchgear, with primitive internal devices such as an internal bus-bar
+    plus 3 or 4 internal switches each of which may individually be open or
+    closed. A CompositeSwitch and a set of contained Switches can also be used
+    to represent a multi-position switch e.g. a switch that can connect a circuit
+    to Ground, Open or Busbar.
+    '''
+
+@dataclass(repr=False)
 class IdentifiedObject(Identity):
     '''
     This is a root class to provide common identification for all classes needing
@@ -294,6 +365,22 @@ class ACDCTerminal(IdentifiedObject):
     point" for a two terminal branch.
     '''
 
+    BusNameMarker: Optional[ BusNameMarker ] = field(
+        default = None,
+        metadata = {
+            'type': 'Association',
+            'minOccurs': '0',
+            'maxOccurs': '1',
+            'inverse': 'BusNameMarker.Terminal',
+            'docstring':
+                '''
+                The bus name marker used to name the bus (topological node).
+                '''
+        })
+    '''
+    The bus name marker used to name the bus (topological node).
+    '''
+
     Measurements: list[ Measurement ] = field(
         default_factory = list,
         metadata = {
@@ -321,6 +408,22 @@ class Terminal(ACDCTerminal):
     '''
     An AC electrical connection point to a piece of conducting equipment. Terminals
     are connected at physical connection points called connectivity nodes.
+    '''
+
+    BoundedSchedulingArea: Optional[ SubSchedulingArea ] = field(
+        default = None,
+        metadata = {
+            'type': 'Association',
+            'minOccurs': '0',
+            'maxOccurs': '1',
+            'inverse': 'SubSchedulingArea.BoundaryTerminals',
+            'docstring':
+                '''
+                The SubSchedulingArea bounded by the specific Terminal
+                '''
+        })
+    '''
+    The SubSchedulingArea bounded by the specific Terminal
     '''
 
     ConductingEquipment: Optional[ ConductingEquipment ] = field(
@@ -402,9 +505,156 @@ class Terminal(ACDCTerminal):
     '''
 
 @dataclass(repr=False)
+class AssetInfo(IdentifiedObject):
+    '''
+    Set of attributes of an asset, representing typical datasheet information
+    of a physical device that can be instantiated and shared in different data
+    exchange contexts:
+    - as attributes of an asset instance (installed or in stock)
+    - as attributes of an asset model (product by a manufacturer)
+    - as attributes of a type asset (generic type of an asset as used in designs/extension
+    planning).
+    '''
+
+@dataclass(repr=False)
 class BaseVoltage(IdentifiedObject):
     '''
     Defines a system base voltage which is referenced.
+    '''
+
+    nominalVoltage: Optional[ float | Voltage ] = field(
+        default = None,
+        metadata = {
+            'type': 'Attribute',
+            'minOccurs': '0',
+            'maxOccurs': '1',
+            'docstring':
+                '''
+                The power system resource's base voltage.
+                '''
+        })
+    '''
+    The power system resource's base voltage.
+    '''
+
+    ConductingEquipment: list[ ConductingEquipment ] = field(
+        default_factory = list,
+        metadata = {
+            'type': 'Association',
+            'minOccurs': '0',
+            'maxOccurs': 'unbounded',
+            'inverse': 'ConductingEquipment.BaseVoltage',
+            'docstring':
+                '''
+                All conducting equipment with this base voltage. Use only when there is
+                no voltage level container used and only one base voltage applies. For
+                example, not used for transformers.
+                '''
+        })
+    '''
+    All conducting equipment with this base voltage. Use only when there is
+    no voltage level container used and only one base voltage applies. For
+    example, not used for transformers.
+    '''
+
+    TopologicalNode: list[ TopologicalNode ] = field(
+        default_factory = list,
+        metadata = {
+            'type': 'Association',
+            'minOccurs': '0',
+            'maxOccurs': 'unbounded',
+            'inverse': 'TopologicalNode.BaseVoltage',
+            'docstring':
+                '''
+                The topological nodes at the base voltage.
+                '''
+        })
+    '''
+    The topological nodes at the base voltage.
+    '''
+
+    VoltageLevel: list[ VoltageLevel ] = field(
+        default_factory = list,
+        metadata = {
+            'type': 'Association',
+            'minOccurs': '0',
+            'maxOccurs': 'unbounded',
+            'inverse': 'VoltageLevel.BaseVoltage',
+            'docstring':
+                '''
+                The voltage levels having this base voltage.
+                '''
+        })
+    '''
+    The voltage levels having this base voltage.
+    '''
+
+@dataclass(repr=False)
+class BusNameMarker(IdentifiedObject):
+    '''
+    Used to apply user standard names to topology buses. Typically used for
+    "bus/branch" case generation. Associated with one or more terminals that
+    are normally connected with the bus name. The associated terminals are
+    normally connected by non-retained switches. For a ring bus station configuration,
+    all busbar terminals in the ring are typically associated. For a breaker
+    and a half scheme, both busbars would normally be associated. For a ring
+    bus, all busbars would normally be associated. For a "straight" busbar
+    configuration, normally only the main terminal at the busbar would be associated.
+    '''
+
+    priority: Optional[ int ] = field(
+        default = None,
+        metadata = {
+            'type': 'Attribute',
+            'minOccurs': '0',
+            'maxOccurs': '1',
+            'docstring':
+                '''
+                Priority of bus name marker for use as topology bus name. Use 0 for don
+                t care. Use 1 for highest priority. Use 2 as priority is less than 1 and
+                so on.
+                '''
+        })
+    '''
+    Priority of bus name marker for use as topology bus name. Use 0 for don
+    t care. Use 1 for highest priority. Use 2 as priority is less than 1 and
+    so on.
+    '''
+
+    Terminal: list[ ACDCTerminal ] = field(
+        default_factory = list,
+        metadata = {
+            'type': 'Association',
+            'minOccurs': '0',
+            'maxOccurs': 'unbounded',
+            'inverse': 'ACDCTerminal.BusNameMarker',
+            'docstring':
+                '''
+                The terminals associated with this bus name marker.
+                '''
+        })
+    '''
+    The terminals associated with this bus name marker.
+    '''
+
+    TopologicalNode: Optional[ TopologicalNode ] = field(
+        default = None,
+        metadata = {
+            'type': 'Association',
+            'minOccurs': '0',
+            'maxOccurs': '1',
+            'inverse': 'TopologicalNode.BusNameMarker',
+            'docstring':
+                '''
+                A user defined topological node that was originally defined in a planning
+                model not yet having topology described by ConnectivityNodes. Once ConnectivityNodes
+                has been created they may linked to user defined ToplogicalNdes using BusNameMarkers.
+                '''
+        })
+    '''
+    A user defined topological node that was originally defined in a planning
+    model not yet having topology described by ConnectivityNodes. Once ConnectivityNodes
+    has been created they may linked to user defined ToplogicalNdes using BusNameMarkers.
     '''
 
 @dataclass(repr=False)
@@ -647,6 +897,20 @@ class ProtectionFunctionBlock(FunctionBlock):
     '''
     '''
 
+    ProtectionEquipment: Optional[ ProtectionEquipment ] = field(
+        default = None,
+        metadata = {
+            'type': 'Association',
+            'minOccurs': '0',
+            'maxOccurs': '1',
+            'inverse': 'ProtectionEquipment.ProtectionFunctionBlock',
+            'docstring':
+                '''
+                '''
+        })
+    '''
+    '''
+
     SettingsGroup: list[ ProtectionSettingsGroup ] = field(
         default_factory = list,
         metadata = {
@@ -773,6 +1037,103 @@ class GeographicalRegion(IdentifiedObject):
     '''
 
 @dataclass(repr=False)
+class Location(IdentifiedObject):
+    '''
+    The place, scene, or point of something where someone or something has
+    been, is, and/or will be at a given moment in time. It can be defined with
+    one or more postition points (coordinates) in a given coordinate system.
+    '''
+
+    direction: Optional[ str ] = field(
+        default = None,
+        metadata = {
+            'type': 'Attribute',
+            'minOccurs': '0',
+            'maxOccurs': '1',
+            'docstring':
+                '''
+                (if applicable) Direction that allows field crews to quickly find a given
+                asset. For a given location, such as a street address, this is the relative
+                direction in which to find the asset. For example, a streetlight may be
+                located at the 'NW' (northwest) corner of the customer's site, or a usage
+                point may be located on the second floor of an apartment building.
+                '''
+        })
+    '''
+    (if applicable) Direction that allows field crews to quickly find a given
+    asset. For a given location, such as a street address, this is the relative
+    direction in which to find the asset. For example, a streetlight may be
+    located at the 'NW' (northwest) corner of the customer's site, or a usage
+    point may be located on the second floor of an apartment building.
+    '''
+
+    geoInfoReference: Optional[ str ] = field(
+        default = None,
+        metadata = {
+            'type': 'Attribute',
+            'minOccurs': '0',
+            'maxOccurs': '1',
+            'docstring':
+                '''
+                (if applicable) Reference to geographical information source, often external
+                to the utility.
+                '''
+        })
+    '''
+    (if applicable) Reference to geographical information source, often external
+    to the utility.
+    '''
+
+    type: Optional[ str ] = field(
+        default = None,
+        metadata = {
+            'type': 'Attribute',
+            'minOccurs': '0',
+            'maxOccurs': '1',
+            'docstring':
+                '''
+                Classification by utility's corporate standards and practices, relative
+                to the location itself (e.g., geographical, functional accounting, etc.,
+                not a given property that happens to exist at that location).
+                '''
+        })
+    '''
+    Classification by utility's corporate standards and practices, relative
+    to the location itself (e.g., geographical, functional accounting, etc.,
+    not a given property that happens to exist at that location).
+    '''
+
+    Measurements: list[ Measurement ] = field(
+        default_factory = list,
+        metadata = {
+            'type': 'Association',
+            'minOccurs': '0',
+            'maxOccurs': 'unbounded',
+            'inverse': 'Measurement.Locations',
+            'docstring':
+                '''
+                '''
+        })
+    '''
+    '''
+
+    PowerSystemResources: list[ PowerSystemResource ] = field(
+        default_factory = list,
+        metadata = {
+            'type': 'Association',
+            'minOccurs': '0',
+            'maxOccurs': 'unbounded',
+            'inverse': 'PowerSystemResource.Location',
+            'docstring':
+                '''
+                All power system resources at this location.
+                '''
+        })
+    '''
+    All power system resources at this location.
+    '''
+
+@dataclass(repr=False)
 class Measurement(IdentifiedObject):
     '''
     A Measurement represents any measured, calculated or non-measured non-calculated
@@ -820,6 +1181,47 @@ class Measurement(IdentifiedObject):
     When the measurementType is set to "Specialization", the type of Measurement
     is defined in more detail by the specialized class which inherits from
     Measurement.
+    '''
+
+    phases: Optional[ str | PhaseCode ] = field(
+        default = None,
+        metadata = {
+            'type': 'enumeration',
+            'minOccurs': '0',
+            'maxOccurs': '1',
+            'docstring':
+                '''
+                Indicates to which phases the measurement applies and avoids the need to
+                use 'measurementType' to also encode phase information (which would explode
+                the types). The phase information in Measurement, along with 'measurementType'
+                and 'phases' uniquely defines a Measurement for a device, based on normal
+                network phase. Their meaning will not change when the computed energizing
+                phasing is changed due to jumpers or other reasons.
+                If the attribute is missing three phases (ABC) shall be assumed.
+                '''
+        })
+    '''
+    Indicates to which phases the measurement applies and avoids the need to
+    use 'measurementType' to also encode phase information (which would explode
+    the types). The phase information in Measurement, along with 'measurementType'
+    and 'phases' uniquely defines a Measurement for a device, based on normal
+    network phase. Their meaning will not change when the computed energizing
+    phasing is changed due to jumpers or other reasons.
+    If the attribute is missing three phases (ABC) shall be assumed.
+    '''
+
+    Locations: list[ Location ] = field(
+        default_factory = list,
+        metadata = {
+            'type': 'Association',
+            'minOccurs': '0',
+            'maxOccurs': 'unbounded',
+            'inverse': 'Location.Measurements',
+            'docstring':
+                '''
+                '''
+        })
+    '''
     '''
 
     PowerSystemResource: Optional[ PowerSystemResource ] = field(
@@ -985,12 +1387,69 @@ class Discrete(Measurement):
     '''
 
 @dataclass(repr=False)
+class PSRType(IdentifiedObject):
+    '''
+    Classifying instances of the same class, e.g. overhead and underground
+    ACLineSegments. This classification mechanism is intended to provide flexibility
+    outside the scope of this standard, i.e. provide customisation that is
+    non standard.
+    '''
+
+    PowerSystemResources: list[ PowerSystemResource ] = field(
+        default_factory = list,
+        metadata = {
+            'type': 'Association',
+            'minOccurs': '0',
+            'maxOccurs': 'unbounded',
+            'inverse': 'PowerSystemResource.PSRType',
+            'docstring':
+                '''
+                Power system resources classified with this power system resource type.
+                '''
+        })
+    '''
+    Power system resources classified with this power system resource type.
+    '''
+
+@dataclass(repr=False)
 class PowerSystemResource(IdentifiedObject):
     '''
     A power system resource can be an item of equipment such as a switch, an
     equipment container containing many individual items of equipment such
     as a substation, or an organisational entity such as sub-control area.
     Power system resources can have measurements associated.
+    '''
+
+    AssetDatasheet: Optional[ AssetInfo ] = field(
+        default = None,
+        metadata = {
+            'type': 'Association',
+            'minOccurs': '0',
+            'maxOccurs': '1',
+            'inverse': 'AssetInfo.PowerSystemResources',
+            'docstring':
+                '''
+                Datasheet information for this power system resource.
+                '''
+        })
+    '''
+    Datasheet information for this power system resource.
+    '''
+
+    Location: Optional[ Location ] = field(
+        default = None,
+        metadata = {
+            'type': 'Association',
+            'minOccurs': '0',
+            'maxOccurs': '1',
+            'inverse': 'Location.PowerSystemResources',
+            'docstring':
+                '''
+                Location of this power system resource.
+                '''
+        })
+    '''
+    Location of this power system resource.
     '''
 
     Measurements: list[ Measurement ] = field(
@@ -1007,6 +1466,22 @@ class PowerSystemResource(IdentifiedObject):
         })
     '''
     The measurements associated with this power system resource.
+    '''
+
+    PSRType: Optional[ PSRType ] = field(
+        default = None,
+        metadata = {
+            'type': 'Association',
+            'minOccurs': '0',
+            'maxOccurs': '1',
+            'inverse': 'PSRType.PowerSystemResources',
+            'docstring':
+                '''
+                Custom classification for this power system resource.
+                '''
+        })
+    '''
+    Custom classification for this power system resource.
     '''
 
 @dataclass(repr=False)
@@ -1103,6 +1578,38 @@ class Feeder(EquipmentContainer):
     distribution resources.
     The organization a feeder does not necessarily reflect connectivity or
     current operation state.
+    '''
+
+    DistributionArea: Optional[ DistributionArea ] = field(
+        default = None,
+        metadata = {
+            'type': 'Association',
+            'minOccurs': '0',
+            'maxOccurs': '1',
+            'inverse': 'DistributionArea.Feeders',
+            'docstring':
+                '''
+                The DistributionArea to which the feeder belongs
+                '''
+        })
+    '''
+    The DistributionArea to which the feeder belongs
+    '''
+
+    FeederArea: Optional[ FeederArea ] = field(
+        default = None,
+        metadata = {
+            'type': 'Association',
+            'minOccurs': '0',
+            'maxOccurs': '1',
+            'inverse': 'FeederArea.Feeder',
+            'docstring':
+                '''
+                The FeederArea (which contains Equipment not contained in
+                '''
+        })
+    '''
+    The FeederArea (which contains Equipment not contained in
     '''
 
     NamingSecondarySubstation: list[ Substation ] = field(
@@ -1253,6 +1760,107 @@ class Substation(EquipmentContainer):
     The SubGeographicalRegion containing the substation.
     '''
 
+    SchedulingArea: Optional[ SchedulingArea ] = field(
+        default = None,
+        metadata = {
+            'type': 'Association',
+            'minOccurs': '0',
+            'maxOccurs': '1',
+            'inverse': 'SchedulingArea.Substation',
+            'docstring':
+                '''
+                '''
+        })
+    '''
+    '''
+
+    VoltageLevels: list[ VoltageLevel ] = field(
+        default_factory = list,
+        metadata = {
+            'type': 'Aggregate Of',
+            'minOccurs': '0',
+            'maxOccurs': 'unbounded',
+            'inverse': 'VoltageLevel.Substation',
+            'docstring':
+                '''
+                The voltage levels within this substation.
+                '''
+        })
+    '''
+    The voltage levels within this substation.
+    '''
+
+@dataclass(repr=False)
+class VoltageLevel(EquipmentContainer):
+    '''
+    A collection of equipment at one common system voltage forming a switchgear.
+    The equipment typically consist of breakers, busbars, instrumentation,
+    control, regulation and protection devices as well as assemblies of all
+    these.
+    '''
+
+    highVoltageLimit: Optional[ float | Voltage ] = field(
+        default = None,
+        metadata = {
+            'type': 'Attribute',
+            'minOccurs': '0',
+            'maxOccurs': '1',
+            'docstring':
+                '''
+                The bus bar's high voltage limit
+                '''
+        })
+    '''
+    The bus bar's high voltage limit
+    '''
+
+    lowVoltageLimit: Optional[ float | Voltage ] = field(
+        default = None,
+        metadata = {
+            'type': 'Attribute',
+            'minOccurs': '0',
+            'maxOccurs': '1',
+            'docstring':
+                '''
+                The bus bar's low voltage limit
+                '''
+        })
+    '''
+    The bus bar's low voltage limit
+    '''
+
+    BaseVoltage: Optional[ BaseVoltage ] = field(
+        default = None,
+        metadata = {
+            'type': 'Association',
+            'minOccurs': '0',
+            'maxOccurs': '1',
+            'inverse': 'BaseVoltage.VoltageLevel',
+            'docstring':
+                '''
+                The base voltage used for all equipment within the voltage level.
+                '''
+        })
+    '''
+    The base voltage used for all equipment within the voltage level.
+    '''
+
+    Substation: Optional[ Substation ] = field(
+        default = None,
+        metadata = {
+            'type': 'Of Aggregate',
+            'minOccurs': '0',
+            'maxOccurs': '1',
+            'inverse': 'Substation.VoltageLevels',
+            'docstring':
+                '''
+                The substation of the voltage level.
+                '''
+        })
+    '''
+    The substation of the voltage level.
+    '''
+
 @dataclass(repr=False)
 class Equipment(PowerSystemResource):
     '''
@@ -1367,6 +1975,22 @@ class Equipment(PowerSystemResource):
     Container of this equipment.
     '''
 
+    SubSchedulingArea: Optional[ SubSchedulingArea ] = field(
+        default = None,
+        metadata = {
+            'type': 'Of Aggregate',
+            'minOccurs': '0',
+            'maxOccurs': '1',
+            'inverse': 'SubSchedulingArea.ContainedEquipment',
+            'docstring':
+                '''
+                The SubSchedulingArea in which the equipment is contained and controlled.
+                '''
+        })
+    '''
+    The SubSchedulingArea in which the equipment is contained and controlled.
+    '''
+
 @dataclass(repr=False)
 class ConductingEquipment(Equipment):
     '''
@@ -1410,286 +2034,6 @@ class ConductingEquipment(Equipment):
     '''
     Conducting equipment have terminals that may be connected to other conducting
     equipment terminals via connectivity nodes or topological nodes.
-    '''
-
-@dataclass(repr=False)
-class EnergyConnection(ConductingEquipment):
-    '''
-    '''
-
-@dataclass(repr=False)
-class EnergyConsumer(EnergyConnection):
-    '''
-    Generic user of energy - a point of consumption on the power system model.
-    '''
-
-    customerCount: Optional[ int ] = field(
-        default = None,
-        metadata = {
-            'type': 'Attribute',
-            'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                Number of individual customers represented by this demand.
-                '''
-        })
-    '''
-    Number of individual customers represented by this demand.
-    '''
-
-    grounded: Optional[ bool ] = field(
-        default = None,
-        metadata = {
-            'type': 'Attribute',
-            'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                Used for Yn and Zn connections. True if the neutral is solidly grounded.
-                '''
-        })
-    '''
-    Used for Yn and Zn connections. True if the neutral is solidly grounded.
-    '''
-
-    p: Optional[ float | ActivePower ] = field(
-        default = None,
-        metadata = {
-            'type': 'Attribute',
-            'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                Active power of the load. Load sign convention is used, i.e. positive sign
-                means flow out from a node.
-                For voltage dependent loads the value is at rated voltage.
-                Starting value for a steady state solution.
-                '''
-        })
-    '''
-    Active power of the load. Load sign convention is used, i.e. positive sign
-    means flow out from a node.
-    For voltage dependent loads the value is at rated voltage.
-    Starting value for a steady state solution.
-    '''
-
-    q: Optional[ float | ReactivePower ] = field(
-        default = None,
-        metadata = {
-            'type': 'Attribute',
-            'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                Reactive power of the load. Load sign convention is used, i.e. positive
-                sign means flow out from a node.
-                For voltage dependent loads the value is at rated voltage.
-                Starting value for a steady state solution.
-                '''
-        })
-    '''
-    Reactive power of the load. Load sign convention is used, i.e. positive
-    sign means flow out from a node.
-    For voltage dependent loads the value is at rated voltage.
-    Starting value for a steady state solution.
-    '''
-
-    PowerCutZone: Optional[ PowerCutZone ] = field(
-        default = None,
-        metadata = {
-            'type': 'Of Aggregate',
-            'minOccurs': '0',
-            'maxOccurs': '1',
-            'inverse': 'PowerCutZone.EnergyConsumers',
-            'docstring':
-                '''
-                The energy consumer is assigned to this power cut zone.
-                '''
-        })
-    '''
-    The energy consumer is assigned to this power cut zone.
-    '''
-
-@dataclass(repr=False)
-class RegulatingCondEq(EnergyConnection):
-    '''
-    A type of conducting equipment that can regulate a quantity (i.e. voltage
-    or flow) at a specific point in the network.
-    '''
-
-    controlEnabled: Optional[ bool ] = field(
-        default = None,
-        metadata = {
-            'type': 'Attribute',
-            'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                Specifies the regulation status of the equipment. True is regulating, false
-                is not regulating.
-                '''
-        })
-    '''
-    Specifies the regulation status of the equipment. True is regulating, false
-    is not regulating.
-    '''
-
-@dataclass(repr=False)
-class PowerElectronicsConnection(RegulatingCondEq):
-    '''
-    A connection to the AC network for energy production or consumption that
-    uses power electronics rather than rotating machines.
-    '''
-
-    controlMode: Optional[ str | ConverterControlModeKind ] = field(
-        default = None,
-        metadata = {
-            'type': 'enumeration',
-            'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                '''
-        })
-    '''
-    '''
-
-    maxIFault: Optional[ float | PU ] = field(
-        default = None,
-        metadata = {
-            'type': 'Attribute',
-            'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                Maximum fault current this device will contribute, in per-unit of rated
-                current, before the converter protection will trip or bypass.
-                '''
-        })
-    '''
-    Maximum fault current this device will contribute, in per-unit of rated
-    current, before the converter protection will trip or bypass.
-    '''
-
-    maxQ: Optional[ float | ReactivePower ] = field(
-        default = None,
-        metadata = {
-            'type': 'Attribute',
-            'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                Maximum reactive power limit. This is the maximum (nameplate) limit for
-                the unit.
-                '''
-        })
-    '''
-    Maximum reactive power limit. This is the maximum (nameplate) limit for
-    the unit.
-    '''
-
-    minQ: Optional[ float | ReactivePower ] = field(
-        default = None,
-        metadata = {
-            'type': 'Attribute',
-            'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                Minimum reactive power limit for the unit. This is the minimum (nameplate)
-                limit for the unit.
-                '''
-        })
-    '''
-    Minimum reactive power limit for the unit. This is the minimum (nameplate)
-    limit for the unit.
-    '''
-
-    p: Optional[ float | ActivePower ] = field(
-        default = None,
-        metadata = {
-            'type': 'Attribute',
-            'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                Active power injection. Load sign convention is used, i.e. positive sign
-                means flow out from a node.
-                Starting value for a steady state solution.
-                '''
-        })
-    '''
-    Active power injection. Load sign convention is used, i.e. positive sign
-    means flow out from a node.
-    Starting value for a steady state solution.
-    '''
-
-    q: Optional[ float | ReactivePower ] = field(
-        default = None,
-        metadata = {
-            'type': 'Attribute',
-            'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                Reactive power injection. Load sign convention is used, i.e. positive sign
-                means flow out from a node.
-                Starting value for a steady state solution.
-                '''
-        })
-    '''
-    Reactive power injection. Load sign convention is used, i.e. positive sign
-    means flow out from a node.
-    Starting value for a steady state solution.
-    '''
-
-    ratedS: Optional[ float | ApparentPower ] = field(
-        default = None,
-        metadata = {
-            'type': 'Attribute',
-            'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                Nameplate apparent power rating for the unit.
-                The attribute shall have a positive value.
-                '''
-        })
-    '''
-    Nameplate apparent power rating for the unit.
-    The attribute shall have a positive value.
-    '''
-
-    ratedU: Optional[ float | Voltage ] = field(
-        default = None,
-        metadata = {
-            'type': 'Attribute',
-            'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                Rated voltage (nameplate data, Ur in IEC 60909-0). It is primarily used
-                for short circuit data exchange according to IEC 60909.
-                '''
-        })
-    '''
-    Rated voltage (nameplate data, Ur in IEC 60909-0). It is primarily used
-    for short circuit data exchange according to IEC 60909.
-    '''
-
-    PowerElectronicsUnit: list[ PowerElectronicsUnit ] = field(
-        default_factory = list,
-        metadata = {
-            'type': 'Association',
-            'minOccurs': '0',
-            'maxOccurs': 'unbounded',
-            'inverse': 'PowerElectronicsUnit.PowerElectronicsConnection',
-            'docstring':
-                '''
-                '''
-        })
-    '''
     '''
 
 @dataclass(repr=False)
@@ -1769,6 +2113,22 @@ class Switch(ConductingEquipment):
     device material and construction.
     '''
 
+    CompositeSwitch: Optional[ CompositeSwitch ] = field(
+        default = None,
+        metadata = {
+            'type': 'Of Aggregate',
+            'minOccurs': '0',
+            'maxOccurs': '1',
+            'inverse': 'CompositeSwitch.Switches',
+            'docstring':
+                '''
+                Composite switch to which this Switch belongs.
+                '''
+        })
+    '''
+    Composite switch to which this Switch belongs.
+    '''
+
 @dataclass(repr=False)
 class ProtectedSwitch(Switch):
     '''
@@ -1844,118 +2204,6 @@ class Breaker(ProtectedSwitch):
         })
     '''
     The transition time from open to close.
-    '''
-
-@dataclass(repr=False)
-class PowerElectronicsUnit(Equipment):
-    '''
-    A generating unit or battery or aggregation that connects to the AC network
-    using power electronics rather than rotating machines.
-    '''
-
-    maxP: Optional[ float | ActivePower ] = field(
-        default = None,
-        metadata = {
-            'type': 'Attribute',
-            'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                Maximum active power limit. This is the maximum (nameplate) limit for the
-                unit.
-                '''
-        })
-    '''
-    Maximum active power limit. This is the maximum (nameplate) limit for the
-    unit.
-    '''
-
-    minP: Optional[ float | ActivePower ] = field(
-        default = None,
-        metadata = {
-            'type': 'Attribute',
-            'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                Minimum active power limit. This is the minimum (nameplate) limit for the
-                unit.
-                '''
-        })
-    '''
-    Minimum active power limit. This is the minimum (nameplate) limit for the
-    unit.
-    '''
-
-    PowerElectronicsConnection: Optional[ PowerElectronicsConnection ] = field(
-        default = None,
-        metadata = {
-            'type': 'Association',
-            'minOccurs': '0',
-            'maxOccurs': '1',
-            'inverse': 'PowerElectronicsConnection.PowerElectronicsUnit',
-            'docstring':
-                '''
-                '''
-        })
-    '''
-    '''
-
-@dataclass(repr=False)
-class BatteryUnit(PowerElectronicsUnit):
-    '''
-    An electrochemical energy storage device
-    '''
-
-    batteryState: Optional[ str | BatteryStateKind ] = field(
-        default = None,
-        metadata = {
-            'type': 'enumeration',
-            'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                indicates whether the battery is charging, discharging or idle
-                '''
-        })
-    '''
-    indicates whether the battery is charging, discharging or idle
-    '''
-
-    ratedE: Optional[ float | RealEnergy ] = field(
-        default = None,
-        metadata = {
-            'type': 'Attribute',
-            'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                full energy storage capacity of the battery
-                '''
-        })
-    '''
-    full energy storage capacity of the battery
-    '''
-
-    storedE: Optional[ float | RealEnergy ] = field(
-        default = None,
-        metadata = {
-            'type': 'Attribute',
-            'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                amount of energy currently stored; no more than ratedE
-                '''
-        })
-    '''
-    amount of energy currently stored; no more than ratedE
-    '''
-
-@dataclass(repr=False)
-class PhotovoltaicUnit(PowerElectronicsUnit):
-    '''
-    A photovoltaic device or an aggregation of such devices
     '''
 
 @dataclass(repr=False)
@@ -2089,55 +2337,297 @@ class ProtectionEquipment(Equipment):
     '''
 
 @dataclass(repr=False)
-class PowerCutZone(PowerSystemResource):
+class SchedulingArea(PowerSystemResource):
     '''
-    An area or zone of the power system which is used for load shedding purposes.
     '''
 
-    cutLevel1: Optional[ float | PerCent ] = field(
-        default = None,
+    Substation: list[ Substation ] = field(
+        default_factory = list,
         metadata = {
-            'type': 'Attribute',
+            'type': 'Association',
             'minOccurs': '0',
-            'maxOccurs': '1',
+            'maxOccurs': 'unbounded',
+            'inverse': 'Substation.SchedulingArea',
             'docstring':
                 '''
-                First level (amount) of load to cut as a percentage of total zone load.
                 '''
         })
     '''
-    First level (amount) of load to cut as a percentage of total zone load.
     '''
 
-    cutLevel2: Optional[ float | PerCent ] = field(
-        default = None,
+@dataclass(repr=False)
+class SubSchedulingArea(SchedulingArea):
+    '''
+    A persistent connectivity-based containment of ConductingEquipment objects
+    with clearly-defined electrical boundaries forming a local power system
+    with one or more points of common coupling. Each piece of ConductingEquipment
+    can be associated with one ResourceContainer. The boundaries of the ResourceContainer
+    are specified through the Terminals of equipment forming the boundary (such
+    as a Recloser or PowerTransformer)
+    '''
+
+    BoundaryTerminals: list[ Terminal ] = field(
+        default_factory = list,
         metadata = {
-            'type': 'Attribute',
+            'type': 'Association',
             'minOccurs': '0',
-            'maxOccurs': '1',
+            'maxOccurs': 'unbounded',
+            'inverse': 'Terminal.BoundedSchedulingArea',
             'docstring':
                 '''
-                Second level (amount) of load to cut as a percentage of total zone load.
+                The set of terminals that define the persistent boundaries of the SubSchedulingArea
                 '''
         })
     '''
-    Second level (amount) of load to cut as a percentage of total zone load.
+    The set of terminals that define the persistent boundaries of the SubSchedulingArea
     '''
 
-    EnergyConsumers: list[ EnergyConsumer ] = field(
+    ContainedEquipment: list[ Equipment ] = field(
         default_factory = list,
         metadata = {
             'type': 'Aggregate Of',
             'minOccurs': '0',
             'maxOccurs': 'unbounded',
-            'inverse': 'EnergyConsumer.PowerCutZone',
+            'inverse': 'Equipment.SubSchedulingArea',
             'docstring':
                 '''
-                Energy consumer is assigned to the power cut zone.
+                The Equipment contained within the SubSchedulingArea.
                 '''
         })
     '''
-    Energy consumer is assigned to the power cut zone.
+    The Equipment contained within the SubSchedulingArea.
+    '''
+
+    SinkConfiguration: list[ AreaConfiguration ] = field(
+        default_factory = list,
+        metadata = {
+            'type': 'Association',
+            'minOccurs': '0',
+            'maxOccurs': 'unbounded',
+            'inverse': 'AreaConfiguration.EnergizedArea',
+            'docstring':
+                '''
+                Set of possible configurations for the sink area.
+                '''
+        })
+    '''
+    Set of possible configurations for the sink area.
+    '''
+
+    SourceConfiguration: list[ AreaConfiguration ] = field(
+        default_factory = list,
+        metadata = {
+            'type': 'Association',
+            'minOccurs': '0',
+            'maxOccurs': 'unbounded',
+            'inverse': 'AreaConfiguration.EnergizingArea',
+            'docstring':
+                '''
+                The set of possible configurations for the source area
+                '''
+        })
+    '''
+    The set of possible configurations for the source area
+    '''
+
+@dataclass(repr=False)
+class DistributionArea(SubSchedulingArea):
+    '''
+    A persistent connectivity-based containment of medium-voltage and high-voltage
+    distribution ConductingEquipment with clearly defined electrical boundaries
+    based on electrical connectivity of a distribution substation or multiple
+    substations.
+    '''
+
+    FeederAreas: list[ FeederArea ] = field(
+        default_factory = list,
+        metadata = {
+            'type': 'Aggregate Of',
+            'minOccurs': '0',
+            'maxOccurs': 'unbounded',
+            'inverse': 'FeederArea.DistributionArea',
+            'docstring':
+                '''
+                '''
+        })
+    '''
+    '''
+
+    Feeders: list[ Feeder ] = field(
+        default_factory = list,
+        metadata = {
+            'type': 'Association',
+            'minOccurs': '0',
+            'maxOccurs': 'unbounded',
+            'inverse': 'Feeder.DistributionArea',
+            'docstring':
+                '''
+                Feeders within the service territory of the DistributionArea of a particular
+                Distribution System Operator (DSO)
+                '''
+        })
+    '''
+    Feeders within the service territory of the DistributionArea of a particular
+    Distribution System Operator (DSO)
+    '''
+
+@dataclass(repr=False)
+class FeederArea(SubSchedulingArea):
+    '''
+    A persistent connectivity-based containment of medium-voltage distribution
+    ConductingEquipment with clearly defined electrical boundaries based on
+    electrical connectivity of a distribution feeder.
+    The FeederArea contains all medium voltage equipment not contained in a
+    SwitchArea or Substation / Bay. It also includes all Sectionalisers, Reclosers,
+    and all other poletop and pad-mounted switchgear that form the boundary
+    of a SwitchArea.
+    '''
+
+    DistributionArea: Optional[ DistributionArea ] = field(
+        default = None,
+        metadata = {
+            'type': 'Of Aggregate',
+            'minOccurs': '0',
+            'maxOccurs': '1',
+            'inverse': 'DistributionArea.FeederAreas',
+            'docstring':
+                '''
+                '''
+        })
+    '''
+    '''
+
+    Feeder: Optional[ Feeder ] = field(
+        default = None,
+        metadata = {
+            'type': 'Association',
+            'minOccurs': '0',
+            'maxOccurs': '1',
+            'inverse': 'Feeder.FeederArea',
+            'docstring':
+                '''
+                The Feeder (which contains the ConnectivityNode and all Equipment) associated
+                with the FeeederArea
+                '''
+        })
+    '''
+    The Feeder (which contains the ConnectivityNode and all Equipment) associated
+    with the FeeederArea
+    '''
+
+    SwitchAreas: list[ SwitchArea ] = field(
+        default_factory = list,
+        metadata = {
+            'type': 'Aggregate Of',
+            'minOccurs': '0',
+            'maxOccurs': 'unbounded',
+            'inverse': 'SwitchArea.FeederArea',
+            'docstring':
+                '''
+                The set of SwitchArea normally energized by the FeederArea
+                '''
+        })
+    '''
+    The set of SwitchArea normally energized by the FeederArea
+    '''
+
+@dataclass(repr=False)
+class SecondaryArea(SubSchedulingArea):
+    '''
+    A persistent connectivity-based containment of low-voltage distribution
+    ConductingEquipment with clearly defined electrical boundaries formed by
+    one or more PowerTransformer objects.
+    '''
+
+    primaryPhase: Optional[ str | PhaseCode ] = field(
+        default = None,
+        metadata = {
+            'type': 'enumeration',
+            'minOccurs': '0',
+            'maxOccurs': '1',
+            'docstring':
+                '''
+                Used to represent the ABC phase to which the secondary split-phase transformer
+                is connected in North American systems. For secondary areas served by a
+                center-tap transformer, the phase connection of equipment will generally
+                be SinglePhaseKind.s1 or SinglePhaseKind.s2, and it is not readily apparent
+                what phase serves the loads at the medium voltage level.
+                '''
+        })
+    '''
+    Used to represent the ABC phase to which the secondary split-phase transformer
+    is connected in North American systems. For secondary areas served by a
+    center-tap transformer, the phase connection of equipment will generally
+    be SinglePhaseKind.s1 or SinglePhaseKind.s2, and it is not readily apparent
+    what phase serves the loads at the medium voltage level.
+    '''
+
+    SwitchArea: Optional[ SwitchArea ] = field(
+        default = None,
+        metadata = {
+            'type': 'Of Aggregate',
+            'minOccurs': '0',
+            'maxOccurs': '1',
+            'inverse': 'SwitchArea.SecondaryAreas',
+            'docstring':
+                '''
+                The SwitchArea that normally energizes the SecondaryArea
+                '''
+        })
+    '''
+    The SwitchArea that normally energizes the SecondaryArea
+    '''
+
+@dataclass(repr=False)
+class SwitchArea(SubSchedulingArea):
+    '''
+    A persistent connectivity-based containment of medium-voltage distribution
+    ConductingEquipment with clearly defined electrical boundaries formed by
+    one or more Switch objects.
+    The SwitchArea contains all conductors, fuses, poletop equipment, and vault
+    equipment. It also contains all secondary service transformers not contained
+    in a SecondarySubstation.
+    '''
+
+    FeederArea: Optional[ FeederArea ] = field(
+        default = None,
+        metadata = {
+            'type': 'Of Aggregate',
+            'minOccurs': '0',
+            'maxOccurs': '1',
+            'inverse': 'FeederArea.SwitchAreas',
+            'docstring':
+                '''
+                The FeederArea that normally energizes the SwitchArea
+                '''
+        })
+    '''
+    The FeederArea that normally energizes the SwitchArea
+    '''
+
+    SecondaryAreas: list[ SecondaryArea ] = field(
+        default_factory = list,
+        metadata = {
+            'type': 'Aggregate Of',
+            'minOccurs': '0',
+            'maxOccurs': 'unbounded',
+            'inverse': 'SecondaryArea.SwitchArea',
+            'docstring':
+                '''
+                The set of SecondAreas normally energized by the SwitchArea
+                '''
+        })
+    '''
+    The set of SecondAreas normally energized by the SwitchArea
+    '''
+
+@dataclass(repr=False)
+class Microgrid(SwitchArea):
+    '''
+    A persistent connectivity-based containment of distribution ConductingEquipment
+    that 1) has clearly-defined electrical boundaries formed by one or more
+    point of common coupling Switch objects and 2) that acts as a single controllable
+    entity which can be operated in grid-connected or islanded mode.
     '''
 
 @dataclass(repr=False)
@@ -2291,20 +2781,20 @@ class TopologicalNode(IdentifiedObject):
     Starting value for a steady state solution.
     '''
 
-    BaseVoltage: Optional[ BaseVoltage ] = field(
-        default = None,
+    BusNameMarker: list[ BusNameMarker ] = field(
+        default_factory = list,
         metadata = {
             'type': 'Association',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'inverse': 'BaseVoltage.TopologicalNode',
+            'maxOccurs': 'unbounded',
+            'inverse': 'BusNameMarker.TopologicalNode',
             'docstring':
                 '''
-                The base voltage of the topologocial node.
+                BusnameMarkers that may refer to a pre defined TopologicalNode.
                 '''
         })
     '''
-    The base voltage of the topologocial node.
+    BusnameMarkers that may refer to a pre defined TopologicalNode.
     '''
 
     ConnectivityNodeContainer: Optional[ ConnectivityNodeContainer ] = field(
@@ -2365,52 +2855,149 @@ class TopologicalNode(IdentifiedObject):
     an input specification.
     '''
 
-class BatteryStateKind( Enum ):
+class PhaseCode( Enum ):
     '''
-    '''
-
-    charging = 'charging'
-    '''
-    storedE is increasing
-    '''
-
-    discharging = 'discharging'
-    '''
-    storedE is decreasing
-    '''
-
-    empty = 'empty'
-    '''
-    unable to Discharge, and not Charging
+    An unordered enumeration of phase identifiers. Allows designation of phases
+    for both transmission and distribution equipment, circuits and loads. The
+    enumeration, by itself, does not describe how the phases are connected
+    together or connected to ground. Ground is not explicitly denoted as a
+    phase.
+    Residential and small commercial loads are often served from single-phase,
+    or split-phase, secondary circuits. For example of s12N, phases 1 and 2
+    refer to hot wires that are 180 degrees out of phase, while N refers to
+    the neutral wire. Through single-phase transformer connections, these secondary
+    circuits may be served from one or two of the primary phases A, B, and
+    C. For three-phase loads, use the A, B, C phase codes instead of s12N.
     '''
 
-    full = 'full'
+    A = 'A'
     '''
-    unable to Charge, and not Discharging
-    '''
-
-    waiting = 'waiting'
-    '''
-    neither Charging nor Discharging, but able to do so
+    Phase A.
     '''
 
-class ConverterControlModeKind( Enum ):
+    AB = 'AB'
     '''
-    '''
-
-    constantPowerFactor = 'constantPowerFactor'
-    '''
-    hold q/p constant
+    Phases A and B.
     '''
 
-    constantReactivePower = 'constantReactivePower'
+    ABC = 'ABC'
     '''
-    Holds constant Q; may change both P and Q by dispatch commands
+    Phases A, B, and C.
     '''
 
-    dynamic = 'dynamic'
+    ABCN = 'ABCN'
     '''
-    use association with DERIEEEType1
+    Phases A, B, C, and N.
+    '''
+
+    ABN = 'ABN'
+    '''
+    Phases A, B, and neutral.
+    '''
+
+    AC = 'AC'
+    '''
+    Phases A and C.
+    '''
+
+    ACN = 'ACN'
+    '''
+    Phases A, C and neutral.
+    '''
+
+    AN = 'AN'
+    '''
+    Phases A and neutral.
+    '''
+
+    B = 'B'
+    '''
+    Phase B.
+    '''
+
+    BC = 'BC'
+    '''
+    Phases B and C.
+    '''
+
+    BCN = 'BCN'
+    '''
+    Phases B, C, and neutral.
+    '''
+
+    BN = 'BN'
+    '''
+    Phases B and neutral.
+    '''
+
+    C = 'C'
+    '''
+    Phase C.
+    '''
+
+    CN = 'CN'
+    '''
+    Phases C and neutral.
+    '''
+
+    N = 'N'
+    '''
+    Neutral phase.
+    '''
+
+    X = 'X'
+    '''
+    Unknown non-neutral phase.
+    '''
+
+    XN = 'XN'
+    '''
+    Unknown non-neutral phase plus neutral.
+    '''
+
+    XY = 'XY'
+    '''
+    Two unknown non-neutral phases.
+    '''
+
+    XYN = 'XYN'
+    '''
+    Two unknown non-neutral phases plus neutral.
+    '''
+
+    none = 'none'
+    '''
+    No phases specified.
+    '''
+
+    s1 = 's1'
+    '''
+    Secondary phase 1.
+    '''
+
+    s12 = 's12'
+    '''
+    Secondary phase 1 and 2.
+    '''
+
+    s12N = 's12N'
+    '''
+    Secondary phases 1, 2, and neutral.
+    '''
+
+    s1N = 's1N'
+    '''
+    Secondary phase 1 and neutral.
+    '''
+
+    s2 = 's2'
+    '''
+    Secondary phase 2.
+    '''
+
+    s2N = 's2N'
+    '''
+    Secondary phase 2 and neutral.
     '''
 
 class UnitMultiplier( Enum ):
@@ -3351,41 +3938,11 @@ class Voltage():
     '''
 
 @dataclass
-class PerCent():
-    value: float = field(default=None)
-    '''
-    Percentage on a defined base. For example, specify as 100 to indicate at
-    the defined base.
-    '''
-
-@dataclass
-class ApparentPower():
-    value: float = field(default=None)
-    '''
-    Product of the RMS value of the voltage and the RMS value of the current.
-    '''
-
-@dataclass
-class RealEnergy():
-    value: float = field(default=None)
-    '''
-    Real electrical energy.
-    '''
-
-@dataclass
 class CurrentFlow():
     value: float = field(default=None)
     '''
     Electrical current with sign convention: positive flow is out of the conducting
     equipment into the connectivity node. Can be both AC and DC.
-    '''
-
-@dataclass
-class PU():
-    value: float = field(default=None)
-    '''
-    Per Unit - a positive or negative value referred to a defined base. Values
-    typically range from -10 to +10.
     '''
 
 @dataclass

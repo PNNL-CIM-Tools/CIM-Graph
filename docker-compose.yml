@@ -2,13 +2,6 @@ version: '2'
 
 services:
 
-  blazegraph:
-    image: gridappsd/blazegraph:develop
-    # image: gridappsd/blazegraph:seto4
-    container_name: blazegraph
-    ports:
-      - 8889:8080
-
   neo4j-apoc:
     image: neo4j:5.22-community
     ports:
@@ -25,22 +18,3 @@ services:
     volumes:
       - ./docker/neo4j/data:/data
       - ./docker/neo4j/plugins:/plugins
-
-
-  graphdb:
-    image: ontotext/graphdb:10.7.3
-    ports:
-      - 7200:7200
-    volumes:
-      - ./docker/graphdb:/opt/graphdb/home
-
-  mysql:
-    image: mysql:8.1.0
-    container_name: mysql_json
-    ports:
-      - 3306:3306
-    environment:
-      MYSQL_ROOT_PASSWORD: password
-      MYSQL_PORT: 3306
-    volumes:
-      - ./docker/mysql:/var/lib/mysql

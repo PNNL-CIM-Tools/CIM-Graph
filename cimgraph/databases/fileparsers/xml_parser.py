@@ -16,27 +16,6 @@ from cimgraph.databases import (ConnectionInterface, ConnectionParameters,
 
 _log = logging.getLogger(__name__)
 
-# def parse_nodes(chunks, params, graph, class_index, lock):
-#     db = ConnectionInterface(params)
-#     # Iterate over the elements and create dataclass instances
-#     for element in chunks:
-#         class_name = element.tag.split('{'+params.namespace+'}')[1]
-#         cim = importlib.import_module('cimgraph.data_profile.' + params.cim_profile)
-#         rdf = '''{http://www.w3.org/1999/02/22-rdf-syntax-ns#}'''
-#         if class_name in cim.__all__:
-#             cim_class = eval(f'cim.{class_name}')
-#             uri = element.get(f'{rdf}about')
-#             identifier = UUID(uri.strip('_').lower())
-#             uri = uri.split(':')[-1]  # Extract UUID from the full URI
-
-#             with lock:
-#                 class_index[identifier] = cim_class
-#                 obj = db.create_object(graph, cim_class, uri)
-#         else:
-#             _log.warning(f'{class_name} not in data profile')
-#     return None
-
-
 class XMLFile(ConnectionInterface):
 
     def __init__(self, connection_params: ConnectionParameters):
@@ -47,17 +26,15 @@ class XMLFile(ConnectionInterface):
         self.filename = connection_params.filename
         self.connection_params = connection_params
         self.graph = None
-        # self.lock = threading.Lock()
         self.connect()
-
 
     def connect(self):
         # if not graph:
         if self.filename is not None:
             try:
                 self.rdf = '''{http://www.w3.org/1999/02/22-rdf-syntax-ns#}'''
-                tree = parse(self.filename)
-                self.root = tree.getroot()
+                self.tree = parse(self.filename)
+                self.root = self.tree.getroot()
                 self.class_index = {}
                 self.graph = {}
             except:
@@ -85,68 +62,13 @@ class XMLFile(ConnectionInterface):
 
     def create_new_graph(self, container: object) -> Graph:
 
-        # with multiprocessing.Manager() as manager:
-        #     graph = manager.dict()
-        #     class_index = manager.dict()
-        #     lock = manager.Lock()
-
-        #     tree = parse(self.filename)
-        #     root = tree.getroot()
-
-        #     num_cores = multiprocessing.cpu_count()
-        #     elements = list(root)
-        #     chunk_size = len(elements) // num_cores
-        #     chunks = [elements[i:i + chunk_size] for i in range(0, len(elements), chunk_size)]
-
-
-            # # Use ProcessPoolExecutor to process elements in parallel
-            # with multiprocessing.Pool(processes=multiprocessing.cpu_count()) as pool:
-            #     pool.map(parse_nodes, [(self.connection_params, graph, element, class_index, lock) for element in root])
-
-
-
-            # with multiprocessing.Pool(num_cores) as pool:
-            # #     pool.starmap(parse_nodes, [(self.connection_params, graph, element, class_index, lock) for element in root])
-            #     results = pool.map(parse_nodes, chunks)
-
-        # with ProcessPoolExecutor() as executor:
-        # with ProcessPoolExecutor() as executor:
-        #     executor.submit(self.parse_nodes(element) for element in self.root)
-
-        # with ProcessPoolExecutor() as executor:
-        #     executor.submit(self.parse_edges(element) for element in self.root)
-            # asyncio.run()
-        # asyncio.run(self.create_new_graph_async())
-        # asyncio.run(self.create_new_graph_async(), executor)
-
         for element in self.root:
             self.parse_nodes(element)
-
-        # with ThreadPoolExecutor(max_workers=os.cpu_count()) as executor:
-
-        #     futures = [executor.submit(self.parse_nodes, element) for element in self.root]
-        #     results = [future.result() for future in concurrent.futures.as_completed(futures)]
 
         with ThreadPoolExecutor(max_workers=os.cpu_count()) as executor:
 
             futures = [executor.submit(self.parse_edges, element) for element in self.root]
             results = [future.result() for future in concurrent.futures.as_completed(futures)]
-
-        # with ProcessPoolExecutor() as executor:
-        #     # We need to pass the shared manager objects to subprocesses
-        #     futures = [
-        #         executor.submit(self.parse_nodes, element)
-        #         for element in self.root
-        #     ]
-        #     # Ensure all processes are completed
-        #     for future in futures:
-        #         future.result()
-
-        # with ThreadPoolExecutor() as executor:
-        #     executor.map(self.parse_edges, self.root)
-
-        # for element in self.root:
-        #     self.parse_nodes(element)
 
         return self.graph
 

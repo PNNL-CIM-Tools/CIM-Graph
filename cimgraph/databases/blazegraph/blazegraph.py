@@ -5,6 +5,7 @@ import importlib
 import json
 import logging
 import math
+import os
 from uuid import UUID
 
 from SPARQLWrapper import JSON, POST, SPARQLWrapper
@@ -298,7 +299,7 @@ class BlazegraphConnection(ConnectionInterface):
         num_batches = math.ceil(len(uuid_list) / 100)
         eq_mrids_batches = [uuid_list[i * 100:(i + 1) * 100] for i in range(num_batches)]
 
-        with concurrent.futures.ThreadPoolExecutor(max_workers=10) as executor:
+        with concurrent.futures.ThreadPoolExecutor(max_workers=os.cpu_count()) as executor:
             futures = [executor.submit(process_batch, batch)
                 for batch in eq_mrids_batches]
             for future in concurrent.futures.as_completed(futures):
