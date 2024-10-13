@@ -104,7 +104,7 @@ class ConnectionInterface(ABC):
 
     def create_value(self, graph: dict[type, dict[str, object]],
                     cim_class: type, identifier: UUID, attribute: str,
-                    value: str) -> None:
+                    value: str) -> bool|int|float|str:
 
         association = self.check_attribute(cim_class, attribute)
         if association is not None:
@@ -127,17 +127,18 @@ class ConnectionInterface(ABC):
 
             elif 'int' in attribute_type:
                 try:
-                    setattr(graph[cim_class][identifier], association, int(float(value)))
+                    value = int(float(value))
                 except:
                     _log.warning(f'{value} for {cim_class.__name__}.{association} is not an integer')
-                    setattr(graph[cim_class][identifier], association, value)
+
+                setattr(graph[cim_class][identifier], association, value)
 
             elif 'float' in attribute_type:
                 try:
-                    setattr(graph[cim_class][identifier], association, float(value))
+                    value = float(value)
                 except:
                     _log.warning(f'{value} for {cim_class.__name__}.{association} is not a float')
-                    setattr(graph[cim_class][identifier], association, value)
+                setattr(graph[cim_class][identifier], association, value)
 
             else:
                 if self.connection_params.use_units:
@@ -145,7 +146,7 @@ class ConnectionInterface(ABC):
                     #TODO: Implement evaluation of units
                 else:
                     setattr(graph[cim_class][identifier], association, value)
-
+        return value
 
 
 
