@@ -1329,7 +1329,7 @@ class IEEE1547Info(AssetInfo):
     '''
     '''
 
-    abnormalPerformanceCategory: Optional[ str | IEEE1547AbnormalPerfomanceCategory ] = field(
+    abnormalPerformanceCategory: Optional[ IEEE1547AbnormalPerfomanceCategory ] = field(
         default = None,
         metadata = {
             'type': 'enumeration',
@@ -1342,7 +1342,7 @@ class IEEE1547Info(AssetInfo):
     '''
     '''
 
-    islandingCategory: Optional[ str | IEEE1547IslandingCategory ] = field(
+    islandingCategory: Optional[ IEEE1547IslandingCategory ] = field(
         default = None,
         metadata = {
             'type': 'enumeration',
@@ -1381,7 +1381,7 @@ class IEEE1547Info(AssetInfo):
     '''
     '''
 
-    normalPerformanceCategory: Optional[ str | IEEE1547NormalPerformanceCategory ] = field(
+    normalPerformanceCategory: Optional[ IEEE1547NormalPerformanceCategory ] = field(
         default = None,
         metadata = {
             'type': 'enumeration',
@@ -1845,7 +1845,7 @@ class SwitchInfo(AssetInfo):
     conditions of use.
     '''
 
-    gasWeightPerTank: Optional[ str | Mass ] = field(
+    gasWeightPerTank: Optional[ Mass ] = field(
         default = None,
         metadata = {
             'type': 'Attribute',
@@ -2546,7 +2546,7 @@ class WireInfo(AssetInfo):
     actual conductor.
     '''
 
-    insulationMaterial: Optional[ str | WireInsulationKind ] = field(
+    insulationMaterial: Optional[ WireInsulationKind ] = field(
         default = None,
         metadata = {
             'type': 'enumeration',
@@ -2576,7 +2576,7 @@ class WireInfo(AssetInfo):
     (if insulated conductor) Thickness of the insulation.
     '''
 
-    material: Optional[ str | WireMaterialKind ] = field(
+    material: Optional[ WireMaterialKind ] = field(
         default = None,
         metadata = {
             'type': 'enumeration',
@@ -3064,7 +3064,7 @@ class WireSpacingInfo(AssetInfo):
     Distance between wire sub-conductors in a symmetrical bundle.
     '''
 
-    usage: Optional[ str | WireUsageKind ] = field(
+    usage: Optional[ WireUsageKind ] = field(
         default = None,
         metadata = {
             'type': 'enumeration',
@@ -3867,7 +3867,7 @@ class CatalogAssetType(IdentifiedObject):
     '''
     '''
 
-    estimatedUnitCost: Optional[ str | Money ] = field(
+    estimatedUnitCost: Optional[ Money ] = field(
         default = None,
         metadata = {
             'type': 'Attribute',
@@ -3884,7 +3884,7 @@ class CatalogAssetType(IdentifiedObject):
     does not include labor to install, construct or configure it.
     '''
 
-    kind: Optional[ str | AssetKind ] = field(
+    kind: Optional[ AssetKind ] = field(
         default = None,
         metadata = {
             'type': 'enumeration',
@@ -5144,7 +5144,7 @@ class House(IdentifiedObject):
     '''
     '''
 
-    coolingSystem: Optional[ str | HouseCooling ] = field(
+    coolingSystem: Optional[ HouseCooling ] = field(
         default = None,
         metadata = {
             'type': 'enumeration',
@@ -5183,7 +5183,7 @@ class House(IdentifiedObject):
     '''
     '''
 
-    heatingSystem: Optional[ str | HouseHeating ] = field(
+    heatingSystem: Optional[ HouseHeating ] = field(
         default = None,
         metadata = {
             'type': 'enumeration',
@@ -6522,7 +6522,7 @@ class Measurement(IdentifiedObject):
     Measurement.
     '''
 
-    phases: Optional[ str | PhaseCode ] = field(
+    phases: Optional[ PhaseCode ] = field(
         default = None,
         metadata = {
             'type': 'enumeration',
@@ -7404,7 +7404,7 @@ class OperationalLimitType(IdentifiedObject):
     local factors such as temperature or wind speed.
     '''
 
-    direction: Optional[ str | OperationalLimitDirectionKind ] = field(
+    direction: Optional[ OperationalLimitDirectionKind ] = field(
         default = None,
         metadata = {
             'type': 'enumeration',
@@ -8517,7 +8517,7 @@ class EnergyConsumerPhase(PowerSystemResource):
     Starting value for a steady state solution.
     '''
 
-    phase: Optional[ str | SinglePhaseKind ] = field(
+    phase: Optional[ SinglePhaseKind ] = field(
         default = None,
         metadata = {
             'type': 'enumeration',
@@ -9465,7 +9465,7 @@ class EnergyConsumer(EnergyConnection):
     Starting value for a steady state solution.
     '''
 
-    phaseConnection: Optional[ str | PhaseShuntConnectionKind ] = field(
+    phaseConnection: Optional[ PhaseShuntConnectionKind ] = field(
         default = None,
         metadata = {
             'type': 'enumeration',
@@ -10219,7 +10219,7 @@ class PowerElectronicsConnection(RegulatingCondEq):
     uses power electronics rather than rotating machines.
     '''
 
-    controlMode: Optional[ str | ConverterControlModeKind ] = field(
+    controlMode: Optional[ ConverterControlModeKind ] = field(
         default = None,
         metadata = {
             'type': 'enumeration',
@@ -10737,7 +10737,7 @@ class AsynchronousMachine(RotatingMachine):
     to IEC 60909
     '''
 
-    asynchronousMachineType: Optional[ str | AsynchronousMachineKind ] = field(
+    asynchronousMachineType: Optional[ AsynchronousMachineKind ] = field(
         default = None,
         metadata = {
             'type': 'enumeration',
@@ -10905,7 +10905,7 @@ class SynchronousMachine(RotatingMachine):
     Minimum reactive power limit for the unit.
     '''
 
-    operatingMode: Optional[ str | SynchronousMachineOperatingMode ] = field(
+    operatingMode: Optional[ SynchronousMachineOperatingMode ] = field(
         default = None,
         metadata = {
             'type': 'enumeration',
@@ -10920,7 +10920,7 @@ class SynchronousMachine(RotatingMachine):
     Current mode of operation.
     '''
 
-    type: Optional[ str | SynchronousMachineKind ] = field(
+    type: Optional[ SynchronousMachineKind ] = field(
         default = None,
         metadata = {
             'type': 'enumeration',
@@ -11066,7 +11066,7 @@ class ShuntCompensator(RegulatingCondEq):
     connected to the network.
     '''
 
-    phaseConnection: Optional[ str | PhaseShuntConnectionKind ] = field(
+    phaseConnection: Optional[ PhaseShuntConnectionKind ] = field(
         default = None,
         metadata = {
             'type': 'enumeration',
@@ -11285,7 +11285,7 @@ class StaticVarCompensator(RegulatingCondEq):
     and the voltage setpoint.
     '''
 
-    sVCControlMode: Optional[ str | SVCControlMode ] = field(
+    sVCControlMode: Optional[ SVCControlMode ] = field(
         default = None,
         metadata = {
             'type': 'enumeration',
@@ -12383,7 +12383,7 @@ class RegulatingControl(PowerSystemResource):
     to the mode attribute.
     '''
 
-    mode: Optional[ str | RegulatingControlModeKind ] = field(
+    mode: Optional[ RegulatingControlModeKind ] = field(
         default = None,
         metadata = {
             'type': 'enumeration',
@@ -12402,7 +12402,7 @@ class RegulatingControl(PowerSystemResource):
     from a schedule.
     '''
 
-    monitoredPhase: Optional[ str | PhaseCode ] = field(
+    monitoredPhase: Optional[ PhaseCode ] = field(
         default = None,
         metadata = {
             'type': 'enumeration',
@@ -12859,7 +12859,7 @@ class SecondaryArea(SubSchedulingArea):
     one or more PowerTransformer objects.
     '''
 
-    primaryPhase: Optional[ str | PhaseCode ] = field(
+    primaryPhase: Optional[ PhaseCode ] = field(
         default = None,
         metadata = {
             'type': 'enumeration',
@@ -13987,7 +13987,7 @@ class Season(IdentifiedObject):
     A specified time period of the year.
     '''
 
-    endDate: Optional[ str | MonthDay ] = field(
+    endDate: Optional[ MonthDay ] = field(
         default = None,
         metadata = {
             'type': 'Attribute',
@@ -14002,7 +14002,7 @@ class Season(IdentifiedObject):
     Date season ends.
     '''
 
-    startDate: Optional[ str | MonthDay ] = field(
+    startDate: Optional[ MonthDay ] = field(
         default = None,
         metadata = {
             'type': 'Attribute',
@@ -14183,7 +14183,7 @@ class ThermostatController(IdentifiedObject):
     schedule
     '''
 
-    controlMode: Optional[ str | ThermostatControlMode ] = field(
+    controlMode: Optional[ ThermostatControlMode ] = field(
         default = None,
         metadata = {
             'type': 'enumeration',
@@ -14196,7 +14196,7 @@ class ThermostatController(IdentifiedObject):
     '''
     '''
 
-    priceCap: Optional[ str | Money ] = field(
+    priceCap: Optional[ Money ] = field(
         default = None,
         metadata = {
             'type': 'Attribute',
@@ -14866,7 +14866,7 @@ class PowerTransformerEnd(TransformerEnd):
     to be the same as the terminal sequence number.
     '''
 
-    connectionKind: Optional[ str | WindingConnection ] = field(
+    connectionKind: Optional[ WindingConnection ] = field(
         default = None,
         metadata = {
             'type': 'enumeration',
@@ -14962,7 +14962,7 @@ class TransformerTankEnd(TransformerEnd):
     the PowerTransformer).
     '''
 
-    orderedPhases: Optional[ str | OrderedPhaseCodeKind ] = field(
+    orderedPhases: Optional[ OrderedPhaseCodeKind ] = field(
         default = None,
         metadata = {
             'type': 'enumeration',
@@ -18521,7 +18521,7 @@ class Quality61850(Identity):
     Measurement value is transmitted for test purposes.
     '''
 
-    source: Optional[ str | Source ] = field(
+    source: Optional[ Source ] = field(
         default = None,
         metadata = {
             'type': 'Attribute',
@@ -23106,7 +23106,7 @@ class MonthDayInterval(Identity):
     Interval between two times specified as mont and date.
     '''
 
-    end: Optional[ str | MonthDay ] = field(
+    end: Optional[ MonthDay ] = field(
         default = None,
         metadata = {
             'type': 'Attribute',
@@ -23121,7 +23121,7 @@ class MonthDayInterval(Identity):
     End time of this interval.
     '''
 
-    start: Optional[ str | MonthDay ] = field(
+    start: Optional[ MonthDay ] = field(
         default = None,
         metadata = {
             'type': 'Attribute',

@@ -12,10 +12,10 @@
     <xsl:param name="ontologyURI"/>
     <xsl:param name="envelope">Profile</xsl:param>
     <xsl:param name="package">au.com.langdale.cimtool.generated</xsl:param>
-    
+
     <!-- Key for tracing parent-child inheritance -->
     <xsl:key name="classes-by-super" match="a:Root|a:ComplexType" use="a:SuperType/@name"/>
- 
+
     <!-- Template for top-level item in schema file -->
     <xsl:template match="a:Catalog">
         <document>
@@ -40,9 +40,9 @@
             <xsl:call-template name="identity"/>
 
 
-            
 
-        
+
+
         <!-- Start with top-level concrete classes and then work down -->
         <xsl:for-each select="a:Root[not(a:SuperType)]">
             <xsl:call-template name="super"/>
@@ -146,14 +146,14 @@
                     <xsl:call-template name="lower"/>
                 </xsl:for-each>
             </xsl:for-each>
-        </xsl:if>        
+        </xsl:if>
     </xsl:template>
 
     <!-- Template for Domain attributes with datatypes -->
     <xsl:template name = 'attribute'>
         <!-- Parse attributes with cardinality of 0..1 -->
         <!-- Typing is Optional, default is None -->
-        <xsl:if test="@maxOccurs &lt;= 1">   
+        <xsl:if test="@maxOccurs &lt;= 1">
             <xsl:variable name="xstype">
                 <xsl:call-template name="type">
                     <xsl:with-param name="xstype" select="@xstype"/>
@@ -246,8 +246,7 @@
             </xsl:variable>
             <!-- Write dataclass field with typing and default -->
             <item>
-                <xsl:value-of select="$name"/>: Optional[ str |
-                <xsl:value-of select="@type"/> ] = field(
+                <xsl:value-of select="$name"/>: Optional[<xsl:value-of select="@type"/>] = field(
             </item>
             <list begin="" indent="    " end="">
                 default = None,
@@ -255,7 +254,7 @@
         </xsl:if>
         <!-- Parse datatype of attributes with cardinality of many -->
         <!-- Typing is List, default is [] -->
-        <xsl:if test="@maxOccurs &gt; 1 or @maxOccurs = 'unbounded'">            
+        <xsl:if test="@maxOccurs &gt; 1 or @maxOccurs = 'unbounded'">
             <!-- Error handling for invalid or missing names -->
             <xsl:variable name="name">
                 <xsl:call-template name="name">
@@ -265,8 +264,7 @@
             </xsl:variable>
             <!-- Write dataclass field with typing and default -->
             <item>
-                <xsl:value-of select="$name"/>: list[ str |
-                <xsl:value-of select="@type"/> ] = field(
+                <xsl:value-of select="$name"/>: list[<xsl:value-of select="@type"/>] = field(
             </item>
             <list begin="" indent="    " end="">
                 default_factory = list,
@@ -285,7 +283,7 @@
             <xsl:for-each select="a:Comment">
                 <xsl:call-template name="comment"/>
             </xsl:for-each>
-        </list> 
+        </list>
         <item></item>
 
     </xsl:template>
@@ -293,7 +291,7 @@
     <!-- Template for enumerations -->
     <xsl:template name="enumeration">
         <!-- Parse enumeration name -->
-        <item>class <xsl:value-of select="@name"/>( Enum ):</item>
+        <item>class <xsl:value-of select="@name"/>(Enum):</item>
         <!-- Parse all comment text, merge multiple comments into single block -->
         <list begin="    '''" indent="    " end="    '''">
             <xsl:for-each select="a:Comment">
@@ -393,7 +391,7 @@
                 <xsl:with-param name="type" select="@name"/>
             </xsl:call-template>
         </xsl:variable>
-        <item> 
+        <item>
             <xsl:value-of select="$name"/> = '<xsl:value-of select="$name"/>'
         </item>
         <!-- Parse all comment text, merge multiple comments into single block -->
@@ -418,7 +416,7 @@
             <xsl:otherwise>str</xsl:otherwise>
         </xsl:choose>
     </xsl:template>
-    
+
     <!-- Template for error handling of missing or reserved names -->
     <xsl:template name="name">
         <xsl:param name="name" select="@name"/>
@@ -472,7 +470,7 @@
             <item>mRID is superseded by Identity.identifier, which is typed to be a UUID.</item>
         </list>
         <list begin="" indent="    " end="">
-            <item>identifier: Optional[ str | UUID ] = field(</item>
+            <item>identifier: Optional[UUID] = field(</item>
             <list begin="" indent="    " end="">
                 <item>default = None,</item>
                 <item>metadata = {</item>
@@ -497,7 +495,7 @@
                 </list>
             </list>
             <item></item>
-            
+
             <item># Override python string for printing with JSON representation</item>
             <item>def __str__(self) -> str: </item>
             <list begin="" indent="    " end="">
@@ -665,7 +663,7 @@
             </list>
             <item>return uri</item>
         </list>
-        
+
         <item></item>
 
         <item># Metadata for inconsistent uri and mRID </item>
@@ -675,13 +673,13 @@
             <item>uri_has_underscore:bool = False</item>
             <item>uri_is_capitalized:bool = False</item>
             <item>mrid_has_underscore:bool = False</item>
-            <item>mrid_is_capitalized:bool = False</item> 
+            <item>mrid_is_capitalized:bool = False</item>
         </list>
         <item></item>
-           
-        
+
+
         </list>
-        
+
     </xsl:template>
 
 </xsl:stylesheet>

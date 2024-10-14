@@ -1,11 +1,13 @@
 from __future__ import annotations
-from dataclasses import dataclass, field, is_dataclass
-from typing import Optional
-from enum import Enum
-from uuid import UUID, uuid4
-from random import Random
+
 import json
 import logging
+from dataclasses import dataclass, field, is_dataclass
+from enum import Enum
+from random import Random
+from typing import Optional
+from uuid import UUID, uuid4
+
 _log = logging.getLogger(__name__)
 '''
     Annotated CIMantic Graphs data profile for cim17v40
@@ -14,25 +16,25 @@ _log = logging.getLogger(__name__)
 @dataclass
 class Identity():
     '''
-    This is the new root class from CIM 18 to provide common identification 
-    for all classes needing identification and naming attributes. 
+    This is the new root class from CIM 18 to provide common identification
+    for all classes needing identification and naming attributes.
     IdentifiedObject is now a child class of Identity.
     mRID is superseded by Identity.identifier, which is typed to be a UUID.
     '''
-    identifier: Optional[ str | UUID ] = field(
+    identifier: Optional[ UUID ] = field(
         default = None,
         metadata = {
             'type': 'Attribute',
             'minOccurs': '1',
             'maxOccurs': '1'
         })
-    
+
     def __post_init__(self):
         if 'mRID' in self.__dataclass_fields__:
             if self.mRID is not None:
                 self.uuid(mRID = self.mRID)
-    
-    # Override python string for printing with JSON representation 
+
+    # Override python string for printing with JSON representation
     def __str__(self) -> str:
         # Create JSON-LD dump with repr and all attributes
         dump = dict(json.loads(self.__repr__()) | self.__dict__)
@@ -56,7 +58,7 @@ class Identity():
 
     def __repr__(self) -> str:
         return json.dumps({'@id': f'{str(self.identifier)}', '@type': f'{self.__class__.__name__}'})
-    
+
     def pprint(self) -> None:
         print(json.dumps(json.loads(self.__str__()), indent=4))
 
@@ -86,7 +88,7 @@ class Identity():
                 self.__uuid__.mrid_is_capitalized = True
                 if uri is None:
                     self.__uuid__.uri_is_capitalized = True
-                
+
             if self.__uuid__.uuid is None:
                 try:
                     self.__uuid__.uuid = UUID(mRID.strip('_').lower())
@@ -98,16 +100,16 @@ class Identity():
 
         if invalid:
             if name is not None:
-                seed = seed + f"{self.__class__.__name__}:{name}"
+                seed = seed + f'{self.__class__.__name__}:{name}'
                 randomGenerator = Random(seed)
                 self.__uuid__.uuid = UUID(int=randomGenerator.getrandbits(128), version=4)
                 self.name = name
-            else: 
+            else:
                 self.__uuid__.uuid = uuid4()
 
         self.identifier = self.__uuid__.uuid
 
-                
+
 
         if 'mRID' in self.__dataclass_fields__:
             if mRID is not None:
@@ -132,7 +134,7 @@ class Identity():
         uri_is_capitalized:bool = False
         mrid_has_underscore:bool = False
         mrid_is_capitalized:bool = False
-        
+
 @dataclass(repr=False)
 class IdentifiedObject(Identity):
     '''
@@ -219,7 +221,7 @@ class IdentifiedObject(Identity):
     The name is any free human readable and possibly non unique text naming
     the object.
     '''
-    InstanceSet: Optional[ str | InstanceSet ] = field(
+    InstanceSet: Optional[ InstanceSet ] = field(
         default = None,
         metadata = {
             'type': 'Association',
@@ -234,7 +236,7 @@ class IdentifiedObject(Identity):
     '''
     Dataset containing the data objects.
     '''
-    Names: list[ str | Name ] = field(
+    Names: list[ Name ] = field(
         default_factory = list,
         metadata = {
             'type': 'Association',
@@ -249,7 +251,7 @@ class IdentifiedObject(Identity):
     '''
     All names of this identified object.
     '''
-    PropertiesCIMDataObject: Optional[ str | ChangeSetMember ] = field(
+    PropertiesCIMDataObject: Optional[ ChangeSetMember ] = field(
         default = None,
         metadata = {
             'type': 'Association',
@@ -321,7 +323,7 @@ class ACDCTerminal(IdentifiedObject):
     should follow in increasing order. The first terminal is the "starting
     point" for a two terminal branch.
     '''
-    BusNameMarker: Optional[ str | BusNameMarker ] = field(
+    BusNameMarker: Optional[ BusNameMarker ] = field(
         default = None,
         metadata = {
             'type': 'Association',
@@ -336,7 +338,7 @@ class ACDCTerminal(IdentifiedObject):
     '''
     The bus name marker used to name the bus (topological node).
     '''
-    Measurements: list[ str | Measurement ] = field(
+    Measurements: list[ Measurement ] = field(
         default_factory = list,
         metadata = {
             'type': 'Association',
@@ -357,7 +359,7 @@ class ACDCTerminal(IdentifiedObject):
     the sensor position, such as a voltage transformer (PT) at a busbar or
     a current transformer (CT) at the bar between a breaker and an isolator.
     '''
-    OperationalLimitSet: list[ str | OperationalLimitSet ] = field(
+    OperationalLimitSet: list[ OperationalLimitSet ] = field(
         default_factory = list,
         metadata = {
             'type': 'Association',
@@ -378,7 +380,7 @@ class Terminal(ACDCTerminal):
     An AC electrical connection point to a piece of conducting equipment. Terminals
     are connected at physical connection points called connectivity nodes.
     '''
-    phases: Optional[ str | PhaseCode ] = field(
+    phases: Optional[ PhaseCode ] = field(
         default = None,
         metadata = {
             'type': 'enumeration',
@@ -404,7 +406,7 @@ class Terminal(ACDCTerminal):
     The phase code on terminals connecting same ConnectivityNode or same TopologicalNode
     as well as for equipment between two terminals shall be consistent.
     '''
-    Bushing: Optional[ str | Bushing ] = field(
+    Bushing: Optional[ Bushing ] = field(
         default = None,
         metadata = {
             'type': 'Association',
@@ -417,7 +419,7 @@ class Terminal(ACDCTerminal):
         })
     '''
     '''
-    Circuit: Optional[ str | Circuit ] = field(
+    Circuit: Optional[ Circuit ] = field(
         default = None,
         metadata = {
             'type': 'Association',
@@ -430,7 +432,7 @@ class Terminal(ACDCTerminal):
         })
     '''
     '''
-    ConductingEquipment: Optional[ str | ConductingEquipment ] = field(
+    ConductingEquipment: Optional[ ConductingEquipment ] = field(
         default = None,
         metadata = {
             'type': 'Association',
@@ -449,7 +451,7 @@ class Terminal(ACDCTerminal):
     that may be connected to other conducting equipment terminals via connectivity
     nodes or topological nodes.
     '''
-    ConnectivityNode: Optional[ str | ConnectivityNode ] = field(
+    ConnectivityNode: Optional[ ConnectivityNode ] = field(
         default = None,
         metadata = {
             'type': 'Association',
@@ -464,7 +466,7 @@ class Terminal(ACDCTerminal):
     '''
     The connectivity node to which this terminal connects with zero impedance.
     '''
-    NormalHeadFeeder: Optional[ str | Feeder ] = field(
+    NormalHeadFeeder: Optional[ Feeder ] = field(
         default = None,
         metadata = {
             'type': 'Association',
@@ -481,7 +483,7 @@ class Terminal(ACDCTerminal):
     The feeder that this terminal normally feeds. Only specified for the terminals
     at head of feeders.
     '''
-    RegulatingControl: list[ str | RegulatingControl ] = field(
+    RegulatingControl: list[ RegulatingControl ] = field(
         default_factory = list,
         metadata = {
             'type': 'Association',
@@ -496,7 +498,7 @@ class Terminal(ACDCTerminal):
     '''
     The controls regulating this terminal.
     '''
-    TopologicalNode: Optional[ str | TopologicalNode ] = field(
+    TopologicalNode: Optional[ TopologicalNode ] = field(
         default = None,
         metadata = {
             'type': 'Of Aggregate',
@@ -519,7 +521,7 @@ class Terminal(ACDCTerminal):
     the if connectivity nodes are in the model, this association would probably
     not be used as an input specification.
     '''
-    TransformerEnd: list[ str | TransformerEnd ] = field(
+    TransformerEnd: list[ TransformerEnd ] = field(
         default_factory = list,
         metadata = {
             'type': 'Association',
@@ -674,7 +676,7 @@ class Asset(IdentifiedObject):
     life expectancy baseline. Represents
     (initial life expectancy - current life expectancy) / initial life expectancy.
     '''
-    inUseState: Optional[ str | InUseStateKind ] = field(
+    inUseState: Optional[ InUseStateKind ] = field(
         default = None,
         metadata = {
             'type': 'enumeration',
@@ -690,7 +692,7 @@ class Asset(IdentifiedObject):
     Indication of whether asset is currently deployed (in use), ready to be
     put into use or not available for use.
     '''
-    kind: Optional[ str | AssetKind ] = field(
+    kind: Optional[ AssetKind ] = field(
         default = None,
         metadata = {
             'type': 'enumeration',
@@ -706,7 +708,7 @@ class Asset(IdentifiedObject):
     Kind of asset. Used in description of asset components in asset instance
     templates.
     '''
-    purchasePrice: Optional[ str | Money ] = field(
+    purchasePrice: Optional[ Money ] = field(
         default = None,
         metadata = {
             'type': 'Attribute',
@@ -720,7 +722,7 @@ class Asset(IdentifiedObject):
     '''
     Purchase price of asset.
     '''
-    AssetContainer: Optional[ str | AssetContainer ] = field(
+    AssetContainer: Optional[ AssetContainer ] = field(
         default = None,
         metadata = {
             'type': 'Association',
@@ -735,7 +737,7 @@ class Asset(IdentifiedObject):
     '''
     Container of this asset.
     '''
-    AssetInfo: Optional[ str | AssetInfo ] = field(
+    AssetInfo: Optional[ AssetInfo ] = field(
         default = None,
         metadata = {
             'type': 'Association',
@@ -750,7 +752,7 @@ class Asset(IdentifiedObject):
     '''
     Data applicable to this asset.
     '''
-    Location: Optional[ str | Location ] = field(
+    Location: Optional[ Location ] = field(
         default = None,
         metadata = {
             'type': 'Association',
@@ -765,7 +767,7 @@ class Asset(IdentifiedObject):
     '''
     Location of this asset.
     '''
-    Measurements: list[ str | Measurement ] = field(
+    Measurements: list[ Measurement ] = field(
         default_factory = list,
         metadata = {
             'type': 'Association',
@@ -786,7 +788,7 @@ class AssetContainer(Asset):
     Asset that is aggregation of other assets such as conductors, transformers,
     switchgear, land, fences, buildings, equipment, vehicles, etc.
     '''
-    Assets: list[ str | Asset ] = field(
+    Assets: list[ Asset ] = field(
         default_factory = list,
         metadata = {
             'type': 'Association',
@@ -824,7 +826,7 @@ class DuctBank(AssetContainer):
     Number of circuits in duct bank. Refer to associations between a duct (ConductorAsset)
     and an ACLineSegment to understand which circuits are in which ducts.
     '''
-    WireSpacingInfos: list[ str | WireSpacingInfo ] = field(
+    WireSpacingInfos: list[ WireSpacingInfo ] = field(
         default_factory = list,
         metadata = {
             'type': 'Association',
@@ -943,7 +945,7 @@ class EndDevice(AssetContainer):
     '''
     Time zone offset relative to GMT for the location of this end device.
     '''
-    Customer: Optional[ str | Customer ] = field(
+    Customer: Optional[ Customer ] = field(
         default = None,
         metadata = {
             'type': 'Association',
@@ -963,7 +965,7 @@ class Bushing(Asset):
     '''
     Bushing asset.
     '''
-    Terminal: Optional[ str | Terminal ] = field(
+    Terminal: Optional[ Terminal ] = field(
         default = None,
         metadata = {
             'type': 'Association',
@@ -989,7 +991,7 @@ class AssetInfo(IdentifiedObject):
     - as attributes of a type asset (generic type of an asset as used in designs/extension
     planning).
     '''
-    Assets: list[ str | Asset ] = field(
+    Assets: list[ Asset ] = field(
         default_factory = list,
         metadata = {
             'type': 'Association',
@@ -1004,7 +1006,7 @@ class AssetInfo(IdentifiedObject):
     '''
     All assets described by this data.
     '''
-    CatalogAssetType: Optional[ str | CatalogAssetType ] = field(
+    CatalogAssetType: Optional[ CatalogAssetType ] = field(
         default = None,
         metadata = {
             'type': 'Association',
@@ -1019,7 +1021,7 @@ class AssetInfo(IdentifiedObject):
     '''
     Asset information (nameplate) for this catalog asset type.
     '''
-    PowerSystemResources: list[ str | PowerSystemResource ] = field(
+    PowerSystemResources: list[ PowerSystemResource ] = field(
         default_factory = list,
         metadata = {
             'type': 'Association',
@@ -1034,7 +1036,7 @@ class AssetInfo(IdentifiedObject):
     '''
     All power system resources with this datasheet information.
     '''
-    ProductAssetModel: Optional[ str | ProductAssetModel ] = field(
+    ProductAssetModel: Optional[ ProductAssetModel ] = field(
         default = None,
         metadata = {
             'type': 'Association',
@@ -1151,7 +1153,7 @@ class BushingInfo(AssetInfo):
     Factory measured insulation power factor, measured between the power factor
     tap and ground.
     '''
-    insulationKind: Optional[ str | BushingInsulationKind ] = field(
+    insulationKind: Optional[ BushingInsulationKind ] = field(
         default = None,
         metadata = {
             'type': 'enumeration',
@@ -1228,7 +1230,7 @@ class InterrupterUnitInfo(AssetInfo):
     '''
     Interrupter datasheet information.
     '''
-    interruptingMedium: Optional[ str | InterruptingMediumKind ] = field(
+    interruptingMedium: Optional[ InterruptingMediumKind ] = field(
         default = None,
         metadata = {
             'type': 'enumeration',
@@ -1275,7 +1277,7 @@ class OperatingMechanismInfo(AssetInfo):
     '''
     Close voltage in volts DC.
     '''
-    mechanismKind: Optional[ str | OperatingMechanismKind ] = field(
+    mechanismKind: Optional[ OperatingMechanismKind ] = field(
         default = None,
         metadata = {
             'type': 'enumeration',
@@ -1364,7 +1366,7 @@ class PowerTransformerInfo(AssetInfo):
     '''
     Set of power transformer data, from an equipment library.
     '''
-    TransformerTankInfos: list[ str | TransformerTankInfo ] = field(
+    TransformerTankInfos: list[ TransformerTankInfo ] = field(
         default_factory = list,
         metadata = {
             'type': 'Association',
@@ -1441,7 +1443,7 @@ class ShuntCompensatorInfo(AssetInfo):
     '''
     Rated voltage.
     '''
-    ShuntCompensatorControl: Optional[ str | ShuntCompensatorControl ] = field(
+    ShuntCompensatorControl: Optional[ ShuntCompensatorControl ] = field(
         default = None,
         metadata = {
             'type': 'Association',
@@ -1894,7 +1896,7 @@ class TransformerEndInfo(AssetInfo):
     winding in code 'Dyn11', set attributes as follows: 'endNumber'=2, 'connectionKind'
     = Yn and 'phaseAngleClock' = 11.
     '''
-    connectionKind: Optional[ str | WindingConnection ] = field(
+    connectionKind: Optional[ WindingConnection ] = field(
         default = None,
         metadata = {
             'type': 'enumeration',
@@ -1998,7 +2000,7 @@ class TransformerEndInfo(AssetInfo):
     Apparent power that this winding can carry for a short period of time (in
     emergency).
     '''
-    CoreAdmittance: Optional[ str | TransformerCoreAdmittance ] = field(
+    CoreAdmittance: Optional[ TransformerCoreAdmittance ] = field(
         default = None,
         metadata = {
             'type': 'Association',
@@ -2017,7 +2019,7 @@ class TransformerEndInfo(AssetInfo):
     magnetising current and core losses. The full values of the transformer
     should be supplied for one transformer end info only.
     '''
-    EnergisedEndNoLoadTests: list[ str | NoLoadTest ] = field(
+    EnergisedEndNoLoadTests: list[ NoLoadTest ] = field(
         default_factory = list,
         metadata = {
             'type': 'Association',
@@ -2032,7 +2034,7 @@ class TransformerEndInfo(AssetInfo):
     '''
     All no-load test measurements in which this transformer end was energised.
     '''
-    EnergisedEndOpenCircuitTests: list[ str | OpenCircuitTest ] = field(
+    EnergisedEndOpenCircuitTests: list[ OpenCircuitTest ] = field(
         default_factory = list,
         metadata = {
             'type': 'Association',
@@ -2047,7 +2049,7 @@ class TransformerEndInfo(AssetInfo):
     '''
     All open-circuit test measurements in which this transformer end was excited.
     '''
-    EnergisedEndShortCircuitTests: list[ str | ShortCircuitTest ] = field(
+    EnergisedEndShortCircuitTests: list[ ShortCircuitTest ] = field(
         default_factory = list,
         metadata = {
             'type': 'Association',
@@ -2062,7 +2064,7 @@ class TransformerEndInfo(AssetInfo):
     '''
     All short-circuit test measurements in which this transformer end was energised.
     '''
-    FromMeshImpedances: list[ str | TransformerMeshImpedance ] = field(
+    FromMeshImpedances: list[ TransformerMeshImpedance ] = field(
         default_factory = list,
         metadata = {
             'type': 'Association',
@@ -2077,7 +2079,7 @@ class TransformerEndInfo(AssetInfo):
     '''
     All mesh impedances between this 'to' and other 'from' transformer ends.
     '''
-    GroundedEndShortCircuitTests: list[ str | ShortCircuitTest ] = field(
+    GroundedEndShortCircuitTests: list[ ShortCircuitTest ] = field(
         default_factory = list,
         metadata = {
             'type': 'Association',
@@ -2092,7 +2094,7 @@ class TransformerEndInfo(AssetInfo):
     '''
     All short-circuit test measurements in which this transformer end was short-circuited.
     '''
-    OpenEndOpenCircuitTests: list[ str | OpenCircuitTest ] = field(
+    OpenEndOpenCircuitTests: list[ OpenCircuitTest ] = field(
         default_factory = list,
         metadata = {
             'type': 'Association',
@@ -2109,7 +2111,7 @@ class TransformerEndInfo(AssetInfo):
     All open-circuit test measurements in which this transformer end was not
     excited.
     '''
-    ToMeshImpedances: list[ str | TransformerMeshImpedance ] = field(
+    ToMeshImpedances: list[ TransformerMeshImpedance ] = field(
         default_factory = list,
         metadata = {
             'type': 'Association',
@@ -2124,7 +2126,7 @@ class TransformerEndInfo(AssetInfo):
     '''
     All mesh impedances between this 'from' and other 'to' transformer ends.
     '''
-    TransformerStarImpedance: Optional[ str | TransformerStarImpedance ] = field(
+    TransformerStarImpedance: Optional[ TransformerStarImpedance ] = field(
         default = None,
         metadata = {
             'type': 'Association',
@@ -2139,7 +2141,7 @@ class TransformerEndInfo(AssetInfo):
     '''
     Transformer star impedance calculated from this transformer end datasheet.
     '''
-    TransformerTankInfo: Optional[ str | TransformerTankInfo ] = field(
+    TransformerTankInfo: Optional[ TransformerTankInfo ] = field(
         default = None,
         metadata = {
             'type': 'Association',
@@ -2159,7 +2161,7 @@ class TransformerTankInfo(AssetInfo):
     '''
     Set of transformer tank data, from an equipment library.
     '''
-    PowerTransformerInfo: Optional[ str | PowerTransformerInfo ] = field(
+    PowerTransformerInfo: Optional[ PowerTransformerInfo ] = field(
         default = None,
         metadata = {
             'type': 'Association',
@@ -2174,7 +2176,7 @@ class TransformerTankInfo(AssetInfo):
     '''
     Power transformer data that this tank description is part of.
     '''
-    TransformerEndInfos: list[ str | TransformerEndInfo ] = field(
+    TransformerEndInfos: list[ TransformerEndInfo ] = field(
         default_factory = list,
         metadata = {
             'type': 'Association',
@@ -2194,7 +2196,7 @@ class WireAssemblyInfo(AssetInfo):
     '''
     Describes the construction of a multi-conductor wire.
     '''
-    PerLengthLineParameter: list[ str | PerLengthLineParameter ] = field(
+    PerLengthLineParameter: list[ PerLengthLineParameter ] = field(
         default_factory = list,
         metadata = {
             'type': 'Association',
@@ -2209,7 +2211,7 @@ class WireAssemblyInfo(AssetInfo):
     '''
     Per length line parameter associated with this wire assembly.
     '''
-    WirePhaseInfo: list[ str | WirePhaseInfo ] = field(
+    WirePhaseInfo: list[ WirePhaseInfo ] = field(
         default_factory = list,
         metadata = {
             'type': 'Association',
@@ -2318,7 +2320,7 @@ class WireInfo(AssetInfo):
     of radius GMR, then its reactance is identical to the reactance of the
     actual conductor.
     '''
-    insulationMaterial: Optional[ str | WireInsulationKind ] = field(
+    insulationMaterial: Optional[ WireInsulationKind ] = field(
         default = None,
         metadata = {
             'type': 'enumeration',
@@ -2346,7 +2348,7 @@ class WireInfo(AssetInfo):
     '''
     (if insulated conductor) Thickness of the insulation.
     '''
-    material: Optional[ str | WireMaterialKind ] = field(
+    material: Optional[ WireMaterialKind ] = field(
         default = None,
         metadata = {
             'type': 'enumeration',
@@ -2444,7 +2446,7 @@ class WireInfo(AssetInfo):
     '''
     DC resistance per unit length of the conductor at 20 °C.
     '''
-    ACLineSegmentPhase: list[ str | ACLineSegmentPhase ] = field(
+    ACLineSegmentPhase: list[ ACLineSegmentPhase ] = field(
         default_factory = list,
         metadata = {
             'type': 'Association',
@@ -2459,7 +2461,7 @@ class WireInfo(AssetInfo):
     '''
     AC line segment phase information associated with this wire information.
     '''
-    WirePhaseInfo: list[ str | WirePhaseInfo ] = field(
+    WirePhaseInfo: list[ WirePhaseInfo ] = field(
         default_factory = list,
         metadata = {
             'type': 'Association',
@@ -2507,7 +2509,7 @@ class CableInfo(WireInfo):
     '''
     True if sheath / shield is used as a neutral (i.e., bonded).
     '''
-    constructionKind: Optional[ str | CableConstructionKind ] = field(
+    constructionKind: Optional[ CableConstructionKind ] = field(
         default = None,
         metadata = {
             'type': 'enumeration',
@@ -2593,7 +2595,7 @@ class CableInfo(WireInfo):
     '''
     Maximum nominal design operating temperature.
     '''
-    outerJacketKind: Optional[ str | CableOuterJacketKind ] = field(
+    outerJacketKind: Optional[ CableOuterJacketKind ] = field(
         default = None,
         metadata = {
             'type': 'enumeration',
@@ -2607,7 +2609,7 @@ class CableInfo(WireInfo):
     '''
     Kind of outer jacket of this cable.
     '''
-    shieldMaterial: Optional[ str | CableShieldMaterialKind ] = field(
+    shieldMaterial: Optional[ CableShieldMaterialKind ] = field(
         default = None,
         metadata = {
             'type': 'enumeration',
@@ -2788,7 +2790,7 @@ class WireSpacingInfo(AssetInfo):
     '''
     Distance between wire sub-conductors in a symmetrical bundle.
     '''
-    usage: Optional[ str | WireUsageKind ] = field(
+    usage: Optional[ WireUsageKind ] = field(
         default = None,
         metadata = {
             'type': 'enumeration',
@@ -2802,7 +2804,7 @@ class WireSpacingInfo(AssetInfo):
     '''
     Usage of the associated wires.
     '''
-    ACLineSegment: list[ str | ACLineSegment ] = field(
+    ACLineSegment: list[ ACLineSegment ] = field(
         default_factory = list,
         metadata = {
             'type': 'Association',
@@ -2817,7 +2819,7 @@ class WireSpacingInfo(AssetInfo):
     '''
     The AC line segment defined by the wire spacing information
     '''
-    DuctBank: Optional[ str | DuctBank ] = field(
+    DuctBank: Optional[ DuctBank ] = field(
         default = None,
         metadata = {
             'type': 'Association',
@@ -2830,7 +2832,7 @@ class WireSpacingInfo(AssetInfo):
         })
     '''
     '''
-    WirePositions: list[ str | WirePosition ] = field(
+    WirePositions: list[ WirePosition ] = field(
         default_factory = list,
         metadata = {
             'type': 'Association',
@@ -2859,7 +2861,7 @@ class AsynchronousMachineDynamics(IdentifiedObject):
     references use the symbol <i>L</i> instead of <i>X</i>.</li>
     </ol>
     '''
-    AsynchronousMachine: Optional[ str | AsynchronousMachine ] = field(
+    AsynchronousMachine: Optional[ AsynchronousMachine ] = field(
         default = None,
         metadata = {
             'type': 'Association',
@@ -2940,7 +2942,7 @@ class BaseVoltage(IdentifiedObject):
     The power system resource's base voltage. Shall be a positive value and
     not zero.
     '''
-    ConductingEquipment: list[ str | ConductingEquipment ] = field(
+    ConductingEquipment: list[ ConductingEquipment ] = field(
         default_factory = list,
         metadata = {
             'type': 'Association',
@@ -2959,7 +2961,7 @@ class BaseVoltage(IdentifiedObject):
     no voltage level container used and only one base voltage applies. For
     example, not used for transformers.
     '''
-    TopologicalNode: list[ str | TopologicalNode ] = field(
+    TopologicalNode: list[ TopologicalNode ] = field(
         default_factory = list,
         metadata = {
             'type': 'Association',
@@ -2974,7 +2976,7 @@ class BaseVoltage(IdentifiedObject):
     '''
     The topological nodes at the base voltage.
     '''
-    TransformerEnds: list[ str | TransformerEnd ] = field(
+    TransformerEnds: list[ TransformerEnd ] = field(
         default_factory = list,
         metadata = {
             'type': 'Association',
@@ -2989,7 +2991,7 @@ class BaseVoltage(IdentifiedObject):
     '''
     Transformer ends at the base voltage. This is essential for PU calculation.
     '''
-    VoltageLevel: list[ str | VoltageLevel ] = field(
+    VoltageLevel: list[ VoltageLevel ] = field(
         default_factory = list,
         metadata = {
             'type': 'Association',
@@ -3025,7 +3027,7 @@ class BasicIntervalSchedule(IdentifiedObject):
     The time for the first time point. The value can be a time of day, not
     a specific date.
     '''
-    value1Multiplier: Optional[ str | UnitMultiplier ] = field(
+    value1Multiplier: Optional[ UnitMultiplier ] = field(
         default = None,
         metadata = {
             'type': 'enumeration',
@@ -3039,7 +3041,7 @@ class BasicIntervalSchedule(IdentifiedObject):
     '''
     Multiplier for value1.
     '''
-    value1Unit: Optional[ str | UnitSymbol ] = field(
+    value1Unit: Optional[ UnitSymbol ] = field(
         default = None,
         metadata = {
             'type': 'enumeration',
@@ -3053,7 +3055,7 @@ class BasicIntervalSchedule(IdentifiedObject):
     '''
     Value1 units of measure.
     '''
-    value2Multiplier: Optional[ str | UnitMultiplier ] = field(
+    value2Multiplier: Optional[ UnitMultiplier ] = field(
         default = None,
         metadata = {
             'type': 'enumeration',
@@ -3067,7 +3069,7 @@ class BasicIntervalSchedule(IdentifiedObject):
     '''
     Multiplier for value2.
     '''
-    value2Unit: Optional[ str | UnitSymbol ] = field(
+    value2Unit: Optional[ UnitSymbol ] = field(
         default = None,
         metadata = {
             'type': 'enumeration',
@@ -3086,7 +3088,7 @@ class IrregularIntervalSchedule(BasicIntervalSchedule):
     '''
     The schedule has time points where the time between them varies.
     '''
-    TimePoints: list[ str | IrregularTimePoint ] = field(
+    TimePoints: list[ IrregularTimePoint ] = field(
         default_factory = list,
         metadata = {
             'type': 'Aggregate Of',
@@ -3138,7 +3140,7 @@ class RegularIntervalSchedule(BasicIntervalSchedule):
     The time between each pair of subsequent regular time points in sequence
     order.
     '''
-    TimePoints: list[ str | RegularTimePoint ] = field(
+    TimePoints: list[ RegularTimePoint ] = field(
         default_factory = list,
         metadata = {
             'type': 'Aggregate Of',
@@ -3163,7 +3165,7 @@ class GenUnitOpSchedule(RegularIntervalSchedule):
     power value: etc.). The Y2-axis represents the must run fixed power value
     where required.
     '''
-    GeneratingUnit: Optional[ str | GeneratingUnit ] = field(
+    GeneratingUnit: Optional[ GeneratingUnit ] = field(
         default = None,
         metadata = {
             'type': 'Of Aggregate',
@@ -3186,7 +3188,7 @@ class SeasonDayTypeSchedule(RegularIntervalSchedule):
     A time schedule covering a 24 hour period, with curve data for a specific
     type of season and day.
     '''
-    DayType: Optional[ str | DayType ] = field(
+    DayType: Optional[ DayType ] = field(
         default = None,
         metadata = {
             'type': 'Association',
@@ -3201,7 +3203,7 @@ class SeasonDayTypeSchedule(RegularIntervalSchedule):
     '''
     DayType for the Schedule.
     '''
-    Season: Optional[ str | Season ] = field(
+    Season: Optional[ Season ] = field(
         default = None,
         metadata = {
             'type': 'Association',
@@ -3224,7 +3226,7 @@ class ConformLoadSchedule(SeasonDayTypeSchedule):
     curve represents a typical pattern of load over the time period for a given
     day type and season.
     '''
-    ConformLoadGroup: Optional[ str | ConformLoadGroup ] = field(
+    ConformLoadGroup: Optional[ ConformLoadGroup ] = field(
         default = None,
         metadata = {
             'type': 'Of Aggregate',
@@ -3246,7 +3248,7 @@ class NonConformLoadSchedule(SeasonDayTypeSchedule):
     versus time (X-axis) for non-conforming loads, e.g., large industrial load
     or power station service (where modelled).
     '''
-    NonConformLoadGroup: Optional[ str | NonConformLoadGroup ] = field(
+    NonConformLoadGroup: Optional[ NonConformLoadGroup ] = field(
         default = None,
         metadata = {
             'type': 'Of Aggregate',
@@ -3267,7 +3269,7 @@ class RegulationSchedule(SeasonDayTypeSchedule):
     A pre-established pattern over time for a controlled variable, e.g., busbar
     voltage.
     '''
-    RegulatingControl: Optional[ str | RegulatingControl ] = field(
+    RegulatingControl: Optional[ RegulatingControl ] = field(
         default = None,
         metadata = {
             'type': 'Association',
@@ -3282,7 +3284,7 @@ class RegulationSchedule(SeasonDayTypeSchedule):
     '''
     Regulating controls that have this schedule.
     '''
-    VoltageControlZones: list[ str | VoltageControlZone ] = field(
+    VoltageControlZones: list[ VoltageControlZone ] = field(
         default_factory = list,
         metadata = {
             'type': 'Association',
@@ -3303,7 +3305,7 @@ class SwitchSchedule(SeasonDayTypeSchedule):
     A schedule of switch positions. If RegularTimePoint.value1 is 0, the switch
     is open. If 1, the switch is closed.
     '''
-    Switch: Optional[ str | Switch ] = field(
+    Switch: Optional[ Switch ] = field(
         default = None,
         metadata = {
             'type': 'Association',
@@ -3323,7 +3325,7 @@ class TapSchedule(SeasonDayTypeSchedule):
     '''
     A pre-established pattern over time for a tap step.
     '''
-    TapChanger: Optional[ str | TapChanger ] = field(
+    TapChanger: Optional[ TapChanger ] = field(
         default = None,
         metadata = {
             'type': 'Association',
@@ -3368,7 +3370,7 @@ class BusNameMarker(IdentifiedObject):
     not care. Use 1 for highest priority. Use 2 as priority is less than 1
     and so on.
     '''
-    ReportingGroup: Optional[ str | ReportingGroup ] = field(
+    ReportingGroup: Optional[ ReportingGroup ] = field(
         default = None,
         metadata = {
             'type': 'Association',
@@ -3383,7 +3385,7 @@ class BusNameMarker(IdentifiedObject):
     '''
     The reporting group to which this bus name marker belongs.
     '''
-    Terminal: list[ str | ACDCTerminal ] = field(
+    Terminal: list[ ACDCTerminal ] = field(
         default_factory = list,
         metadata = {
             'type': 'Association',
@@ -3398,7 +3400,7 @@ class BusNameMarker(IdentifiedObject):
     '''
     The terminals associated with this bus name marker.
     '''
-    TopologicalNode: Optional[ str | TopologicalNode ] = field(
+    TopologicalNode: Optional[ TopologicalNode ] = field(
         default = None,
         metadata = {
             'type': 'Association',
@@ -3423,7 +3425,7 @@ class CalculationMethodHierarchy(IdentifiedObject):
     The hierarchy of calculation methods used to derive this measurement.
     .
     '''
-    Measurement: list[ str | Measurement ] = field(
+    Measurement: list[ Measurement ] = field(
         default_factory = list,
         metadata = {
             'type': 'Association',
@@ -3438,7 +3440,7 @@ class CalculationMethodHierarchy(IdentifiedObject):
     '''
     Measurement to which this calculation method hierarchy applies.
     '''
-    MeasurementValue: Optional[ str | MeasurementValue ] = field(
+    MeasurementValue: Optional[ MeasurementValue ] = field(
         default = None,
         metadata = {
             'type': 'Association',
@@ -3469,7 +3471,7 @@ class ConnectivityNode(IdentifiedObject):
     Connectivity nodes are points where terminals of AC conducting equipment
     are connected together with zero impedance.
     '''
-    ConnectivityNodeContainer: Optional[ str | ConnectivityNodeContainer ] = field(
+    ConnectivityNodeContainer: Optional[ ConnectivityNodeContainer ] = field(
         default = None,
         metadata = {
             'type': 'Association',
@@ -3484,7 +3486,7 @@ class ConnectivityNode(IdentifiedObject):
     '''
     Container of this connectivity node.
     '''
-    Terminals: list[ str | Terminal ] = field(
+    Terminals: list[ Terminal ] = field(
         default_factory = list,
         metadata = {
             'type': 'Association',
@@ -3499,7 +3501,7 @@ class ConnectivityNode(IdentifiedObject):
     '''
     Terminals interconnected with zero impedance at a this connectivity node.
     '''
-    TopologicalNode: Optional[ str | TopologicalNode ] = field(
+    TopologicalNode: Optional[ TopologicalNode ] = field(
         default = None,
         metadata = {
             'type': 'Of Aggregate',
@@ -3551,7 +3553,7 @@ class ControlAction(IdentifiedObject):
     '''
     The integer value used for the command or the accumulator reset.
     '''
-    Control: Optional[ str | Control ] = field(
+    Control: Optional[ Control ] = field(
         default = None,
         metadata = {
             'type': 'Association',
@@ -3574,7 +3576,7 @@ class ControlAreaGeneratingUnit(IdentifiedObject):
     be noted that only one instance within a control area should reference
     a specific generating unit.
     '''
-    GeneratingUnit: Optional[ str | GeneratingUnit ] = field(
+    GeneratingUnit: Optional[ GeneratingUnit ] = field(
         default = None,
         metadata = {
             'type': 'Association',
@@ -3596,7 +3598,7 @@ class CoordinateSystem(IdentifiedObject):
     '''
     Coordinate reference system.
     '''
-    Locations: list[ str | Location ] = field(
+    Locations: list[ Location ] = field(
         default_factory = list,
         metadata = {
             'type': 'Association',
@@ -3617,7 +3619,7 @@ class Curve(IdentifiedObject):
     A multi-purpose curve or functional relationship between an independent
     variable (X-axis) and dependent (Y-axis) variables.
     '''
-    curveStyle: Optional[ str | CurveStyle ] = field(
+    curveStyle: Optional[ CurveStyle ] = field(
         default = None,
         metadata = {
             'type': 'enumeration',
@@ -3631,7 +3633,7 @@ class Curve(IdentifiedObject):
     '''
     The style or shape of the curve.
     '''
-    xMultiplier: Optional[ str | UnitMultiplier ] = field(
+    xMultiplier: Optional[ UnitMultiplier ] = field(
         default = None,
         metadata = {
             'type': 'enumeration',
@@ -3645,7 +3647,7 @@ class Curve(IdentifiedObject):
     '''
     Multiplier for X-axis.
     '''
-    xUnit: Optional[ str | UnitSymbol ] = field(
+    xUnit: Optional[ UnitSymbol ] = field(
         default = None,
         metadata = {
             'type': 'enumeration',
@@ -3659,7 +3661,7 @@ class Curve(IdentifiedObject):
     '''
     The X-axis units of measure.
     '''
-    y1Multiplier: Optional[ str | UnitMultiplier ] = field(
+    y1Multiplier: Optional[ UnitMultiplier ] = field(
         default = None,
         metadata = {
             'type': 'enumeration',
@@ -3673,7 +3675,7 @@ class Curve(IdentifiedObject):
     '''
     Multiplier for Y1-axis.
     '''
-    y1Unit: Optional[ str | UnitSymbol ] = field(
+    y1Unit: Optional[ UnitSymbol ] = field(
         default = None,
         metadata = {
             'type': 'enumeration',
@@ -3687,7 +3689,7 @@ class Curve(IdentifiedObject):
     '''
     The Y1-axis units of measure.
     '''
-    y2Multiplier: Optional[ str | UnitMultiplier ] = field(
+    y2Multiplier: Optional[ UnitMultiplier ] = field(
         default = None,
         metadata = {
             'type': 'enumeration',
@@ -3701,7 +3703,7 @@ class Curve(IdentifiedObject):
     '''
     Multiplier for Y2-axis.
     '''
-    y2Unit: Optional[ str | UnitSymbol ] = field(
+    y2Unit: Optional[ UnitSymbol ] = field(
         default = None,
         metadata = {
             'type': 'enumeration',
@@ -3715,7 +3717,7 @@ class Curve(IdentifiedObject):
     '''
     The Y2-axis units of measure.
     '''
-    y3Multiplier: Optional[ str | UnitMultiplier ] = field(
+    y3Multiplier: Optional[ UnitMultiplier ] = field(
         default = None,
         metadata = {
             'type': 'enumeration',
@@ -3729,7 +3731,7 @@ class Curve(IdentifiedObject):
     '''
     Multiplier for Y3-axis.
     '''
-    y3Unit: Optional[ str | UnitSymbol ] = field(
+    y3Unit: Optional[ UnitSymbol ] = field(
         default = None,
         metadata = {
             'type': 'enumeration',
@@ -3743,7 +3745,7 @@ class Curve(IdentifiedObject):
     '''
     The Y3-axis units of measure.
     '''
-    CurveDatas: list[ str | CurveData ] = field(
+    CurveDatas: list[ CurveData ] = field(
         default_factory = list,
         metadata = {
             'type': 'Aggregate Of',
@@ -3798,7 +3800,7 @@ class ReactiveCapabilityCurve(Curve):
     '''
     The hydrogen coolant pressure.
     '''
-    SynchronousMachines: list[ str | SynchronousMachine ] = field(
+    SynchronousMachines: list[ SynchronousMachine ] = field(
         default_factory = list,
         metadata = {
             'type': 'Association',
@@ -3818,7 +3820,7 @@ class CutAction(IdentifiedObject):
     '''
     Action on cut as a switching step.
     '''
-    kind: Optional[ str | TempEquipActionKind ] = field(
+    kind: Optional[ TempEquipActionKind ] = field(
         default = None,
         metadata = {
             'type': 'enumeration',
@@ -3832,7 +3834,7 @@ class CutAction(IdentifiedObject):
     '''
     Switching action to perform.
     '''
-    Cut: Optional[ str | Cut ] = field(
+    Cut: Optional[ Cut ] = field(
         default = None,
         metadata = {
             'type': 'Association',
@@ -3874,7 +3876,7 @@ class DERGroupForecast(IdentifiedObject):
     '''
     The timestamp for when the DER Group forecast was created
     '''
-    EndDeviceGroup: list[ str | EndDeviceGroup ] = field(
+    EndDeviceGroup: list[ EndDeviceGroup ] = field(
         default_factory = list,
         metadata = {
             'type': 'Association',
@@ -3920,7 +3922,7 @@ class DemandResponseProgram(IdentifiedObject):
     program), BIP (base interruptible program). Note that possible types change
     a lot and it would be impossible to enumerate them all.
     '''
-    CustomerAgreements: list[ str | CustomerAgreement ] = field(
+    CustomerAgreements: list[ CustomerAgreement ] = field(
         default_factory = list,
         metadata = {
             'type': 'Association',
@@ -3937,7 +3939,7 @@ class DemandResponseProgram(IdentifiedObject):
     All customer agreements through which the customer is enrolled in this
     demand response program.
     '''
-    EndDeviceGroups: list[ str | EndDeviceGroup ] = field(
+    EndDeviceGroups: list[ EndDeviceGroup ] = field(
         default_factory = list,
         metadata = {
             'type': 'Association',
@@ -3952,7 +3954,7 @@ class DemandResponseProgram(IdentifiedObject):
     '''
     All groups of end devices enrolled in this demand response program.
     '''
-    UsagePointGroups: list[ str | UsagePointGroup ] = field(
+    UsagePointGroups: list[ UsagePointGroup ] = field(
         default_factory = list,
         metadata = {
             'type': 'Association',
@@ -3967,7 +3969,7 @@ class DemandResponseProgram(IdentifiedObject):
     '''
     All usage point groups enrolled in this demand response program.
     '''
-    validityInterval: Optional[ str | DateTimeInterval ] = field(
+    validityInterval: Optional[ DateTimeInterval ] = field(
         default = None,
         metadata = {
             'type': 'Attribute',
@@ -4011,7 +4013,7 @@ class EndDeviceGroup(IdentifiedObject):
     '''
     Type of this group.
     '''
-    DemandResponsePrograms: list[ str | DemandResponseProgram ] = field(
+    DemandResponsePrograms: list[ DemandResponseProgram ] = field(
         default_factory = list,
         metadata = {
             'type': 'Association',
@@ -4026,7 +4028,7 @@ class EndDeviceGroup(IdentifiedObject):
     '''
     All demand response programs this group of end devices is enrolled in.
     '''
-    DERFunction: Optional[ str | DERFunction ] = field(
+    DERFunction: Optional[ DERFunction ] = field(
         default = None,
         metadata = {
             'type': 'Association',
@@ -4041,7 +4043,7 @@ class EndDeviceGroup(IdentifiedObject):
     '''
     Functions supported by the DER Group
     '''
-    DERGroupDispatch: list[ str | DERGroupDispatch ] = field(
+    DERGroupDispatch: list[ DERGroupDispatch ] = field(
         default_factory = list,
         metadata = {
             'type': 'Association',
@@ -4056,7 +4058,7 @@ class EndDeviceGroup(IdentifiedObject):
     '''
     An individual dispatch for a DER Group.
     '''
-    DERGroupForecast: list[ str | DERGroupForecast ] = field(
+    DERGroupForecast: list[ DERGroupForecast ] = field(
         default_factory = list,
         metadata = {
             'type': 'Association',
@@ -4071,7 +4073,7 @@ class EndDeviceGroup(IdentifiedObject):
     '''
     An individual forecast for a DER Group.
     '''
-    DERMonitorableParameter: list[ str | DERMonitorableParameter ] = field(
+    DERMonitorableParameter: list[ DERMonitorableParameter ] = field(
         default_factory = list,
         metadata = {
             'type': 'Association',
@@ -4086,7 +4088,7 @@ class EndDeviceGroup(IdentifiedObject):
     '''
     The DER monitorable parameters associated with a DER Group.
     '''
-    EndDeviceControls: list[ str | EndDeviceControl ] = field(
+    EndDeviceControls: list[ EndDeviceControl ] = field(
         default_factory = list,
         metadata = {
             'type': 'Association',
@@ -4101,7 +4103,7 @@ class EndDeviceGroup(IdentifiedObject):
     '''
     All end device controls sending commands to this end device group.
     '''
-    EndDevices: list[ str | EndDevice ] = field(
+    EndDevices: list[ EndDevice ] = field(
         default_factory = list,
         metadata = {
             'type': 'Association',
@@ -4116,7 +4118,7 @@ class EndDeviceGroup(IdentifiedObject):
     '''
     All end devices this end device group refers to.
     '''
-    MeterReadSchedule: Optional[ str | MeterReadSchedule ] = field(
+    MeterReadSchedule: Optional[ MeterReadSchedule ] = field(
         default = None,
         metadata = {
             'type': 'Association',
@@ -4131,7 +4133,7 @@ class EndDeviceGroup(IdentifiedObject):
     '''
     Meter read schedule that applies to the end device group
     '''
-    status: Optional[ str | Status ] = field(
+    status: Optional[ Status ] = field(
         default = None,
         metadata = {
             'type': 'Attribute',
@@ -4146,7 +4148,7 @@ class EndDeviceGroup(IdentifiedObject):
     '''
     Current status information relevant to a group.
     '''
-    version: Optional[ str | Version ] = field(
+    version: Optional[ Version ] = field(
         default = None,
         metadata = {
             'type': 'Attribute',
@@ -4170,7 +4172,7 @@ class EnergyArea(IdentifiedObject):
     load levels to individual load points for power flow analysis. Often the
     energy area can be linked to both measured and forecast load levels.
     '''
-    ControlArea: Optional[ str | ControlArea ] = field(
+    ControlArea: Optional[ ControlArea ] = field(
         default = None,
         metadata = {
             'type': 'Association',
@@ -4191,7 +4193,7 @@ class LoadArea(EnergyArea):
     The class is the root or first level in a hierarchical structure for grouping
     of loads for the purpose of load flow load scaling.
     '''
-    SubLoadAreas: list[ str | SubLoadArea ] = field(
+    SubLoadAreas: list[ SubLoadArea ] = field(
         default_factory = list,
         metadata = {
             'type': 'Aggregate Of',
@@ -4212,7 +4214,7 @@ class SubLoadArea(EnergyArea):
     The class is the second level in a hierarchical structure for grouping
     of loads for the purpose of load flow load scaling.
     '''
-    LoadArea: Optional[ str | LoadArea ] = field(
+    LoadArea: Optional[ LoadArea ] = field(
         default = None,
         metadata = {
             'type': 'Of Aggregate',
@@ -4227,7 +4229,7 @@ class SubLoadArea(EnergyArea):
     '''
     The LoadArea where the SubLoadArea belongs.
     '''
-    LoadGroups: list[ str | LoadGroup ] = field(
+    LoadGroups: list[ LoadGroup ] = field(
         default_factory = list,
         metadata = {
             'type': 'Aggregate Of',
@@ -4247,7 +4249,7 @@ class EnergyConsumerAction(IdentifiedObject):
     '''
     Action to connect or disconnect the Energy Consumer from its Terminal
     '''
-    kind: Optional[ str | TempEquipActionKind ] = field(
+    kind: Optional[ TempEquipActionKind ] = field(
         default = None,
         metadata = {
             'type': 'enumeration',
@@ -4261,7 +4263,7 @@ class EnergyConsumerAction(IdentifiedObject):
     '''
     Switching action to perform
     '''
-    EnergyConsumer: Optional[ str | EnergyConsumer ] = field(
+    EnergyConsumer: Optional[ EnergyConsumer ] = field(
         default = None,
         metadata = {
             'type': 'Association',
@@ -4281,7 +4283,7 @@ class EnergySchedulingType(IdentifiedObject):
     '''
     Used to define the type of generation for scheduling purposes.
     '''
-    EnergySource: list[ str | EnergySource ] = field(
+    EnergySource: list[ EnergySource ] = field(
         default_factory = list,
         metadata = {
             'type': 'Association',
@@ -4301,7 +4303,7 @@ class EnergySourceAction(IdentifiedObject):
     '''
     Action on energy source as a switching step.
     '''
-    kind: Optional[ str | TempEquipActionKind ] = field(
+    kind: Optional[ TempEquipActionKind ] = field(
         default = None,
         metadata = {
             'type': 'enumeration',
@@ -4315,7 +4317,7 @@ class EnergySourceAction(IdentifiedObject):
     '''
     Switching action to perform.
     '''
-    EnergySource: Optional[ str | EnergySource ] = field(
+    EnergySource: Optional[ EnergySource ] = field(
         default = None,
         metadata = {
             'type': 'Association',
@@ -4335,7 +4337,7 @@ class GeographicalRegion(IdentifiedObject):
     '''
     A geographical region of a power system network model.
     '''
-    Regions: list[ str | SubGeographicalRegion ] = field(
+    Regions: list[ SubGeographicalRegion ] = field(
         default_factory = list,
         metadata = {
             'type': 'Aggregate Of',
@@ -4355,7 +4357,7 @@ class GroundAction(IdentifiedObject):
     '''
     Action on ground as a switching step.
     '''
-    kind: Optional[ str | TempEquipActionKind ] = field(
+    kind: Optional[ TempEquipActionKind ] = field(
         default = None,
         metadata = {
             'type': 'enumeration',
@@ -4369,7 +4371,7 @@ class GroundAction(IdentifiedObject):
     '''
     Switching action to perform.
     '''
-    AlongACLineSegment: Optional[ str | ACLineSegment ] = field(
+    AlongACLineSegment: Optional[ ACLineSegment ] = field(
         default = None,
         metadata = {
             'type': 'Association',
@@ -4388,7 +4390,7 @@ class GroundAction(IdentifiedObject):
     way to access relationship to clamp in case the ground needs to be placed
     along the line segment.
     '''
-    Ground: Optional[ str | Ground ] = field(
+    Ground: Optional[ Ground ] = field(
         default = None,
         metadata = {
             'type': 'Association',
@@ -4403,7 +4405,7 @@ class GroundAction(IdentifiedObject):
     '''
     Ground on which this action is taken.
     '''
-    GroundedEquipment: Optional[ str | ConductingEquipment ] = field(
+    GroundedEquipment: Optional[ ConductingEquipment ] = field(
         default = None,
         metadata = {
             'type': 'Association',
@@ -4432,7 +4434,7 @@ class IOPoint(IdentifiedObject):
     The class describe a measurement or control value. The purpose is to enable
     having attributes and associations common for measurement and control.
     '''
-    IOPointSource: Optional[ str | IOPointSource ] = field(
+    IOPointSource: Optional[ IOPointSource ] = field(
         default = None,
         metadata = {
             'type': 'Association',
@@ -4502,7 +4504,7 @@ class Control(IOPoint):
     '''
     The last time a control output was sent.
     '''
-    unitMultiplier: Optional[ str | UnitMultiplier ] = field(
+    unitMultiplier: Optional[ UnitMultiplier ] = field(
         default = None,
         metadata = {
             'type': 'enumeration',
@@ -4516,7 +4518,7 @@ class Control(IOPoint):
     '''
     The unit multiplier of the controlled quantity.
     '''
-    unitSymbol: Optional[ str | UnitSymbol ] = field(
+    unitSymbol: Optional[ UnitSymbol ] = field(
         default = None,
         metadata = {
             'type': 'enumeration',
@@ -4530,7 +4532,7 @@ class Control(IOPoint):
     '''
     The unit of measure of the controlled quantity.
     '''
-    ControlAction: Optional[ str | ControlAction ] = field(
+    ControlAction: Optional[ ControlAction ] = field(
         default = None,
         metadata = {
             'type': 'Association',
@@ -4545,7 +4547,7 @@ class Control(IOPoint):
     '''
     The control action that is performed on the control
     '''
-    PowerSystemResource: Optional[ str | PowerSystemResource ] = field(
+    PowerSystemResource: Optional[ PowerSystemResource ] = field(
         default = None,
         metadata = {
             'type': 'Association',
@@ -4560,7 +4562,7 @@ class Control(IOPoint):
     '''
     Regulating device governed by this control output.
     '''
-    RemoteControl: Optional[ str | RemoteControl ] = field(
+    RemoteControl: Optional[ RemoteControl ] = field(
         default = None,
         metadata = {
             'type': 'Association',
@@ -4580,7 +4582,7 @@ class AccumulatorReset(Control):
     '''
     This command resets the counter value to zero.
     '''
-    AccumulatorValue: Optional[ str | AccumulatorValue ] = field(
+    AccumulatorValue: Optional[ AccumulatorValue ] = field(
         default = None,
         metadata = {
             'type': 'Association',
@@ -4632,7 +4634,7 @@ class AnalogControl(Control):
     Normal value range minimum for any of the Control.value. Used for scaling,
     e.g. in bar graphs.
     '''
-    AnalogValue: Optional[ str | AnalogValue ] = field(
+    AnalogValue: Optional[ AnalogValue ] = field(
         default = None,
         metadata = {
             'type': 'Association',
@@ -4653,7 +4655,7 @@ class RaiseLowerCommand(AnalogControl):
     An analog control that increases or decreases a set point value with pulses.
     Unless otherwise specified, one pulse moves the set point by one.
     '''
-    ValueAliasSet: Optional[ str | ValueAliasSet ] = field(
+    ValueAliasSet: Optional[ ValueAliasSet ] = field(
         default = None,
         metadata = {
             'type': 'Association',
@@ -4734,7 +4736,7 @@ class Command(Control):
     '''
     The value representing the actuator output.
     '''
-    DiscreteValue: Optional[ str | DiscreteValue ] = field(
+    DiscreteValue: Optional[ DiscreteValue ] = field(
         default = None,
         metadata = {
             'type': 'Association',
@@ -4749,7 +4751,7 @@ class Command(Control):
     '''
     The MeasurementValue that is controlled.
     '''
-    ValueAliasSet: Optional[ str | ValueAliasSet ] = field(
+    ValueAliasSet: Optional[ ValueAliasSet ] = field(
         default = None,
         metadata = {
             'type': 'Association',
@@ -4801,7 +4803,7 @@ class MeasurementValue(IOPoint):
     The limit, expressed as a percentage of the sensor maximum, that errors
     will not exceed when the sensor is used under reference conditions.
     '''
-    CalculationMethodHierarchy: Optional[ str | CalculationMethodHierarchy ] = field(
+    CalculationMethodHierarchy: Optional[ CalculationMethodHierarchy ] = field(
         default = None,
         metadata = {
             'type': 'Association',
@@ -4814,7 +4816,7 @@ class MeasurementValue(IOPoint):
         })
     '''
     '''
-    ErpPerson: Optional[ str | OldPerson ] = field(
+    ErpPerson: Optional[ OldPerson ] = field(
         default = None,
         metadata = {
             'type': 'Association',
@@ -4827,7 +4829,7 @@ class MeasurementValue(IOPoint):
         })
     '''
     '''
-    MeasurementValueQuality: Optional[ str | MeasurementValueQuality ] = field(
+    MeasurementValueQuality: Optional[ MeasurementValueQuality ] = field(
         default = None,
         metadata = {
             'type': 'Aggregate Of',
@@ -4842,7 +4844,7 @@ class MeasurementValue(IOPoint):
     '''
     A MeasurementValue has a MeasurementValueQuality associated with it.
     '''
-    MeasurementValueSource: Optional[ str | MeasurementValueSource ] = field(
+    MeasurementValueSource: Optional[ MeasurementValueSource ] = field(
         default = None,
         metadata = {
             'type': 'Association',
@@ -4861,7 +4863,7 @@ class MeasurementValue(IOPoint):
     SCADA, CCLink, manual, etc. User conventions for the names of sources are
     contained in the introduction to IEC 61970-301.
     '''
-    RemoteSource: Optional[ str | RemoteSource ] = field(
+    RemoteSource: Optional[ RemoteSource ] = field(
         default = None,
         metadata = {
             'type': 'Association',
@@ -4895,7 +4897,7 @@ class AccumulatorValue(MeasurementValue):
     '''
     The value to supervise. The value is positive.
     '''
-    Accumulator: Optional[ str | Accumulator ] = field(
+    Accumulator: Optional[ Accumulator ] = field(
         default = None,
         metadata = {
             'type': 'Association',
@@ -4910,7 +4912,7 @@ class AccumulatorValue(MeasurementValue):
     '''
     Measurement to which this value is connected.
     '''
-    AccumulatorReset: Optional[ str | AccumulatorReset ] = field(
+    AccumulatorReset: Optional[ AccumulatorReset ] = field(
         default = None,
         metadata = {
             'type': 'Association',
@@ -4944,7 +4946,7 @@ class AnalogValue(MeasurementValue):
     '''
     The value to supervise.
     '''
-    Analog: Optional[ str | Analog ] = field(
+    Analog: Optional[ Analog ] = field(
         default = None,
         metadata = {
             'type': 'Association',
@@ -4959,7 +4961,7 @@ class AnalogValue(MeasurementValue):
     '''
     Measurement to which this value is connected.
     '''
-    AnalogControl: Optional[ str | AnalogControl ] = field(
+    AnalogControl: Optional[ AnalogControl ] = field(
         default = None,
         metadata = {
             'type': 'Association',
@@ -4993,7 +4995,7 @@ class DiscreteValue(MeasurementValue):
     '''
     The value to supervise.
     '''
-    Command: Optional[ str | Command ] = field(
+    Command: Optional[ Command ] = field(
         default = None,
         metadata = {
             'type': 'Association',
@@ -5008,7 +5010,7 @@ class DiscreteValue(MeasurementValue):
     '''
     The Control variable associated with the MeasurementValue.
     '''
-    Discrete: Optional[ str | Discrete ] = field(
+    Discrete: Optional[ Discrete ] = field(
         default = None,
         metadata = {
             'type': 'Association',
@@ -5042,7 +5044,7 @@ class StringMeasurementValue(MeasurementValue):
     '''
     The value to supervise.
     '''
-    StringMeasurement: Optional[ str | StringMeasurement ] = field(
+    StringMeasurement: Optional[ StringMeasurement ] = field(
         default = None,
         metadata = {
             'type': 'Association',
@@ -5090,7 +5092,7 @@ class AccumulatorLimit(Limit):
     '''
     The value to supervise against. The value is positive.
     '''
-    LimitSet: Optional[ str | AccumulatorLimitSet ] = field(
+    LimitSet: Optional[ AccumulatorLimitSet ] = field(
         default = None,
         metadata = {
             'type': 'Of Aggregate',
@@ -5124,7 +5126,7 @@ class AnalogLimit(Limit):
     '''
     The value to supervise against.
     '''
-    LimitSet: Optional[ str | AnalogLimitSet ] = field(
+    LimitSet: Optional[ AnalogLimitSet ] = field(
         default = None,
         metadata = {
             'type': 'Of Aggregate',
@@ -5170,7 +5172,7 @@ class AccumulatorLimitSet(LimitSet):
     An AccumulatorLimitSet specifies a set of Limits that are associated with
     an Accumulator measurement.
     '''
-    Limits: list[ str | AccumulatorLimit ] = field(
+    Limits: list[ AccumulatorLimit ] = field(
         default_factory = list,
         metadata = {
             'type': 'Aggregate Of',
@@ -5185,7 +5187,7 @@ class AccumulatorLimitSet(LimitSet):
     '''
     The limit values used for supervision of Measurements.
     '''
-    Measurements: list[ str | Accumulator ] = field(
+    Measurements: list[ Accumulator ] = field(
         default_factory = list,
         metadata = {
             'type': 'Association',
@@ -5206,7 +5208,7 @@ class AnalogLimitSet(LimitSet):
     An AnalogLimitSet specifies a set of Limits that are associated with an
     Analog measurement.
     '''
-    Limits: list[ str | AnalogLimit ] = field(
+    Limits: list[ AnalogLimit ] = field(
         default_factory = list,
         metadata = {
             'type': 'Aggregate Of',
@@ -5221,7 +5223,7 @@ class AnalogLimitSet(LimitSet):
     '''
     The limit values used for supervision of Measurements.
     '''
-    Measurements: list[ str | Analog ] = field(
+    Measurements: list[ Analog ] = field(
         default_factory = list,
         metadata = {
             'type': 'Association',
@@ -5246,7 +5248,7 @@ class LoadDynamics(IdentifiedObject):
     single load definition. The load model is always applied to individual
     bus loads (energy consumers).
     '''
-    EnergyConsumer: list[ str | EnergyConsumer ] = field(
+    EnergyConsumer: list[ EnergyConsumer ] = field(
         default_factory = list,
         metadata = {
             'type': 'Association',
@@ -5267,7 +5269,7 @@ class LoadGroup(IdentifiedObject):
     The class is the third level in a hierarchical structure for grouping of
     loads for the purpose of load flow load scaling.
     '''
-    SubLoadArea: Optional[ str | SubLoadArea ] = field(
+    SubLoadArea: Optional[ SubLoadArea ] = field(
         default = None,
         metadata = {
             'type': 'Of Aggregate',
@@ -5287,7 +5289,7 @@ class ConformLoadGroup(LoadGroup):
     '''
     A group of loads conforming to an allocation pattern.
     '''
-    ConformLoadSchedules: list[ str | ConformLoadSchedule ] = field(
+    ConformLoadSchedules: list[ ConformLoadSchedule ] = field(
         default_factory = list,
         metadata = {
             'type': 'Aggregate Of',
@@ -5302,7 +5304,7 @@ class ConformLoadGroup(LoadGroup):
     '''
     The ConformLoadSchedules in the ConformLoadGroup.
     '''
-    EnergyConsumers: list[ str | ConformLoad ] = field(
+    EnergyConsumers: list[ ConformLoad ] = field(
         default_factory = list,
         metadata = {
             'type': 'Association',
@@ -5322,7 +5324,7 @@ class NonConformLoadGroup(LoadGroup):
     '''
     Loads that do not follow a daily and seasonal load variation pattern.
     '''
-    EnergyConsumers: list[ str | NonConformLoad ] = field(
+    EnergyConsumers: list[ NonConformLoad ] = field(
         default_factory = list,
         metadata = {
             'type': 'Association',
@@ -5337,7 +5339,7 @@ class NonConformLoadGroup(LoadGroup):
     '''
     Conform loads assigned to this ConformLoadGroup.
     '''
-    NonConformLoadSchedules: list[ str | NonConformLoadSchedule ] = field(
+    NonConformLoadSchedules: list[ NonConformLoadSchedule ] = field(
         default_factory = list,
         metadata = {
             'type': 'Aggregate Of',
@@ -5568,7 +5570,7 @@ class LoadResponseCharacteristic(IdentifiedObject):
     '''
     Exponent of per unit voltage effecting reactive power.
     '''
-    EnergyConsumer: list[ str | EnergyConsumer ] = field(
+    EnergyConsumer: list[ EnergyConsumer ] = field(
         default_factory = list,
         metadata = {
             'type': 'Association',
@@ -5646,7 +5648,7 @@ class Location(IdentifiedObject):
     to the location itself (e.g., geographical, functional accounting, etc.,
     not a given property that happens to exist at that location).
     '''
-    Assets: list[ str | Asset ] = field(
+    Assets: list[ Asset ] = field(
         default_factory = list,
         metadata = {
             'type': 'Association',
@@ -5661,7 +5663,7 @@ class Location(IdentifiedObject):
     '''
     All assets at this location.
     '''
-    CoordinateSystem: Optional[ str | CoordinateSystem ] = field(
+    CoordinateSystem: Optional[ CoordinateSystem ] = field(
         default = None,
         metadata = {
             'type': 'Association',
@@ -5676,7 +5678,7 @@ class Location(IdentifiedObject):
     '''
     Coordinate system used to describe position points of this location.
     '''
-    Measurements: list[ str | Measurement ] = field(
+    Measurements: list[ Measurement ] = field(
         default_factory = list,
         metadata = {
             'type': 'Association',
@@ -5691,7 +5693,7 @@ class Location(IdentifiedObject):
     '''
     All measurements at this location.
     '''
-    PositionPoints: list[ str | PositionPoint ] = field(
+    PositionPoints: list[ PositionPoint ] = field(
         default_factory = list,
         metadata = {
             'type': 'Association',
@@ -5708,7 +5710,7 @@ class Location(IdentifiedObject):
     Sequence of position points describing this location, expressed in coordinate
     system 'Location.CoordinateSystem'.
     '''
-    PowerSystemResources: list[ str | PowerSystemResource ] = field(
+    PowerSystemResources: list[ PowerSystemResource ] = field(
         default_factory = list,
         metadata = {
             'type': 'Association',
@@ -5771,7 +5773,7 @@ class Measurement(IdentifiedObject):
     is defined in more detail by the specialized class which inherits from
     Measurement.
     '''
-    phases: Optional[ str | PhaseCode ] = field(
+    phases: Optional[ PhaseCode ] = field(
         default = None,
         metadata = {
             'type': 'enumeration',
@@ -5797,7 +5799,7 @@ class Measurement(IdentifiedObject):
     phasing is changed due to jumpers or other reasons.
     If the attribute is missing three phases (ABC) shall be assumed.
     '''
-    unitMultiplier: Optional[ str | UnitMultiplier ] = field(
+    unitMultiplier: Optional[ UnitMultiplier ] = field(
         default = None,
         metadata = {
             'type': 'enumeration',
@@ -5811,7 +5813,7 @@ class Measurement(IdentifiedObject):
     '''
     The unit multiplier of the measured quantity.
     '''
-    unitSymbol: Optional[ str | UnitSymbol ] = field(
+    unitSymbol: Optional[ UnitSymbol ] = field(
         default = None,
         metadata = {
             'type': 'enumeration',
@@ -5825,7 +5827,7 @@ class Measurement(IdentifiedObject):
     '''
     The unit of measure of the measured quantity.
     '''
-    Asset: Optional[ str | Asset ] = field(
+    Asset: Optional[ Asset ] = field(
         default = None,
         metadata = {
             'type': 'Association',
@@ -5840,7 +5842,7 @@ class Measurement(IdentifiedObject):
     '''
     Asset that has a measurement
     '''
-    CalculationMethodHierarchy: Optional[ str | CalculationMethodHierarchy ] = field(
+    CalculationMethodHierarchy: Optional[ CalculationMethodHierarchy ] = field(
         default = None,
         metadata = {
             'type': 'Association',
@@ -5855,7 +5857,7 @@ class Measurement(IdentifiedObject):
     '''
     Calculation method hierarchy which applies to this analog.
     '''
-    Locations: list[ str | Location ] = field(
+    Locations: list[ Location ] = field(
         default_factory = list,
         metadata = {
             'type': 'Association',
@@ -5870,7 +5872,7 @@ class Measurement(IdentifiedObject):
     '''
     Location of this measurement.
     '''
-    MeasurementAction: Optional[ str | MeasurementAction ] = field(
+    MeasurementAction: Optional[ MeasurementAction ] = field(
         default = None,
         metadata = {
             'type': 'Association',
@@ -5885,7 +5887,7 @@ class Measurement(IdentifiedObject):
     '''
     The measurement action that is performed on the measurement
     '''
-    PowerSystemResource: Optional[ str | PowerSystemResource ] = field(
+    PowerSystemResource: Optional[ PowerSystemResource ] = field(
         default = None,
         metadata = {
             'type': 'Of Aggregate',
@@ -5900,7 +5902,7 @@ class Measurement(IdentifiedObject):
     '''
     The power system resource that contains the measurement.
     '''
-    Terminal: Optional[ str | ACDCTerminal ] = field(
+    Terminal: Optional[ ACDCTerminal ] = field(
         default = None,
         metadata = {
             'type': 'Association',
@@ -5937,7 +5939,7 @@ class Accumulator(Measurement):
     Normal value range maximum for any of the MeasurementValue.values. Used
     for scaling, e.g. in bar graphs or of telemetered raw values.
     '''
-    AccumulatorValues: list[ str | AccumulatorValue ] = field(
+    AccumulatorValues: list[ AccumulatorValue ] = field(
         default_factory = list,
         metadata = {
             'type': 'Association',
@@ -5952,7 +5954,7 @@ class Accumulator(Measurement):
     '''
     The values connected to this measurement.
     '''
-    LimitSets: list[ str | AccumulatorLimitSet ] = field(
+    LimitSets: list[ AccumulatorLimitSet ] = field(
         default_factory = list,
         metadata = {
             'type': 'Association',
@@ -6036,7 +6038,7 @@ class Analog(Measurement):
     with the convention that a positive value measured at the Terminal means
     power is flowing into the related PowerSystemResource.
     '''
-    AnalogValues: list[ str | AnalogValue ] = field(
+    AnalogValues: list[ AnalogValue ] = field(
         default_factory = list,
         metadata = {
             'type': 'Association',
@@ -6051,7 +6053,7 @@ class Analog(Measurement):
     '''
     The values connected to this measurement.
     '''
-    LimitSets: list[ str | AnalogLimitSet ] = field(
+    LimitSets: list[ AnalogLimitSet ] = field(
         default_factory = list,
         metadata = {
             'type': 'Association',
@@ -6118,7 +6120,7 @@ class Discrete(Measurement):
     '''
     Normal measurement value, e.g., used for percentage calculations.
     '''
-    DiscreteValues: list[ str | DiscreteValue ] = field(
+    DiscreteValues: list[ DiscreteValue ] = field(
         default_factory = list,
         metadata = {
             'type': 'Association',
@@ -6133,7 +6135,7 @@ class Discrete(Measurement):
     '''
     The values connected to this measurement.
     '''
-    ValueAliasSet: Optional[ str | ValueAliasSet ] = field(
+    ValueAliasSet: Optional[ ValueAliasSet ] = field(
         default = None,
         metadata = {
             'type': 'Association',
@@ -6155,7 +6157,7 @@ class StringMeasurement(Measurement):
     '''
     StringMeasurement represents a measurement with values of type string.
     '''
-    StringMeasurementValues: list[ str | StringMeasurementValue ] = field(
+    StringMeasurementValues: list[ StringMeasurementValue ] = field(
         default_factory = list,
         metadata = {
             'type': 'Association',
@@ -6175,7 +6177,7 @@ class MeasurementAction(IdentifiedObject):
     '''
     Measurement taken as a switching step.
     '''
-    Measurement: Optional[ str | Measurement ] = field(
+    Measurement: Optional[ Measurement ] = field(
         default = None,
         metadata = {
             'type': 'Association',
@@ -6197,7 +6199,7 @@ class MeasurementValueSource(IdentifiedObject):
     User conventions for how to use the MeasurementValueSource attributes are
     defined in IEC 61970-301.
     '''
-    MeasurementValues: list[ str | MeasurementValue ] = field(
+    MeasurementValues: list[ MeasurementValue ] = field(
         default_factory = list,
         metadata = {
             'type': 'Association',
@@ -6221,7 +6223,7 @@ class IOPointSource(MeasurementValueSource):
 class MeterReadSchedule(IdentifiedObject):
     '''
     '''
-    EndDevice: list[ str | EndDevice ] = field(
+    EndDevice: list[ EndDevice ] = field(
         default_factory = list,
         metadata = {
             'type': 'Association',
@@ -6365,7 +6367,7 @@ class MutualCoupling(IdentifiedObject):
     '''
     Zero sequence branch-to-branch mutual impedance coupling, reactance.
     '''
-    First_Terminal: Optional[ str | Terminal ] = field(
+    First_Terminal: Optional[ Terminal ] = field(
         default = None,
         metadata = {
             'type': 'Association',
@@ -6386,7 +6388,7 @@ class MutualCoupling(IdentifiedObject):
     for terminals of AC line segments. The first and second terminals of a
     mutual coupling should point to different AC line segments.
     '''
-    Second_Terminal: Optional[ str | Terminal ] = field(
+    Second_Terminal: Optional[ Terminal ] = field(
         default = None,
         metadata = {
             'type': 'Association',
@@ -6416,7 +6418,7 @@ class OperatingParticipant(IdentifiedObject):
     be used for modeling jointly owned units where each owner operates as a
     contractual share.
     '''
-    OperatingShare: list[ str | OperatingShare ] = field(
+    OperatingShare: list[ OperatingShare ] = field(
         default_factory = list,
         metadata = {
             'type': 'Association',
@@ -6457,7 +6459,7 @@ class OperationalLimitSet(IdentifiedObject):
     current limits or high and low voltage limits that are logically applied
     together as a set.
     '''
-    Equipment: Optional[ str | Equipment ] = field(
+    Equipment: Optional[ Equipment ] = field(
         default = None,
         metadata = {
             'type': 'Association',
@@ -6472,7 +6474,7 @@ class OperationalLimitSet(IdentifiedObject):
     '''
     The equipment to which the limit set applies.
     '''
-    OperationalLimitValue: list[ str | OperationalLimit ] = field(
+    OperationalLimitValue: list[ OperationalLimit ] = field(
         default_factory = list,
         metadata = {
             'type': 'Aggregate Of',
@@ -6487,7 +6489,7 @@ class OperationalLimitSet(IdentifiedObject):
     '''
     Values of equipment limits.
     '''
-    Terminal: Optional[ str | ACDCTerminal ] = field(
+    Terminal: Optional[ ACDCTerminal ] = field(
         default = None,
         metadata = {
             'type': 'Association',
@@ -6637,7 +6639,7 @@ class Outage(IdentifiedObject):
     This should possibly be an attribute under the Organization class but it
     is placed here for now.
     '''
-    Equipments: list[ str | Equipment ] = field(
+    Equipments: list[ Equipment ] = field(
         default_factory = list,
         metadata = {
             'type': 'Association',
@@ -6660,7 +6662,7 @@ class PSRType(IdentifiedObject):
     outside the scope of this document, i.e. provide customisation that is
     non standard.
     '''
-    PowerSystemResources: list[ str | PowerSystemResource ] = field(
+    PowerSystemResources: list[ PowerSystemResource ] = field(
         default_factory = list,
         metadata = {
             'type': 'Association',
@@ -6680,7 +6682,7 @@ class PerLengthLineParameter(IdentifiedObject):
     '''
     Common type for per-length electrical catalogues describing line parameters.
     '''
-    WireAssemblyInfo: Optional[ str | WireAssemblyInfo ] = field(
+    WireAssemblyInfo: Optional[ WireAssemblyInfo ] = field(
         default = None,
         metadata = {
             'type': 'Association',
@@ -6702,7 +6704,7 @@ class PerLengthImpedance(PerLengthLineParameter):
     '''
     Common type for per-length impedance electrical catalogues.
     '''
-    ACLineSegments: list[ str | ACLineSegment ] = field(
+    ACLineSegments: list[ ACLineSegment ] = field(
         default_factory = list,
         metadata = {
             'type': 'Association',
@@ -6739,7 +6741,7 @@ class PerLengthPhaseImpedance(PerLengthImpedance):
     Number of phase, neutral, and other wires retained. Constrains the number
     of matrix elements and the phase codes that can be used with this matrix.
     '''
-    PhaseImpedanceData: list[ str | PhaseImpedanceData ] = field(
+    PhaseImpedanceData: list[ PhaseImpedanceData ] = field(
         default_factory = list,
         metadata = {
             'type': 'Association',
@@ -6879,7 +6881,7 @@ class PhaseTapChangerTable(IdentifiedObject):
     Describes a tabular curve for how the phase angle difference and impedance
     varies with the tap step.
     '''
-    PhaseTapChangerTablePoint: list[ str | PhaseTapChangerTablePoint ] = field(
+    PhaseTapChangerTablePoint: list[ PhaseTapChangerTablePoint ] = field(
         default_factory = list,
         metadata = {
             'type': 'Association',
@@ -6894,7 +6896,7 @@ class PhaseTapChangerTable(IdentifiedObject):
     '''
     The points of this table.
     '''
-    PhaseTapChangerTabular: list[ str | PhaseTapChangerTabular ] = field(
+    PhaseTapChangerTabular: list[ PhaseTapChangerTabular ] = field(
         default_factory = list,
         metadata = {
             'type': 'Association',
@@ -6917,7 +6919,7 @@ class PowerSystemResource(IdentifiedObject):
     as a substation, or an organisational entity such as sub-control area.
     Power system resources can have measurements associated.
     '''
-    AssetDatasheet: Optional[ str | AssetInfo ] = field(
+    AssetDatasheet: Optional[ AssetInfo ] = field(
         default = None,
         metadata = {
             'type': 'Association',
@@ -6932,7 +6934,7 @@ class PowerSystemResource(IdentifiedObject):
     '''
     Datasheet information for this power system resource.
     '''
-    Assets: list[ str | Asset ] = field(
+    Assets: list[ Asset ] = field(
         default_factory = list,
         metadata = {
             'type': 'Association',
@@ -6949,7 +6951,7 @@ class PowerSystemResource(IdentifiedObject):
     All assets represented by this power system resource. For example, multiple
     conductor assets are electrically modelled as a single AC line segment.
     '''
-    Controls: list[ str | Control ] = field(
+    Controls: list[ Control ] = field(
         default_factory = list,
         metadata = {
             'type': 'Association',
@@ -6966,7 +6968,7 @@ class PowerSystemResource(IdentifiedObject):
     The controller outputs used to actually govern a regulating device, e.g.
     the magnetization of a synchronous machine or capacitor bank breaker actuator.
     '''
-    Location: Optional[ str | Location ] = field(
+    Location: Optional[ Location ] = field(
         default = None,
         metadata = {
             'type': 'Association',
@@ -6981,7 +6983,7 @@ class PowerSystemResource(IdentifiedObject):
     '''
     Location of this power system resource.
     '''
-    Measurements: list[ str | Measurement ] = field(
+    Measurements: list[ Measurement ] = field(
         default_factory = list,
         metadata = {
             'type': 'Aggregate Of',
@@ -6996,7 +6998,7 @@ class PowerSystemResource(IdentifiedObject):
     '''
     The measurements associated with this power system resource.
     '''
-    PSRType: Optional[ str | PSRType ] = field(
+    PSRType: Optional[ PSRType ] = field(
         default = None,
         metadata = {
             'type': 'Association',
@@ -7038,7 +7040,7 @@ class ACLineSegmentPhase(PowerSystemResource):
     of PerLengthPhaseImpedance) with the connectivity model (this class) and
     the physical model (WirePosition) without tight coupling.
     '''
-    phase: Optional[ str | SinglePhaseKind ] = field(
+    phase: Optional[ SinglePhaseKind ] = field(
         default = None,
         metadata = {
             'type': 'enumeration',
@@ -7052,7 +7054,7 @@ class ACLineSegmentPhase(PowerSystemResource):
     '''
     The phase connection of the wire at both ends.
     '''
-    ACLineSegment: Optional[ str | ACLineSegment ] = field(
+    ACLineSegment: Optional[ ACLineSegment ] = field(
         default = None,
         metadata = {
             'type': 'Association',
@@ -7067,7 +7069,7 @@ class ACLineSegmentPhase(PowerSystemResource):
     '''
     The line segment to which the phase belongs.
     '''
-    WireInfo: Optional[ str | WireInfo ] = field(
+    WireInfo: Optional[ WireInfo ] = field(
         default = None,
         metadata = {
             'type': 'Association',
@@ -7088,7 +7090,7 @@ class ConnectivityNodeContainer(PowerSystemResource):
     A base class for all objects that may contain connectivity nodes or topological
     nodes.
     '''
-    ConnectivityNodes: list[ str | ConnectivityNode ] = field(
+    ConnectivityNodes: list[ ConnectivityNode ] = field(
         default_factory = list,
         metadata = {
             'type': 'Association',
@@ -7103,7 +7105,7 @@ class ConnectivityNodeContainer(PowerSystemResource):
     '''
     Connectivity nodes which belong to this connectivity node container.
     '''
-    TopologicalNode: list[ str | TopologicalNode ] = field(
+    TopologicalNode: list[ TopologicalNode ] = field(
         default_factory = list,
         metadata = {
             'type': 'Association',
@@ -7123,7 +7125,7 @@ class EquipmentContainer(ConnectivityNodeContainer):
     '''
     A modelling construct to provide a root class for containing equipment.
     '''
-    AdditionalGroupedEquipment: list[ str | Equipment ] = field(
+    AdditionalGroupedEquipment: list[ Equipment ] = field(
         default_factory = list,
         metadata = {
             'type': 'Association',
@@ -7148,7 +7150,7 @@ class EquipmentContainer(ConnectivityNodeContainer):
     or when a switch is included in a secondary substation and also grouped
     in a feeder.
     '''
-    Equipments: list[ str | Equipment ] = field(
+    Equipments: list[ Equipment ] = field(
         default_factory = list,
         metadata = {
             'type': 'Aggregate Of',
@@ -7199,7 +7201,7 @@ class Bay(EquipmentContainer):
     '''
     Indicates the presence/absence of active/reactive power measurements.
     '''
-    breakerConfiguration: Optional[ str | BreakerConfiguration ] = field(
+    breakerConfiguration: Optional[ BreakerConfiguration ] = field(
         default = None,
         metadata = {
             'type': 'enumeration',
@@ -7213,7 +7215,7 @@ class Bay(EquipmentContainer):
     '''
     Breaker configuration.
     '''
-    busBarConfiguration: Optional[ str | BusbarConfiguration ] = field(
+    busBarConfiguration: Optional[ BusbarConfiguration ] = field(
         default = None,
         metadata = {
             'type': 'enumeration',
@@ -7227,7 +7229,7 @@ class Bay(EquipmentContainer):
     '''
     Busbar configuration.
     '''
-    Circuit: Optional[ str | Circuit ] = field(
+    Circuit: Optional[ Circuit ] = field(
         default = None,
         metadata = {
             'type': 'Association',
@@ -7240,7 +7242,7 @@ class Bay(EquipmentContainer):
         })
     '''
     '''
-    Substation: Optional[ str | Substation ] = field(
+    Substation: Optional[ Substation ] = field(
         default = None,
         metadata = {
             'type': 'Of Aggregate',
@@ -7255,7 +7257,7 @@ class Bay(EquipmentContainer):
     '''
     Substation containing the bay.
     '''
-    VoltageLevel: Optional[ str | VoltageLevel ] = field(
+    VoltageLevel: Optional[ VoltageLevel ] = field(
         default = None,
         metadata = {
             'type': 'Of Aggregate',
@@ -7278,7 +7280,7 @@ class Feeder(EquipmentContainer):
     The organization a feeder does not necessarily reflect connectivity or
     current operation state.
     '''
-    NamingSecondarySubstation: list[ str | Substation ] = field(
+    NamingSecondarySubstation: list[ Substation ] = field(
         default_factory = list,
         metadata = {
             'type': 'Aggregate Of',
@@ -7297,7 +7299,7 @@ class Feeder(EquipmentContainer):
     Used for naming purposes. Should be consistent with the other associations
     for energizing terminal specification and the feeder energization specification.
     '''
-    NormalEnergizedSubstation: list[ str | Substation ] = field(
+    NormalEnergizedSubstation: list[ Substation ] = field(
         default_factory = list,
         metadata = {
             'type': 'Association',
@@ -7312,7 +7314,7 @@ class Feeder(EquipmentContainer):
     '''
     The substations that are normally energized by the feeder.
     '''
-    NormalEnergizingSubstation: Optional[ str | Substation ] = field(
+    NormalEnergizingSubstation: Optional[ Substation ] = field(
         default = None,
         metadata = {
             'type': 'Of Aggregate',
@@ -7329,7 +7331,7 @@ class Feeder(EquipmentContainer):
     The substation that nominally energizes the feeder. Also used for naming
     purposes.
     '''
-    NormalHeadTerminal: list[ str | Terminal ] = field(
+    NormalHeadTerminal: list[ Terminal ] = field(
         default_factory = list,
         metadata = {
             'type': 'Association',
@@ -7350,7 +7352,7 @@ class Line(EquipmentContainer):
     Contains equipment beyond a substation belonging to a power transmission
     line.
     '''
-    Region: Optional[ str | SubGeographicalRegion ] = field(
+    Region: Optional[ SubGeographicalRegion ] = field(
         default = None,
         metadata = {
             'type': 'Of Aggregate',
@@ -7369,7 +7371,7 @@ class Line(EquipmentContainer):
 class Circuit(Line):
     '''
     '''
-    EndBay: list[ str | Bay ] = field(
+    EndBay: list[ Bay ] = field(
         default_factory = list,
         metadata = {
             'type': 'Association',
@@ -7382,7 +7384,7 @@ class Circuit(Line):
         })
     '''
     '''
-    EndTerminal: list[ str | Terminal ] = field(
+    EndTerminal: list[ Terminal ] = field(
         default_factory = list,
         metadata = {
             'type': 'Association',
@@ -7407,7 +7409,7 @@ class Substation(EquipmentContainer):
     through which electric energy in bulk is passed for the purposes of switching
     or modifying its characteristics.
     '''
-    Bays: list[ str | Bay ] = field(
+    Bays: list[ Bay ] = field(
         default_factory = list,
         metadata = {
             'type': 'Aggregate Of',
@@ -7422,7 +7424,7 @@ class Substation(EquipmentContainer):
     '''
     Bays contained in the substation.
     '''
-    NamingFeeder: Optional[ str | Feeder ] = field(
+    NamingFeeder: Optional[ Feeder ] = field(
         default = None,
         metadata = {
             'type': 'Of Aggregate',
@@ -7441,7 +7443,7 @@ class Substation(EquipmentContainer):
     for naming purposes. Either this association or the substation to subgeographical
     region should be used for hierarchical containment specification.
     '''
-    NormalEnergizedFeeder: list[ str | Feeder ] = field(
+    NormalEnergizedFeeder: list[ Feeder ] = field(
         default_factory = list,
         metadata = {
             'type': 'Aggregate Of',
@@ -7456,7 +7458,7 @@ class Substation(EquipmentContainer):
     '''
     The normal energized feeders of the substation. Also used for naming purposes.
     '''
-    NormalEnergizingFeeder: list[ str | Feeder ] = field(
+    NormalEnergizingFeeder: list[ Feeder ] = field(
         default_factory = list,
         metadata = {
             'type': 'Association',
@@ -7473,7 +7475,7 @@ class Substation(EquipmentContainer):
     The feeders that potentially energize the downstream substation. Should
     be consistent with the associations that describe the naming hierarchy.
     '''
-    Region: Optional[ str | SubGeographicalRegion ] = field(
+    Region: Optional[ SubGeographicalRegion ] = field(
         default = None,
         metadata = {
             'type': 'Of Aggregate',
@@ -7488,7 +7490,7 @@ class Substation(EquipmentContainer):
     '''
     The SubGeographicalRegion containing the substation.
     '''
-    VoltageLevels: list[ str | VoltageLevel ] = field(
+    VoltageLevels: list[ VoltageLevel ] = field(
         default_factory = list,
         metadata = {
             'type': 'Aggregate Of',
@@ -7551,7 +7553,7 @@ class VoltageLevel(EquipmentContainer):
     It is not required that it is exchanged in pair with highVoltageLimit.
     It is preferable to use operational VoltageLimit, which prevails, if present.
     '''
-    BaseVoltage: Optional[ str | BaseVoltage ] = field(
+    BaseVoltage: Optional[ BaseVoltage ] = field(
         default = None,
         metadata = {
             'type': 'Association',
@@ -7566,7 +7568,7 @@ class VoltageLevel(EquipmentContainer):
     '''
     The base voltage used for all equipment within the voltage level.
     '''
-    Bays: list[ str | Bay ] = field(
+    Bays: list[ Bay ] = field(
         default_factory = list,
         metadata = {
             'type': 'Aggregate Of',
@@ -7581,7 +7583,7 @@ class VoltageLevel(EquipmentContainer):
     '''
     The bays within this voltage level.
     '''
-    Substation: Optional[ str | Substation ] = field(
+    Substation: Optional[ Substation ] = field(
         default = None,
         metadata = {
             'type': 'Of Aggregate',
@@ -7656,7 +7658,7 @@ class ControlArea(PowerSystemResource):
     Active power net interchange tolerance. The attribute shall be a positive
     value or zero.
     '''
-    EnergyArea: Optional[ str | EnergyArea ] = field(
+    EnergyArea: Optional[ EnergyArea ] = field(
         default = None,
         metadata = {
             'type': 'Association',
@@ -7728,7 +7730,7 @@ class EnergyConsumerPhase(PowerSystemResource):
     Fixed active power as per cent of load group fixed active power. Load sign
     convention is used, i.e. positive sign means flow out from a node.
     '''
-    phase: Optional[ str | SinglePhaseKind ] = field(
+    phase: Optional[ SinglePhaseKind ] = field(
         default = None,
         metadata = {
             'type': 'enumeration',
@@ -7802,7 +7804,7 @@ class EnergyConsumerPhase(PowerSystemResource):
     Fixed reactive power as per cent of load group fixed reactive power. Load
     sign convention is used, i.e. positive sign means flow out from a node.
     '''
-    EnergyConsumer: Optional[ str | EnergyConsumer ] = field(
+    EnergyConsumer: Optional[ EnergyConsumer ] = field(
         default = None,
         metadata = {
             'type': 'Association',
@@ -7822,7 +7824,7 @@ class EnergySourcePhase(PowerSystemResource):
     '''
     Represents the single phase information of an unbalanced energy source.
     '''
-    phase: Optional[ str | SinglePhaseKind ] = field(
+    phase: Optional[ SinglePhaseKind ] = field(
         default = None,
         metadata = {
             'type': 'enumeration',
@@ -7844,7 +7846,7 @@ class EnergySourcePhase(PowerSystemResource):
     energy source connected from the indicated phase to the next logical non-neutral
     phase.
     '''
-    EnergySource: Optional[ str | EnergySource ] = field(
+    EnergySource: Optional[ EnergySource ] = field(
         default = None,
         metadata = {
             'type': 'Association',
@@ -7952,7 +7954,7 @@ class Equipment(PowerSystemResource):
     if the equipment is energized or not. False means that the equipment is
     treated by network applications as if it is not in the model.
     '''
-    AdditionalEquipmentContainer: list[ str | EquipmentContainer ] = field(
+    AdditionalEquipmentContainer: list[ EquipmentContainer ] = field(
         default_factory = list,
         metadata = {
             'type': 'Association',
@@ -7971,7 +7973,7 @@ class Equipment(PowerSystemResource):
     The equipment is contained in another equipment container, but also grouped
     with this equipment container.
     '''
-    EquipmentContainer: Optional[ str | EquipmentContainer ] = field(
+    EquipmentContainer: Optional[ EquipmentContainer ] = field(
         default = None,
         metadata = {
             'type': 'Of Aggregate',
@@ -7986,7 +7988,7 @@ class Equipment(PowerSystemResource):
     '''
     Container of this equipment.
     '''
-    OperationalLimitSet: list[ str | OperationalLimitSet ] = field(
+    OperationalLimitSet: list[ OperationalLimitSet ] = field(
         default_factory = list,
         metadata = {
             'type': 'Association',
@@ -8001,7 +8003,7 @@ class Equipment(PowerSystemResource):
     '''
     The operational limit sets associated with this equipment.
     '''
-    OperationalRestrictions: list[ str | OperationalRestriction ] = field(
+    OperationalRestrictions: list[ OperationalRestriction ] = field(
         default_factory = list,
         metadata = {
             'type': 'Association',
@@ -8045,7 +8047,7 @@ class CompositeSwitch(Equipment):
     An alphanumeric code that can be used as a reference to extra information
     such as the description of the interlocking scheme if any.
     '''
-    Switches: list[ str | Switch ] = field(
+    Switches: list[ Switch ] = field(
         default_factory = list,
         metadata = {
             'type': 'Aggregate Of',
@@ -8066,7 +8068,7 @@ class ConductingEquipment(Equipment):
     The parts of the AC power system that are designed to carry current or
     that are conductively connected through terminals.
     '''
-    BaseVoltage: Optional[ str | BaseVoltage ] = field(
+    BaseVoltage: Optional[ BaseVoltage ] = field(
         default = None,
         metadata = {
             'type': 'Association',
@@ -8085,7 +8087,7 @@ class ConductingEquipment(Equipment):
     level container used and only one base voltage applies. For example, not
     used for transformers.
     '''
-    GroundingAction: Optional[ str | GroundAction ] = field(
+    GroundingAction: Optional[ GroundAction ] = field(
         default = None,
         metadata = {
             'type': 'Association',
@@ -8100,7 +8102,7 @@ class ConductingEquipment(Equipment):
     '''
     Action involving grounding operation on this conducting equipment.
     '''
-    JumpingAction: Optional[ str | JumperAction ] = field(
+    JumpingAction: Optional[ JumperAction ] = field(
         default = None,
         metadata = {
             'type': 'Association',
@@ -8115,7 +8117,7 @@ class ConductingEquipment(Equipment):
     '''
     Jumper action involving jumping operation on this conducting equipment.
     '''
-    Outage: Optional[ str | Outage ] = field(
+    Outage: Optional[ Outage ] = field(
         default = None,
         metadata = {
             'type': 'Association',
@@ -8130,7 +8132,7 @@ class ConductingEquipment(Equipment):
     '''
     The outage that is isolated by the outage isolation equipment.
     '''
-    Terminals: list[ str | Terminal ] = field(
+    Terminals: list[ Terminal ] = field(
         default_factory = list,
         metadata = {
             'type': 'Association',
@@ -8174,7 +8176,7 @@ class Clamp(ConductingEquipment):
     of the line segment, i.e. the line segment terminal with sequence number
     equal to 1.
     '''
-    ACLineSegment: Optional[ str | ACLineSegment ] = field(
+    ACLineSegment: Optional[ ACLineSegment ] = field(
         default = None,
         metadata = {
             'type': 'Association',
@@ -8189,7 +8191,7 @@ class Clamp(ConductingEquipment):
     '''
     The line segment to which the clamp is connected.
     '''
-    ClampAction: Optional[ str | ClampAction ] = field(
+    ClampAction: Optional[ ClampAction ] = field(
         default = None,
         metadata = {
             'type': 'Association',
@@ -8204,7 +8206,7 @@ class Clamp(ConductingEquipment):
     '''
     The clamp action that is performed on the clamp
     '''
-    JumperAction: Optional[ str | JumperAction ] = field(
+    JumperAction: Optional[ JumperAction ] = field(
         default = None,
         metadata = {
             'type': 'Association',
@@ -8395,7 +8397,7 @@ class ACLineSegment(Conductor):
     '''
     Zero sequence series reactance of the entire line section.
     '''
-    ACLineSegmentPhases: list[ str | ACLineSegmentPhase ] = field(
+    ACLineSegmentPhases: list[ ACLineSegmentPhase ] = field(
         default_factory = list,
         metadata = {
             'type': 'Association',
@@ -8410,7 +8412,7 @@ class ACLineSegment(Conductor):
     '''
     The line segment phases which belong to the line segment.
     '''
-    LineGroundingAction: Optional[ str | GroundAction ] = field(
+    LineGroundingAction: Optional[ GroundAction ] = field(
         default = None,
         metadata = {
             'type': 'Association',
@@ -8427,7 +8429,7 @@ class ACLineSegment(Conductor):
     Ground action involving clamp usage (for the case when the ground is applied
     along the line segment instead of at its terminals).
     '''
-    LineJumpingAction: Optional[ str | JumperAction ] = field(
+    LineJumpingAction: Optional[ JumperAction ] = field(
         default = None,
         metadata = {
             'type': 'Association',
@@ -8444,7 +8446,7 @@ class ACLineSegment(Conductor):
     Jumper action involving clamp usage (for the case when the jumper is applied
     along the line segment instead of at its terminals).
     '''
-    PerLengthImpedance: Optional[ str | PerLengthImpedance ] = field(
+    PerLengthImpedance: Optional[ PerLengthImpedance ] = field(
         default = None,
         metadata = {
             'type': 'Association',
@@ -8459,7 +8461,7 @@ class ACLineSegment(Conductor):
     '''
     Per-length impedance of this line segment.
     '''
-    WireSpacingInfo: Optional[ str | WireSpacingInfo ] = field(
+    WireSpacingInfo: Optional[ WireSpacingInfo ] = field(
         default = None,
         metadata = {
             'type': 'Association',
@@ -8481,7 +8483,7 @@ class WireSegment(Conductor):
     length represented as zero impedance device that can be used to connect
     auxiliary equipment to its terminals.
     '''
-    WireSegmentPhases: list[ str | WireSegmentPhase ] = field(
+    WireSegmentPhases: list[ WireSegmentPhase ] = field(
         default_factory = list,
         metadata = {
             'type': 'Association',
@@ -8530,7 +8532,7 @@ class BusbarSection(Connector):
     Mechanical limit of the busbar in the substation itself. Used for short
     circuit data exchange according to IEC 60909.
     '''
-    VoltageControlZone: Optional[ str | VoltageControlZone ] = field(
+    VoltageControlZone: Optional[ VoltageControlZone ] = field(
         default = None,
         metadata = {
             'type': 'Association',
@@ -8599,7 +8601,7 @@ class PetersenCoil(EarthFaultCompensator):
     A variable impedance device normally used to offset line charging during
     single line faults in an ungrounded section of network.
     '''
-    mode: Optional[ str | PetersenCoilModeKind ] = field(
+    mode: Optional[ PetersenCoilModeKind ] = field(
         default = None,
         metadata = {
             'type': 'enumeration',
@@ -8808,7 +8810,7 @@ class EnergyConsumer(EnergyConnection):
     to represent the time-varying components. Load sign convention is used,
     i.e. positive sign means flow out from a node.
     '''
-    phaseConnection: Optional[ str | PhaseShuntConnectionKind ] = field(
+    phaseConnection: Optional[ PhaseShuntConnectionKind ] = field(
         default = None,
         metadata = {
             'type': 'enumeration',
@@ -8878,7 +8880,7 @@ class EnergyConsumer(EnergyConnection):
     Used to represent the time-varying components. Load sign convention is
     used, i.e. positive sign means flow out from a node.
     '''
-    EnergyConsumerAction: Optional[ str | EnergyConsumerAction ] = field(
+    EnergyConsumerAction: Optional[ EnergyConsumerAction ] = field(
         default = None,
         metadata = {
             'type': 'Association',
@@ -8893,7 +8895,7 @@ class EnergyConsumer(EnergyConnection):
     '''
     The energy consumer action that is performed on the energy consumer
     '''
-    EnergyConsumerPhase: list[ str | EnergyConsumerPhase ] = field(
+    EnergyConsumerPhase: list[ EnergyConsumerPhase ] = field(
         default_factory = list,
         metadata = {
             'type': 'Association',
@@ -8908,7 +8910,7 @@ class EnergyConsumer(EnergyConnection):
     '''
     The individual phase models for this energy consumer.
     '''
-    LoadDynamics: Optional[ str | LoadDynamics ] = field(
+    LoadDynamics: Optional[ LoadDynamics ] = field(
         default = None,
         metadata = {
             'type': 'Association',
@@ -8923,7 +8925,7 @@ class EnergyConsumer(EnergyConnection):
     '''
     Load dynamics model used to describe dynamic behaviour of this energy consumer.
     '''
-    LoadResponse: Optional[ str | LoadResponseCharacteristic ] = field(
+    LoadResponse: Optional[ LoadResponseCharacteristic ] = field(
         default = None,
         metadata = {
             'type': 'Association',
@@ -8940,7 +8942,7 @@ class EnergyConsumer(EnergyConnection):
     The load response characteristic of this load. If missing, this load is
     assumed to be constant power.
     '''
-    PowerCutZone: Optional[ str | PowerCutZone ] = field(
+    PowerCutZone: Optional[ PowerCutZone ] = field(
         default = None,
         metadata = {
             'type': 'Of Aggregate',
@@ -8961,7 +8963,7 @@ class ConformLoad(EnergyConsumer):
     ConformLoad represent loads that follow a daily load change pattern where
     the pattern can be used to scale the load with a system load.
     '''
-    LoadGroup: Optional[ str | ConformLoadGroup ] = field(
+    LoadGroup: Optional[ ConformLoadGroup ] = field(
         default = None,
         metadata = {
             'type': 'Association',
@@ -8983,7 +8985,7 @@ class NonConformLoad(EnergyConsumer):
     pattern and whose changes are not correlated with the daily load change
     pattern.
     '''
-    LoadGroup: Optional[ str | NonConformLoadGroup ] = field(
+    LoadGroup: Optional[ NonConformLoadGroup ] = field(
         default = None,
         metadata = {
             'type': 'Association',
@@ -9223,7 +9225,7 @@ class EnergySource(EnergyConnection):
     '''
     Negative sequence Thevenin reactance.
     '''
-    EnergySchedulingType: Optional[ str | EnergySchedulingType ] = field(
+    EnergySchedulingType: Optional[ EnergySchedulingType ] = field(
         default = None,
         metadata = {
             'type': 'Association',
@@ -9238,7 +9240,7 @@ class EnergySource(EnergyConnection):
     '''
     Energy Scheduling Type of an Energy Source.
     '''
-    EnergySourceAction: Optional[ str | EnergySourceAction ] = field(
+    EnergySourceAction: Optional[ EnergySourceAction ] = field(
         default = None,
         metadata = {
             'type': 'Association',
@@ -9253,7 +9255,7 @@ class EnergySource(EnergyConnection):
     '''
     Action taken with this energy source.
     '''
-    EnergySourcePhase: list[ str | EnergySourcePhase ] = field(
+    EnergySourcePhase: list[ EnergySourcePhase ] = field(
         default_factory = list,
         metadata = {
             'type': 'Association',
@@ -9290,7 +9292,7 @@ class RegulatingCondEq(EnergyConnection):
     Specifies the regulation status of the equipment. True is regulating, false
     is not regulating.
     '''
-    RegulatingControl: Optional[ str | RegulatingControl ] = field(
+    RegulatingControl: Optional[ RegulatingControl ] = field(
         default = None,
         metadata = {
             'type': 'Association',
@@ -9920,7 +9922,7 @@ class PowerElectronicsConnection(RegulatingCondEq):
     '''
     Negative sequence Thevenin reactance.
     '''
-    PowerElectronicsConnectionPhase: list[ str | PowerElectronicsConnectionPhase ] = field(
+    PowerElectronicsConnectionPhase: list[ PowerElectronicsConnectionPhase ] = field(
         default_factory = list,
         metadata = {
             'type': 'Association',
@@ -9935,7 +9937,7 @@ class PowerElectronicsConnection(RegulatingCondEq):
     '''
     The individual phases models for the power electronics connection.
     '''
-    PowerElectronicsUnit: list[ str | PowerElectronicsUnit ] = field(
+    PowerElectronicsUnit: list[ PowerElectronicsUnit ] = field(
         default_factory = list,
         metadata = {
             'type': 'Association',
@@ -9952,7 +9954,7 @@ class PowerElectronicsConnection(RegulatingCondEq):
     An AC network connection may have several power electronics units connecting
     through it.
     '''
-    WindTurbineType3or4Dynamics: Optional[ str | WindTurbineType3or4Dynamics ] = field(
+    WindTurbineType3or4Dynamics: Optional[ WindTurbineType3or4Dynamics ] = field(
         default = None,
         metadata = {
             'type': 'Association',
@@ -10060,7 +10062,7 @@ class RotatingMachine(RegulatingCondEq):
     for short circuit data exchange according to IEC 60909.
     The attribute shall be a positive value.
     '''
-    GeneratingUnit: Optional[ str | GeneratingUnit ] = field(
+    GeneratingUnit: Optional[ GeneratingUnit ] = field(
         default = None,
         metadata = {
             'type': 'Association',
@@ -10077,7 +10079,7 @@ class RotatingMachine(RegulatingCondEq):
     A synchronous machine may operate as a generator and as such becomes a
     member of a generating unit.
     '''
-    HydroPump: Optional[ str | HydroPump ] = field(
+    HydroPump: Optional[ HydroPump ] = field(
         default = None,
         metadata = {
             'type': 'Association',
@@ -10183,7 +10185,7 @@ class AsynchronousMachine(RotatingMachine):
     Locked rotor ratio (R/X). Used for short circuit data exchange according
     to IEC 60909.
     '''
-    asynchronousMachineType: Optional[ str | AsynchronousMachineKind ] = field(
+    asynchronousMachineType: Optional[ AsynchronousMachineKind ] = field(
         default = None,
         metadata = {
             'type': 'enumeration',
@@ -10399,7 +10401,7 @@ class AsynchronousMachine(RotatingMachine):
     '''
     Synchronous reactance (greater than xp).
     '''
-    AsynchronousMachineDynamics: Optional[ str | AsynchronousMachineDynamics ] = field(
+    AsynchronousMachineDynamics: Optional[ AsynchronousMachineDynamics ] = field(
         default = None,
         metadata = {
             'type': 'Association',
@@ -10551,7 +10553,7 @@ class SynchronousMachine(RotatingMachine):
     '''
     Active power consumed when in condenser mode operation.
     '''
-    coolantType: Optional[ str | CoolantType ] = field(
+    coolantType: Optional[ CoolantType ] = field(
         default = None,
         metadata = {
             'type': 'enumeration',
@@ -10703,7 +10705,7 @@ class SynchronousMachine(RotatingMachine):
     '''
     Minimum voltage limit for the unit.
     '''
-    operatingMode: Optional[ str | SynchronousMachineOperatingMode ] = field(
+    operatingMode: Optional[ SynchronousMachineOperatingMode ] = field(
         default = None,
         metadata = {
             'type': 'enumeration',
@@ -10829,7 +10831,7 @@ class SynchronousMachine(RotatingMachine):
     Saturated Direct-axis transient reactance. The attribute is primarily used
     for short circuit calculations according to ANSI.
     '''
-    shortCircuitRotorType: Optional[ str | ShortCircuitRotorKind ] = field(
+    shortCircuitRotorType: Optional[ ShortCircuitRotorKind ] = field(
         default = None,
         metadata = {
             'type': 'enumeration',
@@ -10845,7 +10847,7 @@ class SynchronousMachine(RotatingMachine):
     Type of rotor, used by short circuit applications, only for single fed
     short circuit according to IEC 60909.
     '''
-    type: Optional[ str | SynchronousMachineKind ] = field(
+    type: Optional[ SynchronousMachineKind ] = field(
         default = None,
         metadata = {
             'type': 'enumeration',
@@ -10907,7 +10909,7 @@ class SynchronousMachine(RotatingMachine):
     '''
     Negative sequence reactance.
     '''
-    InitialReactiveCapabilityCurve: Optional[ str | ReactiveCapabilityCurve ] = field(
+    InitialReactiveCapabilityCurve: Optional[ ReactiveCapabilityCurve ] = field(
         default = None,
         metadata = {
             'type': 'Association',
@@ -10922,7 +10924,7 @@ class SynchronousMachine(RotatingMachine):
     '''
     The default reactive capability curve for use by a synchronous machine.
     '''
-    SynchronousMachineDynamics: Optional[ str | SynchronousMachineDynamics ] = field(
+    SynchronousMachineDynamics: Optional[ SynchronousMachineDynamics ] = field(
         default = None,
         metadata = {
             'type': 'Association',
@@ -11091,7 +11093,7 @@ class ShuntCompensator(RegulatingCondEq):
     should normally be within 10% of the voltage at which the capacitor is
     connected to the network.
     '''
-    phaseConnection: Optional[ str | PhaseShuntConnectionKind ] = field(
+    phaseConnection: Optional[ PhaseShuntConnectionKind ] = field(
         default = None,
         metadata = {
             'type': 'enumeration',
@@ -11121,7 +11123,7 @@ class ShuntCompensator(RegulatingCondEq):
     Voltage sensitivity required for the device to regulate the bus voltage,
     in voltage/reactive power.
     '''
-    ShuntCompensatorAction: Optional[ str | ShuntCompensatorAction ] = field(
+    ShuntCompensatorAction: Optional[ ShuntCompensatorAction ] = field(
         default = None,
         metadata = {
             'type': 'Association',
@@ -11136,7 +11138,7 @@ class ShuntCompensator(RegulatingCondEq):
     '''
     The shunt compensator action that is performed on the shunt compensator
     '''
-    ShuntCompensatorPhase: list[ str | ShuntCompensatorPhase ] = field(
+    ShuntCompensatorPhase: list[ ShuntCompensatorPhase ] = field(
         default_factory = list,
         metadata = {
             'type': 'Association',
@@ -11151,7 +11153,7 @@ class ShuntCompensator(RegulatingCondEq):
     '''
     The individual phases models for the shunt compensator.
     '''
-    SvShuntCompensatorSections: list[ str | SvShuntCompensatorSections ] = field(
+    SvShuntCompensatorSections: list[ SvShuntCompensatorSections ] = field(
         default_factory = list,
         metadata = {
             'type': 'Association',
@@ -11236,7 +11238,7 @@ class NonlinearShuntCompensator(ShuntCompensator):
     describe the total conductance and admittance of a NonlinearShuntCompensatorPoint
     at a section number specified by NonlinearShuntCompensatorPoint.sectionNumber.
     '''
-    NonlinearShuntCompensatorPoints: list[ str | NonlinearShuntCompensatorPoint ] = field(
+    NonlinearShuntCompensatorPoints: list[ NonlinearShuntCompensatorPoint ] = field(
         default_factory = list,
         metadata = {
             'type': 'Aggregate Of',
@@ -11334,7 +11336,7 @@ class StaticVarCompensator(RegulatingCondEq):
     and the voltage setpoint.
     The attribute shall be a positive value or zero.
     '''
-    sVCControlMode: Optional[ str | SVCControlMode ] = field(
+    sVCControlMode: Optional[ SVCControlMode ] = field(
         default = None,
         metadata = {
             'type': 'enumeration',
@@ -11368,7 +11370,7 @@ class StaticVarCompensator(RegulatingCondEq):
     the regulated bus voltage is equal to the voltage setpoint, the reactive
     power output is zero.
     '''
-    StaticVarCompensatorDynamics: Optional[ str | StaticVarCompensatorDynamics ] = field(
+    StaticVarCompensatorDynamics: Optional[ StaticVarCompensatorDynamics ] = field(
         default = None,
         metadata = {
             'type': 'Association',
@@ -11391,7 +11393,7 @@ class Ground(ConductingEquipment):
     A point where the system is grounded used for connecting conducting equipment
     to ground. The power system model can have any number of grounds.
     '''
-    GroundAction: Optional[ str | GroundAction ] = field(
+    GroundAction: Optional[ GroundAction ] = field(
         default = None,
         metadata = {
             'type': 'Association',
@@ -11605,7 +11607,7 @@ class PowerTransformer(ConductingEquipment):
     is used for calculation of the impedance correction factor KG defined in
     IEC 60909-0.
     '''
-    PowerTransformerEnd: list[ str | PowerTransformerEnd ] = field(
+    PowerTransformerEnd: list[ PowerTransformerEnd ] = field(
         default_factory = list,
         metadata = {
             'type': 'Association',
@@ -11620,7 +11622,7 @@ class PowerTransformer(ConductingEquipment):
     '''
     The ends of this power transformer.
     '''
-    TransformerTanks: list[ str | TransformerTank ] = field(
+    TransformerTanks: list[ TransformerTank ] = field(
         default_factory = list,
         metadata = {
             'type': 'Association',
@@ -11884,7 +11886,7 @@ class Switch(ConductingEquipment):
     device material and construction.
     The attribute shall be a positive value.
     '''
-    CompositeSwitch: Optional[ str | CompositeSwitch ] = field(
+    CompositeSwitch: Optional[ CompositeSwitch ] = field(
         default = None,
         metadata = {
             'type': 'Of Aggregate',
@@ -11899,7 +11901,7 @@ class Switch(ConductingEquipment):
     '''
     Composite switch to which this Switch belongs.
     '''
-    SwitchAction: Optional[ str | SwitchAction ] = field(
+    SwitchAction: Optional[ SwitchAction ] = field(
         default = None,
         metadata = {
             'type': 'Association',
@@ -11914,7 +11916,7 @@ class Switch(ConductingEquipment):
     '''
     Action changing status of this switch.
     '''
-    SwitchPhase: list[ str | SwitchPhase ] = field(
+    SwitchPhase: list[ SwitchPhase ] = field(
         default_factory = list,
         metadata = {
             'type': 'Association',
@@ -11929,7 +11931,7 @@ class Switch(ConductingEquipment):
     '''
     The individual switch phases for the switch.
     '''
-    SwitchSchedules: list[ str | SwitchSchedule ] = field(
+    SwitchSchedules: list[ SwitchSchedule ] = field(
         default_factory = list,
         metadata = {
             'type': 'Association',
@@ -11978,7 +11980,7 @@ class Cut(Switch):
     of the cut line segment, i.e. the line segment Terminal with sequenceNumber
     equal to 1.
     '''
-    ACLineSegment: Optional[ str | ACLineSegment ] = field(
+    ACLineSegment: Optional[ ACLineSegment ] = field(
         default = None,
         metadata = {
             'type': 'Association',
@@ -11993,7 +11995,7 @@ class Cut(Switch):
     '''
     The line segment to which the cut is applied.
     '''
-    CutAction: Optional[ str | CutAction ] = field(
+    CutAction: Optional[ CutAction ] = field(
         default = None,
         metadata = {
             'type': 'Association',
@@ -12036,7 +12038,7 @@ class Jumper(Switch):
     removed and replaced if the circuit is de-energized. Note that zero-impedance
     branches can potentially be modelled by other equipment types.
     '''
-    JumperAction: Optional[ str | JumperAction ] = field(
+    JumperAction: Optional[ JumperAction ] = field(
         default = None,
         metadata = {
             'type': 'Association',
@@ -12344,7 +12346,7 @@ class GeneratingUnit(Equipment):
     The efficiency of the unit in converting mechanical energy, from the prime
     mover, into electrical energy.
     '''
-    genControlMode: Optional[ str | GeneratorControlMode ] = field(
+    genControlMode: Optional[ GeneratorControlMode ] = field(
         default = None,
         metadata = {
             'type': 'enumeration',
@@ -12358,7 +12360,7 @@ class GeneratingUnit(Equipment):
     '''
     The unit control mode.
     '''
-    genControlSource: Optional[ str | GeneratorControlSource ] = field(
+    genControlSource: Optional[ GeneratorControlSource ] = field(
         default = None,
         metadata = {
             'type': 'enumeration',
@@ -12668,7 +12670,7 @@ class GeneratingUnit(Equipment):
     maximum capacity.
     The attribute shall be a positive value.
     '''
-    startupCost: Optional[ str | Money ] = field(
+    startupCost: Optional[ Money ] = field(
         default = None,
         metadata = {
             'type': 'Attribute',
@@ -12712,7 +12714,7 @@ class GeneratingUnit(Equipment):
     '''
     The efficiency of the unit in converting the fuel into electrical energy.
     '''
-    variableCost: Optional[ str | Money ] = field(
+    variableCost: Optional[ Money ] = field(
         default = None,
         metadata = {
             'type': 'Attribute',
@@ -12726,7 +12728,7 @@ class GeneratingUnit(Equipment):
     '''
     The variable cost component of production per unit of ActivePower.
     '''
-    ControlAreaGeneratingUnit: list[ str | ControlAreaGeneratingUnit ] = field(
+    ControlAreaGeneratingUnit: list[ ControlAreaGeneratingUnit ] = field(
         default_factory = list,
         metadata = {
             'type': 'Association',
@@ -12741,7 +12743,7 @@ class GeneratingUnit(Equipment):
     '''
     ControlArea specifications for this generating unit.
     '''
-    GenUnitOpSchedule: Optional[ str | GenUnitOpSchedule ] = field(
+    GenUnitOpSchedule: Optional[ GenUnitOpSchedule ] = field(
         default = None,
         metadata = {
             'type': 'Aggregate Of',
@@ -12758,7 +12760,7 @@ class GeneratingUnit(Equipment):
     A generating unit may have an operating schedule, indicating the planned
     operation of the unit.
     '''
-    RotatingMachine: list[ str | RotatingMachine ] = field(
+    RotatingMachine: list[ RotatingMachine ] = field(
         default_factory = list,
         metadata = {
             'type': 'Association',
@@ -12781,7 +12783,7 @@ class WindGeneratingUnit(GeneratingUnit):
     A wind driven generating unit, connected to the grid by means of a rotating
     machine. May be used to represent a single turbine or an aggregation.
     '''
-    windGenUnitType: Optional[ str | WindGenUnitKind ] = field(
+    windGenUnitType: Optional[ WindGenUnitKind ] = field(
         default = None,
         metadata = {
             'type': 'enumeration',
@@ -12801,7 +12803,7 @@ class HydroPump(Equipment):
     A synchronous motor-driven pump, typically associated with a pumped storage
     plant.
     '''
-    RotatingMachine: Optional[ str | RotatingMachine ] = field(
+    RotatingMachine: Optional[ RotatingMachine ] = field(
         default = None,
         metadata = {
             'type': 'Association',
@@ -12858,7 +12860,7 @@ class PowerElectronicsUnit(Equipment):
     Minimum active power limit. This is the minimum (nameplate) limit for the
     unit.
     '''
-    PowerElectronicsConnection: Optional[ str | PowerElectronicsConnection ] = field(
+    PowerElectronicsConnection: Optional[ PowerElectronicsConnection ] = field(
         default = None,
         metadata = {
             'type': 'Association',
@@ -12878,7 +12880,7 @@ class BatteryUnit(PowerElectronicsUnit):
     '''
     An electrochemical energy storage device.
     '''
-    batteryState: Optional[ str | BatteryStateKind ] = field(
+    batteryState: Optional[ BatteryStateKind ] = field(
         default = None,
         metadata = {
             'type': 'enumeration',
@@ -12943,7 +12945,7 @@ class TransformerTank(Equipment):
     in the same tank. Transformer tank can be used to model both single-phase
     and 3-phase transformers.
     '''
-    PowerTransformer: Optional[ str | PowerTransformer ] = field(
+    PowerTransformer: Optional[ PowerTransformer ] = field(
         default = None,
         metadata = {
             'type': 'Association',
@@ -12958,7 +12960,7 @@ class TransformerTank(Equipment):
     '''
     Bank this transformer belongs to.
     '''
-    TransformerTankEnds: list[ str | TransformerTankEnd ] = field(
+    TransformerTankEnds: list[ TransformerTankEnd ] = field(
         default_factory = list,
         metadata = {
             'type': 'Association',
@@ -13006,7 +13008,7 @@ class PowerCutZone(PowerSystemResource):
     '''
     Second level (amount) of load to cut as a percentage of total zone load.
     '''
-    EnergyConsumers: list[ str | EnergyConsumer ] = field(
+    EnergyConsumers: list[ EnergyConsumer ] = field(
         default_factory = list,
         metadata = {
             'type': 'Aggregate Of',
@@ -13042,7 +13044,7 @@ class PowerElectronicsConnectionPhase(PowerSystemResource):
     Active power injection. Load sign convention is used, i.e. positive sign
     means flow into the equipment from the network.
     '''
-    phase: Optional[ str | SinglePhaseKind ] = field(
+    phase: Optional[ SinglePhaseKind ] = field(
         default = None,
         metadata = {
             'type': 'enumeration',
@@ -13080,7 +13082,7 @@ class PowerElectronicsConnectionPhase(PowerSystemResource):
     Reactive power injection. Load sign convention is used, i.e. positive sign
     means flow into the equipment from the network.
     '''
-    PowerElectronicsConnection: Optional[ str | PowerElectronicsConnection ] = field(
+    PowerElectronicsConnection: Optional[ PowerElectronicsConnection ] = field(
         default = None,
         metadata = {
             'type': 'Association',
@@ -13215,7 +13217,7 @@ class RegulatingControl(PowerSystemResource):
     target value without the use of schedules. The value has the units appropriate
     to the mode attribute.
     '''
-    mode: Optional[ str | RegulatingControlModeKind ] = field(
+    mode: Optional[ RegulatingControlModeKind ] = field(
         default = None,
         metadata = {
             'type': 'enumeration',
@@ -13233,7 +13235,7 @@ class RegulatingControl(PowerSystemResource):
     for determining the kind of regulation without need for obtaining the units
     from a schedule.
     '''
-    monitoredPhase: Optional[ str | PhaseCode ] = field(
+    monitoredPhase: Optional[ PhaseCode ] = field(
         default = None,
         metadata = {
             'type': 'enumeration',
@@ -13247,7 +13249,7 @@ class RegulatingControl(PowerSystemResource):
     '''
     Phase voltage controlling this regulator, measured at regulator location.
     '''
-    targetValueUnitMultiplier: Optional[ str | UnitMultiplier ] = field(
+    targetValueUnitMultiplier: Optional[ UnitMultiplier ] = field(
         default = None,
         metadata = {
             'type': 'enumeration',
@@ -13261,7 +13263,7 @@ class RegulatingControl(PowerSystemResource):
     '''
     Specify the multiplier for used for the targetValue.
     '''
-    RegulatingCondEq: list[ str | RegulatingCondEq ] = field(
+    RegulatingCondEq: list[ RegulatingCondEq ] = field(
         default_factory = list,
         metadata = {
             'type': 'Association',
@@ -13276,7 +13278,7 @@ class RegulatingControl(PowerSystemResource):
     '''
     The equipment that participates in this regulating control scheme.
     '''
-    RegulationSchedule: list[ str | RegulationSchedule ] = field(
+    RegulationSchedule: list[ RegulationSchedule ] = field(
         default_factory = list,
         metadata = {
             'type': 'Association',
@@ -13291,7 +13293,7 @@ class RegulatingControl(PowerSystemResource):
     '''
     Schedule for this regulating control.
     '''
-    Terminal: Optional[ str | Terminal ] = field(
+    Terminal: Optional[ Terminal ] = field(
         default = None,
         metadata = {
             'type': 'Association',
@@ -13469,7 +13471,7 @@ class ShuntCompensatorControl(RegulatingControl):
     '''
     The size of the individual units that make up the bank.
     '''
-    controlKind: Optional[ str | ShuntImpedanceControlKind ] = field(
+    controlKind: Optional[ ShuntImpedanceControlKind ] = field(
         default = None,
         metadata = {
             'type': 'enumeration',
@@ -13503,7 +13505,7 @@ class ShuntCompensatorControl(RegulatingControl):
     shunt impedance will be turned off regardless of the other local controller
     settings.
     '''
-    localControlKind: Optional[ str | ShuntImpedanceLocalControlKind ] = field(
+    localControlKind: Optional[ ShuntImpedanceLocalControlKind ] = field(
         default = None,
         metadata = {
             'type': 'enumeration',
@@ -13537,7 +13539,7 @@ class ShuntCompensatorControl(RegulatingControl):
     shunt impedance will be turned on regardless of the other local controller
     settings.
     '''
-    regBranchKind: Optional[ str | RegulationBranchKind ] = field(
+    regBranchKind: Optional[ RegulationBranchKind ] = field(
         default = None,
         metadata = {
             'type': 'enumeration',
@@ -13553,7 +13555,7 @@ class ShuntCompensatorControl(RegulatingControl):
     (For VAR, amp, or power factor locally controlled shunt impedances) Kind
     of regulation branch.
     '''
-    sensingPhaseCode: Optional[ str | PhaseCode ] = field(
+    sensingPhaseCode: Optional[ PhaseCode ] = field(
         default = None,
         metadata = {
             'type': 'enumeration',
@@ -13581,7 +13583,7 @@ class ShuntCompensatorControl(RegulatingControl):
     '''
     Time interval between consecutive switching operations.
     '''
-    ShuntCompensatorInfo: Optional[ str | ShuntCompensatorInfo ] = field(
+    ShuntCompensatorInfo: Optional[ ShuntCompensatorInfo ] = field(
         default = None,
         metadata = {
             'type': 'Association',
@@ -13687,7 +13689,7 @@ class TapChangerControl(RegulatingControl):
     '''
     Line drop compensator reactance setting for reverse power flow.
     '''
-    TapChanger: list[ str | TapChanger ] = field(
+    TapChanger: list[ TapChanger ] = field(
         default_factory = list,
         metadata = {
             'type': 'Association',
@@ -13774,7 +13776,7 @@ class ShuntCompensatorPhase(PowerSystemResource):
     For NonlinearShuntCompensator-s shall only be set to one of the NonlinearShuntCompenstorPhasePoint.sectionNumber.
     There is no interpolation between NonlinearShuntCompenstorPhasePoint-s.
     '''
-    phase: Optional[ str | SinglePhaseKind ] = field(
+    phase: Optional[ SinglePhaseKind ] = field(
         default = None,
         metadata = {
             'type': 'enumeration',
@@ -13796,7 +13798,7 @@ class ShuntCompensatorPhase(PowerSystemResource):
     phase indicates a shunt compensator connected from the indicated phase
     to the next logical non-neutral phase.
     '''
-    ShuntCompensator: Optional[ str | ShuntCompensator ] = field(
+    ShuntCompensator: Optional[ ShuntCompensator ] = field(
         default = None,
         metadata = {
             'type': 'Association',
@@ -13857,7 +13859,7 @@ class NonlinearShuntCompensatorPhase(ShuntCompensatorPhase):
     describe the total conductance and admittance of a NonlinearShuntCompensatorPhasePoint
     at a section number specified by NonlinearShuntCompensatorPhasePoint.sectionNumber.
     '''
-    NonlinearShuntCompensatorPhasePoints: list[ str | NonlinearShuntCompensatorPhasePoint ] = field(
+    NonlinearShuntCompensatorPhasePoints: list[ NonlinearShuntCompensatorPhasePoint ] = field(
         default_factory = list,
         metadata = {
             'type': 'Aggregate Of',
@@ -13912,7 +13914,7 @@ class SwitchPhase(PowerSystemResource):
     SwitchPhase has a status measurement the Discrete.normalValue is expected
     to match with this value.
     '''
-    phaseSide1: Optional[ str | SinglePhaseKind ] = field(
+    phaseSide1: Optional[ SinglePhaseKind ] = field(
         default = None,
         metadata = {
             'type': 'enumeration',
@@ -13928,7 +13930,7 @@ class SwitchPhase(PowerSystemResource):
     Phase of this SwitchPhase on the side with terminal sequence number equal
     to 1. Should be a phase contained in that terminal’s phases attribute.
     '''
-    phaseSide2: Optional[ str | SinglePhaseKind ] = field(
+    phaseSide2: Optional[ SinglePhaseKind ] = field(
         default = None,
         metadata = {
             'type': 'enumeration',
@@ -13962,7 +13964,7 @@ class SwitchPhase(PowerSystemResource):
     device material and construction.
     The attribute shall be a positive value.
     '''
-    Switch: Optional[ str | Switch ] = field(
+    Switch: Optional[ Switch ] = field(
         default = None,
         metadata = {
             'type': 'Association',
@@ -14174,7 +14176,7 @@ class TapChanger(PowerSystemResource):
     For an LTC, the delay for subsequent tap changer operation (second and
     later step changes).
     '''
-    SvTapStep: Optional[ str | SvTapStep ] = field(
+    SvTapStep: Optional[ SvTapStep ] = field(
         default = None,
         metadata = {
             'type': 'Association',
@@ -14189,7 +14191,7 @@ class TapChanger(PowerSystemResource):
     '''
     The tap step state associated with the tap changer.
     '''
-    TapChangerControl: Optional[ str | TapChangerControl ] = field(
+    TapChangerControl: Optional[ TapChangerControl ] = field(
         default = None,
         metadata = {
             'type': 'Association',
@@ -14204,7 +14206,7 @@ class TapChanger(PowerSystemResource):
     '''
     The regulating control scheme in which this tap changer participates.
     '''
-    TapSchedules: list[ str | TapSchedule ] = field(
+    TapSchedules: list[ TapSchedule ] = field(
         default_factory = list,
         metadata = {
             'type': 'Association',
@@ -14227,7 +14229,7 @@ class PhaseTapChanger(TapChanger):
     the power transformer. This phase tap model may also impact the voltage
     magnitude.
     '''
-    TransformerEnd: Optional[ str | TransformerEnd ] = field(
+    TransformerEnd: Optional[ TransformerEnd ] = field(
         default = None,
         metadata = {
             'type': 'Association',
@@ -14439,7 +14441,7 @@ class PhaseTapChangerTabular(PhaseTapChanger):
     Describes a tap changer with a table defining the relation between the
     tap step and the phase angle difference across the transformer.
     '''
-    PhaseTapChangerTable: Optional[ str | PhaseTapChangerTable ] = field(
+    PhaseTapChangerTable: Optional[ PhaseTapChangerTable ] = field(
         default = None,
         metadata = {
             'type': 'Association',
@@ -14483,7 +14485,7 @@ class RatioTapChanger(TapChanger):
     When the increment is negative, the voltage decreases when the tap step
     increases.
     '''
-    tculControlMode: Optional[ str | TransformerControlMode ] = field(
+    tculControlMode: Optional[ TransformerControlMode ] = field(
         default = None,
         metadata = {
             'type': 'enumeration',
@@ -14497,7 +14499,7 @@ class RatioTapChanger(TapChanger):
     '''
     Specifies the regulation control mode (voltage or reactive) of the RatioTapChanger.
     '''
-    RatioTapChangerTable: Optional[ str | RatioTapChangerTable ] = field(
+    RatioTapChangerTable: Optional[ RatioTapChangerTable ] = field(
         default = None,
         metadata = {
             'type': 'Association',
@@ -14512,7 +14514,7 @@ class RatioTapChanger(TapChanger):
     '''
     The tap ratio table for this ratio tap changer.
     '''
-    TransformerEnd: Optional[ str | TransformerEnd ] = field(
+    TransformerEnd: Optional[ TransformerEnd ] = field(
         default = None,
         metadata = {
             'type': 'Association',
@@ -14534,7 +14536,7 @@ class VoltageControlZone(PowerSystemResource):
     control purposes. A voltage control zone consists of a collection of substations
     with a designated bus bar section whose voltage will be controlled.
     '''
-    BusbarSection: Optional[ str | BusbarSection ] = field(
+    BusbarSection: Optional[ BusbarSection ] = field(
         default = None,
         metadata = {
             'type': 'Association',
@@ -14549,7 +14551,7 @@ class VoltageControlZone(PowerSystemResource):
     '''
     A VoltageControlZone is controlled by a designated BusbarSection.
     '''
-    RegulationSchedule: Optional[ str | RegulationSchedule ] = field(
+    RegulationSchedule: Optional[ RegulationSchedule ] = field(
         default = None,
         metadata = {
             'type': 'Association',
@@ -14585,7 +14587,7 @@ class WireSegmentPhase(PowerSystemResource):
     Number designation for this wire segment phase. Each wire segment phase
     within a wire segment should have a unique sequence number.
     '''
-    phase: Optional[ str | SinglePhaseKind ] = field(
+    phase: Optional[ SinglePhaseKind ] = field(
         default = None,
         metadata = {
             'type': 'enumeration',
@@ -14599,7 +14601,7 @@ class WireSegmentPhase(PowerSystemResource):
     '''
     The phase connection of the wire at both ends.
     '''
-    WireSegment: Optional[ str | WireSegment ] = field(
+    WireSegment: Optional[ WireSegment ] = field(
         default = None,
         metadata = {
             'type': 'Association',
@@ -14619,7 +14621,7 @@ class ProductAssetModel(IdentifiedObject):
     '''
     Asset model by a specific manufacturer.
     '''
-    Asset: list[ str | Asset ] = field(
+    Asset: list[ Asset ] = field(
         default_factory = list,
         metadata = {
             'type': 'Association',
@@ -14634,7 +14636,7 @@ class ProductAssetModel(IdentifiedObject):
     '''
     An asset of this model.
     '''
-    AssetInfo: Optional[ str | AssetInfo ] = field(
+    AssetInfo: Optional[ AssetInfo ] = field(
         default = None,
         metadata = {
             'type': 'Association',
@@ -14655,7 +14657,7 @@ class RatioTapChangerTable(IdentifiedObject):
     Describes a curve for how the voltage magnitude and impedance varies with
     the tap step.
     '''
-    RatioTapChanger: list[ str | RatioTapChanger ] = field(
+    RatioTapChanger: list[ RatioTapChanger ] = field(
         default_factory = list,
         metadata = {
             'type': 'Association',
@@ -14670,7 +14672,7 @@ class RatioTapChangerTable(IdentifiedObject):
     '''
     The ratio tap changer of this tap ratio table.
     '''
-    RatioTapChangerTablePoint: list[ str | RatioTapChangerTablePoint ] = field(
+    RatioTapChangerTablePoint: list[ RatioTapChangerTablePoint ] = field(
         default_factory = list,
         metadata = {
             'type': 'Association',
@@ -14733,7 +14735,7 @@ class RemoteControl(IdentifiedObject):
     '''
     Set to true if the actuator is remotely controlled.
     '''
-    Control: Optional[ str | Control ] = field(
+    Control: Optional[ Control ] = field(
         default = None,
         metadata = {
             'type': 'Association',
@@ -14810,7 +14812,7 @@ class RemoteSource(IdentifiedObject):
     '''
     The time interval between scans.
     '''
-    MeasurementValue: Optional[ str | MeasurementValue ] = field(
+    MeasurementValue: Optional[ MeasurementValue ] = field(
         default = None,
         metadata = {
             'type': 'Association',
@@ -14830,7 +14832,7 @@ class ReportingGroup(IdentifiedObject):
     '''
     A reporting group is used for various ad-hoc groupings used for reporting.
     '''
-    BusNameMarker: list[ str | BusNameMarker ] = field(
+    BusNameMarker: list[ BusNameMarker ] = field(
         default_factory = list,
         metadata = {
             'type': 'Association',
@@ -14845,7 +14847,7 @@ class ReportingGroup(IdentifiedObject):
     '''
     The bus name markers that belong to this reporting group.
     '''
-    PowerSystemResource: list[ str | PowerSystemResource ] = field(
+    PowerSystemResource: list[ PowerSystemResource ] = field(
         default_factory = list,
         metadata = {
             'type': 'Association',
@@ -14860,7 +14862,7 @@ class ReportingGroup(IdentifiedObject):
     '''
     Power system resources which belong to this reporting group.
     '''
-    ReportingSuperGroup: Optional[ str | ReportingSuperGroup ] = field(
+    ReportingSuperGroup: Optional[ ReportingSuperGroup ] = field(
         default = None,
         metadata = {
             'type': 'Of Aggregate',
@@ -14875,7 +14877,7 @@ class ReportingGroup(IdentifiedObject):
     '''
     Reporting super group to which this reporting group belongs.
     '''
-    TopologicalNode: list[ str | TopologicalNode ] = field(
+    TopologicalNode: list[ TopologicalNode ] = field(
         default_factory = list,
         metadata = {
             'type': 'Association',
@@ -14895,7 +14897,7 @@ class ReportingSuperGroup(IdentifiedObject):
     '''
     A reporting super group, groups reporting groups for a higher level report.
     '''
-    ReportingGroup: list[ str | ReportingGroup ] = field(
+    ReportingGroup: list[ ReportingGroup ] = field(
         default_factory = list,
         metadata = {
             'type': 'Aggregate Of',
@@ -14915,7 +14917,7 @@ class Season(IdentifiedObject):
     '''
     A specified time period of the year.
     '''
-    endDate: Optional[ str | MonthDay ] = field(
+    endDate: Optional[ MonthDay ] = field(
         default = None,
         metadata = {
             'type': 'Attribute',
@@ -14929,7 +14931,7 @@ class Season(IdentifiedObject):
     '''
     Date season ends.
     '''
-    startDate: Optional[ str | MonthDay ] = field(
+    startDate: Optional[ MonthDay ] = field(
         default = None,
         metadata = {
             'type': 'Attribute',
@@ -14947,7 +14949,7 @@ class Season(IdentifiedObject):
 class ShuntCompensatorAction(IdentifiedObject):
     '''
     '''
-    kind: Optional[ str | TempEquipActionKind ] = field(
+    kind: Optional[ TempEquipActionKind ] = field(
         default = None,
         metadata = {
             'type': 'enumeration',
@@ -14961,7 +14963,7 @@ class ShuntCompensatorAction(IdentifiedObject):
     '''
     Switching action to perform
     '''
-    ShuntCompensator: Optional[ str | ShuntCompensator ] = field(
+    ShuntCompensator: Optional[ ShuntCompensator ] = field(
         default = None,
         metadata = {
             'type': 'Association',
@@ -14982,7 +14984,7 @@ class StaticVarCompensatorDynamics(IdentifiedObject):
     Static var compensator whose behaviour is described by reference to a standard
     model <font color="#0f0f0f">or by definition of a user-defined model.</font>
     '''
-    StaticVarCompensator: Optional[ str | StaticVarCompensator ] = field(
+    StaticVarCompensator: Optional[ StaticVarCompensator ] = field(
         default = None,
         metadata = {
             'type': 'Association',
@@ -15002,7 +15004,7 @@ class SubGeographicalRegion(IdentifiedObject):
     '''
     A subset of a geographical region of a power system network model.
     '''
-    Lines: list[ str | Line ] = field(
+    Lines: list[ Line ] = field(
         default_factory = list,
         metadata = {
             'type': 'Aggregate Of',
@@ -15017,7 +15019,7 @@ class SubGeographicalRegion(IdentifiedObject):
     '''
     The lines within the sub-geographical region.
     '''
-    Region: Optional[ str | GeographicalRegion ] = field(
+    Region: Optional[ GeographicalRegion ] = field(
         default = None,
         metadata = {
             'type': 'Of Aggregate',
@@ -15032,7 +15034,7 @@ class SubGeographicalRegion(IdentifiedObject):
     '''
     The geographical region which this sub-geographical region is within.
     '''
-    Substations: list[ str | Substation ] = field(
+    Substations: list[ Substation ] = field(
         default_factory = list,
         metadata = {
             'type': 'Aggregate Of',
@@ -15052,7 +15054,7 @@ class SwitchAction(IdentifiedObject):
     '''
     Action on switch as a switching step.
     '''
-    kind: Optional[ str | SwitchActionKind ] = field(
+    kind: Optional[ SwitchActionKind ] = field(
         default = None,
         metadata = {
             'type': 'enumeration',
@@ -15066,7 +15068,7 @@ class SwitchAction(IdentifiedObject):
     '''
     Switching action to perform.
     '''
-    OperatedSwitch: Optional[ str | Switch ] = field(
+    OperatedSwitch: Optional[ Switch ] = field(
         default = None,
         metadata = {
             'type': 'Association',
@@ -15081,7 +15083,7 @@ class SwitchAction(IdentifiedObject):
     '''
     Switch that is the object of this switch action.
     '''
-    PlannedOutage: Optional[ str | Outage ] = field(
+    PlannedOutage: Optional[ Outage ] = field(
         default = None,
         metadata = {
             'type': 'Association',
@@ -15120,7 +15122,7 @@ class SynchronousMachineDynamics(IdentifiedObject):
     instead of <i>X</i>.</li>
     </ol>
     '''
-    SynchronousMachine: Optional[ str | SynchronousMachine ] = field(
+    SynchronousMachine: Optional[ SynchronousMachine ] = field(
         default = None,
         metadata = {
             'type': 'Association',
@@ -15145,7 +15147,7 @@ class TopologicalIsland(IdentifiedObject):
     tool.
     Only energised TopologicalNode-s shall be part of the topological island.
     '''
-    AngleRefTopologicalNode: Optional[ str | TopologicalNode ] = field(
+    AngleRefTopologicalNode: Optional[ TopologicalNode ] = field(
         default = None,
         metadata = {
             'type': 'Association',
@@ -15164,7 +15166,7 @@ class TopologicalIsland(IdentifiedObject):
     that is selected as the angle reference for each island. Other reference
     schemes exist, so the association is typically optional.
     '''
-    TopologicalNodes: list[ str | TopologicalNode ] = field(
+    TopologicalNodes: list[ TopologicalNode ] = field(
         default_factory = list,
         metadata = {
             'type': 'Aggregate Of',
@@ -15231,7 +15233,7 @@ class TopologicalNode(IdentifiedObject):
     (bus).
     Starting value for a steady state solution.
     '''
-    AngleRefTopologicalIsland: Optional[ str | TopologicalIsland ] = field(
+    AngleRefTopologicalIsland: Optional[ TopologicalIsland ] = field(
         default = None,
         metadata = {
             'type': 'Association',
@@ -15248,7 +15250,7 @@ class TopologicalNode(IdentifiedObject):
     The island for which the node is an angle reference. Normally there is
     one angle reference node for each island.
     '''
-    BaseVoltage: Optional[ str | BaseVoltage ] = field(
+    BaseVoltage: Optional[ BaseVoltage ] = field(
         default = None,
         metadata = {
             'type': 'Association',
@@ -15263,7 +15265,7 @@ class TopologicalNode(IdentifiedObject):
     '''
     The base voltage of the topological node.
     '''
-    BusNameMarker: list[ str | BusNameMarker ] = field(
+    BusNameMarker: list[ BusNameMarker ] = field(
         default_factory = list,
         metadata = {
             'type': 'Association',
@@ -15278,7 +15280,7 @@ class TopologicalNode(IdentifiedObject):
     '''
     BusnameMarkers that may refer to a pre defined TopologicalNode.
     '''
-    ConnectivityNodeContainer: Optional[ str | ConnectivityNodeContainer ] = field(
+    ConnectivityNodeContainer: Optional[ ConnectivityNodeContainer ] = field(
         default = None,
         metadata = {
             'type': 'Association',
@@ -15293,7 +15295,7 @@ class TopologicalNode(IdentifiedObject):
     '''
     The connectivity node container to which the topological node belongs.
     '''
-    ConnectivityNodes: list[ str | ConnectivityNode ] = field(
+    ConnectivityNodes: list[ ConnectivityNode ] = field(
         default_factory = list,
         metadata = {
             'type': 'Aggregate Of',
@@ -15310,7 +15312,7 @@ class TopologicalNode(IdentifiedObject):
     The connectivity nodes combine together to form this topological node.
     May depend on the current state of switches in the network.
     '''
-    ReportingGroup: Optional[ str | ReportingGroup ] = field(
+    ReportingGroup: Optional[ ReportingGroup ] = field(
         default = None,
         metadata = {
             'type': 'Association',
@@ -15325,7 +15327,7 @@ class TopologicalNode(IdentifiedObject):
     '''
     The reporting group to which the topological node belongs.
     '''
-    Terminal: list[ str | Terminal ] = field(
+    Terminal: list[ Terminal ] = field(
         default_factory = list,
         metadata = {
             'type': 'Aggregate Of',
@@ -15348,7 +15350,7 @@ class TopologicalNode(IdentifiedObject):
     nodes are in the model, this association would probably not be used as
     an input specification.
     '''
-    TopologicalIsland: Optional[ str | TopologicalIsland ] = field(
+    TopologicalIsland: Optional[ TopologicalIsland ] = field(
         default = None,
         metadata = {
             'type': 'Of Aggregate',
@@ -15425,7 +15427,7 @@ class TransformerCoreAdmittance(IdentifiedObject):
     '''
     Zero sequence magnetizing branch conductance.
     '''
-    TransformerEnd: list[ str | TransformerEnd ] = field(
+    TransformerEnd: list[ TransformerEnd ] = field(
         default_factory = list,
         metadata = {
             'type': 'Association',
@@ -15440,7 +15442,7 @@ class TransformerCoreAdmittance(IdentifiedObject):
     '''
     All transformer ends having this core admittance.
     '''
-    TransformerEndInfo: Optional[ str | TransformerEndInfo ] = field(
+    TransformerEndInfo: Optional[ TransformerEndInfo ] = field(
         default = None,
         metadata = {
             'type': 'Association',
@@ -15575,7 +15577,7 @@ class TransformerEnd(IdentifiedObject):
     (for Yn and Zn connections) Reactive part of neutral impedance where 'grounded'
     is true.
     '''
-    BaseVoltage: Optional[ str | BaseVoltage ] = field(
+    BaseVoltage: Optional[ BaseVoltage ] = field(
         default = None,
         metadata = {
             'type': 'Association',
@@ -15590,7 +15592,7 @@ class TransformerEnd(IdentifiedObject):
     '''
     Base voltage of the transformer end. This is essential for PU calculation.
     '''
-    CoreAdmittance: Optional[ str | TransformerCoreAdmittance ] = field(
+    CoreAdmittance: Optional[ TransformerCoreAdmittance ] = field(
         default = None,
         metadata = {
             'type': 'Association',
@@ -15609,7 +15611,7 @@ class TransformerEnd(IdentifiedObject):
     and core losses. The full values of the transformer should be supplied
     for one transformer end only.
     '''
-    FromMeshImpedance: list[ str | TransformerMeshImpedance ] = field(
+    FromMeshImpedance: list[ TransformerMeshImpedance ] = field(
         default_factory = list,
         metadata = {
             'type': 'Association',
@@ -15624,7 +15626,7 @@ class TransformerEnd(IdentifiedObject):
     '''
     All mesh impedances between this 'to' and other 'from' transformer ends.
     '''
-    FromWindingInsulations: list[ str | WindingInsulation ] = field(
+    FromWindingInsulations: list[ WindingInsulation ] = field(
         default_factory = list,
         metadata = {
             'type': 'Association',
@@ -15637,7 +15639,7 @@ class TransformerEnd(IdentifiedObject):
         })
     '''
     '''
-    PhaseTapChanger: Optional[ str | PhaseTapChanger ] = field(
+    PhaseTapChanger: Optional[ PhaseTapChanger ] = field(
         default = None,
         metadata = {
             'type': 'Association',
@@ -15652,7 +15654,7 @@ class TransformerEnd(IdentifiedObject):
     '''
     Phase tap changer associated with this transformer end.
     '''
-    RatioTapChanger: Optional[ str | RatioTapChanger ] = field(
+    RatioTapChanger: Optional[ RatioTapChanger ] = field(
         default = None,
         metadata = {
             'type': 'Association',
@@ -15667,7 +15669,7 @@ class TransformerEnd(IdentifiedObject):
     '''
     Ratio tap changer associated with this transformer end.
     '''
-    StarImpedance: Optional[ str | TransformerStarImpedance ] = field(
+    StarImpedance: Optional[ TransformerStarImpedance ] = field(
         default = None,
         metadata = {
             'type': 'Association',
@@ -15688,7 +15690,7 @@ class TransformerEnd(IdentifiedObject):
     full values of the transformer should be entered on the high voltage end
     (endNumber=1).
     '''
-    Terminal: Optional[ str | Terminal ] = field(
+    Terminal: Optional[ Terminal ] = field(
         default = None,
         metadata = {
             'type': 'Association',
@@ -15703,7 +15705,7 @@ class TransformerEnd(IdentifiedObject):
     '''
     Terminal of the power transformer to which this transformer end belongs.
     '''
-    ToMeshImpedance: list[ str | TransformerMeshImpedance ] = field(
+    ToMeshImpedance: list[ TransformerMeshImpedance ] = field(
         default_factory = list,
         metadata = {
             'type': 'Association',
@@ -15718,7 +15720,7 @@ class TransformerEnd(IdentifiedObject):
     '''
     All mesh impedances between this 'from' and other 'to' transformer ends.
     '''
-    ToWindingInsulations: list[ str | WindingInsulation ] = field(
+    ToWindingInsulations: list[ WindingInsulation ] = field(
         default_factory = list,
         metadata = {
             'type': 'Association',
@@ -15814,7 +15816,7 @@ class PowerTransformerEnd(TransformerEnd):
     '''
     Zero sequence magnetizing branch susceptance.
     '''
-    connectionKind: Optional[ str | WindingConnection ] = field(
+    connectionKind: Optional[ WindingConnection ] = field(
         default = None,
         metadata = {
             'type': 'enumeration',
@@ -15956,7 +15958,7 @@ class PowerTransformerEnd(TransformerEnd):
     '''
     Zero sequence series reactance of the transformer end.
     '''
-    PowerTransformer: Optional[ str | PowerTransformer ] = field(
+    PowerTransformer: Optional[ PowerTransformer ] = field(
         default = None,
         metadata = {
             'type': 'Association',
@@ -15978,7 +15980,7 @@ class TransformerTankEnd(TransformerEnd):
     or for transformer tanks connected into a bank (and bank is modelled with
     the PowerTransformer).
     '''
-    phases: Optional[ str | PhaseCode ] = field(
+    phases: Optional[ PhaseCode ] = field(
         default = None,
         metadata = {
             'type': 'enumeration',
@@ -15992,7 +15994,7 @@ class TransformerTankEnd(TransformerEnd):
     '''
     Describes the phases carried by a conducting equipment.
     '''
-    TransformerTank: Optional[ str | TransformerTank ] = field(
+    TransformerTank: Optional[ TransformerTank ] = field(
         default = None,
         metadata = {
             'type': 'Association',
@@ -16076,7 +16078,7 @@ class TransformerMeshImpedance(IdentifiedObject):
     Zero-sequence reactance between the 'from' and the 'to' end, seen from
     the 'from' end.
     '''
-    FromTransformerEnd: Optional[ str | TransformerEnd ] = field(
+    FromTransformerEnd: Optional[ TransformerEnd ] = field(
         default = None,
         metadata = {
             'type': 'Association',
@@ -16093,7 +16095,7 @@ class TransformerMeshImpedance(IdentifiedObject):
     From end this mesh impedance is connected to. It determines the voltage
     reference.
     '''
-    FromTransformerEndInfo: Optional[ str | TransformerEndInfo ] = field(
+    FromTransformerEndInfo: Optional[ TransformerEndInfo ] = field(
         default = None,
         metadata = {
             'type': 'Association',
@@ -16110,7 +16112,7 @@ class TransformerMeshImpedance(IdentifiedObject):
     'from' transformer end datasheet this mesh impedance is calculated from.
     It determines the voltage reference.
     '''
-    ToTransformerEnd: list[ str | TransformerEnd ] = field(
+    ToTransformerEnd: list[ TransformerEnd ] = field(
         default_factory = list,
         metadata = {
             'type': 'Association',
@@ -16125,7 +16127,7 @@ class TransformerMeshImpedance(IdentifiedObject):
     '''
     All transformer ends this mesh impedance is connected to.
     '''
-    ToTransformerEndInfos: list[ str | TransformerEndInfo ] = field(
+    ToTransformerEndInfos: list[ TransformerEndInfo ] = field(
         default_factory = list,
         metadata = {
             'type': 'Association',
@@ -16214,7 +16216,7 @@ class TransformerStarImpedance(IdentifiedObject):
     '''
     Zero sequence series reactance of the transformer end.
     '''
-    TransformerEnd: list[ str | TransformerEnd ] = field(
+    TransformerEnd: list[ TransformerEnd ] = field(
         default_factory = list,
         metadata = {
             'type': 'Association',
@@ -16229,7 +16231,7 @@ class TransformerStarImpedance(IdentifiedObject):
     '''
     All transformer ends having this star impedance.
     '''
-    TransformerEndInfo: Optional[ str | TransformerEndInfo ] = field(
+    TransformerEndInfo: Optional[ TransformerEndInfo ] = field(
         default = None,
         metadata = {
             'type': 'Association',
@@ -16362,7 +16364,7 @@ class NoLoadTest(TransformerTest):
     '''
     Losses measured from a zero-sequence excitation test.
     '''
-    EnergisedEnd: Optional[ str | TransformerEndInfo ] = field(
+    EnergisedEnd: Optional[ TransformerEndInfo ] = field(
         default = None,
         metadata = {
             'type': 'Association',
@@ -16459,7 +16461,7 @@ class OpenCircuitTest(TransformerTest):
     Phase shift measured at the open end with the energised end set to rated
     voltage and all other ends open.
     '''
-    EnergisedEnd: Optional[ str | TransformerEndInfo ] = field(
+    EnergisedEnd: Optional[ TransformerEndInfo ] = field(
         default = None,
         metadata = {
             'type': 'Association',
@@ -16474,7 +16476,7 @@ class OpenCircuitTest(TransformerTest):
     '''
     Transformer end that current is applied to in this open-circuit test.
     '''
-    OpenEnd: Optional[ str | TransformerEndInfo ] = field(
+    OpenEnd: Optional[ TransformerEndInfo ] = field(
         default = None,
         metadata = {
             'type': 'Association',
@@ -16627,7 +16629,7 @@ class ShortCircuitTest(TransformerTest):
     '''
     Short circuit voltage..
     '''
-    EnergisedEnd: Optional[ str | TransformerEndInfo ] = field(
+    EnergisedEnd: Optional[ TransformerEndInfo ] = field(
         default = None,
         metadata = {
             'type': 'Association',
@@ -16644,7 +16646,7 @@ class ShortCircuitTest(TransformerTest):
     Transformer end that voltage is applied to in this short-circuit test.
     The test voltage is chosen to induce rated current in the energised end.
     '''
-    GroundedEnds: list[ str | TransformerEndInfo ] = field(
+    GroundedEnds: list[ TransformerEndInfo ] = field(
         default_factory = list,
         metadata = {
             'type': 'Association',
@@ -16681,7 +16683,7 @@ class UsagePointGroup(IdentifiedObject):
     '''
     Type of this group.
     '''
-    DemandResponsePrograms: list[ str | DemandResponseProgram ] = field(
+    DemandResponsePrograms: list[ DemandResponseProgram ] = field(
         default_factory = list,
         metadata = {
             'type': 'Association',
@@ -16727,7 +16729,7 @@ class ValueToAlias(IdentifiedObject):
     '''
     The value that is mapped.
     '''
-    ValueAliasSet: Optional[ str | ValueAliasSet ] = field(
+    ValueAliasSet: Optional[ ValueAliasSet ] = field(
         default = None,
         metadata = {
             'type': 'Of Aggregate',
@@ -16803,7 +16805,7 @@ class WindingInsulation(IdentifiedObject):
     As of statusDate, the leakage reactance measured at the "from" winding
     with the "to" winding short-circuited and all other windings open-circuited.
     '''
-    FromWinding: Optional[ str | TransformerEnd ] = field(
+    FromWinding: Optional[ TransformerEnd ] = field(
         default = None,
         metadata = {
             'type': 'Association',
@@ -16816,7 +16818,7 @@ class WindingInsulation(IdentifiedObject):
         })
     '''
     '''
-    status: Optional[ str | Status ] = field(
+    status: Optional[ Status ] = field(
         default = None,
         metadata = {
             'type': 'Attribute',
@@ -16829,7 +16831,7 @@ class WindingInsulation(IdentifiedObject):
         })
     '''
     '''
-    ToWinding: Optional[ str | TransformerEnd ] = field(
+    ToWinding: Optional[ TransformerEnd ] = field(
         default = None,
         metadata = {
             'type': 'Association',
@@ -16842,7 +16844,7 @@ class WindingInsulation(IdentifiedObject):
         })
     '''
     '''
-    TransformerObservation: Optional[ str | TransformerObservation ] = field(
+    TransformerObservation: Optional[ TransformerObservation ] = field(
         default = None,
         metadata = {
             'type': 'Association',
@@ -16907,7 +16909,7 @@ class WirePosition(IdentifiedObject):
     Signed vertical distance from the wire at this position: above ground (positive
     value) or burial depth below ground (negative value).
     '''
-    WirePhaseInfo: list[ str | WirePhaseInfo ] = field(
+    WirePhaseInfo: list[ WirePhaseInfo ] = field(
         default_factory = list,
         metadata = {
             'type': 'Association',
@@ -16922,7 +16924,7 @@ class WirePosition(IdentifiedObject):
     '''
     Wire phase information for this wire position.
     '''
-    WireSpacingInfo: Optional[ str | WireSpacingInfo ] = field(
+    WireSpacingInfo: Optional[ WireSpacingInfo ] = field(
         default = None,
         metadata = {
             'type': 'Association',
@@ -17009,7 +17011,7 @@ class CurveData(Identity):
     The data value of the third Y-axis variable (if present), depending on
     the Y-axis units.
     '''
-    Curve: Optional[ str | Curve ] = field(
+    Curve: Optional[ Curve ] = field(
         default = None,
         metadata = {
             'type': 'Of Aggregate',
@@ -17089,7 +17091,7 @@ class Customer(Identity):
     (deprecated) (use 'priority' instead) True if this is an important customer.
     Importance is for matters different than those in 'specialNeed' attribute.
     '''
-    kind: Optional[ str | CustomerKind ] = field(
+    kind: Optional[ CustomerKind ] = field(
         default = None,
         metadata = {
             'type': 'enumeration',
@@ -17103,7 +17105,7 @@ class Customer(Identity):
     '''
     Kind of customer.
     '''
-    Customer: Optional[ str | Customer ] = field(
+    Customer: Optional[ Customer ] = field(
         default = None,
         metadata = {
             'type': 'Association',
@@ -17205,7 +17207,7 @@ class DERCurveData(Identity):
     '''
     The start time of the interval
     '''
-    DERMonitorableParameter: Optional[ str | DERMonitorableParameter ] = field(
+    DERMonitorableParameter: Optional[ DERMonitorableParameter ] = field(
         default = None,
         metadata = {
             'type': 'Association',
@@ -17222,7 +17224,7 @@ class DERCurveData(Identity):
     The DER monitorable parameter for which a time dependent curve has been
     created.
     '''
-    DispatchSchedule: Optional[ str | DispatchSchedule ] = field(
+    DispatchSchedule: Optional[ DispatchSchedule ] = field(
         default = None,
         metadata = {
             'type': 'Association',
@@ -17368,7 +17370,7 @@ class DERFunction(Identity):
     '''
     If set to TRUE, the voltWattCurveFunction is supported.
     '''
-    EndDeviceGroup: Optional[ str | EndDeviceGroup ] = field(
+    EndDeviceGroup: Optional[ EndDeviceGroup ] = field(
         default = None,
         metadata = {
             'type': 'Association',
@@ -17423,7 +17425,7 @@ class DERMonitorableParameter(Identity):
     The minimum value of the DERMonitorableParameter based on the installed
     capacity.
     '''
-    DERParameter: Optional[ str | DERParameterKind ] = field(
+    DERParameter: Optional[ DERParameterKind ] = field(
         default = None,
         metadata = {
             'type': 'enumeration',
@@ -17437,7 +17439,7 @@ class DERMonitorableParameter(Identity):
     '''
     Defines the specific engineering value being forecasted or dispatched.
     '''
-    flowDirection: Optional[ str | FlowDirectionKind ] = field(
+    flowDirection: Optional[ FlowDirectionKind ] = field(
         default = None,
         metadata = {
             'type': 'enumeration',
@@ -17453,7 +17455,7 @@ class DERMonitorableParameter(Identity):
     Kind of flow direction for reading/measured values proper to some commodities
     such as, for example, energy, power, demand.
     '''
-    yMultiplier: Optional[ str | UnitMultiplier ] = field(
+    yMultiplier: Optional[ UnitMultiplier ] = field(
         default = None,
         metadata = {
             'type': 'enumeration',
@@ -17467,7 +17469,7 @@ class DERMonitorableParameter(Identity):
     '''
     The UnitMultiplier that is applied to the DERMonitorableParameter.
     '''
-    yUnit: Optional[ str | DERUnitSymbol ] = field(
+    yUnit: Optional[ DERUnitSymbol ] = field(
         default = None,
         metadata = {
             'type': 'enumeration',
@@ -17481,7 +17483,7 @@ class DERMonitorableParameter(Identity):
     '''
     The DERUnitSymbol that is applied to the DERMonitorableParameter
     '''
-    DERCurveData: Optional[ str | DERCurveData ] = field(
+    DERCurveData: Optional[ DERCurveData ] = field(
         default = None,
         metadata = {
             'type': 'Association',
@@ -17496,7 +17498,7 @@ class DERMonitorableParameter(Identity):
     '''
     Specifies the time dependent curve for a DER monitorable parameter
     '''
-    DispatchSchedule: list[ str | DispatchSchedule ] = field(
+    DispatchSchedule: list[ DispatchSchedule ] = field(
         default_factory = list,
         metadata = {
             'type': 'Association',
@@ -17513,7 +17515,7 @@ class DERMonitorableParameter(Identity):
     The schedule used for dispatching or forecasting the values of DER monitorable
     parameters over time.
     '''
-    EndDeviceGroup: list[ str | EndDeviceGroup ] = field(
+    EndDeviceGroup: list[ EndDeviceGroup ] = field(
         default_factory = list,
         metadata = {
             'type': 'Association',
@@ -17594,7 +17596,7 @@ class DispatchSchedule(Identity):
     A value set by the system, function, algorithm or person creating a prediction
     as to how accurate the prediction is.
     '''
-    curveStyleKind: Optional[ str | CurveStyle ] = field(
+    curveStyleKind: Optional[ CurveStyle ] = field(
         default = None,
         metadata = {
             'type': 'enumeration',
@@ -17610,7 +17612,7 @@ class DispatchSchedule(Identity):
     Used to specify whether the values over an interval are constant (constantYValue)
     or linearly interpolated (straightLineYValues)
     '''
-    timeIntervalUnit: Optional[ str | TimeIntervalKind ] = field(
+    timeIntervalUnit: Optional[ TimeIntervalKind ] = field(
         default = None,
         metadata = {
             'type': 'enumeration',
@@ -17624,7 +17626,7 @@ class DispatchSchedule(Identity):
     '''
     The unit of measure for the time axis of the dispatch schedule.
     '''
-    DERCurveData: list[ str | DERCurveData ] = field(
+    DERCurveData: list[ DERCurveData ] = field(
         default_factory = list,
         metadata = {
             'type': 'Association',
@@ -17641,7 +17643,7 @@ class DispatchSchedule(Identity):
     Specifies the time dependent curve for a DER monitorable parameter in the
     DER dispatch schedule.
     '''
-    DERMonitorableParameter: Optional[ str | DERMonitorableParameter ] = field(
+    DERMonitorableParameter: Optional[ DERMonitorableParameter ] = field(
         default = None,
         metadata = {
             'type': 'Association',
@@ -17748,7 +17750,7 @@ class IrregularTimePoint(Identity):
     '''
     The time is relative to the schedule starting time.
     '''
-    IntervalSchedule: Optional[ str | IrregularIntervalSchedule ] = field(
+    IntervalSchedule: Optional[ IrregularIntervalSchedule ] = field(
         default = None,
         metadata = {
             'type': 'Of Aggregate',
@@ -17785,7 +17787,7 @@ class Name(Identity):
     '''
     Any free text that name the object.
     '''
-    IdentifiedObject: Optional[ str | IdentifiedObject ] = field(
+    IdentifiedObject: Optional[ IdentifiedObject ] = field(
         default = None,
         metadata = {
             'type': 'Association',
@@ -17800,7 +17802,7 @@ class Name(Identity):
     '''
     Identified object that this name designates.
     '''
-    NameType: Optional[ str | NameType ] = field(
+    NameType: Optional[ NameType ] = field(
         default = None,
         metadata = {
             'type': 'Association',
@@ -17858,7 +17860,7 @@ class NameType(Identity):
     '''
     Name of the name type.
     '''
-    Names: list[ str | Name ] = field(
+    Names: list[ Name ] = field(
         default_factory = list,
         metadata = {
             'type': 'Association',
@@ -17873,7 +17875,7 @@ class NameType(Identity):
     '''
     All names of this type.
     '''
-    NameTypeAuthority: Optional[ str | NameTypeAuthority ] = field(
+    NameTypeAuthority: Optional[ NameTypeAuthority ] = field(
         default = None,
         metadata = {
             'type': 'Association',
@@ -17922,7 +17924,7 @@ class NameTypeAuthority(Identity):
     '''
     Name of the name type authority.
     '''
-    NameTypes: list[ str | NameType ] = field(
+    NameTypes: list[ NameType ] = field(
         default_factory = list,
         metadata = {
             'type': 'Association',
@@ -17988,7 +17990,7 @@ class NonlinearShuntCompensatorPhasePoint(Identity):
     '''
     Positive sequence shunt (charging) conductance per section.
     '''
-    NonlinearShuntCompensatorPhase: Optional[ str | NonlinearShuntCompensatorPhase ] = field(
+    NonlinearShuntCompensatorPhase: Optional[ NonlinearShuntCompensatorPhase ] = field(
         default = None,
         metadata = {
             'type': 'Of Aggregate',
@@ -18082,7 +18084,7 @@ class NonlinearShuntCompensatorPoint(Identity):
     '''
     Zero sequence shunt (charging) conductance per section.
     '''
-    NonlinearShuntCompensator: Optional[ str | NonlinearShuntCompensator ] = field(
+    NonlinearShuntCompensator: Optional[ NonlinearShuntCompensator ] = field(
         default = None,
         metadata = {
             'type': 'Of Aggregate',
@@ -18121,7 +18123,7 @@ class OperatingShare(Identity):
     and operating participant) associated with this share. The total percentage
     ownership for a power system resource should add to 100%.
     '''
-    OperatingParticipant: Optional[ str | OperatingParticipant ] = field(
+    OperatingParticipant: Optional[ OperatingParticipant ] = field(
         default = None,
         metadata = {
             'type': 'Association',
@@ -18138,7 +18140,7 @@ class OperatingShare(Identity):
     The operating participant having this share with the associated power system
     resource.
     '''
-    PowerSystemResource: Optional[ str | PowerSystemResource ] = field(
+    PowerSystemResource: Optional[ PowerSystemResource ] = field(
         default = None,
         metadata = {
             'type': 'Association',
@@ -18208,7 +18210,7 @@ class PhaseImpedanceData(Identity):
     '''
     Susceptance matrix element value, per length of unit.
     '''
-    fromPhase: Optional[ str | SinglePhaseKind ] = field(
+    fromPhase: Optional[ SinglePhaseKind ] = field(
         default = None,
         metadata = {
             'type': 'enumeration',
@@ -18250,7 +18252,7 @@ class PhaseImpedanceData(Identity):
     '''
     Resistance matrix element value, per length of unit.
     '''
-    toPhase: Optional[ str | SinglePhaseKind ] = field(
+    toPhase: Optional[ SinglePhaseKind ] = field(
         default = None,
         metadata = {
             'type': 'enumeration',
@@ -18278,7 +18280,7 @@ class PhaseImpedanceData(Identity):
     '''
     Reactance matrix element value, per length of unit.
     '''
-    PhaseImpedance: Optional[ str | PerLengthPhaseImpedance ] = field(
+    PhaseImpedance: Optional[ PerLengthPhaseImpedance ] = field(
         default = None,
         metadata = {
             'type': 'Association',
@@ -18378,7 +18380,7 @@ class PositionPoint(Identity):
     '''
     (if applicable) Z axis position.
     '''
-    Location: Optional[ str | Location ] = field(
+    Location: Optional[ Location ] = field(
         default = None,
         metadata = {
             'type': 'Association',
@@ -18575,7 +18577,7 @@ class Quality61850(Identity):
     '''
     Measurement value is transmitted for test purposes.
     '''
-    source: Optional[ str | Source ] = field(
+    source: Optional[ Source ] = field(
         default = None,
         metadata = {
             'type': 'enumeration',
@@ -18591,7 +18593,7 @@ class Quality61850(Identity):
     Source gives information related to the origin of a value. The value may
     be acquired from the process, defaulted or substituted.
     '''
-    validity: Optional[ str | Validity ] = field(
+    validity: Optional[ Validity ] = field(
         default = None,
         metadata = {
             'type': 'enumeration',
@@ -18612,7 +18614,7 @@ class MeasurementValueQuality(Quality61850):
     in IEC 61850-7-3. Bits 11-15 are reserved for future expansion by that
     document. Bits 16-31 are reserved for EMS applications.
     '''
-    MeasurementValue: Optional[ str | MeasurementValue ] = field(
+    MeasurementValue: Optional[ MeasurementValue ] = field(
         default = None,
         metadata = {
             'type': 'Of Aggregate',
@@ -18691,7 +18693,7 @@ class RegularTimePoint(Identity):
     The second value at the time. The meaning of the value is defined by the
     derived type of the associated schedule.
     '''
-    IntervalSchedule: Optional[ str | RegularIntervalSchedule ] = field(
+    IntervalSchedule: Optional[ RegularIntervalSchedule ] = field(
         default = None,
         metadata = {
             'type': 'Of Aggregate',
@@ -18727,7 +18729,7 @@ class SvShuntCompensatorSections(Identity):
     The number of sections in service as a continuous variable. The attribute
     shall be a positive value or zero. To get integer value scale with ShuntCompensator.bPerSection.
     '''
-    phase: Optional[ str | SinglePhaseKind ] = field(
+    phase: Optional[ SinglePhaseKind ] = field(
         default = None,
         metadata = {
             'type': 'enumeration',
@@ -18743,7 +18745,7 @@ class SvShuntCompensatorSections(Identity):
     The terminal phase at which the connection is applied. If missing, the
     injection is assumed to be balanced among non-neutral phases.
     '''
-    ShuntCompensator: Optional[ str | ShuntCompensator ] = field(
+    ShuntCompensator: Optional[ ShuntCompensator ] = field(
         default = None,
         metadata = {
             'type': 'Association',
@@ -18781,7 +18783,7 @@ class SvTapStep(Identity):
     the tap step position as defined by the related tap changer model and normally
     is constrained to be within the range of minimum and maximum tap positions.
     '''
-    TapChanger: Optional[ str | TapChanger ] = field(
+    TapChanger: Optional[ TapChanger ] = field(
         default = None,
         metadata = {
             'type': 'Association',
@@ -18954,7 +18956,7 @@ class PhaseTapChangerTablePoint(TapChangerTablePoint):
     angle variation from the Terminal at the PowerTransformerEnd, where the
     TapChanger is located, into the transformer.
     '''
-    PhaseTapChangerTable: Optional[ str | PhaseTapChangerTable ] = field(
+    PhaseTapChangerTable: Optional[ PhaseTapChangerTable ] = field(
         default = None,
         metadata = {
             'type': 'Association',
@@ -18974,7 +18976,7 @@ class RatioTapChangerTablePoint(TapChangerTablePoint):
     '''
     Describes each tap step in the ratio tap changer tabular curve.
     '''
-    RatioTapChangerTable: Optional[ str | RatioTapChangerTable ] = field(
+    RatioTapChangerTable: Optional[ RatioTapChangerTable ] = field(
         default = None,
         metadata = {
             'type': 'Association',
@@ -18994,7 +18996,7 @@ class WirePhaseInfo(Identity):
     '''
     Information on a wire carrying a single phase.
     '''
-    phaseInfo: Optional[ str | SinglePhaseKind ] = field(
+    phaseInfo: Optional[ SinglePhaseKind ] = field(
         default = None,
         metadata = {
             'type': 'enumeration',
@@ -19008,7 +19010,7 @@ class WirePhaseInfo(Identity):
     '''
     Phase information.
     '''
-    WireAssemblyInfo: Optional[ str | WireAssemblyInfo ] = field(
+    WireAssemblyInfo: Optional[ WireAssemblyInfo ] = field(
         default = None,
         metadata = {
             'type': 'Association',
@@ -19023,7 +19025,7 @@ class WirePhaseInfo(Identity):
     '''
     Wire assembly information using this wire phase information.
     '''
-    WireInfo: Optional[ str | WireInfo ] = field(
+    WireInfo: Optional[ WireInfo ] = field(
         default = None,
         metadata = {
             'type': 'Association',
@@ -19038,7 +19040,7 @@ class WirePhaseInfo(Identity):
     '''
     Wire information contributing to this wire phase information.
     '''
-    WirePosition: Optional[ str | WirePosition ] = field(
+    WirePosition: Optional[ WirePosition ] = field(
         default = None,
         metadata = {
             'type': 'Association',
@@ -22247,7 +22249,7 @@ class DecimalQuantity(Identity):
     '''
     Value of this quantity.
     '''
-    currency: Optional[ str | Currency ] = field(
+    currency: Optional[ Currency ] = field(
         default = None,
         metadata = {
             'type': 'enumeration',
@@ -22261,7 +22263,7 @@ class DecimalQuantity(Identity):
     '''
     Currency of this quantity.
     '''
-    multiplier: Optional[ str | UnitMultiplier ] = field(
+    multiplier: Optional[ UnitMultiplier ] = field(
         default = None,
         metadata = {
             'type': 'enumeration',
@@ -22275,7 +22277,7 @@ class DecimalQuantity(Identity):
     '''
     Unit multiplier of this quantity.
     '''
-    unit: Optional[ str | UnitSymbol ] = field(
+    unit: Optional[ UnitSymbol ] = field(
         default = None,
         metadata = {
             'type': 'enumeration',
@@ -22308,7 +22310,7 @@ class FloatQuantity(Identity):
     '''
     Value of this quantity.
     '''
-    multiplier: Optional[ str | UnitMultiplier ] = field(
+    multiplier: Optional[ UnitMultiplier ] = field(
         default = None,
         metadata = {
             'type': 'enumeration',
@@ -22322,7 +22324,7 @@ class FloatQuantity(Identity):
     '''
     Unit multiplier of this quantity.
     '''
-    unit: Optional[ str | UnitSymbol ] = field(
+    unit: Optional[ UnitSymbol ] = field(
         default = None,
         metadata = {
             'type': 'enumeration',
@@ -22355,7 +22357,7 @@ class IntegerQuantity(Identity):
     '''
     Value of this quantity.
     '''
-    multiplier: Optional[ str | UnitMultiplier ] = field(
+    multiplier: Optional[ UnitMultiplier ] = field(
         default = None,
         metadata = {
             'type': 'enumeration',
@@ -22369,7 +22371,7 @@ class IntegerQuantity(Identity):
     '''
     Unit multiplier of this quantity.
     '''
-    unit: Optional[ str | UnitSymbol ] = field(
+    unit: Optional[ UnitSymbol ] = field(
         default = None,
         metadata = {
             'type': 'enumeration',
@@ -22388,7 +22390,7 @@ class MonthDayInterval(Identity):
     '''
     Interval between two times specified as month and day.
     '''
-    end: Optional[ str | MonthDay ] = field(
+    end: Optional[ MonthDay ] = field(
         default = None,
         metadata = {
             'type': 'Attribute',
@@ -22402,7 +22404,7 @@ class MonthDayInterval(Identity):
     '''
     End time of this interval.
     '''
-    start: Optional[ str | MonthDay ] = field(
+    start: Optional[ MonthDay ] = field(
         default = None,
         metadata = {
             'type': 'Attribute',
@@ -22503,7 +22505,7 @@ class StringQuantity(Identity):
     '''
     Value of this quantity.
     '''
-    multiplier: Optional[ str | UnitMultiplier ] = field(
+    multiplier: Optional[ UnitMultiplier ] = field(
         default = None,
         metadata = {
             'type': 'enumeration',
@@ -22517,7 +22519,7 @@ class StringQuantity(Identity):
     '''
     Unit multiplier of this quantity.
     '''
-    unit: Optional[ str | UnitSymbol ] = field(
+    unit: Optional[ UnitSymbol ] = field(
         default = None,
         metadata = {
             'type': 'enumeration',
