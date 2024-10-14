@@ -1183,7 +1183,7 @@ class Measurement(IdentifiedObject):
     Measurement.
     '''
 
-    phases: Optional[ str | PhaseCode ] = field(
+    phases: Optional[ PhaseCode ] = field(
         default = None,
         metadata = {
             'type': 'enumeration',
@@ -2276,7 +2276,7 @@ class ProtectionEquipment(Equipment):
     The time delay from detection of abnormal conditions to relay operation.
     '''
 
-    unitMultiplier: Optional[ str | UnitMultiplier ] = field(
+    unitMultiplier: Optional[ UnitMultiplier ] = field(
         default = None,
         metadata = {
             'type': 'enumeration',
@@ -2291,7 +2291,7 @@ class ProtectionEquipment(Equipment):
     The unit multiplier of the value.
     '''
 
-    unitSymbol: Optional[ str | UnitSymbol ] = field(
+    unitSymbol: Optional[ UnitSymbol ] = field(
         default = None,
         metadata = {
             'type': 'enumeration',
@@ -2539,7 +2539,7 @@ class SecondaryArea(SubSchedulingArea):
     one or more PowerTransformer objects.
     '''
 
-    primaryPhase: Optional[ str | PhaseCode ] = field(
+    primaryPhase: Optional[ PhaseCode ] = field(
         default = None,
         metadata = {
             'type': 'enumeration',

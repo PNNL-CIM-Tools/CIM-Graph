@@ -160,11 +160,21 @@
                 </xsl:call-template>
             </xsl:variable>
             <!-- Write dataclass field with typing and default -->
-            <item>
-                <xsl:value-of select="@name"/>: Optional[
-                <xsl:value-of select="$xstype"/>  |
-                <xsl:value-of select="@type"/> ] = field(
-            </item>
+            <xsl:choose>
+                <xsl:when test="$xstype = 'str'">
+                    <item>
+                        <xsl:value-of select="@name"/>: Optional[
+                        <xsl:value-of select="@type"/> ] = field(
+                    </item>
+                </xsl:when>
+                <xsl:otherwise>
+                    <item>
+                        <xsl:value-of select="@name"/>: Optional[
+                        <xsl:value-of select="$xstype"/>  |
+                        <xsl:value-of select="@type"/> ] = field(
+                    </item>
+                </xsl:otherwise>
+            </xsl:choose>
             <list begin="" indent="    " end="">
                 default = None,
             </list>
