@@ -94,7 +94,7 @@ class ConnectionInterface(ABC):
                     if reverse_assc in cim_class.__dataclass_fields__:
                         association = reverse_assc
                     else:
-                        _log.warning(f'Association {reverse_assc} missing from class {attr_class} in data profile')
+                        _log.warning(f'Association {reverse_assc} missing from class {cim_class.__name__} in data profile')
                 except:
                     _log.warning(f'Unable to find inverse of {attribute} for {cim_class.__name__}')
 
@@ -165,12 +165,16 @@ class ConnectionInterface(ABC):
                     if type(obj_list) is not list:
                         obj_list = [obj_list]
                     edge_uuid = (edge_mRID.strip('_').lower())
+                    # _log.warning(obj_list)
                     if edge_uuid not in str(obj_list):
                         edge_object = self.create_object(graph, edge_class, edge_mRID)
                         obj_list.append(edge_object)
                         setattr(graph[cim_class][identifier], association, obj_list)
                 else:
+                    # _log.warning(f'{identifier}, {attribute}, {edge_class}, {edge_mRID}, ')
+
                     edge_object = self.create_object(graph, edge_class, edge_mRID)
+                    # _log.warning(edge_object)
                     setattr(graph[cim_class][identifier], association, edge_object)
             else:
                 _log.warning(f'{cim_class.__name__} does not have attribute {association}')
@@ -188,11 +192,16 @@ class ConnectionInterface(ABC):
             obj: a dataclass instance with the correct identifier
         """
         # Convert uri string to a uuid
-        identifier = UUID(uri.strip('_').lower())
+        try:
+            identifier = UUID(uri.strip('_').lower())
+        except:
+            _log.warning(f'URI {uri} for object {class_type.__name__} is not a valid UUID')
+            identifier = uri
 
         # Add class type to graph keys if not there
         if class_type not in graph:
             graph[class_type] = {}
+            # _log.warning(graph[class_type])
 
         # Check if object exists in graph
         if identifier in graph[class_type]:
@@ -203,6 +212,8 @@ class ConnectionInterface(ABC):
             obj = class_type()
             obj.uuid(uri = uri)
             graph[class_type][identifier] = obj
+
+
 
         return obj
 

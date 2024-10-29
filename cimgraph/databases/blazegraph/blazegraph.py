@@ -290,8 +290,10 @@ class BlazegraphConnection(ConnectionInterface):
                 graph, cim_class, eq_mrids, self.connection_params)
             # Execute SPARQL query
             query_output = self.execute(sparql_message)
+            # _log.warning(query_output)
             # Parse the query output
             self.edge_query_parser(query_output, graph, cim_class)
+
 
         # Create list of all nodes within graph to be expanded
         uuid_list = list(graph[cim_class].keys())
@@ -347,7 +349,7 @@ class BlazegraphConnection(ConnectionInterface):
                 identifier = UUID(uri.strip('_').lower())
                 attribute = result['attribute']['value']  #edge attribute
                 value = result['value']['value']  #get edge value
-
+                # _log.warning(f'{uri} , {attribute}, {value}')
                 if 'edge' in result:  #check if association
                     edge = json.loads(result['edge']['value'])
                     edge_mRID = edge['@id']
@@ -359,6 +361,7 @@ class BlazegraphConnection(ConnectionInterface):
                         continue
 
                     if expand_graph:
+
                         edge_object = self.create_edge(graph, cim_class, identifier,
                                          attribute, edge_class, edge_mRID)
                         new_edges.append(edge_object)

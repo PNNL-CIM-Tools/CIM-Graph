@@ -10,6 +10,10 @@ from cimgraph.databases import ConnectionInterface
 
 _log = logging.getLogger(__name__)
 
+jsonld = dict['@id':str(UUID),'@type':str(type)]
+Graph = dict[type, dict[UUID, object]]
+
+
 
 def new_mrid():
     mRID = str(uuid4())
@@ -41,6 +45,42 @@ def json_dump(value: object,
     return result
 
 
+def create_object(class_type:type, uri:str, graph:Graph = None) -> object:
+    """
+    Method for creating new objects and adding them to the graph
+    Required Args:
+        graph: an LPG graph from a GraphModel object
+        class_type: a dataclass type, such as cim.ACLineSegment
+        uri: the RDF ID or mRID of the object
+    Returns:
+        obj: a dataclass instance with the correct identifier
+    """
+    # Convert uri string to a uuid
+    try:
+        identifier = UUID(uri.strip('_').lower())
+    except:
+        _log.warning(f'URI {uri} for object {class_type.__name__} is not a valid UUID')
+        identifier = uri
+
+    if graph is None:
+        graph = {}
+
+    # Add class type to graph keys if not there
+    if class_type not in graph:
+        graph[class_type] = {}
+
+    # Check if object exists in graph
+    if identifier in graph[class_type]:
+        obj = graph[class_type][identifier]
+
+    # If not there, create a new object and add to graph
+    else:
+        obj = class_type()
+        obj.uuid(uri = uri)
+        graph[class_type][identifier] = obj
+
+    return obj
+
 @dataclass
 class GraphModel:
     container: object
@@ -71,6 +111,32 @@ class GraphModel:
             graph[type(obj)] = {}
         if obj.identifier not in graph[type(obj)]:
             graph[type(obj)][obj.identifier] = obj
+
+    def add_jsonld_to_graph(self, json_ld: jsonld, graph = None) -> object:
+        if type(json_ld) == str:
+            json_ld = json.loads(json_ld)
+        elif type(json_ld) == dict:
+            pass
+        else:
+            raise TypeError('json_ld input must be string or dict')
+
+        if graph is None:
+            graph = self.graph
+
+        obj_id = json_ld['@id']
+        obj_class = json_ld['@type']
+
+        # If equipment class is in data profile, add it to the graph also
+        if obj_class in self.cim.__all__:
+            obj_class = eval(f'self.cim.{obj_class}')
+            obj = create_object(obj_class, obj_id, graph)
+            return obj
+        else:
+            # If it is not in the profile, log it as a missing class
+            _log.warning(
+                f'object class missing from data profile: {obj_class}')
+
+
 
     def get_all_edges(self, cim_class: type,
                       graph: dict[type, dict[str, object]] = None) -> None:

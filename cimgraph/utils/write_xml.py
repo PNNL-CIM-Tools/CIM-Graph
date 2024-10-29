@@ -81,9 +81,12 @@ def write_xml(network: GraphModel, filename: str) -> None:
                                             row = f'  <cim:{parent.__name__}.{attribute} {resource}/>\n'
                                             f.write(row)
                                 else:
-                                    resource = f'rdf:resource="{rdf_resource}{edge.uri()}"'
-                                    row = f'  <cim:{parent.__name__}.{attribute} {resource}/>\n'
-                                    f.write(row)
+                                    # try:
+                                        resource = f'rdf:resource="{rdf_resource}{edge.uri()}"'
+                                        row = f'  <cim:{parent.__name__}.{attribute} {resource}/>\n'
+                                        f.write(row)
+                                    # except:
+                                    #     _log.warning(obj.__dict__)
                         else:
                             if edge is not None and edge != [] and rdf != 'Identity.identifier':
                                 row = f'  <cim:{parent.__name__}.{attribute}>{str(edge)}</cim:{parent.__name__}.{attribute}>\n'

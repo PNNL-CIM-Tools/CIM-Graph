@@ -21,7 +21,7 @@ class Identity():
     IdentifiedObject is now a child class of Identity.
     mRID is superseded by Identity.identifier, which is typed to be a UUID.
     '''
-    identifier: Optional[ UUID ] = field(
+    identifier: Optional[UUID] = field(
         default = None,
         metadata = {
             'type': 'Attribute',
@@ -153,17 +153,7 @@ class IdentifiedObject(Identity):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                Master resource identifier issued by a model authority. The mRID is unique
-                within an exchange context. Global uniqueness is easily achieved by using
-                a UUID, as specified in RFC 4122, for the mRID. The use of UUID is strongly
-                recommended.
-                For CIMXML data files in RDF syntax conforming to IEC 61970-552 Edition
-                1, the mRID is mapped to rdf:ID or rdf:about attributes that identify CIM
-                object elements.
-                '''
+            'maxOccurs': '1'
         })
     '''
     Master resource identifier issued by a model authority. The mRID is unique
@@ -180,16 +170,7 @@ class IdentifiedObject(Identity):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                The aliasName is free text human readable name of the object alternative
-                to IdentifiedObject.name. It may be non unique and may not correlate to
-                a naming hierarchy.
-                The attribute aliasName is retained because of backwards compatibility
-                between CIM relases. It is however recommended to replace aliasName with
-                the Name class as aliasName is planned for retirement at a future time.
-                '''
+            'maxOccurs': '1'
         })
     '''
     The aliasName is free text human readable name of the object alternative
@@ -205,12 +186,7 @@ class IdentifiedObject(Identity):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                The description is a free human readable text describing or naming the
-                object. It may be non unique and may not correlate to a naming hierarchy.
-                '''
+            'maxOccurs': '1'
         })
     '''
     The description is a free human readable text describing or naming the
@@ -222,29 +198,20 @@ class IdentifiedObject(Identity):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                The name is any free human readable and possibly non unique text naming
-                the object.
-                '''
+            'maxOccurs': '1'
         })
     '''
     The name is any free human readable and possibly non unique text naming
     the object.
     '''
 
-    Names: list[ Name ] = field(
+    Names: list[Name] = field(
         default_factory = list,
         metadata = {
             'type': 'Association',
             'minOccurs': '0',
             'maxOccurs': 'unbounded',
-            'inverse': 'Name.IdentifiedObject',
-            'docstring':
-                '''
-                All names of this identified object.
-                '''
+            'inverse': 'Name.IdentifiedObject'
         })
     '''
     All names of this identified object.
@@ -263,19 +230,7 @@ class ACDCTerminal(IdentifiedObject):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                The connected status is related to a bus-branch model and the topological
-                node to terminal relation. True implies the terminal is connected to the
-                related topological node and false implies it is not.
-                In a bus-branch model, the connected status is used to tell if equipment
-                is disconnected without having to change the connectivity described by
-                the topological node to terminal relation. A valid case is that conducting
-                equipment can be connected in one end and open in the other. In particular
-                for an AC line segment, where the reactive line charging can be significant,
-                this is a relevant case.
-                '''
+            'maxOccurs': '1'
         })
     '''
     The connected status is related to a bus-branch model and the topological
@@ -294,14 +249,7 @@ class ACDCTerminal(IdentifiedObject):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                The orientation of the terminal connections for a multiple terminal conducting
-                equipment. The sequence numbering starts with 1 and additional terminals
-                should follow in increasing order. The first terminal is the "starting
-                point" for a two terminal branch.
-                '''
+            'maxOccurs': '1'
         })
     '''
     The orientation of the terminal connections for a multiple terminal conducting
@@ -310,36 +258,25 @@ class ACDCTerminal(IdentifiedObject):
     point" for a two terminal branch.
     '''
 
-    BusNameMarker: Optional[ BusNameMarker ] = field(
+    BusNameMarker: Optional[BusNameMarker] = field(
         default = None,
         metadata = {
             'type': 'Association',
             'minOccurs': '0',
             'maxOccurs': '1',
-            'inverse': 'BusNameMarker.Terminal',
-            'docstring':
-                '''
-                The bus name marker used to name the bus (topological node).
-                '''
+            'inverse': 'BusNameMarker.Terminal'
         })
     '''
     The bus name marker used to name the bus (topological node).
     '''
 
-    Measurements: list[ Measurement ] = field(
+    Measurements: list[Measurement] = field(
         default_factory = list,
         metadata = {
             'type': 'Association',
             'minOccurs': '0',
             'maxOccurs': 'unbounded',
-            'inverse': 'Measurement.Terminal',
-            'docstring':
-                '''
-                Measurements associated with this terminal defining where the measurement
-                is placed in the network topology. It may be used, for instance, to capture
-                the sensor position, such as a voltage transformer (PT) at a busbar or
-                a current transformer (CT) at the bar between a breaker and an isolator.
-                '''
+            'inverse': 'Measurement.Terminal'
         })
     '''
     Measurements associated with this terminal defining where the measurement
@@ -348,16 +285,13 @@ class ACDCTerminal(IdentifiedObject):
     a current transformer (CT) at the bar between a breaker and an isolator.
     '''
 
-    OperationalLimitSet: list[ OperationalLimitSet ] = field(
+    OperationalLimitSet: list[OperationalLimitSet] = field(
         default_factory = list,
         metadata = {
             'type': 'Association',
             'minOccurs': '0',
             'maxOccurs': 'unbounded',
-            'inverse': 'OperationalLimitSet.Terminal',
-            'docstring':
-                '''
-                '''
+            'inverse': 'OperationalLimitSet.Terminal'
         })
     '''
     '''
@@ -369,49 +303,36 @@ class Terminal(ACDCTerminal):
     are connected at physical connection points called connectivity nodes.
     '''
 
-    BoundedSchedulingArea: Optional[ SubSchedulingArea ] = field(
+    BoundedSchedulingArea: Optional[SubSchedulingArea] = field(
         default = None,
         metadata = {
             'type': 'Association',
             'minOccurs': '0',
             'maxOccurs': '1',
-            'inverse': 'SubSchedulingArea.BoundaryTerminals',
-            'docstring':
-                '''
-                The SubSchedulingArea bounded by the specific Terminal
-                '''
+            'inverse': 'SubSchedulingArea.BoundaryTerminals'
         })
     '''
     The SubSchedulingArea bounded by the specific Terminal
     '''
 
-    Bushing: Optional[ Bushing ] = field(
+    Bushing: Optional[Bushing] = field(
         default = None,
         metadata = {
             'type': 'Association',
             'minOccurs': '0',
             'maxOccurs': '1',
-            'inverse': 'Bushing.Terminal',
-            'docstring':
-                '''
-                '''
+            'inverse': 'Bushing.Terminal'
         })
     '''
     '''
 
-    ConductingEquipment: Optional[ ConductingEquipment ] = field(
+    ConductingEquipment: Optional[ConductingEquipment] = field(
         default = None,
         metadata = {
             'type': 'Association',
             'minOccurs': '0',
             'maxOccurs': '1',
-            'inverse': 'ConductingEquipment.Terminals',
-            'docstring':
-                '''
-                The conducting equipment of the terminal. Conducting equipment have terminals
-                that may be connected to other conducting equipment terminals via connectivity
-                nodes or topological nodes.
-                '''
+            'inverse': 'ConductingEquipment.Terminals'
         })
     '''
     The conducting equipment of the terminal. Conducting equipment have terminals
@@ -419,103 +340,74 @@ class Terminal(ACDCTerminal):
     nodes or topological nodes.
     '''
 
-    ConnectivityNode: Optional[ ConnectivityNode ] = field(
+    ConnectivityNode: Optional[ConnectivityNode] = field(
         default = None,
         metadata = {
             'type': 'Association',
             'minOccurs': '0',
             'maxOccurs': '1',
-            'inverse': 'ConnectivityNode.Terminals',
-            'docstring':
-                '''
-                The connectivity node to which this terminal connects with zero impedance.
-                '''
+            'inverse': 'ConnectivityNode.Terminals'
         })
     '''
     The connectivity node to which this terminal connects with zero impedance.
     '''
 
-    HasFirstMutualCoupling: list[ MutualCoupling ] = field(
+    HasFirstMutualCoupling: list[MutualCoupling] = field(
         default_factory = list,
         metadata = {
             'type': 'Association',
             'minOccurs': '0',
             'maxOccurs': 'unbounded',
-            'inverse': 'MutualCoupling.First_Terminal',
-            'docstring':
-                '''
-                Mutual couplings associated with the branch as the first branch.
-                '''
+            'inverse': 'MutualCoupling.First_Terminal'
         })
     '''
     Mutual couplings associated with the branch as the first branch.
     '''
 
-    HasSecondMutualCoupling: list[ MutualCoupling ] = field(
+    HasSecondMutualCoupling: list[MutualCoupling] = field(
         default_factory = list,
         metadata = {
             'type': 'Association',
             'minOccurs': '0',
             'maxOccurs': 'unbounded',
-            'inverse': 'MutualCoupling.Second_Terminal',
-            'docstring':
-                '''
-                Mutual couplings with the branch associated as the first branch.
-                '''
+            'inverse': 'MutualCoupling.Second_Terminal'
         })
     '''
     Mutual couplings with the branch associated as the first branch.
     '''
 
-    NormalHeadFeeder: Optional[ Feeder ] = field(
+    NormalHeadFeeder: Optional[Feeder] = field(
         default = None,
         metadata = {
             'type': 'Association',
             'minOccurs': '0',
             'maxOccurs': '1',
-            'inverse': 'Feeder.NormalHeadTerminal',
-            'docstring':
-                '''
-                The feeder that this terminal normally feeds. Only specifed for the terminals
-                at head of feeders.
-                '''
+            'inverse': 'Feeder.NormalHeadTerminal'
         })
     '''
     The feeder that this terminal normally feeds. Only specifed for the terminals
     at head of feeders.
     '''
 
-    RegulatingControl: list[ RegulatingControl ] = field(
+    RegulatingControl: list[RegulatingControl] = field(
         default_factory = list,
         metadata = {
             'type': 'Association',
             'minOccurs': '0',
             'maxOccurs': 'unbounded',
-            'inverse': 'RegulatingControl.Terminal',
-            'docstring':
-                '''
-                The controls regulating this terminal.
-                '''
+            'inverse': 'RegulatingControl.Terminal'
         })
     '''
     The controls regulating this terminal.
     '''
 
-    TopologicalNode: Optional[ TopologicalNode ] = field(
+    TopologicalNode: Optional[TopologicalNode] = field(
         default = None,
         metadata = {
             'type': 'Of Aggregate',
             'minOccurs': '0',
             'maxOccurs': '1',
-            'inverse': 'TopologicalNode.Terminal',
-            'docstring':
-                '''
-                The topological node associated with the terminal. This can be used as
-                an alternative to the connectivity node path to topological node, thus
-                making it unneccesary to model connectivity nodes in some cases. Note that
-                the if connectivity nodes are in the model, this association would probably
-                not be used as an input specification.
-                '''
+            'inverse': 'TopologicalNode.Terminal'
         })
     '''
     The topological node associated with the terminal. This can be used as
@@ -525,17 +417,13 @@ class Terminal(ACDCTerminal):
     not be used as an input specification.
     '''
 
-    TransformerEnd: list[ TransformerEnd ] = field(
+    TransformerEnd: list[TransformerEnd] = field(
         default_factory = list,
         metadata = {
             'type': 'Association',
             'minOccurs': '0',
             'maxOccurs': 'unbounded',
-            'inverse': 'TransformerEnd.Terminal',
-            'docstring':
-                '''
-                All transformer ends connected at this terminal.
-                '''
+            'inverse': 'TransformerEnd.Terminal'
         })
     '''
     All transformer ends connected at this terminal.
@@ -552,97 +440,72 @@ class Asset(IdentifiedObject):
     of the equipment fulfilling that role.
     '''
 
-    AssetContainer: Optional[ AssetContainer ] = field(
+    AssetContainer: Optional[AssetContainer] = field(
         default = None,
         metadata = {
             'type': 'Association',
             'minOccurs': '0',
             'maxOccurs': '1',
-            'inverse': 'AssetContainer.Assets',
-            'docstring':
-                '''
-                Container of this asset.
-                '''
+            'inverse': 'AssetContainer.Assets'
         })
     '''
     Container of this asset.
     '''
 
-    AssetInfo: Optional[ AssetInfo ] = field(
+    AssetInfo: Optional[AssetInfo] = field(
         default = None,
         metadata = {
             'type': 'Association',
             'minOccurs': '0',
             'maxOccurs': '1',
-            'inverse': 'AssetInfo.Assets',
-            'docstring':
-                '''
-                Data applicable to this asset.
-                '''
+            'inverse': 'AssetInfo.Assets'
         })
     '''
     Data applicable to this asset.
     '''
 
-    Location: Optional[ Location ] = field(
+    Location: Optional[Location] = field(
         default = None,
         metadata = {
             'type': 'Association',
             'minOccurs': '0',
             'maxOccurs': '1',
-            'inverse': 'Location.Assets',
-            'docstring':
-                '''
-                Location of this asset.
-                '''
+            'inverse': 'Location.Assets'
         })
     '''
     Location of this asset.
     '''
 
-    Measurements: list[ Measurement ] = field(
+    Measurements: list[Measurement] = field(
         default_factory = list,
         metadata = {
             'type': 'Association',
             'minOccurs': '0',
             'maxOccurs': 'unbounded',
-            'inverse': 'Measurement.Asset',
-            'docstring':
-                '''
-                '''
+            'inverse': 'Measurement.Asset'
         })
     '''
     '''
 
-    OrganisationRoles: list[ AssetOrganisationRole ] = field(
+    OrganisationRoles: list[AssetOrganisationRole] = field(
         default_factory = list,
         metadata = {
             'type': 'Association',
             'minOccurs': '0',
             'maxOccurs': 'unbounded',
-            'inverse': 'AssetOrganisationRole.Assets',
-            'docstring':
-                '''
-                All roles an organisation plays for this asset.
-                '''
+            'inverse': 'AssetOrganisationRole.Assets'
         })
     '''
     All roles an organisation plays for this asset.
     '''
 
-    PowerSystemResources: list[ PowerSystemResource ] = field(
+    PowerSystemResources: list[PowerSystemResource] = field(
         default_factory = list,
         metadata = {
             'type': 'Association',
             'minOccurs': '0',
             'maxOccurs': 'unbounded',
-            'inverse': 'PowerSystemResource.Assets',
-            'docstring':
-                '''
-                All power system resources used to electrically model this asset. For example,
-                transformer asset is electrically modelled with a transformer and its windings
-                and tap changer.
-                '''
+            'inverse': 'PowerSystemResource.Assets'
         })
     '''
     All power system resources used to electrically model this asset. For example,
@@ -657,17 +520,13 @@ class AssetContainer(Asset):
     switchgear, land, fences, buildings, equipment, vehicles, etc.
     '''
 
-    Assets: list[ Asset ] = field(
+    Assets: list[Asset] = field(
         default_factory = list,
         metadata = {
             'type': 'Association',
             'minOccurs': '0',
             'maxOccurs': 'unbounded',
-            'inverse': 'Asset.AssetContainer',
-            'docstring':
-                '''
-                All assets within this container asset.
-                '''
+            'inverse': 'Asset.AssetContainer'
         })
     '''
     All assets within this container asset.
@@ -686,28 +545,20 @@ class DuctBank(AssetContainer):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                Number of circuits in duct bank. Refer to associations between a duct (ConductorAsset)
-                and an ACLineSegment to understand which circuits are in which ducts.
-                '''
+            'maxOccurs': '1'
         })
     '''
     Number of circuits in duct bank. Refer to associations between a duct (ConductorAsset)
     and an ACLineSegment to understand which circuits are in which ducts.
     '''
 
-    WireSpacingInfos: list[ WireSpacingInfo ] = field(
+    WireSpacingInfos: list[WireSpacingInfo] = field(
         default_factory = list,
         metadata = {
             'type': 'Association',
             'minOccurs': '0',
             'maxOccurs': 'unbounded',
-            'inverse': 'WireSpacingInfo.DuctBank',
-            'docstring':
-                '''
-                '''
+            'inverse': 'WireSpacingInfo.DuctBank'
         })
     '''
     '''
@@ -734,12 +585,7 @@ class EndDevice(AssetContainer):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                Automated meter reading (AMR) or other communication system responsible
-                for communications to this end device.
-                '''
+            'maxOccurs': '1'
         })
     '''
     Automated meter reading (AMR) or other communication system responsible
@@ -751,11 +597,7 @@ class EndDevice(AssetContainer):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                Installation code.
-                '''
+            'maxOccurs': '1'
         })
     '''
     Installation code.
@@ -766,11 +608,7 @@ class EndDevice(AssetContainer):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                If true, this is a premises area network (PAN) device.
-                '''
+            'maxOccurs': '1'
         })
     '''
     If true, this is a premises area network (PAN) device.
@@ -781,10 +619,7 @@ class EndDevice(AssetContainer):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                '''
+            'maxOccurs': '1'
         })
     '''
     '''
@@ -794,13 +629,7 @@ class EndDevice(AssetContainer):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                If true, there is no physical device. As an example, a virtual meter can
-                be defined to aggregate the consumption for two or more physical meters.
-                Otherwise, this is a physical hardware device.
-                '''
+            'maxOccurs': '1'
         })
     '''
     If true, there is no physical device. As an example, a virtual meter can
@@ -813,27 +642,19 @@ class EndDevice(AssetContainer):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                Time zone offset relative to GMT for the location of this end device.
-                '''
+            'maxOccurs': '1'
         })
     '''
     Time zone offset relative to GMT for the location of this end device.
     '''
 
-    Customer: Optional[ Customer ] = field(
+    Customer: Optional[Customer] = field(
         default = None,
         metadata = {
             'type': 'Association',
             'minOccurs': '0',
             'maxOccurs': '1',
-            'inverse': 'Customer.EndDevices',
-            'docstring':
-                '''
-                Customer owning this end device.
-                '''
+            'inverse': 'Customer.EndDevices'
         })
     '''
     Customer owning this end device.
@@ -853,16 +674,13 @@ class Bushing(Asset):
     Bushing asset.
     '''
 
-    Terminal: Optional[ Terminal ] = field(
+    Terminal: Optional[Terminal] = field(
         default = None,
         metadata = {
             'type': 'Association',
             'minOccurs': '0',
             'maxOccurs': '1',
-            'inverse': 'Terminal.Bushing',
-            'docstring':
-                '''
-                '''
+            'inverse': 'Terminal.Bushing'
         })
     '''
     '''
@@ -879,62 +697,48 @@ class AssetInfo(IdentifiedObject):
     planning).
     '''
 
-    Assets: list[ Asset ] = field(
+    Assets: list[Asset] = field(
         default_factory = list,
         metadata = {
             'type': 'Association',
             'minOccurs': '0',
             'maxOccurs': 'unbounded',
-            'inverse': 'Asset.AssetInfo',
-            'docstring':
-                '''
-                All assets described by this data.
-                '''
+            'inverse': 'Asset.AssetInfo'
         })
     '''
     All assets described by this data.
     '''
 
-    CatalogAssetType: Optional[ CatalogAssetType ] = field(
+    CatalogAssetType: Optional[CatalogAssetType] = field(
         default = None,
         metadata = {
             'type': 'Association',
             'minOccurs': '0',
             'maxOccurs': '1',
-            'inverse': 'CatalogAssetType.AssetInfo',
-            'docstring':
-                '''
-                '''
+            'inverse': 'CatalogAssetType.AssetInfo'
         })
     '''
     '''
 
-    PowerSystemResources: list[ PowerSystemResource ] = field(
+    PowerSystemResources: list[PowerSystemResource] = field(
         default_factory = list,
         metadata = {
             'type': 'Association',
             'minOccurs': '0',
             'maxOccurs': 'unbounded',
-            'inverse': 'PowerSystemResource.AssetDatasheet',
-            'docstring':
-                '''
-                All power system resources with this datasheet information.
-                '''
+            'inverse': 'PowerSystemResource.AssetDatasheet'
         })
     '''
     All power system resources with this datasheet information.
     '''
 
-    ProductAssetModel: Optional[ ProductAssetModel ] = field(
+    ProductAssetModel: Optional[ProductAssetModel] = field(
         default = None,
         metadata = {
             'type': 'Association',
             'minOccurs': '0',
             'maxOccurs': '1',
-            'inverse': 'ProductAssetModel.AssetInfo',
-            'docstring':
-                '''
-                '''
+            'inverse': 'ProductAssetModel.AssetInfo'
         })
     '''
     '''
@@ -950,11 +754,7 @@ class BusbarSectionInfo(AssetInfo):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                Rated current.
-                '''
+            'maxOccurs': '1'
         })
     '''
     Rated current.
@@ -965,11 +765,7 @@ class BusbarSectionInfo(AssetInfo):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                Rated voltage.
-                '''
+            'maxOccurs': '1'
         })
     '''
     Rated voltage.
@@ -986,12 +782,7 @@ class BushingInfo(AssetInfo):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                Factory measured capacitance, measured between the power factor tap and
-                the bushing conductor.
-                '''
+            'maxOccurs': '1'
         })
     '''
     Factory measured capacitance, measured between the power factor tap and
@@ -1003,12 +794,7 @@ class BushingInfo(AssetInfo):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                Factory measured insulation power factor, measured between the power factor
-                tap and the bushing conductor.
-                '''
+            'maxOccurs': '1'
         })
     '''
     Factory measured insulation power factor, measured between the power factor
@@ -1020,12 +806,7 @@ class BushingInfo(AssetInfo):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                Factory measured capacitance measured between the power factor tap and
-                ground.
-                '''
+            'maxOccurs': '1'
         })
     '''
     Factory measured capacitance measured between the power factor tap and
@@ -1037,12 +818,7 @@ class BushingInfo(AssetInfo):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                Factory measured insulation power factor, measured between the power factor
-                tap and ground.
-                '''
+            'maxOccurs': '1'
         })
     '''
     Factory measured insulation power factor, measured between the power factor
@@ -1054,11 +830,7 @@ class BushingInfo(AssetInfo):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                Rated current for bushing as installed.
-                '''
+            'maxOccurs': '1'
         })
     '''
     Rated current for bushing as installed.
@@ -1069,11 +841,7 @@ class BushingInfo(AssetInfo):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                Rated impulse withstand voltage, also known as BIL (Basic Impulse Level).
-                '''
+            'maxOccurs': '1'
         })
     '''
     Rated impulse withstand voltage, also known as BIL (Basic Impulse Level).
@@ -1084,12 +852,7 @@ class BushingInfo(AssetInfo):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                Rated line-to-ground voltage. Also referred to as U<sub>y</sub> on bushing
-                nameplate.
-                '''
+            'maxOccurs': '1'
         })
     '''
     Rated line-to-ground voltage. Also referred to as U<sub>y</sub> on bushing
@@ -1101,29 +864,20 @@ class BushingInfo(AssetInfo):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                Rated voltage. Can be referred to as U<sub>m</sub>, system voltage or class
-                on bushing nameplate.
-                '''
+            'maxOccurs': '1'
         })
     '''
     Rated voltage. Can be referred to as U<sub>m</sub>, system voltage or class
     on bushing nameplate.
     '''
 
-    insulationKind: Optional[ BushingInsulationKind ] = field(
+    insulationKind: Optional[BushingInsulationKind] = field(
         default = None,
         metadata = {
             'type': 'enumeration',
             'minOccurs': '0',
             'maxOccurs': '1',
-            'inverse': '',
-            'docstring':
-                '''
-                Kind of insulation.
-                '''
+            'inverse': ''
         })
     '''
     Kind of insulation.
@@ -1139,10 +893,7 @@ class IEEE1547Info(AssetInfo):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                '''
+            'maxOccurs': '1'
         })
     '''
     '''
@@ -1152,10 +903,7 @@ class IEEE1547Info(AssetInfo):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                '''
+            'maxOccurs': '1'
         })
     '''
     '''
@@ -1165,10 +913,7 @@ class IEEE1547Info(AssetInfo):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                '''
+            'maxOccurs': '1'
         })
     '''
     '''
@@ -1178,10 +923,7 @@ class IEEE1547Info(AssetInfo):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                '''
+            'maxOccurs': '1'
         })
     '''
     '''
@@ -1191,10 +933,7 @@ class IEEE1547Info(AssetInfo):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                '''
+            'maxOccurs': '1'
         })
     '''
     '''
@@ -1204,10 +943,7 @@ class IEEE1547Info(AssetInfo):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                '''
+            'maxOccurs': '1'
         })
     '''
     '''
@@ -1217,10 +953,7 @@ class IEEE1547Info(AssetInfo):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                '''
+            'maxOccurs': '1'
         })
     '''
     '''
@@ -1230,10 +963,7 @@ class IEEE1547Info(AssetInfo):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                '''
+            'maxOccurs': '1'
         })
     '''
     '''
@@ -1243,10 +973,7 @@ class IEEE1547Info(AssetInfo):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                '''
+            'maxOccurs': '1'
         })
     '''
     '''
@@ -1256,10 +983,7 @@ class IEEE1547Info(AssetInfo):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                '''
+            'maxOccurs': '1'
         })
     '''
     '''
@@ -1269,10 +993,7 @@ class IEEE1547Info(AssetInfo):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                '''
+            'maxOccurs': '1'
         })
     '''
     '''
@@ -1282,10 +1003,7 @@ class IEEE1547Info(AssetInfo):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                '''
+            'maxOccurs': '1'
         })
     '''
     '''
@@ -1295,10 +1013,7 @@ class IEEE1547Info(AssetInfo):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                '''
+            'maxOccurs': '1'
         })
     '''
     '''
@@ -1308,10 +1023,7 @@ class IEEE1547Info(AssetInfo):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                '''
+            'maxOccurs': '1'
         })
     '''
     '''
@@ -1321,10 +1033,7 @@ class IEEE1547Info(AssetInfo):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                '''
+            'maxOccurs': '1'
         })
     '''
     '''
@@ -1334,10 +1043,7 @@ class IEEE1547Info(AssetInfo):
         metadata = {
             'type': 'enumeration',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                '''
+            'maxOccurs': '1'
         })
     '''
     '''
@@ -1347,10 +1053,7 @@ class IEEE1547Info(AssetInfo):
         metadata = {
             'type': 'enumeration',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                '''
+            'maxOccurs': '1'
         })
     '''
     '''
@@ -1360,10 +1063,7 @@ class IEEE1547Info(AssetInfo):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                '''
+            'maxOccurs': '1'
         })
     '''
     '''
@@ -1373,10 +1073,7 @@ class IEEE1547Info(AssetInfo):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                '''
+            'maxOccurs': '1'
         })
     '''
     '''
@@ -1386,10 +1083,7 @@ class IEEE1547Info(AssetInfo):
         metadata = {
             'type': 'enumeration',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                '''
+            'maxOccurs': '1'
         })
     '''
     '''
@@ -1399,10 +1093,7 @@ class IEEE1547Info(AssetInfo):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                '''
+            'maxOccurs': '1'
         })
     '''
     '''
@@ -1412,10 +1103,7 @@ class IEEE1547Info(AssetInfo):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                '''
+            'maxOccurs': '1'
         })
     '''
     '''
@@ -1425,10 +1113,7 @@ class IEEE1547Info(AssetInfo):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                '''
+            'maxOccurs': '1'
         })
     '''
     '''
@@ -1438,10 +1123,7 @@ class IEEE1547Info(AssetInfo):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                '''
+            'maxOccurs': '1'
         })
     '''
     '''
@@ -1451,10 +1133,7 @@ class IEEE1547Info(AssetInfo):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                '''
+            'maxOccurs': '1'
         })
     '''
     '''
@@ -1464,10 +1143,7 @@ class IEEE1547Info(AssetInfo):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                '''
+            'maxOccurs': '1'
         })
     '''
     '''
@@ -1477,10 +1153,7 @@ class IEEE1547Info(AssetInfo):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                '''
+            'maxOccurs': '1'
         })
     '''
     '''
@@ -1490,10 +1163,7 @@ class IEEE1547Info(AssetInfo):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                '''
+            'maxOccurs': '1'
         })
     '''
     '''
@@ -1503,10 +1173,7 @@ class IEEE1547Info(AssetInfo):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                '''
+            'maxOccurs': '1'
         })
     '''
     '''
@@ -1516,38 +1183,29 @@ class IEEE1547Info(AssetInfo):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                '''
+            'maxOccurs': '1'
         })
     '''
     '''
 
-    PowerElectronicsConnections: list[ PowerElectronicsConnection ] = field(
+    PowerElectronicsConnections: list[PowerElectronicsConnection] = field(
         default_factory = list,
         metadata = {
             'type': 'Association',
             'minOccurs': '0',
             'maxOccurs': 'unbounded',
-            'inverse': 'PowerElectronicsConnection.IEEE1547Info',
-            'docstring':
-                '''
-                '''
+            'inverse': 'PowerElectronicsConnection.IEEE1547Info'
         })
     '''
     '''
 
-    RotatingMachines: list[ RotatingMachine ] = field(
+    RotatingMachines: list[RotatingMachine] = field(
         default_factory = list,
         metadata = {
             'type': 'Association',
             'minOccurs': '0',
             'maxOccurs': 'unbounded',
-            'inverse': 'RotatingMachine.IEEE1547Info',
-            'docstring':
-                '''
-                '''
+            'inverse': 'RotatingMachine.IEEE1547Info'
         })
     '''
     '''
@@ -1557,17 +1215,13 @@ class InterrupterUnitInfo(AssetInfo):
     '''
     '''
 
-    interruptingMedium: Optional[ InterruptingMediumKind ] = field(
+    interruptingMedium: Optional[InterruptingMediumKind] = field(
         default = None,
         metadata = {
             'type': 'enumeration',
             'minOccurs': '0',
             'maxOccurs': '1',
-            'inverse': '',
-            'docstring':
-                '''
-                Interrupting medium.
-                '''
+            'inverse': ''
         })
     '''
     Interrupting medium.
@@ -1584,11 +1238,7 @@ class OperatingMechanismInfo(AssetInfo):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                Close current (nominal).
-                '''
+            'maxOccurs': '1'
         })
     '''
     Close current (nominal).
@@ -1599,11 +1249,7 @@ class OperatingMechanismInfo(AssetInfo):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                Close voltage in volts DC.
-                '''
+            'maxOccurs': '1'
         })
     '''
     Close voltage in volts DC.
@@ -1614,11 +1260,7 @@ class OperatingMechanismInfo(AssetInfo):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                Rated motor run current in amps.
-                '''
+            'maxOccurs': '1'
         })
     '''
     Rated motor run current in amps.
@@ -1629,11 +1271,7 @@ class OperatingMechanismInfo(AssetInfo):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                Rated motor start current in amps.
-                '''
+            'maxOccurs': '1'
         })
     '''
     Rated motor start current in amps.
@@ -1644,11 +1282,7 @@ class OperatingMechanismInfo(AssetInfo):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                Nominal motor voltage in volts DC.
-                '''
+            'maxOccurs': '1'
         })
     '''
     Nominal motor voltage in volts DC.
@@ -1659,11 +1293,7 @@ class OperatingMechanismInfo(AssetInfo):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                Trip current (nominal).
-                '''
+            'maxOccurs': '1'
         })
     '''
     Trip current (nominal).
@@ -1674,27 +1304,19 @@ class OperatingMechanismInfo(AssetInfo):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                Trip voltage in volts DC.
-                '''
+            'maxOccurs': '1'
         })
     '''
     Trip voltage in volts DC.
     '''
 
-    mechanismKind: Optional[ OperatingMechanismKind ] = field(
+    mechanismKind: Optional[OperatingMechanismKind] = field(
         default = None,
         metadata = {
             'type': 'enumeration',
             'minOccurs': '0',
             'maxOccurs': '1',
-            'inverse': '',
-            'docstring':
-                '''
-                Kind of breaker operating mechanism.
-                '''
+            'inverse': ''
         })
     '''
     Kind of breaker operating mechanism.
@@ -1706,17 +1328,13 @@ class PowerTransformerInfo(AssetInfo):
     Set of power transformer data, from an equipment library.
     '''
 
-    TransformerTankInfos: list[ TransformerTankInfo ] = field(
+    TransformerTankInfos: list[TransformerTankInfo] = field(
         default_factory = list,
         metadata = {
             'type': 'Association',
             'minOccurs': '0',
             'maxOccurs': 'unbounded',
-            'inverse': 'TransformerTankInfo.PowerTransformerInfo',
-            'docstring':
-                '''
-                Data for all the tanks described by this power transformer data.
-                '''
+            'inverse': 'TransformerTankInfo.PowerTransformerInfo'
         })
     '''
     Data for all the tanks described by this power transformer data.
@@ -1734,11 +1352,7 @@ class ShuntCompensatorInfo(AssetInfo):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                Maximum allowed apparent power loss.
-                '''
+            'maxOccurs': '1'
         })
     '''
     Maximum allowed apparent power loss.
@@ -1749,11 +1363,7 @@ class ShuntCompensatorInfo(AssetInfo):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                Rated current.
-                '''
+            'maxOccurs': '1'
         })
     '''
     Rated current.
@@ -1764,11 +1374,7 @@ class ShuntCompensatorInfo(AssetInfo):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                Rated reactive power.
-                '''
+            'maxOccurs': '1'
         })
     '''
     Rated reactive power.
@@ -1779,11 +1385,7 @@ class ShuntCompensatorInfo(AssetInfo):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                Rated voltage.
-                '''
+            'maxOccurs': '1'
         })
     '''
     Rated voltage.
@@ -1801,11 +1403,7 @@ class SwitchInfo(AssetInfo):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                If true, it is a single phase switch.
-                '''
+            'maxOccurs': '1'
         })
     '''
     If true, it is a single phase switch.
@@ -1816,12 +1414,7 @@ class SwitchInfo(AssetInfo):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                If true, the switch is not ganged (i.e., a switch phase may be operated
-                separately from other phases).
-                '''
+            'maxOccurs': '1'
         })
     '''
     If true, the switch is not ganged (i.e., a switch phase may be operated
@@ -1833,12 +1426,7 @@ class SwitchInfo(AssetInfo):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                The maximum fault current a breaking device can break safely under prescribed
-                conditions of use.
-                '''
+            'maxOccurs': '1'
         })
     '''
     The maximum fault current a breaking device can break safely under prescribed
@@ -1850,11 +1438,7 @@ class SwitchInfo(AssetInfo):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                Weight of gas in each tank of SF<sub>6</sub> dead tank breaker.
-                '''
+            'maxOccurs': '1'
         })
     '''
     Weight of gas in each tank of SF<sub>6</sub> dead tank breaker.
@@ -1865,11 +1449,7 @@ class SwitchInfo(AssetInfo):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                Gas or air pressure at or below which a low pressure alarm is generated.
-                '''
+            'maxOccurs': '1'
         })
     '''
     Gas or air pressure at or below which a low pressure alarm is generated.
@@ -1880,11 +1460,7 @@ class SwitchInfo(AssetInfo):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                Gas or air pressure below which the breaker will not open.
-                '''
+            'maxOccurs': '1'
         })
     '''
     Gas or air pressure below which the breaker will not open.
@@ -1895,11 +1471,7 @@ class SwitchInfo(AssetInfo):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                Volume of oil in each tank of bulk oil breaker.
-                '''
+            'maxOccurs': '1'
         })
     '''
     Volume of oil in each tank of bulk oil breaker.
@@ -1910,11 +1482,7 @@ class SwitchInfo(AssetInfo):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                Rated current.
-                '''
+            'maxOccurs': '1'
         })
     '''
     Rated current.
@@ -1925,11 +1493,7 @@ class SwitchInfo(AssetInfo):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                Frequency for which switch is rated.
-                '''
+            'maxOccurs': '1'
         })
     '''
     Frequency for which switch is rated.
@@ -1940,11 +1504,7 @@ class SwitchInfo(AssetInfo):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                Rated impulse withstand voltage, also known as BIL (Basic Impulse Level).
-                '''
+            'maxOccurs': '1'
         })
     '''
     Rated impulse withstand voltage, also known as BIL (Basic Impulse Level).
@@ -1955,11 +1515,7 @@ class SwitchInfo(AssetInfo):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                Switch rated interrupting time in seconds.
-                '''
+            'maxOccurs': '1'
         })
     '''
     Switch rated interrupting time in seconds.
@@ -1970,11 +1526,7 @@ class SwitchInfo(AssetInfo):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                Rated voltage.
-                '''
+            'maxOccurs': '1'
         })
     '''
     Rated voltage.
@@ -1991,11 +1543,7 @@ class TapChangerInfo(AssetInfo):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                Built-in current transducer ratio.
-                '''
+            'maxOccurs': '1'
         })
     '''
     Built-in current transducer ratio.
@@ -2006,11 +1554,7 @@ class TapChangerInfo(AssetInfo):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                Built-in voltage transducer ratio.
-                '''
+            'maxOccurs': '1'
         })
     '''
     Built-in voltage transducer ratio.
@@ -2021,11 +1565,7 @@ class TapChangerInfo(AssetInfo):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                Built-in current transformer primary rating.
-                '''
+            'maxOccurs': '1'
         })
     '''
     Built-in current transformer primary rating.
@@ -2042,13 +1582,7 @@ class TransformerEndInfo(AssetInfo):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                Number for this transformer end, corresponding to the end's order in the
-                PowerTransformer.vectorGroup attribute. Highest voltage winding should
-                be 1.
-                '''
+            'maxOccurs': '1'
         })
     '''
     Number for this transformer end, corresponding to the end's order in the
@@ -2061,14 +1595,7 @@ class TransformerEndInfo(AssetInfo):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                Winding phase angle where 360 degrees are represented with clock hours,
-                so the valid values are {0, ..., 11}. For example, to express the second
-                winding in code 'Dyn11', set attributes as follows: 'endNumber'=2, 'connectionKind'
-                = Yn and 'phaseAngleClock' = 11.
-                '''
+            'maxOccurs': '1'
         })
     '''
     Winding phase angle where 360 degrees are represented with clock hours,
@@ -2082,12 +1609,7 @@ class TransformerEndInfo(AssetInfo):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                Apparent power that the winding can carry under emergency conditions (also
-                called long-term emergency power).
-                '''
+            'maxOccurs': '1'
         })
     '''
     Apparent power that the winding can carry under emergency conditions (also
@@ -2099,11 +1621,7 @@ class TransformerEndInfo(AssetInfo):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                Basic insulation level voltage rating.
-                '''
+            'maxOccurs': '1'
         })
     '''
     Basic insulation level voltage rating.
@@ -2114,11 +1632,7 @@ class TransformerEndInfo(AssetInfo):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                DC resistance.
-                '''
+            'maxOccurs': '1'
         })
     '''
     DC resistance.
@@ -2129,11 +1643,7 @@ class TransformerEndInfo(AssetInfo):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                Normal apparent power rating.
-                '''
+            'maxOccurs': '1'
         })
     '''
     Normal apparent power rating.
@@ -2144,12 +1654,7 @@ class TransformerEndInfo(AssetInfo):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                Rated voltage: phase-phase for three-phase windings, and either phase-phase
-                or phase-neutral for single-phase windings.
-                '''
+            'maxOccurs': '1'
         })
     '''
     Rated voltage: phase-phase for three-phase windings, and either phase-phase
@@ -2161,47 +1666,32 @@ class TransformerEndInfo(AssetInfo):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                Apparent power that this winding can carry for a short period of time (in
-                emergency).
-                '''
+            'maxOccurs': '1'
         })
     '''
     Apparent power that this winding can carry for a short period of time (in
     emergency).
     '''
 
-    connectionKind: Optional[ WindingConnection ] = field(
+    connectionKind: Optional[WindingConnection] = field(
         default = None,
         metadata = {
             'type': 'enumeration',
             'minOccurs': '0',
             'maxOccurs': '1',
-            'inverse': '',
-            'docstring':
-                '''
-                Kind of connection.
-                '''
+            'inverse': ''
         })
     '''
     Kind of connection.
     '''
 
-    CoreAdmittance: Optional[ TransformerCoreAdmittance ] = field(
+    CoreAdmittance: Optional[TransformerCoreAdmittance] = field(
         default = None,
         metadata = {
             'type': 'Association',
             'minOccurs': '0',
             'maxOccurs': '1',
-            'inverse': 'TransformerCoreAdmittance.TransformerEndInfo',
-            'docstring':
-                '''
-                Core admittance calculated from this transformer end datasheet, representing
-                magnetising current and core losses. The full values of the transformer
-                should be supplied for one transformer end info only.
-                '''
+            'inverse': 'TransformerCoreAdmittance.TransformerEndInfo'
         })
     '''
     Core admittance calculated from this transformer end datasheet, representing
@@ -2209,147 +1699,110 @@ class TransformerEndInfo(AssetInfo):
     should be supplied for one transformer end info only.
     '''
 
-    EnergisedEndNoLoadTests: list[ NoLoadTest ] = field(
+    EnergisedEndNoLoadTests: list[NoLoadTest] = field(
         default_factory = list,
         metadata = {
             'type': 'Association',
             'minOccurs': '0',
             'maxOccurs': 'unbounded',
-            'inverse': 'NoLoadTest.EnergisedEnd',
-            'docstring':
-                '''
-                All no-load test measurements in which this transformer end was energised.
-                '''
+            'inverse': 'NoLoadTest.EnergisedEnd'
         })
     '''
     All no-load test measurements in which this transformer end was energised.
     '''
 
-    EnergisedEndOpenCircuitTests: list[ OpenCircuitTest ] = field(
+    EnergisedEndOpenCircuitTests: list[OpenCircuitTest] = field(
         default_factory = list,
         metadata = {
             'type': 'Association',
             'minOccurs': '0',
             'maxOccurs': 'unbounded',
-            'inverse': 'OpenCircuitTest.EnergisedEnd',
-            'docstring':
-                '''
-                All open-circuit test measurements in which this transformer end was excited.
-                '''
+            'inverse': 'OpenCircuitTest.EnergisedEnd'
         })
     '''
     All open-circuit test measurements in which this transformer end was excited.
     '''
 
-    EnergisedEndShortCircuitTests: list[ ShortCircuitTest ] = field(
+    EnergisedEndShortCircuitTests: list[ShortCircuitTest] = field(
         default_factory = list,
         metadata = {
             'type': 'Association',
             'minOccurs': '0',
             'maxOccurs': 'unbounded',
-            'inverse': 'ShortCircuitTest.EnergisedEnd',
-            'docstring':
-                '''
-                All short-circuit test measurements in which this transformer end was energised.
-                '''
+            'inverse': 'ShortCircuitTest.EnergisedEnd'
         })
     '''
     All short-circuit test measurements in which this transformer end was energised.
     '''
 
-    FromMeshImpedances: list[ TransformerMeshImpedance ] = field(
+    FromMeshImpedances: list[TransformerMeshImpedance] = field(
         default_factory = list,
         metadata = {
             'type': 'Association',
             'minOccurs': '0',
             'maxOccurs': 'unbounded',
-            'inverse': 'TransformerMeshImpedance.FromTransformerEndInfo',
-            'docstring':
-                '''
-                All mesh impedances between this 'to' and other 'from' transformer ends.
-                '''
+            'inverse': 'TransformerMeshImpedance.FromTransformerEndInfo'
         })
     '''
     All mesh impedances between this 'to' and other 'from' transformer ends.
     '''
 
-    GroundedEndShortCircuitTests: list[ ShortCircuitTest ] = field(
+    GroundedEndShortCircuitTests: list[ShortCircuitTest] = field(
         default_factory = list,
         metadata = {
             'type': 'Association',
             'minOccurs': '0',
             'maxOccurs': 'unbounded',
-            'inverse': 'ShortCircuitTest.GroundedEnds',
-            'docstring':
-                '''
-                All short-circuit test measurements in which this transformer end was short-circuited.
-                '''
+            'inverse': 'ShortCircuitTest.GroundedEnds'
         })
     '''
     All short-circuit test measurements in which this transformer end was short-circuited.
     '''
 
-    OpenEndOpenCircuitTests: list[ OpenCircuitTest ] = field(
+    OpenEndOpenCircuitTests: list[OpenCircuitTest] = field(
         default_factory = list,
         metadata = {
             'type': 'Association',
             'minOccurs': '0',
             'maxOccurs': 'unbounded',
-            'inverse': 'OpenCircuitTest.OpenEnd',
-            'docstring':
-                '''
-                All open-circuit test measurements in which this transformer end was not
-                excited.
-                '''
+            'inverse': 'OpenCircuitTest.OpenEnd'
         })
     '''
     All open-circuit test measurements in which this transformer end was not
     excited.
     '''
 
-    ToMeshImpedances: list[ TransformerMeshImpedance ] = field(
+    ToMeshImpedances: list[TransformerMeshImpedance] = field(
         default_factory = list,
         metadata = {
             'type': 'Association',
             'minOccurs': '0',
             'maxOccurs': 'unbounded',
-            'inverse': 'TransformerMeshImpedance.ToTransformerEndInfos',
-            'docstring':
-                '''
-                All mesh impedances between this 'from' and other 'to' transformer ends.
-                '''
+            'inverse': 'TransformerMeshImpedance.ToTransformerEndInfos'
         })
     '''
     All mesh impedances between this 'from' and other 'to' transformer ends.
     '''
 
-    TransformerStarImpedance: Optional[ TransformerStarImpedance ] = field(
+    TransformerStarImpedance: Optional[TransformerStarImpedance] = field(
         default = None,
         metadata = {
             'type': 'Association',
             'minOccurs': '0',
             'maxOccurs': '1',
-            'inverse': 'TransformerStarImpedance.TransformerEndInfo',
-            'docstring':
-                '''
-                Transformer star impedance calculated from this transformer end datasheet.
-                '''
+            'inverse': 'TransformerStarImpedance.TransformerEndInfo'
         })
     '''
     Transformer star impedance calculated from this transformer end datasheet.
     '''
 
-    TransformerTankInfo: Optional[ TransformerTankInfo ] = field(
+    TransformerTankInfo: Optional[TransformerTankInfo] = field(
         default = None,
         metadata = {
             'type': 'Association',
             'minOccurs': '0',
             'maxOccurs': '1',
-            'inverse': 'TransformerTankInfo.TransformerEndInfos',
-            'docstring':
-                '''
-                Transformer tank data that this end description is part of.
-                '''
+            'inverse': 'TransformerTankInfo.TransformerEndInfos'
         })
     '''
     Transformer tank data that this end description is part of.
@@ -2361,48 +1814,37 @@ class TransformerTankInfo(AssetInfo):
     Set of transformer tank data, from an equipment library.
     '''
 
-    PowerTransformerInfo: Optional[ PowerTransformerInfo ] = field(
+    PowerTransformerInfo: Optional[PowerTransformerInfo] = field(
         default = None,
         metadata = {
             'type': 'Association',
             'minOccurs': '0',
             'maxOccurs': '1',
-            'inverse': 'PowerTransformerInfo.TransformerTankInfos',
-            'docstring':
-                '''
-                Power transformer data that this tank description is part of.
-                '''
+            'inverse': 'PowerTransformerInfo.TransformerTankInfos'
         })
     '''
     Power transformer data that this tank description is part of.
     '''
 
-    TransformerEndInfos: list[ TransformerEndInfo ] = field(
+    TransformerEndInfos: list[TransformerEndInfo] = field(
         default_factory = list,
         metadata = {
             'type': 'Association',
             'minOccurs': '0',
             'maxOccurs': 'unbounded',
-            'inverse': 'TransformerEndInfo.TransformerTankInfo',
-            'docstring':
-                '''
-                Data for all the ends described by this transformer tank data.
-                '''
+            'inverse': 'TransformerEndInfo.TransformerTankInfo'
         })
     '''
     Data for all the ends described by this transformer tank data.
     '''
 
-    TransformerTanks: list[ TransformerTank ] = field(
+    TransformerTanks: list[TransformerTank] = field(
         default_factory = list,
         metadata = {
             'type': 'Association',
             'minOccurs': '0',
             'maxOccurs': 'unbounded',
-            'inverse': 'TransformerTank.TransformerTankInfo',
-            'docstring':
-                '''
-                '''
+            'inverse': 'TransformerTank.TransformerTankInfo'
         })
     '''
     '''
@@ -2413,34 +1855,26 @@ class WireAssemblyInfo(AssetInfo):
     Describes the construction of a multi-conductor wire
     '''
 
-    PerLengthLineParameter: list[ PerLengthLineParameter ] = field(
+    PerLengthLineParameter: list[PerLengthLineParameter] = field(
         default_factory = list,
         metadata = {
             'type': 'Association',
             'minOccurs': '0',
             'maxOccurs': 'unbounded',
-            'inverse': 'PerLengthLineParameter.WireAssemblyInfo',
-            'docstring':
-                '''
-                A WireAssemblyInfo is used to compute the PerLengthParameter data in the
-                Wires package
-                '''
+            'inverse': 'PerLengthLineParameter.WireAssemblyInfo'
         })
     '''
     A WireAssemblyInfo is used to compute the PerLengthParameter data in the
     Wires package
     '''
 
-    WirePhaseInfo: list[ WirePhaseInfo ] = field(
+    WirePhaseInfo: list[WirePhaseInfo] = field(
         default_factory = list,
         metadata = {
             'type': 'Association',
             'minOccurs': '0',
             'maxOccurs': 'unbounded',
-            'inverse': 'WirePhaseInfo.WireAssemblyInfo',
-            'docstring':
-                '''
-                '''
+            'inverse': 'WirePhaseInfo.WireAssemblyInfo'
         })
     '''
     '''
@@ -2457,11 +1891,7 @@ class WireInfo(AssetInfo):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                (if used) Number of strands in the steel core.
-                '''
+            'maxOccurs': '1'
         })
     '''
     (if used) Number of strands in the steel core.
@@ -2472,11 +1902,7 @@ class WireInfo(AssetInfo):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                True if conductor is insulated.
-                '''
+            'maxOccurs': '1'
         })
     '''
     True if conductor is insulated.
@@ -2487,11 +1913,7 @@ class WireInfo(AssetInfo):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                Describes the wire gauge or cross section (e.g., 4/0, #2, 336.5).
-                '''
+            'maxOccurs': '1'
         })
     '''
     Describes the wire gauge or cross section (e.g., 4/0, #2, 336.5).
@@ -2502,11 +1924,7 @@ class WireInfo(AssetInfo):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                Number of strands in the conductor.
-                '''
+            'maxOccurs': '1'
         })
     '''
     Number of strands in the conductor.
@@ -2517,11 +1935,7 @@ class WireInfo(AssetInfo):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                (if there is a different core material) Radius of the central core.
-                '''
+            'maxOccurs': '1'
         })
     '''
     (if there is a different core material) Radius of the central core.
@@ -2532,13 +1946,7 @@ class WireInfo(AssetInfo):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                Geometric mean radius. If we replace the conductor by a thin walled tube
-                of radius GMR, then its reactance is identical to the reactance of the
-                actual conductor.
-                '''
+            'maxOccurs': '1'
         })
     '''
     Geometric mean radius. If we replace the conductor by a thin walled tube
@@ -2551,11 +1959,7 @@ class WireInfo(AssetInfo):
         metadata = {
             'type': 'enumeration',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                (if insulated conductor) Material used for insulation.
-                '''
+            'maxOccurs': '1'
         })
     '''
     (if insulated conductor) Material used for insulation.
@@ -2566,11 +1970,7 @@ class WireInfo(AssetInfo):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                (if insulated conductor) Thickness of the insulation.
-                '''
+            'maxOccurs': '1'
         })
     '''
     (if insulated conductor) Thickness of the insulation.
@@ -2581,11 +1981,7 @@ class WireInfo(AssetInfo):
         metadata = {
             'type': 'enumeration',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                Conductor material.
-                '''
+            'maxOccurs': '1'
         })
     '''
     Conductor material.
@@ -2596,11 +1992,7 @@ class WireInfo(AssetInfo):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                AC resistance per unit length of the conductor at 25 °C.
-                '''
+            'maxOccurs': '1'
         })
     '''
     AC resistance per unit length of the conductor at 25 °C.
@@ -2611,11 +2003,7 @@ class WireInfo(AssetInfo):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                AC resistance per unit length of the conductor at 50 °C.
-                '''
+            'maxOccurs': '1'
         })
     '''
     AC resistance per unit length of the conductor at 50 °C.
@@ -2626,11 +2014,7 @@ class WireInfo(AssetInfo):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                AC resistance per unit length of the conductor at 75 °C.
-                '''
+            'maxOccurs': '1'
         })
     '''
     AC resistance per unit length of the conductor at 75 °C.
@@ -2641,11 +2025,7 @@ class WireInfo(AssetInfo):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                Outside radius of the wire.
-                '''
+            'maxOccurs': '1'
         })
     '''
     Outside radius of the wire.
@@ -2656,11 +2036,7 @@ class WireInfo(AssetInfo):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                Current carrying capacity of the wire under stated thermal conditions.
-                '''
+            'maxOccurs': '1'
         })
     '''
     Current carrying capacity of the wire under stated thermal conditions.
@@ -2671,40 +2047,30 @@ class WireInfo(AssetInfo):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                DC resistance per unit length of the conductor at 20 °C.
-                '''
+            'maxOccurs': '1'
         })
     '''
     DC resistance per unit length of the conductor at 20 °C.
     '''
 
-    ACLineSegmentPhases: list[ ACLineSegmentPhase ] = field(
+    ACLineSegmentPhases: list[ACLineSegmentPhase] = field(
         default_factory = list,
         metadata = {
             'type': 'Association',
             'minOccurs': '0',
             'maxOccurs': 'unbounded',
-            'inverse': 'ACLineSegmentPhase.WireInfo',
-            'docstring':
-                '''
-                '''
+            'inverse': 'ACLineSegmentPhase.WireInfo'
         })
     '''
     '''
 
-    WirePhaseInfo: list[ WirePhaseInfo ] = field(
+    WirePhaseInfo: list[WirePhaseInfo] = field(
         default_factory = list,
         metadata = {
             'type': 'Association',
             'minOccurs': '0',
             'maxOccurs': 'unbounded',
-            'inverse': 'WirePhaseInfo.WireInfo',
-            'docstring':
-                '''
-                '''
+            'inverse': 'WirePhaseInfo.WireInfo'
         })
     '''
     '''
@@ -2720,11 +2086,7 @@ class CableInfo(WireInfo):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                True if wire strands are extruded in a way to fill the voids in the cable.
-                '''
+            'maxOccurs': '1'
         })
     '''
     True if wire strands are extruded in a way to fill the voids in the cable.
@@ -2735,10 +2097,7 @@ class CableInfo(WireInfo):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                '''
+            'maxOccurs': '1'
         })
     '''
     '''
@@ -2748,11 +2107,7 @@ class CableInfo(WireInfo):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                True if sheath / shield is used as a neutral (i.e., bonded).
-                '''
+            'maxOccurs': '1'
         })
     '''
     True if sheath / shield is used as a neutral (i.e., bonded).
@@ -2763,12 +2118,7 @@ class CableInfo(WireInfo):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                Diameter over the core, including any semi-con screen; should be the insulating
-                layer's inside diameter.
-                '''
+            'maxOccurs': '1'
         })
     '''
     Diameter over the core, including any semi-con screen; should be the insulating
@@ -2780,11 +2130,7 @@ class CableInfo(WireInfo):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                Diameter over the insulating layer, excluding outer screen.
-                '''
+            'maxOccurs': '1'
         })
     '''
     Diameter over the insulating layer, excluding outer screen.
@@ -2795,11 +2141,7 @@ class CableInfo(WireInfo):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                Diameter over the outermost jacketing layer.
-                '''
+            'maxOccurs': '1'
         })
     '''
     Diameter over the outermost jacketing layer.
@@ -2810,11 +2152,7 @@ class CableInfo(WireInfo):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                Diameter over the outer screen; should be the shield's inside diameter.
-                '''
+            'maxOccurs': '1'
         })
     '''
     Diameter over the outer screen; should be the shield's inside diameter.
@@ -2825,59 +2163,43 @@ class CableInfo(WireInfo):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                Maximum nominal design operating temperature.
-                '''
+            'maxOccurs': '1'
         })
     '''
     Maximum nominal design operating temperature.
     '''
 
-    constructionKind: Optional[ CableConstructionKind ] = field(
+    constructionKind: Optional[CableConstructionKind] = field(
         default = None,
         metadata = {
             'type': 'enumeration',
             'minOccurs': '0',
             'maxOccurs': '1',
-            'inverse': '',
-            'docstring':
-                '''
-                Kind of construction of this cable.
-                '''
+            'inverse': ''
         })
     '''
     Kind of construction of this cable.
     '''
 
-    outerJacketKind: Optional[ CableOuterJacketKind ] = field(
+    outerJacketKind: Optional[CableOuterJacketKind] = field(
         default = None,
         metadata = {
             'type': 'enumeration',
             'minOccurs': '0',
             'maxOccurs': '1',
-            'inverse': '',
-            'docstring':
-                '''
-                Kind of outer jacket of this cable.
-                '''
+            'inverse': ''
         })
     '''
     Kind of outer jacket of this cable.
     '''
 
-    shieldMaterial: Optional[ CableShieldMaterialKind ] = field(
+    shieldMaterial: Optional[CableShieldMaterialKind] = field(
         default = None,
         metadata = {
             'type': 'enumeration',
             'minOccurs': '0',
             'maxOccurs': '1',
-            'inverse': '',
-            'docstring':
-                '''
-                Material of the shield.
-                '''
+            'inverse': ''
         })
     '''
     Material of the shield.
@@ -2894,11 +2216,7 @@ class ConcentricNeutralCableInfo(CableInfo):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                Number of concentric neutral strands.
-                '''
+            'maxOccurs': '1'
         })
     '''
     Number of concentric neutral strands.
@@ -2909,11 +2227,7 @@ class ConcentricNeutralCableInfo(CableInfo):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                Diameter over the concentric neutral strands.
-                '''
+            'maxOccurs': '1'
         })
     '''
     Diameter over the concentric neutral strands.
@@ -2924,11 +2238,7 @@ class ConcentricNeutralCableInfo(CableInfo):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                Geometric mean radius of the neutral strand.
-                '''
+            'maxOccurs': '1'
         })
     '''
     Geometric mean radius of the neutral strand.
@@ -2939,11 +2249,7 @@ class ConcentricNeutralCableInfo(CableInfo):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                Outside radius of the neutral strand.
-                '''
+            'maxOccurs': '1'
         })
     '''
     Outside radius of the neutral strand.
@@ -2954,11 +2260,7 @@ class ConcentricNeutralCableInfo(CableInfo):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                DC resistance per unit length of the neutral strand at 20 °C.
-                '''
+            'maxOccurs': '1'
         })
     '''
     DC resistance per unit length of the neutral strand at 20 °C.
@@ -2975,12 +2277,7 @@ class TapeShieldCableInfo(CableInfo):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                Percentage of the tape shield width that overlaps in each wrap, typically
-                10% to 25%.
-                '''
+            'maxOccurs': '1'
         })
     '''
     Percentage of the tape shield width that overlaps in each wrap, typically
@@ -2992,11 +2289,7 @@ class TapeShieldCableInfo(CableInfo):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                Thickness of the tape shield, before wrapping.
-                '''
+            'maxOccurs': '1'
         })
     '''
     Thickness of the tape shield, before wrapping.
@@ -3022,11 +2315,7 @@ class WireSpacingInfo(AssetInfo):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                If true, this spacing data describes a cable.
-                '''
+            'maxOccurs': '1'
         })
     '''
     If true, this spacing data describes a cable.
@@ -3037,12 +2326,7 @@ class WireSpacingInfo(AssetInfo):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                Number of wire sub-conductors in the symmetrical bundle (typically between
-                1 and 4).
-                '''
+            'maxOccurs': '1'
         })
     '''
     Number of wire sub-conductors in the symmetrical bundle (typically between
@@ -3054,11 +2338,7 @@ class WireSpacingInfo(AssetInfo):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                Distance between wire sub-conductors in a symmetrical bundle.
-                '''
+            'maxOccurs': '1'
         })
     '''
     Distance between wire sub-conductors in a symmetrical bundle.
@@ -3069,83 +2349,63 @@ class WireSpacingInfo(AssetInfo):
         metadata = {
             'type': 'enumeration',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                Usage of the associated wires.
-                '''
+            'maxOccurs': '1'
         })
     '''
     Usage of the associated wires.
     '''
 
-    ACLineSegments: list[ ACLineSegment ] = field(
+    ACLineSegments: list[ACLineSegment] = field(
         default_factory = list,
         metadata = {
             'type': 'Association',
             'minOccurs': '0',
             'maxOccurs': 'unbounded',
-            'inverse': 'ACLineSegment.WireSpacingInfo',
-            'docstring':
-                '''
-                '''
+            'inverse': 'ACLineSegment.WireSpacingInfo'
         })
     '''
     '''
 
-    DuctBank: Optional[ DuctBank ] = field(
+    DuctBank: Optional[DuctBank] = field(
         default = None,
         metadata = {
             'type': 'Association',
             'minOccurs': '0',
             'maxOccurs': '1',
-            'inverse': 'DuctBank.WireSpacingInfos',
-            'docstring':
-                '''
-                '''
+            'inverse': 'DuctBank.WireSpacingInfos'
         })
     '''
     '''
 
-    Structures: list[ Structure ] = field(
+    Structures: list[Structure] = field(
         default_factory = list,
         metadata = {
             'type': 'Association',
             'minOccurs': '0',
             'maxOccurs': 'unbounded',
-            'inverse': 'Structure.WireSpacingInfos',
-            'docstring':
-                '''
-                '''
+            'inverse': 'Structure.WireSpacingInfos'
         })
     '''
     '''
 
-    WireAssemblyInfo: list[ WireAssemblyInfo ] = field(
+    WireAssemblyInfo: list[WireAssemblyInfo] = field(
         default_factory = list,
         metadata = {
             'type': 'Association',
             'minOccurs': '0',
             'maxOccurs': 'unbounded',
-            'inverse': 'WireAssemblyInfo.WireSpacingInfo',
-            'docstring':
-                '''
-                '''
+            'inverse': 'WireAssemblyInfo.WireSpacingInfo'
         })
     '''
     '''
 
-    WirePositions: list[ WirePosition ] = field(
+    WirePositions: list[WirePosition] = field(
         default_factory = list,
         metadata = {
             'type': 'Association',
             'minOccurs': '0',
             'maxOccurs': 'unbounded',
-            'inverse': 'WirePosition.WireSpacingInfo',
-            'docstring':
-                '''
-                All positions of single wires (phase or neutral) making the conductor.
-                '''
+            'inverse': 'WirePosition.WireSpacingInfo'
         })
     '''
     All positions of single wires (phase or neutral) making the conductor.
@@ -3166,11 +2426,7 @@ class BaseFrequency(IdentifiedObject):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                The base frequency.
-                '''
+            'maxOccurs': '1'
         })
     '''
     The base frequency.
@@ -3187,11 +2443,7 @@ class BasePower(IdentifiedObject):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                Value used as base power.
-                '''
+            'maxOccurs': '1'
         })
     '''
     Value used as base power.
@@ -3208,29 +2460,19 @@ class BaseVoltage(IdentifiedObject):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                The power system resource's base voltage.
-                '''
+            'maxOccurs': '1'
         })
     '''
     The power system resource's base voltage.
     '''
 
-    ConductingEquipment: list[ ConductingEquipment ] = field(
+    ConductingEquipment: list[ConductingEquipment] = field(
         default_factory = list,
         metadata = {
             'type': 'Association',
             'minOccurs': '0',
             'maxOccurs': 'unbounded',
-            'inverse': 'ConductingEquipment.BaseVoltage',
-            'docstring':
-                '''
-                All conducting equipment with this base voltage. Use only when there is
-                no voltage level container used and only one base voltage applies. For
-                example, not used for transformers.
-                '''
+            'inverse': 'ConductingEquipment.BaseVoltage'
         })
     '''
     All conducting equipment with this base voltage. Use only when there is
@@ -3238,49 +2480,37 @@ class BaseVoltage(IdentifiedObject):
     example, not used for transformers.
     '''
 
-    TopologicalNode: list[ TopologicalNode ] = field(
+    TopologicalNode: list[TopologicalNode] = field(
         default_factory = list,
         metadata = {
             'type': 'Association',
             'minOccurs': '0',
             'maxOccurs': 'unbounded',
-            'inverse': 'TopologicalNode.BaseVoltage',
-            'docstring':
-                '''
-                The topological nodes at the base voltage.
-                '''
+            'inverse': 'TopologicalNode.BaseVoltage'
         })
     '''
     The topological nodes at the base voltage.
     '''
 
-    TransformerEnds: list[ TransformerEnd ] = field(
+    TransformerEnds: list[TransformerEnd] = field(
         default_factory = list,
         metadata = {
             'type': 'Association',
             'minOccurs': '0',
             'maxOccurs': 'unbounded',
-            'inverse': 'TransformerEnd.BaseVoltage',
-            'docstring':
-                '''
-                Transformer ends at the base voltage. This is essential for PU calculation.
-                '''
+            'inverse': 'TransformerEnd.BaseVoltage'
         })
     '''
     Transformer ends at the base voltage. This is essential for PU calculation.
     '''
 
-    VoltageLevel: list[ VoltageLevel ] = field(
+    VoltageLevel: list[VoltageLevel] = field(
         default_factory = list,
         metadata = {
             'type': 'Association',
             'minOccurs': '0',
             'maxOccurs': 'unbounded',
-            'inverse': 'VoltageLevel.BaseVoltage',
-            'docstring':
-                '''
-                The voltage levels having this base voltage.
-                '''
+            'inverse': 'VoltageLevel.BaseVoltage'
         })
     '''
     The voltage levels having this base voltage.
@@ -3297,77 +2527,56 @@ class BasicIntervalSchedule(IdentifiedObject):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                The time for the first time point. The value can be a time of day, not
-                a specific date.
-                '''
+            'maxOccurs': '1'
         })
     '''
     The time for the first time point. The value can be a time of day, not
     a specific date.
     '''
 
-    value1Multiplier: Optional[ UnitMultiplier ] = field(
+    value1Multiplier: Optional[UnitMultiplier] = field(
         default = None,
         metadata = {
             'type': 'enumeration',
             'minOccurs': '0',
             'maxOccurs': '1',
-            'inverse': '',
-            'docstring':
-                '''
-                Multiplier for value1.
-                '''
+            'inverse': ''
         })
     '''
     Multiplier for value1.
     '''
 
-    value1Unit: Optional[ UnitSymbol ] = field(
+    value1Unit: Optional[UnitSymbol] = field(
         default = None,
         metadata = {
             'type': 'enumeration',
             'minOccurs': '0',
             'maxOccurs': '1',
-            'inverse': '',
-            'docstring':
-                '''
-                Value1 units of measure.
-                '''
+            'inverse': ''
         })
     '''
     Value1 units of measure.
     '''
 
-    value2Multiplier: Optional[ UnitMultiplier ] = field(
+    value2Multiplier: Optional[UnitMultiplier] = field(
         default = None,
         metadata = {
             'type': 'enumeration',
             'minOccurs': '0',
             'maxOccurs': '1',
-            'inverse': '',
-            'docstring':
-                '''
-                Multiplier for value2.
-                '''
+            'inverse': ''
         })
     '''
     Multiplier for value2.
     '''
 
-    value2Unit: Optional[ UnitSymbol ] = field(
+    value2Unit: Optional[UnitSymbol] = field(
         default = None,
         metadata = {
             'type': 'enumeration',
             'minOccurs': '0',
             'maxOccurs': '1',
-            'inverse': '',
-            'docstring':
-                '''
-                Value2 units of measure.
-                '''
+            'inverse': ''
         })
     '''
     Value2 units of measure.
@@ -3379,17 +2588,13 @@ class IrregularIntervalSchedule(BasicIntervalSchedule):
     The schedule has time points where the time between them varies.
     '''
 
-    TimePoints: list[ IrregularTimePoint ] = field(
+    TimePoints: list[IrregularTimePoint] = field(
         default_factory = list,
         metadata = {
             'type': 'Aggregate Of',
             'minOccurs': '0',
             'maxOccurs': 'unbounded',
-            'inverse': 'IrregularTimePoint.IntervalSchedule',
-            'docstring':
-                '''
-                The point data values that define a curve.
-                '''
+            'inverse': 'IrregularTimePoint.IntervalSchedule'
         })
     '''
     The point data values that define a curve.
@@ -3406,12 +2611,7 @@ class RegularIntervalSchedule(BasicIntervalSchedule):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                The time for the last time point. The value can be a time of day, not a
-                specific date.
-                '''
+            'maxOccurs': '1'
         })
     '''
     The time for the last time point. The value can be a time of day, not a
@@ -3423,29 +2623,20 @@ class RegularIntervalSchedule(BasicIntervalSchedule):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                The time between each pair of subsequent regular time points in sequence
-                order.
-                '''
+            'maxOccurs': '1'
         })
     '''
     The time between each pair of subsequent regular time points in sequence
     order.
     '''
 
-    TimePoints: list[ RegularTimePoint ] = field(
+    TimePoints: list[RegularTimePoint] = field(
         default_factory = list,
         metadata = {
             'type': 'Aggregate Of',
             'minOccurs': '0',
             'maxOccurs': 'unbounded',
-            'inverse': 'RegularTimePoint.IntervalSchedule',
-            'docstring':
-                '''
-                The regular interval time point data values that define this schedule.
-                '''
+            'inverse': 'RegularTimePoint.IntervalSchedule'
         })
     '''
     The regular interval time point data values that define this schedule.
@@ -3462,18 +2653,13 @@ class GenUnitOpSchedule(RegularIntervalSchedule):
     where required.
     '''
 
-    GeneratingUnit: Optional[ GeneratingUnit ] = field(
+    GeneratingUnit: Optional[GeneratingUnit] = field(
         default = None,
         metadata = {
             'type': 'Of Aggregate',
             'minOccurs': '0',
             'maxOccurs': '1',
-            'inverse': 'GeneratingUnit.GenUnitOpSchedule',
-            'docstring':
-                '''
-                A generating unit may have an operating schedule, indicating the planned
-                operation of the unit.
-                '''
+            'inverse': 'GeneratingUnit.GenUnitOpSchedule'
         })
     '''
     A generating unit may have an operating schedule, indicating the planned
@@ -3487,33 +2673,25 @@ class SeasonDayTypeSchedule(RegularIntervalSchedule):
     type of season and day.
     '''
 
-    DayType: Optional[ DayType ] = field(
+    DayType: Optional[DayType] = field(
         default = None,
         metadata = {
             'type': 'Association',
             'minOccurs': '0',
             'maxOccurs': '1',
-            'inverse': 'DayType.SeasonDayTypeSchedules',
-            'docstring':
-                '''
-                DayType for the Schedule.
-                '''
+            'inverse': 'DayType.SeasonDayTypeSchedules'
         })
     '''
     DayType for the Schedule.
     '''
 
-    Season: Optional[ Season ] = field(
+    Season: Optional[Season] = field(
         default = None,
         metadata = {
             'type': 'Association',
             'minOccurs': '0',
             'maxOccurs': '1',
-            'inverse': 'Season.SeasonDayTypeSchedules',
-            'docstring':
-                '''
-                Season for the Schedule.
-                '''
+            'inverse': 'Season.SeasonDayTypeSchedules'
         })
     '''
     Season for the Schedule.
@@ -3528,17 +2706,13 @@ class ConformLoadSchedule(SeasonDayTypeSchedule):
     day type and season.
     '''
 
-    ConformLoadGroup: Optional[ ConformLoadGroup ] = field(
+    ConformLoadGroup: Optional[ConformLoadGroup] = field(
         default = None,
         metadata = {
             'type': 'Of Aggregate',
             'minOccurs': '0',
             'maxOccurs': '1',
-            'inverse': 'ConformLoadGroup.ConformLoadSchedules',
-            'docstring':
-                '''
-                The ConformLoadGroup where the ConformLoadSchedule belongs.
-                '''
+            'inverse': 'ConformLoadGroup.ConformLoadSchedules'
         })
     '''
     The ConformLoadGroup where the ConformLoadSchedule belongs.
@@ -3552,17 +2726,13 @@ class NonConformLoadSchedule(SeasonDayTypeSchedule):
     or power station service (where modeled).
     '''
 
-    NonConformLoadGroup: Optional[ NonConformLoadGroup ] = field(
+    NonConformLoadGroup: Optional[NonConformLoadGroup] = field(
         default = None,
         metadata = {
             'type': 'Of Aggregate',
             'minOccurs': '0',
             'maxOccurs': '1',
-            'inverse': 'NonConformLoadGroup.NonConformLoadSchedules',
-            'docstring':
-                '''
-                The NonConformLoadGroup where the NonConformLoadSchedule belongs.
-                '''
+            'inverse': 'NonConformLoadGroup.NonConformLoadSchedules'
         })
     '''
     The NonConformLoadGroup where the NonConformLoadSchedule belongs.
@@ -3575,33 +2745,25 @@ class RegulationSchedule(SeasonDayTypeSchedule):
     voltage.
     '''
 
-    RegulatingControl: Optional[ RegulatingControl ] = field(
+    RegulatingControl: Optional[RegulatingControl] = field(
         default = None,
         metadata = {
             'type': 'Association',
             'minOccurs': '0',
             'maxOccurs': '1',
-            'inverse': 'RegulatingControl.RegulationSchedule',
-            'docstring':
-                '''
-                Regulating controls that have this Schedule.
-                '''
+            'inverse': 'RegulatingControl.RegulationSchedule'
         })
     '''
     Regulating controls that have this Schedule.
     '''
 
-    VoltageControlZones: list[ VoltageControlZone ] = field(
+    VoltageControlZones: list[VoltageControlZone] = field(
         default_factory = list,
         metadata = {
             'type': 'Association',
             'minOccurs': '0',
             'maxOccurs': 'unbounded',
-            'inverse': 'VoltageControlZone.RegulationSchedule',
-            'docstring':
-                '''
-                A VoltageControlZone may have a voltage regulation schedule.
-                '''
+            'inverse': 'VoltageControlZone.RegulationSchedule'
         })
     '''
     A VoltageControlZone may have a voltage regulation schedule.
@@ -3614,17 +2776,13 @@ class SwitchSchedule(SeasonDayTypeSchedule):
     is open. If 1, the switch is closed.
     '''
 
-    Switch: Optional[ Switch ] = field(
+    Switch: Optional[Switch] = field(
         default = None,
         metadata = {
             'type': 'Association',
             'minOccurs': '0',
             'maxOccurs': '1',
-            'inverse': 'Switch.SwitchSchedules',
-            'docstring':
-                '''
-                A SwitchSchedule is associated with a Switch.
-                '''
+            'inverse': 'Switch.SwitchSchedules'
         })
     '''
     A SwitchSchedule is associated with a Switch.
@@ -3636,17 +2794,13 @@ class TapSchedule(SeasonDayTypeSchedule):
     A pre-established pattern over time for a tap step.
     '''
 
-    TapChanger: Optional[ TapChanger ] = field(
+    TapChanger: Optional[TapChanger] = field(
         default = None,
         metadata = {
             'type': 'Association',
             'minOccurs': '0',
             'maxOccurs': '1',
-            'inverse': 'TapChanger.TapSchedules',
-            'docstring':
-                '''
-                A TapSchedule is associated with a TapChanger.
-                '''
+            'inverse': 'TapChanger.TapSchedules'
         })
     '''
     A TapSchedule is associated with a TapChanger.
@@ -3664,11 +2818,7 @@ class BranchGroup(IdentifiedObject):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                Monitor the active power flow.
-                '''
+            'maxOccurs': '1'
         })
     '''
     Monitor the active power flow.
@@ -3679,11 +2829,7 @@ class BranchGroup(IdentifiedObject):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                Monitor the reactive power flow.
-                '''
+            'maxOccurs': '1'
         })
     '''
     Monitor the reactive power flow.
@@ -3694,11 +2840,7 @@ class BranchGroup(IdentifiedObject):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                The maximum active power flow.
-                '''
+            'maxOccurs': '1'
         })
     '''
     The maximum active power flow.
@@ -3709,11 +2851,7 @@ class BranchGroup(IdentifiedObject):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                The maximum reactive power flow.
-                '''
+            'maxOccurs': '1'
         })
     '''
     The maximum reactive power flow.
@@ -3724,11 +2862,7 @@ class BranchGroup(IdentifiedObject):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                The minimum active power flow.
-                '''
+            'maxOccurs': '1'
         })
     '''
     The minimum active power flow.
@@ -3739,11 +2873,7 @@ class BranchGroup(IdentifiedObject):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                The minimum reactive power flow.
-                '''
+            'maxOccurs': '1'
         })
     '''
     The minimum reactive power flow.
@@ -3767,13 +2897,7 @@ class BusNameMarker(IdentifiedObject):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                Priority of bus name marker for use as topology bus name. Use 0 for don
-                t care. Use 1 for highest priority. Use 2 as priority is less than 1 and
-                so on.
-                '''
+            'maxOccurs': '1'
         })
     '''
     Priority of bus name marker for use as topology bus name. Use 0 for don
@@ -3781,51 +2905,37 @@ class BusNameMarker(IdentifiedObject):
     so on.
     '''
 
-    ReportingGroup: Optional[ ReportingGroup ] = field(
+    ReportingGroup: Optional[ReportingGroup] = field(
         default = None,
         metadata = {
             'type': 'Association',
             'minOccurs': '0',
             'maxOccurs': '1',
-            'inverse': 'ReportingGroup.BusNameMarker',
-            'docstring':
-                '''
-                The reporting group to which this bus name marker belongs.
-                '''
+            'inverse': 'ReportingGroup.BusNameMarker'
         })
     '''
     The reporting group to which this bus name marker belongs.
     '''
 
-    Terminal: list[ ACDCTerminal ] = field(
+    Terminal: list[ACDCTerminal] = field(
         default_factory = list,
         metadata = {
             'type': 'Association',
             'minOccurs': '0',
             'maxOccurs': 'unbounded',
-            'inverse': 'ACDCTerminal.BusNameMarker',
-            'docstring':
-                '''
-                The terminals associated with this bus name marker.
-                '''
+            'inverse': 'ACDCTerminal.BusNameMarker'
         })
     '''
     The terminals associated with this bus name marker.
     '''
 
-    TopologicalNode: Optional[ TopologicalNode ] = field(
+    TopologicalNode: Optional[TopologicalNode] = field(
         default = None,
         metadata = {
             'type': 'Association',
             'minOccurs': '0',
             'maxOccurs': '1',
-            'inverse': 'TopologicalNode.BusNameMarker',
-            'docstring':
-                '''
-                A user defined topological node that was originally defined in a planning
-                model not yet having topology described by ConnectivityNodes. Once ConnectivityNodes
-                has been created they may linked to user defined ToplogicalNdes using BusNameMarkers.
-                '''
+            'inverse': 'TopologicalNode.BusNameMarker'
         })
     '''
     A user defined topological node that was originally defined in a planning
@@ -3844,11 +2954,7 @@ class CatalogAssetType(IdentifiedObject):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                True if item is a stock item (default).
-                '''
+            'maxOccurs': '1'
         })
     '''
     True if item is a stock item (default).
@@ -3859,10 +2965,7 @@ class CatalogAssetType(IdentifiedObject):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                '''
+            'maxOccurs': '1'
         })
     '''
     '''
@@ -3872,12 +2975,7 @@ class CatalogAssetType(IdentifiedObject):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                Estimated unit cost (or cost per unit length) of this type of asset. It
-                does not include labor to install, construct or configure it.
-                '''
+            'maxOccurs': '1'
         })
     '''
     Estimated unit cost (or cost per unit length) of this type of asset. It
@@ -3889,38 +2987,29 @@ class CatalogAssetType(IdentifiedObject):
         metadata = {
             'type': 'enumeration',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                '''
+            'maxOccurs': '1'
         })
     '''
     '''
 
-    AssetInfo: Optional[ AssetInfo ] = field(
+    AssetInfo: Optional[AssetInfo] = field(
         default = None,
         metadata = {
             'type': 'Association',
             'minOccurs': '0',
             'maxOccurs': '1',
-            'inverse': 'AssetInfo.CatalogAssetType',
-            'docstring':
-                '''
-                '''
+            'inverse': 'AssetInfo.CatalogAssetType'
         })
     '''
     '''
 
-    ProductAssetModel: list[ ProductAssetModel ] = field(
+    ProductAssetModel: list[ProductAssetModel] = field(
         default_factory = list,
         metadata = {
             'type': 'Association',
             'minOccurs': '0',
             'maxOccurs': 'unbounded',
-            'inverse': 'ProductAssetModel.CatalogAssetType',
-            'docstring':
-                '''
-                '''
+            'inverse': 'ProductAssetModel.CatalogAssetType'
         })
     '''
     '''
@@ -3932,64 +3021,48 @@ class ConnectivityNode(IdentifiedObject):
     are connected together with zero impedance.
     '''
 
-    ConnectivityNodeContainer: Optional[ ConnectivityNodeContainer ] = field(
+    ConnectivityNodeContainer: Optional[ConnectivityNodeContainer] = field(
         default = None,
         metadata = {
             'type': 'Association',
             'minOccurs': '0',
             'maxOccurs': '1',
-            'inverse': 'ConnectivityNodeContainer.ConnectivityNodes',
-            'docstring':
-                '''
-                Container of this connectivity node.
-                '''
+            'inverse': 'ConnectivityNodeContainer.ConnectivityNodes'
         })
     '''
     Container of this connectivity node.
     '''
 
-    OperationalLimitSet: list[ OperationalLimitSet ] = field(
+    OperationalLimitSet: list[OperationalLimitSet] = field(
         default_factory = list,
         metadata = {
             'type': 'Association',
             'minOccurs': '0',
             'maxOccurs': 'unbounded',
-            'inverse': 'OperationalLimitSet.ConnectivityNode',
-            'docstring':
-                '''
-                '''
+            'inverse': 'OperationalLimitSet.ConnectivityNode'
         })
     '''
     '''
 
-    Terminals: list[ Terminal ] = field(
+    Terminals: list[Terminal] = field(
         default_factory = list,
         metadata = {
             'type': 'Association',
             'minOccurs': '0',
             'maxOccurs': 'unbounded',
-            'inverse': 'Terminal.ConnectivityNode',
-            'docstring':
-                '''
-                Terminals interconnected with zero impedance at a this connectivity node.
-                '''
+            'inverse': 'Terminal.ConnectivityNode'
         })
     '''
     Terminals interconnected with zero impedance at a this connectivity node.
     '''
 
-    TopologicalNode: Optional[ TopologicalNode ] = field(
+    TopologicalNode: Optional[TopologicalNode] = field(
         default = None,
         metadata = {
             'type': 'Of Aggregate',
             'minOccurs': '0',
             'maxOccurs': '1',
-            'inverse': 'TopologicalNode.ConnectivityNodes',
-            'docstring':
-                '''
-                The topological node to which this connectivity node is assigned. May depend
-                on the current state of switches in the network.
-                '''
+            'inverse': 'TopologicalNode.ConnectivityNodes'
         })
     '''
     The topological node to which this connectivity node is assigned. May depend
@@ -4007,21 +3080,7 @@ class CoordinateSystem(IdentifiedObject):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                A Uniform Resource Name (URN) for the coordinate reference system (crs)
-                used to define 'Location.PositionPoints'.
-                An example would be the European Petroleum Survey Group (EPSG) code for
-                a coordinate reference system, defined in URN under the Open Geospatial
-                Consortium (OGC) namespace as: urn:ogc:def:uom:EPSG::XXXX, where XXXX is
-                an EPSG code (a full list of codes can be found at the EPSG Registry web
-                site http://www.epsg-registry.org/). To define the coordinate system as
-                being WGS84 (latitude, longitude) using an EPSG OGC, this attribute would
-                be urn:ogc:def:uom:EPSG::4236.
-                A profile should limit this code to a set of allowed URNs agreed to by
-                all sending and receiving parties.
-                '''
+            'maxOccurs': '1'
         })
     '''
     A Uniform Resource Name (URN) for the coordinate reference system (crs)
@@ -4037,17 +3096,13 @@ class CoordinateSystem(IdentifiedObject):
     all sending and receiving parties.
     '''
 
-    Locations: list[ Location ] = field(
+    Locations: list[Location] = field(
         default_factory = list,
         metadata = {
             'type': 'Association',
             'minOccurs': '0',
             'maxOccurs': 'unbounded',
-            'inverse': 'Location.CoordinateSystem',
-            'docstring':
-                '''
-                All locations described with position points in this coordinate system.
-                '''
+            'inverse': 'Location.CoordinateSystem'
         })
     '''
     All locations described with position points in this coordinate system.
@@ -4060,161 +3115,121 @@ class Curve(IdentifiedObject):
     variable (X-axis) and dependent (Y-axis) variables.
     '''
 
-    curveStyle: Optional[ CurveStyle ] = field(
+    curveStyle: Optional[CurveStyle] = field(
         default = None,
         metadata = {
             'type': 'enumeration',
             'minOccurs': '0',
             'maxOccurs': '1',
-            'inverse': '',
-            'docstring':
-                '''
-                The style or shape of the curve.
-                '''
+            'inverse': ''
         })
     '''
     The style or shape of the curve.
     '''
 
-    xMultiplier: Optional[ UnitMultiplier ] = field(
+    xMultiplier: Optional[UnitMultiplier] = field(
         default = None,
         metadata = {
             'type': 'enumeration',
             'minOccurs': '0',
             'maxOccurs': '1',
-            'inverse': '',
-            'docstring':
-                '''
-                Multiplier for X-axis.
-                '''
+            'inverse': ''
         })
     '''
     Multiplier for X-axis.
     '''
 
-    xUnit: Optional[ UnitSymbol ] = field(
+    xUnit: Optional[UnitSymbol] = field(
         default = None,
         metadata = {
             'type': 'enumeration',
             'minOccurs': '0',
             'maxOccurs': '1',
-            'inverse': '',
-            'docstring':
-                '''
-                The X-axis units of measure.
-                '''
+            'inverse': ''
         })
     '''
     The X-axis units of measure.
     '''
 
-    y1Multiplier: Optional[ UnitMultiplier ] = field(
+    y1Multiplier: Optional[UnitMultiplier] = field(
         default = None,
         metadata = {
             'type': 'enumeration',
             'minOccurs': '0',
             'maxOccurs': '1',
-            'inverse': '',
-            'docstring':
-                '''
-                Multiplier for Y1-axis.
-                '''
+            'inverse': ''
         })
     '''
     Multiplier for Y1-axis.
     '''
 
-    y1Unit: Optional[ UnitSymbol ] = field(
+    y1Unit: Optional[UnitSymbol] = field(
         default = None,
         metadata = {
             'type': 'enumeration',
             'minOccurs': '0',
             'maxOccurs': '1',
-            'inverse': '',
-            'docstring':
-                '''
-                The Y1-axis units of measure.
-                '''
+            'inverse': ''
         })
     '''
     The Y1-axis units of measure.
     '''
 
-    y2Multiplier: Optional[ UnitMultiplier ] = field(
+    y2Multiplier: Optional[UnitMultiplier] = field(
         default = None,
         metadata = {
             'type': 'enumeration',
             'minOccurs': '0',
             'maxOccurs': '1',
-            'inverse': '',
-            'docstring':
-                '''
-                Multiplier for Y2-axis.
-                '''
+            'inverse': ''
         })
     '''
     Multiplier for Y2-axis.
     '''
 
-    y2Unit: Optional[ UnitSymbol ] = field(
+    y2Unit: Optional[UnitSymbol] = field(
         default = None,
         metadata = {
             'type': 'enumeration',
             'minOccurs': '0',
             'maxOccurs': '1',
-            'inverse': '',
-            'docstring':
-                '''
-                The Y2-axis units of measure.
-                '''
+            'inverse': ''
         })
     '''
     The Y2-axis units of measure.
     '''
 
-    y3Multiplier: Optional[ UnitMultiplier ] = field(
+    y3Multiplier: Optional[UnitMultiplier] = field(
         default = None,
         metadata = {
             'type': 'enumeration',
             'minOccurs': '0',
             'maxOccurs': '1',
-            'inverse': '',
-            'docstring':
-                '''
-                Multiplier for Y3-axis.
-                '''
+            'inverse': ''
         })
     '''
     Multiplier for Y3-axis.
     '''
 
-    y3Unit: Optional[ UnitSymbol ] = field(
+    y3Unit: Optional[UnitSymbol] = field(
         default = None,
         metadata = {
             'type': 'enumeration',
             'minOccurs': '0',
             'maxOccurs': '1',
-            'inverse': '',
-            'docstring':
-                '''
-                The Y3-axis units of measure.
-                '''
+            'inverse': ''
         })
     '''
     The Y3-axis units of measure.
     '''
 
-    CurveDatas: list[ CurveData ] = field(
+    CurveDatas: list[CurveData] = field(
         default_factory = list,
         metadata = {
             'type': 'Aggregate Of',
             'minOccurs': '0',
             'maxOccurs': 'unbounded',
-            'inverse': 'CurveData.Curve',
-            'docstring':
-                '''
-                The point data values that define this curve.
-                '''
+            'inverse': 'CurveData.Curve'
         })
     '''
     The point data values that define this curve.
@@ -4231,18 +3246,13 @@ class GrossToNetActivePowerCurve(Curve):
     curve, depending on the auxiliary equipment that is in service.
     '''
 
-    GeneratingUnit: Optional[ GeneratingUnit ] = field(
+    GeneratingUnit: Optional[GeneratingUnit] = field(
         default = None,
         metadata = {
             'type': 'Of Aggregate',
             'minOccurs': '0',
             'maxOccurs': '1',
-            'inverse': 'GeneratingUnit.GrossToNetActivePowerCurves',
-            'docstring':
-                '''
-                A generating unit may have a gross active power to net active power curve,
-                describing the losses and auxiliary power requirements of the unit.
-                '''
+            'inverse': 'GeneratingUnit.GrossToNetActivePowerCurves'
         })
     '''
     A generating unit may have a gross active power to net active power curve,
@@ -4275,12 +3285,7 @@ class ReactiveCapabilityCurve(Curve):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                The machine's coolant temperature (e.g., ambient air or stator circulating
-                water).
-                '''
+            'maxOccurs': '1'
         })
     '''
     The machine's coolant temperature (e.g., ambient air or stator circulating
@@ -4292,27 +3297,19 @@ class ReactiveCapabilityCurve(Curve):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                The hydrogen coolant pressure
-                '''
+            'maxOccurs': '1'
         })
     '''
     The hydrogen coolant pressure
     '''
 
-    SynchronousMachines: list[ SynchronousMachine ] = field(
+    SynchronousMachines: list[SynchronousMachine] = field(
         default_factory = list,
         metadata = {
             'type': 'Association',
             'minOccurs': '0',
             'maxOccurs': 'unbounded',
-            'inverse': 'SynchronousMachine.ReactiveCapabilityCurves',
-            'docstring':
-                '''
-                Synchronous machines using this curve.
-                '''
+            'inverse': 'SynchronousMachine.ReactiveCapabilityCurves'
         })
     '''
     Synchronous machines using this curve.
@@ -4354,11 +3351,7 @@ class Customer(IdentifiedObject):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                Locale designating language to use in communications with this customer.
-                '''
+            'maxOccurs': '1'
         })
     '''
     Locale designating language to use in communications with this customer.
@@ -4369,11 +3362,7 @@ class Customer(IdentifiedObject):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                (if applicable) Public utilities commission (PUC) identification number.
-                '''
+            'maxOccurs': '1'
         })
     '''
     (if applicable) Public utilities commission (PUC) identification number.
@@ -4384,12 +3373,7 @@ class Customer(IdentifiedObject):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                True if customer organisation has special service needs such as life support,
-                hospitals, etc.
-                '''
+            'maxOccurs': '1'
         })
     '''
     True if customer organisation has special service needs such as life support,
@@ -4401,29 +3385,20 @@ class Customer(IdentifiedObject):
         metadata = {
             'type': 'deprecated',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                (use 'priority' instead) True if this is an important customer. Importance
-                is for matters different than those in 'specialNeed' attribute.
-                '''
+            'maxOccurs': '1'
         })
     '''
     (use 'priority' instead) True if this is an important customer. Importance
     is for matters different than those in 'specialNeed' attribute.
     '''
 
-    kind: Optional[ CustomerKind ] = field(
+    kind: Optional[CustomerKind] = field(
         default = None,
         metadata = {
             'type': 'enumeration',
             'minOccurs': '0',
             'maxOccurs': '1',
-            'inverse': '',
-            'docstring':
-                '''
-                Kind of customer.
-                '''
+            'inverse': ''
         })
     '''
     Kind of customer.
@@ -4443,11 +3418,7 @@ class CustomerAgreement(IdentifiedObject):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                If true, the customer is a pre-pay customer for the specified service.
-                '''
+            'maxOccurs': '1'
         })
     '''
     If true, the customer is a pre-pay customer for the specified service.
@@ -4458,11 +3429,7 @@ class CustomerAgreement(IdentifiedObject):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                Load management code.
-                '''
+            'maxOccurs': '1'
         })
     '''
     Load management code.
@@ -4473,27 +3440,19 @@ class CustomerAgreement(IdentifiedObject):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                Final date and time the service will be billed to the previous customer.
-                '''
+            'maxOccurs': '1'
         })
     '''
     Final date and time the service will be billed to the previous customer.
     '''
 
-    Customer: Optional[ Customer ] = field(
+    Customer: Optional[Customer] = field(
         default = None,
         metadata = {
             'type': 'Association',
             'minOccurs': '0',
             'maxOccurs': '1',
-            'inverse': 'Customer.CustomerAgreements',
-            'docstring':
-                '''
-                Customer for this agreement.
-                '''
+            'inverse': 'Customer.CustomerAgreements'
         })
     '''
     Customer for this agreement.
@@ -4514,24 +3473,18 @@ class DERGroupForecast(IdentifiedObject):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                '''
+            'maxOccurs': '1'
         })
     '''
     '''
 
-    EndDeviceGroup: list[ EndDeviceGroup ] = field(
+    EndDeviceGroup: list[EndDeviceGroup] = field(
         default_factory = list,
         metadata = {
             'type': 'Association',
             'minOccurs': '0',
             'maxOccurs': 'unbounded',
-            'inverse': 'EndDeviceGroup.DERGroupForecast',
-            'docstring':
-                '''
-                '''
+            'inverse': 'EndDeviceGroup.DERGroupForecast'
         })
     '''
     '''
@@ -4554,14 +3507,7 @@ class DemandResponseProgram(IdentifiedObject):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                Type of demand response program; examples are CPP (critical-peak pricing),
-                RTP (real-time pricing), DLC (direct load control), DBP (demand bidding
-                program), BIP (base interruptible program). Note that possible types change
-                a lot and it would be impossible to enumerate them all.
-                '''
+            'maxOccurs': '1'
         })
     '''
     Type of demand response program; examples are CPP (critical-peak pricing),
@@ -4570,67 +3516,50 @@ class DemandResponseProgram(IdentifiedObject):
     a lot and it would be impossible to enumerate them all.
     '''
 
-    CustomerAgreements: list[ CustomerAgreement ] = field(
+    CustomerAgreements: list[CustomerAgreement] = field(
         default_factory = list,
         metadata = {
             'type': 'Association',
             'minOccurs': '0',
             'maxOccurs': 'unbounded',
-            'inverse': 'CustomerAgreement.DemandResponsePrograms',
-            'docstring':
-                '''
-                All customer agreements through which the customer is enrolled in this
-                demand response program.
-                '''
+            'inverse': 'CustomerAgreement.DemandResponsePrograms'
         })
     '''
     All customer agreements through which the customer is enrolled in this
     demand response program.
     '''
 
-    EndDeviceGroups: list[ EndDeviceGroup ] = field(
+    EndDeviceGroups: list[EndDeviceGroup] = field(
         default_factory = list,
         metadata = {
             'type': 'Association',
             'minOccurs': '0',
             'maxOccurs': 'unbounded',
-            'inverse': 'EndDeviceGroup.DemandResponsePrograms',
-            'docstring':
-                '''
-                All groups of end devices enrolled in this demand response program.
-                '''
+            'inverse': 'EndDeviceGroup.DemandResponsePrograms'
         })
     '''
     All groups of end devices enrolled in this demand response program.
     '''
 
-    UsagePointGroups: list[ UsagePointGroup ] = field(
+    UsagePointGroups: list[UsagePointGroup] = field(
         default_factory = list,
         metadata = {
             'type': 'Association',
             'minOccurs': '0',
             'maxOccurs': 'unbounded',
-            'inverse': 'UsagePointGroup.DemandResponsePrograms',
-            'docstring':
-                '''
-                All usage point groups enrolled in this demand response program.
-                '''
+            'inverse': 'UsagePointGroup.DemandResponsePrograms'
         })
     '''
     All usage point groups enrolled in this demand response program.
     '''
 
-    validityInterval: Optional[ DateTimeInterval ] = field(
+    validityInterval: Optional[DateTimeInterval] = field(
         default = None,
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
             'maxOccurs': '1',
-            'inverse': '',
-            'docstring':
-                '''
-                Interval within which the program is valid.
-                '''
+            'inverse': ''
         })
     '''
     Interval within which the program is valid.
@@ -4658,144 +3587,110 @@ class EndDeviceGroup(IdentifiedObject):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                Type of this group.
-                '''
+            'maxOccurs': '1'
         })
     '''
     Type of this group.
     '''
 
-    DemandResponsePrograms: list[ DemandResponseProgram ] = field(
+    DemandResponsePrograms: list[DemandResponseProgram] = field(
         default_factory = list,
         metadata = {
             'type': 'Association',
             'minOccurs': '0',
             'maxOccurs': 'unbounded',
-            'inverse': 'DemandResponseProgram.EndDeviceGroups',
-            'docstring':
-                '''
-                All demand response programs this group of end devices is enrolled in.
-                '''
+            'inverse': 'DemandResponseProgram.EndDeviceGroups'
         })
     '''
     All demand response programs this group of end devices is enrolled in.
     '''
 
-    DERFunction: Optional[ DERFunction ] = field(
+    DERFunction: Optional[DERFunction] = field(
         default = None,
         metadata = {
             'type': 'Association',
             'minOccurs': '0',
             'maxOccurs': '1',
-            'inverse': 'DERFunction.EndDeviceGroup',
-            'docstring':
-                '''
-                '''
+            'inverse': 'DERFunction.EndDeviceGroup'
         })
     '''
     '''
 
-    DERGroupDispatch: list[ DERGroupDispatch ] = field(
+    DERGroupDispatch: list[DERGroupDispatch] = field(
         default_factory = list,
         metadata = {
             'type': 'Association',
             'minOccurs': '0',
             'maxOccurs': 'unbounded',
-            'inverse': 'DERGroupDispatch.EndDeviceGroup',
-            'docstring':
-                '''
-                '''
+            'inverse': 'DERGroupDispatch.EndDeviceGroup'
         })
     '''
     '''
 
-    DERGroupForecast: list[ DERGroupForecast ] = field(
+    DERGroupForecast: list[DERGroupForecast] = field(
         default_factory = list,
         metadata = {
             'type': 'Association',
             'minOccurs': '0',
             'maxOccurs': 'unbounded',
-            'inverse': 'DERGroupForecast.EndDeviceGroup',
-            'docstring':
-                '''
-                '''
+            'inverse': 'DERGroupForecast.EndDeviceGroup'
         })
     '''
     '''
 
-    DERMonitorableParameter: list[ DERMonitorableParameter ] = field(
+    DERMonitorableParameter: list[DERMonitorableParameter] = field(
         default_factory = list,
         metadata = {
             'type': 'Association',
             'minOccurs': '0',
             'maxOccurs': 'unbounded',
-            'inverse': 'DERMonitorableParameter.EndDeviceGroup',
-            'docstring':
-                '''
-                '''
+            'inverse': 'DERMonitorableParameter.EndDeviceGroup'
         })
     '''
     '''
 
-    EndDeviceControls: list[ EndDeviceControl ] = field(
+    EndDeviceControls: list[EndDeviceControl] = field(
         default_factory = list,
         metadata = {
             'type': 'Association',
             'minOccurs': '0',
             'maxOccurs': 'unbounded',
-            'inverse': 'EndDeviceControl.EndDeviceGroups',
-            'docstring':
-                '''
-                All end device controls sending commands to this end device group.
-                '''
+            'inverse': 'EndDeviceControl.EndDeviceGroups'
         })
     '''
     All end device controls sending commands to this end device group.
     '''
 
-    EndDevices: list[ EndDevice ] = field(
+    EndDevices: list[EndDevice] = field(
         default_factory = list,
         metadata = {
             'type': 'Association',
             'minOccurs': '0',
             'maxOccurs': 'unbounded',
-            'inverse': 'EndDevice.EndDeviceGroups',
-            'docstring':
-                '''
-                All end devices this end device group refers to.
-                '''
+            'inverse': 'EndDevice.EndDeviceGroups'
         })
     '''
     All end devices this end device group refers to.
     '''
 
-    status: Optional[ Status ] = field(
+    status: Optional[Status] = field(
         default = None,
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
             'maxOccurs': '1',
-            'inverse': '',
-            'docstring':
-                '''
-                '''
+            'inverse': ''
         })
     '''
     '''
 
-    version: Optional[ Version ] = field(
+    version: Optional[Version] = field(
         default = None,
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
             'maxOccurs': '1',
-            'inverse': '',
-            'docstring':
-                '''
-                '''
+            'inverse': ''
         })
     '''
     '''
@@ -4817,17 +3712,13 @@ class LoadArea(EnergyArea):
     of loads for the purpose of load flow load scaling.
     '''
 
-    SubLoadAreas: list[ SubLoadArea ] = field(
+    SubLoadAreas: list[SubLoadArea] = field(
         default_factory = list,
         metadata = {
             'type': 'Aggregate Of',
             'minOccurs': '0',
             'maxOccurs': 'unbounded',
-            'inverse': 'SubLoadArea.LoadArea',
-            'docstring':
-                '''
-                The SubLoadAreas in the LoadArea.
-                '''
+            'inverse': 'SubLoadArea.LoadArea'
         })
     '''
     The SubLoadAreas in the LoadArea.
@@ -4840,33 +3731,25 @@ class SubLoadArea(EnergyArea):
     of loads for the purpose of load flow load scaling.
     '''
 
-    LoadArea: Optional[ LoadArea ] = field(
+    LoadArea: Optional[LoadArea] = field(
         default = None,
         metadata = {
             'type': 'Of Aggregate',
             'minOccurs': '0',
             'maxOccurs': '1',
-            'inverse': 'LoadArea.SubLoadAreas',
-            'docstring':
-                '''
-                The LoadArea where the SubLoadArea belongs.
-                '''
+            'inverse': 'LoadArea.SubLoadAreas'
         })
     '''
     The LoadArea where the SubLoadArea belongs.
     '''
 
-    LoadGroups: list[ LoadGroup ] = field(
+    LoadGroups: list[LoadGroup] = field(
         default_factory = list,
         metadata = {
             'type': 'Aggregate Of',
             'minOccurs': '0',
             'maxOccurs': 'unbounded',
-            'inverse': 'LoadGroup.SubLoadArea',
-            'docstring':
-                '''
-                The Loadgroups in the SubLoadArea.
-                '''
+            'inverse': 'LoadGroup.SubLoadArea'
         })
     '''
     The Loadgroups in the SubLoadArea.
@@ -4886,12 +3769,7 @@ class EnergyConnectionProfile(IdentifiedObject):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                Reference to OpenDSS Daily curve, for Load, Storage, PVSystem, Generator,
-                and WindGen power
-                '''
+            'maxOccurs': '1'
         })
     '''
     Reference to OpenDSS Daily curve, for Load, Storage, PVSystem, Generator,
@@ -4903,12 +3781,7 @@ class EnergyConnectionProfile(IdentifiedObject):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                Reference to OpenDSS Duty Cycle curve, for Load, Storage, PVSystem, Generator,
-                and WindGen power
-                '''
+            'maxOccurs': '1'
         })
     '''
     Reference to OpenDSS Duty Cycle curve, for Load, Storage, PVSystem, Generator,
@@ -4920,11 +3793,7 @@ class EnergyConnectionProfile(IdentifiedObject):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                Reference to OpenDSS CvrCurve, for Load objects
-                '''
+            'maxOccurs': '1'
         })
     '''
     Reference to OpenDSS CvrCurve, for Load objects
@@ -4935,11 +3804,7 @@ class EnergyConnectionProfile(IdentifiedObject):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                Reference to OpenDSS Growth curve, for Load objects
-                '''
+            'maxOccurs': '1'
         })
     '''
     Reference to OpenDSS Growth curve, for Load objects
@@ -4950,11 +3815,7 @@ class EnergyConnectionProfile(IdentifiedObject):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                Reference to OpenDSS Daily curve, for PVSystem temperature
-                '''
+            'maxOccurs': '1'
         })
     '''
     Reference to OpenDSS Daily curve, for PVSystem temperature
@@ -4965,11 +3826,7 @@ class EnergyConnectionProfile(IdentifiedObject):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                Reference to OpenDSS Duty Cycle curve, for PVSystem temperature
-                '''
+            'maxOccurs': '1'
         })
     '''
     Reference to OpenDSS Duty Cycle curve, for PVSystem temperature
@@ -4980,11 +3837,7 @@ class EnergyConnectionProfile(IdentifiedObject):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                Reference to OpenDSS Yearly curve, for PVSystem temperature
-                '''
+            'maxOccurs': '1'
         })
     '''
     Reference to OpenDSS Yearly curve, for PVSystem temperature
@@ -4995,12 +3848,7 @@ class EnergyConnectionProfile(IdentifiedObject):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                Reference to OpenDSS harmonic current Spectrum, for Load, Storage, PVSystem,
-                Generator, and WindGen power
-                '''
+            'maxOccurs': '1'
         })
     '''
     Reference to OpenDSS harmonic current Spectrum, for Load, Storage, PVSystem,
@@ -5012,12 +3860,7 @@ class EnergyConnectionProfile(IdentifiedObject):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                Reference to OpenDSS Yearly curve, for Load, Storage, PVSystem, Generator,
-                and WindGen power
-                '''
+            'maxOccurs': '1'
         })
     '''
     Reference to OpenDSS Yearly curve, for Load, Storage, PVSystem, Generator,
@@ -5029,12 +3872,7 @@ class EnergyConnectionProfile(IdentifiedObject):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                GridLAB-D Player for base_power attributes on Load and Triplex_Load objects,
-                and P_Out for Battery objects. Netlisted as player.value.
-                '''
+            'maxOccurs': '1'
         })
     '''
     GridLAB-D Player for base_power attributes on Load and Triplex_Load objects,
@@ -5046,30 +3884,258 @@ class EnergyConnectionProfile(IdentifiedObject):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                GridLAB-D schedule for base_power attributes on Load and Triplex_Load objects,
-                and P_Out attributes on Battery objects.
-                '''
+            'maxOccurs': '1'
         })
     '''
     GridLAB-D schedule for base_power attributes on Load and Triplex_Load objects,
     and P_Out attributes on Battery objects.
     '''
 
-    EnergyConnections: list[ EnergyConnection ] = field(
+    EnergyConnections: list[EnergyConnection] = field(
         default_factory = list,
         metadata = {
             'type': 'Association',
             'minOccurs': '0',
             'maxOccurs': 'unbounded',
-            'inverse': 'EnergyConnection.EnergyConnectionProfile',
-            'docstring':
-                '''
-                '''
+            'inverse': 'EnergyConnection.EnergyConnectionProfile'
         })
     '''
+    '''
+
+@dataclass(repr=False)
+class FunctionBlock(IdentifiedObject):
+    '''
+    Function block is a function described as a set of elementary blocks. The
+    blocks describe the function between input variables and output variables.
+    '''
+
+    enabled: Optional[ bool ] = field(
+        default = None,
+        metadata = {
+            'type': 'Attribute',
+            'minOccurs': '0',
+            'maxOccurs': '1'
+        })
+    '''
+    True, if the function block is enabled (active). Otherwise false.
+    '''
+
+    priority: Optional[ int ] = field(
+        default = None,
+        metadata = {
+            'type': 'Attribute',
+            'minOccurs': '0',
+            'maxOccurs': '1'
+        })
+    '''
+    Value 0 means ignore priority. 1 means the highest priority, 2 is the second
+    highest priority.
+    '''
+
+    FunctionOutputVariable: list[FunctionOutputVariable] = field(
+        default_factory = list,
+        metadata = {
+            'type': 'Aggregate Of',
+            'minOccurs': '0',
+            'maxOccurs': 'unbounded',
+            'inverse': 'FunctionOutputVariable.FunctionBlock'
+        })
+    '''
+    Function output variable describe the output or codomain to the function
+    block.
+    '''
+
+    Input: list[FunctionInputVariable] = field(
+        default_factory = list,
+        metadata = {
+            'type': 'Association',
+            'minOccurs': '0',
+            'maxOccurs': 'unbounded',
+            'inverse': 'FunctionInputVariable.Function'
+        })
+    '''
+    Function input variable describe the input or domain to the function block.
+    '''
+
+@dataclass(repr=False)
+class ProtectionFunctionBlock(FunctionBlock):
+    '''
+    '''
+
+    isEnabled: Optional[ bool ] = field(
+        default = None,
+        metadata = {
+            'type': 'Attribute',
+            'minOccurs': '0',
+            'maxOccurs': '1'
+        })
+    '''
+    '''
+
+    usage: Optional[ str ] = field(
+        default = None,
+        metadata = {
+            'type': 'Attribute',
+            'minOccurs': '0',
+            'maxOccurs': '1'
+        })
+    '''
+    '''
+
+    operateDelayTime: Optional[ float | Seconds ] = field(
+        default = None,
+        metadata = {
+            'type': 'Attribute',
+            'minOccurs': '0',
+            'maxOccurs': '1'
+        })
+    '''
+    '''
+
+    operateTime: Optional[ float | Seconds ] = field(
+        default = None,
+        metadata = {
+            'type': 'Attribute',
+            'minOccurs': '0',
+            'maxOccurs': '1'
+        })
+    '''
+    '''
+
+    resetDelayTime: Optional[ float | Seconds ] = field(
+        default = None,
+        metadata = {
+            'type': 'Attribute',
+            'minOccurs': '0',
+            'maxOccurs': '1'
+        })
+    '''
+    '''
+
+    resetTime: Optional[ float | Seconds ] = field(
+        default = None,
+        metadata = {
+            'type': 'Attribute',
+            'minOccurs': '0',
+            'maxOccurs': '1'
+        })
+    '''
+    '''
+
+    startTime: Optional[ float | Seconds ] = field(
+        default = None,
+        metadata = {
+            'type': 'Attribute',
+            'minOccurs': '0',
+            'maxOccurs': '1'
+        })
+    '''
+    '''
+
+    ProtectedSwitch: Optional[ProtectedSwitch] = field(
+        default = None,
+        metadata = {
+            'type': 'Association',
+            'minOccurs': '0',
+            'maxOccurs': '1',
+            'inverse': 'ProtectedSwitch.ProtectionRelayFunction'
+        })
+    '''
+    '''
+
+    ProtectionEquipment: Optional[ProtectionEquipment] = field(
+        default = None,
+        metadata = {
+            'type': 'Association',
+            'minOccurs': '0',
+            'maxOccurs': '1',
+            'inverse': 'ProtectionEquipment.ProtectionFunctionBlock'
+        })
+    '''
+    '''
+
+    SettingsGroup: list[ProtectionSettingsGroup] = field(
+        default_factory = list,
+        metadata = {
+            'type': 'Association',
+            'minOccurs': '0',
+            'maxOccurs': 'unbounded',
+            'inverse': 'ProtectionSettingsGroup.ProtectionFunctionBlock'
+        })
+    '''
+    '''
+
+@dataclass(repr=False)
+class WideAreaProtectionFunctionBlock(ProtectionFunctionBlock):
+    '''
+    '''
+
+@dataclass(repr=False)
+class FrequencyProtectionFunctionBlock(WideAreaProtectionFunctionBlock):
+    '''
+    '''
+
+    voltageBlockValue: Optional[ float | Voltage ] = field(
+        default = None,
+        metadata = {
+            'type': 'Attribute',
+            'minOccurs': '0',
+            'maxOccurs': '1'
+        })
+    '''
+    '''
+
+@dataclass(repr=False)
+class UnderFrequencyProtectionFunctionBlock(FrequencyProtectionFunctionBlock):
+    '''
+    '''
+
+    operateValue: Optional[ float | Frequency ] = field(
+        default = None,
+        metadata = {
+            'type': 'Attribute',
+            'minOccurs': '0',
+            'maxOccurs': '1'
+        })
+    '''
+    '''
+
+@dataclass(repr=False)
+class FunctionInputVariable(IdentifiedObject):
+    '''
+    Functional input variable defines the domain of the function.
+    '''
+
+    Function: Optional[FunctionBlock] = field(
+        default = None,
+        metadata = {
+            'type': 'Association',
+            'minOccurs': '0',
+            'maxOccurs': '1',
+            'inverse': 'FunctionBlock.Input'
+        })
+    '''
+    Function block describe the function that function input variable provides
+    the domain for.
+    '''
+
+@dataclass(repr=False)
+class FunctionOutputVariable(IdentifiedObject):
+    '''
+    Functional output variable defines the codomain of the function.
+    '''
+
+    FunctionBlock: Optional[FunctionBlock] = field(
+        default = None,
+        metadata = {
+            'type': 'Of Aggregate',
+            'minOccurs': '0',
+            'maxOccurs': '1',
+            'inverse': 'FunctionBlock.FunctionOutputVariable'
+        })
+    '''
+    Function block describe the function that function output variable provides
+    the codomain for.
     '''
 
 @dataclass(repr=False)
@@ -5078,17 +4144,13 @@ class GeographicalRegion(IdentifiedObject):
     A geographical region of a power system network model.
     '''
 
-    Regions: list[ SubGeographicalRegion ] = field(
+    Regions: list[SubGeographicalRegion] = field(
         default_factory = list,
         metadata = {
             'type': 'Aggregate Of',
             'minOccurs': '0',
             'maxOccurs': 'unbounded',
-            'inverse': 'SubGeographicalRegion.Region',
-            'docstring':
-                '''
-                All sub-geograhpical regions within this geographical region.
-                '''
+            'inverse': 'SubGeographicalRegion.Region'
         })
     '''
     All sub-geograhpical regions within this geographical region.
@@ -5110,10 +4172,7 @@ class House(IdentifiedObject):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                '''
+            'maxOccurs': '1'
         })
     '''
     '''
@@ -5123,10 +4182,7 @@ class House(IdentifiedObject):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                '''
+            'maxOccurs': '1'
         })
     '''
     '''
@@ -5136,10 +4192,7 @@ class House(IdentifiedObject):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                '''
+            'maxOccurs': '1'
         })
     '''
     '''
@@ -5149,10 +4202,7 @@ class House(IdentifiedObject):
         metadata = {
             'type': 'enumeration',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                '''
+            'maxOccurs': '1'
         })
     '''
     '''
@@ -5162,10 +4212,7 @@ class House(IdentifiedObject):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                '''
+            'maxOccurs': '1'
         })
     '''
     '''
@@ -5175,10 +4222,7 @@ class House(IdentifiedObject):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                '''
+            'maxOccurs': '1'
         })
     '''
     '''
@@ -5188,38 +4232,29 @@ class House(IdentifiedObject):
         metadata = {
             'type': 'enumeration',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                '''
+            'maxOccurs': '1'
         })
     '''
     '''
 
-    EnergyConsumer: Optional[ EnergyConsumer ] = field(
+    EnergyConsumer: Optional[EnergyConsumer] = field(
         default = None,
         metadata = {
             'type': 'Association',
             'minOccurs': '0',
             'maxOccurs': '1',
-            'inverse': 'EnergyConsumer.House',
-            'docstring':
-                '''
-                '''
+            'inverse': 'EnergyConsumer.House'
         })
     '''
     '''
 
-    ThermostatController: Optional[ ThermostatController ] = field(
+    ThermostatController: Optional[ThermostatController] = field(
         default = None,
         metadata = {
             'type': 'Association',
             'minOccurs': '0',
             'maxOccurs': '1',
-            'inverse': 'ThermostatController.House',
-            'docstring':
-                '''
-                '''
+            'inverse': 'ThermostatController.House'
         })
     '''
     '''
@@ -5244,13 +4279,7 @@ class Control(IOPoint):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                Specifies the type of Control, e.g. BreakerOn/Off, GeneratorVoltageSetPoint,
-                TieLineFlow etc. The ControlType.name shall be unique among all specified
-                types and describe the type.
-                '''
+            'maxOccurs': '1'
         })
     '''
     Specifies the type of Control, e.g. BreakerOn/Off, GeneratorVoltageSetPoint,
@@ -5263,12 +4292,7 @@ class Control(IOPoint):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                Indicates that a client is currently sending control commands that has
-                not completed.
-                '''
+            'maxOccurs': '1'
         })
     '''
     Indicates that a client is currently sending control commands that has
@@ -5280,59 +4304,43 @@ class Control(IOPoint):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                The last time a control output was sent.
-                '''
+            'maxOccurs': '1'
         })
     '''
     The last time a control output was sent.
     '''
 
-    unitMultiplier: Optional[ UnitMultiplier ] = field(
+    unitMultiplier: Optional[UnitMultiplier] = field(
         default = None,
         metadata = {
             'type': 'enumeration',
             'minOccurs': '0',
             'maxOccurs': '1',
-            'inverse': '',
-            'docstring':
-                '''
-                The unit multiplier of the controlled quantity.
-                '''
+            'inverse': ''
         })
     '''
     The unit multiplier of the controlled quantity.
     '''
 
-    unitSymbol: Optional[ UnitSymbol ] = field(
+    unitSymbol: Optional[UnitSymbol] = field(
         default = None,
         metadata = {
             'type': 'enumeration',
             'minOccurs': '0',
             'maxOccurs': '1',
-            'inverse': '',
-            'docstring':
-                '''
-                The unit of measure of the controlled quantity.
-                '''
+            'inverse': ''
         })
     '''
     The unit of measure of the controlled quantity.
     '''
 
-    PowerSystemResource: Optional[ PowerSystemResource ] = field(
+    PowerSystemResource: Optional[PowerSystemResource] = field(
         default = None,
         metadata = {
             'type': 'Association',
             'minOccurs': '0',
             'maxOccurs': '1',
-            'inverse': 'PowerSystemResource.Controls',
-            'docstring':
-                '''
-                Regulating device governed by this control output.
-                '''
+            'inverse': 'PowerSystemResource.Controls'
         })
     '''
     Regulating device governed by this control output.
@@ -5344,17 +4352,13 @@ class AccumulatorReset(Control):
     This command reset the counter value to zero.
     '''
 
-    AccumulatorValue: Optional[ AccumulatorValue ] = field(
+    AccumulatorValue: Optional[AccumulatorValue] = field(
         default = None,
         metadata = {
             'type': 'Association',
             'minOccurs': '0',
             'maxOccurs': '1',
-            'inverse': 'AccumulatorValue.AccumulatorReset',
-            'docstring':
-                '''
-                The accumulator value that is reset by the command.
-                '''
+            'inverse': 'AccumulatorValue.AccumulatorReset'
         })
     '''
     The accumulator value that is reset by the command.
@@ -5371,12 +4375,7 @@ class AnalogControl(Control):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                Normal value range maximum for any of the Control.value. Used for scaling,
-                e.g. in bar graphs.
-                '''
+            'maxOccurs': '1'
         })
     '''
     Normal value range maximum for any of the Control.value. Used for scaling,
@@ -5388,29 +4387,20 @@ class AnalogControl(Control):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                Normal value range minimum for any of the Control.value. Used for scaling,
-                e.g. in bar graphs.
-                '''
+            'maxOccurs': '1'
         })
     '''
     Normal value range minimum for any of the Control.value. Used for scaling,
     e.g. in bar graphs.
     '''
 
-    AnalogValue: Optional[ AnalogValue ] = field(
+    AnalogValue: Optional[AnalogValue] = field(
         default = None,
         metadata = {
             'type': 'Association',
             'minOccurs': '0',
             'maxOccurs': '1',
-            'inverse': 'AnalogValue.AnalogControl',
-            'docstring':
-                '''
-                The MeasurementValue that is controlled.
-                '''
+            'inverse': 'AnalogValue.AnalogControl'
         })
     '''
     The MeasurementValue that is controlled.
@@ -5423,17 +4413,13 @@ class RaiseLowerCommand(AnalogControl):
     Unless otherwise specified, one pulse moves the set point by one.
     '''
 
-    ValueAliasSet: Optional[ ValueAliasSet ] = field(
+    ValueAliasSet: Optional[ValueAliasSet] = field(
         default = None,
         metadata = {
             'type': 'Association',
             'minOccurs': '0',
             'maxOccurs': '1',
-            'inverse': 'ValueAliasSet.RaiseLowerCommands',
-            'docstring':
-                '''
-                The ValueAliasSet used for translation of a Control value to a name.
-                '''
+            'inverse': 'ValueAliasSet.RaiseLowerCommands'
         })
     '''
     The ValueAliasSet used for translation of a Control value to a name.
@@ -5450,11 +4436,7 @@ class SetPoint(AnalogControl):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                Normal value for Control.value e.g. used for percentage scaling.
-                '''
+            'maxOccurs': '1'
         })
     '''
     Normal value for Control.value e.g. used for percentage scaling.
@@ -5465,11 +4447,7 @@ class SetPoint(AnalogControl):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                The value representing the actuator output.
-                '''
+            'maxOccurs': '1'
         })
     '''
     The value representing the actuator output.
@@ -5486,11 +4464,7 @@ class Command(Control):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                Normal value for Control.value e.g. used for percentage scaling.
-                '''
+            'maxOccurs': '1'
         })
     '''
     Normal value for Control.value e.g. used for percentage scaling.
@@ -5501,43 +4475,31 @@ class Command(Control):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                The value representing the actuator output.
-                '''
+            'maxOccurs': '1'
         })
     '''
     The value representing the actuator output.
     '''
 
-    DiscreteValue: Optional[ DiscreteValue ] = field(
+    DiscreteValue: Optional[DiscreteValue] = field(
         default = None,
         metadata = {
             'type': 'Association',
             'minOccurs': '0',
             'maxOccurs': '1',
-            'inverse': 'DiscreteValue.Command',
-            'docstring':
-                '''
-                The MeasurementValue that is controlled.
-                '''
+            'inverse': 'DiscreteValue.Command'
         })
     '''
     The MeasurementValue that is controlled.
     '''
 
-    ValueAliasSet: Optional[ ValueAliasSet ] = field(
+    ValueAliasSet: Optional[ValueAliasSet] = field(
         default = None,
         metadata = {
             'type': 'Association',
             'minOccurs': '0',
             'maxOccurs': '1',
-            'inverse': 'ValueAliasSet.Commands',
-            'docstring':
-                '''
-                The ValueAliasSet used for translation of a Control value to a name.
-                '''
+            'inverse': 'ValueAliasSet.Commands'
         })
     '''
     The ValueAliasSet used for translation of a Control value to a name.
@@ -5556,11 +4518,7 @@ class MeasurementValue(IOPoint):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                The time when the value was last updated
-                '''
+            'maxOccurs': '1'
         })
     '''
     The time when the value was last updated
@@ -5571,47 +4529,32 @@ class MeasurementValue(IOPoint):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                The limit, expressed as a percentage of the sensor maximum, that errors
-                will not exceed when the sensor is used under reference conditions.
-                '''
+            'maxOccurs': '1'
         })
     '''
     The limit, expressed as a percentage of the sensor maximum, that errors
     will not exceed when the sensor is used under reference conditions.
     '''
 
-    MeasurementValueQuality: Optional[ MeasurementValueQuality ] = field(
+    MeasurementValueQuality: Optional[MeasurementValueQuality] = field(
         default = None,
         metadata = {
             'type': 'Aggregate Of',
             'minOccurs': '0',
             'maxOccurs': '1',
-            'inverse': 'MeasurementValueQuality.MeasurementValue',
-            'docstring':
-                '''
-                A MeasurementValue has a MeasurementValueQuality associated with it.
-                '''
+            'inverse': 'MeasurementValueQuality.MeasurementValue'
         })
     '''
     A MeasurementValue has a MeasurementValueQuality associated with it.
     '''
 
-    MeasurementValueSource: Optional[ MeasurementValueSource ] = field(
+    MeasurementValueSource: Optional[MeasurementValueSource] = field(
         default = None,
         metadata = {
             'type': 'Association',
             'minOccurs': '0',
             'maxOccurs': '1',
-            'inverse': 'MeasurementValueSource.MeasurementValues',
-            'docstring':
-                '''
-                A reference to the type of source that updates the MeasurementValue, e.g.
-                SCADA, CCLink, manual, etc. User conventions for the names of sources are
-                contained in the introduction to IEC 61970-301.
-                '''
+            'inverse': 'MeasurementValueSource.MeasurementValues'
         })
     '''
     A reference to the type of source that updates the MeasurementValue, e.g.
@@ -5630,43 +4573,31 @@ class AccumulatorValue(MeasurementValue):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                The value to supervise. The value is positive.
-                '''
+            'maxOccurs': '1'
         })
     '''
     The value to supervise. The value is positive.
     '''
 
-    Accumulator: Optional[ Accumulator ] = field(
+    Accumulator: Optional[Accumulator] = field(
         default = None,
         metadata = {
             'type': 'Association',
             'minOccurs': '0',
             'maxOccurs': '1',
-            'inverse': 'Accumulator.AccumulatorValues',
-            'docstring':
-                '''
-                Measurement to which this value is connected.
-                '''
+            'inverse': 'Accumulator.AccumulatorValues'
         })
     '''
     Measurement to which this value is connected.
     '''
 
-    AccumulatorReset: Optional[ AccumulatorReset ] = field(
+    AccumulatorReset: Optional[AccumulatorReset] = field(
         default = None,
         metadata = {
             'type': 'Association',
             'minOccurs': '0',
             'maxOccurs': '1',
-            'inverse': 'AccumulatorReset.AccumulatorValue',
-            'docstring':
-                '''
-                The command that reset the accumulator value.
-                '''
+            'inverse': 'AccumulatorReset.AccumulatorValue'
         })
     '''
     The command that reset the accumulator value.
@@ -5683,43 +4614,31 @@ class AnalogValue(MeasurementValue):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                The value to supervise.
-                '''
+            'maxOccurs': '1'
         })
     '''
     The value to supervise.
     '''
 
-    Analog: Optional[ Analog ] = field(
+    Analog: Optional[Analog] = field(
         default = None,
         metadata = {
             'type': 'Association',
             'minOccurs': '0',
             'maxOccurs': '1',
-            'inverse': 'Analog.AnalogValues',
-            'docstring':
-                '''
-                Measurement to which this value is connected.
-                '''
+            'inverse': 'Analog.AnalogValues'
         })
     '''
     Measurement to which this value is connected.
     '''
 
-    AnalogControl: Optional[ AnalogControl ] = field(
+    AnalogControl: Optional[AnalogControl] = field(
         default = None,
         metadata = {
             'type': 'Association',
             'minOccurs': '0',
             'maxOccurs': '1',
-            'inverse': 'AnalogControl.AnalogValue',
-            'docstring':
-                '''
-                The Control variable associated with the MeasurementValue.
-                '''
+            'inverse': 'AnalogControl.AnalogValue'
         })
     '''
     The Control variable associated with the MeasurementValue.
@@ -5736,43 +4655,31 @@ class DiscreteValue(MeasurementValue):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                The value to supervise.
-                '''
+            'maxOccurs': '1'
         })
     '''
     The value to supervise.
     '''
 
-    Command: Optional[ Command ] = field(
+    Command: Optional[Command] = field(
         default = None,
         metadata = {
             'type': 'Association',
             'minOccurs': '0',
             'maxOccurs': '1',
-            'inverse': 'Command.DiscreteValue',
-            'docstring':
-                '''
-                The Control variable associated with the MeasurementValue.
-                '''
+            'inverse': 'Command.DiscreteValue'
         })
     '''
     The Control variable associated with the MeasurementValue.
     '''
 
-    Discrete: Optional[ Discrete ] = field(
+    Discrete: Optional[Discrete] = field(
         default = None,
         metadata = {
             'type': 'Association',
             'minOccurs': '0',
             'maxOccurs': '1',
-            'inverse': 'Discrete.DiscreteValues',
-            'docstring':
-                '''
-                Measurement to which this value is connected.
-                '''
+            'inverse': 'Discrete.DiscreteValues'
         })
     '''
     Measurement to which this value is connected.
@@ -5789,27 +4696,19 @@ class StringMeasurementValue(MeasurementValue):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                The value to supervise.
-                '''
+            'maxOccurs': '1'
         })
     '''
     The value to supervise.
     '''
 
-    StringMeasurement: Optional[ StringMeasurement ] = field(
+    StringMeasurement: Optional[StringMeasurement] = field(
         default = None,
         metadata = {
             'type': 'Association',
             'minOccurs': '0',
             'maxOccurs': '1',
-            'inverse': 'StringMeasurement.StringMeasurementValues',
-            'docstring':
-                '''
-                Measurement to which this value is connected.
-                '''
+            'inverse': 'StringMeasurement.StringMeasurementValues'
         })
     '''
     Measurement to which this value is connected.
@@ -5836,27 +4735,19 @@ class AccumulatorLimit(Limit):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                The value to supervise against. The value is positive.
-                '''
+            'maxOccurs': '1'
         })
     '''
     The value to supervise against. The value is positive.
     '''
 
-    LimitSet: Optional[ AccumulatorLimitSet ] = field(
+    LimitSet: Optional[AccumulatorLimitSet] = field(
         default = None,
         metadata = {
             'type': 'Of Aggregate',
             'minOccurs': '0',
             'maxOccurs': '1',
-            'inverse': 'AccumulatorLimitSet.Limits',
-            'docstring':
-                '''
-                The set of limits.
-                '''
+            'inverse': 'AccumulatorLimitSet.Limits'
         })
     '''
     The set of limits.
@@ -5873,27 +4764,19 @@ class AnalogLimit(Limit):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                The value to supervise against.
-                '''
+            'maxOccurs': '1'
         })
     '''
     The value to supervise against.
     '''
 
-    LimitSet: Optional[ AnalogLimitSet ] = field(
+    LimitSet: Optional[AnalogLimitSet] = field(
         default = None,
         metadata = {
             'type': 'Of Aggregate',
             'minOccurs': '0',
             'maxOccurs': '1',
-            'inverse': 'AnalogLimitSet.Limits',
-            'docstring':
-                '''
-                The set of limits.
-                '''
+            'inverse': 'AnalogLimitSet.Limits'
         })
     '''
     The set of limits.
@@ -5914,12 +4797,7 @@ class LimitSet(IdentifiedObject):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                Tells if the limit values are in percentage of normalValue or the specified
-                Unit for Measurements and Controls.
-                '''
+            'maxOccurs': '1'
         })
     '''
     Tells if the limit values are in percentage of normalValue or the specified
@@ -5933,33 +4811,25 @@ class AccumulatorLimitSet(LimitSet):
     an Accumulator measurement.
     '''
 
-    Limits: list[ AccumulatorLimit ] = field(
+    Limits: list[AccumulatorLimit] = field(
         default_factory = list,
         metadata = {
             'type': 'Aggregate Of',
             'minOccurs': '0',
             'maxOccurs': 'unbounded',
-            'inverse': 'AccumulatorLimit.LimitSet',
-            'docstring':
-                '''
-                The limit values used for supervision of Measurements.
-                '''
+            'inverse': 'AccumulatorLimit.LimitSet'
         })
     '''
     The limit values used for supervision of Measurements.
     '''
 
-    Measurements: list[ Accumulator ] = field(
+    Measurements: list[Accumulator] = field(
         default_factory = list,
         metadata = {
             'type': 'Association',
             'minOccurs': '0',
             'maxOccurs': 'unbounded',
-            'inverse': 'Accumulator.LimitSets',
-            'docstring':
-                '''
-                The Measurements using the LimitSet.
-                '''
+            'inverse': 'Accumulator.LimitSets'
         })
     '''
     The Measurements using the LimitSet.
@@ -5972,33 +4842,25 @@ class AnalogLimitSet(LimitSet):
     Analog measurement.
     '''
 
-    Limits: list[ AnalogLimit ] = field(
+    Limits: list[AnalogLimit] = field(
         default_factory = list,
         metadata = {
             'type': 'Aggregate Of',
             'minOccurs': '0',
             'maxOccurs': 'unbounded',
-            'inverse': 'AnalogLimit.LimitSet',
-            'docstring':
-                '''
-                The limit values used for supervision of Measurements.
-                '''
+            'inverse': 'AnalogLimit.LimitSet'
         })
     '''
     The limit values used for supervision of Measurements.
     '''
 
-    Measurements: list[ Analog ] = field(
+    Measurements: list[Analog] = field(
         default_factory = list,
         metadata = {
             'type': 'Association',
             'minOccurs': '0',
             'maxOccurs': 'unbounded',
-            'inverse': 'Analog.LimitSets',
-            'docstring':
-                '''
-                The Measurements using the LimitSet.
-                '''
+            'inverse': 'Analog.LimitSets'
         })
     '''
     The Measurements using the LimitSet.
@@ -6011,17 +4873,13 @@ class LoadGroup(IdentifiedObject):
     loads for the purpose of load flow load scaling.
     '''
 
-    SubLoadArea: Optional[ SubLoadArea ] = field(
+    SubLoadArea: Optional[SubLoadArea] = field(
         default = None,
         metadata = {
             'type': 'Of Aggregate',
             'minOccurs': '0',
             'maxOccurs': '1',
-            'inverse': 'SubLoadArea.LoadGroups',
-            'docstring':
-                '''
-                The SubLoadArea where the Loadgroup belongs.
-                '''
+            'inverse': 'SubLoadArea.LoadGroups'
         })
     '''
     The SubLoadArea where the Loadgroup belongs.
@@ -6033,33 +4891,25 @@ class ConformLoadGroup(LoadGroup):
     A group of loads conforming to an allocation pattern.
     '''
 
-    ConformLoadSchedules: list[ ConformLoadSchedule ] = field(
+    ConformLoadSchedules: list[ConformLoadSchedule] = field(
         default_factory = list,
         metadata = {
             'type': 'Aggregate Of',
             'minOccurs': '0',
             'maxOccurs': 'unbounded',
-            'inverse': 'ConformLoadSchedule.ConformLoadGroup',
-            'docstring':
-                '''
-                The ConformLoadSchedules in the ConformLoadGroup.
-                '''
+            'inverse': 'ConformLoadSchedule.ConformLoadGroup'
         })
     '''
     The ConformLoadSchedules in the ConformLoadGroup.
     '''
 
-    EnergyConsumers: list[ ConformLoad ] = field(
+    EnergyConsumers: list[ConformLoad] = field(
         default_factory = list,
         metadata = {
             'type': 'Association',
             'minOccurs': '0',
             'maxOccurs': 'unbounded',
-            'inverse': 'ConformLoad.LoadGroup',
-            'docstring':
-                '''
-                Conform loads assigned to this ConformLoadGroup.
-                '''
+            'inverse': 'ConformLoad.LoadGroup'
         })
     '''
     Conform loads assigned to this ConformLoadGroup.
@@ -6071,33 +4921,25 @@ class NonConformLoadGroup(LoadGroup):
     Loads that do not follow a daily and seasonal load variation pattern.
     '''
 
-    EnergyConsumers: list[ NonConformLoad ] = field(
+    EnergyConsumers: list[NonConformLoad] = field(
         default_factory = list,
         metadata = {
             'type': 'Association',
             'minOccurs': '0',
             'maxOccurs': 'unbounded',
-            'inverse': 'NonConformLoad.LoadGroup',
-            'docstring':
-                '''
-                Conform loads assigned to this ConformLoadGroup.
-                '''
+            'inverse': 'NonConformLoad.LoadGroup'
         })
     '''
     Conform loads assigned to this ConformLoadGroup.
     '''
 
-    NonConformLoadSchedules: list[ NonConformLoadSchedule ] = field(
+    NonConformLoadSchedules: list[NonConformLoadSchedule] = field(
         default_factory = list,
         metadata = {
             'type': 'Aggregate Of',
             'minOccurs': '0',
             'maxOccurs': 'unbounded',
-            'inverse': 'NonConformLoadSchedule.NonConformLoadGroup',
-            'docstring':
-                '''
-                The NonConformLoadSchedules in the NonConformLoadGroup.
-                '''
+            'inverse': 'NonConformLoadSchedule.NonConformLoadGroup'
         })
     '''
     The NonConformLoadSchedules in the NonConformLoadGroup.
@@ -6123,26 +4965,7 @@ class LoadResponseCharacteristic(IdentifiedObject):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                Indicates the exponential voltage dependency model is to be used. If false,
-                the coefficient model is to be used.
-                The exponential voltage dependency model consist of the attributes
-                - pVoltageExponent
-                - qVoltageExponent.
-                The coefficient model consist of the attributes
-                - pConstantImpedance
-                - pConstantCurrent
-                - pConstantPower
-                - qConstantImpedance
-                - qConstantCurrent
-                - qConstantPower.
-                The sum of pConstantImpedance, pConstantCurrent and pConstantPower shall
-                equal 1.
-                The sum of qConstantImpedance, qConstantCurrent and qConstantPower shall
-                equal 1.
-                '''
+            'maxOccurs': '1'
         })
     '''
     Indicates the exponential voltage dependency model is to be used. If false,
@@ -6168,11 +4991,7 @@ class LoadResponseCharacteristic(IdentifiedObject):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                Portion of active power load modeled as constant current.
-                '''
+            'maxOccurs': '1'
         })
     '''
     Portion of active power load modeled as constant current.
@@ -6183,11 +5002,7 @@ class LoadResponseCharacteristic(IdentifiedObject):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                Portion of active power load modeled as constant impedance.
-                '''
+            'maxOccurs': '1'
         })
     '''
     Portion of active power load modeled as constant impedance.
@@ -6198,11 +5013,7 @@ class LoadResponseCharacteristic(IdentifiedObject):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                Portion of active power load modeled as constant power.
-                '''
+            'maxOccurs': '1'
         })
     '''
     Portion of active power load modeled as constant power.
@@ -6213,10 +5024,7 @@ class LoadResponseCharacteristic(IdentifiedObject):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                '''
+            'maxOccurs': '1'
         })
     '''
     '''
@@ -6226,11 +5034,7 @@ class LoadResponseCharacteristic(IdentifiedObject):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                Exponent of per unit voltage effecting real power.
-                '''
+            'maxOccurs': '1'
         })
     '''
     Exponent of per unit voltage effecting real power.
@@ -6241,11 +5045,7 @@ class LoadResponseCharacteristic(IdentifiedObject):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                Portion of reactive power load modeled as constant current.
-                '''
+            'maxOccurs': '1'
         })
     '''
     Portion of reactive power load modeled as constant current.
@@ -6256,11 +5056,7 @@ class LoadResponseCharacteristic(IdentifiedObject):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                Portion of reactive power load modeled as constant impedance.
-                '''
+            'maxOccurs': '1'
         })
     '''
     Portion of reactive power load modeled as constant impedance.
@@ -6271,11 +5067,7 @@ class LoadResponseCharacteristic(IdentifiedObject):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                Portion of reactive power load modeled as constant power.
-                '''
+            'maxOccurs': '1'
         })
     '''
     Portion of reactive power load modeled as constant power.
@@ -6286,10 +5078,7 @@ class LoadResponseCharacteristic(IdentifiedObject):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                '''
+            'maxOccurs': '1'
         })
     '''
     '''
@@ -6299,27 +5088,19 @@ class LoadResponseCharacteristic(IdentifiedObject):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                Exponent of per unit voltage effecting reactive power.
-                '''
+            'maxOccurs': '1'
         })
     '''
     Exponent of per unit voltage effecting reactive power.
     '''
 
-    EnergyConsumer: list[ EnergyConsumer ] = field(
+    EnergyConsumer: list[EnergyConsumer] = field(
         default_factory = list,
         metadata = {
             'type': 'Association',
             'minOccurs': '0',
             'maxOccurs': 'unbounded',
-            'inverse': 'EnergyConsumer.LoadResponse',
-            'docstring':
-                '''
-                The set of loads that have the response characteristics.
-                '''
+            'inverse': 'EnergyConsumer.LoadResponse'
         })
     '''
     The set of loads that have the response characteristics.
@@ -6338,15 +5119,7 @@ class Location(IdentifiedObject):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                (if applicable) Direction that allows field crews to quickly find a given
-                asset. For a given location, such as a street address, this is the relative
-                direction in which to find the asset. For example, a streetlight may be
-                located at the 'NW' (northwest) corner of the customer's site, or a usage
-                point may be located on the second floor of an apartment building.
-                '''
+            'maxOccurs': '1'
         })
     '''
     (if applicable) Direction that allows field crews to quickly find a given
@@ -6361,12 +5134,7 @@ class Location(IdentifiedObject):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                (if applicable) Reference to geographical information source, often external
-                to the utility.
-                '''
+            'maxOccurs': '1'
         })
     '''
     (if applicable) Reference to geographical information source, often external
@@ -6378,13 +5146,7 @@ class Location(IdentifiedObject):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                Classification by utility's corporate standards and practices, relative
-                to the location itself (e.g., geographical, functional accounting, etc.,
-                not a given property that happens to exist at that location).
-                '''
+            'maxOccurs': '1'
         })
     '''
     Classification by utility's corporate standards and practices, relative
@@ -6392,81 +5154,61 @@ class Location(IdentifiedObject):
     not a given property that happens to exist at that location).
     '''
 
-    Assets: list[ Asset ] = field(
+    Assets: list[Asset] = field(
         default_factory = list,
         metadata = {
             'type': 'Association',
             'minOccurs': '0',
             'maxOccurs': 'unbounded',
-            'inverse': 'Asset.Location',
-            'docstring':
-                '''
-                All assets at this location.
-                '''
+            'inverse': 'Asset.Location'
         })
     '''
     All assets at this location.
     '''
 
-    CoordinateSystem: Optional[ CoordinateSystem ] = field(
+    CoordinateSystem: Optional[CoordinateSystem] = field(
         default = None,
         metadata = {
             'type': 'Association',
             'minOccurs': '0',
             'maxOccurs': '1',
-            'inverse': 'CoordinateSystem.Locations',
-            'docstring':
-                '''
-                Coordinate system used to describe position points of this location.
-                '''
+            'inverse': 'CoordinateSystem.Locations'
         })
     '''
     Coordinate system used to describe position points of this location.
     '''
 
-    Measurements: list[ Measurement ] = field(
+    Measurements: list[Measurement] = field(
         default_factory = list,
         metadata = {
             'type': 'Association',
             'minOccurs': '0',
             'maxOccurs': 'unbounded',
-            'inverse': 'Measurement.Locations',
-            'docstring':
-                '''
-                '''
+            'inverse': 'Measurement.Locations'
         })
     '''
     '''
 
-    PositionPoints: list[ PositionPoint ] = field(
+    PositionPoints: list[PositionPoint] = field(
         default_factory = list,
         metadata = {
             'type': 'Association',
             'minOccurs': '0',
             'maxOccurs': 'unbounded',
-            'inverse': 'PositionPoint.Location',
-            'docstring':
-                '''
-                Sequence of position points describing this location, expressed in coordinate
-                system 'Location.CoordinateSystem'.
-                '''
+            'inverse': 'PositionPoint.Location'
         })
     '''
     Sequence of position points describing this location, expressed in coordinate
     system 'Location.CoordinateSystem'.
     '''
 
-    PowerSystemResources: list[ PowerSystemResource ] = field(
+    PowerSystemResources: list[PowerSystemResource] = field(
         default_factory = list,
         metadata = {
             'type': 'Association',
             'minOccurs': '0',
             'maxOccurs': 'unbounded',
-            'inverse': 'PowerSystemResource.Location',
-            'docstring':
-                '''
-                All power system resources at this location.
-                '''
+            'inverse': 'PowerSystemResource.Location'
         })
     '''
     All power system resources at this location.
@@ -6502,16 +5244,7 @@ class Measurement(IdentifiedObject):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                Specifies the type of measurement. For example, this specifies if the measurement
-                represents an indoor temperature, outdoor temperature, bus voltage, line
-                flow, etc.
-                When the measurementType is set to "Specialization", the type of Measurement
-                is defined in more detail by the specialized class which inherits from
-                Measurement.
-                '''
+            'maxOccurs': '1'
         })
     '''
     Specifies the type of measurement. For example, this specifies if the measurement
@@ -6527,17 +5260,7 @@ class Measurement(IdentifiedObject):
         metadata = {
             'type': 'enumeration',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                Indicates to which phases the measurement applies and avoids the need to
-                use 'measurementType' to also encode phase information (which would explode
-                the types). The phase information in Measurement, along with 'measurementType'
-                and 'phases' uniquely defines a Measurement for a device, based on normal
-                network phase. Their meaning will not change when the computed energizing
-                phasing is changed due to jumpers or other reasons.
-                If the attribute is missing three phases (ABC) shall be assumed.
-                '''
+            'maxOccurs': '1'
         })
     '''
     Indicates to which phases the measurement applies and avoids the need to
@@ -6549,61 +5272,47 @@ class Measurement(IdentifiedObject):
     If the attribute is missing three phases (ABC) shall be assumed.
     '''
 
-    Asset: Optional[ Asset ] = field(
+    Asset: Optional[Asset] = field(
         default = None,
         metadata = {
             'type': 'Association',
             'minOccurs': '0',
             'maxOccurs': '1',
-            'inverse': 'Asset.Measurements',
-            'docstring':
-                '''
-                '''
+            'inverse': 'Asset.Measurements'
         })
     '''
     '''
 
-    Locations: list[ Location ] = field(
+    Locations: list[Location] = field(
         default_factory = list,
         metadata = {
             'type': 'Association',
             'minOccurs': '0',
             'maxOccurs': 'unbounded',
-            'inverse': 'Location.Measurements',
-            'docstring':
-                '''
-                '''
+            'inverse': 'Location.Measurements'
         })
     '''
     '''
 
-    PowerSystemResource: Optional[ PowerSystemResource ] = field(
+    PowerSystemResource: Optional[PowerSystemResource] = field(
         default = None,
         metadata = {
             'type': 'Of Aggregate',
             'minOccurs': '0',
             'maxOccurs': '1',
-            'inverse': 'PowerSystemResource.Measurements',
-            'docstring':
-                '''
-                The power system resource that contains the measurement.
-                '''
+            'inverse': 'PowerSystemResource.Measurements'
         })
     '''
     The power system resource that contains the measurement.
     '''
 
-    Terminal: Optional[ ACDCTerminal ] = field(
+    Terminal: Optional[ACDCTerminal] = field(
         default = None,
         metadata = {
             'type': 'Association',
             'minOccurs': '0',
             'maxOccurs': '1',
-            'inverse': 'ACDCTerminal.Measurements',
-            'docstring':
-                '''
-                One or more measurements may be associated with a terminal in the network.
-                '''
+            'inverse': 'ACDCTerminal.Measurements'
         })
     '''
     One or more measurements may be associated with a terminal in the network.
@@ -6621,45 +5330,32 @@ class Accumulator(Measurement):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                Normal value range maximum for any of the MeasurementValue.values. Used
-                for scaling, e.g. in bar graphs or of telemetered raw values.
-                '''
+            'maxOccurs': '1'
         })
     '''
     Normal value range maximum for any of the MeasurementValue.values. Used
     for scaling, e.g. in bar graphs or of telemetered raw values.
     '''
 
-    AccumulatorValues: list[ AccumulatorValue ] = field(
+    AccumulatorValues: list[AccumulatorValue] = field(
         default_factory = list,
         metadata = {
             'type': 'Association',
             'minOccurs': '0',
             'maxOccurs': 'unbounded',
-            'inverse': 'AccumulatorValue.Accumulator',
-            'docstring':
-                '''
-                The values connected to this measurement.
-                '''
+            'inverse': 'AccumulatorValue.Accumulator'
         })
     '''
     The values connected to this measurement.
     '''
 
-    LimitSets: list[ AccumulatorLimitSet ] = field(
+    LimitSets: list[AccumulatorLimitSet] = field(
         default_factory = list,
         metadata = {
             'type': 'Association',
             'minOccurs': '0',
             'maxOccurs': 'unbounded',
-            'inverse': 'AccumulatorLimitSet.Measurements',
-            'docstring':
-                '''
-                A measurement may have zero or more limit ranges defined for it.
-                '''
+            'inverse': 'AccumulatorLimitSet.Measurements'
         })
     '''
     A measurement may have zero or more limit ranges defined for it.
@@ -6676,12 +5372,7 @@ class Analog(Measurement):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                Normal value range maximum for any of the MeasurementValue.values. Used
-                for scaling, e.g. in bar graphs or of telemetered raw values.
-                '''
+            'maxOccurs': '1'
         })
     '''
     Normal value range maximum for any of the MeasurementValue.values. Used
@@ -6693,12 +5384,7 @@ class Analog(Measurement):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                Normal value range minimum for any of the MeasurementValue.values. Used
-                for scaling, e.g. in bar graphs or of telemetered raw values.
-                '''
+            'maxOccurs': '1'
         })
     '''
     Normal value range minimum for any of the MeasurementValue.values. Used
@@ -6710,11 +5396,7 @@ class Analog(Measurement):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                Normal measurement value, e.g., used for percentage calculations.
-                '''
+            'maxOccurs': '1'
         })
     '''
     Normal measurement value, e.g., used for percentage calculations.
@@ -6725,13 +5407,7 @@ class Analog(Measurement):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                If true then this measurement is an active power, reactive power or current
-                with the convention that a positive value measured at the Terminal means
-                power is flowing into the related PowerSystemResource.
-                '''
+            'maxOccurs': '1'
         })
     '''
     If true then this measurement is an active power, reactive power or current
@@ -6739,33 +5415,25 @@ class Analog(Measurement):
     power is flowing into the related PowerSystemResource.
     '''
 
-    AnalogValues: list[ AnalogValue ] = field(
+    AnalogValues: list[AnalogValue] = field(
         default_factory = list,
         metadata = {
             'type': 'Association',
             'minOccurs': '0',
             'maxOccurs': 'unbounded',
-            'inverse': 'AnalogValue.Analog',
-            'docstring':
-                '''
-                The values connected to this measurement.
-                '''
+            'inverse': 'AnalogValue.Analog'
         })
     '''
     The values connected to this measurement.
     '''
 
-    LimitSets: list[ AnalogLimitSet ] = field(
+    LimitSets: list[AnalogLimitSet] = field(
         default_factory = list,
         metadata = {
             'type': 'Association',
             'minOccurs': '0',
             'maxOccurs': 'unbounded',
-            'inverse': 'AnalogLimitSet.Measurements',
-            'docstring':
-                '''
-                A measurement may have zero or more limit ranges defined for it.
-                '''
+            'inverse': 'AnalogLimitSet.Measurements'
         })
     '''
     A measurement may have zero or more limit ranges defined for it.
@@ -6783,12 +5451,7 @@ class Discrete(Measurement):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                Normal value range maximum for any of the MeasurementValue.values. Used
-                for scaling, e.g. in bar graphs or of telemetered raw values.
-                '''
+            'maxOccurs': '1'
         })
     '''
     Normal value range maximum for any of the MeasurementValue.values. Used
@@ -6800,12 +5463,7 @@ class Discrete(Measurement):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                Normal value range minimum for any of the MeasurementValue.values. Used
-                for scaling, e.g. in bar graphs or of telemetered raw values.
-                '''
+            'maxOccurs': '1'
         })
     '''
     Normal value range minimum for any of the MeasurementValue.values. Used
@@ -6817,44 +5475,31 @@ class Discrete(Measurement):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                Normal measurement value, e.g., used for percentage calculations.
-                '''
+            'maxOccurs': '1'
         })
     '''
     Normal measurement value, e.g., used for percentage calculations.
     '''
 
-    DiscreteValues: list[ DiscreteValue ] = field(
+    DiscreteValues: list[DiscreteValue] = field(
         default_factory = list,
         metadata = {
             'type': 'Association',
             'minOccurs': '0',
             'maxOccurs': 'unbounded',
-            'inverse': 'DiscreteValue.Discrete',
-            'docstring':
-                '''
-                The values connected to this measurement.
-                '''
+            'inverse': 'DiscreteValue.Discrete'
         })
     '''
     The values connected to this measurement.
     '''
 
-    ValueAliasSet: Optional[ ValueAliasSet ] = field(
+    ValueAliasSet: Optional[ValueAliasSet] = field(
         default = None,
         metadata = {
             'type': 'Association',
             'minOccurs': '0',
             'maxOccurs': '1',
-            'inverse': 'ValueAliasSet.Discretes',
-            'docstring':
-                '''
-                The ValueAliasSet used for translation of a MeasurementValue.value to a
-                name.
-                '''
+            'inverse': 'ValueAliasSet.Discretes'
         })
     '''
     The ValueAliasSet used for translation of a MeasurementValue.value to a
@@ -6867,17 +5512,13 @@ class StringMeasurement(Measurement):
     StringMeasurement represents a measurement with values of type string.
     '''
 
-    StringMeasurementValues: list[ StringMeasurementValue ] = field(
+    StringMeasurementValues: list[StringMeasurementValue] = field(
         default_factory = list,
         metadata = {
             'type': 'Association',
             'minOccurs': '0',
             'maxOccurs': 'unbounded',
-            'inverse': 'StringMeasurementValue.StringMeasurement',
-            'docstring':
-                '''
-                The values connected to this measurement.
-                '''
+            'inverse': 'StringMeasurementValue.StringMeasurement'
         })
     '''
     The values connected to this measurement.
@@ -6891,17 +5532,13 @@ class MeasurementValueSource(IdentifiedObject):
     described in the introduction to IEC 61970-301.
     '''
 
-    MeasurementValues: list[ MeasurementValue ] = field(
+    MeasurementValues: list[MeasurementValue] = field(
         default_factory = list,
         metadata = {
             'type': 'Association',
             'minOccurs': '0',
             'maxOccurs': 'unbounded',
-            'inverse': 'MeasurementValue.MeasurementValueSource',
-            'docstring':
-                '''
-                The MeasurementValues updated by the source.
-                '''
+            'inverse': 'MeasurementValue.MeasurementValueSource'
         })
     '''
     The MeasurementValues updated by the source.
@@ -6918,12 +5555,7 @@ class MutualCoupling(IdentifiedObject):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                Zero sequence mutual coupling shunt (charging) susceptance, uniformly distributed,
-                of the entire line section.
-                '''
+            'maxOccurs': '1'
         })
     '''
     Zero sequence mutual coupling shunt (charging) susceptance, uniformly distributed,
@@ -6935,12 +5567,7 @@ class MutualCoupling(IdentifiedObject):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                Distance to the start of the coupled region from the first line's terminal
-                having sequence number equal to 1.
-                '''
+            'maxOccurs': '1'
         })
     '''
     Distance to the start of the coupled region from the first line's terminal
@@ -6952,12 +5579,7 @@ class MutualCoupling(IdentifiedObject):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                Distance to the end of the coupled region from the first line's terminal
-                with sequence number equal to 1.
-                '''
+            'maxOccurs': '1'
         })
     '''
     Distance to the end of the coupled region from the first line's terminal
@@ -6969,12 +5591,7 @@ class MutualCoupling(IdentifiedObject):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                Distance to the start of coupled region from the second line's terminal
-                with sequence number equal to 1.
-                '''
+            'maxOccurs': '1'
         })
     '''
     Distance to the start of coupled region from the second line's terminal
@@ -6986,12 +5603,7 @@ class MutualCoupling(IdentifiedObject):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                Distance to the end of coupled region from the second line's terminal with
-                sequence number equal to 1.
-                '''
+            'maxOccurs': '1'
         })
     '''
     Distance to the end of coupled region from the second line's terminal with
@@ -7003,12 +5615,7 @@ class MutualCoupling(IdentifiedObject):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                Zero sequence mutual coupling shunt (charging) conductance, uniformly distributed,
-                of the entire line section.
-                '''
+            'maxOccurs': '1'
         })
     '''
     Zero sequence mutual coupling shunt (charging) conductance, uniformly distributed,
@@ -7020,11 +5627,7 @@ class MutualCoupling(IdentifiedObject):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                Zero sequence branch-to-branch mutual impedance coupling, resistance.
-                '''
+            'maxOccurs': '1'
         })
     '''
     Zero sequence branch-to-branch mutual impedance coupling, resistance.
@@ -7035,30 +5638,19 @@ class MutualCoupling(IdentifiedObject):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                Zero sequence branch-to-branch mutual impedance coupling, reactance.
-                '''
+            'maxOccurs': '1'
         })
     '''
     Zero sequence branch-to-branch mutual impedance coupling, reactance.
     '''
 
-    First_Terminal: Optional[ Terminal ] = field(
+    First_Terminal: Optional[Terminal] = field(
         default = None,
         metadata = {
             'type': 'Association',
             'minOccurs': '0',
             'maxOccurs': '1',
-            'inverse': 'Terminal.HasFirstMutualCoupling',
-            'docstring':
-                '''
-                The starting terminal for the calculation of distances along the first
-                branch of the mutual coupling. Normally MutualCoupling would only be used
-                for terminals of AC line segments. The first and second terminals of a
-                mutual coupling should point to different AC line segments.
-                '''
+            'inverse': 'Terminal.HasFirstMutualCoupling'
         })
     '''
     The starting terminal for the calculation of distances along the first
@@ -7067,18 +5659,13 @@ class MutualCoupling(IdentifiedObject):
     mutual coupling should point to different AC line segments.
     '''
 
-    Second_Terminal: Optional[ Terminal ] = field(
+    Second_Terminal: Optional[Terminal] = field(
         default = None,
         metadata = {
             'type': 'Association',
             'minOccurs': '0',
             'maxOccurs': '1',
-            'inverse': 'Terminal.HasSecondMutualCoupling',
-            'docstring':
-                '''
-                The starting terminal for the calculation of distances along the second
-                branch of the mutual coupling.
-                '''
+            'inverse': 'Terminal.HasSecondMutualCoupling'
         })
     '''
     The starting terminal for the calculation of distances along the second
@@ -7094,18 +5681,13 @@ class OperatingParticipant(IdentifiedObject):
     contractual share.
     '''
 
-    OperatingShare: list[ OperatingShare ] = field(
+    OperatingShare: list[OperatingShare] = field(
         default_factory = list,
         metadata = {
             'type': 'Association',
             'minOccurs': '0',
             'maxOccurs': 'unbounded',
-            'inverse': 'OperatingShare.OperatingParticipant',
-            'docstring':
-                '''
-                The operating shares of this operating participant. An operating participant
-                can be resused for any number of power system resources.
-                '''
+            'inverse': 'OperatingShare.OperatingParticipant'
         })
     '''
     The operating shares of this operating participant. An operating participant
@@ -7126,33 +5708,25 @@ class OperationalLimit(IdentifiedObject):
     A value_x with direction="high" shall be greater than a value_y with direction="low".
     '''
 
-    OperationalLimitSet: Optional[ OperationalLimitSet ] = field(
+    OperationalLimitSet: Optional[OperationalLimitSet] = field(
         default = None,
         metadata = {
             'type': 'Of Aggregate',
             'minOccurs': '0',
             'maxOccurs': '1',
-            'inverse': 'OperationalLimitSet.OperationalLimitValue',
-            'docstring':
-                '''
-                The limit set to which the limit values belong.
-                '''
+            'inverse': 'OperationalLimitSet.OperationalLimitValue'
         })
     '''
     The limit set to which the limit values belong.
     '''
 
-    OperationalLimitType: Optional[ OperationalLimitType ] = field(
+    OperationalLimitType: Optional[OperationalLimitType] = field(
         default = None,
         metadata = {
             'type': 'Association',
             'minOccurs': '0',
             'maxOccurs': '1',
-            'inverse': 'OperationalLimitType.OperationalLimit',
-            'docstring':
-                '''
-                The limit type associated with this limit.
-                '''
+            'inverse': 'OperationalLimitType.OperationalLimit'
         })
     '''
     The limit type associated with this limit.
@@ -7169,11 +5743,7 @@ class ActivePowerLimit(OperationalLimit):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                The normal value of active power limit.
-                '''
+            'maxOccurs': '1'
         })
     '''
     The normal value of active power limit.
@@ -7184,11 +5754,7 @@ class ActivePowerLimit(OperationalLimit):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                Value of active power limit.
-                '''
+            'maxOccurs': '1'
         })
     '''
     Value of active power limit.
@@ -7205,11 +5771,7 @@ class ApparentPowerLimit(OperationalLimit):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                The normal apparent power limit.
-                '''
+            'maxOccurs': '1'
         })
     '''
     The normal apparent power limit.
@@ -7220,11 +5782,7 @@ class ApparentPowerLimit(OperationalLimit):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                The apparent power limit.
-                '''
+            'maxOccurs': '1'
         })
     '''
     The apparent power limit.
@@ -7241,11 +5799,7 @@ class CurrentLimit(OperationalLimit):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                The normal value for limit on current flow.
-                '''
+            'maxOccurs': '1'
         })
     '''
     The normal value for limit on current flow.
@@ -7256,11 +5810,7 @@ class CurrentLimit(OperationalLimit):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                Limit on current flow.
-                '''
+            'maxOccurs': '1'
         })
     '''
     Limit on current flow.
@@ -7277,12 +5827,7 @@ class VoltageLimit(OperationalLimit):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                The normal limit on voltage. High or low limit nature of the limit depends
-                upon the properties of the operational limit type.
-                '''
+            'maxOccurs': '1'
         })
     '''
     The normal limit on voltage. High or low limit nature of the limit depends
@@ -7294,12 +5839,7 @@ class VoltageLimit(OperationalLimit):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                Limit on voltage. High or low limit nature of the limit depends upon the
-                properties of the operational limit type.
-                '''
+            'maxOccurs': '1'
         })
     '''
     Limit on voltage. High or low limit nature of the limit depends upon the
@@ -7317,62 +5857,48 @@ class OperationalLimitSet(IdentifiedObject):
     together as a set.
     '''
 
-    ConnectivityNode: Optional[ ConnectivityNode ] = field(
+    ConnectivityNode: Optional[ConnectivityNode] = field(
         default = None,
         metadata = {
             'type': 'Association',
             'minOccurs': '0',
             'maxOccurs': '1',
-            'inverse': 'ConnectivityNode.OperationalLimitSet',
-            'docstring':
-                '''
-                '''
+            'inverse': 'ConnectivityNode.OperationalLimitSet'
         })
     '''
     '''
 
-    Equipment: Optional[ Equipment ] = field(
+    Equipment: Optional[Equipment] = field(
         default = None,
         metadata = {
             'type': 'Association',
             'minOccurs': '0',
             'maxOccurs': '1',
-            'inverse': 'Equipment.OperationalLimitSet',
-            'docstring':
-                '''
-                The equipment to which the limit set applies.
-                '''
+            'inverse': 'Equipment.OperationalLimitSet'
         })
     '''
     The equipment to which the limit set applies.
     '''
 
-    OperationalLimitValue: list[ OperationalLimit ] = field(
+    OperationalLimitValue: list[OperationalLimit] = field(
         default_factory = list,
         metadata = {
             'type': 'Aggregate Of',
             'minOccurs': '0',
             'maxOccurs': 'unbounded',
-            'inverse': 'OperationalLimit.OperationalLimitSet',
-            'docstring':
-                '''
-                Values of equipment limits.
-                '''
+            'inverse': 'OperationalLimit.OperationalLimitSet'
         })
     '''
     Values of equipment limits.
     '''
 
-    Terminal: Optional[ ACDCTerminal ] = field(
+    Terminal: Optional[ACDCTerminal] = field(
         default = None,
         metadata = {
             'type': 'Association',
             'minOccurs': '0',
             'maxOccurs': '1',
-            'inverse': 'ACDCTerminal.OperationalLimitSet',
-            'docstring':
-                '''
-                '''
+            'inverse': 'ACDCTerminal.OperationalLimitSet'
         })
     '''
     '''
@@ -7388,14 +5914,7 @@ class OperationalLimitType(IdentifiedObject):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                The nominal acceptable duration of the limit. Limits are commonly expressed
-                in terms of the a time limit for which the limit is normally acceptable.
-                The actual acceptable duration of a specific limit may depend on other
-                local factors such as temperature or wind speed.
-                '''
+            'maxOccurs': '1'
         })
     '''
     The nominal acceptable duration of the limit. Limits are commonly expressed
@@ -7409,27 +5928,19 @@ class OperationalLimitType(IdentifiedObject):
         metadata = {
             'type': 'enumeration',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                The direction of the limit.
-                '''
+            'maxOccurs': '1'
         })
     '''
     The direction of the limit.
     '''
 
-    OperationalLimit: list[ OperationalLimit ] = field(
+    OperationalLimit: list[OperationalLimit] = field(
         default_factory = list,
         metadata = {
             'type': 'Association',
             'minOccurs': '0',
             'maxOccurs': 'unbounded',
-            'inverse': 'OperationalLimit.OperationalLimitType',
-            'docstring':
-                '''
-                The operational limits associated with this type of limit.
-                '''
+            'inverse': 'OperationalLimit.OperationalLimitType'
         })
     '''
     The operational limits associated with this type of limit.
@@ -7444,17 +5955,13 @@ class PSRType(IdentifiedObject):
     non standard.
     '''
 
-    PowerSystemResources: list[ PowerSystemResource ] = field(
+    PowerSystemResources: list[PowerSystemResource] = field(
         default_factory = list,
         metadata = {
             'type': 'Association',
             'minOccurs': '0',
             'maxOccurs': 'unbounded',
-            'inverse': 'PowerSystemResource.PSRType',
-            'docstring':
-                '''
-                Power system resources classified with this power system resource type.
-                '''
+            'inverse': 'PowerSystemResource.PSRType'
         })
     '''
     Power system resources classified with this power system resource type.
@@ -7470,38 +5977,29 @@ class ParallelLineSegment(IdentifiedObject):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                '''
+            'maxOccurs': '1'
         })
     '''
     '''
 
-    ACLineSegment: Optional[ ACLineSegment ] = field(
+    ACLineSegment: Optional[ACLineSegment] = field(
         default = None,
         metadata = {
             'type': 'Association',
             'minOccurs': '0',
             'maxOccurs': '1',
-            'inverse': 'ACLineSegment.ParallelLineSegment',
-            'docstring':
-                '''
-                '''
+            'inverse': 'ACLineSegment.ParallelLineSegment'
         })
     '''
     '''
 
-    RightOfWay: Optional[ RightOfWay ] = field(
+    RightOfWay: Optional[RightOfWay] = field(
         default = None,
         metadata = {
             'type': 'Association',
             'minOccurs': '0',
             'maxOccurs': '1',
-            'inverse': 'RightOfWay.ParallelLineSegments',
-            'docstring':
-                '''
-                '''
+            'inverse': 'RightOfWay.ParallelLineSegments'
         })
     '''
     '''
@@ -7512,18 +6010,13 @@ class PerLengthLineParameter(IdentifiedObject):
     Common type for per-length electrical catalogues describing line parameters.
     '''
 
-    WireAssemblyInfo: Optional[ WireAssemblyInfo ] = field(
+    WireAssemblyInfo: Optional[WireAssemblyInfo] = field(
         default = None,
         metadata = {
             'type': 'Association',
             'minOccurs': '0',
             'maxOccurs': '1',
-            'inverse': 'WireAssemblyInfo.PerLengthLineParameter',
-            'docstring':
-                '''
-                A WireAssemblyInfo is used to compute the PerLengthParameter data in the
-                Wires package
-                '''
+            'inverse': 'WireAssemblyInfo.PerLengthLineParameter'
         })
     '''
     A WireAssemblyInfo is used to compute the PerLengthParameter data in the
@@ -7536,17 +6029,13 @@ class PerLengthImpedance(PerLengthLineParameter):
     Common type for per-length impedance electrical catalogues.
     '''
 
-    ACLineSegments: list[ ACLineSegment ] = field(
+    ACLineSegments: list[ACLineSegment] = field(
         default_factory = list,
         metadata = {
             'type': 'Association',
             'minOccurs': '0',
             'maxOccurs': 'unbounded',
-            'inverse': 'ACLineSegment.PerLengthImpedance',
-            'docstring':
-                '''
-                All line segments described by this per-length impedance.
-                '''
+            'inverse': 'ACLineSegment.PerLengthImpedance'
         })
     '''
     All line segments described by this per-length impedance.
@@ -7564,29 +6053,20 @@ class PerLengthPhaseImpedance(PerLengthImpedance):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                Number of phase, neutral, and other wires retained. Constrains the number
-                of matrix elements and the phase codes that can be used with this matrix.
-                '''
+            'maxOccurs': '1'
         })
     '''
     Number of phase, neutral, and other wires retained. Constrains the number
     of matrix elements and the phase codes that can be used with this matrix.
     '''
 
-    PhaseImpedanceData: list[ PhaseImpedanceData ] = field(
+    PhaseImpedanceData: list[PhaseImpedanceData] = field(
         default_factory = list,
         metadata = {
             'type': 'Association',
             'minOccurs': '0',
             'maxOccurs': 'unbounded',
-            'inverse': 'PhaseImpedanceData.PhaseImpedance',
-            'docstring':
-                '''
-                All data that belong to this conductor phase impedance.
-                '''
+            'inverse': 'PhaseImpedanceData.PhaseImpedance'
         })
     '''
     All data that belong to this conductor phase impedance.
@@ -7605,11 +6085,7 @@ class PerLengthSequenceImpedance(PerLengthImpedance):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                Zero sequence shunt (charging) susceptance, per unit of length.
-                '''
+            'maxOccurs': '1'
         })
     '''
     Zero sequence shunt (charging) susceptance, per unit of length.
@@ -7620,11 +6096,7 @@ class PerLengthSequenceImpedance(PerLengthImpedance):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                Positive sequence shunt (charging) susceptance, per unit of length.
-                '''
+            'maxOccurs': '1'
         })
     '''
     Positive sequence shunt (charging) susceptance, per unit of length.
@@ -7635,11 +6107,7 @@ class PerLengthSequenceImpedance(PerLengthImpedance):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                Zero sequence shunt (charging) conductance, per unit of length.
-                '''
+            'maxOccurs': '1'
         })
     '''
     Zero sequence shunt (charging) conductance, per unit of length.
@@ -7650,11 +6118,7 @@ class PerLengthSequenceImpedance(PerLengthImpedance):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                Positive sequence shunt (charging) conductance, per unit of length.
-                '''
+            'maxOccurs': '1'
         })
     '''
     Positive sequence shunt (charging) conductance, per unit of length.
@@ -7665,11 +6129,7 @@ class PerLengthSequenceImpedance(PerLengthImpedance):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                Positive sequence series resistance, per unit of length.
-                '''
+            'maxOccurs': '1'
         })
     '''
     Positive sequence series resistance, per unit of length.
@@ -7680,11 +6140,7 @@ class PerLengthSequenceImpedance(PerLengthImpedance):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                Zero sequence series resistance, per unit of length.
-                '''
+            'maxOccurs': '1'
         })
     '''
     Zero sequence series resistance, per unit of length.
@@ -7695,11 +6151,7 @@ class PerLengthSequenceImpedance(PerLengthImpedance):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                Positive sequence series reactance, per unit of length.
-                '''
+            'maxOccurs': '1'
         })
     '''
     Positive sequence series reactance, per unit of length.
@@ -7710,11 +6162,7 @@ class PerLengthSequenceImpedance(PerLengthImpedance):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                Zero sequence series reactance, per unit of length.
-                '''
+            'maxOccurs': '1'
         })
     '''
     Zero sequence series reactance, per unit of length.
@@ -7727,33 +6175,25 @@ class PhaseTapChangerTable(IdentifiedObject):
     varies with the tap step.
     '''
 
-    PhaseTapChangerTablePoint: list[ PhaseTapChangerTablePoint ] = field(
+    PhaseTapChangerTablePoint: list[PhaseTapChangerTablePoint] = field(
         default_factory = list,
         metadata = {
             'type': 'Association',
             'minOccurs': '0',
             'maxOccurs': 'unbounded',
-            'inverse': 'PhaseTapChangerTablePoint.PhaseTapChangerTable',
-            'docstring':
-                '''
-                The points of this table.
-                '''
+            'inverse': 'PhaseTapChangerTablePoint.PhaseTapChangerTable'
         })
     '''
     The points of this table.
     '''
 
-    PhaseTapChangerTabular: list[ PhaseTapChangerTabular ] = field(
+    PhaseTapChangerTabular: list[PhaseTapChangerTabular] = field(
         default_factory = list,
         metadata = {
             'type': 'Association',
             'minOccurs': '0',
             'maxOccurs': 'unbounded',
-            'inverse': 'PhaseTapChangerTabular.PhaseTapChangerTable',
-            'docstring':
-                '''
-                The phase tap changers to which this phase tap table applies.
-                '''
+            'inverse': 'PhaseTapChangerTabular.PhaseTapChangerTable'
         })
     '''
     The phase tap changers to which this phase tap table applies.
@@ -7768,101 +6208,75 @@ class PowerSystemResource(IdentifiedObject):
     Power system resources can have measurements associated.
     '''
 
-    AssetDatasheet: Optional[ AssetInfo ] = field(
+    AssetDatasheet: Optional[AssetInfo] = field(
         default = None,
         metadata = {
             'type': 'Association',
             'minOccurs': '0',
             'maxOccurs': '1',
-            'inverse': 'AssetInfo.PowerSystemResources',
-            'docstring':
-                '''
-                Datasheet information for this power system resource.
-                '''
+            'inverse': 'AssetInfo.PowerSystemResources'
         })
     '''
     Datasheet information for this power system resource.
     '''
 
-    Assets: list[ Asset ] = field(
+    Assets: list[Asset] = field(
         default_factory = list,
         metadata = {
             'type': 'Association',
             'minOccurs': '0',
             'maxOccurs': 'unbounded',
-            'inverse': 'Asset.PowerSystemResources',
-            'docstring':
-                '''
-                All assets represented by this power system resource. For example, multiple
-                conductor assets are electrically modelled as a single AC line segment.
-                '''
+            'inverse': 'Asset.PowerSystemResources'
         })
     '''
     All assets represented by this power system resource. For example, multiple
     conductor assets are electrically modelled as a single AC line segment.
     '''
 
-    Controls: list[ Control ] = field(
+    Controls: list[Control] = field(
         default_factory = list,
         metadata = {
             'type': 'Association',
             'minOccurs': '0',
             'maxOccurs': 'unbounded',
-            'inverse': 'Control.PowerSystemResource',
-            'docstring':
-                '''
-                The controller outputs used to actually govern a regulating device, e.g.
-                the magnetization of a synchronous machine or capacitor bank breaker actuator.
-                '''
+            'inverse': 'Control.PowerSystemResource'
         })
     '''
     The controller outputs used to actually govern a regulating device, e.g.
     the magnetization of a synchronous machine or capacitor bank breaker actuator.
     '''
 
-    Location: Optional[ Location ] = field(
+    Location: Optional[Location] = field(
         default = None,
         metadata = {
             'type': 'Association',
             'minOccurs': '0',
             'maxOccurs': '1',
-            'inverse': 'Location.PowerSystemResources',
-            'docstring':
-                '''
-                Location of this power system resource.
-                '''
+            'inverse': 'Location.PowerSystemResources'
         })
     '''
     Location of this power system resource.
     '''
 
-    Measurements: list[ Measurement ] = field(
+    Measurements: list[Measurement] = field(
         default_factory = list,
         metadata = {
             'type': 'Aggregate Of',
             'minOccurs': '0',
             'maxOccurs': 'unbounded',
-            'inverse': 'Measurement.PowerSystemResource',
-            'docstring':
-                '''
-                The measurements associated with this power system resource.
-                '''
+            'inverse': 'Measurement.PowerSystemResource'
         })
     '''
     The measurements associated with this power system resource.
     '''
 
-    PSRType: Optional[ PSRType ] = field(
+    PSRType: Optional[PSRType] = field(
         default = None,
         metadata = {
             'type': 'Association',
             'minOccurs': '0',
             'maxOccurs': '1',
-            'inverse': 'PSRType.PowerSystemResources',
-            'docstring':
-                '''
-                Custom classification for this power system resource.
-                '''
+            'inverse': 'PSRType.PowerSystemResources'
         })
     '''
     Custom classification for this power system resource.
@@ -7879,18 +6293,7 @@ class ACLineSegmentPhase(PowerSystemResource):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                Number designation for this line segment phase. Each line segment phase
-                within a line segment should have a unique sequence number. This is useful
-                for unbalanced modeling to bind the mathematical model (PhaseImpedanceData
-                of PerLengthPhaseImpedance) with the connectivity model (this class) and
-                the physical model (WirePosition, WirePhaseInfo) without tight coupling.
-                Multiple circuits on the same pole, tower or right-of-way can be included
-                with unique sequence numbers for the phases, and identical sequence numbers
-                for any shared neutrals.
-                '''
+            'maxOccurs': '1'
         })
     '''
     Number designation for this line segment phase. Each line segment phase
@@ -7903,48 +6306,37 @@ class ACLineSegmentPhase(PowerSystemResource):
     for any shared neutrals.
     '''
 
-    phase: Optional[ SinglePhaseKind ] = field(
+    phase: Optional[SinglePhaseKind] = field(
         default = None,
         metadata = {
             'type': 'enumeration',
             'minOccurs': '0',
             'maxOccurs': '1',
-            'inverse': '',
-            'docstring':
-                '''
-                The phase connection of the wire at both ends.
-                '''
+            'inverse': ''
         })
     '''
     The phase connection of the wire at both ends.
     '''
 
-    ACLineSegment: Optional[ ACLineSegment ] = field(
+    ACLineSegment: Optional[ACLineSegment] = field(
         default = None,
         metadata = {
             'type': 'Association',
             'minOccurs': '0',
             'maxOccurs': '1',
-            'inverse': 'ACLineSegment.ACLineSegmentPhases',
-            'docstring':
-                '''
-                The line segment to which the phase belongs.
-                '''
+            'inverse': 'ACLineSegment.ACLineSegmentPhases'
         })
     '''
     The line segment to which the phase belongs.
     '''
 
-    WireInfo: Optional[ WireInfo ] = field(
+    WireInfo: Optional[WireInfo] = field(
         default = None,
         metadata = {
             'type': 'Association',
             'minOccurs': '0',
             'maxOccurs': '1',
-            'inverse': 'WireInfo.ACLineSegmentPhases',
-            'docstring':
-                '''
-                '''
+            'inverse': 'WireInfo.ACLineSegmentPhases'
         })
     '''
     '''
@@ -7956,33 +6348,25 @@ class ConnectivityNodeContainer(PowerSystemResource):
     nodes.
     '''
 
-    ConnectivityNodes: list[ ConnectivityNode ] = field(
+    ConnectivityNodes: list[ConnectivityNode] = field(
         default_factory = list,
         metadata = {
             'type': 'Association',
             'minOccurs': '0',
             'maxOccurs': 'unbounded',
-            'inverse': 'ConnectivityNode.ConnectivityNodeContainer',
-            'docstring':
-                '''
-                Connectivity nodes which belong to this connectivity node container.
-                '''
+            'inverse': 'ConnectivityNode.ConnectivityNodeContainer'
         })
     '''
     Connectivity nodes which belong to this connectivity node container.
     '''
 
-    TopologicalNode: list[ TopologicalNode ] = field(
+    TopologicalNode: list[TopologicalNode] = field(
         default_factory = list,
         metadata = {
             'type': 'Association',
             'minOccurs': '0',
             'maxOccurs': 'unbounded',
-            'inverse': 'TopologicalNode.ConnectivityNodeContainer',
-            'docstring':
-                '''
-                The topological nodes which belong to this connectivity node container.
-                '''
+            'inverse': 'TopologicalNode.ConnectivityNodeContainer'
         })
     '''
     The topological nodes which belong to this connectivity node container.
@@ -7994,22 +6378,13 @@ class EquipmentContainer(ConnectivityNodeContainer):
     A modeling construct to provide a root class for containing equipment.
     '''
 
-    AdditionalGroupedEquipment: list[ Equipment ] = field(
+    AdditionalGroupedEquipment: list[Equipment] = field(
         default_factory = list,
         metadata = {
             'type': 'Association',
             'minOccurs': '0',
             'maxOccurs': 'unbounded',
-            'inverse': 'Equipment.AdditionalEquipmentContainer',
-            'docstring':
-                '''
-                The additonal contained equipment. The equipment belong to the equipment
-                container. The equipment is contained in another equipment container, but
-                also grouped with this equipment container. Examples include when a switch
-                contained in a substation is also desired to be grouped with a line contianer
-                or when a switch is included in a secondary substation and also grouped
-                in a feeder.
-                '''
+            'inverse': 'Equipment.AdditionalEquipmentContainer'
         })
     '''
     The additonal contained equipment. The equipment belong to the equipment
@@ -8020,17 +6395,13 @@ class EquipmentContainer(ConnectivityNodeContainer):
     in a feeder.
     '''
 
-    Equipments: list[ Equipment ] = field(
+    Equipments: list[Equipment] = field(
         default_factory = list,
         metadata = {
             'type': 'Aggregate Of',
             'minOccurs': '0',
             'maxOccurs': 'unbounded',
-            'inverse': 'Equipment.EquipmentContainer',
-            'docstring':
-                '''
-                Contained equipment.
-                '''
+            'inverse': 'Equipment.EquipmentContainer'
         })
     '''
     Contained equipment.
@@ -8050,11 +6421,7 @@ class Bay(EquipmentContainer):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                Indicates the presence/absence of energy measurements.
-                '''
+            'maxOccurs': '1'
         })
     '''
     Indicates the presence/absence of energy measurements.
@@ -8065,75 +6432,55 @@ class Bay(EquipmentContainer):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                Indicates the presence/absence of active/reactive power measurements.
-                '''
+            'maxOccurs': '1'
         })
     '''
     Indicates the presence/absence of active/reactive power measurements.
     '''
 
-    breakerConfiguration: Optional[ BreakerConfiguration ] = field(
+    breakerConfiguration: Optional[BreakerConfiguration] = field(
         default = None,
         metadata = {
             'type': 'enumeration',
             'minOccurs': '0',
             'maxOccurs': '1',
-            'inverse': '',
-            'docstring':
-                '''
-                Breaker configuration.
-                '''
+            'inverse': ''
         })
     '''
     Breaker configuration.
     '''
 
-    busBarConfiguration: Optional[ BusbarConfiguration ] = field(
+    busBarConfiguration: Optional[BusbarConfiguration] = field(
         default = None,
         metadata = {
             'type': 'enumeration',
             'minOccurs': '0',
             'maxOccurs': '1',
-            'inverse': '',
-            'docstring':
-                '''
-                Bus bar configuration.
-                '''
+            'inverse': ''
         })
     '''
     Bus bar configuration.
     '''
 
-    Substation: Optional[ Substation ] = field(
+    Substation: Optional[Substation] = field(
         default = None,
         metadata = {
             'type': 'Of Aggregate',
             'minOccurs': '0',
             'maxOccurs': '1',
-            'inverse': 'Substation.Bays',
-            'docstring':
-                '''
-                Substation containing the bay.
-                '''
+            'inverse': 'Substation.Bays'
         })
     '''
     Substation containing the bay.
     '''
 
-    VoltageLevel: Optional[ VoltageLevel ] = field(
+    VoltageLevel: Optional[VoltageLevel] = field(
         default = None,
         metadata = {
             'type': 'Of Aggregate',
             'minOccurs': '0',
             'maxOccurs': '1',
-            'inverse': 'VoltageLevel.Bays',
-            'docstring':
-                '''
-                The voltage level containing this bay.
-                '''
+            'inverse': 'VoltageLevel.Bays'
         })
     '''
     The voltage level containing this bay.
@@ -8148,51 +6495,37 @@ class Feeder(EquipmentContainer):
     current operation state.
     '''
 
-    DistributionArea: Optional[ DistributionArea ] = field(
+    DistributionArea: Optional[DistributionArea] = field(
         default = None,
         metadata = {
             'type': 'Association',
             'minOccurs': '0',
             'maxOccurs': '1',
-            'inverse': 'DistributionArea.Feeders',
-            'docstring':
-                '''
-                The DistributionArea to which the feeder belongs
-                '''
+            'inverse': 'DistributionArea.Feeders'
         })
     '''
     The DistributionArea to which the feeder belongs
     '''
 
-    FeederArea: Optional[ FeederArea ] = field(
+    FeederArea: Optional[FeederArea] = field(
         default = None,
         metadata = {
             'type': 'Association',
             'minOccurs': '0',
             'maxOccurs': '1',
-            'inverse': 'FeederArea.Feeder',
-            'docstring':
-                '''
-                The FeederArea (which contains Equipment not contained in
-                '''
+            'inverse': 'FeederArea.Feeder'
         })
     '''
     The FeederArea (which contains Equipment not contained in
     '''
 
-    NamingSecondarySubstation: list[ Substation ] = field(
+    NamingSecondarySubstation: list[Substation] = field(
         default_factory = list,
         metadata = {
             'type': 'Aggregate Of',
             'minOccurs': '0',
             'maxOccurs': 'unbounded',
-            'inverse': 'Substation.NamingFeeder',
-            'docstring':
-                '''
-                The secondary substations that are normally energized from the feeder.
-                Used for naming purposes. Should be consistent with the other associations
-                for energizing terminal specification and the feeder energization specification.
-                '''
+            'inverse': 'Substation.NamingFeeder'
         })
     '''
     The secondary substations that are normally energized from the feeder.
@@ -8200,51 +6533,38 @@ class Feeder(EquipmentContainer):
     for energizing terminal specification and the feeder energization specification.
     '''
 
-    NormalEnergizedSubstation: list[ Substation ] = field(
+    NormalEnergizedSubstation: list[Substation] = field(
         default_factory = list,
         metadata = {
             'type': 'Association',
             'minOccurs': '0',
             'maxOccurs': 'unbounded',
-            'inverse': 'Substation.NormalEnergizingFeeder',
-            'docstring':
-                '''
-                The substations that are normally energized by the feeder.
-                '''
+            'inverse': 'Substation.NormalEnergizingFeeder'
         })
     '''
     The substations that are normally energized by the feeder.
     '''
 
-    NormalEnergizingSubstation: Optional[ Substation ] = field(
+    NormalEnergizingSubstation: Optional[Substation] = field(
         default = None,
         metadata = {
             'type': 'Of Aggregate',
             'minOccurs': '0',
             'maxOccurs': '1',
-            'inverse': 'Substation.NormalEnergizedFeeder',
-            'docstring':
-                '''
-                The substation that nominally energizes the feeder. Also used for naming
-                purposes.
-                '''
+            'inverse': 'Substation.NormalEnergizedFeeder'
         })
     '''
     The substation that nominally energizes the feeder. Also used for naming
     purposes.
     '''
 
-    NormalHeadTerminal: list[ Terminal ] = field(
+    NormalHeadTerminal: list[Terminal] = field(
         default_factory = list,
         metadata = {
             'type': 'Association',
             'minOccurs': '0',
             'maxOccurs': 'unbounded',
-            'inverse': 'Terminal.NormalHeadFeeder',
-            'docstring':
-                '''
-                The normal head terminal or terminals of the feeder.
-                '''
+            'inverse': 'Terminal.NormalHeadFeeder'
         })
     '''
     The normal head terminal or terminals of the feeder.
@@ -8257,17 +6577,13 @@ class Line(EquipmentContainer):
     line.
     '''
 
-    Region: Optional[ SubGeographicalRegion ] = field(
+    Region: Optional[SubGeographicalRegion] = field(
         default = None,
         metadata = {
             'type': 'Of Aggregate',
             'minOccurs': '0',
             'maxOccurs': '1',
-            'inverse': 'SubGeographicalRegion.Lines',
-            'docstring':
-                '''
-                The sub-geographical region of the line.
-                '''
+            'inverse': 'SubGeographicalRegion.Lines'
         })
     '''
     The sub-geographical region of the line.
@@ -8287,35 +6603,25 @@ class Substation(EquipmentContainer):
     or modifying its characteristics.
     '''
 
-    Bays: list[ Bay ] = field(
+    Bays: list[Bay] = field(
         default_factory = list,
         metadata = {
             'type': 'Aggregate Of',
             'minOccurs': '0',
             'maxOccurs': 'unbounded',
-            'inverse': 'Bay.Substation',
-            'docstring':
-                '''
-                Bays contained in the substation.
-                '''
+            'inverse': 'Bay.Substation'
         })
     '''
     Bays contained in the substation.
     '''
 
-    NamingFeeder: Optional[ Feeder ] = field(
+    NamingFeeder: Optional[Feeder] = field(
         default = None,
         metadata = {
             'type': 'Of Aggregate',
             'minOccurs': '0',
             'maxOccurs': '1',
-            'inverse': 'Feeder.NamingSecondarySubstation',
-            'docstring':
-                '''
-                The primary feeder that normally energizes the secondary substation. Used
-                for naming purposes. Either this association or the substation to subgeographical
-                region should be used for hiearchical containment specification.
-                '''
+            'inverse': 'Feeder.NamingSecondarySubstation'
         })
     '''
     The primary feeder that normally energizes the secondary substation. Used
@@ -8323,81 +6629,61 @@ class Substation(EquipmentContainer):
     region should be used for hiearchical containment specification.
     '''
 
-    NormalEnergizedFeeder: list[ Feeder ] = field(
+    NormalEnergizedFeeder: list[Feeder] = field(
         default_factory = list,
         metadata = {
             'type': 'Aggregate Of',
             'minOccurs': '0',
             'maxOccurs': 'unbounded',
-            'inverse': 'Feeder.NormalEnergizingSubstation',
-            'docstring':
-                '''
-                The normal energized feeders of the substation. Also used for naming purposes.
-                '''
+            'inverse': 'Feeder.NormalEnergizingSubstation'
         })
     '''
     The normal energized feeders of the substation. Also used for naming purposes.
     '''
 
-    NormalEnergizingFeeder: list[ Feeder ] = field(
+    NormalEnergizingFeeder: list[Feeder] = field(
         default_factory = list,
         metadata = {
             'type': 'Association',
             'minOccurs': '0',
             'maxOccurs': 'unbounded',
-            'inverse': 'Feeder.NormalEnergizedSubstation',
-            'docstring':
-                '''
-                The feeders that potentially energize the downstream substation. Should
-                be consistent with the associations that describe the naming hiearchy.
-                '''
+            'inverse': 'Feeder.NormalEnergizedSubstation'
         })
     '''
     The feeders that potentially energize the downstream substation. Should
     be consistent with the associations that describe the naming hiearchy.
     '''
 
-    Region: Optional[ SubGeographicalRegion ] = field(
+    Region: Optional[SubGeographicalRegion] = field(
         default = None,
         metadata = {
             'type': 'Of Aggregate',
             'minOccurs': '0',
             'maxOccurs': '1',
-            'inverse': 'SubGeographicalRegion.Substations',
-            'docstring':
-                '''
-                The SubGeographicalRegion containing the substation.
-                '''
+            'inverse': 'SubGeographicalRegion.Substations'
         })
     '''
     The SubGeographicalRegion containing the substation.
     '''
 
-    SchedulingArea: Optional[ SchedulingArea ] = field(
+    SchedulingArea: Optional[SchedulingArea] = field(
         default = None,
         metadata = {
             'type': 'Association',
             'minOccurs': '0',
             'maxOccurs': '1',
-            'inverse': 'SchedulingArea.Substations',
-            'docstring':
-                '''
-                '''
+            'inverse': 'SchedulingArea.Substation'
         })
     '''
     '''
 
-    VoltageLevels: list[ VoltageLevel ] = field(
+    VoltageLevels: list[VoltageLevel] = field(
         default_factory = list,
         metadata = {
             'type': 'Aggregate Of',
             'minOccurs': '0',
             'maxOccurs': 'unbounded',
-            'inverse': 'VoltageLevel.Substation',
-            'docstring':
-                '''
-                The voltage levels within this substation.
-                '''
+            'inverse': 'VoltageLevel.Substation'
         })
     '''
     The voltage levels within this substation.
@@ -8417,11 +6703,7 @@ class VoltageLevel(EquipmentContainer):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                The bus bar's high voltage limit
-                '''
+            'maxOccurs': '1'
         })
     '''
     The bus bar's high voltage limit
@@ -8432,59 +6714,43 @@ class VoltageLevel(EquipmentContainer):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                The bus bar's low voltage limit
-                '''
+            'maxOccurs': '1'
         })
     '''
     The bus bar's low voltage limit
     '''
 
-    BaseVoltage: Optional[ BaseVoltage ] = field(
+    BaseVoltage: Optional[BaseVoltage] = field(
         default = None,
         metadata = {
             'type': 'Association',
             'minOccurs': '0',
             'maxOccurs': '1',
-            'inverse': 'BaseVoltage.VoltageLevel',
-            'docstring':
-                '''
-                The base voltage used for all equipment within the voltage level.
-                '''
+            'inverse': 'BaseVoltage.VoltageLevel'
         })
     '''
     The base voltage used for all equipment within the voltage level.
     '''
 
-    Bays: list[ Bay ] = field(
+    Bays: list[Bay] = field(
         default_factory = list,
         metadata = {
             'type': 'Aggregate Of',
             'minOccurs': '0',
             'maxOccurs': 'unbounded',
-            'inverse': 'Bay.VoltageLevel',
-            'docstring':
-                '''
-                The bays within this voltage level.
-                '''
+            'inverse': 'Bay.VoltageLevel'
         })
     '''
     The bays within this voltage level.
     '''
 
-    Substation: Optional[ Substation ] = field(
+    Substation: Optional[Substation] = field(
         default = None,
         metadata = {
             'type': 'Of Aggregate',
             'minOccurs': '0',
             'maxOccurs': '1',
-            'inverse': 'Substation.VoltageLevels',
-            'docstring':
-                '''
-                The substation of the voltage level.
-                '''
+            'inverse': 'Substation.VoltageLevels'
         })
     '''
     The substation of the voltage level.
@@ -8501,14 +6767,7 @@ class EnergyConsumerPhase(PowerSystemResource):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                Active power of the load. Load sign convention is used, i.e. positive sign
-                means flow out from a node.
-                For voltage dependent loads the value is at rated voltage.
-                Starting value for a steady state solution.
-                '''
+            'maxOccurs': '1'
         })
     '''
     Active power of the load. Load sign convention is used, i.e. positive sign
@@ -8522,15 +6781,7 @@ class EnergyConsumerPhase(PowerSystemResource):
         metadata = {
             'type': 'enumeration',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                Phase of this energy consumer component. If the energy consumer is wye
-                connected, the connection is from the indicated phase to the central ground
-                or neutral point. If the energy consumer is delta connected, the phase
-                indicates an energy consumer connected from the indicated phase to the
-                next logical non-neutral phase.
-                '''
+            'maxOccurs': '1'
         })
     '''
     Phase of this energy consumer component. If the energy consumer is wye
@@ -8545,14 +6796,7 @@ class EnergyConsumerPhase(PowerSystemResource):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                Reactive power of the load. Load sign convention is used, i.e. positive
-                sign means flow out from a node.
-                For voltage dependent loads the value is at rated voltage.
-                Starting value for a steady state solution.
-                '''
+            'maxOccurs': '1'
         })
     '''
     Reactive power of the load. Load sign convention is used, i.e. positive
@@ -8561,17 +6805,13 @@ class EnergyConsumerPhase(PowerSystemResource):
     Starting value for a steady state solution.
     '''
 
-    EnergyConsumer: Optional[ EnergyConsumer ] = field(
+    EnergyConsumer: Optional[EnergyConsumer] = field(
         default = None,
         metadata = {
             'type': 'Association',
             'minOccurs': '0',
             'maxOccurs': '1',
-            'inverse': 'EnergyConsumer.EnergyConsumerPhase',
-            'docstring':
-                '''
-                The energy consumer to which this phase belongs.
-                '''
+            'inverse': 'EnergyConsumer.EnergyConsumerPhase'
         })
     '''
     The energy consumer to which this phase belongs.
@@ -8583,21 +6823,13 @@ class EnergySourcePhase(PowerSystemResource):
     Represents the single phase information of an unbalanced energy source.
     '''
 
-    phase: Optional[ SinglePhaseKind ] = field(
+    phase: Optional[SinglePhaseKind] = field(
         default = None,
         metadata = {
             'type': 'enumeration',
             'minOccurs': '0',
             'maxOccurs': '1',
-            'inverse': '',
-            'docstring':
-                '''
-                Phase of this energy source component. If the energy source wye connected,
-                the connection is from the indicated phase to the central ground or neutral
-                point. If the energy source is delta connected, the phase indicates an
-                energy source connected from the indicated phase to the next logical non-neutral
-                phase.
-                '''
+            'inverse': ''
         })
     '''
     Phase of this energy source component. If the energy source wye connected,
@@ -8607,17 +6839,13 @@ class EnergySourcePhase(PowerSystemResource):
     phase.
     '''
 
-    EnergySource: Optional[ EnergySource ] = field(
+    EnergySource: Optional[EnergySource] = field(
         default = None,
         metadata = {
             'type': 'Association',
             'minOccurs': '0',
             'maxOccurs': '1',
-            'inverse': 'EnergySource.EnergySourcePhase',
-            'docstring':
-                '''
-                The energy sourceto which the phase belongs.
-                '''
+            'inverse': 'EnergySource.EnergySourcePhase'
         })
     '''
     The energy sourceto which the phase belongs.
@@ -8634,16 +6862,7 @@ class Equipment(PowerSystemResource):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                The single instance of equipment represents multiple pieces of equipment
-                that have been modeled together as an aggregate. Examples would be power
-                transformers or synchronous machines operating in parallel modeled as a
-                single aggregate power transformer or aggregate synchronous machine. This
-                is not to be used to indicate equipment that is part of a group of interdependent
-                equipment produced by a network production program.
-                '''
+            'maxOccurs': '1'
         })
     '''
     The single instance of equipment represents multiple pieces of equipment
@@ -8659,11 +6878,7 @@ class Equipment(PowerSystemResource):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                If true, the equipment is in service.
-                '''
+            'maxOccurs': '1'
         })
     '''
     If true, the equipment is in service.
@@ -8674,12 +6889,7 @@ class Equipment(PowerSystemResource):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                The equipment is enabled to participate in network analysis. If unspecified,
-                the value is assumed to be true.
-                '''
+            'maxOccurs': '1'
         })
     '''
     The equipment is enabled to participate in network analysis. If unspecified,
@@ -8691,29 +6901,19 @@ class Equipment(PowerSystemResource):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                If true, the equipment is normally in service.
-                '''
+            'maxOccurs': '1'
         })
     '''
     If true, the equipment is normally in service.
     '''
 
-    AdditionalEquipmentContainer: list[ EquipmentContainer ] = field(
+    AdditionalEquipmentContainer: list[EquipmentContainer] = field(
         default_factory = list,
         metadata = {
             'type': 'Association',
             'minOccurs': '0',
             'maxOccurs': 'unbounded',
-            'inverse': 'EquipmentContainer.AdditionalGroupedEquipment',
-            'docstring':
-                '''
-                Additional equipment container beyond the primary equipment container.
-                The equipment is contained in another equipment container, but also grouped
-                with this equipment container.
-                '''
+            'inverse': 'EquipmentContainer.AdditionalGroupedEquipment'
         })
     '''
     Additional equipment container beyond the primary equipment container.
@@ -8721,49 +6921,37 @@ class Equipment(PowerSystemResource):
     with this equipment container.
     '''
 
-    EquipmentContainer: Optional[ EquipmentContainer ] = field(
+    EquipmentContainer: Optional[EquipmentContainer] = field(
         default = None,
         metadata = {
             'type': 'Of Aggregate',
             'minOccurs': '0',
             'maxOccurs': '1',
-            'inverse': 'EquipmentContainer.Equipments',
-            'docstring':
-                '''
-                Container of this equipment.
-                '''
+            'inverse': 'EquipmentContainer.Equipments'
         })
     '''
     Container of this equipment.
     '''
 
-    OperationalLimitSet: list[ OperationalLimitSet ] = field(
+    OperationalLimitSet: list[OperationalLimitSet] = field(
         default_factory = list,
         metadata = {
             'type': 'Association',
             'minOccurs': '0',
             'maxOccurs': 'unbounded',
-            'inverse': 'OperationalLimitSet.Equipment',
-            'docstring':
-                '''
-                The operational limit sets associated with this equipment.
-                '''
+            'inverse': 'OperationalLimitSet.Equipment'
         })
     '''
     The operational limit sets associated with this equipment.
     '''
 
-    SubSchedulingArea: Optional[ SubSchedulingArea ] = field(
+    SubSchedulingArea: Optional[SubSchedulingArea] = field(
         default = None,
         metadata = {
             'type': 'Of Aggregate',
             'minOccurs': '0',
             'maxOccurs': '1',
-            'inverse': 'SubSchedulingArea.ContainedEquipment',
-            'docstring':
-                '''
-                The SubSchedulingArea in which the equipment is contained and controlled.
-                '''
+            'inverse': 'SubSchedulingArea.ContainedEquipment'
         })
     '''
     The SubSchedulingArea in which the equipment is contained and controlled.
@@ -8788,29 +6976,20 @@ class CompositeSwitch(Equipment):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                An alphanumeric code that can be used as a reference to extra information
-                such as the description of the interlocking scheme if any.
-                '''
+            'maxOccurs': '1'
         })
     '''
     An alphanumeric code that can be used as a reference to extra information
     such as the description of the interlocking scheme if any.
     '''
 
-    Switches: list[ Switch ] = field(
+    Switches: list[Switch] = field(
         default_factory = list,
         metadata = {
             'type': 'Aggregate Of',
             'minOccurs': '0',
             'maxOccurs': 'unbounded',
-            'inverse': 'Switch.CompositeSwitch',
-            'docstring':
-                '''
-                Switches contained in this Composite switch.
-                '''
+            'inverse': 'Switch.CompositeSwitch'
         })
     '''
     Switches contained in this Composite switch.
@@ -8823,19 +7002,13 @@ class ConductingEquipment(Equipment):
     that are conductively connected through terminals.
     '''
 
-    BaseVoltage: Optional[ BaseVoltage ] = field(
+    BaseVoltage: Optional[BaseVoltage] = field(
         default = None,
         metadata = {
             'type': 'Association',
             'minOccurs': '0',
             'maxOccurs': '1',
-            'inverse': 'BaseVoltage.ConductingEquipment',
-            'docstring':
-                '''
-                Base voltage of this conducting equipment. Use only when there is no voltage
-                level container used and only one base voltage applies. For example, not
-                used for transformers.
-                '''
+            'inverse': 'BaseVoltage.ConductingEquipment'
         })
     '''
     Base voltage of this conducting equipment. Use only when there is no voltage
@@ -8843,18 +7016,13 @@ class ConductingEquipment(Equipment):
     used for transformers.
     '''
 
-    Terminals: list[ Terminal ] = field(
+    Terminals: list[Terminal] = field(
         default_factory = list,
         metadata = {
             'type': 'Association',
             'minOccurs': '0',
             'maxOccurs': 'unbounded',
-            'inverse': 'Terminal.ConductingEquipment',
-            'docstring':
-                '''
-                Conducting equipment have terminals that may be connected to other conducting
-                equipment terminals via connectivity nodes or topological nodes.
-                '''
+            'inverse': 'Terminal.ConductingEquipment'
         })
     '''
     Conducting equipment have terminals that may be connected to other conducting
@@ -8876,13 +7044,7 @@ class Clamp(ConductingEquipment):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                The length to the place where the clamp is located starting from side one
-                of the line segment, i.e. the line segment terminal with sequence number
-                equal to 1.
-                '''
+            'maxOccurs': '1'
         })
     '''
     The length to the place where the clamp is located starting from side one
@@ -8890,17 +7052,13 @@ class Clamp(ConductingEquipment):
     equal to 1.
     '''
 
-    ACLineSegment: Optional[ ACLineSegment ] = field(
+    ACLineSegment: Optional[ACLineSegment] = field(
         default = None,
         metadata = {
             'type': 'Association',
             'minOccurs': '0',
             'maxOccurs': '1',
-            'inverse': 'ACLineSegment.Clamp',
-            'docstring':
-                '''
-                The line segment to which the clamp is connected.
-                '''
+            'inverse': 'ACLineSegment.Clamp'
         })
     '''
     The line segment to which the clamp is connected.
@@ -8919,11 +7077,7 @@ class Conductor(ConductingEquipment):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                Segment length for calculating line section capabilities
-                '''
+            'maxOccurs': '1'
         })
     '''
     Segment length for calculating line section capabilities
@@ -8950,12 +7104,7 @@ class ACLineSegment(Conductor):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                Zero sequence shunt (charging) susceptance, uniformly distributed, of the
-                entire line section.
-                '''
+            'maxOccurs': '1'
         })
     '''
     Zero sequence shunt (charging) susceptance, uniformly distributed, of the
@@ -8967,13 +7116,7 @@ class ACLineSegment(Conductor):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                Positive sequence shunt (charging) susceptance, uniformly distributed,
-                of the entire line section. This value represents the full charging over
-                the full length of the line.
-                '''
+            'maxOccurs': '1'
         })
     '''
     Positive sequence shunt (charging) susceptance, uniformly distributed,
@@ -8986,12 +7129,7 @@ class ACLineSegment(Conductor):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                Zero sequence shunt (charging) conductance, uniformly distributed, of the
-                entire line section.
-                '''
+            'maxOccurs': '1'
         })
     '''
     Zero sequence shunt (charging) conductance, uniformly distributed, of the
@@ -9003,12 +7141,7 @@ class ACLineSegment(Conductor):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                Positive sequence shunt (charging) conductance, uniformly distributed,
-                of the entire line section.
-                '''
+            'maxOccurs': '1'
         })
     '''
     Positive sequence shunt (charging) conductance, uniformly distributed,
@@ -9020,11 +7153,7 @@ class ACLineSegment(Conductor):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                Positive sequence series resistance of the entire line section.
-                '''
+            'maxOccurs': '1'
         })
     '''
     Positive sequence series resistance of the entire line section.
@@ -9035,11 +7164,7 @@ class ACLineSegment(Conductor):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                Zero sequence series resistance of the entire line section.
-                '''
+            'maxOccurs': '1'
         })
     '''
     Zero sequence series resistance of the entire line section.
@@ -9050,13 +7175,7 @@ class ACLineSegment(Conductor):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                Maximum permitted temperature at the end of SC for the calculation of minimum
-                short-circuit currents. Used for short circuit data exchange according
-                to IEC 60909
-                '''
+            'maxOccurs': '1'
         })
     '''
     Maximum permitted temperature at the end of SC for the calculation of minimum
@@ -9069,11 +7188,7 @@ class ACLineSegment(Conductor):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                Positive sequence series reactance of the entire line section.
-                '''
+            'maxOccurs': '1'
         })
     '''
     Positive sequence series reactance of the entire line section.
@@ -9084,72 +7199,54 @@ class ACLineSegment(Conductor):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                Zero sequence series reactance of the entire line section.
-                '''
+            'maxOccurs': '1'
         })
     '''
     Zero sequence series reactance of the entire line section.
     '''
 
-    ACLineSegmentPhases: list[ ACLineSegmentPhase ] = field(
+    ACLineSegmentPhases: list[ACLineSegmentPhase] = field(
         default_factory = list,
         metadata = {
             'type': 'Association',
             'minOccurs': '0',
             'maxOccurs': 'unbounded',
-            'inverse': 'ACLineSegmentPhase.ACLineSegment',
-            'docstring':
-                '''
-                The line segment phases which belong to the line segment.
-                '''
+            'inverse': 'ACLineSegmentPhase.ACLineSegment'
         })
     '''
     The line segment phases which belong to the line segment.
     '''
 
-    ParallelLineSegment: Optional[ ParallelLineSegment ] = field(
+    ParallelLineSegment: Optional[ParallelLineSegment] = field(
         default = None,
         metadata = {
             'type': 'Association',
             'minOccurs': '0',
             'maxOccurs': '1',
-            'inverse': 'ParallelLineSegment.ACLineSegment',
-            'docstring':
-                '''
-                '''
+            'inverse': 'ParallelLineSegment.ACLineSegment'
         })
     '''
     '''
 
-    PerLengthImpedance: Optional[ PerLengthImpedance ] = field(
+    PerLengthImpedance: Optional[PerLengthImpedance] = field(
         default = None,
         metadata = {
             'type': 'Association',
             'minOccurs': '0',
             'maxOccurs': '1',
-            'inverse': 'PerLengthImpedance.ACLineSegments',
-            'docstring':
-                '''
-                Per-length impedance of this line segment.
-                '''
+            'inverse': 'PerLengthImpedance.ACLineSegments'
         })
     '''
     Per-length impedance of this line segment.
     '''
 
-    WireSpacingInfo: Optional[ WireSpacingInfo ] = field(
+    WireSpacingInfo: Optional[WireSpacingInfo] = field(
         default = None,
         metadata = {
             'type': 'Association',
             'minOccurs': '0',
             'maxOccurs': '1',
-            'inverse': 'WireSpacingInfo.ACLineSegments',
-            'docstring':
-                '''
-                '''
+            'inverse': 'WireSpacingInfo.ACLineSegments'
         })
     '''
     '''
@@ -9177,14 +7274,7 @@ class BusbarSection(Connector):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                Maximum allowable peak short-circuit current of busbar (Ipmax in the IEC
-                60909-0).
-                Mechanical limit of the busbar in the substation itself. Used for short
-                circuit data exchange according to IEC 60909
-                '''
+            'maxOccurs': '1'
         })
     '''
     Maximum allowable peak short-circuit current of busbar (Ipmax in the IEC
@@ -9193,17 +7283,13 @@ class BusbarSection(Connector):
     circuit data exchange according to IEC 60909
     '''
 
-    VoltageControlZone: Optional[ VoltageControlZone ] = field(
+    VoltageControlZone: Optional[VoltageControlZone] = field(
         default = None,
         metadata = {
             'type': 'Association',
             'minOccurs': '0',
             'maxOccurs': '1',
-            'inverse': 'VoltageControlZone.BusbarSection',
-            'docstring':
-                '''
-                A VoltageControlZone is controlled by a designated BusbarSection.
-                '''
+            'inverse': 'VoltageControlZone.BusbarSection'
         })
     '''
     A VoltageControlZone is controlled by a designated BusbarSection.
@@ -9231,11 +7317,7 @@ class EarthFaultCompensator(ConductingEquipment):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                Nominal resistance of device.
-                '''
+            'maxOccurs': '1'
         })
     '''
     Nominal resistance of device.
@@ -9252,11 +7334,7 @@ class GroundingImpedance(EarthFaultCompensator):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                Reactance of device.
-                '''
+            'maxOccurs': '1'
         })
     '''
     Reactance of device.
@@ -9274,11 +7352,7 @@ class PetersenCoil(EarthFaultCompensator):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                The nominal voltage for which the coil is designed.
-                '''
+            'maxOccurs': '1'
         })
     '''
     The nominal voltage for which the coil is designed.
@@ -9289,14 +7363,7 @@ class PetersenCoil(EarthFaultCompensator):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                The offset current that the Petersen coil controller is operating from
-                the resonant point. This is normally a fixed amount for which the controller
-                is configured and could be positive or negative. Typically 0 to 60 Amperes
-                depending on voltage and resonance conditions.
-                '''
+            'maxOccurs': '1'
         })
     '''
     The offset current that the Petersen coil controller is operating from
@@ -9310,12 +7377,7 @@ class PetersenCoil(EarthFaultCompensator):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                The control current used to control the Petersen coil also known as the
-                position current. Typically in the range of 20-200mA.
-                '''
+            'maxOccurs': '1'
         })
     '''
     The control current used to control the Petersen coil also known as the
@@ -9327,11 +7389,7 @@ class PetersenCoil(EarthFaultCompensator):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                The maximum reactance.
-                '''
+            'maxOccurs': '1'
         })
     '''
     The maximum reactance.
@@ -9342,11 +7400,7 @@ class PetersenCoil(EarthFaultCompensator):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                The minimum reactance.
-                '''
+            'maxOccurs': '1'
         })
     '''
     The minimum reactance.
@@ -9357,14 +7411,7 @@ class PetersenCoil(EarthFaultCompensator):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                The nominal reactance. This is the operating point (normally over compensation)
-                that is defined based on the resonance point in the healthy network condition.
-                The impedance is calculated based on nominal voltage divided by position
-                current.
-                '''
+            'maxOccurs': '1'
         })
     '''
     The nominal reactance. This is the operating point (normally over compensation)
@@ -9373,17 +7420,13 @@ class PetersenCoil(EarthFaultCompensator):
     current.
     '''
 
-    mode: Optional[ PetersenCoilModeKind ] = field(
+    mode: Optional[PetersenCoilModeKind] = field(
         default = None,
         metadata = {
             'type': 'enumeration',
             'minOccurs': '0',
             'maxOccurs': '1',
-            'inverse': '',
-            'docstring':
-                '''
-                The mode of operation of the Petersen coil.
-                '''
+            'inverse': ''
         })
     '''
     The mode of operation of the Petersen coil.
@@ -9394,16 +7437,13 @@ class EnergyConnection(ConductingEquipment):
     '''
     '''
 
-    EnergyConnectionProfile: Optional[ EnergyConnectionProfile ] = field(
+    EnergyConnectionProfile: Optional[EnergyConnectionProfile] = field(
         default = None,
         metadata = {
             'type': 'Association',
             'minOccurs': '0',
             'maxOccurs': '1',
-            'inverse': 'EnergyConnectionProfile.EnergyConnections',
-            'docstring':
-                '''
-                '''
+            'inverse': 'EnergyConnectionProfile.EnergyConnections'
         })
     '''
     '''
@@ -9419,11 +7459,7 @@ class EnergyConsumer(EnergyConnection):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                Number of individual customers represented by this demand.
-                '''
+            'maxOccurs': '1'
         })
     '''
     Number of individual customers represented by this demand.
@@ -9434,11 +7470,7 @@ class EnergyConsumer(EnergyConnection):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                Used for Yn and Zn connections. True if the neutral is solidly grounded.
-                '''
+            'maxOccurs': '1'
         })
     '''
     Used for Yn and Zn connections. True if the neutral is solidly grounded.
@@ -9449,14 +7481,7 @@ class EnergyConsumer(EnergyConnection):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                Active power of the load. Load sign convention is used, i.e. positive sign
-                means flow out from a node.
-                For voltage dependent loads the value is at rated voltage.
-                Starting value for a steady state solution.
-                '''
+            'maxOccurs': '1'
         })
     '''
     Active power of the load. Load sign convention is used, i.e. positive sign
@@ -9470,11 +7495,7 @@ class EnergyConsumer(EnergyConnection):
         metadata = {
             'type': 'enumeration',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                The type of phase connection, such as wye or delta.
-                '''
+            'maxOccurs': '1'
         })
     '''
     The type of phase connection, such as wye or delta.
@@ -9485,14 +7506,7 @@ class EnergyConsumer(EnergyConnection):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                Reactive power of the load. Load sign convention is used, i.e. positive
-                sign means flow out from a node.
-                For voltage dependent loads the value is at rated voltage.
-                Starting value for a steady state solution.
-                '''
+            'maxOccurs': '1'
         })
     '''
     Reactive power of the load. Load sign convention is used, i.e. positive
@@ -9501,65 +7515,49 @@ class EnergyConsumer(EnergyConnection):
     Starting value for a steady state solution.
     '''
 
-    EnergyConsumerPhase: list[ EnergyConsumerPhase ] = field(
+    EnergyConsumerPhase: list[EnergyConsumerPhase] = field(
         default_factory = list,
         metadata = {
             'type': 'Association',
             'minOccurs': '0',
             'maxOccurs': 'unbounded',
-            'inverse': 'EnergyConsumerPhase.EnergyConsumer',
-            'docstring':
-                '''
-                The individual phase models for this energy consumer.
-                '''
+            'inverse': 'EnergyConsumerPhase.EnergyConsumer'
         })
     '''
     The individual phase models for this energy consumer.
     '''
 
-    House: Optional[ House ] = field(
+    House: Optional[House] = field(
         default = None,
         metadata = {
             'type': 'Association',
             'minOccurs': '0',
             'maxOccurs': '1',
-            'inverse': 'House.EnergyConsumer',
-            'docstring':
-                '''
-                '''
+            'inverse': 'House.EnergyConsumer'
         })
     '''
     '''
 
-    LoadResponse: Optional[ LoadResponseCharacteristic ] = field(
+    LoadResponse: Optional[LoadResponseCharacteristic] = field(
         default = None,
         metadata = {
             'type': 'Association',
             'minOccurs': '0',
             'maxOccurs': '1',
-            'inverse': 'LoadResponseCharacteristic.EnergyConsumer',
-            'docstring':
-                '''
-                The load response characteristic of this load. If missing, this load is
-                assumed to be constant power.
-                '''
+            'inverse': 'LoadResponseCharacteristic.EnergyConsumer'
         })
     '''
     The load response characteristic of this load. If missing, this load is
     assumed to be constant power.
     '''
 
-    PowerCutZone: Optional[ PowerCutZone ] = field(
+    PowerCutZone: Optional[PowerCutZone] = field(
         default = None,
         metadata = {
             'type': 'Of Aggregate',
             'minOccurs': '0',
             'maxOccurs': '1',
-            'inverse': 'PowerCutZone.EnergyConsumers',
-            'docstring':
-                '''
-                The energy consumer is assigned to this power cut zone.
-                '''
+            'inverse': 'PowerCutZone.EnergyConsumers'
         })
     '''
     The energy consumer is assigned to this power cut zone.
@@ -9572,17 +7570,13 @@ class ConformLoad(EnergyConsumer):
     the pattern can be used to scale the load with a system load.
     '''
 
-    LoadGroup: Optional[ ConformLoadGroup ] = field(
+    LoadGroup: Optional[ConformLoadGroup] = field(
         default = None,
         metadata = {
             'type': 'Association',
             'minOccurs': '0',
             'maxOccurs': '1',
-            'inverse': 'ConformLoadGroup.EnergyConsumers',
-            'docstring':
-                '''
-                Group of this ConformLoad.
-                '''
+            'inverse': 'ConformLoadGroup.EnergyConsumers'
         })
     '''
     Group of this ConformLoad.
@@ -9595,17 +7589,13 @@ class NonConformLoad(EnergyConsumer):
     and changes are not correlated with the daily load change pattern.
     '''
 
-    LoadGroup: Optional[ NonConformLoadGroup ] = field(
+    LoadGroup: Optional[NonConformLoadGroup] = field(
         default = None,
         metadata = {
             'type': 'Association',
             'minOccurs': '0',
             'maxOccurs': '1',
-            'inverse': 'NonConformLoadGroup.EnergyConsumers',
-            'docstring':
-                '''
-                Group of this ConformLoad.
-                '''
+            'inverse': 'NonConformLoadGroup.EnergyConsumers'
         })
     '''
     Group of this ConformLoad.
@@ -9629,11 +7619,7 @@ class EnergySource(EnergyConnection):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                Phase-to-phase nominal voltage.
-                '''
+            'maxOccurs': '1'
         })
     '''
     Phase-to-phase nominal voltage.
@@ -9644,11 +7630,7 @@ class EnergySource(EnergyConnection):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                Positive sequence Thevenin resistance.
-                '''
+            'maxOccurs': '1'
         })
     '''
     Positive sequence Thevenin resistance.
@@ -9659,11 +7641,7 @@ class EnergySource(EnergyConnection):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                Zero sequence Thevenin resistance.
-                '''
+            'maxOccurs': '1'
         })
     '''
     Zero sequence Thevenin resistance.
@@ -9674,11 +7652,7 @@ class EnergySource(EnergyConnection):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                Phase angle of a-phase open circuit.
-                '''
+            'maxOccurs': '1'
         })
     '''
     Phase angle of a-phase open circuit.
@@ -9689,11 +7663,7 @@ class EnergySource(EnergyConnection):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                Phase-to-phase open circuit voltage magnitude.
-                '''
+            'maxOccurs': '1'
         })
     '''
     Phase-to-phase open circuit voltage magnitude.
@@ -9704,11 +7674,7 @@ class EnergySource(EnergyConnection):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                Positive sequence Thevenin reactance.
-                '''
+            'maxOccurs': '1'
         })
     '''
     Positive sequence Thevenin reactance.
@@ -9719,27 +7685,19 @@ class EnergySource(EnergyConnection):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                Zero sequence Thevenin reactance.
-                '''
+            'maxOccurs': '1'
         })
     '''
     Zero sequence Thevenin reactance.
     '''
 
-    EnergySourcePhase: list[ EnergySourcePhase ] = field(
+    EnergySourcePhase: list[EnergySourcePhase] = field(
         default_factory = list,
         metadata = {
             'type': 'Association',
             'minOccurs': '0',
             'maxOccurs': 'unbounded',
-            'inverse': 'EnergySourcePhase.EnergySource',
-            'docstring':
-                '''
-                The individual phase information of the energy source.
-                '''
+            'inverse': 'EnergySourcePhase.EnergySource'
         })
     '''
     The individual phase information of the energy source.
@@ -9757,29 +7715,20 @@ class RegulatingCondEq(EnergyConnection):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                Specifies the regulation status of the equipment. True is regulating, false
-                is not regulating.
-                '''
+            'maxOccurs': '1'
         })
     '''
     Specifies the regulation status of the equipment. True is regulating, false
     is not regulating.
     '''
 
-    RegulatingControl: Optional[ RegulatingControl ] = field(
+    RegulatingControl: Optional[RegulatingControl] = field(
         default = None,
         metadata = {
             'type': 'Association',
             'minOccurs': '0',
             'maxOccurs': '1',
-            'inverse': 'RegulatingControl.RegulatingCondEq',
-            'docstring':
-                '''
-                The regulating control scheme in which this equipment participates.
-                '''
+            'inverse': 'RegulatingControl.RegulatingCondEq'
         })
     '''
     The regulating control scheme in which this equipment participates.
@@ -9796,12 +7745,7 @@ class ExternalNetworkInjection(RegulatingCondEq):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                Indicates whether initial symmetrical short-circuit current and power have
-                been calculated according to IEC (Ik").
-                '''
+            'maxOccurs': '1'
         })
     '''
     Indicates whether initial symmetrical short-circuit current and power have
@@ -9813,13 +7757,7 @@ class ExternalNetworkInjection(RegulatingCondEq):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                Maximum ratio of zero sequence resistance of Network Feeder to its zero
-                sequence reactance (R(0)/X(0) max). Used for short circuit data exchange
-                according to IEC 60909
-                '''
+            'maxOccurs': '1'
         })
     '''
     Maximum ratio of zero sequence resistance of Network Feeder to its zero
@@ -9832,13 +7770,7 @@ class ExternalNetworkInjection(RegulatingCondEq):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                Maximum ratio of positive sequence resistance of Network Feeder to its
-                positive sequence reactance (R(1)/X(1) max). Used for short circuit data
-                exchange according to IEC 60909
-                '''
+            'maxOccurs': '1'
         })
     '''
     Maximum ratio of positive sequence resistance of Network Feeder to its
@@ -9851,13 +7783,7 @@ class ExternalNetworkInjection(RegulatingCondEq):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                Maximum ratio of zero sequence impedance to its positive sequence impedance
-                (Z(0)/Z(1) max). Used for short circuit data exchange according to IEC
-                60909
-                '''
+            'maxOccurs': '1'
         })
     '''
     Maximum ratio of zero sequence impedance to its positive sequence impedance
@@ -9870,13 +7796,7 @@ class ExternalNetworkInjection(RegulatingCondEq):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                Indicates whether initial symmetrical short-circuit current and power have
-                been calculated according to IEC (Ik"). Used for short circuit data exchange
-                according to IEC 6090
-                '''
+            'maxOccurs': '1'
         })
     '''
     Indicates whether initial symmetrical short-circuit current and power have
@@ -9889,13 +7809,7 @@ class ExternalNetworkInjection(RegulatingCondEq):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                Minimum ratio of positive sequence resistance of Network Feeder to its
-                positive sequence reactance (R(1)/X(1) min). Used for short circuit data
-                exchange according to IEC 60909
-                '''
+            'maxOccurs': '1'
         })
     '''
     Minimum ratio of positive sequence resistance of Network Feeder to its
@@ -9908,13 +7822,7 @@ class ExternalNetworkInjection(RegulatingCondEq):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                Minimum ratio of zero sequence impedance to its positive sequence impedance
-                (Z(0)/Z(1) min). Used for short circuit data exchange according to IEC
-                60909
-                '''
+            'maxOccurs': '1'
         })
     '''
     Minimum ratio of zero sequence impedance to its positive sequence impedance
@@ -9927,13 +7835,7 @@ class ExternalNetworkInjection(RegulatingCondEq):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                Priority of unit for use as powerflow voltage phase angle reference bus
-                selection. 0 = don t care (default) 1 = highest priority. 2 is less than
-                1 and so on.
-                '''
+            'maxOccurs': '1'
         })
     '''
     Priority of unit for use as powerflow voltage phase angle reference bus
@@ -9946,13 +7848,7 @@ class ExternalNetworkInjection(RegulatingCondEq):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                Power Frequency Bias. This is the change in power injection divided by
-                the change in frequency and negated. A positive value of the power frequency
-                bias provides additional power injection upon a drop in frequency.
-                '''
+            'maxOccurs': '1'
         })
     '''
     Power Frequency Bias. This is the change in power injection divided by
@@ -9965,13 +7861,7 @@ class ExternalNetworkInjection(RegulatingCondEq):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                Maximum initial symmetrical short-circuit currents (Ik" max) in A (Ik"
-                = Sk"/(SQRT(3) Un)). Used for short circuit data exchange according to
-                IEC 60909
-                '''
+            'maxOccurs': '1'
         })
     '''
     Maximum initial symmetrical short-circuit currents (Ik" max) in A (Ik"
@@ -9984,11 +7874,7 @@ class ExternalNetworkInjection(RegulatingCondEq):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                Maximum active power of the injection.
-                '''
+            'maxOccurs': '1'
         })
     '''
     Maximum active power of the injection.
@@ -9999,13 +7885,7 @@ class ExternalNetworkInjection(RegulatingCondEq):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                Not for short circuit modelling; It is used for modelling of infeed for
-                load flow exchange. If maxQ and minQ are not used ReactiveCapabilityCurve
-                can be used
-                '''
+            'maxOccurs': '1'
         })
     '''
     Not for short circuit modelling; It is used for modelling of infeed for
@@ -10018,13 +7898,7 @@ class ExternalNetworkInjection(RegulatingCondEq):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                Minimum initial symmetrical short-circuit currents (Ik" min) in A (Ik"
-                = Sk"/(SQRT(3) Un)). Used for short circuit data exchange according to
-                IEC 60909
-                '''
+            'maxOccurs': '1'
         })
     '''
     Minimum initial symmetrical short-circuit currents (Ik" min) in A (Ik"
@@ -10037,11 +7911,7 @@ class ExternalNetworkInjection(RegulatingCondEq):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                Minimum active power of the injection.
-                '''
+            'maxOccurs': '1'
         })
     '''
     Minimum active power of the injection.
@@ -10052,13 +7922,7 @@ class ExternalNetworkInjection(RegulatingCondEq):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                Not for short circuit modelling; It is used for modelling of infeed for
-                load flow exchange. If maxQ and minQ are not used ReactiveCapabilityCurve
-                can be used
-                '''
+            'maxOccurs': '1'
         })
     '''
     Not for short circuit modelling; It is used for modelling of infeed for
@@ -10071,13 +7935,7 @@ class ExternalNetworkInjection(RegulatingCondEq):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                Active power injection. Load sign convention is used, i.e. positive sign
-                means flow out from a node.
-                Starting value for steady state solutions.
-                '''
+            'maxOccurs': '1'
         })
     '''
     Active power injection. Load sign convention is used, i.e. positive sign
@@ -10090,13 +7948,7 @@ class ExternalNetworkInjection(RegulatingCondEq):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                Reactive power injection. Load sign convention is used, i.e. positive sign
-                means flow out from a node.
-                Starting value for steady state solutions.
-                '''
+            'maxOccurs': '1'
         })
     '''
     Reactive power injection. Load sign convention is used, i.e. positive sign
@@ -10109,12 +7961,7 @@ class ExternalNetworkInjection(RegulatingCondEq):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                Voltage factor in pu, which was used to calculate short-circuit current
-                Ik" and power Sk".
-                '''
+            'maxOccurs': '1'
         })
     '''
     Voltage factor in pu, which was used to calculate short-circuit current
@@ -10134,11 +7981,7 @@ class FrequencyConverter(RegulatingCondEq):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                Frequency on the AC side.
-                '''
+            'maxOccurs': '1'
         })
     '''
     Frequency on the AC side.
@@ -10149,12 +7992,7 @@ class FrequencyConverter(RegulatingCondEq):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                The maximum active power on the DC side at which the frequence converter
-                should operate.
-                '''
+            'maxOccurs': '1'
         })
     '''
     The maximum active power on the DC side at which the frequence converter
@@ -10166,12 +8004,7 @@ class FrequencyConverter(RegulatingCondEq):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                The maximum voltage on the DC side at which the frequency converter should
-                operate.
-                '''
+            'maxOccurs': '1'
         })
     '''
     The maximum voltage on the DC side at which the frequency converter should
@@ -10183,12 +8016,7 @@ class FrequencyConverter(RegulatingCondEq):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                The minimum active power on the DC side at which the frequence converter
-                should operate.
-                '''
+            'maxOccurs': '1'
         })
     '''
     The minimum active power on the DC side at which the frequence converter
@@ -10200,12 +8028,7 @@ class FrequencyConverter(RegulatingCondEq):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                The minimum voltage on the DC side at which the frequency converter should
-                operate.
-                '''
+            'maxOccurs': '1'
         })
     '''
     The minimum voltage on the DC side at which the frequency converter should
@@ -10224,10 +8047,7 @@ class PowerElectronicsConnection(RegulatingCondEq):
         metadata = {
             'type': 'enumeration',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                '''
+            'maxOccurs': '1'
         })
     '''
     '''
@@ -10237,12 +8057,7 @@ class PowerElectronicsConnection(RegulatingCondEq):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                Maximum fault current this device will contribute, in per-unit of rated
-                current, before the converter protection will trip or bypass.
-                '''
+            'maxOccurs': '1'
         })
     '''
     Maximum fault current this device will contribute, in per-unit of rated
@@ -10254,12 +8069,7 @@ class PowerElectronicsConnection(RegulatingCondEq):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                Maximum reactive power limit. This is the maximum (nameplate) limit for
-                the unit.
-                '''
+            'maxOccurs': '1'
         })
     '''
     Maximum reactive power limit. This is the maximum (nameplate) limit for
@@ -10271,12 +8081,7 @@ class PowerElectronicsConnection(RegulatingCondEq):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                Minimum reactive power limit for the unit. This is the minimum (nameplate)
-                limit for the unit.
-                '''
+            'maxOccurs': '1'
         })
     '''
     Minimum reactive power limit for the unit. This is the minimum (nameplate)
@@ -10288,13 +8093,7 @@ class PowerElectronicsConnection(RegulatingCondEq):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                Active power injection. Load sign convention is used, i.e. positive sign
-                means flow out from a node.
-                Starting value for a steady state solution.
-                '''
+            'maxOccurs': '1'
         })
     '''
     Active power injection. Load sign convention is used, i.e. positive sign
@@ -10307,13 +8106,7 @@ class PowerElectronicsConnection(RegulatingCondEq):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                Reactive power injection. Load sign convention is used, i.e. positive sign
-                means flow out from a node.
-                Starting value for a steady state solution.
-                '''
+            'maxOccurs': '1'
         })
     '''
     Reactive power injection. Load sign convention is used, i.e. positive sign
@@ -10326,12 +8119,7 @@ class PowerElectronicsConnection(RegulatingCondEq):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                Nameplate apparent power rating for the unit.
-                The attribute shall have a positive value.
-                '''
+            'maxOccurs': '1'
         })
     '''
     Nameplate apparent power rating for the unit.
@@ -10343,114 +8131,87 @@ class PowerElectronicsConnection(RegulatingCondEq):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                Rated voltage (nameplate data, Ur in IEC 60909-0). It is primarily used
-                for short circuit data exchange according to IEC 60909.
-                '''
+            'maxOccurs': '1'
         })
     '''
     Rated voltage (nameplate data, Ur in IEC 60909-0). It is primarily used
     for short circuit data exchange according to IEC 60909.
     '''
 
-    DERDynamics: Optional[ DERDynamics ] = field(
+    DERDynamics: Optional[DERDynamics] = field(
         default = None,
         metadata = {
             'type': 'Association',
             'minOccurs': '0',
             'maxOccurs': '1',
-            'inverse': 'DERDynamics.PowerElectronicsConnection',
-            'docstring':
-                '''
-                DER dynamics model associated with this power electronics connection model.
-                '''
+            'inverse': 'DERDynamics.PowerElectronicsConnection'
         })
     '''
     DER dynamics model associated with this power electronics connection model.
     '''
 
-    IEEE1547ControlSettings: Optional[ IEEE1547ControlSettings ] = field(
+    IEEE1547ControlSettings: Optional[IEEE1547ControlSettings] = field(
         default = None,
         metadata = {
             'type': 'Association',
             'minOccurs': '0',
             'maxOccurs': '1',
-            'inverse': 'IEEE1547ControlSettings.PowerElectronicsConnections',
-            'docstring':
-                '''
-                '''
+            'inverse': 'IEEE1547ControlSettings.PowerElectronicsConnections'
         })
     '''
     '''
 
-    IEEE1547Info: Optional[ IEEE1547Info ] = field(
+    IEEE1547Info: Optional[IEEE1547Info] = field(
         default = None,
         metadata = {
             'type': 'Association',
             'minOccurs': '0',
             'maxOccurs': '1',
-            'inverse': 'IEEE1547Info.PowerElectronicsConnections',
-            'docstring':
-                '''
-                '''
+            'inverse': 'IEEE1547Info.PowerElectronicsConnections'
         })
     '''
     '''
 
-    IEEE1547Setting: Optional[ IEEE1547Setting ] = field(
+    IEEE1547Setting: Optional[IEEE1547Setting] = field(
         default = None,
         metadata = {
             'type': 'Association',
             'minOccurs': '0',
             'maxOccurs': '1',
-            'inverse': 'IEEE1547Setting.PowerElectronicsConnections',
-            'docstring':
-                '''
-                '''
+            'inverse': 'IEEE1547Setting.PowerElectronicsConnections'
         })
     '''
     '''
 
-    IEEE1547TripSettings: Optional[ IEEE1547TripSettings ] = field(
+    IEEE1547TripSettings: Optional[IEEE1547TripSettings] = field(
         default = None,
         metadata = {
             'type': 'Association',
             'minOccurs': '0',
             'maxOccurs': '1',
-            'inverse': 'IEEE1547TripSettings.PowerElectronicsConnections',
-            'docstring':
-                '''
-                '''
+            'inverse': 'IEEE1547TripSettings.PowerElectronicsConnections'
         })
     '''
     '''
 
-    PowerElectronicsConnectionPhases: list[ PowerElectronicsConnectionPhase ] = field(
+    PowerElectronicsConnectionPhases: list[PowerElectronicsConnectionPhase] = field(
         default_factory = list,
         metadata = {
             'type': 'Association',
             'minOccurs': '0',
             'maxOccurs': 'unbounded',
-            'inverse': 'PowerElectronicsConnectionPhase.PowerElectronicsConnection',
-            'docstring':
-                '''
-                '''
+            'inverse': 'PowerElectronicsConnectionPhase.PowerElectronicsConnection'
         })
     '''
     '''
 
-    PowerElectronicsUnit: list[ PowerElectronicsUnit ] = field(
+    PowerElectronicsUnit: list[PowerElectronicsUnit] = field(
         default_factory = list,
         metadata = {
             'type': 'Association',
             'minOccurs': '0',
             'maxOccurs': 'unbounded',
-            'inverse': 'PowerElectronicsUnit.PowerElectronicsConnection',
-            'docstring':
-                '''
-                '''
+            'inverse': 'PowerElectronicsUnit.PowerElectronicsConnection'
         })
     '''
     '''
@@ -10466,12 +8227,7 @@ class RotatingMachine(RegulatingCondEq):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                Power factor (nameplate data). It is primarily used for short circuit data
-                exchange according to IEC 60909.
-                '''
+            'maxOccurs': '1'
         })
     '''
     Power factor (nameplate data). It is primarily used for short circuit data
@@ -10483,13 +8239,7 @@ class RotatingMachine(RegulatingCondEq):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                Active power injection. Load sign convention is used, i.e. positive sign
-                means flow out from a node.
-                Starting value for a steady state solution.
-                '''
+            'maxOccurs': '1'
         })
     '''
     Active power injection. Load sign convention is used, i.e. positive sign
@@ -10502,13 +8252,7 @@ class RotatingMachine(RegulatingCondEq):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                Reactive power injection. Load sign convention is used, i.e. positive sign
-                means flow out from a node.
-                Starting value for a steady state solution.
-                '''
+            'maxOccurs': '1'
         })
     '''
     Reactive power injection. Load sign convention is used, i.e. positive sign
@@ -10521,12 +8265,7 @@ class RotatingMachine(RegulatingCondEq):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                Nameplate apparent power rating for the unit.
-                The attribute shall have a positive value.
-                '''
+            'maxOccurs': '1'
         })
     '''
     Nameplate apparent power rating for the unit.
@@ -10538,49 +8277,33 @@ class RotatingMachine(RegulatingCondEq):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                Rated voltage (nameplate data, Ur in IEC 60909-0). It is primarily used
-                for short circuit data exchange according to IEC 60909.
-                '''
+            'maxOccurs': '1'
         })
     '''
     Rated voltage (nameplate data, Ur in IEC 60909-0). It is primarily used
     for short circuit data exchange according to IEC 60909.
     '''
 
-    GeneratingUnit: Optional[ GeneratingUnit ] = field(
+    GeneratingUnit: Optional[GeneratingUnit] = field(
         default = None,
         metadata = {
             'type': 'Association',
             'minOccurs': '0',
             'maxOccurs': '1',
-            'inverse': 'GeneratingUnit.RotatingMachine',
-            'docstring':
-                '''
-                A synchronous machine may operate as a generator and as such becomes a
-                member of a generating unit.
-                '''
+            'inverse': 'GeneratingUnit.RotatingMachine'
         })
     '''
     A synchronous machine may operate as a generator and as such becomes a
     member of a generating unit.
     '''
 
-    HydroPump: Optional[ HydroPump ] = field(
+    HydroPump: Optional[HydroPump] = field(
         default = None,
         metadata = {
             'type': 'Association',
             'minOccurs': '0',
             'maxOccurs': '1',
-            'inverse': 'HydroPump.RotatingMachine',
-            'docstring':
-                '''
-                The synchronous machine drives the turbine which moves the water from a
-                low elevation to a higher elevation. The direction of machine rotation
-                for pumping may or may not be the same as for generating.
-                '''
+            'inverse': 'HydroPump.RotatingMachine'
         })
     '''
     The synchronous machine drives the turbine which moves the water from a
@@ -10588,58 +8311,46 @@ class RotatingMachine(RegulatingCondEq):
     for pumping may or may not be the same as for generating.
     '''
 
-    IEEE1547ControlSettings: Optional[ IEEE1547ControlSettings ] = field(
+    IEEE1547ControlSettings: Optional[IEEE1547ControlSettings] = field(
         default = None,
         metadata = {
             'type': 'Association',
             'minOccurs': '0',
             'maxOccurs': '1',
-            'inverse': 'IEEE1547ControlSettings.RotatingMachines',
-            'docstring':
-                '''
-                '''
+            'inverse': 'IEEE1547ControlSettings.RotatingMachines'
         })
     '''
     '''
 
-    IEEE1547Info: Optional[ IEEE1547Info ] = field(
+    IEEE1547Info: Optional[IEEE1547Info] = field(
         default = None,
         metadata = {
             'type': 'Association',
             'minOccurs': '0',
             'maxOccurs': '1',
-            'inverse': 'IEEE1547Info.RotatingMachines',
-            'docstring':
-                '''
-                '''
+            'inverse': 'IEEE1547Info.RotatingMachines'
         })
     '''
     '''
 
-    IEEE1547Setting: Optional[ IEEE1547Setting ] = field(
+    IEEE1547Setting: Optional[IEEE1547Setting] = field(
         default = None,
         metadata = {
             'type': 'Association',
             'minOccurs': '0',
             'maxOccurs': '1',
-            'inverse': 'IEEE1547Setting.RotatingMachines',
-            'docstring':
-                '''
-                '''
+            'inverse': 'IEEE1547Setting.RotatingMachines'
         })
     '''
     '''
 
-    IEEE1547TripSettings: Optional[ IEEE1547TripSettings ] = field(
+    IEEE1547TripSettings: Optional[IEEE1547TripSettings] = field(
         default = None,
         metadata = {
             'type': 'Association',
             'minOccurs': '0',
             'maxOccurs': '1',
-            'inverse': 'IEEE1547TripSettings.RotatingMachines',
-            'docstring':
-                '''
-                '''
+            'inverse': 'IEEE1547TripSettings.RotatingMachines'
         })
     '''
     '''
@@ -10657,12 +8368,7 @@ class AsynchronousMachine(RotatingMachine):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                Indicates whether the machine is a converter fed drive. Used for short
-                circuit data exchange according to IEC 60909
-                '''
+            'maxOccurs': '1'
         })
     '''
     Indicates whether the machine is a converter fed drive. Used for short
@@ -10674,12 +8380,7 @@ class AsynchronousMachine(RotatingMachine):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                Ratio of locked-rotor current to the rated current of the motor (Ia/Ir).
-                Used for short circuit data exchange according to IEC 60909
-                '''
+            'maxOccurs': '1'
         })
     '''
     Ratio of locked-rotor current to the rated current of the motor (Ia/Ir).
@@ -10691,12 +8392,7 @@ class AsynchronousMachine(RotatingMachine):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                Number of pole pairs of stator. Used for short circuit data exchange according
-                to IEC 60909
-                '''
+            'maxOccurs': '1'
         })
     '''
     Number of pole pairs of stator. Used for short circuit data exchange according
@@ -10708,12 +8404,7 @@ class AsynchronousMachine(RotatingMachine):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                Indicates for converter drive motors if the power can be reversible. Used
-                for short circuit data exchange according to IEC 60909
-                '''
+            'maxOccurs': '1'
         })
     '''
     Indicates for converter drive motors if the power can be reversible. Used
@@ -10725,12 +8416,7 @@ class AsynchronousMachine(RotatingMachine):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                Locked rotor ratio (R/X). Used for short circuit data exchange according
-                to IEC 60909
-                '''
+            'maxOccurs': '1'
         })
     '''
     Locked rotor ratio (R/X). Used for short circuit data exchange according
@@ -10742,11 +8428,7 @@ class AsynchronousMachine(RotatingMachine):
         metadata = {
             'type': 'enumeration',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                Indicates the type of Asynchronous Machine (motor or generator).
-                '''
+            'maxOccurs': '1'
         })
     '''
     Indicates the type of Asynchronous Machine (motor or generator).
@@ -10757,13 +8439,7 @@ class AsynchronousMachine(RotatingMachine):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                Efficiency of the asynchronous machine at nominal operation in percent.
-                Indicator for converter drive motors. Used for short circuit data exchange
-                according to IEC 60909
-                '''
+            'maxOccurs': '1'
         })
     '''
     Efficiency of the asynchronous machine at nominal operation in percent.
@@ -10776,11 +8452,7 @@ class AsynchronousMachine(RotatingMachine):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                Nameplate data indicates if the machine is 50 or 60 Hz.
-                '''
+            'maxOccurs': '1'
         })
     '''
     Nameplate data indicates if the machine is 50 or 60 Hz.
@@ -10791,11 +8463,7 @@ class AsynchronousMachine(RotatingMachine):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                Nameplate data. Depends on the slip and number of pole pairs.
-                '''
+            'maxOccurs': '1'
         })
     '''
     Nameplate data. Depends on the slip and number of pole pairs.
@@ -10806,29 +8474,20 @@ class AsynchronousMachine(RotatingMachine):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                Rated mechanical power (Pr in the IEC 60909-0). Used for short circuit
-                data exchange according to IEC 60909.
-                '''
+            'maxOccurs': '1'
         })
     '''
     Rated mechanical power (Pr in the IEC 60909-0). Used for short circuit
     data exchange according to IEC 60909.
     '''
 
-    DERDynamics: Optional[ DERDynamics ] = field(
+    DERDynamics: Optional[DERDynamics] = field(
         default = None,
         metadata = {
             'type': 'Association',
             'minOccurs': '0',
             'maxOccurs': '1',
-            'inverse': 'DERDynamics.AsynchronousMachine',
-            'docstring':
-                '''
-                DER dynamics model associated with this asynchronous machine model.
-                '''
+            'inverse': 'DERDynamics.AsynchronousMachine'
         })
     '''
     DER dynamics model associated with this asynchronous machine model.
@@ -10847,19 +8506,7 @@ class SynchronousMachine(RotatingMachine):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                Steady-state short-circuit current (in A for the profile) of generator
-                with compound excitation during 3-phase short circuit.
-                - Ikk=0: Generator with no compound excitation.
-                - Ikk?0: Generator with compound excitation.
-                Ikk is used to calculate the minimum steady-state short-circuit current
-                for generators with compound excitation
-                (Section 4.6.1.2 in the IEC 60909-0)
-                Used only for single fed short circuit on a generator. (Section 4.3.4.2.
-                in the IEC 60909-0)
-                '''
+            'maxOccurs': '1'
         })
     '''
     Steady-state short-circuit current (in A for the profile) of generator
@@ -10878,12 +8525,7 @@ class SynchronousMachine(RotatingMachine):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                Maximum reactive power limit. This is the maximum (nameplate) limit for
-                the unit.
-                '''
+            'maxOccurs': '1'
         })
     '''
     Maximum reactive power limit. This is the maximum (nameplate) limit for
@@ -10895,11 +8537,7 @@ class SynchronousMachine(RotatingMachine):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                Minimum reactive power limit for the unit.
-                '''
+            'maxOccurs': '1'
         })
     '''
     Minimum reactive power limit for the unit.
@@ -10910,11 +8548,7 @@ class SynchronousMachine(RotatingMachine):
         metadata = {
             'type': 'enumeration',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                Current mode of operation.
-                '''
+            'maxOccurs': '1'
         })
     '''
     Current mode of operation.
@@ -10925,27 +8559,19 @@ class SynchronousMachine(RotatingMachine):
         metadata = {
             'type': 'enumeration',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                Modes that this synchronous machine can operate in.
-                '''
+            'maxOccurs': '1'
         })
     '''
     Modes that this synchronous machine can operate in.
     '''
 
-    DERDynamics: Optional[ DERDynamics ] = field(
+    DERDynamics: Optional[DERDynamics] = field(
         default = None,
         metadata = {
             'type': 'Association',
             'minOccurs': '0',
             'maxOccurs': '1',
-            'inverse': 'DERDynamics.SynchronousMachine',
-            'docstring':
-                '''
-                DER dynamics model associated with this synchronous machine model.
-                '''
+            'inverse': 'DERDynamics.SynchronousMachine'
         })
     '''
     DER dynamics model associated with this synchronous machine model.
@@ -10965,11 +8591,7 @@ class ShuntCompensator(RegulatingCondEq):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                Used for Yn and Zn connections. True if the neutral is solidly grounded.
-                '''
+            'maxOccurs': '1'
         })
     '''
     Used for Yn and Zn connections. True if the neutral is solidly grounded.
@@ -10980,11 +8602,7 @@ class ShuntCompensator(RegulatingCondEq):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                The maximum number of sections that may be switched in.
-                '''
+            'maxOccurs': '1'
         })
     '''
     The maximum number of sections that may be switched in.
@@ -10995,11 +8613,7 @@ class ShuntCompensator(RegulatingCondEq):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                The normal number of sections switched in.
-                '''
+            'maxOccurs': '1'
         })
     '''
     The normal number of sections switched in.
@@ -11010,16 +8624,7 @@ class ShuntCompensator(RegulatingCondEq):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                Shunt compensator sections in use.
-                Starting value for steady state solution. Non integer values are allowed
-                to support continuous variables. The reasons for continuous value are to
-                support study cases where no discrete shunt compensators has yet been designed,
-                a solutions where a narrow voltage band force the sections to oscillate
-                or accommodate for a continuous solution as input.
-                '''
+            'maxOccurs': '1'
         })
     '''
     Shunt compensator sections in use.
@@ -11035,12 +8640,7 @@ class ShuntCompensator(RegulatingCondEq):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                Time delay required for the device to be connected or disconnected by automatic
-                voltage regulation (AVR).
-                '''
+            'maxOccurs': '1'
         })
     '''
     Time delay required for the device to be connected or disconnected by automatic
@@ -11052,13 +8652,7 @@ class ShuntCompensator(RegulatingCondEq):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                The voltage at which the nominal reactive power may be calculated. This
-                should normally be within 10% of the voltage at which the capacitor is
-                connected to the network.
-                '''
+            'maxOccurs': '1'
         })
     '''
     The voltage at which the nominal reactive power may be calculated. This
@@ -11071,43 +8665,31 @@ class ShuntCompensator(RegulatingCondEq):
         metadata = {
             'type': 'enumeration',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                The type of phase connection, such as wye or delta.
-                '''
+            'maxOccurs': '1'
         })
     '''
     The type of phase connection, such as wye or delta.
     '''
 
-    ShuntCompensatorPhase: list[ ShuntCompensatorPhase ] = field(
+    ShuntCompensatorPhase: list[ShuntCompensatorPhase] = field(
         default_factory = list,
         metadata = {
             'type': 'Association',
             'minOccurs': '0',
             'maxOccurs': 'unbounded',
-            'inverse': 'ShuntCompensatorPhase.ShuntCompensator',
-            'docstring':
-                '''
-                The individual phases models for the shunt compensator.
-                '''
+            'inverse': 'ShuntCompensatorPhase.ShuntCompensator'
         })
     '''
     The individual phases models for the shunt compensator.
     '''
 
-    SvShuntCompensatorSections: Optional[ SvShuntCompensatorSections ] = field(
+    SvShuntCompensatorSections: Optional[SvShuntCompensatorSections] = field(
         default = None,
         metadata = {
             'type': 'Association',
             'minOccurs': '0',
             'maxOccurs': '1',
-            'inverse': 'SvShuntCompensatorSections.ShuntCompensator',
-            'docstring':
-                '''
-                The state for the number of shunt compensator sections in service.
-                '''
+            'inverse': 'SvShuntCompensatorSections.ShuntCompensator'
         })
     '''
     The state for the number of shunt compensator sections in service.
@@ -11125,11 +8707,7 @@ class LinearShuntCompensator(ShuntCompensator):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                Zero sequence shunt (charging) susceptance per section
-                '''
+            'maxOccurs': '1'
         })
     '''
     Zero sequence shunt (charging) susceptance per section
@@ -11140,11 +8718,7 @@ class LinearShuntCompensator(ShuntCompensator):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                Positive sequence shunt (charging) susceptance per section
-                '''
+            'maxOccurs': '1'
         })
     '''
     Positive sequence shunt (charging) susceptance per section
@@ -11155,11 +8729,7 @@ class LinearShuntCompensator(ShuntCompensator):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                Zero sequence shunt (charging) conductance per section
-                '''
+            'maxOccurs': '1'
         })
     '''
     Zero sequence shunt (charging) conductance per section
@@ -11170,11 +8740,7 @@ class LinearShuntCompensator(ShuntCompensator):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                Positive sequence shunt (charging) conductance per section
-                '''
+            'maxOccurs': '1'
         })
     '''
     Positive sequence shunt (charging) conductance per section
@@ -11187,17 +8753,13 @@ class NonlinearShuntCompensator(ShuntCompensator):
     differs.
     '''
 
-    NonlinearShuntCompensatorPoints: list[ NonlinearShuntCompensatorPoint ] = field(
+    NonlinearShuntCompensatorPoints: list[NonlinearShuntCompensatorPoint] = field(
         default_factory = list,
         metadata = {
             'type': 'Aggregate Of',
             'minOccurs': '0',
             'maxOccurs': 'unbounded',
-            'inverse': 'NonlinearShuntCompensatorPoint.NonlinearShuntCompensator',
-            'docstring':
-                '''
-                All points of the non-linear shunt compensator.
-                '''
+            'inverse': 'NonlinearShuntCompensatorPoint.NonlinearShuntCompensator'
         })
     '''
     All points of the non-linear shunt compensator.
@@ -11222,11 +8784,7 @@ class StaticVarCompensator(RegulatingCondEq):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                Maximum available capacitive reactance.
-                '''
+            'maxOccurs': '1'
         })
     '''
     Maximum available capacitive reactance.
@@ -11237,11 +8795,7 @@ class StaticVarCompensator(RegulatingCondEq):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                Maximum available inductive reactance.
-                '''
+            'maxOccurs': '1'
         })
     '''
     Maximum available inductive reactance.
@@ -11252,13 +8806,7 @@ class StaticVarCompensator(RegulatingCondEq):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                Reactive power injection. Load sign convention is used, i.e. positive sign
-                means flow out from a node.
-                Starting value for a steady state solution.
-                '''
+            'maxOccurs': '1'
         })
     '''
     Reactive power injection. Load sign convention is used, i.e. positive sign
@@ -11271,13 +8819,7 @@ class StaticVarCompensator(RegulatingCondEq):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                The characteristics slope of an SVC defines how the reactive power output
-                changes in proportion to the difference between the regulated bus voltage
-                and the voltage setpoint.
-                '''
+            'maxOccurs': '1'
         })
     '''
     The characteristics slope of an SVC defines how the reactive power output
@@ -11290,11 +8832,7 @@ class StaticVarCompensator(RegulatingCondEq):
         metadata = {
             'type': 'enumeration',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                SVC control mode.
-                '''
+            'maxOccurs': '1'
         })
     '''
     SVC control mode.
@@ -11305,14 +8843,7 @@ class StaticVarCompensator(RegulatingCondEq):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                The reactive power output of the SVC is proportional to the difference
-                between the voltage at the regulated bus and the voltage setpoint. When
-                the regulated bus voltage is equal to the voltage setpoint, the reactive
-                power output is zero.
-                '''
+            'maxOccurs': '1'
         })
     '''
     The reactive power output of the SVC is proportional to the difference
@@ -11351,33 +8882,7 @@ class PowerTransformer(ConductingEquipment):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                Vector group of the transformer for protective relaying, e.g., Dyn1. For
-                unbalanced transformers, this may not be simply determined from the constituent
-                winding connections and phase angle dispacements.
-                The vectorGroup string consists of the following components in the order
-                listed: high voltage winding connection, mid voltage winding connection
-                (for three winding transformers), phase displacement clock number from
-                0 to 11, low voltage winding connection
-                phase displacement clock number from 0 to 11. The winding connections are
-                D (delta), Y (wye), YN (wye with neutral), Z (zigzag), ZN (zigzag with
-                neutral), A (auto transformer). Upper case means the high voltage, lower
-                case mid or low. The high voltage winding always has clock postion 0 and
-                is not included in the vector group string. Some examples: YNy0 (two winding
-                wye to wye with no phase displacement), YNd11 (two winding wye to delta
-                with 330 degrees phase displacement), YNyn0d5 (three winding transformer
-                wye with neutral high voltgage, wye with neutral mid voltgage and no phase
-                displacement, delta low voltage with 150 degrees displacement).
-                Phase displacement is defined as the angular difference between the phasors
-                representing the voltages between the neutral point (real or imaginary)
-                and the corresponding terminals of two windings, a positive sequence voltage
-                system being applied to the high-voltage terminals, following each other
-                in alphabetical sequence if they are lettered, or in numerical sequence
-                if they are numbered: the phasors are assumed to rotate in a counter-clockwise
-                sense.
-                '''
+            'maxOccurs': '1'
         })
     '''
     Vector group of the transformer for protective relaying, e.g., Dyn1. For
@@ -11405,33 +8910,25 @@ class PowerTransformer(ConductingEquipment):
     sense.
     '''
 
-    PowerTransformerEnd: list[ PowerTransformerEnd ] = field(
+    PowerTransformerEnd: list[PowerTransformerEnd] = field(
         default_factory = list,
         metadata = {
             'type': 'Association',
             'minOccurs': '0',
             'maxOccurs': 'unbounded',
-            'inverse': 'PowerTransformerEnd.PowerTransformer',
-            'docstring':
-                '''
-                The ends of this power transformer.
-                '''
+            'inverse': 'PowerTransformerEnd.PowerTransformer'
         })
     '''
     The ends of this power transformer.
     '''
 
-    TransformerTanks: list[ TransformerTank ] = field(
+    TransformerTanks: list[TransformerTank] = field(
         default_factory = list,
         metadata = {
             'type': 'Association',
             'minOccurs': '0',
             'maxOccurs': 'unbounded',
-            'inverse': 'TransformerTank.PowerTransformer',
-            'docstring':
-                '''
-                All transformers that belong to this bank.
-                '''
+            'inverse': 'TransformerTank.PowerTransformer'
         })
     '''
     All transformers that belong to this bank.
@@ -11449,12 +8946,7 @@ class SeriesCompensator(ConductingEquipment):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                Describe if a metal oxide varistor (mov) for over voltage protection is
-                configured at the series compensator.
-                '''
+            'maxOccurs': '1'
         })
     '''
     Describe if a metal oxide varistor (mov) for over voltage protection is
@@ -11466,11 +8958,7 @@ class SeriesCompensator(ConductingEquipment):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                Positive sequence resistance.
-                '''
+            'maxOccurs': '1'
         })
     '''
     Positive sequence resistance.
@@ -11481,11 +8969,7 @@ class SeriesCompensator(ConductingEquipment):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                Zero sequence resistance.
-                '''
+            'maxOccurs': '1'
         })
     '''
     Zero sequence resistance.
@@ -11496,11 +8980,7 @@ class SeriesCompensator(ConductingEquipment):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                The maximum current the varistor is designed to handle at specified duration.
-                '''
+            'maxOccurs': '1'
         })
     '''
     The maximum current the varistor is designed to handle at specified duration.
@@ -11511,11 +8991,7 @@ class SeriesCompensator(ConductingEquipment):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                The dc voltage at which the varistor start conducting.
-                '''
+            'maxOccurs': '1'
         })
     '''
     The dc voltage at which the varistor start conducting.
@@ -11526,11 +9002,7 @@ class SeriesCompensator(ConductingEquipment):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                Positive sequence reactance.
-                '''
+            'maxOccurs': '1'
         })
     '''
     Positive sequence reactance.
@@ -11541,11 +9013,7 @@ class SeriesCompensator(ConductingEquipment):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                Zero sequence reactance.
-                '''
+            'maxOccurs': '1'
         })
     '''
     Zero sequence reactance.
@@ -11563,13 +9031,7 @@ class Switch(ConductingEquipment):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                The attribute is used in cases when no Measurement for the status value
-                is present. If the Switch has a status measurement the Discrete.normalValue
-                is expected to match with the Switch.normalOpen.
-                '''
+            'maxOccurs': '1'
         })
     '''
     The attribute is used in cases when no Measurement for the status value
@@ -11582,12 +9044,7 @@ class Switch(ConductingEquipment):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                The attribute tells if the switch is considered open when used as input
-                to topology processing.
-                '''
+            'maxOccurs': '1'
         })
     '''
     The attribute tells if the switch is considered open when used as input
@@ -11599,12 +9056,7 @@ class Switch(ConductingEquipment):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                Branch is retained in a bus branch model. The flow through retained switches
-                will normally be calculated in power flow.
-                '''
+            'maxOccurs': '1'
         })
     '''
     Branch is retained in a bus branch model. The flow through retained switches
@@ -11616,61 +9068,44 @@ class Switch(ConductingEquipment):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                The maximum continuous current carrying capacity in amps governed by the
-                device material and construction.
-                '''
+            'maxOccurs': '1'
         })
     '''
     The maximum continuous current carrying capacity in amps governed by the
     device material and construction.
     '''
 
-    CompositeSwitch: Optional[ CompositeSwitch ] = field(
+    CompositeSwitch: Optional[CompositeSwitch] = field(
         default = None,
         metadata = {
             'type': 'Of Aggregate',
             'minOccurs': '0',
             'maxOccurs': '1',
-            'inverse': 'CompositeSwitch.Switches',
-            'docstring':
-                '''
-                Composite switch to which this Switch belongs.
-                '''
+            'inverse': 'CompositeSwitch.Switches'
         })
     '''
     Composite switch to which this Switch belongs.
     '''
 
-    SwitchPhase: list[ SwitchPhase ] = field(
+    SwitchPhase: list[SwitchPhase] = field(
         default_factory = list,
         metadata = {
             'type': 'Association',
             'minOccurs': '0',
             'maxOccurs': 'unbounded',
-            'inverse': 'SwitchPhase.Switch',
-            'docstring':
-                '''
-                The individual switch phases for the switch.
-                '''
+            'inverse': 'SwitchPhase.Switch'
         })
     '''
     The individual switch phases for the switch.
     '''
 
-    SwitchSchedules: list[ SwitchSchedule ] = field(
+    SwitchSchedules: list[SwitchSchedule] = field(
         default_factory = list,
         metadata = {
             'type': 'Association',
             'minOccurs': '0',
             'maxOccurs': 'unbounded',
-            'inverse': 'SwitchSchedule.Switch',
-            'docstring':
-                '''
-                A Switch can be associated with SwitchSchedules.
-                '''
+            'inverse': 'SwitchSchedule.Switch'
         })
     '''
     A Switch can be associated with SwitchSchedules.
@@ -11698,13 +9133,7 @@ class Cut(Switch):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                The length to the place where the cut is located starting from side one
-                of the cut line segment, i.e. the line segment Terminal with sequenceNumber
-                equal to 1.
-                '''
+            'maxOccurs': '1'
         })
     '''
     The length to the place where the cut is located starting from side one
@@ -11712,17 +9141,13 @@ class Cut(Switch):
     equal to 1.
     '''
 
-    ACLineSegment: Optional[ ACLineSegment ] = field(
+    ACLineSegment: Optional[ACLineSegment] = field(
         default = None,
         metadata = {
             'type': 'Association',
             'minOccurs': '0',
             'maxOccurs': '1',
-            'inverse': 'ACLineSegment.Cut',
-            'docstring':
-                '''
-                The line segment to which the cut is applied.
-                '''
+            'inverse': 'ACLineSegment.Cut'
         })
     '''
     The line segment to which the cut is applied.
@@ -11771,16 +9196,34 @@ class ProtectedSwitch(Switch):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                The maximum fault current a breaking device can break safely under prescribed
-                conditions of use.
-                '''
+            'maxOccurs': '1'
         })
     '''
     The maximum fault current a breaking device can break safely under prescribed
     conditions of use.
+    '''
+
+    OperatedByProtectionEquipment: list[ProtectionEquipment] = field(
+        default_factory = list,
+        metadata = {
+            'type': 'Association',
+            'minOccurs': '0',
+            'maxOccurs': 'unbounded',
+            'inverse': 'ProtectionEquipment.ProtectedSwitches'
+        })
+    '''
+    Protection equipments that operate this ProtectedSwitch.
+    '''
+
+    ProtectionRelayFunction: list[ProtectionFunctionBlock] = field(
+        default_factory = list,
+        metadata = {
+            'type': 'Association',
+            'minOccurs': '0',
+            'maxOccurs': 'unbounded',
+            'inverse': 'ProtectionFunctionBlock.ProtectedSwitch'
+        })
+    '''
     '''
 
 @dataclass(repr=False)
@@ -11797,11 +9240,7 @@ class Breaker(ProtectedSwitch):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                The transition time from open to close.
-                '''
+            'maxOccurs': '1'
         })
     '''
     The transition time from open to close.
@@ -11846,12 +9285,7 @@ class GeneratingUnit(Equipment):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                This is the maximum operating active power limit the dispatcher can enter
-                for this unit.
-                '''
+            'maxOccurs': '1'
         })
     '''
     This is the maximum operating active power limit the dispatcher can enter
@@ -11863,48 +9297,33 @@ class GeneratingUnit(Equipment):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                This is the minimum operating active power limit the dispatcher can enter
-                for this unit.
-                '''
+            'maxOccurs': '1'
         })
     '''
     This is the minimum operating active power limit the dispatcher can enter
     for this unit.
     '''
 
-    GrossToNetActivePowerCurves: list[ GrossToNetActivePowerCurve ] = field(
+    GrossToNetActivePowerCurves: list[GrossToNetActivePowerCurve] = field(
         default_factory = list,
         metadata = {
             'type': 'Aggregate Of',
             'minOccurs': '0',
             'maxOccurs': 'unbounded',
-            'inverse': 'GrossToNetActivePowerCurve.GeneratingUnit',
-            'docstring':
-                '''
-                A generating unit may have a gross active power to net active power curve,
-                describing the losses and auxiliary power requirements of the unit.
-                '''
+            'inverse': 'GrossToNetActivePowerCurve.GeneratingUnit'
         })
     '''
     A generating unit may have a gross active power to net active power curve,
     describing the losses and auxiliary power requirements of the unit.
     '''
 
-    RotatingMachine: list[ RotatingMachine ] = field(
+    RotatingMachine: list[RotatingMachine] = field(
         default_factory = list,
         metadata = {
             'type': 'Association',
             'minOccurs': '0',
             'maxOccurs': 'unbounded',
-            'inverse': 'RotatingMachine.GeneratingUnit',
-            'docstring':
-                '''
-                A synchronous machine may operate as a generator and as such becomes a
-                member of a generating unit.
-                '''
+            'inverse': 'RotatingMachine.GeneratingUnit'
         })
     '''
     A synchronous machine may operate as a generator and as such becomes a
@@ -11925,17 +9344,13 @@ class WindGeneratingUnit(GeneratingUnit):
     machine. May be used to represent a single turbine or an aggregation.
     '''
 
-    windGenUnitType: Optional[ WindGenUnitKind ] = field(
+    windGenUnitType: Optional[WindGenUnitKind] = field(
         default = None,
         metadata = {
             'type': 'enumeration',
             'minOccurs': '0',
             'maxOccurs': '1',
-            'inverse': '',
-            'docstring':
-                '''
-                The kind of wind generating unit
-                '''
+            'inverse': ''
         })
     '''
     The kind of wind generating unit
@@ -11948,19 +9363,13 @@ class HydroPump(Equipment):
     plant.
     '''
 
-    RotatingMachine: Optional[ RotatingMachine ] = field(
+    RotatingMachine: Optional[RotatingMachine] = field(
         default = None,
         metadata = {
             'type': 'Association',
             'minOccurs': '0',
             'maxOccurs': '1',
-            'inverse': 'RotatingMachine.HydroPump',
-            'docstring':
-                '''
-                The synchronous machine drives the turbine which moves the water from a
-                low elevation to a higher elevation. The direction of machine rotation
-                for pumping may or may not be the same as for generating.
-                '''
+            'inverse': 'RotatingMachine.HydroPump'
         })
     '''
     The synchronous machine drives the turbine which moves the water from a
@@ -11980,12 +9389,7 @@ class PowerElectronicsUnit(Equipment):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                Maximum active power limit. This is the maximum (nameplate) limit for the
-                unit.
-                '''
+            'maxOccurs': '1'
         })
     '''
     Maximum active power limit. This is the maximum (nameplate) limit for the
@@ -11997,28 +9401,20 @@ class PowerElectronicsUnit(Equipment):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                Minimum active power limit. This is the minimum (nameplate) limit for the
-                unit.
-                '''
+            'maxOccurs': '1'
         })
     '''
     Minimum active power limit. This is the minimum (nameplate) limit for the
     unit.
     '''
 
-    PowerElectronicsConnection: Optional[ PowerElectronicsConnection ] = field(
+    PowerElectronicsConnection: Optional[PowerElectronicsConnection] = field(
         default = None,
         metadata = {
             'type': 'Association',
             'minOccurs': '0',
             'maxOccurs': '1',
-            'inverse': 'PowerElectronicsConnection.PowerElectronicsUnit',
-            'docstring':
-                '''
-                '''
+            'inverse': 'PowerElectronicsConnection.PowerElectronicsUnit'
         })
     '''
     '''
@@ -12034,11 +9430,7 @@ class BatteryUnit(PowerElectronicsUnit):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                full energy storage capacity of the battery
-                '''
+            'maxOccurs': '1'
         })
     '''
     full energy storage capacity of the battery
@@ -12049,27 +9441,19 @@ class BatteryUnit(PowerElectronicsUnit):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                amount of energy currently stored; no more than ratedE
-                '''
+            'maxOccurs': '1'
         })
     '''
     amount of energy currently stored; no more than ratedE
     '''
 
-    batteryState: Optional[ BatteryStateKind ] = field(
+    batteryState: Optional[BatteryStateKind] = field(
         default = None,
         metadata = {
             'type': 'enumeration',
             'minOccurs': '0',
             'maxOccurs': '1',
-            'inverse': '',
-            'docstring':
-                '''
-                indicates whether the battery is charging, discharging or idle
-                '''
+            'inverse': ''
         })
     '''
     indicates whether the battery is charging, discharging or idle
@@ -12089,6 +9473,105 @@ class PowerElectronicsWindUnit(PowerElectronicsUnit):
     '''
 
 @dataclass(repr=False)
+class ProtectionEquipment(Equipment):
+    '''
+    An electrical device designed to respond to input conditions in a prescribed
+    manner and after specified conditions are met to cause contact operation
+    or similar abrupt change in associated electric control circuits, or simply
+    to display the detected condition. Protection equipment is associated with
+    conducting equipment and usually operate circuit breakers.
+    '''
+
+    highLimit: Optional[ float ] = field(
+        default = None,
+        metadata = {
+            'type': 'Attribute',
+            'minOccurs': '0',
+            'maxOccurs': '1'
+        })
+    '''
+    The maximum allowable value.
+    '''
+
+    lowLimit: Optional[ float ] = field(
+        default = None,
+        metadata = {
+            'type': 'Attribute',
+            'minOccurs': '0',
+            'maxOccurs': '1'
+        })
+    '''
+    The minimum allowable value.
+    '''
+
+    powerDirectionFlag: Optional[ bool ] = field(
+        default = None,
+        metadata = {
+            'type': 'Attribute',
+            'minOccurs': '0',
+            'maxOccurs': '1'
+        })
+    '''
+    Direction same as positive active power flow value.
+    '''
+
+    relayDelayTime: Optional[ float | Seconds ] = field(
+        default = None,
+        metadata = {
+            'type': 'Attribute',
+            'minOccurs': '0',
+            'maxOccurs': '1'
+        })
+    '''
+    The time delay from detection of abnormal conditions to relay operation.
+    '''
+
+    unitMultiplier: Optional[ UnitMultiplier ] = field(
+        default = None,
+        metadata = {
+            'type': 'enumeration',
+            'minOccurs': '0',
+            'maxOccurs': '1'
+        })
+    '''
+    The unit multiplier of the value.
+    '''
+
+    unitSymbol: Optional[ UnitSymbol ] = field(
+        default = None,
+        metadata = {
+            'type': 'enumeration',
+            'minOccurs': '0',
+            'maxOccurs': '1'
+        })
+    '''
+    The unit of measure of the value.
+    '''
+
+    ProtectedSwitches: list[ProtectedSwitch] = field(
+        default_factory = list,
+        metadata = {
+            'type': 'Association',
+            'minOccurs': '0',
+            'maxOccurs': 'unbounded',
+            'inverse': 'ProtectedSwitch.OperatedByProtectionEquipment'
+        })
+    '''
+    Protected switches operated by this ProtectionEquipment.
+    '''
+
+    ProtectionFunctionBlock: list[ProtectionFunctionBlock] = field(
+        default_factory = list,
+        metadata = {
+            'type': 'Association',
+            'minOccurs': '0',
+            'maxOccurs': 'unbounded',
+            'inverse': 'ProtectionFunctionBlock.ProtectionEquipment'
+        })
+    '''
+    '''
+
+@dataclass(repr=False)
 class TransformerTank(Equipment):
     '''
     An assembly of two or more coupled windings that transform electrical power
@@ -12097,48 +9580,37 @@ class TransformerTank(Equipment):
     and 3-phase transformers.
     '''
 
-    PowerTransformer: Optional[ PowerTransformer ] = field(
+    PowerTransformer: Optional[PowerTransformer] = field(
         default = None,
         metadata = {
             'type': 'Association',
             'minOccurs': '0',
             'maxOccurs': '1',
-            'inverse': 'PowerTransformer.TransformerTanks',
-            'docstring':
-                '''
-                Bank this transformer belongs to.
-                '''
+            'inverse': 'PowerTransformer.TransformerTanks'
         })
     '''
     Bank this transformer belongs to.
     '''
 
-    TransformerTankEnds: list[ TransformerTankEnd ] = field(
+    TransformerTankEnds: list[TransformerTankEnd] = field(
         default_factory = list,
         metadata = {
             'type': 'Association',
             'minOccurs': '0',
             'maxOccurs': 'unbounded',
-            'inverse': 'TransformerTankEnd.TransformerTank',
-            'docstring':
-                '''
-                All windings of this transformer.
-                '''
+            'inverse': 'TransformerTankEnd.TransformerTank'
         })
     '''
     All windings of this transformer.
     '''
 
-    TransformerTankInfo: Optional[ TransformerTankInfo ] = field(
+    TransformerTankInfo: Optional[TransformerTankInfo] = field(
         default = None,
         metadata = {
             'type': 'Association',
             'minOccurs': '0',
             'maxOccurs': '1',
-            'inverse': 'TransformerTankInfo.TransformerTanks',
-            'docstring':
-                '''
-                '''
+            'inverse': 'TransformerTankInfo.TransformerTanks'
         })
     '''
     '''
@@ -12154,11 +9626,7 @@ class PowerCutZone(PowerSystemResource):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                First level (amount) of load to cut as a percentage of total zone load.
-                '''
+            'maxOccurs': '1'
         })
     '''
     First level (amount) of load to cut as a percentage of total zone load.
@@ -12169,27 +9637,19 @@ class PowerCutZone(PowerSystemResource):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                Second level (amount) of load to cut as a percentage of total zone load.
-                '''
+            'maxOccurs': '1'
         })
     '''
     Second level (amount) of load to cut as a percentage of total zone load.
     '''
 
-    EnergyConsumers: list[ EnergyConsumer ] = field(
+    EnergyConsumers: list[EnergyConsumer] = field(
         default_factory = list,
         metadata = {
             'type': 'Aggregate Of',
             'minOccurs': '0',
             'maxOccurs': 'unbounded',
-            'inverse': 'EnergyConsumer.PowerCutZone',
-            'docstring':
-                '''
-                Energy consumer is assigned to the power cut zone.
-                '''
+            'inverse': 'EnergyConsumer.PowerCutZone'
         })
     '''
     Energy consumer is assigned to the power cut zone.
@@ -12205,12 +9665,7 @@ class PowerElectronicsConnectionPhase(PowerSystemResource):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                Active power injection. Load sign convention is used, i.e. positive sign
-                means flow into the equipment from the network.
-                '''
+            'maxOccurs': '1'
         })
     '''
     Active power injection. Load sign convention is used, i.e. positive sign
@@ -12222,33 +9677,20 @@ class PowerElectronicsConnectionPhase(PowerSystemResource):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                Reactive power injection. Load sign convention is used, i.e. positive sign
-                means flow into the equipment from the network.
-                '''
+            'maxOccurs': '1'
         })
     '''
     Reactive power injection. Load sign convention is used, i.e. positive sign
     means flow into the equipment from the network.
     '''
 
-    phase: Optional[ SinglePhaseKind ] = field(
+    phase: Optional[SinglePhaseKind] = field(
         default = None,
         metadata = {
             'type': 'enumeration',
             'minOccurs': '0',
             'maxOccurs': '1',
-            'inverse': '',
-            'docstring':
-                '''
-                Phase of this energy producer component. If the energy producer is wye
-                connected, the connection is from the indicated phase to the central ground
-                or neutral point. If the energy producer is delta connected, the phase
-                indicates an energy producer connected from the indicated phase to the
-                next logical non-neutral phase.
-                '''
+            'inverse': ''
         })
     '''
     Phase of this energy producer component. If the energy producer is wye
@@ -12258,16 +9700,13 @@ class PowerElectronicsConnectionPhase(PowerSystemResource):
     next logical non-neutral phase.
     '''
 
-    PowerElectronicsConnection: Optional[ PowerElectronicsConnection ] = field(
+    PowerElectronicsConnection: Optional[PowerElectronicsConnection] = field(
         default = None,
         metadata = {
             'type': 'Association',
             'minOccurs': '0',
             'maxOccurs': '1',
-            'inverse': 'PowerElectronicsConnection.PowerElectronicsConnectionPhases',
-            'docstring':
-                '''
-                '''
+            'inverse': 'PowerElectronicsConnection.PowerElectronicsConnectionPhases'
         })
     '''
     '''
@@ -12292,12 +9731,7 @@ class RegulatingControl(PowerSystemResource):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                The regulation is performed in a discrete mode. This applies to equipment
-                with discrete controls, e.g. tap changers and shunt compensators.
-                '''
+            'maxOccurs': '1'
         })
     '''
     The regulation is performed in a discrete mode. This applies to equipment
@@ -12309,11 +9743,7 @@ class RegulatingControl(PowerSystemResource):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                The flag tells if regulation is enabled.
-                '''
+            'maxOccurs': '1'
         })
     '''
     The flag tells if regulation is enabled.
@@ -12324,10 +9754,7 @@ class RegulatingControl(PowerSystemResource):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                '''
+            'maxOccurs': '1'
         })
     '''
     '''
@@ -12337,10 +9764,7 @@ class RegulatingControl(PowerSystemResource):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                '''
+            'maxOccurs': '1'
         })
     '''
     '''
@@ -12350,13 +9774,7 @@ class RegulatingControl(PowerSystemResource):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                This is a deadband used with discrete control to avoid excessive update
-                of controls like tap changers and shunt compensator banks while regulating.
-                The units of those appropriate for the mode.
-                '''
+            'maxOccurs': '1'
         })
     '''
     This is a deadband used with discrete control to avoid excessive update
@@ -12369,13 +9787,7 @@ class RegulatingControl(PowerSystemResource):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                The target value specified for case input. This value can be used for the
-                target value without the use of schedules. The value has the units appropriate
-                to the mode attribute.
-                '''
+            'maxOccurs': '1'
         })
     '''
     The target value specified for case input. This value can be used for the
@@ -12388,13 +9800,7 @@ class RegulatingControl(PowerSystemResource):
         metadata = {
             'type': 'enumeration',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                The regulating control mode presently available. This specification allows
-                for determining the kind of regulation without need for obtaining the units
-                from a schedule.
-                '''
+            'maxOccurs': '1'
         })
     '''
     The regulating control mode presently available. This specification allows
@@ -12407,64 +9813,43 @@ class RegulatingControl(PowerSystemResource):
         metadata = {
             'type': 'enumeration',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                Phase voltage controlling this regulator, measured at regulator location.
-                '''
+            'maxOccurs': '1'
         })
     '''
     Phase voltage controlling this regulator, measured at regulator location.
     '''
 
-    RegulatingCondEq: list[ RegulatingCondEq ] = field(
+    RegulatingCondEq: list[RegulatingCondEq] = field(
         default_factory = list,
         metadata = {
             'type': 'Association',
             'minOccurs': '0',
             'maxOccurs': 'unbounded',
-            'inverse': 'RegulatingCondEq.RegulatingControl',
-            'docstring':
-                '''
-                The equipment that participates in this regulating control scheme.
-                '''
+            'inverse': 'RegulatingCondEq.RegulatingControl'
         })
     '''
     The equipment that participates in this regulating control scheme.
     '''
 
-    RegulationSchedule: list[ RegulationSchedule ] = field(
+    RegulationSchedule: list[RegulationSchedule] = field(
         default_factory = list,
         metadata = {
             'type': 'Association',
             'minOccurs': '0',
             'maxOccurs': 'unbounded',
-            'inverse': 'RegulationSchedule.RegulatingControl',
-            'docstring':
-                '''
-                Schedule for this Regulating regulating control.
-                '''
+            'inverse': 'RegulationSchedule.RegulatingControl'
         })
     '''
     Schedule for this Regulating regulating control.
     '''
 
-    Terminal: Optional[ Terminal ] = field(
+    Terminal: Optional[Terminal] = field(
         default = None,
         metadata = {
             'type': 'Association',
             'minOccurs': '0',
             'maxOccurs': '1',
-            'inverse': 'Terminal.RegulatingControl',
-            'docstring':
-                '''
-                The terminal associated with this regulating control. The terminal is associated
-                instead of a node, since the terminal could connect into either a topological
-                node (bus in bus-branch model) or a connectivity node (detailed switch
-                model). Sometimes it is useful to model regulation at a terminal of a bus
-                bar object since the bus bar can be present in both a bus-branch model
-                or a model with switch detail.
-                '''
+            'inverse': 'Terminal.RegulatingControl'
         })
     '''
     The terminal associated with this regulating control. The terminal is associated
@@ -12488,11 +9873,7 @@ class TapChangerControl(RegulatingControl):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                If true, the line drop compensation is to be applied.
-                '''
+            'maxOccurs': '1'
         })
     '''
     If true, the line drop compensation is to be applied.
@@ -12503,10 +9884,7 @@ class TapChangerControl(RegulatingControl):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                '''
+            'maxOccurs': '1'
         })
     '''
     '''
@@ -12516,10 +9894,7 @@ class TapChangerControl(RegulatingControl):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                '''
+            'maxOccurs': '1'
         })
     '''
     '''
@@ -12529,11 +9904,7 @@ class TapChangerControl(RegulatingControl):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                Line drop compensator resistance setting for normal (forward) power flow.
-                '''
+            'maxOccurs': '1'
         })
     '''
     Line drop compensator resistance setting for normal (forward) power flow.
@@ -12544,11 +9915,7 @@ class TapChangerControl(RegulatingControl):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                Line drop compensator reactance setting for normal (forward) power flow.
-                '''
+            'maxOccurs': '1'
         })
     '''
     Line drop compensator reactance setting for normal (forward) power flow.
@@ -12559,12 +9926,7 @@ class TapChangerControl(RegulatingControl):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                Maximum allowed regulated voltage on the PT secondary, regardless of line
-                drop compensation. Sometimes referred to as first-house protection.
-                '''
+            'maxOccurs': '1'
         })
     '''
     Maximum allowed regulated voltage on the PT secondary, regardless of line
@@ -12576,10 +9938,7 @@ class TapChangerControl(RegulatingControl):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                '''
+            'maxOccurs': '1'
         })
     '''
     '''
@@ -12589,11 +9948,7 @@ class TapChangerControl(RegulatingControl):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                Line drop compensator resistance setting for reverse power flow.
-                '''
+            'maxOccurs': '1'
         })
     '''
     Line drop compensator resistance setting for reverse power flow.
@@ -12604,11 +9959,7 @@ class TapChangerControl(RegulatingControl):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                Line drop compensator reactance setting for reverse power flow.
-                '''
+            'maxOccurs': '1'
         })
     '''
     Line drop compensator reactance setting for reverse power flow.
@@ -12619,10 +9970,7 @@ class TapChangerControl(RegulatingControl):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                '''
+            'maxOccurs': '1'
         })
     '''
     '''
@@ -12632,25 +9980,18 @@ class TapChangerControl(RegulatingControl):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                '''
+            'maxOccurs': '1'
         })
     '''
     '''
 
-    TapChanger: list[ TapChanger ] = field(
+    TapChanger: list[TapChanger] = field(
         default_factory = list,
         metadata = {
             'type': 'Association',
             'minOccurs': '0',
             'maxOccurs': 'unbounded',
-            'inverse': 'TapChanger.TapChangerControl',
-            'docstring':
-                '''
-                The tap changers that participates in this regulating tap control scheme.
-                '''
+            'inverse': 'TapChanger.TapChangerControl'
         })
     '''
     The tap changers that participates in this regulating tap control scheme.
@@ -12661,16 +10002,13 @@ class SchedulingArea(PowerSystemResource):
     '''
     '''
 
-    Substations: list[ Substation ] = field(
+    Substation: list[Substation] = field(
         default_factory = list,
         metadata = {
             'type': 'Association',
             'minOccurs': '0',
             'maxOccurs': 'unbounded',
-            'inverse': 'Substation.SchedulingArea',
-            'docstring':
-                '''
-                '''
+            'inverse': 'Substation.SchedulingArea'
         })
     '''
     '''
@@ -12686,65 +10024,49 @@ class SubSchedulingArea(SchedulingArea):
     as a Recloser or PowerTransformer)
     '''
 
-    BoundaryTerminals: list[ Terminal ] = field(
+    BoundaryTerminals: list[Terminal] = field(
         default_factory = list,
         metadata = {
             'type': 'Association',
             'minOccurs': '0',
             'maxOccurs': 'unbounded',
-            'inverse': 'Terminal.BoundedSchedulingArea',
-            'docstring':
-                '''
-                The set of terminals that define the persistent boundaries of the SubSchedulingArea
-                '''
+            'inverse': 'Terminal.BoundedSchedulingArea'
         })
     '''
     The set of terminals that define the persistent boundaries of the SubSchedulingArea
     '''
 
-    ContainedEquipment: list[ Equipment ] = field(
+    ContainedEquipment: list[Equipment] = field(
         default_factory = list,
         metadata = {
             'type': 'Aggregate Of',
             'minOccurs': '0',
             'maxOccurs': 'unbounded',
-            'inverse': 'Equipment.SubSchedulingArea',
-            'docstring':
-                '''
-                The Equipment contained within the SubSchedulingArea.
-                '''
+            'inverse': 'Equipment.SubSchedulingArea'
         })
     '''
     The Equipment contained within the SubSchedulingArea.
     '''
 
-    SinkConfiguration: list[ AreaConfiguration ] = field(
+    SinkConfiguration: list[AreaConfiguration] = field(
         default_factory = list,
         metadata = {
             'type': 'Association',
             'minOccurs': '0',
             'maxOccurs': 'unbounded',
-            'inverse': 'AreaConfiguration.EnergizedArea',
-            'docstring':
-                '''
-                Set of possible configurations for the sink area.
-                '''
+            'inverse': 'AreaConfiguration.EnergizedArea'
         })
     '''
     Set of possible configurations for the sink area.
     '''
 
-    SourceConfiguration: list[ AreaConfiguration ] = field(
+    SourceConfiguration: list[AreaConfiguration] = field(
         default_factory = list,
         metadata = {
             'type': 'Association',
             'minOccurs': '0',
             'maxOccurs': 'unbounded',
-            'inverse': 'AreaConfiguration.EnergizingArea',
-            'docstring':
-                '''
-                The set of possible configurations for the source area
-                '''
+            'inverse': 'AreaConfiguration.EnergizingArea'
         })
     '''
     The set of possible configurations for the source area
@@ -12759,32 +10081,24 @@ class DistributionArea(SubSchedulingArea):
     substations.
     '''
 
-    FeederAreas: list[ FeederArea ] = field(
+    FeederAreas: list[FeederArea] = field(
         default_factory = list,
         metadata = {
             'type': 'Aggregate Of',
             'minOccurs': '0',
             'maxOccurs': 'unbounded',
-            'inverse': 'FeederArea.DistributionArea',
-            'docstring':
-                '''
-                '''
+            'inverse': 'FeederArea.DistributionArea'
         })
     '''
     '''
 
-    Feeders: list[ Feeder ] = field(
+    Feeders: list[Feeder] = field(
         default_factory = list,
         metadata = {
             'type': 'Association',
             'minOccurs': '0',
             'maxOccurs': 'unbounded',
-            'inverse': 'Feeder.DistributionArea',
-            'docstring':
-                '''
-                Feeders within the service territory of the DistributionArea of a particular
-                Distribution System Operator (DSO)
-                '''
+            'inverse': 'Feeder.DistributionArea'
         })
     '''
     Feeders within the service territory of the DistributionArea of a particular
@@ -12803,49 +10117,37 @@ class FeederArea(SubSchedulingArea):
     of a SwitchArea.
     '''
 
-    DistributionArea: Optional[ DistributionArea ] = field(
+    DistributionArea: Optional[DistributionArea] = field(
         default = None,
         metadata = {
             'type': 'Of Aggregate',
             'minOccurs': '0',
             'maxOccurs': '1',
-            'inverse': 'DistributionArea.FeederAreas',
-            'docstring':
-                '''
-                '''
+            'inverse': 'DistributionArea.FeederAreas'
         })
     '''
     '''
 
-    Feeder: Optional[ Feeder ] = field(
+    Feeder: Optional[Feeder] = field(
         default = None,
         metadata = {
             'type': 'Association',
             'minOccurs': '0',
             'maxOccurs': '1',
-            'inverse': 'Feeder.FeederArea',
-            'docstring':
-                '''
-                The Feeder (which contains the ConnectivityNode and all Equipment) associated
-                with the FeeederArea
-                '''
+            'inverse': 'Feeder.FeederArea'
         })
     '''
     The Feeder (which contains the ConnectivityNode and all Equipment) associated
     with the FeeederArea
     '''
 
-    SwitchAreas: list[ SwitchArea ] = field(
+    SwitchAreas: list[SwitchArea] = field(
         default_factory = list,
         metadata = {
             'type': 'Aggregate Of',
             'minOccurs': '0',
             'maxOccurs': 'unbounded',
-            'inverse': 'SwitchArea.FeederArea',
-            'docstring':
-                '''
-                The set of SwitchArea normally energized by the FeederArea
-                '''
+            'inverse': 'SwitchArea.FeederArea'
         })
     '''
     The set of SwitchArea normally energized by the FeederArea
@@ -12864,15 +10166,7 @@ class SecondaryArea(SubSchedulingArea):
         metadata = {
             'type': 'enumeration',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                Used to represent the ABC phase to which the secondary split-phase transformer
-                is connected in North American systems. For secondary areas served by a
-                center-tap transformer, the phase connection of equipment will generally
-                be SinglePhaseKind.s1 or SinglePhaseKind.s2, and it is not readily apparent
-                what phase serves the loads at the medium voltage level.
-                '''
+            'maxOccurs': '1'
         })
     '''
     Used to represent the ABC phase to which the secondary split-phase transformer
@@ -12882,17 +10176,13 @@ class SecondaryArea(SubSchedulingArea):
     what phase serves the loads at the medium voltage level.
     '''
 
-    SwitchArea: Optional[ SwitchArea ] = field(
+    SwitchArea: Optional[SwitchArea] = field(
         default = None,
         metadata = {
             'type': 'Of Aggregate',
             'minOccurs': '0',
             'maxOccurs': '1',
-            'inverse': 'SwitchArea.SecondaryAreas',
-            'docstring':
-                '''
-                The SwitchArea that normally energizes the SecondaryArea
-                '''
+            'inverse': 'SwitchArea.SecondaryAreas'
         })
     '''
     The SwitchArea that normally energizes the SecondaryArea
@@ -12909,33 +10199,25 @@ class SwitchArea(SubSchedulingArea):
     in a SecondarySubstation.
     '''
 
-    FeederArea: Optional[ FeederArea ] = field(
+    FeederArea: Optional[FeederArea] = field(
         default = None,
         metadata = {
             'type': 'Of Aggregate',
             'minOccurs': '0',
             'maxOccurs': '1',
-            'inverse': 'FeederArea.SwitchAreas',
-            'docstring':
-                '''
-                The FeederArea that normally energizes the SwitchArea
-                '''
+            'inverse': 'FeederArea.SwitchAreas'
         })
     '''
     The FeederArea that normally energizes the SwitchArea
     '''
 
-    SecondaryAreas: list[ SecondaryArea ] = field(
+    SecondaryAreas: list[SecondaryArea] = field(
         default_factory = list,
         metadata = {
             'type': 'Aggregate Of',
             'minOccurs': '0',
             'maxOccurs': 'unbounded',
-            'inverse': 'SecondaryArea.SwitchArea',
-            'docstring':
-                '''
-                The set of SecondAreas normally energized by the SwitchArea
-                '''
+            'inverse': 'SecondaryArea.SwitchArea'
         })
     '''
     The set of SecondAreas normally energized by the SwitchArea
@@ -12962,11 +10244,7 @@ class ShuntCompensatorPhase(PowerSystemResource):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                The maximum number of sections that may be switched in for this phase.
-                '''
+            'maxOccurs': '1'
         })
     '''
     The maximum number of sections that may be switched in for this phase.
@@ -12977,11 +10255,7 @@ class ShuntCompensatorPhase(PowerSystemResource):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                For the capacitor phase, the normal number of sections switched in.
-                '''
+            'maxOccurs': '1'
         })
     '''
     For the capacitor phase, the normal number of sections switched in.
@@ -12992,13 +10266,7 @@ class ShuntCompensatorPhase(PowerSystemResource):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                Number of sections in use for this phase, when controlled independently
-                from the other phases. If not provided, may default to the parent ShuntCompensator.sections
-                value (see ShuntCompensator documentation for more details).
-                '''
+            'maxOccurs': '1'
         })
     '''
     Number of sections in use for this phase, when controlled independently
@@ -13006,21 +10274,13 @@ class ShuntCompensatorPhase(PowerSystemResource):
     value (see ShuntCompensator documentation for more details).
     '''
 
-    phase: Optional[ SinglePhaseKind ] = field(
+    phase: Optional[SinglePhaseKind] = field(
         default = None,
         metadata = {
             'type': 'enumeration',
             'minOccurs': '0',
             'maxOccurs': '1',
-            'inverse': '',
-            'docstring':
-                '''
-                Phase of this shunt compensator component. If the shunt compensator is
-                wye connected, the connection is from the indicated phase to the central
-                ground or neutral point. If the shunt compensator is delta connected, the
-                phase indicates a shunt compensator connected from the indicated phase
-                to the next logical non-neutral phase.
-                '''
+            'inverse': ''
         })
     '''
     Phase of this shunt compensator component. If the shunt compensator is
@@ -13030,17 +10290,13 @@ class ShuntCompensatorPhase(PowerSystemResource):
     to the next logical non-neutral phase.
     '''
 
-    ShuntCompensator: Optional[ ShuntCompensator ] = field(
+    ShuntCompensator: Optional[ShuntCompensator] = field(
         default = None,
         metadata = {
             'type': 'Association',
             'minOccurs': '0',
             'maxOccurs': '1',
-            'inverse': 'ShuntCompensator.ShuntCompensatorPhase',
-            'docstring':
-                '''
-                Shunt compensator of this shunt compensator phase.
-                '''
+            'inverse': 'ShuntCompensator.ShuntCompensatorPhase'
         })
     '''
     Shunt compensator of this shunt compensator phase.
@@ -13058,12 +10314,7 @@ class LinearShuntCompensatorPhase(ShuntCompensatorPhase):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                Susceptance per section of the phase if shunt compensator is wye connected.
-                Susceptance per section phase to phase if shunt compensator is delta connected.
-                '''
+            'maxOccurs': '1'
         })
     '''
     Susceptance per section of the phase if shunt compensator is wye connected.
@@ -13075,12 +10326,7 @@ class LinearShuntCompensatorPhase(ShuntCompensatorPhase):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                Conductance per section for this phase if shunt compensator is wye connected.
-                Conductance per section phase to phase if shunt compensator is delta connected.
-                '''
+            'maxOccurs': '1'
         })
     '''
     Conductance per section for this phase if shunt compensator is wye connected.
@@ -13094,17 +10340,13 @@ class NonlinearShuntCompensatorPhase(ShuntCompensatorPhase):
     values that differs.
     '''
 
-    NonlinearShuntCompensatorPhasePoints: list[ NonlinearShuntCompensatorPhasePoint ] = field(
+    NonlinearShuntCompensatorPhasePoints: list[NonlinearShuntCompensatorPhasePoint] = field(
         default_factory = list,
         metadata = {
             'type': 'Aggregate Of',
             'minOccurs': '0',
             'maxOccurs': 'unbounded',
-            'inverse': 'NonlinearShuntCompensatorPhasePoint.NonlinearShuntCompensatorPhase',
-            'docstring':
-                '''
-                All points of the non-linear shunt compensator phase.
-                '''
+            'inverse': 'NonlinearShuntCompensatorPhasePoint.NonlinearShuntCompensatorPhase'
         })
     '''
     All points of the non-linear shunt compensator phase.
@@ -13122,12 +10364,7 @@ class SwitchPhase(PowerSystemResource):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                The attribute tells if the switch is considered closed when used as input
-                to topology processing.
-                '''
+            'maxOccurs': '1'
         })
     '''
     The attribute tells if the switch is considered closed when used as input
@@ -13139,13 +10376,7 @@ class SwitchPhase(PowerSystemResource):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                Used in cases when no Measurement for the status value is present. If the
-                SwitchPhase has a status measurement the Discrete.normalValue is expected
-                to match with this value.
-                '''
+            'maxOccurs': '1'
         })
     '''
     Used in cases when no Measurement for the status value is present. If the
@@ -13158,47 +10389,32 @@ class SwitchPhase(PowerSystemResource):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                Rated current through this phase, if different from the others.
-                '''
+            'maxOccurs': '1'
         })
     '''
     Rated current through this phase, if different from the others.
     '''
 
-    phaseSide1: Optional[ SinglePhaseKind ] = field(
+    phaseSide1: Optional[SinglePhaseKind] = field(
         default = None,
         metadata = {
             'type': 'enumeration',
             'minOccurs': '0',
             'maxOccurs': '1',
-            'inverse': '',
-            'docstring':
-                '''
-                Phase of this SwitchPhase on the side with terminal sequence number equal
-                1. Should be a phase contained in that terminal&rsquo;s phases attribute.
-                '''
+            'inverse': ''
         })
     '''
     Phase of this SwitchPhase on the side with terminal sequence number equal
     1. Should be a phase contained in that terminal&rsquo;s phases attribute.
     '''
 
-    phaseSide2: Optional[ SinglePhaseKind ] = field(
+    phaseSide2: Optional[SinglePhaseKind] = field(
         default = None,
         metadata = {
             'type': 'enumeration',
             'minOccurs': '0',
             'maxOccurs': '1',
-            'inverse': '',
-            'docstring':
-                '''
-                Phase of this SwitchPhase on the side with terminal sequence number equal
-                2. Should be a phase contained in that terminal&rsquo;s Terminal.phases
-                attribute.
-                '''
+            'inverse': ''
         })
     '''
     Phase of this SwitchPhase on the side with terminal sequence number equal
@@ -13206,17 +10422,13 @@ class SwitchPhase(PowerSystemResource):
     attribute.
     '''
 
-    Switch: Optional[ Switch ] = field(
+    Switch: Optional[Switch] = field(
         default = None,
         metadata = {
             'type': 'Association',
             'minOccurs': '0',
             'maxOccurs': '1',
-            'inverse': 'Switch.SwitchPhase',
-            'docstring':
-                '''
-                The switch of the switch phase.
-                '''
+            'inverse': 'Switch.SwitchPhase'
         })
     '''
     The switch of the switch phase.
@@ -13233,12 +10445,7 @@ class TapChanger(PowerSystemResource):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                Specifies the regulation status of the equipment. True is regulating, false
-                is not regulating.
-                '''
+            'maxOccurs': '1'
         })
     '''
     Specifies the regulation status of the equipment. True is regulating, false
@@ -13250,10 +10457,7 @@ class TapChanger(PowerSystemResource):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                '''
+            'maxOccurs': '1'
         })
     '''
     '''
@@ -13263,12 +10467,7 @@ class TapChanger(PowerSystemResource):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                Highest possible tap step position, advance from neutral.
-                The attribute shall be greater than lowStep.
-                '''
+            'maxOccurs': '1'
         })
     '''
     Highest possible tap step position, advance from neutral.
@@ -13280,11 +10479,7 @@ class TapChanger(PowerSystemResource):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                Lowest possible tap step position, retard from neutral
-                '''
+            'maxOccurs': '1'
         })
     '''
     Lowest possible tap step position, retard from neutral
@@ -13295,11 +10490,7 @@ class TapChanger(PowerSystemResource):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                Specifies whether or not a TapChanger has load tap changing capabilities.
-                '''
+            'maxOccurs': '1'
         })
     '''
     Specifies whether or not a TapChanger has load tap changing capabilities.
@@ -13310,13 +10501,7 @@ class TapChanger(PowerSystemResource):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                The neutral tap step position for this winding.
-                The attribute shall be equal or greater than lowStep and equal or less
-                than highStep.
-                '''
+            'maxOccurs': '1'
         })
     '''
     The neutral tap step position for this winding.
@@ -13329,14 +10514,7 @@ class TapChanger(PowerSystemResource):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                The tap step position used in "normal" network operation for this winding.
-                For a "Fixed" tap changer indicates the current physical tap setting.
-                The attribute shall be equal or greater than lowStep and equal or less
-                than highStep.
-                '''
+            'maxOccurs': '1'
         })
     '''
     The tap step position used in "normal" network operation for this winding.
@@ -13350,10 +10528,7 @@ class TapChanger(PowerSystemResource):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                '''
+            'maxOccurs': '1'
         })
     '''
     '''
@@ -13363,18 +10538,7 @@ class TapChanger(PowerSystemResource):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                Tap changer position.
-                Starting step for a steady state solution. Non integer values are allowed
-                to support continuous tap variables. The reasons for continuous value are
-                to support study cases where no discrete tap changers has yet been designed,
-                a solutions where a narrow voltage band force the tap step to oscillate
-                or accommodate for a continuous solution as input.
-                The attribute shall be equal or greater than lowStep and equal or less
-                than highStep.
-                '''
+            'maxOccurs': '1'
         })
     '''
     Tap changer position.
@@ -13392,10 +10556,7 @@ class TapChanger(PowerSystemResource):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                '''
+            'maxOccurs': '1'
         })
     '''
     '''
@@ -13405,11 +10566,7 @@ class TapChanger(PowerSystemResource):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                For an LTC, the delay for initial tap changer operation (first step change)
-                '''
+            'maxOccurs': '1'
         })
     '''
     For an LTC, the delay for initial tap changer operation (first step change)
@@ -13420,11 +10577,7 @@ class TapChanger(PowerSystemResource):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                Voltage at which the winding operates at the neutral tap setting.
-                '''
+            'maxOccurs': '1'
         })
     '''
     Voltage at which the winding operates at the neutral tap setting.
@@ -13435,61 +10588,44 @@ class TapChanger(PowerSystemResource):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                For an LTC, the delay for subsequent tap changer operation (second and
-                later step changes)
-                '''
+            'maxOccurs': '1'
         })
     '''
     For an LTC, the delay for subsequent tap changer operation (second and
     later step changes)
     '''
 
-    SvTapStep: Optional[ SvTapStep ] = field(
+    SvTapStep: Optional[SvTapStep] = field(
         default = None,
         metadata = {
             'type': 'Association',
             'minOccurs': '0',
             'maxOccurs': '1',
-            'inverse': 'SvTapStep.TapChanger',
-            'docstring':
-                '''
-                The tap step state associated with the tap changer.
-                '''
+            'inverse': 'SvTapStep.TapChanger'
         })
     '''
     The tap step state associated with the tap changer.
     '''
 
-    TapChangerControl: Optional[ TapChangerControl ] = field(
+    TapChangerControl: Optional[TapChangerControl] = field(
         default = None,
         metadata = {
             'type': 'Association',
             'minOccurs': '0',
             'maxOccurs': '1',
-            'inverse': 'TapChangerControl.TapChanger',
-            'docstring':
-                '''
-                The regulating control scheme in which this tap changer participates.
-                '''
+            'inverse': 'TapChangerControl.TapChanger'
         })
     '''
     The regulating control scheme in which this tap changer participates.
     '''
 
-    TapSchedules: list[ TapSchedule ] = field(
+    TapSchedules: list[TapSchedule] = field(
         default_factory = list,
         metadata = {
             'type': 'Association',
             'minOccurs': '0',
             'maxOccurs': 'unbounded',
-            'inverse': 'TapSchedule.TapChanger',
-            'docstring':
-                '''
-                A TapChanger can have TapSchedules.
-                '''
+            'inverse': 'TapSchedule.TapChanger'
         })
     '''
     A TapChanger can have TapSchedules.
@@ -13504,17 +10640,13 @@ class PhaseTapChanger(TapChanger):
     magnitude.
     '''
 
-    TransformerEnd: Optional[ TransformerEnd ] = field(
+    TransformerEnd: Optional[TransformerEnd] = field(
         default = None,
         metadata = {
             'type': 'Association',
             'minOccurs': '0',
             'maxOccurs': '1',
-            'inverse': 'TransformerEnd.PhaseTapChanger',
-            'docstring':
-                '''
-                Transformer end to which this phase tap changer belongs.
-                '''
+            'inverse': 'TransformerEnd.PhaseTapChanger'
         })
     '''
     Transformer end to which this phase tap changer belongs.
@@ -13535,16 +10667,7 @@ class PhaseTapChangerLinear(PhaseTapChanger):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                Phase shift per step position. A positive value indicates a positive phase
-                shift from the winding where the tap is located to the other winding (for
-                a two-winding transformer).
-                The actual phase shift increment might be more accurately computed from
-                the symmetrical or asymmetrical models or a tap step table lookup if those
-                are available.
-                '''
+            'maxOccurs': '1'
         })
     '''
     Phase shift per step position. A positive value indicates a positive phase
@@ -13560,12 +10683,7 @@ class PhaseTapChangerLinear(PhaseTapChanger):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                The reactance depend on the tap position according to a "u" shaped curve.
-                The maximum reactance (xMax) appear at the low and high tap positions.
-                '''
+            'maxOccurs': '1'
         })
     '''
     The reactance depend on the tap position according to a "u" shaped curve.
@@ -13577,12 +10695,7 @@ class PhaseTapChangerLinear(PhaseTapChanger):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                The reactance depend on the tap position according to a "u" shaped curve.
-                The minimum reactance (xMin) appear at the mid tap position.
-                '''
+            'maxOccurs': '1'
         })
     '''
     The reactance depend on the tap position according to a "u" shaped curve.
@@ -13603,14 +10716,7 @@ class PhaseTapChangerNonLinear(PhaseTapChanger):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                The voltage step increment on the out of phase winding specified in percent
-                of neutral voltage of the tap changer.
-                When the increment is negative, the voltage decreases when the tap step
-                increases.
-                '''
+            'maxOccurs': '1'
         })
     '''
     The voltage step increment on the out of phase winding specified in percent
@@ -13624,12 +10730,7 @@ class PhaseTapChangerNonLinear(PhaseTapChanger):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                The reactance depend on the tap position according to a "u" shaped curve.
-                The maximum reactance (xMax) appear at the low and high tap positions.
-                '''
+            'maxOccurs': '1'
         })
     '''
     The reactance depend on the tap position according to a "u" shaped curve.
@@ -13641,12 +10742,7 @@ class PhaseTapChangerNonLinear(PhaseTapChanger):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                The reactance depend on the tap position according to a "u" shaped curve.
-                The minimum reactance (xMin) appear at the mid tap position.
-                '''
+            'maxOccurs': '1'
         })
     '''
     The reactance depend on the tap position according to a "u" shaped curve.
@@ -13668,14 +10764,7 @@ class PhaseTapChangerAsymmetrical(PhaseTapChangerNonLinear):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                The phase angle between the in-phase winding and the out-of -phase winding
-                used for creating phase shift. The out-of-phase winding produces what is
-                known as the difference voltage. Setting this angle to 90 degrees is not
-                the same as a symmetrical transformer.
-                '''
+            'maxOccurs': '1'
         })
     '''
     The phase angle between the in-phase winding and the out-of -phase winding
@@ -13700,17 +10789,13 @@ class PhaseTapChangerTabular(PhaseTapChanger):
     '''
     '''
 
-    PhaseTapChangerTable: Optional[ PhaseTapChangerTable ] = field(
+    PhaseTapChangerTable: Optional[PhaseTapChangerTable] = field(
         default = None,
         metadata = {
             'type': 'Association',
             'minOccurs': '0',
             'maxOccurs': '1',
-            'inverse': 'PhaseTapChangerTable.PhaseTapChangerTabular',
-            'docstring':
-                '''
-                The phase tap changer table for this phase tap changer.
-                '''
+            'inverse': 'PhaseTapChangerTable.PhaseTapChangerTabular'
         })
     '''
     The phase tap changer table for this phase tap changer.
@@ -13728,13 +10813,7 @@ class RatioTapChanger(TapChanger):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                Tap step increment, in per cent of neutral voltage, per step position.
-                When the increment is negative, the voltage decreases when the tap step
-                increases.
-                '''
+            'maxOccurs': '1'
         })
     '''
     Tap step increment, in per cent of neutral voltage, per step position.
@@ -13742,33 +10821,25 @@ class RatioTapChanger(TapChanger):
     increases.
     '''
 
-    RatioTapChangerTable: Optional[ RatioTapChangerTable ] = field(
+    RatioTapChangerTable: Optional[RatioTapChangerTable] = field(
         default = None,
         metadata = {
             'type': 'Association',
             'minOccurs': '0',
             'maxOccurs': '1',
-            'inverse': 'RatioTapChangerTable.RatioTapChanger',
-            'docstring':
-                '''
-                The tap ratio table for this ratio tap changer.
-                '''
+            'inverse': 'RatioTapChangerTable.RatioTapChanger'
         })
     '''
     The tap ratio table for this ratio tap changer.
     '''
 
-    TransformerEnd: Optional[ TransformerEnd ] = field(
+    TransformerEnd: Optional[TransformerEnd] = field(
         default = None,
         metadata = {
             'type': 'Association',
             'minOccurs': '0',
             'maxOccurs': '1',
-            'inverse': 'TransformerEnd.RatioTapChanger',
-            'docstring':
-                '''
-                Transformer end to which this ratio tap changer belongs.
-                '''
+            'inverse': 'TransformerEnd.RatioTapChanger'
         })
     '''
     Transformer end to which this ratio tap changer belongs.
@@ -13782,33 +10853,25 @@ class VoltageControlZone(PowerSystemResource):
     with a designated bus bar section whose voltage will be controlled.
     '''
 
-    BusbarSection: Optional[ BusbarSection ] = field(
+    BusbarSection: Optional[BusbarSection] = field(
         default = None,
         metadata = {
             'type': 'Association',
             'minOccurs': '0',
             'maxOccurs': '1',
-            'inverse': 'BusbarSection.VoltageControlZone',
-            'docstring':
-                '''
-                A VoltageControlZone is controlled by a designated BusbarSection.
-                '''
+            'inverse': 'BusbarSection.VoltageControlZone'
         })
     '''
     A VoltageControlZone is controlled by a designated BusbarSection.
     '''
 
-    RegulationSchedule: Optional[ RegulationSchedule ] = field(
+    RegulationSchedule: Optional[RegulationSchedule] = field(
         default = None,
         metadata = {
             'type': 'Association',
             'minOccurs': '0',
             'maxOccurs': '1',
-            'inverse': 'RegulationSchedule.VoltageControlZones',
-            'docstring':
-                '''
-                A VoltageControlZone may have a voltage regulation schedule.
-                '''
+            'inverse': 'RegulationSchedule.VoltageControlZones'
         })
     '''
     A VoltageControlZone may have a voltage regulation schedule.
@@ -13820,32 +10883,71 @@ class ProductAssetModel(IdentifiedObject):
     Asset model by a specific manufacturer.
     '''
 
-    Asset: list[ Asset ] = field(
+    Asset: list[Asset] = field(
         default_factory = list,
         metadata = {
             'type': 'Association',
             'minOccurs': '0',
             'maxOccurs': 'unbounded',
-            'inverse': 'Asset.ProductAssetModel',
-            'docstring':
-                '''
-                An asset of this model.
-                '''
+            'inverse': 'Asset.ProductAssetModel'
         })
     '''
     An asset of this model.
     '''
 
-    AssetInfo: Optional[ AssetInfo ] = field(
+    AssetInfo: Optional[AssetInfo] = field(
         default = None,
         metadata = {
             'type': 'Association',
             'minOccurs': '0',
             'maxOccurs': '1',
-            'inverse': 'AssetInfo.ProductAssetModel',
-            'docstring':
-                '''
-                '''
+            'inverse': 'AssetInfo.ProductAssetModel'
+        })
+    '''
+    '''
+
+@dataclass(repr=False)
+class ProtectionSettingsGroup(IdentifiedObject):
+    '''
+    '''
+
+    caseName: Optional[ str ] = field(
+        default = None,
+        metadata = {
+            'type': 'Attribute',
+            'minOccurs': '0',
+            'maxOccurs': '1'
+        })
+    '''
+    '''
+
+    groupNumber: Optional[ int ] = field(
+        default = None,
+        metadata = {
+            'type': 'Attribute',
+            'minOccurs': '0',
+            'maxOccurs': '1'
+        })
+    '''
+    '''
+
+    inService: Optional[ bool ] = field(
+        default = None,
+        metadata = {
+            'type': 'Attribute',
+            'minOccurs': '0',
+            'maxOccurs': '1'
+        })
+    '''
+    '''
+
+    ProtectionFunctionBlock: list[ProtectionFunctionBlock] = field(
+        default_factory = list,
+        metadata = {
+            'type': 'Association',
+            'minOccurs': '0',
+            'maxOccurs': 'unbounded',
+            'inverse': 'ProtectionFunctionBlock.SettingsGroup'
         })
     '''
     '''
@@ -13857,33 +10959,25 @@ class RatioTapChangerTable(IdentifiedObject):
     the tap step.
     '''
 
-    RatioTapChanger: list[ RatioTapChanger ] = field(
+    RatioTapChanger: list[RatioTapChanger] = field(
         default_factory = list,
         metadata = {
             'type': 'Association',
             'minOccurs': '0',
             'maxOccurs': 'unbounded',
-            'inverse': 'RatioTapChanger.RatioTapChangerTable',
-            'docstring':
-                '''
-                The ratio tap changer of this tap ratio table.
-                '''
+            'inverse': 'RatioTapChanger.RatioTapChangerTable'
         })
     '''
     The ratio tap changer of this tap ratio table.
     '''
 
-    RatioTapChangerTablePoint: list[ RatioTapChangerTablePoint ] = field(
+    RatioTapChangerTablePoint: list[RatioTapChangerTablePoint] = field(
         default_factory = list,
         metadata = {
             'type': 'Association',
             'minOccurs': '0',
             'maxOccurs': 'unbounded',
-            'inverse': 'RatioTapChangerTablePoint.RatioTapChangerTable',
-            'docstring':
-                '''
-                Points of this table.
-                '''
+            'inverse': 'RatioTapChangerTablePoint.RatioTapChangerTable'
         })
     '''
     Points of this table.
@@ -13895,65 +10989,49 @@ class ReportingGroup(IdentifiedObject):
     A reporting group is used for various ad-hoc groupings used for reporting.
     '''
 
-    BusNameMarker: list[ BusNameMarker ] = field(
+    BusNameMarker: list[BusNameMarker] = field(
         default_factory = list,
         metadata = {
             'type': 'Association',
             'minOccurs': '0',
             'maxOccurs': 'unbounded',
-            'inverse': 'BusNameMarker.ReportingGroup',
-            'docstring':
-                '''
-                The bus name markers that belong to this reporting group.
-                '''
+            'inverse': 'BusNameMarker.ReportingGroup'
         })
     '''
     The bus name markers that belong to this reporting group.
     '''
 
-    PowerSystemResource: list[ PowerSystemResource ] = field(
+    PowerSystemResource: list[PowerSystemResource] = field(
         default_factory = list,
         metadata = {
             'type': 'Association',
             'minOccurs': '0',
             'maxOccurs': 'unbounded',
-            'inverse': 'PowerSystemResource.ReportingGroup',
-            'docstring':
-                '''
-                Power system resources which belong to this reporting group.
-                '''
+            'inverse': 'PowerSystemResource.ReportingGroup'
         })
     '''
     Power system resources which belong to this reporting group.
     '''
 
-    ReportingSuperGroup: Optional[ ReportingSuperGroup ] = field(
+    ReportingSuperGroup: Optional[ReportingSuperGroup] = field(
         default = None,
         metadata = {
             'type': 'Of Aggregate',
             'minOccurs': '0',
             'maxOccurs': '1',
-            'inverse': 'ReportingSuperGroup.ReportingGroup',
-            'docstring':
-                '''
-                Reporting super group to which this reporting group belongs.
-                '''
+            'inverse': 'ReportingSuperGroup.ReportingGroup'
         })
     '''
     Reporting super group to which this reporting group belongs.
     '''
 
-    TopologicalNode: list[ TopologicalNode ] = field(
+    TopologicalNode: list[TopologicalNode] = field(
         default_factory = list,
         metadata = {
             'type': 'Association',
             'minOccurs': '0',
             'maxOccurs': 'unbounded',
-            'inverse': 'TopologicalNode.ReportingGroup',
-            'docstring':
-                '''
-                The topological nodes that belong to the reporting group.
-                '''
+            'inverse': 'TopologicalNode.ReportingGroup'
         })
     '''
     The topological nodes that belong to the reporting group.
@@ -13965,17 +11043,13 @@ class ReportingSuperGroup(IdentifiedObject):
     A reporting super group, groups reporting groups for a higher level report.
     '''
 
-    ReportingGroup: list[ ReportingGroup ] = field(
+    ReportingGroup: list[ReportingGroup] = field(
         default_factory = list,
         metadata = {
             'type': 'Aggregate Of',
             'minOccurs': '0',
             'maxOccurs': 'unbounded',
-            'inverse': 'ReportingGroup.ReportingSuperGroup',
-            'docstring':
-                '''
-                Reporting groups that are grouped under this super group.
-                '''
+            'inverse': 'ReportingGroup.ReportingSuperGroup'
         })
     '''
     Reporting groups that are grouped under this super group.
@@ -13992,11 +11066,7 @@ class Season(IdentifiedObject):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                Date season ends.
-                '''
+            'maxOccurs': '1'
         })
     '''
     Date season ends.
@@ -14007,27 +11077,19 @@ class Season(IdentifiedObject):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                Date season starts.
-                '''
+            'maxOccurs': '1'
         })
     '''
     Date season starts.
     '''
 
-    SeasonDayTypeSchedules: list[ SeasonDayTypeSchedule ] = field(
+    SeasonDayTypeSchedules: list[SeasonDayTypeSchedule] = field(
         default_factory = list,
         metadata = {
             'type': 'Association',
             'minOccurs': '0',
             'maxOccurs': 'unbounded',
-            'inverse': 'SeasonDayTypeSchedule.Season',
-            'docstring':
-                '''
-                Schedules that use this Season.
-                '''
+            'inverse': 'SeasonDayTypeSchedule.Season'
         })
     '''
     Schedules that use this Season.
@@ -14039,49 +11101,37 @@ class SubGeographicalRegion(IdentifiedObject):
     A subset of a geographical region of a power system network model.
     '''
 
-    Lines: list[ Line ] = field(
+    Lines: list[Line] = field(
         default_factory = list,
         metadata = {
             'type': 'Aggregate Of',
             'minOccurs': '0',
             'maxOccurs': 'unbounded',
-            'inverse': 'Line.Region',
-            'docstring':
-                '''
-                The lines within the sub-geographical region.
-                '''
+            'inverse': 'Line.Region'
         })
     '''
     The lines within the sub-geographical region.
     '''
 
-    Region: Optional[ GeographicalRegion ] = field(
+    Region: Optional[GeographicalRegion] = field(
         default = None,
         metadata = {
             'type': 'Of Aggregate',
             'minOccurs': '0',
             'maxOccurs': '1',
-            'inverse': 'GeographicalRegion.Regions',
-            'docstring':
-                '''
-                The geographical region to which this sub-geographical region is within.
-                '''
+            'inverse': 'GeographicalRegion.Regions'
         })
     '''
     The geographical region to which this sub-geographical region is within.
     '''
 
-    Substations: list[ Substation ] = field(
+    Substations: list[Substation] = field(
         default_factory = list,
         metadata = {
             'type': 'Aggregate Of',
             'minOccurs': '0',
             'maxOccurs': 'unbounded',
-            'inverse': 'Substation.Region',
-            'docstring':
-                '''
-                The substations in this sub-geographical region.
-                '''
+            'inverse': 'Substation.Region'
         })
     '''
     The substations in this sub-geographical region.
@@ -14098,12 +11148,7 @@ class ThermostatController(IdentifiedObject):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                name of a market aggregator that collects bid curves for a higher-level
-                market
-                '''
+            'maxOccurs': '1'
         })
     '''
     name of a market aggregator that collects bid curves for a higher-level
@@ -14115,11 +11160,7 @@ class ThermostatController(IdentifiedObject):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                slope of high-temperature bidding curve, $/degreeC
-                '''
+            'maxOccurs': '1'
         })
     '''
     slope of high-temperature bidding curve, $/degreeC
@@ -14130,11 +11171,7 @@ class ThermostatController(IdentifiedObject):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                slope of low-temperature bidding curve, $/degreeC
-                '''
+            'maxOccurs': '1'
         })
     '''
     slope of low-temperature bidding curve, $/degreeC
@@ -14145,10 +11182,7 @@ class ThermostatController(IdentifiedObject):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                '''
+            'maxOccurs': '1'
         })
     '''
     '''
@@ -14158,10 +11192,7 @@ class ThermostatController(IdentifiedObject):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                '''
+            'maxOccurs': '1'
         })
     '''
     '''
@@ -14171,12 +11202,7 @@ class ThermostatController(IdentifiedObject):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                user's desired thermostat setpoint, including the effects of pre-programmed
-                schedule
-                '''
+            'maxOccurs': '1'
         })
     '''
     user's desired thermostat setpoint, including the effects of pre-programmed
@@ -14188,10 +11214,7 @@ class ThermostatController(IdentifiedObject):
         metadata = {
             'type': 'enumeration',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                '''
+            'maxOccurs': '1'
         })
     '''
     '''
@@ -14201,12 +11224,7 @@ class ThermostatController(IdentifiedObject):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                maximum price per kwh that the controller will bid, regardless of the market's
-                price cap
-                '''
+            'maxOccurs': '1'
         })
     '''
     maximum price per kwh that the controller will bid, regardless of the market's
@@ -14218,11 +11236,7 @@ class ThermostatController(IdentifiedObject):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                maximum postive offset to the thermostat setpoint
-                '''
+            'maxOccurs': '1'
         })
     '''
     maximum postive offset to the thermostat setpoint
@@ -14233,26 +11247,19 @@ class ThermostatController(IdentifiedObject):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                maximum negative offset to the thermostat setpoint
-                '''
+            'maxOccurs': '1'
         })
     '''
     maximum negative offset to the thermostat setpoint
     '''
 
-    House: Optional[ House ] = field(
+    House: Optional[House] = field(
         default = None,
         metadata = {
             'type': 'Association',
             'minOccurs': '0',
             'maxOccurs': '1',
-            'inverse': 'House.ThermostatController',
-            'docstring':
-                '''
-                '''
+            'inverse': 'House.ThermostatController'
         })
     '''
     '''
@@ -14267,19 +11274,13 @@ class TopologicalIsland(IdentifiedObject):
     tool.
     '''
 
-    AngleRefTopologicalNode: Optional[ TopologicalNode ] = field(
+    AngleRefTopologicalNode: Optional[TopologicalNode] = field(
         default = None,
         metadata = {
             'type': 'Association',
             'minOccurs': '0',
             'maxOccurs': '1',
-            'inverse': 'TopologicalNode.AngleRefTopologicalIsland',
-            'docstring':
-                '''
-                The angle reference for the island. Normally there is one TopologicalNode
-                that is selected as the angle reference for each island. Other reference
-                schemes exist, so the association is typically optional.
-                '''
+            'inverse': 'TopologicalNode.AngleRefTopologicalIsland'
         })
     '''
     The angle reference for the island. Normally there is one TopologicalNode
@@ -14287,17 +11288,13 @@ class TopologicalIsland(IdentifiedObject):
     schemes exist, so the association is typically optional.
     '''
 
-    TopologicalNodes: list[ TopologicalNode ] = field(
+    TopologicalNodes: list[TopologicalNode] = field(
         default_factory = list,
         metadata = {
             'type': 'Aggregate Of',
             'minOccurs': '0',
             'maxOccurs': 'unbounded',
-            'inverse': 'TopologicalNode.TopologicalIsland',
-            'docstring':
-                '''
-                A topological node belongs to a topological island.
-                '''
+            'inverse': 'TopologicalNode.TopologicalIsland'
         })
     '''
     A topological node belongs to a topological island.
@@ -14321,14 +11318,7 @@ class TopologicalNode(IdentifiedObject):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                The active power injected into the bus at this location in addition to
-                injections from equipment. Positive sign means injection into the TopologicalNode
-                (bus).
-                Starting value for a steady state solution.
-                '''
+            'maxOccurs': '1'
         })
     '''
     The active power injected into the bus at this location in addition to
@@ -14342,14 +11332,7 @@ class TopologicalNode(IdentifiedObject):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                The reactive power injected into the bus at this location in addition to
-                injections from equipment. Positive sign means injection into the TopologicalNode
-                (bus).
-                Starting value for a steady state solution.
-                '''
+            'maxOccurs': '1'
         })
     '''
     The reactive power injected into the bus at this location in addition to
@@ -14358,121 +11341,87 @@ class TopologicalNode(IdentifiedObject):
     Starting value for a steady state solution.
     '''
 
-    AngleRefTopologicalIsland: Optional[ TopologicalIsland ] = field(
+    AngleRefTopologicalIsland: Optional[TopologicalIsland] = field(
         default = None,
         metadata = {
             'type': 'Association',
             'minOccurs': '0',
             'maxOccurs': '1',
-            'inverse': 'TopologicalIsland.AngleRefTopologicalNode',
-            'docstring':
-                '''
-                The island for which the node is an angle reference. Normally there is
-                one angle reference node for each island.
-                '''
+            'inverse': 'TopologicalIsland.AngleRefTopologicalNode'
         })
     '''
     The island for which the node is an angle reference. Normally there is
     one angle reference node for each island.
     '''
 
-    BaseVoltage: Optional[ BaseVoltage ] = field(
+    BaseVoltage: Optional[BaseVoltage] = field(
         default = None,
         metadata = {
             'type': 'Association',
             'minOccurs': '0',
             'maxOccurs': '1',
-            'inverse': 'BaseVoltage.TopologicalNode',
-            'docstring':
-                '''
-                The base voltage of the topologocial node.
-                '''
+            'inverse': 'BaseVoltage.TopologicalNode'
         })
     '''
     The base voltage of the topologocial node.
     '''
 
-    BusNameMarker: list[ BusNameMarker ] = field(
+    BusNameMarker: list[BusNameMarker] = field(
         default_factory = list,
         metadata = {
             'type': 'Association',
             'minOccurs': '0',
             'maxOccurs': 'unbounded',
-            'inverse': 'BusNameMarker.TopologicalNode',
-            'docstring':
-                '''
-                BusnameMarkers that may refer to a pre defined TopologicalNode.
-                '''
+            'inverse': 'BusNameMarker.TopologicalNode'
         })
     '''
     BusnameMarkers that may refer to a pre defined TopologicalNode.
     '''
 
-    ConnectivityNodeContainer: Optional[ ConnectivityNodeContainer ] = field(
+    ConnectivityNodeContainer: Optional[ConnectivityNodeContainer] = field(
         default = None,
         metadata = {
             'type': 'Association',
             'minOccurs': '0',
             'maxOccurs': '1',
-            'inverse': 'ConnectivityNodeContainer.TopologicalNode',
-            'docstring':
-                '''
-                The connectivity node container to which the toplogical node belongs.
-                '''
+            'inverse': 'ConnectivityNodeContainer.TopologicalNode'
         })
     '''
     The connectivity node container to which the toplogical node belongs.
     '''
 
-    ConnectivityNodes: list[ ConnectivityNode ] = field(
+    ConnectivityNodes: list[ConnectivityNode] = field(
         default_factory = list,
         metadata = {
             'type': 'Aggregate Of',
             'minOccurs': '0',
             'maxOccurs': 'unbounded',
-            'inverse': 'ConnectivityNode.TopologicalNode',
-            'docstring':
-                '''
-                The connectivity nodes combine together to form this topological node.
-                May depend on the current state of switches in the network.
-                '''
+            'inverse': 'ConnectivityNode.TopologicalNode'
         })
     '''
     The connectivity nodes combine together to form this topological node.
     May depend on the current state of switches in the network.
     '''
 
-    ReportingGroup: Optional[ ReportingGroup ] = field(
+    ReportingGroup: Optional[ReportingGroup] = field(
         default = None,
         metadata = {
             'type': 'Association',
             'minOccurs': '0',
             'maxOccurs': '1',
-            'inverse': 'ReportingGroup.TopologicalNode',
-            'docstring':
-                '''
-                The reporting group to which the topological node belongs.
-                '''
+            'inverse': 'ReportingGroup.TopologicalNode'
         })
     '''
     The reporting group to which the topological node belongs.
     '''
 
-    Terminal: list[ Terminal ] = field(
+    Terminal: list[Terminal] = field(
         default_factory = list,
         metadata = {
             'type': 'Aggregate Of',
             'minOccurs': '0',
             'maxOccurs': 'unbounded',
-            'inverse': 'Terminal.TopologicalNode',
-            'docstring':
-                '''
-                The terminals associated with the topological node. This can be used as
-                an alternative to the connectivity node path to terminal, thus making it
-                unneccesary to model connectivity nodes in some cases. Note that if connectivity
-                nodes are in the model, this association would probably not be used as
-                an input specification.
-                '''
+            'inverse': 'Terminal.TopologicalNode'
         })
     '''
     The terminals associated with the topological node. This can be used as
@@ -14482,17 +11431,13 @@ class TopologicalNode(IdentifiedObject):
     an input specification.
     '''
 
-    TopologicalIsland: Optional[ TopologicalIsland ] = field(
+    TopologicalIsland: Optional[TopologicalIsland] = field(
         default = None,
         metadata = {
             'type': 'Of Aggregate',
             'minOccurs': '0',
             'maxOccurs': '1',
-            'inverse': 'TopologicalIsland.TopologicalNodes',
-            'docstring':
-                '''
-                A topological node belongs to a topological island.
-                '''
+            'inverse': 'TopologicalIsland.TopologicalNodes'
         })
     '''
     A topological node belongs to a topological island.
@@ -14510,11 +11455,7 @@ class TransformerCoreAdmittance(IdentifiedObject):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                Magnetizing branch susceptance (B mag). The value can be positive or negative.
-                '''
+            'maxOccurs': '1'
         })
     '''
     Magnetizing branch susceptance (B mag). The value can be positive or negative.
@@ -14525,11 +11466,7 @@ class TransformerCoreAdmittance(IdentifiedObject):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                Zero sequence magnetizing branch susceptance.
-                '''
+            'maxOccurs': '1'
         })
     '''
     Zero sequence magnetizing branch susceptance.
@@ -14540,11 +11477,7 @@ class TransformerCoreAdmittance(IdentifiedObject):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                Magnetizing branch conductance (G mag).
-                '''
+            'maxOccurs': '1'
         })
     '''
     Magnetizing branch conductance (G mag).
@@ -14555,43 +11488,31 @@ class TransformerCoreAdmittance(IdentifiedObject):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                Zero sequence magnetizing branch conductance.
-                '''
+            'maxOccurs': '1'
         })
     '''
     Zero sequence magnetizing branch conductance.
     '''
 
-    TransformerEnd: list[ TransformerEnd ] = field(
+    TransformerEnd: list[TransformerEnd] = field(
         default_factory = list,
         metadata = {
             'type': 'Association',
             'minOccurs': '0',
             'maxOccurs': 'unbounded',
-            'inverse': 'TransformerEnd.CoreAdmittance',
-            'docstring':
-                '''
-                All transformer ends having this core admittance.
-                '''
+            'inverse': 'TransformerEnd.CoreAdmittance'
         })
     '''
     All transformer ends having this core admittance.
     '''
 
-    TransformerEndInfo: Optional[ TransformerEndInfo ] = field(
+    TransformerEndInfo: Optional[TransformerEndInfo] = field(
         default = None,
         metadata = {
             'type': 'Association',
             'minOccurs': '0',
             'maxOccurs': '1',
-            'inverse': 'TransformerEndInfo.CoreAdmittance',
-            'docstring':
-                '''
-                Transformer end datasheet used to calculate this core admittance.
-                '''
+            'inverse': 'TransformerEndInfo.CoreAdmittance'
         })
     '''
     Transformer end datasheet used to calculate this core admittance.
@@ -14611,15 +11532,7 @@ class TransformerEnd(IdentifiedObject):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                Number for this transformer end, corresponding to the end's order in the
-                power transformer vector group or phase angle clock number. Highest voltage
-                winding should be 1. Each end within a power transformer should have a
-                unique subsequent end number. Note the transformer end number need not
-                match the terminal sequence number.
-                '''
+            'maxOccurs': '1'
         })
     '''
     Number for this transformer end, corresponding to the end's order in the
@@ -14634,11 +11547,7 @@ class TransformerEnd(IdentifiedObject):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                (for Yn and Zn connections) True if the neutral is solidly grounded.
-                '''
+            'maxOccurs': '1'
         })
     '''
     (for Yn and Zn connections) True if the neutral is solidly grounded.
@@ -14649,12 +11558,7 @@ class TransformerEnd(IdentifiedObject):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                (for Yn and Zn connections) Resistance part of neutral impedance where
-                'grounded' is true.
-                '''
+            'maxOccurs': '1'
         })
     '''
     (for Yn and Zn connections) Resistance part of neutral impedance where
@@ -14666,47 +11570,32 @@ class TransformerEnd(IdentifiedObject):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                (for Yn and Zn connections) Reactive part of neutral impedance where 'grounded'
-                is true.
-                '''
+            'maxOccurs': '1'
         })
     '''
     (for Yn and Zn connections) Reactive part of neutral impedance where 'grounded'
     is true.
     '''
 
-    BaseVoltage: Optional[ BaseVoltage ] = field(
+    BaseVoltage: Optional[BaseVoltage] = field(
         default = None,
         metadata = {
             'type': 'Association',
             'minOccurs': '0',
             'maxOccurs': '1',
-            'inverse': 'BaseVoltage.TransformerEnds',
-            'docstring':
-                '''
-                Base voltage of the transformer end. This is essential for PU calculation.
-                '''
+            'inverse': 'BaseVoltage.TransformerEnds'
         })
     '''
     Base voltage of the transformer end. This is essential for PU calculation.
     '''
 
-    CoreAdmittance: Optional[ TransformerCoreAdmittance ] = field(
+    CoreAdmittance: Optional[TransformerCoreAdmittance] = field(
         default = None,
         metadata = {
             'type': 'Association',
             'minOccurs': '0',
             'maxOccurs': '1',
-            'inverse': 'TransformerCoreAdmittance.TransformerEnd',
-            'docstring':
-                '''
-                Core admittance of this transformer end, representing magnetising current
-                and core losses. The full values of the transformer should be supplied
-                for one transformer end only.
-                '''
+            'inverse': 'TransformerCoreAdmittance.TransformerEnd'
         })
     '''
     Core admittance of this transformer end, representing magnetising current
@@ -14714,68 +11603,49 @@ class TransformerEnd(IdentifiedObject):
     for one transformer end only.
     '''
 
-    FromMeshImpedance: list[ TransformerMeshImpedance ] = field(
+    FromMeshImpedance: list[TransformerMeshImpedance] = field(
         default_factory = list,
         metadata = {
             'type': 'Association',
             'minOccurs': '0',
             'maxOccurs': 'unbounded',
-            'inverse': 'TransformerMeshImpedance.FromTransformerEnd',
-            'docstring':
-                '''
-                All mesh impedances between this 'to' and other 'from' transformer ends.
-                '''
+            'inverse': 'TransformerMeshImpedance.FromTransformerEnd'
         })
     '''
     All mesh impedances between this 'to' and other 'from' transformer ends.
     '''
 
-    PhaseTapChanger: Optional[ PhaseTapChanger ] = field(
+    PhaseTapChanger: Optional[PhaseTapChanger] = field(
         default = None,
         metadata = {
             'type': 'Association',
             'minOccurs': '0',
             'maxOccurs': '1',
-            'inverse': 'PhaseTapChanger.TransformerEnd',
-            'docstring':
-                '''
-                Phase tap changer associated with this transformer end.
-                '''
+            'inverse': 'PhaseTapChanger.TransformerEnd'
         })
     '''
     Phase tap changer associated with this transformer end.
     '''
 
-    RatioTapChanger: Optional[ RatioTapChanger ] = field(
+    RatioTapChanger: Optional[RatioTapChanger] = field(
         default = None,
         metadata = {
             'type': 'Association',
             'minOccurs': '0',
             'maxOccurs': '1',
-            'inverse': 'RatioTapChanger.TransformerEnd',
-            'docstring':
-                '''
-                Ratio tap changer associated with this transformer end.
-                '''
+            'inverse': 'RatioTapChanger.TransformerEnd'
         })
     '''
     Ratio tap changer associated with this transformer end.
     '''
 
-    StarImpedance: Optional[ TransformerStarImpedance ] = field(
+    StarImpedance: Optional[TransformerStarImpedance] = field(
         default = None,
         metadata = {
             'type': 'Association',
             'minOccurs': '0',
             'maxOccurs': '1',
-            'inverse': 'TransformerStarImpedance.TransformerEnd',
-            'docstring':
-                '''
-                (accurate for 2- or 3-winding transformers only) Pi-model impedances of
-                this transformer end. By convention, for a two winding transformer, the
-                full values of the transformer should be entered on the high voltage end
-                (endNumber=1).
-                '''
+            'inverse': 'TransformerStarImpedance.TransformerEnd'
         })
     '''
     (accurate for 2- or 3-winding transformers only) Pi-model impedances of
@@ -14784,33 +11654,25 @@ class TransformerEnd(IdentifiedObject):
     (endNumber=1).
     '''
 
-    Terminal: Optional[ Terminal ] = field(
+    Terminal: Optional[Terminal] = field(
         default = None,
         metadata = {
             'type': 'Association',
             'minOccurs': '0',
             'maxOccurs': '1',
-            'inverse': 'Terminal.TransformerEnd',
-            'docstring':
-                '''
-                Terminal of the power transformer to which this transformer end belongs.
-                '''
+            'inverse': 'Terminal.TransformerEnd'
         })
     '''
     Terminal of the power transformer to which this transformer end belongs.
     '''
 
-    ToMeshImpedance: list[ TransformerMeshImpedance ] = field(
+    ToMeshImpedance: list[TransformerMeshImpedance] = field(
         default_factory = list,
         metadata = {
             'type': 'Association',
             'minOccurs': '0',
             'maxOccurs': 'unbounded',
-            'inverse': 'TransformerMeshImpedance.ToTransformerEnd',
-            'docstring':
-                '''
-                All mesh impedances between this 'from' and other 'to' transformer ends.
-                '''
+            'inverse': 'TransformerMeshImpedance.ToTransformerEnd'
         })
     '''
     All mesh impedances between this 'from' and other 'to' transformer ends.
@@ -14844,17 +11706,7 @@ class PowerTransformerEnd(TransformerEnd):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                Terminal voltage phase angle displacement where 360 degrees are represented
-                with clock hours. The valid values are 0 to 11. For example, for the secondary
-                side end of a transformer with vector group code of 'Dyn11', specify the
-                connection kind as wye with neutral and specify the phase angle of the
-                clock as 11. The clock value of the transformer end number specified as
-                1, is assumed to be zero. Note the transformer end number is not assumed
-                to be the same as the terminal sequence number.
-                '''
+            'maxOccurs': '1'
         })
     '''
     Terminal voltage phase angle displacement where 360 degrees are represented
@@ -14871,11 +11723,7 @@ class PowerTransformerEnd(TransformerEnd):
         metadata = {
             'type': 'enumeration',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                Kind of connection.
-                '''
+            'maxOccurs': '1'
         })
     '''
     Kind of connection.
@@ -14886,12 +11734,7 @@ class PowerTransformerEnd(TransformerEnd):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                Resistance (star-model) of the transformer end.
-                The attribute shall be equal or greater than zero for non-equivalent transformers.
-                '''
+            'maxOccurs': '1'
         })
     '''
     Resistance (star-model) of the transformer end.
@@ -14903,13 +11746,7 @@ class PowerTransformerEnd(TransformerEnd):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                Normal apparent power rating.
-                The attribute shall be a positive value. For a two-winding transformer
-                the values for the high and low voltage sides shall be identical.
-                '''
+            'maxOccurs': '1'
         })
     '''
     Normal apparent power rating.
@@ -14922,14 +11759,7 @@ class PowerTransformerEnd(TransformerEnd):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                Rated voltage: phase-phase for three-phase windings, and either phase-phase
-                or phase-neutral for single-phase windings.
-                A high voltage side, as given by TransformerEnd.endNumber, shall have a
-                ratedU that is greater or equal than ratedU for the lower voltage sides.
-                '''
+            'maxOccurs': '1'
         })
     '''
     Rated voltage: phase-phase for three-phase windings, and either phase-phase
@@ -14938,17 +11768,13 @@ class PowerTransformerEnd(TransformerEnd):
     ratedU that is greater or equal than ratedU for the lower voltage sides.
     '''
 
-    PowerTransformer: Optional[ PowerTransformer ] = field(
+    PowerTransformer: Optional[PowerTransformer] = field(
         default = None,
         metadata = {
             'type': 'Association',
             'minOccurs': '0',
             'maxOccurs': '1',
-            'inverse': 'PowerTransformer.PowerTransformerEnd',
-            'docstring':
-                '''
-                The power transformer of this power transformer end.
-                '''
+            'inverse': 'PowerTransformer.PowerTransformerEnd'
         })
     '''
     The power transformer of this power transformer end.
@@ -14967,15 +11793,7 @@ class TransformerTankEnd(TransformerEnd):
         metadata = {
             'type': 'enumeration',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                Identifies the phases present and the order of their connection on this
-                winding (end) of the transformer. In some use cases, such as open-wye,
-                open-delta transformers and single-phase, center-tap secondary transformers,
-                the order of phase connection is important, so the OrderedPhaseCodeKind
-                enumeration is used instead of PhaseCode.
-                '''
+            'maxOccurs': '1'
         })
     '''
     Identifies the phases present and the order of their connection on this
@@ -14985,17 +11803,13 @@ class TransformerTankEnd(TransformerEnd):
     enumeration is used instead of PhaseCode.
     '''
 
-    TransformerTank: Optional[ TransformerTank ] = field(
+    TransformerTank: Optional[TransformerTank] = field(
         default = None,
         metadata = {
             'type': 'Association',
             'minOccurs': '0',
             'maxOccurs': '1',
-            'inverse': 'TransformerTank.TransformerTankEnds',
-            'docstring':
-                '''
-                Transformer this winding belongs to.
-                '''
+            'inverse': 'TransformerTank.TransformerTankEnds'
         })
     '''
     Transformer this winding belongs to.
@@ -15016,11 +11830,7 @@ class TransformerMeshImpedance(IdentifiedObject):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                Resistance between the 'from' and the 'to' end, seen from the 'from' end.
-                '''
+            'maxOccurs': '1'
         })
     '''
     Resistance between the 'from' and the 'to' end, seen from the 'from' end.
@@ -15031,12 +11841,7 @@ class TransformerMeshImpedance(IdentifiedObject):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                Zero-sequence resistance between the 'from' and the 'to' end, seen from
-                the 'from' end.
-                '''
+            'maxOccurs': '1'
         })
     '''
     Zero-sequence resistance between the 'from' and the 'to' end, seen from
@@ -15048,11 +11853,7 @@ class TransformerMeshImpedance(IdentifiedObject):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                Reactance between the 'from' and the 'to' end, seen from the 'from' end.
-                '''
+            'maxOccurs': '1'
         })
     '''
     Reactance between the 'from' and the 'to' end, seen from the 'from' end.
@@ -15063,82 +11864,58 @@ class TransformerMeshImpedance(IdentifiedObject):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                Zero-sequence reactance between the 'from' and the 'to' end, seen from
-                the 'from' end.
-                '''
+            'maxOccurs': '1'
         })
     '''
     Zero-sequence reactance between the 'from' and the 'to' end, seen from
     the 'from' end.
     '''
 
-    FromTransformerEnd: Optional[ TransformerEnd ] = field(
+    FromTransformerEnd: Optional[TransformerEnd] = field(
         default = None,
         metadata = {
             'type': 'Association',
             'minOccurs': '0',
             'maxOccurs': '1',
-            'inverse': 'TransformerEnd.FromMeshImpedance',
-            'docstring':
-                '''
-                From end this mesh impedance is connected to. It determines the voltage
-                reference.
-                '''
+            'inverse': 'TransformerEnd.FromMeshImpedance'
         })
     '''
     From end this mesh impedance is connected to. It determines the voltage
     reference.
     '''
 
-    FromTransformerEndInfo: Optional[ TransformerEndInfo ] = field(
+    FromTransformerEndInfo: Optional[TransformerEndInfo] = field(
         default = None,
         metadata = {
             'type': 'Association',
             'minOccurs': '0',
             'maxOccurs': '1',
-            'inverse': 'TransformerEndInfo.FromMeshImpedances',
-            'docstring':
-                '''
-                'from' transformer end datasheet this mesh impedance is calculated from.
-                It determines the voltage reference.
-                '''
+            'inverse': 'TransformerEndInfo.FromMeshImpedances'
         })
     '''
     'from' transformer end datasheet this mesh impedance is calculated from.
     It determines the voltage reference.
     '''
 
-    ToTransformerEnd: list[ TransformerEnd ] = field(
+    ToTransformerEnd: list[TransformerEnd] = field(
         default_factory = list,
         metadata = {
             'type': 'Association',
             'minOccurs': '0',
             'maxOccurs': 'unbounded',
-            'inverse': 'TransformerEnd.ToMeshImpedance',
-            'docstring':
-                '''
-                All transformer ends this mesh impedance is connected to.
-                '''
+            'inverse': 'TransformerEnd.ToMeshImpedance'
         })
     '''
     All transformer ends this mesh impedance is connected to.
     '''
 
-    ToTransformerEndInfos: list[ TransformerEndInfo ] = field(
+    ToTransformerEndInfos: list[TransformerEndInfo] = field(
         default_factory = list,
         metadata = {
             'type': 'Association',
             'minOccurs': '0',
             'maxOccurs': 'unbounded',
-            'inverse': 'TransformerEndInfo.ToMeshImpedances',
-            'docstring':
-                '''
-                All 'to' transformer end datasheets this mesh impedance for 'from' transformer
-                end is calculated from.
-                '''
+            'inverse': 'TransformerEndInfo.ToMeshImpedances'
         })
     '''
     All 'to' transformer end datasheets this mesh impedance for 'from' transformer
@@ -15160,11 +11937,7 @@ class TransformerStarImpedance(IdentifiedObject):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                Resistance of the transformer end.
-                '''
+            'maxOccurs': '1'
         })
     '''
     Resistance of the transformer end.
@@ -15175,10 +11948,7 @@ class TransformerStarImpedance(IdentifiedObject):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                '''
+            'maxOccurs': '1'
         })
     '''
     '''
@@ -15188,11 +11958,7 @@ class TransformerStarImpedance(IdentifiedObject):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                Positive sequence series reactance of the transformer end.
-                '''
+            'maxOccurs': '1'
         })
     '''
     Positive sequence series reactance of the transformer end.
@@ -15203,43 +11969,31 @@ class TransformerStarImpedance(IdentifiedObject):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                Zero sequence series reactance of the transformer end.
-                '''
+            'maxOccurs': '1'
         })
     '''
     Zero sequence series reactance of the transformer end.
     '''
 
-    TransformerEnd: list[ TransformerEnd ] = field(
+    TransformerEnd: list[TransformerEnd] = field(
         default_factory = list,
         metadata = {
             'type': 'Association',
             'minOccurs': '0',
             'maxOccurs': 'unbounded',
-            'inverse': 'TransformerEnd.StarImpedance',
-            'docstring':
-                '''
-                All transformer ends having this star impedance.
-                '''
+            'inverse': 'TransformerEnd.StarImpedance'
         })
     '''
     All transformer ends having this star impedance.
     '''
 
-    TransformerEndInfo: Optional[ TransformerEndInfo ] = field(
+    TransformerEndInfo: Optional[TransformerEndInfo] = field(
         default = None,
         metadata = {
             'type': 'Association',
             'minOccurs': '0',
             'maxOccurs': '1',
-            'inverse': 'TransformerEndInfo.TransformerStarImpedance',
-            'docstring':
-                '''
-                Transformer end datasheet used to calculate this transformer star impedance.
-                '''
+            'inverse': 'TransformerEndInfo.TransformerStarImpedance'
         })
     '''
     Transformer end datasheet used to calculate this transformer star impedance.
@@ -15257,12 +12011,7 @@ class TransformerTest(IdentifiedObject):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                Base power at which the tests are conducted, usually equal to the rateds
-                of one of the involved transformer ends.
-                '''
+            'maxOccurs': '1'
         })
     '''
     Base power at which the tests are conducted, usually equal to the rateds
@@ -15274,11 +12023,7 @@ class TransformerTest(IdentifiedObject):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                Temperature at which the test is conducted.
-                '''
+            'maxOccurs': '1'
         })
     '''
     Temperature at which the test is conducted.
@@ -15298,11 +12043,7 @@ class NoLoadTest(TransformerTest):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                Voltage applied to the winding (end) during test.
-                '''
+            'maxOccurs': '1'
         })
     '''
     Voltage applied to the winding (end) during test.
@@ -15313,12 +12054,7 @@ class NoLoadTest(TransformerTest):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                Exciting current measured from a positive-sequence or single-phase excitation
-                test.
-                '''
+            'maxOccurs': '1'
         })
     '''
     Exciting current measured from a positive-sequence or single-phase excitation
@@ -15330,12 +12066,7 @@ class NoLoadTest(TransformerTest):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                Exciting current measured from a zero-sequence open-circuit excitation
-                test.
-                '''
+            'maxOccurs': '1'
         })
     '''
     Exciting current measured from a zero-sequence open-circuit excitation
@@ -15347,11 +12078,7 @@ class NoLoadTest(TransformerTest):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                Losses measured from a positive-sequence or single-phase excitation test.
-                '''
+            'maxOccurs': '1'
         })
     '''
     Losses measured from a positive-sequence or single-phase excitation test.
@@ -15362,27 +12089,19 @@ class NoLoadTest(TransformerTest):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                Losses measured from a zero-sequence excitation test.
-                '''
+            'maxOccurs': '1'
         })
     '''
     Losses measured from a zero-sequence excitation test.
     '''
 
-    EnergisedEnd: Optional[ TransformerEndInfo ] = field(
+    EnergisedEnd: Optional[TransformerEndInfo] = field(
         default = None,
         metadata = {
             'type': 'Association',
             'minOccurs': '0',
             'maxOccurs': '1',
-            'inverse': 'TransformerEndInfo.EnergisedEndNoLoadTests',
-            'docstring':
-                '''
-                Transformer end that current is applied to in this no-load test.
-                '''
+            'inverse': 'TransformerEndInfo.EnergisedEndNoLoadTests'
         })
     '''
     Transformer end that current is applied to in this no-load test.
@@ -15402,11 +12121,7 @@ class OpenCircuitTest(TransformerTest):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                Tap step number for the energised end of the test pair.
-                '''
+            'maxOccurs': '1'
         })
     '''
     Tap step number for the energised end of the test pair.
@@ -15417,11 +12132,7 @@ class OpenCircuitTest(TransformerTest):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                Tap step number for the open end of the test pair.
-                '''
+            'maxOccurs': '1'
         })
     '''
     Tap step number for the open end of the test pair.
@@ -15432,11 +12143,7 @@ class OpenCircuitTest(TransformerTest):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                Voltage applied to the winding (end) during test.
-                '''
+            'maxOccurs': '1'
         })
     '''
     Voltage applied to the winding (end) during test.
@@ -15447,12 +12154,7 @@ class OpenCircuitTest(TransformerTest):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                Voltage measured at the open-circuited end, with the energised end set
-                to rated voltage and all other ends open.
-                '''
+            'maxOccurs': '1'
         })
     '''
     Voltage measured at the open-circuited end, with the energised end set
@@ -15464,46 +12166,32 @@ class OpenCircuitTest(TransformerTest):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                Phase shift measured at the open end with the energised end set to rated
-                voltage and all other ends open.
-                '''
+            'maxOccurs': '1'
         })
     '''
     Phase shift measured at the open end with the energised end set to rated
     voltage and all other ends open.
     '''
 
-    EnergisedEnd: Optional[ TransformerEndInfo ] = field(
+    EnergisedEnd: Optional[TransformerEndInfo] = field(
         default = None,
         metadata = {
             'type': 'Association',
             'minOccurs': '0',
             'maxOccurs': '1',
-            'inverse': 'TransformerEndInfo.EnergisedEndOpenCircuitTests',
-            'docstring':
-                '''
-                Transformer end that current is applied to in this open-circuit test.
-                '''
+            'inverse': 'TransformerEndInfo.EnergisedEndOpenCircuitTests'
         })
     '''
     Transformer end that current is applied to in this open-circuit test.
     '''
 
-    OpenEnd: Optional[ TransformerEndInfo ] = field(
+    OpenEnd: Optional[TransformerEndInfo] = field(
         default = None,
         metadata = {
             'type': 'Association',
             'minOccurs': '0',
             'maxOccurs': '1',
-            'inverse': 'TransformerEndInfo.OpenEndOpenCircuitTests',
-            'docstring':
-                '''
-                Transformer end measured for induced voltage and angle in this open-circuit
-                test.
-                '''
+            'inverse': 'TransformerEndInfo.OpenEndOpenCircuitTests'
         })
     '''
     Transformer end measured for induced voltage and angle in this open-circuit
@@ -15524,11 +12212,7 @@ class ShortCircuitTest(TransformerTest):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                Tap step number for the energised end of the test pair.
-                '''
+            'maxOccurs': '1'
         })
     '''
     Tap step number for the energised end of the test pair.
@@ -15539,11 +12223,7 @@ class ShortCircuitTest(TransformerTest):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                Tap step number for the grounded end of the test pair.
-                '''
+            'maxOccurs': '1'
         })
     '''
     Tap step number for the grounded end of the test pair.
@@ -15554,12 +12234,7 @@ class ShortCircuitTest(TransformerTest):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                Leakage impedance measured from a positive-sequence or single-phase short-circuit
-                test.
-                '''
+            'maxOccurs': '1'
         })
     '''
     Leakage impedance measured from a positive-sequence or single-phase short-circuit
@@ -15571,11 +12246,7 @@ class ShortCircuitTest(TransformerTest):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                Leakage impedance measured from a zero-sequence short-circuit test.
-                '''
+            'maxOccurs': '1'
         })
     '''
     Leakage impedance measured from a zero-sequence short-circuit test.
@@ -15586,11 +12257,7 @@ class ShortCircuitTest(TransformerTest):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                Load losses from a positive-sequence or single-phase short-circuit test.
-                '''
+            'maxOccurs': '1'
         })
     '''
     Load losses from a positive-sequence or single-phase short-circuit test.
@@ -15601,45 +12268,32 @@ class ShortCircuitTest(TransformerTest):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                Load losses from a zero-sequence short-circuit test.
-                '''
+            'maxOccurs': '1'
         })
     '''
     Load losses from a zero-sequence short-circuit test.
     '''
 
-    EnergisedEnd: Optional[ TransformerEndInfo ] = field(
+    EnergisedEnd: Optional[TransformerEndInfo] = field(
         default = None,
         metadata = {
             'type': 'Association',
             'minOccurs': '0',
             'maxOccurs': '1',
-            'inverse': 'TransformerEndInfo.EnergisedEndShortCircuitTests',
-            'docstring':
-                '''
-                Transformer end that voltage is applied to in this short-circuit test.
-                The test voltage is chosen to induce rated current in the energised end.
-                '''
+            'inverse': 'TransformerEndInfo.EnergisedEndShortCircuitTests'
         })
     '''
     Transformer end that voltage is applied to in this short-circuit test.
     The test voltage is chosen to induce rated current in the energised end.
     '''
 
-    GroundedEnds: list[ TransformerEndInfo ] = field(
+    GroundedEnds: list[TransformerEndInfo] = field(
         default_factory = list,
         metadata = {
             'type': 'Association',
             'minOccurs': '0',
             'maxOccurs': 'unbounded',
-            'inverse': 'TransformerEndInfo.GroundedEndShortCircuitTests',
-            'docstring':
-                '''
-                All ends short-circuited in this short-circuit test.
-                '''
+            'inverse': 'TransformerEndInfo.GroundedEndShortCircuitTests'
         })
     '''
     All ends short-circuited in this short-circuit test.
@@ -15659,27 +12313,19 @@ class UsagePointGroup(IdentifiedObject):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                Type of this group.
-                '''
+            'maxOccurs': '1'
         })
     '''
     Type of this group.
     '''
 
-    DemandResponsePrograms: list[ DemandResponseProgram ] = field(
+    DemandResponsePrograms: list[DemandResponseProgram] = field(
         default_factory = list,
         metadata = {
             'type': 'Association',
             'minOccurs': '0',
             'maxOccurs': 'unbounded',
-            'inverse': 'DemandResponseProgram.UsagePointGroups',
-            'docstring':
-                '''
-                All demand response programs this usage point group is enrolled in.
-                '''
+            'inverse': 'DemandResponseProgram.UsagePointGroups'
         })
     '''
     All demand response programs this usage point group is enrolled in.
@@ -15709,27 +12355,19 @@ class ValueToAlias(IdentifiedObject):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                The value that is mapped.
-                '''
+            'maxOccurs': '1'
         })
     '''
     The value that is mapped.
     '''
 
-    ValueAliasSet: Optional[ ValueAliasSet ] = field(
+    ValueAliasSet: Optional[ValueAliasSet] = field(
         default = None,
         metadata = {
             'type': 'Of Aggregate',
             'minOccurs': '0',
             'maxOccurs': '1',
-            'inverse': 'ValueAliasSet.Values',
-            'docstring':
-                '''
-                The ValueAliasSet having the ValueToAlias mappings.
-                '''
+            'inverse': 'ValueAliasSet.Values'
         })
     '''
     The ValueAliasSet having the ValueToAlias mappings.
@@ -15747,14 +12385,7 @@ class WirePosition(IdentifiedObject):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                Numbering for wires on a WireSpacingInfo. Neutrals should be numbered last.
-                Multiple circuits on the same pole, tower or right-of-way can be included
-                with unique sequence numbers for the phases, and identical sequence numbers
-                for any shared neutrals.
-                '''
+            'maxOccurs': '1'
         })
     '''
     Numbering for wires on a WireSpacingInfo. Neutrals should be numbered last.
@@ -15768,12 +12399,7 @@ class WirePosition(IdentifiedObject):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                Signed horizontal distance from the wire at this position to a common reference
-                point.
-                '''
+            'maxOccurs': '1'
         })
     '''
     Signed horizontal distance from the wire at this position to a common reference
@@ -15785,43 +12411,31 @@ class WirePosition(IdentifiedObject):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                Signed vertical distance from the wire at this position: above ground (positive
-                value) or burial depth below ground (negative value).
-                '''
+            'maxOccurs': '1'
         })
     '''
     Signed vertical distance from the wire at this position: above ground (positive
     value) or burial depth below ground (negative value).
     '''
 
-    WirePhaseInfo: list[ WirePhaseInfo ] = field(
+    WirePhaseInfo: list[WirePhaseInfo] = field(
         default_factory = list,
         metadata = {
             'type': 'Association',
             'minOccurs': '0',
             'maxOccurs': 'unbounded',
-            'inverse': 'WirePhaseInfo.WirePosition',
-            'docstring':
-                '''
-                '''
+            'inverse': 'WirePhaseInfo.WirePosition'
         })
     '''
     '''
 
-    WireSpacingInfo: Optional[ WireSpacingInfo ] = field(
+    WireSpacingInfo: Optional[WireSpacingInfo] = field(
         default = None,
         metadata = {
             'type': 'Association',
             'minOccurs': '0',
             'maxOccurs': '1',
-            'inverse': 'WireSpacingInfo.WirePositions',
-            'docstring':
-                '''
-                Wire spacing data this wire position belongs to.
-                '''
+            'inverse': 'WireSpacingInfo.WirePositions'
         })
     '''
     Wire spacing data this wire position belongs to.
@@ -15840,45 +12454,32 @@ class AreaConfiguration(Identity):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                Value 0 means ignore priority. 1 means the highest priority, 2 is the second
-                highest priority.
-                '''
+            'maxOccurs': '1'
         })
     '''
     Value 0 means ignore priority. 1 means the highest priority, 2 is the second
     highest priority.
     '''
 
-    EnergizedArea: Optional[ SubSchedulingArea ] = field(
+    EnergizedArea: Optional[SubSchedulingArea] = field(
         default = None,
         metadata = {
             'type': 'Association',
             'minOccurs': '0',
             'maxOccurs': '1',
-            'inverse': 'SubSchedulingArea.SinkConfiguration',
-            'docstring':
-                '''
-                The sink area being energized by the source area.
-                '''
+            'inverse': 'SubSchedulingArea.SinkConfiguration'
         })
     '''
     The sink area being energized by the source area.
     '''
 
-    EnergizingArea: Optional[ SubSchedulingArea ] = field(
+    EnergizingArea: Optional[SubSchedulingArea] = field(
         default = None,
         metadata = {
             'type': 'Association',
             'minOccurs': '0',
             'maxOccurs': '1',
-            'inverse': 'SubSchedulingArea.SourceConfiguration',
-            'docstring':
-                '''
-                The source area which is energizing the sink area
-                '''
+            'inverse': 'SubSchedulingArea.SourceConfiguration'
         })
     '''
     The source area which is energizing the sink area
@@ -15890,17 +12491,13 @@ class AssetOrganisationRole(Identity):
     Role an organisation plays with respect to asset.
     '''
 
-    Assets: list[ Asset ] = field(
+    Assets: list[Asset] = field(
         default_factory = list,
         metadata = {
             'type': 'Association',
             'minOccurs': '0',
             'maxOccurs': 'unbounded',
-            'inverse': 'Asset.OrganisationRoles',
-            'docstring':
-                '''
-                All assets for this organisation role.
-                '''
+            'inverse': 'Asset.OrganisationRoles'
         })
     '''
     All assets for this organisation role.
@@ -15917,45 +12514,32 @@ class BranchGroupTerminal(Identity):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                The flow into the terminal is summed if set true. The flow out of the terminanl
-                is summed if set false.
-                '''
+            'maxOccurs': '1'
         })
     '''
     The flow into the terminal is summed if set true. The flow out of the terminanl
     is summed if set false.
     '''
 
-    BranchGroup: Optional[ BranchGroup ] = field(
+    BranchGroup: Optional[BranchGroup] = field(
         default = None,
         metadata = {
             'type': 'Of Aggregate',
             'minOccurs': '0',
             'maxOccurs': '1',
-            'inverse': 'BranchGroup.BranchGroupTerminal',
-            'docstring':
-                '''
-                The branch group to which the directed branch group terminals belong.
-                '''
+            'inverse': 'BranchGroup.BranchGroupTerminal'
         })
     '''
     The branch group to which the directed branch group terminals belong.
     '''
 
-    Terminal: Optional[ Terminal ] = field(
+    Terminal: Optional[Terminal] = field(
         default = None,
         metadata = {
             'type': 'Association',
             'minOccurs': '0',
             'maxOccurs': '1',
-            'inverse': 'Terminal.BranchGroupTerminal',
-            'docstring':
-                '''
-                The terminal to be summed.
-                '''
+            'inverse': 'Terminal.BranchGroupTerminal'
         })
     '''
     The terminal to be summed.
@@ -15974,11 +12558,7 @@ class CurveData(Identity):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                The data value of the X-axis variable, depending on the X-axis units.
-                '''
+            'maxOccurs': '1'
         })
     '''
     The data value of the X-axis variable, depending on the X-axis units.
@@ -15989,11 +12569,7 @@ class CurveData(Identity):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                The data value of the first Y-axis variable, depending on the Y-axis units.
-                '''
+            'maxOccurs': '1'
         })
     '''
     The data value of the first Y-axis variable, depending on the Y-axis units.
@@ -16004,12 +12580,7 @@ class CurveData(Identity):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                The data value of the second Y-axis variable (if present), depending on
-                the Y-axis units.
-                '''
+            'maxOccurs': '1'
         })
     '''
     The data value of the second Y-axis variable (if present), depending on
@@ -16021,29 +12592,20 @@ class CurveData(Identity):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                The data value of the third Y-axis variable (if present), depending on
-                the Y-axis units.
-                '''
+            'maxOccurs': '1'
         })
     '''
     The data value of the third Y-axis variable (if present), depending on
     the Y-axis units.
     '''
 
-    Curve: Optional[ Curve ] = field(
+    Curve: Optional[Curve] = field(
         default = None,
         metadata = {
             'type': 'Of Aggregate',
             'minOccurs': '0',
             'maxOccurs': '1',
-            'inverse': 'Curve.CurveDatas',
-            'docstring':
-                '''
-                The curve of this curve data point.
-                '''
+            'inverse': 'Curve.CurveDatas'
         })
     '''
     The curve of this curve data point.
@@ -16059,10 +12621,7 @@ class DERCurveData(Identity):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                '''
+            'maxOccurs': '1'
         })
     '''
     '''
@@ -16072,10 +12631,7 @@ class DERCurveData(Identity):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                '''
+            'maxOccurs': '1'
         })
     '''
     '''
@@ -16085,10 +12641,7 @@ class DERCurveData(Identity):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                '''
+            'maxOccurs': '1'
         })
     '''
     '''
@@ -16098,10 +12651,7 @@ class DERCurveData(Identity):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                '''
+            'maxOccurs': '1'
         })
     '''
     '''
@@ -16111,38 +12661,29 @@ class DERCurveData(Identity):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                '''
+            'maxOccurs': '1'
         })
     '''
     '''
 
-    DERMonitorableParameter: Optional[ DERMonitorableParameter ] = field(
+    DERMonitorableParameter: Optional[DERMonitorableParameter] = field(
         default = None,
         metadata = {
             'type': 'Association',
             'minOccurs': '0',
             'maxOccurs': '1',
-            'inverse': 'DERMonitorableParameter.DERCurveData',
-            'docstring':
-                '''
-                '''
+            'inverse': 'DERMonitorableParameter.DERCurveData'
         })
     '''
     '''
 
-    DispatchSchedule: Optional[ DispatchSchedule ] = field(
+    DispatchSchedule: Optional[DispatchSchedule] = field(
         default = None,
         metadata = {
             'type': 'Association',
             'minOccurs': '0',
             'maxOccurs': '1',
-            'inverse': 'DispatchSchedule.DERCurveData',
-            'docstring':
-                '''
-                '''
+            'inverse': 'DispatchSchedule.DERCurveData'
         })
     '''
     '''
@@ -16153,49 +12694,37 @@ class DERDynamics(Identity):
     Parent class supporting relationships to DER dynamics models.
     '''
 
-    AsynchronousMachine: list[ AsynchronousMachine ] = field(
+    AsynchronousMachine: list[AsynchronousMachine] = field(
         default_factory = list,
         metadata = {
             'type': 'Association',
             'minOccurs': '0',
             'maxOccurs': 'unbounded',
-            'inverse': 'AsynchronousMachine.DERDynamics',
-            'docstring':
-                '''
-                Asynchronous machine model with which this DER dynamics model is associated.
-                '''
+            'inverse': 'AsynchronousMachine.DERDynamics'
         })
     '''
     Asynchronous machine model with which this DER dynamics model is associated.
     '''
 
-    PowerElectronicsConnection: list[ PowerElectronicsConnection ] = field(
+    PowerElectronicsConnection: list[PowerElectronicsConnection] = field(
         default_factory = list,
         metadata = {
             'type': 'Association',
             'minOccurs': '0',
             'maxOccurs': 'unbounded',
-            'inverse': 'PowerElectronicsConnection.DERDynamics',
-            'docstring':
-                '''
-                Power electronics connection with which this DER dynamics model is associated.
-                '''
+            'inverse': 'PowerElectronicsConnection.DERDynamics'
         })
     '''
     Power electronics connection with which this DER dynamics model is associated.
     '''
 
-    SynchronousMachine: list[ SynchronousMachine ] = field(
+    SynchronousMachine: list[SynchronousMachine] = field(
         default_factory = list,
         metadata = {
             'type': 'Association',
             'minOccurs': '0',
             'maxOccurs': 'unbounded',
-            'inverse': 'SynchronousMachine.DERDynamics',
-            'docstring':
-                '''
-                Synchronous machine model with which this DER dynamics model is associated.
-                '''
+            'inverse': 'SynchronousMachine.DERDynamics'
         })
     '''
     Synchronous machine model with which this DER dynamics model is associated.
@@ -16211,10 +12740,7 @@ class DERFunction(Identity):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                '''
+            'maxOccurs': '1'
         })
     '''
     '''
@@ -16224,10 +12750,7 @@ class DERFunction(Identity):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                '''
+            'maxOccurs': '1'
         })
     '''
     '''
@@ -16237,10 +12760,7 @@ class DERFunction(Identity):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                '''
+            'maxOccurs': '1'
         })
     '''
     '''
@@ -16250,10 +12770,7 @@ class DERFunction(Identity):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                '''
+            'maxOccurs': '1'
         })
     '''
     '''
@@ -16263,10 +12780,7 @@ class DERFunction(Identity):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                '''
+            'maxOccurs': '1'
         })
     '''
     '''
@@ -16276,10 +12790,7 @@ class DERFunction(Identity):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                '''
+            'maxOccurs': '1'
         })
     '''
     '''
@@ -16289,10 +12800,7 @@ class DERFunction(Identity):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                '''
+            'maxOccurs': '1'
         })
     '''
     '''
@@ -16302,10 +12810,7 @@ class DERFunction(Identity):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                '''
+            'maxOccurs': '1'
         })
     '''
     '''
@@ -16315,24 +12820,18 @@ class DERFunction(Identity):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                '''
+            'maxOccurs': '1'
         })
     '''
     '''
 
-    EndDeviceGroup: Optional[ EndDeviceGroup ] = field(
+    EndDeviceGroup: Optional[EndDeviceGroup] = field(
         default = None,
         metadata = {
             'type': 'Association',
             'minOccurs': '0',
             'maxOccurs': '1',
-            'inverse': 'EndDeviceGroup.DERFunction',
-            'docstring':
-                '''
-                '''
+            'inverse': 'EndDeviceGroup.DERFunction'
         })
     '''
     '''
@@ -16347,10 +12846,7 @@ class DERMonitorableParameter(Identity):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                '''
+            'maxOccurs': '1'
         })
     '''
     '''
@@ -16360,108 +12856,84 @@ class DERMonitorableParameter(Identity):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                '''
+            'maxOccurs': '1'
         })
     '''
     '''
 
-    DERParameter: Optional[ DERParameterKind ] = field(
+    DERParameter: Optional[DERParameterKind] = field(
         default = None,
         metadata = {
             'type': 'enumeration',
             'minOccurs': '0',
             'maxOccurs': '1',
-            'inverse': '',
-            'docstring':
-                '''
-                '''
+            'inverse': ''
         })
     '''
     '''
 
-    flowDirection: Optional[ FlowDirectionKind ] = field(
+    flowDirection: Optional[FlowDirectionKind] = field(
         default = None,
         metadata = {
             'type': 'enumeration',
             'minOccurs': '0',
             'maxOccurs': '1',
-            'inverse': '',
-            'docstring':
-                '''
-                '''
+            'inverse': ''
         })
     '''
     '''
 
-    yMultiplier: Optional[ UnitMultiplier ] = field(
+    yMultiplier: Optional[UnitMultiplier] = field(
         default = None,
         metadata = {
             'type': 'enumeration',
             'minOccurs': '0',
             'maxOccurs': '1',
-            'inverse': '',
-            'docstring':
-                '''
-                '''
+            'inverse': ''
         })
     '''
     '''
 
-    yUnit: Optional[ DERUnitSymbol ] = field(
+    yUnit: Optional[DERUnitSymbol] = field(
         default = None,
         metadata = {
             'type': 'enumeration',
             'minOccurs': '0',
             'maxOccurs': '1',
-            'inverse': '',
-            'docstring':
-                '''
-                '''
+            'inverse': ''
         })
     '''
     '''
 
-    DERCurveData: Optional[ DERCurveData ] = field(
+    DERCurveData: Optional[DERCurveData] = field(
         default = None,
         metadata = {
             'type': 'Association',
             'minOccurs': '0',
             'maxOccurs': '1',
-            'inverse': 'DERCurveData.DERMonitorableParameter',
-            'docstring':
-                '''
-                '''
+            'inverse': 'DERCurveData.DERMonitorableParameter'
         })
     '''
     '''
 
-    DispatchSchedule: list[ DispatchSchedule ] = field(
+    DispatchSchedule: list[DispatchSchedule] = field(
         default_factory = list,
         metadata = {
             'type': 'Association',
             'minOccurs': '0',
             'maxOccurs': 'unbounded',
-            'inverse': 'DispatchSchedule.DERMonitorableParameter',
-            'docstring':
-                '''
-                '''
+            'inverse': 'DispatchSchedule.DERMonitorableParameter'
         })
     '''
     '''
 
-    EndDeviceGroup: list[ EndDeviceGroup ] = field(
+    EndDeviceGroup: list[EndDeviceGroup] = field(
         default_factory = list,
         metadata = {
             'type': 'Association',
             'minOccurs': '0',
             'maxOccurs': 'unbounded',
-            'inverse': 'EndDeviceGroup.DERMonitorableParameter',
-            'docstring':
-                '''
-                '''
+            'inverse': 'EndDeviceGroup.DERMonitorableParameter'
         })
     '''
     '''
@@ -16476,12 +12948,7 @@ class DispatchSchedule(Identity):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                Used to specify the number of intervals when requesting a forecast or a
-                dispatch.
-                '''
+            'maxOccurs': '1'
         })
     '''
     Used to specify the number of intervals when requesting a forecast or a
@@ -16493,11 +12960,7 @@ class DispatchSchedule(Identity):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                The start time of the first interval in the dispatch schedule
-                '''
+            'maxOccurs': '1'
         })
     '''
     The start time of the first interval in the dispatch schedule
@@ -16508,11 +12971,7 @@ class DispatchSchedule(Identity):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                The length of time for each interval in the dispatch schedule.
-                '''
+            'maxOccurs': '1'
         })
     '''
     The length of time for each interval in the dispatch schedule.
@@ -16523,72 +12982,54 @@ class DispatchSchedule(Identity):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                '''
+            'maxOccurs': '1'
         })
     '''
     '''
 
-    curveStyleKind: Optional[ CurveStyle ] = field(
+    curveStyleKind: Optional[CurveStyle] = field(
         default = None,
         metadata = {
             'type': 'enumeration',
             'minOccurs': '0',
             'maxOccurs': '1',
-            'inverse': '',
-            'docstring':
-                '''
-                Used to specify whether the values over an interval are constant (constantYValue)
-                or linearly interpolated (straightLineYValues)
-                '''
+            'inverse': ''
         })
     '''
     Used to specify whether the values over an interval are constant (constantYValue)
     or linearly interpolated (straightLineYValues)
     '''
 
-    timeIntervalUnit: Optional[ TimeIntervalKind ] = field(
+    timeIntervalUnit: Optional[TimeIntervalKind] = field(
         default = None,
         metadata = {
             'type': 'enumeration',
             'minOccurs': '0',
             'maxOccurs': '1',
-            'inverse': '',
-            'docstring':
-                '''
-                The unit of measure for the time axis of the dispatch schedule.
-                '''
+            'inverse': ''
         })
     '''
     The unit of measure for the time axis of the dispatch schedule.
     '''
 
-    DERCurveData: list[ DERCurveData ] = field(
+    DERCurveData: list[DERCurveData] = field(
         default_factory = list,
         metadata = {
             'type': 'Association',
             'minOccurs': '0',
             'maxOccurs': 'unbounded',
-            'inverse': 'DERCurveData.DispatchSchedule',
-            'docstring':
-                '''
-                '''
+            'inverse': 'DERCurveData.DispatchSchedule'
         })
     '''
     '''
 
-    DERMonitorableParameter: Optional[ DERMonitorableParameter ] = field(
+    DERMonitorableParameter: Optional[DERMonitorableParameter] = field(
         default = None,
         metadata = {
             'type': 'Association',
             'minOccurs': '0',
             'maxOccurs': '1',
-            'inverse': 'DERMonitorableParameter.DispatchSchedule',
-            'docstring':
-                '''
-                '''
+            'inverse': 'DERMonitorableParameter.DispatchSchedule'
         })
     '''
     '''
@@ -16604,11 +13045,7 @@ class IEC61970CIMVersion(Identity):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                Form is YYYY-MM-DD for example for January 5, 2009 it is 2009-01-05.
-                '''
+            'maxOccurs': '1'
         })
     '''
     Form is YYYY-MM-DD for example for January 5, 2009 it is 2009-01-05.
@@ -16619,12 +13056,7 @@ class IEC61970CIMVersion(Identity):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                Form is IEC61970CIMXXvYY where XX is the major CIM package version and
-                the YY is the minor version. For example IEC61970CIM13v18.
-                '''
+            'maxOccurs': '1'
         })
     '''
     Form is IEC61970CIMXXvYY where XX is the major CIM package version and
@@ -16641,10 +13073,7 @@ class IEEE1547ControlSettings(Identity):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                '''
+            'maxOccurs': '1'
         })
     '''
     '''
@@ -16654,10 +13083,7 @@ class IEEE1547ControlSettings(Identity):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                '''
+            'maxOccurs': '1'
         })
     '''
     '''
@@ -16667,10 +13093,7 @@ class IEEE1547ControlSettings(Identity):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                '''
+            'maxOccurs': '1'
         })
     '''
     '''
@@ -16680,10 +13103,7 @@ class IEEE1547ControlSettings(Identity):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                '''
+            'maxOccurs': '1'
         })
     '''
     '''
@@ -16693,10 +13113,7 @@ class IEEE1547ControlSettings(Identity):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                '''
+            'maxOccurs': '1'
         })
     '''
     '''
@@ -16706,10 +13123,7 @@ class IEEE1547ControlSettings(Identity):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                '''
+            'maxOccurs': '1'
         })
     '''
     '''
@@ -16719,10 +13133,7 @@ class IEEE1547ControlSettings(Identity):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                '''
+            'maxOccurs': '1'
         })
     '''
     '''
@@ -16732,10 +13143,7 @@ class IEEE1547ControlSettings(Identity):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                '''
+            'maxOccurs': '1'
         })
     '''
     '''
@@ -16745,10 +13153,7 @@ class IEEE1547ControlSettings(Identity):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                '''
+            'maxOccurs': '1'
         })
     '''
     '''
@@ -16758,10 +13163,7 @@ class IEEE1547ControlSettings(Identity):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                '''
+            'maxOccurs': '1'
         })
     '''
     '''
@@ -16771,10 +13173,7 @@ class IEEE1547ControlSettings(Identity):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                '''
+            'maxOccurs': '1'
         })
     '''
     '''
@@ -16784,10 +13183,7 @@ class IEEE1547ControlSettings(Identity):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                '''
+            'maxOccurs': '1'
         })
     '''
     '''
@@ -16797,10 +13193,7 @@ class IEEE1547ControlSettings(Identity):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                '''
+            'maxOccurs': '1'
         })
     '''
     '''
@@ -16810,10 +13203,7 @@ class IEEE1547ControlSettings(Identity):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                '''
+            'maxOccurs': '1'
         })
     '''
     '''
@@ -16823,10 +13213,7 @@ class IEEE1547ControlSettings(Identity):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                '''
+            'maxOccurs': '1'
         })
     '''
     '''
@@ -16836,10 +13223,7 @@ class IEEE1547ControlSettings(Identity):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                '''
+            'maxOccurs': '1'
         })
     '''
     '''
@@ -16849,10 +13233,7 @@ class IEEE1547ControlSettings(Identity):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                '''
+            'maxOccurs': '1'
         })
     '''
     '''
@@ -16862,10 +13243,7 @@ class IEEE1547ControlSettings(Identity):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                '''
+            'maxOccurs': '1'
         })
     '''
     '''
@@ -16875,10 +13253,7 @@ class IEEE1547ControlSettings(Identity):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                '''
+            'maxOccurs': '1'
         })
     '''
     '''
@@ -16888,10 +13263,7 @@ class IEEE1547ControlSettings(Identity):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                '''
+            'maxOccurs': '1'
         })
     '''
     '''
@@ -16901,10 +13273,7 @@ class IEEE1547ControlSettings(Identity):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                '''
+            'maxOccurs': '1'
         })
     '''
     '''
@@ -16914,10 +13283,7 @@ class IEEE1547ControlSettings(Identity):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                '''
+            'maxOccurs': '1'
         })
     '''
     '''
@@ -16927,10 +13293,7 @@ class IEEE1547ControlSettings(Identity):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                '''
+            'maxOccurs': '1'
         })
     '''
     '''
@@ -16940,10 +13303,7 @@ class IEEE1547ControlSettings(Identity):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                '''
+            'maxOccurs': '1'
         })
     '''
     '''
@@ -16953,10 +13313,7 @@ class IEEE1547ControlSettings(Identity):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                '''
+            'maxOccurs': '1'
         })
     '''
     '''
@@ -16966,10 +13323,7 @@ class IEEE1547ControlSettings(Identity):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                '''
+            'maxOccurs': '1'
         })
     '''
     '''
@@ -16979,10 +13333,7 @@ class IEEE1547ControlSettings(Identity):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                '''
+            'maxOccurs': '1'
         })
     '''
     '''
@@ -16992,10 +13343,7 @@ class IEEE1547ControlSettings(Identity):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                '''
+            'maxOccurs': '1'
         })
     '''
     '''
@@ -17005,10 +13353,7 @@ class IEEE1547ControlSettings(Identity):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                '''
+            'maxOccurs': '1'
         })
     '''
     '''
@@ -17018,10 +13363,7 @@ class IEEE1547ControlSettings(Identity):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                '''
+            'maxOccurs': '1'
         })
     '''
     '''
@@ -17031,10 +13373,7 @@ class IEEE1547ControlSettings(Identity):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                '''
+            'maxOccurs': '1'
         })
     '''
     '''
@@ -17044,10 +13383,7 @@ class IEEE1547ControlSettings(Identity):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                '''
+            'maxOccurs': '1'
         })
     '''
     '''
@@ -17057,10 +13393,7 @@ class IEEE1547ControlSettings(Identity):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                '''
+            'maxOccurs': '1'
         })
     '''
     '''
@@ -17070,10 +13403,7 @@ class IEEE1547ControlSettings(Identity):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                '''
+            'maxOccurs': '1'
         })
     '''
     '''
@@ -17083,38 +13413,29 @@ class IEEE1547ControlSettings(Identity):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                '''
+            'maxOccurs': '1'
         })
     '''
     '''
 
-    PowerElectronicsConnections: list[ PowerElectronicsConnection ] = field(
+    PowerElectronicsConnections: list[PowerElectronicsConnection] = field(
         default_factory = list,
         metadata = {
             'type': 'Association',
             'minOccurs': '0',
             'maxOccurs': 'unbounded',
-            'inverse': 'PowerElectronicsConnection.IEEE1547ControlSettings',
-            'docstring':
-                '''
-                '''
+            'inverse': 'PowerElectronicsConnection.IEEE1547ControlSettings'
         })
     '''
     '''
 
-    RotatingMachines: list[ RotatingMachine ] = field(
+    RotatingMachines: list[RotatingMachine] = field(
         default_factory = list,
         metadata = {
             'type': 'Association',
             'minOccurs': '0',
             'maxOccurs': 'unbounded',
-            'inverse': 'RotatingMachine.IEEE1547ControlSettings',
-            'docstring':
-                '''
-                '''
+            'inverse': 'RotatingMachine.IEEE1547ControlSettings'
         })
     '''
     '''
@@ -17129,10 +13450,7 @@ class IEEE1547Setting(Identity):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                '''
+            'maxOccurs': '1'
         })
     '''
     '''
@@ -17142,10 +13460,7 @@ class IEEE1547Setting(Identity):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                '''
+            'maxOccurs': '1'
         })
     '''
     '''
@@ -17155,10 +13470,7 @@ class IEEE1547Setting(Identity):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                '''
+            'maxOccurs': '1'
         })
     '''
     '''
@@ -17168,10 +13480,7 @@ class IEEE1547Setting(Identity):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                '''
+            'maxOccurs': '1'
         })
     '''
     '''
@@ -17181,10 +13490,7 @@ class IEEE1547Setting(Identity):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                '''
+            'maxOccurs': '1'
         })
     '''
     '''
@@ -17194,10 +13500,7 @@ class IEEE1547Setting(Identity):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                '''
+            'maxOccurs': '1'
         })
     '''
     '''
@@ -17207,10 +13510,7 @@ class IEEE1547Setting(Identity):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                '''
+            'maxOccurs': '1'
         })
     '''
     '''
@@ -17220,10 +13520,7 @@ class IEEE1547Setting(Identity):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                '''
+            'maxOccurs': '1'
         })
     '''
     '''
@@ -17233,10 +13530,7 @@ class IEEE1547Setting(Identity):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                '''
+            'maxOccurs': '1'
         })
     '''
     '''
@@ -17246,10 +13540,7 @@ class IEEE1547Setting(Identity):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                '''
+            'maxOccurs': '1'
         })
     '''
     '''
@@ -17259,10 +13550,7 @@ class IEEE1547Setting(Identity):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                '''
+            'maxOccurs': '1'
         })
     '''
     '''
@@ -17272,10 +13560,7 @@ class IEEE1547Setting(Identity):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                '''
+            'maxOccurs': '1'
         })
     '''
     '''
@@ -17285,10 +13570,7 @@ class IEEE1547Setting(Identity):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                '''
+            'maxOccurs': '1'
         })
     '''
     '''
@@ -17298,10 +13580,7 @@ class IEEE1547Setting(Identity):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                '''
+            'maxOccurs': '1'
         })
     '''
     '''
@@ -17311,10 +13590,7 @@ class IEEE1547Setting(Identity):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                '''
+            'maxOccurs': '1'
         })
     '''
     '''
@@ -17324,38 +13600,29 @@ class IEEE1547Setting(Identity):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                '''
+            'maxOccurs': '1'
         })
     '''
     '''
 
-    PowerElectronicsConnections: list[ PowerElectronicsConnection ] = field(
+    PowerElectronicsConnections: list[PowerElectronicsConnection] = field(
         default_factory = list,
         metadata = {
             'type': 'Association',
             'minOccurs': '0',
             'maxOccurs': 'unbounded',
-            'inverse': 'PowerElectronicsConnection.IEEE1547Setting',
-            'docstring':
-                '''
-                '''
+            'inverse': 'PowerElectronicsConnection.IEEE1547Setting'
         })
     '''
     '''
 
-    RotatingMachines: list[ RotatingMachine ] = field(
+    RotatingMachines: list[RotatingMachine] = field(
         default_factory = list,
         metadata = {
             'type': 'Association',
             'minOccurs': '0',
             'maxOccurs': 'unbounded',
-            'inverse': 'RotatingMachine.IEEE1547Setting',
-            'docstring':
-                '''
-                '''
+            'inverse': 'RotatingMachine.IEEE1547Setting'
         })
     '''
     '''
@@ -17370,10 +13637,7 @@ class IEEE1547TripSettings(Identity):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                '''
+            'maxOccurs': '1'
         })
     '''
     '''
@@ -17383,10 +13647,7 @@ class IEEE1547TripSettings(Identity):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                '''
+            'maxOccurs': '1'
         })
     '''
     '''
@@ -17396,10 +13657,7 @@ class IEEE1547TripSettings(Identity):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                '''
+            'maxOccurs': '1'
         })
     '''
     '''
@@ -17409,10 +13667,7 @@ class IEEE1547TripSettings(Identity):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                '''
+            'maxOccurs': '1'
         })
     '''
     '''
@@ -17422,10 +13677,7 @@ class IEEE1547TripSettings(Identity):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                '''
+            'maxOccurs': '1'
         })
     '''
     '''
@@ -17435,10 +13687,7 @@ class IEEE1547TripSettings(Identity):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                '''
+            'maxOccurs': '1'
         })
     '''
     '''
@@ -17448,10 +13697,7 @@ class IEEE1547TripSettings(Identity):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                '''
+            'maxOccurs': '1'
         })
     '''
     '''
@@ -17461,10 +13707,7 @@ class IEEE1547TripSettings(Identity):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                '''
+            'maxOccurs': '1'
         })
     '''
     '''
@@ -17474,10 +13717,7 @@ class IEEE1547TripSettings(Identity):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                '''
+            'maxOccurs': '1'
         })
     '''
     '''
@@ -17487,10 +13727,7 @@ class IEEE1547TripSettings(Identity):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                '''
+            'maxOccurs': '1'
         })
     '''
     '''
@@ -17500,10 +13737,7 @@ class IEEE1547TripSettings(Identity):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                '''
+            'maxOccurs': '1'
         })
     '''
     '''
@@ -17513,10 +13747,7 @@ class IEEE1547TripSettings(Identity):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                '''
+            'maxOccurs': '1'
         })
     '''
     '''
@@ -17526,10 +13757,7 @@ class IEEE1547TripSettings(Identity):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                '''
+            'maxOccurs': '1'
         })
     '''
     '''
@@ -17539,10 +13767,7 @@ class IEEE1547TripSettings(Identity):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                '''
+            'maxOccurs': '1'
         })
     '''
     '''
@@ -17552,10 +13777,7 @@ class IEEE1547TripSettings(Identity):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                '''
+            'maxOccurs': '1'
         })
     '''
     '''
@@ -17565,38 +13787,29 @@ class IEEE1547TripSettings(Identity):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                '''
+            'maxOccurs': '1'
         })
     '''
     '''
 
-    PowerElectronicsConnections: list[ PowerElectronicsConnection ] = field(
+    PowerElectronicsConnections: list[PowerElectronicsConnection] = field(
         default_factory = list,
         metadata = {
             'type': 'Association',
             'minOccurs': '0',
             'maxOccurs': 'unbounded',
-            'inverse': 'PowerElectronicsConnection.IEEE1547TripSettings',
-            'docstring':
-                '''
-                '''
+            'inverse': 'PowerElectronicsConnection.IEEE1547TripSettings'
         })
     '''
     '''
 
-    RotatingMachines: list[ RotatingMachine ] = field(
+    RotatingMachines: list[RotatingMachine] = field(
         default_factory = list,
         metadata = {
             'type': 'Association',
             'minOccurs': '0',
             'maxOccurs': 'unbounded',
-            'inverse': 'RotatingMachine.IEEE1547TripSettings',
-            'docstring':
-                '''
-                '''
+            'inverse': 'RotatingMachine.IEEE1547TripSettings'
         })
     '''
     '''
@@ -17612,12 +13825,7 @@ class IrregularTimePoint(Identity):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                The first value at the time. The meaning of the value is defined by the
-                derived type of the associated schedule.
-                '''
+            'maxOccurs': '1'
         })
     '''
     The first value at the time. The meaning of the value is defined by the
@@ -17629,12 +13837,7 @@ class IrregularTimePoint(Identity):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                The second value at the time. The meaning of the value is defined by the
-                derived type of the associated schedule.
-                '''
+            'maxOccurs': '1'
         })
     '''
     The second value at the time. The meaning of the value is defined by the
@@ -17646,27 +13849,19 @@ class IrregularTimePoint(Identity):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                The time is relative to the schedule starting time.
-                '''
+            'maxOccurs': '1'
         })
     '''
     The time is relative to the schedule starting time.
     '''
 
-    IntervalSchedule: Optional[ IrregularIntervalSchedule ] = field(
+    IntervalSchedule: Optional[IrregularIntervalSchedule] = field(
         default = None,
         metadata = {
             'type': 'Of Aggregate',
             'minOccurs': '0',
             'maxOccurs': '1',
-            'inverse': 'IrregularIntervalSchedule.TimePoints',
-            'docstring':
-                '''
-                An IrregularTimePoint belongs to an IrregularIntervalSchedule.
-                '''
+            'inverse': 'IrregularIntervalSchedule.TimePoints'
         })
     '''
     An IrregularTimePoint belongs to an IrregularIntervalSchedule.
@@ -17686,43 +13881,31 @@ class Name(Identity):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                Any free text that name the object.
-                '''
+            'maxOccurs': '1'
         })
     '''
     Any free text that name the object.
     '''
 
-    IdentifiedObject: Optional[ IdentifiedObject ] = field(
+    IdentifiedObject: Optional[IdentifiedObject] = field(
         default = None,
         metadata = {
             'type': 'Association',
             'minOccurs': '0',
             'maxOccurs': '1',
-            'inverse': 'IdentifiedObject.Names',
-            'docstring':
-                '''
-                Identified object that this name designates.
-                '''
+            'inverse': 'IdentifiedObject.Names'
         })
     '''
     Identified object that this name designates.
     '''
 
-    NameType: Optional[ NameType ] = field(
+    NameType: Optional[NameType] = field(
         default = None,
         metadata = {
             'type': 'Association',
             'minOccurs': '0',
             'maxOccurs': '1',
-            'inverse': 'NameType.Names',
-            'docstring':
-                '''
-                Type of this name.
-                '''
+            'inverse': 'NameType.Names'
         })
     '''
     Type of this name.
@@ -17749,11 +13932,7 @@ class NameType(Identity):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                Description of the name type.
-                '''
+            'maxOccurs': '1'
         })
     '''
     Description of the name type.
@@ -17764,43 +13943,31 @@ class NameType(Identity):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                Name of the name type.
-                '''
+            'maxOccurs': '1'
         })
     '''
     Name of the name type.
     '''
 
-    Names: list[ Name ] = field(
+    Names: list[Name] = field(
         default_factory = list,
         metadata = {
             'type': 'Association',
             'minOccurs': '0',
             'maxOccurs': 'unbounded',
-            'inverse': 'Name.NameType',
-            'docstring':
-                '''
-                All names of this type.
-                '''
+            'inverse': 'Name.NameType'
         })
     '''
     All names of this type.
     '''
 
-    NameTypeAuthority: Optional[ NameTypeAuthority ] = field(
+    NameTypeAuthority: Optional[NameTypeAuthority] = field(
         default = None,
         metadata = {
             'type': 'Association',
             'minOccurs': '0',
             'maxOccurs': '1',
-            'inverse': 'NameTypeAuthority.NameTypes',
-            'docstring':
-                '''
-                Authority responsible for managing names of this type.
-                '''
+            'inverse': 'NameTypeAuthority.NameTypes'
         })
     '''
     Authority responsible for managing names of this type.
@@ -17818,11 +13985,7 @@ class NameTypeAuthority(Identity):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                Description of the name type authority.
-                '''
+            'maxOccurs': '1'
         })
     '''
     Description of the name type authority.
@@ -17833,27 +13996,19 @@ class NameTypeAuthority(Identity):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                Name of the name type authority.
-                '''
+            'maxOccurs': '1'
         })
     '''
     Name of the name type authority.
     '''
 
-    NameTypes: list[ NameType ] = field(
+    NameTypes: list[NameType] = field(
         default_factory = list,
         metadata = {
             'type': 'Association',
             'minOccurs': '0',
             'maxOccurs': 'unbounded',
-            'inverse': 'NameType.NameTypeAuthority',
-            'docstring':
-                '''
-                All name types managed by this authority.
-                '''
+            'inverse': 'NameType.NameTypeAuthority'
         })
     '''
     All name types managed by this authority.
@@ -17870,11 +14025,7 @@ class NonlinearShuntCompensatorPhasePoint(Identity):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                The number of the section.
-                '''
+            'maxOccurs': '1'
         })
     '''
     The number of the section.
@@ -17885,11 +14036,7 @@ class NonlinearShuntCompensatorPhasePoint(Identity):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                Positive sequence shunt (charging) susceptance per section
-                '''
+            'maxOccurs': '1'
         })
     '''
     Positive sequence shunt (charging) susceptance per section
@@ -17900,27 +14047,19 @@ class NonlinearShuntCompensatorPhasePoint(Identity):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                Positive sequence shunt (charging) conductance per section
-                '''
+            'maxOccurs': '1'
         })
     '''
     Positive sequence shunt (charging) conductance per section
     '''
 
-    NonlinearShuntCompensatorPhase: Optional[ NonlinearShuntCompensatorPhase ] = field(
+    NonlinearShuntCompensatorPhase: Optional[NonlinearShuntCompensatorPhase] = field(
         default = None,
         metadata = {
             'type': 'Of Aggregate',
             'minOccurs': '0',
             'maxOccurs': '1',
-            'inverse': 'NonlinearShuntCompensatorPhase.NonlinearShuntCompensatorPhasePoints',
-            'docstring':
-                '''
-                Non-linear shunt compensator phase owning this point.
-                '''
+            'inverse': 'NonlinearShuntCompensatorPhase.NonlinearShuntCompensatorPhasePoints'
         })
     '''
     Non-linear shunt compensator phase owning this point.
@@ -17937,11 +14076,7 @@ class NonlinearShuntCompensatorPoint(Identity):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                The number of the section.
-                '''
+            'maxOccurs': '1'
         })
     '''
     The number of the section.
@@ -17952,11 +14087,7 @@ class NonlinearShuntCompensatorPoint(Identity):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                Positive sequence shunt (charging) susceptance per section
-                '''
+            'maxOccurs': '1'
         })
     '''
     Positive sequence shunt (charging) susceptance per section
@@ -17967,11 +14098,7 @@ class NonlinearShuntCompensatorPoint(Identity):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                Zero sequence shunt (charging) susceptance per section
-                '''
+            'maxOccurs': '1'
         })
     '''
     Zero sequence shunt (charging) susceptance per section
@@ -17982,11 +14109,7 @@ class NonlinearShuntCompensatorPoint(Identity):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                Positive sequence shunt (charging) conductance per section
-                '''
+            'maxOccurs': '1'
         })
     '''
     Positive sequence shunt (charging) conductance per section
@@ -17997,27 +14120,19 @@ class NonlinearShuntCompensatorPoint(Identity):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                Zero sequence shunt (charging) conductance per section
-                '''
+            'maxOccurs': '1'
         })
     '''
     Zero sequence shunt (charging) conductance per section
     '''
 
-    NonlinearShuntCompensator: Optional[ NonlinearShuntCompensator ] = field(
+    NonlinearShuntCompensator: Optional[NonlinearShuntCompensator] = field(
         default = None,
         metadata = {
             'type': 'Of Aggregate',
             'minOccurs': '0',
             'maxOccurs': '1',
-            'inverse': 'NonlinearShuntCompensator.NonlinearShuntCompensatorPoints',
-            'docstring':
-                '''
-                Non-linear shunt compensator owning this point.
-                '''
+            'inverse': 'NonlinearShuntCompensator.NonlinearShuntCompensatorPoints'
         })
     '''
     Non-linear shunt compensator owning this point.
@@ -18035,13 +14150,7 @@ class OperatingShare(Identity):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                Percentage operational ownership between the pair (power system resource
-                and operatging participant) associated with this share. The total percentage
-                ownership for a power system resource should add to 100%.
-                '''
+            'maxOccurs': '1'
         })
     '''
     Percentage operational ownership between the pair (power system resource
@@ -18049,35 +14158,26 @@ class OperatingShare(Identity):
     ownership for a power system resource should add to 100%.
     '''
 
-    OperatingParticipant: Optional[ OperatingParticipant ] = field(
+    OperatingParticipant: Optional[OperatingParticipant] = field(
         default = None,
         metadata = {
             'type': 'Association',
             'minOccurs': '0',
             'maxOccurs': '1',
-            'inverse': 'OperatingParticipant.OperatingShare',
-            'docstring':
-                '''
-                The operating participant having this share with the associated power system
-                resource.
-                '''
+            'inverse': 'OperatingParticipant.OperatingShare'
         })
     '''
     The operating participant having this share with the associated power system
     resource.
     '''
 
-    PowerSystemResource: Optional[ PowerSystemResource ] = field(
+    PowerSystemResource: Optional[PowerSystemResource] = field(
         default = None,
         metadata = {
             'type': 'Association',
             'minOccurs': '0',
             'maxOccurs': '1',
-            'inverse': 'PowerSystemResource.OperatingShare',
-            'docstring':
-                '''
-                The power system resource to which the share applies.
-                '''
+            'inverse': 'PowerSystemResource.OperatingShare'
         })
     '''
     The power system resource to which the share applies.
@@ -18098,16 +14198,7 @@ class PhaseImpedanceData(Identity):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                This matrix element's column number, in the range 1 to row. Only the lower
-                triangle needs to be stored. Neutrals should be numbered last. Multiple
-                circuits on the same pole, tower or right-of-way can be included with unique
-                sequence numbers for the phases, and identical sequence numbers for any
-                shared neutrals. This solumn number matches ACLineSegmentPhase.sequenceNumber,
-                WirePosition.sequenceNumber and WirePhaseInfo.sequenceNumber as applicable..
-                '''
+            'maxOccurs': '1'
         })
     '''
     This matrix element's column number, in the range 1 to row. Only the lower
@@ -18123,16 +14214,7 @@ class PhaseImpedanceData(Identity):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                This matrix element's row number, in the range 1 to PerLengthPhaseImpedance.conductorCount.
-                Only the lower triangle needs to be stored. Neutrals should be numbered
-                last. Multiple circuits on the same pole, tower or right-of-way can be
-                included with unique sequence numbers for the phases, and identical sequence
-                numbers for any shared neutrals. This row number matches ACLineSegmentPhase.sequenceNumber,
-                WirePosition.sequenceNumber and WirePhaseInfo.sequenceNumber as applicable..
-                '''
+            'maxOccurs': '1'
         })
     '''
     This matrix element's row number, in the range 1 to PerLengthPhaseImpedance.conductorCount.
@@ -18148,11 +14230,7 @@ class PhaseImpedanceData(Identity):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                Susceptance matrix element value, per length of unit.
-                '''
+            'maxOccurs': '1'
         })
     '''
     Susceptance matrix element value, per length of unit.
@@ -18163,11 +14241,7 @@ class PhaseImpedanceData(Identity):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                Conductance matrix element value, per length of unit.
-                '''
+            'maxOccurs': '1'
         })
     '''
     Conductance matrix element value, per length of unit.
@@ -18178,11 +14252,7 @@ class PhaseImpedanceData(Identity):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                Resistance matrix element value, per length of unit.
-                '''
+            'maxOccurs': '1'
         })
     '''
     Resistance matrix element value, per length of unit.
@@ -18193,27 +14263,19 @@ class PhaseImpedanceData(Identity):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                Reactance matrix element value, per length of unit.
-                '''
+            'maxOccurs': '1'
         })
     '''
     Reactance matrix element value, per length of unit.
     '''
 
-    PhaseImpedance: Optional[ PerLengthPhaseImpedance ] = field(
+    PhaseImpedance: Optional[PerLengthPhaseImpedance] = field(
         default = None,
         metadata = {
             'type': 'Association',
             'minOccurs': '0',
             'maxOccurs': '1',
-            'inverse': 'PerLengthPhaseImpedance.PhaseImpedanceData',
-            'docstring':
-                '''
-                Conductor phase impedance to which this data belongs.
-                '''
+            'inverse': 'PerLengthPhaseImpedance.PhaseImpedanceData'
         })
     '''
     Conductor phase impedance to which this data belongs.
@@ -18236,13 +14298,7 @@ class PositionPoint(Identity):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                Zero-relative sequence number of this group within a series of points;
-                used when there is a need to express disjoint groups of points that are
-                considered to be part of a single location.
-                '''
+            'maxOccurs': '1'
         })
     '''
     Zero-relative sequence number of this group within a series of points;
@@ -18255,11 +14311,7 @@ class PositionPoint(Identity):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                Zero-relative sequence number of this point within a series of points.
-                '''
+            'maxOccurs': '1'
         })
     '''
     Zero-relative sequence number of this point within a series of points.
@@ -18270,11 +14322,7 @@ class PositionPoint(Identity):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                X axis position.
-                '''
+            'maxOccurs': '1'
         })
     '''
     X axis position.
@@ -18285,11 +14333,7 @@ class PositionPoint(Identity):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                Y axis position.
-                '''
+            'maxOccurs': '1'
         })
     '''
     Y axis position.
@@ -18300,27 +14344,19 @@ class PositionPoint(Identity):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                (if applicable) Z axis position.
-                '''
+            'maxOccurs': '1'
         })
     '''
     (if applicable) Z axis position.
     '''
 
-    Location: Optional[ Location ] = field(
+    Location: Optional[Location] = field(
         default = None,
         metadata = {
             'type': 'Association',
             'minOccurs': '0',
             'maxOccurs': '1',
-            'inverse': 'Location.PositionPoints',
-            'docstring':
-                '''
-                Location described by this position point.
-                '''
+            'inverse': 'Location.PositionPoints'
         })
     '''
     Location described by this position point.
@@ -18338,11 +14374,7 @@ class Quality61850(Identity):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                Measurement value may be incorrect due to a reference being out of calibration.
-                '''
+            'maxOccurs': '1'
         })
     '''
     Measurement value may be incorrect due to a reference being out of calibration.
@@ -18353,12 +14385,7 @@ class Quality61850(Identity):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                Value has been replaced by State Estimator. estimatorReplaced is not an
-                IEC61850 quality bit but has been put in this class for convenience.
-                '''
+            'maxOccurs': '1'
         })
     '''
     Value has been replaced by State Estimator. estimatorReplaced is not an
@@ -18370,12 +14397,7 @@ class Quality61850(Identity):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                This identifier indicates that a supervision function has detected an internal
-                or external failure, e.g. communication failure.
-                '''
+            'maxOccurs': '1'
         })
     '''
     This identifier indicates that a supervision function has detected an internal
@@ -18387,12 +14409,7 @@ class Quality61850(Identity):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                Measurement value is old and possibly invalid, as it has not been successfully
-                updated during a specified time interval.
-                '''
+            'maxOccurs': '1'
         })
     '''
     Measurement value is old and possibly invalid, as it has not been successfully
@@ -18404,11 +14421,7 @@ class Quality61850(Identity):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                Measurement value is blocked and hence unavailable for transmission.
-                '''
+            'maxOccurs': '1'
         })
     '''
     Measurement value is blocked and hence unavailable for transmission.
@@ -18419,24 +14432,7 @@ class Quality61850(Identity):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                To prevent some overload of the communication it is sensible to detect
-                and suppress oscillating (fast changing) binary inputs. If a signal changes
-                in a defined time (tosc) twice in the same direction (from 0 to 1 or from
-                1 to 0) then oscillation is detected and the detail quality identifier
-                "oscillatory" is set. If it is detected a configured numbers of transient
-                changes could be passed by. In this time the validity status "questionable"
-                is set. If after this defined numbers of changes the signal is still in
-                the oscillating state the value shall be set either to the opposite state
-                of the previous stable value or to a defined default value. In this case
-                the validity status "questionable" is reset and "invalid" is set as long
-                as the signal is oscillating. If it is configured such that no transient
-                changes should be passed by then the validity status "invalid" is set immediately
-                in addition to the detail quality identifier "oscillatory" (used for status
-                information only).
-                '''
+            'maxOccurs': '1'
         })
     '''
     To prevent some overload of the communication it is sensible to detect
@@ -18460,11 +14456,7 @@ class Quality61850(Identity):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                Measurement value is beyond a predefined range of value.
-                '''
+            'maxOccurs': '1'
         })
     '''
     Measurement value is beyond a predefined range of value.
@@ -18475,13 +14467,7 @@ class Quality61850(Identity):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                Measurement value is beyond the capability of being represented properly.
-                For example, a counter value overflows from maximum count back to a value
-                of zero.
-                '''
+            'maxOccurs': '1'
         })
     '''
     Measurement value is beyond the capability of being represented properly.
@@ -18494,12 +14480,7 @@ class Quality61850(Identity):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                A correlation function has detected that the value is not consitent with
-                other values. Typically set by a network State Estimator.
-                '''
+            'maxOccurs': '1'
         })
     '''
     A correlation function has detected that the value is not consitent with
@@ -18511,11 +14492,7 @@ class Quality61850(Identity):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                Measurement value is transmitted for test purposes.
-                '''
+            'maxOccurs': '1'
         })
     '''
     Measurement value is transmitted for test purposes.
@@ -18526,29 +14503,20 @@ class Quality61850(Identity):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                Source gives information related to the origin of a value. The value may
-                be acquired from the process, defaulted or substituted.
-                '''
+            'maxOccurs': '1'
         })
     '''
     Source gives information related to the origin of a value. The value may
     be acquired from the process, defaulted or substituted.
     '''
 
-    validity: Optional[ Validity ] = field(
+    validity: Optional[Validity] = field(
         default = None,
         metadata = {
             'type': 'enumeration',
             'minOccurs': '0',
             'maxOccurs': '1',
-            'inverse': '',
-            'docstring':
-                '''
-                Validity of the measurement value.
-                '''
+            'inverse': ''
         })
     '''
     Validity of the measurement value.
@@ -18562,17 +14530,13 @@ class MeasurementValueQuality(Quality61850):
     by that document. Bits 16-31 are reserved for EMS applications.
     '''
 
-    MeasurementValue: Optional[ MeasurementValue ] = field(
+    MeasurementValue: Optional[MeasurementValue] = field(
         default = None,
         metadata = {
             'type': 'Of Aggregate',
             'minOccurs': '0',
             'maxOccurs': '1',
-            'inverse': 'MeasurementValue.MeasurementValueQuality',
-            'docstring':
-                '''
-                A MeasurementValue has a MeasurementValueQuality associated with it.
-                '''
+            'inverse': 'MeasurementValue.MeasurementValueQuality'
         })
     '''
     A MeasurementValue has a MeasurementValueQuality associated with it.
@@ -18590,15 +14554,7 @@ class RegularTimePoint(Identity):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                The position of the regular time point in the sequence. Note that time
-                points don't have to be sequential, i.e. time points may be omitted. The
-                actual time for a RegularTimePoint is computed by multiplying the associated
-                regular interval schedule's time step with the regular time point sequence
-                number and adding the associated schedules start time.
-                '''
+            'maxOccurs': '1'
         })
     '''
     The position of the regular time point in the sequence. Note that time
@@ -18613,12 +14569,7 @@ class RegularTimePoint(Identity):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                The first value at the time. The meaning of the value is defined by the
-                derived type of the associated schedule.
-                '''
+            'maxOccurs': '1'
         })
     '''
     The first value at the time. The meaning of the value is defined by the
@@ -18630,29 +14581,20 @@ class RegularTimePoint(Identity):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                The second value at the time. The meaning of the value is defined by the
-                derived type of the associated schedule.
-                '''
+            'maxOccurs': '1'
         })
     '''
     The second value at the time. The meaning of the value is defined by the
     derived type of the associated schedule.
     '''
 
-    IntervalSchedule: Optional[ RegularIntervalSchedule ] = field(
+    IntervalSchedule: Optional[RegularIntervalSchedule] = field(
         default = None,
         metadata = {
             'type': 'Of Aggregate',
             'minOccurs': '0',
             'maxOccurs': '1',
-            'inverse': 'RegularIntervalSchedule.TimePoints',
-            'docstring':
-                '''
-                Regular interval schedule containing this time point.
-                '''
+            'inverse': 'RegularIntervalSchedule.TimePoints'
         })
     '''
     Regular interval schedule containing this time point.
@@ -18674,47 +14616,33 @@ class SvShuntCompensatorSections(Identity):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                The number of sections in service as a continous variable. To get integer
-                value scale with ShuntCompensator.bPerSection.
-                '''
+            'maxOccurs': '1'
         })
     '''
     The number of sections in service as a continous variable. To get integer
     value scale with ShuntCompensator.bPerSection.
     '''
 
-    phase: Optional[ SinglePhaseKind ] = field(
+    phase: Optional[SinglePhaseKind] = field(
         default = None,
         metadata = {
             'type': 'enumeration',
             'minOccurs': '0',
             'maxOccurs': '1',
-            'inverse': '',
-            'docstring':
-                '''
-                The terminal phase at which the connection is applied. If missing, the
-                injection is assumed to be balanced among non-neutral phases.
-                '''
+            'inverse': ''
         })
     '''
     The terminal phase at which the connection is applied. If missing, the
     injection is assumed to be balanced among non-neutral phases.
     '''
 
-    ShuntCompensator: Optional[ ShuntCompensator ] = field(
+    ShuntCompensator: Optional[ShuntCompensator] = field(
         default = None,
         metadata = {
             'type': 'Association',
             'minOccurs': '0',
             'maxOccurs': '1',
-            'inverse': 'ShuntCompensator.SvShuntCompensatorSections',
-            'docstring':
-                '''
-                The shunt compensator for which the state applies.
-                '''
+            'inverse': 'ShuntCompensator.SvShuntCompensatorSections'
         })
     '''
     The shunt compensator for which the state applies.
@@ -18731,13 +14659,7 @@ class SvTapStep(Identity):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                The floating point tap position. This is not the tap ratio, but rather
-                the tap step position as defined by the related tap changer model and normally
-                is constrained to be within the range of minimum and maximum tap positions.
-                '''
+            'maxOccurs': '1'
         })
     '''
     The floating point tap position. This is not the tap ratio, but rather
@@ -18745,17 +14667,13 @@ class SvTapStep(Identity):
     is constrained to be within the range of minimum and maximum tap positions.
     '''
 
-    TapChanger: Optional[ TapChanger ] = field(
+    TapChanger: Optional[TapChanger] = field(
         default = None,
         metadata = {
             'type': 'Association',
             'minOccurs': '0',
             'maxOccurs': '1',
-            'inverse': 'TapChanger.SvTapStep',
-            'docstring':
-                '''
-                The tap changer associated with the tap step state.
-                '''
+            'inverse': 'TapChanger.SvTapStep'
         })
     '''
     The tap changer associated with the tap step state.
@@ -18771,15 +14689,7 @@ class TapChangerTablePoint(Identity):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                The voltage at the tap step divided by rated voltage of the transformer
-                end having the tap changer. Hence this is a value close to one.
-                For example, if the ratio at step 1 is 1.01, and the rated voltage of the
-                transformer end is 110kV, then the voltage obtained by setting the tap
-                changer to step 1 to is 111.1kV.
-                '''
+            'maxOccurs': '1'
         })
     '''
     The voltage at the tap step divided by rated voltage of the transformer
@@ -18794,11 +14704,7 @@ class TapChangerTablePoint(Identity):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                The tap step.
-                '''
+            'maxOccurs': '1'
         })
     '''
     The tap step.
@@ -18809,16 +14715,7 @@ class TapChangerTablePoint(Identity):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                The magnetizing branch susceptance deviation in percent of nominal value.
-                The actual susceptance is calculated as follows:
-                calculated magnetizing susceptance = b(nominal) * (1 + b(from this class)/100).
-                The b(nominal) is defined as the static magnetizing susceptance on the
-                associated power transformer end or ends. This model assumes the star impedance
-                (pi model) form.
-                '''
+            'maxOccurs': '1'
         })
     '''
     The magnetizing branch susceptance deviation in percent of nominal value.
@@ -18834,16 +14731,7 @@ class TapChangerTablePoint(Identity):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                The magnetizing branch conductance deviation in percent of nominal value.
-                The actual conductance is calculated as follows:
-                calculated magnetizing conductance = g(nominal) * (1 + g(from this class)/100).
-                The g(nominal) is defined as the static magnetizing conductance on the
-                associated power transformer end or ends. This model assumes the star impedance
-                (pi model) form.
-                '''
+            'maxOccurs': '1'
         })
     '''
     The magnetizing branch conductance deviation in percent of nominal value.
@@ -18859,16 +14747,7 @@ class TapChangerTablePoint(Identity):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                The resistance deviation in percent of nominal value. The actual reactance
-                is calculated as follows:
-                calculated resistance = r(nominal) * (1 + r(from this class)/100). The
-                r(nominal) is defined as the static resistance on the associated power
-                transformer end or ends. This model assumes the star impedance (pi model)
-                form.
-                '''
+            'maxOccurs': '1'
         })
     '''
     The resistance deviation in percent of nominal value. The actual reactance
@@ -18884,15 +14763,7 @@ class TapChangerTablePoint(Identity):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                The series reactance deviation in percent of nominal value. The actual
-                reactance is calculated as follows:
-                calculated reactance = x(nominal) * (1 + x(from this class)/100). The x(nominal)
-                is defined as the static series reactance on the associated power transformer
-                end or ends. This model assumes the star impedance (pi model) form.
-                '''
+            'maxOccurs': '1'
         })
     '''
     The series reactance deviation in percent of nominal value. The actual
@@ -18913,13 +14784,7 @@ class PhaseTapChangerTablePoint(TapChangerTablePoint):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                The angle difference in degrees. A positive value indicates a positive
-                phase shift from the winding where the tap is located to the other winding
-                (for a two-winding transformer).
-                '''
+            'maxOccurs': '1'
         })
     '''
     The angle difference in degrees. A positive value indicates a positive
@@ -18927,17 +14792,13 @@ class PhaseTapChangerTablePoint(TapChangerTablePoint):
     (for a two-winding transformer).
     '''
 
-    PhaseTapChangerTable: Optional[ PhaseTapChangerTable ] = field(
+    PhaseTapChangerTable: Optional[PhaseTapChangerTable] = field(
         default = None,
         metadata = {
             'type': 'Association',
             'minOccurs': '0',
             'maxOccurs': '1',
-            'inverse': 'PhaseTapChangerTable.PhaseTapChangerTablePoint',
-            'docstring':
-                '''
-                The table of this point.
-                '''
+            'inverse': 'PhaseTapChangerTable.PhaseTapChangerTablePoint'
         })
     '''
     The table of this point.
@@ -18949,17 +14810,13 @@ class RatioTapChangerTablePoint(TapChangerTablePoint):
     Describes each tap step in the ratio tap changer tabular curve.
     '''
 
-    RatioTapChangerTable: Optional[ RatioTapChangerTable ] = field(
+    RatioTapChangerTable: Optional[RatioTapChangerTable] = field(
         default = None,
         metadata = {
             'type': 'Association',
             'minOccurs': '0',
             'maxOccurs': '1',
-            'inverse': 'RatioTapChangerTable.RatioTapChangerTablePoint',
-            'docstring':
-                '''
-                Table of this point.
-                '''
+            'inverse': 'RatioTapChangerTable.RatioTapChangerTablePoint'
         })
     '''
     Table of this point.
@@ -18975,79 +14832,63 @@ class WirePhaseInfo(Identity):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                Numbering for wires on a WireSpacingInfo. Neutrals should be numbered last.
-                '''
+            'maxOccurs': '1'
         })
     '''
     Numbering for wires on a WireSpacingInfo. Neutrals should be numbered last.
     '''
 
-    phaseInfo: Optional[ SinglePhaseKind ] = field(
+    phaseInfo: Optional[SinglePhaseKind] = field(
         default = None,
         metadata = {
             'type': 'enumeration',
             'minOccurs': '0',
             'maxOccurs': '1',
-            'inverse': '',
-            'docstring':
-                '''
-                '''
+            'inverse': ''
         })
     '''
     '''
 
-    WireAssemblyInfo: Optional[ WireAssemblyInfo ] = field(
+    WireAssemblyInfo: Optional[WireAssemblyInfo] = field(
         default = None,
         metadata = {
             'type': 'Association',
             'minOccurs': '0',
             'maxOccurs': '1',
-            'inverse': 'WireAssemblyInfo.WirePhaseInfo',
-            'docstring':
-                '''
-                '''
+            'inverse': 'WireAssemblyInfo.WirePhaseInfo'
         })
     '''
     '''
 
-    WireInfo: Optional[ WireInfo ] = field(
+    WireInfo: Optional[WireInfo] = field(
         default = None,
         metadata = {
             'type': 'Association',
             'minOccurs': '0',
             'maxOccurs': '1',
-            'inverse': 'WireInfo.WirePhaseInfo',
-            'docstring':
-                '''
-                '''
+            'inverse': 'WireInfo.WirePhaseInfo'
         })
     '''
     '''
 
-    WirePosition: Optional[ WirePosition ] = field(
+    WirePosition: Optional[WirePosition] = field(
         default = None,
         metadata = {
             'type': 'Association',
             'minOccurs': '0',
             'maxOccurs': '1',
-            'inverse': 'WirePosition.WirePhaseInfo',
-            'docstring':
-                '''
-                '''
+            'inverse': 'WirePosition.WirePhaseInfo'
         })
     '''
     '''
 
-class AssetKind( Enum ):
+class AssetKind(Enum):
     '''
     Other type of Asset. The type attribute may provide more details in this
     case.
     '''
 
-class AsynchronousMachineKind( Enum ):
+class AsynchronousMachineKind(Enum):
     '''
     Kind of Asynchronous Machine.
     '''
@@ -19062,7 +14903,7 @@ class AsynchronousMachineKind( Enum ):
     The Asynchronous Machine is a motor.
     '''
 
-class BatteryStateKind( Enum ):
+class BatteryStateKind(Enum):
     '''
     '''
 
@@ -19091,7 +14932,7 @@ class BatteryStateKind( Enum ):
     neither Charging nor Discharging, but able to do so
     '''
 
-class BreakerConfiguration( Enum ):
+class BreakerConfiguration(Enum):
     '''
     Switching arrangement for bay.
     '''
@@ -19116,7 +14957,7 @@ class BreakerConfiguration( Enum ):
     Single breaker.
     '''
 
-class BusbarConfiguration( Enum ):
+class BusbarConfiguration(Enum):
     '''
     Busbar layout for bay.
     '''
@@ -19141,7 +14982,7 @@ class BusbarConfiguration( Enum ):
     Single bus.
     '''
 
-class BushingInsulationKind( Enum ):
+class BushingInsulationKind(Enum):
     '''
     Insulation kind for bushings.
     '''
@@ -19171,7 +15012,7 @@ class BushingInsulationKind( Enum ):
     '''
     '''
 
-class CableConstructionKind( Enum ):
+class CableConstructionKind(Enum):
     '''
     Kind of cable construction.
     '''
@@ -19211,7 +15052,7 @@ class CableConstructionKind( Enum ):
     Stranded cable.
     '''
 
-class CableOuterJacketKind( Enum ):
+class CableOuterJacketKind(Enum):
     '''
     Kind of cable outer jacket.
     '''
@@ -19251,7 +15092,7 @@ class CableOuterJacketKind( Enum ):
     Semiconducting cable outer jacket.
     '''
 
-class CableShieldMaterialKind( Enum ):
+class CableShieldMaterialKind(Enum):
     '''
     Kind of cable shield material.
     '''
@@ -19281,7 +15122,7 @@ class CableShieldMaterialKind( Enum ):
     Steel cable shield.
     '''
 
-class ConverterControlModeKind( Enum ):
+class ConverterControlModeKind(Enum):
     '''
     '''
 
@@ -19300,7 +15141,7 @@ class ConverterControlModeKind( Enum ):
     use association with DERIEEEType1
     '''
 
-class CoolantType( Enum ):
+class CoolantType(Enum):
     '''
     Method of cooling a machine.
     '''
@@ -19320,7 +15161,7 @@ class CoolantType( Enum ):
     Water.
     '''
 
-class Currency( Enum ):
+class Currency(Enum):
     '''
     Monetary currencies. ISO 4217 standard including 3-character currency code.
     '''
@@ -20130,7 +15971,7 @@ class Currency( Enum ):
     Zimbabwe dollar.
     '''
 
-class CurveStyle( Enum ):
+class CurveStyle(Enum):
     '''
     Style or shape of curve.
     '''
@@ -20147,7 +15988,7 @@ class CurveStyle( Enum ):
     known as linear interpolation.
     '''
 
-class CustomerKind( Enum ):
+class CustomerKind(Enum):
     '''
     Kind of customer.
     '''
@@ -20224,7 +16065,7 @@ class CustomerKind( Enum ):
     Wind machine customer.
     '''
 
-class DERParameterKind( Enum ):
+class DERParameterKind(Enum):
     '''
     '''
 
@@ -20276,7 +16117,7 @@ class DERParameterKind( Enum ):
     '''
     '''
 
-class DERUnitSymbol( Enum ):
+class DERUnitSymbol(Enum):
     '''
     The units defined for usage in the CIM.
     '''
@@ -20451,7 +16292,7 @@ class DERUnitSymbol( Enum ):
     Energy, Therm.
     '''
 
-class FlowDirectionKind( Enum ):
+class FlowDirectionKind(Enum):
     '''
     Kind of flow direction for reading/measured values proper to some commodities
     such as, for example, energy, power, demand.
@@ -20608,7 +16449,7 @@ class FlowDirectionKind( Enum ):
     “Total” enumeration should be used with single phase meter data.
     '''
 
-class GeneratorControlMode( Enum ):
+class GeneratorControlMode(Enum):
     '''
     Unit control modes.
     '''
@@ -20623,7 +16464,7 @@ class GeneratorControlMode( Enum ):
     Setpoint control mode.
     '''
 
-class GeneratorControlSource( Enum ):
+class GeneratorControlSource(Enum):
     '''
     The source of controls for a generating unit.
     '''
@@ -20648,7 +16489,7 @@ class GeneratorControlSource( Enum ):
     Not available.
     '''
 
-class HouseCooling( Enum ):
+class HouseCooling(Enum):
     '''
     '''
 
@@ -20664,7 +16505,7 @@ class HouseCooling( Enum ):
     '''
     '''
 
-class HouseHeating( Enum ):
+class HouseHeating(Enum):
     '''
     '''
 
@@ -20684,7 +16525,7 @@ class HouseHeating( Enum ):
     '''
     '''
 
-class HouseThermalIntegrity( Enum ):
+class HouseThermalIntegrity(Enum):
     '''
     '''
 
@@ -20720,7 +16561,7 @@ class HouseThermalIntegrity( Enum ):
     '''
     '''
 
-class IEEE1547AbnormalPerfomanceCategory( Enum ):
+class IEEE1547AbnormalPerfomanceCategory(Enum):
     '''
     '''
 
@@ -20736,7 +16577,7 @@ class IEEE1547AbnormalPerfomanceCategory( Enum ):
     '''
     '''
 
-class IEEE1547IslandingCategory( Enum ):
+class IEEE1547IslandingCategory(Enum):
     '''
     See clause 8.2
     '''
@@ -20757,7 +16598,7 @@ class IEEE1547IslandingCategory( Enum ):
     '''
     '''
 
-class IEEE1547NormalPerformanceCategory( Enum ):
+class IEEE1547NormalPerformanceCategory(Enum):
     '''
     '''
 
@@ -20769,16 +16610,16 @@ class IEEE1547NormalPerformanceCategory( Enum ):
     '''
     '''
 
-class InUseStateKind( Enum ):
+class InUseStateKind(Enum):
     '''
     Asset is ready to be put into use.
     '''
 
-class InterruptingMediumKind( Enum ):
+class InterruptingMediumKind(Enum):
     '''
     '''
 
-class OperatingMechanismKind( Enum ):
+class OperatingMechanismKind(Enum):
     '''
     '''
 
@@ -20818,7 +16659,7 @@ class OperatingMechanismKind( Enum ):
     '''
     '''
 
-class OperationalLimitDirectionKind( Enum ):
+class OperationalLimitDirectionKind(Enum):
     '''
     The direction attribute describes the side of a limit that is a violation.
     '''
@@ -20841,7 +16682,7 @@ class OperationalLimitDirectionKind( Enum ):
     to a terminal flow, the positive direction is into the terminal.
     '''
 
-class OrderedPhaseCodeKind( Enum ):
+class OrderedPhaseCodeKind(Enum):
     '''
     In some use cases, the ordering of phases is important. The PhaseCode class
     does not represent order, but this class addresses such use cases. When
@@ -21042,7 +16883,7 @@ class OrderedPhaseCodeKind( Enum ):
     '''
     '''
 
-class PetersenCoilModeKind( Enum ):
+class PetersenCoilModeKind(Enum):
     '''
     The mode of operation for a Petersen coil.
     '''
@@ -21062,7 +16903,7 @@ class PetersenCoilModeKind( Enum ):
     Manual positioning.
     '''
 
-class PhaseCode( Enum ):
+class PhaseCode(Enum):
     '''
     An unordered enumeration of phase identifiers. Allows designation of phases
     for both transmission and distribution equipment, circuits and loads. The
@@ -21207,7 +17048,7 @@ class PhaseCode( Enum ):
     Secondary phase 2 and neutral.
     '''
 
-class PhaseShuntConnectionKind( Enum ):
+class PhaseShuntConnectionKind(Enum):
     '''
     The configuration of phase connections for a single terminal device such
     as a load or capacitor.
@@ -21240,7 +17081,7 @@ class PhaseShuntConnectionKind( Enum ):
     Wye, with neutral brought out for grounding.
     '''
 
-class RegulatingControlModeKind( Enum ):
+class RegulatingControlModeKind(Enum):
     '''
     The kind of regulation model. For example regulating voltage, reactive
     power, active power, etc.
@@ -21287,7 +17128,7 @@ class RegulatingControlModeKind( Enum ):
     Voltage is specified.
     '''
 
-class SVCControlMode( Enum ):
+class SVCControlMode(Enum):
     '''
     Static VAr Compensator control mode.
     '''
@@ -21300,7 +17141,7 @@ class SVCControlMode( Enum ):
     '''
     '''
 
-class ShortCircuitRotorKind( Enum ):
+class ShortCircuitRotorKind(Enum):
     '''
     Type of rotor, used by short circuit applications.
     '''
@@ -21325,7 +17166,7 @@ class ShortCircuitRotorKind( Enum ):
     Turbo series 2 in IEC 60909
     '''
 
-class SinglePhaseKind( Enum ):
+class SinglePhaseKind(Enum):
     '''
     Enumeration of single phase identifiers. Allows designation of single phases
     for both transmission and distribution equipment, circuits and loads.
@@ -21361,7 +17202,7 @@ class SinglePhaseKind( Enum ):
     Secondary phase 2.
     '''
 
-class SynchronousMachineKind( Enum ):
+class SynchronousMachineKind(Enum):
     '''
     Synchronous machine type.
     '''
@@ -21394,7 +17235,7 @@ class SynchronousMachineKind( Enum ):
     '''
     '''
 
-class SynchronousMachineOperatingMode( Enum ):
+class SynchronousMachineOperatingMode(Enum):
     '''
     Synchronous machine operating mode.
     '''
@@ -21411,7 +17252,7 @@ class SynchronousMachineOperatingMode( Enum ):
     '''
     '''
 
-class ThermostatControlMode( Enum ):
+class ThermostatControlMode(Enum):
     '''
     '''
 
@@ -21423,11 +17264,11 @@ class ThermostatControlMode( Enum ):
     '''
     '''
 
-class TimeIntervalKind( Enum ):
+class TimeIntervalKind(Enum):
     '''
     '''
 
-class TransformerControlMode( Enum ):
+class TransformerControlMode(Enum):
     '''
     Control modes for a transformer.
     '''
@@ -21442,7 +17283,7 @@ class TransformerControlMode( Enum ):
     Voltage control
     '''
 
-class UnitMultiplier( Enum ):
+class UnitMultiplier(Enum):
     '''
     The unit multipliers defined for the CIM. When applied to unit symbols,
     the unit symbol is treated as a derived unit. Regardless of the contents
@@ -21574,7 +17415,7 @@ class UnitMultiplier( Enum ):
     zepto 10**-21.
     '''
 
-class UnitSymbol( Enum ):
+class UnitSymbol(Enum):
     '''
     The derived units defined for usage in the CIM. In some cases, the derived
     unit is equal to an SI unit. Whenever possible, the standard derived symbol
@@ -22357,7 +18198,7 @@ class UnitSymbol( Enum ):
     mass, “tonne” or “metric ton” (1000 kg = 1 Mg).
     '''
 
-class Validity( Enum ):
+class Validity(Enum):
     '''
     Validity for MeasurementValue.
     '''
@@ -22384,7 +18225,7 @@ class Validity( Enum ):
     for determining whether or not values marked "questionable" should be used.
     '''
 
-class WindGenUnitKind( Enum ):
+class WindGenUnitKind(Enum):
     '''
     Kind of wind generating unit.
     '''
@@ -22399,7 +18240,7 @@ class WindGenUnitKind( Enum ):
     The wind generating unit is located onshore.
     '''
 
-class WindingConnection( Enum ):
+class WindingConnection(Enum):
     '''
     Winding connection type.
     '''
@@ -22439,7 +18280,7 @@ class WindingConnection( Enum ):
     ZigZag, with neutral brought out for grounding.
     '''
 
-class WireInsulationKind( Enum ):
+class WireInsulationKind(Enum):
     '''
     Kind of wire insulation.
     '''
@@ -22534,7 +18375,7 @@ class WireInsulationKind( Enum ):
     Varnished dacron glass wire insulation.
     '''
 
-class WireMaterialKind( Enum ):
+class WireMaterialKind(Enum):
     '''
     Kind of wire material.
     '''
@@ -22584,7 +18425,7 @@ class WireMaterialKind( Enum ):
     Steel wire.
     '''
 
-class WireUsageKind( Enum ):
+class WireUsageKind(Enum):
     '''
     Kind of wire usage.
     '''
@@ -22883,11 +18724,7 @@ class DateInterval(Identity):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                End date of this interval.
-                '''
+            'maxOccurs': '1'
         })
     '''
     End date of this interval.
@@ -22898,11 +18735,7 @@ class DateInterval(Identity):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                Start date of this interval.
-                '''
+            'maxOccurs': '1'
         })
     '''
     Start date of this interval.
@@ -22919,11 +18752,7 @@ class DateTimeInterval(Identity):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                End date and time of this interval.
-                '''
+            'maxOccurs': '1'
         })
     '''
     End date and time of this interval.
@@ -22934,11 +18763,7 @@ class DateTimeInterval(Identity):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                Start date and time of this interval.
-                '''
+            'maxOccurs': '1'
         })
     '''
     Start date and time of this interval.
@@ -22954,54 +18779,41 @@ class DecimalQuantity(Identity):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                '''
+            'maxOccurs': '1'
         })
     '''
     '''
 
-    currency: Optional[ Currency ] = field(
+    currency: Optional[Currency] = field(
         default = None,
         metadata = {
             'type': 'enumeration',
             'minOccurs': '0',
             'maxOccurs': '1',
-            'inverse': '',
-            'docstring':
-                '''
-                Quantity with decimal value and associated unit or currency information.
-                '''
+            'inverse': ''
         })
     '''
     Quantity with decimal value and associated unit or currency information.
     '''
 
-    multiplier: Optional[ UnitMultiplier ] = field(
+    multiplier: Optional[UnitMultiplier] = field(
         default = None,
         metadata = {
             'type': 'enumeration',
             'minOccurs': '0',
             'maxOccurs': '1',
-            'inverse': '',
-            'docstring':
-                '''
-                '''
+            'inverse': ''
         })
     '''
     '''
 
-    unit: Optional[ UnitSymbol ] = field(
+    unit: Optional[UnitSymbol] = field(
         default = None,
         metadata = {
             'type': 'enumeration',
             'minOccurs': '0',
             'maxOccurs': '1',
-            'inverse': '',
-            'docstring':
-                '''
-                '''
+            'inverse': ''
         })
     '''
     '''
@@ -23017,38 +18829,29 @@ class FloatQuantity(Identity):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                '''
+            'maxOccurs': '1'
         })
     '''
     '''
 
-    multiplier: Optional[ UnitMultiplier ] = field(
+    multiplier: Optional[UnitMultiplier] = field(
         default = None,
         metadata = {
             'type': 'enumeration',
             'minOccurs': '0',
             'maxOccurs': '1',
-            'inverse': '',
-            'docstring':
-                '''
-                '''
+            'inverse': ''
         })
     '''
     '''
 
-    unit: Optional[ UnitSymbol ] = field(
+    unit: Optional[UnitSymbol] = field(
         default = None,
         metadata = {
             'type': 'enumeration',
             'minOccurs': '0',
             'maxOccurs': '1',
-            'inverse': '',
-            'docstring':
-                '''
-                '''
+            'inverse': ''
         })
     '''
     '''
@@ -23064,38 +18867,29 @@ class IntegerQuantity(Identity):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                '''
+            'maxOccurs': '1'
         })
     '''
     '''
 
-    multiplier: Optional[ UnitMultiplier ] = field(
+    multiplier: Optional[UnitMultiplier] = field(
         default = None,
         metadata = {
             'type': 'enumeration',
             'minOccurs': '0',
             'maxOccurs': '1',
-            'inverse': '',
-            'docstring':
-                '''
-                '''
+            'inverse': ''
         })
     '''
     '''
 
-    unit: Optional[ UnitSymbol ] = field(
+    unit: Optional[UnitSymbol] = field(
         default = None,
         metadata = {
             'type': 'enumeration',
             'minOccurs': '0',
             'maxOccurs': '1',
-            'inverse': '',
-            'docstring':
-                '''
-                '''
+            'inverse': ''
         })
     '''
     '''
@@ -23111,11 +18905,7 @@ class MonthDayInterval(Identity):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                End time of this interval.
-                '''
+            'maxOccurs': '1'
         })
     '''
     End time of this interval.
@@ -23126,11 +18916,7 @@ class MonthDayInterval(Identity):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                Start time of this interval.
-                '''
+            'maxOccurs': '1'
         })
     '''
     Start time of this interval.
@@ -23147,11 +18933,7 @@ class Status(Identity):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                Date and time for which status 'value' applies.
-                '''
+            'maxOccurs': '1'
         })
     '''
     Date and time for which status 'value' applies.
@@ -23162,12 +18944,7 @@ class Status(Identity):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                Reason code or explanation for why an object went to the current status
-                'value'.
-                '''
+            'maxOccurs': '1'
         })
     '''
     Reason code or explanation for why an object went to the current status
@@ -23179,11 +18956,7 @@ class Status(Identity):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                Pertinent information regarding the current 'value', as free form text.
-                '''
+            'maxOccurs': '1'
         })
     '''
     Pertinent information regarding the current 'value', as free form text.
@@ -23194,13 +18967,7 @@ class Status(Identity):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                Status value at 'dateTime'; prior status changes may have been kept in
-                instances of activity records associated with the object to which this
-                status applies.
-                '''
+            'maxOccurs': '1'
         })
     '''
     Status value at 'dateTime'; prior status changes may have been kept in
@@ -23220,38 +18987,29 @@ class StringQuantity(Identity):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                '''
+            'maxOccurs': '1'
         })
     '''
     '''
 
-    multiplier: Optional[ UnitMultiplier ] = field(
+    multiplier: Optional[UnitMultiplier] = field(
         default = None,
         metadata = {
             'type': 'enumeration',
             'minOccurs': '0',
             'maxOccurs': '1',
-            'inverse': '',
-            'docstring':
-                '''
-                '''
+            'inverse': ''
         })
     '''
     '''
 
-    unit: Optional[ UnitSymbol ] = field(
+    unit: Optional[UnitSymbol] = field(
         default = None,
         metadata = {
             'type': 'enumeration',
             'minOccurs': '0',
             'maxOccurs': '1',
-            'inverse': '',
-            'docstring':
-                '''
-                '''
+            'inverse': ''
         })
     '''
     '''
@@ -23267,11 +19025,7 @@ class TimeInterval(Identity):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                End time of this interval.
-                '''
+            'maxOccurs': '1'
         })
     '''
     End time of this interval.
@@ -23282,11 +19036,7 @@ class TimeInterval(Identity):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                Start time of this interval.
-                '''
+            'maxOccurs': '1'
         })
     '''
     Start time of this interval.
@@ -23306,11 +19056,7 @@ class Version(Identity):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                date of this version
-                '''
+            'maxOccurs': '1'
         })
     '''
     date of this version
@@ -23321,11 +19067,7 @@ class Version(Identity):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                major release level for this version
-                '''
+            'maxOccurs': '1'
         })
     '''
     major release level for this version
@@ -23336,11 +19078,7 @@ class Version(Identity):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                minor release level for this version
-                '''
+            'maxOccurs': '1'
         })
     '''
     minor release level for this version
@@ -23351,11 +19089,7 @@ class Version(Identity):
         metadata = {
             'type': 'Attribute',
             'minOccurs': '0',
-            'maxOccurs': '1',
-            'docstring':
-                '''
-                revision level for this version
-                '''
+            'maxOccurs': '1'
         })
     '''
     revision level for this version
