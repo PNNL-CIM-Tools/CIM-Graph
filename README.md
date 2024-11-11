@@ -1,5 +1,25 @@
 # CIMantic Graphs Library
 
+![GitHub Tag](https://img.shields.io/github/v/tag/PNNL-CIM-Tools/CIM-Graph)
+![GitHub Release Date](https://img.shields.io/github/release-date-pre/PNNL-CIM-Tools/CIM-Graph)
+![GitHub Actions Workflow Status](https://img.shields.io/github/actions/workflow/status/PNNL-CIM-Tools/CIM-Graph/dev-pre-release.yml)
+![Libraries.io dependency status for GitHub repo](https://img.shields.io/librariesio/github/PNNL-CIM-Tools/CIM-Graph)
+
+
+![PyPI - Version](https://img.shields.io/pypi/v/cim-graph)
+![PyPI - Downloads](https://img.shields.io/pypi/dm/cim-graph?label=pypi%20downloads)
+![PyPI - Format](https://img.shields.io/pypi/format/cim-graph)
+
+
+![GitHub Issues or Pull Requests](https://img.shields.io/github/issues/PNNL-CIM-Tools/CIM-Graph)
+![GitHub Issues or Pull Requests](https://img.shields.io/github/issues-pr/PNNL-CIM-Tools/CIM-Graph)
+![GitHub commit activity](https://img.shields.io/github/commit-activity/t/PNNL-CIM-Tools/CIM-Graph)
+
+![GitHub Downloads (all assets, all releases)](https://img.shields.io/github/downloads/PNNL-CIM-Tools/CIM-Graph/total?label=git%20downloads)
+![GitHub License](https://img.shields.io/github/license/PNNL-CIM-Tools/CIM-Graph)
+![https://doi.org/10.11578/dc.20240507.3](https://img.shields.io/badge/doi-10.11578/dc.20240507.3-blue)
+
+
 CIMantic Graphs is an open-source library for for creating, parsing, and editing CIM power system models using in-memory knowledge graphs to reduce the burden and learning curve associated with using the Common Information Model.
 
 Key features:
