@@ -137,9 +137,9 @@ class Identity():
     class __uuid_meta__():
         uuid:UUID = None
         uri_has_underscore:bool = False
-        uri_is_capitalized:bool = True
+        uri_is_capitalized:bool = False
         mrid_has_underscore:bool = False
-        mrid_is_capitalized:bool = True
+        mrid_is_capitalized:bool = False
 
 @dataclass(repr=False)
 class IdentifiedObject(Identity):

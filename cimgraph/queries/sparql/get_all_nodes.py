@@ -165,10 +165,9 @@ def get_all_nodes_from_area(area: object, connection_params: ConnectionParameter
         ?eq cim:Equipment.SubSchedulingArea ?c.
         ?eq a ?eq_cls.
 
-        OPTIONAL {
-            ?t cim:Terminal.ConductingEquipment ?eq.
-            ?t cim:Terminal.ConnectivityNode ?node.
-        }
+        ?t cim:Terminal.ConductingEquipment ?eq.
+        ?t cim:Terminal.ConnectivityNode ?node.
+
         OPTIONAL {?meas cim:Measurement.Terminal ?t.
         ?meas a ?m_cls.
         bind(strafter(str(?meas),"%s") as ?meas_id).
