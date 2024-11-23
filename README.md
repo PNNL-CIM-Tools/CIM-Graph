@@ -37,7 +37,7 @@ Key features:
 * Support for direct creation / editing / parsing of CIM XML, JSON-LD.
 * API support for centralized/distributed transmission + distribution models.
 
-![summary-image](./cim_graph_structure.png)
+![summary-image](https://raw.githubusercontent.com/PNNL-CIM-Tools/CIM-Graph/blob/develop/cim_graph_structure.png)
 
 ## Requirements
 
