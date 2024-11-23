@@ -166,7 +166,7 @@ class GridappsdConnection(ConnectionInterface):
                 attribute = result['attribute']['value'].split('.')  #split edge attribute
                 value = result['value']['value']  #get edge value
 
-                
+
 
                 if 'edge' in result:  #check if association
                     edge = json.loads(result['edge']['value'])
@@ -182,7 +182,7 @@ class GridappsdConnection(ConnectionInterface):
                     if self.rdfs_profile is not None:
                         self.create_assocation(graph, attribute, cim_class, identifier,
                                            attr, edge_class, edge_mRID)
-                       
+
                     else:
                         self.create_edge(graph, cim_class, identifier, attr, edge_class, edge_mRID)
 
@@ -198,7 +198,7 @@ class GridappsdConnection(ConnectionInterface):
                 else:
                     setattr(graph[cim_class][identifier], attribute[1], value)
 
-    
+
 
     def upload(self, graph: dict[type, dict[str, object]]) -> None:
         for cim_class in graph.keys():

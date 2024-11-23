@@ -1,9 +1,10 @@
 from __future__ import annotations
-from uuid import UUID, uuid4
-from random import Random
-import json
 
+import json
 import logging
+from random import Random
+from uuid import UUID, uuid4
+
 _log = logging.getLogger(__name__)
 
 def str_to_uuid(obj, uri:str = None, mRID:str = None, name:str = None) -> UUID:
@@ -43,12 +44,12 @@ def str_to_uuid(obj, uri:str = None, mRID:str = None, name:str = None) -> UUID:
             randomGenerator = Random(seed)
             obj.__uuid__.uuid = UUID(int=randomGenerator.getrandbits(128), version=4)
             obj.name = name
-        else: 
+        else:
             obj.__uuid__.uuid = uuid4()
 
     obj.identifier = obj.__uuid__.uuid
 
-            
+
 
     if 'mRID' in obj.__dataclass_fields__:
         if mRID is not None:

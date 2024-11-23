@@ -11,7 +11,8 @@ from rdflib import Graph, Namespace, URIRef
 from rdflib.namespace import RDF
 
 import cimgraph.queries.sparql as sparql
-from cimgraph.databases import ConnectionInterface, ConnectionParameters, QueryResponse
+from cimgraph.databases import (ConnectionInterface, ConnectionParameters,
+                                QueryResponse)
 from cimgraph.models.graph_model import GraphModel
 
 _log = logging.getLogger(__name__)
@@ -65,7 +66,7 @@ class RDFlibConnection(ConnectionInterface):
         self.connect()
         query_output = self.libgraph.query(query_message)
         return query_output
-    
+
     def get_object(self, mrid:str, graph = {}) -> object:
         sparql_message = sparql.get_object_sparql(mrid, self.connection_params)
         query_output = self.execute(sparql_message)
@@ -201,7 +202,7 @@ class RDFlibConnection(ConnectionInterface):
                     else:
                         self.create_value(graph, cim_class, identifier, attribute, value)
 
-                   
+
                 elif is_enumeration:
                     edge_enum = eval(f'self.cim.{enum_class}(enum_value)')
                     association = self.check_attribute(cim_class, attribute)

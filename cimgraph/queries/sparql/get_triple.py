@@ -1,4 +1,5 @@
 from __future__ import annotations
+
 from uuid import UUID
 
 from cimgraph.databases import ConnectionParameters
@@ -8,7 +9,7 @@ def get_triple_sparql(obj:object, attribute:str, connection_params: ConnectionPa
     """
     Generates SPARQL query string for a given catalog of objects and feeder id
     Args:
-        
+
     Returns:
         query_message: query string that can be used in blazegraph connection or STOMP client
     """
@@ -31,14 +32,14 @@ def get_triple_sparql(obj:object, attribute:str, connection_params: ConnectionPa
     query_message += '''
     VALUES ?identifier {"%s"}''' %mrid
     # add all equipment mRID
-    
+
     query_message += f'''
         bind(iri(concat("{split}", ?identifier)) as ?eq)'''
-    
+
     query_message += """
 
         ?eq cim:%s ?val.
-    
+
         {bind("%s" as ?attribute)}
         {bind(strafter(str(?val),"%s") as ?uri)}
         {bind(if(?uri = "", ?val, ?uri) as ?value)}
