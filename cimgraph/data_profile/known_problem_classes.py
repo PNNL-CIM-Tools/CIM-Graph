@@ -207,5 +207,6 @@ class ClassesWithManytoMany:
             'ConnectivityNode.OperationalLimitSet',
             'ACDCTerminal.OperationalLimitSet',
             'ShortCircuitTest.GroundedEnds',
-            'TransformerMeshImpedance.ToTransformerEnd'
+            'TransformerMeshImpedance.ToTransformerEnd',
+            'Equipment.AdditionalEquipmentContainer'
         ]
