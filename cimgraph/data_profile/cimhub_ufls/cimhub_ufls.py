@@ -87,7 +87,7 @@ class Identity():
             except:
                 seed = seed + uri
                 _log.warning(f'URI {uri} not a valid UUID, generating new UUID')
-        if mRID is not None:
+        if mRID is not None and str(self.identifier) != self.mRID:
             # Handle inconsistent capitalization / underscores
             if mRID.strip('_') != mRID:
                 self.__uuid__.mrid_has_underscore = True
@@ -97,13 +97,13 @@ class Identity():
                 self.__uuid__.mrid_is_capitalized = True
                 if uri is None:
                     self.__uuid__.uri_is_capitalized = True
-                try:
-                    self.identifier = UUID(mRID.strip('_').lower())
-                    invalid_mrid = False
-                except:
-                    self.mRID = mRID
-                    seed = seed + mRID
-                    _log.warning(f'mRID {mRID} not a valid UUID, generating new UUID')
+            try:
+                self.identifier = UUID(mRID.strip('_').lower())
+                invalid_mrid = False
+            except:
+                self.mRID = mRID
+                seed = seed + mRID
+                _log.warning(f'mRID {mRID} not a valid UUID, generating new UUID')
         # Otherwise, build UUID using unique name as a seed
         if invalid_mrid:
             if name is not None:
@@ -137,9 +137,9 @@ class Identity():
     class __uuid_meta__():
         uuid:UUID = None
         uri_has_underscore:bool = False
-        uri_is_capitalized:bool = True
+        uri_is_capitalized:bool = False
         mrid_has_underscore:bool = False
-        mrid_is_capitalized:bool = True
+        mrid_is_capitalized:bool = False
 
 @dataclass(repr=False)
 class IdentifiedObject(Identity):
@@ -9460,7 +9460,7 @@ class BatteryUnit(PowerElectronicsUnit):
     '''
 
 @dataclass(repr=False)
-class PhotovoltaicUnit(PowerElectronicsUnit):
+class PhotoVoltaicUnit(PowerElectronicsUnit):
     '''
     A photovoltaic device or an aggregation of such devices
     '''

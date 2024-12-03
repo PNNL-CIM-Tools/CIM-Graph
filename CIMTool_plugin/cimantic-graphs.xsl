@@ -588,7 +588,7 @@
                         <item>_log.warning(f'URI {uri} not a valid UUID, generating new UUID')</item>
                     </list>
                 </list>
-                <item>if mRID is not None:</item>
+                <item>if mRID is not None and str(self.identifier) != self.mRID:</item>
                 <list begin="" indent="    " end="">
                     <item># Handle inconsistent capitalization / underscores</item>
                     <item>if mRID.strip('_') != mRID:</item>
@@ -607,18 +607,18 @@
                             <item>self.__uuid__.uri_is_capitalized = True</item>
                         </list>
                     </list>
+                    </list>
+                <list begin="" indent="    " end="">
+                    <item>try:</item>
                     <list begin="" indent="    " end="">
-                        <item>try:</item>
-                        <list begin="" indent="    " end="">
-                            <item>self.identifier = UUID(mRID.strip('_').lower())</item>
-                            <item>invalid_mrid = False</item>
-                        </list>
-                        <item>except:</item>
-                        <list begin="" indent="    " end="">
-                            <item>self.mRID = mRID</item>
-                            <item>seed = seed + mRID</item>
-                            <item>_log.warning(f'mRID {mRID} not a valid UUID, generating new UUID')</item>
-                        </list>
+                        <item>self.identifier = UUID(mRID.strip('_').lower())</item>
+                        <item>invalid_mrid = False</item>
+                    </list>
+                    <item>except:</item>
+                    <list begin="" indent="    " end="">
+                        <item>self.mRID = mRID</item>
+                        <item>seed = seed + mRID</item>
+                        <item>_log.warning(f'mRID {mRID} not a valid UUID, generating new UUID')</item>
                     </list>
                 </list>
                 <item># Otherwise, build UUID using unique name as a seed</item>
