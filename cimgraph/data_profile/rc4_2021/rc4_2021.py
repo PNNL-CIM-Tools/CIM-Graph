@@ -31,9 +31,21 @@ class Identity():
 
     # Backwards support for objects created with mRID
     def __post_init__(self) -> None:
-        if 'mRID' in self.__dataclass_fields__:
-            if self.mRID is not None:
-                self.uuid(mRID = self.mRID)
+        if self.identifier is None:
+            if 'mRID' in self.__dataclass_fields__:
+                if self.mRID is not None:
+                    self.uuid(mRID=self.mRID)
+                else:
+                    self.uuid()
+            else:
+                self.uuid()
+        else:
+            if 'mRID' in self.__dataclass_fields__:
+                if str(self.identifier) != self.mRID:
+                    if self.mRID is not None:
+                        self.uuid(mRID=self.mRID)
+                    else:
+                        self.mRID = str(self.identifier)
 
     # Override python string for printing with JSON representation
     def __str__(self) -> str:
@@ -87,23 +99,27 @@ class Identity():
             except:
                 seed = seed + uri
                 _log.warning(f'URI {uri} not a valid UUID, generating new UUID')
-        if mRID is not None and str(self.identifier) != self.mRID:
-            # Handle inconsistent capitalization / underscores
-            if mRID.strip('_') != mRID:
-                self.__uuid__.mrid_has_underscore = True
-                if uri is None:
-                    self.__uuid__.uri_has_underscore = True
-            if mRID.lower() != mRID:
-                self.__uuid__.mrid_is_capitalized = True
-                if uri is None:
-                    self.__uuid__.uri_is_capitalized = True
-            try:
-                self.identifier = UUID(mRID.strip('_').lower())
+        if mRID is not None:
+            if str(self.identifier) != mRID:
+                # Handle inconsistent capitalization / underscores
+                if mRID.strip('_') != mRID:
+                    self.__uuid__.mrid_has_underscore = True
+                    if uri is None:
+                        self.__uuid__.uri_has_underscore = True
+                if mRID.lower() != mRID:
+                    self.__uuid__.mrid_is_capitalized = True
+                    if uri is None:
+                        self.__uuid__.uri_is_capitalized = True
+                try:
+                    self.identifier = UUID(mRID.strip('_').lower())
+                    invalid_mrid = False
+                except:
+                    seed = seed + mRID
+                    _log.warning(f'mRID {mRID} not a valid UUID, generating new UUID')
+            else:
                 invalid_mrid = False
-            except:
+            if 'mRID' in self.__dataclass_fields__:
                 self.mRID = mRID
-                seed = seed + mRID
-                _log.warning(f'mRID {mRID} not a valid UUID, generating new UUID')
         # Otherwise, build UUID using unique name as a seed
         if invalid_mrid:
             if name is not None:
@@ -18753,7 +18769,7 @@ class BatteryUnit(PowerElectronicsUnit):
     '''
 
 @dataclass(repr=False)
-class PhotovoltaicUnit(PowerElectronicsUnit):
+class PhotoVoltaicUnit(PowerElectronicsUnit):
     '''
     A photovoltaic device or an aggregation of such devices
     '''

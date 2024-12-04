@@ -496,11 +496,39 @@
             <item># Backwards support for objects created with mRID</item>
             <item>def __post_init__(self) -> None:</item>
             <list begin="" indent="    " end="">
-                <item>if 'mRID' in self.__dataclass_fields__:</item>
+                <item>if self.identifier is None:</item>
                 <list begin="" indent="    " end="">
-                    <item>if self.mRID is not None:</item>
+                    <item>if 'mRID' in self.__dataclass_fields__:</item>
                     <list begin="" indent="    " end="">
-                        <item>self.uuid(mRID = self.mRID)</item>
+                        <item>if self.mRID is not None:</item>
+                        <list begin="" indent="    " end="">
+                            <item>self.uuid(mRID=self.mRID)</item>
+                        </list>
+                        <item>else:</item>
+                        <list begin="" indent="    " end="">
+                            <item>self.uuid()</item>
+                        </list>
+                    </list>
+                    <item>else:</item>
+                    <list begin="" indent="    " end="">
+                        <item>self.uuid()</item>
+                    </list>
+                </list>
+                <item>else:</item>
+                <list begin="" indent="    " end="">
+                    <item>if 'mRID' in self.__dataclass_fields__:</item>
+                    <list begin="" indent="    " end="">
+                        <item>if str(self.identifier) != self.mRID:</item>
+                        <list begin="" indent="    " end="">
+                            <item>if self.mRID is not None:</item>
+                            <list begin="" indent="    " end="">
+                                <item>self.uuid(mRID=self.mRID)</item>
+                            </list>
+                            <item>else:</item>
+                            <list begin="" indent="    " end="">
+                                <item>self.mRID = str(self.identifier)</item>
+                            </list>
+                        </list>
                     </list>
                 </list>
             </list>
@@ -588,37 +616,45 @@
                         <item>_log.warning(f'URI {uri} not a valid UUID, generating new UUID')</item>
                     </list>
                 </list>
-                <item>if mRID is not None and str(self.identifier) != self.mRID:</item>
+                <item>if mRID is not None:</item>
                 <list begin="" indent="    " end="">
-                    <item># Handle inconsistent capitalization / underscores</item>
-                    <item>if mRID.strip('_') != mRID:</item>
+                    <item>if str(self.identifier) != mRID:</item>
                     <list begin="" indent="    " end="">
-                        <item>self.__uuid__.mrid_has_underscore = True</item>
-                        <item>if uri is None:</item>
+                        <item># Handle inconsistent capitalization / underscores</item>
+                        <item>if mRID.strip('_') != mRID:</item>
                         <list begin="" indent="    " end="">
-                            <item>self.__uuid__.uri_has_underscore = True</item>
+                            <item>self.__uuid__.mrid_has_underscore = True</item>
+                            <item>if uri is None:</item>
+                            <list begin="" indent="    " end="">
+                                <item>self.__uuid__.uri_has_underscore = True</item>
+                            </list>
+                        </list>
+                        <item>if mRID.lower() != mRID:</item>
+                        <list begin="" indent="    " end="">
+                            <item>self.__uuid__.mrid_is_capitalized = True</item>
+                            <item>if uri is None:</item>
+                            <list begin="" indent="    " end="">
+                                <item>self.__uuid__.uri_is_capitalized = True</item>
+                            </list>
+                        </list>
+                        <item>try:</item>
+                        <list begin="" indent="    " end="">
+                            <item>self.identifier = UUID(mRID.strip('_').lower())</item>
+                            <item>invalid_mrid = False</item>
+                        </list>
+                        <item>except:</item>
+                        <list begin="" indent="    " end="">
+                            <item>seed = seed + mRID</item>
+                            <item>_log.warning(f'mRID {mRID} not a valid UUID, generating new UUID')</item>
                         </list>
                     </list>
-                    <item>if mRID.lower() != mRID:</item>
+                    <item>else:</item>
                     <list begin="" indent="    " end="">
-                        <item>self.__uuid__.mrid_is_capitalized = True</item>
-                        <item>if uri is None:</item>
-                        <list begin="" indent="    " end="">
-                            <item>self.__uuid__.uri_is_capitalized = True</item>
-                        </list>
-                    </list>
-                    </list>
-                <list begin="" indent="    " end="">
-                    <item>try:</item>
-                    <list begin="" indent="    " end="">
-                        <item>self.identifier = UUID(mRID.strip('_').lower())</item>
                         <item>invalid_mrid = False</item>
                     </list>
-                    <item>except:</item>
+                    <item>if 'mRID' in self.__dataclass_fields__:</item>
                     <list begin="" indent="    " end="">
                         <item>self.mRID = mRID</item>
-                        <item>seed = seed + mRID</item>
-                        <item>_log.warning(f'mRID {mRID} not a valid UUID, generating new UUID')</item>
                     </list>
                 </list>
                 <item># Otherwise, build UUID using unique name as a seed</item>
