@@ -31,21 +31,31 @@ class Identity():
 
     # Backwards support for objects created with mRID
     def __post_init__(self) -> None:
-        if self.identifier is None:
+        # Validate if pre-specified
+        if self.identifier is not None:
+            if type(self.identifier) != UUID:
+                _log.warning(f'Identifier {self.identifier} must be a UUID object, generating new UUID')
+
+            if 'mRID' in self.__dataclass_fields__:
+                if self.mRID is not None:
+                    self.uuid(uri=str(self.identifier), mRID=self.mRID)
+                else:
+                    self.uuid(uri=str(self.identifier))
+            elif self.name:
+                self.uuid(uri=str(self.identifier))
+
+        else:
             if 'mRID' in self.__dataclass_fields__:
                 if self.mRID is not None:
                     self.uuid(mRID=self.mRID)
+                elif self.name is not None:
+                    self.uuid(name=self.name)
                 else:
                     self.uuid()
             else:
                 self.uuid()
-        else:
-            if 'mRID' in self.__dataclass_fields__:
-                if str(self.identifier) != self.mRID:
-                    if self.mRID is not None:
-                        self.uuid(mRID=self.mRID)
-                    else:
-                        self.mRID = str(self.identifier)
+
+
 
     # Override python string for printing with JSON representation
     def __str__(self) -> str:
@@ -86,6 +96,7 @@ class Identity():
         seed = ''
         invalid_mrid = True
         self.__uuid__ = self.__uuid_meta__()
+
         # If URI is specified, try creating from UUID from URI
         if uri is not None:
             # Handle inconsistent capitalization / underscores
@@ -93,33 +104,39 @@ class Identity():
                 self.__uuid__.uri_has_underscore = True
             if uri.lower() != uri:
                 self.__uuid__.uri_is_capitalized = True
-            try:
-                self.identifier = UUID(uri.strip('_').lower())
+            if self.__uuid__.uuid is None:
+                try:
+                    self.__uuid__.uuid = UUID(uri.strip('_').lower())
+                    self.identifier = self.__uuid__.uuid
+                    invalid_mrid = False
+                except:
+                    seed = seed + uri
+                    _log.warning(f'URI {uri} not a valid UUID, generating new UUID')
+                    mRID = str(uri)
+            else:
+                self.__uuid__.uuid = self.identifier
                 invalid_mrid = False
-            except:
-                seed = seed + uri
-                _log.warning(f'URI {uri} not a valid UUID, generating new UUID')
+
+        # If URI is specified, try creating from UUID from URI
         if mRID is not None:
-            if str(self.identifier) != mRID:
-                # Handle inconsistent capitalization / underscores
-                if mRID.strip('_') != mRID:
-                    self.__uuid__.mrid_has_underscore = True
-                    if uri is None:
-                        self.__uuid__.uri_has_underscore = True
-                if mRID.lower() != mRID:
-                    self.__uuid__.mrid_is_capitalized = True
-                    if uri is None:
-                        self.__uuid__.uri_is_capitalized = True
+            # Handle inconsistent capitalization / underscores
+            if mRID.strip('_') != mRID:
+                self.__uuid__.mrid_has_underscore = True
+                if uri is None:
+                    self.__uuid__.uri_has_underscore = True
+            if mRID.lower() != mRID:
+                self.__uuid__.mrid_is_capitalized = True
+                if uri is None:
+                    self.__uuid__.uri_is_capitalized = True
+            # Create a new UUID based on the mRID if it does not exist
+            if self.__uuid__.uuid is None:
                 try:
                     self.identifier = UUID(mRID.strip('_').lower())
                     invalid_mrid = False
                 except:
                     seed = seed + mRID
                     _log.warning(f'mRID {mRID} not a valid UUID, generating new UUID')
-            else:
-                invalid_mrid = False
-            if 'mRID' in self.__dataclass_fields__:
-                self.mRID = mRID
+
         # Otherwise, build UUID using unique name as a seed
         if invalid_mrid:
             if name is not None:
@@ -129,13 +146,15 @@ class Identity():
                 self.name = name
             else:
                 self.__uuid__.uuid = uuid4()
+
             self.identifier = self.__uuid__.uuid
-            # Write mRID string for backwards compatibility
-            if 'mRID' in self.__dataclass_fields__:
-                if mRID is not None:
-                    self.mRID = mRID
-                else:
-                    self.mRID = str(self.identifier)
+
+        # Write mRID string for backwards compatibility
+        if 'mRID' in self.__dataclass_fields__:
+            if mRID is not None:
+                self.mRID = mRID
+            else:
+                self.mRID = str(self.identifier)
 
     # Method to reconstitute URI from UUID
     def uri(self) -> str:
@@ -9217,7 +9236,7 @@ class BatteryUnit(PowerElectronicsUnit):
     '''
 
 @dataclass(repr=False)
-class PhotoVoltaicUnit(PowerElectronicsUnit):
+class PhotovoltaicUnit(PowerElectronicsUnit):
     '''
     A photovoltaic device or an aggregation of such devices
     '''
