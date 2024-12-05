@@ -16,6 +16,6 @@ from cimgraph.utils.get_all_data import \
     get_all_switch_data as get_all_switch_data
 from cimgraph.utils.get_all_data import \
     get_all_transformer_data as get_all_transformer_data
-from cimgraph.utils.get_identifier import str_to_uuid
+from cimgraph.utils.get_identifier import UUID_Meta
 from cimgraph.utils.write_csv import write_csv
 from cimgraph.utils.write_xml import write_xml as write_xml
