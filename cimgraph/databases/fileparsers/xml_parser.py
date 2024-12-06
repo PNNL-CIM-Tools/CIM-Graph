@@ -11,6 +11,7 @@ from defusedxml.ElementTree import parse
 
 from cimgraph.databases import (ConnectionInterface, ConnectionParameters,
                                 Graph, QueryResponse)
+from cimgraph.utils.timing import timing as time_func
 
 _log = logging.getLogger(__name__)
 
@@ -71,7 +72,7 @@ class XMLFile(ConnectionInterface):
         _log.error('distributed models not supported for XML file read')
 
 
-
+    @time_func
     def create_new_graph(self, container: object) -> Graph:
 
         for element in self.root:
@@ -95,7 +96,7 @@ class XMLFile(ConnectionInterface):
     #             for element in self.root]):
     #         await f
 
-
+    @time_func
     def parse_nodes(self, element:object, graph:Graph=None):
         if not graph:
             graph = self.graph
@@ -115,6 +116,7 @@ class XMLFile(ConnectionInterface):
             _log.warning(f'{class_name} not in data profile')
         return obj
 
+    @time_func
     def parse_edges(self, element):
 
         class_name = element.tag.split('{'+self.namespace+'}')[1]

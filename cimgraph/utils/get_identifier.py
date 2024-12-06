@@ -9,11 +9,11 @@ _log = logging.getLogger(__name__)
 
 class UUID_Meta():
     uuid:UUID = None
+    uuid_str:str = ''
     uri_has_underscore:bool = False
     uri_is_capitalized:bool = False
     mrid_has_underscore:bool = False
     mrid_is_capitalized:bool = False
-
 
     # Create UUID from inconsistent mRIDs
     def generate_uuid(self, mRID:str = None, uri:str = None, name:str = None, seed:str = None) -> UUID:
@@ -71,4 +71,5 @@ class UUID_Meta():
 
             identifier = self.uuid
 
+        self.uuid_str = str(identifier)
         return identifier

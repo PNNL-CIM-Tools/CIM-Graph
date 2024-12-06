@@ -5,6 +5,9 @@ from typing import Optional
 from uuid import UUID
 
 from cimgraph.utils import UUID_Meta
+from cimgraph.utils.timing import timing as time_func
+
+ARCHIVE_JSON_LD = True
 
 _log = logging.getLogger(__name__)
 
@@ -25,6 +28,7 @@ class Identity():
         })
 
     # Backwards support for objects created with mRID
+    @time_func
     def __post_init__(self) -> None:
         # Validate if pre-specified
         if self.identifier is not None:
@@ -45,7 +49,11 @@ class Identity():
             else:
                 self.uuid()
 
+        if ARCHIVE_JSON_LD:
+            self.__json_ld__ = json.dumps({'@id': f'{str(self.identifier)}', '@type': f'{self.__class__.__name__}'})
+
     # Override python string for printing with JSON representation
+    @time_func
     def __str__(self) -> str:
         # Create JSON-LD dump with repr and all attributes
         dump = dict(json.loads(self.__repr__()) | self.__dict__)
@@ -72,14 +80,19 @@ class Identity():
 
     # Override python __repr__ method with JSON-LD representation
     # This is needed to avoid infinite loops in object previews
+    @time_func
     def __repr__(self) -> str:
-        return json.dumps({'@id': f'{str(self.identifier)}', '@type': f'{self.__class__.__name__}'})
+        if ARCHIVE_JSON_LD:
+            return self.__json_ld__
+        else:
+            return json.dumps({'@id': f'{str(self.identifier)}', '@type': f'{self.__class__.__name__}'})
 
     # Add indentation of json for pretty print
     def pprint(self) -> None:
         print(json.dumps(json.loads(self.__str__()), indent=4))
 
     # Create UUID from inconsistent mRIDs
+    @time_func
     def uuid(self, mRID:str = None, uri:str = None, name:str = None, seed:str = None) -> UUID:
         self.__uuid__ = UUID_Meta()
         if name is not None:
@@ -93,6 +106,7 @@ class Identity():
                 self.mRID = mRID
             else:
                 self.mRID = str(self.identifier)
+
 
     # Method to reconstitute URI from UUID
     def uri(self) -> str:
