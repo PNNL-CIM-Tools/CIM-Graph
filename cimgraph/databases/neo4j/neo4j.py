@@ -7,12 +7,12 @@ import math
 from uuid import UUID
 
 import nest_asyncio
+from neo4j import AsyncGraphDatabase, GraphDatabase
 from neo4j.exceptions import DriverError, Neo4jError
 
 import cimgraph.queries.cypher as cypher
 from cimgraph.databases import (ConnectionInterface, ConnectionParameters,
                                 Graph, QueryResponse)
-from neo4j import AsyncGraphDatabase, GraphDatabase
 
 nest_asyncio.apply()
 
