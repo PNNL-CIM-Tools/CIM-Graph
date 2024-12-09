@@ -7,11 +7,10 @@ from cimgraph.databases import ConnectionParameters
 
 def get_object_sparql(mrid: str, connection_params: ConnectionParameters) -> str:
     """
-    Generates SPARQL query string for a given catalog of objects and feeder id
+    Generates SPARQL query string to find the type of an object from its uri
     Args:
-        feeder_mrid (str | Feeder object): The mRID of the feeder or feeder object
-        graph (dict[type, dict[str, object]]): The typed catalog of CIM objects organized by
-            class type and object mRID
+        mrid (str): The mRID or uri of the  object
+        connection_params (ConnectionParameters): Database connection parameters
     Returns:
         query_message: query string that can be used in blazegraph connection or STOMP client
     """

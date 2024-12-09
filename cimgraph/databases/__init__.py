@@ -233,64 +233,6 @@ class ConnectionInterface(ABC):
         if obj.identifier not in graph[type(obj)]:
             graph[type(obj)][obj.identifier] = obj
 
-    # def create_assocation(self, graph: Graph, attribute: str,
-    #                       cim_class: type, mRID: str, attr_text: str,
-    #                       edge_class: type, edge_mRID: str) -> None:
-
-    #     # Old method to identify attributes using RDFS profile
-    #     # This will be deprecated in a future release
-
-
-    #     if attribute[1] in cim_class.__dataclass_fields__:    #check if forward attribute
-    #         self.create_edge(graph, cim_class, mRID, attribute[1], edge_class, edge_mRID)
-
-    #     elif self.rdfs_profile is not None:    # use data profile to look up reverse attribute
-    #         attr_uri = URIRef(f'{self.namespace}{attr_text}')
-    #         reverse_uri = self.rdfs_profile.value(object=attr_uri,
-    #                                             predicate=self.reverse)
-    #         try:
-    #             reverse_attribute = reverse_uri.split('#')[1].split('.')[1]    # split string
-    #         except:
-    #             _log.warning(f'{cim_class.__name__} does not have attribute {attr_text}')
-
-    #         self.create_edge(graph, cim_class, mRID, reverse_attribute, edge_class, edge_mRID)
-
-    #     else:    # fallback to use basic logic to identify
-    #         if attribute[0] in cim_class.__dataclass_fields__:    #check if first name is the attribute
-    #             self.create_edge(graph, cim_class, mRID, attribute[0], edge_class, edge_mRID)
-
-    #         elif attribute[0] + 's' in cim_class.__dataclass_fields__:    #check if attribute spelling is plural
-    #             self.create_edge(graph, cim_class, mRID, attribute[0] + 's', edge_class, edge_mRID)
-
-    #         elif attribute[1] + 's' in cim_class.__dataclass_fields__:    #check if attribute spelling is plural
-    #             self.create_edge(graph, cim_class, mRID, attribute[1] + 's',edge_class, edge_mRID)
-
-    #         elif edge_class.__name__ in cim_class.__dataclass_fields__:    #check if attribute spelling is plural
-    #             self.create_edge(graph, cim_class, mRID, edge_class.__name__, edge_class, edge_mRID)
-
-    #         elif edge_class.__name__ + 's' in cim_class.__dataclass_fields__:    #check if attribute spelling is plural
-    #             self.create_edge(graph, cim_class, mRID, edge_class.__name__ + 's', edge_class, edge_mRID)
-
-    #         else:    #fallback: match class type until a suitable parent edge class is found
-    #             parsed = False
-    #             for node_attr in list(cim_class.__dataclass_fields__.keys()):
-    #                 attr_str = cim_class.__dataclass_fields__[node_attr].type
-    #                 edge_parent = attr_str.split('[')[1].split(']')[0]
-    #                 if edge_parent in self.cim.__all__:
-    #                     parent_class = eval(f'self.cim.{edge_parent}')
-    #                     if issubclass(edge_class, parent_class):
-    #                         self.create_edge(graph, cim_class, mRID, node_attr, edge_class, edge_mRID)
-    #                         parsed = True
-    #                         break
-    #             if not parsed:
-    #                 _log.warning(
-    #                     f'unable to find match for {attr_text} for {mRID}')
-
-
-
-
-
-
 
 from cimgraph.databases.blazegraph import BlazegraphConnection
 from cimgraph.databases.fileparsers import XMLFile

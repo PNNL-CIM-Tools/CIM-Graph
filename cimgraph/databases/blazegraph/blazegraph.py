@@ -41,6 +41,7 @@ class BlazegraphConnection(ConnectionInterface):
         self.sparql_obj = None
         self.rdfs_profile = None
 
+
     def connect(self) -> None:
         """
         Establish a connection to the Blazegraph endpoint.
@@ -49,11 +50,13 @@ class BlazegraphConnection(ConnectionInterface):
             self.sparql_obj = SPARQLWrapper(self.url)
             self.sparql_obj.setReturnFormat(JSON)
 
+
     def disconnect(self) -> None:
         """
         Disconnect from the Blazegraph endpoint.
         """
         self.sparql_obj = None
+
 
     def execute(self, query_message: str) -> QueryResponse:
         """
@@ -71,6 +74,7 @@ class BlazegraphConnection(ConnectionInterface):
         query_output = self.sparql_obj.query().convert()
         return query_output
 
+
     def update(self, update_message:str) -> str:
         """
         Execute SPARQL update on the Blazegraph endpoint.
@@ -86,6 +90,7 @@ class BlazegraphConnection(ConnectionInterface):
         self.sparql_obj.setMethod(POST)
         output = self.sparql_obj.query()
         return output
+
 
     def get_object(self, mrid: str, graph: dict = {}) -> object:
         """
@@ -119,6 +124,7 @@ class BlazegraphConnection(ConnectionInterface):
 
         return obj
 
+
     def get_from_triple(self, subject:object, predicate:str, graph: Graph = {}) -> list[object]:
         if not graph:
             self.add_to_graph(subject, graph)
@@ -129,6 +135,7 @@ class BlazegraphConnection(ConnectionInterface):
         # Parse the query output
         new_edges = self.edge_query_parser(query_output, graph, subject.__class__)
         return new_edges
+
 
     def create_new_graph(self, container: object, graph: dict = {}) -> Graph:
         """
@@ -169,9 +176,6 @@ class BlazegraphConnection(ConnectionInterface):
         # Parse query results and create new graph
         graph = self.parse_node_query(graph, query_output)
         return graph
-
-
-
 
 
     def parse_node_query(self, graph: dict, query_output: dict) -> Graph:
@@ -227,9 +231,6 @@ class BlazegraphConnection(ConnectionInterface):
                     meas_class = eval(f'self.cim.{meas_class}')
                     measurement = self.create_object(graph, meas_class, meas_id)
 
-
-
-
         return graph
 
     def build_graph_from_list(self, graph: Graph,
@@ -254,6 +255,7 @@ class BlazegraphConnection(ConnectionInterface):
             graph = self.parse_node_query(graph, query_output)
         return graph
 
+
     def get_edges_query(self, graph: Graph,
                         cim_class: type) -> str:
         """
@@ -271,6 +273,7 @@ class BlazegraphConnection(ConnectionInterface):
         sparql_message = sparql.get_all_edges_sparql(graph, cim_class, eq_mrids, self.connection_params)
 
         return sparql_message
+
 
     def get_all_edges(self, graph: Graph, cim_class: type) -> None:
         """
@@ -307,6 +310,7 @@ class BlazegraphConnection(ConnectionInterface):
             for future in concurrent.futures.as_completed(futures):
                 # Ensuring all futures are processed
                 future.result()
+
 
     def get_all_attributes(self, graph: Graph,
                            cim_class: type) -> None:
@@ -349,7 +353,6 @@ class BlazegraphConnection(ConnectionInterface):
                 identifier = UUID(uri.strip('_').lower())
                 attribute = result['attribute']['value']  #edge attribute
                 value = result['value']['value']  #get edge value
-                # _log.warning(f'{uri} , {attribute}, {value}')
                 if 'edge' in result:  #check if association
                     edge = json.loads(result['edge']['value'])
                     edge_mRID = edge['@id']
@@ -361,7 +364,6 @@ class BlazegraphConnection(ConnectionInterface):
                         continue
 
                     if expand_graph:
-
                         edge_object = self.create_edge(graph, cim_class, identifier,
                                          attribute, edge_class, edge_mRID)
                         new_edges.append(edge_object)

@@ -46,7 +46,7 @@ class XMLFile(ConnectionInterface):
         del self.root
         del self.graph
 
-    def execute(self, query_message: str) -> QueryResponse:
+    def async_execute(self, query_message: str) -> QueryResponse:
         pass
 
     def get_object(self, mrid:str, graph = {}) -> object:

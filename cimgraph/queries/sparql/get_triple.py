@@ -7,7 +7,7 @@ from cimgraph.databases import ConnectionParameters
 
 def get_triple_sparql(obj:object, attribute:str, connection_params: ConnectionParameters) -> str:
     """
-    Generates SPARQL query string for a given catalog of objects and feeder id
+    Generates SPARQL query string to find predicate for RDF triple
     Args:
 
     Returns:

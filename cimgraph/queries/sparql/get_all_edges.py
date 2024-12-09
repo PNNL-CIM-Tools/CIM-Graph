@@ -10,9 +10,12 @@ def get_all_edges_sparql(graph:dict[type, dict[UUID, object]], cim_class: type, 
     """
     Generates SPARQL query string for a given catalog of objects and feeder id
     Args:
-        feeder_mrid (str | Feeder object): The mRID of the feeder or feeder object
-        graph (dict[type, dict[str, object]]): The typed catalog of CIM objects organized by
-            class type and object mRID
+        graph (dict[type, dict[UUID, object]]): The graph of CIM objects organized by
+            class type and UUID object identifier
+        cim_class (type): The CIM class type to query
+        uuid_list (list[UUID]): List of UUIDs to query for
+        connection_params (ConnectionParameters): Database connection parameters
+
     Returns:
         query_message: query string that can be used in blazegraph connection or STOMP client
     """
