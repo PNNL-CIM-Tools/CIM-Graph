@@ -112,6 +112,8 @@ class Identity():
                 self.mRID = mRID
             else:
                 self.mRID = str(self.identifier)
+            if name is not None:
+                self.name = name
 
         if ARCHIVE_JSON_LD:
             self.__json_ld__ = json.dumps({'@id': f'{str(self.identifier)}', '@type': f'{self.__class__.__name__}'})
