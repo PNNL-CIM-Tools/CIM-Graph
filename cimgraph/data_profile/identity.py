@@ -49,8 +49,7 @@ class Identity():
             else:
                 self.uuid()
 
-        if ARCHIVE_JSON_LD:
-            self.__json_ld__ = json.dumps({'@id': f'{str(self.identifier)}', '@type': f'{self.__class__.__name__}'})
+
 
     # Override python string for printing with JSON representation
     @time_func
@@ -113,6 +112,9 @@ class Identity():
                 self.mRID = mRID
             else:
                 self.mRID = str(self.identifier)
+
+        if ARCHIVE_JSON_LD:
+            self.__json_ld__ = json.dumps({'@id': f'{str(self.identifier)}', '@type': f'{self.__class__.__name__}'})
 
 
     # Method to reconstitute URI from UUID
