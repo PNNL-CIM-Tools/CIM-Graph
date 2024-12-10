@@ -32,17 +32,6 @@ class RDFlibConnection(ConnectionInterface):
         self.libgraph = None
         self.use_oxigraph = use_oxigraph
 
-        try:
-            # If old data profile using XSD-data, use oxigraph
-            # This will be deprecated in a future release
-            self.rdfs_profile = Graph(store='Oxigraph')
-            path = os.path.dirname(self.cim.__file__)
-            self.rdfs_profile.parse(f'{path}/{self.cim_profile}.rdfs', format='xml')
-            self.reverse = URIRef('http://iec.ch/TC57/1999/rdf-schema-extensions-19990926#inverseRoleName')
-        except:
-            # Else new profiles built from CIM-Tool XSLT Builder
-            self.rdfs_profile = None
-
     def connect(self):
         if not self.libgraph:
             if self.use_oxigraph:
@@ -96,9 +85,7 @@ class RDFlibConnection(ConnectionInterface):
             eq = json.loads(result.Equipment)
             eq_id = eq['@id']
             eq_class = eq['@type']
-            # Add each object to graph
-            node = self.create_object(graph, self.cim.ConnectivityNode, node_mrid)
-            terminal = self.create_object(graph, self.cim.Terminal, term_mrid)
+
             if eq_class in self.cim.__all__:
                 eq_class = eval(f'self.cim.{eq_class}')
                 equipment = self.create_object(graph, eq_class, eq_id)
@@ -106,13 +93,19 @@ class RDFlibConnection(ConnectionInterface):
             else:
                 _log.warning(f'object class missing from data profile: {eq_class}')
                 continue
-            # Link objects in graph
-            if terminal not in equipment.Terminals:
-                equipment.Terminals.append(terminal)
-            if terminal not in node.Terminals:
-                node.Terminals.append(terminal)
-            setattr(terminal, 'ConnectivityNode', node)
-            setattr(terminal, 'ConductingEquipment', equipment)
+
+            if node_mrid != 'None':
+                # Add each object to graph
+                node = self.create_object(graph, self.cim.ConnectivityNode, node_mrid)
+                terminal = self.create_object(graph, self.cim.Terminal, term_mrid)
+                # Associate the node and equipment with the terminal
+                if terminal not in equipment.Terminals:
+                    equipment.Terminals.append(terminal)
+                if terminal not in node.Terminals:
+                    node.Terminals.append(terminal)
+                # Associate the terminal with the equipment and node
+                setattr(terminal, 'ConnectivityNode', node)
+                setattr(terminal, 'ConductingEquipment', equipment)
 
         return graph
 
@@ -153,7 +146,7 @@ class RDFlibConnection(ConnectionInterface):
                           graph: dict[type, dict[UUID, object]],
                           cim_class: type, expand_graph = True) -> None:
         for result in query_output:
-            if 'type' not in result.attribute:  #skip 'type' and other single attributes
+            if 'type' not in result.attribute and result.attribute is not None:  #skip 'type' and other single attributes
 
                 is_association = False
                 is_enumeration = False
@@ -213,42 +206,15 @@ class RDFlibConnection(ConnectionInterface):
                     if association is not None:
                         self.create_value(graph, cim_class, identifier, attribute, value)
 
-    # def create_edge(self, graph, cim_class, mRID, attribute, edge_class,
-    #                 edge_mRID):
-    #     edge_object = self.create_object(graph, edge_class, edge_mRID)
-    #     setattr(edge_object, 'mRID', edge_mRID)
-    #     attribute_type = cim_class.__dataclass_fields__[attribute].type
-    #     if 'List' in attribute_type:
-    #         obj_list = getattr(graph[cim_class][mRID], attribute)
-    #         mrid_list = []
-    #         for obj in obj_list:
-    #             mrid_list.append(obj.mRID)
-    #         if edge_mRID not in mrid_list:
-    #             obj_list.append(edge_object)
-    #             setattr(graph[cim_class][mRID], attribute, obj_list)
-    #     else:
-    #         setattr(graph[cim_class][mRID], attribute, edge_object)
-
-    # def create_object(self, graph, class_type, mRID):
-
-    #     if class_type not in graph.keys():
-    #         graph[class_type] = {}
-
-    #     if mRID in graph[class_type].keys():
-    #         obj = graph[class_type][mRID]
-    #     else:
-    #         obj = class_type()
-    #         setattr(obj, 'mRID', mRID)
-    #         graph[class_type][mRID] = obj
 
     #     return obj
 
     def upload(self, graph):
         pass
 
-    # def add_to_graph(self, obj: object,
-    #                  graph: dict[type, dict[str, object]]) -> None:
-    #     if type(obj) not in graph.keys():
-    #         graph[type(obj)] = {}
-    #     if obj.mRID not in graph[type(obj)].keys():
-    #         graph[type(obj)][obj.mRID] = obj
+
+    def get_from_triple(self, subject, predicate, graph = ...):
+        pass
+
+    def create_distributed_graph(self, area, graph = ...):
+        pass

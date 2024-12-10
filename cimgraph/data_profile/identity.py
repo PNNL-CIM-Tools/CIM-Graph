@@ -54,10 +54,11 @@ class Identity():
 
     # Override python string for printing with JSON representation
     @time_func
-    def __str__(self) -> str:
+    def __str__(self, print_mRID:bool = False) -> str:
         # Create JSON-LD dump with repr and all attributes
         dump = dict(json.loads(self.__repr__()) | self.__dict__)
         del dump['__uuid__']
+        del dump['__json_ld__']
         attribute_list = list(self.__dataclass_fields__.keys())
         for attribute in attribute_list:
             # Delete attributes from print that are empty
@@ -69,6 +70,10 @@ class Identity():
             elif type[dump[attribute]] != str:
                 # Reformat all attributes as string for JSON
                 dump[attribute] = str(dump[attribute])
+        if not print_mRID:
+            del dump['identifier']
+            if 'mRID' in dump:
+                del dump['mRID']
         # Fix python ' vs JSON "
         dump = json.dumps(dump)
         dump = str(dump).replace('\\\"','\"' )
@@ -88,13 +93,15 @@ class Identity():
             return json.dumps({'@id': f'{str(self.identifier)}', '@type': f'{self.__class__.__name__}'})
 
     # Add indentation of json for pretty print
-    def pprint(self) -> None:
-        print(json.dumps(json.loads(self.__str__()), indent=4))
+    def pprint(self, print_mRID:bool=False) -> None:
+        print(json.dumps(json.loads(self.__str__(print_mRID)), indent=4))
 
     # Create UUID from inconsistent mRIDs
     @time_func
     def uuid(self, mRID:str = None, uri:str = None, name:str = None, seed:str = None) -> UUID:
         self.__uuid__ = UUID_Meta()
+        if seed is None:
+            seed = ''
         if name is not None:
             seed = seed + f'{self.__class__.__name__}:{name}'
 
