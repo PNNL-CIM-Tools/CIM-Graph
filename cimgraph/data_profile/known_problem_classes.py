@@ -195,7 +195,10 @@ class ClassesWithoutMRID:
             'SubstitutionResourceList',
             'PackageDependenciesCIMVersion',
             'Model/TC57CIM/IEC61968/Work WorkTimeScheduleKind' ]
-
+        self.units = [
+            'WPerHz',
+            'g'
+        ]
 
 @dataclass
 class ClassesWithManytoMany:
@@ -204,5 +207,6 @@ class ClassesWithManytoMany:
             'ConnectivityNode.OperationalLimitSet',
             'ACDCTerminal.OperationalLimitSet',
             'ShortCircuitTest.GroundedEnds',
-            'TransformerMeshImpedance.ToTransformerEnd'
+            'TransformerMeshImpedance.ToTransformerEnd',
+            'Equipment.AdditionalEquipmentContainer'
         ]

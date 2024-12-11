@@ -4,15 +4,15 @@ import asyncio
 import importlib
 import logging
 import math
-import os
+from uuid import UUID
 
 import nest_asyncio
+from neo4j import AsyncGraphDatabase, GraphDatabase
 from neo4j.exceptions import DriverError, Neo4jError
-from rdflib import Graph, URIRef
 
 import cimgraph.queries.cypher as cypher
-from cimgraph.databases import ConnectionInterface, ConnectionParameters, QueryResponse
-from neo4j import AsyncGraphDatabase, GraphDatabase
+from cimgraph.databases import (ConnectionInterface, ConnectionParameters,
+                                Graph, QueryResponse)
 
 nest_asyncio.apply()
 
@@ -20,6 +20,12 @@ _log = logging.getLogger(__name__)
 
 
 class Neo4jConnection(ConnectionInterface):
+    """
+    A class to handle connections and operations with a Neo4J database.
+
+    Attributes:
+        connection_params (ConnectionParameters): Connection parameters with details like cim_profile, namespace, etc.
+    """
 
     def __init__(self, connection_parameters: ConnectionParameters):
 
@@ -32,112 +38,197 @@ class Neo4jConnection(ConnectionInterface):
         self.password = connection_parameters.password
         self.database = connection_parameters.database
         self.driver = None
+        # self.use_async = use_async
 
-        try:
-            self.data_profile = Graph(store='Oxigraph')
-            path = os.path.dirname(self.cim.__file__)
-            self.data_profile.parse(f'{path}/{self.cim_profile}.rdfs', format='xml')
-            self.reverse = URIRef(
-                'http://iec.ch/TC57/1999/rdf-schema-extensions-19990926#inverseRoleName')
-        except:
-            _log.warning('No RDFS schema found, reverting to default logic')
-            self.data_profile = None
 
     def connect(self):
+        """
+        Establish a connection to the Neo4J endpoint.
+        """
+        # Create a neo4j driver object if it does not exist
         if not self.driver:
-            self.driver = AsyncGraphDatabase.driver(self.url, auth=(self.username, self.password))
-            # self.driver.verify_connectivity()
+            # Use Async driver for bettter performance
+            # if self.use_async:
+                self.driver = AsyncGraphDatabase.driver(self.url, auth=(self.username, self.password))
+                asyncio.run(self.driver.verify_connectivity())
+                # else:
+                #     self.driver = GraphDatabase.driver(self.url, auth=(self.username, self.password))
+                #     self.driver.verify_connectivity()
+                #     self.session = self.driver.session(database=self.database)
 
     def disconnect(self):
+        """
+        Disconnect from the Neo4J endpoint.
+        """
         self.driver.close()
         self.driver = None
 
-    async def execute(self, query_message: str) -> QueryResponse:
+    def execute(self, query_message: str) -> QueryResponse:
+        """
+        Execute a given cypher query on the Neo4J endpoint.
+        If performing concurrent calls with the Async driver, use the
+        async_execute() method instead.
+
+        Args:
+            query_message (str): The cypher query to be executed.
+
+        Returns:
+            query_output (QueryResponse): The response from the query execution.
+        """
+        records = asyncio.run(self.async_execute(query_message))
+        return records
+
+    async def async_execute(self, query_message: str) -> QueryResponse:
+        """
+        Execute a given cypher query on the Neo4J endpoint with the Async driver.
+        Call using query_output = asyncio.run(self.async_execute(cypher_message))
+
+        Args:
+            query_message (str): The cypher query to be executed.
+
+        Returns:
+            query_output (QueryResponse): The response from the query execution.
+        """
         self.connect()
-        # driver = AsyncGraphDatabase.driver(self.url, auth=(self.username, self.password))
-        # result = self.read_transaction(driver, query_message)
-        # driver.close()
-        # try:
-        #     records, summary, keys = self.driver.execute_query(query_message, database_=self.database )
-        #     return records, summary, keys
-        # # Capture any errors along with the query and data for traceability
-        # except (DriverError, Neo4jError) as exception:
-        #     _log.error("%s raised an error: \n%s", query_message, exception)
+
         async with self.driver.session(database=self.database) as session:
             result = await session.read_transaction(lambda tx: self.query_tx(tx, query_message))
-            # driver.close()
-            #     await lambda tx: tx.run(query_message).data()
-            # )
 
         return result
 
-    # async def read_transaction(self, driver, query_message):
-    #     async with driver.session(database = self.database) as session:
-    #         result = await session.read_transaction(lambda tx: self.query_tx(tx,query_message))
-    #     return result
-
     async def query_tx(self, tx, query_message):
+        """
+        Lambda transform for async query execution
+        """
         result = await tx.run(query_message)
         records = await result.data()
         return records
+
+    def get_object(self, mrid: str, graph: dict = {}) -> object:
+        """
+        Retrieve an object from the Neo4J database using its mRID.
+
+        Args:
+            mrid (str): The mRID of the object to be retrieved.
+            graph (dict, optional): The graph database to store the fetched object. Defaults to {}.
+
+        Returns:
+            object: The retrieved object.
+        """
+        # Use cypher module to build get correct query string
+        cypher_message = cypher.get_object_cypher(mrid, self.connection_params)
+        query_output = self.execute(cypher_message)
+
+        obj = None
+        # Parse query results to get the correct CIM object
+        for result in query_output:
+            uri = result['identifier']  # uri / mRID string
+            obj_class = result['obj_class']  # class type
+            # If equipment class is in data profile, create a new object
+            if obj_class in self.cim.__all__:
+                class_type = eval(f'self.cim.{obj_class}')  # get type
+                obj = self.create_object(graph, class_type, uri)  # get object
+            else:
+                # If it is not in the profile, log it as a missing class
+                _log.warning(
+                    f'object class missing from data profile: {obj_class}')
+                continue
+
+        return obj
 
     def create_new_graph(self, container: object) -> dict[type, dict[str, object]]:
         graph = {}
         # Generate cypher message from correct loaders>cypher python script based on class name
         cypher_message = cypher.get_all_nodes_from_container(container, self.namespace)
-        # Execute cypher query
+        # async_execute cypher query
+        query_output = self.execute(cypher_message)
+        self.parse_node_query(graph, query_output)
 
-        query_output = asyncio.run(self.execute(cypher_message))
-        parsed = {}
+        return graph
+
+
+    def parse_node_query(self, graph: dict, query_output: dict) -> Graph:
+        """
+        Parse the results of a node query to update a graph structure.
+
+        Args:
+            graph (dict): Graph to be updated.
+            query_output (dict): Query output to be parsed.
+
+        Returns:
+            dict: Updated graph structure.
+        """
+
         for result in query_output:
-
             # Parse query results
-            # node = result['ConnectivityNode']['IdentifiedObject.mRID']
-            # terminal = result['Terminal']['IdentifiedObject.mRID']
-            # eq_id = result['Equipment']['IdentifiedObject.mRID']
-            node = result['ConnectivityNode']
-            terminal = result['Terminal']
+            node_id = result['ConnectivityNode']
+            terminal_id = result['Terminal']
             eq_id = result['eq_id']
-            eq_class = result['eq_class'][1]
-            # Add each object to graph
-            try:
-                graph[self.cim.ConnectivityNode][node]
-            except:
-                self.create_object(graph, self.cim.ConnectivityNode, node)
-            self.create_object(graph, self.cim.Terminal, terminal)
+            eq_class = result['eq_class']
+
+            # If equipment class is in data profile, add it to the graph also
             if eq_class in self.cim.__all__:
                 eq_class = eval(f'self.cim.{eq_class}')
-                self.create_object(graph, eq_class, eq_id)
+                equipment = self.create_object(graph, eq_class, eq_id)
             else:
-                _log.warning('object class missing from data profile:' + str(eq_class))
+                # If it is not in the profile, log it as a missing class
+                _log.warning(
+                    f'object class missing from data profile: {eq_class}')
                 continue
-            # Link objects in graph
-            graph[eq_class][eq_id].Terminals.append(graph[self.cim.Terminal][terminal])
-            graph[self.cim.ConnectivityNode][node].Terminals.append(
-                graph[self.cim.Terminal][terminal])
-            setattr(graph[self.cim.Terminal][terminal], 'ConnectivityNode',
-                    graph[self.cim.ConnectivityNode][node])
-            setattr(graph[self.cim.Terminal][terminal], 'ConductingEquipment',
-                    graph[eq_class][eq_id])
+            if node:
+                # Add each object to graph
+                node = self.create_object(graph, self.cim.ConnectivityNode, node_id)
+                terminal = self.create_object(graph, self.cim.Terminal, terminal_id)
+
+                # Associate the node and equipment with the terminal
+                if terminal not in equipment.Terminals:
+                    equipment.Terminals.append(terminal)
+                if terminal not in node.Terminals:
+                    node.Terminals.append(terminal)
+                # Associate the terminal with the equipment and node
+                setattr(terminal, 'ConnectivityNode', node)
+                setattr(terminal, 'ConductingEquipment', equipment)
 
         return graph
 
-    def create_graph_from_list(self, mrid_list: list[str]) -> dict[type, dict[str, object]]:
-        graph = {}
-        _log.warning('not supported yet for neo4j')
+    def create_distributed_graph(self, area: object, graph: dict = {}) -> Graph:
+        self.add_to_graph(graph=graph, obj=area)
+
+        if not isinstance(area, self.cim.SubSchedulingArea):
+            _log.error(f'Area object is not a SubSchedulingArea')
+            raise TypeError('Area object is not a SubSchedulingArea')
+
+        cypher_message = cypher.get_all_nodes_from_area(area, self.connection_params)
+        # Execute cypher query
+        query_output = self.execute(cypher_message)
+        # Parse query results and create new graph
+        graph = self.parse_node_query(graph, query_output)
         return graph
+
+
+    def get_from_triple(self, subject:object, predicate:str, graph: Graph = {}) -> list[object]:
+        if not graph:
+            self.add_to_graph(subject, graph)
+        # Generate cypher query for user-specified triple string
+        cypher_message = cypher.get_triple_cypher(subject, predicate, self.connection_params)
+        # Execute cypher query
+        query_output = self.execute(cypher_message)
+        # Parse the query output
+        new_edges = self.edge_query_parser(query_output, graph, subject.__class__)
+        return new_edges
 
     def get_edges_query(self, graph: dict[type, dict[str, object]], cim_class: type) -> str:
 
         eq_mrids = list(graph[cim_class].keys())[0:100]
-        cypher_message = cypher.get_all_edges_cypher(cim_class, eq_mrids, self.namespace)
+        cypher_message = cypher.get_all_edges_cypher(graph, cim_class, eq_mrids, self.connection_params)
 
         return cypher_message
 
     def get_all_edges(self, graph: dict[type, dict[str, object]], cim_class: type) -> None:
-        mrid_list = list(graph[cim_class].keys())
-        num_nodes = len(mrid_list)
-        asyncio.run(self.get_all_edges_async(mrid_list, graph, cim_class))
+        uuid_list = list(graph[cim_class].keys())
+
+        asyncio.run(self.get_all_edges_async(uuid_list, graph, cim_class))
+
 
     async def get_all_edges_async(self, mrid_list, graph: dict[type, dict[str, object]],
                                   cim_class: type):
@@ -147,145 +238,96 @@ class Neo4jConnection(ConnectionInterface):
         ]):
             await f
 
-    async def edge_query_parser(self, mrid_list: list[str], index: int,
+    async def edge_query_runner(self, mrid_list: list[str], index: int,
                                 graph: dict[type, dict[str, object]], cim_class: type):
+
+        # Run a batch of 100 UUIDs at a time
         eq_mrids = mrid_list[index * 100:(index + 1) * 100]
-        #generate cypher message from correct loaders>cypher python script based on class name
-        cypher_message = cypher.get_all_edges_cypher(cim_class, eq_mrids, self.namespace)
-        #execute cypher query
-        query_output = asyncio.run(self.execute(cypher_message))
-        parsed = []
+        #generate cypher message from graph and CIM class name
+        cypher_message = cypher.get_all_edges_cypher(graph, cim_class, eq_mrids, self.connection_params)
+        #async_execute cypher query
+        query_output = asyncio.run(self.async_execute(cypher_message))
+        self.edge_query_parser(query_output)
+
+        #generate cypher message from graph and CIM class name
+        cypher_message = cypher.get_all_properties_cypher(graph, cim_class, eq_mrids, self.connection_params)
+        #async_execute cypher query
+        query_output = asyncio.run(self.async_execute(cypher_message))
+
+
+
+    def edge_query_parser(self, query_output: QueryResponse,
+                          graph: Graph, cim_class: type, expand_graph=True):
+
+        new_edges = []
         for result in query_output:
-            is_association = False
-            is_enumeration = False
 
-            mRID = result['mRID']    #get mRID
-            if 'urn:uuid:' in mRID:
-                mRID = mRID.split('urn:uuid:')[1]
-            elif '#' in mRID:
-                mRID = mRID.split('#')[1]
-
-            if mRID not in parsed:
-                parsed.append(mRID)
-                attr_list = list(result['eq'].keys())
-                for attr in attr_list:
-                    if attr != 'uri':
-                        try:
-                            attribute = attr.split('.')[1]
-                            value = result['eq'][attr]
-                            setattr(graph[cim_class][mRID], attribute, value)
-                        except:
-                            _log.warning(f'attribute {attribute} not recognized')
-            attr = result['attribute']
-            attribute = result['attribute'].split('.')    #split edge attribute
-            edge_node = result['edge_mrid']    #get edge value
-            # edge_node = result['edge_node'] #get edge value
+            uri = result['identifier']    #get mRID
+            attribute = result['attribute']
+            edge_value = result['edge_id']   #get edge value
             edge_class = result['edge_class']
 
-            if len(edge_class) == 1:    #check if enumeration
-                enum = edge_node.split('#')[1]
-                enum_class = enum.split('.')[0]
-                enum_value = enum.split('.')[1]
-                is_enumeration = True
+            if 'urn:uuid:' in uri:
+                uri = uri.split('urn:uuid:')[1]
+            elif '#' in uri:
+                uri = uri.split('#')[1]
 
-            else:
-                edge_class = edge_class[1]
+            identifier = UUID(uri.strip('_').lower())
 
+            if edge_class: # Check if association to another class
                 if edge_class in self.cim.__all__:
-                    is_association = True
                     edge_class = eval(f'self.cim.{edge_class}')
                 else:
-                    _log.warning(f'unknown class {edge_class}')
+                    _log.warning(f'Class {edge_class} not in data profile')
                     continue
 
-            if is_association:    # if association to another CIM object
+                edge_object = self.create_edge(graph, cim_class, identifier,
+                                            attribute, edge_class, edge_value)
+                new_edges.append(edge_object)
+            else:
+                if self.namespace in edge_value: # Check if enumeration
+                    enum_text = edge_value.split(self.namespace)[1]
+                    enum_text = enum_text.split('>')[0]
+                    enum_class = enum_text.split('.')[0]
+                    enum_value = enum_text.split('.')[1]
 
-                if 'urn:uuid' in edge_node:
-                    edge_mRID = edge_node.split('urn:uuid:')[1]
-                elif '#' in edge_node:
-                    edge_mRID = edge_node.split('#')[1]
+                    if enum_class in self.cim.__all__:  # if enumeration
+                        edge_enum = eval(f'self.cim.{enum_class}(enum_value)')
+                        new_edges.append(edge_enum)
+                        association = self.check_attribute(
+                            cim_class, attribute)
+                        if association is not None:
+                            setattr(graph[cim_class][identifier], association, edge_enum)
                 else:
-                    edge_mRID = edge_node
+                    association = self.check_attribute(cim_class, attribute)
+                    if association is not None:
+                        new_edges.append(edge_value)
+                        self.create_value(graph, cim_class, identifier, attribute, edge_value)
+        return new_edges
 
-                if attribute[1] in cim_class.__dataclass_fields__:    #check if forward attribute
-                    self.create_edge(graph, cim_class, mRID, attribute[1], edge_class, edge_mRID)
+    def property_query_parser(self, query_output: QueryResponse,
+                          graph: Graph, cim_class: type, expand_graph=True):
 
-                elif self.data_profile is not None:    # use data profile to look up reverse attribute
-                    attr_uri = URIRef(f'{self.namespace}{attr}')
-                    reverse_uri = self.data_profile.value(object=attr_uri, predicate=self.reverse)
-                    try:
-                        reverse_attribute = reverse_uri.split('#')[1].split('.')[
-                            1]    # split string
-                    except:
-                        _log.warning(f'{cim_class.__name__} does not have attribute {attr}')
+        for result in query_output:
 
-                    self.create_edge(graph, cim_class, mRID, reverse_attribute, edge_class,
-                                     edge_mRID)
+            uri = result['identifier']    #get mRID
+            if 'urn:uuid:' in uri:
+                uri = uri.split('urn:uuid:')[1]
+            elif '#' in uri:
+                uri = uri.split('#')[1]
 
-                else:    # fallback to use basic logic to identify
-                    if attribute[
-                            0] in cim_class.__dataclass_fields__:    #check if first name is the attribute
-                        self.create_edge(graph, cim_class, mRID, attribute[0], edge_class,
-                                         edge_mRID)
+            identifier = UUID(uri.strip('_').lower())
 
-                    elif attribute[
-                            0] + 's' in cim_class.__dataclass_fields__:    #check if attribute spelling is plural
-                        self.create_edge(graph, cim_class, mRID, attribute[0] + 's', edge_class,
-                                         edge_mRID)
+            properties = result['attributes']
+            for attribute in properties.keys():
+                if attribute != 'uri':
+                    association = self.check_attribute(cim_class, attribute)
+                    if association is not None:
+                        self.create_value(graph, cim_class, identifier, attribute, properties[attribute])
 
-                    elif attribute[
-                            1] + 's' in cim_class.__dataclass_fields__:    #check if attribute spelling is plural
-                        self.create_edge(graph, cim_class, mRID, attribute[1] + 's', edge_class,
-                                         edge_mRID)
 
-                    elif edge_class.__name__ in cim_class.__dataclass_fields__:    #check if attribute spelling is plural
-                        self.create_edge(graph, cim_class, mRID, edge_class.__name__, edge_class,
-                                         edge_mRID)
+    def get_all_attributes(self, graph, cim_class):
+        pass
 
-                    elif edge_class.__name__ + 's' in cim_class.__dataclass_fields__:    #check if attribute spelling is plural
-                        self.create_edge(graph, cim_class, mRID, edge_class.__name__ + 's',
-                                         edge_class, edge_mRID)
-
-                    else:    #fallback: match class type until a suitable parent edge class is found
-                        parsed = False
-                        for node_attr in list(cim_class.__dataclass_fields__.keys()):
-                            attr_str = cim_class.__dataclass_fields__[node_attr].type
-                            edge_parent = attr_str.split('[')[1].split(']')[0]
-                            if edge_parent in self.cim.__all__:
-                                parent_class = eval(f'self.cim.{edge_parent}')
-                                if issubclass(edge_class, parent_class):
-                                    self.create_edge(graph, cim_class, mRID, node_attr, edge_class,
-                                                     edge_mRID)
-                                    parsed = True
-                                    break
-                        if not parsed:
-                            _log.warning(f'unable to find match for {attr} for {mRID}')
-
-            elif is_enumeration:
-                if enum_class in self.cim.__all__:    # if enumeration
-                    edge_enum = eval(f'self.cim.{enum_class}(enum_value)')
-                    setattr(graph[cim_class][mRID], attribute[1], edge_enum)
-
-    def create_object(self, graph, class_type, mRID):
-
-        if class_type not in graph.keys():
-            graph[class_type] = {}
-
-        if mRID in graph[class_type].keys():
-            obj = graph[class_type][mRID]
-        else:
-            obj = class_type()
-            setattr(obj, 'mRID', mRID)
-            graph[class_type][mRID] = obj
-
-        return obj
-
-    def create_edge(self, graph, cim_class, mRID, attribute, edge_class, edge_mRID):
-        edge_object = self.create_object(graph, edge_class, edge_mRID)
-        attribute_type = cim_class.__dataclass_fields__[attribute].type
-        if 'List' in attribute_type:
-            obj_list = getattr(graph[cim_class][mRID], attribute)
-            obj_list.append(edge_object)
-            setattr(graph[cim_class][mRID], attribute, obj_list)
-        else:
-            setattr(graph[cim_class][mRID], attribute, edge_object)
+    def upload(self, graph):
+        pass

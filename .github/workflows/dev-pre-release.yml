@@ -37,7 +37,7 @@
   jobs:
     setup-defaults:
       runs-on: ubuntu-22.04
-      env: 
+      env:
         DRY_RUN: ${{ inputs.dry-run }}
         LETTER: ${{ inputs.letter }}
         VERSION_STRATEGY: ${{ inputs.version-strategy }}
@@ -72,7 +72,7 @@
           echo "Dry Run: ${{ needs.setup-defaults.outputs.dry_run }}"
           echo "Leter: ${{ needs.setup-defaults.outputs.letter == 'true' }}"
           echo "strategy: ${{ needs.setup-defaults.outputs.strategy }}"
-      
+
     call-deploy-release:
       needs: setup-defaults
       uses: GRIDAPPSD/.github/.github/workflows/deploy-dev-release.yml@v2
