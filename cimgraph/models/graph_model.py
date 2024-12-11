@@ -1,85 +1,17 @@
 from __future__ import annotations
 
-import enum
 import json
 import logging
 from dataclasses import dataclass, field
-from uuid import UUID, uuid4
+from uuid import UUID
 
+from cimgraph.data_profile.identity import Identity
 from cimgraph.databases import ConnectionInterface
 
 _log = logging.getLogger(__name__)
 
 jsonld = dict['@id':str(UUID),'@type':str(type)]
 Graph = dict[type, dict[UUID, object]]
-
-
-
-def new_mrid():
-    mRID = str(uuid4())
-    return mRID
-
-
-def json_dump(value: object,
-              cim: __package__,
-              json_ld: bool = False,
-              use_names=False) -> str:
-    class_type = value.__class__
-    if type(class_type) is enum.EnumMeta:
-        result = str(value)
-    elif class_type is list:
-        result = []
-        for item in value:
-            result.append(json_dump(item, cim, json_ld, use_names))
-    elif value is None:
-        result = ''
-    elif class_type.__name__ in cim.__all__:
-        if json_ld:
-            result = {'@type': {value.__class__.__name__}, '@id': {value.mRID}}
-        elif use_names:
-            result = value.name
-        else:
-            result = value.mRID
-    else:
-        result = str(value)
-    return result
-
-
-def create_object(class_type:type, uri:str, graph:Graph = None) -> object:
-    """
-    Method for creating new objects and adding them to the graph
-    Required Args:
-        graph: an LPG graph from a GraphModel object
-        class_type: a dataclass type, such as cim.ACLineSegment
-        uri: the RDF ID or mRID of the object
-    Returns:
-        obj: a dataclass instance with the correct identifier
-    """
-    # Convert uri string to a uuid
-    try:
-        identifier = UUID(uri.strip('_').lower())
-    except:
-        _log.warning(f'URI {uri} for object {class_type.__name__} is not a valid UUID')
-        identifier = uri
-
-    if graph is None:
-        graph = {}
-
-    # Add class type to graph keys if not there
-    if class_type not in graph:
-        graph[class_type] = {}
-
-    # Check if object exists in graph
-    if identifier in graph[class_type]:
-        obj = graph[class_type][identifier]
-
-    # If not there, create a new object and add to graph
-    else:
-        obj = class_type()
-        obj.uuid(uri = uri)
-        graph[class_type][identifier] = obj
-
-    return obj
 
 @dataclass
 class GraphModel:
@@ -129,7 +61,7 @@ class GraphModel:
         # If equipment class is in data profile, add it to the graph also
         if obj_class in self.cim.__all__:
             obj_class = eval(f'self.cim.{obj_class}')
-            obj = create_object(obj_class, obj_id, graph)
+            obj = self.connection.create_object(obj_class, obj_id, graph)
             return obj
         else:
             # If it is not in the profile, log it as a missing class
@@ -189,48 +121,27 @@ class GraphModel:
             new_edges = self.connection.get_from_triple(subject, predicate)
         return new_edges
 
-
-
-
     def pprint(self, cim_class: type, show_empty: bool = False,
                json_ld: bool = False, use_names: bool = False) -> None:
         if cim_class in self.graph:
-            json_dump = self.__dumps__(cim_class, show_empty, json_ld, use_names)
+            json_dump = self.__dumps__(cim_class, show_empty, use_names)
         else:
             json_dump = {}
             _log.info(f'no instances of {cim_class.__name__} found in graph.')
-        print(json.dumps(json_dump, indent=4))
+        print(json_dump)
 
     def upload(self) -> None:
         self.connection.upload(self.graph)
 
-    def __dumps__(self,
-                  cim_class: type,
-                  show_empty: bool = False,
-                  json_ld: bool = True,
-                  use_names=False) -> str:
-        if cim_class in self.graph:
-            mrid_list = list(self.graph[cim_class].keys())
-            attribute_list = list(cim_class.__dataclass_fields__.keys())
-            dump = {}
-
-            for uuid in mrid_list:
-                mrid = str(uuid)
-                dump[mrid] = {}
-                for attribute in attribute_list:
-                    value = getattr(self.graph[cim_class][uuid], attribute)
-                    if value is None or value == []:
-                        if show_empty:
-                            dump[mrid][attribute] = ''
-                    else:
-                        result = json_dump(value=value,
-                                           cim=self.connection.cim,
-                                           json_ld=json_ld,
-                                           use_names=use_names)
-                        dump[mrid][attribute] = str(result)
-
-        else:
-            dump = {}
-            _log.info(f'no instances of {cim_class.__name__} found in graph.')
-
+    def __dumps__(self, cim_class: type, show_empty: bool = False,
+                  use_names=False) -> json:
+        dump = []
+        for obj in self.graph.get(cim_class, {}).values():
+            if isinstance(obj, Identity):
+                dump.append(json.loads(obj.__str__(
+                    show_empty=show_empty,
+                    use_names=use_names)))
+            else:
+                _log.warning(f'Unknown object of type {type(obj)}')
+        dump = json.dumps(dump, indent=4)
         return dump

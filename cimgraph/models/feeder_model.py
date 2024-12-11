@@ -3,7 +3,8 @@ from dataclasses import dataclass, field
 
 from cimgraph.models.distributed_area import DistributedArea
 from cimgraph.models.graph_model import GraphModel
-from cimgraph.utils.timing import timing as time_func
+
+# from cimgraph.utils.timing import timing as time_func
 
 _log = logging.getLogger(__name__)
 
@@ -45,7 +46,7 @@ class FeederModel(GraphModel):
                 self.initialize_centralized_model(self.container)
         else:    # Log error thant no connection was specified
             _log.error('A ConnectionInterface must be specified')
-    @time_func
+    # @time_func
     def initialize_centralized_model(self, container: object) -> None:
         # Build graph model using database-specific routine
         self.graph = self.connection.create_new_graph(container)

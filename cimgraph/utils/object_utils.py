@@ -2,11 +2,6 @@ import json
 import logging
 from uuid import UUID
 
-import cimgraph.data_profile.cimhub_2023 as cim
-
-# from cimgraph.models.graph_model import GraphModel
-
-
 _log = logging.getLogger(__name__)
 
 jsonld = dict['@id':str(UUID),'@type':str(type)]
@@ -14,14 +9,14 @@ Graph = dict[type, dict[UUID, object]]
 
 
 
-def jsonld_to_obj(cim:cim, json_ld:jsonld|str[jsonld]) -> object:
+# def jsonld_to_obj(cim:cim, json_ld:jsonld|str[jsonld]) -> object:
 
-    if type(json_ld) == str:
-        json_ld = json.loads(json_ld)
-    elif type(json_ld) == dict:
-        pass
-    else:
-        raise TypeError('json_ld input must be string or dict')
+#     if type(json_ld) == str:
+#         json_ld = json.loads(json_ld)
+#     elif type(json_ld) == dict:
+#         pass
+#     else:
+#         raise TypeError('json_ld input must be string or dict')
 
 
 

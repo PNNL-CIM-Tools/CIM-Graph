@@ -4,7 +4,6 @@ import enum
 import importlib
 import logging
 
-# from cimgraph.models.graph_model import json_dump
 from cimgraph.data_profile.known_problem_classes import ClassesWithManytoMany
 from cimgraph.databases import ConnectionParameters
 
@@ -45,6 +44,9 @@ def upload_triples_sparql(obj: object, params: ConnectionParameters) -> str:
     for parent in parent_classes:
         # Iterate through attributes and associations inherited from each parent class
         for attribute in parent.__annotations__.keys():
+            if attribute == 'identifier':
+                continue
+
             try:
                 # Check if attribute is in data profile
                 attribute_type = cim_class.__dataclass_fields__[attribute].type

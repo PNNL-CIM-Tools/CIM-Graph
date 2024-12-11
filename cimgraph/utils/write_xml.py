@@ -8,7 +8,7 @@ import math
 import uuid
 
 from cimgraph.data_profile.known_problem_classes import ClassesWithManytoMany
-from cimgraph.models.graph_model import GraphModel, json_dump
+from cimgraph.models.graph_model import GraphModel
 
 _log = logging.getLogger(__name__)
 
@@ -36,9 +36,10 @@ def write_xml(network: GraphModel, filename: str) -> None:
 -->'''
     f.write(header)
 
-    for cim_class in list(network.graph.keys()):
+    for root_class in list(network.graph.keys()):
         counter = 0
-        for obj in network.graph[cim_class].values():
+        for obj in network.graph[root_class].values():
+            cim_class = obj.__class__
             header = f'<cim:{cim_class.__name__} {rdf_header}{obj.uri()}">\n'
             f.write(header)
 
@@ -51,13 +52,16 @@ def write_xml(network: GraphModel, filename: str) -> None:
                     attribute_type = cim_class.__dataclass_fields__[attribute].type
                     rdf = f'{parent.__name__}.{attribute}'
 
+                    if attribute == 'identifier':
+                        continue
+
                     # Upload attributes that are many-to-one or are known problem classes
                     if 'list' not in attribute_type or rdf in many_to_many:
                         edge_class = attribute_type.split('[')[1].split(']')[0]
                         edge = getattr(obj, attribute)
 
                         # Check if attribute is association to a class object
-                        if edge_class in network.cim.__all__:
+                        if edge_class in network.connection.cim.__all__:
                             if edge is not None and edge != []:
                                 if type(edge.__class__) is enum.EnumMeta:
                                     resource = f'rdf:resource="{namespace}{str(edge)}"'
