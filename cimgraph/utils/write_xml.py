@@ -27,7 +27,7 @@ def write_xml(network: GraphModel, filename: str) -> None:
         rdf_resource = '#'
     f = open(filename, 'w', encoding='utf-8')
     header = '<?xml version="1.0" encoding="utf-8"?>\n'
-    header += '<!-- un-comment this line to enable validation\n' 
+    header += '<!-- un-comment this line to enable validation\n'
     header += '-->\n'
     header += f'<rdf:RDF xmlns:cim="{namespace}" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">\n'
     header += '<!--\n'

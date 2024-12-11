@@ -10,10 +10,10 @@ from uuid import UUID
 
 from defusedxml.ElementTree import parse
 
+import cimgraph.utils as cimUtils
 from cimgraph.data_profile.known_problem_classes import ClassesWithManytoMany
 from cimgraph.databases import (ConnectionInterface, ConnectionParameters,
                                 Graph, QueryResponse)
-import cimgraph.utils as cimUtils
 
 # from cimgraph.utils.timing import timing as time_func
 
@@ -213,7 +213,7 @@ class XMLFile(ConnectionInterface):
             rdf_resource = '#'
         f = open(self.filename, 'w', encoding='utf-8')
         header = '<?xml version="1.0" encoding="utf-8"?>\n'
-        header += '<!-- un-comment this line to enable validation\n' 
+        header += '<!-- un-comment this line to enable validation\n'
         header += '-->\n'
         header += f'<rdf:RDF xmlns:cim="{namespace}" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">\n'
         header += '<!--\n'
