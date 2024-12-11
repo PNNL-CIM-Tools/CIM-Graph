@@ -4,7 +4,7 @@ import logging
 import os
 from zipfile import ZIP_DEFLATED, ZipFile
 
-from cimgraph.models.graph_model import GraphModel, json_dump
+from cimgraph.models.graph_model import GraphModel
 
 _log = logging.getLogger(__name__)
 

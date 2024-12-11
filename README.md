@@ -1,5 +1,25 @@
 # CIMantic Graphs Library
 
+![GitHub Tag](https://img.shields.io/github/v/tag/PNNL-CIM-Tools/CIM-Graph)
+![GitHub Release Date](https://img.shields.io/github/release-date-pre/PNNL-CIM-Tools/CIM-Graph)
+![GitHub Actions Workflow Status](https://img.shields.io/github/actions/workflow/status/PNNL-CIM-Tools/CIM-Graph/dev-pre-release.yml)
+![Libraries.io dependency status for GitHub repo](https://img.shields.io/librariesio/github/PNNL-CIM-Tools/CIM-Graph)
+
+
+![PyPI - Version](https://img.shields.io/pypi/v/cim-graph)
+![PyPI - Downloads](https://img.shields.io/pypi/dm/cim-graph?label=pypi%20downloads)
+![PyPI - Format](https://img.shields.io/pypi/format/cim-graph)
+
+
+![GitHub Issues or Pull Requests](https://img.shields.io/github/issues/PNNL-CIM-Tools/CIM-Graph)
+![GitHub Issues or Pull Requests](https://img.shields.io/github/issues-pr/PNNL-CIM-Tools/CIM-Graph)
+![GitHub commit activity](https://img.shields.io/github/commit-activity/t/PNNL-CIM-Tools/CIM-Graph)
+
+![GitHub Downloads (all assets, all releases)](https://img.shields.io/github/downloads/PNNL-CIM-Tools/CIM-Graph/total?label=git%20downloads)
+![GitHub License](https://img.shields.io/github/license/PNNL-CIM-Tools/CIM-Graph)
+![https://doi.org/10.11578/dc.20240507.3](https://img.shields.io/badge/doi-10.11578/dc.20240507.3-blue)
+
+
 CIMantic Graphs is an open-source library for for creating, parsing, and editing CIM power system models using in-memory knowledge graphs to reduce the burden and learning curve associated with using the Common Information Model.
 
 Key features:
@@ -17,7 +37,7 @@ Key features:
 * Support for direct creation / editing / parsing of CIM XML, JSON-LD.
 * API support for centralized/distributed transmission + distribution models.
 
-![summary-image](./cim_graph_structure.png)
+![summary-image](https://raw.githubusercontent.com/PNNL-CIM-Tools/CIM-Graph/develop/cim_graph_structure.png)
 
 ## Requirements
 
@@ -148,18 +168,19 @@ bus_name = network.graph[cim.ACLineSegment][line_mrid].Terminals[0].Connectivity
 
 Note that all classes and attributes are case sensitive and follow the CIM UML conventions for each class.
 
-### pprint and __dumps__
+### pprint
 
-Printing of CIM objects using default `print()` is not supported. All instances of all given CIM class can be printed `.pprint(cim.ClassName)` method:
+Printing of individual CIM objects using default `print()` is now supported. Individual objects can be pretty-printed using the
+
+```python
+line = cim.ACLineSegment(name = 'new_line', r=0.002, x=0.050, b=0.003)
+line.pprint()
+```
+
+All instances of all given CIM class within the network graph can be printed `.pprint(cim.ClassName)` method:
 
 ```python
 network.pprint(cim.ACLineSegment)
-```
-
-All instances of all given CIM class can also be exported as JSON text using the `.__dumps__(cim.ClassName)` method of the distributed area classes:
-
-```python
-json_dump = network.__dumps__(cim.ACLineSegment)
 ```
 
 Additional examples of usage are available on ReadTheDocs.
