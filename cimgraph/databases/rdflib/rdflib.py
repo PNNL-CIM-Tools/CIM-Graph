@@ -13,7 +13,6 @@ from rdflib.namespace import RDF
 import cimgraph.queries.sparql as sparql
 from cimgraph.databases import (ConnectionInterface, ConnectionParameters,
                                 QueryResponse)
-from cimgraph.models.graph_model import GraphModel
 
 _log = logging.getLogger(__name__)
 

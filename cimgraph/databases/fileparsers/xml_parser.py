@@ -10,7 +10,6 @@ from uuid import UUID
 
 from defusedxml.ElementTree import parse
 
-import cimgraph.utils as cimUtils
 from cimgraph.data_profile.known_problem_classes import ClassesWithManytoMany
 from cimgraph.databases import (ConnectionInterface, ConnectionParameters,
                                 Graph, QueryResponse)
