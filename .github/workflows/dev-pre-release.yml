@@ -75,7 +75,7 @@
 
     call-deploy-release:
       needs: setup-defaults
-      uses: GRIDAPPSD/.github/.github/workflows/deploy-dev-release.yml@v2
+      uses: GRIDAPPSD/.github/.github/workflows/deploy-dev-release.yml@v3
       permissions:
         contents: write  # To push a branch
         pull-requests: write  # To create a PR from that branch
