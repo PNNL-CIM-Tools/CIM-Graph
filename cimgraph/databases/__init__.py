@@ -5,8 +5,6 @@ from abc import ABC, abstractmethod
 from dataclasses import dataclass, field, is_dataclass
 from uuid import UUID
 
-from rdflib import URIRef
-
 _log = logging.getLogger(__name__)
 
 Graph = dict[type, dict[UUID, object]]
