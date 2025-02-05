@@ -41,7 +41,7 @@ Key features:
 
 ## Requirements
 
-CIM-Graph requires a python version >=3.8 and <4. No testing has been done with other versions.
+CIM-Graph requires a python version >=3.10 and <4. No testing has been done with other versions.
 
 Support is currently offered for opening XML, JSON-LD, and CSV files
 
@@ -184,6 +184,10 @@ network.pprint(cim.ACLineSegment)
 ```
 
 Additional examples of usage are available on ReadTheDocs.
+
+## Developer Install
+
+We use poetry as the package manager.  We require poetry >= 2.0.0 which was released in early 2025.
 
 ## Attribution and Disclaimer
 
