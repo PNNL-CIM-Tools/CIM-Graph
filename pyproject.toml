@@ -18,7 +18,7 @@ rdflib = "^7.0.0"
 oxrdflib = "^0.3.6"
 rdflib-neo4j = "^0.0.1b6"
 mysql-connector-python = "^8.0.0"
-gridappsd-python = "^2024.6.0"
+gridappsd-python = "^2025.2.1"
 nest-asyncio = "^1.5.8"
 
 [tool.poetry.group.dev.dependencies]
