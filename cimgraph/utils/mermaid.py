@@ -157,7 +157,7 @@ def class_all_assc_mermaid(cim_class:type, show_inherited:bool=False)->str:
     return mermaid
 
 def get_mermaid(root:object|type|list, show_attributes:bool=True,
-                show_inherited:bool=False, theme:str='dark'):
+                show_inherited:bool=False, theme:str='neutral'):
     if isinstance(root, Identity):
         mermaid = object_mermaid(root)
     elif isinstance(root, enum.EnumMeta):
@@ -258,7 +258,8 @@ def get_mermaid_path(root:object|type, path:list[str],
         mermaid = add_class_path_mermaid(root, path, mermaid, show_attributes, show_inherited)
     return mermaid
 
-def add_mermaid_path(root:object|type, path:list[str],mermaid:str)->str:
+def add_mermaid_path(root:object|type, path:list[str], mermaid:str,
+                     show_attributes:bool=True, show_inherited:bool=False)->str:
 
     if isinstance(root, Identity):
         mermaid += short_uri_mermaid(root).replace('(','("').replace(')','")')
@@ -266,5 +267,5 @@ def add_mermaid_path(root:object|type, path:list[str],mermaid:str)->str:
     elif isinstance(root, enum.EnumMeta):
         mermaid = ''
     elif is_dataclass(root):
-        pass
+        mermaid = add_class_path_mermaid(root, path, mermaid, show_attributes, show_inherited)
     return mermaid
