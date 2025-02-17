@@ -360,30 +360,6 @@ flowchart LR
     A66508A9 -- Location --> 3A63B621
     3A63B621("**Location**
         name: 650632_Loc")
-    A04CDFB1("**ACLineSegment**
-        name: 650632")
-    A04CDFB1 -- ACLineSegmentPhases --> 2A5A1025
-    2A5A1025("**ACLineSegmentPhase**
-        name: 650632_A")
-    2A5A1025 -- Location --> 3A63B621
-    3A63B621("**Location**
-        name: 650632_Loc")
-    A04CDFB1("**ACLineSegment**
-        name: 650632")
-    A04CDFB1 -- ACLineSegmentPhases --> 2D60B241
-    2D60B241("**ACLineSegmentPhase**
-        name: 650632_B")
-    2D60B241 -- Location --> 3A63B621
-    3A63B621("**Location**
-        name: 650632_Loc")
-    A04CDFB1("**ACLineSegment**
-        name: 650632")
-    A04CDFB1 -- ACLineSegmentPhases --> A66508A9
-    A66508A9("**ACLineSegmentPhase**
-        name: 650632_C")
-    A66508A9 -- Location --> 3A63B621
-    3A63B621("**Location**
-        name: 650632_Loc")
 ```
 
 ### Visualizing Graph Traversal of UML Classes
