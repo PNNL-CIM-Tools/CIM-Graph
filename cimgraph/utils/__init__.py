@@ -6,8 +6,7 @@ from cimgraph.utils.get_all_data import (get_all_bus_data, get_all_data,
                                          get_all_measurement_data,
                                          get_all_switch_data,
                                          get_all_transformer_data)
-from cimgraph.utils.mermaid import (add_class_path_mermaid,
-                                    add_object_path_mermaid, get_mermaid,
+from cimgraph.utils.mermaid import (add_mermaid_path, get_mermaid,
                                     get_mermaid_path)
 from cimgraph.utils.object_utils import create_object
 from cimgraph.utils.write_csv import write_csv

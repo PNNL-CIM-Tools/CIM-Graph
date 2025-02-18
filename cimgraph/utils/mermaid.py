@@ -9,14 +9,14 @@ INDENT = '    '
 def short_attr_mermaid(obj:object, attr:str, num_indent:int=1) -> str:
     mermaid = ''
     edge = getattr(obj, attr)
-    if len(attr) > 20:
-        mermaid += f'\n{INDENT*(num_indent)}{attr[:20]}\n'
-        mermaid += f'{INDENT*(num_indent)}{attr[20:]}:'
+    if len(attr) > 22:
+        mermaid += f'\n{INDENT*(num_indent)}{attr[:22]}\n'
+        mermaid += f'{INDENT*(num_indent)}{attr[22:]}:'
     else:
         mermaid += '\n' + INDENT*(num_indent) + f'{attr}: '
-    if len(str(edge)) > 20:
-        mermaid += f'{edge[:20]}\n'
-        mermaid += f'{edge[20:]}'
+    if len(str(edge)) > 22:
+        mermaid += f'{edge[:22]}\n'
+        mermaid += f'{edge[22:]}'
     else:
         mermaid += f'{edge}'
     return mermaid
@@ -26,9 +26,9 @@ def short_uri_mermaid(obj:object, num_indent:int=1) -> str:
     mermaid = ''
     obj_class = obj.__class__.__name__
     short_uri = obj.uri().split('-')[0]
-    if len(obj_class) > 20:
-        mermaid += INDENT*(num_indent) + short_uri + f'(**{obj_class[:20]}**\n'
-        mermaid += INDENT*(num_indent+1) + f'**{obj_class[20:]}**'
+    if len(obj_class) > 22:
+        mermaid += INDENT*(num_indent) + short_uri + f'(**{obj_class[:22]}**\n'
+        mermaid += INDENT*(num_indent+1) + f'**{obj_class[22:]}**'
     else:
         mermaid += INDENT*(num_indent) + short_uri + f'(**{obj_class}**'
     if 'name' in obj.__dataclass_fields__:
@@ -57,17 +57,17 @@ def object_mermaid(obj:object) -> str:
     for attribute in obj.__dataclass_fields__:
         edge = getattr(obj, attribute)
         if is_dataclass(edge) and edge is not None:
-            if len(attribute) > 20:
-                mermaid += f'\n{INDENT*2}[{attribute[:20]}\n'
-                mermaid += f'{INDENT*2}{attribute[20:]}]\n'
+            if len(attribute) > 22:
+                mermaid += f'\n{INDENT*2}[{attribute[:22]}\n'
+                mermaid += f'{INDENT*2}{attribute[22:]}]\n'
             else:
                 mermaid += INDENT*2 + f'[{attribute}]\n'
             mermaid += short_uri_mermaid(edge, num_indent=3)
 
         elif type(edge) == list and edge != []:
-            if len(attribute) > 20:
-                mermaid += f'\n{INDENT*2}[{attribute[:20]}\n'
-                mermaid += f'{INDENT*2}{attribute[20:]}]\n'
+            if len(attribute) > 22:
+                mermaid += f'\n{INDENT*2}[{attribute[:22]}\n'
+                mermaid += f'{INDENT*2}{attribute[22:]}]\n'
             else:
                 mermaid += INDENT*2 + f'["{attribute}"]\n'
             for item in edge:
@@ -196,12 +196,22 @@ def get_mermaid(root:object|type|list, show_attributes:bool=True,
 
     return mermaid
 
-def add_object_path_mermaid(root:object, path:list[str], mermaid:str)->str:
+def add_object_path_mermaid(root:object, path:str, mermaid:str)->str:
     edge = root
     previous_edge = root
+    if type(path) is list:
+        pass
+    elif type(path) is str:
+        path = path.split('.')
+
     for attr in path:
         if isinstance(edge, Identity):
-            next_edge = getattr(edge,attr)
+            if '[' in attr:
+                attr_list = attr.split('[')
+                next_edge = getattr(edge,attr_list[0])
+                next_edge = eval(f'next_edge[{attr_list[1]}')
+            else:
+                next_edge = getattr(edge,attr)
         elif type(edge) is list:
             next_edge = eval(f'edge{attr}')
             edge = previous_edge
@@ -211,7 +221,7 @@ def add_object_path_mermaid(root:object, path:list[str], mermaid:str)->str:
             # Add an arrow to next class
             short_uri = edge.uri().split('-')[0]
             next_short_uri = next_edge.uri().split('-')[0]
-            mermaid += INDENT + f'{short_uri} -- {attr} --> {next_short_uri}\n'
+            mermaid += INDENT + f'{short_uri} -- "{attr}" --> {next_short_uri}\n'
             text = short_uri_mermaid(next_edge)
             mermaid += text.replace('(','("').replace(')','")')
 
@@ -224,9 +234,13 @@ def add_object_path_mermaid(root:object, path:list[str], mermaid:str)->str:
         edge = next_edge
     return mermaid
 
-def add_class_path_mermaid(root:type, path:list[str], mermaid:str,
+def add_class_path_mermaid(root:type, path:str|list[str], mermaid:str,
                            show_attributes:bool=True, show_inherited:bool=False)->str:
     edge = root
+    if type(path) is list:
+        pass
+    elif type(path) is str:
+        path = path.split('.')
     for attr in path:
         if '__subclasses__' in attr:
             next_class = eval(f'edge.{attr}')
@@ -258,7 +272,7 @@ def get_mermaid_path(root:object|type, path:list[str],
         mermaid = add_class_path_mermaid(root, path, mermaid, show_attributes, show_inherited)
     return mermaid
 
-def add_mermaid_path(root:object|type, path:list[str], mermaid:str,
+def add_mermaid_path(root:object|type, path:str, mermaid:str,
                      show_attributes:bool=True, show_inherited:bool=False)->str:
 
     if isinstance(root, Identity):
