@@ -1,9 +1,15 @@
+import base64
 import enum
+import logging
 from dataclasses import is_dataclass
-from textwrap import indent
+
+import requests
 
 import cimgraph
 from cimgraph.data_profile.identity import Identity
+
+_log = logging.getLogger(__name__)
+
 
 INDENT = '    '
 
@@ -117,7 +123,7 @@ def class_mermaid(cim_class: type, show_attributes: bool = True, show_inherited:
     parent_classes.pop(len(parent_classes) - 1)
     mermaid = ''
 
-    if type(cim_class) is not enum.EnumMeta and len(parent_classes) > 1:
+    if type(cim_class) is not enum.EnumMeta:# and len(parent_classes) > 1:
         mermaid = INDENT + 'class ' + cim_class.__name__ + '{\n'
         if show_attributes:
             for attribute in cim_class.__annotations__.keys():
@@ -388,8 +394,8 @@ def add_mermaid_path(root: object | type, path: str | list[str], mermaid: str,
 
     Args:
         root (object | type): The root object or class.
-        path (str): The attribute path.
-        mermaid (str, list[str]): The initial mermaid diagram.
+        path (str, list[str]): The attribute path.
+        mermaid (str): The initial mermaid diagram.
         show_attributes (bool, optional): Whether to show attributes. Defaults to True.
         show_inherited (bool, optional): Whether to show inherited attributes. Defaults to False.
 
@@ -404,3 +410,32 @@ def add_mermaid_path(root: object | type, path: str | list[str], mermaid: str,
     elif is_dataclass(root):
         mermaid = add_class_path_mermaid(root, path, mermaid, show_attributes, show_inherited)
     return mermaid
+
+def download_mermaid(mermaid:str, filename:str) -> None:
+    """
+    Downloads a Mermaid diagram from mermaid.ink and saves as an image
+
+    Args:
+        mermaid (str): The mermaid diagram text.
+        filename (str): The file to which the diagram should be saved
+
+    Returns:
+        None
+    """
+    try:
+        graphbytes = mermaid.encode('ascii')
+        base64_bytes = base64.b64encode(graphbytes)
+        base64_string = base64_bytes.decode('ascii')
+
+        url='https://mermaid.ink/img/' + base64_string
+
+
+        response = requests.get(url, stream=True)
+        response.raise_for_status()  # Raise HTTPError for bad responses (4xx or 5xx)
+
+        with open(filename, 'wb') as file:
+            for chunk in response.iter_content(chunk_size=8192):
+                file.write(chunk)
+
+    except requests.exceptions.RequestException as e:
+        _log.error(f'Error downloading diagram')
