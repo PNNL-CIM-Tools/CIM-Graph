@@ -1,12 +1,24 @@
 import enum
 from dataclasses import is_dataclass
+from textwrap import indent
 
 import cimgraph
 from cimgraph.data_profile.identity import Identity
 
 INDENT = '    '
 
-def short_attr_mermaid(obj:object, attr:str, num_indent:int=1) -> str:
+def short_attr_mermaid(obj: object, attr: str, num_indent: int = 1) -> str:
+    """
+    Generate a mermaid short representation of an attribute.
+
+    Args:
+        obj (object): The object containing the attribute.
+        attr (str): The attribute name.
+        num_indent (int, optional): Number of indentations. Defaults to 1.
+
+    Returns:
+        str: The mermaid representation of the attribute.
+    """
     mermaid = ''
     edge = getattr(obj, attr)
     if len(attr) > 22:
@@ -21,8 +33,17 @@ def short_attr_mermaid(obj:object, attr:str, num_indent:int=1) -> str:
         mermaid += f'{edge}'
     return mermaid
 
+def short_uri_mermaid(obj: object, num_indent: int = 1) -> str:
+    """
+    Generate a mermaid short representation of an object's URI.
 
-def short_uri_mermaid(obj:object, num_indent:int=1) -> str:
+    Args:
+        obj (object): The object.
+        num_indent (int, optional): Number of indentations. Defaults to 1.
+
+    Returns:
+        str: The mermaid representation of the object's URI.
+    """
     mermaid = ''
     obj_class = obj.__class__.__name__
     short_uri = obj.uri().split('-')[0]
@@ -38,13 +59,17 @@ def short_uri_mermaid(obj:object, num_indent:int=1) -> str:
     mermaid += ')\n'
     return mermaid
 
+def object_mermaid(obj: object) -> str:
+    """
+    Generate a mermaid mindmap of an object.
 
+    Args:
+        obj (object): The object to represent.
 
-
-def object_mermaid(obj:object) -> str:
-
+    Returns:
+        str: The mermaid mindmap representation of the object.
+    """
     mermaid = 'mindmap\n'
-
     # Build starting node as round circle with all attributes that are not None
     mermaid += short_uri_mermaid(obj).replace('(','((')[:-2]
     for attribute in obj.__dataclass_fields__:
@@ -76,11 +101,23 @@ def object_mermaid(obj:object) -> str:
 
     return mermaid
 
-def class_mermaid(cim_class:type, show_attributes:bool=True, show_inherited:bool=False)->str:
+def class_mermaid(cim_class: type, show_attributes: bool = True, show_inherited: bool = False) -> str:
+    """
+    Generate a mermaid class diagram of a CIM class.
 
+    Args:
+        cim_class (type): The CIM class to represent.
+        show_attributes (bool, optional): Whether to show class attributes. Defaults to True.
+        show_inherited (bool, optional): Whether to show inherited attributes. Defaults to False.
+
+    Returns:
+        str: The mermaid class diagram representation of the CIM class.
+    """
     parent_classes = list(cim_class.__mro__)
     parent_classes.pop(len(parent_classes) - 1)
-    if type(cim_class) is not enum.EnumMeta and len(parent_classes)>1:
+    mermaid = ''
+
+    if type(cim_class) is not enum.EnumMeta and len(parent_classes) > 1:
         mermaid = INDENT + 'class ' + cim_class.__name__ + '{\n'
         if show_attributes:
             for attribute in cim_class.__annotations__.keys():
@@ -97,25 +134,38 @@ def class_mermaid(cim_class:type, show_attributes:bool=True, show_inherited:bool
                     pass
 
             if show_inherited:
-
                 for parent in parent_classes:
                     if len(parent.__annotations__.keys()) > 0 and parent.__name__ != cim_class.__name__:
-
                         for attribute in parent.__annotations__.keys():
                             attr = parent.__dataclass_fields__[attribute]
                             attr_type = str(attr.type)
                             try:
                                 if 'Attribute' in attr.metadata['type'] or 'enumeration' in attr.metadata['type']:
                                     edge = attr_type.split('[')[1].split(']')[0]
-
                                     mermaid += f'{INDENT*2}+ {attribute} : {edge}\n'
                             except:
                                 pass
-
         mermaid += INDENT + '}\n'
+    elif type(cim_class) is enum.EnumMeta:
+        mermaid = INDENT + 'class ' + cim_class.__name__ + ':::enum {\n'
+        mermaid += INDENT*2 + '<<enumeration>>\n'
+        for value in cim_class.__members__.keys():
+            mermaid += INDENT*2 + value + '\n'
+        mermaid += '}\n'
+
     return mermaid
 
-def class_assc_mermaid(cim_class:type, association:str)->str:
+def class_assc_mermaid(cim_class: type, association: str) -> str:
+    """
+    Generate a mermaid class association diagram.
+
+    Args:
+        cim_class (type): The CIM class to represent.
+        association (str): The association name.
+
+    Returns:
+        str: The mermaid class association diagram.
+    """
     attr = cim_class.__dataclass_fields__[association]
     attr_type = str(attr.type)
     mermaid = ''
@@ -136,67 +186,97 @@ def class_assc_mermaid(cim_class:type, association:str)->str:
         pass
     return mermaid
 
-def class_all_assc_mermaid(cim_class:type, show_inherited:bool=False)->str:
+def class_all_assc_mermaid(cim_class: type, show_inherited: bool = False) -> str:
+    """
+    Generate a mermaid diagram of all class associations.
 
+    Args:
+        cim_class (type): The CIM class to represent.
+        show_inherited (bool, optional): Whether to show inherited associations. Defaults to False.
+
+    Returns:
+        str: The mermaid diagram of all class associations.
+    """
     parent_classes = list(cim_class.__mro__)
     parent_classes.pop(len(parent_classes) - 1)
-    if type(cim_class) is not enum.EnumMeta and len(parent_classes)>1:
-        mermaid = INDENT + f'{parent_classes[1].__name__} <|-- {cim_class.__name__} : inherits from\n'
+    mermaid = ''
+
+    if type(cim_class) is not enum.EnumMeta and len(parent_classes) > 1:
+        mermaid += INDENT + f'{parent_classes[1].__name__} <|-- {cim_class.__name__} : inherits from\n'
 
         for attribute in cim_class.__annotations__.keys():
             mermaid += class_assc_mermaid(cim_class, attribute)
 
         if show_inherited:
-
             for parent_class in parent_classes:
                 if len(parent_class.__annotations__.keys()) > 0 and parent_class.__name__ != cim_class.__name__:
-
                     for attribute in parent_class.__annotations__.keys():
                         mermaid += class_assc_mermaid(cim_class, attribute)
 
     return mermaid
 
-def get_mermaid(root:object|type|list, show_attributes:bool=True,
-                show_inherited:bool=False, theme:str='neutral'):
-    if isinstance(root, Identity):
+def get_mermaid(root: object | type | list, show_attributes: bool = True, show_inherited: bool = False,
+                theme: str = 'neutral', layout: str = 'dagre') -> str:
+    """
+    Generate a mermaid representation of provided root object or class.
+
+    Args:
+        root (object | type | list): The root object or class to represent.
+        show_attributes (bool, optional): Whether to show attributes. Defaults to True.
+        show_inherited (bool, optional): Whether to show inherited attributes. Defaults to False.
+        theme (str, optional): The theme for mermaid diagram. Defaults to 'neutral'.
+        layout (str, optional): The layout for mermaid diagram. Defaults to 'dagre'.
+
+    Returns:
+        str: The mermaid diagram representation.
+    """
+    mermaid = ''
+    if isinstance(root, Identity) or type(root) is enum.EnumMeta:
         mermaid = object_mermaid(root)
-    elif isinstance(root, enum.EnumMeta):
-        mermaid = ''
     elif is_dataclass(root):
-        mermaid = "%%{init: {'theme':'" + str(theme) + "'}}%%\n"
+        mermaid = '%%{init: {"theme":"' + str(theme) + "'}}%%\n"
         mermaid += 'classDiagram\n'
         mermaid += class_mermaid(root, show_attributes, show_inherited)
         mermaid += class_all_assc_mermaid(root, show_inherited)
     elif type(root) == list:
+        if set(map(type, root)) == {type} or set(map(type, root)) == {enum.EnumMeta, type}:
+            mermaid = '%%{init: {"theme":"' + str(theme) + "'}}%%\n"
+            mermaid += 'classDiagram\n'
+            for value in root:
+                mermaid += class_mermaid(value, show_attributes, show_inherited)
+                for attr in value.__annotations__:
+                    try:
+                        next_str = value.__annotations__[attr]
+                        next_class_name = next_str.split('[')[1].split(']')[0]
+                        next_class = eval(f'{value.__module__}.{next_class_name}')
+                        if next_class in root:
+                            mermaid += class_assc_mermaid(value, attr)
+                    except:
+                        pass
+                parent_classes = list(value.__mro__)
+                if len(parent_classes) > 1:
+                    if parent_classes[1] in root:
+                        mermaid += INDENT + f'{parent_classes[1].__name__} <|-- {value.__name__} : inherits from\n'
 
-            if set(map(type, root)) == {type}:
-                mermaid = "%%{init: {'theme':'" + str(theme) + "'}}%%\n"
-                mermaid += 'classDiagram\n'
-                for value in root:
-                    mermaid += class_mermaid(value, show_attributes, show_inherited)
-                    for attr in value.__annotations__:
-                        try:
-                            next_str = value.__annotations__[attr]
-                            next_class_name=next_str.split('[')[1].split(']')[0]
-                            next_class = eval(f'{value.__module__}.{next_class_name}')
-                            if next_class in root:
-                                mermaid += class_assc_mermaid(value, attr)
-                        except:
-                            pass
-                    parent_classes = list(value.__mro__)
-                    if len(parent_classes)>1:
-                        if parent_classes[1] in root:
-                            mermaid += INDENT + f'{parent_classes[1].__name__} <|-- {value.__name__} : inherits from\n'
-
-
-            if set(map(isinstance, root, [Identity]*len(root))) == {True}:
-                mermaid = ''
-                for value in root:
-                    mermaid += object_mermaid(value)
+        if set(map(isinstance, root, [Identity] * len(root))) == {True}:
+            mermaid = ''
+            for value in root:
+                mermaid += object_mermaid(value)
 
     return mermaid
 
-def add_object_path_mermaid(root:object, path:str, mermaid:str)->str:
+def add_object_path_mermaid(root: object, path: str, mermaid: str) -> str:
+    """
+    Add a path representation to an existing mermaid diagram of an object.
+
+    Args:
+        root (object): The root object.
+        path (str): The attribute path.
+        mermaid (str): The initial mermaid diagram.
+
+    Returns:
+        str: The updated mermaid diagram with the path representation.
+    """
     edge = root
     previous_edge = root
     if type(path) is list:
@@ -208,10 +288,10 @@ def add_object_path_mermaid(root:object, path:str, mermaid:str)->str:
         if isinstance(edge, Identity):
             if '[' in attr:
                 attr_list = attr.split('[')
-                next_edge = getattr(edge,attr_list[0])
+                next_edge = getattr(edge, attr_list[0])
                 next_edge = eval(f'next_edge[{attr_list[1]}')
             else:
-                next_edge = getattr(edge,attr)
+                next_edge = getattr(edge, attr)
         elif type(edge) is list:
             next_edge = eval(f'edge{attr}')
             edge = previous_edge
@@ -223,7 +303,7 @@ def add_object_path_mermaid(root:object, path:str, mermaid:str)->str:
             next_short_uri = next_edge.uri().split('-')[0]
             mermaid += INDENT + f'{short_uri} -- "{attr}" --> {next_short_uri}\n'
             text = short_uri_mermaid(next_edge)
-            mermaid += text.replace('(','("').replace(')','")')
+            mermaid += text.replace('(', '("').replace(')', '")')
 
         elif type(next_edge) in [str, float, bool, int]:
             mermaid = mermaid[:-3]
@@ -234,8 +314,21 @@ def add_object_path_mermaid(root:object, path:str, mermaid:str)->str:
         edge = next_edge
     return mermaid
 
-def add_class_path_mermaid(root:type, path:str|list[str], mermaid:str,
-                           show_attributes:bool=True, show_inherited:bool=False)->str:
+def add_class_path_mermaid(root: type, path: str | list[str], mermaid: str,
+                           show_attributes: bool = True, show_inherited: bool = False) -> str:
+    """
+    Add a class path representation to an existing mermaid diagram.
+
+    Args:
+        root (type): The root class.
+        path (str | list[str]): The attribute path.
+        mermaid (str): The initial mermaid diagram.
+        show_attributes (bool, optional): Whether to show attributes. Defaults to True.
+        show_inherited (bool, optional): Whether to show inherited attributes. Defaults to False.
+
+    Returns:
+        str: The updated mermaid diagram with the class path representation.
+    """
     edge = root
     if type(path) is list:
         pass
@@ -248,20 +341,36 @@ def add_class_path_mermaid(root:type, path:str|list[str], mermaid:str,
         else:
             mermaid += class_assc_mermaid(edge, attr)
             next_str = edge.__dataclass_fields__[attr]
-            next_class_name=next_str.type.split('[')[1].split(']')[0]
+            next_class_name = next_str.type.split('[')[1].split(']')[0]
             next_class = eval(f'{edge.__module__}.{next_class_name}')
             mermaid += class_mermaid(next_class, show_attributes, show_inherited)
         edge = next_class
     return mermaid
 
-def get_mermaid_path(root:object|type, path:list[str],
-                     direction:str='LR', theme:str='neutral',
-                     show_attributes:bool=True, show_inherited:bool=False)->str:
+def get_mermaid_path(root: object | type, path: str | list[str],
+                     direction: str = 'LR', theme: str = 'neutral',
+                     show_attributes: bool = True, show_inherited: bool = False) -> str:
+    """
+    Generate a mermaid diagram of a specified path starting from a root object or class.
+    The path is a cimgraph traversal (e.g. '.Terminals[0].ConnectivityNode') or
+    a list with UML association names separated by commas (e.g. ['Terminals','[0]'])
 
+    Args:
+        root (object | type): The root object or class.
+        path (str, list[str]): The attribute path
+        direction (str, optional): The direction of the diagram. Defaults to 'LR'.
+        theme (str, optional): The theme for the diagram. Defaults to 'neutral'.
+        show_attributes (bool, optional): Whether to show attributes. Defaults to True.
+        show_inherited (bool, optional): Whether to show inherited attributes. Defaults to False.
+
+    Returns:
+        str: The mermaid diagram representation of the specified path.
+    """
+    mermaid = ''
     if isinstance(root, Identity):
         mermaid = '%%{init: {"theme":"' + str(theme) + '"}}%%\n'
         mermaid += f'flowchart {direction}\n'
-        mermaid += short_uri_mermaid(root).replace('(','("').replace(')','")')
+        mermaid += short_uri_mermaid(root).replace('(', '("').replace(')', '")')
         mermaid = add_object_path_mermaid(root, path, mermaid)
     elif isinstance(root, enum.EnumMeta):
         mermaid = ''
@@ -272,11 +381,23 @@ def get_mermaid_path(root:object|type, path:list[str],
         mermaid = add_class_path_mermaid(root, path, mermaid, show_attributes, show_inherited)
     return mermaid
 
-def add_mermaid_path(root:object|type, path:str, mermaid:str,
-                     show_attributes:bool=True, show_inherited:bool=False)->str:
+def add_mermaid_path(root: object | type, path: str | list[str], mermaid: str,
+                     show_attributes: bool = True, show_inherited: bool = False) -> str:
+    """
+    Add a mermaid path representation to an existing diagram.
 
+    Args:
+        root (object | type): The root object or class.
+        path (str): The attribute path.
+        mermaid (str, list[str]): The initial mermaid diagram.
+        show_attributes (bool, optional): Whether to show attributes. Defaults to True.
+        show_inherited (bool, optional): Whether to show inherited attributes. Defaults to False.
+
+    Returns:
+        str: The updated mermaid diagram with the path representation.
+    """
     if isinstance(root, Identity):
-        mermaid += short_uri_mermaid(root).replace('(','("').replace(')','")')
+        mermaid += short_uri_mermaid(root).replace('(', '("').replace(')', '")')
         mermaid = add_object_path_mermaid(root, path, mermaid)
     elif isinstance(root, enum.EnumMeta):
         mermaid = ''
