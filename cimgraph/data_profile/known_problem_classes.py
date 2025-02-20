@@ -194,7 +194,7 @@ class ClassesWithoutMRID:
             'SchedulingCoordinatorUser',
             'SubstitutionResourceList',
             'PackageDependenciesCIMVersion',
-            'Model/TC57CIM/IEC61968/Work WorkTimeScheduleKind' ]
+            'WorkTimeScheduleKind' ]
         self.units = [
             'WPerHz',
             'g'

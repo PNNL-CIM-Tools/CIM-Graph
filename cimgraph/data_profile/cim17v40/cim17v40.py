@@ -65470,14 +65470,14 @@ class ServiceRequestKind(Enum):
     Test work.
     '''
 
-    turn-off = 'turn-off'
+    turn_off = 'turn_off'
     '''
-    Temporarily turn off the service but leave the connection in place.
+    Temporarily turn off the service but leave the connection in place. THIS ATTRIBUTE HAS BEEN RENAMED TO COMPLY WITH PYTHON SYNTAX
     '''
 
-    turn-on = 'turn-on'
+    turn_on = 'turn_on'
     '''
-    Turn on the service.
+    Turn on the service. THIS ATTRIBUTE HAS BEEN RENAMED TO COMPLY WITH PYTHON SYNTAX
     '''
 
 class ShortCircuitRotorKind(Enum):

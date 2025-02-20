@@ -92,19 +92,21 @@ class BlazegraphConnection(ConnectionInterface):
         return output
 
 
-    def get_object(self, mrid: str, graph: dict = {}) -> object:
+    def get_object(self, mRID: str, graph: dict = None) -> object:
         """
         Retrieve an object from the Blazegraph database using its mRID.
 
         Args:
-            mrid (str): The mRID of the object to be retrieved.
+            mRID (str): The mRID of the object to be retrieved.
             graph (dict, optional): The graph database to store the fetched object. Defaults to {}.
 
         Returns:
             object: The retrieved object.
         """
+        if graph is None:
+            graph = {}
         # Use sparql module to build get correct query string
-        sparql_message = sparql.get_object_sparql(mrid, self.connection_params)
+        sparql_message = sparql.get_object_sparql(mRID, self.connection_params)
         # Execute query
         query_output = self.execute(sparql_message)
         obj = None
