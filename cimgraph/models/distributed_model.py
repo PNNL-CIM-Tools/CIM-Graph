@@ -91,5 +91,5 @@ class DistributedModel:
             _log.info('no instances of '+str(cim_class.__name__)+' found in catalog.')
 
         return json_dump
-    
-    
+
+
