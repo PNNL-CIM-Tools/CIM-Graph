@@ -11,8 +11,7 @@ from uuid import UUID
 from defusedxml.ElementTree import parse
 
 from cimgraph.data_profile.known_problem_classes import ClassesWithManytoMany
-from cimgraph.databases import (ConnectionInterface, ConnectionParameters,
-                                Graph, QueryResponse)
+from cimgraph.databases import ConnectionInterface, ConnectionParameters, Graph, QueryResponse
 
 # from cimgraph.utils.timing import timing as time_func
 
