@@ -62,7 +62,7 @@ class RDFlibConnection(ConnectionInterface):
         for result in query_output:
             uri = result['identifier']['value']
             obj_class = result['obj_class']['value']
-            class_type = eval(f'self.cim.{obj_class}')
+            class_type = getattr(self.cim, obj_class)
             obj = self.create_object(graph, class_type, uri)
         return obj
 
@@ -86,7 +86,7 @@ class RDFlibConnection(ConnectionInterface):
             eq_class = eq['@type']
 
             if eq_class in self.cim.__all__:
-                eq_class = eval(f'self.cim.{eq_class}')
+                eq_class = getattr(self.cim, eq_class)
                 equipment = self.create_object(graph, eq_class, eq_id)
 
             else:
@@ -184,7 +184,7 @@ class RDFlibConnection(ConnectionInterface):
                         else:
                             edge_mRID = value.split('#')[1]
                     if edge_class in self.cim.__all__:
-                        edge_class = eval(f'self.cim.{edge_class}')
+                        edge_class = getattr(self.cim, edge_class)
                     else:
                         _log.warning(f'unknown class {edge_class}')
                         continue
@@ -196,7 +196,7 @@ class RDFlibConnection(ConnectionInterface):
 
 
                 elif is_enumeration:
-                    edge_enum = eval(f'self.cim.{enum_class}(enum_value)')
+                    edge_enum = getattr(self.cim, enum_class)(enum_value)
                     association = self.check_attribute(cim_class, attribute)
                     if association is not None:
                         setattr(graph[cim_class][identifier], association, edge_enum)

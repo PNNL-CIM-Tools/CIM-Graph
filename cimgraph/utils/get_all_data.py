@@ -143,7 +143,7 @@ def get_all_data(network: GraphModel):
     while set(parsed_classes) != set(all_classes):
         for class_name in all_classes:
             if class_name not in parsed_classes:
-                class_type = eval(f'cim.{class_name}')
+                class_type = getattr(cim, class_name)
                 if class_type not in attr_only:
                     # print('edges', class_name)
                     network.get_all_edges(class_type)

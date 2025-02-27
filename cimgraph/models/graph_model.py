@@ -60,7 +60,7 @@ class GraphModel:
 
         # If equipment class is in data profile, add it to the graph also
         if obj_class in self.cim.__all__:
-            obj_class = eval(f'self.cim.{obj_class}')
+            obj_class = getattr(self.cim, obj_class)
             obj = self.connection.create_object(class_type=obj_class, uri=obj_id, graph=graph)
             return obj
         else:
