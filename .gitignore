@@ -17,8 +17,21 @@ poetry.lock
 env/
 build/
 develop-eggs/
+*.py[cod]
+*$py.class
+
+# C extensions
+*.so
+
+# Distribution / packaging
+.Python
+/docker/
+/neo4j/
+poetry.lock
+env/
+build/
+develop-eggs/
 dist/
-<<<<<<< HEAD
 downloads/
 eggs/
 .eggs/

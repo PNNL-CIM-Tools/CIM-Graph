@@ -11,8 +11,7 @@ import mysql.connector
 from SPARQLWrapper import JSON, POST, SPARQLWrapper
 
 import cimgraph.queries.sparql as sparql
-from cimgraph.databases import (ConnectionInterface, ConnectionParameters,
-                                QueryResponse)
+from cimgraph.databases import ConnectionInterface, ConnectionParameters, QueryResponse
 from cimgraph.models.graph_model import GraphModel
 
 _log = logging.getLogger(__name__)
@@ -72,7 +71,7 @@ class MySQLJSONConnection(ConnectionInterface):
             self.create_object(graph, self.cim.ConnectivityNode, node)
             self.create_object(graph, self.cim.Terminal, terminal)
             if eq_class in self.cim.__all__:
-                eq_class = eval(f'self.cim.{eq_class}')
+                eq_class = getattr(self.cim, eq_class)
                 obj = self.create_object(graph, eq_class, eq_id)
 
             else:
@@ -135,7 +134,7 @@ class MySQLJSONConnection(ConnectionInterface):
                     edge_mRID = edge['@id']
                     edge_class = edge['@type']
                     if edge_class in self.cim.__all__:
-                        edge_class = eval(f'self.cim.{edge_class}')
+                        edge_class = getattr(self.cim, edge_class)
                     else:
                         print('unknown class', edge_class)
                         continue
@@ -167,7 +166,7 @@ class MySQLJSONConnection(ConnectionInterface):
                             attr_str = cim_class.__dataclass_fields__[node_attr].type
                             edge_parent = attr_str.split('[')[1].split(']')[0]
                             if edge_parent in self.cim.__all__:
-                                parent_class = eval(f'self.cim.{edge_parent}')
+                                parent_class = getattr(self.cim, edge_parent)
                                 if issubclass(edge_class, parent_class):
                                     self.create_edge(graph, cim_class, mRID, node_attr, edge_class,
                                                      edge_mRID)
@@ -175,7 +174,7 @@ class MySQLJSONConnection(ConnectionInterface):
 
                 elif is_enumeration:
                     if enum_class in self.cim.__all__:    # if enumeration
-                        edge_enum = eval(f'self.cim.{enum_class}(enum_value)')
+                        edge_enum = getattr(self.cim, enum_class)(enum_value)
                         setattr(graph[cim_class][mRID], attribute[1], edge_enum)
                 else:
                     setattr(graph[cim_class][mRID], attribute[1], value)

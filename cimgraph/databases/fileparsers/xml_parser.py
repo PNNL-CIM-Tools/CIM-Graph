@@ -11,8 +11,7 @@ from uuid import UUID
 from defusedxml.ElementTree import parse
 
 from cimgraph.data_profile.known_problem_classes import ClassesWithManytoMany
-from cimgraph.databases import (ConnectionInterface, ConnectionParameters,
-                                Graph, QueryResponse)
+from cimgraph.databases import ConnectionInterface, ConnectionParameters, Graph, QueryResponse
 
 # from cimgraph.utils.timing import timing as time_func
 
@@ -109,7 +108,7 @@ class XMLFile(ConnectionInterface):
 
         if class_name in self.cim.__all__:
             # print(class_name)
-            cim_class = eval(f'self.cim.{class_name}')
+            cim_class = getattr(self.cim, class_name)
             uri = element.get(f'{self.rdf}about')
             identifier = UUID(uri.strip('_').lower())
             uri = uri.split(':')[-1]  # Extract UUID from the full URI
@@ -126,7 +125,7 @@ class XMLFile(ConnectionInterface):
 
 
         if class_name in self.cim.__all__:
-            cim_class = eval(f'self.cim.{class_name}')
+            cim_class = getattr(self.cim, class_name)
             uri = element.get(f'{self.rdf}about')
 
             identifier = UUID(uri.strip('_').lower())
@@ -169,7 +168,7 @@ class XMLFile(ConnectionInterface):
                     enum_text = enum_text.split('>')[0]
                     enum_class = enum_text.split('.')[0]
                     enum_value = enum_text.split('.')[1]
-                    edge_enum = eval(f'self.cim.{enum_class}(enum_value)')
+                    edge_enum = getattr(self.cim, enum_class)(enum_value)
                     if association is not None:
                         value = setattr(self.graph[cim_class][identifier], association, edge_enum)
                 except:

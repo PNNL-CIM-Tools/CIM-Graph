@@ -81,7 +81,7 @@ class ConnectionInterface(ABC):
         if attr_link in cim_class.__dataclass_fields__:
             association = attr_link
         else:
-            from_class = eval(f'self.cim.{attr_class}')
+            from_class = getattr(self.cim, attr_class)
             if attr_link not in from_class.__dataclass_fields__:
                 _log.warning(f'Association {attr_link} missing from class {attr_class} in data profile')
 

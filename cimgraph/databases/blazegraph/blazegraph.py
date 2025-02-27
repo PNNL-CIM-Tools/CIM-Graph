@@ -11,8 +11,7 @@ from uuid import UUID
 from SPARQLWrapper import JSON, POST, SPARQLWrapper
 
 import cimgraph.queries.sparql as sparql
-from cimgraph.databases import (ConnectionInterface, ConnectionParameters,
-                                Graph, QueryResponse)
+from cimgraph.databases import ConnectionInterface, ConnectionParameters, Graph, QueryResponse
 
 _log = logging.getLogger(__name__)
 
@@ -116,7 +115,7 @@ class BlazegraphConnection(ConnectionInterface):
             obj_class = result['obj_class']['value']  # class type
             # If equipment class is in data profile, create a new object
             if obj_class in self.cim.__all__:
-                class_type = eval(f'self.cim.{obj_class}')  # get type
+                class_type = getattr(self.cim, obj_class)  # get type
                 obj = self.create_object(graph, class_type, uri)  # get object
             else:
                 # If it is not in the profile, log it as a missing class
@@ -201,7 +200,7 @@ class BlazegraphConnection(ConnectionInterface):
 
             # If equipment class is in data profile, add it to the graph also
             if eq_class in self.cim.__all__:
-                eq_class = eval(f'self.cim.{eq_class}')
+                eq_class = getattr(self.cim, eq_class)
                 equipment = self.create_object(graph, eq_class, eq_id)
             else:
                 # If it is not in the profile, log it as a missing class
@@ -230,7 +229,7 @@ class BlazegraphConnection(ConnectionInterface):
                 meas_class = meas['@type']
                 # Get uri strings of nodes and terminals
                 if meas_class in self.cim.__all__:
-                    meas_class = eval(f'self.cim.{meas_class}')
+                    meas_class = getattr(self.cim, meas_class)
                     measurement = self.create_object(graph, meas_class, meas_id)
 
         return graph
@@ -360,7 +359,7 @@ class BlazegraphConnection(ConnectionInterface):
                     edge_mRID = edge['@id']
                     edge_class = edge['@type']
                     if edge_class in self.cim.__all__:
-                        edge_class = eval(f'self.cim.{edge_class}')
+                        edge_class = getattr(self.cim, edge_class)
                     else:
                         _log.warning(f'Class {edge_class} not in data profile')
                         continue
@@ -379,7 +378,7 @@ class BlazegraphConnection(ConnectionInterface):
                     enum_value = enum_text.split('.')[1]
 
                     if enum_class in self.cim.__all__:  # if enumeration
-                        edge_enum = eval(f'self.cim.{enum_class}(enum_value)')
+                        edge_enum = getattr(self.cim, enum_class)(enum_value)
                         new_edges.append(edge_enum)
                         association = self.check_attribute(
                             cim_class, attribute)
