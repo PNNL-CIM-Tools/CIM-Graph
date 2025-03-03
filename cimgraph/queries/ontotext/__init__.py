@@ -1,0 +1,2 @@
+from cimgraph.queries.ontotext.get_all_edges import get_all_edges_ontotext
+from cimgraph.queries.ontotext.get_all_nodes import get_all_nodes_ontotext

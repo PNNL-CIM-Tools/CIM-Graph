@@ -1,0 +1,91 @@
+imaginary = [] = i = reactive
+A2 = amp * amp = A²
+A2h = amp * amp * hour = A²h
+A2s = amp * amp * second = A²s
+APerA = amp / amp = A/A
+APerm = amp / meter = A/m
+As = amp * second = A·s
+CPerkg = coulomb / kilogram = C/m
+CPerm2 = coulomb / meter / meter = C/m²
+CPerm3 = coulomb / meter / meter / meter = C/m³
+FPerm = farad / meter = F/m
+GyPers = gray / second = Gy/s
+HPerm = henry / meter = H/m
+HzPerHz = hertz / hertz = Hz/Hz
+HzPers = herts / second = Hz/s
+JPerK = joule / kelvin = J/K
+JPerkg = joule / kilogram = J/kg
+JPerkgK = joule / kilogram / kelvin = J/kg·K
+JPerm2 = joule / meter / meter = J/m²
+JPerm3 = joule / meter / meter = J/m³
+JPermol = joule / mol = J/mol
+JPermolK = joule / mol / kelvin = J/mol·K
+JPers = joule / second = J/s
+KPers = kelvin / second = K/s
+NPerm = newton / meter = N/m
+Nm = newton * meter = N·m
+PaPers = pascal / second = Pa/s
+Pas = pascal * second = Pas
+Q = imaginary * watt = Q
+Qh = imaginary * watt * hour = Qh
+SPerm = siemens / meter = S/m
+V2 = volt * volt = V²
+V2h = volt * volt * hour = V²h
+VAh = volt * amp * hour = VA·h
+VAr = watt * imaginary = VAr
+VArh = watt * hour * imaginary = VAr·h
+VPerHz = volt / hertz = V/Hz
+VPerV = volt / volt = V/V
+VPerVA = volt / volt / amp = V/VA
+VPerVAr = volt / volt / amp / imaginary = V/VAr
+VPerm = volt / meter = V/m
+Vh = volt * hour = Vh
+Vs = volt * second = Vs
+WPerA = watt / amp = W/A
+WPerHz = watt / hertz = W/Hz
+WPerW = watt / watt = W/W
+WPerm2 = watt / meter / meter = W/m²
+WPerm2sr = watt / meter / meter / steradian = W/m²sr
+WPermK = watt / meter / kelvin = W/m·K
+WPers = watt / second = W/s
+WPersr = watt / steradian = W/sr
+anglemin = arcminute = arcmin
+anglesec = arcsecond = arcsec
+charPers = baud = bps
+character = bit = bit
+cosPhi = [] = cosφ
+ft3 = feet * feet * feet = ft³
+gPerg = gram / gram = g/g
+katPerm3 = katal / meter / meter / meter = kat/m³
+kgPerJ = kilogram / joule = kg/J
+kgPerm3 = kilogram / meter / meter / meter = kg/m³
+kgm = kilogram * meter = kg·m
+kgm2 = kilogram * meter * meter = kg·m²
+kn = knot = kt
+lPerh = litre / hour = L/h
+lPerl = litre / litre = L/L
+lPers = litre / meter = L/m
+m2 = meter * meter = m²
+m2Pers = meter * meter / second = m²/s
+m3 = meter * meter * meter = m³
+m3Compensated = meter * meter * meter = m³_comp
+m3Perh = meter * meter * meter / hour = m³/h
+m3Perkg = meter * meter * meter / kilogram = m³/kg
+m3Pers = meter * meter * meter / second = m³/s
+m3Uncompensated = meter * meter * meter = m³_uncomp
+mPerm3 = meter / meter / meter / meter = m/m³
+mPers = meter / second = m/s
+mPers2 = meter / second / second = m/s²
+molPerkg = mol / kilogram = mol/kg
+molPerm3 = mol / meter / meter / meter = mol/m³
+molPermol = mol / mol = mol/mol
+none = [] = _
+ohmPerm = ohm / meter = ohm/m
+ohmm = ohm * meter = ohm·m
+onePerHz = 1 / hertz = Hz_1
+onePerm = 1 / meter = m_1
+radPers = radian / second = rad/s
+radPers2 = radian / second / second = rad/s²
+rev = revolution
+rotPers = hertz = Hz
+sPers = second / second = s/s

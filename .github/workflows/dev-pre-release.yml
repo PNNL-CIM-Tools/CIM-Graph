@@ -1,0 +1,89 @@
+---
+  name: Pre-Release Package
+
+  on:
+    push:
+      branches:
+      - develop
+    workflow_dispatch:
+      inputs:
+        version-strategy:
+          description: "Strategy for next version (NONE just increments patch release)"
+          type: choice
+          options:
+            - DATE
+            - PATCH
+            - MINOR
+            - MAJOR
+            - NONE
+          default: 'NONE'
+        dry-run:
+          description: "Is this a dry-run?"
+          type: boolean
+          default: false
+        letter:
+          description: "Letter for pre-release"
+          type: string
+          default: b
+  defaults:
+    run:
+      shell: bash
+
+  env:
+    LANG: en_US.utf-8
+    LC_ALL: en_US.utf-8
+    PYTHON_VERSION: '3.10'
+
+  jobs:
+    setup-defaults:
+      runs-on: ubuntu-22.04
+      env:
+        DRY_RUN: ${{ inputs.dry-run }}
+        LETTER: ${{ inputs.letter }}
+        VERSION_STRATEGY: ${{ inputs.version-strategy }}
+      outputs:
+        dry_run: ${{ steps.defaults.outputs.dry_run }}
+        letter: ${{ steps.defaults.outputs.letter }}
+        strategy: ${{ steps.defaults.outputs.strategy }}
+      steps:
+        - name: Create output variables for call-deploy-release
+          id: defaults
+          run: |
+            echo "Dry Run Before $DRY_RUN"
+
+            echo "dry_run=${DRY_RUN:-false}" >> "$GITHUB_OUTPUT"
+            echo "letter=${LETTER:-b}" >> "$GITHUB_OUTPUT"
+            echo "strategy=${VERSION_STRATEGY:-PATCH}" >> "$GITHUB_OUTPUT"
+        - name: Check output
+          run: |
+            echo "Dry Run AFTER ${{ steps.defaults.outputs.dry_run }}"
+
+    echo-output:
+      needs: setup-defaults
+      runs-on: ubuntu-22.04
+      env:
+        DRY_RUN: ${{ needs.setup-defaults.outputs.dry_run }}
+        STRATEGY: ${{ needs.setup-defaults.outputs.strategy }}
+        LETTER: ${{ needs.setup-defaults.outputs.letter }}
+      steps:
+      - name: echo
+        id: echo
+        run: |
+          echo "Dry Run: ${{ needs.setup-defaults.outputs.dry_run }}"
+          echo "Leter: ${{ needs.setup-defaults.outputs.letter == 'true' }}"
+          echo "strategy: ${{ needs.setup-defaults.outputs.strategy }}"
+
+    call-deploy-release:
+      needs: setup-defaults
+      uses: GRIDAPPSD/.github/.github/workflows/deploy-dev-release.yml@v3
+      permissions:
+        contents: write  # To push a branch
+        pull-requests: write  # To create a PR from that branch
+      with:
+        version-strategy: ${{ needs.setup-defaults.outputs.strategy }}
+        # This seems like the only way to make it a true boolean
+        dry-run: ${{ needs.setup-defaults.outputs.dry_run == 'true' }}
+        letter: ${{ needs.setup-defaults.outputs.letter }}
+      secrets:
+        git-token: ${{ secrets.GITHUB_TOKEN }}
+        pypi-token: ${{ secrets.PYPI_TOKEN }}
