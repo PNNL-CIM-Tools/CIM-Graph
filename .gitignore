@@ -1,24 +1,6 @@
 .venv/
-.idea/
-.vscode/
 .ipynb_checkpoints/
 __pycache__/
-*.py[cod]
-*$py.class
-
-# C extensions
-*.so
-
-# Distribution / packaging
-.Python
-/docker/
-/neo4j/
-poetry.lock
-env/
-build/
-develop-eggs/
-*.py[cod]
-*$py.class
 
 # C extensions
 *.so
@@ -44,6 +26,8 @@ wheels/
 *.egg-info/
 .installed.cfg
 *.egg
+*.py[cod]
+*$py.class
 
 # PyInstaller
 #  Usually these files are written by a python script from a template
@@ -131,4 +115,3 @@ ENV/
 .pytest_cache
 
 generated/
-poetry.lock
