@@ -11,8 +11,7 @@ from uuid import UUID
 from SPARQLWrapper import JSON, POST, SPARQLWrapper
 
 import cimgraph.queries.sparql as sparql
-from cimgraph.databases import (ConnectionInterface, ConnectionParameters,
-                                Graph, QueryResponse)
+from cimgraph.databases import ConnectionInterface, ConnectionParameters, Graph, QueryResponse
 
 _log = logging.getLogger(__name__)
 
