@@ -1,5 +1,6 @@
 from cimgraph.data_profile import CIM_PROFILE
 
+
 def test_CIM_PROFILE():
     assert len(CIM_PROFILE) == 5
     assert CIM_PROFILE.CIM17V40.value == 'cim17v40'
