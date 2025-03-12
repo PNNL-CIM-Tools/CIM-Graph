@@ -17,7 +17,7 @@ neo4j = "^5.10.0"
 rdflib = "^7.0.0"
 oxrdflib = "^0.3.6"
 mysql-connector-python = "^9.2.0"
-gridappsd-python = "^2025.2.1"
+gridappsd-python = ">=2025.3.1a0"
 nest-asyncio = "^1.5.8"
 mermaid-python = "^0.1"
 
