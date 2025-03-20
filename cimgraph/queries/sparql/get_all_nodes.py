@@ -2,13 +2,13 @@ from __future__ import annotations
 
 import logging
 
-from cimgraph.databases import ConnectionParameters
+from cimgraph.databases import get_iec61970_301, get_namespace, get_url
 
 _log = logging.getLogger(__name__)
 
 
 
-def get_all_nodes_from_container(container: object, connection_params: ConnectionParameters) -> str:
+def get_all_nodes_from_container(container: object) -> str:
     """
     Generates SPARQL query string for all nodes, terminals, and conducting equipment
     Args:
@@ -22,15 +22,15 @@ def get_all_nodes_from_container(container: object, connection_params: Connectio
     except:
         container_uri = container.mRID
 
-    if int(connection_params.iec61970_301) > 7:
+    if get_iec61970_301() > 7:
         split = 'urn:uuid:'
     else:
-        split = f'{connection_params.url}#'
+        split = f'{get_url()}#'
 
 
     query_message = """
         PREFIX r:  <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
-        PREFIX cim:  <%s>""" % connection_params.namespace
+        PREFIX cim:  <%s>""" % get_namespace()
     query_message += """
         SELECT DISTINCT ?ConnectivityNode ?Terminal ?Equipment
         WHERE {
@@ -54,7 +54,7 @@ def get_all_nodes_from_container(container: object, connection_params: Connectio
 
         bind(concat("{\\"@id\\":\\"", str(?eq_id),"\\",\\"@type\\":\\"",strafter(str(?eq_cls),"%s"), "\\"}") as ?Equipment)
         }
-        ''' % (split, split, split, connection_params.namespace)
+        ''' % (split, split, split, get_namespace())
     # get Equipment objects associated with Container
     query_message += '''
         UNION
@@ -74,7 +74,7 @@ def get_all_nodes_from_container(container: object, connection_params: Connectio
         }
         }
         ORDER by ?ConnectivityNode
-        ''' % (split, split, split, connection_params.namespace)
+        ''' % (split, split, split, get_namespace())
 
     return query_message
 
@@ -120,7 +120,7 @@ def get_all_nodes_from_list(mrid_list: list[str], namespace: str) -> str:
     return query_message
 
 
-def get_all_nodes_from_area(area: object, connection_params: ConnectionParameters) -> str:
+def get_all_nodes_from_area(area: object) -> str:
     """
     Generates SPARQL query string for all nodes, terminals, and conducting equipment
     Args:
@@ -140,15 +140,15 @@ def get_all_nodes_from_area(area: object, connection_params: ConnectionParameter
     except:
         container_uri = area.mRID
 
-    if int(connection_params.iec61970_301) > 7:
+    if get_iec61970_301() > 7:
         split = 'urn:uuid:'
     else:
-        split = f'{connection_params.url}#'
+        split = f'{get_url()}#'
 
 
     query_message = """
         PREFIX r:  <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
-        PREFIX cim:  <%s>""" % connection_params.namespace
+        PREFIX cim:  <%s>""" % get_namespace()
     query_message += """
         SELECT DISTINCT ?ConnectivityNode ?Terminal ?Equipment ?Measurement
         WHERE {
@@ -183,6 +183,6 @@ def get_all_nodes_from_area(area: object, connection_params: ConnectionParameter
 
     }
         ORDER by ?Equipment
-        ''' % (split, split, split, split,  connection_params.namespace, connection_params.namespace)
+        ''' % (split, split, split, split, get_namespace(), get_namespace())
 
     return query_message

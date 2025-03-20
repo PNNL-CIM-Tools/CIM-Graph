@@ -18,48 +18,56 @@ _log = logging.getLogger(__name__)
 
 class GridappsdConnection(ConnectionInterface):
 
-    def __init__(self, connection_params):
-        self.cim_profile = connection_params.cim_profile
+    def __init__(self):
+
+        required_env_vars = [
+            'CIMG_CIM_PROFILE',
+            'CIMG_URL',
+            'CIMG_DATABASE',
+            'CIMG_HOST',
+            'CIMG_PORT',
+            'CIMG_USERNAME',
+            'CIMG_PASSWORD',
+            'CIMG_NAMESPACE',
+            'CIMG_IEC61970_301',
+            'CIMG_USE_UNITS'
+        ]
+
+        missing_vars = [
+            var for var in required_env_vars if os.getenv(var) is None
+        ]
+
+        if missing_vars:
+            raise EnvironmentError(
+                f"Missing required environment variables: {', '.join(missing_vars)}"
+            )
+
+
+        self.cim_profile = os.getenv('CIMG_CIM_PROFILE')
         self.cim = importlib.import_module('cimgraph.data_profile.' + self.cim_profile)
-        self.namespace = connection_params.namespace
-        self.iec61970_301 = connection_params.iec61970_301
-        self.connection_params = connection_params
+        self.namespace = os.getenv('CIMG_NAMESPACE')
+        self.iec61970_301 = int(os.getenv('CIMG_IEC61970_301'))
+        self.host = os.getenv('CIMG_HOST')
+        self.port = int(os.getenv('CIMG_PORT'))
+        self.username = os.getenv('CIMG_USERNAME')
+        self.password = os.getenv('CIMG_PASSWORD')
+        self.use_units = os.getenv('CIMG_USE_UNITS') == 'false'
+        self.url = os.getenv('CIMG_URL')
+        self.database = os.getenv('CIMG_DATABASE')
 
-        if connection_params.host:
-            os.environ['GRIDAPPSD_ADDRESS'] = connection_params.host
-        else:
-            os.environ['GRIDAPPSD_ADDRESS'] = 'localhost'
 
-        if connection_params.port:
-            os.environ['GRIDAPPSD_PORT'] = connection_params.port
-        else:
-            os.environ['GRIDAPPSD_PORT'] = '61613'
-
-        if connection_params.database:
-            self.database = connection_params.database
-        else:
-            self.database = 'powergridmodel'
-
-        if not connection_params.url:
-            self.connection_params.url = 'http://localhost:8889/bigdata/namespace/kb/sparql'
-
-        os.environ['GRIDAPPSD_APPLICATION_ID'] = 'cimantic-graphs'
-        os.environ['GRIDAPPSD_APPLICATION_STATUS'] = 'STARTED'
-        os.environ['GRIDAPPSD_USER'] = 'app_user'
-        os.environ['GRIDAPPSD_PASSWORD'] = '1234App'
 
         self.gapps = None
 
-        try:
-            self.rdfs_profile = Graph(store='Oxigraph')
-            path = os.path.dirname(self.cim.__file__)
-            self.rdfs_profile.parse(f'{path}/{self.cim_profile}.rdfs', format='xml')
-            self.reverse = URIRef('http://iec.ch/TC57/1999/rdf-schema-extensions-19990926#inverseRoleName')
-        except:
-            self.rdfs_profile = None
 
     def connect(self):
         if not self.gapps:
+            os.environ['GRIDAPPSD_ADDRESS'] = self.host
+            os.environ['GRIDAPPSD_PORT'] = str(self.port)
+            os.environ['GRIDAPPSD_USER'] = self.username
+            os.environ['GRIDAPPSD_PASSWORD'] = self.password
+            os.environ['GRIDAPPSD_DATABASE'] = self.database
+            os.environ['GRIDAPPSD_URL'] = self.url
             self.gapps = GridAPPSD()
 
     def disconnect(self):
@@ -89,7 +97,7 @@ class GridappsdConnection(ConnectionInterface):
         graph = {}
         self.add_to_graph(graph=graph, obj=container)
         # Get all nodes, terminal, and equipment by
-        sparql_message = sparql.get_all_nodes_from_container(container, self.connection_params)
+        sparql_message = sparql.get_all_nodes_from_container(container)
         query_output = self.execute(sparql_message)
         graph = self.parse_node_query(graph, query_output)
         return graph
@@ -101,7 +109,7 @@ class GridappsdConnection(ConnectionInterface):
             _log.error(f'Area object is not a SubSchedulingArea')
             raise TypeError('Area object is not a SubSchedulingArea')
 
-        sparql_message = sparql.get_all_nodes_from_area(area, self.connection_params)
+        sparql_message = sparql.get_all_nodes_from_area(area)
         # Execute SPARQL query
         query_output = self.execute(sparql_message)
         # Parse query results and create new graph
@@ -203,8 +211,7 @@ class GridappsdConnection(ConnectionInterface):
         for index in range(math.ceil(len(mrid_list) / 100)):
             eq_mrids = mrid_list[index * 100:(index + 1) * 100]
             #generate SPARQL message from correct loaders>sparql python script based on class name
-            sparql_message = sparql.get_all_attributes_sparql(
-                cim_class, eq_mrids, self.connection_params)
+            sparql_message = sparql.get_all_attributes_sparql(cim_class, eq_mrids)
             #execute sparql query
             query_output = self.execute(sparql_message)
             self.edge_query_parser(query_output, graph, cim_class)
@@ -270,14 +277,14 @@ class GridappsdConnection(ConnectionInterface):
     def upload(self, graph: dict[type, dict[str, object]]) -> None:
         for cim_class in graph.keys():
             for obj in graph[cim_class].values():
-                query = sparql.upload_triples_sparql(obj, self.connection_params)
+                query = sparql.upload_triples_sparql(obj)
                 self.execute(query)
 
     def get_from_triple(self, subject:object, predicate:str, graph: Graph = {}) -> list[object]:
         if not graph:
             self.add_to_graph(subject, graph)
         # Generate SPARQL query for user-specified triple string
-        sparql_message = sparql.get_triple_sparql(subject, predicate, self.connection_params)
+        sparql_message = sparql.get_triple_sparql(subject, predicate)
         # Execute SPARQL query
         query_output = self.execute(sparql_message)
         # Parse the query output
@@ -296,7 +303,7 @@ class GridappsdConnection(ConnectionInterface):
             object: The retrieved object.
         """
         # Use sparql module to build get correct query string
-        sparql_message = sparql.get_object_sparql(mrid, self.connection_params)
+        sparql_message = sparql.get_object_sparql(mrid)
         # Execute query
         query_output = self.execute(sparql_message)
         obj = None

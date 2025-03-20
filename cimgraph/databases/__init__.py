@@ -1,9 +1,79 @@
 from __future__ import annotations
 
 import logging
+import os
 from abc import ABC, abstractmethod
 from dataclasses import dataclass, field, is_dataclass
+from functools import cache
 from uuid import UUID
+
+from loguru import logger
+
+_log = logging.getLogger(__name__)
+
+Graph = dict[type, dict[UUID, object]]
+
+@cache
+def get_namespace() -> str:
+    """
+    Returns the namespace for the cimgraph database
+    Returns:
+        namespace: the namespace for the cimgraph database
+    """
+    namespace = os.getenv('CIMG_NAMESPACE')
+    if namespace is None:
+        raise ValueError('CIMG_NAMESPACE environment variable is not set.')
+    return namespace
+
+@cache
+def get_iec61970_301() -> int:
+    """
+    Returns the IEC61970_301 version for the cimgraph database
+    Returns:
+        iec61970_301: the IEC61970_301 version for the cimgraph database
+    """
+    iec61970_301 = os.getenv('CIMG_IEC61970_301')
+    if iec61970_301 is None:
+        raise ValueError('IEC61970_301 environment variable is not set.')
+    return int(iec61970_301)
+
+
+@cache
+def get_url() -> str:
+    """
+    Returns the URL for the cimgraph database
+    Returns:
+        url: the URL for the cimgraph database
+    """
+    url = os.getenv('CIMG_URL')
+    if url is None:
+        raise ValueError('CIMG_URL environment variable is not set.')
+    return url
+
+@cache
+def get_database() -> str:
+    """
+    Returns the database name for the cimgraph database
+    Returns:
+        database: the database name for the cimgraph database
+    """
+    database = os.getenv('CIMG_DATABASE')
+    if database is None:
+        raise ValueError('CIMG_DATABASE environment variable is not set.')
+    return database
+
+@cache
+def get_use_units() -> bool:
+    """
+    Returns the use_units flag for the cimgraph database
+    Returns:
+        use_units: the use_units flag for the cimgraph database
+    """
+    use_units = os.getenv('CIMG_USE_UNITS')
+    if use_units is None:
+        use_units = 'false'
+        logger.debug("CIMG_USE_UNITS environment variable is not set. Defaulting to 'false'.")
+    return use_units.lower() == 'true'
 
 _log = logging.getLogger(__name__)
 
@@ -29,7 +99,6 @@ class QueryResponse:
 
 
 class ConnectionInterface(ABC):
-    connection_params: ConnectionParameters
 
     @abstractmethod
     def connect(self):
@@ -139,7 +208,7 @@ class ConnectionInterface(ABC):
                 setattr(graph[cim_class][identifier], association, value)
 
             else:
-                if self.connection_params.use_units:
+                if get_use_units():
                     pass
                     #TODO: Implement evaluation of units
                 else:
