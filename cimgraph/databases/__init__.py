@@ -1,5 +1,5 @@
 from __future__ import annotations
-
+import importlib
 import logging
 import os
 from abc import ABC, abstractmethod
@@ -7,11 +7,31 @@ from dataclasses import dataclass, field, is_dataclass
 from functools import cache
 from uuid import UUID
 
-from loguru import logger
-
 _log = logging.getLogger(__name__)
 
 Graph = dict[type, dict[UUID, object]]
+
+_log = logging.getLogger(__name__)
+
+@cache
+def get_cim_profile() -> str:
+    """
+    Returns the CIM profile to be used for object graph
+    Returns:
+        cim_profile: library 
+    """
+    cim_profile = os.getenv('CIMG_CIM_PROFILE')
+    if cim_profile is None:
+        raise ValueError('CIMG_CIM_PROFILE environment variable is not set.')
+    else:
+        # try:
+            if '.' in cim_profile:
+                cim = importlib.import_module(cim_profile)
+            else:
+                cim = importlib.import_module('cimgraph.data_profile.'+cim_profile)
+        # except:
+        #     raise ValueError('CIMG_CIM_PROFILE environment variable must be name of a valid object module on the PATH')
+    return cim_profile, cim
 
 @cache
 def get_namespace() -> str:
@@ -22,7 +42,9 @@ def get_namespace() -> str:
     """
     namespace = os.getenv('CIMG_NAMESPACE')
     if namespace is None:
-        raise ValueError('CIMG_NAMESPACE environment variable is not set.')
+        namespace = 'http://iec.ch/TC57/CIM100#'
+        _log.debug('Default namespace for CIM100 used')
+        # raise ValueError('CIMG_NAMESPACE environment variable is not set.')
     return namespace
 
 @cache
@@ -34,8 +56,13 @@ def get_iec61970_301() -> int:
     """
     iec61970_301 = os.getenv('CIMG_IEC61970_301')
     if iec61970_301 is None:
-        raise ValueError('IEC61970_301 environment variable is not set.')
-    return int(iec61970_301)
+        iec61970_301 = 8
+    else:
+        try:
+            iec61970_301 = int(iec61970_301)
+        except:
+            raise ValueError('CIMG_IEC61970_301 environment variable should be an integer')
+    return iec61970_301
 
 
 @cache
@@ -72,12 +99,8 @@ def get_use_units() -> bool:
     use_units = os.getenv('CIMG_USE_UNITS')
     if use_units is None:
         use_units = 'false'
-        logger.debug("CIMG_USE_UNITS environment variable is not set. Defaulting to 'false'.")
+        _log.debug("CIMG_USE_UNITS environment variable is not set. Defaulting to 'false'.")
     return use_units.lower() == 'true'
-
-_log = logging.getLogger(__name__)
-
-Graph = dict[type, dict[UUID, object]]
 
 @dataclass
 class ConnectionParameters:
@@ -92,6 +115,9 @@ class ConnectionParameters:
     iec61970_301: int = field(default=7)
     filename: str = field(default_factory=str)
     use_units: bool = field(default=False)
+    def __post_init__(self):
+        _log.warning('ConnectionParameters class is deprecated and will be deleted in a future release')
+        _log.warning('Set environment variables for required authentication')
 
 @dataclass
 class QueryResponse:
@@ -133,14 +159,93 @@ class ConnectionInterface(ABC):
         raise RuntimeError('Must have implemented query in the inherited class')
 
     @abstractmethod
-    def create_new_graph(self, container: object, graph: dict = {}) -> Graph:
+    def create_new_graph(self, container: object, graph: Graph = {}) -> Graph:
         raise RuntimeError('Must have implemented query in the inherited class')
 
     @abstractmethod
-    def create_distributed_graph(self, area: object, graph: dict = {}) -> Graph:
+    def create_distributed_graph(self, area: object, graph: Graph = {}) -> Graph:
         raise RuntimeError('Must have implemented query in the inherited class')
 
+    @cache
+    def get_cim_profile(self) -> str:
+        """
+        Returns the CIM profile to be used for object graph
+        Returns:
+            cim_profile: library 
+        """
+        self.cim_profile = os.getenv('CIMG_CIM_PROFILE')
+        if self.cim_profile is None:
+            raise ValueError('CIMG_CIM_PROFILE environment variable is not set.')
+        return self.namespace
+    
+    @cache
+    def get_namespace(self) -> str:
+        """
+        Returns the namespace for the cimgraph database
+        Returns:
+            namespace: the namespace for the cimgraph database
+        """
+        self.namespace = os.getenv('CIMG_NAMESPACE')
+        if self.namespace is None:
+            self.namespace = 'http://iec.ch/TC57/CIM100#'
+            _log.debug('Default namespace for CIM100 used')
+            # raise ValueError('CIMG_NAMESPACE environment variable is not set.')
+        return self.namespace
 
+    @cache
+    def get_iec61970_301(self) -> int:
+        """
+        Returns the IEC61970_301 version for the cimgraph database
+        Returns:
+            iec61970_301: the IEC61970_301 version for the cimgraph database
+        """
+        iec61970_301 = os.getenv('CIMG_IEC61970_301')
+        if self.iec61970_301 is None:
+            self.iec61970_301 = 8
+        else:
+            try:
+                self.iec61970_301 = int(iec61970_301)
+            except:
+                raise ValueError('CIMG_IEC61970_301 environment variable should be an integer')
+        return self.iec61970_301
+
+
+    @cache
+    def get_url(self) -> str:
+        """
+        Returns the URL for the cimgraph database
+        Returns:
+            url: the URL for the cimgraph database
+        """
+        self.url = os.getenv('CIMG_URL')
+        if self.url is None:
+            raise ValueError('CIMG_URL environment variable is not set.')
+        return self.url
+
+    @cache
+    def get_database(self) -> str:
+        """
+        Returns the database name for the cimgraph database
+        Returns:
+            database: the database name for the cimgraph database
+        """
+        database = os.getenv('CIMG_DATABASE')
+        if database is None:
+            raise ValueError('CIMG_DATABASE environment variable is not set.')
+        return database
+
+    @cache
+    def get_use_units() -> bool:
+        """
+        Returns the use_units flag for the cimgraph database
+        Returns:
+            use_units: the use_units flag for the cimgraph database
+        """
+        use_units = os.getenv('CIMG_USE_UNITS')
+        if use_units is None:
+            use_units = 'false'
+            _log.debug("CIMG_USE_UNITS environment variable is not set. Defaulting to 'false'.")
+        return use_units.lower() == 'true'
 
     def check_attribute(self, cim_class:type, attribute:str) -> str:
         attr_class = attribute.split('.')[0]

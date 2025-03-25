@@ -1,11 +1,9 @@
 from __future__ import annotations
 
-from uuid import UUID
-
-from cimgraph.databases import ConnectionParameters
+from cimgraph.databases import get_iec61970_301, get_namespace, get_url
 
 
-def get_triple_sparql(obj:object, attribute:str, connection_params: ConnectionParameters) -> str:
+def get_triple_sparql(obj:object, attribute:str) -> str:
     """
     Generates SPARQL query string to find predicate for RDF triple
     Args:
@@ -15,14 +13,14 @@ def get_triple_sparql(obj:object, attribute:str, connection_params: ConnectionPa
     """
     mrid = obj.uri()
 
-    if int(connection_params.iec61970_301) > 7:
+    if int(get_iec61970_301()) > 7:
         split = 'urn:uuid:'
     else:
-        split = f'{connection_params.url}#'
+        split = f'{get_url()}#'
 
     query_message = """
         PREFIX r:  <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
-        PREFIX cim:  <%s>""" % connection_params.namespace
+        PREFIX cim:  <%s>""" % get_namespace()
 
     query_message += """
         SELECT DISTINCT ?identifier ?attribute ?value ?edge
@@ -52,5 +50,5 @@ def get_triple_sparql(obj:object, attribute:str, connection_params: ConnectionPa
         }
 
         ORDER by  ?identifier ?attribute
-        """ % (attribute, attribute, split, connection_params.namespace, split)
+        """ % (attribute, attribute, split, get_namespace(), split)
     return query_message

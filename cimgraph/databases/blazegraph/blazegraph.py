@@ -1,7 +1,6 @@
 from __future__ import annotations
 
 import concurrent.futures
-import importlib
 import json
 import logging
 import math
@@ -11,7 +10,8 @@ from uuid import UUID
 from SPARQLWrapper import JSON, POST, SPARQLWrapper
 
 import cimgraph.queries.sparql as sparql
-from cimgraph.databases import ConnectionInterface, ConnectionParameters, Graph, QueryResponse
+from cimgraph.databases import ConnectionInterface, Graph, QueryResponse
+from cimgraph.databases import get_cim_profile, get_iec61970_301, get_namespace, get_url
 
 _log = logging.getLogger(__name__)
 
@@ -19,27 +19,32 @@ _log = logging.getLogger(__name__)
 class BlazegraphConnection(ConnectionInterface):
     """
     A class to handle connections and operations with a Blazegraph database.
-
-    Attributes:
-        connection_params (ConnectionInterface): Connection parameters with details like cim_profile, namespace, etc.
     """
 
-    def __init__(self, connection_params: ConnectionParameters) -> None:
-        """
-        Initialize a new BlazegraphConnection.
+    def __init__(self):
 
-        Args:
-            connection_params (ConnectionInterface): The connection parameters containing CIM profile, namespace, etc.
-        """
-        self.cim_profile = connection_params.cim_profile
-        self.cim = importlib.import_module('cimgraph.data_profile.' + self.cim_profile)
-        self.namespace = connection_params.namespace
-        self.iec61970_301 = connection_params.iec61970_301
-        self.url = connection_params.url
-        self.connection_params = connection_params
+        required_env_vars = [
+            'CIMG_CIM_PROFILE',
+            'CIMG_URL',
+            'CIMG_IEC61970_301'
+        ]
+
+        missing_vars = [
+            var for var in required_env_vars if os.getenv(var) is None
+        ]
+
+        if missing_vars:
+            raise EnvironmentError(
+                f"Missing required environment variables: {', '.join(missing_vars)}"
+            )
+
         self.sparql_obj = None
-        self.rdfs_profile = None
+        self.url = get_url()
+        self.namespace = get_namespace()
+        self.iec61970_301 = get_iec61970_301()
+        self.cim_profile, self.cim = get_cim_profile()
 
+        self.connect()
 
     def connect(self) -> None:
         """
@@ -97,15 +102,17 @@ class BlazegraphConnection(ConnectionInterface):
 
         Args:
             mRID (str): The mRID of the object to be retrieved.
-            graph (dict, optional): The graph database to store the fetched object. Defaults to {}.
+            graph (dict, optional): The graph catalog to store the fetched object. Defaults to {}.
 
         Returns:
             object: The retrieved object.
         """
+        # Use empty dict if graph not provided
         if graph is None:
             graph = {}
+
         # Use sparql module to build get correct query string
-        sparql_message = sparql.get_object_sparql(mRID, self.connection_params)
+        sparql_message = sparql.get_object_sparql(mRID)
         # Execute query
         query_output = self.execute(sparql_message)
         obj = None
@@ -126,11 +133,23 @@ class BlazegraphConnection(ConnectionInterface):
         return obj
 
 
-    def get_from_triple(self, subject:object, predicate:str, graph: Graph = {}) -> list[object]:
-        if not graph:
-            self.add_to_graph(subject, graph)
+    def get_from_triple(self, subject:object, predicate:str, graph:Graph = None) -> list[str]|list[object]:
+        """
+        Retrieve the object of an RDF triple from the Blazegraph database from the subject and predicate.
+
+        Args:
+            subject (object): A CIM object instance created using CIM-Graph
+            predicate (str): A CIM RDF property string, such as `IdentifiedObject.name`
+
+        Returns:
+            new_edges: A list of the retrieved objects or property strings.
+        """
+        if graph is None:
+            graph = {}
+        
+        self.add_to_graph(obj=subject, graph=graph)
         # Generate SPARQL query for user-specified triple string
-        sparql_message = sparql.get_triple_sparql(subject, predicate, self.connection_params)
+        sparql_message = sparql.get_triple_sparql(subject, predicate)
         # Execute SPARQL query
         query_output = self.execute(sparql_message)
         # Parse the query output
@@ -156,8 +175,7 @@ class BlazegraphConnection(ConnectionInterface):
         """
         self.add_to_graph(graph=graph, obj=container)
         # Get all nodes, terminal, and equipment associated with EquipmentContainer object
-        sparql_message = sparql.get_all_nodes_from_container(
-            container, self.connection_params)
+        sparql_message = sparql.get_all_nodes_from_container(container)
         query_output = self.execute(sparql_message)
         # Parse query results and create new graph
         graph = self.parse_node_query(graph, query_output)
@@ -171,7 +189,7 @@ class BlazegraphConnection(ConnectionInterface):
             _log.error(f'Area object is not a SubSchedulingArea')
             raise TypeError('Area object is not a SubSchedulingArea')
 
-        sparql_message = sparql.get_all_nodes_from_area(area, self.connection_params)
+        sparql_message = sparql.get_all_nodes_from_area(area)
         # Execute SPARQL query
         query_output = self.execute(sparql_message)
         # Parse query results and create new graph
@@ -257,8 +275,7 @@ class BlazegraphConnection(ConnectionInterface):
         return graph
 
 
-    def get_edges_query(self, graph: Graph,
-                        cim_class: type) -> str:
+    def get_edges_query(self, graph: Graph, cim_class: type) -> str:
         """
         Generate a SPARQL query to get edges from the graph for a specific CIM class.
         This method is used to provide the graph traversal query for debugging.
@@ -271,7 +288,7 @@ class BlazegraphConnection(ConnectionInterface):
             str: SPARQL query string.
         """
         eq_mrids = list(graph[cim_class].keys())[0:100]
-        sparql_message = sparql.get_all_edges_sparql(graph, cim_class, eq_mrids, self.connection_params)
+        sparql_message = sparql.get_all_edges_sparql(graph, cim_class, eq_mrids)
 
         return sparql_message
 
@@ -290,8 +307,7 @@ class BlazegraphConnection(ConnectionInterface):
         # Parallel processing bath handler
         def process_batch(eq_mrids):
             # Generate universal graph traversal query for the selected starting nodes
-            sparql_message = sparql.get_all_edges_sparql(
-                graph, cim_class, eq_mrids, self.connection_params)
+            sparql_message = sparql.get_all_edges_sparql(graph, cim_class, eq_mrids)
             # Execute SPARQL query
             query_output = self.execute(sparql_message)
             # _log.warning(query_output)
@@ -328,8 +344,7 @@ class BlazegraphConnection(ConnectionInterface):
         for index in range(math.ceil(len(mrid_list) / 100)):
             eq_mrids = mrid_list[index * 100:(index + 1) * 100]
             # Create a graph traversal query with edge classes as strings
-            sparql_message = sparql.get_all_attributes_sparql(
-                graph, cim_class, eq_mrids, self.connection_params)
+            sparql_message = sparql.get_all_attributes_sparql(graph, cim_class, eq_mrids)
             # Execute sparql query and parse results
             query_output = self.execute(sparql_message)
             self.edge_query_parser(query_output, graph, cim_class, expand_graph=False)
@@ -400,5 +415,5 @@ class BlazegraphConnection(ConnectionInterface):
         """
         for cim_class in graph.keys():
             for obj in graph[cim_class].values():
-                query = sparql.upload_triples_sparql(obj, self.connection_params)
+                query = sparql.upload_triples_sparql(obj)
                 self.update(query)

@@ -1,18 +1,18 @@
 from __future__ import annotations
 
 import logging
-
+import cimgraph.data_profile.cim17v40 as cim
 from cimgraph.databases import get_iec61970_301, get_namespace, get_url
 
 _log = logging.getLogger(__name__)
 
 
 
-def get_all_nodes_from_container(container: object) -> str:
+def get_all_nodes_from_container(container: cim.ConnectivityNodeContainer) -> str:
     """
     Generates SPARQL query string for all nodes, terminals, and conducting equipment
     Args:
-
+        container: an object instance of cim:ConnectivityNodeContainer or child classes (e.g. cim:Feeder)
     Returns:
         query_message: query string that can be used in blazegraph connection or STOMP client
     """

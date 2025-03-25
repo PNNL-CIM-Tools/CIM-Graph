@@ -2,7 +2,7 @@ from __future__ import annotations
 
 from uuid import UUID
 
-from cimgraph.databases import get_iec61970_301, get_namespace
+from cimgraph.databases import get_iec61970_301, get_namespace, get_url
 
 
 def get_object_sparql(mrid: str) -> str:
@@ -18,7 +18,7 @@ def get_object_sparql(mrid: str) -> str:
     if get_iec61970_301() > 7:
         split = 'urn:uuid:'
     else:
-        split = f'{connection_params.url}#'
+        split = f'{get_url()}#'
 
     query_message = """
         PREFIX r:  <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
