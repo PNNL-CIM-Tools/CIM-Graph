@@ -6,12 +6,10 @@ import logging
 import math
 import os
 from uuid import UUID
-
 from gridappsd import GridAPPSD
-from rdflib import Graph, URIRef
 
 import cimgraph.queries.sparql as sparql
-from cimgraph.databases import ConnectionInterface, QueryResponse
+from cimgraph.databases import ConnectionInterface, QueryResponse, Graph
 
 _log = logging.getLogger(__name__)
 
@@ -102,7 +100,9 @@ class GridappsdConnection(ConnectionInterface):
         graph = self.parse_node_query(graph, query_output)
         return graph
 
-    def create_distributed_graph(self, area: object, graph: dict = {}) -> Graph:
+    def create_distributed_graph(self, area: object, graph: dict = None) -> Graph:
+        if graph is None:
+            graph = {}
         self.add_to_graph(graph=graph, obj=area)
 
         if not isinstance(area, self.cim.SubSchedulingArea):
@@ -188,8 +188,7 @@ class GridappsdConnection(ConnectionInterface):
                         cim_class: type) -> str:
 
         eq_mrids = list(graph[cim_class].keys())[0:100]
-        sparql_message = sparql.get_all_edges_sparql(graph, cim_class, eq_mrids,
-                                                     self.connection_params)
+        sparql_message = sparql.get_all_edges_sparql(graph, cim_class, eq_mrids)
 
         return sparql_message
 
@@ -198,8 +197,7 @@ class GridappsdConnection(ConnectionInterface):
         for index in range(math.ceil(len(uuid_list) / 100)):
             eq_mrids = uuid_list[index * 100:(index + 1) * 100]
             #generate SPARQL message from correct queries>sparql python script based on class name
-            sparql_message = sparql.get_all_edges_sparql(graph,
-                cim_class, eq_mrids, self.connection_params)
+            sparql_message = sparql.get_all_edges_sparql(graph, cim_class, eq_mrids)
             #execute sparql query
             query_output = self.execute(sparql_message)
             self.edge_query_parser(query_output, graph, cim_class)
@@ -280,9 +278,10 @@ class GridappsdConnection(ConnectionInterface):
                 query = sparql.upload_triples_sparql(obj)
                 self.execute(query)
 
-    def get_from_triple(self, subject:object, predicate:str, graph: Graph = {}) -> list[object]:
-        if not graph:
-            self.add_to_graph(subject, graph)
+    def get_from_triple(self, subject:object, predicate:str, graph: Graph = None) -> list[object]:
+        if graph is None:
+            graph = {}
+        self.add_to_graph(subject, graph)
         # Generate SPARQL query for user-specified triple string
         sparql_message = sparql.get_triple_sparql(subject, predicate)
         # Execute SPARQL query
@@ -291,7 +290,7 @@ class GridappsdConnection(ConnectionInterface):
         new_edges = self.edge_query_parser(query_output, graph, subject.__class__)
         return new_edges
 
-    def get_object(self, mrid: str, graph: dict = {}) -> object:
+    def get_object(self, mrid: str, graph: dict = None) -> object:
         """
         Retrieve an object from the Blazegraph database using its mRID.
 
@@ -302,6 +301,8 @@ class GridappsdConnection(ConnectionInterface):
         Returns:
             object: The retrieved object.
         """
+        if graph is None:
+            graph = {}
         # Use sparql module to build get correct query string
         sparql_message = sparql.get_object_sparql(mrid)
         # Execute query

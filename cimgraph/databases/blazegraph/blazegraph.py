@@ -157,7 +157,7 @@ class BlazegraphConnection(ConnectionInterface):
         return new_edges
 
 
-    def create_new_graph(self, container: object, graph: dict = {}) -> Graph:
+    def create_new_graph(self, container: object, graph: dict = None) -> Graph:
         """
         Create a new graph structure for a CIM EquipmentContainer object.
         The method uses a SPARQL query to obtain all terminals in the graph,
@@ -173,6 +173,8 @@ class BlazegraphConnection(ConnectionInterface):
         Returns:
             dict: Graph consisting of types and UUID mapped to object instances.
         """
+        if graph is None:
+            graph = {}
         self.add_to_graph(graph=graph, obj=container)
         # Get all nodes, terminal, and equipment associated with EquipmentContainer object
         sparql_message = sparql.get_all_nodes_from_container(container)
@@ -182,7 +184,9 @@ class BlazegraphConnection(ConnectionInterface):
         return graph
 
 
-    def create_distributed_graph(self, area: object, graph: dict = {}) -> Graph:
+    def create_distributed_graph(self, area:object, graph:dict=None) -> Graph:
+        if graph is None:
+            graph = {}
         self.add_to_graph(graph=graph, obj=area)
 
         if not isinstance(area, self.cim.SubSchedulingArea):

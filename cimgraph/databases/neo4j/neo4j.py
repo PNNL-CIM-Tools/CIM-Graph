@@ -103,7 +103,7 @@ class Neo4jConnection(ConnectionInterface):
         records = await result.data()
         return records
 
-    def get_object(self, mrid: str, graph: dict = {}) -> object:
+    def get_object(self, mrid: str, graph: dict = None) -> object:
         """
         Retrieve an object from the Neo4J database using its mRID.
 
@@ -114,6 +114,8 @@ class Neo4jConnection(ConnectionInterface):
         Returns:
             object: The retrieved object.
         """
+        if graph is None:
+            graph = {}
         # Use cypher module to build get correct query string
         cypher_message = cypher.get_object_cypher(mrid, self.connection_params)
         query_output = self.execute(cypher_message)
@@ -190,7 +192,9 @@ class Neo4jConnection(ConnectionInterface):
 
         return graph
 
-    def create_distributed_graph(self, area: object, graph: dict = {}) -> Graph:
+    def create_distributed_graph(self, area: object, graph: dict = None) -> Graph:
+        if graph is None:
+            graph = {}
         self.add_to_graph(graph=graph, obj=area)
 
         if not isinstance(area, self.cim.SubSchedulingArea):
@@ -205,9 +209,10 @@ class Neo4jConnection(ConnectionInterface):
         return graph
 
 
-    def get_from_triple(self, subject:object, predicate:str, graph: Graph = {}) -> list[object]:
-        if not graph:
-            self.add_to_graph(subject, graph)
+    def get_from_triple(self, subject:object, predicate:str, graph: Graph = None) -> list[object]:
+        if graph is None:
+            graph = {}
+        self.add_to_graph(subject, graph)
         # Generate cypher query for user-specified triple string
         cypher_message = cypher.get_triple_cypher(subject, predicate, self.connection_params)
         # Execute cypher query

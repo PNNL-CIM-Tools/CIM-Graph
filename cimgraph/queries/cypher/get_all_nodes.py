@@ -1,7 +1,6 @@
 from __future__ import annotations
 
-from cimgraph.databases import ConnectionParameters
-
+from cimgraph.databases import get_namespace
 
 def get_all_nodes_from_container(container: object, namespace: str):
     """

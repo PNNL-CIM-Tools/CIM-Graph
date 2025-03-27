@@ -5,7 +5,7 @@ from uuid import UUID
 from cimgraph.databases import get_iec61970_301, get_namespace, get_url
 
 
-def get_object_sparql(mrid: str) -> str:
+def get_object_sparql(mRID: str) -> str:
     """
     Generates SPARQL query string to find the type of an object from its uri
     Args:
@@ -30,7 +30,7 @@ def get_object_sparql(mrid: str) -> str:
           """
 
     query_message += '''
-    VALUES ?identifier {"%s"}''' %mrid
+    VALUES ?identifier {"%s"}''' %mRID
     # add all equipment mRID
 
     query_message += f'''

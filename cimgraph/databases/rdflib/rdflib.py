@@ -54,7 +54,9 @@ class RDFlibConnection(ConnectionInterface):
         query_output = self.libgraph.query(query_message)
         return query_output
 
-    def get_object(self, mrid:str, graph = {}) -> object:
+    def get_object(self, mrid:str, graph = None) -> object:
+        if graph is None:
+            graph = {}
         sparql_message = sparql.get_object_sparql(mrid, self.connection_params)
         query_output = self.execute(sparql_message)
         obj = None

@@ -8,7 +8,7 @@ _log = logging.getLogger(__name__)
 
 
 
-def get_all_nodes_from_container(container: cim.ConnectivityNodeContainer) -> str:
+def get_all_nodes_from_container(container: cim.EquipmentContainer) -> str:
     """
     Generates SPARQL query string for all nodes, terminals, and conducting equipment
     Args:
@@ -16,7 +16,7 @@ def get_all_nodes_from_container(container: cim.ConnectivityNodeContainer) -> st
     Returns:
         query_message: query string that can be used in blazegraph connection or STOMP client
     """
-    container_class = container.__class__.__name__
+
     try:
         container_uri = container.uri()
     except:
@@ -59,7 +59,9 @@ def get_all_nodes_from_container(container: cim.ConnectivityNodeContainer) -> st
     query_message += '''
         UNION
         {
-        ?eq cim:Equipment.EquipmentContainer ?c.
+        {?eq cim:Equipment.EquipmentContainer ?c.}
+        UNION
+        {?eq cim:Equipment.AdditionalEquipmentContainer ?c.}
         OPTIONAL {
             ?t cim:Terminal.ConductingEquipment ?eq.
             ?t cim:Terminal.ConnectivityNode ?node.

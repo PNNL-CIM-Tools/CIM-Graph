@@ -11,7 +11,8 @@ from uuid import UUID
 from defusedxml.ElementTree import parse
 
 from cimgraph.data_profile.known_problem_classes import ClassesWithManytoMany
-from cimgraph.databases import ConnectionInterface, ConnectionParameters, Graph, QueryResponse
+from cimgraph.databases import ConnectionInterface, Graph, QueryResponse
+from cimgraph.databases import get_cim_profile, get_iec61970_301, get_namespace
 
 # from cimgraph.utils.timing import timing as time_func
 
@@ -19,13 +20,11 @@ _log = logging.getLogger(__name__)
 
 class XMLFile(ConnectionInterface):
 
-    def __init__(self, connection_params: ConnectionParameters):
-        self.cim_profile = connection_params.cim_profile
-        self.cim = importlib.import_module('cimgraph.data_profile.' + self.cim_profile)
-        self.namespace = connection_params.namespace
-        self.iec61970_301 = connection_params.iec61970_301
-        self.filename = connection_params.filename
-        self.connection_params = connection_params
+    def __init__(self, filename:str|list[str]):
+        self.cim_profile, self.cim = get_cim_profile
+        self.namespace = get_namespace()
+        self.iec61970_301 = get_cim_profile
+        self.filename = filename
         self.graph = None
         self.connect()
 
@@ -42,6 +41,11 @@ class XMLFile(ConnectionInterface):
             except:
                 _log.warning(f'File {self.filename} not found. Defaulting to empty network graph')
                 self.filename = None
+                self.tree = None
+                self.root = None
+                self.class_index = {}
+                self.graph = {}
+
 
     def disconnect(self):
         del self.tree
@@ -51,13 +55,15 @@ class XMLFile(ConnectionInterface):
     def execute(self, query_message: str) -> QueryResponse:
         pass
 
-    def get_object(self, mrid:str, graph = {}) -> object:
+    def get_object(self, mrid:str, graph = None) -> object:
         for element in self.root:
             if mrid in element.get(f'{self.rdf}about'):
                 obj = self.parse_nodes(element)
         return obj
 
-    def get_from_triple(self, subject:object, predicate:str, graph: Graph = {}) -> list[object]:
+    def get_from_triple(self, subject:object, predicate:str, graph: Graph = None) -> list[object]:
+        if graph is None:
+            graph = {}
         results = []
         class_type = subject.__class__
         elements = self.tree.findall(f'.//cim:{class_type.__name__}', self.namespaces)
@@ -70,9 +76,10 @@ class XMLFile(ConnectionInterface):
 
 
 
-    def create_distributed_graph(self, area: object, graph: dict = {}) -> Graph:
+    def create_distributed_graph(self, area: object, graph: dict = None) -> Graph:
         _log.error('distributed models not supported for XML file read')
-
+        if graph is None:
+            graph = {}
 
     # @time_func
     def create_new_graph(self, container: object) -> Graph:

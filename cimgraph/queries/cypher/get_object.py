@@ -2,10 +2,10 @@ from __future__ import annotations
 
 from uuid import UUID
 
-from cimgraph.databases import ConnectionParameters
+from cimgraph.databases import get_namespace, get_url, get_iec61970_301
 
 
-def get_object_cypher(mrid: str, connection_params: ConnectionParameters) -> str:
+def get_object_cypher(mrid: str) -> str:
     """
     Generates cypher query string to find the type of an object from its uri
     Args:
@@ -16,10 +16,10 @@ def get_object_cypher(mrid: str, connection_params: ConnectionParameters) -> str
     """
 
 
-    if int(connection_params.iec61970_301) > 7:
+    if int(get_iec61970_301()) > 7:
         split = 'urn:uuid:'
     else:
-        split = f'{connection_params.url}#'
+        split = f'{get_url()}#'
 
     query_message = f'''
 MATCH(n)

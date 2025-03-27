@@ -7,6 +7,7 @@ from uuid import UUID
 
 from cimgraph.data_profile.identity import Identity
 from cimgraph.databases import ConnectionInterface
+from abc import ABC, abstractmethod
 
 _log = logging.getLogger(__name__)
 
@@ -14,7 +15,7 @@ jsonld = dict['@id':str(UUID),'@type':str(type)]
 Graph = dict[type, dict[UUID, object]]
 
 @dataclass
-class GraphModel:
+class GraphModel(ABC):
     container: object
     connection: ConnectionInterface
     distributed: bool = field(default=False)

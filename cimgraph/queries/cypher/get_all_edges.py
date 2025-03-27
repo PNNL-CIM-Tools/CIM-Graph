@@ -2,11 +2,10 @@ from __future__ import annotations
 
 from uuid import UUID
 
-from cimgraph.databases import ConnectionParameters
+from cimgraph.databases import get_namespace, get_iec61970_301, get_url
 
 
-def get_all_edges_cypher(graph:dict[type, dict[UUID, object]], cim_class: type, uuid_list: list[UUID],
-                         connection_params: ConnectionParameters) -> str:
+def get_all_edges_cypher(graph:dict[type, dict[UUID, object]], cim_class: type, uuid_list: list[UUID]) -> str:
     """
     Generates SPARQL query string for a given catalog of objects and feeder id
     Args:
@@ -21,10 +20,10 @@ def get_all_edges_cypher(graph:dict[type, dict[UUID, object]], cim_class: type, 
     """
     class_name = cim_class.__name__
 
-    if int(connection_params.iec61970_301) > 7:
+    if int(get_iec61970_301()) > 7:
         split = 'urn:uuid:'
     else:
-        split = f'{connection_params.url}#'
+        split = f'{get_url()}#'
 
     query_message = f"""
 MATCH (n:{class_name})
@@ -43,8 +42,7 @@ labels(m)[1] as edge_class'''
     # '{"@id":"' + COALESCE(m.uri ,"") + '","@type":"' + COALESCE((labels(m))[1],"") + '"}' as edge
     return query_message
 
-def get_all_properties_cypher(graph:dict[type, dict[UUID, object]], cim_class: type, uuid_list: list[UUID],
-                         connection_params: ConnectionParameters) -> str:
+def get_all_properties_cypher(graph:dict[type, dict[UUID, object]], cim_class: type, uuid_list: list[UUID]) -> str:
     """
     Generates SPARQL query string for a given catalog of objects and feeder id
     Args:
@@ -59,10 +57,10 @@ def get_all_properties_cypher(graph:dict[type, dict[UUID, object]], cim_class: t
     """
     class_name = cim_class.__name__
 
-    if int(connection_params.iec61970_301) > 7:
+    if int(get_iec61970_301()) > 7:
         split = 'urn:uuid:'
     else:
-        split = f'{connection_params.url}#'
+        split = f'{get_url()}#'
 
     query_message = f"""
         MATCH (n:{class_name})
