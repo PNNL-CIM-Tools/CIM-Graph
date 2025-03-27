@@ -130,11 +130,6 @@ def get_all_nodes_from_area(area: object) -> str:
     Returns:
         query_message: query string that can be used in blazegraph connection or STOMP client
     """
-    # if 'SubSchedulingArea' not in connection_params.cim.__all__:
-    #     _log.error("No SubSchedulingArea classes in profile")
-    # else:
-    #     if not isinstance(area, connection_params.cim.SubSchedulingArea):
-    #         _log.error("Area is not a SubSchedulingArea")
 
     area_class = area.__class__.__name__
     try:

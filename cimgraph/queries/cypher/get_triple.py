@@ -2,27 +2,27 @@ from __future__ import annotations
 
 from uuid import UUID
 
-from cimgraph.databases import ConnectionParameters
+from cimgraph.databases import get_iec61970_301, get_url
 
 
-def get_triple_cypher(obj:object, attribute:str, connection_params: ConnectionParameters) -> str:
+def get_triple_cypher(subject:object, attribute:str) -> str:
 
     """
     Generates cypher query string to find the type of an object from its uri
     Args:
-        mrid (str): The mRID or uri of the  object
-        connection_params (ConnectionParameters): Database connection parameters
+        subject (object): The subject of the RDF triple
+        attribute (str): The attribute / association to be queried
     Returns:
         query_message: query string that can be used in Neo4J
     """
 
-    if int(connection_params.iec61970_301) > 7:
+    if int(get_iec61970_301()) > 7:
         split = 'urn:uuid:'
     else:
-        split = f'{connection_params.url}#'
+        split = f'{get_url()}#'
 
-    query_message = f'''MATCH (n:{obj.__class__.__name__})
-WHERE n.uri = "{split+obj.uri()}"
+    query_message = f'''MATCH (n:{subject.__class__.__name__})
+WHERE n.uri = "{split+subject.uri()}"
 OPTIONAL MATCH (n) - [:`{attribute}`] - (m)
 RETURN DISTINCT
 n.uri as identifier,

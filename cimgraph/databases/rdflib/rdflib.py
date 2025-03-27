@@ -11,22 +11,19 @@ from rdflib import Graph, Namespace, URIRef
 from rdflib.namespace import RDF
 
 import cimgraph.queries.sparql as sparql
-from cimgraph.databases import ConnectionInterface, ConnectionParameters, QueryResponse
+from cimgraph.databases import ConnectionInterface, QueryResponse
+from cimgraph.databases import get_namespace, get_iec61970_301, get_cim_profile
 
 _log = logging.getLogger(__name__)
 
 
 class RDFlibConnection(ConnectionInterface):
 
-    def __init__(self,
-                 connection_params: ConnectionParameters,
-                 use_oxigraph: bool = True):
-        self.cim_profile = connection_params.cim_profile
-        self.cim = importlib.import_module('cimgraph.data_profile.' + self.cim_profile)
-        self.namespace = connection_params.namespace
-        self.iec61970_301 = connection_params.iec61970_301
-        self.filename = connection_params.filename
-        self.connection_params = connection_params
+    def __init__(self, filename:str=None, use_oxigraph:bool=True):
+        self.cim_profile, self.cim = get_cim_profile()
+        self.namespace = get_namespace()
+        self.iec61970_301 = get_iec61970_301()
+        self.filename = filename
         self.libgraph = None
         self.use_oxigraph = use_oxigraph
 
@@ -54,10 +51,10 @@ class RDFlibConnection(ConnectionInterface):
         query_output = self.libgraph.query(query_message)
         return query_output
 
-    def get_object(self, mrid:str, graph = None) -> object:
+    def get_object(self, mRID:str, graph = None) -> object:
         if graph is None:
             graph = {}
-        sparql_message = sparql.get_object_sparql(mrid, self.connection_params)
+        sparql_message = sparql.get_object_sparql(mRID)
         query_output = self.execute(sparql_message)
         obj = None
         for result in query_output:
@@ -71,7 +68,7 @@ class RDFlibConnection(ConnectionInterface):
         graph = {}
         self.add_to_graph(graph=graph, obj=container)
         # Get all nodes, terminal, and equipment by
-        sparql_message = sparql.get_all_nodes_from_container(container, self.connection_params)
+        sparql_message = sparql.get_all_nodes_from_container(container)
         query_output = self.execute(sparql_message)
         graph = self.parse_node_query(graph, query_output)
         return graph
@@ -113,8 +110,7 @@ class RDFlibConnection(ConnectionInterface):
                         cim_class: type) -> str:
 
         eq_mrids = list(graph[cim_class].keys())[0:100]
-        sparql_message = sparql.get_all_edges_sparql(graph, cim_class, eq_mrids,
-                                                     self.connection_params)
+        sparql_message = sparql.get_all_edges_sparql(graph, cim_class, eq_mrids)
 
         return sparql_message
 
@@ -123,21 +119,18 @@ class RDFlibConnection(ConnectionInterface):
         for index in range(math.ceil(len(uuid_list) / 100)):
             eq_mrids = uuid_list[index * 100:(index + 1) * 100]
             #generate SPARQL message from correct queries>sparql python script based on class name
-            sparql_message = sparql.get_all_edges_sparql(graph,
-                cim_class, eq_mrids, self.connection_params)
+            sparql_message = sparql.get_all_edges_sparql(graph, cim_class, eq_mrids)
             #execute sparql query
             query_output = self.execute(sparql_message)
             self.edge_query_parser(query_output, graph, cim_class)
 
-    def get_all_attributes(self, graph: dict[type, dict[UUID, object]],
-                           cim_class: type) -> None:
+    def get_all_attributes(self, graph: dict[type, dict[UUID, object]], cim_class: type) -> None:
         mrid_list = list(graph[cim_class].keys())
 
         for index in range(math.ceil(len(mrid_list) / 100)):
             eq_mrids = mrid_list[index * 100:(index + 1) * 100]
             #generate SPARQL message from correct loaders>sparql python script based on class name
-            sparql_message = sparql.get_all_attributes_sparql(graph,
-                cim_class, eq_mrids, self.connection_params)
+            sparql_message = sparql.get_all_attributes_sparql(graph, cim_class, eq_mrids)
             #execute sparql query
             query_output = self.execute(sparql_message)
             self.edge_query_parser(query_output, graph, cim_class, expand_graph = False)
@@ -150,8 +143,8 @@ class RDFlibConnection(ConnectionInterface):
 
                 is_association = False
                 is_enumeration = False
-                if result.mRID is not None:  #get mRID
-                    mRID = str(result.mRID)
+                if result.uri() is not None:  #get mRID
+                    mRID = str(result.uri())
                 else:
                     iri = str(result.eq)
                     if self.iec61970_301 > 7:

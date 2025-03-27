@@ -11,7 +11,8 @@ import mysql.connector
 from SPARQLWrapper import JSON, POST, SPARQLWrapper
 
 import cimgraph.queries.sparql as sparql
-from cimgraph.databases import ConnectionInterface, ConnectionParameters, QueryResponse
+from cimgraph.databases import ConnectionInterface, QueryResponse
+from cimgraph.databases import get_namespace, get_iec61970_301, get_cim_profile, get_host, get_port, get_username, get_password, get_database
 from cimgraph.models.graph_model import GraphModel
 
 _log = logging.getLogger(__name__)
@@ -19,16 +20,14 @@ _log = logging.getLogger(__name__)
 
 class MySQLJSONConnection(ConnectionInterface):
 
-    def __init__(self, connection_parameters):
-        self.connection_parameters = connection_parameters
-        self.cim_profile = connection_parameters.cim_profile
-        self.cim = importlib.import_module('cimgraph.data_profile.' + self.cim_profile)
-        self.namespace = connection_parameters.namespace
-        self.host = connection_parameters.host
-        self.port = connection_parameters.port
-        self.username = connection_parameters.username
-        self.password = connection_parameters.password
-        self.database = connection_parameters.database
+    def __init__(self):
+        self.cim_profile, self.cim = get_cim_profile()
+        self.namespace = get_namespace()
+        self.host = get_host()
+        self.port = get_port()
+        self.username = get_username()
+        self.password = get_password()
+        self.database = get_database()
         self.connection = None
         self.cursor = None
 

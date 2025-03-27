@@ -9,8 +9,7 @@ def get_object_sparql(mRID: str) -> str:
     """
     Generates SPARQL query string to find the type of an object from its uri
     Args:
-        mrid (str): The mRID or uri of the  object
-        connection_params (ConnectionParameters): Database connection parameters
+        mRID (str): The mRID or uri of the  object
     Returns:
         query_message: query string that can be used in blazegraph connection or STOMP client
     """

@@ -5,12 +5,11 @@ from uuid import UUID
 from cimgraph.databases import get_namespace, get_url, get_iec61970_301
 
 
-def get_object_cypher(mrid: str) -> str:
+def get_object_cypher(mRID: str) -> str:
     """
     Generates cypher query string to find the type of an object from its uri
     Args:
         mrid (str): The mRID or uri of the  object
-        connection_params (ConnectionParameters): Database connection parameters
     Returns:
         query_message: query string that can be used in Neo4J
     """
@@ -23,7 +22,7 @@ def get_object_cypher(mrid: str) -> str:
 
     query_message = f'''
 MATCH(n)
-WHERE n.uri = {split+mrid}
+WHERE n.uri = {split+mRID}
 RETURN DISTINCT n.uri as identifier,
 labels(n)[1] as class'''
     # '{"@id":"' + COALESCE(m.uri ,"") + '","@type":"' + COALESCE((labels(m))[1],"") + '"}' as edge

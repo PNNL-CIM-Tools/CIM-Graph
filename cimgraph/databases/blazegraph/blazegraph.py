@@ -23,20 +23,20 @@ class BlazegraphConnection(ConnectionInterface):
 
     def __init__(self):
 
-        required_env_vars = [
-            'CIMG_CIM_PROFILE',
-            'CIMG_URL',
-            'CIMG_IEC61970_301'
-        ]
+        # required_env_vars = [
+        #     'CIMG_CIM_PROFILE',
+        #     'CIMG_URL',
+        #     'CIMG_IEC61970_301'
+        # ]
 
-        missing_vars = [
-            var for var in required_env_vars if os.getenv(var) is None
-        ]
+        # missing_vars = [
+        #     var for var in required_env_vars if os.getenv(var) is None
+        # ]
 
-        if missing_vars:
-            raise EnvironmentError(
-                f"Missing required environment variables: {', '.join(missing_vars)}"
-            )
+        # if missing_vars:
+        #     raise EnvironmentError(
+        #         f"Missing required environment variables: {', '.join(missing_vars)}"
+        #     )
 
         self.sparql_obj = None
         self.url = get_url()

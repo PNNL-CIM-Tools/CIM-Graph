@@ -10,6 +10,7 @@ from gridappsd import GridAPPSD
 
 import cimgraph.queries.sparql as sparql
 from cimgraph.databases import ConnectionInterface, QueryResponse, Graph
+from cimgraph.databases import get_namespace, get_iec61970_301, get_cim_profile, get_database, get_host, get_port, get_username, get_password, get_url
 
 _log = logging.getLogger(__name__)
 
@@ -18,41 +19,39 @@ class GridappsdConnection(ConnectionInterface):
 
     def __init__(self):
 
-        required_env_vars = [
-            'CIMG_CIM_PROFILE',
-            'CIMG_URL',
-            'CIMG_DATABASE',
-            'CIMG_HOST',
-            'CIMG_PORT',
-            'CIMG_USERNAME',
-            'CIMG_PASSWORD',
-            'CIMG_NAMESPACE',
-            'CIMG_IEC61970_301',
-            'CIMG_USE_UNITS'
-        ]
+        # required_env_vars = [
+        #     'CIMG_CIM_PROFILE',
+        #     'CIMG_URL',
+        #     'CIMG_DATABASE',
+        #     'CIMG_HOST',
+        #     'CIMG_PORT',
+        #     'CIMG_USERNAME',
+        #     'CIMG_PASSWORD',
+        #     'CIMG_NAMESPACE',
+        #     'CIMG_IEC61970_301',
+        #     'CIMG_USE_UNITS'
+        # ]
 
-        missing_vars = [
-            var for var in required_env_vars if os.getenv(var) is None
-        ]
+        # missing_vars = [
+        #     var for var in required_env_vars if os.getenv(var) is None
+        # ]
 
-        if missing_vars:
-            raise EnvironmentError(
-                f"Missing required environment variables: {', '.join(missing_vars)}"
-            )
+        # if missing_vars:
+        #     raise EnvironmentError(
+        #         f"Missing required environment variables: {', '.join(missing_vars)}"
+        #     )
 
 
-        self.cim_profile = os.getenv('CIMG_CIM_PROFILE')
-        self.cim = importlib.import_module('cimgraph.data_profile.' + self.cim_profile)
-        self.namespace = os.getenv('CIMG_NAMESPACE')
-        self.iec61970_301 = int(os.getenv('CIMG_IEC61970_301'))
-        self.host = os.getenv('CIMG_HOST')
-        self.port = int(os.getenv('CIMG_PORT'))
-        self.username = os.getenv('CIMG_USERNAME')
-        self.password = os.getenv('CIMG_PASSWORD')
-        self.use_units = os.getenv('CIMG_USE_UNITS') == 'false'
-        self.url = os.getenv('CIMG_URL')
-        self.database = os.getenv('CIMG_DATABASE')
-
+        self.cim_profile, self.cim = get_cim_profile()
+        self.namespace = get_namespace()
+        self.iec61970_301 = get_iec61970_301()
+        self.host = get_host()
+        self.port = get_port()
+        self.username = get_username()
+        self.password = get_password()
+        self.use_units = False
+        self.url = get_url()
+        self.database = get_database()
 
 
         self.gapps = None

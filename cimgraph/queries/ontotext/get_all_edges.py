@@ -10,7 +10,6 @@ def get_all_edges_ontotext(graph:dict[type, dict[UUID, object]], cim_class: type
             class type and UUID object identifier
         cim_class (type): The CIM class type to query
         uuid_list (list[UUID]): List of UUIDs to query for
-        connection_params (ConnectionParameters): Database connection parameters
 
     Returns:
         query_message: query string that can be used in GraphDB connection or STOMP client

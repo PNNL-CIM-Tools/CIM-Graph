@@ -99,7 +99,7 @@ def get_database() -> str:
     database = os.getenv('CIMG_DATABASE')
     if database is None:
         _log.warning('CIMG_DATABASE environment variable is not set.')
-
+        database = DEFAULT_DATABASE
         # raise ValueError('CIMG_DATABASE environment variable is not set.')
     return database
 
@@ -115,6 +115,58 @@ def get_use_units() -> bool:
         use_units = DEFAULT_USE_UNITS
         _log.debug("CIMG_USE_UNITS environment variable is not set. Defaulting to false.")
     return use_units.lower() == 'true'
+
+@cache
+def get_username() -> str:
+    """
+    Returns the CIM profile to be used for object graph
+    Returns:
+        cim_profile: library 
+    """
+    username = os.getenv('CIMG_USERNAME')
+    if username is None:
+        _log.warning('CIMG_USERNAME environment variable is not set.')
+        username = DEFAULT_USERNAME
+    return username
+
+@cache
+def get_password() -> str:
+    """
+    Returns the CIM profile to be used for object graph
+    Returns:
+        cim_profile: library 
+    """
+    password = os.getenv('CIMG_PASSWORD')
+    if password is None:
+        _log.warning('CIMG_PASSWORD environment variable is not set.')
+        password = DEFAULT_PASSWORD
+    return password
+
+@cache
+def get_host() -> str:
+    """
+    Returns the CIM profile to be used for object graph
+    Returns:
+        cim_profile: library 
+    """
+    host = os.getenv('CIMG_HOST')
+    if host is None:
+        _log.warning('CIMG_HOST environment variable is not set.')
+        host = DEFAULT_HOST
+    return host
+
+@cache
+def get_port() -> str:
+    """
+    Returns the CIM profile to be used for object graph
+    Returns:
+        cim_profile: library 
+    """
+    port = os.getenv('CIMG_PORT')
+    if port is None:
+        _log.warning('CIMG_PORT environment variable is not set.')
+        port = DEFAULT_PORT
+    return port
 
 @dataclass
 class ConnectionParameters:
