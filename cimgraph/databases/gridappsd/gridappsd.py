@@ -290,7 +290,7 @@ class GridappsdConnection(ConnectionInterface):
         new_edges = self.edge_query_parser(query_output, graph, subject.__class__)
         return new_edges
 
-    def get_object(self, mrid: str, graph: dict = None) -> object:
+    def get_object(self, mRID: str, graph: dict = None) -> object:
         """
         Retrieve an object from the Blazegraph database using its mRID.
 
@@ -304,7 +304,7 @@ class GridappsdConnection(ConnectionInterface):
         if graph is None:
             graph = {}
         # Use sparql module to build get correct query string
-        sparql_message = sparql.get_object_sparql(mrid)
+        sparql_message = sparql.get_object_sparql(mRID)
         # Execute query
         query_output = self.execute(sparql_message)
         obj = None
