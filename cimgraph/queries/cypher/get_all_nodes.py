@@ -2,6 +2,7 @@ from __future__ import annotations
 
 from cimgraph.databases import get_namespace
 
+
 def get_all_nodes_from_container(container: object):
     """
     Generates SPARQL query string for all nodes, terminals, and conducting equipment

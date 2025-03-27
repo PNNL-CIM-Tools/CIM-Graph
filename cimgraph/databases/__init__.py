@@ -1,4 +1,5 @@
 from __future__ import annotations
+
 import importlib
 import logging
 import os
@@ -27,7 +28,7 @@ def get_cim_profile() -> str:
     """
     Returns the CIM profile to be used for object graph
     Returns:
-        cim_profile: library 
+        cim_profile: library
     """
     cim_profile = os.getenv('CIMG_CIM_PROFILE')
     if cim_profile is None:
@@ -113,7 +114,7 @@ def get_use_units() -> bool:
     use_units = os.getenv('CIMG_USE_UNITS')
     if use_units is None:
         use_units = DEFAULT_USE_UNITS
-        _log.debug("CIMG_USE_UNITS environment variable is not set. Defaulting to false.")
+        _log.debug('CIMG_USE_UNITS environment variable is not set. Defaulting to false.')
     return use_units.lower() == 'true'
 
 @cache
@@ -121,7 +122,7 @@ def get_username() -> str:
     """
     Returns the CIM profile to be used for object graph
     Returns:
-        cim_profile: library 
+        cim_profile: library
     """
     username = os.getenv('CIMG_USERNAME')
     if username is None:
@@ -134,7 +135,7 @@ def get_password() -> str:
     """
     Returns the CIM profile to be used for object graph
     Returns:
-        cim_profile: library 
+        cim_profile: library
     """
     password = os.getenv('CIMG_PASSWORD')
     if password is None:
@@ -147,7 +148,7 @@ def get_host() -> str:
     """
     Returns the CIM profile to be used for object graph
     Returns:
-        cim_profile: library 
+        cim_profile: library
     """
     host = os.getenv('CIMG_HOST')
     if host is None:
@@ -160,7 +161,7 @@ def get_port() -> str:
     """
     Returns the CIM profile to be used for object graph
     Returns:
-        cim_profile: library 
+        cim_profile: library
     """
     port = os.getenv('CIMG_PORT')
     if port is None:

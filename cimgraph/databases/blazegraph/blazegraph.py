@@ -10,8 +10,8 @@ from uuid import UUID
 from SPARQLWrapper import JSON, POST, SPARQLWrapper
 
 import cimgraph.queries.sparql as sparql
-from cimgraph.databases import ConnectionInterface, Graph, QueryResponse
-from cimgraph.databases import get_cim_profile, get_iec61970_301, get_namespace, get_url
+from cimgraph.databases import (ConnectionInterface, Graph, QueryResponse, get_cim_profile,
+                                get_iec61970_301, get_namespace, get_url)
 
 _log = logging.getLogger(__name__)
 
@@ -146,7 +146,7 @@ class BlazegraphConnection(ConnectionInterface):
         """
         if graph is None:
             graph = {}
-        
+
         self.add_to_graph(obj=subject, graph=graph)
         # Generate SPARQL query for user-specified triple string
         sparql_message = sparql.get_triple_sparql(subject, predicate)

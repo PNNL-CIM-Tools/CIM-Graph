@@ -2,7 +2,7 @@ from __future__ import annotations
 
 from uuid import UUID
 
-from cimgraph.databases import get_namespace, get_url, get_iec61970_301
+from cimgraph.databases import get_iec61970_301, get_namespace, get_url
 
 
 def get_object_cypher(mRID: str) -> str:

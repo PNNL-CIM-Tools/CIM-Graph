@@ -11,8 +11,8 @@ from neo4j import AsyncGraphDatabase, GraphDatabase
 from neo4j.exceptions import DriverError, Neo4jError
 
 import cimgraph.queries.cypher as cypher
-from cimgraph.databases import ConnectionInterface, Graph, QueryResponse
-from cimgraph.databases import get_cim_profile, get_namespace, get_url, get_username, get_password, get_database
+from cimgraph.databases import (ConnectionInterface, Graph, QueryResponse, get_cim_profile,
+                                get_database, get_namespace, get_password, get_url, get_username)
 
 nest_asyncio.apply()
 

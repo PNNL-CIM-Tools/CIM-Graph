@@ -11,8 +11,9 @@ import mysql.connector
 from SPARQLWrapper import JSON, POST, SPARQLWrapper
 
 import cimgraph.queries.sparql as sparql
-from cimgraph.databases import ConnectionInterface, QueryResponse
-from cimgraph.databases import get_namespace, get_iec61970_301, get_cim_profile, get_host, get_port, get_username, get_password, get_database
+from cimgraph.databases import (ConnectionInterface, QueryResponse, get_cim_profile, get_database,
+                                get_host, get_iec61970_301, get_namespace, get_password, get_port,
+                                get_username)
 from cimgraph.models.graph_model import GraphModel
 
 _log = logging.getLogger(__name__)

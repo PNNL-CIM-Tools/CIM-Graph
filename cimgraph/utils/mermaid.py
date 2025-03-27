@@ -414,21 +414,22 @@ def add_mermaid_path(root: object | type, path: str | list[str], mermaid: str,
     return mermaid
 
 import base64
-import requests
 import logging
 from typing import Optional
+
+import requests
 
 _log = logging.getLogger(__name__)
 
 def download_mermaid(mermaid: str, filename: str, timeout: int = 30) -> Optional[bool]:
     """
     Downloads a Mermaid diagram from mermaid.ink and saves as an image
-    
+
     Args:
         mermaid (str): The mermaid diagram text.
         filename (str): The file to which the diagram should be saved
         timeout (int): Request timeout in seconds
-        
+
     Returns:
         bool: True if successful, False if failed, None if error occurred
     """
@@ -441,14 +442,14 @@ def download_mermaid(mermaid: str, filename: str, timeout: int = 30) -> Optional
         # Added timeout parameter
         with requests.get(url, stream=True, timeout=timeout) as response:
             response.raise_for_status()
-            
+
             with open(filename, 'wb') as file:
                 for chunk in response.iter_content(chunk_size=16384):
                     if chunk:  # filter out keep-alive new chunks
                         file.write(chunk)
-        
+
         return True
-    
+
     except requests.exceptions.Timeout:
         _log.error(f"Timeout error downloading diagram to {filename}")
         return False
@@ -457,7 +458,7 @@ def download_mermaid(mermaid: str, filename: str, timeout: int = 30) -> Optional
         return False
     except requests.exceptions.ConnectionError:
         _log.error(f"Connection error downloading diagram to {filename}")
-        return False  
+        return False
     except requests.exceptions.RequestException as e:
         _log.error(f"Error downloading diagram to {filename}: {str(e)}")
         return False

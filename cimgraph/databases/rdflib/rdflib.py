@@ -11,8 +11,8 @@ from rdflib import Graph, Namespace, URIRef
 from rdflib.namespace import RDF
 
 import cimgraph.queries.sparql as sparql
-from cimgraph.databases import ConnectionInterface, QueryResponse
-from cimgraph.databases import get_namespace, get_iec61970_301, get_cim_profile
+from cimgraph.databases import (ConnectionInterface, QueryResponse, get_cim_profile,
+                                get_iec61970_301, get_namespace)
 
 _log = logging.getLogger(__name__)
 

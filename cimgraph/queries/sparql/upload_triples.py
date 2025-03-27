@@ -5,7 +5,7 @@ import importlib
 import logging
 
 from cimgraph.data_profile.known_problem_classes import ClassesWithManytoMany
-from cimgraph.databases import get_url, get_iec61970_301, get_namespace, get_cim_profile
+from cimgraph.databases import get_cim_profile, get_iec61970_301, get_namespace, get_url
 
 _log = logging.getLogger(__name__)
 

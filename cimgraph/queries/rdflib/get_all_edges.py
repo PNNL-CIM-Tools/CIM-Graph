@@ -1,6 +1,8 @@
 from __future__ import annotations
+
 from uuid import UUID
-from cimgraph.databases import get_namespace, get_iec61970_301
+
+from cimgraph.databases import get_iec61970_301, get_namespace
 
 
 def get_all_edges_sparql(graph:dict[type, dict[UUID, object]], cim_class: type, uuid_list: list[UUID]) -> str:
@@ -51,7 +53,7 @@ def get_all_edges_sparql(graph:dict[type, dict[UUID, object]], cim_class: type, 
 
     # add all attributes
     query_message += """
-    
+
         {?eq (cim:|!cim:) ?val.
          ?eq ?attr ?val.}
         UNION

@@ -1,11 +1,13 @@
 import os
 import unittest
-import cimgraph.data_profile.cimhub_2023 as cim
-from cimgraph.databases import GridappsdConnection
-from cimgraph.queries import sparql
-from cimgraph.models import FeederModel
-from cimgraph import utils
 from uuid import UUID
+
+import cimgraph.data_profile.cimhub_2023 as cim
+from cimgraph import utils
+from cimgraph.databases import GridappsdConnection
+from cimgraph.models import FeederModel
+from cimgraph.queries import sparql
+
 
 class TestBlazegraphSETO(unittest.TestCase):
 
@@ -60,7 +62,7 @@ class TestBlazegraphSETO(unittest.TestCase):
         query = sparql.get_object_sparql(mRID=self.feeder_mrid)
         expected_str = '\n        PREFIX r:  <http://www.w3.org/1999/02/22-rdf-syntax-ns#>\n        PREFIX cim:  <http://iec.ch/TC57/CIM100#>\n        SELECT DISTINCT ?identifier ?obj_class\n        WHERE {\n          \n    VALUES ?identifier {"49AD8E07-3BF9-A4E2-CB8F-C3722F837B62"}\n        bind(iri(concat("urn:uuid:", ?identifier)) as ?eq)\n\n        ?eq a ?classraw.\n        bind(strafter(str(?classraw),"http://iec.ch/TC57/CIM100#") as ?obj_class)\n        }\n        ORDER by  ?identifier\n        '
         self.assertEqual(query, expected_str)
-        
+
     def test_get_object(self):
         database = GridappsdConnection()
         feeder = database.get_object(mRID=self.feeder_mrid)
@@ -93,14 +95,14 @@ class TestBlazegraphSETO(unittest.TestCase):
         # check value of line 645646
         self.assertEqual(line.name, '645646')
         self.assertEqual(line.length, 91.44)
-        
+
         # check phase C
         for phase in line.ACLineSegmentPhases:
             if phase.phase.value == 'C':
                break
         self.assertEqual(phase.name, '645646_C')
         self.assertEqual(phase.ACLineSegment, line)
-        
+
 
 if __name__ == '__main__':
     unittest.main()

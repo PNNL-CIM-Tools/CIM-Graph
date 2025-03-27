@@ -2,7 +2,7 @@ from __future__ import annotations
 
 from uuid import UUID
 
-from cimgraph.databases import get_url, get_iec61970_301, get_namespace
+from cimgraph.databases import get_iec61970_301, get_namespace, get_url
 
 
 def get_all_edges_sparql(graph:dict[type, dict[UUID, object]], cim_class: type, uuid_list: list[UUID]) -> str:

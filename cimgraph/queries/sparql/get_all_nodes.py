@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import logging
+
 import cimgraph.data_profile.cim17v40 as cim
 from cimgraph.databases import get_iec61970_301, get_namespace, get_url
 

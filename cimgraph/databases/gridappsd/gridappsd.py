@@ -6,11 +6,13 @@ import logging
 import math
 import os
 from uuid import UUID
+
 from gridappsd import GridAPPSD
 
 import cimgraph.queries.sparql as sparql
-from cimgraph.databases import ConnectionInterface, QueryResponse, Graph
-from cimgraph.databases import get_namespace, get_iec61970_301, get_cim_profile, get_database, get_host, get_port, get_username, get_password, get_url
+from cimgraph.databases import (ConnectionInterface, Graph, QueryResponse, get_cim_profile,
+                                get_database, get_host, get_iec61970_301, get_namespace,
+                                get_password, get_port, get_url, get_username)
 
 _log = logging.getLogger(__name__)
 

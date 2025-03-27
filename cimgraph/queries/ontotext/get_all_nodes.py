@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from cimgraph.databases import get_namespace, get_url, get_iec61970_301
+from cimgraph.databases import get_iec61970_301, get_namespace, get_url
 
 
 def get_all_nodes_ontotext(container: object) -> str:

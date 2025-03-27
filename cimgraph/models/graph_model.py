@@ -2,12 +2,12 @@ from __future__ import annotations
 
 import json
 import logging
+from abc import ABC, abstractmethod
 from dataclasses import dataclass, field
 from uuid import UUID
 
 from cimgraph.data_profile.identity import Identity
 from cimgraph.databases import ConnectionInterface
-from abc import ABC, abstractmethod
 
 _log = logging.getLogger(__name__)
 
