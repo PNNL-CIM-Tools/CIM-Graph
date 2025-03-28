@@ -12,7 +12,7 @@ from neo4j.exceptions import DriverError, Neo4jError
 
 import cimgraph.queries.cypher as cypher
 from cimgraph.databases import (ConnectionInterface, Graph, QueryResponse, get_cim_profile,
-                                get_database, get_namespace, get_password, get_url, get_username)
+                                get_database, get_namespace, get_password, get_url, get_username, get_iec61970_301)
 
 nest_asyncio.apply()
 
@@ -33,6 +33,7 @@ class Neo4jConnection(ConnectionInterface):
         self.username = get_username()
         self.password = get_password()
         self.database = get_database()
+        self.iec61970_301 = get_iec61970_301()
         self.driver = None
         # self.use_async = use_async
 
@@ -56,7 +57,7 @@ class Neo4jConnection(ConnectionInterface):
         """
         Disconnect from the Neo4J endpoint.
         """
-        self.driver.close()
+        asyncio.run(self.driver.close())
         self.driver = None
 
     def execute(self, query_message: str) -> QueryResponse:
@@ -121,7 +122,7 @@ class Neo4jConnection(ConnectionInterface):
         # Parse query results to get the correct CIM object
         for result in query_output:
             uri = result['identifier']  # uri / mRID string
-            obj_class = result['obj_class']  # class type
+            obj_class = result['class']  # class type
             # If equipment class is in data profile, create a new object
             if obj_class in self.cim.__all__:
                 class_type = getattr(self.cim, obj_class)  # get type
@@ -137,7 +138,7 @@ class Neo4jConnection(ConnectionInterface):
     def create_new_graph(self, container: object) -> dict[type, dict[str, object]]:
         graph = {}
         # Generate cypher message from correct loaders>cypher python script based on class name
-        cypher_message = cypher.get_all_nodes_from_container(container, self.namespace)
+        cypher_message = cypher.get_all_nodes_from_container(container)
         # async_execute cypher query
         query_output = self.execute(cypher_message)
         self.parse_node_query(graph, query_output)
@@ -173,7 +174,7 @@ class Neo4jConnection(ConnectionInterface):
                 _log.warning(
                     f'object class missing from data profile: {eq_class}')
                 continue
-            if node:
+            if node_id:
                 # Add each object to graph
                 node = self.create_object(graph, self.cim.ConnectivityNode, node_id)
                 terminal = self.create_object(graph, self.cim.Terminal, terminal_id)
@@ -234,7 +235,7 @@ class Neo4jConnection(ConnectionInterface):
     async def get_all_edges_async(self, mrid_list, graph: dict[type, dict[str, object]],
                                   cim_class: type):
         for f in asyncio.as_completed([
-                self.edge_query_parser(mrid_list, index, graph, cim_class)
+                self.edge_query_runner(mrid_list, index, graph, cim_class)
                 for index in range(math.ceil(len(mrid_list) / 100))
         ]):
             await f
@@ -248,12 +249,13 @@ class Neo4jConnection(ConnectionInterface):
         cypher_message = cypher.get_all_edges_cypher(graph, cim_class, eq_mrids)
         #async_execute cypher query
         query_output = asyncio.run(self.async_execute(cypher_message))
-        self.edge_query_parser(query_output)
+        self.edge_query_parser(query_output, graph, cim_class)
 
         #generate cypher message from graph and CIM class name
         cypher_message = cypher.get_all_properties_cypher(graph, cim_class, eq_mrids)
         #async_execute cypher query
         query_output = asyncio.run(self.async_execute(cypher_message))
+        self.property_query_parser(query_output,graph,cim_class)
 
 
 

@@ -32,11 +32,11 @@ WHERE n.uri IN ["""
         query_message += f'"{split+graph[cim_class][uuid].uri()}", \n'
 
     query_message = query_message.rstrip(', \n')
-    query_message += ''']
+    query_message += f''']
 OPTIONAL MATCH (n) - [r] - (m)
 RETURN DISTINCT n.uri as identifier,
 type(r) as attribute,
-m.uri as edge_id,
+REPLACE(m.uri, "{split}", "") as edge_id,
 labels(m)[1] as edge_class'''
     # '{"@id":"' + COALESCE(m.uri ,"") + '","@type":"' + COALESCE((labels(m))[1],"") + '"}' as edge
     return query_message

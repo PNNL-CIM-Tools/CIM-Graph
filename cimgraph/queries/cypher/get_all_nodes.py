@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from cimgraph.databases import get_namespace
+from cimgraph.databases import get_namespace, get_iec61970_301, get_url
 
 
 def get_all_nodes_from_container(container: object):
@@ -14,14 +14,19 @@ def get_all_nodes_from_container(container: object):
     container_class = container.__class__.__name__
     uri = container.uri()
 
+    if get_iec61970_301() > 7:
+        split = 'urn:uuid:'
+    else:
+        split = f'{get_url()}#'
+
     query_message = f"""MATCH (container:{container_class})
-WHERE container.uri = "{uri}"
+WHERE container.uri = "{split}{uri}"
 MATCH (eq) - [:`Equipment.EquipmentContainer`] - (container)
 OPTIONAL MATCH (cnode) - [:`Terminal.ConnectivityNode`] - (term:Terminal) - [:`Terminal.ConductingEquipment`] -> (eq)
 RETURN DISTINCT
-cnode.`IdentifiedObject.mRID` as ConnectivityNode,
-term.`IdentifiedObject.mRID` as Terminal,
-eq.`IdentifiedObject.mRID` as eq_id,
+REPLACE(cnode.uri, "{split}", "") as ConnectivityNode,
+REPLACE(term.uri, "{split}", "") as Terminal,
+REPLACE(eq.uri, "{split}", "") as eq_id,
 LABELS(eq)[1] as eq_class"""
 
     return query_message

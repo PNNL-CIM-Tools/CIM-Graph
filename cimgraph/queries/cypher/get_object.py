@@ -22,7 +22,7 @@ def get_object_cypher(mRID: str) -> str:
 
     query_message = f'''
 MATCH(n)
-WHERE n.uri = {split+mRID}
+WHERE n.uri = "{split+mRID}"
 RETURN DISTINCT n.uri as identifier,
 labels(n)[1] as class'''
     # '{"@id":"' + COALESCE(m.uri ,"") + '","@type":"' + COALESCE((labels(m))[1],"") + '"}' as edge
