@@ -138,7 +138,7 @@ class RDFlibConnection(ConnectionInterface):
     def edge_query_parser(self, query_output: QueryResponse,
                           graph: dict[type, dict[UUID, object]],
                           cim_class: type, expand_graph = True) -> None:
-        
+
         for result in query_output:
             if result.attribute is not None:  #skip 'type' and other single attributes
                 if 'type' not in result.attribute.value:
