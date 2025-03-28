@@ -21,9 +21,9 @@ _log = logging.getLogger(__name__)
 class XMLFile(ConnectionInterface):
 
     def __init__(self, filename:str|list[str]):
-        self.cim_profile, self.cim = get_cim_profile
+        self.cim_profile, self.cim = get_cim_profile()
         self.namespace = get_namespace()
-        self.iec61970_301 = get_cim_profile
+        self.iec61970_301 = get_iec61970_301()
         self.filename = filename
         self.graph = None
         self.connect()

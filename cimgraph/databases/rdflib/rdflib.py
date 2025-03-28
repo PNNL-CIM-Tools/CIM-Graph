@@ -77,9 +77,9 @@ class RDFlibConnection(ConnectionInterface):
 
         for result in query_output:
             # Parse query results
-            node_mrid = str(result.ConnectivityNode)
-            term_mrid = str(result.Terminal)
-            eq = json.loads(result.Equipment)
+            node_mrid = str(result.ConnectivityNode.value)
+            term_mrid = str(result.Terminal.value)
+            eq = json.loads(result.Equipment.value)
             eq_id = eq['@id']
             eq_class = eq['@type']
 
@@ -138,66 +138,67 @@ class RDFlibConnection(ConnectionInterface):
     def edge_query_parser(self, query_output: QueryResponse,
                           graph: dict[type, dict[UUID, object]],
                           cim_class: type, expand_graph = True) -> None:
+        
         for result in query_output:
-            if 'type' not in result.attribute and result.attribute is not None:  #skip 'type' and other single attributes
-
-                is_association = False
-                is_enumeration = False
-                if result.uri() is not None:  #get mRID
-                    mRID = str(result.uri())
-                else:
-                    iri = str(result.eq)
-                    if self.iec61970_301 > 7:
-                        mRID = iri.split('uuid:')[1]
+            if result.attribute is not None:  #skip 'type' and other single attributes
+                if 'type' not in result.attribute.value:
+                    is_association = False
+                    is_enumeration = False
+                    if result.uri() is not None:  #get mRID
+                        mRID = str(result.uri())
                     else:
-                        mRID = iri.split('rdf:id:')[1]
-                identifier = UUID(mRID.strip('_').lower())
-                attr_uri = result.attr
-                attr = str(result.attr).split(self.namespace)[1]
-                attribute = attr.split('.')  #split edge attribute
-                value = str(result.val)  #get edge value
-
-                if self.namespace in value:  #check if enumeration
-                    enum_text = value.split(self.namespace)[1]
-                    enum_text = enum_text.split('>')[0]
-                    enum_class = enum_text.split('.')[0]
-                    enum_value = enum_text.split('.')[1]
-                    is_enumeration = True
-
-                if result.edge_class is not None:  #check if association
-                    is_association = True
-                    # edge = json.loads(result.edge)
-                    # edge_mRID = edge['@id']
-                    # edge_class = edge['@type']
-                    edge_class = str(result.edge_class)
-                    if result.edge_mRID is not None:
-                        edge_mRID = str(result.edge_mRID)
-                    else:
+                        iri = str(result.eq)
                         if self.iec61970_301 > 7:
-                            edge_mRID = value.split('uuid:')[1]
+                            mRID = iri.split('uuid:')[1]
                         else:
-                            edge_mRID = value.split('#')[1]
-                    if edge_class in self.cim.__all__:
-                        edge_class = getattr(self.cim, edge_class)
+                            mRID = iri.split('rdf:id:')[1]
+                    identifier = UUID(mRID.strip('_').lower())
+                    attr_uri = result.attr
+                    attr = str(result.attr).split(self.namespace)[1]
+                    attribute = attr.split('.')  #split edge attribute
+                    value = str(result.val)  #get edge value
+
+                    if self.namespace in value:  #check if enumeration
+                        enum_text = value.split(self.namespace)[1]
+                        enum_text = enum_text.split('>')[0]
+                        enum_class = enum_text.split('.')[0]
+                        enum_value = enum_text.split('.')[1]
+                        is_enumeration = True
+
+                    if result.edge_class is not None:  #check if association
+                        is_association = True
+                        # edge = json.loads(result.edge)
+                        # edge_mRID = edge['@id']
+                        # edge_class = edge['@type']
+                        edge_class = str(result.edge_class)
+                        if result.edge_mRID is not None:
+                            edge_mRID = str(result.edge_mRID)
+                        else:
+                            if self.iec61970_301 > 7:
+                                edge_mRID = value.split('uuid:')[1]
+                            else:
+                                edge_mRID = value.split('#')[1]
+                        if edge_class in self.cim.__all__:
+                            edge_class = getattr(self.cim, edge_class)
+                        else:
+                            _log.warning(f'unknown class {edge_class}')
+                            continue
+
+                        if expand_graph:
+                            self.create_edge(graph, cim_class, identifier, attribute, edge_class, edge_mRID)
+                        else:
+                            self.create_value(graph, cim_class, identifier, attribute, value)
+
+
+                    elif is_enumeration:
+                        edge_enum = getattr(self.cim, enum_class)(enum_value)
+                        association = self.check_attribute(cim_class, attribute)
+                        if association is not None:
+                            setattr(graph[cim_class][identifier], association, edge_enum)
                     else:
-                        _log.warning(f'unknown class {edge_class}')
-                        continue
-
-                    if expand_graph:
-                        self.create_edge(graph, cim_class, identifier, attribute, edge_class, edge_mRID)
-                    else:
-                        self.create_value(graph, cim_class, identifier, attribute, value)
-
-
-                elif is_enumeration:
-                    edge_enum = getattr(self.cim, enum_class)(enum_value)
-                    association = self.check_attribute(cim_class, attribute)
-                    if association is not None:
-                        setattr(graph[cim_class][identifier], association, edge_enum)
-                else:
-                    association = self.check_attribute(cim_class, attribute)
-                    if association is not None:
-                        self.create_value(graph, cim_class, identifier, attribute, value)
+                        association = self.check_attribute(cim_class, attribute)
+                        if association is not None:
+                            self.create_value(graph, cim_class, identifier, attribute, value)
 
 
     #     return obj
