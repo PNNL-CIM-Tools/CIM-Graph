@@ -11,7 +11,9 @@ from neo4j import AsyncGraphDatabase, GraphDatabase
 from neo4j.exceptions import DriverError, Neo4jError
 
 import cimgraph.queries.cypher as cypher
-from cimgraph.databases import ConnectionInterface, ConnectionParameters, Graph, QueryResponse
+from cimgraph.databases import (ConnectionInterface, Graph, QueryResponse, get_cim_profile,
+                                get_database, get_iec61970_301, get_namespace, get_password,
+                                get_url, get_username)
 
 nest_asyncio.apply()
 
@@ -22,20 +24,17 @@ class Neo4jConnection(ConnectionInterface):
     """
     A class to handle connections and operations with a Neo4J database.
 
-    Attributes:
-        connection_params (ConnectionParameters): Connection parameters with details like cim_profile, namespace, etc.
     """
 
-    def __init__(self, connection_parameters: ConnectionParameters):
+    def __init__(self):
 
-        self.cim_profile = connection_parameters.cim_profile
-        self.cim = importlib.import_module('cimgraph.data_profile.' + self.cim_profile)
-        self.connection_params = connection_parameters
-        self.namespace = connection_parameters.namespace
-        self.url = connection_parameters.url
-        self.username = connection_parameters.username
-        self.password = connection_parameters.password
-        self.database = connection_parameters.database
+        self.cim_profile, self.cim = get_cim_profile()
+        self.namespace = get_namespace()
+        self.url = get_url()
+        self.username = get_username()
+        self.password = get_password()
+        self.database = get_database()
+        self.iec61970_301 = get_iec61970_301()
         self.driver = None
         # self.use_async = use_async
 
@@ -59,7 +58,7 @@ class Neo4jConnection(ConnectionInterface):
         """
         Disconnect from the Neo4J endpoint.
         """
-        self.driver.close()
+        asyncio.run(self.driver.close())
         self.driver = None
 
     def execute(self, query_message: str) -> QueryResponse:
@@ -91,7 +90,7 @@ class Neo4jConnection(ConnectionInterface):
         self.connect()
 
         async with self.driver.session(database=self.database) as session:
-            result = await session.read_transaction(lambda tx: self.query_tx(tx, query_message))
+            result = await session.execute_read(lambda tx: self.query_tx(tx, query_message))
 
         return result
 
@@ -103,7 +102,7 @@ class Neo4jConnection(ConnectionInterface):
         records = await result.data()
         return records
 
-    def get_object(self, mrid: str, graph: dict = {}) -> object:
+    def get_object(self, mRID: str, graph: dict = None) -> object:
         """
         Retrieve an object from the Neo4J database using its mRID.
 
@@ -114,15 +113,17 @@ class Neo4jConnection(ConnectionInterface):
         Returns:
             object: The retrieved object.
         """
+        if graph is None:
+            graph = {}
         # Use cypher module to build get correct query string
-        cypher_message = cypher.get_object_cypher(mrid, self.connection_params)
+        cypher_message = cypher.get_object_cypher(mRID)
         query_output = self.execute(cypher_message)
 
         obj = None
         # Parse query results to get the correct CIM object
         for result in query_output:
             uri = result['identifier']  # uri / mRID string
-            obj_class = result['obj_class']  # class type
+            obj_class = result['class']  # class type
             # If equipment class is in data profile, create a new object
             if obj_class in self.cim.__all__:
                 class_type = getattr(self.cim, obj_class)  # get type
@@ -138,7 +139,7 @@ class Neo4jConnection(ConnectionInterface):
     def create_new_graph(self, container: object) -> dict[type, dict[str, object]]:
         graph = {}
         # Generate cypher message from correct loaders>cypher python script based on class name
-        cypher_message = cypher.get_all_nodes_from_container(container, self.namespace)
+        cypher_message = cypher.get_all_nodes_from_container(container)
         # async_execute cypher query
         query_output = self.execute(cypher_message)
         self.parse_node_query(graph, query_output)
@@ -174,7 +175,7 @@ class Neo4jConnection(ConnectionInterface):
                 _log.warning(
                     f'object class missing from data profile: {eq_class}')
                 continue
-            if node:
+            if node_id:
                 # Add each object to graph
                 node = self.create_object(graph, self.cim.ConnectivityNode, node_id)
                 terminal = self.create_object(graph, self.cim.Terminal, terminal_id)
@@ -190,14 +191,16 @@ class Neo4jConnection(ConnectionInterface):
 
         return graph
 
-    def create_distributed_graph(self, area: object, graph: dict = {}) -> Graph:
+    def create_distributed_graph(self, area: object, graph: dict = None) -> Graph:
+        if graph is None:
+            graph = {}
         self.add_to_graph(graph=graph, obj=area)
 
         if not isinstance(area, self.cim.SubSchedulingArea):
             _log.error(f'Area object is not a SubSchedulingArea')
             raise TypeError('Area object is not a SubSchedulingArea')
 
-        cypher_message = cypher.get_all_nodes_from_area(area, self.connection_params)
+        cypher_message = cypher.get_all_nodes_from_area(area)
         # Execute cypher query
         query_output = self.execute(cypher_message)
         # Parse query results and create new graph
@@ -205,11 +208,12 @@ class Neo4jConnection(ConnectionInterface):
         return graph
 
 
-    def get_from_triple(self, subject:object, predicate:str, graph: Graph = {}) -> list[object]:
-        if not graph:
-            self.add_to_graph(subject, graph)
+    def get_from_triple(self, subject:object, predicate:str, graph: Graph = None) -> list[object]:
+        if graph is None:
+            graph = {}
+        self.add_to_graph(subject, graph)
         # Generate cypher query for user-specified triple string
-        cypher_message = cypher.get_triple_cypher(subject, predicate, self.connection_params)
+        cypher_message = cypher.get_triple_cypher(subject, predicate)
         # Execute cypher query
         query_output = self.execute(cypher_message)
         # Parse the query output
@@ -219,7 +223,7 @@ class Neo4jConnection(ConnectionInterface):
     def get_edges_query(self, graph: dict[type, dict[str, object]], cim_class: type) -> str:
 
         eq_mrids = list(graph[cim_class].keys())[0:100]
-        cypher_message = cypher.get_all_edges_cypher(graph, cim_class, eq_mrids, self.connection_params)
+        cypher_message = cypher.get_all_edges_cypher(graph, cim_class, eq_mrids)
 
         return cypher_message
 
@@ -232,7 +236,7 @@ class Neo4jConnection(ConnectionInterface):
     async def get_all_edges_async(self, mrid_list, graph: dict[type, dict[str, object]],
                                   cim_class: type):
         for f in asyncio.as_completed([
-                self.edge_query_parser(mrid_list, index, graph, cim_class)
+                self.edge_query_runner(mrid_list, index, graph, cim_class)
                 for index in range(math.ceil(len(mrid_list) / 100))
         ]):
             await f
@@ -243,15 +247,16 @@ class Neo4jConnection(ConnectionInterface):
         # Run a batch of 100 UUIDs at a time
         eq_mrids = mrid_list[index * 100:(index + 1) * 100]
         #generate cypher message from graph and CIM class name
-        cypher_message = cypher.get_all_edges_cypher(graph, cim_class, eq_mrids, self.connection_params)
+        cypher_message = cypher.get_all_edges_cypher(graph, cim_class, eq_mrids)
         #async_execute cypher query
         query_output = asyncio.run(self.async_execute(cypher_message))
-        self.edge_query_parser(query_output)
+        self.edge_query_parser(query_output, graph, cim_class)
 
         #generate cypher message from graph and CIM class name
-        cypher_message = cypher.get_all_properties_cypher(graph, cim_class, eq_mrids, self.connection_params)
+        cypher_message = cypher.get_all_properties_cypher(graph, cim_class, eq_mrids)
         #async_execute cypher query
         query_output = asyncio.run(self.async_execute(cypher_message))
+        self.property_query_parser(query_output,graph,cim_class)
 
 
 

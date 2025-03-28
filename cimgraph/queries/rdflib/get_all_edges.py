@@ -1,23 +1,27 @@
 from __future__ import annotations
 
-from cimgraph.data_profile.known_problem_classes import ClassesWithoutMRID
+from uuid import UUID
+
+from cimgraph.databases import get_iec61970_301, get_namespace
 
 
-def get_all_edges_sparql(cim_class: str, mrid_list: list[str], namespace: str,
-                         iec61970_301: int) -> str:
+def get_all_edges_sparql(graph:dict[type, dict[UUID, object]], cim_class: type, uuid_list: list[UUID]) -> str:
     """
     Generates SPARQL query string for a given catalog of objects and feeder id
     Args:
-        feeder_mrid (str | Feeder object): The mRID of the feeder or feeder object
-        graph (dict[type, dict[str, object]]): The typed catalog of CIM objects organized by
-            class type and object mRID
+        graph (dict[type, dict[UUID, object]]): The graph of CIM objects organized by
+            class type and UUID object identifier
+        cim_class (type): The CIM class type to query
+        uuid_list (list[UUID]): List of UUIDs to query for
+
     Returns:
-        query_message: query string that can be used in blazegraph connection or STOMP client
+        query_message: query string that can be used in RDFLib connection or STOMP client
     """
     class_name = cim_class.__name__
-    classes_without_mrid = ClassesWithoutMRID()
+    namespace = get_namespace()
 
-    if int(iec61970_301) > 7:
+
+    if int(get_iec61970_301()) > 7:
         split = 'urn:uuid:'
     else:
         split = 'rdf:id:'
@@ -38,25 +42,18 @@ def get_all_edges_sparql(cim_class: str, mrid_list: list[str], namespace: str,
     #      {[cim:Equipment.EquipmentContainer ?fdr] (cim:|!cim:)?  ?eq}}.
     #       """ %feeder_mrid
 
-    if class_name not in classes_without_mrid.classes:
-        query_message += """
-        VALUES ?mRID {"""
-        # add all equipment mRID
-        for mrid in mrid_list:
-            query_message += ' "%s" \n' % mrid
-        query_message += """               }
-        ?eq cim:IdentifiedObject.mRID ?mRID."""
-    else:
-        query_message += """
-        VALUES ?eq {"""
-        # add all equipment mRID
-        for mrid in mrid_list:
-            query_message += """ <%s%s> \n""" % (split, mrid)
-        query_message += """               }
-        {bind(strafter(str(?eq),"%s") as ?mRID)}.""" % split
+    query_message += """
+    VALUES ?identifier {"""
+    # add all equipment mRID
+    for uuid in uuid_list:
+        query_message += ' "%s" \n' % graph[cim_class][uuid].uri()
+    query_message += '               }'
+    query_message += f'''
+        bind(iri(concat("{split}", ?identifier)) as ?eq)'''
 
     # add all attributes
     query_message += """
+
         {?eq (cim:|!cim:) ?val.
          ?eq ?attr ?val.}
         UNION
@@ -75,6 +72,6 @@ def get_all_edges_sparql(cim_class: str, mrid_list: list[str], namespace: str,
                   }
         }
 
-        ORDER by  ?mRID ?attribute
+        ORDER by  ?identifier ?attribute
         """ % (split, namespace)
     return query_message

@@ -5,12 +5,12 @@ import importlib
 import logging
 
 from cimgraph.data_profile.known_problem_classes import ClassesWithManytoMany
-from cimgraph.databases import ConnectionParameters
+from cimgraph.databases import get_cim_profile, get_iec61970_301, get_namespace, get_url
 
 _log = logging.getLogger(__name__)
 
 
-def upload_triples_sparql(obj: object, params: ConnectionParameters) -> str:
+def upload_triples_sparql(obj: object) -> str:
     """
     Generates SPARQL query string to upload graph model changes to database
     Args:
@@ -19,18 +19,18 @@ def upload_triples_sparql(obj: object, params: ConnectionParameters) -> str:
     Returns:
         query_message: query string that can be used in blazegraph connection or STOMP client
     """
-    cim = importlib.import_module('cimgraph.data_profile.' + params.cim_profile)
+    cim = importlib.import_module('cimgraph.data_profile.' + get_cim_profile())
     many_to_many = ClassesWithManytoMany().attributes
 
     # Handling of formatting change between different 301 standard versions
-    if int(params.iec61970_301) > 7: # Now use rdf:about
+    if int(get_iec61970_301()) > 7: # Now use rdf:about
         rdf_resource = 'urn:uuid:'
     else: # Older versions used rdf:ID
-        rdf_resource = f"""{params.url}#"""
-    rdf_enum = f"""{params.namespace}"""
+        rdf_resource = f"""{get_url()}#"""
+    rdf_enum = f"""{get_namespace()}"""
 
     prefix = 'PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>\n'
-    prefix += f'PREFIX cim: <{params.namespace}>\n'
+    prefix += f'PREFIX cim: <{get_namespace()}>\n'
     prefix += 'PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>\n'
     triples = []
     cim_class = obj.__class__

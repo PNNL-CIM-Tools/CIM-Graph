@@ -54,7 +54,7 @@ class FeederModel(GraphModel):
         self.distributed_areas = []
 
         # If topology message is provided, build the distributed model from the message
-        if self.topology_message is not None:
+        if self.topology_message:
             if isinstance(self.topology_message, str):
                 self.topology_message = json.loads(self.topology_message)
 
