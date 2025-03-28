@@ -13,8 +13,6 @@ _log = logging.getLogger(__name__)
 @dataclass
 class BusBranchModel(GraphModel):
 
-    distributed_hierarchy: list[type] = field(default_factory=list)
-
     def __post_init__(self):
         self.cim_profile = self.connection.cim_profile
         self.cim = importlib.import_module('cimgraph.data_profile.' + self.cim_profile)
