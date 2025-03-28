@@ -71,25 +71,28 @@ cim_profile = 'rc4_2021'
 cim = importlib.import_module('cimgraph.data_profile.' + cim_profile)
 ```
 
-## Specifying the Connection Parameters
+## Specifying the Environment Variables
 
-The CIM-Graph library supports multiple databases. The ConnectionParameters specify how to read the CIM model:
+**IMPORTANT: As of v0.3+, the ConnectionParameters class has been deprecated. Use the environment variables below to authenticate with the database.**
 
-__Required arguments:__
+The CIM-Graph library supports multiple databases. The environment variables specify how to read the CIM model:
 
-* `cim_profile`: This specifies the specific version of CIM to be used, based on the available python data profiles loaded into the library
+__Required environment variables:__
 
-__Optional arguments:__
+* `CIMG_CIM_PROFILE`: This specifies the specific version of CIM to be used, based on the available python data profiles loaded into the library
 
-* `namespace`: CIM namespace, default is `"http://iec.ch/TC57/CIM100#"`
-* `iec61970-301`: Serialization version. Versions 7(default) and below use `rdf:ID=`. Version 8 uses `rdf:about=urn:uuid:`
-* `url`: URL at which the database can be reached via TCP/IP or other connection
-* `host`: Database host address
-* `port`: Database host port
-* `database`: Database name
-* `username`: Database username
-* `password`: Database password
-* `filename`: Filename for importing CIM models from an XML file
+__Optional environment variables:__
+
+If these values are not specified, they will default to the sample values listed in [example.env](https://github.com/PNNL-CIM-Tools/CIM-Graph/blob/develop/example.env)
+
+* `CIMG_NAMESPACE`: CIM namespace, default is `"http://iec.ch/TC57/CIM100#"`
+* `CIMG_IEC61970-301`: Serialization version. Versions 7(default) and below use `rdf:ID=`. Version 8 uses `rdf:about=urn:uuid:`
+* `CIMG_URL`: URL at which the database can be reached via TCP/IP or other connection
+* `CIMG_HOST`: Database host address
+* `CIMG_PORT`: Database host port
+* `CIMG_DATABASE`: Database name
+* `CIMG_USERNAME`: Database username
+* `CIMG_PASSWORD`: Database password
 
 Note that not all parameters are required. Each database connection uses a subset of these arguments depending on the requirements of the database connection driver.
 
