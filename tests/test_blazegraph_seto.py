@@ -4,7 +4,7 @@ from uuid import UUID
 
 import cimgraph.data_profile.cimhub_2023 as cim
 from cimgraph import utils
-from cimgraph.databases import GridappsdConnection
+from cimgraph.databases import BlazegraphConnection
 from cimgraph.models import FeederModel
 from cimgraph.queries import sparql
 
@@ -29,14 +29,10 @@ class TestBlazegraphSETO(unittest.TestCase):
         # Set environment variables for testing
         os.environ['CIMG_CIM_PROFILE'] = 'cimhub_2023'
         os.environ['CIMG_URL'] = 'http://localhost:8889/bigdata/namespace/kb/sparql'
-        os.environ['CIMG_DATABASE'] = 'powergridmodel'
-        os.environ['CIMG_HOST'] = 'localhost'
-        os.environ['CIMG_PORT'] = '61613'
-        os.environ['CIMG_USERNAME'] = 'test_app_user'
-        os.environ['CIMG_PASSWORD'] = '4Test'
         os.environ['CIMG_NAMESPACE'] = 'http://iec.ch/TC57/CIM100#'
         os.environ['CIMG_IEC61970_301'] = '8'
-        os.environ['CIMG_USE_UNITS'] = 'False'
+        os.environ['CIMG_USE_UNITS'] = 'false'
+
         self.feeder_mrid = '49AD8E07-3BF9-A4E2-CB8F-C3722F837B62'
 
     def tearDown(self):
@@ -49,8 +45,8 @@ class TestBlazegraphSETO(unittest.TestCase):
 
     def test_blazegraph_connection_with_env_vars(self):
 
-        connection = GridappsdConnection()
-        self.assertIsInstance(connection, GridappsdConnection, 'Connection should be an instance of GridappsdConnection')
+        connection = BlazegraphConnection()
+        self.assertIsInstance(connection, BlazegraphConnection, 'Connection should be an instance of BlazegraphConnection')
         self.assertEqual(connection.cim_profile, 'cimhub_2023', 'CIM profile mismatch')
         self.assertEqual(connection.url, 'http://localhost:8889/bigdata/namespace/kb/sparql', 'URL mismatch')
         self.assertEqual(connection.namespace, 'http://iec.ch/TC57/CIM100#', 'Namespace mismatch')
@@ -64,7 +60,7 @@ class TestBlazegraphSETO(unittest.TestCase):
         self.assertEqual(query, expected_str)
 
     def test_get_object(self):
-        database = GridappsdConnection()
+        database = BlazegraphConnection()
         feeder = database.get_object(mRID=self.feeder_mrid)
         expected_str = '{"@id": "49ad8e07-3bf9-a4e2-cb8f-c3722f837b62", "@type": "Feeder"}'
         self.assertEqual(feeder.__str__(), expected_str)
@@ -76,14 +72,14 @@ class TestBlazegraphSETO(unittest.TestCase):
         self.assertEqual(query, expected_str)
 
     def test_get_feeder_model(self):
-        database = GridappsdConnection()
+        database = BlazegraphConnection()
         feeder = cim.Feeder(mRID=self.feeder_mrid)
         network = FeederModel(connection=database, container=feeder, distributed=False)
         initial_keys = len(network.graph.keys())
         self.assertEqual(initial_keys, 14)
 
     def test_get_all_line_data(self):
-        database = GridappsdConnection()
+        database = BlazegraphConnection()
         feeder = cim.Feeder(mRID=self.feeder_mrid)
         network = FeederModel(connection=database, container=feeder, distributed=False)
         line = network.graph[cim.ACLineSegment][UUID('0bbd0ea3-f665-465b-86fd-fc8b8466ad53')]

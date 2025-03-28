@@ -66,7 +66,7 @@ class TestGridappsdDatasource(unittest.TestCase):
         feeder_mrid = '49AD8E07-3BF9-A4E2-CB8F-C3722F837B62'
         #eeder = cim.Feeder(mRID = feeder_mrid)
         connection = GridappsdConnection()
-        feeder = connection.get_object(mrid=feeder_mrid)
+        feeder = connection.get_object(mRID=feeder_mrid)
         assert feeder, 'Feeder object.'
         assert connection.gapps.connected, "Couldn't connect"
         network = FeederModel(connection=connection, container=feeder, distributed=False)

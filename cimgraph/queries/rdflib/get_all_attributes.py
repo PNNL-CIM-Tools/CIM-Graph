@@ -1,10 +1,12 @@
 from __future__ import annotations
 
+from uuid import UUID
+
 from cimgraph.data_profile.known_problem_classes import ClassesWithoutMRID
+from cimgraph.databases import get_cim_profile, get_iec61970_301, get_namespace, get_url
 
 
-def get_all_attributes_sparql(cim_class: str, mrid_list: list[str],
-                              connection_params) -> str:
+def get_all_attributes_sparql(graph:dict[type, dict[UUID, object]], cim_class: str, uuid_list: list[UUID]) -> str:
     """
     Generates SPARQL query string for a given catalog of objects and feeder id
     Args:
@@ -14,8 +16,8 @@ def get_all_attributes_sparql(cim_class: str, mrid_list: list[str],
     Returns:
         query_message: query string that can be used in blazegraph connection or STOMP client
     """
-    namespace = connection_params.namespace
-    iec61970_301 = connection_params.iec61970_301
+    namespace = get_namespace()
+    iec61970_301 = get_iec61970_301()
     class_name = cim_class.__name__
     classes_without_mrid = ClassesWithoutMRID()
 
@@ -40,22 +42,14 @@ def get_all_attributes_sparql(cim_class: str, mrid_list: list[str],
     #      {[cim:Equipment.EquipmentContainer ?fdr] (cim:|!cim:)?  ?eq}}.
     #       """ %feeder_mrid
 
-    if class_name not in classes_without_mrid.classes:
-        query_message += """
-        VALUES ?mRID {"""
-        # add all equipment mRID
-        for mrid in mrid_list:
-            query_message += ' "%s" \n' % mrid
-        query_message += """               }
-        ?eq cim:IdentifiedObject.mRID ?mRID."""
-    else:
-        query_message += """
-        VALUES ?eq {"""
-        # add all equipment mRID
-        for mrid in mrid_list:
-            query_message += """ <%s%s> \n""" % (split, mrid)
-        query_message += """               }
-        {bind(strafter(str(?eq),"%s") as ?mRID)}.""" % split
+    query_message += """
+    VALUES ?identifier {"""
+    # add all equipment mRID
+    for uuid in uuid_list:
+        query_message += ' "%s" \n' % graph[cim_class][uuid].uri()
+    query_message += '               }'
+    query_message += f'''
+        bind(iri(concat("{split}", ?identifier)) as ?eq)'''
 
     # add all attributes
     query_message += """
@@ -71,6 +65,6 @@ def get_all_attributes_sparql(cim_class: str, mrid_list: list[str],
         }
 
 
-        ORDER by  ?mRID ?attribute
+        ORDER by  ?identifier ?attribute
         """ % split
     return query_message

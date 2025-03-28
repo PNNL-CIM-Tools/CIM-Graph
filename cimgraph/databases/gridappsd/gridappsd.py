@@ -8,10 +8,11 @@ import os
 from uuid import UUID
 
 from gridappsd import GridAPPSD
-from rdflib import Graph, URIRef
 
 import cimgraph.queries.sparql as sparql
-from cimgraph.databases import ConnectionInterface, QueryResponse
+from cimgraph.databases import (ConnectionInterface, Graph, QueryResponse, get_cim_profile,
+                                get_database, get_host, get_iec61970_301, get_namespace,
+                                get_password, get_port, get_url, get_username)
 
 _log = logging.getLogger(__name__)
 
@@ -20,41 +21,39 @@ class GridappsdConnection(ConnectionInterface):
 
     def __init__(self):
 
-        required_env_vars = [
-            'CIMG_CIM_PROFILE',
-            'CIMG_URL',
-            'CIMG_DATABASE',
-            'CIMG_HOST',
-            'CIMG_PORT',
-            'CIMG_USERNAME',
-            'CIMG_PASSWORD',
-            'CIMG_NAMESPACE',
-            'CIMG_IEC61970_301',
-            'CIMG_USE_UNITS'
-        ]
+        # required_env_vars = [
+        #     'CIMG_CIM_PROFILE',
+        #     'CIMG_URL',
+        #     'CIMG_DATABASE',
+        #     'CIMG_HOST',
+        #     'CIMG_PORT',
+        #     'CIMG_USERNAME',
+        #     'CIMG_PASSWORD',
+        #     'CIMG_NAMESPACE',
+        #     'CIMG_IEC61970_301',
+        #     'CIMG_USE_UNITS'
+        # ]
 
-        missing_vars = [
-            var for var in required_env_vars if os.getenv(var) is None
-        ]
+        # missing_vars = [
+        #     var for var in required_env_vars if os.getenv(var) is None
+        # ]
 
-        if missing_vars:
-            raise EnvironmentError(
-                f"Missing required environment variables: {', '.join(missing_vars)}"
-            )
+        # if missing_vars:
+        #     raise EnvironmentError(
+        #         f"Missing required environment variables: {', '.join(missing_vars)}"
+        #     )
 
 
-        self.cim_profile = os.getenv('CIMG_CIM_PROFILE')
-        self.cim = importlib.import_module('cimgraph.data_profile.' + self.cim_profile)
-        self.namespace = os.getenv('CIMG_NAMESPACE')
-        self.iec61970_301 = int(os.getenv('CIMG_IEC61970_301'))
-        self.host = os.getenv('CIMG_HOST')
-        self.port = int(os.getenv('CIMG_PORT'))
-        self.username = os.getenv('CIMG_USERNAME')
-        self.password = os.getenv('CIMG_PASSWORD')
-        self.use_units = os.getenv('CIMG_USE_UNITS') == 'false'
-        self.url = os.getenv('CIMG_URL')
-        self.database = os.getenv('CIMG_DATABASE')
-
+        self.cim_profile, self.cim = get_cim_profile()
+        self.namespace = get_namespace()
+        self.iec61970_301 = get_iec61970_301()
+        self.host = get_host()
+        self.port = get_port()
+        self.username = get_username()
+        self.password = get_password()
+        self.use_units = False
+        self.url = get_url()
+        self.database = get_database()
 
 
         self.gapps = None
@@ -102,7 +101,9 @@ class GridappsdConnection(ConnectionInterface):
         graph = self.parse_node_query(graph, query_output)
         return graph
 
-    def create_distributed_graph(self, area: object, graph: dict = {}) -> Graph:
+    def create_distributed_graph(self, area: object, graph: dict = None) -> Graph:
+        if graph is None:
+            graph = {}
         self.add_to_graph(graph=graph, obj=area)
 
         if not isinstance(area, self.cim.SubSchedulingArea):
@@ -188,8 +189,7 @@ class GridappsdConnection(ConnectionInterface):
                         cim_class: type) -> str:
 
         eq_mrids = list(graph[cim_class].keys())[0:100]
-        sparql_message = sparql.get_all_edges_sparql(graph, cim_class, eq_mrids,
-                                                     self.connection_params)
+        sparql_message = sparql.get_all_edges_sparql(graph, cim_class, eq_mrids)
 
         return sparql_message
 
@@ -198,8 +198,7 @@ class GridappsdConnection(ConnectionInterface):
         for index in range(math.ceil(len(uuid_list) / 100)):
             eq_mrids = uuid_list[index * 100:(index + 1) * 100]
             #generate SPARQL message from correct queries>sparql python script based on class name
-            sparql_message = sparql.get_all_edges_sparql(graph,
-                cim_class, eq_mrids, self.connection_params)
+            sparql_message = sparql.get_all_edges_sparql(graph, cim_class, eq_mrids)
             #execute sparql query
             query_output = self.execute(sparql_message)
             self.edge_query_parser(query_output, graph, cim_class)
@@ -280,9 +279,10 @@ class GridappsdConnection(ConnectionInterface):
                 query = sparql.upload_triples_sparql(obj)
                 self.execute(query)
 
-    def get_from_triple(self, subject:object, predicate:str, graph: Graph = {}) -> list[object]:
-        if not graph:
-            self.add_to_graph(subject, graph)
+    def get_from_triple(self, subject:object, predicate:str, graph: Graph = None) -> list[object]:
+        if graph is None:
+            graph = {}
+        self.add_to_graph(subject, graph)
         # Generate SPARQL query for user-specified triple string
         sparql_message = sparql.get_triple_sparql(subject, predicate)
         # Execute SPARQL query
@@ -291,7 +291,7 @@ class GridappsdConnection(ConnectionInterface):
         new_edges = self.edge_query_parser(query_output, graph, subject.__class__)
         return new_edges
 
-    def get_object(self, mrid: str, graph: dict = {}) -> object:
+    def get_object(self, mRID: str, graph: dict = None) -> object:
         """
         Retrieve an object from the Blazegraph database using its mRID.
 
@@ -302,8 +302,10 @@ class GridappsdConnection(ConnectionInterface):
         Returns:
             object: The retrieved object.
         """
+        if graph is None:
+            graph = {}
         # Use sparql module to build get correct query string
-        sparql_message = sparql.get_object_sparql(mrid)
+        sparql_message = sparql.get_object_sparql(mRID)
         # Execute query
         query_output = self.execute(sparql_message)
         obj = None

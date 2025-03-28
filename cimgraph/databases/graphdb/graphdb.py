@@ -12,30 +12,19 @@ from SPARQLWrapper import JSON, POST, SPARQLWrapper
 
 import cimgraph.queries.ontotext as ontotext
 import cimgraph.queries.sparql as sparql
-from cimgraph.databases import ConnectionInterface, ConnectionParameters, QueryResponse
+from cimgraph.databases import (ConnectionInterface, Graph, QueryResponse, get_cim_profile,
+                                get_iec61970_301, get_namespace, get_url)
 
 _log = logging.getLogger(__name__)
 
 
 class GraphDBConnection(ConnectionInterface):
 
-    def __init__(self, connection_params: ConnectionParameters) -> None:
-        self.cim_profile = connection_params.cim_profile
-        self.cim = importlib.import_module('cimgraph.data_profile.' + self.cim_profile)
-        self.namespace = connection_params.namespace
-        self.iec61970_301 = connection_params.iec61970_301
+    def __init__(self) -> None:
+        self.cim_profile, self.cim = get_cim_profile()
+        self.namespace = get_namespace()
+        self.iec61970_301 = get_iec61970_301()
         self.sparql_obj = None
-        self.connection_parameters = connection_params
-
-        try:
-            self.data_profile = Graph(store='Oxigraph')
-            path = os.path.dirname(self.cim.__file__)
-            self.data_profile.parse(f'{path}/{self.cim_profile}.rdfs', format='xml')
-            self.reverse = URIRef(
-                'http://iec.ch/TC57/1999/rdf-schema-extensions-19990926#inverseRoleName')
-        except:
-            _log.warning('No RDFS schema found, reverting to default logic')
-            self.data_profile = None
 
     def connect(self) -> None:
         if not self.sparql_obj:

@@ -4,9 +4,9 @@ from uuid import UUID
 
 import cimgraph.data_profile.cimhub_2023 as cim
 from cimgraph import utils
-from cimgraph.databases import GridappsdConnection
+from cimgraph.databases import Neo4jConnection
 from cimgraph.models import FeederModel
-from cimgraph.queries import sparql
+from cimgraph.queries import cypher
 
 
 class TestBlazegraphSETO(unittest.TestCase):
@@ -28,12 +28,12 @@ class TestBlazegraphSETO(unittest.TestCase):
 
         # Set environment variables for testing
         os.environ['CIMG_CIM_PROFILE'] = 'cimhub_2023'
-        os.environ['CIMG_URL'] = 'http://localhost:8889/bigdata/namespace/kb/sparql'
-        os.environ['CIMG_DATABASE'] = 'powergridmodel'
+        os.environ['CIMG_URL'] = 'neo4j://localhost:7687'
+        os.environ['CIMG_DATABASE'] = 'neo4j'
         os.environ['CIMG_HOST'] = 'localhost'
-        os.environ['CIMG_PORT'] = '61613'
-        os.environ['CIMG_USERNAME'] = 'test_app_user'
-        os.environ['CIMG_PASSWORD'] = '4Test'
+        os.environ['CIMG_PORT'] = '7687'
+        os.environ['CIMG_USERNAME'] = 'neo4j'
+        os.environ['CIMG_PASSWORD'] = 'test1234'
         os.environ['CIMG_NAMESPACE'] = 'http://iec.ch/TC57/CIM100#'
         os.environ['CIMG_IEC61970_301'] = '8'
         os.environ['CIMG_USE_UNITS'] = 'False'
@@ -49,41 +49,44 @@ class TestBlazegraphSETO(unittest.TestCase):
 
     def test_blazegraph_connection_with_env_vars(self):
 
-        connection = GridappsdConnection()
-        self.assertIsInstance(connection, GridappsdConnection, 'Connection should be an instance of GridappsdConnection')
+        connection = Neo4jConnection()
+        self.assertIsInstance(connection, Neo4jConnection, 'Connection should be an instance of Neo4jConnection')
         self.assertEqual(connection.cim_profile, 'cimhub_2023', 'CIM profile mismatch')
-        self.assertEqual(connection.url, 'http://localhost:8889/bigdata/namespace/kb/sparql', 'URL mismatch')
+        self.assertEqual(connection.url, 'neo4j://localhost:7687', 'URL mismatch')
         self.assertEqual(connection.namespace, 'http://iec.ch/TC57/CIM100#', 'Namespace mismatch')
         self.assertEqual(connection.iec61970_301, 8, 'IEC61970_301 mismatch')
 
-    def test_get_object_sparql(self):
+    def test_get_object_cypher(self):
         """Test get_object_sparql to retrieve object from mrid"""
 
-        query = sparql.get_object_sparql(mRID=self.feeder_mrid)
-        expected_str = '\n        PREFIX r:  <http://www.w3.org/1999/02/22-rdf-syntax-ns#>\n        PREFIX cim:  <http://iec.ch/TC57/CIM100#>\n        SELECT DISTINCT ?identifier ?obj_class\n        WHERE {\n          \n    VALUES ?identifier {"49AD8E07-3BF9-A4E2-CB8F-C3722F837B62"}\n        bind(iri(concat("urn:uuid:", ?identifier)) as ?eq)\n\n        ?eq a ?classraw.\n        bind(strafter(str(?classraw),"http://iec.ch/TC57/CIM100#") as ?obj_class)\n        }\n        ORDER by  ?identifier\n        '
+        query = cypher.get_object_cypher(mRID=self.feeder_mrid)
+        expected_str = '\nMATCH(n)\nWHERE n.uri = "urn:uuid:49AD8E07-3BF9-A4E2-CB8F-C3722F837B62"\nRETURN DISTINCT n.uri as identifier,\nlabels(n)[1] as class'
         self.assertEqual(query, expected_str)
 
     def test_get_object(self):
-        database = GridappsdConnection()
+        database = Neo4jConnection()
         feeder = database.get_object(mRID=self.feeder_mrid)
         expected_str = '{"@id": "49ad8e07-3bf9-a4e2-cb8f-c3722f837b62", "@type": "Feeder"}'
         self.assertEqual(feeder.__str__(), expected_str)
+        database.disconnect()
 
     def test_get_nodes_sparql(self):
         feeder = cim.Feeder(mRID=self.feeder_mrid)
-        query = sparql.get_all_nodes_from_container(feeder)
-        expected_str = '\n        PREFIX r:  <http://www.w3.org/1999/02/22-rdf-syntax-ns#>\n        PREFIX cim:  <http://iec.ch/TC57/CIM100#>\n        SELECT DISTINCT ?ConnectivityNode ?Terminal ?Equipment\n        WHERE {\n          \n        VALUES ?identifier {"49AD8E07-3BF9-A4E2-CB8F-C3722F837B62"}\n        bind(iri(concat("urn:uuid:", ?identifier)) as ?c).\n             {\n\n        ?node cim:ConnectivityNode.ConnectivityNodeContainer ?c.\n        ?t cim:Terminal.ConnectivityNode ?node.\n        ?t cim:Terminal.ConductingEquipment ?eq.\n        ?eq a ?eq_cls.\n\n        bind(strafter(str(?node),"urn:uuid:") as ?ConnectivityNode).\n        bind(strafter(str(?t),"urn:uuid:") as ?Terminal).\n        bind(strafter(str(?eq),"urn:uuid:") as ?eq_id).\n\n        bind(concat("{\\"@id\\":\\"", str(?eq_id),"\\",\\"@type\\":\\"",strafter(str(?eq_cls),"http://iec.ch/TC57/CIM100#"), "\\"}") as ?Equipment)\n        }\n        \n        UNION\n        {\n        {?eq cim:Equipment.EquipmentContainer ?c.}\n        UNION\n        {?eq cim:Equipment.AdditionalEquipmentContainer ?c.}\n        OPTIONAL {\n            ?t cim:Terminal.ConductingEquipment ?eq.\n            ?t cim:Terminal.ConnectivityNode ?node.\n            }\n        ?eq a ?eq_cls.\n\n        bind(strafter(str(?node),"urn:uuid:") as ?ConnectivityNode).\n        bind(strafter(str(?t),"urn:uuid:") as ?Terminal).\n        bind(strafter(str(?eq),"urn:uuid:") as ?eq_id).\n\n        bind(concat("{\\"@id\\":\\"", str(?eq_id),"\\",\\"@type\\":\\"",strafter(str(?eq_cls),"http://iec.ch/TC57/CIM100#"), "\\"}") as ?Equipment)\n        }\n        }\n        ORDER by ?ConnectivityNode\n        '
+        query = cypher.get_all_nodes_from_container(feeder)
+        expected_str = 'MATCH (container:Feeder)\nWHERE container.uri = "urn:uuid:49AD8E07-3BF9-A4E2-CB8F-C3722F837B62"\nMATCH (eq) - [:`Equipment.EquipmentContainer`] - (container)\nOPTIONAL MATCH (cnode) - [:`Terminal.ConnectivityNode`] - (term:Terminal) - [:`Terminal.ConductingEquipment`] -> (eq)\nRETURN DISTINCT\nREPLACE(cnode.uri, "urn:uuid:", "") as ConnectivityNode,\nREPLACE(term.uri, "urn:uuid:", "") as Terminal,\nREPLACE(eq.uri, "urn:uuid:", "") as eq_id,\nLABELS(eq)[1] as eq_class'
         self.assertEqual(query, expected_str)
 
     def test_get_feeder_model(self):
-        database = GridappsdConnection()
+        database = Neo4jConnection()
         feeder = cim.Feeder(mRID=self.feeder_mrid)
         network = FeederModel(connection=database, container=feeder, distributed=False)
         initial_keys = len(network.graph.keys())
-        self.assertEqual(initial_keys, 14)
+        self.assertEqual(initial_keys, 13)
+        database.disconnect()
+
 
     def test_get_all_line_data(self):
-        database = GridappsdConnection()
+        database = Neo4jConnection()
         feeder = cim.Feeder(mRID=self.feeder_mrid)
         network = FeederModel(connection=database, container=feeder, distributed=False)
         line = network.graph[cim.ACLineSegment][UUID('0bbd0ea3-f665-465b-86fd-fc8b8466ad53')]
@@ -102,6 +105,8 @@ class TestBlazegraphSETO(unittest.TestCase):
                break
         self.assertEqual(phase.name, '645646_C')
         self.assertEqual(phase.ACLineSegment, line)
+        database.disconnect()
+
 
 
 if __name__ == '__main__':

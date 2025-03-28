@@ -2,21 +2,22 @@ from __future__ import annotations
 
 import logging
 
+import cimgraph.data_profile.cim17v40 as cim
 from cimgraph.databases import get_iec61970_301, get_namespace, get_url
 
 _log = logging.getLogger(__name__)
 
 
 
-def get_all_nodes_from_container(container: object) -> str:
+def get_all_nodes_from_container(container: cim.EquipmentContainer) -> str:
     """
     Generates SPARQL query string for all nodes, terminals, and conducting equipment
     Args:
-
+        container: an object instance of cim:ConnectivityNodeContainer or child classes (e.g. cim:Feeder)
     Returns:
         query_message: query string that can be used in blazegraph connection or STOMP client
     """
-    container_class = container.__class__.__name__
+
     try:
         container_uri = container.uri()
     except:
@@ -59,7 +60,9 @@ def get_all_nodes_from_container(container: object) -> str:
     query_message += '''
         UNION
         {
-        ?eq cim:Equipment.EquipmentContainer ?c.
+        {?eq cim:Equipment.EquipmentContainer ?c.}
+        UNION
+        {?eq cim:Equipment.AdditionalEquipmentContainer ?c.}
         OPTIONAL {
             ?t cim:Terminal.ConductingEquipment ?eq.
             ?t cim:Terminal.ConnectivityNode ?node.
@@ -128,11 +131,6 @@ def get_all_nodes_from_area(area: object) -> str:
     Returns:
         query_message: query string that can be used in blazegraph connection or STOMP client
     """
-    # if 'SubSchedulingArea' not in connection_params.cim.__all__:
-    #     _log.error("No SubSchedulingArea classes in profile")
-    # else:
-    #     if not isinstance(area, connection_params.cim.SubSchedulingArea):
-    #         _log.error("Area is not a SubSchedulingArea")
 
     area_class = area.__class__.__name__
     try:

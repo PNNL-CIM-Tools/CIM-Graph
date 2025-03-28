@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import importlib
 import logging
 import os
 from abc import ABC, abstractmethod
@@ -7,11 +8,40 @@ from dataclasses import dataclass, field, is_dataclass
 from functools import cache
 from uuid import UUID
 
-from loguru import logger
-
 _log = logging.getLogger(__name__)
 
 Graph = dict[type, dict[UUID, object]]
+
+DEFAULT_NAMESPACE = 'http://iec.ch/TC57/CIM100#'
+DEFAULT_CIM_PROFILE = 'cimhub_2023'
+DEFAULT_URL = 'http://localhost:8889/bigdata/namespace/kb/sparql'
+DEFAULT_DATABASE = 'powergridmodel'
+DEFAULT_HOST = 'localhost'
+DEFAULT_PORT = '61613'
+DEFAULT_USERNAME = 'system'
+DEFAULT_PASSWORD = 'manager'
+DEFAULT_IEC61970_301 = 8
+DEFAULT_USE_UNITS = 'false'
+
+@cache
+def get_cim_profile() -> str:
+    """
+    Returns the CIM profile to be used for object graph
+    Returns:
+        cim_profile: library
+    """
+    cim_profile = os.getenv('CIMG_CIM_PROFILE')
+    if cim_profile is None:
+        raise ValueError('CIMG_CIM_PROFILE environment variable is not set.')
+    else:
+        # try:
+            if '.' in cim_profile:
+                cim = importlib.import_module(cim_profile)
+            else:
+                cim = importlib.import_module('cimgraph.data_profile.'+cim_profile)
+        # except:
+        #     raise ValueError('CIMG_CIM_PROFILE environment variable must be name of a valid object module on the PATH')
+    return cim_profile, cim
 
 @cache
 def get_namespace() -> str:
@@ -22,7 +52,9 @@ def get_namespace() -> str:
     """
     namespace = os.getenv('CIMG_NAMESPACE')
     if namespace is None:
-        raise ValueError('CIMG_NAMESPACE environment variable is not set.')
+        namespace = DEFAULT_NAMESPACE
+        _log.debug('Default namespace for CIM100 used')
+        # raise ValueError('CIMG_NAMESPACE environment variable is not set.')
     return namespace
 
 @cache
@@ -34,8 +66,14 @@ def get_iec61970_301() -> int:
     """
     iec61970_301 = os.getenv('CIMG_IEC61970_301')
     if iec61970_301 is None:
-        raise ValueError('IEC61970_301 environment variable is not set.')
-    return int(iec61970_301)
+        iec61970_301 = DEFAULT_IEC61970_301
+        _log.info('CIMG_IEC61970_301 environment variable not set. Defaulting to 8 for urn:uuid:mRID. Set to 7 for mRIDs with underscores')
+    else:
+        try:
+            iec61970_301 = int(iec61970_301)
+        except:
+            raise ValueError('CIMG_IEC61970_301 environment variable should be an integer')
+    return iec61970_301
 
 
 @cache
@@ -47,7 +85,9 @@ def get_url() -> str:
     """
     url = os.getenv('CIMG_URL')
     if url is None:
-        raise ValueError('CIMG_URL environment variable is not set.')
+        _log.warning('CIMG_URL environment variable is not set. Using Blazegraph default')
+        url = DEFAULT_URL
+        # raise ValueError('CIMG_URL environment variable is not set.')
     return url
 
 @cache
@@ -59,7 +99,9 @@ def get_database() -> str:
     """
     database = os.getenv('CIMG_DATABASE')
     if database is None:
-        raise ValueError('CIMG_DATABASE environment variable is not set.')
+        _log.warning('CIMG_DATABASE environment variable is not set.')
+        database = DEFAULT_DATABASE
+        # raise ValueError('CIMG_DATABASE environment variable is not set.')
     return database
 
 @cache
@@ -71,13 +113,61 @@ def get_use_units() -> bool:
     """
     use_units = os.getenv('CIMG_USE_UNITS')
     if use_units is None:
-        use_units = 'false'
-        logger.debug("CIMG_USE_UNITS environment variable is not set. Defaulting to 'false'.")
+        use_units = DEFAULT_USE_UNITS
+        _log.debug('CIMG_USE_UNITS environment variable is not set. Defaulting to false.')
     return use_units.lower() == 'true'
 
-_log = logging.getLogger(__name__)
+@cache
+def get_username() -> str:
+    """
+    Returns the CIM profile to be used for object graph
+    Returns:
+        cim_profile: library
+    """
+    username = os.getenv('CIMG_USERNAME')
+    if username is None:
+        _log.warning('CIMG_USERNAME environment variable is not set.')
+        username = DEFAULT_USERNAME
+    return username
 
-Graph = dict[type, dict[UUID, object]]
+@cache
+def get_password() -> str:
+    """
+    Returns the CIM profile to be used for object graph
+    Returns:
+        cim_profile: library
+    """
+    password = os.getenv('CIMG_PASSWORD')
+    if password is None:
+        _log.warning('CIMG_PASSWORD environment variable is not set.')
+        password = DEFAULT_PASSWORD
+    return password
+
+@cache
+def get_host() -> str:
+    """
+    Returns the CIM profile to be used for object graph
+    Returns:
+        cim_profile: library
+    """
+    host = os.getenv('CIMG_HOST')
+    if host is None:
+        _log.warning('CIMG_HOST environment variable is not set.')
+        host = DEFAULT_HOST
+    return host
+
+@cache
+def get_port() -> str:
+    """
+    Returns the CIM profile to be used for object graph
+    Returns:
+        cim_profile: library
+    """
+    port = os.getenv('CIMG_PORT')
+    if port is None:
+        _log.warning('CIMG_PORT environment variable is not set.')
+        port = DEFAULT_PORT
+    return port
 
 @dataclass
 class ConnectionParameters:
@@ -92,6 +182,9 @@ class ConnectionParameters:
     iec61970_301: int = field(default=7)
     filename: str = field(default_factory=str)
     use_units: bool = field(default=False)
+    def __post_init__(self):
+        _log.warning('ConnectionParameters class is deprecated and will be deleted in a future release')
+        _log.warning('Set environment variables for required authentication')
 
 @dataclass
 class QueryResponse:
@@ -129,17 +222,16 @@ class ConnectionInterface(ABC):
         raise RuntimeError('Must have implemented query in the inherited class')
 
     @abstractmethod
-    def get_from_triple(self, subject:object, predicate:str, graph: Graph = {}) -> list[object]:
+    def get_from_triple(self, subject:object, predicate:str, graph: Graph = None) -> list[object]:
         raise RuntimeError('Must have implemented query in the inherited class')
 
     @abstractmethod
-    def create_new_graph(self, container: object, graph: dict = {}) -> Graph:
+    def create_new_graph(self, container: object, graph: Graph = None) -> Graph:
         raise RuntimeError('Must have implemented query in the inherited class')
 
     @abstractmethod
-    def create_distributed_graph(self, area: object, graph: dict = {}) -> Graph:
+    def create_distributed_graph(self, area: object, graph: Graph = None) -> Graph:
         raise RuntimeError('Must have implemented query in the inherited class')
-
 
 
     def check_attribute(self, cim_class:type, attribute:str) -> str:

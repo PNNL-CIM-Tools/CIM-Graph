@@ -2,11 +2,10 @@ from __future__ import annotations
 
 from uuid import UUID
 
-from cimgraph.databases import ConnectionParameters
+from cimgraph.databases import get_iec61970_301, get_namespace, get_url
 
 
-def get_all_attributes_sparql(graph:dict[type, dict[UUID, object]], cim_class: str, uuid_list: list[UUID],
-                              connection_params: ConnectionParameters) -> str:
+def get_all_attributes_sparql(graph:dict[type, dict[UUID, object]], cim_class: str, uuid_list: list[UUID]) -> str:
     """
     Generates SPARQL query string for a given catalog of objects and feeder id
     Args:
@@ -18,14 +17,14 @@ def get_all_attributes_sparql(graph:dict[type, dict[UUID, object]], cim_class: s
     """
     class_name = cim_class.__name__
 
-    if int(connection_params.iec61970_301) > 7:
+    if int(get_iec61970_301()) > 7:
         split = 'urn:uuid:'
     else:
-        split = f'{connection_params.url}#'
+        split = f'{get_url()}#'
 
     query_message = """
         PREFIX r:  <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
-        PREFIX cim:  <%s>""" % connection_params.namespace
+        PREFIX cim:  <%s>""" % get_namespace()
 
     query_message += """
         SELECT DISTINCT ?identifier ?attribute ?value ?edge

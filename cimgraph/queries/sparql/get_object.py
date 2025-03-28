@@ -2,15 +2,14 @@ from __future__ import annotations
 
 from uuid import UUID
 
-from cimgraph.databases import get_iec61970_301, get_namespace
+from cimgraph.databases import get_iec61970_301, get_namespace, get_url
 
 
-def get_object_sparql(mrid: str) -> str:
+def get_object_sparql(mRID: str) -> str:
     """
     Generates SPARQL query string to find the type of an object from its uri
     Args:
-        mrid (str): The mRID or uri of the  object
-        connection_params (ConnectionParameters): Database connection parameters
+        mRID (str): The mRID or uri of the  object
     Returns:
         query_message: query string that can be used in blazegraph connection or STOMP client
     """
@@ -18,7 +17,7 @@ def get_object_sparql(mrid: str) -> str:
     if get_iec61970_301() > 7:
         split = 'urn:uuid:'
     else:
-        split = f'{connection_params.url}#'
+        split = f'{get_url()}#'
 
     query_message = """
         PREFIX r:  <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
@@ -30,7 +29,7 @@ def get_object_sparql(mrid: str) -> str:
           """
 
     query_message += '''
-    VALUES ?identifier {"%s"}''' %mrid
+    VALUES ?identifier {"%s"}''' %mRID
     # add all equipment mRID
 
     query_message += f'''

@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import json
 import logging
+from abc import ABC, abstractmethod
 from dataclasses import dataclass, field
 from uuid import UUID
 
@@ -14,7 +15,7 @@ jsonld = dict['@id':str(UUID),'@type':str(type)]
 Graph = dict[type, dict[UUID, object]]
 
 @dataclass
-class GraphModel:
+class GraphModel(ABC):
     container: object
     connection: ConnectionInterface
     distributed: bool = field(default=False)

@@ -11,22 +11,19 @@ from rdflib import Graph, Namespace, URIRef
 from rdflib.namespace import RDF
 
 import cimgraph.queries.sparql as sparql
-from cimgraph.databases import ConnectionInterface, ConnectionParameters, QueryResponse
+from cimgraph.databases import (ConnectionInterface, QueryResponse, get_cim_profile,
+                                get_iec61970_301, get_namespace)
 
 _log = logging.getLogger(__name__)
 
 
 class RDFlibConnection(ConnectionInterface):
 
-    def __init__(self,
-                 connection_params: ConnectionParameters,
-                 use_oxigraph: bool = True):
-        self.cim_profile = connection_params.cim_profile
-        self.cim = importlib.import_module('cimgraph.data_profile.' + self.cim_profile)
-        self.namespace = connection_params.namespace
-        self.iec61970_301 = connection_params.iec61970_301
-        self.filename = connection_params.filename
-        self.connection_params = connection_params
+    def __init__(self, filename:str=None, use_oxigraph:bool=True):
+        self.cim_profile, self.cim = get_cim_profile()
+        self.namespace = get_namespace()
+        self.iec61970_301 = get_iec61970_301()
+        self.filename = filename
         self.libgraph = None
         self.use_oxigraph = use_oxigraph
 
@@ -54,8 +51,10 @@ class RDFlibConnection(ConnectionInterface):
         query_output = self.libgraph.query(query_message)
         return query_output
 
-    def get_object(self, mrid:str, graph = {}) -> object:
-        sparql_message = sparql.get_object_sparql(mrid, self.connection_params)
+    def get_object(self, mRID:str, graph = None) -> object:
+        if graph is None:
+            graph = {}
+        sparql_message = sparql.get_object_sparql(mRID)
         query_output = self.execute(sparql_message)
         obj = None
         for result in query_output:
@@ -69,7 +68,7 @@ class RDFlibConnection(ConnectionInterface):
         graph = {}
         self.add_to_graph(graph=graph, obj=container)
         # Get all nodes, terminal, and equipment by
-        sparql_message = sparql.get_all_nodes_from_container(container, self.connection_params)
+        sparql_message = sparql.get_all_nodes_from_container(container)
         query_output = self.execute(sparql_message)
         graph = self.parse_node_query(graph, query_output)
         return graph
@@ -78,9 +77,9 @@ class RDFlibConnection(ConnectionInterface):
 
         for result in query_output:
             # Parse query results
-            node_mrid = str(result.ConnectivityNode)
-            term_mrid = str(result.Terminal)
-            eq = json.loads(result.Equipment)
+            node_mrid = str(result.ConnectivityNode.value)
+            term_mrid = str(result.Terminal.value)
+            eq = json.loads(result.Equipment.value)
             eq_id = eq['@id']
             eq_class = eq['@type']
 
@@ -111,8 +110,7 @@ class RDFlibConnection(ConnectionInterface):
                         cim_class: type) -> str:
 
         eq_mrids = list(graph[cim_class].keys())[0:100]
-        sparql_message = sparql.get_all_edges_sparql(graph, cim_class, eq_mrids,
-                                                     self.connection_params)
+        sparql_message = sparql.get_all_edges_sparql(graph, cim_class, eq_mrids)
 
         return sparql_message
 
@@ -121,21 +119,18 @@ class RDFlibConnection(ConnectionInterface):
         for index in range(math.ceil(len(uuid_list) / 100)):
             eq_mrids = uuid_list[index * 100:(index + 1) * 100]
             #generate SPARQL message from correct queries>sparql python script based on class name
-            sparql_message = sparql.get_all_edges_sparql(graph,
-                cim_class, eq_mrids, self.connection_params)
+            sparql_message = sparql.get_all_edges_sparql(graph, cim_class, eq_mrids)
             #execute sparql query
             query_output = self.execute(sparql_message)
             self.edge_query_parser(query_output, graph, cim_class)
 
-    def get_all_attributes(self, graph: dict[type, dict[UUID, object]],
-                           cim_class: type) -> None:
+    def get_all_attributes(self, graph: dict[type, dict[UUID, object]], cim_class: type) -> None:
         mrid_list = list(graph[cim_class].keys())
 
         for index in range(math.ceil(len(mrid_list) / 100)):
             eq_mrids = mrid_list[index * 100:(index + 1) * 100]
             #generate SPARQL message from correct loaders>sparql python script based on class name
-            sparql_message = sparql.get_all_attributes_sparql(graph,
-                cim_class, eq_mrids, self.connection_params)
+            sparql_message = sparql.get_all_attributes_sparql(graph, cim_class, eq_mrids)
             #execute sparql query
             query_output = self.execute(sparql_message)
             self.edge_query_parser(query_output, graph, cim_class, expand_graph = False)
@@ -143,66 +138,67 @@ class RDFlibConnection(ConnectionInterface):
     def edge_query_parser(self, query_output: QueryResponse,
                           graph: dict[type, dict[UUID, object]],
                           cim_class: type, expand_graph = True) -> None:
+
         for result in query_output:
-            if 'type' not in result.attribute and result.attribute is not None:  #skip 'type' and other single attributes
-
-                is_association = False
-                is_enumeration = False
-                if result.mRID is not None:  #get mRID
-                    mRID = str(result.mRID)
-                else:
-                    iri = str(result.eq)
-                    if self.iec61970_301 > 7:
-                        mRID = iri.split('uuid:')[1]
+            if result.attribute is not None:  #skip 'type' and other single attributes
+                if 'type' not in result.attribute.value:
+                    is_association = False
+                    is_enumeration = False
+                    if result.uri() is not None:  #get mRID
+                        mRID = str(result.uri())
                     else:
-                        mRID = iri.split('rdf:id:')[1]
-                identifier = UUID(mRID.strip('_').lower())
-                attr_uri = result.attr
-                attr = str(result.attr).split(self.namespace)[1]
-                attribute = attr.split('.')  #split edge attribute
-                value = str(result.val)  #get edge value
-
-                if self.namespace in value:  #check if enumeration
-                    enum_text = value.split(self.namespace)[1]
-                    enum_text = enum_text.split('>')[0]
-                    enum_class = enum_text.split('.')[0]
-                    enum_value = enum_text.split('.')[1]
-                    is_enumeration = True
-
-                if result.edge_class is not None:  #check if association
-                    is_association = True
-                    # edge = json.loads(result.edge)
-                    # edge_mRID = edge['@id']
-                    # edge_class = edge['@type']
-                    edge_class = str(result.edge_class)
-                    if result.edge_mRID is not None:
-                        edge_mRID = str(result.edge_mRID)
-                    else:
+                        iri = str(result.eq)
                         if self.iec61970_301 > 7:
-                            edge_mRID = value.split('uuid:')[1]
+                            mRID = iri.split('uuid:')[1]
                         else:
-                            edge_mRID = value.split('#')[1]
-                    if edge_class in self.cim.__all__:
-                        edge_class = getattr(self.cim, edge_class)
+                            mRID = iri.split('rdf:id:')[1]
+                    identifier = UUID(mRID.strip('_').lower())
+                    attr_uri = result.attr
+                    attr = str(result.attr).split(self.namespace)[1]
+                    attribute = attr.split('.')  #split edge attribute
+                    value = str(result.val)  #get edge value
+
+                    if self.namespace in value:  #check if enumeration
+                        enum_text = value.split(self.namespace)[1]
+                        enum_text = enum_text.split('>')[0]
+                        enum_class = enum_text.split('.')[0]
+                        enum_value = enum_text.split('.')[1]
+                        is_enumeration = True
+
+                    if result.edge_class is not None:  #check if association
+                        is_association = True
+                        # edge = json.loads(result.edge)
+                        # edge_mRID = edge['@id']
+                        # edge_class = edge['@type']
+                        edge_class = str(result.edge_class)
+                        if result.edge_mRID is not None:
+                            edge_mRID = str(result.edge_mRID)
+                        else:
+                            if self.iec61970_301 > 7:
+                                edge_mRID = value.split('uuid:')[1]
+                            else:
+                                edge_mRID = value.split('#')[1]
+                        if edge_class in self.cim.__all__:
+                            edge_class = getattr(self.cim, edge_class)
+                        else:
+                            _log.warning(f'unknown class {edge_class}')
+                            continue
+
+                        if expand_graph:
+                            self.create_edge(graph, cim_class, identifier, attribute, edge_class, edge_mRID)
+                        else:
+                            self.create_value(graph, cim_class, identifier, attribute, value)
+
+
+                    elif is_enumeration:
+                        edge_enum = getattr(self.cim, enum_class)(enum_value)
+                        association = self.check_attribute(cim_class, attribute)
+                        if association is not None:
+                            setattr(graph[cim_class][identifier], association, edge_enum)
                     else:
-                        _log.warning(f'unknown class {edge_class}')
-                        continue
-
-                    if expand_graph:
-                        self.create_edge(graph, cim_class, identifier, attribute, edge_class, edge_mRID)
-                    else:
-                        self.create_value(graph, cim_class, identifier, attribute, value)
-
-
-                elif is_enumeration:
-                    edge_enum = getattr(self.cim, enum_class)(enum_value)
-                    association = self.check_attribute(cim_class, attribute)
-                    if association is not None:
-                        setattr(graph[cim_class][identifier], association, edge_enum)
-                else:
-                    association = self.check_attribute(cim_class, attribute)
-                    if association is not None:
-                        self.create_value(graph, cim_class, identifier, attribute, value)
+                        association = self.check_attribute(cim_class, attribute)
+                        if association is not None:
+                            self.create_value(graph, cim_class, identifier, attribute, value)
 
 
     #     return obj
