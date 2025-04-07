@@ -86,7 +86,7 @@ __Optional environment variables:__
 If these values are not specified, they will default to the sample values listed in [example.env](https://github.com/PNNL-CIM-Tools/CIM-Graph/blob/develop/example.env)
 
 * `CIMG_NAMESPACE`: CIM namespace, default is `"http://iec.ch/TC57/CIM100#"`
-* `CIMG_IEC61970-301`: Serialization version. Versions 7(default) and below use `rdf:ID=`. Version 8 uses `rdf:about=urn:uuid:`
+* `CIMG_IEC61970_301`: Serialization version. Versions 7(default) and below use `rdf:ID=`. Version 8 uses `rdf:about=urn:uuid:`
 * `CIMG_URL`: URL at which the database can be reached via TCP/IP or other connection
 * `CIMG_HOST`: Database host address
 * `CIMG_PORT`: Database host port

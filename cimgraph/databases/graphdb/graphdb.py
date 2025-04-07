@@ -21,6 +21,13 @@ _log = logging.getLogger(__name__)
 class GraphDBConnection(ConnectionInterface):
 
     def __init__(self) -> None:
+        # clear cached env variables
+        get_url.cache_clear()
+        get_namespace.cache_clear()
+        get_cim_profile.cache_clear()
+        get_iec61970_301.cache_clear()
+
+        # retrieve env variables
         self.cim_profile, self.cim = get_cim_profile()
         self.namespace = get_namespace()
         self.iec61970_301 = get_iec61970_301()
