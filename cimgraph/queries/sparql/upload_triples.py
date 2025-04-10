@@ -19,7 +19,7 @@ def upload_triples_sparql(obj: object) -> str:
     Returns:
         query_message: query string that can be used in blazegraph connection or STOMP client
     """
-    cim = importlib.import_module('cimgraph.data_profile.' + get_cim_profile())
+    cim_profile, cim = get_cim_profile()
     many_to_many = ClassesWithManytoMany().attributes
 
     # Handling of formatting change between different 301 standard versions

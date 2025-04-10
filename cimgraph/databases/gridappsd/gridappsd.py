@@ -43,7 +43,17 @@ class GridappsdConnection(ConnectionInterface):
         #         f"Missing required environment variables: {', '.join(missing_vars)}"
         #     )
 
+        # clear cached env variables
+        get_url.cache_clear()
+        get_namespace.cache_clear()
+        get_cim_profile.cache_clear()
+        get_iec61970_301.cache_clear()
+        get_host.cache_clear()
+        get_port.cache_clear()
+        get_username.cache_clear()
+        get_password.cache_clear()
 
+        # retrieve env variables
         self.cim_profile, self.cim = get_cim_profile()
         self.namespace = get_namespace()
         self.iec61970_301 = get_iec61970_301()

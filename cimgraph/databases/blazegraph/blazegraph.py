@@ -23,21 +23,13 @@ class BlazegraphConnection(ConnectionInterface):
 
     def __init__(self):
 
-        # required_env_vars = [
-        #     'CIMG_CIM_PROFILE',
-        #     'CIMG_URL',
-        #     'CIMG_IEC61970_301'
-        # ]
+        # clear cached env variables
+        get_url.cache_clear()
+        get_namespace.cache_clear()
+        get_cim_profile.cache_clear()
+        get_iec61970_301.cache_clear()
 
-        # missing_vars = [
-        #     var for var in required_env_vars if os.getenv(var) is None
-        # ]
-
-        # if missing_vars:
-        #     raise EnvironmentError(
-        #         f"Missing required environment variables: {', '.join(missing_vars)}"
-        #     )
-
+        # retrieve env variables
         self.sparql_obj = None
         self.url = get_url()
         self.namespace = get_namespace()
@@ -106,6 +98,7 @@ class BlazegraphConnection(ConnectionInterface):
 
         Returns:
             object: The retrieved object.
+            graph: A graph dictionary with the object
         """
         # Use empty dict if graph not provided
         if graph is None:
