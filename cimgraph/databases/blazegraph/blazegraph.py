@@ -123,7 +123,7 @@ class BlazegraphConnection(ConnectionInterface):
                     f'object class missing from data profile: {obj_class}')
                 continue
 
-        return obj, graph
+        return obj
 
 
     def get_from_triple(self, subject:object, predicate:str, graph:Graph = None) -> list[str]|list[object]:
