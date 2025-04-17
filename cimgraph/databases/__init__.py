@@ -324,11 +324,25 @@ class ConnectionInterface(ABC):
                     if type(obj_list) is not list:
                         obj_list = [obj_list]
                     edge_uuid = (edge_mRID.strip('_').lower())
-                    # _log.warning(obj_list)
-                    if edge_uuid not in str(obj_list):
+                    finder = lambda edge: edge.uri() == edge_uuid
+                    linked_objects = list(filter(finder, obj_list))
+                    if linked_objects == []:
                         edge_object = self.create_object(graph, edge_class, edge_mRID)
                         obj_list.append(edge_object)
                         setattr(graph[cim_class][identifier], association, obj_list)
+                    elif len(linked_objects) > 0:
+                        
+                        edge_object = linked_objects[0]
+                        if len(linked_objects) > 1:
+                            _log.warning(f'Duplicate edge with uuid {edge_uuid} found in {cim_class} {identifier}')
+                        if edge_object.__class__ != edge_class:
+                            _log.warning(f'Edge {edge_object} is of type {edge_object.__class__} but should be {edge_class}')
+                            raise TypeError()
+                        if edge_class not in graph:
+                            graph[edge_class] = {}
+                        if edge_object not in graph[edge_class].values():
+                            self.add_to_graph(edge_object, graph)
+                        
                 else:
                     # _log.warning(f'{identifier}, {attribute}, {edge_class}, {edge_mRID}, ')
 

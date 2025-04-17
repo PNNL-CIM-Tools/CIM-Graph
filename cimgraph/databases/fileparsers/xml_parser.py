@@ -42,15 +42,15 @@ class XMLFile(ConnectionInterface):
                 self.namespaces = {'cim': self.namespace, 'rdf': self.rdf}
                 self.tree = parse(self.filename)
                 self.root = self.tree.getroot()
-                self.class_index = {}
-                self.graph = {}
+
             except:
                 _log.warning(f'File {self.filename} not found. Defaulting to empty network graph')
-                self.filename = None
                 self.tree = None
                 self.root = None
-                self.class_index = {}
-                self.graph = {}
+            self.class_index = {}
+            self.graph = {}
+        else:
+            raise ValueError('filename must be specified')
 
 
     def disconnect(self):
@@ -87,32 +87,24 @@ class XMLFile(ConnectionInterface):
         if graph is None:
             graph = {}
 
-    # @time_func
+
     def create_new_graph(self, container: object) -> Graph:
+        if self.root is not None:
+            for element in self.root:
+                self.parse_nodes(element)
 
-        for element in self.root:
-            self.parse_nodes(element)
+            with ThreadPoolExecutor(max_workers=os.cpu_count()) as executor:
 
-        with ThreadPoolExecutor(max_workers=os.cpu_count()) as executor:
-
-            futures = [executor.submit(self.parse_edges, element) for element in self.root]
-            results = [future.result() for future in concurrent.futures.as_completed(futures)]
-
+                futures = [executor.submit(self.parse_edges, element) for element in self.root]
+                results = [future.result() for future in concurrent.futures.as_completed(futures)]
+        else:
+            _log.warning('No root element found in XML file')
+            self.graph = {}
         return self.graph
 
-    # async def create_new_graph_async(self):
-    #     for f in asyncio.as_completed([
-    #             asyncio.to_thread(self.parse_nodes(element))
-    #             for element in self.root]):
-    #         await f
 
-    #     for f in asyncio.as_completed([
-    #             asyncio.to_thread(self.parse_edges(element))
-    #             for element in self.root]):
-    #         await f
-
-    # @time_func
     def parse_nodes(self, element:object, graph:Graph=None):
+        obj = None
         if not graph:
             graph = self.graph
 

@@ -39,7 +39,7 @@ class NodeBreakerModel(GraphModel):
 
     def __post_init__(self):
         if self.connection is not None:    # Check if connection has been specified
-            self.cim = self.connection.cim    # Set CIM data profile
+            # self.cim = self.connection.cim    # Set CIM data profile
             if self.distributed:    # Check if distributed flag is true
                 # Build distributed network model
                 self.initialize_distributed_model(self.container)
