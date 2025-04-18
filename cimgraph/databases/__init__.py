@@ -7,6 +7,7 @@ from abc import ABC, abstractmethod
 from dataclasses import dataclass, field, is_dataclass
 from functools import cache
 from uuid import UUID
+from cimgraph.data_profile.identity import Identity
 
 _log = logging.getLogger(__name__)
 
@@ -354,7 +355,7 @@ class ConnectionInterface(ABC):
         return edge_object
 
     def create_object(self, graph:Graph,
-                      class_type:type, uri:str) -> object:
+                      class_type:type, uri:str) -> Identity:
         """
         Method for creating new objects and adding them to the graph
         Required Args:

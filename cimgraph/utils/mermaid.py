@@ -413,15 +413,9 @@ def add_mermaid_path(root: object | type, path: str | list[str], mermaid: str,
         mermaid = add_class_path_mermaid(root, path, mermaid, show_attributes, show_inherited)
     return mermaid
 
-import base64
-import logging
-from typing import Optional
 
-import requests
 
-_log = logging.getLogger(__name__)
-
-def download_mermaid(mermaid: str, filename: str, timeout: int = 30) -> Optional[bool]:
+def download_mermaid(mermaid: str, filename: str, timeout: int = 30) -> bool:
     """
     Downloads a Mermaid diagram from mermaid.ink and saves as an image
 

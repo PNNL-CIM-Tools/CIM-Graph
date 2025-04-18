@@ -63,7 +63,7 @@ class UUID_Meta():
                     invalid_mrid = False
                 except:
                     seed = seed + mRID
-                    _log.warning(f'mRID {mRID} not a valid UUID, generating new UUID')
+                    # _log.warning(f'mRID {mRID} not a valid UUID, generating new UUID')
 
         # Otherwise, build UUID using unique name as a seed
         if invalid_mrid:

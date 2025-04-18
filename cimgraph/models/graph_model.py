@@ -3,23 +3,27 @@ from __future__ import annotations
 import json
 import logging
 from abc import ABC, abstractmethod
-from dataclasses import dataclass, field
+from dataclasses import dataclass, field, fields, is_dataclass
+from typing import TypeVar, Iterator, cast
 from uuid import UUID
 
 from cimgraph.data_profile.identity import Identity
 from cimgraph.databases import ConnectionInterface
+from cimgraph.models.difference_builder import new_obj_difference
 
 _log = logging.getLogger(__name__)
 
 jsonld = dict['@id':str(UUID),'@type':str(type)]
 Graph = dict[type, dict[UUID, object]]
+T = TypeVar('T')
 
 @dataclass
 class GraphModel(ABC):
     container: object
     connection: ConnectionInterface
     distributed: bool = field(default=False)
-    graph: dict[type, dict[str, object]] = field(default_factory=dict)
+    graph: dict[type, dict[UUID, object]] = field(default_factory=dict)
+    differences: dict[str, dict[UUID, any]] = field(default_factory=dict)
     """
     Underlying root class for all knowledge graph models, inlcuding
     FeederModel, BusBranchModel, and NodeBreakerModel
@@ -36,6 +40,10 @@ class GraphModel(ABC):
         pprint(cim.ClassName): pretty-print method for showing graph of a class type
         get_edges_query(cim.ClassName): returns query text for debugging
     """
+
+    # -------------------------------------------------------------------------
+    # Methods to add objects to GraphModel.graph
+    # -------------------------------------------------------------------------
 
     def add_to_graph(self, obj: object, graph: dict[type, dict[UUID, object]] = None) -> None:
         if graph is None:
@@ -69,7 +77,9 @@ class GraphModel(ABC):
             _log.warning(
                 f'object class missing from data profile: {obj_class}')
 
-
+    # -------------------------------------------------------------------------
+    # Methods to query databases
+    # -------------------------------------------------------------------------
 
     def get_all_edges(self, cim_class: type,
                       graph: dict[type, dict[str, object]] = None) -> None:
@@ -121,6 +131,92 @@ class GraphModel(ABC):
         else:
             new_edges = self.connection.get_from_triple(subject, predicate)
         return new_edges
+    
+    # -------------------------------------------------------------------------
+    # Methods to retrieve objects from GraphModel.graph
+    # -------------------------------------------------------------------------
+
+    def list_by_type(self, cim_class:type[T]) -> list[T]:
+        '''Get all nodes of a specific type with proper typing.'''
+        values = list(self.graph.get(cim_class, {}).values())
+        return values
+
+    def iter_by_type(self, cim_class):
+        '''Iterate through all nodes of a specific type with proper typing.'''
+        return iter(self.graph.get(cim_class, {}).values())
+
+    def first(self, cim_class:type):
+        '''Get first '''
+        values = self.list_by_type(cim_class)
+        if values:
+            self.__
+            return values[0]
+        else:
+            return []
+
+    def next(self, cim_class:type[T]) -> object[T]:
+        '''Get next'''
+
+
+    # -------------------------------------------------------------------------
+    # Methods to search GraphModel.graph
+    # -------------------------------------------------------------------------
+
+    def find_by_attribute(self, cim_class:type[T], attribute:str, value:any) -> list[T]:
+        '''Searches the graph to find all object instances with matching value'''
+
+
+    # -------------------------------------------------------------------------
+    # Methods to modify GraphModel.graph via difference message
+    # -------------------------------------------------------------------------
+
+    def create(self, cim_class: type[T], **kwargs: any) -> object[T]:
+        """
+        Create an instance of a dataclass from keyword arguments.
+        
+        Args:
+            cim_class: The dataclass type to instantiate
+            **kwargs: Attribute names and values for the dataclass instance
+        
+        Returns:
+            An instance of the specified dataclass type
+            
+        Raises:
+            TypeError: If cim_class is not a dataclass
+            TypeError: If kwargs contains attributes not in the dataclass
+        """
+        # Verify that class_type is a dataclass
+        if not is_dataclass(cim_class):
+            raise TypeError(f"{cim_class.__name__} is not a dataclass")
+        if cim_class.__name__ not in self.cim.__all__:
+            raise TypeError(f"{cim_class.__name__} not in CIM profile")
+        
+        # Get the field names of the dataclass
+        field_names = {field.name for field in fields(cim_class)}
+        
+        # Check if all kwargs keys are valid field names
+        invalid_attrs = set(kwargs.keys()) - field_names
+        if invalid_attrs:
+            raise TypeError(f"Invalid attribute(s) for {cim_class.__name__}: {', '.join(invalid_attrs)}")
+        
+        # Create and return an instance of the dataclass
+        new_object:Identity = cim_class(**kwargs)
+        
+        self.add_to_graph(new_object)
+
+        new_obj_difference(new_object, self.differences)
+
+        return new_object
+
+    def delete(self, cim_class:type[T], uuid:UUID) -> None:
+        '''
+        Delete object from graph all references by other objects
+        '''
+
+
+    # -------------------------------------------------------------------------
+    # Methods to print GraphModel.graph
+    # -------------------------------------------------------------------------
 
     def pprint(self, cim_class: type, show_empty: bool = False,
                json_ld: bool = False, use_names: bool = False) -> None:

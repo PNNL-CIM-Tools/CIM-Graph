@@ -9,7 +9,7 @@ from concurrent.futures import ThreadPoolExecutor
 from uuid import UUID
 
 from defusedxml.ElementTree import parse
-
+from cimgraph.data_profile.identity import Identity
 from cimgraph.data_profile.known_problem_classes import ClassesWithManytoMany
 from cimgraph.databases import (ConnectionInterface, Graph, QueryResponse, get_cim_profile,
                                 get_iec61970_301, get_namespace)
@@ -103,22 +103,36 @@ class XMLFile(ConnectionInterface):
         return self.graph
 
 
-    def parse_nodes(self, element:object, graph:Graph=None):
+    def parse_nodes(self, element:object, graph:Graph=None) -> Identity:
         obj = None
         if not graph:
             graph = self.graph
-
-        # Iterate over the elements and create dataclass instances
-        class_name = element.tag.split('{'+self.namespace+'}')[1]
+        try:
+            # Iterate over the elements and create dataclass instances
+            class_name = element.tag.split('{'+self.namespace+'}')[1]
+        except:
+            _log.error(f'Unable to parse {element}. This may be caused by an invalid namespace')
+            return None
 
         if class_name in self.cim.__all__:
             # print(class_name)
             cim_class = getattr(self.cim, class_name)
-            uri = element.get(f'{self.rdf}about')
-            identifier = UUID(uri.strip('_').lower())
+            if self.iec61970_301 >= 8:
+                uri = element.get(f'{self.rdf}about')
+            else:
+                uri = element.get(f'{self.rdf}ID')
             uri = uri.split(':')[-1]  # Extract UUID from the full URI
-            self.class_index[identifier] = cim_class
+            try:
+                identifier = UUID(uri.strip('_').lower())
+            except:
+                _log.warning(f'Unable to parse URI. Check the IEC61970-301 serialization')
+                
+            
             obj = self.create_object(graph, cim_class, uri)
+            self.class_index[obj.uri()] = cim_class
+            if uri != obj.uri():
+                self.class_index[uri]=obj.uri()
+
         else:
             _log.warning(f'{class_name} not in data profile')
         return obj
@@ -131,11 +145,17 @@ class XMLFile(ConnectionInterface):
 
         if class_name in self.cim.__all__:
             cim_class = getattr(self.cim, class_name)
-            uri = element.get(f'{self.rdf}about')
-
-            identifier = UUID(uri.strip('_').lower())
-            uri = uri.split(':')[-1]  # Extract UUID from the full URI
-            obj = self.graph[cim_class][UUID(uri)]
+            if self.iec61970_301 >= 8:
+                uri = element.get(f'{self.rdf}about')
+            else:
+                uri = element.get(f'{self.rdf}ID')
+            try:
+                uri = uri.split(':')[-1]  # Extract UUID from the full URI
+                identifier = UUID(uri.strip('_').lower())
+            except:
+                # identifier = UUID(self.class_index[uri].strip('_').lower())
+                identifier = uri
+            obj = self.graph[cim_class][identifier]
             for sub_element in element:
                 self.parse_value(sub_element, cim_class, identifier)
 
@@ -143,7 +163,7 @@ class XMLFile(ConnectionInterface):
             _log.warning(f'{class_name} not in data profile')
 
     def parse_value(self, sub_element, cim_class, identifier):
-
+        value = None
         sub_tag = sub_element.tag.split('}')[-1]
         association = self.check_attribute(cim_class, sub_tag)
         try:
@@ -153,8 +173,10 @@ class XMLFile(ConnectionInterface):
 
         if edge_uri is not None:
             if self.namespace not in edge_uri:
-                # try:
+                try:
                     edge_uuid = UUID(edge_uri.strip('_').lower())
+                except:
+                    edge_uuid = edge_uri
 
                     try:
                         edge_class = self.class_index[edge_uuid]
