@@ -3,6 +3,7 @@ from __future__ import annotations
 import json
 import logging
 from abc import ABC, abstractmethod
+from collections import defaultdict
 from dataclasses import dataclass, field, fields, is_dataclass
 from typing import TypeVar, Iterator, cast
 from uuid import UUID
@@ -23,7 +24,9 @@ class GraphModel(ABC):
     connection: ConnectionInterface
     distributed: bool = field(default=False)
     graph: dict[type, dict[UUID, object]] = field(default_factory=dict)
-    incrementals: dict[str, dict[str, any]] = field(default_factory=dict)
+    incrementals: defaultdict[str, dict[str, any]] = field(default_factory=defaultdict)
+    __class_iter__: defaultdict[type, iter] = field(default_factory=defaultdict)
+    # __queried_objects__: defaultdict[UUID] = field(default_factory=defaultdict)
     """
     Underlying root class for all knowledge graph models, inlcuding
     FeederModel, BusBranchModel, and NodeBreakerModel
@@ -136,26 +139,30 @@ class GraphModel(ABC):
     # Methods to retrieve objects from GraphModel.graph
     # -------------------------------------------------------------------------
 
-    def list_by_type(self, cim_class:type[T]) -> list[T]:
+    def list_by_class(self, cim_class:type[T]) -> list[T]:
         '''Get all nodes of a specific type with proper typing.'''
         values = list(self.graph.get(cim_class, {}).values())
         return values
 
-    def iter_by_type(self, cim_class):
+    def iter_by_class(self, cim_class) -> iter:
         '''Iterate through all nodes of a specific type with proper typing.'''
         return iter(self.graph.get(cim_class, {}).values())
 
     def first(self, cim_class:type):
         '''Get first '''
-        values = self.list_by_type(cim_class)
+        values = self.list_by_class(cim_class)
         if values:
-            # self.__class_iter__ 
+            self.__class_iter__[cim_class] = iter(values)
             return values[0]
         else:
             return []
 
     def next(self, cim_class:type[T]) -> object[T]:
         '''Get next'''
+        if not self.__class_iter__[cim_class]:
+            return self.first(cim_class)
+        else:
+            return next(self.__class_iter__[cim_class])
 
 
     # -------------------------------------------------------------------------
@@ -164,6 +171,14 @@ class GraphModel(ABC):
 
     def find_by_attribute(self, cim_class:type[T], attribute:str, value:any) -> list[T]:
         '''Searches the graph to find all object instances with matching value'''
+        matching = []
+        valid, attr_datatype = validate_attr_datatype(cim_class, attribute, value)
+        if not valid:
+            _log.warning(f'{attribute} with {value} should have datatype {attr_datatype}')
+        for cim_object in self.graph.get(cim_class, {}).values():
+            if str(getattr(cim_object, attribute)) == str(value):
+                matching.append(cim_object)
+        return matching
 
 
     # -------------------------------------------------------------------------

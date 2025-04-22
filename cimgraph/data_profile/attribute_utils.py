@@ -43,13 +43,13 @@ def validate_attr_datatype(cim_class:dataclass, attribute:str, value:any) -> boo
 
     if value_datatype == 'list':
         for item in value:
-            item_check = validate_attr_datatype(cim_class, attribute, item)
+            item_check, _ = validate_attr_datatype(cim_class, attribute, item)
             if not item_check:
                 valid = False
     else:
         valid = value_datatype in attr_datatype
     
-    return valid
+    return valid, attr_datatype
 
 
 def get_attr_uml_type(cim_class:dataclass, attribute:str):

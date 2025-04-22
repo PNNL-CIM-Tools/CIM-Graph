@@ -1,6 +1,7 @@
 import json
 import logging
 from dataclasses import dataclass, field
+from collections import defaultdict
 
 from cimgraph.models.distributed_area import DistributedArea
 from cimgraph.models.graph_model import GraphModel
@@ -39,6 +40,7 @@ class FeederModel(GraphModel):
         self.incrementals['reverseDifferences'] = {}
         cim_profile, cim_module = get_cim_profile()
         self.cim:cim = cim_module
+        self.__class_iter__ = defaultdict(dict)
 
         if self.connection is not None:    # Check if connection has been specified
             if self.distributed:    # Check if distributed flag is true

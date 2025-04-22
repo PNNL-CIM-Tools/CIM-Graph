@@ -111,8 +111,9 @@ def validate_incremental(message:dict, connection:ConnectionInterface,
             if attr not in obj.__class__.__dataclass_fields__:
                 _log.warning(f'{obj.__class__.__name__} does not have attribute {attribute}' )
                 del message['reverseDifferences'][uri]
-            if not validate_attr_datatype(obj.__class__, attr, old_value):
-                _log.warning(f'{attribute} with {old_value} has wrong datatype')
+            valid, attr_datatype = validate_attr_datatype(obj.__class__, attr, old_value)
+            if not valid:
+                _log.warning(f'{attribute} with {old_value} should have datatype {attr_datatype}')
             if current_value != old_value:
                 _log.warning(f'Current value {current_value} does not match reverse {old_value}')
 
