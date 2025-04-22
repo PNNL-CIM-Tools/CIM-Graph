@@ -9,7 +9,7 @@ from uuid import UUID
 
 from cimgraph.data_profile.identity import Identity
 from cimgraph.databases import ConnectionInterface
-from cimgraph.models.difference_builder import new_obj_difference
+from cimgraph.models.incremental_builder import *
 
 _log = logging.getLogger(__name__)
 
@@ -23,7 +23,7 @@ class GraphModel(ABC):
     connection: ConnectionInterface
     distributed: bool = field(default=False)
     graph: dict[type, dict[UUID, object]] = field(default_factory=dict)
-    differences: dict[str, dict[UUID, any]] = field(default_factory=dict)
+    incrementals: dict[str, dict[str, any]] = field(default_factory=dict)
     """
     Underlying root class for all knowledge graph models, inlcuding
     FeederModel, BusBranchModel, and NodeBreakerModel
@@ -149,7 +149,7 @@ class GraphModel(ABC):
         '''Get first '''
         values = self.list_by_type(cim_class)
         if values:
-            self.__
+            # self.__class_iter__ 
             return values[0]
         else:
             return []
@@ -170,7 +170,7 @@ class GraphModel(ABC):
     # Methods to modify GraphModel.graph via difference message
     # -------------------------------------------------------------------------
 
-    def create(self, cim_class: type[T], **kwargs: any) -> object[T]:
+    def create(self, cim_class: type, incremental_file: str = None, **kwargs: any) -> Identity:
         """
         Create an instance of a dataclass from keyword arguments.
         
@@ -188,6 +188,7 @@ class GraphModel(ABC):
         # Verify that class_type is a dataclass
         if not is_dataclass(cim_class):
             raise TypeError(f"{cim_class.__name__} is not a dataclass")
+        # Verify that class_type is in CIM profile
         if cim_class.__name__ not in self.cim.__all__:
             raise TypeError(f"{cim_class.__name__} not in CIM profile")
         
@@ -202,16 +203,80 @@ class GraphModel(ABC):
         # Create and return an instance of the dataclass
         new_object:Identity = cim_class(**kwargs)
         
+        # Add to graph
         self.add_to_graph(new_object)
 
-        new_obj_difference(new_object, self.differences)
+        # Add to list of incremental messages
+        new_obj_incremental(new_object, self.incrementals)
+
+        if incremental_file is not None:
+            forward = {}
+            forward[cim_class] = {}
+            forward[cim_class][new_object.uri()] = self.incrementals['forwardDifferences'][cim_class][new_object.uri()]
+            write_incremental(reverse=None, forward=forward, filename=incremental_file)
 
         return new_object
+    
+    def from_incremental(self, filename:str) -> list[object]:
+        '''
+        Create new object from incremental message
+        '''
+        if '.xml' in filename.lower():
+            message = read_incremental_xml(filename)
+        valid_message = validate_incremental(message, self.connection, self.graph)
+        # TODO: Delete objects from incremental
+        # TODO: Add objects from incremental
+        modified = modify_from_incremental(valid_message, self.connection, self.graph)
+        return modified
+
 
     def delete(self, cim_class:type[T], uuid:UUID) -> None:
         '''
         Delete object from graph all references by other objects
         '''
+
+
+    def modify(self, cim_object:Identity, attribute:str, value:any, incremental_file:str=None) -> None:
+        if not isinstance(cim_object, Identity):
+            raise TypeError(f"{cim_object} is not a CIM-Graph dataclass")
+        # Verify that class_type is in CIM profile
+        cim_class = cim_object.__class__
+        if cim_class.__name__ not in self.cim.__all__:
+            raise TypeError(f"{cim_class.__name__} not in CIM profile")
+        if attribute not in cim_class.__dataclass_fields__:
+            raise TypeError(f"{cim_class.__name__}.{attribute} not in CIM profile")
+        cim_class = cim_object.__class__
+        if not validate_attr_datatype(cim_class, attribute, value):
+            raise TypeError(f'{value} does not match datatype of {attribute}')
+        
+        # Get old value for reverse difference
+        base_value = self.incrementals['reverseDifferences'].get(cim_class, {}).get(cim_object.uri(), {}).get(attribute, {})
+        if base_value != {}:
+            old_value = base_value
+        else:
+            old_value = getattr(cim_object, attribute)
+        
+        # Set new value
+        setattr(cim_object, attribute, value)
+        # Create incremental
+        modify_incremental(cim_object, attribute, old_value, value, self.incrementals)
+        # Write single incremental to file if specificied
+        if incremental_file is not None:
+            forward = {}
+            reverse = {}
+            forward[cim_class] = {}
+            reverse[cim_class] = {}
+            forward[cim_class][cim_object.uri()] = self.incrementals['forwardDifferences'][cim_class][cim_object.uri()]
+            reverse[cim_class][cim_object.uri()] = self.incrementals['reverseDifferences'][cim_class][cim_object.uri()]
+            write_incremental(reverse=reverse, forward=forward, filename=incremental_file)
+        
+        
+    def write_all_incrementals(self, incremental_file:str):
+            write_incremental(reverse=self.incrementals['reverseDifferences'],
+                            forward=self.incrementals['forwardDifferences'],
+                             filename=incremental_file)
+
+
 
 
     # -------------------------------------------------------------------------

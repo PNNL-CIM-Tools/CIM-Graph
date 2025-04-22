@@ -61,9 +61,10 @@ class XMLFile(ConnectionInterface):
     def execute(self, query_message: str) -> QueryResponse:
         pass
 
-    def get_object(self, mrid:str, graph = None) -> object:
+    def get_object(self, mRID:str, graph = None) -> object:
+        obj = None
         for element in self.root:
-            if mrid in element.get(f'{self.rdf}about'):
+            if mRID in element.get(f'{self.rdf}about'):
                 obj = self.parse_nodes(element)
         return obj
 
