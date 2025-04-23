@@ -90,7 +90,9 @@ class XMLFile(ConnectionInterface):
             graph = defaultdict(lambda: defaultdict(dict))
 
 
-    def create_new_graph(self, container: object) -> Graph:
+    def create_new_graph(self, container: object, graph:dict = None) -> Graph:
+        if graph is not None:
+            self.graph = graph
         if self.root is not None:
             for element in self.root:
                 self.parse_nodes(element)

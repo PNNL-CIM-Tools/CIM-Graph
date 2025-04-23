@@ -41,6 +41,8 @@ class FeederModel(GraphModel):
         cim_profile, cim_module = get_cim_profile()
         self.cim:cim = cim_module
         self.__class_iter__ = defaultdict(dict)
+        if not self.graph:
+            self.graph = defaultdict(lambda: defaultdict(dict))
 
         if self.connection is not None:    # Check if connection has been specified
             if self.distributed:    # Check if distributed flag is true
@@ -56,7 +58,7 @@ class FeederModel(GraphModel):
 
     def __initialize_centralized_model(self) -> None:
         # Build graph model using database-specific routine
-        self.graph = self.connection.create_new_graph(self.container)
+        self.graph = self.connection.create_new_graph(self.container, self.graph)
 
     def __initialize_distributed_model(self) -> None:
         self.distributed_areas = []
