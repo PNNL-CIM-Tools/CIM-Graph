@@ -100,16 +100,18 @@ class Identity():
     def __post_init__(self) -> None:
         # Validate if pre-specified
         if self.identifier is not None:
-            id = str(self.identifier)
+            # id = str(self.identifier)
             # Check if Identity.identifier is an invalid UUID
-            if not isinstance(self.identifier,UUID):
-                _log.warning(f'Identifier {self.identifier} must be a UUID object, generating new UUID')
-                self.identifier = None
+            # if not isinstance(self.identifier,UUID):
+            #     self.uuid(uri=str(self.identifier))
+                # _log.warning(f'Identifier {self.identifier} must be a UUID object, generating new UUID')
+                # self.identifier = None
             # If object inherits from IdentifiedObject, create uuid from mRID
             if 'mRID' in self.__dataclass_fields__:
-                self.uuid(uri=id, mRID=self.mRID, name=self.name)
+                self.uuid(uri=str(self.identifier), mRID=self.mRID, name=self.name)
             else:
-                self.uuid(uri=id)
+                self.uuid(uri=str(self.identifier))
+
         # Otherwise, create a new UUID
         else:
             if 'mRID' in self.__dataclass_fields__:

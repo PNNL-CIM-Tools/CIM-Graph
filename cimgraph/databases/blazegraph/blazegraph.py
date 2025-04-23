@@ -8,7 +8,7 @@ import os
 from uuid import UUID
 
 from SPARQLWrapper import JSON, POST, SPARQLWrapper
-
+from collections import defaultdict
 import cimgraph.queries.sparql as sparql
 from cimgraph.databases import (ConnectionInterface, Graph, QueryResponse, get_cim_profile,
                                 get_iec61970_301, get_namespace, get_url)
@@ -37,6 +37,10 @@ class BlazegraphConnection(ConnectionInterface):
         self.cim_profile, self.cim = get_cim_profile()
 
         self.connect()
+
+    # -------------------------------------------------------------------------
+    # Methods for connecting to the database and executing SPARQL queries
+    # -------------------------------------------------------------------------
 
     def connect(self) -> None:
         """
@@ -86,6 +90,93 @@ class BlazegraphConnection(ConnectionInterface):
         self.sparql_obj.setMethod(POST)
         output = self.sparql_obj.query()
         return output
+    
+    def upload(self, graph: Graph) -> None:
+        """
+        Upload a graph structure to the Blazegraph database.
+
+        Args:
+            graph (dict): The graph structure to be uploaded.
+        """
+        for cim_class in graph.keys():
+            for obj in graph[cim_class].values():
+                query = sparql.upload_triples_sparql(obj)
+                self.update(query)
+
+    # -------------------------------------------------------------------------
+    # Methods for creating new graph structures
+    # -------------------------------------------------------------------------
+    
+    def create_new_graph(self, container: object, graph: dict = None) -> Graph:
+        """
+        Create a new graph structure for a CIM EquipmentContainer object.
+        The method uses a SPARQL query to obtain all terminals in the graph,
+        along with all nodes and conducting equipment associated with each
+        terminal. This forms the baseline knowledge graph for the GraphModel.
+        If a graph is specified, the new objects will be added to the existing
+        graph. Otherwise, a new graph will be created from scratch.
+
+        Args:
+            container (object): The container object for which the graph is created.
+            graph (dict, optional): Graph of CIM objects, grouped by class and UUID.
+
+        Returns:
+            dict: Graph consisting of types and UUID mapped to object instances.
+        """
+        if graph is None:
+            graph = defaultdict(lambda: defaultdict(dict))
+        self.add_to_graph(graph=graph, obj=container)
+        # Get all nodes, terminal, and equipment associated with EquipmentContainer object
+        sparql_message = sparql.get_all_nodes_from_container(container)
+        query_output = self.execute(sparql_message)
+        # Parse query results and create new graph
+        graph = self.parse_node_query(graph, query_output)
+        return graph
+
+
+    def create_distributed_graph(self, area:object, graph:dict=None) -> Graph:
+        if graph is None:
+            graph = defaultdict(lambda: defaultdict(dict))
+        self.add_to_graph(graph=graph, obj=area)
+
+        if not isinstance(area, self.cim.SubSchedulingArea):
+            _log.error(f'Area object is not a SubSchedulingArea')
+            raise TypeError('Area object is not a SubSchedulingArea')
+
+        sparql_message = sparql.get_all_nodes_from_area(area)
+        # Execute SPARQL query
+        query_output = self.execute(sparql_message)
+        # Parse query results and create new graph
+        graph = self.parse_node_query(graph, query_output)
+        return graph
+
+
+
+    def build_graph_from_list(self, graph: Graph,
+            mrid_list: list[str]) -> Graph:
+        """
+        Build a graph structure based on a list of mRIDs. This method is used
+        with original GridAPPS-D Topology Processor, which provided a list
+        of addressable and unaddressable equipment in each distributed area.
+
+        Args:
+            graph (dict): Initial graph structure.
+            mrid_list (list[str]): List of mRIDs to be included in the graph.
+
+        Returns:
+            dict: Updated graph structure.
+        """
+        # mRID list needs to be broken into groups of 100 uri strings per query
+        for index in range(math.ceil(len(mrid_list) / 100)):
+            eq_mrids = mrid_list[index * 100:(index + 1) * 100]
+            sparql_message = sparql.get_all_nodes_from_list(eq_mrids, self.namespace)
+            query_output = self.execute(sparql_message)
+            graph = self.parse_node_query(graph, query_output)
+        return graph
+    
+    # -------------------------------------------------------------------------
+    # Methods for retrieving objects from the database
+    # -------------------------------------------------------------------------
 
 
     def get_object(self, mRID: str, graph: dict = None) -> object:
@@ -102,7 +193,7 @@ class BlazegraphConnection(ConnectionInterface):
         """
         # Use empty dict if graph not provided
         if graph is None:
-            graph = {}
+            graph = defaultdict(lambda: defaultdict(dict))
 
         # Use sparql module to build get correct query string
         sparql_message = sparql.get_object_sparql(mRID)
@@ -138,7 +229,7 @@ class BlazegraphConnection(ConnectionInterface):
             new_edges: A list of the retrieved objects or property strings.
         """
         if graph is None:
-            graph = {}
+            graph = defaultdict(lambda: defaultdict(dict))
 
         self.add_to_graph(obj=subject, graph=graph)
         # Generate SPARQL query for user-specified triple string
@@ -150,48 +241,83 @@ class BlazegraphConnection(ConnectionInterface):
         return new_edges
 
 
-    def create_new_graph(self, container: object, graph: dict = None) -> Graph:
+    def get_edges_query(self, graph: Graph, cim_class: type) -> str:
         """
-        Create a new graph structure for a CIM EquipmentContainer object.
-        The method uses a SPARQL query to obtain all terminals in the graph,
-        along with all nodes and conducting equipment associated with each
-        terminal. This forms the baseline knowledge graph for the GraphModel.
-        If a graph is specified, the new objects will be added to the existing
-        graph. Otherwise, a new graph will be created from scratch.
+        Generate a SPARQL query to get edges from the graph for a specific CIM class.
+        This method is used to provide the graph traversal query for debugging.
 
         Args:
-            container (object): The container object for which the graph is created.
-            graph (dict, optional): Graph of CIM objects, grouped by class and UUID.
+            graph (dict): Graph structure.
+            cim_class (type): The CIM class for which edges query is to be generated.
 
         Returns:
-            dict: Graph consisting of types and UUID mapped to object instances.
+            str: SPARQL query string.
         """
-        if graph is None:
-            graph = {}
-        self.add_to_graph(graph=graph, obj=container)
-        # Get all nodes, terminal, and equipment associated with EquipmentContainer object
-        sparql_message = sparql.get_all_nodes_from_container(container)
-        query_output = self.execute(sparql_message)
-        # Parse query results and create new graph
-        graph = self.parse_node_query(graph, query_output)
-        return graph
+        eq_mrids = list(graph[cim_class].keys())[0:100]
+        sparql_message = sparql.get_all_edges_sparql(graph, cim_class, eq_mrids)
+
+        return sparql_message
 
 
-    def create_distributed_graph(self, area:object, graph:dict=None) -> Graph:
-        if graph is None:
-            graph = {}
-        self.add_to_graph(graph=graph, obj=area)
+    def get_all_edges(self, graph: Graph, cim_class: type) -> None:
+        """
+        Expands the knowledge graph by one edge for all instances of the
+        requested CIM class. Associated objects are added to the graph
+        as new CIM objects.
 
-        if not isinstance(area, self.cim.SubSchedulingArea):
-            _log.error(f'Area object is not a SubSchedulingArea')
-            raise TypeError('Area object is not a SubSchedulingArea')
+        Args:
+            graph (dict): Graph structure.
+            cim_class (type): The CIM class for which to retrieve edges.
+        """
 
-        sparql_message = sparql.get_all_nodes_from_area(area)
-        # Execute SPARQL query
-        query_output = self.execute(sparql_message)
-        # Parse query results and create new graph
-        graph = self.parse_node_query(graph, query_output)
-        return graph
+        # Parallel processing batch handler
+        def process_batch(eq_mrids):
+            # Generate universal graph traversal query for the selected starting nodes
+            sparql_message = sparql.get_all_edges_sparql(graph, cim_class, eq_mrids)
+            # Execute SPARQL query
+            query_output = self.execute(sparql_message)
+            # _log.warning(query_output)
+            # Parse the query output
+            self.edge_query_parser(query_output, graph, cim_class)
+
+
+        # Create list of all nodes within graph to be expanded
+        uuid_list = list(graph[cim_class].keys())
+        # Parallel process in batches of 100 uuids per query
+        num_batches = math.ceil(len(uuid_list) / 100)
+        eq_mrids_batches = [uuid_list[i * 100:(i + 1) * 100] for i in range(num_batches)]
+
+        with concurrent.futures.ThreadPoolExecutor(max_workers=os.cpu_count()) as executor:
+            futures = [executor.submit(process_batch, batch)
+                for batch in eq_mrids_batches]
+            for future in concurrent.futures.as_completed(futures):
+                # Ensuring all futures are processed
+                future.result()
+
+
+    def get_all_attributes(self, graph: Graph,
+                           cim_class: type) -> None:
+        """
+        Retrieve all attributes for a given CIM class in the graph. Associated
+        objects are added to the graph as strings instead of new CIM objects.
+
+        Args:
+            graph (dict): Graph structure.
+            cim_class (type): The CIM class for which to retrieve attributes.
+        """
+        mrid_list = list(graph[cim_class].keys())
+
+        for index in range(math.ceil(len(mrid_list) / 100)):
+            eq_mrids = mrid_list[index * 100:(index + 1) * 100]
+            # Create a graph traversal query with edge classes as strings
+            sparql_message = sparql.get_all_attributes_sparql(graph, cim_class, eq_mrids)
+            # Execute sparql query and parse results
+            query_output = self.execute(sparql_message)
+            self.edge_query_parser(query_output, graph, cim_class, expand_graph=False)
+
+    # -------------------------------------------------------------------------
+    # Methods for parsing query results
+    # -------------------------------------------------------------------------
 
 
     def parse_node_query(self, graph: dict, query_output: dict) -> Graph:
@@ -237,114 +363,16 @@ class BlazegraphConnection(ConnectionInterface):
                 # Associate the terminal with the equipment and node
                 setattr(terminal, 'ConnectivityNode', node)
                 setattr(terminal, 'ConductingEquipment', equipment)
-            if 'Measurement' in result:
-                # Associated conducting equipment are JSON-LD strings
-                meas = json.loads(result['Measurement']['value'])
-                meas_id = meas['@id']
-                meas_class = meas['@type']
-                # Get uri strings of nodes and terminals
-                if meas_class in self.cim.__all__:
-                    meas_class = getattr(self.cim, meas_class)
-                    measurement = self.create_object(graph, meas_class, meas_id)
-
+            # if 'Measurement' in result:
+            #     # Associated conducting equipment are JSON-LD strings
+            #     meas = json.loads(result['Measurement']['value'])
+            #     meas_id = meas['@id']
+            #     meas_class = meas['@type']
+            #     # Get uri strings of nodes and terminals
+            #     if meas_class in self.cim.__all__:
+            #         meas_class = getattr(self.cim, meas_class)
+            #         measurement = self.create_object(graph, meas_class, meas_id)
         return graph
-
-    def build_graph_from_list(self, graph: Graph,
-            mrid_list: list[str]) -> Graph:
-        """
-        Build a graph structure based on a list of mRIDs. This method is used
-        with original GridAPPS-D Topology Processor, which provided a list
-        of addressable and unaddressable equipment in each distributed area.
-
-        Args:
-            graph (dict): Initial graph structure.
-            mrid_list (list[str]): List of mRIDs to be included in the graph.
-
-        Returns:
-            dict: Updated graph structure.
-        """
-        # mRID list needs to be broken into groups of 100 uri strings per query
-        for index in range(math.ceil(len(mrid_list) / 100)):
-            eq_mrids = mrid_list[index * 100:(index + 1) * 100]
-            sparql_message = sparql.get_all_nodes_from_list(eq_mrids, self.namespace)
-            query_output = self.execute(sparql_message)
-            graph = self.parse_node_query(graph, query_output)
-        return graph
-
-
-    def get_edges_query(self, graph: Graph, cim_class: type) -> str:
-        """
-        Generate a SPARQL query to get edges from the graph for a specific CIM class.
-        This method is used to provide the graph traversal query for debugging.
-
-        Args:
-            graph (dict): Graph structure.
-            cim_class (type): The CIM class for which edges query is to be generated.
-
-        Returns:
-            str: SPARQL query string.
-        """
-        eq_mrids = list(graph[cim_class].keys())[0:100]
-        sparql_message = sparql.get_all_edges_sparql(graph, cim_class, eq_mrids)
-
-        return sparql_message
-
-
-    def get_all_edges(self, graph: Graph, cim_class: type) -> None:
-        """
-        Expands the knowledge graph by one edge for all instances of the
-        requested CIM class. Associated objects are added to the graph
-        as new CIM objects.
-
-        Args:
-            graph (dict): Graph structure.
-            cim_class (type): The CIM class for which to retrieve edges.
-        """
-
-        # Parallel processing bath handler
-        def process_batch(eq_mrids):
-            # Generate universal graph traversal query for the selected starting nodes
-            sparql_message = sparql.get_all_edges_sparql(graph, cim_class, eq_mrids)
-            # Execute SPARQL query
-            query_output = self.execute(sparql_message)
-            # _log.warning(query_output)
-            # Parse the query output
-            self.edge_query_parser(query_output, graph, cim_class)
-
-
-        # Create list of all nodes within graph to be expanded
-        uuid_list = list(graph[cim_class].keys())
-        # Parallel process in batches of 100 uuids per query
-        num_batches = math.ceil(len(uuid_list) / 100)
-        eq_mrids_batches = [uuid_list[i * 100:(i + 1) * 100] for i in range(num_batches)]
-
-        with concurrent.futures.ThreadPoolExecutor(max_workers=os.cpu_count()) as executor:
-            futures = [executor.submit(process_batch, batch)
-                for batch in eq_mrids_batches]
-            for future in concurrent.futures.as_completed(futures):
-                # Ensuring all futures are processed
-                future.result()
-
-
-    def get_all_attributes(self, graph: Graph,
-                           cim_class: type) -> None:
-        """
-        Retrieve all attributes for a given CIM class in the graph. Associated
-        objects are added to the graph as strings instead of new CIM objects.
-
-        Args:
-            graph (dict): Graph structure.
-            cim_class (type): The CIM class for which to retrieve attributes.
-        """
-        mrid_list = list(graph[cim_class].keys())
-
-        for index in range(math.ceil(len(mrid_list) / 100)):
-            eq_mrids = mrid_list[index * 100:(index + 1) * 100]
-            # Create a graph traversal query with edge classes as strings
-            sparql_message = sparql.get_all_attributes_sparql(graph, cim_class, eq_mrids)
-            # Execute sparql query and parse results
-            query_output = self.execute(sparql_message)
-            self.edge_query_parser(query_output, graph, cim_class, expand_graph=False)
 
     def edge_query_parser(self, query_output: QueryResponse,
                           graph: Graph, cim_class: type, expand_graph=True) -> list[object]:
@@ -403,14 +431,3 @@ class BlazegraphConnection(ConnectionInterface):
                         self.create_value(graph, cim_class, identifier, attribute, value)
         return new_edges
 
-    def upload(self, graph: Graph) -> None:
-        """
-        Upload a graph structure to the Blazegraph database.
-
-        Args:
-            graph (dict): The graph structure to be uploaded.
-        """
-        for cim_class in graph.keys():
-            for obj in graph[cim_class].values():
-                query = sparql.upload_triples_sparql(obj)
-                self.update(query)

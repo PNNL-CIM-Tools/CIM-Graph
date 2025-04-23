@@ -5,6 +5,7 @@ import enum
 import importlib
 import logging
 import os
+from collections import defaultdict
 from concurrent.futures import ThreadPoolExecutor
 from uuid import UUID
 
@@ -31,7 +32,7 @@ class XMLFile(ConnectionInterface):
         self.namespace = get_namespace()
         self.iec61970_301 = get_iec61970_301()
         self.filename = filename
-        self.graph = None
+        # self.graph = None
         self.connect()
 
     def connect(self):
@@ -48,7 +49,7 @@ class XMLFile(ConnectionInterface):
                 self.tree = None
                 self.root = None
             self.class_index = {}
-            self.graph = {}
+            self.graph = defaultdict(lambda: defaultdict(dict))
         else:
             raise ValueError('filename must be specified')
 
@@ -68,9 +69,9 @@ class XMLFile(ConnectionInterface):
                 obj = self.parse_nodes(element)
         return obj
 
-    def get_from_triple(self, subject:object, predicate:str, graph: Graph = None) -> list[object]:
+    def get_from_triple(self, subject:Identity, predicate:str, graph: Graph = None) -> list[object]:
         if graph is None:
-            graph = {}
+            graph = defaultdict(lambda: defaultdict(dict))
         results = []
         class_type = subject.__class__
         elements = self.tree.findall(f'.//cim:{class_type.__name__}', self.namespaces)
@@ -86,7 +87,7 @@ class XMLFile(ConnectionInterface):
     def create_distributed_graph(self, area: object, graph: dict = None) -> Graph:
         _log.error('distributed models not supported for XML file read')
         if graph is None:
-            graph = {}
+            graph = defaultdict(lambda: defaultdict(dict))
 
 
     def create_new_graph(self, container: object) -> Graph:
@@ -100,14 +101,11 @@ class XMLFile(ConnectionInterface):
                 results = [future.result() for future in concurrent.futures.as_completed(futures)]
         else:
             _log.warning('No root element found in XML file')
-            self.graph = {}
+            self.graph = defaultdict(lambda: defaultdict(dict))
         return self.graph
 
-
-    def parse_nodes(self, element:object, graph:Graph=None) -> Identity:
+    def parse_nodes(self, element:object) -> Identity:
         obj = None
-        if not graph:
-            graph = self.graph
         try:
             # Iterate over the elements and create dataclass instances
             class_name = element.tag.split('{'+self.namespace+'}')[1]
@@ -129,7 +127,7 @@ class XMLFile(ConnectionInterface):
                 _log.warning(f'Unable to parse URI. Check the IEC61970-301 serialization')
                 
             
-            obj = self.create_object(graph, cim_class, uri)
+            obj = self.create_object(self.graph, cim_class, uri)
             self.class_index[obj.uri()] = cim_class
             if uri != obj.uri():
                 self.class_index[uri]=obj.uri()

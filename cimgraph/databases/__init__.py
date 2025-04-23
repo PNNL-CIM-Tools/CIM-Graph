@@ -311,9 +311,9 @@ class ConnectionInterface(ABC):
 
 
 
-    def create_edge(self, graph: dict[type, dict[str, object]],
+    def create_edge(self, graph: dict[type, dict[UUID, object]],
                     cim_class: type, identifier: UUID, attribute: str,
-                    edge_class: type, edge_mRID: str) -> object:
+                    edge_class: type, edge_mRID: str[UUID]) -> object:
 
         edge_object = None
         association = self.check_attribute(cim_class, attribute)
@@ -339,8 +339,8 @@ class ConnectionInterface(ABC):
                         if edge_object.__class__ != edge_class:
                             _log.warning(f'Edge {edge_object} is of type {edge_object.__class__} but should be {edge_class}')
                             raise TypeError()
-                        if edge_class not in graph:
-                            graph[edge_class] = {}
+                        # if edge_class not in graph:
+                        #     graph[edge_class] = {}
                         if edge_object not in graph[edge_class].values():
                             self.add_to_graph(edge_object, graph)
                         
@@ -354,8 +354,7 @@ class ConnectionInterface(ABC):
                 _log.warning(f'{cim_class.__name__} does not have attribute {association}')
         return edge_object
 
-    def create_object(self, graph:Graph,
-                      class_type:type, uri:str) -> Identity:
+    def create_object(self, graph:Graph, class_type:type, uri:str[UUID]) -> Identity:
         """
         Method for creating new objects and adding them to the graph
         Required Args:
@@ -369,29 +368,30 @@ class ConnectionInterface(ABC):
         try:
             identifier = UUID(uri.strip('_').lower())
         except:
-            _log.warning(f'URI {uri} for object {class_type.__name__} is not a valid UUID')
+        #     # _log.warning(f'URI {uri} for object {class_type.__name__} is not a valid UUID')
             identifier = uri
 
         # Add class type to graph keys if not there
-        if class_type not in graph:
-            graph[class_type] = {}
+        # if class_type not in graph:
+        #     graph[class_type] = {}
             # _log.warning(graph[class_type])
 
         # Check if object exists in graph
-        if identifier in graph[class_type]:
+        # if identifier in graph[class_type]:
+        if graph[class_type][identifier]:
             obj = graph[class_type][identifier]
 
         # If not there, create a new object and add to graph
         else:
-            obj = class_type()
-            obj.uuid(uri = uri)
+            obj = class_type(identifier = uri)
+            # obj.uuid(uri = uri)
             graph[class_type][identifier] = obj
 
 
 
         return obj
 
-    def add_to_graph(self, obj: object, graph: Graph) -> None:
+    def add_to_graph(self, obj:Identity, graph: Graph) -> None:
         """
         Method for adding existing objects to the graph
         Required Args:
@@ -400,12 +400,12 @@ class ConnectionInterface(ABC):
             none
         """
         # Add class type to graph if not there
-        if type(obj) not in graph:
-            graph[type(obj)] = {}
+        # if type(obj) not in graph:
+        #     graph[type(obj)] = {}
 
         # Add instance to graph keys if not there
-        if obj.identifier not in graph[type(obj)]:
-            graph[type(obj)][obj.identifier] = obj
+        # if obj.identifier not in graph[type(obj)]:
+        graph[type(obj)][obj.identifier] = obj
 
 
 from cimgraph.databases.blazegraph import BlazegraphConnection

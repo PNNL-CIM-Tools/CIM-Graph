@@ -1,15 +1,17 @@
 from __future__ import annotations
 
 import asyncio
-import importlib
+import nest_asyncio
 import logging
 import math
-from uuid import UUID
 
-import nest_asyncio
+from uuid import UUID
+from collections import defaultdict
+
 from neo4j import AsyncGraphDatabase, GraphDatabase
 from neo4j.exceptions import DriverError, Neo4jError
 
+import cimgraph.data_profile.cimhub_2023 as cim
 import cimgraph.queries.cypher as cypher
 from cimgraph.databases import (ConnectionInterface, Graph, QueryResponse, get_cim_profile,
                                 get_database, get_iec61970_301, get_namespace, get_password,
@@ -37,7 +39,8 @@ class Neo4jConnection(ConnectionInterface):
         get_password.cache_clear()
 
         # retrieve env variables
-        self.cim_profile, self.cim = get_cim_profile()
+        self.cim_profile, cim_module = get_cim_profile()
+        self.cim:cim = cim_module
         self.namespace = get_namespace()
         self.url = get_url()
         self.username = get_username()
@@ -123,7 +126,7 @@ class Neo4jConnection(ConnectionInterface):
             object: The retrieved object.
         """
         if graph is None:
-            graph = {}
+            graph = defaultdict(lambda: defaultdict(dict))
         # Use cypher module to build get correct query string
         cypher_message = cypher.get_object_cypher(mRID)
         query_output = self.execute(cypher_message)
@@ -146,7 +149,7 @@ class Neo4jConnection(ConnectionInterface):
         return obj
 
     def create_new_graph(self, container: object) -> dict[type, dict[str, object]]:
-        graph = {}
+        graph = defaultdict(lambda: defaultdict(dict))
         # Generate cypher message from correct loaders>cypher python script based on class name
         cypher_message = cypher.get_all_nodes_from_container(container)
         # async_execute cypher query
@@ -178,7 +181,7 @@ class Neo4jConnection(ConnectionInterface):
             # If equipment class is in data profile, add it to the graph also
             if eq_class in self.cim.__all__:
                 eq_class = getattr(self.cim, eq_class)
-                equipment = self.create_object(graph, eq_class, eq_id)
+                equipment:cim.ConductingEquipment = self.create_object(graph, eq_class, eq_id)
             else:
                 # If it is not in the profile, log it as a missing class
                 _log.warning(
@@ -186,8 +189,8 @@ class Neo4jConnection(ConnectionInterface):
                 continue
             if node_id:
                 # Add each object to graph
-                node = self.create_object(graph, self.cim.ConnectivityNode, node_id)
-                terminal = self.create_object(graph, self.cim.Terminal, terminal_id)
+                node:cim.ConnectivityNode = self.create_object(graph, self.cim.ConnectivityNode, node_id)
+                terminal:cim.Terminal = self.create_object(graph, self.cim.Terminal, terminal_id)
 
                 # Associate the node and equipment with the terminal
                 if terminal not in equipment.Terminals:
@@ -202,7 +205,7 @@ class Neo4jConnection(ConnectionInterface):
 
     def create_distributed_graph(self, area: object, graph: dict = None) -> Graph:
         if graph is None:
-            graph = {}
+            graph = defaultdict(lambda: defaultdict(dict))
         self.add_to_graph(graph=graph, obj=area)
 
         if not isinstance(area, self.cim.SubSchedulingArea):
@@ -219,7 +222,7 @@ class Neo4jConnection(ConnectionInterface):
 
     def get_from_triple(self, subject:object, predicate:str, graph: Graph = None) -> list[object]:
         if graph is None:
-            graph = {}
+            graph = defaultdict(lambda: defaultdict(dict))
         self.add_to_graph(subject, graph)
         # Generate cypher query for user-specified triple string
         cypher_message = cypher.get_triple_cypher(subject, predicate)
