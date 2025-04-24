@@ -172,7 +172,7 @@ class GraphModel(ABC):
     def find_by_attribute(self, cim_class:type[T], attribute:str, value:any) -> list[T]:
         '''Searches the graph to find all object instances with matching value'''
         matching = []
-        valid, attr_datatype = validate_attr_datatype(cim_class, attribute, value)
+        valid, attr_datatype, value = validate_attr_datatype(cim_class, attribute, value)
         if not valid:
             _log.warning(f'{attribute} with {value} should have datatype {attr_datatype}')
         for cim_object in self.graph.get(cim_class, {}).values():

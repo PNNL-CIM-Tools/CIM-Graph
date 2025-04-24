@@ -358,8 +358,8 @@ class ConnectionInterface(ABC):
             identifier = uri
 
         # Add class type to graph keys if not there
-        if class_type not in graph:
-            graph[class_type] = {}
+        # if class_type not in graph:
+        #     graph[class_type] = {}
             # _log.warning(graph[class_type])
 
         # Check if object exists in graph
@@ -368,8 +368,8 @@ class ConnectionInterface(ABC):
 
         # If not there, create a new object and add to graph
         else:
-            obj = class_type()
-            obj.uuid(uri = uri)
+            obj = class_type(identifier = uri)
+            # obj.uuid(uri = uri)
             graph[class_type][identifier] = obj
 
 

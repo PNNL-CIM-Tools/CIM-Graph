@@ -148,8 +148,9 @@ class Neo4jConnection(ConnectionInterface):
 
         return obj
 
-    def create_new_graph(self, container: object) -> dict[type, dict[str, object]]:
-        graph = defaultdict(lambda: defaultdict(dict))
+    def create_new_graph(self, container: object, graph:Graph = None) -> Graph:
+        if graph is None:
+            graph = defaultdict(lambda: defaultdict(dict))
         # Generate cypher message from correct loaders>cypher python script based on class name
         cypher_message = cypher.get_all_nodes_from_container(container)
         # async_execute cypher query

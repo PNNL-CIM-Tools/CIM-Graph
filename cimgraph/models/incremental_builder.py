@@ -1,5 +1,5 @@
 from __future__ import annotations
-from dataclasses import fields
+from dataclasses import fields, is_dataclass
 from collections import defaultdict
 from uuid import UUID
 from cimgraph.data_profile.identity import Identity
@@ -80,17 +80,23 @@ def read_incremental_xml(filename) -> dict:
     return incremental
 
 
+
+
 def validate_incremental(message:dict, connection:ConnectionInterface,
                         graph:dict[type, dict[UUID, object]]) -> dict:
     '''
     Validate CIM incremental against classes and attributes in profile
     '''
+    get_cim_profile.cache_clear()
+    cim_profile, cim = get_cim_profile()
+
     for uri in message['reverseDifferences']:
         try:
             identifier = UUID(uri.strip('_').lower())
         except:
             _log.warning(f'Invalid UUID string {uri}')
-            del message['reverseDifferences'][uri]
+            message['reverseDifferences'][uri] = {}
+            # del message['reverseDifferences'][uri]
             continue
         found = False
         for cim_class in graph:
@@ -101,19 +107,29 @@ def validate_incremental(message:dict, connection:ConnectionInterface,
         if not found:
             obj = connection.get_object(mRID=uri)
             if obj is None:
-                _log.warning(f'Could not find any objects with mRID {uri}')
-                del message['reverseDifferences'][uri]
+                _log.warning(f'Could not find any objects with reverse difference mRID {uri}')
+                message['reverseDifferences'][uri] = {}
+                # del message['reverseDifferences'][uri]
                 continue
         for attribute in message['reverseDifferences'][uri]:
+            parent = attribute.split('.')[0]
+            try:
+                parent = getattr(cim, parent)
+            except:
+                _log.warning(f'{parent} not found in CIM profile {cim_profile}' )
+            if parent not in obj.__class__.__mro__:
+                _log.warning(f'{obj.__class__.__name__} does not inherit from {parent}' )
+
             attr = attribute.split('.')[1]
             old_value = message['reverseDifferences'][uri][attribute]
             current_value = getattr(obj, attr)
             if attr not in obj.__class__.__dataclass_fields__:
                 _log.warning(f'{obj.__class__.__name__} does not have attribute {attribute}' )
-                del message['reverseDifferences'][uri]
-            valid, attr_datatype = validate_attr_datatype(obj.__class__, attr, old_value)
+                message['reverseDifferences'][uri] = {}
+
+            valid, attr_datatype, old_value = validate_attr_datatype(obj.__class__, attr, old_value)
             if not valid:
-                _log.warning(f'{attribute} with {old_value} should have datatype {attr_datatype}')
+                _log.warning(f'{attribute} with reverse value {old_value} should have datatype {attr_datatype}')
             if current_value != old_value:
                 _log.warning(f'Current value {current_value} does not match reverse {old_value}')
 
@@ -124,18 +140,54 @@ def validate_incremental(message:dict, connection:ConnectionInterface,
             identifier = UUID(uri.strip('_').lower())
         except:
             _log.warning(f'Invalid UUID string {uri}')
-            del message['forwardDifferences'][uri]
+            message['forwardDifferences'][uri] = {}
+
+        for cim_class in graph:
+            if identifier in graph[cim_class]:
+                found = True
+                obj = graph[cim_class][identifier]
+                break
+        if not found:
+            obj = connection.get_object(mRID=uri)
+                
 
         for attribute in message['forwardDifferences'][uri]:
+            parent = attribute.split('.')[0]
+            validated = True
+            try:
+                parent = getattr(cim, parent)
+            except:
+                validated = False
+                _log.warning(f'{parent} not found in CIM profile {cim_profile}' )
+
+            if parent not in obj.__class__.__mro__ and obj is not None:
+                validated = False
+                _log.warning(f'{obj.__class__.__name__} does not inherit from {parent}' )
+
             attr = attribute.split('.')[1]
             new_value = message['forwardDifferences'][uri][attribute]
+            if obj is not None:
+                if attr not in obj.__class__.__dataclass_fields__:
+                    validated = False
+                    _log.warning(f'{obj.__class__.__name__} does not have attribute {attribute}' )
+                    # del message['forwardDifferences'][uri]
+                valid, attr_datatype, new_value = validate_attr_datatype(obj.__class__, attr, new_value)
+                if not valid:
+                    validated = False
+                    _log.warning(f'{attribute} with forward value {new_value} should have datatype {attr_datatype}')
 
-            if attr not in obj.__class__.__dataclass_fields__:
-                _log.warning(f'{obj.__class__.__name__} does not have attribute {attribute}' )
-                del message['forwardDifferences'][uri]
-            if not validate_attr_datatype(obj.__class__, attr, old_value):
-                _log.warning(f'{attribute} with {new_value} has wrong datatype')
-                del message['forwardDifferences'][uri]
+            elif is_dataclass(parent):
+                if attr not in parent.__dataclass_fields__:
+                    validated = False
+                    _log.warning(f'{parent.__name__} does not have attribute {attribute}' )
+                    # del message['forwardDifferences'][uri]
+                valid, attr_datatype, new_value = validate_attr_datatype(parent, attr, new_value)
+
+                if not valid:
+                    _log.warning(f'{attribute} with forward value {new_value} should have datatype {attr_datatype}')
+            if not validated:    
+                message['forwardDifferences'][uri] = {}
+                # del message['forwardDifferences'][uri]
     
     return message
 
@@ -273,7 +325,7 @@ def incremantal_row(cim_class:type, uri:str, difference:dict) -> str:
                         else:
                             # _log.warning(f'unknown format of {str(value)}')
                             row += f' rdf:resouce={ns_prefix}{str(value)}>\n'
-    row += '</rdf:Description>'
+    row += '</rdf:Description>\n'
     return row
 
 def write_incremental(reverse:dict, forward:dict, filename:str):

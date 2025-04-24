@@ -1,9 +1,10 @@
 from __future__ import annotations
 
+import os
 import json
 import logging
 import math
-
+import concurrent.futures
 from collections import defaultdict
 from SPARQLWrapper import JSON, POST, SPARQLWrapper
 from uuid import UUID
@@ -80,7 +81,7 @@ class GraphDBConnection(ConnectionInterface):
     # -------------------------------------------------------------------------
 
 
-    def create_new_graph(self, container: object, graph: dict = None) -> Graph:
+    def create_new_graph(self, container:object, graph:Graph = None) -> Graph:
         """
         Create a new graph structure for a CIM EquipmentContainer object.
         The method uses a SPARQL query to obtain all terminals in the graph,
@@ -201,18 +202,40 @@ class GraphDBConnection(ConnectionInterface):
 
         return sparql_message
 
-    def get_all_edges(self, graph: dict[type, dict[str, object]], cim_class: type) -> None:
-        mrid_list = list(graph[cim_class].keys())
-        num_nodes = len(mrid_list)
-        for index in range(math.ceil(len(mrid_list) / 100)):
-            eq_mrids = mrid_list[index * 100:(index + 1) * 100]
-            #generate SPARQL message from correct loaders>sparql python script based on class name
-            # sparql_message = ontotext.get_all_edges_ontotext(graph, cim_class, eq_mrids)
+    def get_all_edges(self, graph: Graph, cim_class: type) -> None:
+        """
+        Expands the knowledge graph by one edge for all instances of the
+        requested CIM class. Associated objects are added to the graph
+        as new CIM objects.
+
+        Args:
+            graph (dict): Graph structure.
+            cim_class (type): The CIM class for which to retrieve edges.
+        """
+
+        # Parallel processing bath handler
+        def process_batch(eq_mrids):
+            # Generate universal graph traversal query for the selected starting nodes
             sparql_message = sparql.get_all_edges_sparql(graph, cim_class, eq_mrids)
-            
-            #execute sparql query
+            # Execute SPARQL query
             query_output = self.execute(sparql_message)
+            # _log.warning(query_output)
+            # Parse the query output
             self.edge_query_parser(query_output, graph, cim_class)
+
+
+        # Create list of all nodes within graph to be expanded
+        uuid_list = list(graph[cim_class].keys())
+        # Parallel process in batches of 100 uuids per query
+        num_batches = math.ceil(len(uuid_list) / 100)
+        eq_mrids_batches = [uuid_list[i * 100:(i + 1) * 100] for i in range(num_batches)]
+
+        with concurrent.futures.ThreadPoolExecutor(max_workers=os.cpu_count()) as executor:
+            futures = [executor.submit(process_batch, batch)
+                for batch in eq_mrids_batches]
+            for future in concurrent.futures.as_completed(futures):
+                # Ensuring all futures are processed
+                future.result()
 
     # -------------------------------------------------------------------------
     # Methods for parsing query results

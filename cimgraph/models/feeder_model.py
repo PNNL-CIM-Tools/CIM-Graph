@@ -36,8 +36,8 @@ class FeederModel(GraphModel):
     distributed_areas: list[DistributedArea] | None = None
 
     def __post_init__(self):
-        self.incrementals['forwardDifferences'] = {}
-        self.incrementals['reverseDifferences'] = {}
+        self.incrementals['forwardDifferences'] = defaultdict(dict)
+        self.incrementals['reverseDifferences'] = defaultdict(dict)
         cim_profile, cim_module = get_cim_profile()
         self.cim:cim = cim_module
         self.__class_iter__ = defaultdict(dict)

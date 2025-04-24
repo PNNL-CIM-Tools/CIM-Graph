@@ -78,7 +78,7 @@ class GridappsdConnection(ConnectionInterface):
     # Methods for creating new graph structures
     # -------------------------------------------------------------------------
 
-    def create_new_graph(self, container: object) -> dict[type, dict[UUID, object]]:
+    def create_new_graph(self, container: object, graph:Graph = None) -> dict[type, dict[UUID, object]]:
         """
         Create a new graph structure for a CIM EquipmentContainer object.
         The method uses a SPARQL query to obtain all terminals in the graph,
@@ -94,7 +94,8 @@ class GridappsdConnection(ConnectionInterface):
         Returns:
             dict: Graph consisting of types and UUID mapped to object instances.
         """
-        graph = defaultdict(lambda: defaultdict(dict))
+        if graph is None:
+            graph = defaultdict(lambda: defaultdict(dict))
         self.add_to_graph(graph=graph, obj=container)
         # Get all nodes, terminal, and equipment by
         sparql_message = sparql.get_all_nodes_from_container(container)
