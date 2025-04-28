@@ -97,10 +97,13 @@ class XMLFile(ConnectionInterface):
             for element in self.root:
                 self.parse_nodes(element)
 
-            with ThreadPoolExecutor(max_workers=os.cpu_count()) as executor:
+            for element in self.root:
+                self.parse_edges(element)
 
-                futures = [executor.submit(self.parse_edges, element) for element in self.root]
-                results = [future.result() for future in concurrent.futures.as_completed(futures)]
+            # with ThreadPoolExecutor(max_workers=os.cpu_count()) as executor:
+
+            #     futures = [executor.submit(self.parse_edges, element) for element in self.root]
+            #     results = [future.result() for future in concurrent.futures.as_completed(futures)]
         else:
             _log.warning('No root element found in XML file')
             self.graph = defaultdict(lambda: defaultdict(dict))
@@ -179,14 +182,14 @@ class XMLFile(ConnectionInterface):
                 except:
                     edge_uuid = edge_uri
 
-                    try:
-                        edge_class = self.class_index[edge_uuid]
-                        value = self.create_edge(self.graph, cim_class, identifier, sub_tag, edge_class, edge_uri)
-                        reverse = cim_class.__dataclass_fields__[association].metadata['inverse']
-                        self.create_edge(self.graph, edge_class, edge_uuid, reverse,
-                                            cim_class, self.graph[cim_class][identifier].uri())
-                    except:
-                        value = self.get_object(edge_uri)
+                try:
+                    edge_class = self.class_index[edge_uri]
+                    value = self.create_edge(self.graph, cim_class, identifier, sub_tag, edge_class, edge_uri)
+                    reverse = cim_class.__dataclass_fields__[association].metadata['inverse']
+                    self.create_edge(self.graph, edge_class, edge_uuid, reverse,
+                                        cim_class, self.graph[cim_class][identifier].uri())
+                except:
+                    value = self.get_object(edge_uri)
 
                 # except:
                 #     _log.warning(f'unable to create object with uuid {edge_uri}')

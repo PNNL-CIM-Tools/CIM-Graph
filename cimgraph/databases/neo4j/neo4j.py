@@ -37,6 +37,7 @@ class Neo4jConnection(ConnectionInterface):
         get_iec61970_301.cache_clear()
         get_username.cache_clear()
         get_password.cache_clear()
+        get_database.cache_clear()
 
         # retrieve env variables
         self.cim_profile, cim_module = get_cim_profile()

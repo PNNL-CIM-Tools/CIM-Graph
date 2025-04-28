@@ -351,7 +351,7 @@ def add_class_path_mermaid(root: type, path: str | list[str], mermaid: str,
             next_class_name = next_str.type.split('[')[1].split(']')[0]
             # next_class = getattr(edge.__module__, next_class_name)
             next_class = eval(f'{edge.__module__}.{next_class_name}')
-            mermaid += class_mermaid(next_class, show_attributes, show_inherited)
+        mermaid += class_mermaid(next_class, show_attributes, show_inherited)
         edge = next_class
     return mermaid
 
