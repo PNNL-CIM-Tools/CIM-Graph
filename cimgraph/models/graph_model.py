@@ -18,6 +18,8 @@ jsonld = dict['@id':str(UUID),'@type':str(type)]
 Graph = dict[type, dict[UUID, object]]
 T = TypeVar('T')
 
+
+
 @dataclass
 class GraphModel(ABC):
     container: object
@@ -153,7 +155,7 @@ class GraphModel(ABC):
         values = self.list_by_class(cim_class)
         if values:
             self.__class_iter__[cim_class] = iter(values)
-            return values[0]
+            return next(self.__class_iter__[cim_class])
         else:
             return []
 
@@ -180,6 +182,12 @@ class GraphModel(ABC):
                 matching.append(cim_object)
         return matching
 
+    def find_by_condition(self, cim_class:type[T], attribute:str, predicate:callable[[T], bool]) -> list[T]:
+        """Find nodes using a custom lambda search criterion."""
+        return [
+            cim_object for cim_object in self.graph.get(cim_class, {}).values()
+            if predicate(getattr(cim_object, attribute))
+        ]  
 
     # -------------------------------------------------------------------------
     # Methods to modify GraphModel.graph via difference message
@@ -245,10 +253,72 @@ class GraphModel(ABC):
         return modified
 
 
-    def delete(self, cim_class:type[T], uuid:UUID) -> None:
-        '''
-        Delete object from graph all references by other objects
-        '''
+    def delete_object(self, obj:Identity) -> None:
+        """
+        Delete an object from a typed property graph dictionary and remove all references to it.
+        
+        Args:
+            obj: The object to delete
+        """
+
+        if obj is None:
+            return
+        
+        cim_class = obj.__class__
+        
+        # Step 1: Find and clean up all references to this object
+        obj_id = obj.identifier
+        if obj_id is None:
+            obj_id = id(obj)  # Fallback to using object id if no mRID exists
+        
+        # First, iterate over fields of the object to find inverse references
+        for field in fields(obj):
+            # Check if this field has metadata about inverse relationships
+            if 'inverse' in field.metadata and field.metadata['type'] != 'enumeration':
+                # Get the value of this field
+                value = getattr(obj, field.name)
+                
+                if value is not None:
+                    inverse_ref = field.metadata['inverse']
+                    target_attr = inverse_ref.split('.')[1]
+                    
+                    # Handle different cardinality cases
+                    if isinstance(value, (list, set)):
+                        # Many-to-many or one-to-many
+                        for related_obj in value:
+                            clean_inverse_reference(related_obj, target_attr, obj)
+                    else:
+                        # One-to-one or many-to-one
+                        clean_inverse_reference(value, target_attr, obj)
+        
+        # # Step 2: Search the entire graph for any remaining references to this object
+        # for other_obj in graph.values():
+        #     if other_obj is obj:
+        #         continue  # Skip the object itself
+                
+        #     for field in fields(other_obj):
+        #         field_value = getattr(other_obj, field.name)
+                
+        #         # Handle list/set references
+        #         if isinstance(field_value, list) and obj in field_value:
+        #             field_value.remove(obj)
+        #         elif isinstance(field_value, set) and obj in field_value:
+        #             field_value.remove(obj)
+        #         # Handle direct references
+        #         elif field_value is obj:
+        #             setattr(other_obj, field.name, None)
+        
+        # Step 3: Remove the object from the graph
+        if obj_id in self.graph[cim_class]:
+            del self.graph[cim_class][obj_id]
+        # else:
+        #     # If object is not keyed by mRID, search by identity
+        #     keys_to_delete = [k for k, v in graph.items() if v is obj]
+        #     for key in keys_to_delete:
+        #         del graph[key]
+
+
+        
 
 
     def modify(self, cim_object:Identity, attribute:str, value:any, incremental_file:str=None) -> None:
@@ -322,3 +392,5 @@ class GraphModel(ABC):
                 _log.warning(f'Unknown object of type {type(obj)}')
         dump = json.dumps(dump, indent=4)
         return dump
+
+

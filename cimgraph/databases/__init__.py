@@ -242,21 +242,24 @@ class ConnectionInterface(ABC):
         if attr_link in cim_class.__dataclass_fields__:
             association = attr_link
         else:
-            from_class = getattr(self.cim, attr_class)
-            if attr_link not in from_class.__dataclass_fields__:
-                _log.warning(f'Association {attr_link} missing from class {attr_class} in data profile')
+            try:
+                from_class = getattr(self.cim, attr_class)
+                
+                if attr_link not in from_class.__dataclass_fields__:
+                    _log.warning(f'Association {attr_link} missing from class {attr_class} in data profile')
 
-            else:
-                try:
-                    reverse = from_class.__dataclass_fields__[attr_link].metadata['inverse']
-                    reverse_assc = reverse.split('.')[1]
-                    if reverse_assc in cim_class.__dataclass_fields__:
-                        association = reverse_assc
-                    else:
-                        _log.warning(f'Association {reverse_assc} missing from class {cim_class.__name__} in data profile')
-                except:
-                    _log.warning(f'Unable to find inverse of {attribute} for {cim_class.__name__}')
-
+                else:
+                    try:
+                        reverse = from_class.__dataclass_fields__[attr_link].metadata['inverse']
+                        reverse_assc = reverse.split('.')[1]
+                        if reverse_assc in cim_class.__dataclass_fields__:
+                            association = reverse_assc
+                        else:
+                            _log.warning(f'Association {reverse_assc} missing from class {cim_class.__name__} in data profile')
+                    except:
+                        _log.warning(f'Unable to find inverse of {attribute} for {cim_class.__name__}')
+            except:
+                _log.warning(f'Unable to find {attribute} for {cim_class.__name__}')
 
         return association
 

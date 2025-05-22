@@ -65,7 +65,11 @@ class XMLFile(ConnectionInterface):
     def get_object(self, mRID:str, graph = None) -> object:
         obj = None
         for element in self.root:
-            if mRID in element.get(f'{self.rdf}about'):
+            if self.iec61970_301 >= 8:
+                uri = element.get(f'{self.rdf}about')
+            else:
+                uri = element.get(f'{self.rdf}ID')
+            if mRID in uri:
                 obj = self.parse_nodes(element)
         return obj
 
@@ -76,7 +80,11 @@ class XMLFile(ConnectionInterface):
         class_type = subject.__class__
         elements = self.tree.findall(f'.//cim:{class_type.__name__}', self.namespaces)
         for element in elements:
-            if subject.uri() in element.get(f'{self.rdf}about'):
+            if self.iec61970_301 >= 8:
+                uri = element.get(f'{self.rdf}about')
+            else:
+                uri = element.get(f'{self.rdf}ID')
+            if subject.uri() in uri:
                 value = element.find(f'.//cim:{predicate}', self.namespaces)
                 results.append(self.parse_value(value, class_type, subject.identifier))
         return results
@@ -143,8 +151,9 @@ class XMLFile(ConnectionInterface):
 
     # @time_func
     def parse_edges(self, element):
-
-        class_name = element.tag.split('{'+self.namespace+'}')[1]
+        
+        # class_name = element.tag.split('{'+self.namespace+'}')[1]
+        class_name = element.tag.split('}')[1]
 
 
         if class_name in self.cim.__all__:

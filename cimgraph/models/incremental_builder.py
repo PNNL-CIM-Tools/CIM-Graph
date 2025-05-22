@@ -360,3 +360,28 @@ def write_incremental(reverse:dict, forward:dict, filename:str):
     f.write('</dm:DifferenceModel>\n')
     f.write('</rdf:RDF>')
     f.close()
+
+
+
+def clean_inverse_reference(related_obj: any, attr_name: str, obj_to_remove: any) -> None:
+    """
+    Clean up an inverse reference from a related object to the object being deleted.
+    
+    Args:
+        related_obj: The object that might have references to the object being deleted
+        attr_name: The attribute name on the related object that contains the reference
+        obj_to_remove: The object being deleted
+    """
+    if related_obj is None:
+        return
+        
+    related_value = getattr(related_obj, attr_name)
+    
+    # Handle collection (list/set) references
+    if isinstance(related_value, list) and obj_to_remove in related_value:
+        related_value.remove(obj_to_remove)
+    elif isinstance(related_value, set) and obj_to_remove in related_value:
+        related_value.remove(obj_to_remove)
+    # Handle direct references
+    elif related_value is obj_to_remove:
+        setattr(related_obj, attr_name, None)
