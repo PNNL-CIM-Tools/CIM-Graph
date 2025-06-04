@@ -22,6 +22,8 @@ DEFAULT_USERNAME = 'system'
 DEFAULT_PASSWORD = 'manager'
 DEFAULT_IEC61970_301 = 8
 DEFAULT_USE_UNITS = 'false'
+DEFAULT_VALIDATION_LOG_LEVEL = 'WARNING'
+DEFAULT_ALLOW_UNDEFINED_ATTRIBUTES = 'false'
 
 @cache
 def get_cim_profile() -> str:
@@ -122,7 +124,7 @@ def get_username() -> str:
     """
     Returns the CIM profile to be used for object graph
     Returns:
-        cim_profile: library
+        username: str
     """
     username = os.getenv('CIMG_USERNAME')
     if username is None:
@@ -135,7 +137,7 @@ def get_password() -> str:
     """
     Returns the CIM profile to be used for object graph
     Returns:
-        cim_profile: library
+        password: str
     """
     password = os.getenv('CIMG_PASSWORD')
     if password is None:
@@ -148,7 +150,7 @@ def get_host() -> str:
     """
     Returns the CIM profile to be used for object graph
     Returns:
-        cim_profile: library
+        host: str
     """
     host = os.getenv('CIMG_HOST')
     if host is None:
@@ -161,13 +163,36 @@ def get_port() -> str:
     """
     Returns the CIM profile to be used for object graph
     Returns:
-        cim_profile: library
+        port: str
     """
     port = os.getenv('CIMG_PORT')
     if port is None:
         _log.warning('CIMG_PORT environment variable is not set.')
         port = DEFAULT_PORT
     return port
+
+@cache
+def get_validation_log_level() -> str:
+    '''
+    Returns the log level used for validation warnings
+    Returns:
+        log_level: str
+    '''
+    log_level = getattr(logging, os.environ.get('CIMG_VALIDATION_LOG_LEVEL',
+                        DEFAULT_VALIDATION_LOG_LEVEL).upper(), logging.WARNING)
+    return log_level
+
+@cache
+def get_undefined_handling() -> str:
+    '''
+    Returns the log level used for validation warnings
+    Returns:
+        log_level: str
+    '''
+    handling = os.environ.get('CIMG_ALLOW_UNDEFINED_ATTRIBUTES',
+                        DEFAULT_ALLOW_UNDEFINED_ATTRIBUTES)
+    return handling.lower() == 'true'
+
 
 @dataclass
 class ConnectionParameters:
@@ -233,6 +258,18 @@ class ConnectionInterface(ABC):
     def create_distributed_graph(self, area: object, graph: Graph = None) -> Graph:
         raise RuntimeError('Must have implemented query in the inherited class')
 
+    def __init__(self):
+        # clear cached env variables
+        get_namespace.cache_clear()
+        get_cim_profile.cache_clear()
+        get_iec61970_301.cache_clear()
+        get_validation_log_level.cache_clear()
+
+        # retrieve env variables
+        self.cim_profile, self.cim = get_cim_profile()
+        self.namespace = get_namespace()
+        self.iec61970_301 = get_iec61970_301()
+        self.log_level = get_validation_log_level()
 
     def check_attribute(self, cim_class:type, attribute:str) -> str:
         attr_class = attribute.split('.')[0]
@@ -246,7 +283,7 @@ class ConnectionInterface(ABC):
                 from_class = getattr(self.cim, attr_class)
                 
                 if attr_link not in from_class.__dataclass_fields__:
-                    _log.warning(f'Association {attr_link} missing from class {attr_class} in data profile')
+                    _log.log(self.log_level, f'Association {attr_link} missing from class {attr_class} in data profile')
 
                 else:
                     try:
@@ -255,11 +292,11 @@ class ConnectionInterface(ABC):
                         if reverse_assc in cim_class.__dataclass_fields__:
                             association = reverse_assc
                         else:
-                            _log.warning(f'Association {reverse_assc} missing from class {cim_class.__name__} in data profile')
+                            _log.log(self.log_level,f'Association {reverse_assc} missing from class {cim_class.__name__} in data profile')
                     except:
-                        _log.warning(f'Unable to find inverse of {attribute} for {cim_class.__name__}')
+                        _log.log(self.log_level,f'Unable to find inverse of {attribute} for {cim_class.__name__}')
             except:
-                _log.warning(f'Unable to find {attribute} for {cim_class.__name__}')
+                _log.log(self.log_level,f'Unable to find {attribute} for {cim_class.__name__}')
 
         return association
 
@@ -282,7 +319,7 @@ class ConnectionInterface(ABC):
                 elif str(value).lower() == 'false' or str(value).lower() == '0':
                     value = False
                 else:
-                    _log.warning(f'{value} for {cim_class.__name__}.{association} is not a boolean')
+                    _log.log(self.log_level, f'{value} for {cim_class.__name__}.{association} is not a boolean')
 
                 setattr(graph[cim_class][identifier], association, value)
 
@@ -291,7 +328,7 @@ class ConnectionInterface(ABC):
                 try:
                     value = int(float(value))
                 except:
-                    _log.warning(f'{value} for {cim_class.__name__}.{association} is not an integer')
+                    _log.log(self.log_level, f'{value} for {cim_class.__name__}.{association} is not an integer')
 
                 setattr(graph[cim_class][identifier], association, value)
 
@@ -299,7 +336,7 @@ class ConnectionInterface(ABC):
                 try:
                     value = float(value)
                 except:
-                    _log.warning(f'{value} for {cim_class.__name__}.{association} is not a float')
+                    _log.log(self.log_level, f'{value} for {cim_class.__name__}.{association} is not a float')
                 setattr(graph[cim_class][identifier], association, value)
 
             else:
@@ -360,11 +397,6 @@ class ConnectionInterface(ABC):
             _log.warning(f'URI {uri} for object {class_type.__name__} is not a valid UUID')
             identifier = uri
 
-        # Add class type to graph keys if not there
-        # if class_type not in graph:
-        #     graph[class_type] = {}
-            # _log.warning(graph[class_type])
-
         # Check if object exists in graph
         if identifier in graph[class_type]:
             obj = graph[class_type][identifier]
@@ -374,8 +406,6 @@ class ConnectionInterface(ABC):
             obj = class_type(identifier = uri)
             # obj.uuid(uri = uri)
             graph[class_type][identifier] = obj
-
-
 
         return obj
 
