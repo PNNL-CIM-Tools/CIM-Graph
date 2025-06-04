@@ -4,10 +4,10 @@ import json
 import logging
 import math
 import os
+from collections import defaultdict
 from uuid import UUID
 
 from gridappsd import GridAPPSD
-from collections import defaultdict
 
 import cimgraph.queries.sparql as sparql
 from cimgraph.databases import (ConnectionInterface, Graph, QueryResponse, get_cim_profile,
@@ -67,7 +67,7 @@ class GridappsdConnection(ConnectionInterface):
         self.connect()
         response = self.gapps.query_data(query_message, database_type=self.database, timeout=30)
         return response['data']
-    
+
     def upload(self, graph: dict[type, dict[str, object]]) -> None:
         for cim_class in graph.keys():
             for obj in graph[cim_class].values():
@@ -167,7 +167,7 @@ class GridappsdConnection(ConnectionInterface):
                 continue
 
         return obj
-    
+
     def get_from_triple(self, subject:object, predicate:str, graph: Graph = None) -> list[object]:
         if graph is None:
             graph = defaultdict(lambda: defaultdict(dict))
@@ -331,6 +331,6 @@ class GridappsdConnection(ConnectionInterface):
 
 
 
-    
 
-    
+
+

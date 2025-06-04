@@ -1,13 +1,14 @@
 from __future__ import annotations
 
-import os
+import concurrent.futures
 import json
 import logging
 import math
-import concurrent.futures
+import os
 from collections import defaultdict
-from SPARQLWrapper import JSON, POST, SPARQLWrapper
 from uuid import UUID
+
+from SPARQLWrapper import JSON, POST, SPARQLWrapper
 
 import cimgraph.queries.ontotext as ontotext
 import cimgraph.queries.sparql as sparql
@@ -33,7 +34,7 @@ class GraphDBConnection(ConnectionInterface):
         self.url = get_url()
         self.sparql_obj = None
 
-        
+
     # -------------------------------------------------------------------------
     # Methods for connecting to the database and executing SPARQL queries
     # -------------------------------------------------------------------------
@@ -52,7 +53,7 @@ class GraphDBConnection(ConnectionInterface):
         self.sparql_obj.setMethod(POST)
         query_output = self.sparql_obj.query().convert()
         return query_output
-    
+
     def update(self, update_message:str) -> str:
         """
         Execute SPARQL update on the GraphDB endpoint.
@@ -68,14 +69,14 @@ class GraphDBConnection(ConnectionInterface):
         self.sparql_obj.setMethod(POST)
         output = self.sparql_obj.query()
         return output
-    
+
     def upload(self, graph: dict[type, dict[str, object]]) -> None:
         for cim_class in graph.keys():
             for obj in graph[cim_class].values():
                 query = sparql.upload_triples_sparql(obj, self.connection_params)
                 self.execute(query)
 
-                
+
     # -------------------------------------------------------------------------
     # Methods for creating new graph structures
     # -------------------------------------------------------------------------
@@ -107,7 +108,7 @@ class GraphDBConnection(ConnectionInterface):
         graph = self.parse_node_query(graph, query_output)
         return graph
 
-    
+
     def create_distributed_graph(self, area:object, graph:dict=None) -> Graph:
         if graph is None:
             graph = defaultdict(lambda: defaultdict(dict))
@@ -123,12 +124,12 @@ class GraphDBConnection(ConnectionInterface):
         # Parse query results and create new graph
         graph = self.parse_node_query(graph, query_output)
         return graph
-    
+
     # -------------------------------------------------------------------------
     # Methods for retrieving objects from the database
     # -------------------------------------------------------------------------
 
-    
+
     def get_object(self, mRID: str, graph: dict = None) -> object:
         """
         Retrieve an object from the Blazegraph database using its mRID.
@@ -165,7 +166,7 @@ class GraphDBConnection(ConnectionInterface):
                 continue
 
         return obj
-    
+
     def get_from_triple(self, subject:object, predicate:str, graph:Graph = None) -> list[str]|list[object]:
         """
         Retrieve the object of an RDF triple from the Blazegraph database from the subject and predicate.
@@ -188,7 +189,7 @@ class GraphDBConnection(ConnectionInterface):
         # Parse the query output
         new_edges = self.edge_query_parser(query_output, graph, subject.__class__)
         return new_edges
-    
+
     def get_all_attributes(self, graph, cim_class):
         pass
 
@@ -343,5 +344,3 @@ class GraphDBConnection(ConnectionInterface):
                         new_edges.append(value)
                         self.create_value(graph, cim_class, identifier, attribute, value)
         return new_edges
-
-

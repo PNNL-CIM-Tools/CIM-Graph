@@ -1,12 +1,13 @@
 import json
 import logging
-from dataclasses import dataclass, field
 from collections import defaultdict
+from dataclasses import dataclass, field
 
+import cimgraph.data_profile.cimhub_2023 as cim
+from cimgraph.databases import get_cim_profile
 from cimgraph.models.distributed_area import DistributedArea
 from cimgraph.models.graph_model import GraphModel
-from cimgraph.databases import get_cim_profile
-import cimgraph.data_profile.cimhub_2023 as cim
+
 # from cimgraph.utils.timing import timing as time_func
 
 _log = logging.getLogger(__name__)
@@ -54,7 +55,7 @@ class FeederModel(GraphModel):
         else:    # Log error thant no connection was specified
             _log.error('A ConnectionInterface must be specified')
 
-      
+
 
     def __initialize_centralized_model(self) -> None:
         # Build graph model using database-specific routine

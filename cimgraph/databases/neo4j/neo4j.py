@@ -1,13 +1,12 @@
 from __future__ import annotations
 
 import asyncio
-import nest_asyncio
 import logging
 import math
-
-from uuid import UUID
 from collections import defaultdict
+from uuid import UUID
 
+import nest_asyncio
 from neo4j import AsyncGraphDatabase, GraphDatabase
 from neo4j.exceptions import DriverError, Neo4jError
 

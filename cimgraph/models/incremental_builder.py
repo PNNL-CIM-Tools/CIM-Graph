@@ -1,15 +1,17 @@
 from __future__ import annotations
-from dataclasses import fields, is_dataclass
+
+import logging
 from collections import defaultdict
+from dataclasses import fields, is_dataclass
 from uuid import UUID
-from cimgraph.data_profile.identity import Identity
-from cimgraph.databases import ConnectionInterface
-from cimgraph.data_profile.attribute_utils import validate_attr_datatype
-from cimgraph.databases import get_cim_profile, get_namespace, get_iec61970_301
 
 from defusedxml.ElementTree import parse
 
-import logging
+from cimgraph.data_profile.attribute_utils import validate_attr_datatype
+from cimgraph.data_profile.identity import Identity
+from cimgraph.databases import (ConnectionInterface, get_cim_profile, get_iec61970_301,
+                                get_namespace)
+
 _log = logging.getLogger(__name__)
 
 NAMESPACES = {'cim': get_namespace(),
@@ -36,47 +38,47 @@ INDENT = '  '
 def read_incremental_xml(filename) -> dict:
     # Create a dictionary to store the incremental changes
     incremental = {
-        "forwardDifferences": defaultdict(dict),
-        "reverseDifferences": defaultdict(dict)
+        'forwardDifferences': defaultdict(dict),
+        'reverseDifferences': defaultdict(dict)
     }
-    
+
     # Parse the XML string
     root = parse(filename)
-    
-    
+
+
     # Find the DifferenceModel element
     diff_model = root.find('.//dm:DifferenceModel', NAMESPACES)
     if diff_model is None:
         # Fall back to the alternate namespace in the XML
         NAMESPACES['dm'] = 'http://iec.ch/TC57/61970-552/DifferenceModel#'
         diff_model = root.find('.//dm:DifferenceModel', NAMESPACES)
-    
+
     if diff_model is None:
-        raise ValueError("Could not find DifferenceModel element")
-    
+        raise ValueError('Could not find DifferenceModel element')
+
     # Process forward and reverse differences
     for diff_type in ['forwardDifferences', 'reverseDifferences']:
         diff_element = diff_model.find(f'dm:{diff_type}', NAMESPACES)
-        
+
         if diff_element is not None:
             # Find all Description elements under this difference type
             descriptions = diff_element.findall('rdf:Description', NAMESPACES)
-            
+
             for desc in descriptions:
                 # Get the URI (remove the leading '#' if present)
                 uri = desc.get(f'{{{NAMESPACES["rdf"]}}}about')
                 uri = uri.strip('#').strip('urn:uuid:')
-                
+
                 # Process each attribute in the Description
                 for child in desc:
                     # Extract tag without namespace prefix
                     tag = child.tag
                     if '}' in tag:
                         tag = tag.split('}', 1)[1]  # Remove namespace part
-                    
+
                     # Store the value in the dictionary
                     incremental[diff_type][uri][tag] = child.text
-    
+
     return incremental
 
 
@@ -134,7 +136,7 @@ def validate_incremental(message:dict, connection:ConnectionInterface,
                 _log.warning(f'Current value {current_value} does not match reverse {old_value}')
 
 
-    
+
     for uri in message['forwardDifferences']:
         try:
             identifier = UUID(uri.strip('_').lower())
@@ -149,7 +151,7 @@ def validate_incremental(message:dict, connection:ConnectionInterface,
                 break
         if not found:
             obj = connection.get_object(mRID=uri)
-                
+
 
         for attribute in message['forwardDifferences'][uri]:
             parent = attribute.split('.')[0]
@@ -185,10 +187,10 @@ def validate_incremental(message:dict, connection:ConnectionInterface,
 
                 if not valid:
                     _log.warning(f'{attribute} with forward value {new_value} should have datatype {attr_datatype}')
-            if not validated:    
+            if not validated:
                 message['forwardDifferences'][uri] = {}
                 # del message['forwardDifferences'][uri]
-    
+
     return message
 
 
@@ -205,14 +207,14 @@ def modify_from_incremental(message:dict, connection:ConnectionInterface,
         if obj is not None:
             for attribute in message['forwardDifferences'][uri]:
                 attr = attribute.split('.')[1]
-                new_value = message['forwardDifferences'][uri][attribute] 
+                new_value = message['forwardDifferences'][uri][attribute]
                 setattr(obj,attr,new_value)
                 modified.append(obj)
         else:
             # TODO: Create new object
             pass
     return modified
-    
+
 
 def add_to_incremental(cim_class, uuid, differences):
     if cim_class not in differences['forwardDifferences']:
@@ -230,7 +232,7 @@ def add_to_incremental(cim_class, uuid, differences):
 def new_obj_incremental(new_object:Identity, differences:dict[str, dict]):
     if not isinstance(new_object, Identity):
         raise TypeError('Input must be a CIM class')
-    
+
     cim_class = new_object.__class__
     uuid = new_object.uri()
 
@@ -253,7 +255,7 @@ def new_obj_incremental(new_object:Identity, differences:dict[str, dict]):
 def del_obj_difference(new_object:Identity, differences:dict[str, dict]) -> None:
     if not isinstance(new_object, Identity):
         raise TypeError('Input must be a CIM class')
-    
+
     cim_class = new_object.__class__
     uuid = new_object.uri()
 
@@ -283,10 +285,10 @@ def modify_incremental(cim_object:Identity, attribute:str, old_value:any, new_va
         differences['forwardDifferences'][cim_class][uuid][attribute] = new_value
         differences['reverseDifferences'][cim_class][uuid][attribute] = old_value
 
-    
-    
 
-        
+
+
+
 
 def incremantal_row(cim_class:type, uri:str, difference:dict) -> str:
 
@@ -294,10 +296,10 @@ def incremantal_row(cim_class:type, uri:str, difference:dict) -> str:
     attr_fields = cim_class.__dataclass_fields__
     parent_classes = list(cim_class.__mro__)
     parent_classes.pop(len(parent_classes) - 1)
-    
+
     if set(difference.values()) == {None}:
         return ''
-    
+
     if iec61970_301>7:
         row = INDENT*2 + f'<rdf:Description rdf:about="urn:uuid:{uri}">\n'
     else:
@@ -307,10 +309,10 @@ def incremantal_row(cim_class:type, uri:str, difference:dict) -> str:
 
         if attribute in attr_fields and value is not None:
 
-                
+
             for parent in parent_classes:
                 if attribute in parent.__annotations__:
-                    
+
                     attr_type = attr_fields[attribute].metadata['type']
                     ns_prefix = REVERSE_NS[attr_fields[attribute].metadata['namespace']]
                     row += INDENT*3 + f'<{ns_prefix}:{parent.__name__}.{attribute}'
@@ -344,14 +346,14 @@ def write_incremental(reverse:dict, forward:dict, filename:str):
     f.write('<dm:DifferenceModel xmlns:dm="http://iec.ch/2002/schema/CIM_difference_model#">\n')
     # f.write('<dm:DifferenceModel about="">\n')
     f.write(indent + '<dm:forwardDifferences rdf:parseType="Statements">\n')
-    if forward is not None: 
+    if forward is not None:
         for cim_class in forward:
             for uri in forward[cim_class]:
                 row = incremantal_row(cim_class, uri, forward[cim_class][uri])
                 f.write(row)
     f.write(indent + '</dm:forwardDifferences>\n')
     f.write(indent + '<dm:reverseDifferences rdf:parseType="Statements">\n')
-    if reverse is not None: 
+    if reverse is not None:
         for cim_class in reverse:
             for uri in reverse[cim_class]:
                 row = incremantal_row(cim_class, uri, reverse[cim_class][uri])
@@ -366,7 +368,7 @@ def write_incremental(reverse:dict, forward:dict, filename:str):
 def clean_inverse_reference(related_obj: any, attr_name: str, obj_to_remove: any) -> None:
     """
     Clean up an inverse reference from a related object to the object being deleted.
-    
+
     Args:
         related_obj: The object that might have references to the object being deleted
         attr_name: The attribute name on the related object that contains the reference
@@ -374,9 +376,9 @@ def clean_inverse_reference(related_obj: any, attr_name: str, obj_to_remove: any
     """
     if related_obj is None:
         return
-        
+
     related_value = getattr(related_obj, attr_name)
-    
+
     # Handle collection (list/set) references
     if isinstance(related_value, list) and obj_to_remove in related_value:
         related_value.remove(obj_to_remove)

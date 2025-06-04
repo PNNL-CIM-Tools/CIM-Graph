@@ -5,7 +5,7 @@ import logging
 from abc import ABC, abstractmethod
 from collections import defaultdict
 from dataclasses import dataclass, field, fields, is_dataclass
-from typing import TypeVar, Iterator, cast
+from typing import Iterator, TypeVar, cast
 from uuid import UUID
 
 from cimgraph.data_profile.identity import Identity
@@ -136,7 +136,7 @@ class GraphModel(ABC):
         else:
             new_edges = self.connection.get_from_triple(subject, predicate)
         return new_edges
-    
+
     # -------------------------------------------------------------------------
     # Methods to retrieve objects from GraphModel.graph
     # -------------------------------------------------------------------------
@@ -187,7 +187,7 @@ class GraphModel(ABC):
         return [
             cim_object for cim_object in self.graph.get(cim_class, {}).values()
             if predicate(getattr(cim_object, attribute))
-        ]  
+        ]
 
     # -------------------------------------------------------------------------
     # Methods to modify GraphModel.graph via difference message
@@ -196,14 +196,14 @@ class GraphModel(ABC):
     def create(self, cim_class: type, incremental_file: str = None, **kwargs: any) -> Identity:
         """
         Create an instance of a dataclass from keyword arguments.
-        
+
         Args:
             cim_class: The dataclass type to instantiate
             **kwargs: Attribute names and values for the dataclass instance
-        
+
         Returns:
             An instance of the specified dataclass type
-            
+
         Raises:
             TypeError: If cim_class is not a dataclass
             TypeError: If kwargs contains attributes not in the dataclass
@@ -214,18 +214,18 @@ class GraphModel(ABC):
         # Verify that class_type is in CIM profile
         if cim_class.__name__ not in self.cim.__all__:
             raise TypeError(f"{cim_class.__name__} not in CIM profile")
-        
+
         # Get the field names of the dataclass
         field_names = {field.name for field in fields(cim_class)}
-        
+
         # Check if all kwargs keys are valid field names
         invalid_attrs = set(kwargs.keys()) - field_names
         if invalid_attrs:
             raise TypeError(f"Invalid attribute(s) for {cim_class.__name__}: {', '.join(invalid_attrs)}")
-        
+
         # Create and return an instance of the dataclass
         new_object:Identity = cim_class(**kwargs)
-        
+
         # Add to graph
         self.add_to_graph(new_object)
 
@@ -239,7 +239,7 @@ class GraphModel(ABC):
             write_incremental(reverse=None, forward=forward, filename=incremental_file)
 
         return new_object
-    
+
     def from_incremental(self, filename:str) -> list[object]:
         '''
         Create new object from incremental message
@@ -256,32 +256,32 @@ class GraphModel(ABC):
     def delete_object(self, obj:Identity) -> None:
         """
         Delete an object from a typed property graph dictionary and remove all references to it.
-        
+
         Args:
             obj: The object to delete
         """
 
         if obj is None:
             return
-        
+
         cim_class = obj.__class__
-        
+
         # Step 1: Find and clean up all references to this object
         obj_id = obj.identifier
         if obj_id is None:
             obj_id = id(obj)  # Fallback to using object id if no mRID exists
-        
+
         # First, iterate over fields of the object to find inverse references
         for field in fields(obj):
             # Check if this field has metadata about inverse relationships
             if 'inverse' in field.metadata and field.metadata['type'] != 'enumeration':
                 # Get the value of this field
                 value = getattr(obj, field.name)
-                
+
                 if value is not None:
                     inverse_ref = field.metadata['inverse']
                     target_attr = inverse_ref.split('.')[1]
-                    
+
                     # Handle different cardinality cases
                     if isinstance(value, (list, set)):
                         # Many-to-many or one-to-many
@@ -290,15 +290,15 @@ class GraphModel(ABC):
                     else:
                         # One-to-one or many-to-one
                         clean_inverse_reference(value, target_attr, obj)
-        
+
         # # Step 2: Search the entire graph for any remaining references to this object
         # for other_obj in graph.values():
         #     if other_obj is obj:
         #         continue  # Skip the object itself
-                
+
         #     for field in fields(other_obj):
         #         field_value = getattr(other_obj, field.name)
-                
+
         #         # Handle list/set references
         #         if isinstance(field_value, list) and obj in field_value:
         #             field_value.remove(obj)
@@ -307,7 +307,7 @@ class GraphModel(ABC):
         #         # Handle direct references
         #         elif field_value is obj:
         #             setattr(other_obj, field.name, None)
-        
+
         # Step 3: Remove the object from the graph
         if obj_id in self.graph[cim_class]:
             del self.graph[cim_class][obj_id]
@@ -318,7 +318,7 @@ class GraphModel(ABC):
         #         del graph[key]
 
 
-        
+
 
 
     def modify(self, cim_object:Identity, attribute:str, value:any, incremental_file:str=None) -> None:
@@ -333,14 +333,14 @@ class GraphModel(ABC):
         cim_class = cim_object.__class__
         if not validate_attr_datatype(cim_class, attribute, value):
             raise TypeError(f'{value} does not match datatype of {attribute}')
-        
+
         # Get old value for reverse difference
         base_value = self.incrementals['reverseDifferences'].get(cim_class, {}).get(cim_object.uri(), {}).get(attribute, {})
         if base_value != {}:
             old_value = base_value
         else:
             old_value = getattr(cim_object, attribute)
-        
+
         # Set new value
         setattr(cim_object, attribute, value)
         # Create incremental
@@ -354,8 +354,8 @@ class GraphModel(ABC):
             forward[cim_class][cim_object.uri()] = self.incrementals['forwardDifferences'][cim_class][cim_object.uri()]
             reverse[cim_class][cim_object.uri()] = self.incrementals['reverseDifferences'][cim_class][cim_object.uri()]
             write_incremental(reverse=reverse, forward=forward, filename=incremental_file)
-        
-        
+
+
     def write_all_incrementals(self, incremental_file:str):
             write_incremental(reverse=self.incrementals['reverseDifferences'],
                             forward=self.incrementals['forwardDifferences'],
@@ -392,5 +392,3 @@ class GraphModel(ABC):
                 _log.warning(f'Unknown object of type {type(obj)}')
         dump = json.dumps(dump, indent=4)
         return dump
-
-

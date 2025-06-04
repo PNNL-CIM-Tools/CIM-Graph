@@ -3,15 +3,14 @@ from __future__ import annotations
 import json
 import logging
 import math
-
-from uuid import UUID
 from collections import defaultdict
+from uuid import UUID
 
 from rdflib import Graph, Namespace
 from rdflib.namespace import RDF
 
-import cimgraph.queries.sparql as sparql
 import cimgraph.queries.rdflib as rdflib_sparql
+import cimgraph.queries.sparql as sparql
 from cimgraph.databases import (ConnectionInterface, QueryResponse, get_cim_profile,
                                 get_iec61970_301, get_namespace)
 
@@ -78,7 +77,7 @@ class RDFlibConnection(ConnectionInterface):
 
         for result in query_output:
             # Parse query results
-            
+
             eq = json.loads(result.Equipment.value)
             eq_id = eq['@id']
             eq_class = eq['@type']

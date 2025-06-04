@@ -10,6 +10,7 @@ from concurrent.futures import ThreadPoolExecutor
 from uuid import UUID
 
 from defusedxml.ElementTree import parse
+
 from cimgraph.data_profile.identity import Identity
 from cimgraph.data_profile.known_problem_classes import ClassesWithManytoMany
 from cimgraph.databases import (ConnectionInterface, Graph, QueryResponse, get_cim_profile,
@@ -153,8 +154,8 @@ class XMLFile(ConnectionInterface):
             #     identifier = UUID(uri.strip('_').lower())
             # except:
             #     _log.warning(f'Unable to parse URI. Check the IEC61970-301 serialization')
-                
-            
+
+
             obj = self.create_object(self.graph, cim_class, uri)
             self.class_index[obj.uri()] = cim_class
             if uri != obj.uri():
@@ -166,7 +167,7 @@ class XMLFile(ConnectionInterface):
 
     # @time_func
     def parse_edges(self, element):
-        
+
         # class_name = element.tag.split('{'+self.namespace+'}')[1]
         class_name = element.tag.split('}')[1]
 

@@ -3,10 +3,10 @@ from __future__ import annotations
 import importlib
 import json
 import logging
-from dataclasses import dataclass, field
 from collections import defaultdict
-from cimgraph.databases import get_cim_profile
+from dataclasses import dataclass, field
 
+from cimgraph.databases import get_cim_profile
 from cimgraph.models.graph_model import GraphModel
 
 _log = logging.getLogger(__name__)

@@ -6,10 +6,7 @@ import logging
 from abc import ABC, abstractmethod
 from dataclasses import dataclass
 
-
 from cimgraph.data_profile.identity import Identity
-
-
 
 _log = logging.getLogger(__name__)
 
@@ -26,7 +23,7 @@ def convert_datatype(value, attribute_type):
         except:
             pass
             # _log.warning(f'{value} is not an integer')
-                         
+
     if 'float' in attribute_type:
         try:
             value = float(value)
@@ -68,7 +65,7 @@ def validate_attr_datatype(cim_class:dataclass, attribute:str, value:any) -> boo
                 valid = False
     else:
         valid = value_datatype in attr_datatype
-    
+
     return valid, attr_datatype, value
 
 
@@ -80,4 +77,4 @@ def get_attr_uml_type(cim_class:dataclass, attribute:str):
 
 
 
-    
+

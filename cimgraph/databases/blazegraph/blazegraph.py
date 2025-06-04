@@ -5,8 +5,9 @@ import json
 import logging
 import math
 import os
-from uuid import UUID
 from collections import defaultdict
+from uuid import UUID
+
 from SPARQLWrapper import JSON, POST, SPARQLWrapper
 
 import cimgraph.queries.sparql as sparql
