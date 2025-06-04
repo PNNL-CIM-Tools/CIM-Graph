@@ -1,15 +1,15 @@
 from __future__ import annotations
 
-import importlib
 import json
 import logging
 import math
-import os
+from collections import defaultdict
 from uuid import UUID
 
-from rdflib import Graph, Namespace, URIRef
+from rdflib import Graph, Namespace
 from rdflib.namespace import RDF
 
+import cimgraph.queries.rdflib as rdflib_sparql
 import cimgraph.queries.sparql as sparql
 from cimgraph.databases import (ConnectionInterface, QueryResponse, get_cim_profile,
                                 get_iec61970_301, get_namespace)
@@ -53,19 +53,19 @@ class RDFlibConnection(ConnectionInterface):
 
     def get_object(self, mRID:str, graph = None) -> object:
         if graph is None:
-            graph = {}
+            graph = defaultdict(lambda: defaultdict(dict))
         sparql_message = sparql.get_object_sparql(mRID)
         query_output = self.execute(sparql_message)
         obj = None
         for result in query_output:
-            uri = result['identifier']['value']
-            obj_class = result['obj_class']['value']
+            uri = result.identifier.value
+            obj_class = result.obj_class.value
             class_type = getattr(self.cim, obj_class)
             obj = self.create_object(graph, class_type, uri)
         return obj
 
     def create_new_graph(self, container: object) -> dict[type, dict[UUID, object]]:
-        graph = {}
+        graph = defaultdict(lambda: defaultdict(dict))
         self.add_to_graph(graph=graph, obj=container)
         # Get all nodes, terminal, and equipment by
         sparql_message = sparql.get_all_nodes_from_container(container)
@@ -77,21 +77,24 @@ class RDFlibConnection(ConnectionInterface):
 
         for result in query_output:
             # Parse query results
-            node_mrid = str(result.ConnectivityNode.value)
-            term_mrid = str(result.Terminal.value)
+
             eq = json.loads(result.Equipment.value)
             eq_id = eq['@id']
             eq_class = eq['@type']
 
+            # If equipment class is in data profile, add it to the graph also
             if eq_class in self.cim.__all__:
                 eq_class = getattr(self.cim, eq_class)
                 equipment = self.create_object(graph, eq_class, eq_id)
-
             else:
-                _log.warning(f'object class missing from data profile: {eq_class}')
+                # If it is not in the profile, log it as a missing class
+                _log.warning(
+                    f'object class missing from data profile: {eq_class}')
                 continue
-
-            if node_mrid != 'None':
+            try:
+                # Get uri strings of nodes and terminals
+                node_mrid = str(result.ConnectivityNode.value)
+                term_mrid = str(result.Terminal.value)
                 # Add each object to graph
                 node = self.create_object(graph, self.cim.ConnectivityNode, node_mrid)
                 terminal = self.create_object(graph, self.cim.Terminal, term_mrid)
@@ -103,14 +106,16 @@ class RDFlibConnection(ConnectionInterface):
                 # Associate the terminal with the equipment and node
                 setattr(terminal, 'ConnectivityNode', node)
                 setattr(terminal, 'ConductingEquipment', equipment)
-
+            except:
+                pass
         return graph
+
 
     def get_edges_query(self, graph: dict[type, dict[UUID, object]],
                         cim_class: type) -> str:
 
         eq_mrids = list(graph[cim_class].keys())[0:100]
-        sparql_message = sparql.get_all_edges_sparql(graph, cim_class, eq_mrids)
+        sparql_message = rdflib_sparql.get_all_edges_sparql(graph, cim_class, eq_mrids)
 
         return sparql_message
 
@@ -119,7 +124,7 @@ class RDFlibConnection(ConnectionInterface):
         for index in range(math.ceil(len(uuid_list) / 100)):
             eq_mrids = uuid_list[index * 100:(index + 1) * 100]
             #generate SPARQL message from correct queries>sparql python script based on class name
-            sparql_message = sparql.get_all_edges_sparql(graph, cim_class, eq_mrids)
+            sparql_message = rdflib_sparql.get_all_edges_sparql(graph, cim_class, eq_mrids)
             #execute sparql query
             query_output = self.execute(sparql_message)
             self.edge_query_parser(query_output, graph, cim_class)
@@ -130,7 +135,7 @@ class RDFlibConnection(ConnectionInterface):
         for index in range(math.ceil(len(mrid_list) / 100)):
             eq_mrids = mrid_list[index * 100:(index + 1) * 100]
             #generate SPARQL message from correct loaders>sparql python script based on class name
-            sparql_message = sparql.get_all_attributes_sparql(graph, cim_class, eq_mrids)
+            sparql_message = rdflib_sparql.get_all_attributes_sparql(graph, cim_class, eq_mrids)
             #execute sparql query
             query_output = self.execute(sparql_message)
             self.edge_query_parser(query_output, graph, cim_class, expand_graph = False)
@@ -140,22 +145,14 @@ class RDFlibConnection(ConnectionInterface):
                           cim_class: type, expand_graph = True) -> None:
 
         for result in query_output:
-            if result.attribute is not None:  #skip 'type' and other single attributes
-                if 'type' not in result.attribute.value:
-                    is_association = False
+            if result.attr is not None:  #skip 'type' and other single attributes
+                if 'type' not in str(result.attr):
+
                     is_enumeration = False
-                    if result.uri() is not None:  #get mRID
-                        mRID = str(result.uri())
-                    else:
-                        iri = str(result.eq)
-                        if self.iec61970_301 > 7:
-                            mRID = iri.split('uuid:')[1]
-                        else:
-                            mRID = iri.split('rdf:id:')[1]
-                    identifier = UUID(mRID.strip('_').lower())
-                    attr_uri = result.attr
-                    attr = str(result.attr).split(self.namespace)[1]
-                    attribute = attr.split('.')  #split edge attribute
+
+                    identifier = UUID(result.identifier.value.strip('_').lower())
+                    attribute = str(result.attr).split(self.namespace)[1]
+                    # attribute = attr.split('.')[1]  #split edge attribute
                     value = str(result.val)  #get edge value
 
                     if self.namespace in value:  #check if enumeration
@@ -166,18 +163,15 @@ class RDFlibConnection(ConnectionInterface):
                         is_enumeration = True
 
                     if result.edge_class is not None:  #check if association
-                        is_association = True
-                        # edge = json.loads(result.edge)
-                        # edge_mRID = edge['@id']
-                        # edge_class = edge['@type']
+
+
                         edge_class = str(result.edge_class)
-                        if result.edge_mRID is not None:
-                            edge_mRID = str(result.edge_mRID)
+
+
+                        if self.iec61970_301 > 7:
+                            edge_mRID = value.split('uuid:')[1]
                         else:
-                            if self.iec61970_301 > 7:
-                                edge_mRID = value.split('uuid:')[1]
-                            else:
-                                edge_mRID = value.split('#')[1]
+                            edge_mRID = value.split('#')[1]
                         if edge_class in self.cim.__all__:
                             edge_class = getattr(self.cim, edge_class)
                         else:

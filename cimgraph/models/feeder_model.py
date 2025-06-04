@@ -1,7 +1,10 @@
 import json
 import logging
+from collections import defaultdict
 from dataclasses import dataclass, field
 
+import cimgraph.data_profile.cimhub_2023 as cim
+from cimgraph.databases import get_cim_profile
 from cimgraph.models.distributed_area import DistributedArea
 from cimgraph.models.graph_model import GraphModel
 
@@ -34,9 +37,15 @@ class FeederModel(GraphModel):
     distributed_areas: list[DistributedArea] | None = None
 
     def __post_init__(self):
+        self.incrementals['forwardDifferences'] = defaultdict(dict)
+        self.incrementals['reverseDifferences'] = defaultdict(dict)
+        cim_profile, cim_module = get_cim_profile()
+        self.cim:cim = cim_module
+        self.__class_iter__ = defaultdict(dict)
+        if not self.graph:
+            self.graph = defaultdict(lambda: defaultdict(dict))
 
         if self.connection is not None:    # Check if connection has been specified
-            self.cim = self.connection.cim    # Set CIM data profile
             if self.distributed:    # Check if distributed flag is true
                 # Build distributed network model
                 self.__initialize_distributed_model()
@@ -46,9 +55,11 @@ class FeederModel(GraphModel):
         else:    # Log error thant no connection was specified
             _log.error('A ConnectionInterface must be specified')
 
+
+
     def __initialize_centralized_model(self) -> None:
         # Build graph model using database-specific routine
-        self.graph = self.connection.create_new_graph(self.container)
+        self.graph = self.connection.create_new_graph(self.container, self.graph)
 
     def __initialize_distributed_model(self) -> None:
         self.distributed_areas = []

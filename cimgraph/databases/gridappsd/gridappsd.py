@@ -1,10 +1,10 @@
 from __future__ import annotations
 
-import importlib
 import json
 import logging
 import math
 import os
+from collections import defaultdict
 from uuid import UUID
 
 from gridappsd import GridAPPSD
@@ -20,28 +20,6 @@ _log = logging.getLogger(__name__)
 class GridappsdConnection(ConnectionInterface):
 
     def __init__(self):
-
-        # required_env_vars = [
-        #     'CIMG_CIM_PROFILE',
-        #     'CIMG_URL',
-        #     'CIMG_DATABASE',
-        #     'CIMG_HOST',
-        #     'CIMG_PORT',
-        #     'CIMG_USERNAME',
-        #     'CIMG_PASSWORD',
-        #     'CIMG_NAMESPACE',
-        #     'CIMG_IEC61970_301',
-        #     'CIMG_USE_UNITS'
-        # ]
-
-        # missing_vars = [
-        #     var for var in required_env_vars if os.getenv(var) is None
-        # ]
-
-        # if missing_vars:
-        #     raise EnvironmentError(
-        #         f"Missing required environment variables: {', '.join(missing_vars)}"
-        #     )
 
         # clear cached env variables
         get_url.cache_clear()
@@ -68,6 +46,9 @@ class GridappsdConnection(ConnectionInterface):
 
         self.gapps = None
 
+    # -------------------------------------------------------------------------
+    # Methods for connecting to the platform and executing SPARQL queries
+    # -------------------------------------------------------------------------
 
     def connect(self):
         if not self.gapps:
@@ -87,7 +68,17 @@ class GridappsdConnection(ConnectionInterface):
         response = self.gapps.query_data(query_message, database_type=self.database, timeout=30)
         return response['data']
 
-    def create_new_graph(self, container: object) -> dict[type, dict[UUID, object]]:
+    def upload(self, graph: dict[type, dict[str, object]]) -> None:
+        for cim_class in graph.keys():
+            for obj in graph[cim_class].values():
+                query = sparql.upload_triples_sparql(obj)
+                self.execute(query)
+
+    # -------------------------------------------------------------------------
+    # Methods for creating new graph structures
+    # -------------------------------------------------------------------------
+
+    def create_new_graph(self, container: object, graph:Graph = None) -> dict[type, dict[UUID, object]]:
         """
         Create a new graph structure for a CIM EquipmentContainer object.
         The method uses a SPARQL query to obtain all terminals in the graph,
@@ -103,7 +94,8 @@ class GridappsdConnection(ConnectionInterface):
         Returns:
             dict: Graph consisting of types and UUID mapped to object instances.
         """
-        graph = {}
+        if graph is None:
+            graph = defaultdict(lambda: defaultdict(dict))
         self.add_to_graph(graph=graph, obj=container)
         # Get all nodes, terminal, and equipment by
         sparql_message = sparql.get_all_nodes_from_container(container)
@@ -113,7 +105,7 @@ class GridappsdConnection(ConnectionInterface):
 
     def create_distributed_graph(self, area: object, graph: dict = None) -> Graph:
         if graph is None:
-            graph = {}
+            graph = defaultdict(lambda: defaultdict(dict))
         self.add_to_graph(graph=graph, obj=area)
 
         if not isinstance(area, self.cim.SubSchedulingArea):
@@ -126,6 +118,103 @@ class GridappsdConnection(ConnectionInterface):
         # Parse query results and create new graph
         graph = self.parse_node_query(graph, query_output)
         return graph
+
+    def build_graph_from_list( self, graph, mrid_list: list[str]) -> Graph:
+        for index in range(math.ceil(len(mrid_list) / 100)):
+            eq_mrids = mrid_list[index * 100:(index + 1) * 100]
+            #generate SPARQL message from correct loaders>sparql python script based on class name
+            sparql_message = sparql.get_all_nodes_from_list(
+                eq_mrids, self.namespace)
+            # print(sparql_message)
+            query_output = self.execute(sparql_message)
+            graph = self.parse_node_query(graph, query_output)
+        return graph
+
+    # -------------------------------------------------------------------------
+    # Methods for retrieving objects from the database
+    # -------------------------------------------------------------------------
+
+    def get_object(self, mRID: str, graph: dict = None) -> object:
+        """
+        Retrieve an object from the Blazegraph database using its mRID.
+
+        Args:
+            mrid (str): The mRID of the object to be retrieved.
+            graph (dict, optional): The graph database to store the fetched object. Defaults to {}.
+
+        Returns:
+            object: The retrieved object.
+        """
+        if graph is None:
+            graph = defaultdict(lambda: defaultdict(dict))
+        # Use sparql module to build get correct query string
+        sparql_message = sparql.get_object_sparql(mRID)
+        # Execute query
+        query_output = self.execute(sparql_message)
+        obj = None
+        # Parse query results to get the correct CIM object
+        for result in query_output['results']['bindings']:
+            uri = result['identifier']['value']  # uri / mRID string
+            obj_class = result['obj_class']['value']  # class type
+            # If equipment class is in data profile, create a new object
+            if obj_class in self.cim.__all__:
+                class_type = getattr(self.cim, obj_class)  # get type
+                obj = self.create_object(graph, class_type, uri)  # get object
+            else:
+                # If it is not in the profile, log it as a missing class
+                _log.warning(
+                    f'object class missing from data profile: {obj_class}')
+                continue
+
+        return obj
+
+    def get_from_triple(self, subject:object, predicate:str, graph: Graph = None) -> list[object]:
+        if graph is None:
+            graph = defaultdict(lambda: defaultdict(dict))
+        self.add_to_graph(subject, graph)
+        # Generate SPARQL query for user-specified triple string
+        sparql_message = sparql.get_triple_sparql(subject, predicate)
+        # Execute SPARQL query
+        query_output = self.execute(sparql_message)
+        # Parse the query output
+        new_edges = self.edge_query_parser(query_output, graph, subject.__class__)
+        return new_edges
+
+
+    def get_edges_query(self, graph: dict[type, dict[UUID, object]],
+                        cim_class: type) -> str:
+
+        eq_mrids = list(graph[cim_class].keys())[0:100]
+        sparql_message = sparql.get_all_edges_sparql(graph, cim_class, eq_mrids)
+
+        return sparql_message
+
+    def get_all_edges(self, graph: dict[type, dict[UUID, object]], cim_class: type) -> None:
+        uuid_list = list(graph[cim_class].keys())
+        for index in range(math.ceil(len(uuid_list) / 100)):
+            eq_mrids = uuid_list[index * 100:(index + 1) * 100]
+            #generate SPARQL message from correct queries>sparql python script based on class name
+            sparql_message = sparql.get_all_edges_sparql(graph, cim_class, eq_mrids)
+            #execute sparql query
+            query_output = self.execute(sparql_message)
+            self.edge_query_parser(query_output, graph, cim_class)
+
+    def get_all_attributes(self, graph: dict[type, dict[str, object]],
+                           cim_class: type):
+        mrid_list = list(graph[cim_class].keys())
+        for index in range(math.ceil(len(mrid_list) / 100)):
+            eq_mrids = mrid_list[index * 100:(index + 1) * 100]
+            #generate SPARQL message from correct loaders>sparql python script based on class name
+            sparql_message = sparql.get_all_attributes_sparql(cim_class, eq_mrids)
+            #execute sparql query
+            query_output = self.execute(sparql_message)
+            self.edge_query_parser(query_output, graph, cim_class)
+
+    # -------------------------------------------------------------------------
+    # Methods for parsing query results
+    # -------------------------------------------------------------------------
+
+
 
     def parse_node_query(self, graph: dict, query_output: dict) -> Graph:
         """
@@ -181,49 +270,6 @@ class GridappsdConnection(ConnectionInterface):
                     measurement = self.create_object(graph, meas_class, meas_id)
 
         return graph
-
-    def build_graph_from_list(
-            self, graph,
-            mrid_list: list[str]) -> dict[type, dict[str, object]]:
-        for index in range(math.ceil(len(mrid_list) / 100)):
-            eq_mrids = mrid_list[index * 100:(index + 1) * 100]
-            #generate SPARQL message from correct loaders>sparql python script based on class name
-            sparql_message = sparql.get_all_nodes_from_list(
-                eq_mrids, self.namespace)
-            # print(sparql_message)
-            query_output = self.execute(sparql_message)
-            graph = self.parse_node_query(graph, query_output)
-        return graph
-
-    def get_edges_query(self, graph: dict[type, dict[UUID, object]],
-                        cim_class: type) -> str:
-
-        eq_mrids = list(graph[cim_class].keys())[0:100]
-        sparql_message = sparql.get_all_edges_sparql(graph, cim_class, eq_mrids)
-
-        return sparql_message
-
-    def get_all_edges(self, graph: dict[type, dict[UUID, object]], cim_class: type) -> None:
-        uuid_list = list(graph[cim_class].keys())
-        for index in range(math.ceil(len(uuid_list) / 100)):
-            eq_mrids = uuid_list[index * 100:(index + 1) * 100]
-            #generate SPARQL message from correct queries>sparql python script based on class name
-            sparql_message = sparql.get_all_edges_sparql(graph, cim_class, eq_mrids)
-            #execute sparql query
-            query_output = self.execute(sparql_message)
-            self.edge_query_parser(query_output, graph, cim_class)
-
-    def get_all_attributes(self, graph: dict[type, dict[str, object]],
-                           cim_class: type):
-        mrid_list = list(graph[cim_class].keys())
-        num_nodes = len(mrid_list)
-        for index in range(math.ceil(len(mrid_list) / 100)):
-            eq_mrids = mrid_list[index * 100:(index + 1) * 100]
-            #generate SPARQL message from correct loaders>sparql python script based on class name
-            sparql_message = sparql.get_all_attributes_sparql(cim_class, eq_mrids)
-            #execute sparql query
-            query_output = self.execute(sparql_message)
-            self.edge_query_parser(query_output, graph, cim_class)
 
     def edge_query_parser(self, query_output: QueryResponse,
                           graph: Graph, cim_class: type, expand_graph=True) -> list[object]:
@@ -283,54 +329,8 @@ class GridappsdConnection(ConnectionInterface):
         return new_edges
 
 
-    def upload(self, graph: dict[type, dict[str, object]]) -> None:
-        for cim_class in graph.keys():
-            for obj in graph[cim_class].values():
-                query = sparql.upload_triples_sparql(obj)
-                self.execute(query)
 
-    def get_from_triple(self, subject:object, predicate:str, graph: Graph = None) -> list[object]:
-        if graph is None:
-            graph = {}
-        self.add_to_graph(subject, graph)
-        # Generate SPARQL query for user-specified triple string
-        sparql_message = sparql.get_triple_sparql(subject, predicate)
-        # Execute SPARQL query
-        query_output = self.execute(sparql_message)
-        # Parse the query output
-        new_edges = self.edge_query_parser(query_output, graph, subject.__class__)
-        return new_edges
 
-    def get_object(self, mRID: str, graph: dict = None) -> object:
-        """
-        Retrieve an object from the Blazegraph database using its mRID.
 
-        Args:
-            mrid (str): The mRID of the object to be retrieved.
-            graph (dict, optional): The graph database to store the fetched object. Defaults to {}.
 
-        Returns:
-            object: The retrieved object.
-        """
-        if graph is None:
-            graph = {}
-        # Use sparql module to build get correct query string
-        sparql_message = sparql.get_object_sparql(mRID)
-        # Execute query
-        query_output = self.execute(sparql_message)
-        obj = None
-        # Parse query results to get the correct CIM object
-        for result in query_output['results']['bindings']:
-            uri = result['identifier']['value']  # uri / mRID string
-            obj_class = result['obj_class']['value']  # class type
-            # If equipment class is in data profile, create a new object
-            if obj_class in self.cim.__all__:
-                class_type = getattr(self.cim, obj_class)  # get type
-                obj = self.create_object(graph, class_type, uri)  # get object
-            else:
-                # If it is not in the profile, log it as a missing class
-                _log.warning(
-                    f'object class missing from data profile: {obj_class}')
-                continue
 
-        return obj

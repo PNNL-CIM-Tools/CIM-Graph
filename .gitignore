@@ -2,6 +2,9 @@
 .ipynb_checkpoints/
 __pycache__/
 
+*/.debug
+
+
 # C extensions
 *.so
 

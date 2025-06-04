@@ -3,8 +3,10 @@ from __future__ import annotations
 import importlib
 import json
 import logging
+from collections import defaultdict
 from dataclasses import dataclass, field
 
+from cimgraph.databases import get_cim_profile
 from cimgraph.models.graph_model import GraphModel
 
 _log = logging.getLogger(__name__)
@@ -14,8 +16,13 @@ _log = logging.getLogger(__name__)
 class BusBranchModel(GraphModel):
 
     def __post_init__(self):
-        self.cim_profile = self.connection.cim_profile
-        self.cim = importlib.import_module('cimgraph.data_profile.' + self.cim_profile)
+        self.incrementals['forwardDifferences'] = defaultdict(dict)
+        self.incrementals['reverseDifferences'] = defaultdict(dict)
+        cim_profile, cim_module = get_cim_profile()
+        self.cim:cim = cim_module
+        self.__class_iter__ = defaultdict(dict)
+        if not self.graph:
+            self.graph = defaultdict(lambda: defaultdict(dict))
 
         if self.connection is not None:
             if self.distributed:

@@ -5,6 +5,7 @@ import json
 import logging
 import math
 import os
+from collections import defaultdict
 from uuid import UUID
 
 from SPARQLWrapper import JSON, POST, SPARQLWrapper
@@ -23,13 +24,7 @@ class BlazegraphConnection(ConnectionInterface):
 
     def __init__(self):
 
-        # clear cached env variables
-        get_url.cache_clear()
-        get_namespace.cache_clear()
-        get_cim_profile.cache_clear()
-        get_iec61970_301.cache_clear()
 
-        # retrieve env variables
         self.sparql_obj = None
         self.url = get_url()
         self.namespace = get_namespace()
@@ -98,11 +93,10 @@ class BlazegraphConnection(ConnectionInterface):
 
         Returns:
             object: The retrieved object.
-            graph: A graph dictionary with the object
         """
         # Use empty dict if graph not provided
         if graph is None:
-            graph = {}
+            graph = defaultdict(lambda: defaultdict(dict))
 
         # Use sparql module to build get correct query string
         sparql_message = sparql.get_object_sparql(mRID)
@@ -138,7 +132,7 @@ class BlazegraphConnection(ConnectionInterface):
             new_edges: A list of the retrieved objects or property strings.
         """
         if graph is None:
-            graph = {}
+            graph = defaultdict(lambda: defaultdict(dict))
 
         self.add_to_graph(obj=subject, graph=graph)
         # Generate SPARQL query for user-specified triple string
@@ -167,7 +161,7 @@ class BlazegraphConnection(ConnectionInterface):
             dict: Graph consisting of types and UUID mapped to object instances.
         """
         if graph is None:
-            graph = {}
+            graph = defaultdict(lambda: defaultdict(dict))
         self.add_to_graph(graph=graph, obj=container)
         # Get all nodes, terminal, and equipment associated with EquipmentContainer object
         sparql_message = sparql.get_all_nodes_from_container(container)
@@ -179,7 +173,7 @@ class BlazegraphConnection(ConnectionInterface):
 
     def create_distributed_graph(self, area:object, graph:dict=None) -> Graph:
         if graph is None:
-            graph = {}
+            graph = defaultdict(lambda: defaultdict(dict))
         self.add_to_graph(graph=graph, obj=area)
 
         if not isinstance(area, self.cim.SubSchedulingArea):

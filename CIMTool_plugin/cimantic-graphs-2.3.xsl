@@ -355,18 +355,16 @@
         </xsl:if>
         <item> 'minOccurs': '<xsl:value-of select="@minOccurs"/>', </item>
         <item> 'maxOccurs': '<xsl:value-of select="@maxOccurs"/>', </item>
-        <!-- <item> 'namespace': '<xsl:value-of select="substring-before(@baseProperty,'#')"/>#' </item> -->
+        <item> 'namespace': '<xsl:value-of select="substring-before(@baseProperty,'#')"/>#' </item>
 
         <!-- Uncomment lines below to include docstring in attribute metadata -->
-        <item> 'namespace': '<xsl:value-of select="substring-before(@baseProperty,'#')"/>#',</item>
-
         <!-- <item> 'maxOccurs': '<xsl:value-of select="@maxOccurs"/>', </item> -->
-        <item> 'docstring': </item>
-        <list begin="    '''" indent="    " end="    '''">
-            <xsl:for-each select="a:Comment">
-                <xsl:call-template name="comment"/>
-            </xsl:for-each>
-        </list>
+        <!-- <item> 'docstring': </item> -->
+        <!-- <list begin="    '''" indent="    " end="    '''"> -->
+            <!-- <xsl:for-each select="a:Comment"> -->
+                <!-- <xsl:call-template name="comment"/> -->
+            <!-- </xsl:for-each> -->
+        <!-- </list> -->
     </xsl:template>
 
     <!-- Template for association metadata -->
@@ -381,16 +379,39 @@
         <item> 'minOccurs': '<xsl:value-of select="@minOccurs"/>', </item>
         <item> 'maxOccurs': '<xsl:value-of select="@maxOccurs"/>', </item>
         <item> 'inverse': '<xsl:value-of select="substring-after(@inverseBaseProperty,'#')"/>', </item>
-        <!-- <item> 'namespace': '<xsl:value-of select="substring-before(@baseProperty,'#')"/>#' </item> -->
+        <item> 'namespace': '<xsl:value-of select="substring-before(@baseProperty,'#')"/>#' </item>
 
         <!-- Uncomment lines below to include docstring in association metadata -->
-        <item> 'namespace': '<xsl:value-of select="substring-before(@baseProperty,'#')"/>#', </item>
-        <item> 'docstring': </item>
-        <list begin="    '''" indent="    " end="    '''">
-            <xsl:for-each select="a:Comment">
-                <xsl:call-template name="comment"/>
-            </xsl:for-each>
-        </list>
+        <!-- <item> 'inverse': '<xsl:value-of select="substring-after(@inverseBaseProperty,'#')"/>', </item> -->
+        <!-- <item> 'docstring': </item> -->
+        <!-- <list begin="    '''" indent="    " end="    '''"> -->
+            <!-- <xsl:for-each select="a:Comment"> -->
+                <!-- <xsl:call-template name="comment"/> -->
+            <!-- </xsl:for-each> -->
+        <!-- </list> -->
+    </xsl:template>
+
+    <!-- Template for attribute metadata -->
+    <xsl:template name="primitive_metadata">
+        <!-- Use stereotype label if provided, otherwise, use 'Attribute' -->
+        <xsl:if test="a:Stereotype/@label">
+            <item> 'type': '<xsl:value-of select="a:Stereotype/@label"/>', </item>
+        </xsl:if>
+        <xsl:if test="not(a:Stereotype/@label)">
+            <item> 'type': 'Attribute', </item>
+        </xsl:if>
+        <item> 'minOccurs': '<xsl:value-of select="@minOccurs"/>', </item>
+        <item> 'maxOccurs': '<xsl:value-of select="@maxOccurs"/>', </item>
+        <item> 'namespace': '<xsl:value-of select="substring-before(@baseProperty,'#')"/>#' </item>
+
+        <!-- Uncomment lines below to include docstring in attribute metadata -->
+        <!-- <item> 'maxOccurs': '<xsl:value-of select="@maxOccurs"/>', </item> -->
+        <!-- <item> 'docstring': </item> -->
+        <!-- <list begin="    '''" indent="    " end="    '''"> -->
+            <!-- <xsl:for-each select="a:Comment"> -->
+                <!-- <xsl:call-template name="comment"/> -->
+            <!-- </xsl:for-each> -->
+        <!-- </list> -->
     </xsl:template>
 
     <!-- Template for enumeration values -->

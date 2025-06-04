@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:md="http://iec.ch/TC57/61970-552/ModelDescription/1#" xmlns:prov="http://www.w3.org/ns/prov#" xmlns:dcat="http://www.w3.org/ns/dcat#" xmlns:nc="http://entsoe.eu/ns/nc#" xmlns:cim="http://iec.ch/TC57/CIM100#" xmlns:dm="http://iec.ch/TC57/61970-552/DifferenceModel/1#" xmlns:time="http://www.w3.org/2006/time#" xmlns:osi="http://osii.com/opennet/6.3#" xmlns:profcim="http://iec.ch/TC57/ns/CIM/prof-cim#" xmlns:prof="http://www.w3.org/ns/dx/prof/#" xmlns:eumd="http://entsoe.eu/ns/Metadata-European#" xmlns:eu="http://iec.ch/TC57/CIM100-European#" xmlns:dcterms="http://purl.org/dc/terms/#" xmlns:cimstudio="http://osii.com/cimstudio/v1#">
+    <dm:DifferenceModel xmlns:dm="http://iec.ch/2002/schema/CIM_difference_model#">
+        <dm:forwardDifferences rdf:parseType="Statements">
+            <rdf:Description rdf:about="#_00850BE4-ABB2-4D90-9B4F-657C52E04F10">
+                <cim:ACLineSegment.x>8.464</cim:ACLineSegment.x>
+            </rdf:Description>
+            <rdf:Description rdf:about="#_B66B4353-AD5E-4C55-91E4-2E50467C78A6">
+                <cim:ACLineSegment.x>105.8</cim:ACLineSegment.x>
+            </rdf:Description>
+            <rdf:Description rdf:about="#_B8AC4C0B-64EE-4D28-9B6B-A912178926F0">
+                <cim:ACLineSegment.x>39.675</cim:ACLineSegment.x>
+            </rdf:Description>
+        </dm:forwardDifferences>
+        <dm:reverseDifferences rdf:parseType="Statements">
+            <rdf:Description rdf:about="#_00850BE4-ABB2-4D90-9B4F-657C52E04F10">
+                <cim:ACLineSegment.x>7.240952</cim:ACLineSegment.x>
+            </rdf:Description>
+            <rdf:Description rdf:about="#_B66B4353-AD5E-4C55-91E4-2E50467C78A6">
+                <cim:ACLineSegment.x>4.52295</cim:ACLineSegment.x>
+            </rdf:Description>
+            <rdf:Description rdf:about="#_B8AC4C0B-64EE-4D28-9B6B-A912178926F0">
+                <cim:ACLineSegment.x>19.7965</cim:ACLineSegment.x>
+            </rdf:Description>
+        </dm:reverseDifferences>
+    </dm:DifferenceModel>
+</rdf:RDF>
