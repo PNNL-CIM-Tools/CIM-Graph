@@ -26,7 +26,7 @@
             <item>from typing import Optional</item>
             <item>from enum import Enum</item>
             <item>from cimgraph.data_profile.identity import Identity, CIMStereotype, stereotype</item>
-            <item>from cimgraph.data_profile.units import PintUnit</item>
+            <item>from cimgraph.data_profile.units import CIMUnit</item>
             <item>_log = logging.getLogger(__name__)</item>
             
             <list begin="'''" indent="    " end="'''">
@@ -67,9 +67,17 @@
         <!-- Create dataclass for each CIM class -->
         
         <!-- Parse Stereotype -->
-        <xsl:if test="a:Stereotype/@label">
-            <item>@stereotype(CIMStereotype.<xsl:value-of select="a:Stereotype/@label"/>)</item>
-        </xsl:if>
+        <xsl:choose>
+            <xsl:when test="a:Stereotype[@label='Description']">
+                <item>@stereotype(CIMStereotype.Description)</item>
+            </xsl:when>
+            <xsl:when test="a:Stereotype[@label='Concrete']">
+                <item>@stereotype(CIMStereotype.Concrete)</item>
+            </xsl:when>
+            <xsl:when test="a:Stereotype/@label">
+                <item>@stereotype(CIMStereotype.<xsl:value-of select="a:Stereotype/@label"/>)</item>
+            </xsl:when>
+        </xsl:choose>
         
         <xsl:variable name="name">
             <xsl:call-template name="name">
@@ -120,9 +128,18 @@
             <!-- Find all Root elements with the same SuperType -->
             <xsl:for-each select="key('classes-by-super', a:SuperType/@name)">
                 <!-- Parse Stereotype -->
-                <xsl:if test="a:Stereotype/@label">
-                    <item>@stereotype(CIMStereotype.<xsl:value-of select="a:Stereotype/@label"/>)</item>
-                </xsl:if>
+                <xsl:choose>
+                    <xsl:when test="a:Stereotype[@label='Description']">
+                        <item>@stereotype(CIMStereotype.Description)</item>
+                    </xsl:when>
+                    <xsl:when test="a:Stereotype[@label='Concrete']">
+                        <item>@stereotype(CIMStereotype.Concrete)</item>
+                    </xsl:when>
+                    <xsl:when test="a:Stereotype/@label">
+                        <item>@stereotype(CIMStereotype.<xsl:value-of select="a:Stereotype/@label"/>)</item>
+                    </xsl:when>
+                </xsl:choose>
+
                 <!-- Create dataclass for each CIM class -->
                 <item>@dataclass(repr=False)</item>
                 
@@ -328,7 +345,7 @@
                 <xsl:with-param name="type" select="@name"/>
             </xsl:call-template>
         </xsl:variable>
-
+        <item>@stereotype(CIMStereotype.Enumeration)</item>
         <item>class <xsl:value-of select="$name"/>(Enum):</item>
         <!-- Parse all comment text, merge multiple comments into single block -->
         <list begin="    '''" indent="    " end="    '''">
@@ -348,9 +365,10 @@
     
     <!-- Template for CIM Units as SimpleType -->
     <xsl:template name="units">
-        <!-- Parse SimpleType name and always inherit from PintUnit -->
-        <item>@dataclass</item>
-        <item>class <xsl:value-of select="@name"/>(PintUnit):</item>
+        <!-- Parse SimpleType name and always inherit from CIMUnit -->
+        <item>@stereotype(CIMStereotype.CIMDatatype)</item>
+        <item>@dataclass(repr=False)</item>
+        <item>class <xsl:value-of select="@name"/>(CIMUnit):</item>
         
         <!-- Parse all comment text for the class docstring -->
         <list begin="    '''" indent="    " end="    '''">

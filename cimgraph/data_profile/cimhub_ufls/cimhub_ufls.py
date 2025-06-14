@@ -4,7 +4,7 @@ from dataclasses import dataclass, field
 from typing import Optional
 from enum import Enum
 from cimgraph.data_profile.identity import Identity, CIMStereotype, stereotype
-from cimgraph.data_profile.units import PintUnit
+from cimgraph.data_profile.units import CIMUnit
 _log = logging.getLogger(__name__)
 '''
     Annotated CIMantic Graphs data profile for cim17v40
@@ -2545,6 +2545,7 @@ class CableInfo(WireInfo):
     Material of the shield.
     '''
     
+@stereotype(CIMStereotype.Concrete)
 @dataclass(repr=False)
 class ConcentricNeutralCableInfo(CableInfo):
     '''
@@ -3421,7 +3422,7 @@ class CatalogAssetType(IdentifiedObject):
     '''
     '''
     
-@stereotype(CIMStereotype.AggregateOf)
+@stereotype(CIMStereotype.Concrete)
 @dataclass(repr=False)
 class ConnectivityNode(IdentifiedObject):
     '''
@@ -4628,7 +4629,7 @@ class FunctionOutputVariable(IdentifiedObject):
     the codomain for.
     '''
     
-@stereotype(CIMStereotype.OfAggregate)
+@stereotype(CIMStereotype.Concrete)
 @dataclass(repr=False)
 class GeographicalRegion(IdentifiedObject):
     '''
@@ -4648,6 +4649,7 @@ class GeographicalRegion(IdentifiedObject):
     All sub-geograhpical regions within this geographical region.
     '''
     
+@stereotype(CIMStereotype.Description)
 @dataclass(repr=False)
 class House(IdentifiedObject):
     '''
@@ -5673,6 +5675,7 @@ class LoadResponseCharacteristic(IdentifiedObject):
     The set of loads that have the response characteristics.
     '''
     
+@stereotype(CIMStereotype.Concrete)
 @dataclass(repr=False)
 class Location(IdentifiedObject):
     '''
@@ -5789,7 +5792,7 @@ class Location(IdentifiedObject):
     All power system resources at this location.
     '''
     
-@stereotype(CIMStereotype.AggregateOf)
+@stereotype(CIMStereotype.Concrete)
 @dataclass(repr=False)
 class Measurement(IdentifiedObject):
     '''
@@ -6844,7 +6847,7 @@ class PhaseTapChangerTable(IdentifiedObject):
     The phase tap changers to which this phase tap table applies.
     '''
     
-@stereotype(CIMStereotype.OfAggregate)
+@stereotype(CIMStereotype.Concrete)
 @dataclass(repr=False)
 class PowerSystemResource(IdentifiedObject):
     '''
@@ -7273,7 +7276,7 @@ class Plant(EquipmentContainer):
     A Plant is a collection of equipment for purposes of generation.
     '''
 
-@stereotype(CIMStereotype.OfAggregate)
+@stereotype(CIMStereotype.Concrete)
 @dataclass(repr=False)
 class Substation(EquipmentContainer):
     '''
@@ -7551,7 +7554,7 @@ class EnergySourcePhase(PowerSystemResource):
     The energy sourceto which the phase belongs.
     '''
     
-@stereotype(CIMStereotype.AggregateOf)
+@stereotype(CIMStereotype.Concrete)
 @dataclass(repr=False)
 class Equipment(PowerSystemResource):
     '''
@@ -7801,7 +7804,7 @@ class Conductor(ConductingEquipment):
     Segment length for calculating line section capabilities
     '''
     
-@stereotype(CIMStereotype.Concrete)
+@stereotype(CIMStereotype.Description)
 @dataclass(repr=False)
 class ACLineSegment(Conductor):
     '''
@@ -9223,6 +9226,7 @@ class AsynchronousMachine(RotatingMachine):
     DER dynamics model associated with this asynchronous machine model.
     '''
     
+@stereotype(CIMStereotype.Concrete)
 @dataclass(repr=False)
 class SynchronousMachine(RotatingMachine):
     '''
@@ -9440,6 +9444,7 @@ class ShuntCompensator(RegulatingCondEq):
     The state for the number of shunt compensator sections in service.
     '''
     
+@stereotype(CIMStereotype.Concrete)
 @dataclass(repr=False)
 class LinearShuntCompensator(ShuntCompensator):
     '''
@@ -9609,6 +9614,7 @@ class StaticVarCompensator(RegulatingCondEq):
     power output is zero.
     '''
     
+@stereotype(CIMStereotype.Concrete)
 @dataclass(repr=False)
 class Ground(ConductingEquipment):
     '''
@@ -9947,6 +9953,7 @@ class Fuse(Switch):
     is considered a switching device because it breaks current.
     '''
 
+@stereotype(CIMStereotype.Concrete)
 @dataclass(repr=False)
 class GroundDisconnector(Switch):
     '''
@@ -11038,6 +11045,7 @@ class SecondaryArea(SubSchedulingArea):
     The SwitchArea that normally energizes the SecondaryArea
     '''
     
+@stereotype(CIMStereotype.Description)
 @dataclass(repr=False)
 class SwitchArea(SubSchedulingArea):
     '''
@@ -11159,6 +11167,7 @@ class ShuntCompensatorPhase(PowerSystemResource):
     Shunt compensator of this shunt compensator phase.
     '''
     
+@stereotype(CIMStereotype.Concrete)
 @dataclass(repr=False)
 class LinearShuntCompensatorPhase(ShuntCompensatorPhase):
     '''
@@ -14435,6 +14444,7 @@ class WirePhaseInfo(Identity):
     '''
     '''
     
+@stereotype(CIMStereotype.Enumeration)
 class AssetKind(Enum):
     '''
     '''
@@ -14481,6 +14491,7 @@ class AssetKind(Enum):
     '''
     '''
     
+@stereotype(CIMStereotype.Enumeration)
 class AsynchronousMachineKind(Enum):
     '''
     Kind of Asynchronous Machine.
@@ -14496,6 +14507,7 @@ class AsynchronousMachineKind(Enum):
     The Asynchronous Machine is a motor.
     '''
     
+@stereotype(CIMStereotype.Enumeration)
 class BatteryStateKind(Enum):
     '''
     '''
@@ -14525,6 +14537,7 @@ class BatteryStateKind(Enum):
     neither Charging nor Discharging, but able to do so
     '''
     
+@stereotype(CIMStereotype.Enumeration)
 class BreakerConfiguration(Enum):
     '''
     Switching arrangement for bay.
@@ -14550,6 +14563,7 @@ class BreakerConfiguration(Enum):
     Single breaker.
     '''
     
+@stereotype(CIMStereotype.Enumeration)
 class BusbarConfiguration(Enum):
     '''
     Busbar layout for bay.
@@ -14575,6 +14589,7 @@ class BusbarConfiguration(Enum):
     Single bus.
     '''
     
+@stereotype(CIMStereotype.Enumeration)
 class BushingInsulationKind(Enum):
     '''
     Insulation kind for bushings.
@@ -14605,6 +14620,7 @@ class BushingInsulationKind(Enum):
     '''
     '''
     
+@stereotype(CIMStereotype.Enumeration)
 class CableConstructionKind(Enum):
     '''
     Kind of cable construction.
@@ -14645,6 +14661,7 @@ class CableConstructionKind(Enum):
     Stranded cable.
     '''
     
+@stereotype(CIMStereotype.Enumeration)
 class CableOuterJacketKind(Enum):
     '''
     Kind of cable outer jacket.
@@ -14685,6 +14702,7 @@ class CableOuterJacketKind(Enum):
     Semiconducting cable outer jacket.
     '''
     
+@stereotype(CIMStereotype.Enumeration)
 class CableShieldMaterialKind(Enum):
     '''
     Kind of cable shield material.
@@ -14715,6 +14733,7 @@ class CableShieldMaterialKind(Enum):
     Steel cable shield.
     '''
     
+@stereotype(CIMStereotype.Enumeration)
 class ConverterControlModeKind(Enum):
     '''
     '''
@@ -14734,6 +14753,7 @@ class ConverterControlModeKind(Enum):
     use association with DERIEEEType1
     '''
     
+@stereotype(CIMStereotype.Enumeration)
 class CoolantType(Enum):
     '''
     Method of cooling a machine.
@@ -14754,6 +14774,7 @@ class CoolantType(Enum):
     Water.
     '''
     
+@stereotype(CIMStereotype.Enumeration)
 class Currency(Enum):
     '''
     Monetary currencies. ISO 4217 standard including 3-character currency code.
@@ -15564,6 +15585,7 @@ class Currency(Enum):
     Zimbabwe dollar.
     '''
     
+@stereotype(CIMStereotype.Enumeration)
 class CurveStyle(Enum):
     '''
     Style or shape of curve.
@@ -15581,6 +15603,7 @@ class CurveStyle(Enum):
     known as linear interpolation.
     '''
     
+@stereotype(CIMStereotype.Enumeration)
 class CustomerKind(Enum):
     '''
     Kind of customer.
@@ -15658,6 +15681,7 @@ class CustomerKind(Enum):
     Wind machine customer.
     '''
     
+@stereotype(CIMStereotype.Enumeration)
 class DERParameterKind(Enum):
     '''
     '''
@@ -15710,6 +15734,7 @@ class DERParameterKind(Enum):
     '''
     '''
     
+@stereotype(CIMStereotype.Enumeration)
 class DERUnitSymbol(Enum):
     '''
     The units defined for usage in the CIM.
@@ -15885,6 +15910,7 @@ class DERUnitSymbol(Enum):
     Energy, Therm.
     '''
     
+@stereotype(CIMStereotype.Enumeration)
 class FlowDirectionKind(Enum):
     '''
     Kind of flow direction for reading/measured values proper to some commodities
@@ -16042,6 +16068,7 @@ class FlowDirectionKind(Enum):
     �Total� enumeration should be used with single phase meter data.
     '''
     
+@stereotype(CIMStereotype.Enumeration)
 class GeneratorControlMode(Enum):
     '''
     Unit control modes.
@@ -16057,6 +16084,7 @@ class GeneratorControlMode(Enum):
     Setpoint control mode.
     '''
     
+@stereotype(CIMStereotype.Enumeration)
 class GeneratorControlSource(Enum):
     '''
     The source of controls for a generating unit.
@@ -16082,6 +16110,7 @@ class GeneratorControlSource(Enum):
     Not available.
     '''
     
+@stereotype(CIMStereotype.Enumeration)
 class HouseCooling(Enum):
     '''
     '''
@@ -16098,6 +16127,7 @@ class HouseCooling(Enum):
     '''
     '''
     
+@stereotype(CIMStereotype.Enumeration)
 class HouseHeating(Enum):
     '''
     '''
@@ -16118,6 +16148,7 @@ class HouseHeating(Enum):
     '''
     '''
     
+@stereotype(CIMStereotype.Enumeration)
 class HouseThermalIntegrity(Enum):
     '''
     '''
@@ -16154,6 +16185,7 @@ class HouseThermalIntegrity(Enum):
     '''
     '''
     
+@stereotype(CIMStereotype.Enumeration)
 class InUseStateKind(Enum):
     '''
     Possible 'in use' states that an asset can be in.
@@ -16174,6 +16206,7 @@ class InUseStateKind(Enum):
     Asset is ready to be put into use.
     '''
     
+@stereotype(CIMStereotype.Enumeration)
 class InterruptingMediumKind(Enum):
     '''
     '''
@@ -16206,6 +16239,7 @@ class InterruptingMediumKind(Enum):
     '''
     '''
     
+@stereotype(CIMStereotype.Enumeration)
 class OperatingMechanismKind(Enum):
     '''
     '''
@@ -16246,6 +16280,7 @@ class OperatingMechanismKind(Enum):
     '''
     '''
     
+@stereotype(CIMStereotype.Enumeration)
 class OperationalLimitDirectionKind(Enum):
     '''
     The direction attribute describes the side of a limit that is a violation.
@@ -16269,6 +16304,7 @@ class OperationalLimitDirectionKind(Enum):
     to a terminal flow, the positive direction is into the terminal.
     '''
     
+@stereotype(CIMStereotype.Enumeration)
 class OrderedPhaseCodeKind(Enum):
     '''
     In some use cases, the ordering of phases is important. The PhaseCode class
@@ -16470,6 +16506,7 @@ class OrderedPhaseCodeKind(Enum):
     '''
     '''
     
+@stereotype(CIMStereotype.Enumeration)
 class PetersenCoilModeKind(Enum):
     '''
     The mode of operation for a Petersen coil.
@@ -16490,6 +16527,7 @@ class PetersenCoilModeKind(Enum):
     Manual positioning.
     '''
     
+@stereotype(CIMStereotype.Enumeration)
 class PhaseCode(Enum):
     '''
     An unordered enumeration of phase identifiers. Allows designation of phases
@@ -16635,6 +16673,7 @@ class PhaseCode(Enum):
     Secondary phase 2 and neutral.
     '''
     
+@stereotype(CIMStereotype.Enumeration)
 class PhaseShuntConnectionKind(Enum):
     '''
     The configuration of phase connections for a single terminal device such
@@ -16668,6 +16707,7 @@ class PhaseShuntConnectionKind(Enum):
     Wye, with neutral brought out for grounding.
     '''
     
+@stereotype(CIMStereotype.Enumeration)
 class RegulatingControlModeKind(Enum):
     '''
     The kind of regulation model. For example regulating voltage, reactive
@@ -16715,6 +16755,7 @@ class RegulatingControlModeKind(Enum):
     Voltage is specified.
     '''
     
+@stereotype(CIMStereotype.Enumeration)
 class SVCControlMode(Enum):
     '''
     Static VAr Compensator control mode.
@@ -16728,6 +16769,7 @@ class SVCControlMode(Enum):
     '''
     '''
     
+@stereotype(CIMStereotype.Enumeration)
 class ShortCircuitRotorKind(Enum):
     '''
     Type of rotor, used by short circuit applications.
@@ -16753,6 +16795,7 @@ class ShortCircuitRotorKind(Enum):
     Turbo series 2 in IEC 60909
     '''
     
+@stereotype(CIMStereotype.Enumeration)
 class SinglePhaseKind(Enum):
     '''
     Enumeration of single phase identifiers. Allows designation of single phases
@@ -16789,6 +16832,7 @@ class SinglePhaseKind(Enum):
     Secondary phase 2.
     '''
     
+@stereotype(CIMStereotype.Enumeration)
 class SynchronousMachineKind(Enum):
     '''
     Synchronous machine type.
@@ -16822,6 +16866,7 @@ class SynchronousMachineKind(Enum):
     '''
     '''
     
+@stereotype(CIMStereotype.Enumeration)
 class SynchronousMachineOperatingMode(Enum):
     '''
     Synchronous machine operating mode.
@@ -16839,6 +16884,7 @@ class SynchronousMachineOperatingMode(Enum):
     '''
     '''
     
+@stereotype(CIMStereotype.Enumeration)
 class ThermostatControlMode(Enum):
     '''
     '''
@@ -16851,6 +16897,7 @@ class ThermostatControlMode(Enum):
     '''
     '''
     
+@stereotype(CIMStereotype.Enumeration)
 class TimeIntervalKind(Enum):
     '''
     '''
@@ -16879,6 +16926,7 @@ class TimeIntervalKind(Enum):
     '''
     '''
     
+@stereotype(CIMStereotype.Enumeration)
 class TransformerControlMode(Enum):
     '''
     Control modes for a transformer.
@@ -16894,6 +16942,7 @@ class TransformerControlMode(Enum):
     Voltage control
     '''
     
+@stereotype(CIMStereotype.Enumeration)
 class UnitMultiplier(Enum):
     '''
     The unit multipliers defined for the CIM. When applied to unit symbols,
@@ -17026,6 +17075,7 @@ class UnitMultiplier(Enum):
     zepto 10**-21.
     '''
     
+@stereotype(CIMStereotype.Enumeration)
 class UnitSymbol(Enum):
     '''
     The derived units defined for usage in the CIM. In some cases, the derived
@@ -17809,6 +17859,7 @@ class UnitSymbol(Enum):
     mass, �tonne� or �metric ton� (1000 kg = 1 Mg).
     '''
     
+@stereotype(CIMStereotype.Enumeration)
 class Validity(Enum):
     '''
     Validity for MeasurementValue.
@@ -17836,6 +17887,7 @@ class Validity(Enum):
     for determining whether or not values marked "questionable" should be used.
     '''
     
+@stereotype(CIMStereotype.Enumeration)
 class WindGenUnitKind(Enum):
     '''
     Kind of wind generating unit.
@@ -17851,6 +17903,7 @@ class WindGenUnitKind(Enum):
     The wind generating unit is located onshore.
     '''
     
+@stereotype(CIMStereotype.Enumeration)
 class WindingConnection(Enum):
     '''
     Winding connection type.
@@ -17891,6 +17944,7 @@ class WindingConnection(Enum):
     ZigZag, with neutral brought out for grounding.
     '''
     
+@stereotype(CIMStereotype.Enumeration)
 class WireInsulationKind(Enum):
     '''
     Kind of wire insulation.
@@ -17986,6 +18040,7 @@ class WireInsulationKind(Enum):
     Varnished dacron glass wire insulation.
     '''
     
+@stereotype(CIMStereotype.Enumeration)
 class WireMaterialKind(Enum):
     '''
     Kind of wire material.
@@ -18036,6 +18091,7 @@ class WireMaterialKind(Enum):
     Steel wire.
     '''
     
+@stereotype(CIMStereotype.Enumeration)
 class WireUsageKind(Enum):
     '''
     Kind of wire usage.
@@ -18061,8 +18117,9 @@ class WireUsageKind(Enum):
     Wire is used in extra-high voltage or high voltage network.
     '''
     
-@dataclass
-class ActivePower(PintUnit):
+@stereotype(CIMStereotype.CIMDatatype)
+@dataclass(repr=False)
+class ActivePower(CIMUnit):
     '''
     Product of RMS value of the voltage and the RMS value of the in-phase component
     of the current.
@@ -18075,8 +18132,9 @@ class ActivePower(PintUnit):
     def __init__(self, value, input_unit:str='W', input_multiplier:str=None):
         self.__pint__(value = value, input_unit=input_unit, input_multiplier=input_multiplier)
 
-@dataclass
-class ActivePowerPerFrequency(PintUnit):
+@stereotype(CIMStereotype.CIMDatatype)
+@dataclass(repr=False)
+class ActivePowerPerFrequency(CIMUnit):
     '''
     Active power variation with frequency.
     '''
@@ -18088,8 +18146,9 @@ class ActivePowerPerFrequency(PintUnit):
     def __init__(self, value, input_unit:str='WPers', input_multiplier:str=None):
         self.__pint__(value = value, input_unit=input_unit, input_multiplier=input_multiplier)
 
-@dataclass
-class AngleDegrees(PintUnit):
+@stereotype(CIMStereotype.CIMDatatype)
+@dataclass(repr=False)
+class AngleDegrees(CIMUnit):
     '''
     Measurement of angle in degrees.
     '''
@@ -18101,8 +18160,9 @@ class AngleDegrees(PintUnit):
     def __init__(self, value, input_unit:str='deg', input_multiplier:str=None):
         self.__pint__(value = value, input_unit=input_unit, input_multiplier=input_multiplier)
 
-@dataclass
-class AngleRadians(PintUnit):
+@stereotype(CIMStereotype.CIMDatatype)
+@dataclass(repr=False)
+class AngleRadians(CIMUnit):
     '''
     Phase angle in radians.
     '''
@@ -18114,8 +18174,9 @@ class AngleRadians(PintUnit):
     def __init__(self, value, input_unit:str='rad', input_multiplier:str=None):
         self.__pint__(value = value, input_unit=input_unit, input_multiplier=input_multiplier)
 
-@dataclass
-class ApparentPower(PintUnit):
+@stereotype(CIMStereotype.CIMDatatype)
+@dataclass(repr=False)
+class ApparentPower(CIMUnit):
     '''
     Product of the RMS value of the voltage and the RMS value of the current.
     '''
@@ -18127,8 +18188,9 @@ class ApparentPower(PintUnit):
     def __init__(self, value, input_unit:str='VA', input_multiplier:str=None):
         self.__pint__(value = value, input_unit=input_unit, input_multiplier=input_multiplier)
 
-@dataclass
-class Area(PintUnit):
+@stereotype(CIMStereotype.CIMDatatype)
+@dataclass(repr=False)
+class Area(CIMUnit):
     '''
     Area.
     '''
@@ -18140,8 +18202,9 @@ class Area(PintUnit):
     def __init__(self, value, input_unit:str='m2', input_multiplier:str=None):
         self.__pint__(value = value, input_unit=input_unit, input_multiplier=input_multiplier)
 
-@dataclass
-class Capacitance(PintUnit):
+@stereotype(CIMStereotype.CIMDatatype)
+@dataclass(repr=False)
+class Capacitance(CIMUnit):
     '''
     Capacitive part of reactance (imaginary part of impedance), at rated frequency.
     '''
@@ -18153,8 +18216,9 @@ class Capacitance(PintUnit):
     def __init__(self, value, input_unit:str='F', input_multiplier:str=None):
         self.__pint__(value = value, input_unit=input_unit, input_multiplier=input_multiplier)
 
-@dataclass
-class Conductance(PintUnit):
+@stereotype(CIMStereotype.CIMDatatype)
+@dataclass(repr=False)
+class Conductance(CIMUnit):
     '''
     Factor by which voltage must be multiplied to give corresponding power
     lost from a circuit. Real part of admittance.
@@ -18167,8 +18231,9 @@ class Conductance(PintUnit):
     def __init__(self, value, input_unit:str='S', input_multiplier:str=None):
         self.__pint__(value = value, input_unit=input_unit, input_multiplier=input_multiplier)
 
-@dataclass
-class ConductancePerLength(PintUnit):
+@stereotype(CIMStereotype.CIMDatatype)
+@dataclass(repr=False)
+class ConductancePerLength(CIMUnit):
     '''
     Real part of admittance per unit of length.
     '''
@@ -18180,8 +18245,9 @@ class ConductancePerLength(PintUnit):
     def __init__(self, value, input_unit:str='SPerm', input_multiplier:str=None):
         self.__pint__(value = value, input_unit=input_unit, input_multiplier=input_multiplier)
 
-@dataclass
-class CurrentFlow(PintUnit):
+@stereotype(CIMStereotype.CIMDatatype)
+@dataclass(repr=False)
+class CurrentFlow(CIMUnit):
     '''
     Electrical current with sign convention: positive flow is out of the conducting
     equipment into the connectivity node. Can be both AC and DC.
@@ -18194,8 +18260,9 @@ class CurrentFlow(PintUnit):
     def __init__(self, value, input_unit:str='A', input_multiplier:str=None):
         self.__pint__(value = value, input_unit=input_unit, input_multiplier=input_multiplier)
 
-@dataclass
-class Displacement(PintUnit):
+@stereotype(CIMStereotype.CIMDatatype)
+@dataclass(repr=False)
+class Displacement(CIMUnit):
     '''
     Unit of displacement relative a reference position, hence can be negative.
     '''
@@ -18207,8 +18274,9 @@ class Displacement(PintUnit):
     def __init__(self, value, input_unit:str='m', input_multiplier:str=None):
         self.__pint__(value = value, input_unit=input_unit, input_multiplier=input_multiplier)
 
-@dataclass
-class Frequency(PintUnit):
+@stereotype(CIMStereotype.CIMDatatype)
+@dataclass(repr=False)
+class Frequency(CIMUnit):
     '''
     Cycles per second.
     '''
@@ -18220,8 +18288,9 @@ class Frequency(PintUnit):
     def __init__(self, value, input_unit:str='Hz', input_multiplier:str=None):
         self.__pint__(value = value, input_unit=input_unit, input_multiplier=input_multiplier)
 
-@dataclass
-class Impedance(PintUnit):
+@stereotype(CIMStereotype.CIMDatatype)
+@dataclass(repr=False)
+class Impedance(CIMUnit):
     '''
     Ratio of voltage to current.
     '''
@@ -18233,8 +18302,9 @@ class Impedance(PintUnit):
     def __init__(self, value, input_unit:str='ohm', input_multiplier:str=None):
         self.__pint__(value = value, input_unit=input_unit, input_multiplier=input_multiplier)
 
-@dataclass
-class KiloActivePower(PintUnit):
+@stereotype(CIMStereotype.CIMDatatype)
+@dataclass(repr=False)
+class KiloActivePower(CIMUnit):
     '''
     Active power in kilowatts.
     '''
@@ -18246,8 +18316,9 @@ class KiloActivePower(PintUnit):
     def __init__(self, value, input_unit:str='W', input_multiplier:str=None):
         self.__pint__(value = value, input_unit=input_unit, input_multiplier=input_multiplier)
 
-@dataclass
-class Length(PintUnit):
+@stereotype(CIMStereotype.CIMDatatype)
+@dataclass(repr=False)
+class Length(CIMUnit):
     '''
     Unit of length. Never negative.
     '''
@@ -18259,8 +18330,9 @@ class Length(PintUnit):
     def __init__(self, value, input_unit:str='m', input_multiplier:str=None):
         self.__pint__(value = value, input_unit=input_unit, input_multiplier=input_multiplier)
 
-@dataclass
-class Minutes(PintUnit):
+@stereotype(CIMStereotype.CIMDatatype)
+@dataclass(repr=False)
+class Minutes(CIMUnit):
     '''
     Time in minutes.
     '''
@@ -18272,8 +18344,9 @@ class Minutes(PintUnit):
     def __init__(self, value, input_unit:str='min', input_multiplier:str=None):
         self.__pint__(value = value, input_unit=input_unit, input_multiplier=input_multiplier)
 
-@dataclass
-class Money(PintUnit):
+@stereotype(CIMStereotype.CIMDatatype)
+@dataclass(repr=False)
+class Money(CIMUnit):
     '''
     Amount of money.
     '''
@@ -18285,8 +18358,9 @@ class Money(PintUnit):
     def __init__(self, value, input_unit:str='none', input_multiplier:str=None):
         self.__pint__(value = value, input_unit=input_unit, input_multiplier=input_multiplier)
 
-@dataclass
-class PU(PintUnit):
+@stereotype(CIMStereotype.CIMDatatype)
+@dataclass(repr=False)
+class PU(CIMUnit):
     '''
     Per Unit - a positive or negative value referred to a defined base. Values
     typically range from -10 to +10.
@@ -18299,8 +18373,9 @@ class PU(PintUnit):
     def __init__(self, value, input_unit:str='none', input_multiplier:str=None):
         self.__pint__(value = value, input_unit=input_unit, input_multiplier=input_multiplier)
 
-@dataclass
-class PerCent(PintUnit):
+@stereotype(CIMStereotype.CIMDatatype)
+@dataclass(repr=False)
+class PerCent(CIMUnit):
     '''
     Percentage on a defined base. For example, specify as 100 to indicate at
     the defined base.
@@ -18313,8 +18388,9 @@ class PerCent(PintUnit):
     def __init__(self, value, input_unit:str='none', input_multiplier:str=None):
         self.__pint__(value = value, input_unit=input_unit, input_multiplier=input_multiplier)
 
-@dataclass
-class Pressure(PintUnit):
+@stereotype(CIMStereotype.CIMDatatype)
+@dataclass(repr=False)
+class Pressure(CIMUnit):
     '''
     Pressure in Pascal.
     '''
@@ -18326,8 +18402,9 @@ class Pressure(PintUnit):
     def __init__(self, value, input_unit:str='Pa', input_multiplier:str=None):
         self.__pint__(value = value, input_unit=input_unit, input_multiplier=input_multiplier)
 
-@dataclass
-class Reactance(PintUnit):
+@stereotype(CIMStereotype.CIMDatatype)
+@dataclass(repr=False)
+class Reactance(CIMUnit):
     '''
     Reactance (imaginary part of impedance), at rated frequency.
     '''
@@ -18339,8 +18416,9 @@ class Reactance(PintUnit):
     def __init__(self, value, input_unit:str='ohm', input_multiplier:str=None):
         self.__pint__(value = value, input_unit=input_unit, input_multiplier=input_multiplier)
 
-@dataclass
-class ReactancePerLength(PintUnit):
+@stereotype(CIMStereotype.CIMDatatype)
+@dataclass(repr=False)
+class ReactancePerLength(CIMUnit):
     '''
     Reactance (imaginary part of impedance) per unit of length, at rated frequency.
     '''
@@ -18352,8 +18430,9 @@ class ReactancePerLength(PintUnit):
     def __init__(self, value, input_unit:str='ohmPerm', input_multiplier:str=None):
         self.__pint__(value = value, input_unit=input_unit, input_multiplier=input_multiplier)
 
-@dataclass
-class ReactivePower(PintUnit):
+@stereotype(CIMStereotype.CIMDatatype)
+@dataclass(repr=False)
+class ReactivePower(CIMUnit):
     '''
     Product of RMS value of the voltage and the RMS value of the quadrature
     component of the current.
@@ -18366,8 +18445,9 @@ class ReactivePower(PintUnit):
     def __init__(self, value, input_unit:str='VAr', input_multiplier:str=None):
         self.__pint__(value = value, input_unit=input_unit, input_multiplier=input_multiplier)
 
-@dataclass
-class RealEnergy(PintUnit):
+@stereotype(CIMStereotype.CIMDatatype)
+@dataclass(repr=False)
+class RealEnergy(CIMUnit):
     '''
     Real electrical energy.
     '''
@@ -18379,8 +18459,9 @@ class RealEnergy(PintUnit):
     def __init__(self, value, input_unit:str='Wh', input_multiplier:str=None):
         self.__pint__(value = value, input_unit=input_unit, input_multiplier=input_multiplier)
 
-@dataclass
-class Resistance(PintUnit):
+@stereotype(CIMStereotype.CIMDatatype)
+@dataclass(repr=False)
+class Resistance(CIMUnit):
     '''
     Resistance (real part of impedance).
     '''
@@ -18392,8 +18473,9 @@ class Resistance(PintUnit):
     def __init__(self, value, input_unit:str='ohm', input_multiplier:str=None):
         self.__pint__(value = value, input_unit=input_unit, input_multiplier=input_multiplier)
 
-@dataclass
-class ResistancePerLength(PintUnit):
+@stereotype(CIMStereotype.CIMDatatype)
+@dataclass(repr=False)
+class ResistancePerLength(CIMUnit):
     '''
     Resistance (real part of impedance) per unit of length.
     '''
@@ -18405,8 +18487,9 @@ class ResistancePerLength(PintUnit):
     def __init__(self, value, input_unit:str='ohmPerm', input_multiplier:str=None):
         self.__pint__(value = value, input_unit=input_unit, input_multiplier=input_multiplier)
 
-@dataclass
-class RotationSpeed(PintUnit):
+@stereotype(CIMStereotype.CIMDatatype)
+@dataclass(repr=False)
+class RotationSpeed(CIMUnit):
     '''
     Number of revolutions per second.
     '''
@@ -18418,8 +18501,9 @@ class RotationSpeed(PintUnit):
     def __init__(self, value, input_unit:str='Hz', input_multiplier:str=None):
         self.__pint__(value = value, input_unit=input_unit, input_multiplier=input_multiplier)
 
-@dataclass
-class Seconds(PintUnit):
+@stereotype(CIMStereotype.CIMDatatype)
+@dataclass(repr=False)
+class Seconds(CIMUnit):
     '''
     Time, in seconds.
     '''
@@ -18431,8 +18515,9 @@ class Seconds(PintUnit):
     def __init__(self, value, input_unit:str='s', input_multiplier:str=None):
         self.__pint__(value = value, input_unit=input_unit, input_multiplier=input_multiplier)
 
-@dataclass
-class Susceptance(PintUnit):
+@stereotype(CIMStereotype.CIMDatatype)
+@dataclass(repr=False)
+class Susceptance(CIMUnit):
     '''
     Imaginary part of admittance.
     '''
@@ -18444,8 +18529,9 @@ class Susceptance(PintUnit):
     def __init__(self, value, input_unit:str='S', input_multiplier:str=None):
         self.__pint__(value = value, input_unit=input_unit, input_multiplier=input_multiplier)
 
-@dataclass
-class SusceptancePerLength(PintUnit):
+@stereotype(CIMStereotype.CIMDatatype)
+@dataclass(repr=False)
+class SusceptancePerLength(CIMUnit):
     '''
     Imaginary part of admittance per unit of length.
     '''
@@ -18457,8 +18543,9 @@ class SusceptancePerLength(PintUnit):
     def __init__(self, value, input_unit:str='SPerm', input_multiplier:str=None):
         self.__pint__(value = value, input_unit=input_unit, input_multiplier=input_multiplier)
 
-@dataclass
-class Temperature(PintUnit):
+@stereotype(CIMStereotype.CIMDatatype)
+@dataclass(repr=False)
+class Temperature(CIMUnit):
     '''
     Value of temperature in degrees Celsius.
     '''
@@ -18470,8 +18557,9 @@ class Temperature(PintUnit):
     def __init__(self, value, input_unit:str='degC', input_multiplier:str=None):
         self.__pint__(value = value, input_unit=input_unit, input_multiplier=input_multiplier)
 
-@dataclass
-class Voltage(PintUnit):
+@stereotype(CIMStereotype.CIMDatatype)
+@dataclass(repr=False)
+class Voltage(CIMUnit):
     '''
     Electrical voltage, can be both AC and DC.
     '''
@@ -18483,8 +18571,9 @@ class Voltage(PintUnit):
     def __init__(self, value, input_unit:str='V', input_multiplier:str=None):
         self.__pint__(value = value, input_unit=input_unit, input_multiplier=input_multiplier)
 
-@dataclass
-class VoltagePerReactivePower(PintUnit):
+@stereotype(CIMStereotype.CIMDatatype)
+@dataclass(repr=False)
+class VoltagePerReactivePower(CIMUnit):
     '''
     Voltage variation with reactive power.
     '''
@@ -18496,8 +18585,9 @@ class VoltagePerReactivePower(PintUnit):
     def __init__(self, value, input_unit:str='VPerVAr', input_multiplier:str=None):
         self.__pint__(value = value, input_unit=input_unit, input_multiplier=input_multiplier)
 
-@dataclass
-class Volume(PintUnit):
+@stereotype(CIMStereotype.CIMDatatype)
+@dataclass(repr=False)
+class Volume(CIMUnit):
     '''
     Volume.
     '''

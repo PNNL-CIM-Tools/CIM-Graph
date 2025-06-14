@@ -11,13 +11,15 @@ ARCHIVE_JSON_LD = True
 _log = logging.getLogger(__name__)
 
 class CIMStereotype(Enum):
-    Abstract = "Abstract"
-    Concrete = "Concrete" 
-    Description = "Description"
-    Compound = "Compound"
-    AggregateOf = "AggregateOf"
-    OfAggregate = "OfAggregate"
-    Attribute = "Attribute"
+    Abstract = "abstract"
+    Concrete = "concrete" 
+    Description = "description"
+    Compound = "compound"
+    AggregateOf = "aggregateOf"
+    OfAggregate = "ofAggregate"
+    Attribute = "attribute"
+    CIMDatatype = "CIMDatatype"
+    Enumeration = "enumeration"
 
 def stereotype(stereotype: CIMStereotype):
     """Decorator to add UML stereotype metadata to dataclasses"""

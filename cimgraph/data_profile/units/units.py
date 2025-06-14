@@ -1,6 +1,5 @@
 
 from __future__ import annotations
-from abc import ABC
 from dataclasses import dataclass, field
 from enum import Enum
 from importlib import resources as impresources
@@ -15,7 +14,7 @@ ureg = UnitRegistry()
 ureg.load_definitions(units_file)
 
 
-class PintUnit():
+class CIMUnit():
     value: Optional[float]
     unit: Optional[UnitSymbol]
     multiplier: Optional[UnitMultiplier]
