@@ -26,6 +26,7 @@
             <item>from typing import Optional</item>
             <item>from enum import Enum</item>
             <item>from cimgraph.data_profile.identity import Identity, CIMStereotype, stereotype</item>
+            <item>from cimgraph.data_profile.units import PintUnit</item>
             <item>_log = logging.getLogger(__name__)</item>
             
             <list begin="'''" indent="    " end="'''">
@@ -52,7 +53,7 @@
             </xsl:for-each>
             <!-- Then do all primitives -->
             <xsl:for-each select="a:SimpleType">
-                <xsl:call-template name="primitive"/>
+                <xsl:call-template name="units"/>
             </xsl:for-each>
             <!-- Then do all compounds -->
             <xsl:for-each select="a:CompoundType">
@@ -70,8 +71,15 @@
             <item>@stereotype(CIMStereotype.<xsl:value-of select="a:Stereotype/@label"/>)</item>
         </xsl:if>
         
+        <xsl:variable name="name">
+            <xsl:call-template name="name">
+                <xsl:with-param name="name" select="@name"/>
+                <xsl:with-param name="type" select="@name"/>
+            </xsl:call-template>
+        </xsl:variable>
+        
         <item>@dataclass(repr=False)</item>
-        <item>class <xsl:value-of select="@name"/>(Identity):</item>
+        <item>class <xsl:value-of select="$name"/>(Identity):</item>
         
         <!-- Parse all comment text, merge multiple comments into single block -->
         <list begin="    '''" indent="    " end="    '''">
@@ -117,8 +125,16 @@
                 </xsl:if>
                 <!-- Create dataclass for each CIM class -->
                 <item>@dataclass(repr=False)</item>
+                
+                <xsl:variable name="name">
+                    <xsl:call-template name="name">
+                        <xsl:with-param name="name" select="@name"/>
+                        <xsl:with-param name="type" select="@name"/>
+                    </xsl:call-template>
+                </xsl:variable>
+
                 <item>
-                    class <xsl:value-of select="@name"/>(<xsl:value-of select="a:SuperType/@name"/>):
+                    class <xsl:value-of select="$name"/>(<xsl:value-of select="a:SuperType/@name"/>):
                 </item>
                 <!-- Parse all comment text, merge multiple comments into single block -->
                 <list begin="    '''" indent="    " end="    '''">
@@ -306,7 +322,14 @@
     <!-- Template for enumerations -->
     <xsl:template name="enumeration">
         <!-- Parse enumeration name -->
-        <item>class <xsl:value-of select="@name"/>(Enum):</item>
+        <xsl:variable name="name">
+            <xsl:call-template name="name">
+                <xsl:with-param name="name" select="@name"/>
+                <xsl:with-param name="type" select="@name"/>
+            </xsl:call-template>
+        </xsl:variable>
+
+        <item>class <xsl:value-of select="$name"/>(Enum):</item>
         <!-- Parse all comment text, merge multiple comments into single block -->
         <list begin="    '''" indent="    " end="    '''">
             <xsl:for-each select="a:Comment">
@@ -323,28 +346,78 @@
         </xsl:for-each>
     </xsl:template>
     
-    <!-- Template for primitives -->
-    <xsl:template name="primitive">
-        <xsl:variable name="xstype">
-            <xsl:call-template name="type">
-                <xsl:with-param name="xstype" select="@xstype"/>
-            </xsl:call-template>
-        </xsl:variable>
-        <!-- Parse primitve name and type -->
+    <!-- Template for CIM Units as SimpleType -->
+    <xsl:template name="units">
+        <!-- Parse SimpleType name and always inherit from PintUnit -->
         <item>@dataclass</item>
-        <item>class <xsl:value-of select="@name"/>():</item>
-        <list begin="" indent="    " end="">
-            value: <xsl:value-of select="$xstype"/> = field(default=None)
-        </list>
-        <!-- Parse all comment text, merge multiple comments into single block -->
+        <item>class <xsl:value-of select="@name"/>(PintUnit):</item>
+        
+        <!-- Parse all comment text for the class docstring -->
         <list begin="    '''" indent="    " end="    '''">
             <xsl:for-each select="a:Comment">
                 <xsl:call-template name="comment"/>
             </xsl:for-each>
         </list>
+        
+        <!-- Process Simple elements as regular fields -->
+        <xsl:for-each select="a:Simple">
+            <xsl:variable name="xstype">
+                <xsl:call-template name="type">
+                    <xsl:with-param name="xstype" select="@xstype"/>
+                </xsl:call-template>
+            </xsl:variable>
+            <list begin="" indent="    " end="">
+                <xsl:value-of select="@name"/>: <xsl:value-of select="$xstype"/> = field(default=None)
+            </list>
+        </xsl:for-each>
+        
+        <!-- Process multiplier Enumerated elements as regular fields -->
+        <xsl:for-each select="a:Enumerated[@name='multiplier']">
+            <xsl:variable name="multiplierConstant">
+                <xsl:choose>
+                    <xsl:when test="@constant = '' or @constant = 'none'">none</xsl:when>
+                    <xsl:otherwise><xsl:value-of select="@constant"/></xsl:otherwise>
+                </xsl:choose>
+            </xsl:variable>
+            <list begin="" indent="    " end="">
+                <xsl:value-of select="@name"/>: <xsl:value-of select="@type"/> = field(default=<xsl:value-of select="@type"/>.<xsl:value-of select="$multiplierConstant"/>)
+            </list>
+        </xsl:for-each>
+        
+        <!-- Process unit Enumerated elements as read-only properties -->
+        <xsl:for-each select="a:Enumerated[@name='unit']">
+            <xsl:variable name="unitConstant">
+                <xsl:choose>
+                    <xsl:when test="@constant = '' or @constant = 'none'">none</xsl:when>
+                    <xsl:otherwise><xsl:value-of select="@constant"/></xsl:otherwise>
+                </xsl:choose>
+            </xsl:variable>
+            <list begin="" indent="    " end="">
+                @property #read-only
+            </list>
+            <list begin="" indent="    " end="">
+                def <xsl:value-of select="@name"/>(self):
+            </list>
+            <list begin="" indent="        " end="">
+                return <xsl:value-of select="@type"/>.<xsl:value-of select="$unitConstant"/>
+            </list>
+        </xsl:for-each>
+        
+        <!-- Add __init__ method with unit symbol as default -->
+        <xsl:variable name="unitConstant">
+            <xsl:choose>
+                <xsl:when test="a:Enumerated[@name='unit']/@constant = '' or a:Enumerated[@name='unit']/@constant = 'none'">none</xsl:when>
+                <xsl:otherwise><xsl:value-of select="a:Enumerated[@name='unit']/@constant"/></xsl:otherwise>
+            </xsl:choose>
+        </xsl:variable>
+        <list begin="" indent="    " end="">
+            def __init__(self, value, input_unit:str='<xsl:value-of select="$unitConstant"/>', input_multiplier:str=None):
+        </list>
+        <list begin="" indent="        " end="">
+            self.__pint__(value = value, input_unit=input_unit, input_multiplier=input_multiplier)
+        </list>
+        
         <item></item>
-        
-        
     </xsl:template>
     
     <!-- Template for wrapping comment text -->
@@ -464,39 +537,78 @@
         <xsl:param name="name" select="@name"/>
         <xsl:param name="type" select="@type"/>
         
+        <xsl:variable name="cleanName">
+            <xsl:call-template name="removeSpecialChars">
+                <xsl:with-param name="text" select="$name"/>
+            </xsl:call-template>
+        </xsl:variable>
+        
         <xsl:choose>
             <xsl:when test="contains($name,'EAID_')"><xsl:value-of select="$type"/></xsl:when>
-            <xsl:when test="$name = 'and'">_and</xsl:when>
-            <xsl:when test="$name = 'as'">_as</xsl:when>
-            <xsl:when test="$name = 'assert'">_assert</xsl:when>
-            <xsl:when test="$name = 'break'">_break</xsl:when>
-            <xsl:when test="$name = 'class'">_class</xsl:when>
-            <xsl:when test="$name = 'continue'">_continue</xsl:when>
-            <xsl:when test="$name = 'def'">_def</xsl:when>
-            <xsl:when test="$name = 'del'">_del</xsl:when>
-            <xsl:when test="$name = 'elif'">_elif</xsl:when>
-            <xsl:when test="$name = 'else'">_else</xsl:when>
-            <xsl:when test="$name = 'except'">_except</xsl:when>
-            <xsl:when test="$name = 'finally'">_finally</xsl:when>
-            <xsl:when test="$name = 'for'">_for</xsl:when>
-            <xsl:when test="$name = 'from'">_from</xsl:when>
-            <xsl:when test="$name = 'global'">_global</xsl:when>
-            <xsl:when test="$name = 'if'">_if</xsl:when>
-            <xsl:when test="$name = 'import'">_import</xsl:when>
-            <xsl:when test="$name = 'in'">_in</xsl:when>
-            <xsl:when test="$name = 'is'">_is</xsl:when>
-            <xsl:when test="$name = 'lambda'">_lambda</xsl:when>
-            <xsl:when test="$name = 'nonlocal'">_nonlocal</xsl:when>
-            <xsl:when test="$name = 'not'">_not</xsl:when>
-            <xsl:when test="$name = 'or'">_or</xsl:when>
-            <xsl:when test="$name = 'pass'">_pass</xsl:when>
-            <xsl:when test="$name = 'raise'">_raise</xsl:when>
-            <xsl:when test="$name = 'return'">_return</xsl:when>
-            <xsl:when test="$name = 'try'">_try</xsl:when>
-            <xsl:when test="$name = 'while'">_while</xsl:when>
-            <xsl:when test="$name = 'with'">_with</xsl:when>
-            <xsl:when test="$name = 'yield'">_yield</xsl:when>
-            <xsl:otherwise><xsl:value-of select="$name"/></xsl:otherwise>
+            <xsl:when test="string-length($cleanName) > 0 and translate(substring($cleanName,1,1),'0123456789','') = ''">_<xsl:value-of select="$cleanName"/></xsl:when>
+            <xsl:when test="$cleanName = 'and'">_and</xsl:when>
+            <xsl:when test="$cleanName = 'as'">_as</xsl:when>
+            <xsl:when test="$cleanName = 'assert'">_assert</xsl:when>
+            <xsl:when test="$cleanName = 'break'">_break</xsl:when>
+            <xsl:when test="$cleanName = 'class'">_class</xsl:when>
+            <xsl:when test="$cleanName = 'continue'">_continue</xsl:when>
+            <xsl:when test="$cleanName = 'def'">_def</xsl:when>
+            <xsl:when test="$cleanName = 'del'">_del</xsl:when>
+            <xsl:when test="$cleanName = 'elif'">_elif</xsl:when>
+            <xsl:when test="$cleanName = 'else'">_else</xsl:when>
+            <xsl:when test="$cleanName = 'except'">_except</xsl:when>
+            <xsl:when test="$cleanName = 'finally'">_finally</xsl:when>
+            <xsl:when test="$cleanName = 'for'">_for</xsl:when>
+            <xsl:when test="$cleanName = 'from'">_from</xsl:when>
+            <xsl:when test="$cleanName = 'global'">_global</xsl:when>
+            <xsl:when test="$cleanName = 'if'">_if</xsl:when>
+            <xsl:when test="$cleanName = 'import'">_import</xsl:when>
+            <xsl:when test="$cleanName = 'in'">_in</xsl:when>
+            <xsl:when test="$cleanName = 'is'">_is</xsl:when>
+            <xsl:when test="$cleanName = 'lambda'">_lambda</xsl:when>
+            <xsl:when test="$cleanName = 'nonlocal'">_nonlocal</xsl:when>
+            <xsl:when test="$cleanName = 'not'">_not</xsl:when>
+            <xsl:when test="$cleanName = 'or'">_or</xsl:when>
+            <xsl:when test="$cleanName = 'pass'">_pass</xsl:when>
+            <xsl:when test="$cleanName = 'raise'">_raise</xsl:when>
+            <xsl:when test="$cleanName = 'return'">_return</xsl:when>
+            <xsl:when test="$cleanName = 'try'">_try</xsl:when>
+            <xsl:when test="$cleanName = 'while'">_while</xsl:when>
+            <xsl:when test="$cleanName = 'with'">_with</xsl:when>
+            <xsl:when test="$cleanName = 'yield'">_yield</xsl:when>
+            <xsl:otherwise><xsl:value-of select="$cleanName"/></xsl:otherwise>
+        </xsl:choose>
+    </xsl:template>
+    
+    <xsl:template name="removeSpecialChars">
+        <xsl:param name="text"/>
+        <xsl:param name="pos" select="1"/>
+        <xsl:param name="result" select="''"/>
+        
+        <xsl:choose>
+            <xsl:when test="$pos > string-length($text)">
+                <xsl:value-of select="$result"/>
+            </xsl:when>
+            <xsl:otherwise>
+                <xsl:variable name="char" select="substring($text, $pos, 1)"/>
+                <xsl:variable name="validChars" select="'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789_'"/>
+                <xsl:variable name="isValidChar" select="contains($validChars, $char)"/>
+                
+                <xsl:call-template name="removeSpecialChars">
+                    <xsl:with-param name="text" select="$text"/>
+                    <xsl:with-param name="pos" select="$pos + 1"/>
+                    <xsl:with-param name="result">
+                        <xsl:choose>
+                            <xsl:when test="$isValidChar">
+                                <xsl:value-of select="concat($result, $char)"/>
+                            </xsl:when>
+                            <xsl:otherwise>
+                                <xsl:value-of select="$result"/>
+                            </xsl:otherwise>
+                        </xsl:choose>
+                    </xsl:with-param>
+                </xsl:call-template>
+            </xsl:otherwise>
         </xsl:choose>
     </xsl:template>
     

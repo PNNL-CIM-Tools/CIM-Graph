@@ -2,10 +2,8 @@ from __future__ import annotations
 
 import json
 import logging
-from abc import ABC, abstractmethod
 from collections import defaultdict
 from dataclasses import dataclass, field, fields, is_dataclass
-from typing import Iterator, TypeVar, cast
 from uuid import UUID
 
 from cimgraph.data_profile.identity import Identity
@@ -16,12 +14,10 @@ _log = logging.getLogger(__name__)
 
 jsonld = dict['@id':str(UUID),'@type':str(type)]
 Graph = dict[type, dict[UUID, object]]
-T = TypeVar('T')
-
 
 
 @dataclass
-class GraphModel(ABC):
+class GraphModel():
     container: object
     connection: ConnectionInterface
     distributed: bool = field(default=False)
@@ -253,7 +249,7 @@ class GraphModel(ABC):
         return modified
 
 
-    def delete_object(self, obj:Identity) -> None:
+    def delete(self, obj:Identity) -> None:
         """
         Delete an object from a typed property graph dictionary and remove all references to it.
 
@@ -291,35 +287,10 @@ class GraphModel(ABC):
                         # One-to-one or many-to-one
                         clean_inverse_reference(value, target_attr, obj)
 
-        # # Step 2: Search the entire graph for any remaining references to this object
-        # for other_obj in graph.values():
-        #     if other_obj is obj:
-        #         continue  # Skip the object itself
 
-        #     for field in fields(other_obj):
-        #         field_value = getattr(other_obj, field.name)
 
-        #         # Handle list/set references
-        #         if isinstance(field_value, list) and obj in field_value:
-        #             field_value.remove(obj)
-        #         elif isinstance(field_value, set) and obj in field_value:
-        #             field_value.remove(obj)
-        #         # Handle direct references
-        #         elif field_value is obj:
-        #             setattr(other_obj, field.name, None)
-
-        # Step 3: Remove the object from the graph
         if obj_id in self.graph[cim_class]:
             del self.graph[cim_class][obj_id]
-        # else:
-        #     # If object is not keyed by mRID, search by identity
-        #     keys_to_delete = [k for k, v in graph.items() if v is obj]
-        #     for key in keys_to_delete:
-        #         del graph[key]
-
-
-
-
 
     def modify(self, cim_object:Identity, attribute:str, value:any, incremental_file:str=None) -> None:
         if not isinstance(cim_object, Identity):

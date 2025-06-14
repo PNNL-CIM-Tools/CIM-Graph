@@ -14,6 +14,10 @@ class CIMStereotype(Enum):
     Abstract = "Abstract"
     Concrete = "Concrete" 
     Description = "Description"
+    Compound = "Compound"
+    AggregateOf = "AggregateOf"
+    OfAggregate = "OfAggregate"
+    Attribute = "Attribute"
 
 def stereotype(stereotype: CIMStereotype):
     """Decorator to add UML stereotype metadata to dataclasses"""
