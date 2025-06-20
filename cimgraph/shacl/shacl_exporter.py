@@ -7,13 +7,13 @@ import rdflib
 from rdflib import Graph as RDFGraph, Namespace, URIRef
 from rdflib.namespace import SH, RDF
 from rdflib.collection import Collection
-from cimgraph.validators.attribute_utils import (
+from cimgraph.data_profile.attribute_utils import (
     get_attr_datatype, get_attr_uml_type, 
     get_attr_field_type, get_attr_inverse
 )
 
 _log = logging.getLogger(__name__)
-EX = Namespace("http://example.org/export#")
+EX = Namespace("http://gridappsd.org/export#")
 
 @dataclass
 class ConditionalExport:

@@ -9,7 +9,7 @@ from pint import UnitRegistry, Quantity
 import cimgraph.data_profile.units.cim_units as cim_units
 from cimgraph.data_profile.units.cim_units import UnitSymbol, UnitMultiplier
 
-units_file = impresources.files(cim_units) / 'units.txt'
+units_file = impresources.files(cim_units).joinpath('units.txt')
 ureg = UnitRegistry()
 ureg.load_definitions(units_file)
 

@@ -7,7 +7,7 @@ from uuid import UUID
 
 from defusedxml.ElementTree import parse
 
-from cimgraph.validators.attribute_utils import validate_attr_datatype
+from cimgraph.data_profile.attribute_utils import validate_attr_datatype
 from cimgraph.data_profile.identity import Identity
 from cimgraph.databases import (ConnectionInterface, get_cim_profile, get_iec61970_301,
                                 get_namespace)

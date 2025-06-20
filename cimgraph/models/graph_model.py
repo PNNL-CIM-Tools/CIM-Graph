@@ -4,17 +4,18 @@ import json
 import logging
 from collections import defaultdict
 from dataclasses import dataclass, field, fields, is_dataclass
+from typing import Iterator, TypeVar, cast
 from uuid import UUID
 
 from cimgraph.data_profile.identity import Identity
 from cimgraph.databases import ConnectionInterface
-from cimgraph.validators.incremental_builder import *
-from cimgraph.validators.shacl_exporter import SHACLExportFilter
+from cimgraph.models.incremental_builder import *
+from cimgraph.shacl import SHACLExportFilter, SHACLCatalogProcessor
 _log = logging.getLogger(__name__)
 
 jsonld = dict['@id':str(UUID),'@type':str(type)]
 Graph = dict[type, dict[UUID, object]]
-
+T = TypeVar('T')
 
 @dataclass
 class GraphModel():
@@ -373,7 +374,7 @@ class GraphModel():
         export_filter = SHACLExportFilter(shacl_file, self.cim)
         return export_filter.create_filtered_graph(self)
     
-    def export_and_serialize(self, shacl_file: str, output_file: str, 
+    def export_with_shacl_and_serialize(self, shacl_file: str, output_file: str, 
                            format: str = 'xml') -> None:
         """Export and serialize filtered graph in one step"""
         filtered_graph = self.export_with_shacl(shacl_file)
@@ -386,3 +387,12 @@ class GraphModel():
             write_json_ld(filtered_graph, output_file)
         else:
             raise ValueError(f"Unsupported format: {format}")
+        
+    def create_equipment_catalog(self, catalog_shape_name: str,
+                           catalog_shacl_file: str,
+                           format: str = None) -> dict | str:
+        """Create equipment catalog using SHACL catalog shapes"""
+
+        
+        processor = SHACLCatalogProcessor(catalog_shacl_file, self.cim)
+        return processor.create_catalog(self, catalog_shape_name, format)
