@@ -201,7 +201,7 @@ class XMLFile(ConnectionInterface):
             edge_uri = None
 
         if edge_uri is not None:
-            if edge_uri.split('#')[0] not in self.namespaces.values():
+            if (edge_uri.split('#')[0] + '#') not in self.namespaces.values():
                 try:
                     edge_uuid = UUID(edge_uri.strip('#').strip('_').lower())
                 except:
@@ -227,7 +227,7 @@ class XMLFile(ConnectionInterface):
                 #     _log.warning(f'unable to create object with uuid {edge_uri}')
             else:
                 try:
-                    enum_text = edge_uri.split(self.namespace)[1]
+                    enum_text = edge_uri.split('#')[1]
                     enum_text = enum_text.split('>')[0]
                     enum_class = enum_text.split('.')[0]
                     enum_value = enum_text.split('.')[1]
