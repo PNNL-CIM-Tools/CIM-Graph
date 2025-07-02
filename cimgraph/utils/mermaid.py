@@ -151,12 +151,14 @@ def class_mermaid(cim_class: type, show_attributes: bool = True, show_inherited:
                 attr = cim_class.__dataclass_fields__[attribute]
                 attr_type = str(attr.type)
                 try:
-                    if 'Attribute' in attr.metadata['type']:
-                        edge = attr_type.split('[')[1].split(']')[0]
-                        mermaid += f'{INDENT*2}+ {attribute}: {edge}\n'
-                    elif 'enumeration' in attr.metadata['type']:
+                    if 'enumeration' in attr.metadata['type']:
                         edge = attr_type.split('[')[1].split(']')[0]
                         mermaid += f'{INDENT*2}+ {attribute}: enum:{edge}\n'
+                        
+                    elif 'Attribute' in attr.metadata['type']:
+                        edge = attr_type.split('[')[1].split(']')[0]
+                        mermaid += f'{INDENT*2}+ {attribute}: {edge}\n'
+                    
                 except:
                     pass
 

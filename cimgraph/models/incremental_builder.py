@@ -316,9 +316,9 @@ def incremantal_row(cim_class:type, uri:str, difference:dict) -> str:
                     attr_type = attr_fields[attribute].metadata['type']
                     ns_prefix = REVERSE_NS[attr_fields[attribute].metadata['namespace']]
                     row += INDENT*3 + f'<{ns_prefix}:{parent.__name__}.{attribute}'
-                    if attr_type.lower() == 'attribute':
+                    if 'attribute' in attr_type.lower() and 'enumeration' in attr_type.lower():
                         row += f'>{str(value)}</{ns_prefix}:{parent.__name__}.{attribute}>\n'
-                    elif attr_type.lower() == 'enumeration':
+                    elif 'enumeration' in attr_type.lower():
                         row += f' rdf:resouce={ns_prefix}{str(value)}>\n'
                     else:
                         if isinstance(value, Identity):
