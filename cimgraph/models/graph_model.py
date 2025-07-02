@@ -388,11 +388,3 @@ class GraphModel():
         else:
             raise ValueError(f"Unsupported format: {format}")
         
-    def create_equipment_catalog(self, catalog_shape_name: str,
-                           catalog_shacl_file: str,
-                           format: str = None) -> dict | str:
-        """Create equipment catalog using SHACL catalog shapes"""
-
-        
-        processor = SHACLCatalogProcessor(catalog_shacl_file, self.cim)
-        return processor.create_catalog(self, catalog_shape_name, format)
