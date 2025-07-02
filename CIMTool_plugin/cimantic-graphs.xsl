@@ -294,7 +294,7 @@
     <xsl:template match="a:EnumeratedType" mode="enumeration">
         <xsl:variable name="enum-name" select="local:sanitize_name(@name, @name)"/>
         
-        <item>@stereotype(CIMStereotype.Enumeration)</item>
+        <xsl:call-template name="generate_stereotype"/>
         <item>class <xsl:value-of select="$enum-name"/>(Enum):</item>
         
         <xsl:call-template name="generate_class_docstring"/>
@@ -310,7 +310,7 @@
     
     <!-- Template for CIM Units as SimpleType -->
     <xsl:template match="a:SimpleType" mode="units">
-        <item>@stereotype(CIMStereotype.CIMDatatype)</item>
+        <xsl:call-template name="generate_stereotype"/>
         <item>@dataclass(repr=False)</item>
         <item>class <xsl:value-of select="@name"/>(CIMUnit):</item>
         

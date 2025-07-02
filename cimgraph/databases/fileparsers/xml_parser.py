@@ -212,10 +212,14 @@ class XMLFile(ConnectionInterface):
                 except:
                     _log.log(self.log_level, f'Object with ID {edge_uri} not found')
                     return None
+                
                 value = self.create_edge(self.graph, cim_class, identifier, sub_tag, edge_class, edge_uri)
-                reverse = cim_class.__dataclass_fields__[association].metadata['inverse']
-                self.create_edge(self.graph, edge_class, edge_uuid, reverse,
-                                    cim_class, self.graph[cim_class][identifier].uri())
+                try:
+                    reverse = cim_class.__dataclass_fields__[association].metadata['inverse']
+                    self.create_edge(self.graph, edge_class, edge_uuid, reverse,
+                                        cim_class, self.graph[cim_class][identifier].uri())
+                except Exception as e:
+                    _log.log(self.log_level, f'Could not create inverse for {cim_class.__name__} association {association}')
                 # except:
                 #     value = self.get_object(edge_uri)
 
