@@ -201,7 +201,7 @@ class XMLFile(ConnectionInterface):
             edge_uri = None
 
         if edge_uri is not None:
-            if self.namespace not in edge_uri:
+            if edge_uri.split('#')[0] not in self.namespaces.values():
                 try:
                     edge_uuid = UUID(edge_uri.strip('#').strip('_').lower())
                 except:
@@ -219,7 +219,7 @@ class XMLFile(ConnectionInterface):
                     self.create_edge(self.graph, edge_class, edge_uuid, reverse,
                                         cim_class, self.graph[cim_class][identifier].uri())
                 except Exception as e:
-                    _log.log(self.log_level, f'Could not create inverse for {cim_class.__name__} association {association}')
+                    _log.log(self.log_level, f'Could not identify inverse for {cim_class.__name__} association {association}')
                 # except:
                 #     value = self.get_object(edge_uri)
 

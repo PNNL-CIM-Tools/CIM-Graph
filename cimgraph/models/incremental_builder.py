@@ -376,14 +376,17 @@ def clean_inverse_reference(related_obj: any, attr_name: str, obj_to_remove: any
     """
     if related_obj is None:
         return
+    try:
+        related_value = getattr(related_obj, attr_name)
 
-    related_value = getattr(related_obj, attr_name)
-
-    # Handle collection (list/set) references
-    if isinstance(related_value, list) and obj_to_remove in related_value:
-        related_value.remove(obj_to_remove)
-    elif isinstance(related_value, set) and obj_to_remove in related_value:
-        related_value.remove(obj_to_remove)
-    # Handle direct references
-    elif related_value is obj_to_remove:
-        setattr(related_obj, attr_name, None)
+        # Handle collection (list/set) references
+        if isinstance(related_value, list) and obj_to_remove in related_value:
+            related_value.remove(obj_to_remove)
+        elif isinstance(related_value, set) and obj_to_remove in related_value:
+            related_value.remove(obj_to_remove)
+        # Handle direct references
+        elif related_value is obj_to_remove:
+            setattr(related_obj, attr_name, None)
+    except Exception as e:
+        _log.warning(f'Unable to remove {attr_name} from {related_obj} and {obj_to_remove} due to error \n {e}')
+        

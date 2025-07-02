@@ -3655,6 +3655,19 @@ class IdentifiedObject(Identity):
     EIC code. For details on EIC scheme please refer to ENTSO-E web site.
     '''
     
+    name: Optional[str] = field(
+        default=None,
+        metadata={
+        'type': 'Attribute',
+        'minOccurs': '0',
+        'maxOccurs': '1',
+        'namespace': 'http://iec.ch/TC57/CIM101#',
+        })
+    '''
+    The name is any free human readable and possibly non unique text naming
+    the object.
+    '''
+    
     shortName: Optional[str] = field(
         default=None,
         metadata={
@@ -3679,20 +3692,6 @@ class IdentifiedObject(Identity):
         })
     '''
     Dataset containing the data objects.
-    '''
-    
-    name: list[Name] = field(
-        default_factory=list,
-        metadata={
-        'type': 'NC',
-        'minOccurs': '0',
-        'maxOccurs': 'unbounded',
-        'inverse': 'Name.IdentifiedObject',
-        'namespace': 'http://iec.ch/TC57/CIM101#',
-        })
-    '''
-    All names of this identified object. Names may be but are not guaranteed
-    to be unique.
     '''
     
     ObjectType: Optional[ObjectType] = field(
@@ -12484,6 +12483,20 @@ class TransformerEndInfo(ConductingAssetInfo):
     '''
     All short-circuit test measurements in which this transformer end was
     energised.
+    '''
+    
+    GroundedEndShortCircuitTests: list[ShortCircuitTest] = field(
+        default_factory=list,
+        metadata={
+        'type': 'Association',
+        'minOccurs': '0',
+        'maxOccurs': 'unbounded',
+        'inverse': 'ShortCircuitTest.GroundedEnds',
+        'namespace': 'http://iec.ch/TC57/CIM101#',
+        })
+    '''
+    All short-circuit test measurements in which this transformer end was
+    short-circuited.
     '''
     
     CoreAdmittance: Optional[TransformerCoreAdmittance] = field(
@@ -45785,6 +45798,28 @@ class TapChangerControl(RegulatingControl):
     If true, the line drop compensation is to be applied.
     '''
     
+    reverseToNeutral: Optional[bool] = field(
+        default=None,
+        metadata={
+        'type': 'Attribute',
+        'minOccurs': '0',
+        'maxOccurs': '1',
+        'namespace': 'http://epri.com/gmdm#',
+        })
+    '''
+    '''
+    
+    reversible: Optional[bool] = field(
+        default=None,
+        metadata={
+        'type': 'Attribute',
+        'minOccurs': '0',
+        'maxOccurs': '1',
+        'namespace': 'http://epri.com/gmdm#',
+        })
+    '''
+    '''
+    
     lineDropR: Optional[ float | Resistance ] = field(
         default=None,
         metadata={
@@ -45865,6 +45900,50 @@ class TapChangerControl(RegulatingControl):
         })
     '''
     Line drop compensator reactance setting for reverse power flow.
+    '''
+    
+    reverseTargetDeadband: Optional[ float | Voltage ] = field(
+        default=None,
+        metadata={
+        'type': 'Attribute',
+        'minOccurs': '0',
+        'maxOccurs': '1',
+        'namespace': 'http://epri.com/gmdm#',
+        })
+    '''
+    '''
+    
+    reverseTargetValue: Optional[ float | Voltage ] = field(
+        default=None,
+        metadata={
+        'type': 'Attribute',
+        'minOccurs': '0',
+        'maxOccurs': '1',
+        'namespace': 'http://epri.com/gmdm#',
+        })
+    '''
+    '''
+    
+    reversingDelay: Optional[ float | Seconds ] = field(
+        default=None,
+        metadata={
+        'type': 'Attribute',
+        'minOccurs': '0',
+        'maxOccurs': '1',
+        'namespace': 'http://epri.com/gmdm#',
+        })
+    '''
+    '''
+    
+    reversingPowerThreshold: Optional[ float | ApparentPower ] = field(
+        default=None,
+        metadata={
+        'type': 'Attribute',
+        'minOccurs': '0',
+        'maxOccurs': '1',
+        'namespace': 'http://epri.com/gmdm#',
+        })
+    '''
     '''
     
 @stereotype(CIMStereotype.OfAggregate)
@@ -53030,6 +53109,20 @@ class TransformerEnd(IdentifiedObject):
     ends.
     '''
     
+    ToMeshImpedance: list[TransformerMeshImpedance] = field(
+        default_factory=list,
+        metadata={
+        'type': 'Association',
+        'minOccurs': '0',
+        'maxOccurs': 'unbounded',
+        'inverse': 'TransformerMeshImpedance.ToTransformerEnd',
+        'namespace': 'http://iec.ch/TC57/CIM101#',
+        })
+    '''
+    All mesh impedances between this 'from' and other 'to' transformer
+    ends.
+    '''
+    
     endNumber: Optional[int] = field(
         default=None,
         metadata={
@@ -53559,6 +53652,19 @@ class TransformerMeshImpedance(IdentifiedObject):
     from. It determines the voltage reference.
     '''
     
+    ToTransformerEnd: list[TransformerEnd] = field(
+        default_factory=list,
+        metadata={
+        'type': 'Attribute',
+        'minOccurs': '0',
+        'maxOccurs': 'unbounded',
+        'inverse': 'TransformerEnd.ToMeshImpedance',
+        'namespace': 'http://iec.ch/TC57/CIM101#',
+        })
+    '''
+    All transformer ends this mesh impedance is connected to.
+    '''
+    
 @dataclass(repr=False)
 class TransformerStarImpedance(IdentifiedObject):
     '''
@@ -54003,6 +54109,19 @@ class ShortCircuitTest(TransformerTest):
     Transformer end that voltage is applied to in this short-circuit test.
     The test voltage is chosen to induce rated current in the energised
     end.
+    '''
+    
+    GroundedEnds: list[TransformerEndInfo] = field(
+        default_factory=list,
+        metadata={
+        'type': 'Attribute',
+        'minOccurs': '0',
+        'maxOccurs': 'unbounded',
+        'inverse': 'TransformerEndInfo.GroundedEndShortCircuitTests',
+        'namespace': 'http://iec.ch/TC57/CIM101#',
+        })
+    '''
+    All ends short-circuited in this short-circuit test.
     '''
     
 @dataclass(repr=False)
@@ -56175,19 +56294,6 @@ class Name(Identity):
     for an object.
     '''
 
-    IdentifiedObject: Optional[IdentifiedObject] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'IdentifiedObject.Name',
-        'namespace': 'http://iec.ch/TC57/CIM101#',
-        })
-    '''
-    Identified object that this name designates.
-    '''
-    
     NameType: Optional[NameType] = field(
         default=None,
         metadata={

@@ -21,9 +21,16 @@ def write_xml(network: GraphModel, filename: str, namespaces: dict=None) -> None
         None
 
     """
-    if namespaces is None:
-        namespaces = {'cim': 'http://iec.ch/TC57/CIM100#',
-                      'rdf': 'http://www.w3.org/1999/02/22-rdf-syntax-ns#'}
+    default_namespaces = {'cim': 'http://iec.ch/TC57/CIM100#',
+                        'eu': 'http://iec.ch/TC57/CIM100-European#',
+                        'nc': 'http://entsoe.eu/ns/nc#',
+                        'gb': 'http://GB/placeholder/ext#',
+                        'rdf': 'http://www.w3.org/1999/02/22-rdf-syntax-ns#'}
+    if namespaces is not None:
+            default_namespaces.update(namespaces)
+    namespaces = default_namespaces
+
+        
 
     # Create reverse lookup for namespace
     reverse_ns_lookup = {v: k for k, v in namespaces.items()}
