@@ -389,4 +389,3 @@ def clean_inverse_reference(related_obj: any, attr_name: str, obj_to_remove: any
             setattr(related_obj, attr_name, None)
     except Exception as e:
         _log.warning(f'Unable to remove {attr_name} from {related_obj} and {obj_to_remove} due to error \n {e}')
-

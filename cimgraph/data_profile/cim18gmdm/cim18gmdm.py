@@ -77404,4 +77404,3 @@ class WEPStandard(Identity):
     '''
     WEP standard number.
     '''
-
