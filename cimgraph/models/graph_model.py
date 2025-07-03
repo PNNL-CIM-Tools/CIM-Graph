@@ -2,24 +2,31 @@ from __future__ import annotations
 
 import json
 import logging
-from abc import ABC, abstractmethod
-from dataclasses import dataclass, field
+from collections import defaultdict
+from dataclasses import dataclass, field, fields, is_dataclass
+from typing import Iterator, TypeVar, cast
 from uuid import UUID
 
 from cimgraph.data_profile.identity import Identity
 from cimgraph.databases import ConnectionInterface
+from cimgraph.models.incremental_builder import *
+from cimgraph.shacl import SHACLCatalogProcessor, SHACLExportFilter
 
 _log = logging.getLogger(__name__)
 
 jsonld = dict['@id':str(UUID),'@type':str(type)]
 Graph = dict[type, dict[UUID, object]]
+T = TypeVar('T')
 
 @dataclass
-class GraphModel(ABC):
+class GraphModel():
     container: object
     connection: ConnectionInterface
     distributed: bool = field(default=False)
-    graph: dict[type, dict[str, object]] = field(default_factory=dict)
+    graph: dict[type, dict[UUID, object]] = field(default_factory=dict)
+    incrementals: defaultdict[str, dict[str, any]] = field(default_factory=defaultdict)
+    __class_iter__: defaultdict[type, iter] = field(default_factory=defaultdict)
+    # __queried_objects__: defaultdict[UUID] = field(default_factory=defaultdict)
     """
     Underlying root class for all knowledge graph models, inlcuding
     FeederModel, BusBranchModel, and NodeBreakerModel
@@ -36,6 +43,10 @@ class GraphModel(ABC):
         pprint(cim.ClassName): pretty-print method for showing graph of a class type
         get_edges_query(cim.ClassName): returns query text for debugging
     """
+
+    # -------------------------------------------------------------------------
+    # Methods to add objects to GraphModel.graph
+    # -------------------------------------------------------------------------
 
     def add_to_graph(self, obj: object, graph: dict[type, dict[UUID, object]] = None) -> None:
         if graph is None:
@@ -69,7 +80,9 @@ class GraphModel(ABC):
             _log.warning(
                 f'object class missing from data profile: {obj_class}')
 
-
+    # -------------------------------------------------------------------------
+    # Methods to query databases
+    # -------------------------------------------------------------------------
 
     def get_all_edges(self, cim_class: type,
                       graph: dict[type, dict[str, object]] = None) -> None:
@@ -122,6 +135,212 @@ class GraphModel(ABC):
             new_edges = self.connection.get_from_triple(subject, predicate)
         return new_edges
 
+    # -------------------------------------------------------------------------
+    # Methods to retrieve objects from GraphModel.graph
+    # -------------------------------------------------------------------------
+
+    def list_by_class(self, cim_class:type[T]) -> list[T]:
+        '''Get all nodes of a specific type with proper typing.'''
+        values = list(self.graph.get(cim_class, {}).values())
+        return values
+
+    def iter_by_class(self, cim_class) -> iter:
+        '''Iterate through all nodes of a specific type with proper typing.'''
+        return iter(self.graph.get(cim_class, {}).values())
+
+    def first(self, cim_class:type):
+        '''Get first '''
+        values = self.list_by_class(cim_class)
+        if values:
+            self.__class_iter__[cim_class] = iter(values)
+            return next(self.__class_iter__[cim_class])
+        else:
+            return []
+
+    def next(self, cim_class:type[T]) -> object[T]:
+        '''Get next'''
+        if not self.__class_iter__[cim_class]:
+            return self.first(cim_class)
+        else:
+            return next(self.__class_iter__[cim_class])
+
+
+    # -------------------------------------------------------------------------
+    # Methods to search GraphModel.graph
+    # -------------------------------------------------------------------------
+
+    def find_by_attribute(self, cim_class:type[T], attribute:str, value:any) -> list[T]:
+        '''Searches the graph to find all object instances with matching value'''
+        matching = []
+        valid, attr_datatype, value = validate_attr_datatype(cim_class, attribute, value)
+        if not valid:
+            _log.warning(f'{attribute} with {value} should have datatype {attr_datatype}')
+        for cim_object in self.graph.get(cim_class, {}).values():
+            if str(getattr(cim_object, attribute)) == str(value):
+                matching.append(cim_object)
+        return matching
+
+    def find_by_condition(self, cim_class:type[T], attribute:str, predicate:callable[[T], bool]) -> list[T]:
+        """Find nodes using a custom lambda search criterion."""
+        return [
+            cim_object for cim_object in self.graph.get(cim_class, {}).values()
+            if predicate(getattr(cim_object, attribute))
+        ]
+
+    # -------------------------------------------------------------------------
+    # Methods to modify GraphModel.graph via difference message
+    # -------------------------------------------------------------------------
+
+    def create(self, cim_class: type, incremental_file: str = None, **kwargs: any) -> Identity:
+        """
+        Create an instance of a dataclass from keyword arguments.
+
+        Args:
+            cim_class: The dataclass type to instantiate
+            **kwargs: Attribute names and values for the dataclass instance
+
+        Returns:
+            An instance of the specified dataclass type
+
+        Raises:
+            TypeError: If cim_class is not a dataclass
+            TypeError: If kwargs contains attributes not in the dataclass
+        """
+        # Verify that class_type is a dataclass
+        if not is_dataclass(cim_class):
+            raise TypeError(f"{cim_class.__name__} is not a dataclass")
+        # Verify that class_type is in CIM profile
+        if cim_class.__name__ not in self.cim.__all__:
+            raise TypeError(f"{cim_class.__name__} not in CIM profile")
+
+        # Get the field names of the dataclass
+        field_names = {field.name for field in fields(cim_class)}
+
+        # Check if all kwargs keys are valid field names
+        invalid_attrs = set(kwargs.keys()) - field_names
+        if invalid_attrs:
+            raise TypeError(f"Invalid attribute(s) for {cim_class.__name__}: {', '.join(invalid_attrs)}")
+
+        # Create and return an instance of the dataclass
+        new_object:Identity = cim_class(**kwargs)
+
+        # Add to graph
+        self.add_to_graph(new_object)
+
+        # Add to list of incremental messages
+        new_obj_incremental(new_object, self.incrementals)
+
+        if incremental_file is not None:
+            forward = {}
+            forward[cim_class] = {}
+            forward[cim_class][new_object.uri()] = self.incrementals['forwardDifferences'][cim_class][new_object.uri()]
+            write_incremental(reverse=None, forward=forward, filename=incremental_file)
+
+        return new_object
+
+    def from_incremental(self, filename:str) -> list[object]:
+        '''
+        Create new object from incremental message
+        '''
+        if '.xml' in filename.lower():
+            message = read_incremental_xml(filename)
+        valid_message = validate_incremental(message, self.connection, self.graph)
+        # TODO: Delete objects from incremental
+        # TODO: Add objects from incremental
+        modified = modify_from_incremental(valid_message, self.connection, self.graph)
+        return modified
+
+
+    def delete(self, obj:Identity) -> None:
+        """
+        Delete an object from a typed property graph dictionary and remove all references to it.
+
+        Args:
+            obj: The object to delete
+        """
+
+        if obj is None:
+            return
+
+        cim_class = obj.__class__
+
+        # Step 1: Find and clean up all references to this object
+        obj_id = obj.identifier
+        if obj_id is None:
+            obj_id = id(obj)  # Fallback to using object id if no mRID exists
+
+        # First, iterate over fields of the object to find inverse references
+        for field in fields(obj):
+            # Check if this field has metadata about inverse relationships
+            if 'inverse' in field.metadata and field.metadata['type'] != 'enumeration':
+                # Get the value of this field
+                value = getattr(obj, field.name)
+
+                if value is not None:
+                    inverse_ref = field.metadata['inverse']
+                    target_attr = inverse_ref.split('.')[1]
+
+                    # Handle different cardinality cases
+                    if isinstance(value, (list, set)):
+                        # Many-to-many or one-to-many
+                        for related_obj in value:
+                            clean_inverse_reference(related_obj, target_attr, obj)
+                    else:
+                        # One-to-one or many-to-one
+                        clean_inverse_reference(value, target_attr, obj)
+
+
+
+        if obj_id in self.graph[cim_class]:
+            del self.graph[cim_class][obj_id]
+
+    def modify(self, cim_object:Identity, attribute:str, value:any, incremental_file:str=None) -> None:
+        if not isinstance(cim_object, Identity):
+            raise TypeError(f"{cim_object} is not a CIM-Graph dataclass")
+        # Verify that class_type is in CIM profile
+        cim_class = cim_object.__class__
+        if cim_class.__name__ not in self.cim.__all__:
+            raise TypeError(f"{cim_class.__name__} not in CIM profile")
+        if attribute not in cim_class.__dataclass_fields__:
+            raise TypeError(f"{cim_class.__name__}.{attribute} not in CIM profile")
+        cim_class = cim_object.__class__
+        if not validate_attr_datatype(cim_class, attribute, value):
+            raise TypeError(f'{value} does not match datatype of {attribute}')
+
+        # Get old value for reverse difference
+        base_value = self.incrementals['reverseDifferences'].get(cim_class, {}).get(cim_object.uri(), {}).get(attribute, {})
+        if base_value != {}:
+            old_value = base_value
+        else:
+            old_value = getattr(cim_object, attribute)
+
+        # Set new value
+        setattr(cim_object, attribute, value)
+        # Create incremental
+        modify_incremental(cim_object, attribute, old_value, value, self.incrementals)
+        # Write single incremental to file if specificied
+        if incremental_file is not None:
+            forward = {}
+            reverse = {}
+            forward[cim_class] = {}
+            reverse[cim_class] = {}
+            forward[cim_class][cim_object.uri()] = self.incrementals['forwardDifferences'][cim_class][cim_object.uri()]
+            reverse[cim_class][cim_object.uri()] = self.incrementals['reverseDifferences'][cim_class][cim_object.uri()]
+            write_incremental(reverse=reverse, forward=forward, filename=incremental_file)
+
+
+    def write_all_incrementals(self, incremental_file:str):
+            write_incremental(reverse=self.incrementals['reverseDifferences'],
+                            forward=self.incrementals['forwardDifferences'],
+                             filename=incremental_file)
+
+
+
+
+    # -------------------------------------------------------------------------
+    # Methods to print GraphModel.graph
+    # -------------------------------------------------------------------------
+
     def pprint(self, cim_class: type, show_empty: bool = False,
                json_ld: bool = False, use_names: bool = False) -> None:
         if cim_class in self.graph:
@@ -146,3 +365,26 @@ class GraphModel(ABC):
                 _log.warning(f'Unknown object of type {type(obj)}')
         dump = json.dumps(dump, indent=4)
         return dump
+
+    # -------------------------------------------------------------------------
+    # Methods for SHACL validation and access control GraphModel.graph
+    # -------------------------------------------------------------------------
+
+    def export_with_shacl(self, shacl_file: str) -> 'GraphModel':
+        """Export a filtered graph based on SHACL permissions"""
+        export_filter = SHACLExportFilter(shacl_file, self.cim)
+        return export_filter.create_filtered_graph(self)
+
+    def export_with_shacl_and_serialize(self, shacl_file: str, output_file: str,
+                           format: str = 'xml') -> None:
+        """Export and serialize filtered graph in one step"""
+        filtered_graph = self.export_with_shacl(shacl_file)
+
+        if format.lower() == 'xml':
+            from cimgraph.utils import write_xml
+            write_xml(filtered_graph, output_file)
+        elif format.lower() in ['jsonld', 'json-ld']:
+            from cimgraph.utils import write_json_ld
+            write_json_ld(filtered_graph, output_file)
+        else:
+            raise ValueError(f"Unsupported format: {format}")

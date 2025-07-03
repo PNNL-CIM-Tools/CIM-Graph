@@ -5,14 +5,16 @@ import enum
 import importlib
 import logging
 import os
+from collections import defaultdict
 from concurrent.futures import ThreadPoolExecutor
 from uuid import UUID
 
 from defusedxml.ElementTree import parse
 
+from cimgraph.data_profile.identity import Identity
 from cimgraph.data_profile.known_problem_classes import ClassesWithManytoMany
 from cimgraph.databases import (ConnectionInterface, Graph, QueryResponse, get_cim_profile,
-                                get_iec61970_301, get_namespace)
+                                get_iec61970_301, get_namespace, get_validation_log_level)
 
 # from cimgraph.utils.timing import timing as time_func
 
@@ -20,31 +22,42 @@ _log = logging.getLogger(__name__)
 
 class XMLFile(ConnectionInterface):
 
-    def __init__(self, filename:str|list[str]):
+    def __init__(self, filename:str|list[str], namespaces:dict=None):
+        # clear cached env variables
+        get_namespace.cache_clear()
+        get_cim_profile.cache_clear()
+        get_iec61970_301.cache_clear()
+        get_validation_log_level.cache_clear()
+
+        # retrieve env variables
         self.cim_profile, self.cim = get_cim_profile()
         self.namespace = get_namespace()
         self.iec61970_301 = get_iec61970_301()
+        self.log_level = get_validation_log_level()
         self.filename = filename
-        self.graph = None
+        self.rdf = '''{http://www.w3.org/1999/02/22-rdf-syntax-ns#}'''
+
+        self.namespaces = {'cim': self.namespace, 'rdf': self.rdf}
+        if namespaces is not None:
+            self.namespaces.update(namespaces)
+        # self.graph = None
         self.connect()
 
     def connect(self):
         # if not graph:
         if self.filename is not None:
             try:
-                self.rdf = '''{http://www.w3.org/1999/02/22-rdf-syntax-ns#}'''
-                self.namespaces = {'cim': self.namespace, 'rdf': self.rdf}
                 self.tree = parse(self.filename)
                 self.root = self.tree.getroot()
-                self.class_index = {}
-                self.graph = {}
+
             except:
                 _log.warning(f'File {self.filename} not found. Defaulting to empty network graph')
-                self.filename = None
                 self.tree = None
                 self.root = None
-                self.class_index = {}
-                self.graph = {}
+            self.class_index = {}
+            self.graph = defaultdict(lambda: defaultdict(dict))
+        else:
+            raise ValueError('filename must be specified')
 
 
     def disconnect(self):
@@ -55,20 +68,29 @@ class XMLFile(ConnectionInterface):
     def execute(self, query_message: str) -> QueryResponse:
         pass
 
-    def get_object(self, mrid:str, graph = None) -> object:
+    def get_object(self, mRID:str, graph = None) -> object:
+        obj = None
         for element in self.root:
-            if mrid in element.get(f'{self.rdf}about'):
+            if 'about' in str(element.attrib.keys()):
+                uri = element.get(f'{self.rdf}about')
+            elif 'ID' in str(element.attrib.keys()):
+                uri = element.get(f'{self.rdf}ID')
+            if mRID in uri:
                 obj = self.parse_nodes(element)
         return obj
 
-    def get_from_triple(self, subject:object, predicate:str, graph: Graph = None) -> list[object]:
+    def get_from_triple(self, subject:Identity, predicate:str, graph: Graph = None) -> list[object]:
         if graph is None:
-            graph = {}
+            graph = defaultdict(lambda: defaultdict(dict))
         results = []
         class_type = subject.__class__
         elements = self.tree.findall(f'.//cim:{class_type.__name__}', self.namespaces)
         for element in elements:
-            if subject.uri() in element.get(f'{self.rdf}about'):
+            if 'about' in str(element.attrib.keys()):
+                uri = element.get(f'{self.rdf}about')
+            elif 'ID' in str(element.attrib.keys()):
+                uri = element.get(f'{self.rdf}ID')
+            if subject.uri() in uri:
                 value = element.find(f'.//cim:{predicate}', self.namespaces)
                 results.append(self.parse_value(value, class_type, subject.identifier))
         return results
@@ -79,99 +101,134 @@ class XMLFile(ConnectionInterface):
     def create_distributed_graph(self, area: object, graph: dict = None) -> Graph:
         _log.error('distributed models not supported for XML file read')
         if graph is None:
-            graph = {}
+            graph = defaultdict(lambda: defaultdict(dict))
 
-    # @time_func
-    def create_new_graph(self, container: object) -> Graph:
 
-        for element in self.root:
-            self.parse_nodes(element)
+    def create_new_graph(self, container: object, graph:dict = None) -> Graph:
+        if graph is not None:
+            self.graph = graph
+        if self.root is not None:
+            for element in self.root:
+                self.parse_nodes(element)
 
-        with ThreadPoolExecutor(max_workers=os.cpu_count()) as executor:
+            for element in self.root:
+                self.parse_edges(element)
 
-            futures = [executor.submit(self.parse_edges, element) for element in self.root]
-            results = [future.result() for future in concurrent.futures.as_completed(futures)]
+            # with ThreadPoolExecutor(max_workers=os.cpu_count()) as executor:
 
+            #     futures = [executor.submit(self.parse_edges, element) for element in self.root]
+            #     results = [future.result() for future in concurrent.futures.as_completed(futures)]
+        else:
+            _log.warning('No root element found in XML file')
+            self.graph = defaultdict(lambda: defaultdict(dict))
         return self.graph
 
-    # async def create_new_graph_async(self):
-    #     for f in asyncio.as_completed([
-    #             asyncio.to_thread(self.parse_nodes(element))
-    #             for element in self.root]):
-    #         await f
-
-    #     for f in asyncio.as_completed([
-    #             asyncio.to_thread(self.parse_edges(element))
-    #             for element in self.root]):
-    #         await f
-
-    # @time_func
-    def parse_nodes(self, element:object, graph:Graph=None):
-        if not graph:
-            graph = self.graph
-
-        # Iterate over the elements and create dataclass instances
-        class_name = element.tag.split('{'+self.namespace+'}')[1]
+    def parse_nodes(self, element:object) -> Identity:
+        obj = None
+        class_name = None
+        try:
+            # Iterate over the elements and create dataclass instances
+            class_name = element.tag.split('{'+self.namespace+'}')[1]
+        except:
+            for namespace in self.namespaces.values():
+                try:
+                    class_name = element.tag.split('{'+namespace+'}')[1]
+                except:
+                    pass
+        if class_name is None:
+            _log.error(f'Unable to parse {element}. This may be caused by an invalid namespace')
+            return None
 
         if class_name in self.cim.__all__:
             # print(class_name)
             cim_class = getattr(self.cim, class_name)
-            uri = element.get(f'{self.rdf}about')
-            identifier = UUID(uri.strip('_').lower())
+            if 'about' in str(element.attrib.keys()):
+                uri = element.get(f'{self.rdf}about')
+            elif 'ID' in str(element.attrib.keys()):
+                uri = element.get(f'{self.rdf}ID')
+            else:
+                _log.error(f'Unable to parse {element}. Elements must be rdf:ID or rdf:about')
+
             uri = uri.split(':')[-1]  # Extract UUID from the full URI
-            self.class_index[identifier] = cim_class
-            obj = self.create_object(graph, cim_class, uri)
+            # try:
+            #     identifier = UUID(uri.strip('_').lower())
+            # except:
+            #     _log.warning(f'Unable to parse URI. Check the IEC61970-301 serialization')
+
+
+            obj = self.create_object(self.graph, cim_class, uri)
+            self.class_index[obj.uri()] = cim_class
+            if uri != obj.uri():
+                self.class_index[uri]=obj.uri()
+
         else:
-            _log.warning(f'{class_name} not in data profile')
+            _log.log(self.log_level, f'{class_name} not in data profile')
         return obj
 
     # @time_func
     def parse_edges(self, element):
 
-        class_name = element.tag.split('{'+self.namespace+'}')[1]
+        # class_name = element.tag.split('{'+self.namespace+'}')[1]
+        class_name = element.tag.split('}')[1]
 
 
         if class_name in self.cim.__all__:
             cim_class = getattr(self.cim, class_name)
-            uri = element.get(f'{self.rdf}about')
-
-            identifier = UUID(uri.strip('_').lower())
-            uri = uri.split(':')[-1]  # Extract UUID from the full URI
-            obj = self.graph[cim_class][UUID(uri)]
+            if 'about' in str(element.attrib.keys()):
+                uri = element.get(f'{self.rdf}about')
+            elif 'ID' in str(element.attrib.keys()):
+                uri = element.get(f'{self.rdf}ID')
+            try:
+                uri = uri.split(':')[-1]  # Extract UUID from the full URI
+                identifier = UUID(uri.strip('#').strip('_').lower())
+            except:
+                # identifier = UUID(self.class_index[uri].strip('_').lower())
+                identifier = uri
+            obj = self.graph[cim_class][identifier]
             for sub_element in element:
-                self.parse_value(sub_element, cim_class, identifier)
+                if 'Identity.identifier' not in sub_element.tag:
+                    self.parse_value(sub_element, cim_class, identifier)
 
         else:
-            _log.warning(f'{class_name} not in data profile')
+            _log.log(self.log_level, f'{class_name} not in data profile')
 
     def parse_value(self, sub_element, cim_class, identifier):
-
+        value = None
         sub_tag = sub_element.tag.split('}')[-1]
         association = self.check_attribute(cim_class, sub_tag)
         try:
-            edge_uri = sub_element.attrib[f'{self.rdf}resource'].split('uuid:')[-1]
+            edge_uri = sub_element.attrib[f'{self.rdf}resource'].split('uuid:')[-1].strip('#')
         except:
             edge_uri = None
 
         if edge_uri is not None:
-            if self.namespace not in edge_uri:
-                # try:
-                    edge_uuid = UUID(edge_uri.strip('_').lower())
+            if (edge_uri.split('#')[0] + '#') not in self.namespaces.values():
+                try:
+                    edge_uuid = UUID(edge_uri.strip('#').strip('_').lower())
+                except:
+                    edge_uuid = edge_uri
 
-                    try:
-                        edge_class = self.class_index[edge_uuid]
-                        value = self.create_edge(self.graph, cim_class, identifier, sub_tag, edge_class, edge_uri)
-                        reverse = cim_class.__dataclass_fields__[association].metadata['inverse']
-                        self.create_edge(self.graph, edge_class, edge_uuid, reverse,
-                                            cim_class, self.graph[cim_class][identifier].uri())
-                    except:
-                        value = self.get_object(edge_uri)
+                try:
+                    edge_class = self.class_index[edge_uri]
+                except:
+                    _log.log(self.log_level, f'Object with ID {edge_uri} not found')
+                    return None
+
+                value = self.create_edge(self.graph, cim_class, identifier, sub_tag, edge_class, edge_uri)
+                try:
+                    reverse = cim_class.__dataclass_fields__[association].metadata['inverse']
+                    self.create_edge(self.graph, edge_class, edge_uuid, reverse,
+                                        cim_class, self.graph[cim_class][identifier].uri())
+                except Exception as e:
+                    _log.log(self.log_level, f'Could not identify inverse for {cim_class.__name__} association {association}')
+                # except:
+                #     value = self.get_object(edge_uri)
 
                 # except:
                 #     _log.warning(f'unable to create object with uuid {edge_uri}')
             else:
                 try:
-                    enum_text = edge_uri.split(self.namespace)[1]
+                    enum_text = edge_uri.split('#')[1]
                     enum_text = enum_text.split('>')[0]
                     enum_class = enum_text.split('.')[0]
                     enum_value = enum_text.split('.')[1]

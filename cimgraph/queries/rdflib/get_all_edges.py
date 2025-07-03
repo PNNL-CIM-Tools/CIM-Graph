@@ -2,7 +2,7 @@ from __future__ import annotations
 
 from uuid import UUID
 
-from cimgraph.databases import get_iec61970_301, get_namespace
+from cimgraph.databases import get_iec61970_301, get_namespace, get_url
 
 
 def get_all_edges_sparql(graph:dict[type, dict[UUID, object]], cim_class: type, uuid_list: list[UUID]) -> str:
@@ -13,34 +13,24 @@ def get_all_edges_sparql(graph:dict[type, dict[UUID, object]], cim_class: type, 
             class type and UUID object identifier
         cim_class (type): The CIM class type to query
         uuid_list (list[UUID]): List of UUIDs to query for
-
     Returns:
-        query_message: query string that can be used in RDFLib connection or STOMP client
+        query_message: query string that can be used in blazegraph connection or STOMP client
     """
     class_name = cim_class.__name__
-    namespace = get_namespace()
 
-
-    if int(get_iec61970_301()) > 7:
+    if get_iec61970_301() > 7:
         split = 'urn:uuid:'
     else:
-        split = 'rdf:id:'
+        split = f'{get_url()}#'
 
     query_message = """
         PREFIX r:  <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
-        PREFIX cim:  <%s>""" % namespace
+        PREFIX cim:  <%s>""" % get_namespace()
 
     query_message += """
-        SELECT DISTINCT ?mRID ?attr ?val ?edge_class ?edge_mRID ?eq
+        SELECT DISTINCT ?identifier ?attr ?val ?edge_class
         WHERE {
-          ?eq r:type cim:%s.""" % class_name
-    # query_message += """
-    #     VALUES ?fdrid {"%s"}
-    #     {?fdr cim:IdentifiedObject.mRID ?fdrid.
-    #     {?eq (cim:|!cim:)?  [ cim:Equipment.EquipmentContainer ?fdr]}
-    #      UNION
-    #      {[cim:Equipment.EquipmentContainer ?fdr] (cim:|!cim:)?  ?eq}}.
-    #       """ %feeder_mrid
+          """
 
     query_message += """
     VALUES ?identifier {"""
@@ -51,8 +41,9 @@ def get_all_edges_sparql(graph:dict[type, dict[UUID, object]], cim_class: type, 
     query_message += f'''
         bind(iri(concat("{split}", ?identifier)) as ?eq)'''
 
-    # add all attributes
     query_message += """
+
+        ?eq r:type cim:%s.
 
         {?eq (cim:|!cim:) ?val.
          ?eq ?attr ?val.}
@@ -60,18 +51,14 @@ def get_all_edges_sparql(graph:dict[type, dict[UUID, object]], cim_class: type, 
         {?val (cim:|!cim:) ?eq.
          ?val ?attr ?eq.}
 
-        # {bind(strafter(str(?attr),"#") as ?attribute).}
-        # {bind(strafter(str(?val),"%s") as ?uri).}
-        # {bind(if(?uri = "", ?val, ?uri) as ?value).}
 
         OPTIONAL {?val a ?classraw.
-                  bind(strafter(str(?classraw),"%s") as ?edge_class).}
-        OPTIONAL {?val cim:IdentifiedObject.mRID ?edge_mRID.
-                #   {bind(if(EXISTS(?edge_id), ?val, ?edge_id)) as ?edge_mRID)}.
-                #   bind(concat("{\\"@id\\":\\"", ?edge_mRID,"\\",\\"@type\\":\\"", ?edge_class, "\\"}") as ?edge)
-                  }
-        }
+                  bind(strafter(str(?classraw),"%s") as ?edge_class)
+                  {bind(strafter(str(?val),"%s") as ?uri)}
 
+                #   bind(concat("{\\"@id\\":\\"", ?uri,"\\",\\"@type\\":\\"", ?edge_class, "\\"}") as ?edge)
+        }
+        }
         ORDER by  ?identifier ?attribute
-        """ % (split, namespace)
+        """ % (class_name,  get_namespace(), split)
     return query_message

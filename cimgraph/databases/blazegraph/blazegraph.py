@@ -5,6 +5,7 @@ import json
 import logging
 import math
 import os
+from collections import defaultdict
 from uuid import UUID
 
 from SPARQLWrapper import JSON, POST, SPARQLWrapper
@@ -23,20 +24,6 @@ class BlazegraphConnection(ConnectionInterface):
 
     def __init__(self):
 
-        # required_env_vars = [
-        #     'CIMG_CIM_PROFILE',
-        #     'CIMG_URL',
-        #     'CIMG_IEC61970_301'
-        # ]
-
-        # missing_vars = [
-        #     var for var in required_env_vars if os.getenv(var) is None
-        # ]
-
-        # if missing_vars:
-        #     raise EnvironmentError(
-        #         f"Missing required environment variables: {', '.join(missing_vars)}"
-        #     )
 
         self.sparql_obj = None
         self.url = get_url()
@@ -109,7 +96,7 @@ class BlazegraphConnection(ConnectionInterface):
         """
         # Use empty dict if graph not provided
         if graph is None:
-            graph = {}
+            graph = defaultdict(lambda: defaultdict(dict))
 
         # Use sparql module to build get correct query string
         sparql_message = sparql.get_object_sparql(mRID)
@@ -145,7 +132,7 @@ class BlazegraphConnection(ConnectionInterface):
             new_edges: A list of the retrieved objects or property strings.
         """
         if graph is None:
-            graph = {}
+            graph = defaultdict(lambda: defaultdict(dict))
 
         self.add_to_graph(obj=subject, graph=graph)
         # Generate SPARQL query for user-specified triple string
@@ -174,7 +161,7 @@ class BlazegraphConnection(ConnectionInterface):
             dict: Graph consisting of types and UUID mapped to object instances.
         """
         if graph is None:
-            graph = {}
+            graph = defaultdict(lambda: defaultdict(dict))
         self.add_to_graph(graph=graph, obj=container)
         # Get all nodes, terminal, and equipment associated with EquipmentContainer object
         sparql_message = sparql.get_all_nodes_from_container(container)
@@ -186,7 +173,7 @@ class BlazegraphConnection(ConnectionInterface):
 
     def create_distributed_graph(self, area:object, graph:dict=None) -> Graph:
         if graph is None:
-            graph = {}
+            graph = defaultdict(lambda: defaultdict(dict))
         self.add_to_graph(graph=graph, obj=area)
 
         if not isinstance(area, self.cim.SubSchedulingArea):

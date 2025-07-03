@@ -7,6 +7,7 @@ import requests
 
 import cimgraph
 from cimgraph.data_profile.identity import Identity
+from cimgraph.data_profile.units import CIMUnit
 
 _log = logging.getLogger(__name__)
 
@@ -123,19 +124,41 @@ def class_mermaid(cim_class: type, show_attributes: bool = True, show_inherited:
     parent_classes.pop(len(parent_classes) - 1)
     mermaid = ''
 
-    if type(cim_class) is not enum.EnumMeta:# and len(parent_classes) > 1:
+    if issubclass(cim_class, CIMUnit):
+        instance = cim_class(0)
         mermaid = INDENT + 'class ' + cim_class.__name__ + '{\n'
+        try:
+            stereotype = cim_class.__stereotype__.value
+            mermaid += INDENT*2 + f'<<{stereotype}>>\n'
+        except:
+            pass
+        mermaid += INDENT*2 + 'value: float \n'
+        mermaid += INDENT*2 + 'unit: ' + getattr(instance, 'unit').value + ' \n'
+        mermaid += INDENT*2 + 'multiplier: ' + getattr(instance, 'multiplier').value + ' \n'
+        mermaid += INDENT + '}\n'
+
+
+    elif type(cim_class) is not enum.EnumMeta:# and len(parent_classes) > 1:
+        mermaid = INDENT + 'class ' + cim_class.__name__ + '{\n'
+        try:
+            stereotype = cim_class.__stereotype__.value
+            mermaid += INDENT*2 + f'<<{stereotype}>>\n'
+        except:
+            pass
+
         if show_attributes:
             for attribute in cim_class.__annotations__.keys():
                 attr = cim_class.__dataclass_fields__[attribute]
                 attr_type = str(attr.type)
                 try:
-                    if 'Attribute' in attr.metadata['type']:
-                        edge = attr_type.split('[')[1].split(']')[0]
-                        mermaid += f'{INDENT*2}+ {attribute}: {edge}\n'
-                    elif 'enumeration' in attr.metadata['type']:
+                    if 'enumeration' in attr.metadata['type']:
                         edge = attr_type.split('[')[1].split(']')[0]
                         mermaid += f'{INDENT*2}+ {attribute}: enum:{edge}\n'
+
+                    elif 'Attribute' in attr.metadata['type']:
+                        edge = attr_type.split('[')[1].split(']')[0]
+                        mermaid += f'{INDENT*2}+ {attribute}: {edge}\n'
+
                 except:
                     pass
 
@@ -154,7 +177,7 @@ def class_mermaid(cim_class: type, show_attributes: bool = True, show_inherited:
         mermaid += INDENT + '}\n'
     elif type(cim_class) is enum.EnumMeta:
         mermaid = INDENT + 'class ' + cim_class.__name__ + ':::enum {\n'
-        mermaid += INDENT*2 + '<<enumeration>>\n'
+        # mermaid += '<<enumeration>>\n'
         for value in cim_class.__members__.keys():
             mermaid += INDENT*2 + value + '\n'
         mermaid += '}\n'
@@ -207,7 +230,7 @@ def class_all_assc_mermaid(cim_class: type, show_inherited: bool = False) -> str
     parent_classes.pop(len(parent_classes) - 1)
     mermaid = ''
 
-    if type(cim_class) is not enum.EnumMeta and len(parent_classes) > 1:
+    if type(cim_class) is not enum.EnumMeta and len(parent_classes) > 1 and not issubclass(cim_class, CIMUnit):
         mermaid += INDENT + f'{parent_classes[1].__name__} <|-- {cim_class.__name__} : inherits from\n'
 
         for attribute in cim_class.__annotations__.keys():
@@ -237,9 +260,9 @@ def get_mermaid(root: object | type | list, show_attributes: bool = True, show_i
         str: The mermaid diagram representation.
     """
     mermaid = ''
-    if isinstance(root, Identity) or type(root) is enum.EnumMeta:
+    if isinstance(root, Identity):
         mermaid = object_mermaid(root)
-    elif is_dataclass(root):
+    elif is_dataclass(root) or type(root) is enum.EnumMeta:
         mermaid = '%%{init: {"theme":"' + str(theme) + "'}}%%\n"
         mermaid += 'classDiagram\n'
         mermaid += class_mermaid(root, show_attributes, show_inherited)
@@ -351,7 +374,7 @@ def add_class_path_mermaid(root: type, path: str | list[str], mermaid: str,
             next_class_name = next_str.type.split('[')[1].split(']')[0]
             # next_class = getattr(edge.__module__, next_class_name)
             next_class = eval(f'{edge.__module__}.{next_class_name}')
-            mermaid += class_mermaid(next_class, show_attributes, show_inherited)
+        mermaid += class_mermaid(next_class, show_attributes, show_inherited)
         edge = next_class
     return mermaid
 
@@ -413,15 +436,9 @@ def add_mermaid_path(root: object | type, path: str | list[str], mermaid: str,
         mermaid = add_class_path_mermaid(root, path, mermaid, show_attributes, show_inherited)
     return mermaid
 
-import base64
-import logging
-from typing import Optional
 
-import requests
 
-_log = logging.getLogger(__name__)
-
-def download_mermaid(mermaid: str, filename: str, timeout: int = 30) -> Optional[bool]:
+def download_mermaid(mermaid: str, filename: str, timeout: int = 30) -> bool:
     """
     Downloads a Mermaid diagram from mermaid.ink and saves as an image
 
