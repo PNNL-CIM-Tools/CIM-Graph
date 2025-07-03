@@ -1,6 +1,7 @@
 import json
 import logging
 from dataclasses import dataclass, field, is_dataclass
+from enum import Enum
 from random import Random
 from typing import Any, Dict, List, Optional, Union
 from uuid import UUID, uuid4
@@ -9,6 +10,24 @@ from uuid import UUID, uuid4
 ARCHIVE_JSON_LD = True
 _log = logging.getLogger(__name__)
 
+class CIMStereotype(Enum):
+    Abstract = 'Abstract'
+    Concrete = 'Concrete'
+    Description = 'Description'
+    Compound = 'Compound'
+    AggregateOf = 'AggregateOf'
+    OfAggregate = 'OfAggregate'
+    Attribute = 'Attribute'
+    CIMDatatype = 'CIMDatatype'
+    Enumeration = 'Enumeration'
+    ByReference = 'ByReference'
+
+def stereotype(stereotype: CIMStereotype):
+    """Decorator to add UML stereotype metadata to dataclasses"""
+    def decorator(cls):
+        cls.__stereotype__ = stereotype
+        return cls
+    return decorator
 
 class UUID_Meta:
     """

@@ -316,9 +316,9 @@ def incremantal_row(cim_class:type, uri:str, difference:dict) -> str:
                     attr_type = attr_fields[attribute].metadata['type']
                     ns_prefix = REVERSE_NS[attr_fields[attribute].metadata['namespace']]
                     row += INDENT*3 + f'<{ns_prefix}:{parent.__name__}.{attribute}'
-                    if attr_type.lower() == 'attribute':
+                    if 'attribute' in attr_type.lower() and 'enumeration' in attr_type.lower():
                         row += f'>{str(value)}</{ns_prefix}:{parent.__name__}.{attribute}>\n'
-                    elif attr_type.lower() == 'enumeration':
+                    elif 'enumeration' in attr_type.lower():
                         row += f' rdf:resouce={ns_prefix}{str(value)}>\n'
                     else:
                         if isinstance(value, Identity):
@@ -376,14 +376,17 @@ def clean_inverse_reference(related_obj: any, attr_name: str, obj_to_remove: any
     """
     if related_obj is None:
         return
+    try:
+        related_value = getattr(related_obj, attr_name)
 
-    related_value = getattr(related_obj, attr_name)
+        # Handle collection (list/set) references
+        if isinstance(related_value, list) and obj_to_remove in related_value:
+            related_value.remove(obj_to_remove)
+        elif isinstance(related_value, set) and obj_to_remove in related_value:
+            related_value.remove(obj_to_remove)
+        # Handle direct references
+        elif related_value is obj_to_remove:
+            setattr(related_obj, attr_name, None)
+    except Exception as e:
+        _log.warning(f'Unable to remove {attr_name} from {related_obj} and {obj_to_remove} due to error \n {e}')
 
-    # Handle collection (list/set) references
-    if isinstance(related_value, list) and obj_to_remove in related_value:
-        related_value.remove(obj_to_remove)
-    elif isinstance(related_value, set) and obj_to_remove in related_value:
-        related_value.remove(obj_to_remove)
-    # Handle direct references
-    elif related_value is obj_to_remove:
-        setattr(related_obj, attr_name, None)

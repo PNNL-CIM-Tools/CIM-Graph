@@ -9,7 +9,7 @@ from cimgraph.models.graph_model import GraphModel
 _log = logging.getLogger(__name__)
 
 
-def write_xml(network: GraphModel, filename: str, namespaces: dict=None) -> None:
+def write_xml(network: GraphModel, filename: str, namespaces: dict=None, write_identifier=False) -> None:
     """
     Write the network graph to an XML file.
 
@@ -21,9 +21,16 @@ def write_xml(network: GraphModel, filename: str, namespaces: dict=None) -> None
         None
 
     """
-    if namespaces is None:
-        namespaces = {'cim': 'http://iec.ch/TC57/CIM100#',
-                      'rdf': 'http://www.w3.org/1999/02/22-rdf-syntax-ns#'}
+    default_namespaces = {'cim': 'http://iec.ch/TC57/CIM100#',
+                        'eu': 'http://iec.ch/TC57/CIM100-European#',
+                        'nc': 'http://entsoe.eu/ns/nc#',
+                        'gb': 'http://GB/placeholder/ext#',
+                        'rdf': 'http://www.w3.org/1999/02/22-rdf-syntax-ns#'}
+    if namespaces is not None:
+            default_namespaces.update(namespaces)
+    namespaces = default_namespaces
+
+
 
     # Create reverse lookup for namespace
     reverse_ns_lookup = {v: k for k, v in namespaces.items()}
@@ -64,7 +71,9 @@ def write_xml(network: GraphModel, filename: str, namespaces: dict=None) -> None
             for parent in parent_classes:
                 for attribute in parent.__annotations__.keys():
                     # Skip over Identity.identifier attribute
-                    if attribute == 'identifier':
+                    if attribute == 'identifier' and write_identifier:
+                        row = f'  <cim:Identity.identifier>{obj.uri()}</cim:Identity.identifier>\n'
+                        f.write(row)
                         continue
                     attribute_type = cim_class.__dataclass_fields__[attribute].type
                     rdf = f'{parent.__name__}.{attribute}'

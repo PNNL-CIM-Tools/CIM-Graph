@@ -186,7 +186,8 @@ class XMLFile(ConnectionInterface):
                 identifier = uri
             obj = self.graph[cim_class][identifier]
             for sub_element in element:
-                self.parse_value(sub_element, cim_class, identifier)
+                if 'Identity.identifier' not in sub_element.tag:
+                    self.parse_value(sub_element, cim_class, identifier)
 
         else:
             _log.log(self.log_level, f'{class_name} not in data profile')
@@ -201,7 +202,7 @@ class XMLFile(ConnectionInterface):
             edge_uri = None
 
         if edge_uri is not None:
-            if self.namespace not in edge_uri:
+            if (edge_uri.split('#')[0] + '#') not in self.namespaces.values():
                 try:
                     edge_uuid = UUID(edge_uri.strip('#').strip('_').lower())
                 except:
@@ -212,10 +213,14 @@ class XMLFile(ConnectionInterface):
                 except:
                     _log.log(self.log_level, f'Object with ID {edge_uri} not found')
                     return None
+
                 value = self.create_edge(self.graph, cim_class, identifier, sub_tag, edge_class, edge_uri)
-                reverse = cim_class.__dataclass_fields__[association].metadata['inverse']
-                self.create_edge(self.graph, edge_class, edge_uuid, reverse,
-                                    cim_class, self.graph[cim_class][identifier].uri())
+                try:
+                    reverse = cim_class.__dataclass_fields__[association].metadata['inverse']
+                    self.create_edge(self.graph, edge_class, edge_uuid, reverse,
+                                        cim_class, self.graph[cim_class][identifier].uri())
+                except Exception as e:
+                    _log.log(self.log_level, f'Could not identify inverse for {cim_class.__name__} association {association}')
                 # except:
                 #     value = self.get_object(edge_uri)
 
@@ -223,7 +228,7 @@ class XMLFile(ConnectionInterface):
                 #     _log.warning(f'unable to create object with uuid {edge_uri}')
             else:
                 try:
-                    enum_text = edge_uri.split(self.namespace)[1]
+                    enum_text = edge_uri.split('#')[1]
                     enum_text = enum_text.split('>')[0]
                     enum_class = enum_text.split('.')[0]
                     enum_value = enum_text.split('.')[1]

@@ -2,7 +2,6 @@ from __future__ import annotations
 
 import json
 import logging
-from abc import ABC, abstractmethod
 from collections import defaultdict
 from dataclasses import dataclass, field, fields, is_dataclass
 from typing import Iterator, TypeVar, cast
@@ -11,6 +10,7 @@ from uuid import UUID
 from cimgraph.data_profile.identity import Identity
 from cimgraph.databases import ConnectionInterface
 from cimgraph.models.incremental_builder import *
+from cimgraph.shacl import SHACLCatalogProcessor, SHACLExportFilter
 
 _log = logging.getLogger(__name__)
 
@@ -18,10 +18,8 @@ jsonld = dict['@id':str(UUID),'@type':str(type)]
 Graph = dict[type, dict[UUID, object]]
 T = TypeVar('T')
 
-
-
 @dataclass
-class GraphModel(ABC):
+class GraphModel():
     container: object
     connection: ConnectionInterface
     distributed: bool = field(default=False)
@@ -253,7 +251,7 @@ class GraphModel(ABC):
         return modified
 
 
-    def delete_object(self, obj:Identity) -> None:
+    def delete(self, obj:Identity) -> None:
         """
         Delete an object from a typed property graph dictionary and remove all references to it.
 
@@ -291,35 +289,10 @@ class GraphModel(ABC):
                         # One-to-one or many-to-one
                         clean_inverse_reference(value, target_attr, obj)
 
-        # # Step 2: Search the entire graph for any remaining references to this object
-        # for other_obj in graph.values():
-        #     if other_obj is obj:
-        #         continue  # Skip the object itself
 
-        #     for field in fields(other_obj):
-        #         field_value = getattr(other_obj, field.name)
 
-        #         # Handle list/set references
-        #         if isinstance(field_value, list) and obj in field_value:
-        #             field_value.remove(obj)
-        #         elif isinstance(field_value, set) and obj in field_value:
-        #             field_value.remove(obj)
-        #         # Handle direct references
-        #         elif field_value is obj:
-        #             setattr(other_obj, field.name, None)
-
-        # Step 3: Remove the object from the graph
         if obj_id in self.graph[cim_class]:
             del self.graph[cim_class][obj_id]
-        # else:
-        #     # If object is not keyed by mRID, search by identity
-        #     keys_to_delete = [k for k, v in graph.items() if v is obj]
-        #     for key in keys_to_delete:
-        #         del graph[key]
-
-
-
-
 
     def modify(self, cim_object:Identity, attribute:str, value:any, incremental_file:str=None) -> None:
         if not isinstance(cim_object, Identity):
@@ -392,3 +365,27 @@ class GraphModel(ABC):
                 _log.warning(f'Unknown object of type {type(obj)}')
         dump = json.dumps(dump, indent=4)
         return dump
+
+    # -------------------------------------------------------------------------
+    # Methods for SHACL validation and access control GraphModel.graph
+    # -------------------------------------------------------------------------
+
+    def export_with_shacl(self, shacl_file: str) -> 'GraphModel':
+        """Export a filtered graph based on SHACL permissions"""
+        export_filter = SHACLExportFilter(shacl_file, self.cim)
+        return export_filter.create_filtered_graph(self)
+
+    def export_with_shacl_and_serialize(self, shacl_file: str, output_file: str,
+                           format: str = 'xml') -> None:
+        """Export and serialize filtered graph in one step"""
+        filtered_graph = self.export_with_shacl(shacl_file)
+
+        if format.lower() == 'xml':
+            from cimgraph.utils import write_xml
+            write_xml(filtered_graph, output_file)
+        elif format.lower() in ['jsonld', 'json-ld']:
+            from cimgraph.utils import write_json_ld
+            write_json_ld(filtered_graph, output_file)
+        else:
+            raise ValueError(f"Unsupported format: {format}")
+

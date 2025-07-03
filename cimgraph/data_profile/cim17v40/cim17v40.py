@@ -5,7 +5,8 @@ from dataclasses import dataclass, field
 from enum import Enum
 from typing import Optional
 
-from cimgraph.data_profile.identity import Identity
+from cimgraph.data_profile.identity import CIMStereotype, Identity, stereotype
+from cimgraph.data_profile.units import CIMUnit
 
 _log = logging.getLogger(__name__)
 '''
@@ -16,6 +17,7 @@ _log = logging.getLogger(__name__)
 BASE_URI = 'http://iec.ch/TC57/2007/profile#'
 ONTOLOGY_URI = 'http://iec.ch/TC57/CIM100#'
 
+@stereotype(CIMStereotype.Concrete)
 @dataclass(repr=False)
 class IdentifiedObject(Identity):
     '''
@@ -269,6 +271,7 @@ class DCBaseTerminal(ACDCTerminal):
     See association end Terminal.TopologicalNode.
     '''
 
+@stereotype(CIMStereotype.Concrete)
 @dataclass(repr=False)
 class ACDCConverterDCTerminal(DCBaseTerminal):
     '''
@@ -291,10 +294,10 @@ class ACDCConverterDCTerminal(DCBaseTerminal):
     '''
     Represents the normal network polarity condition. Depending on the converter
     configuration the value shall be set as follows:
-    - For a monopole with two converter terminals use DCPolarityKind “positive”
-    and “negative”.
+    - For a monopole with two converter terminals use DCPolarityKind �positive�
+    and �negative�.
     - For a bi-pole or symmetric monopole with three converter terminals use
-    DCPolarityKind “positive”, “middle” and “negative”.
+    DCPolarityKind �positive�, �middle� and �negative�.
     '''
 
     DCConductingEquipment: Optional[ACDCConverter] = field(
@@ -329,6 +332,7 @@ class DCTerminal(DCBaseTerminal):
     An DC terminal belong to a DC conducting equipment.
     '''
 
+@stereotype(CIMStereotype.Concrete)
 @dataclass(repr=False)
 class Terminal(ACDCTerminal):
     '''
@@ -565,7 +569,7 @@ class Terminal(ACDCTerminal):
     TopologicalNode: Optional[TopologicalNode] = field(
         default = None,
         metadata = {
-            'type': 'Of Aggregate',
+            'type': 'OfAggregate',
             'minOccurs': '0',
             'maxOccurs': '1',
             'inverse': 'TopologicalNode.Terminal',
@@ -622,6 +626,7 @@ class MktTerminal(Terminal):
     '''
     '''
 
+@stereotype(CIMStereotype.Concrete)
 @dataclass(repr=False)
 class ActivityRecord(IdentifiedObject):
     '''
@@ -717,19 +722,6 @@ class ActivityRecord(IdentifiedObject):
         })
     '''
     The document having associated activity records
-    '''
-
-    status: Optional[Status] = field(
-        default = None,
-        metadata = {
-            'type': 'Attribute',
-            'minOccurs': '0',
-            'maxOccurs': '1',
-            'inverse': '',
-            'namespace': 'http://iec.ch/TC57/CIM100#'
-        })
-    '''
-    Information on consequence of event resulting in this activity record.
     '''
 
 @dataclass(repr=False)
@@ -1144,19 +1136,6 @@ class EnvironmentalAlert(ActivityRecord):
     Type of location to which this environmental alert applies.
     '''
 
-    inEffect: Optional[DateTimeInterval] = field(
-        default = None,
-        metadata = {
-            'type': 'Attribute',
-            'minOccurs': '0',
-            'maxOccurs': '1',
-            'inverse': '',
-            'namespace': 'http://iec.ch/TC57/CIM100#'
-        })
-    '''
-    The interval for which this weather alert is in effect.
-    '''
-
 @dataclass(repr=False)
 class EnvironmentalEvent(ActivityRecord):
     '''
@@ -1377,13 +1356,14 @@ class SwitchingEvent(ActivityRecord):
     The switching action that is performed on the switching event
     '''
 
+@stereotype(CIMStereotype.Concrete)
 @dataclass(repr=False)
 class AdjacentCASet(IdentifiedObject):
     '''
     Groups Adjacent Control Areas.
     '''
 
-    lossPercentage : Optional[ float ] = field(
+    lossPercentage: Optional[ float ] = field(
         default = None,
         metadata = {
             'type': 'Attribute',
@@ -1455,6 +1435,7 @@ class AdjacentCASet(IdentifiedObject):
     '''
     '''
 
+@stereotype(CIMStereotype.Concrete)
 @dataclass(repr=False)
 class AggregateNode(IdentifiedObject):
     '''
@@ -1645,6 +1626,7 @@ class AlertTypeList(IdentifiedObject):
     alert types.
     '''
 
+@stereotype(CIMStereotype.AggregateOf)
 @dataclass(repr=False)
 class AltGeneratingUnitMeas(IdentifiedObject):
     '''
@@ -1680,7 +1662,7 @@ class AltGeneratingUnitMeas(IdentifiedObject):
     ControlAreaGeneratingUnit: Optional[ControlAreaGeneratingUnit] = field(
         default = None,
         metadata = {
-            'type': 'Of Aggregate',
+            'type': 'OfAggregate',
             'minOccurs': '0',
             'maxOccurs': '1',
             'inverse': 'ControlAreaGeneratingUnit.AltGeneratingUnitMeas',
@@ -1691,6 +1673,7 @@ class AltGeneratingUnitMeas(IdentifiedObject):
     is applied.
     '''
 
+@stereotype(CIMStereotype.AggregateOf)
 @dataclass(repr=False)
 class AltTieMeas(IdentifiedObject):
     '''
@@ -1726,7 +1709,7 @@ class AltTieMeas(IdentifiedObject):
     TieFlow: Optional[TieFlow] = field(
         default = None,
         metadata = {
-            'type': 'Of Aggregate',
+            'type': 'OfAggregate',
             'minOccurs': '0',
             'maxOccurs': '1',
             'inverse': 'TieFlow.AltTieMeas',
@@ -1944,6 +1927,7 @@ class AnnotatedProjectDependency(IdentifiedObject):
     '''
     '''
 
+@stereotype(CIMStereotype.Concrete)
 @dataclass(repr=False)
 class Appointment(IdentifiedObject):
     '''
@@ -1961,19 +1945,6 @@ class Appointment(IdentifiedObject):
     '''
     True if requested to call customer when someone is about to arrive at their
     premises.
-    '''
-
-    meetingInterval: Optional[DateTimeInterval] = field(
-        default = None,
-        metadata = {
-            'type': 'Attribute',
-            'minOccurs': '0',
-            'maxOccurs': '1',
-            'inverse': '',
-            'namespace': 'http://iec.ch/TC57/CIM100#'
-        })
-    '''
-    Date and time reserved for appointment.
     '''
 
     Persons: list[PersonRole] = field(
@@ -2180,19 +2151,6 @@ class Asset(IdentifiedObject):
     Reason asset retired.
     '''
 
-    acceptanceTest: Optional[AcceptanceTest] = field(
-        default = None,
-        metadata = {
-            'type': 'Attribute',
-            'minOccurs': '0',
-            'maxOccurs': '1',
-            'inverse': '',
-            'namespace': 'http://iec.ch/TC57/CIM100#'
-        })
-    '''
-    Information on acceptance test.
-    '''
-
     ActivityRecords: list[ActivityRecord] = field(
         default_factory = list,
         metadata = {
@@ -2335,19 +2293,6 @@ class Asset(IdentifiedObject):
     All configuration events created for this asset.
     '''
 
-    electronicAddress: Optional[ElectronicAddress] = field(
-        default = None,
-        metadata = {
-            'type': 'Attribute',
-            'minOccurs': '0',
-            'maxOccurs': '1',
-            'inverse': '',
-            'namespace': 'http://iec.ch/TC57/CIM100#'
-        })
-    '''
-    Electronic address.
-    '''
-
     ErpInventory: Optional[ErpInventory] = field(
         default = None,
         metadata = {
@@ -2407,33 +2352,6 @@ class Asset(IdentifiedObject):
             'namespace': 'http://iec.ch/TC57/CIM100#'
         })
     '''
-    '''
-
-    inUseDate: Optional[InUseDate] = field(
-        default = None,
-        metadata = {
-            'type': 'Attribute',
-            'minOccurs': '0',
-            'maxOccurs': '1',
-            'inverse': '',
-            'namespace': 'http://iec.ch/TC57/CIM100#'
-        })
-    '''
-    In use dates for this asset.
-    '''
-
-    lifecycleDate: Optional[LifecycleDate] = field(
-        default = None,
-        metadata = {
-            'type': 'Attribute',
-            'minOccurs': '0',
-            'maxOccurs': '1',
-            'inverse': '',
-            'namespace': 'http://iec.ch/TC57/CIM100#'
-        })
-    '''
-    <was lifecycle>
-    Lifecycle dates for this asset.
     '''
 
     Location: Optional[Location] = field(
@@ -2629,19 +2547,6 @@ class Asset(IdentifiedObject):
         })
     '''
     The sevice location at which the assets exist
-    '''
-
-    status: Optional[Status] = field(
-        default = None,
-        metadata = {
-            'type': 'Attribute',
-            'minOccurs': '0',
-            'maxOccurs': '1',
-            'inverse': '',
-            'namespace': 'http://iec.ch/TC57/CIM100#'
-        })
-    '''
-    Status of this asset.
     '''
 
     WorkTasks: list[WorkTask] = field(
@@ -3069,6 +2974,7 @@ class Facility(AssetContainer):
     Kind of this facility.
     '''
 
+@stereotype(CIMStereotype.Concrete)
 @dataclass(repr=False)
 class Structure(AssetContainer):
     '''
@@ -3498,7 +3404,7 @@ class InterrupterUnit(Asset):
             'type': 'Association',
             'minOccurs': '0',
             'maxOccurs': 'unbounded',
-            'inverse': 'Bushing.MovingContact',
+            'inverse': 'Bushing.FixedContact',
             'namespace': 'http://iec.ch/TC57/CIM100#'
         })
     '''
@@ -3572,6 +3478,7 @@ class OperatingMechanism(Asset):
     Breaker mechanism.
     '''
 
+@stereotype(CIMStereotype.Concrete)
 @dataclass(repr=False)
 class Streetlight(Asset):
     '''
@@ -3842,19 +3749,6 @@ class AssetDeployment(IdentifiedObject):
         })
     '''
     Base voltage of this network asset deployment.
-    '''
-
-    deploymentDate: Optional[DeploymentDate] = field(
-        default = None,
-        metadata = {
-            'type': 'Attribute',
-            'minOccurs': '0',
-            'maxOccurs': '1',
-            'inverse': '',
-            'namespace': 'http://iec.ch/TC57/CIM100#'
-        })
-    '''
-    Dates of asset deployment.
     '''
 
 @dataclass(repr=False)
@@ -4151,19 +4045,6 @@ class ConnectDisconnectFunction(EndDeviceFunction):
     If set true and if reconnection can be operated remotely, then the operation
     happens automatically. If set false and if reconnection can be operated
     remotely, then the operation happens manually.
-    '''
-
-    rcdInfo: Optional[RemoteConnectDisconnectInfo] = field(
-        default = None,
-        metadata = {
-            'type': 'Attribute',
-            'minOccurs': '0',
-            'maxOccurs': '1',
-            'inverse': '',
-            'namespace': 'http://iec.ch/TC57/CIM100#'
-        })
-    '''
-    Information on remote connect disconnect switch.
     '''
 
     Switches: list[Switch] = field(
@@ -4465,19 +4346,6 @@ class EndDeviceInfo(AssetInfo):
     Rated voltage.
     '''
 
-    capability: Optional[EndDeviceCapability] = field(
-        default = None,
-        metadata = {
-            'type': 'Attribute',
-            'minOccurs': '0',
-            'maxOccurs': '1',
-            'inverse': '',
-            'namespace': 'http://iec.ch/TC57/CIM100#'
-        })
-    '''
-    Inherent capabilities of the device (i.e., the functions it supports).
-    '''
-
     EndDevices: list[EndDevice] = field(
         default_factory = list,
         metadata = {
@@ -4740,18 +4608,6 @@ class SwitchInfo(AssetInfo):
     '''
     The maximum fault current a breaking device can break safely under prescribed
     conditions of use.
-    '''
-
-    gasWeightPerTank: Optional[ float | Mass ] = field(
-        default = None,
-        metadata = {
-            'type': 'Attribute',
-            'minOccurs': '0',
-            'maxOccurs': '1',
-            'namespace': 'http://iec.ch/TC57/CIM100#'
-        })
-    '''
-    Weight of gas in each tank of SF6 dead tank breaker.
     '''
 
     lowPressureAlarm: Optional[ float | Pressure ] = field(
@@ -5483,7 +5339,7 @@ class WireInfo(AssetInfo):
             'namespace': 'http://iec.ch/TC57/CIM100#'
         })
     '''
-    AC resistance per unit length of the conductor at 25 °C.
+    AC resistance per unit length of the conductor at 25 �C.
     '''
 
     rAC50: Optional[ float | ResistancePerLength ] = field(
@@ -5495,7 +5351,7 @@ class WireInfo(AssetInfo):
             'namespace': 'http://iec.ch/TC57/CIM100#'
         })
     '''
-    AC resistance per unit length of the conductor at 50 °C.
+    AC resistance per unit length of the conductor at 50 �C.
     '''
 
     rAC75: Optional[ float | ResistancePerLength ] = field(
@@ -5507,7 +5363,7 @@ class WireInfo(AssetInfo):
             'namespace': 'http://iec.ch/TC57/CIM100#'
         })
     '''
-    AC resistance per unit length of the conductor at 75 °C.
+    AC resistance per unit length of the conductor at 75 �C.
     '''
 
     radius: Optional[ float | Length ] = field(
@@ -5543,7 +5399,7 @@ class WireInfo(AssetInfo):
             'namespace': 'http://iec.ch/TC57/CIM100#'
         })
     '''
-    DC resistance per unit length of the conductor at 20 °C.
+    DC resistance per unit length of the conductor at 20 �C.
     '''
 
     ACLineSegmentPhase: list[ACLineSegmentPhase] = field(
@@ -5699,6 +5555,7 @@ class CableInfo(WireInfo):
     Material of the shield.
     '''
 
+@stereotype(CIMStereotype.Concrete)
 @dataclass(repr=False)
 class ConcentricNeutralCableInfo(CableInfo):
     '''
@@ -5762,7 +5619,7 @@ class ConcentricNeutralCableInfo(CableInfo):
             'namespace': 'http://iec.ch/TC57/CIM100#'
         })
     '''
-    DC resistance per unit length of the neutral strand at 20 °C.
+    DC resistance per unit length of the neutral strand at 20 �C.
     '''
 
 @dataclass(repr=False)
@@ -5930,18 +5787,7 @@ class AssetModelCatalogue(IdentifiedObject):
     '''
     '''
 
-    status: Optional[Status] = field(
-        default = None,
-        metadata = {
-            'type': 'Attribute',
-            'minOccurs': '0',
-            'maxOccurs': '1',
-            'inverse': '',
-            'namespace': 'http://iec.ch/TC57/CIM100#'
-        })
-    '''
-    '''
-
+@stereotype(CIMStereotype.Concrete)
 @dataclass(repr=False)
 class AsynchronousMachineDynamics(IdentifiedObject):
     '''
@@ -6061,6 +5907,7 @@ class Auction(IdentifiedObject):
     '''
     '''
 
+@stereotype(CIMStereotype.Concrete)
 @dataclass(repr=False)
 class BaseFrequency(IdentifiedObject):
     '''
@@ -6084,6 +5931,7 @@ class BaseFrequency(IdentifiedObject):
     The base frequency.
     '''
 
+@stereotype(CIMStereotype.Concrete)
 @dataclass(repr=False)
 class BasePower(IdentifiedObject):
     '''
@@ -6324,6 +6172,7 @@ class DynamicSchedule(BasicIntervalSchedule):
     A control area can send dynamic schedules to other control areas
     '''
 
+@stereotype(CIMStereotype.OfAggregate)
 @dataclass(repr=False)
 class IrregularIntervalSchedule(BasicIntervalSchedule):
     '''
@@ -6333,7 +6182,7 @@ class IrregularIntervalSchedule(BasicIntervalSchedule):
     TimePoints: list[IrregularTimePoint] = field(
         default_factory = list,
         metadata = {
-            'type': 'Aggregate Of',
+            'type': 'AggregateOf',
             'minOccurs': '0',
             'maxOccurs': 'unbounded',
             'inverse': 'IrregularTimePoint.IntervalSchedule',
@@ -6343,6 +6192,7 @@ class IrregularIntervalSchedule(BasicIntervalSchedule):
     The point data values that define a curve.
     '''
 
+@stereotype(CIMStereotype.OfAggregate)
 @dataclass(repr=False)
 class RegularIntervalSchedule(BasicIntervalSchedule):
     '''
@@ -6378,7 +6228,7 @@ class RegularIntervalSchedule(BasicIntervalSchedule):
     TimePoints: list[RegularTimePoint] = field(
         default_factory = list,
         metadata = {
-            'type': 'Aggregate Of',
+            'type': 'AggregateOf',
             'minOccurs': '0',
             'maxOccurs': 'unbounded',
             'inverse': 'RegularTimePoint.IntervalSchedule',
@@ -6575,6 +6425,7 @@ class BidSelfSched(RegularIntervalSchedule):
     '''
     '''
 
+@stereotype(CIMStereotype.AggregateOf)
 @dataclass(repr=False)
 class GenUnitOpSchedule(RegularIntervalSchedule):
     '''
@@ -6589,7 +6440,7 @@ class GenUnitOpSchedule(RegularIntervalSchedule):
     GeneratingUnit: Optional[GeneratingUnit] = field(
         default = None,
         metadata = {
-            'type': 'Of Aggregate',
+            'type': 'OfAggregate',
             'minOccurs': '0',
             'maxOccurs': '1',
             'inverse': 'GeneratingUnit.GenUnitOpSchedule',
@@ -6600,6 +6451,7 @@ class GenUnitOpSchedule(RegularIntervalSchedule):
     operation of the unit.
     '''
 
+@stereotype(CIMStereotype.AggregateOf)
 @dataclass(repr=False)
 class HydroPumpOpSchedule(RegularIntervalSchedule):
     '''
@@ -6612,7 +6464,7 @@ class HydroPumpOpSchedule(RegularIntervalSchedule):
     HydroPump: Optional[HydroPump] = field(
         default = None,
         metadata = {
-            'type': 'Of Aggregate',
+            'type': 'OfAggregate',
             'minOccurs': '0',
             'maxOccurs': '1',
             'inverse': 'HydroPump.HydroPumpOpSchedule',
@@ -6623,6 +6475,7 @@ class HydroPumpOpSchedule(RegularIntervalSchedule):
     is to occur.
     '''
 
+@stereotype(CIMStereotype.AggregateOf)
 @dataclass(repr=False)
 class InflowForecast(RegularIntervalSchedule):
     '''
@@ -6635,7 +6488,7 @@ class InflowForecast(RegularIntervalSchedule):
     Reservoir: Optional[Reservoir] = field(
         default = None,
         metadata = {
-            'type': 'Of Aggregate',
+            'type': 'OfAggregate',
             'minOccurs': '0',
             'maxOccurs': '1',
             'inverse': 'Reservoir.InflowForecasts',
@@ -6678,6 +6531,7 @@ class SeasonDayTypeSchedule(RegularIntervalSchedule):
     Season for the Schedule.
     '''
 
+@stereotype(CIMStereotype.AggregateOf)
 @dataclass(repr=False)
 class ConformLoadSchedule(SeasonDayTypeSchedule):
     '''
@@ -6690,7 +6544,7 @@ class ConformLoadSchedule(SeasonDayTypeSchedule):
     ConformLoadGroup: Optional[ConformLoadGroup] = field(
         default = None,
         metadata = {
-            'type': 'Of Aggregate',
+            'type': 'OfAggregate',
             'minOccurs': '0',
             'maxOccurs': '1',
             'inverse': 'ConformLoadGroup.ConformLoadSchedules',
@@ -6700,6 +6554,7 @@ class ConformLoadSchedule(SeasonDayTypeSchedule):
     The ConformLoadGroup where the ConformLoadSchedule belongs.
     '''
 
+@stereotype(CIMStereotype.AggregateOf)
 @dataclass(repr=False)
 class NonConformLoadSchedule(SeasonDayTypeSchedule):
     '''
@@ -6711,7 +6566,7 @@ class NonConformLoadSchedule(SeasonDayTypeSchedule):
     NonConformLoadGroup: Optional[NonConformLoadGroup] = field(
         default = None,
         metadata = {
-            'type': 'Of Aggregate',
+            'type': 'OfAggregate',
             'minOccurs': '0',
             'maxOccurs': '1',
             'inverse': 'NonConformLoadGroup.NonConformLoadSchedules',
@@ -6793,6 +6648,7 @@ class TapSchedule(SeasonDayTypeSchedule):
     A TapSchedule is associated with a TapChanger.
     '''
 
+@stereotype(CIMStereotype.AggregateOf)
 @dataclass(repr=False)
 class SteamSendoutSchedule(RegularIntervalSchedule):
     '''
@@ -6802,7 +6658,7 @@ class SteamSendoutSchedule(RegularIntervalSchedule):
     CogenerationPlant: Optional[CogenerationPlant] = field(
         default = None,
         metadata = {
-            'type': 'Of Aggregate',
+            'type': 'OfAggregate',
             'minOccurs': '0',
             'maxOccurs': '1',
             'inverse': 'CogenerationPlant.SteamSendoutSchedule',
@@ -7132,6 +6988,7 @@ class TASE2BilateralTable(BilateralExchangeAgreement):
     In order for a link to be established, both sides must have the same value.
     '''
 
+@stereotype(CIMStereotype.OfAggregate)
 @dataclass(repr=False)
 class BranchGroup(IdentifiedObject):
     '''
@@ -7214,7 +7071,7 @@ class BranchGroup(IdentifiedObject):
     BranchGroupTerminal: list[BranchGroupTerminal] = field(
         default_factory = list,
         metadata = {
-            'type': 'Aggregate Of',
+            'type': 'AggregateOf',
             'minOccurs': '0',
             'maxOccurs': 'unbounded',
             'inverse': 'BranchGroupTerminal.BranchGroup',
@@ -7224,6 +7081,7 @@ class BranchGroup(IdentifiedObject):
     The directed branch group terminals to be summed.
     '''
 
+@stereotype(CIMStereotype.Concrete)
 @dataclass(repr=False)
 class BusNameMarker(IdentifiedObject):
     '''
@@ -7319,18 +7177,6 @@ class BushingInsulationPF(IdentifiedObject):
             'minOccurs': '0',
             'maxOccurs': '1',
             'inverse': 'Bushing.BushingInsulationPFs',
-            'namespace': 'http://iec.ch/TC57/CIM100#'
-        })
-    '''
-    '''
-
-    status: Optional[Status] = field(
-        default = None,
-        metadata = {
-            'type': 'Attribute',
-            'minOccurs': '0',
-            'maxOccurs': '1',
-            'inverse': '',
             'namespace': 'http://iec.ch/TC57/CIM100#'
         })
     '''
@@ -7552,19 +7398,6 @@ class CatalogAssetType(IdentifiedObject):
     Product asset model conforming to this catalog asset type.
     '''
 
-    quantity: Optional[StringQuantity] = field(
-        default = None,
-        metadata = {
-            'type': 'Attribute',
-            'minOccurs': '0',
-            'maxOccurs': '1',
-            'inverse': '',
-            'namespace': 'http://iec.ch/TC57/CIM100#'
-        })
-    '''
-    The value, unit of measure, and multiplier for the quantity.
-    '''
-
     TypeAssetCatalogue: Optional[TypeAssetCatalogue] = field(
         default = None,
         metadata = {
@@ -7696,19 +7529,6 @@ class Charge(IdentifiedObject):
         })
     '''
     Tariff intervals to which this consumption-based charge has to be levied.
-    '''
-
-    fixedPortion: Optional[AccountingUnit] = field(
-        default = None,
-        metadata = {
-            'type': 'Attribute',
-            'minOccurs': '0',
-            'maxOccurs': '1',
-            'inverse': '',
-            'namespace': 'http://iec.ch/TC57/CIM100#'
-        })
-    '''
-    The fixed portion of this charge element.
     '''
 
     ParentCharge: Optional[Charge] = field(
@@ -8153,18 +7973,7 @@ class ConditionFactor(IdentifiedObject):
     '''
     '''
 
-    status: Optional[Status] = field(
-        default = None,
-        metadata = {
-            'type': 'Attribute',
-            'minOccurs': '0',
-            'maxOccurs': '1',
-            'inverse': '',
-            'namespace': 'http://iec.ch/TC57/CIM100#'
-        })
-    '''
-    '''
-
+@stereotype(CIMStereotype.Concrete)
 @dataclass(repr=False)
 class ConnectivityNode(IdentifiedObject):
     '''
@@ -8201,7 +8010,7 @@ class ConnectivityNode(IdentifiedObject):
     TopologicalNode: Optional[TopologicalNode] = field(
         default = None,
         metadata = {
-            'type': 'Of Aggregate',
+            'type': 'OfAggregate',
             'minOccurs': '0',
             'maxOccurs': '1',
             'inverse': 'TopologicalNode.ConnectivityNodes',
@@ -8310,6 +8119,7 @@ class ConstraintResults(IdentifiedObject):
     the solved value for the constraint, and the associated shadow price.
     '''
 
+@stereotype(CIMStereotype.OfAggregate)
 @dataclass(repr=False)
 class Contingency(IdentifiedObject):
     '''
@@ -8332,7 +8142,7 @@ class Contingency(IdentifiedObject):
     ContingencyElement: list[ContingencyElement] = field(
         default_factory = list,
         metadata = {
-            'type': 'Aggregate Of',
+            'type': 'AggregateOf',
             'minOccurs': '0',
             'maxOccurs': 'unbounded',
             'inverse': 'ContingencyElement.Contingency',
@@ -8342,6 +8152,7 @@ class Contingency(IdentifiedObject):
     A contingency can have any number of contingency elements.
     '''
 
+@stereotype(CIMStereotype.AggregateOf)
 @dataclass(repr=False)
 class ContingencyElement(IdentifiedObject):
     '''
@@ -8352,7 +8163,7 @@ class ContingencyElement(IdentifiedObject):
     Contingency: Optional[Contingency] = field(
         default = None,
         metadata = {
-            'type': 'Of Aggregate',
+            'type': 'OfAggregate',
             'minOccurs': '0',
             'maxOccurs': '1',
             'inverse': 'Contingency.ContingencyElement',
@@ -8451,18 +8262,6 @@ class ContractorItem(IdentifiedObject):
     '''
     '''
 
-    status: Optional[Status] = field(
-        default = None,
-        metadata = {
-            'type': 'Attribute',
-            'minOccurs': '0',
-            'maxOccurs': '1',
-            'inverse': '',
-            'namespace': 'http://iec.ch/TC57/CIM100#'
-        })
-    '''
-    '''
-
     WorkCostDetail: Optional[WorkCostDetail] = field(
         default = None,
         metadata = {
@@ -8487,6 +8286,7 @@ class ContractorItem(IdentifiedObject):
     '''
     '''
 
+@stereotype(CIMStereotype.OfAggregate)
 @dataclass(repr=False)
 class ControlAreaGeneratingUnit(IdentifiedObject):
     '''
@@ -8499,7 +8299,7 @@ class ControlAreaGeneratingUnit(IdentifiedObject):
     AltGeneratingUnitMeas: list[AltGeneratingUnitMeas] = field(
         default_factory = list,
         metadata = {
-            'type': 'Aggregate Of',
+            'type': 'AggregateOf',
             'minOccurs': '0',
             'maxOccurs': 'unbounded',
             'inverse': 'AltGeneratingUnitMeas.ControlAreaGeneratingUnit',
@@ -8512,7 +8312,7 @@ class ControlAreaGeneratingUnit(IdentifiedObject):
     ControlArea: Optional[ControlArea] = field(
         default = None,
         metadata = {
-            'type': 'Of Aggregate',
+            'type': 'OfAggregate',
             'minOccurs': '0',
             'maxOccurs': '1',
             'inverse': 'ControlArea.ControlAreaGeneratingUnit',
@@ -8758,18 +8558,6 @@ class CostType(IdentifiedObject):
     '''
     '''
 
-    status: Optional[Status] = field(
-        default = None,
-        metadata = {
-            'type': 'Attribute',
-            'minOccurs': '0',
-            'maxOccurs': '1',
-            'inverse': '',
-            'namespace': 'http://iec.ch/TC57/CIM100#'
-        })
-    '''
-    '''
-
     WorkCostDetails: list[WorkCostDetail] = field(
         default_factory = list,
         metadata = {
@@ -8853,19 +8641,6 @@ class Crew(IdentifiedObject):
     The outage that is assigned to the crew.
     '''
 
-    status: Optional[Status] = field(
-        default = None,
-        metadata = {
-            'type': 'Attribute',
-            'minOccurs': '0',
-            'maxOccurs': '1',
-            'inverse': '',
-            'namespace': 'http://iec.ch/TC57/CIM100#'
-        })
-    '''
-    Status of this crew.
-    '''
-
     SwitchingAction: Optional[SwitchingAction] = field(
         default = None,
         metadata = {
@@ -8932,6 +8707,7 @@ class CrewType(IdentifiedObject):
     All crews of this type.
     '''
 
+@stereotype(CIMStereotype.OfAggregate)
 @dataclass(repr=False)
 class Curve(IdentifiedObject):
     '''
@@ -9050,7 +8826,7 @@ class Curve(IdentifiedObject):
     CurveDatas: list[CurveData] = field(
         default_factory = list,
         metadata = {
-            'type': 'Aggregate Of',
+            'type': 'AggregateOf',
             'minOccurs': '0',
             'maxOccurs': 'unbounded',
             'inverse': 'CurveData.Curve',
@@ -9092,6 +8868,7 @@ class AssetPropertyCurve(Curve):
     '''
     '''
 
+@stereotype(CIMStereotype.AggregateOf)
 @dataclass(repr=False)
 class CTTempActivePowerCurve(Curve):
     '''
@@ -9102,7 +8879,7 @@ class CTTempActivePowerCurve(Curve):
     CombustionTurbine: Optional[CombustionTurbine] = field(
         default = None,
         metadata = {
-            'type': 'Of Aggregate',
+            'type': 'OfAggregate',
             'minOccurs': '0',
             'maxOccurs': '1',
             'inverse': 'CombustionTurbine.CTTempActivePowerCurve',
@@ -9157,6 +8934,7 @@ class DefaultBidCurve(Curve):
     '''
     '''
 
+@stereotype(CIMStereotype.AggregateOf)
 @dataclass(repr=False)
 class EmissionAccount(Curve):
     '''
@@ -9194,7 +8972,7 @@ class EmissionAccount(Curve):
     ThermalGeneratingUnit: Optional[ThermalGeneratingUnit] = field(
         default = None,
         metadata = {
-            'type': 'Of Aggregate',
+            'type': 'OfAggregate',
             'minOccurs': '0',
             'maxOccurs': '1',
             'inverse': 'ThermalGeneratingUnit.EmmissionAccounts',
@@ -9204,6 +8982,7 @@ class EmissionAccount(Curve):
     A thermal generating unit may have one or more emission allowance accounts.
     '''
 
+@stereotype(CIMStereotype.AggregateOf)
 @dataclass(repr=False)
 class EmissionCurve(Curve):
     '''
@@ -9253,7 +9032,7 @@ class EmissionCurve(Curve):
     ThermalGeneratingUnit: Optional[ThermalGeneratingUnit] = field(
         default = None,
         metadata = {
-            'type': 'Of Aggregate',
+            'type': 'OfAggregate',
             'minOccurs': '0',
             'maxOccurs': '1',
             'inverse': 'ThermalGeneratingUnit.EmissionCurves',
@@ -9263,6 +9042,7 @@ class EmissionCurve(Curve):
     A thermal generating unit may have one or more emission curves.
     '''
 
+@stereotype(CIMStereotype.AggregateOf)
 @dataclass(repr=False)
 class FuelAllocationSchedule(Curve):
     '''
@@ -9348,7 +9128,7 @@ class FuelAllocationSchedule(Curve):
     ThermalGeneratingUnit: Optional[ThermalGeneratingUnit] = field(
         default = None,
         metadata = {
-            'type': 'Of Aggregate',
+            'type': 'OfAggregate',
             'minOccurs': '0',
             'maxOccurs': '1',
             'inverse': 'ThermalGeneratingUnit.FuelAllocationSchedules',
@@ -9358,6 +9138,7 @@ class FuelAllocationSchedule(Curve):
     A thermal generating unit may have one or more fuel allocation schedules.
     '''
 
+@stereotype(CIMStereotype.AggregateOf)
 @dataclass(repr=False)
 class GenUnitOpCostCurve(Curve):
     '''
@@ -9382,7 +9163,7 @@ class GenUnitOpCostCurve(Curve):
     GeneratingUnit: Optional[GeneratingUnit] = field(
         default = None,
         metadata = {
-            'type': 'Of Aggregate',
+            'type': 'OfAggregate',
             'minOccurs': '0',
             'maxOccurs': '1',
             'inverse': 'GeneratingUnit.GenUnitOpCostCurves',
@@ -9393,6 +9174,7 @@ class GenUnitOpCostCurve(Curve):
     mixture and fuel cost.
     '''
 
+@stereotype(CIMStereotype.AggregateOf)
 @dataclass(repr=False)
 class GrossToNetActivePowerCurve(Curve):
     '''
@@ -9407,7 +9189,7 @@ class GrossToNetActivePowerCurve(Curve):
     GeneratingUnit: Optional[GeneratingUnit] = field(
         default = None,
         metadata = {
-            'type': 'Of Aggregate',
+            'type': 'OfAggregate',
             'minOccurs': '0',
             'maxOccurs': '1',
             'inverse': 'GeneratingUnit.GrossToNetActivePowerCurves',
@@ -9418,6 +9200,7 @@ class GrossToNetActivePowerCurve(Curve):
     describing the losses and auxiliary power requirements of the unit.
     '''
 
+@stereotype(CIMStereotype.AggregateOf)
 @dataclass(repr=False)
 class HeatInputCurve(Curve):
     '''
@@ -9491,7 +9274,7 @@ class HeatInputCurve(Curve):
     ThermalGeneratingUnit: Optional[ThermalGeneratingUnit] = field(
         default = None,
         metadata = {
-            'type': 'Of Aggregate',
+            'type': 'OfAggregate',
             'minOccurs': '0',
             'maxOccurs': '1',
             'inverse': 'ThermalGeneratingUnit.HeatInputCurve',
@@ -9501,6 +9284,7 @@ class HeatInputCurve(Curve):
     A thermal generating unit may have a heat input curve.
     '''
 
+@stereotype(CIMStereotype.AggregateOf)
 @dataclass(repr=False)
 class HeatRateCurve(Curve):
     '''
@@ -9523,7 +9307,7 @@ class HeatRateCurve(Curve):
     ThermalGeneratingUnit: Optional[ThermalGeneratingUnit] = field(
         default = None,
         metadata = {
-            'type': 'Of Aggregate',
+            'type': 'OfAggregate',
             'minOccurs': '0',
             'maxOccurs': '1',
             'inverse': 'ThermalGeneratingUnit.HeatRateCurve',
@@ -9539,6 +9323,7 @@ class MktHeatRateCurve(HeatRateCurve):
     Subclass of IEC 61970: Generation: Production:HeatRateCurve.
     '''
 
+@stereotype(CIMStereotype.AggregateOf)
 @dataclass(repr=False)
 class HydroGeneratingEfficiencyCurve(Curve):
     '''
@@ -9555,7 +9340,7 @@ class HydroGeneratingEfficiencyCurve(Curve):
     HydroGeneratingUnit: Optional[HydroGeneratingUnit] = field(
         default = None,
         metadata = {
-            'type': 'Of Aggregate',
+            'type': 'OfAggregate',
             'minOccurs': '0',
             'maxOccurs': '1',
             'inverse': 'HydroGeneratingUnit.HydroGeneratingEfficiencyCurves',
@@ -9565,6 +9350,7 @@ class HydroGeneratingEfficiencyCurve(Curve):
     A hydro generating unit has an efficiency curve.
     '''
 
+@stereotype(CIMStereotype.AggregateOf)
 @dataclass(repr=False)
 class IncrementalHeatRateCurve(Curve):
     '''
@@ -9589,7 +9375,7 @@ class IncrementalHeatRateCurve(Curve):
     ThermalGeneratingUnit: Optional[ThermalGeneratingUnit] = field(
         default = None,
         metadata = {
-            'type': 'Of Aggregate',
+            'type': 'OfAggregate',
             'minOccurs': '0',
             'maxOccurs': '1',
             'inverse': 'ThermalGeneratingUnit.IncrementalHeatRateCurve',
@@ -9599,6 +9385,7 @@ class IncrementalHeatRateCurve(Curve):
     A thermal generating unit may have an incremental heat rate curve.
     '''
 
+@stereotype(CIMStereotype.AggregateOf)
 @dataclass(repr=False)
 class LevelVsVolumeCurve(Curve):
     '''
@@ -9609,7 +9396,7 @@ class LevelVsVolumeCurve(Curve):
     Reservoir: Optional[Reservoir] = field(
         default = None,
         metadata = {
-            'type': 'Of Aggregate',
+            'type': 'OfAggregate',
             'minOccurs': '0',
             'maxOccurs': '1',
             'inverse': 'Reservoir.LevelVsVolumeCurves',
@@ -9619,6 +9406,7 @@ class LevelVsVolumeCurve(Curve):
     A reservoir may have a level versus volume relationship.
     '''
 
+@stereotype(CIMStereotype.AggregateOf)
 @dataclass(repr=False)
 class PenstockLossCurve(Curve):
     '''
@@ -9630,7 +9418,7 @@ class PenstockLossCurve(Curve):
     HydroGeneratingUnit: Optional[HydroGeneratingUnit] = field(
         default = None,
         metadata = {
-            'type': 'Of Aggregate',
+            'type': 'OfAggregate',
             'minOccurs': '0',
             'maxOccurs': '1',
             'inverse': 'HydroGeneratingUnit.PenstockLossCurve',
@@ -9820,6 +9608,7 @@ class ResourceOperationMaintenanceCost(Curve):
     '''
     '''
 
+@stereotype(CIMStereotype.AggregateOf)
 @dataclass(repr=False)
 class ShutdownCurve(Curve):
     '''
@@ -9854,7 +9643,7 @@ class ShutdownCurve(Curve):
     ThermalGeneratingUnit: Optional[ThermalGeneratingUnit] = field(
         default = None,
         metadata = {
-            'type': 'Of Aggregate',
+            'type': 'OfAggregate',
             'minOccurs': '0',
             'maxOccurs': '1',
             'inverse': 'ThermalGeneratingUnit.ShutdownCurve',
@@ -9864,6 +9653,7 @@ class ShutdownCurve(Curve):
     A thermal generating unit may have a shutdown curve.
     '''
 
+@stereotype(CIMStereotype.AggregateOf)
 @dataclass(repr=False)
 class StartIgnFuelCurve(Curve):
     '''
@@ -9886,7 +9676,7 @@ class StartIgnFuelCurve(Curve):
     StartupModel: Optional[StartupModel] = field(
         default = None,
         metadata = {
-            'type': 'Of Aggregate',
+            'type': 'OfAggregate',
             'minOccurs': '0',
             'maxOccurs': '1',
             'inverse': 'StartupModel.StartIgnFuelCurve',
@@ -9896,6 +9686,7 @@ class StartIgnFuelCurve(Curve):
     The unit's startup model may have a startup ignition fuel curve.
     '''
 
+@stereotype(CIMStereotype.AggregateOf)
 @dataclass(repr=False)
 class StartMainFuelCurve(Curve):
     '''
@@ -9918,7 +9709,7 @@ class StartMainFuelCurve(Curve):
     StartupModel: Optional[StartupModel] = field(
         default = None,
         metadata = {
-            'type': 'Of Aggregate',
+            'type': 'OfAggregate',
             'minOccurs': '0',
             'maxOccurs': '1',
             'inverse': 'StartupModel.StartMainFuelCurve',
@@ -9928,6 +9719,7 @@ class StartMainFuelCurve(Curve):
     The unit's startup model may have a startup main fuel curve.
     '''
 
+@stereotype(CIMStereotype.AggregateOf)
 @dataclass(repr=False)
 class StartRampCurve(Curve):
     '''
@@ -9950,7 +9742,7 @@ class StartRampCurve(Curve):
     StartupModel: Optional[StartupModel] = field(
         default = None,
         metadata = {
-            'type': 'Of Aggregate',
+            'type': 'OfAggregate',
             'minOccurs': '0',
             'maxOccurs': '1',
             'inverse': 'StartupModel.StartRampCurve',
@@ -9960,6 +9752,7 @@ class StartRampCurve(Curve):
     The unit's startup model may have a startup ramp curve.
     '''
 
+@stereotype(CIMStereotype.AggregateOf)
 @dataclass(repr=False)
 class TailbayLossCurve(Curve):
     '''
@@ -9972,7 +9765,7 @@ class TailbayLossCurve(Curve):
     HydroGeneratingUnit: Optional[HydroGeneratingUnit] = field(
         default = None,
         metadata = {
-            'type': 'Of Aggregate',
+            'type': 'OfAggregate',
             'minOccurs': '0',
             'maxOccurs': '1',
             'inverse': 'HydroGeneratingUnit.TailbayLossCurve',
@@ -9982,6 +9775,7 @@ class TailbayLossCurve(Curve):
     A hydro generating unit has a tailbay loss curve.
     '''
 
+@stereotype(CIMStereotype.AggregateOf)
 @dataclass(repr=False)
 class TargetLevelSchedule(Curve):
     '''
@@ -10016,7 +9810,7 @@ class TargetLevelSchedule(Curve):
     Reservoir: Optional[Reservoir] = field(
         default = None,
         metadata = {
-            'type': 'Of Aggregate',
+            'type': 'OfAggregate',
             'minOccurs': '0',
             'maxOccurs': '1',
             'inverse': 'Reservoir.TargetLevelSchedule',
@@ -10094,6 +9888,7 @@ class DCNode(IdentifiedObject):
     May depend on the current state of switches in the network.
     '''
 
+@stereotype(CIMStereotype.OfAggregate)
 @dataclass(repr=False)
 class DCTopologicalIsland(IdentifiedObject):
     '''
@@ -10108,7 +9903,7 @@ class DCTopologicalIsland(IdentifiedObject):
     DCTopologicalNodes: list[DCTopologicalNode] = field(
         default_factory = list,
         metadata = {
-            'type': 'Aggregate Of',
+            'type': 'AggregateOf',
             'minOccurs': '0',
             'maxOccurs': 'unbounded',
             'inverse': 'DCTopologicalNode.DCTopologicalIsland',
@@ -10118,6 +9913,7 @@ class DCTopologicalIsland(IdentifiedObject):
     The DC topological nodes in a DC topological island.
     '''
 
+@stereotype(CIMStereotype.AggregateOf)
 @dataclass(repr=False)
 class DCTopologicalNode(IdentifiedObject):
     '''
@@ -10167,7 +9963,7 @@ class DCTopologicalNode(IdentifiedObject):
     DCTopologicalIsland: Optional[DCTopologicalIsland] = field(
         default = None,
         metadata = {
-            'type': 'Of Aggregate',
+            'type': 'OfAggregate',
             'minOccurs': '0',
             'maxOccurs': '1',
             'inverse': 'DCTopologicalIsland.DCTopologicalNodes',
@@ -10362,19 +10158,6 @@ class DemandResponseProgram(IdentifiedObject):
     All usage point groups enrolled in this demand response program.
     '''
 
-    validityInterval: Optional[DateTimeInterval] = field(
-        default = None,
-        metadata = {
-            'type': 'Attribute',
-            'minOccurs': '0',
-            'maxOccurs': '1',
-            'inverse': '',
-            'namespace': 'http://iec.ch/TC57/CIM100#'
-        })
-    '''
-    Interval within which the program is valid.
-    '''
-
 @dataclass(repr=False)
 class DesignLocation(IdentifiedObject):
     '''
@@ -10437,18 +10220,6 @@ class DesignLocation(IdentifiedObject):
             'minOccurs': '0',
             'maxOccurs': 'unbounded',
             'inverse': 'MiscCostItem.DesignLocation',
-            'namespace': 'http://iec.ch/TC57/CIM100#'
-        })
-    '''
-    '''
-
-    status: Optional[Status] = field(
-        default = None,
-        metadata = {
-            'type': 'Attribute',
-            'minOccurs': '0',
-            'maxOccurs': '1',
-            'inverse': '',
             'namespace': 'http://iec.ch/TC57/CIM100#'
         })
     '''
@@ -10539,10 +10310,10 @@ class Diagram(IdentifiedObject):
         })
     '''
     Coordinate system orientation of the diagram. A positive orientation gives
-    standard “right-hand” orientation, with negative orientation indicating
-    a “left-hand” orientation. For 2D diagrams, a positive orientation will
+    standard �right-hand� orientation, with negative orientation indicating
+    a �left-hand� orientation. For 2D diagrams, a positive orientation will
     result in X values increasing from left to right and Y values increasing
-    from bottom to top. A negative orientation gives the “left-hand” orientation
+    from bottom to top. A negative orientation gives the �left-hand� orientation
     (favoured by computer graphics displays) with X values increasing from
     left to right and Y values increasing from top to bottom.
     '''
@@ -11035,21 +10806,6 @@ class Document(IdentifiedObject):
     All configuration events created for this document.
     '''
 
-    docStatus: Optional[Status] = field(
-        default = None,
-        metadata = {
-            'type': 'Attribute',
-            'minOccurs': '0',
-            'maxOccurs': '1',
-            'inverse': '',
-            'namespace': 'http://iec.ch/TC57/CIM100#'
-        })
-    '''
-    Status of this document. For status of subject matter this document represents
-    (e.g., Agreement, Work), use 'status' attribute.
-    Example values for 'docStatus.status' are draft, approved, cancelled, etc.
-    '''
-
     Editor: Optional[Editor] = field(
         default = None,
         metadata = {
@@ -11063,19 +10819,6 @@ class Document(IdentifiedObject):
     Editor of this document.
     '''
 
-    electronicAddress: Optional[ElectronicAddress] = field(
-        default = None,
-        metadata = {
-            'type': 'Attribute',
-            'minOccurs': '0',
-            'maxOccurs': '1',
-            'inverse': '',
-            'namespace': 'http://iec.ch/TC57/CIM100#'
-        })
-    '''
-    Electronic address.
-    '''
-
     Issuer: Optional[Issuer] = field(
         default = None,
         metadata = {
@@ -11087,20 +10830,6 @@ class Document(IdentifiedObject):
         })
     '''
     Issuer of this document.
-    '''
-
-    status: Optional[Status] = field(
-        default = None,
-        metadata = {
-            'type': 'Attribute',
-            'minOccurs': '0',
-            'maxOccurs': '1',
-            'inverse': '',
-            'namespace': 'http://iec.ch/TC57/CIM100#'
-        })
-    '''
-    Status of subject matter (e.g., Agreement, Work) this document represents.
-    For status of the document itself, use 'docStatus' attribute.
     '''
 
 @dataclass(repr=False)
@@ -11121,20 +10850,6 @@ class Agreement(Document):
         })
     '''
     Date this agreement was consummated among associated persons and/or organisations.
-    '''
-
-    validityInterval: Optional[DateTimeInterval] = field(
-        default = None,
-        metadata = {
-            'type': 'Attribute',
-            'minOccurs': '0',
-            'maxOccurs': '1',
-            'inverse': '',
-            'namespace': 'http://iec.ch/TC57/CIM100#'
-        })
-    '''
-    Date and time interval this agreement is valid (from going into effect
-    to termination).
     '''
 
 @dataclass(repr=False)
@@ -13284,7 +12999,7 @@ class EnergyTransaction(Document):
     CurtailmentProfiles: list[CurtailmentProfile] = field(
         default_factory = list,
         metadata = {
-            'type': 'Aggregate Of',
+            'type': 'AggregateOf',
             'minOccurs': '0',
             'maxOccurs': 'unbounded',
             'inverse': 'CurtailmentProfile.EnergyTransaction',
@@ -13323,7 +13038,7 @@ class EnergyTransaction(Document):
     EnergyProfiles: list[EnergyProfile] = field(
         default_factory = list,
         metadata = {
-            'type': 'Aggregate Of',
+            'type': 'AggregateOf',
             'minOccurs': '0',
             'maxOccurs': 'unbounded',
             'inverse': 'EnergyProfile.EnergyTransaction',
@@ -13362,7 +13077,7 @@ class EnergyTransaction(Document):
     LossProfiles: list[LossProfile] = field(
         default_factory = list,
         metadata = {
-            'type': 'Aggregate Of',
+            'type': 'AggregateOf',
             'minOccurs': '0',
             'maxOccurs': 'unbounded',
             'inverse': 'LossProfile.EnergyTransaction',
@@ -13674,19 +13389,6 @@ class ErpInvoiceLineItem(Document):
         })
     '''
     Kind of line item.
-    '''
-
-    billPeriod: Optional[DateTimeInterval] = field(
-        default = None,
-        metadata = {
-            'type': 'Attribute',
-            'minOccurs': '0',
-            'maxOccurs': '1',
-            'inverse': '',
-            'namespace': 'http://iec.ch/TC57/CIM100#'
-        })
-    '''
-    Bill period for the line item.
     '''
 
     ComponentErpInvoiceLineItems: list[ErpInvoiceLineItem] = field(
@@ -14695,19 +14397,6 @@ class MarketSkill(Document):
     Level of skill for a Craft.
     '''
 
-    certificationPeriod: Optional[DateTimeInterval] = field(
-        default = None,
-        metadata = {
-            'type': 'Attribute',
-            'minOccurs': '0',
-            'maxOccurs': '1',
-            'inverse': '',
-            'namespace': 'http://iec.ch/TC57/CIM100#'
-        })
-    '''
-    Interval between the certification and its expiry.
-    '''
-
     MarketPerson: Optional[MarketPerson] = field(
         default = None,
         metadata = {
@@ -14871,19 +14560,6 @@ class OperationalRestriction(Document):
     restrictions may be removed.
     '''
 
-    activePeriod: Optional[DateTimeInterval] = field(
-        default = None,
-        metadata = {
-            'type': 'Attribute',
-            'minOccurs': '0',
-            'maxOccurs': '1',
-            'inverse': '',
-            'namespace': 'http://iec.ch/TC57/CIM100#'
-        })
-    '''
-    Interval during which this restriction is applied.
-    '''
-
     Equipments: list[Equipment] = field(
         default_factory = list,
         metadata = {
@@ -14908,19 +14584,6 @@ class OperationalRestriction(Document):
         })
     '''
     Asset model to which this restriction applies.
-    '''
-
-    restrictedValue: Optional[FloatQuantity] = field(
-        default = None,
-        metadata = {
-            'type': 'Attribute',
-            'minOccurs': '0',
-            'maxOccurs': '1',
-            'inverse': '',
-            'namespace': 'http://iec.ch/TC57/CIM100#'
-        })
-    '''
-    Restricted (new) value; includes unit of measure and potentially multiplier.
     '''
 
 @dataclass(repr=False)
@@ -15127,20 +14790,6 @@ class Outage(Document):
     defines the status of the crew as in dispatched or arrived, etc.
     '''
 
-    actualPeriod: Optional[DateTimeInterval] = field(
-        default = None,
-        metadata = {
-            'type': 'Attribute',
-            'minOccurs': '0',
-            'maxOccurs': '1',
-            'inverse': '',
-            'namespace': 'http://iec.ch/TC57/CIM100#'
-        })
-    '''
-    Actual outage period; end of the period corresponds to the actual restoration
-    time.
-    '''
-
     Crew: list[Crew] = field(
         default_factory = list,
         metadata = {
@@ -15191,21 +14840,6 @@ class Outage(Document):
         })
     '''
     All equipments associated with this outage.
-    '''
-
-    estimatedPeriod: Optional[DateTimeInterval] = field(
-        default = None,
-        metadata = {
-            'type': 'Attribute',
-            'minOccurs': '0',
-            'maxOccurs': '1',
-            'inverse': '',
-            'namespace': 'http://iec.ch/TC57/CIM100#'
-        })
-    '''
-    Estimated outage period for a planned outage. The start of the period is
-    the start of the planned outage and the end of the period corresponds to
-    the end of the planned outage.
     '''
 
     EstimatedRestorationTime: Optional[EstimatedRestorationTime] = field(
@@ -15286,19 +14920,6 @@ class Outage(Document):
     All switch actions to apply within the scope of this planned outage. Each
     such action groups switches to which the action is to apply in order to
     produce the desired network state considered as outage.
-    '''
-
-    summary: Optional[ServicePointOutageSummary] = field(
-        default = None,
-        metadata = {
-            'type': 'Attribute',
-            'minOccurs': '0',
-            'maxOccurs': '1',
-            'inverse': '',
-            'namespace': 'http://iec.ch/TC57/CIM100#'
-        })
-    '''
-    Summary counts of service points (customers) affected by this outage.
     '''
 
     SwitchingPlans: list[SwitchingPlan] = field(
@@ -15608,19 +15229,6 @@ class OutagePlan(Document):
         })
     '''
     The outage resulting from the execution of the outage plan.
-    '''
-
-    plannedPeriod: Optional[DateTimeInterval] = field(
-        default = None,
-        metadata = {
-            'type': 'Attribute',
-            'minOccurs': '0',
-            'maxOccurs': '1',
-            'inverse': '',
-            'namespace': 'http://iec.ch/TC57/CIM100#'
-        })
-    '''
-    planned start and end time of the planned outage.
     '''
 
     SwitchingPlan: Optional[SwitchingPlan] = field(
@@ -16677,19 +16285,6 @@ class SwitchingOrder(Document):
     Location of this switching order.
     '''
 
-    plannedExecutionInterval: Optional[DateTimeInterval] = field(
-        default = None,
-        metadata = {
-            'type': 'Attribute',
-            'minOccurs': '0',
-            'maxOccurs': '1',
-            'inverse': '',
-            'namespace': 'http://iec.ch/TC57/CIM100#'
-        })
-    '''
-    The planned start and end time for the switching order.
-    '''
-
     SwitchingPlan: Optional[SwitchingPlan] = field(
         default = None,
         metadata = {
@@ -16801,19 +16396,6 @@ class SwitchingPlan(Document):
         })
     '''
     The planned outage notification that is associated to the switching plan.
-    '''
-
-    plannedPeriod: Optional[DateTimeInterval] = field(
-        default = None,
-        metadata = {
-            'type': 'Attribute',
-            'minOccurs': '0',
-            'maxOccurs': '1',
-            'inverse': '',
-            'namespace': 'http://iec.ch/TC57/CIM100#'
-        })
-    '''
-    the planned start and end times for the switching plan.
     '''
 
     SafetyDocuments: list[SafetyDocument] = field(
@@ -16987,33 +16569,6 @@ class SwitchingPlanRequest(Document):
     The details of this switching plan request.
     '''
 
-    forwardSwitchingDateTimeInterval: Optional[DateTimeInterval] = field(
-        default = None,
-        metadata = {
-            'type': 'Attribute',
-            'minOccurs': '0',
-            'maxOccurs': '1',
-            'inverse': '',
-            'namespace': 'http://iec.ch/TC57/CIM100#'
-        })
-    '''
-    The date when the switching to isolate equipment is performed.
-    '''
-
-    outageDateTimeInterval: Optional[DateTimeInterval] = field(
-        default = None,
-        metadata = {
-            'type': 'Attribute',
-            'minOccurs': '0',
-            'maxOccurs': '1',
-            'inverse': '',
-            'namespace': 'http://iec.ch/TC57/CIM100#'
-        })
-    '''
-    The window of time during which one or more customers will be de-energized
-    during execution of the switching plan.
-    '''
-
     RequestingOrganization: Optional[Organisation] = field(
         default = None,
         metadata = {
@@ -17025,19 +16580,6 @@ class SwitchingPlanRequest(Document):
         })
     '''
     The organization that requested the switching plan.
-    '''
-
-    reverseSwitchingDateTimeInterval: Optional[DateTimeInterval] = field(
-        default = None,
-        metadata = {
-            'type': 'Attribute',
-            'minOccurs': '0',
-            'maxOccurs': '1',
-            'inverse': '',
-            'namespace': 'http://iec.ch/TC57/CIM100#'
-        })
-    '''
-    The date when the switching to energize equipment is performed.
     '''
 
     SwitchingPlan: list[SwitchingPlan] = field(
@@ -17176,19 +16718,6 @@ class TimeSchedule(Document):
     Meter read schedule for which the time schedule applies
     '''
 
-    scheduleInterval: Optional[DateTimeInterval] = field(
-        default = None,
-        metadata = {
-            'type': 'Attribute',
-            'minOccurs': '0',
-            'maxOccurs': '1',
-            'inverse': '',
-            'namespace': 'http://iec.ch/TC57/CIM100#'
-        })
-    '''
-    Schedule date and time interval.
-    '''
-
     TimePoints: list[TimePoint] = field(
         default_factory = list,
         metadata = {
@@ -17289,19 +16818,6 @@ class TroubleOrder(Document):
         })
     '''
     The location of this trouble order
-    '''
-
-    plannedExecutionInterval: Optional[DateTimeInterval] = field(
-        default = None,
-        metadata = {
-            'type': 'Attribute',
-            'minOccurs': '0',
-            'maxOccurs': '1',
-            'inverse': '',
-            'namespace': 'http://iec.ch/TC57/CIM100#'
-        })
-    '''
-    The planned start and end time for the trouble order.
     '''
 
     TroubleTicket: list[TroubleTicket] = field(
@@ -18209,51 +17725,6 @@ class EndDeviceControl(IdentifiedObject):
     All end devices receiving commands from this end device control.
     '''
 
-    primaryDeviceTiming: Optional[EndDeviceTiming] = field(
-        default = None,
-        metadata = {
-            'type': 'Attribute',
-            'minOccurs': '0',
-            'maxOccurs': '1',
-            'inverse': '',
-            'namespace': 'http://iec.ch/TC57/CIM100#'
-        })
-    '''
-    Timing for the control actions performed on the device identified in the
-    end device control.
-    '''
-
-    scheduledInterval: Optional[DateTimeInterval] = field(
-        default = None,
-        metadata = {
-            'type': 'Attribute',
-            'minOccurs': '0',
-            'maxOccurs': '1',
-            'inverse': '',
-            'namespace': 'http://iec.ch/TC57/CIM100#'
-        })
-    '''
-    (if control has scheduled duration) Date and time interval the control
-    has been scheduled to execute within.
-    '''
-
-    secondaryDeviceTiming: Optional[EndDeviceTiming] = field(
-        default = None,
-        metadata = {
-            'type': 'Attribute',
-            'minOccurs': '0',
-            'maxOccurs': '1',
-            'inverse': '',
-            'namespace': 'http://iec.ch/TC57/CIM100#'
-        })
-    '''
-    Timing for the control actions performed by devices that are responding
-    to event related information sent to the primary device indicated in the
-    end device control. For example, load control actions performed by a PAN
-    device in response to demand response event information sent to a PAN gateway
-    server.
-    '''
-
     UsagePointGroups: list[UsagePointGroup] = field(
         default_factory = list,
         metadata = {
@@ -18460,6 +17931,19 @@ class EndDeviceGroup(IdentifiedObject):
     All demand response programs this group of end devices is enrolled in.
     '''
 
+    DERFunction: list[DERFunction] = field(
+        default_factory = list,
+        metadata = {
+            'type': 'Association',
+            'minOccurs': '0',
+            'maxOccurs': 'unbounded',
+            'inverse': 'DERFunction.EndDeviceGroup',
+            'namespace': 'http://iec.ch/TC57/CIM100#'
+        })
+    '''
+    The DER functions that are applied to the DER Group.
+    '''
+
     DERFunction: Optional[DERFunction] = field(
         default = None,
         metadata = {
@@ -18551,32 +18035,6 @@ class EndDeviceGroup(IdentifiedObject):
     Meter read schedule that applies to the end device group
     '''
 
-    status: Optional[Status] = field(
-        default = None,
-        metadata = {
-            'type': 'Attribute',
-            'minOccurs': '0',
-            'maxOccurs': '1',
-            'inverse': '',
-            'namespace': 'http://iec.ch/TC57/CIM100#'
-        })
-    '''
-    Current status information relevant to a group.
-    '''
-
-    version: Optional[Version] = field(
-        default = None,
-        metadata = {
-            'type': 'Attribute',
-            'minOccurs': '0',
-            'maxOccurs': '1',
-            'inverse': '',
-            'namespace': 'http://iec.ch/TC57/CIM100#'
-        })
-    '''
-    version of this group
-    '''
-
 @dataclass(repr=False)
 class EnergyArea(IdentifiedObject):
     '''
@@ -18600,6 +18058,7 @@ class EnergyArea(IdentifiedObject):
     The control area specification that is used for the load forecast.
     '''
 
+@stereotype(CIMStereotype.OfAggregate)
 @dataclass(repr=False)
 class LoadArea(EnergyArea):
     '''
@@ -18610,7 +18069,7 @@ class LoadArea(EnergyArea):
     SubLoadAreas: list[SubLoadArea] = field(
         default_factory = list,
         metadata = {
-            'type': 'Aggregate Of',
+            'type': 'AggregateOf',
             'minOccurs': '0',
             'maxOccurs': 'unbounded',
             'inverse': 'SubLoadArea.LoadArea',
@@ -18620,6 +18079,7 @@ class LoadArea(EnergyArea):
     The SubLoadAreas in the LoadArea.
     '''
 
+@stereotype(CIMStereotype.OfAggregate)
 @dataclass(repr=False)
 class SubLoadArea(EnergyArea):
     '''
@@ -18630,7 +18090,7 @@ class SubLoadArea(EnergyArea):
     LoadArea: Optional[LoadArea] = field(
         default = None,
         metadata = {
-            'type': 'Of Aggregate',
+            'type': 'OfAggregate',
             'minOccurs': '0',
             'maxOccurs': '1',
             'inverse': 'LoadArea.SubLoadAreas',
@@ -18643,7 +18103,7 @@ class SubLoadArea(EnergyArea):
     LoadGroups: list[LoadGroup] = field(
         default_factory = list,
         metadata = {
-            'type': 'Aggregate Of',
+            'type': 'AggregateOf',
             'minOccurs': '0',
             'maxOccurs': 'unbounded',
             'inverse': 'LoadGroup.SubLoadArea',
@@ -18774,20 +18234,6 @@ class Forecast(EnvironmentalInformation):
     A forecast group of value sets and/or phenomena characteristics.
     '''
 
-    validFor: Optional[DateTimeInterval] = field(
-        default = None,
-        metadata = {
-            'type': 'Attribute',
-            'minOccurs': '0',
-            'maxOccurs': '1',
-            'inverse': '',
-            'namespace': 'http://iec.ch/TC57/CIM100#'
-        })
-    '''
-    The interval for which the forecast is valid. For example, a forecast issued
-    now for tomorrow might be valid for the next 2 hours.
-    '''
-
 @dataclass(repr=False)
 class Observation(EnvironmentalInformation):
     '''
@@ -18908,6 +18354,7 @@ class EnvironmentalMonitoringStation(IdentifiedObject):
     '''
     '''
 
+@stereotype(CIMStereotype.AggregateOf)
 @dataclass(repr=False)
 class EquipmentLimitSeriesComponent(IdentifiedObject):
     '''
@@ -18934,7 +18381,7 @@ class EquipmentLimitSeriesComponent(IdentifiedObject):
     SeriesEquipmentDependentLimit: Optional[SeriesEquipmentDependentLimit] = field(
         default = None,
         metadata = {
-            'type': 'Of Aggregate',
+            'type': 'OfAggregate',
             'minOccurs': '0',
             'maxOccurs': '1',
             'inverse': 'SeriesEquipmentDependentLimit.EquipmentLimitSeriesComponent',
@@ -19009,35 +18456,11 @@ class ErpInventory(IdentifiedObject):
     '''
     '''
 
-    status: Optional[Status] = field(
-        default = None,
-        metadata = {
-            'type': 'Attribute',
-            'minOccurs': '0',
-            'maxOccurs': '1',
-            'inverse': '',
-            'namespace': 'http://iec.ch/TC57/CIM100#'
-        })
-    '''
-    '''
-
 @dataclass(repr=False)
 class ErpIssueInventory(IdentifiedObject):
     '''
     Can be used to request an application to process an issue or request information
     about an issue.
-    '''
-
-    status: Optional[Status] = field(
-        default = None,
-        metadata = {
-            'type': 'Attribute',
-            'minOccurs': '0',
-            'maxOccurs': '1',
-            'inverse': '',
-            'namespace': 'http://iec.ch/TC57/CIM100#'
-        })
-    '''
     '''
 
     TypeAsset: Optional[CatalogAssetType] = field(
@@ -19082,18 +18505,6 @@ class ErpItemMaster(IdentifiedObject):
             'minOccurs': '0',
             'maxOccurs': '1',
             'inverse': 'Asset.ErpItemMaster',
-            'namespace': 'http://iec.ch/TC57/CIM100#'
-        })
-    '''
-    '''
-
-    status: Optional[Status] = field(
-        default = None,
-        metadata = {
-            'type': 'Attribute',
-            'minOccurs': '0',
-            'maxOccurs': '1',
-            'inverse': '',
             'namespace': 'http://iec.ch/TC57/CIM100#'
         })
     '''
@@ -19238,18 +18649,6 @@ class ErpJournalEntry(IdentifiedObject):
     '''
     '''
 
-    status: Optional[Status] = field(
-        default = None,
-        metadata = {
-            'type': 'Attribute',
-            'minOccurs': '0',
-            'maxOccurs': '1',
-            'inverse': '',
-            'namespace': 'http://iec.ch/TC57/CIM100#'
-        })
-    '''
-    '''
-
 @dataclass(repr=False)
 class ErpLedBudLineItem(IdentifiedObject):
     '''
@@ -19277,18 +18676,6 @@ class ErpLedBudLineItem(IdentifiedObject):
             'minOccurs': '0',
             'maxOccurs': '1',
             'inverse': 'ErpLedgerBudget.ErpLedBudLineItems',
-            'namespace': 'http://iec.ch/TC57/CIM100#'
-        })
-    '''
-    '''
-
-    status: Optional[Status] = field(
-        default = None,
-        metadata = {
-            'type': 'Attribute',
-            'minOccurs': '0',
-            'maxOccurs': '1',
-            'inverse': '',
             'namespace': 'http://iec.ch/TC57/CIM100#'
         })
     '''
@@ -19397,18 +18784,6 @@ class ErpLedgerEntry(IdentifiedObject):
     '''
     '''
 
-    status: Optional[Status] = field(
-        default = None,
-        metadata = {
-            'type': 'Attribute',
-            'minOccurs': '0',
-            'maxOccurs': '1',
-            'inverse': '',
-            'namespace': 'http://iec.ch/TC57/CIM100#'
-        })
-    '''
-    '''
-
     UserAttributes: list[UserAttribute] = field(
         default_factory = list,
         metadata = {
@@ -19471,18 +18846,6 @@ class ErpPayableLineItem(IdentifiedObject):
             'minOccurs': '0',
             'maxOccurs': 'unbounded',
             'inverse': 'ErpPayment.ErpPayableLineItems',
-            'namespace': 'http://iec.ch/TC57/CIM100#'
-        })
-    '''
-    '''
-
-    status: Optional[Status] = field(
-        default = None,
-        metadata = {
-            'type': 'Attribute',
-            'minOccurs': '0',
-            'maxOccurs': '1',
-            'inverse': '',
             'namespace': 'http://iec.ch/TC57/CIM100#'
         })
     '''
@@ -19558,18 +18921,6 @@ class ErpQuoteLineItem(IdentifiedObject):
     '''
     '''
 
-    status: Optional[Status] = field(
-        default = None,
-        metadata = {
-            'type': 'Attribute',
-            'minOccurs': '0',
-            'maxOccurs': '1',
-            'inverse': '',
-            'namespace': 'http://iec.ch/TC57/CIM100#'
-        })
-    '''
-    '''
-
 @dataclass(repr=False)
 class ErpRecDelvLineItem(IdentifiedObject):
     '''
@@ -19626,18 +18977,6 @@ class ErpRecDelvLineItem(IdentifiedObject):
     '''
     '''
 
-    status: Optional[Status] = field(
-        default = None,
-        metadata = {
-            'type': 'Attribute',
-            'minOccurs': '0',
-            'maxOccurs': '1',
-            'inverse': '',
-            'namespace': 'http://iec.ch/TC57/CIM100#'
-        })
-    '''
-    '''
-
 @dataclass(repr=False)
 class ErpRecLineItem(IdentifiedObject):
     '''
@@ -19688,18 +19027,6 @@ class ErpRecLineItem(IdentifiedObject):
             'minOccurs': '0',
             'maxOccurs': '1',
             'inverse': 'ErpReceivable.ErpRecLineItems',
-            'namespace': 'http://iec.ch/TC57/CIM100#'
-        })
-    '''
-    '''
-
-    status: Optional[Status] = field(
-        default = None,
-        metadata = {
-            'type': 'Attribute',
-            'minOccurs': '0',
-            'maxOccurs': '1',
-            'inverse': '',
             'namespace': 'http://iec.ch/TC57/CIM100#'
         })
     '''
@@ -19788,18 +19115,6 @@ class ErpReqLineItem(IdentifiedObject):
             'minOccurs': '0',
             'maxOccurs': '1',
             'inverse': 'ErpRequisition.ErpReqLineItems',
-            'namespace': 'http://iec.ch/TC57/CIM100#'
-        })
-    '''
-    '''
-
-    status: Optional[Status] = field(
-        default = None,
-        metadata = {
-            'type': 'Attribute',
-            'minOccurs': '0',
-            'maxOccurs': '1',
-            'inverse': '',
             'namespace': 'http://iec.ch/TC57/CIM100#'
         })
     '''
@@ -19907,19 +19222,6 @@ class Fault(IdentifiedObject):
         })
     '''
     Equipment carrying this fault.
-    '''
-
-    impedance: Optional[FaultImpedance] = field(
-        default = None,
-        metadata = {
-            'type': 'Attribute',
-            'minOccurs': '0',
-            'maxOccurs': '1',
-            'inverse': '',
-            'namespace': 'http://iec.ch/TC57/CIM100#'
-        })
-    '''
-    Fault impedance. Its usage is described by 'kind'.
     '''
 
     Location: Optional[Location] = field(
@@ -20233,19 +19535,6 @@ class FinancialInfo(IdentifiedObject):
     The asset to which this financial information relates.
     '''
 
-    quantity: Optional[IntegerQuantity] = field(
-        default = None,
-        metadata = {
-            'type': 'Attribute',
-            'minOccurs': '0',
-            'maxOccurs': '1',
-            'inverse': '',
-            'namespace': 'http://iec.ch/TC57/CIM100#'
-        })
-    '''
-    The quantity of the asset if per unit length, for example conductor.
-    '''
-
 @dataclass(repr=False)
 class FossilFuel(IdentifiedObject):
     '''
@@ -20423,6 +19712,7 @@ class GenericConstraints(IdentifiedObject):
     b) Group line flow constraint type
     '''
 
+@stereotype(CIMStereotype.Concrete)
 @dataclass(repr=False)
 class GeographicalRegion(IdentifiedObject):
     '''
@@ -20432,7 +19722,7 @@ class GeographicalRegion(IdentifiedObject):
     Regions: list[SubGeographicalRegion] = field(
         default_factory = list,
         metadata = {
-            'type': 'Aggregate Of',
+            'type': 'AggregateOf',
             'minOccurs': '0',
             'maxOccurs': 'unbounded',
             'inverse': 'SubGeographicalRegion.Region',
@@ -20471,19 +19761,6 @@ class Hazard(IdentifiedObject):
             'namespace': 'http://iec.ch/TC57/CIM100#'
         })
     '''
-    '''
-
-    status: Optional[Status] = field(
-        default = None,
-        metadata = {
-            'type': 'Attribute',
-            'minOccurs': '0',
-            'maxOccurs': '1',
-            'inverse': '',
-            'namespace': 'http://iec.ch/TC57/CIM100#'
-        })
-    '''
-    Status of this hazard.
     '''
 
     TroubleTicket: Optional[TroubleTicket] = field(
@@ -20776,6 +20053,7 @@ class AccumulatorReset(Control):
     The accumulator value that is reset by the command.
     '''
 
+@stereotype(CIMStereotype.Concrete)
 @dataclass(repr=False)
 class AnalogControl(Control):
     '''
@@ -20927,6 +20205,7 @@ class Command(Control):
     The ValueAliasSet used for translation of a Control value to a name.
     '''
 
+@stereotype(CIMStereotype.OfAggregate)
 @dataclass(repr=False)
 class MeasurementValue(IOPoint):
     '''
@@ -20987,7 +20266,7 @@ class MeasurementValue(IOPoint):
     MeasurementValueQuality: Optional[MeasurementValueQuality] = field(
         default = None,
         metadata = {
-            'type': 'Aggregate Of',
+            'type': 'AggregateOf',
             'minOccurs': '0',
             'maxOccurs': '1',
             'inverse': 'MeasurementValueQuality.MeasurementValue',
@@ -21082,6 +20361,7 @@ class AccumulatorValue(MeasurementValue):
     The command that resets the accumulator value.
     '''
 
+@stereotype(CIMStereotype.Concrete)
 @dataclass(repr=False)
 class AnalogValue(MeasurementValue):
     '''
@@ -21182,20 +20462,6 @@ class BaseReading(MeasurementValue):
         })
     '''
     All qualities of this reading.
-    '''
-
-    timePeriod: Optional[DateTimeInterval] = field(
-        default = None,
-        metadata = {
-            'type': 'Attribute',
-            'minOccurs': '0',
-            'maxOccurs': '1',
-            'inverse': '',
-            'namespace': 'http://iec.ch/TC57/CIM100#'
-        })
-    '''
-    Start and end of the period for those readings whose type has a time attribute
-    such as 'billing', seasonal' or 'forTheSpecifiedPeriod'.
     '''
 
 @dataclass(repr=False)
@@ -21613,18 +20879,6 @@ class LandProperty(IdentifiedObject):
     All rights of way this land property has.
     '''
 
-    status: Optional[Status] = field(
-        default = None,
-        metadata = {
-            'type': 'Attribute',
-            'minOccurs': '0',
-            'maxOccurs': '1',
-            'inverse': '',
-            'namespace': 'http://iec.ch/TC57/CIM100#'
-        })
-    '''
-    '''
-
 @dataclass(repr=False)
 class Limit(IdentifiedObject):
     '''
@@ -21647,6 +20901,7 @@ class Limit(IdentifiedObject):
     '''
     '''
 
+@stereotype(CIMStereotype.Concrete)
 @dataclass(repr=False)
 class AccumulatorLimit(Limit):
     '''
@@ -21668,7 +20923,7 @@ class AccumulatorLimit(Limit):
     LimitSet: Optional[AccumulatorLimitSet] = field(
         default = None,
         metadata = {
-            'type': 'Of Aggregate',
+            'type': 'OfAggregate',
             'minOccurs': '0',
             'maxOccurs': '1',
             'inverse': 'AccumulatorLimitSet.Limits',
@@ -21678,6 +20933,7 @@ class AccumulatorLimit(Limit):
     The set of limits.
     '''
 
+@stereotype(CIMStereotype.Concrete)
 @dataclass(repr=False)
 class AnalogLimit(Limit):
     '''
@@ -21699,7 +20955,7 @@ class AnalogLimit(Limit):
     LimitSet: Optional[AnalogLimitSet] = field(
         default = None,
         metadata = {
-            'type': 'Of Aggregate',
+            'type': 'OfAggregate',
             'minOccurs': '0',
             'maxOccurs': '1',
             'inverse': 'AnalogLimitSet.Limits',
@@ -21716,6 +20972,7 @@ class ViolationLimit(Limit):
     the organisation responsible for setting the limit.
     '''
 
+@stereotype(CIMStereotype.AggregateOf)
 @dataclass(repr=False)
 class LimitDependency(IdentifiedObject):
     '''
@@ -21728,7 +20985,7 @@ class LimitDependency(IdentifiedObject):
     Equipment: Optional[Equipment] = field(
         default = None,
         metadata = {
-            'type': 'Of Aggregate',
+            'type': 'OfAggregate',
             'minOccurs': '0',
             'maxOccurs': '1',
             'inverse': 'Equipment.LimitDependencyModel',
@@ -21783,6 +21040,7 @@ class LimitScalingLimit(LimitDependency):
     '''
     '''
 
+@stereotype(CIMStereotype.OfAggregate)
 @dataclass(repr=False)
 class SeriesEquipmentDependentLimit(LimitDependency):
     '''
@@ -21803,7 +21061,7 @@ class SeriesEquipmentDependentLimit(LimitDependency):
     EquipmentLimitSeriesComponent: list[EquipmentLimitSeriesComponent] = field(
         default_factory = list,
         metadata = {
-            'type': 'Aggregate Of',
+            'type': 'AggregateOf',
             'minOccurs': '0',
             'maxOccurs': 'unbounded',
             'inverse': 'EquipmentLimitSeriesComponent.SeriesEquipmentDependentLimit',
@@ -21836,6 +21094,7 @@ class LimitSet(IdentifiedObject):
     Unit for Measurements and Controls.
     '''
 
+@stereotype(CIMStereotype.Concrete)
 @dataclass(repr=False)
 class AccumulatorLimitSet(LimitSet):
     '''
@@ -21846,7 +21105,7 @@ class AccumulatorLimitSet(LimitSet):
     Limits: list[AccumulatorLimit] = field(
         default_factory = list,
         metadata = {
-            'type': 'Aggregate Of',
+            'type': 'AggregateOf',
             'minOccurs': '0',
             'maxOccurs': 'unbounded',
             'inverse': 'AccumulatorLimit.LimitSet',
@@ -21869,6 +21128,7 @@ class AccumulatorLimitSet(LimitSet):
     The Measurements using the LimitSet.
     '''
 
+@stereotype(CIMStereotype.Concrete)
 @dataclass(repr=False)
 class AnalogLimitSet(LimitSet):
     '''
@@ -21879,7 +21139,7 @@ class AnalogLimitSet(LimitSet):
     Limits: list[AnalogLimit] = field(
         default_factory = list,
         metadata = {
-            'type': 'Aggregate Of',
+            'type': 'AggregateOf',
             'minOccurs': '0',
             'maxOccurs': 'unbounded',
             'inverse': 'AnalogLimit.LimitSet',
@@ -21926,6 +21186,7 @@ class LoadDynamics(IdentifiedObject):
     Energy consumer to which this dynamics load model applies.
     '''
 
+@stereotype(CIMStereotype.AggregateOf)
 @dataclass(repr=False)
 class LoadGroup(IdentifiedObject):
     '''
@@ -21936,7 +21197,7 @@ class LoadGroup(IdentifiedObject):
     SubLoadArea: Optional[SubLoadArea] = field(
         default = None,
         metadata = {
-            'type': 'Of Aggregate',
+            'type': 'OfAggregate',
             'minOccurs': '0',
             'maxOccurs': '1',
             'inverse': 'SubLoadArea.LoadGroups',
@@ -21946,6 +21207,7 @@ class LoadGroup(IdentifiedObject):
     The SubLoadArea where the Loadgroup belongs.
     '''
 
+@stereotype(CIMStereotype.OfAggregate)
 @dataclass(repr=False)
 class ConformLoadGroup(LoadGroup):
     '''
@@ -21955,7 +21217,7 @@ class ConformLoadGroup(LoadGroup):
     ConformLoadSchedules: list[ConformLoadSchedule] = field(
         default_factory = list,
         metadata = {
-            'type': 'Aggregate Of',
+            'type': 'AggregateOf',
             'minOccurs': '0',
             'maxOccurs': 'unbounded',
             'inverse': 'ConformLoadSchedule.ConformLoadGroup',
@@ -21978,6 +21240,7 @@ class ConformLoadGroup(LoadGroup):
     Conform loads assigned to this ConformLoadGroup.
     '''
 
+@stereotype(CIMStereotype.OfAggregate)
 @dataclass(repr=False)
 class NonConformLoadGroup(LoadGroup):
     '''
@@ -22000,7 +21263,7 @@ class NonConformLoadGroup(LoadGroup):
     NonConformLoadSchedules: list[NonConformLoadSchedule] = field(
         default_factory = list,
         metadata = {
-            'type': 'Aggregate Of',
+            'type': 'AggregateOf',
             'minOccurs': '0',
             'maxOccurs': 'unbounded',
             'inverse': 'NonConformLoadSchedule.NonConformLoadGroup',
@@ -22316,19 +21579,6 @@ class Location(IdentifiedObject):
     '''
     '''
 
-    electronicAddress: Optional[ElectronicAddress] = field(
-        default = None,
-        metadata = {
-            'type': 'Attribute',
-            'minOccurs': '0',
-            'maxOccurs': '1',
-            'inverse': '',
-            'namespace': 'http://iec.ch/TC57/CIM100#'
-        })
-    '''
-    Electronic address.
-    '''
-
     EnvironmentalLocationKind: list[EnvironmentalLocationType] = field(
         default_factory = list,
         metadata = {
@@ -22406,19 +21656,6 @@ class Location(IdentifiedObject):
     '''
     '''
 
-    mainAddress: Optional[StreetAddress] = field(
-        default = None,
-        metadata = {
-            'type': 'Attribute',
-            'minOccurs': '0',
-            'maxOccurs': '1',
-            'inverse': '',
-            'namespace': 'http://iec.ch/TC57/CIM100#'
-        })
-    '''
-    Main address of the location.
-    '''
-
     Measurements: list[Measurement] = field(
         default_factory = list,
         metadata = {
@@ -22443,32 +21680,6 @@ class Location(IdentifiedObject):
         })
     '''
     The outage order at this location.
-    '''
-
-    phone1: Optional[TelephoneNumber] = field(
-        default = None,
-        metadata = {
-            'type': 'Attribute',
-            'minOccurs': '0',
-            'maxOccurs': '1',
-            'inverse': '',
-            'namespace': 'http://iec.ch/TC57/CIM100#'
-        })
-    '''
-    Phone number.
-    '''
-
-    phone2: Optional[TelephoneNumber] = field(
-        default = None,
-        metadata = {
-            'type': 'Attribute',
-            'minOccurs': '0',
-            'maxOccurs': '1',
-            'inverse': '',
-            'namespace': 'http://iec.ch/TC57/CIM100#'
-        })
-    '''
-    Additional phone number.
     '''
 
     PositionPoints: list[PositionPoint] = field(
@@ -22508,33 +21719,6 @@ class Location(IdentifiedObject):
             'namespace': 'http://iec.ch/TC57/CIM100#'
         })
     '''
-    '''
-
-    secondaryAddress: Optional[StreetAddress] = field(
-        default = None,
-        metadata = {
-            'type': 'Attribute',
-            'minOccurs': '0',
-            'maxOccurs': '1',
-            'inverse': '',
-            'namespace': 'http://iec.ch/TC57/CIM100#'
-        })
-    '''
-    Secondary address of the location. For example, PO Box address may have
-    different ZIP code than that in the 'mainAddress'.
-    '''
-
-    status: Optional[Status] = field(
-        default = None,
-        metadata = {
-            'type': 'Attribute',
-            'minOccurs': '0',
-            'maxOccurs': '1',
-            'inverse': '',
-            'namespace': 'http://iec.ch/TC57/CIM100#'
-        })
-    '''
-    Status of this location.
     '''
 
     SwitchingOrder: Optional[SwitchingOrder] = field(
@@ -23277,45 +22461,6 @@ class MarketPerson(IdentifiedObject):
     The user name for the person; required to log in.
     '''
 
-    electronicAddressAlternate: Optional[ElectronicAddress] = field(
-        default = None,
-        metadata = {
-            'type': 'Attribute',
-            'minOccurs': '0',
-            'maxOccurs': '1',
-            'inverse': '',
-            'namespace': 'http://iec.ch/TC57/CIM100#'
-        })
-    '''
-    Alternate Electronic address.
-    '''
-
-    electronicAddressPrimary: Optional[ElectronicAddress] = field(
-        default = None,
-        metadata = {
-            'type': 'Attribute',
-            'minOccurs': '0',
-            'maxOccurs': '1',
-            'inverse': '',
-            'namespace': 'http://iec.ch/TC57/CIM100#'
-        })
-    '''
-    Primary Electronic address.
-    '''
-
-    landlinePhone: Optional[TelephoneNumber] = field(
-        default = None,
-        metadata = {
-            'type': 'Attribute',
-            'minOccurs': '0',
-            'maxOccurs': '1',
-            'inverse': '',
-            'namespace': 'http://iec.ch/TC57/CIM100#'
-        })
-    '''
-    Landline phone number.
-    '''
-
     MarketParticipant: list[MarketParticipant] = field(
         default_factory = list,
         metadata = {
@@ -23335,31 +22480,6 @@ class MarketPerson(IdentifiedObject):
             'minOccurs': '0',
             'maxOccurs': 'unbounded',
             'inverse': 'MarketSkill.MarketPerson',
-            'namespace': 'http://iec.ch/TC57/CIM100#'
-        })
-    '''
-    '''
-
-    mobilePhone: Optional[TelephoneNumber] = field(
-        default = None,
-        metadata = {
-            'type': 'Attribute',
-            'minOccurs': '0',
-            'maxOccurs': '1',
-            'inverse': '',
-            'namespace': 'http://iec.ch/TC57/CIM100#'
-        })
-    '''
-    Mobile phone number.
-    '''
-
-    status: Optional[Status] = field(
-        default = None,
-        metadata = {
-            'type': 'Attribute',
-            'minOccurs': '0',
-            'maxOccurs': '1',
-            'inverse': '',
             'namespace': 'http://iec.ch/TC57/CIM100#'
         })
     '''
@@ -23503,7 +22623,7 @@ class MarketQualificationRequirement(IdentifiedObject):
             'namespace': 'http://iec.ch/TC57/CIM100#'
         })
     '''
-    The status of the privilege. Shows the status of the user´s qualification.
+    The status of the privilege. Shows the status of the user�s qualification.
     The current statuses are: 1=New, 2=Active, 3=Refused, 4=Terminated, 5=Withdrawn
     and it is subject to update.
     '''
@@ -23684,6 +22804,7 @@ class MaterialItem(IdentifiedObject):
     items such as nuts, bolts, brackets, glue, etc.
     '''
 
+@stereotype(CIMStereotype.Concrete)
 @dataclass(repr=False)
 class Measurement(IdentifiedObject):
     '''
@@ -23847,7 +22968,7 @@ class Measurement(IdentifiedObject):
     PowerSystemResource: Optional[PowerSystemResource] = field(
         default = None,
         metadata = {
-            'type': 'Of Aggregate',
+            'type': 'OfAggregate',
             'minOccurs': '0',
             'maxOccurs': '1',
             'inverse': 'PowerSystemResource.Measurements',
@@ -23895,6 +23016,7 @@ class Measurement(IdentifiedObject):
     One or more measurements may be associated with a terminal in the network.
     '''
 
+@stereotype(CIMStereotype.Concrete)
 @dataclass(repr=False)
 class Accumulator(Measurement):
     '''
@@ -23941,6 +23063,7 @@ class Accumulator(Measurement):
     A measurement may have zero or more limit ranges defined for it.
     '''
 
+@stereotype(CIMStereotype.Concrete)
 @dataclass(repr=False)
 class Analog(Measurement):
     '''
@@ -24075,7 +23198,7 @@ class AssetAnalog(Analog):
     temperature of test standard or if there is no test standard. Reporting
     temperature is what gas volumes are normalized to. Different reporting
     temperatures are used by different sources. For example, ASTM specifies
-    0°C, whereas IEC specifies 20°C. Online monitors often have their own unique
+    0�C, whereas IEC specifies 20�C. Online monitors often have their own unique
     reporting temperatures.
     '''
 
@@ -24498,6 +23621,7 @@ class EnvironmentalStringMeasurement(StringMeasurement):
     Observation or forecast with which this environmental string is associated.
     '''
 
+@stereotype(CIMStereotype.OfAggregate)
 @dataclass(repr=False)
 class MeasurementCalculator(IdentifiedObject):
     '''
@@ -24519,7 +23643,7 @@ class MeasurementCalculator(IdentifiedObject):
     MeasurementCalculatorInput: list[MeasurementCalculatorInput] = field(
         default_factory = list,
         metadata = {
-            'type': 'Aggregate Of',
+            'type': 'AggregateOf',
             'minOccurs': '0',
             'maxOccurs': 'unbounded',
             'inverse': 'MeasurementCalculatorInput.MeasurementCalculator',
@@ -24541,6 +23665,7 @@ class MeasurementCalculator(IdentifiedObject):
     '''
     '''
 
+@stereotype(CIMStereotype.AggregateOf)
 @dataclass(repr=False)
 class MeasurementCalculatorInput(IdentifiedObject):
     '''
@@ -24588,7 +23713,7 @@ class MeasurementCalculatorInput(IdentifiedObject):
     MeasurementCalculator: Optional[MeasurementCalculator] = field(
         default = None,
         metadata = {
-            'type': 'Of Aggregate',
+            'type': 'OfAggregate',
             'minOccurs': '0',
             'maxOccurs': '1',
             'inverse': 'MeasurementCalculator.MeasurementCalculatorInput',
@@ -24833,19 +23958,6 @@ class MeterReading(IdentifiedObject):
         })
     '''
     Usage point from which this meter reading (set of values) has been obtained.
-    '''
-
-    valuesInterval: Optional[DateTimeInterval] = field(
-        default = None,
-        metadata = {
-            'type': 'Attribute',
-            'minOccurs': '0',
-            'maxOccurs': '1',
-            'inverse': '',
-            'namespace': 'http://iec.ch/TC57/CIM100#'
-        })
-    '''
-    Date and time interval of the data items contained within this meter reading.
     '''
 
 @dataclass(repr=False)
@@ -25362,6 +24474,7 @@ class OperatingParticipant(IdentifiedObject):
     can be resused for any number of power system resources.
     '''
 
+@stereotype(CIMStereotype.AggregateOf)
 @dataclass(repr=False)
 class OperationalLimit(IdentifiedObject):
     '''
@@ -25406,7 +24519,7 @@ class OperationalLimit(IdentifiedObject):
     OperationalLimitSet: Optional[OperationalLimitSet] = field(
         default = None,
         metadata = {
-            'type': 'Of Aggregate',
+            'type': 'OfAggregate',
             'minOccurs': '0',
             'maxOccurs': '1',
             'inverse': 'OperationalLimitSet.OperationalLimitValue',
@@ -25559,6 +24672,7 @@ class VoltageLimit(OperationalLimit):
     value or zero.
     '''
 
+@stereotype(CIMStereotype.OfAggregate)
 @dataclass(repr=False)
 class OperationalLimitSet(IdentifiedObject):
     '''
@@ -25586,7 +24700,7 @@ class OperationalLimitSet(IdentifiedObject):
     OperationalLimitValue: list[OperationalLimit] = field(
         default_factory = list,
         metadata = {
-            'type': 'Aggregate Of',
+            'type': 'AggregateOf',
             'minOccurs': '0',
             'maxOccurs': 'unbounded',
             'inverse': 'OperationalLimit.OperationalLimitSet',
@@ -25702,19 +24816,6 @@ class Organisation(IdentifiedObject):
     customer, etc.
     '''
 
-    electronicAddress: Optional[ElectronicAddress] = field(
-        default = None,
-        metadata = {
-            'type': 'Attribute',
-            'minOccurs': '0',
-            'maxOccurs': '1',
-            'inverse': '',
-            'namespace': 'http://iec.ch/TC57/CIM100#'
-        })
-    '''
-    Electronic address.
-    '''
-
     ParentOrganisation: Optional[ParentOrganization] = field(
         default = None,
         metadata = {
@@ -25728,46 +24829,6 @@ class Organisation(IdentifiedObject):
     Parent organisation of this organisation.
     '''
 
-    phone1: Optional[TelephoneNumber] = field(
-        default = None,
-        metadata = {
-            'type': 'Attribute',
-            'minOccurs': '0',
-            'maxOccurs': '1',
-            'inverse': '',
-            'namespace': 'http://iec.ch/TC57/CIM100#'
-        })
-    '''
-    Phone number.
-    '''
-
-    phone2: Optional[TelephoneNumber] = field(
-        default = None,
-        metadata = {
-            'type': 'Attribute',
-            'minOccurs': '0',
-            'maxOccurs': '1',
-            'inverse': '',
-            'namespace': 'http://iec.ch/TC57/CIM100#'
-        })
-    '''
-    Additional phone number.
-    '''
-
-    postalAddress: Optional[StreetAddress] = field(
-        default = None,
-        metadata = {
-            'type': 'Attribute',
-            'minOccurs': '0',
-            'maxOccurs': '1',
-            'inverse': '',
-            'namespace': 'http://iec.ch/TC57/CIM100#'
-        })
-    '''
-    Postal address, potentially different than 'streetAddress' (e.g., another
-    city).
-    '''
-
     Roles: list[OrganisationRole] = field(
         default_factory = list,
         metadata = {
@@ -25779,19 +24840,6 @@ class Organisation(IdentifiedObject):
         })
     '''
     All roles of this organisation.
-    '''
-
-    streetAddress: Optional[StreetAddress] = field(
-        default = None,
-        metadata = {
-            'type': 'Attribute',
-            'minOccurs': '0',
-            'maxOccurs': '1',
-            'inverse': '',
-            'namespace': 'http://iec.ch/TC57/CIM100#'
-        })
-    '''
-    Street address.
     '''
 
     SwitchingPlanRequest: list[SwitchingPlanRequest] = field(
@@ -26137,6 +25185,7 @@ class AssetOrganisationRole(OrganisationRole):
     All assets for this organisation role.
     '''
 
+@stereotype(CIMStereotype.Concrete)
 @dataclass(repr=False)
 class AssetOwner(AssetOrganisationRole):
     '''
@@ -26391,19 +25440,6 @@ class Customer(OrganisationRole):
     The notification of the planned outage
     '''
 
-    priority: Optional[Priority] = field(
-        default = None,
-        metadata = {
-            'type': 'Attribute',
-            'minOccurs': '0',
-            'maxOccurs': '1',
-            'inverse': '',
-            'namespace': 'http://iec.ch/TC57/CIM100#'
-        })
-    '''
-    Priority of the customer.
-    '''
-
     ServiceRequest: list[ServiceRequest] = field(
         default_factory = list,
         metadata = {
@@ -26415,19 +25451,6 @@ class Customer(OrganisationRole):
         })
     '''
     All service requests for the customer
-    '''
-
-    status: Optional[Status] = field(
-        default = None,
-        metadata = {
-            'type': 'Attribute',
-            'minOccurs': '0',
-            'maxOccurs': '1',
-            'inverse': '',
-            'namespace': 'http://iec.ch/TC57/CIM100#'
-        })
-    '''
-    Status of this customer.
     '''
 
     TroubleTickets: list[TroubleTicket] = field(
@@ -26583,12 +25606,12 @@ class PropertyOrganisationRole(OrganisationRole):
     may be the owner, renter, occupier, taxiing authority, etc.).
     '''
 
-    LandProperty: list[LandProperty] = field(
-        default_factory = list,
+    LandProperty: Optional[LandProperty] = field(
+        default = None,
         metadata = {
             'type': 'Association',
             'minOccurs': '0',
-            'maxOccurs': 'unbounded',
+            'maxOccurs': '1',
             'inverse': 'LandProperty.ErpOrganisationRoles',
             'namespace': 'http://iec.ch/TC57/CIM100#'
         })
@@ -26784,8 +25807,6 @@ class PerLengthLineParameter(IdentifiedObject):
             'namespace': 'http://iec.ch/TC57/CIM100#'
         })
     '''
-    A WireAssemblyInfo is used to compute the PerLengthParameter data in the
-    Wires package
     '''
 
 @dataclass(repr=False)
@@ -27093,45 +26114,6 @@ class Person(IdentifiedObject):
     The customer represented by the person
     '''
 
-    electronicAddress: Optional[ElectronicAddress] = field(
-        default = None,
-        metadata = {
-            'type': 'Attribute',
-            'minOccurs': '0',
-            'maxOccurs': '1',
-            'inverse': '',
-            'namespace': 'http://iec.ch/TC57/CIM100#'
-        })
-    '''
-    Electronic address.
-    '''
-
-    landlinePhone: Optional[TelephoneNumber] = field(
-        default = None,
-        metadata = {
-            'type': 'Attribute',
-            'minOccurs': '0',
-            'maxOccurs': '1',
-            'inverse': '',
-            'namespace': 'http://iec.ch/TC57/CIM100#'
-        })
-    '''
-    Landline phone number.
-    '''
-
-    mobilePhone: Optional[TelephoneNumber] = field(
-        default = None,
-        metadata = {
-            'type': 'Attribute',
-            'minOccurs': '0',
-            'maxOccurs': '1',
-            'inverse': '',
-            'namespace': 'http://iec.ch/TC57/CIM100#'
-        })
-    '''
-    Mobile phone number.
-    '''
-
     Roles: list[PersonRole] = field(
         default_factory = list,
         metadata = {
@@ -27220,6 +26202,7 @@ class DocumentPersonRole(PersonRole):
     Person role with respect to documents.
     '''
 
+@stereotype(CIMStereotype.Concrete)
 @dataclass(repr=False)
 class Approver(DocumentPersonRole):
     '''
@@ -27644,6 +26627,7 @@ class Pnode(IdentifiedObject):
     '''
     '''
 
+@stereotype(CIMStereotype.Concrete)
 @dataclass(repr=False)
 class AggregatedPnode(Pnode):
     '''
@@ -27862,6 +26846,7 @@ class IndividualPnode(Pnode):
     '''
     '''
 
+@stereotype(CIMStereotype.Concrete)
 @dataclass(repr=False)
 class PowerSystemResource(IdentifiedObject):
     '''
@@ -27967,7 +26952,7 @@ class PowerSystemResource(IdentifiedObject):
     Measurements: list[Measurement] = field(
         default_factory = list,
         metadata = {
-            'type': 'Aggregate Of',
+            'type': 'AggregateOf',
             'minOccurs': '0',
             'maxOccurs': 'unbounded',
             'inverse': 'Measurement.PowerSystemResource',
@@ -28055,6 +27040,7 @@ class PowerSystemResource(IdentifiedObject):
     The verification action that is performed on the power system resource
     '''
 
+@stereotype(CIMStereotype.Concrete)
 @dataclass(repr=False)
 class ACLineSegmentPhase(PowerSystemResource):
     '''
@@ -28115,6 +27101,7 @@ class ACLineSegmentPhase(PowerSystemResource):
     Wire information contributing to this AC line segment phase information.
     '''
 
+@stereotype(CIMStereotype.Concrete)
 @dataclass(repr=False)
 class AirCompressor(PowerSystemResource):
     '''
@@ -28137,7 +27124,7 @@ class AirCompressor(PowerSystemResource):
     CAESPlant: Optional[CAESPlant] = field(
         default = None,
         metadata = {
-            'type': 'Of Aggregate',
+            'type': 'OfAggregate',
             'minOccurs': '0',
             'maxOccurs': '1',
             'inverse': 'CAESPlant.AirCompressor',
@@ -28160,6 +27147,7 @@ class AirCompressor(PowerSystemResource):
     A CAES air compressor is driven by combustion turbine.
     '''
 
+@stereotype(CIMStereotype.OfAggregate)
 @dataclass(repr=False)
 class CAESPlant(PowerSystemResource):
     '''
@@ -28194,7 +27182,7 @@ class CAESPlant(PowerSystemResource):
     AirCompressor: Optional[AirCompressor] = field(
         default = None,
         metadata = {
-            'type': 'Aggregate Of',
+            'type': 'AggregateOf',
             'minOccurs': '0',
             'maxOccurs': '1',
             'inverse': 'AirCompressor.CAESPlant',
@@ -28218,6 +27206,7 @@ class CAESPlant(PowerSystemResource):
     plant.
     '''
 
+@stereotype(CIMStereotype.OfAggregate)
 @dataclass(repr=False)
 class CogenerationPlant(PowerSystemResource):
     '''
@@ -28291,7 +27280,7 @@ class CogenerationPlant(PowerSystemResource):
     SteamSendoutSchedule: Optional[SteamSendoutSchedule] = field(
         default = None,
         metadata = {
-            'type': 'Aggregate Of',
+            'type': 'AggregateOf',
             'minOccurs': '0',
             'maxOccurs': '1',
             'inverse': 'SteamSendoutSchedule.CogenerationPlant',
@@ -28396,7 +27385,7 @@ class CommunicationLink(PowerSystemResource):
 @dataclass(repr=False)
 class IPAccessPoint(CommunicationLink):
     '''
-    Internet Protocol Access Point – used to represent an addressing structure
+    Internet Protocol Access Point � used to represent an addressing structure
     is based upon an Internet Protocol (IP) address.
     '''
 
@@ -28618,6 +27607,7 @@ class ConnectivityNodeContainer(PowerSystemResource):
     The topological nodes which belong to this connectivity node container.
     '''
 
+@stereotype(CIMStereotype.OfAggregate)
 @dataclass(repr=False)
 class EquipmentContainer(ConnectivityNodeContainer):
     '''
@@ -28645,7 +27635,7 @@ class EquipmentContainer(ConnectivityNodeContainer):
     Equipments: list[Equipment] = field(
         default_factory = list,
         metadata = {
-            'type': 'Aggregate Of',
+            'type': 'AggregateOf',
             'minOccurs': '0',
             'maxOccurs': 'unbounded',
             'inverse': 'Equipment.EquipmentContainer',
@@ -28655,6 +27645,7 @@ class EquipmentContainer(ConnectivityNodeContainer):
     Contained equipment.
     '''
 
+@stereotype(CIMStereotype.Concrete)
 @dataclass(repr=False)
 class Bay(EquipmentContainer):
     '''
@@ -28727,7 +27718,7 @@ class Bay(EquipmentContainer):
     Substation: Optional[Substation] = field(
         default = None,
         metadata = {
-            'type': 'Of Aggregate',
+            'type': 'OfAggregate',
             'minOccurs': '0',
             'maxOccurs': '1',
             'inverse': 'Substation.Bays',
@@ -28740,7 +27731,7 @@ class Bay(EquipmentContainer):
     VoltageLevel: Optional[VoltageLevel] = field(
         default = None,
         metadata = {
-            'type': 'Of Aggregate',
+            'type': 'OfAggregate',
             'minOccurs': '0',
             'maxOccurs': '1',
             'inverse': 'VoltageLevel.Bays',
@@ -28785,11 +27776,12 @@ class DCEquipmentContainer(EquipmentContainer):
     The topological nodes which belong to this connectivity node container.
     '''
 
+@stereotype(CIMStereotype.AggregateOf)
 @dataclass(repr=False)
 class DCConverterUnit(DCEquipmentContainer):
     '''
     Indivisible operative unit comprising all equipment between the point of
-    common coupling on the AC side and the point of common coupling – DC side,
+    common coupling on the AC side and the point of common coupling � DC side,
     essentially one or more converters, together with one or more converter
     transformers, converter control equipment, essential protective and switching
     devices and auxiliaries, if any, used for conversion.
@@ -28811,7 +27803,7 @@ class DCConverterUnit(DCEquipmentContainer):
     Substation: Optional[Substation] = field(
         default = None,
         metadata = {
-            'type': 'Of Aggregate',
+            'type': 'OfAggregate',
             'minOccurs': '0',
             'maxOccurs': '1',
             'inverse': 'Substation.DCConverterUnit',
@@ -28840,6 +27832,7 @@ class DCLine(DCEquipmentContainer):
     The SubGeographicalRegion containing the DC line.
     '''
 
+@stereotype(CIMStereotype.AggregateOf)
 @dataclass(repr=False)
 class Feeder(EquipmentContainer):
     '''
@@ -28852,7 +27845,7 @@ class Feeder(EquipmentContainer):
     NamingSecondarySubstation: list[Substation] = field(
         default_factory = list,
         metadata = {
-            'type': 'Aggregate Of',
+            'type': 'AggregateOf',
             'minOccurs': '0',
             'maxOccurs': 'unbounded',
             'inverse': 'Substation.NamingFeeder',
@@ -28880,7 +27873,7 @@ class Feeder(EquipmentContainer):
     NormalEnergizingSubstation: Optional[Substation] = field(
         default = None,
         metadata = {
-            'type': 'Of Aggregate',
+            'type': 'OfAggregate',
             'minOccurs': '0',
             'maxOccurs': '1',
             'inverse': 'Substation.NormalEnergizedFeeder',
@@ -28904,6 +27897,7 @@ class Feeder(EquipmentContainer):
     The normal head terminal or terminals of the feeder.
     '''
 
+@stereotype(CIMStereotype.AggregateOf)
 @dataclass(repr=False)
 class Line(EquipmentContainer):
     '''
@@ -28914,7 +27908,7 @@ class Line(EquipmentContainer):
     Region: Optional[SubGeographicalRegion] = field(
         default = None,
         metadata = {
-            'type': 'Of Aggregate',
+            'type': 'OfAggregate',
             'minOccurs': '0',
             'maxOccurs': '1',
             'inverse': 'SubGeographicalRegion.Lines',
@@ -28989,6 +27983,7 @@ class Plant(EquipmentContainer):
     A Plant is a collection of equipment for purposes of generation.
     '''
 
+@stereotype(CIMStereotype.Concrete)
 @dataclass(repr=False)
 class Substation(EquipmentContainer):
     '''
@@ -29000,7 +27995,7 @@ class Substation(EquipmentContainer):
     Bays: list[Bay] = field(
         default_factory = list,
         metadata = {
-            'type': 'Aggregate Of',
+            'type': 'AggregateOf',
             'minOccurs': '0',
             'maxOccurs': 'unbounded',
             'inverse': 'Bay.Substation',
@@ -29013,7 +28008,7 @@ class Substation(EquipmentContainer):
     DCConverterUnit: list[DCConverterUnit] = field(
         default_factory = list,
         metadata = {
-            'type': 'Aggregate Of',
+            'type': 'AggregateOf',
             'minOccurs': '0',
             'maxOccurs': 'unbounded',
             'inverse': 'DCConverterUnit.Substation',
@@ -29026,7 +28021,7 @@ class Substation(EquipmentContainer):
     NamingFeeder: Optional[Feeder] = field(
         default = None,
         metadata = {
-            'type': 'Of Aggregate',
+            'type': 'OfAggregate',
             'minOccurs': '0',
             'maxOccurs': '1',
             'inverse': 'Feeder.NamingSecondarySubstation',
@@ -29041,7 +28036,7 @@ class Substation(EquipmentContainer):
     NormalEnergizedFeeder: list[Feeder] = field(
         default_factory = list,
         metadata = {
-            'type': 'Aggregate Of',
+            'type': 'AggregateOf',
             'minOccurs': '0',
             'maxOccurs': 'unbounded',
             'inverse': 'Feeder.NormalEnergizingSubstation',
@@ -29068,7 +28063,7 @@ class Substation(EquipmentContainer):
     Region: Optional[SubGeographicalRegion] = field(
         default = None,
         metadata = {
-            'type': 'Of Aggregate',
+            'type': 'OfAggregate',
             'minOccurs': '0',
             'maxOccurs': '1',
             'inverse': 'SubGeographicalRegion.Substations',
@@ -29081,7 +28076,7 @@ class Substation(EquipmentContainer):
     VoltageLevels: list[VoltageLevel] = field(
         default_factory = list,
         metadata = {
-            'type': 'Aggregate Of',
+            'type': 'AggregateOf',
             'minOccurs': '0',
             'maxOccurs': 'unbounded',
             'inverse': 'VoltageLevel.Substation',
@@ -29091,6 +28086,7 @@ class Substation(EquipmentContainer):
     The voltage levels within this substation.
     '''
 
+@stereotype(CIMStereotype.Concrete)
 @dataclass(repr=False)
 class VoltageLevel(EquipmentContainer):
     '''
@@ -29146,7 +28142,7 @@ class VoltageLevel(EquipmentContainer):
     Bays: list[Bay] = field(
         default_factory = list,
         metadata = {
-            'type': 'Aggregate Of',
+            'type': 'AggregateOf',
             'minOccurs': '0',
             'maxOccurs': 'unbounded',
             'inverse': 'Bay.VoltageLevel',
@@ -29159,7 +28155,7 @@ class VoltageLevel(EquipmentContainer):
     Substation: Optional[Substation] = field(
         default = None,
         metadata = {
-            'type': 'Of Aggregate',
+            'type': 'OfAggregate',
             'minOccurs': '0',
             'maxOccurs': '1',
             'inverse': 'Substation.VoltageLevels',
@@ -29169,6 +28165,7 @@ class VoltageLevel(EquipmentContainer):
     The substation of the voltage level.
     '''
 
+@stereotype(CIMStereotype.OfAggregate)
 @dataclass(repr=False)
 class EquivalentNetwork(ConnectivityNodeContainer):
     '''
@@ -29182,7 +28179,7 @@ class EquivalentNetwork(ConnectivityNodeContainer):
     EquivalentEquipments: list[EquivalentEquipment] = field(
         default_factory = list,
         metadata = {
-            'type': 'Aggregate Of',
+            'type': 'AggregateOf',
             'minOccurs': '0',
             'maxOccurs': 'unbounded',
             'inverse': 'EquivalentEquipment.EquivalentNetwork',
@@ -29192,6 +28189,7 @@ class EquivalentNetwork(ConnectivityNodeContainer):
     The associated reduced equivalents.
     '''
 
+@stereotype(CIMStereotype.OfAggregate)
 @dataclass(repr=False)
 class ControlArea(PowerSystemResource):
     '''
@@ -29266,7 +28264,7 @@ class ControlArea(PowerSystemResource):
     ControlAreaGeneratingUnit: list[ControlAreaGeneratingUnit] = field(
         default_factory = list,
         metadata = {
-            'type': 'Aggregate Of',
+            'type': 'AggregateOf',
             'minOccurs': '0',
             'maxOccurs': 'unbounded',
             'inverse': 'ControlAreaGeneratingUnit.ControlArea',
@@ -29292,7 +28290,7 @@ class ControlArea(PowerSystemResource):
     TieFlow: list[TieFlow] = field(
         default_factory = list,
         metadata = {
-            'type': 'Aggregate Of',
+            'type': 'AggregateOf',
             'minOccurs': '0',
             'maxOccurs': 'unbounded',
             'inverse': 'TieFlow.ControlArea',
@@ -29481,6 +28479,7 @@ class EnergySourcePhase(PowerSystemResource):
     The energy sourceto which the phase belongs.
     '''
 
+@stereotype(CIMStereotype.Concrete)
 @dataclass(repr=False)
 class Equipment(PowerSystemResource):
     '''
@@ -29499,7 +28498,7 @@ class Equipment(PowerSystemResource):
     The aggregate flag provides an alternative way of representing an aggregated
     (equivalent) element. It is applicable in cases when the dedicated classes
     for equivalent equipment do not have all of the attributes necessary to
-    represent the required level of detail. In case the flag is set to “true”
+    represent the required level of detail. In case the flag is set to �true�
     the single instance of equipment represents multiple pieces of equipment
     that have been modelled together as an aggregate equivalent obtained by
     a network reduction procedure. Examples would be power transformers or
@@ -29595,7 +28594,7 @@ class Equipment(PowerSystemResource):
     EquipmentContainer: Optional[EquipmentContainer] = field(
         default = None,
         metadata = {
-            'type': 'Of Aggregate',
+            'type': 'OfAggregate',
             'minOccurs': '0',
             'maxOccurs': '1',
             'inverse': 'EquipmentContainer.Equipments',
@@ -29621,7 +28620,7 @@ class Equipment(PowerSystemResource):
     LimitDependencyModel: list[LimitDependency] = field(
         default_factory = list,
         metadata = {
-            'type': 'Aggregate Of',
+            'type': 'AggregateOf',
             'minOccurs': '0',
             'maxOccurs': 'unbounded',
             'inverse': 'LimitDependency.Equipment',
@@ -29900,6 +28899,7 @@ class WaveTrap(AuxiliaryEquipment):
     yet present a negligible impedance at the main power frequency.
     '''
 
+@stereotype(CIMStereotype.OfAggregate)
 @dataclass(repr=False)
 class CompositeSwitch(Equipment):
     '''
@@ -29930,7 +28930,7 @@ class CompositeSwitch(Equipment):
     Switches: list[Switch] = field(
         default_factory = list,
         metadata = {
-            'type': 'Aggregate Of',
+            'type': 'AggregateOf',
             'minOccurs': '0',
             'maxOccurs': 'unbounded',
             'inverse': 'Switch.CompositeSwitch',
@@ -29940,6 +28940,7 @@ class CompositeSwitch(Equipment):
     Switches contained in this Composite switch.
     '''
 
+@stereotype(CIMStereotype.Concrete)
 @dataclass(repr=False)
 class ConductingEquipment(Equipment):
     '''
@@ -30057,6 +29058,7 @@ class ConductingEquipment(Equipment):
     equipment terminals via connectivity nodes or topological nodes.
     '''
 
+@stereotype(CIMStereotype.Concrete)
 @dataclass(repr=False)
 class ACDCConverter(ConductingEquipment):
     '''
@@ -30099,7 +29101,7 @@ class ACDCConverter(ConductingEquipment):
             'namespace': 'http://iec.ch/TC57/CIM100#'
         })
     '''
-    Converter DC current, also called Id. It is converter’s state variable,
+    Converter DC current, also called Id. It is converter�s state variable,
     result from power flow.
     '''
 
@@ -30112,7 +29114,7 @@ class ACDCConverter(ConductingEquipment):
             'namespace': 'http://iec.ch/TC57/CIM100#'
         })
     '''
-    Active power loss in pole at no power transfer. It is converter’s configuration
+    Active power loss in pole at no power transfer. It is converter�s configuration
     data used in power flow. The attribute shall be a positive value.
     '''
 
@@ -30139,7 +29141,7 @@ class ACDCConverter(ConductingEquipment):
         })
     '''
     The maximum voltage on the DC side at which the converter should operate.
-    It is converter’s configuration data used in power flow. The attribute
+    It is converter�s configuration data used in power flow. The attribute
     shall be a positive value.
     '''
 
@@ -30166,7 +29168,7 @@ class ACDCConverter(ConductingEquipment):
         })
     '''
     The minimum voltage on the DC side at which the converter should operate.
-    It is converter’s configuration data used in power flow. The attribute
+    It is converter�s configuration data used in power flow. The attribute
     shall be a positive value.
     '''
 
@@ -30199,7 +29201,7 @@ class ACDCConverter(ConductingEquipment):
     For lossless operation Pdc=Pac.
     For rectifier operation with losses Pdc=Pac-lossP.
     For inverter operation with losses Pdc=Pac+lossP.
-    It is converter’s state variable used in power flow. The attribute shall
+    It is converter�s state variable used in power flow. The attribute shall
     be a positive value.
     '''
 
@@ -30228,7 +29230,7 @@ class ACDCConverter(ConductingEquipment):
         })
     '''
     Rated converter DC voltage, also called UdN. The attribute shall be a positive
-    value. It is converter’s configuration data used in power flow. For instance
+    value. It is converter�s configuration data used in power flow. For instance
     a bipolar HVDC link with value 200 kV has a 400kV difference between the
     dc lines.
     '''
@@ -30242,7 +29244,7 @@ class ACDCConverter(ConductingEquipment):
             'namespace': 'http://iec.ch/TC57/CIM100#'
         })
     '''
-    It is converter’s configuration data used in power flow. Refer to poleLossP.
+    It is converter�s configuration data used in power flow. Refer to poleLossP.
     The attribute shall be a positive value.
     '''
 
@@ -30295,7 +29297,7 @@ class ACDCConverter(ConductingEquipment):
         })
     '''
     Line-to-line converter voltage, the voltage at the AC side of the valve.
-    It is converter’s state variable, result from power flow. The attribute
+    It is converter�s state variable, result from power flow. The attribute
     shall be a positive value.
     '''
 
@@ -30308,7 +29310,7 @@ class ACDCConverter(ConductingEquipment):
             'namespace': 'http://iec.ch/TC57/CIM100#'
         })
     '''
-    Converter voltage at the DC side, also called Ud. It is converter’s state
+    Converter voltage at the DC side, also called Ud. It is converter�s state
     variable, result from power flow. The attribute shall be a positive value.
     '''
 
@@ -30393,7 +29395,7 @@ class CsConverter(ACDCConverter):
     '''
     Firing angle that determines the dc voltage at the converter dc terminal.
     Typical value between 10 degrees and 18 degrees for a rectifier. It is
-    converter’s state variable, result from power flow. The attribute shall
+    converter�s state variable, result from power flow. The attribute shall
     be a positive value.
     '''
 
@@ -30408,7 +29410,7 @@ class CsConverter(ACDCConverter):
     '''
     Extinction angle. It is used to limit the dc voltage at the inverter if
     needed. Typical value between 17 degrees and 20 degrees for an inverter.
-    It is converter’s state variable, result from power flow. The attribute
+    It is converter�s state variable, result from power flow. The attribute
     shall be a positive value.
     '''
 
@@ -30421,7 +29423,7 @@ class CsConverter(ACDCConverter):
             'namespace': 'http://iec.ch/TC57/CIM100#'
         })
     '''
-    Maximum firing angle. It is converter’s configuration data used in power
+    Maximum firing angle. It is converter�s configuration data used in power
     flow. The attribute shall be a positive value.
     '''
 
@@ -30434,7 +29436,7 @@ class CsConverter(ACDCConverter):
             'namespace': 'http://iec.ch/TC57/CIM100#'
         })
     '''
-    Maximum extinction angle. It is converter’s configuration data used in
+    Maximum extinction angle. It is converter�s configuration data used in
     power flow. The attribute shall be a positive value.
     '''
 
@@ -30448,7 +29450,7 @@ class CsConverter(ACDCConverter):
         })
     '''
     The maximum direct current (Id) on the DC side at which the converter should
-    operate. It is converter’s configuration data use in power flow. The attribute
+    operate. It is converter�s configuration data use in power flow. The attribute
     shall be a positive value.
     '''
 
@@ -30461,7 +29463,7 @@ class CsConverter(ACDCConverter):
             'namespace': 'http://iec.ch/TC57/CIM100#'
         })
     '''
-    Minimum firing angle. It is converter’s configuration data used in power
+    Minimum firing angle. It is converter�s configuration data used in power
     flow. The attribute shall be a positive value.
     '''
 
@@ -30474,7 +29476,7 @@ class CsConverter(ACDCConverter):
             'namespace': 'http://iec.ch/TC57/CIM100#'
         })
     '''
-    Minimum extinction angle. It is converter’s configuration data used in
+    Minimum extinction angle. It is converter�s configuration data used in
     power flow. The attribute shall be a positive value.
     '''
 
@@ -30488,7 +29490,7 @@ class CsConverter(ACDCConverter):
         })
     '''
     The minimum direct current (Id) on the DC side at which the converter should
-    operate. It is converter’s configuration data used in power flow. The attribute
+    operate. It is converter�s configuration data used in power flow. The attribute
     shall be a positive value.
     '''
 
@@ -30502,7 +29504,7 @@ class CsConverter(ACDCConverter):
         })
     '''
     Indicates whether the DC pole is operating as an inverter or as a rectifier.
-    It is converter’s control variable used in power flow.
+    It is converter�s control variable used in power flow.
     '''
 
     pPccControl: Optional[ CsPpccControlKind ] = field(
@@ -30527,7 +29529,7 @@ class CsConverter(ACDCConverter):
         })
     '''
     Rated converter DC current, also called IdN. The attribute shall be a positive
-    value. It is converter’s configuration data used in power flow.
+    value. It is converter�s configuration data used in power flow.
     '''
 
     targetAlpha: Optional[ float | AngleDegrees ] = field(
@@ -30539,7 +29541,7 @@ class CsConverter(ACDCConverter):
             'namespace': 'http://iec.ch/TC57/CIM100#'
         })
     '''
-    Target firing angle. It is converter’s control variable used in power flow.
+    Target firing angle. It is converter�s control variable used in power flow.
     It is only applicable for rectifier if continuous tap changer control is
     used. Allowed values are within the range minAlpha&lt;=targetAlpha&lt;=maxAlpha.
     The attribute shall be a positive value.
@@ -30554,7 +29556,7 @@ class CsConverter(ACDCConverter):
             'namespace': 'http://iec.ch/TC57/CIM100#'
         })
     '''
-    Target extinction angle. It is converter’s control variable used in power
+    Target extinction angle. It is converter�s control variable used in power
     flow. It is only applicable for inverter if continuous tap changer control
     is used. Allowed values are within the range minGamma&lt;=targetGamma&lt;=maxGamma.
     The attribute shall be a positive value.
@@ -30569,7 +29571,7 @@ class CsConverter(ACDCConverter):
             'namespace': 'http://iec.ch/TC57/CIM100#'
         })
     '''
-    DC current target value. It is converter’s control variable used in power
+    DC current target value. It is converter�s control variable used in power
     flow. The attribute shall be a positive value.
     '''
 
@@ -30603,7 +29605,7 @@ class VsConverter(ACDCConverter):
         })
     '''
     The maximum quotient between the AC converter voltage (Uc) and DC voltage
-    (Ud). A factor typically less than 1. It is converter’s configuration data
+    (Ud). A factor typically less than 1. It is converter�s configuration data
     used in power flow.
     '''
 
@@ -30642,7 +29644,7 @@ class VsConverter(ACDCConverter):
             'namespace': 'http://iec.ch/TC57/CIM100#'
         })
     '''
-    Angle between VsConverter.uv and ACDCConverter.uc. It is converter’s state
+    Angle between VsConverter.uv and ACDCConverter.uc. It is converter�s state
     variable used in power flow. The attribute shall be a positive value or
     zero.
     '''
@@ -30682,7 +29684,7 @@ class VsConverter(ACDCConverter):
             'namespace': 'http://iec.ch/TC57/CIM100#'
         })
     '''
-    The maximum current through a valve. It is converter’s configuration data.
+    The maximum current through a valve. It is converter�s configuration data.
     '''
 
     pPccControl: Optional[ VsPpccControlKind ] = field(
@@ -30772,7 +29774,7 @@ class VsConverter(ACDCConverter):
         })
     '''
     Line-to-line voltage on the valve side of the converter transformer. It
-    is converter’s state variable, result from power flow. The attribute shall
+    is converter�s state variable, result from power flow. The attribute shall
     be a positive value.
     '''
 
@@ -30886,6 +29888,7 @@ class Conductor(ConductingEquipment):
     Segment length for calculating line section capabilities.
     '''
 
+@stereotype(CIMStereotype.Concrete)
 @dataclass(repr=False)
 class ACLineSegment(Conductor):
     '''
@@ -31346,6 +30349,7 @@ class EnergyConnection(ConductingEquipment):
     A connection of energy generation or consumption on the power system model.
     '''
 
+@stereotype(CIMStereotype.AggregateOf)
 @dataclass(repr=False)
 class EnergyConsumer(EnergyConnection):
     '''
@@ -31533,7 +30537,7 @@ class EnergyConsumer(EnergyConnection):
     PowerCutZone: Optional[PowerCutZone] = field(
         default = None,
         metadata = {
-            'type': 'Of Aggregate',
+            'type': 'OfAggregate',
             'minOccurs': '0',
             'maxOccurs': '1',
             'inverse': 'PowerCutZone.EnergyConsumers',
@@ -32485,6 +31489,7 @@ class RotatingMachine(RegulatingCondEq):
     for pumping may or may not be the same as for generating.
     '''
 
+@stereotype(CIMStereotype.Concrete)
 @dataclass(repr=False)
 class AsynchronousMachine(RotatingMachine):
     '''
@@ -32755,6 +31760,7 @@ class AsynchronousMachine(RotatingMachine):
     of this asynchronous machine.
     '''
 
+@stereotype(CIMStereotype.Concrete)
 @dataclass(repr=False)
 class SynchronousMachine(RotatingMachine):
     '''
@@ -33448,6 +32454,7 @@ class LinearShuntCompensator(ShuntCompensator):
     Positive sequence shunt (charging) conductance per section.
     '''
 
+@stereotype(CIMStereotype.OfAggregate)
 @dataclass(repr=False)
 class NonlinearShuntCompensator(ShuntCompensator):
     '''
@@ -33460,7 +32467,7 @@ class NonlinearShuntCompensator(ShuntCompensator):
     NonlinearShuntCompensatorPoints: list[NonlinearShuntCompensatorPoint] = field(
         default_factory = list,
         metadata = {
-            'type': 'Aggregate Of',
+            'type': 'AggregateOf',
             'minOccurs': '0',
             'maxOccurs': 'unbounded',
             'inverse': 'NonlinearShuntCompensatorPoint.NonlinearShuntCompensator',
@@ -33580,6 +32587,7 @@ class StaticVarCompensator(RegulatingCondEq):
     of this Static Var Compensator.
     '''
 
+@stereotype(CIMStereotype.AggregateOf)
 @dataclass(repr=False)
 class EquivalentEquipment(ConductingEquipment):
     '''
@@ -33590,7 +32598,7 @@ class EquivalentEquipment(ConductingEquipment):
     EquivalentNetwork: Optional[EquivalentNetwork] = field(
         default = None,
         metadata = {
-            'type': 'Of Aggregate',
+            'type': 'OfAggregate',
             'minOccurs': '0',
             'maxOccurs': '1',
             'inverse': 'EquivalentNetwork.EquivalentEquipments',
@@ -34457,6 +33465,7 @@ class MktSeriesCompensator(SeriesCompensator):
     '''
     '''
 
+@stereotype(CIMStereotype.AggregateOf)
 @dataclass(repr=False)
 class Switch(ConductingEquipment):
     '''
@@ -34566,7 +33575,7 @@ class Switch(ConductingEquipment):
     CompositeSwitch: Optional[CompositeSwitch] = field(
         default = None,
         metadata = {
-            'type': 'Of Aggregate',
+            'type': 'OfAggregate',
             'minOccurs': '0',
             'maxOccurs': '1',
             'inverse': 'CompositeSwitch.Switches',
@@ -34742,6 +33751,7 @@ class Jumper(Switch):
     Action taken with this jumper.
     '''
 
+@stereotype(CIMStereotype.OfAggregate)
 @dataclass(repr=False)
 class ProtectedSwitch(Switch):
     '''
@@ -34777,7 +33787,7 @@ class ProtectedSwitch(Switch):
     RecloseSequences: list[RecloseSequence] = field(
         default_factory = list,
         metadata = {
-            'type': 'Aggregate Of',
+            'type': 'AggregateOf',
             'minOccurs': '0',
             'maxOccurs': 'unbounded',
             'inverse': 'RecloseSequence.ProtectedSwitch',
@@ -35076,6 +34086,7 @@ class DCDisconnector(DCSwitch):
     A disconnector within a DC system.
     '''
 
+@stereotype(CIMStereotype.OfAggregate)
 @dataclass(repr=False)
 class GeneratingUnit(Equipment):
     '''
@@ -35586,7 +34597,7 @@ class GeneratingUnit(Equipment):
     GenUnitOpCostCurves: list[GenUnitOpCostCurve] = field(
         default_factory = list,
         metadata = {
-            'type': 'Aggregate Of',
+            'type': 'AggregateOf',
             'minOccurs': '0',
             'maxOccurs': 'unbounded',
             'inverse': 'GenUnitOpCostCurve.GeneratingUnit',
@@ -35600,7 +34611,7 @@ class GeneratingUnit(Equipment):
     GenUnitOpSchedule: Optional[GenUnitOpSchedule] = field(
         default = None,
         metadata = {
-            'type': 'Aggregate Of',
+            'type': 'AggregateOf',
             'minOccurs': '0',
             'maxOccurs': '1',
             'inverse': 'GenUnitOpSchedule.GeneratingUnit',
@@ -35614,7 +34625,7 @@ class GeneratingUnit(Equipment):
     GrossToNetActivePowerCurves: list[GrossToNetActivePowerCurve] = field(
         default_factory = list,
         metadata = {
-            'type': 'Aggregate Of',
+            'type': 'AggregateOf',
             'minOccurs': '0',
             'maxOccurs': 'unbounded',
             'inverse': 'GrossToNetActivePowerCurve.GeneratingUnit',
@@ -35639,6 +34650,7 @@ class GeneratingUnit(Equipment):
     member of a generating unit.
     '''
 
+@stereotype(CIMStereotype.AggregateOf)
 @dataclass(repr=False)
 class HydroGeneratingUnit(GeneratingUnit):
     '''
@@ -35697,7 +34709,7 @@ class HydroGeneratingUnit(GeneratingUnit):
     HydroGeneratingEfficiencyCurves: list[HydroGeneratingEfficiencyCurve] = field(
         default_factory = list,
         metadata = {
-            'type': 'Aggregate Of',
+            'type': 'AggregateOf',
             'minOccurs': '0',
             'maxOccurs': 'unbounded',
             'inverse': 'HydroGeneratingEfficiencyCurve.HydroGeneratingUnit',
@@ -35710,7 +34722,7 @@ class HydroGeneratingUnit(GeneratingUnit):
     HydroPowerPlant: Optional[HydroPowerPlant] = field(
         default = None,
         metadata = {
-            'type': 'Of Aggregate',
+            'type': 'OfAggregate',
             'minOccurs': '0',
             'maxOccurs': '1',
             'inverse': 'HydroPowerPlant.HydroGeneratingUnits',
@@ -35723,7 +34735,7 @@ class HydroGeneratingUnit(GeneratingUnit):
     PenstockLossCurve: Optional[PenstockLossCurve] = field(
         default = None,
         metadata = {
-            'type': 'Aggregate Of',
+            'type': 'AggregateOf',
             'minOccurs': '0',
             'maxOccurs': '1',
             'inverse': 'PenstockLossCurve.HydroGeneratingUnit',
@@ -35736,7 +34748,7 @@ class HydroGeneratingUnit(GeneratingUnit):
     TailbayLossCurve: list[TailbayLossCurve] = field(
         default_factory = list,
         metadata = {
-            'type': 'Aggregate Of',
+            'type': 'AggregateOf',
             'minOccurs': '0',
             'maxOccurs': 'unbounded',
             'inverse': 'TailbayLossCurve.HydroGeneratingUnit',
@@ -35770,6 +34782,7 @@ class NuclearGeneratingUnit(GeneratingUnit):
     A nuclear generating unit.
     '''
 
+@stereotype(CIMStereotype.Concrete)
 @dataclass(repr=False)
 class SolarGeneratingUnit(GeneratingUnit):
     '''
@@ -35777,6 +34790,7 @@ class SolarGeneratingUnit(GeneratingUnit):
     machine. This class does not represent photovoltaic (PV) generation.
     '''
 
+@stereotype(CIMStereotype.OfAggregate)
 @dataclass(repr=False)
 class ThermalGeneratingUnit(GeneratingUnit):
     '''
@@ -35839,7 +34853,7 @@ class ThermalGeneratingUnit(GeneratingUnit):
     EmissionCurves: list[EmissionCurve] = field(
         default_factory = list,
         metadata = {
-            'type': 'Aggregate Of',
+            'type': 'AggregateOf',
             'minOccurs': '0',
             'maxOccurs': 'unbounded',
             'inverse': 'EmissionCurve.ThermalGeneratingUnit',
@@ -35852,7 +34866,7 @@ class ThermalGeneratingUnit(GeneratingUnit):
     EmmissionAccounts: list[EmissionAccount] = field(
         default_factory = list,
         metadata = {
-            'type': 'Aggregate Of',
+            'type': 'AggregateOf',
             'minOccurs': '0',
             'maxOccurs': 'unbounded',
             'inverse': 'EmissionAccount.ThermalGeneratingUnit',
@@ -35878,7 +34892,7 @@ class ThermalGeneratingUnit(GeneratingUnit):
     FuelAllocationSchedules: list[FuelAllocationSchedule] = field(
         default_factory = list,
         metadata = {
-            'type': 'Aggregate Of',
+            'type': 'AggregateOf',
             'minOccurs': '0',
             'maxOccurs': 'unbounded',
             'inverse': 'FuelAllocationSchedule.ThermalGeneratingUnit',
@@ -35891,7 +34905,7 @@ class ThermalGeneratingUnit(GeneratingUnit):
     HeatInputCurve: Optional[HeatInputCurve] = field(
         default = None,
         metadata = {
-            'type': 'Aggregate Of',
+            'type': 'AggregateOf',
             'minOccurs': '0',
             'maxOccurs': '1',
             'inverse': 'HeatInputCurve.ThermalGeneratingUnit',
@@ -35904,7 +34918,7 @@ class ThermalGeneratingUnit(GeneratingUnit):
     HeatRateCurve: Optional[HeatRateCurve] = field(
         default = None,
         metadata = {
-            'type': 'Aggregate Of',
+            'type': 'AggregateOf',
             'minOccurs': '0',
             'maxOccurs': '1',
             'inverse': 'HeatRateCurve.ThermalGeneratingUnit',
@@ -35917,7 +34931,7 @@ class ThermalGeneratingUnit(GeneratingUnit):
     IncrementalHeatRateCurve: Optional[IncrementalHeatRateCurve] = field(
         default = None,
         metadata = {
-            'type': 'Aggregate Of',
+            'type': 'AggregateOf',
             'minOccurs': '0',
             'maxOccurs': '1',
             'inverse': 'IncrementalHeatRateCurve.ThermalGeneratingUnit',
@@ -35930,7 +34944,7 @@ class ThermalGeneratingUnit(GeneratingUnit):
     ShutdownCurve: Optional[ShutdownCurve] = field(
         default = None,
         metadata = {
-            'type': 'Aggregate Of',
+            'type': 'AggregateOf',
             'minOccurs': '0',
             'maxOccurs': '1',
             'inverse': 'ShutdownCurve.ThermalGeneratingUnit',
@@ -35943,7 +34957,7 @@ class ThermalGeneratingUnit(GeneratingUnit):
     StartupModel: Optional[StartupModel] = field(
         default = None,
         metadata = {
-            'type': 'Aggregate Of',
+            'type': 'AggregateOf',
             'minOccurs': '0',
             'maxOccurs': '1',
             'inverse': 'StartupModel.ThermalGeneratingUnit',
@@ -35972,6 +34986,7 @@ class WindGeneratingUnit(GeneratingUnit):
     The kind of wind generating unit.
     '''
 
+@stereotype(CIMStereotype.AggregateOf)
 @dataclass(repr=False)
 class HydroPump(Equipment):
     '''
@@ -36030,7 +35045,7 @@ class HydroPump(Equipment):
     HydroPowerPlant: Optional[HydroPowerPlant] = field(
         default = None,
         metadata = {
-            'type': 'Of Aggregate',
+            'type': 'OfAggregate',
             'minOccurs': '0',
             'maxOccurs': '1',
             'inverse': 'HydroPowerPlant.HydroPumps',
@@ -36044,7 +35059,7 @@ class HydroPump(Equipment):
     HydroPumpOpSchedule: Optional[HydroPumpOpSchedule] = field(
         default = None,
         metadata = {
-            'type': 'Aggregate Of',
+            'type': 'AggregateOf',
             'minOccurs': '0',
             'maxOccurs': '1',
             'inverse': 'HydroPumpOpSchedule.HydroPump',
@@ -36116,6 +35131,7 @@ class PowerElectronicsUnit(Equipment):
     A power electronics unit has a connection to the AC network.
     '''
 
+@stereotype(CIMStereotype.Concrete)
 @dataclass(repr=False)
 class BatteryUnit(PowerElectronicsUnit):
     '''
@@ -36956,6 +35972,7 @@ class HostControlArea(PowerSystemResource):
     '''
     '''
 
+@stereotype(CIMStereotype.OfAggregate)
 @dataclass(repr=False)
 class HydroPowerPlant(PowerSystemResource):
     '''
@@ -37093,7 +36110,7 @@ class HydroPowerPlant(PowerSystemResource):
     HydroGeneratingUnits: list[HydroGeneratingUnit] = field(
         default_factory = list,
         metadata = {
-            'type': 'Aggregate Of',
+            'type': 'AggregateOf',
             'minOccurs': '0',
             'maxOccurs': 'unbounded',
             'inverse': 'HydroGeneratingUnit.HydroPowerPlant',
@@ -37106,7 +36123,7 @@ class HydroPowerPlant(PowerSystemResource):
     HydroPumps: list[HydroPump] = field(
         default_factory = list,
         metadata = {
-            'type': 'Aggregate Of',
+            'type': 'AggregateOf',
             'minOccurs': '0',
             'maxOccurs': 'unbounded',
             'inverse': 'HydroPump.HydroPowerPlant',
@@ -37131,6 +36148,7 @@ class HydroPowerPlant(PowerSystemResource):
     reservoir.
     '''
 
+@stereotype(CIMStereotype.OfAggregate)
 @dataclass(repr=False)
 class PowerCutZone(PowerSystemResource):
     '''
@@ -37164,7 +36182,7 @@ class PowerCutZone(PowerSystemResource):
     EnergyConsumers: list[EnergyConsumer] = field(
         default_factory = list,
         metadata = {
-            'type': 'Aggregate Of',
+            'type': 'AggregateOf',
             'minOccurs': '0',
             'maxOccurs': 'unbounded',
             'inverse': 'EnergyConsumer.PowerCutZone',
@@ -37266,6 +36284,7 @@ class PrimeMover(PowerSystemResource):
     Synchronous machines this Prime mover drives.
     '''
 
+@stereotype(CIMStereotype.OfAggregate)
 @dataclass(repr=False)
 class CombustionTurbine(PrimeMover):
     '''
@@ -37391,7 +36410,7 @@ class CombustionTurbine(PrimeMover):
     CTTempActivePowerCurve: Optional[CTTempActivePowerCurve] = field(
         default = None,
         metadata = {
-            'type': 'Aggregate Of',
+            'type': 'AggregateOf',
             'minOccurs': '0',
             'maxOccurs': '1',
             'inverse': 'CTTempActivePowerCurve.CombustionTurbine',
@@ -37555,6 +36574,7 @@ class HydroTurbine(PrimeMover):
     Water starting time.
     '''
 
+@stereotype(CIMStereotype.Concrete)
 @dataclass(repr=False)
 class SteamTurbine(PrimeMover):
     '''
@@ -37764,7 +36784,7 @@ class RegisteredResource(PowerSystemResource):
     Indication of the last time this item was modified/versioned.
     '''
 
-    maxBaseSelfSchedQty : Optional[ float ] = field(
+    maxBaseSelfSchedQty: Optional[ float ] = field(
         default = None,
         metadata = {
             'type': 'Attribute',
@@ -38816,6 +37836,7 @@ class TapChangerControl(RegulatingControl):
     The tap changers that participates in this regulating tap control scheme.
     '''
 
+@stereotype(CIMStereotype.OfAggregate)
 @dataclass(repr=False)
 class RemoteUnit(PowerSystemResource):
     '''
@@ -38857,7 +37878,7 @@ class RemoteUnit(PowerSystemResource):
     RemotePoints: list[RemotePoint] = field(
         default_factory = list,
         metadata = {
-            'type': 'Aggregate Of',
+            'type': 'AggregateOf',
             'minOccurs': '0',
             'maxOccurs': 'unbounded',
             'inverse': 'RemotePoint.RemoteUnit',
@@ -38867,6 +37888,7 @@ class RemoteUnit(PowerSystemResource):
     Remote points this Remote unit contains.
     '''
 
+@stereotype(CIMStereotype.OfAggregate)
 @dataclass(repr=False)
 class Reservoir(PowerSystemResource):
     '''
@@ -39025,7 +38047,7 @@ class Reservoir(PowerSystemResource):
     InflowForecasts: list[InflowForecast] = field(
         default_factory = list,
         metadata = {
-            'type': 'Aggregate Of',
+            'type': 'AggregateOf',
             'minOccurs': '0',
             'maxOccurs': 'unbounded',
             'inverse': 'InflowForecast.Reservoir',
@@ -39038,7 +38060,7 @@ class Reservoir(PowerSystemResource):
     LevelVsVolumeCurves: list[LevelVsVolumeCurve] = field(
         default_factory = list,
         metadata = {
-            'type': 'Aggregate Of',
+            'type': 'AggregateOf',
             'minOccurs': '0',
             'maxOccurs': 'unbounded',
             'inverse': 'LevelVsVolumeCurve.Reservoir',
@@ -39077,7 +38099,7 @@ class Reservoir(PowerSystemResource):
     TargetLevelSchedule: Optional[TargetLevelSchedule] = field(
         default = None,
         metadata = {
-            'type': 'Aggregate Of',
+            'type': 'AggregateOf',
             'minOccurs': '0',
             'maxOccurs': '1',
             'inverse': 'TargetLevelSchedule.Reservoir',
@@ -39218,6 +38240,7 @@ class LinearShuntCompensatorPhase(ShuntCompensatorPhase):
     Conductance per section phase to phase if shunt compensator is delta connected.
     '''
 
+@stereotype(CIMStereotype.OfAggregate)
 @dataclass(repr=False)
 class NonlinearShuntCompensatorPhase(ShuntCompensatorPhase):
     '''
@@ -39230,7 +38253,7 @@ class NonlinearShuntCompensatorPhase(ShuntCompensatorPhase):
     NonlinearShuntCompensatorPhasePoints: list[NonlinearShuntCompensatorPhasePoint] = field(
         default_factory = list,
         metadata = {
-            'type': 'Aggregate Of',
+            'type': 'AggregateOf',
             'minOccurs': '0',
             'maxOccurs': 'unbounded',
             'inverse': 'NonlinearShuntCompensatorPhasePoint.NonlinearShuntCompensatorPhase',
@@ -39240,6 +38263,7 @@ class NonlinearShuntCompensatorPhase(ShuntCompensatorPhase):
     All points of the non-linear shunt compensator phase.
     '''
 
+@stereotype(CIMStereotype.Concrete)
 @dataclass(repr=False)
 class SteamSupply(PowerSystemResource):
     '''
@@ -40434,7 +39458,7 @@ class SubControlArea(PowerSystemResource):
     InadvertentAccount: list[InadvertentAccount] = field(
         default_factory = list,
         metadata = {
-            'type': 'Aggregate Of',
+            'type': 'AggregateOf',
             'minOccurs': '0',
             'maxOccurs': 'unbounded',
             'inverse': 'InadvertentAccount.SubControlArea',
@@ -40602,7 +39626,7 @@ class SwitchPhase(PowerSystemResource):
         })
     '''
     Phase of this SwitchPhase on the side with terminal sequence number equal
-    to 1. Should be a phase contained in that terminal’s phases attribute.
+    to 1. Should be a phase contained in that terminal�s phases attribute.
     '''
 
     phaseSide2: Optional[ SinglePhaseKind ] = field(
@@ -40615,7 +39639,7 @@ class SwitchPhase(PowerSystemResource):
         })
     '''
     Phase of this SwitchPhase on the side with terminal sequence number equal
-    to 2. Should be a phase contained in that terminal’s Terminal.phases attribute.
+    to 2. Should be a phase contained in that terminal�s Terminal.phases attribute.
     '''
 
     ratedCurrent: Optional[ float | CurrentFlow ] = field(
@@ -40896,7 +39920,7 @@ class PhaseTapChangerLinear(PhaseTapChanger):
     '''
     The reactance depends on the tap position according to a "u" shaped curve.
     The maximum reactance (xMax) appears at the low and high tap positions.
-    Depending on the “u” curve the attribute can be either higher or lower
+    Depending on the �u� curve the attribute can be either higher or lower
     than PowerTransformerEnd.x.
     '''
 
@@ -40953,7 +39977,7 @@ class PhaseTapChangerNonLinear(PhaseTapChanger):
     '''
     The reactance depends on the tap position according to a "u" shaped curve.
     The maximum reactance (xMax) appears at the low and high tap positions.
-    Depending on the “u” curve the attribute can be either higher or lower
+    Depending on the �u� curve the attribute can be either higher or lower
     than PowerTransformerEnd.x.
     '''
 
@@ -41352,18 +40376,6 @@ class ProductAssetModel(IdentifiedObject):
         })
     '''
     Intended usage for this asset model.
-    '''
-
-    weightTotal: Optional[ float | Mass ] = field(
-        default = None,
-        metadata = {
-            'type': 'Attribute',
-            'minOccurs': '0',
-            'maxOccurs': '1',
-            'namespace': 'http://iec.ch/TC57/CIM100#'
-        })
-    '''
-    Total manufactured weight of asset.
     '''
 
     Asset: list[Asset] = field(
@@ -42130,23 +41142,6 @@ class ReadingType(IdentifiedObject):
     Metering-specific unit.
     '''
 
-    argument: Optional[RationalNumber] = field(
-        default = None,
-        metadata = {
-            'type': 'Attribute',
-            'minOccurs': '0',
-            'maxOccurs': '1',
-            'inverse': '',
-            'namespace': 'http://iec.ch/TC57/CIM100#'
-        })
-    '''
-    Argument used to introduce numbers into the unit of measure description
-    where they are needed (e.g., 4 where the measure needs an argument such
-    as CEMI(n=4)). Most arguments used in practice however will be integers
-    (i.e., 'denominator'=1).
-    Value 0 in 'numerator' and 'denominator' means not applicable.
-    '''
-
     Channel: Optional[Channel] = field(
         default = None,
         metadata = {
@@ -42171,20 +41166,6 @@ class ReadingType(IdentifiedObject):
         })
     '''
     All tariff intervals with consumption described by this reading type.
-    '''
-
-    interharmonic: Optional[ReadingInterharmonic] = field(
-        default = None,
-        metadata = {
-            'type': 'Attribute',
-            'minOccurs': '0',
-            'maxOccurs': '1',
-            'inverse': '',
-            'namespace': 'http://iec.ch/TC57/CIM100#'
-        })
-    '''
-    Indication of a "harmonic" or "interharmonic" basis for the measurement.
-    Value 0 in 'numerator' and 'denominator' means not applicable.
     '''
 
     IntervalBlocks: list[IntervalBlock] = field(
@@ -42258,6 +41239,7 @@ class Receipt(IdentifiedObject):
     Record of total receipted payment from customer.
     '''
 
+@stereotype(CIMStereotype.AggregateOf)
 @dataclass(repr=False)
 class RecloseSequence(IdentifiedObject):
     '''
@@ -42293,7 +41275,7 @@ class RecloseSequence(IdentifiedObject):
     ProtectedSwitch: Optional[ProtectedSwitch] = field(
         default = None,
         metadata = {
-            'type': 'Of Aggregate',
+            'type': 'OfAggregate',
             'minOccurs': '0',
             'maxOccurs': '1',
             'inverse': 'ProtectedSwitch.RecloseSequences',
@@ -42443,20 +41425,6 @@ class Register(IdentifiedObject):
     End device function metering quantities displayed by this register.
     '''
 
-    touTier: Optional[TimeInterval] = field(
-        default = None,
-        metadata = {
-            'type': 'Attribute',
-            'minOccurs': '0',
-            'maxOccurs': '1',
-            'inverse': '',
-            'namespace': 'http://iec.ch/TC57/CIM100#'
-        })
-    '''
-    Clock time interval for register to beging/cease accumulating time of usage
-    (e.g., start at 8:00 am, stop at 5:00 pm).
-    '''
-
     UsagePoint: Optional[UsagePoint] = field(
         default = None,
         metadata = {
@@ -42484,6 +41452,7 @@ class RemoteInputSignal(IdentifiedObject):
     an input signal of a specific type is coming.
     '''
 
+@stereotype(CIMStereotype.AggregateOf)
 @dataclass(repr=False)
 class RemotePoint(IdentifiedObject):
     '''
@@ -42494,7 +41463,7 @@ class RemotePoint(IdentifiedObject):
     RemoteUnit: Optional[RemoteUnit] = field(
         default = None,
         metadata = {
-            'type': 'Of Aggregate',
+            'type': 'OfAggregate',
             'minOccurs': '0',
             'maxOccurs': '1',
             'inverse': 'RemoteUnit.RemotePoints',
@@ -42628,6 +41597,7 @@ class RemoteSource(RemotePoint):
     Link to the physical telemetered point associated with this measurement.
     '''
 
+@stereotype(CIMStereotype.AggregateOf)
 @dataclass(repr=False)
 class ReportingGroup(IdentifiedObject):
     '''
@@ -42663,7 +41633,7 @@ class ReportingGroup(IdentifiedObject):
     ReportingSuperGroup: Optional[ReportingSuperGroup] = field(
         default = None,
         metadata = {
-            'type': 'Of Aggregate',
+            'type': 'OfAggregate',
             'minOccurs': '0',
             'maxOccurs': '1',
             'inverse': 'ReportingSuperGroup.ReportingGroup',
@@ -42686,6 +41656,7 @@ class ReportingGroup(IdentifiedObject):
     The topological nodes that belong to the reporting group.
     '''
 
+@stereotype(CIMStereotype.OfAggregate)
 @dataclass(repr=False)
 class ReportingSuperGroup(IdentifiedObject):
     '''
@@ -42695,7 +41666,7 @@ class ReportingSuperGroup(IdentifiedObject):
     ReportingGroup: list[ReportingGroup] = field(
         default_factory = list,
         metadata = {
-            'type': 'Aggregate Of',
+            'type': 'AggregateOf',
             'minOccurs': '0',
             'maxOccurs': 'unbounded',
             'inverse': 'ReportingGroup.ReportingSuperGroup',
@@ -42750,18 +41721,6 @@ class Route(IdentifiedObject):
             'minOccurs': '0',
             'maxOccurs': 'unbounded',
             'inverse': 'Location.Routes',
-            'namespace': 'http://iec.ch/TC57/CIM100#'
-        })
-    '''
-    '''
-
-    status: Optional[Status] = field(
-        default = None,
-        metadata = {
-            'type': 'Attribute',
-            'minOccurs': '0',
-            'maxOccurs': '1',
-            'inverse': '',
             'namespace': 'http://iec.ch/TC57/CIM100#'
         })
     '''
@@ -42824,19 +41783,6 @@ class ScheduledEvent(IdentifiedObject):
         })
     '''
     Specification for this scheduled event.
-    '''
-
-    status: Optional[Status] = field(
-        default = None,
-        metadata = {
-            'type': 'Attribute',
-            'minOccurs': '0',
-            'maxOccurs': '1',
-            'inverse': '',
-            'namespace': 'http://iec.ch/TC57/CIM100#'
-        })
-    '''
-    Current status information relevant to a scheduled event
     '''
 
 @dataclass(repr=False)
@@ -42924,7 +41870,7 @@ class Season(IdentifiedObject):
     A specified time period of the year.
     '''
 
-    endDate: Optional[ MonthDay ] = field(
+    endDate: Optional[ str ] = field(
         default = None,
         metadata = {
             'type': 'Attribute',
@@ -42936,7 +41882,7 @@ class Season(IdentifiedObject):
     Date season ends.
     '''
 
-    startDate: Optional[ MonthDay ] = field(
+    startDate: Optional[ str ] = field(
         default = None,
         metadata = {
             'type': 'Attribute',
@@ -43146,7 +42092,7 @@ class Specimen(IdentifiedObject):
             'namespace': 'http://iec.ch/TC57/CIM100#'
         })
     '''
-    Operating ambient temperature (in °C).
+    Operating ambient temperature (in �C).
     '''
 
     humidityAtSampling: Optional[ float | PerCent ] = field(
@@ -43240,6 +42186,7 @@ class OilSpecimen(Specimen):
     Type of sample container.
     '''
 
+@stereotype(CIMStereotype.OfAggregate)
 @dataclass(repr=False)
 class Stage(IdentifiedObject):
     '''
@@ -43349,7 +42296,7 @@ class StageTrigger(IdentifiedObject):
     Stage: Optional[Stage] = field(
         default = None,
         metadata = {
-            'type': 'Of Aggregate',
+            'type': 'OfAggregate',
             'minOccurs': '0',
             'maxOccurs': '1',
             'inverse': 'Stage.StageTrigger',
@@ -43358,6 +42305,7 @@ class StageTrigger(IdentifiedObject):
     '''
     '''
 
+@stereotype(CIMStereotype.OfAggregate)
 @dataclass(repr=False)
 class StartupModel(IdentifiedObject):
     '''
@@ -43492,7 +42440,7 @@ class StartupModel(IdentifiedObject):
     StartIgnFuelCurve: Optional[StartIgnFuelCurve] = field(
         default = None,
         metadata = {
-            'type': 'Aggregate Of',
+            'type': 'AggregateOf',
             'minOccurs': '0',
             'maxOccurs': '1',
             'inverse': 'StartIgnFuelCurve.StartupModel',
@@ -43505,7 +42453,7 @@ class StartupModel(IdentifiedObject):
     StartMainFuelCurve: Optional[StartMainFuelCurve] = field(
         default = None,
         metadata = {
-            'type': 'Aggregate Of',
+            'type': 'AggregateOf',
             'minOccurs': '0',
             'maxOccurs': '1',
             'inverse': 'StartMainFuelCurve.StartupModel',
@@ -43518,7 +42466,7 @@ class StartupModel(IdentifiedObject):
     StartRampCurve: Optional[StartRampCurve] = field(
         default = None,
         metadata = {
-            'type': 'Aggregate Of',
+            'type': 'AggregateOf',
             'minOccurs': '0',
             'maxOccurs': '1',
             'inverse': 'StartRampCurve.StartupModel',
@@ -43531,7 +42479,7 @@ class StartupModel(IdentifiedObject):
     ThermalGeneratingUnit: Optional[ThermalGeneratingUnit] = field(
         default = None,
         metadata = {
-            'type': 'Of Aggregate',
+            'type': 'OfAggregate',
             'minOccurs': '0',
             'maxOccurs': '1',
             'inverse': 'ThermalGeneratingUnit.StartupModel',
@@ -43605,6 +42553,7 @@ class StatisticalCalculation(IdentifiedObject):
     The order in which this statistical calculation is done.
     '''
 
+@stereotype(CIMStereotype.Concrete)
 @dataclass(repr=False)
 class SubGeographicalRegion(IdentifiedObject):
     '''
@@ -43627,7 +42576,7 @@ class SubGeographicalRegion(IdentifiedObject):
     Lines: list[Line] = field(
         default_factory = list,
         metadata = {
-            'type': 'Aggregate Of',
+            'type': 'AggregateOf',
             'minOccurs': '0',
             'maxOccurs': 'unbounded',
             'inverse': 'Line.Region',
@@ -43640,7 +42589,7 @@ class SubGeographicalRegion(IdentifiedObject):
     Region: Optional[GeographicalRegion] = field(
         default = None,
         metadata = {
-            'type': 'Of Aggregate',
+            'type': 'OfAggregate',
             'minOccurs': '0',
             'maxOccurs': '1',
             'inverse': 'GeographicalRegion.Regions',
@@ -43653,7 +42602,7 @@ class SubGeographicalRegion(IdentifiedObject):
     Substations: list[Substation] = field(
         default_factory = list,
         metadata = {
-            'type': 'Aggregate Of',
+            'type': 'AggregateOf',
             'minOccurs': '0',
             'maxOccurs': 'unbounded',
             'inverse': 'Substation.Region',
@@ -44531,174 +43480,7 @@ class TestStandard(IdentifiedObject):
     An asset health string related to this lab test standard.
     '''
 
-    testStandardASTM: Optional[ASTMStandard] = field(
-        default = None,
-        metadata = {
-            'type': 'Attribute',
-            'minOccurs': '0',
-            'maxOccurs': '1',
-            'inverse': '',
-            'namespace': 'http://iec.ch/TC57/CIM100#'
-        })
-    '''
-    Which ASTM standard used to determine analog value result. Applies only
-    if ASTM standard used.
-    '''
-
-    testStandardCIGRE: Optional[CIGREStandard] = field(
-        default = None,
-        metadata = {
-            'type': 'Attribute',
-            'minOccurs': '0',
-            'maxOccurs': '1',
-            'inverse': '',
-            'namespace': 'http://iec.ch/TC57/CIM100#'
-        })
-    '''
-    Which CIGRE standard used to determine analog value result. Applies only
-    if CIGRE standard used.
-    '''
-
-    testStandardDIN: Optional[DINStandard] = field(
-        default = None,
-        metadata = {
-            'type': 'Attribute',
-            'minOccurs': '0',
-            'maxOccurs': '1',
-            'inverse': '',
-            'namespace': 'http://iec.ch/TC57/CIM100#'
-        })
-    '''
-    Which DIN standard used to determine analog value result. Applies only
-    if DIN standard used.
-    '''
-
-    testStandardDoble: Optional[DobleStandard] = field(
-        default = None,
-        metadata = {
-            'type': 'Attribute',
-            'minOccurs': '0',
-            'maxOccurs': '1',
-            'inverse': '',
-            'namespace': 'http://iec.ch/TC57/CIM100#'
-        })
-    '''
-    Which Doble standard used to determine analog value result. Applies only
-    if Doble standard used.
-    '''
-
-    testStandardEPA: Optional[EPAStandard] = field(
-        default = None,
-        metadata = {
-            'type': 'Attribute',
-            'minOccurs': '0',
-            'maxOccurs': '1',
-            'inverse': '',
-            'namespace': 'http://iec.ch/TC57/CIM100#'
-        })
-    '''
-    Which EPA standard used to determine analog value result. Applies only
-    if EPA standard used.
-    '''
-
-    testStandardIEC: Optional[IECStandard] = field(
-        default = None,
-        metadata = {
-            'type': 'Attribute',
-            'minOccurs': '0',
-            'maxOccurs': '1',
-            'inverse': '',
-            'namespace': 'http://iec.ch/TC57/CIM100#'
-        })
-    '''
-    Which IEC standard used to determine analog value result. Applies only
-    if IEC standard used.
-    '''
-
-    testStandardIEEE: Optional[IEEEStandard] = field(
-        default = None,
-        metadata = {
-            'type': 'Attribute',
-            'minOccurs': '0',
-            'maxOccurs': '1',
-            'inverse': '',
-            'namespace': 'http://iec.ch/TC57/CIM100#'
-        })
-    '''
-    Which IEEE standard used to determine analog value result. Applies only
-    if IEEE standard used.
-    '''
-
-    testStandardISO: Optional[ISOStandard] = field(
-        default = None,
-        metadata = {
-            'type': 'Attribute',
-            'minOccurs': '0',
-            'maxOccurs': '1',
-            'inverse': '',
-            'namespace': 'http://iec.ch/TC57/CIM100#'
-        })
-    '''
-    Which ISO standard used to determine analog value result. Applies only
-    if ISO standard used.
-    '''
-
-    testStandardLaborelec: Optional[LaborelecStandard] = field(
-        default = None,
-        metadata = {
-            'type': 'Attribute',
-            'minOccurs': '0',
-            'maxOccurs': '1',
-            'inverse': '',
-            'namespace': 'http://iec.ch/TC57/CIM100#'
-        })
-    '''
-    Which Laborelec standard used to determine analog value result. Applies
-    only if Laborelec standard used.
-    '''
-
-    testStandardTAPPI: Optional[TAPPIStandard] = field(
-        default = None,
-        metadata = {
-            'type': 'Attribute',
-            'minOccurs': '0',
-            'maxOccurs': '1',
-            'inverse': '',
-            'namespace': 'http://iec.ch/TC57/CIM100#'
-        })
-    '''
-    Which TAPPI standard used to determine analog value result. Applies only
-    if TAPPI standard used.
-    '''
-
-    testStandardUKMinistryOfDefence: Optional[UKMinistryOfDefenceStandard] = field(
-        default = None,
-        metadata = {
-            'type': 'Attribute',
-            'minOccurs': '0',
-            'maxOccurs': '1',
-            'inverse': '',
-            'namespace': 'http://iec.ch/TC57/CIM100#'
-        })
-    '''
-    Which UK Ministry of Defence standard used to determine analog value result.
-    Applies only if UK Ministry of Defence standard used.
-    '''
-
-    testStandardWEP: Optional[WEPStandard] = field(
-        default = None,
-        metadata = {
-            'type': 'Attribute',
-            'minOccurs': '0',
-            'maxOccurs': '1',
-            'inverse': '',
-            'namespace': 'http://iec.ch/TC57/CIM100#'
-        })
-    '''
-    Which WEP standard used to determine analog value result. Applies only
-    if WEP standard used.
-    '''
-
+@stereotype(CIMStereotype.OfAggregate)
 @dataclass(repr=False)
 class TieFlow(IdentifiedObject):
     '''
@@ -44725,7 +43507,7 @@ class TieFlow(IdentifiedObject):
     AltTieMeas: list[AltTieMeas] = field(
         default_factory = list,
         metadata = {
-            'type': 'Aggregate Of',
+            'type': 'AggregateOf',
             'minOccurs': '0',
             'maxOccurs': 'unbounded',
             'inverse': 'AltTieMeas.TieFlow',
@@ -44739,7 +43521,7 @@ class TieFlow(IdentifiedObject):
     ControlArea: Optional[ControlArea] = field(
         default = None,
         metadata = {
-            'type': 'Of Aggregate',
+            'type': 'OfAggregate',
             'minOccurs': '0',
             'maxOccurs': '1',
             'inverse': 'ControlArea.TieFlow',
@@ -44893,19 +43675,6 @@ class TimePoint(IdentifiedObject):
     'TimeSchedule.scheduleInterval.start'.
     '''
 
-    status: Optional[Status] = field(
-        default = None,
-        metadata = {
-            'type': 'Attribute',
-            'minOccurs': '0',
-            'maxOccurs': '1',
-            'inverse': '',
-            'namespace': 'http://iec.ch/TC57/CIM100#'
-        })
-    '''
-    Status of this time point.
-    '''
-
     TimeSchedule: Optional[TimeSchedule] = field(
         default = None,
         metadata = {
@@ -44917,19 +43686,6 @@ class TimePoint(IdentifiedObject):
         })
     '''
     Time schedule owning this time point.
-    '''
-
-    window: Optional[DateTimeInterval] = field(
-        default = None,
-        metadata = {
-            'type': 'Attribute',
-            'minOccurs': '0',
-            'maxOccurs': '1',
-            'inverse': '',
-            'namespace': 'http://iec.ch/TC57/CIM100#'
-        })
-    '''
-    Interval defining the window of time for which this time point is valid.
     '''
 
 @dataclass(repr=False)
@@ -45412,6 +44168,7 @@ class Series(TimeSeries):
     of change of supplier for a customer.
     '''
 
+@stereotype(CIMStereotype.OfAggregate)
 @dataclass(repr=False)
 class TopologicalIsland(IdentifiedObject):
     '''
@@ -45441,7 +44198,7 @@ class TopologicalIsland(IdentifiedObject):
     TopologicalNodes: list[TopologicalNode] = field(
         default_factory = list,
         metadata = {
-            'type': 'Aggregate Of',
+            'type': 'AggregateOf',
             'minOccurs': '0',
             'maxOccurs': 'unbounded',
             'inverse': 'TopologicalNode.TopologicalIsland',
@@ -45451,6 +44208,7 @@ class TopologicalIsland(IdentifiedObject):
     A topological node belongs to a topological island.
     '''
 
+@stereotype(CIMStereotype.AggregateOf)
 @dataclass(repr=False)
 class TopologicalNode(IdentifiedObject):
     '''
@@ -45550,7 +44308,7 @@ class TopologicalNode(IdentifiedObject):
     ConnectivityNodes: list[ConnectivityNode] = field(
         default_factory = list,
         metadata = {
-            'type': 'Aggregate Of',
+            'type': 'AggregateOf',
             'minOccurs': '0',
             'maxOccurs': 'unbounded',
             'inverse': 'ConnectivityNode.TopologicalNode',
@@ -45603,7 +44361,7 @@ class TopologicalNode(IdentifiedObject):
     Terminal: list[Terminal] = field(
         default_factory = list,
         metadata = {
-            'type': 'Aggregate Of',
+            'type': 'AggregateOf',
             'minOccurs': '0',
             'maxOccurs': 'unbounded',
             'inverse': 'Terminal.TopologicalNode',
@@ -45620,7 +44378,7 @@ class TopologicalNode(IdentifiedObject):
     TopologicalIsland: Optional[TopologicalIsland] = field(
         default = None,
         metadata = {
-            'type': 'Of Aggregate',
+            'type': 'OfAggregate',
             'minOccurs': '0',
             'maxOccurs': '1',
             'inverse': 'TopologicalIsland.TopologicalNodes',
@@ -45761,19 +44519,6 @@ class Transaction(IdentifiedObject):
         })
     '''
     Customer account for this payment transaction.
-    '''
-
-    line: Optional[LineDetail] = field(
-        default = None,
-        metadata = {
-            'type': 'Attribute',
-            'minOccurs': '0',
-            'maxOccurs': '1',
-            'inverse': '',
-            'namespace': 'http://iec.ch/TC57/CIM100#'
-        })
-    '''
-    Transaction amount, rounding, date and note for this transaction line.
     '''
 
     Meter: Optional[Meter] = field(
@@ -46719,18 +45464,6 @@ class TransformerObservation(IdentifiedObject):
     '''
     '''
 
-    status: Optional[Status] = field(
-        default = None,
-        metadata = {
-            'type': 'Attribute',
-            'minOccurs': '0',
-            'maxOccurs': '1',
-            'inverse': '',
-            'namespace': 'http://iec.ch/TC57/CIM100#'
-        })
-    '''
-    '''
-
     Transformer: Optional[TransformerTank] = field(
         default = None,
         metadata = {
@@ -47053,6 +45786,7 @@ class OpenCircuitTest(TransformerTest):
     test.
     '''
 
+@stereotype(CIMStereotype.Concrete)
 @dataclass(repr=False)
 class ShortCircuitTest(TransformerTest):
     '''
@@ -47203,18 +45937,6 @@ class TypeAssetCatalogue(IdentifiedObject):
     '''
     Catalogue of generic types of assets (TypeAsset) that may be used for design
     purposes. It is not associated with a particular manufacturer.
-    '''
-
-    status: Optional[Status] = field(
-        default = None,
-        metadata = {
-            'type': 'Attribute',
-            'minOccurs': '0',
-            'maxOccurs': '1',
-            'inverse': '',
-            'namespace': 'http://iec.ch/TC57/CIM100#'
-        })
-    '''
     '''
 
     TypeAssets: list[CatalogAssetType] = field(
@@ -47654,20 +46376,6 @@ class UsagePoint(IdentifiedObject):
     All outages at this Usage Point
     '''
 
-    physicalConnectionCapacity: Optional[DecimalQuantity] = field(
-        default = None,
-        metadata = {
-            'type': 'Attribute',
-            'minOccurs': '0',
-            'maxOccurs': '1',
-            'inverse': '',
-            'namespace': 'http://iec.ch/TC57/CIM100#'
-        })
-    '''
-    Quantitative information about the maximum physical capacity of the connection
-    for the usage point.
-    '''
-
     PlannedOutageNotification: list[PlannedOutageNotification] = field(
         default_factory = list,
         metadata = {
@@ -47899,6 +46607,7 @@ class VSCDynamics(IdentifiedObject):
     applies.
     '''
 
+@stereotype(CIMStereotype.OfAggregate)
 @dataclass(repr=False)
 class ValueAliasSet(IdentifiedObject):
     '''
@@ -47953,7 +46662,7 @@ class ValueAliasSet(IdentifiedObject):
     Values: list[ValueToAlias] = field(
         default_factory = list,
         metadata = {
-            'type': 'Aggregate Of',
+            'type': 'AggregateOf',
             'minOccurs': '0',
             'maxOccurs': 'unbounded',
             'inverse': 'ValueToAlias.ValueAliasSet',
@@ -47963,6 +46672,7 @@ class ValueAliasSet(IdentifiedObject):
     The ValueToAlias mappings included in the set.
     '''
 
+@stereotype(CIMStereotype.AggregateOf)
 @dataclass(repr=False)
 class ValueToAlias(IdentifiedObject):
     '''
@@ -47985,7 +46695,7 @@ class ValueToAlias(IdentifiedObject):
     ValueAliasSet: Optional[ValueAliasSet] = field(
         default = None,
         metadata = {
-            'type': 'Of Aggregate',
+            'type': 'OfAggregate',
             'minOccurs': '0',
             'maxOccurs': '1',
             'inverse': 'ValueAliasSet.Values',
@@ -48147,6 +46857,7 @@ class VisibilityLayer(IdentifiedObject):
     A visibility layer can contain one or more diagram objects.
     '''
 
+@stereotype(CIMStereotype.OfAggregate)
 @dataclass(repr=False)
 class WindPlantDynamics(IdentifiedObject):
     '''
@@ -48171,7 +46882,7 @@ class WindPlantDynamics(IdentifiedObject):
     WindTurbineType3or4Dynamics: list[WindTurbineType3or4Dynamics] = field(
         default_factory = list,
         metadata = {
-            'type': 'Aggregate Of',
+            'type': 'AggregateOf',
             'minOccurs': '0',
             'maxOccurs': 'unbounded',
             'inverse': 'WindTurbineType3or4Dynamics.WindPlantDynamics',
@@ -48181,6 +46892,7 @@ class WindPlantDynamics(IdentifiedObject):
     The wind turbine type 3 or type 4 associated with this wind plant.
     '''
 
+@stereotype(CIMStereotype.AggregateOf)
 @dataclass(repr=False)
 class WindTurbineType3or4Dynamics(IdentifiedObject):
     '''
@@ -48218,7 +46930,7 @@ class WindTurbineType3or4Dynamics(IdentifiedObject):
     WindPlantDynamics: Optional[WindPlantDynamics] = field(
         default = None,
         metadata = {
-            'type': 'Of Aggregate',
+            'type': 'OfAggregate',
             'minOccurs': '0',
             'maxOccurs': '1',
             'inverse': 'WindPlantDynamics.WindTurbineType3or4Dynamics',
@@ -48281,18 +46993,6 @@ class WindingInsulation(IdentifiedObject):
             'minOccurs': '0',
             'maxOccurs': '1',
             'inverse': 'TransformerEnd.FromWindingInsulations',
-            'namespace': 'http://iec.ch/TC57/CIM100#'
-        })
-    '''
-    '''
-
-    status: Optional[Status] = field(
-        default = None,
-        metadata = {
-            'type': 'Attribute',
-            'minOccurs': '0',
-            'maxOccurs': '1',
-            'inverse': '',
             'namespace': 'http://iec.ch/TC57/CIM100#'
         })
     '''
@@ -48410,18 +47110,6 @@ class WorkFlowStep(IdentifiedObject):
     '''
     Used to define dependencies of each work flow step, which is for the instance
     of WorkTask associated with a given instance of WorkFlow.
-    '''
-
-    status: Optional[Status] = field(
-        default = None,
-        metadata = {
-            'type': 'Attribute',
-            'minOccurs': '0',
-            'maxOccurs': '1',
-            'inverse': '',
-            'namespace': 'http://iec.ch/TC57/CIM100#'
-        })
-    '''
     '''
 
     Work: Optional[Work] = field(
@@ -48571,6 +47259,7 @@ class AceTariffType(Identity):
     '''
     '''
 
+@stereotype(CIMStereotype.OfAggregate)
 @dataclass(repr=False)
 class AllocationResult(Identity):
     '''
@@ -48614,7 +47303,7 @@ class AllocationResult(Identity):
     AllocationResultValues: list[AllocationResultValues] = field(
         default_factory = list,
         metadata = {
-            'type': 'Aggregate Of',
+            'type': 'AggregateOf',
             'minOccurs': '0',
             'maxOccurs': 'unbounded',
             'inverse': 'AllocationResultValues.AllocationResult',
@@ -48698,7 +47387,7 @@ class AllocationResultValues(Identity):
     AllocationResult: Optional[AllocationResult] = field(
         default = None,
         metadata = {
-            'type': 'Of Aggregate',
+            'type': 'OfAggregate',
             'minOccurs': '0',
             'maxOccurs': '1',
             'inverse': 'AllocationResult.AllocationResultValues',
@@ -48890,6 +47579,7 @@ class AttributeProperty(Identity):
     Property for a particular attribute that contains name and value.
     '''
 
+@stereotype(CIMStereotype.OfAggregate)
 @dataclass(repr=False)
 class AuxiliaryCost(Identity):
     '''
@@ -48943,7 +47633,7 @@ class AuxiliaryCost(Identity):
     AuxillaryValues: list[AuxiliaryValues] = field(
         default_factory = list,
         metadata = {
-            'type': 'Aggregate Of',
+            'type': 'AggregateOf',
             'minOccurs': '0',
             'maxOccurs': 'unbounded',
             'inverse': 'AuxiliaryValues.AuxillaryCost',
@@ -49079,7 +47769,7 @@ class AuxiliaryValues(AuxiliaryObject):
     AuxillaryCost: Optional[AuxiliaryCost] = field(
         default = None,
         metadata = {
-            'type': 'Of Aggregate',
+            'type': 'OfAggregate',
             'minOccurs': '0',
             'maxOccurs': '1',
             'inverse': 'AuxiliaryCost.AuxillaryValues',
@@ -49091,7 +47781,7 @@ class AuxiliaryValues(AuxiliaryObject):
     FiveMinAuxillaryData: Optional[FiveMinAuxiliaryData] = field(
         default = None,
         metadata = {
-            'type': 'Of Aggregate',
+            'type': 'OfAggregate',
             'minOccurs': '0',
             'maxOccurs': '1',
             'inverse': 'FiveMinAuxiliaryData.AuxillaryValues',
@@ -49103,7 +47793,7 @@ class AuxiliaryValues(AuxiliaryObject):
     TenMinAuxillaryData: Optional[TenMinAuxiliaryData] = field(
         default = None,
         metadata = {
-            'type': 'Of Aggregate',
+            'type': 'OfAggregate',
             'minOccurs': '0',
             'maxOccurs': '1',
             'inverse': 'TenMinAuxiliaryData.AuxillaryData',
@@ -49322,6 +48012,7 @@ class BranchEndFlow(Identity):
     '''
     '''
 
+@stereotype(CIMStereotype.AggregateOf)
 @dataclass(repr=False)
 class BranchGroupTerminal(Identity):
     '''
@@ -49344,7 +48035,7 @@ class BranchGroupTerminal(Identity):
     BranchGroup: Optional[BranchGroup] = field(
         default = None,
         metadata = {
-            'type': 'Of Aggregate',
+            'type': 'OfAggregate',
             'minOccurs': '0',
             'maxOccurs': '1',
             'inverse': 'BranchGroup.BranchGroupTerminal',
@@ -49580,20 +48271,6 @@ class CommodityPrice(Identity):
     '''
     '''
 
-    timeIntervalPeriod: Optional[DateTimeInterval] = field(
-        default = None,
-        metadata = {
-            'type': 'Attribute',
-            'minOccurs': '0',
-            'maxOccurs': '1',
-            'inverse': '',
-            'namespace': 'http://iec.ch/TC57/CIM100#'
-        })
-    '''
-    The time interval over which the CommodityPrice is valid, using the standard
-    conventions associated with the DateTimeInterval class.
-    '''
-
 @dataclass(repr=False)
 class ConstraintDuration(Identity):
     '''
@@ -49797,6 +48474,7 @@ class CurtailmentProfile(Identity):
     timeframe for this EnergyTransaction.
     '''
 
+@stereotype(CIMStereotype.AggregateOf)
 @dataclass(repr=False)
 class CurveData(Identity):
     '''
@@ -49858,7 +48536,7 @@ class CurveData(Identity):
     Curve: Optional[Curve] = field(
         default = None,
         metadata = {
-            'type': 'Of Aggregate',
+            'type': 'OfAggregate',
             'minOccurs': '0',
             'maxOccurs': '1',
             'inverse': 'Curve.CurveDatas',
@@ -50905,19 +49583,6 @@ class PanDemandResponse(EndDeviceAction):
     and calculated based on local temperature.
     '''
 
-    appliance: Optional[ControlledAppliance] = field(
-        default = None,
-        metadata = {
-            'type': 'Attribute',
-            'minOccurs': '0',
-            'maxOccurs': '1',
-            'inverse': '',
-            'namespace': 'http://iec.ch/TC57/CIM100#'
-        })
-    '''
-    Appliance being controlled.
-    '''
-
 @dataclass(repr=False)
 class PanDisplay(EndDeviceAction):
     '''
@@ -51034,19 +49699,6 @@ class EndDeviceEventDetail(Identity):
         })
     '''
     End device owning this detail.
-    '''
-
-    value: Optional[StringQuantity] = field(
-        default = None,
-        metadata = {
-            'type': 'Attribute',
-            'minOccurs': '0',
-            'maxOccurs': '1',
-            'inverse': '',
-            'namespace': 'http://iec.ch/TC57/CIM100#'
-        })
-    '''
-    Value, including unit information.
     '''
 
 @dataclass(repr=False)
@@ -51168,19 +49820,6 @@ class EnvironmentalPhenomenon(Identity):
     The classification of this phenomenon.
     '''
 
-    timeInterval: Optional[DateTimeInterval] = field(
-        default = None,
-        metadata = {
-            'type': 'Attribute',
-            'minOccurs': '0',
-            'maxOccurs': '1',
-            'inverse': '',
-            'namespace': 'http://iec.ch/TC57/CIM100#'
-        })
-    '''
-    The timestamp of the phenomenon as a single point or time interval.
-    '''
-
 @dataclass(repr=False)
 class AtmosphericPhenomenon(EnvironmentalPhenomenon):
     '''
@@ -51234,32 +49873,6 @@ class AtmosphericPhenomenon(EnvironmentalPhenomenon):
         })
     '''
     The speed of the phenomenon
-    '''
-
-    altitude: Optional[RelativeDisplacement] = field(
-        default = None,
-        metadata = {
-            'type': 'Attribute',
-            'minOccurs': '0',
-            'maxOccurs': '1',
-            'inverse': '',
-            'namespace': 'http://iec.ch/TC57/CIM100#'
-        })
-    '''
-    The maximum altitude of the phenomenon.
-    '''
-
-    base: Optional[RelativeDisplacement] = field(
-        default = None,
-        metadata = {
-            'type': 'Attribute',
-            'minOccurs': '0',
-            'maxOccurs': '1',
-            'inverse': '',
-            'namespace': 'http://iec.ch/TC57/CIM100#'
-        })
-    '''
-    The base altitude of the phenomenon.
     '''
 
 @dataclass(repr=False)
@@ -51349,7 +49962,7 @@ class Hurricane(Cyclone):
 @dataclass(repr=False)
 class TropicalCycloneAustralia(Cyclone):
     '''
-    A tropical cyclone, a subtype of cyclone that forms to the east of 90°E
+    A tropical cyclone, a subtype of cyclone that forms to the east of 90�E
     in the Southern Hemisphere whose intensity is measured by the Australian
     tropical cyclone intensity scale.
     '''
@@ -51473,19 +50086,6 @@ class Earthquake(GeosphericPhenomenon):
     The magnitude of the earthquake as defined on the Moment Magnitude (M<sub>w</sub>)
     scale, which measures the size of earthquakes in terms of the energy released.
     Must be greater than zero.
-    '''
-
-    focalDepth: Optional[RelativeDisplacement] = field(
-        default = None,
-        metadata = {
-            'type': 'Attribute',
-            'minOccurs': '0',
-            'maxOccurs': '1',
-            'inverse': '',
-            'namespace': 'http://iec.ch/TC57/CIM100#'
-        })
-    '''
-    The depth below the earth's surface of the earthquake's focal point.
     '''
 
 @dataclass(repr=False)
@@ -51696,18 +50296,6 @@ class ErpTimeEntry(Identity):
     '''
     '''
 
-    status: Optional[Status] = field(
-        default = None,
-        metadata = {
-            'type': 'Attribute',
-            'minOccurs': '0',
-            'maxOccurs': '1',
-            'inverse': '',
-            'namespace': 'http://iec.ch/TC57/CIM100#'
-        })
-    '''
-    '''
-
 @dataclass(repr=False)
 class ErpTimeSheet(Identity):
     '''
@@ -51841,6 +50429,7 @@ class ExPostLossResults(Identity):
     '''
     '''
 
+@stereotype(CIMStereotype.OfAggregate)
 @dataclass(repr=False)
 class ExpectedEnergy(Identity):
     '''
@@ -51883,7 +50472,7 @@ class ExpectedEnergy(Identity):
     ExpectedEnergyValues: list[ExpectedEnergyValues] = field(
         default_factory = list,
         metadata = {
-            'type': 'Aggregate Of',
+            'type': 'AggregateOf',
             'minOccurs': '0',
             'maxOccurs': 'unbounded',
             'inverse': 'ExpectedEnergyValues.ExpectedEnergy',
@@ -51923,7 +50512,7 @@ class ExpectedEnergyValues(Identity):
     ExpectedEnergy: Optional[ExpectedEnergy] = field(
         default = None,
         metadata = {
-            'type': 'Of Aggregate',
+            'type': 'OfAggregate',
             'minOccurs': '0',
             'maxOccurs': '1',
             'inverse': 'ExpectedEnergy.ExpectedEnergyValues',
@@ -52013,6 +50602,7 @@ class FieldDispatchStep(Identity):
     The dispatch history associated with the field dispatch step
     '''
 
+@stereotype(CIMStereotype.OfAggregate)
 @dataclass(repr=False)
 class FiveMinAuxiliaryData(Identity):
     '''
@@ -52055,7 +50645,7 @@ class FiveMinAuxiliaryData(Identity):
     AuxillaryValues: list[AuxiliaryValues] = field(
         default_factory = list,
         metadata = {
-            'type': 'Aggregate Of',
+            'type': 'AggregateOf',
             'minOccurs': '0',
             'maxOccurs': 'unbounded',
             'inverse': 'AuxiliaryValues.FiveMinAuxillaryData',
@@ -52268,6 +50858,7 @@ class IEC61970CIMVersion(Identity):
     the YY is the minor version. For example IEC61970CIM13v18.
     '''
 
+@stereotype(CIMStereotype.AggregateOf)
 @dataclass(repr=False)
 class InadvertentAccount(Identity):
     '''
@@ -52519,7 +51110,7 @@ class IntervalBlock(Identity):
     readings may need conversion through the application of an offset and a
     scalar defined in associated pending.
     Table 548 shows all association ends of IntervalBlock with other classes.
-    Table 548 – Association ends of Metering::IntervalBlock with other classes
+    Table 548 � Association ends of Metering::IntervalBlock with other classes
     Associations
     name
     mult to
@@ -52610,6 +51201,7 @@ class IntervalBlock(Identity):
     Type information for interval reading values contained in this block.
     '''
 
+@stereotype(CIMStereotype.AggregateOf)
 @dataclass(repr=False)
 class IrregularTimePoint(Identity):
     '''
@@ -52657,7 +51249,7 @@ class IrregularTimePoint(Identity):
     IntervalSchedule: Optional[IrregularIntervalSchedule] = field(
         default = None,
         metadata = {
-            'type': 'Of Aggregate',
+            'type': 'OfAggregate',
             'minOccurs': '0',
             'maxOccurs': '1',
             'inverse': 'IrregularIntervalSchedule.TimePoints',
@@ -53050,19 +51642,6 @@ class MarketInvoiceLineItem(Identity):
     Kind of line item.
     '''
 
-    billPeriod: Optional[DateTimeInterval] = field(
-        default = None,
-        metadata = {
-            'type': 'Attribute',
-            'minOccurs': '0',
-            'maxOccurs': '1',
-            'inverse': '',
-            'namespace': 'http://iec.ch/TC57/CIM100#'
-        })
-    '''
-    Bill period for the line item.
-    '''
-
     ContainerMarketInvoiceLineItem: Optional[MarketInvoiceLineItem] = field(
         default = None,
         metadata = {
@@ -53176,19 +51755,6 @@ class MarketLedgerEntry(Identity):
             'namespace': 'http://iec.ch/TC57/CIM100#'
         })
     '''
-    '''
-
-    status: Optional[Status] = field(
-        default = None,
-        metadata = {
-            'type': 'Attribute',
-            'minOccurs': '0',
-            'maxOccurs': '1',
-            'inverse': '',
-            'namespace': 'http://iec.ch/TC57/CIM100#'
-        })
-    '''
-    Status of ledger entry.
     '''
 
 @dataclass(repr=False)
@@ -53407,6 +51973,7 @@ class NameTypeAuthority(Identity):
     All name types managed by this authority.
     '''
 
+@stereotype(CIMStereotype.AggregateOf)
 @dataclass(repr=False)
 class NonlinearShuntCompensatorPhasePoint(Identity):
     '''
@@ -53456,7 +52023,7 @@ class NonlinearShuntCompensatorPhasePoint(Identity):
     NonlinearShuntCompensatorPhase: Optional[NonlinearShuntCompensatorPhase] = field(
         default = None,
         metadata = {
-            'type': 'Of Aggregate',
+            'type': 'OfAggregate',
             'minOccurs': '0',
             'maxOccurs': '1',
             'inverse': 'NonlinearShuntCompensatorPhase.NonlinearShuntCompensatorPhasePoints',
@@ -53466,6 +52033,7 @@ class NonlinearShuntCompensatorPhasePoint(Identity):
     Non-linear shunt compensator phase owning this point.
     '''
 
+@stereotype(CIMStereotype.AggregateOf)
 @dataclass(repr=False)
 class NonlinearShuntCompensatorPoint(Identity):
     '''
@@ -53539,7 +52107,7 @@ class NonlinearShuntCompensatorPoint(Identity):
     NonlinearShuntCompensator: Optional[NonlinearShuntCompensator] = field(
         default = None,
         metadata = {
-            'type': 'Of Aggregate',
+            'type': 'OfAggregate',
             'minOccurs': '0',
             'maxOccurs': '1',
             'inverse': 'NonlinearShuntCompensator.NonlinearShuntCompensatorPoints',
@@ -54035,19 +52603,6 @@ class Period(Identity):
     '''
     '''
 
-    timeInterval: Optional[DateTimeInterval] = field(
-        default = None,
-        metadata = {
-            'type': 'Attribute',
-            'minOccurs': '0',
-            'maxOccurs': '1',
-            'inverse': '',
-            'namespace': 'http://iec.ch/TC57/CIM100#'
-        })
-    '''
-    The start and end date and time for a given interval.
-    '''
-
     TimeSeries: list[TimeSeries] = field(
         default_factory = list,
         metadata = {
@@ -54092,7 +52647,7 @@ class PhaseImpedanceData(Identity):
             'namespace': 'http://iec.ch/TC57/CIM100#'
         })
     '''
-    The matrix element’s row number, in the range 1 to PerLengthPhaseImpedance.conductorCount.
+    The matrix element�s row number, in the range 1 to PerLengthPhaseImpedance.conductorCount.
     Only the lower triangle needs to be stored. This row number matches ACLineSegmentPhase.sequenceNumber.
     '''
 
@@ -54995,6 +53550,7 @@ class Quality61850(Identity):
     Validity of the measurement value.
     '''
 
+@stereotype(CIMStereotype.AggregateOf)
 @dataclass(repr=False)
 class MeasurementValueQuality(Quality61850):
     '''
@@ -55006,7 +53562,7 @@ class MeasurementValueQuality(Quality61850):
     MeasurementValue: Optional[MeasurementValue] = field(
         default = None,
         metadata = {
-            'type': 'Of Aggregate',
+            'type': 'OfAggregate',
             'minOccurs': '0',
             'maxOccurs': '1',
             'inverse': 'MeasurementValue.MeasurementValueQuality',
@@ -55016,6 +53572,7 @@ class MeasurementValueQuality(Quality61850):
     A MeasurementValue has a MeasurementValueQuality associated with it.
     '''
 
+@stereotype(CIMStereotype.Attribute)
 @dataclass(repr=False)
 class Quantity(Identity):
     '''
@@ -55086,20 +53643,6 @@ class Quantity(Identity):
             'namespace': 'http://iec.ch/TC57/CIM100#'
         })
     '''
-    '''
-
-    quantity: Optional[Quantity] = field(
-        default = None,
-        metadata = {
-            'type': 'Attribute',
-            'minOccurs': '0',
-            'maxOccurs': '1',
-            'inverse': 'Quantity.Detail_Quantity',
-            'namespace': 'http://iec.ch/TC57/CIM100#'
-        })
-    '''
-    The quantity value.
-    The association role provides the information about what is expressed.
     '''
 
     TimeSeries: list[TimeSeries] = field(
@@ -55277,6 +53820,7 @@ class Reason(Identity):
     '''
     '''
 
+@stereotype(CIMStereotype.AggregateOf)
 @dataclass(repr=False)
 class RegularTimePoint(Identity):
     '''
@@ -55331,7 +53875,7 @@ class RegularTimePoint(Identity):
     IntervalSchedule: Optional[RegularIntervalSchedule] = field(
         default = None,
         metadata = {
-            'type': 'Of Aggregate',
+            'type': 'OfAggregate',
             'minOccurs': '0',
             'maxOccurs': '1',
             'inverse': 'RegularIntervalSchedule.TimePoints',
@@ -55565,6 +54109,7 @@ class ResourceDeploymentStatus(Identity):
     '''
     '''
 
+@stereotype(CIMStereotype.AggregateOf)
 @dataclass(repr=False)
 class ResourceStartupCost(Identity):
     '''
@@ -55766,7 +54311,7 @@ class ResourceStartupCost(Identity):
     ResourceVerifiableCosts: Optional[ResourceVerifiableCosts] = field(
         default = None,
         metadata = {
-            'type': 'Of Aggregate',
+            'type': 'OfAggregate',
             'minOccurs': '0',
             'maxOccurs': '1',
             'inverse': 'ResourceVerifiableCosts.ResourceStartupCost',
@@ -55775,6 +54320,7 @@ class ResourceStartupCost(Identity):
     '''
     '''
 
+@stereotype(CIMStereotype.OfAggregate)
 @dataclass(repr=False)
 class ResourceVerifiableCosts(Identity):
     '''
@@ -55821,7 +54367,7 @@ class ResourceVerifiableCosts(Identity):
     ResourceStartupCost: list[ResourceStartupCost] = field(
         default_factory = list,
         metadata = {
-            'type': 'Aggregate Of',
+            'type': 'AggregateOf',
             'minOccurs': '0',
             'maxOccurs': 'unbounded',
             'inverse': 'ResourceStartupCost.ResourceVerifiableCosts',
@@ -55904,20 +54450,6 @@ class ScheduledEventData(Identity):
     has completed.
     '''
 
-    estimatedWindow: Optional[DateTimeInterval] = field(
-        default = None,
-        metadata = {
-            'type': 'Attribute',
-            'minOccurs': '0',
-            'maxOccurs': '1',
-            'inverse': '',
-            'namespace': 'http://iec.ch/TC57/CIM100#'
-        })
-    '''
-    Estimated date and time for activity execution (with earliest possibility
-    of activity initiation and latest possibility of activity completion).
-    '''
-
     InspectionDataSet: Optional[InspectionDataSet] = field(
         default = None,
         metadata = {
@@ -55928,19 +54460,6 @@ class ScheduledEventData(Identity):
             'namespace': 'http://iec.ch/TC57/CIM100#'
         })
     '''
-    '''
-
-    requestedWindow: Optional[DateTimeInterval] = field(
-        default = None,
-        metadata = {
-            'type': 'Attribute',
-            'minOccurs': '0',
-            'maxOccurs': '1',
-            'inverse': '',
-            'namespace': 'http://iec.ch/TC57/CIM100#'
-        })
-    '''
-    Requested date and time interval for activity execution.
     '''
 
     ScheduledEvents: list[ScheduledEvent] = field(
@@ -55954,19 +54473,6 @@ class ScheduledEventData(Identity):
         })
     '''
     All scheduled events with this specification.
-    '''
-
-    status: Optional[Status] = field(
-        default = None,
-        metadata = {
-            'type': 'Attribute',
-            'minOccurs': '0',
-            'maxOccurs': '1',
-            'inverse': '',
-            'namespace': 'http://iec.ch/TC57/CIM100#'
-        })
-    '''
-    Current status information relevant to the data for a scheduled event
     '''
 
 @dataclass(repr=False)
@@ -56081,18 +54587,6 @@ class SvPowerFlow(StateVariable):
     '''
     The reactive power flow. Load sign convention is used, i.e. positive sign
     means flow out from a TopologicalNode (bus) into the conducting equipment.
-    '''
-
-    EnergyGroup: Optional[EnergyGroup] = field(
-        default = None,
-        metadata = {
-            'type': 'Association',
-            'minOccurs': '0',
-            'maxOccurs': '1',
-            'inverse': 'EAID_9E145EE8_2544_4933_9DE4_FB008FF09419-A',
-            'namespace': 'http://langdale.com.au/2005/xuid#'
-        })
-    '''
     '''
 
     Terminal: Optional[Terminal] = field(
@@ -56718,6 +55212,7 @@ class RatioTapChangerTablePoint(TapChangerTablePoint):
     Table of this point.
     '''
 
+@stereotype(CIMStereotype.OfAggregate)
 @dataclass(repr=False)
 class TenMinAuxiliaryData(Identity):
     '''
@@ -56774,6 +55269,7 @@ class TimeTariffInterval(Identity):
     interval.
     '''
 
+@stereotype(CIMStereotype.OfAggregate)
 @dataclass(repr=False)
 class TradingHubPrice(Identity):
     '''
@@ -56858,7 +55354,7 @@ class TradingHubValues(Identity):
     TradingHubPrice: Optional[TradingHubPrice] = field(
         default = None,
         metadata = {
-            'type': 'Of Aggregate',
+            'type': 'OfAggregate',
             'minOccurs': '0',
             'maxOccurs': '1',
             'inverse': 'TradingHubPrice.TradingHubValues',
@@ -57208,19 +55704,6 @@ class UserAttribute(Identity):
     Transaction for which this snapshot has been recorded.
     '''
 
-    value: Optional[StringQuantity] = field(
-        default = None,
-        metadata = {
-            'type': 'Attribute',
-            'minOccurs': '0',
-            'maxOccurs': '1',
-            'inverse': '',
-            'namespace': 'http://iec.ch/TC57/CIM100#'
-        })
-    '''
-    Value of an attribute, including unit information.
-    '''
-
 @dataclass(repr=False)
 class MktUserAttribute(UserAttribute):
     '''
@@ -57356,6 +55839,7 @@ class WirePhaseInfo(Identity):
     Wire position with this wire phase information.
     '''
 
+@stereotype(CIMStereotype.Enumeration)
 class AccumulationKind(Enum):
     '''
     Kind of accumulation behaviour for read / measured values from individual
@@ -57400,7 +55884,7 @@ class AccumulationKind(Enum):
     cumulative = 'cumulative'
     '''
     The sum of the previous billing period values.
-    Note: 'cumulative' is commonly used in conjunction with “demand.” Each
+    Note: 'cumulative' is commonly used in conjunction with �demand.� Each
     demand reset causes the maximum demand value for the present billing period
     (since the last demand reset) to accumulate as an accumulative total of
     all maximum demands. So instead of 'zeroing' the demand register, a demand
@@ -57423,7 +55907,7 @@ class AccumulationKind(Enum):
     As if a needle is swung out on the meter face to a value to indicate the
     current value.
     Note: An 'indicating' value is typically measured over hundreds of milliseconds
-    or greater, or may imply a “pusher” mechanism to capture a value. Compare
+    or greater, or may imply a �pusher� mechanism to capture a value. Compare
     this to 'instantaneous' which is measured over a shorter period of time.
     '''
 
@@ -57442,7 +55926,7 @@ class AccumulationKind(Enum):
     except that it latches upon the maximum value upon reaching that value.
     Any additional accumulation (positive or negative) is discarded until a
     reset occurs.
-    Note: A 'latchingQuantity' may also occur in the downward direction – upon
+    Note: A 'latchingQuantity' may also occur in the downward direction � upon
     reaching a minimum value. The terms 'maximum' or 'minimum' (for 'aggregate')
     will usually be included when this type of accumulation behaviour is present.
     When this description is applied to an encoded value (UOM= 'Code'), it
@@ -57473,6 +55957,7 @@ class AccumulationKind(Enum):
     data value.
     '''
 
+@stereotype(CIMStereotype.Enumeration)
 class AggregateKind(Enum):
     '''
     Kind of aggregation for read / measured values from multiple end points.
@@ -57553,6 +56038,7 @@ class AggregateKind(Enum):
     The third highest value observed.
     '''
 
+@stereotype(CIMStereotype.Enumeration)
 class AmiBillingReadyKind(Enum):
     '''
     Lifecycle states of the metering installation at a usage point with respect
@@ -57599,6 +56085,7 @@ class AmiBillingReadyKind(Enum):
     communicating with the AMI network.
     '''
 
+@stereotype(CIMStereotype.Enumeration)
 class AnalyticKind(Enum):
     '''
     Possible kinds of analytics.
@@ -57634,6 +56121,7 @@ class AnalyticKind(Enum):
     Analytic evaluates risk.
     '''
 
+@stereotype(CIMStereotype.Enumeration)
 class AnchorKind(Enum):
     '''
     Kind of anchor.
@@ -57667,6 +56155,7 @@ class AnchorKind(Enum):
     '''
     '''
 
+@stereotype(CIMStereotype.Enumeration)
 class AnodeType(Enum):
     '''
     Aggregated Nodes Types for example:
@@ -57765,6 +56254,7 @@ class AnodeType(Enum):
     System Zone/Region;
     '''
 
+@stereotype(CIMStereotype.Enumeration)
 class ApnodeType(Enum):
     '''
     Aggregate Node Types for example:
@@ -57848,6 +56338,7 @@ class ApnodeType(Enum):
     Zone
     '''
 
+@stereotype(CIMStereotype.Enumeration)
 class ApplicationSecurityKind(Enum):
     '''
     Specifies the expected security mechanism, per IEC 62351-4, to be utilized.
@@ -57872,6 +56363,7 @@ class ApplicationSecurityKind(Enum):
     association.
     '''
 
+@stereotype(CIMStereotype.Enumeration)
 class AreaControlMode(Enum):
     '''
     Area's present control mode.
@@ -57897,6 +56389,7 @@ class AreaControlMode(Enum):
     Tie-Line Bias
     '''
 
+@stereotype(CIMStereotype.Enumeration)
 class AreaKind(Enum):
     '''
     Enumeration for the type of area defined; e.g., county, state, parish,
@@ -57943,6 +56436,7 @@ class AreaKind(Enum):
     Enumeration for the type of area defined for the zipcode
     '''
 
+@stereotype(CIMStereotype.Enumeration)
 class AssetFailureClassification(Enum):
     '''
     Classifications of asset failures.
@@ -57960,7 +56454,7 @@ class AssetFailureClassification(Enum):
 
     majorNeedsReplacement = 'majorNeedsReplacement'
     '''
-    Major failure – asset needs to be replaced.
+    Major failure � asset needs to be replaced.
     '''
 
     minor = 'minor'
@@ -57968,6 +56462,7 @@ class AssetFailureClassification(Enum):
     Minor failure.
     '''
 
+@stereotype(CIMStereotype.Enumeration)
 class AssetFailureMode(Enum):
     '''
     What asset has failed to be able to do.
@@ -58002,6 +56497,7 @@ class AssetFailureMode(Enum):
     Failure to provide insulation.
     '''
 
+@stereotype(CIMStereotype.Enumeration)
 class AssetGroupKind(Enum):
     '''
     Possible kinds of asset groups.
@@ -58033,6 +56529,7 @@ class AssetGroupKind(Enum):
     '''
     '''
 
+@stereotype(CIMStereotype.Enumeration)
 class AssetHazardKind(Enum):
     '''
     Type of hazard that is posed to asset in this location.
@@ -58043,12 +56540,12 @@ class AssetHazardKind(Enum):
 
     ambientTempAbove38 = 'ambientTempAbove38'
     '''
-    Subject to ambient temperature above 38 °C.
+    Subject to ambient temperature above 38 �C.
     '''
 
     ambientTempBelowMinus12 = 'ambientTempBelowMinus12'
     '''
-    Subject to ambient temperature of below -12 °C.
+    Subject to ambient temperature of below -12 �C.
     '''
 
     childrenAtPlay = 'childrenAtPlay'
@@ -58071,6 +56568,7 @@ class AssetHazardKind(Enum):
     Vegetation growing below asset that may cause problem.
     '''
 
+@stereotype(CIMStereotype.Enumeration)
 class AssetKind(Enum):
     '''
     Kinds of assets or asset components.
@@ -58127,6 +56625,7 @@ class AssetKind(Enum):
     Transformer tank.
     '''
 
+@stereotype(CIMStereotype.Enumeration)
 class AssetLifecycleStateKind(Enum):
     '''
     Lifecycle states an asset can be in.
@@ -58160,6 +56659,7 @@ class AssetLifecycleStateKind(Enum):
     Asset retired.
     '''
 
+@stereotype(CIMStereotype.Enumeration)
 class AssetModelUsageKind(Enum):
     '''
     Usage for an asset model.
@@ -58205,6 +56705,7 @@ class AssetModelUsageKind(Enum):
     Usage of the asset model is unknown.
     '''
 
+@stereotype(CIMStereotype.Enumeration)
 class AssetStringKind(Enum):
     '''
     Definition of type of string useful in asset domain.
@@ -58217,6 +56718,7 @@ class AssetStringKind(Enum):
     including sediment, appearance, free water.
     '''
 
+@stereotype(CIMStereotype.Enumeration)
 class AsynchronousMachineKind(Enum):
     '''
     Kind of Asynchronous Machine.
@@ -58232,6 +56734,7 @@ class AsynchronousMachineKind(Enum):
     The Asynchronous Machine is a motor.
     '''
 
+@stereotype(CIMStereotype.Enumeration)
 class AtmosphericAnalogKind(Enum):
     '''
     Kinds of analogs (floats) measuring an atmospheric condition.
@@ -58375,6 +56878,7 @@ class AtmosphericAnalogKind(Enum):
     a moment in time.
     '''
 
+@stereotype(CIMStereotype.Enumeration)
 class AutomaticDispInstTypeCommitment(Enum):
     '''
     Commitment instruction types.
@@ -58406,6 +56910,7 @@ class AutomaticDispInstTypeCommitment(Enum):
     Start up instruction type
     '''
 
+@stereotype(CIMStereotype.Enumeration)
 class BatteryStateKind(Enum):
     '''
     The state of the battery unit.
@@ -58436,6 +56941,7 @@ class BatteryStateKind(Enum):
     Neither charging nor discharging, but able to do so.
     '''
 
+@stereotype(CIMStereotype.Enumeration)
 class BidType(Enum):
     '''
     For example:
@@ -58456,6 +56962,7 @@ class BidType(Enum):
     '''
     '''
 
+@stereotype(CIMStereotype.Enumeration)
 class BidTypeRMR(Enum):
     '''
     Bid self schedule type has two types as the required output of requirements
@@ -58472,6 +56979,7 @@ class BidTypeRMR(Enum):
     Qualified pre-dispatch bid self schedule type.
     '''
 
+@stereotype(CIMStereotype.Enumeration)
 class BillMediaKind(Enum):
     '''
     Kind of bill media.
@@ -58489,6 +56997,7 @@ class BillMediaKind(Enum):
     '''
     '''
 
+@stereotype(CIMStereotype.Enumeration)
 class BoilerControlMode(Enum):
     '''
     Boiler control mode.
@@ -58504,6 +57013,7 @@ class BoilerControlMode(Enum):
     Following.
     '''
 
+@stereotype(CIMStereotype.Enumeration)
 class BreakerApplicationKind(Enum):
     '''
     Classifications of network roles in which breakers can be deployed. The
@@ -58584,6 +57094,7 @@ class BreakerApplicationKind(Enum):
     Transmission tie line breaker.
     '''
 
+@stereotype(CIMStereotype.Enumeration)
 class BreakerConfiguration(Enum):
     '''
     Switching arrangement for bay.
@@ -58609,6 +57120,7 @@ class BreakerConfiguration(Enum):
     Single breaker.
     '''
 
+@stereotype(CIMStereotype.Enumeration)
 class BreakerFailureReasonKind(Enum):
     '''
     Reason for breaker failure.
@@ -58772,6 +57284,7 @@ class BreakerFailureReasonKind(Enum):
     Trip coil open shorted failure.
     '''
 
+@stereotype(CIMStereotype.Enumeration)
 class BusbarConfiguration(Enum):
     '''
     Busbar layout for bay.
@@ -58797,6 +57310,7 @@ class BusbarConfiguration(Enum):
     Single bus.
     '''
 
+@stereotype(CIMStereotype.Enumeration)
 class BushingInsulationKind(Enum):
     '''
     Insulation kind for bushings.
@@ -58832,6 +57346,7 @@ class BushingInsulationKind(Enum):
     Solid porcelain.
     '''
 
+@stereotype(CIMStereotype.Enumeration)
 class BushingInsulationPfTestKind(Enum):
     '''
     Kind of PF test for bushing insulation.
@@ -58847,6 +57362,7 @@ class BushingInsulationPfTestKind(Enum):
     Power factor tap-to-conductor.
     '''
 
+@stereotype(CIMStereotype.Enumeration)
 class CableConstructionKind(Enum):
     '''
     Kind of cable construction.
@@ -58887,6 +57403,7 @@ class CableConstructionKind(Enum):
     Stranded cable.
     '''
 
+@stereotype(CIMStereotype.Enumeration)
 class CableOuterJacketKind(Enum):
     '''
     Kind of cable outer jacket.
@@ -58927,6 +57444,7 @@ class CableOuterJacketKind(Enum):
     Semiconducting cable outer jacket.
     '''
 
+@stereotype(CIMStereotype.Enumeration)
 class CableShieldMaterialKind(Enum):
     '''
     Kind of cable shield material.
@@ -58957,6 +57475,7 @@ class CableShieldMaterialKind(Enum):
     Steel cable shield.
     '''
 
+@stereotype(CIMStereotype.Enumeration)
 class CalculationIntervalUnitKind(Enum):
     '''
     Units in which calculation interval period is defined.
@@ -59017,6 +57536,7 @@ class CalculationIntervalUnitKind(Enum):
     Period expressed in years.
     '''
 
+@stereotype(CIMStereotype.Enumeration)
 class CalculationKind(Enum):
     '''
     Categorisation of calculation operation that can be done to Measurement.
@@ -59042,6 +57562,7 @@ class CalculationKind(Enum):
     Summation operation over the input values (operands).
     '''
 
+@stereotype(CIMStereotype.Enumeration)
 class CalculationModeKind(Enum):
     '''
     The mode of the calculation (total, periodic, sliding).
@@ -59063,6 +57584,7 @@ class CalculationModeKind(Enum):
     Calculation is for total period.
     '''
 
+@stereotype(CIMStereotype.Enumeration)
 class CalculationTechniqueKind(Enum):
     '''
     Possible calculation techniques.
@@ -59088,6 +57610,7 @@ class CalculationTechniqueKind(Enum):
     Result is RMS value for period.
     '''
 
+@stereotype(CIMStereotype.Enumeration)
 class ChargeKind(Enum):
     '''
     Kind of charge.
@@ -59126,6 +57649,7 @@ class ChargeKind(Enum):
     TV tax, etc.
     '''
 
+@stereotype(CIMStereotype.Enumeration)
 class ClearanceActionKind(Enum):
     '''
     Type of clearance action.
@@ -59146,6 +57670,7 @@ class ClearanceActionKind(Enum):
     Update clearance.
     '''
 
+@stereotype(CIMStereotype.Enumeration)
 class CloudKind(Enum):
     '''
     Kind of cloud.
@@ -59199,6 +57724,7 @@ class CloudKind(Enum):
     '''
     '''
 
+@stereotype(CIMStereotype.Enumeration)
 class ComDirectionKind(Enum):
     '''
     Kind of communication direction.
@@ -59219,6 +57745,7 @@ class ComDirectionKind(Enum):
     Communication is to device.
     '''
 
+@stereotype(CIMStereotype.Enumeration)
 class ComTechnologyKind(Enum):
     '''
     Kind of communication technology.
@@ -59275,6 +57802,7 @@ class ComTechnologyKind(Enum):
     established by the ZigBee. A specific variant of 'rf'.
     '''
 
+@stereotype(CIMStereotype.Enumeration)
 class CommodityKind(Enum):
     '''
     Kind of commodity being measured.
@@ -59316,14 +57844,14 @@ class CommodityKind(Enum):
     It is possible for a meter to be outfitted with an external VT and/or CT.
     The meter might not be aware of these devices, and the display not compensate
     for their presence. Ultimately, when these scalars are applied, the value
-    that represents the service value is called the “primary metered” value.
-    The “index” in sub-category 3 mirrors those of sub-category 0.
+    that represents the service value is called the �primary metered� value.
+    The �index� in sub-category 3 mirrors those of sub-category 0.
     '''
 
     electricitySecondaryMetered = 'electricitySecondaryMetered'
     '''
     All types of metered quantities. This type of reading comes from the meter
-    and represents a “secondary” metered value.
+    and represents a �secondary� metered value.
     '''
 
     hch = 'hch'
@@ -59365,7 +57893,7 @@ class CommodityKind(Enum):
 
     nonpotableWater = 'nonpotableWater'
     '''
-    Reclaimed water – possibly used for irrigation but not sufficiently treated
+    Reclaimed water � possibly used for irrigation but not sufficiently treated
     to be considered safe for drinking.
     '''
 
@@ -59419,6 +57947,7 @@ class CommodityKind(Enum):
     (Sewerage)
     '''
 
+@stereotype(CIMStereotype.Enumeration)
 class ConditionFactorKind(Enum):
     '''
     Kind of condition factor.
@@ -59444,6 +57973,7 @@ class ConditionFactorKind(Enum):
     '''
     '''
 
+@stereotype(CIMStereotype.Enumeration)
 class ContingencyEquipmentStatusKind(Enum):
     '''
     Indicates the state which the contingency equipment is to be in when the
@@ -59460,6 +57990,7 @@ class ContingencyEquipmentStatusKind(Enum):
     The equipment is to be taken out of service.
     '''
 
+@stereotype(CIMStereotype.Enumeration)
 class ControlAreaTypeKind(Enum):
     '''
     The type of control area.
@@ -59480,6 +58011,7 @@ class ControlAreaTypeKind(Enum):
     Used for interchange specification or control.
     '''
 
+@stereotype(CIMStereotype.Enumeration)
 class CoolantType(Enum):
     '''
     Method of cooling a machine.
@@ -59500,6 +58032,7 @@ class CoolantType(Enum):
     Water.
     '''
 
+@stereotype(CIMStereotype.Enumeration)
 class CoolingKind(Enum):
     '''
     Kind of cooling.
@@ -59521,6 +58054,7 @@ class CoolingKind(Enum):
     '''
     '''
 
+@stereotype(CIMStereotype.Enumeration)
 class CorporateStandardKind(Enum):
     '''
     Kind of corporate standard.
@@ -59546,6 +58080,7 @@ class CorporateStandardKind(Enum):
     Asset model usage is under evaluation.
     '''
 
+@stereotype(CIMStereotype.Enumeration)
 class CoverageCodeKind(Enum):
     '''
     Kinds of weather condition coverage.
@@ -59595,6 +58130,7 @@ class CoverageCodeKind(Enum):
     '''
     '''
 
+@stereotype(CIMStereotype.Enumeration)
 class CrewStatusKind(Enum):
     '''
     Defines the current status of the Crew - assigned, arrived, etc.
@@ -59626,6 +58162,7 @@ class CrewStatusKind(Enum):
     devices may not be energized at this time.
     '''
 
+@stereotype(CIMStereotype.Enumeration)
 class CsOperatingModeKind(Enum):
     '''
     Operating mode for HVDC line operating as Current Source Converter.
@@ -59641,6 +58178,7 @@ class CsOperatingModeKind(Enum):
     Operating as rectifier, which is the power sending end.
     '''
 
+@stereotype(CIMStereotype.Enumeration)
 class CsPpccControlKind(Enum):
     '''
     Active power control modes for HVDC line operating as Current Source Converter.
@@ -59662,6 +58200,7 @@ class CsPpccControlKind(Enum):
     Control is DC voltage with target value provided by ACDCConverter.targetUdc.
     '''
 
+@stereotype(CIMStereotype.Enumeration)
 class Currency(Enum):
     '''
     Monetary currencies. ISO 4217 standard including 3-character currency code.
@@ -60009,7 +58548,7 @@ class Currency(Enum):
 
     ISK = 'ISK'
     '''
-    Icelandic króna.
+    Icelandic kr�na.
     '''
 
     JMD = 'JMD'
@@ -60249,7 +58788,7 @@ class Currency(Enum):
 
     PYG = 'PYG'
     '''
-    Paraguayan guaraní.
+    Paraguayan guaran�.
     '''
 
     QAR = 'QAR'
@@ -60329,7 +58868,7 @@ class Currency(Enum):
 
     STD = 'STD'
     '''
-    São Tomé and Príncipe dobra.
+    S�o Tom� and Pr�ncipe dobra.
     '''
 
     SYP = 'SYP'
@@ -60414,7 +58953,7 @@ class Currency(Enum):
 
     VEF = 'VEF'
     '''
-    Venezuelan bolívar fuerte.
+    Venezuelan bol�var fuerte.
     '''
 
     VND = 'VND'
@@ -60472,6 +59011,7 @@ class Currency(Enum):
     Zimbabwe dollar.
     '''
 
+@stereotype(CIMStereotype.Enumeration)
 class CurveStyle(Enum):
     '''
     Style or shape of curve.
@@ -60489,6 +59029,7 @@ class CurveStyle(Enum):
     known as linear interpolation.
     '''
 
+@stereotype(CIMStereotype.Enumeration)
 class CustomerBillingKind(Enum):
     '''
     Kind of customer billing.
@@ -60513,6 +59054,7 @@ class CustomerBillingKind(Enum):
     Separate bills from ESS and UDC.
     '''
 
+@stereotype(CIMStereotype.Enumeration)
 class CustomerKind(Enum):
     '''
     Kind of customer.
@@ -60593,6 +59135,7 @@ class CustomerKind(Enum):
     Wind machine customer.
     '''
 
+@stereotype(CIMStereotype.Enumeration)
 class DCConverterOperatingModeKind(Enum):
     '''
     The operating mode of an HVDC bipole.
@@ -60613,6 +59156,7 @@ class DCConverterOperatingModeKind(Enum):
     Monopolar operation with metallic return.
     '''
 
+@stereotype(CIMStereotype.Enumeration)
 class DCPolarityKind(Enum):
     '''
     Polarity for DC circuits.
@@ -60637,6 +59181,7 @@ class DCPolarityKind(Enum):
     voltage relative the midpoint or negative terminal.
     '''
 
+@stereotype(CIMStereotype.Enumeration)
 class DERParameterKind(Enum):
     '''
     Specifies the DER parameters related to the unit of power, ramp rate and
@@ -60705,6 +59250,7 @@ class DERParameterKind(Enum):
     Volts.
     '''
 
+@stereotype(CIMStereotype.Enumeration)
 class DERUnitSymbol(Enum):
     '''
     The units defined for usage in DER related contexts. This class is a subset
@@ -60723,7 +59269,7 @@ class DERUnitSymbol(Enum):
 
     As = 'As'
     '''
-    Ampere seconds (A·s).
+    Ampere seconds (A�s).
     '''
 
     Btu = 'Btu'
@@ -60763,7 +59309,7 @@ class DERUnitSymbol(Enum):
 
     VAr = 'VAr'
     '''
-    Reactive power in Volt Ampere reactive. The “reactive” or “imaginary” component
+    Reactive power in Volt Ampere reactive. The �reactive� or �imaginary� component
     of electrical power (VIsin(phi)). (See also real power and apparent power).
     Note: Different meter designs use different methods to arrive at their
     results. Some meters may compute reactive power as an arithmetic value,
@@ -60808,7 +59354,7 @@ class DERUnitSymbol(Enum):
     W = 'W'
     '''
     Real power in Watt (J/s). Electrical power may have real and reactive components.
-    The real portion of electrical power (I²R or VIcos(phi)), is expressed
+    The real portion of electrical power (I�R or VIcos(phi)), is expressed
     in Watts. (See also apparent power and reactive power.)
     '''
 
@@ -60835,10 +59381,10 @@ class DERUnitSymbol(Enum):
     degC = 'degC'
     '''
     Relative temperature in degrees Celsius.
-    In the SI unit system the symbol is ºC. Electric charge is measured in
+    In the SI unit system the symbol is �C. Electric charge is measured in
     coulomb that has the unit symbol C. To distinguish degree Celsius form
-    coulomb the symbol used in the UML is degC. Reason for not using ºC is
-    the special character º is difficult to manage in software.
+    coulomb the symbol used in the UML is degC. Reason for not using �C is
+    the special character � is difficult to manage in software.
     '''
 
     h = 'h'
@@ -60881,6 +59427,7 @@ class DERUnitSymbol(Enum):
     Energy, Therm.
     '''
 
+@stereotype(CIMStereotype.Enumeration)
 class DemographicKind(Enum):
     '''
     Demographic kind of a land property.
@@ -60898,6 +59445,7 @@ class DemographicKind(Enum):
     '''
     '''
 
+@stereotype(CIMStereotype.Enumeration)
 class DependencyKind(Enum):
     '''
     '''
@@ -60910,6 +59458,7 @@ class DependencyKind(Enum):
     '''
     '''
 
+@stereotype(CIMStereotype.Enumeration)
 class DeploymentStateKind(Enum):
     '''
     Possible states of asset deployment.
@@ -60940,6 +59489,7 @@ class DeploymentStateKind(Enum):
     Asset removed from deployment location.
     '''
 
+@stereotype(CIMStereotype.Enumeration)
 class DesignKind(Enum):
     '''
     Kind of design.
@@ -60957,6 +59507,7 @@ class DesignKind(Enum):
     '''
     '''
 
+@stereotype(CIMStereotype.Enumeration)
 class ERTConfidenceKind(Enum):
     '''
     The estimated restoration time (ERT) is the amount of time estimated to
@@ -60976,6 +59527,7 @@ class ERTConfidenceKind(Enum):
     there is a low confidence that the ERT will be accomplished.
     '''
 
+@stereotype(CIMStereotype.Enumeration)
 class EmissionType(Enum):
     '''
     The type of emission.
@@ -61011,6 +59563,7 @@ class EmissionType(Enum):
     Sulfur dioxide.
     '''
 
+@stereotype(CIMStereotype.Enumeration)
 class EmissionValueSource(Enum):
     '''
     The source of the emission value.
@@ -61026,6 +59579,7 @@ class EmissionValueSource(Enum):
     Measured.
     '''
 
+@stereotype(CIMStereotype.Enumeration)
 class EndDeviceFunctionKind(Enum):
     '''
     Kind of end device function.
@@ -61083,6 +59637,7 @@ class EndDeviceFunctionKind(Enum):
     Water metering.
     '''
 
+@stereotype(CIMStereotype.Enumeration)
 class EnergyTransactionType(Enum):
     '''
     Defines the state of a transaction.
@@ -61103,6 +59658,7 @@ class EnergyTransactionType(Enum):
     Study
     '''
 
+@stereotype(CIMStereotype.Enumeration)
 class EnvironmentalDiscreteKind(Enum):
     '''
     Discrete (integer) measuring an environmental condition.
@@ -61113,6 +59669,7 @@ class EnvironmentalDiscreteKind(Enum):
     Cloud cover in octa.
     '''
 
+@stereotype(CIMStereotype.Enumeration)
 class ErpAccountKind(Enum):
     '''
     Kind of ERP account.
@@ -61134,6 +59691,7 @@ class ErpAccountKind(Enum):
     '''
     '''
 
+@stereotype(CIMStereotype.Enumeration)
 class ErpInvoiceKind(Enum):
     '''
     Kind of ERP invoice.
@@ -61147,6 +59705,7 @@ class ErpInvoiceKind(Enum):
     '''
     '''
 
+@stereotype(CIMStereotype.Enumeration)
 class ErpInvoiceLineItemKind(Enum):
     '''
     Kind of invoice line item.
@@ -61164,6 +59723,7 @@ class ErpInvoiceLineItemKind(Enum):
     '''
     '''
 
+@stereotype(CIMStereotype.Enumeration)
 class ExecutionType(Enum):
     '''
     Execution types of Market Runs.
@@ -61189,6 +59749,7 @@ class ExecutionType(Enum):
     Real Time Pre-dispatch
     '''
 
+@stereotype(CIMStereotype.Enumeration)
 class FACTSDeviceKind(Enum):
     '''
     Kind of FACTS device.
@@ -61234,6 +59795,7 @@ class FACTSDeviceKind(Enum):
     Unified power flow controller.
     '''
 
+@stereotype(CIMStereotype.Enumeration)
 class FScale(Enum):
     '''
     Fujita scale (referred to as EF-scale starting in 2007) for tornado damage.
@@ -61279,6 +59841,7 @@ class FScale(Enum):
     65-85 mph 3-second gust.
     '''
 
+@stereotype(CIMStereotype.Enumeration)
 class FacilityKind(Enum):
     '''
     Types of facilities at which an asset can be deployed.
@@ -61319,6 +59882,7 @@ class FacilityKind(Enum):
     Transmission substation.
     '''
 
+@stereotype(CIMStereotype.Enumeration)
 class FailureIsolationMethodKind(Enum):
     '''
     How the failure has been isolated.
@@ -61349,6 +59913,7 @@ class FailureIsolationMethodKind(Enum):
     Isolated by other action.
     '''
 
+@stereotype(CIMStereotype.Enumeration)
 class FlowDirectionKind(Enum):
     '''
     Kind of flow direction for reading/measured values proper to some commodities
@@ -61371,17 +59936,17 @@ class FlowDirectionKind(Enum):
     '''
     Typically used to describe that a power factor is lagging the reference
     value.
-    Note 1: When used to describe VA, “lagging” describes a form of measurement
+    Note 1: When used to describe VA, �lagging� describes a form of measurement
     where reactive power is considered in all four quadrants, but real power
     is considered only in quadrants I and IV.
-    Note 2: When used to describe power factor, the term “Lagging” implies
-    that the PF is negative. The term “lagging” in this case takes the place
+    Note 2: When used to describe power factor, the term �Lagging� implies
+    that the PF is negative. The term �lagging� in this case takes the place
     of the negative sign. If a signed PF value is to be passed by the data
     producer, then the direction of flow enumeration zero (none) should be
     used in order to avoid the possibility of creating an expression that employs
     a double negative. The data consumer should be able to tell from the sign
     of the data if the PF is leading or lagging. This principle is analogous
-    to the concept that “Reverse” energy is an implied negative value, and
+    to the concept that �Reverse� energy is an implied negative value, and
     to publish a negative reverse value would be ambiguous.
     Note 3: Lagging power factors typically indicate inductive loading.
     '''
@@ -61396,8 +59961,8 @@ class FlowDirectionKind(Enum):
     net = 'net'
     '''
     |Forward| - |Reverse|, See 61968-2.
-    Note: In some systems, the value passed as a “net” value could become negative.
-    In other systems the value passed as a “net” value is always a positive
+    Note: In some systems, the value passed as a �net� value could become negative.
+    In other systems the value passed as a �net� value is always a positive
     number, and rolls-over and rolls-under as needed.
     '''
 
@@ -61413,7 +59978,7 @@ class FlowDirectionKind(Enum):
 
     q1plusQ2 = 'q1plusQ2'
     '''
-    Reactive positive quadrants. (The term “lagging” is preferred.)
+    Reactive positive quadrants. (The term �lagging� is preferred.)
     '''
 
     q1plusQ3 = 'q1plusQ3'
@@ -61448,7 +60013,7 @@ class FlowDirectionKind(Enum):
 
     q3plusQ4 = 'q3plusQ4'
     '''
-    Reactive negative quadrants. (The term “leading” is preferred.)
+    Reactive negative quadrants. (The term �leading� is preferred.)
     '''
 
     quadrant1 = 'quadrant1'
@@ -61483,7 +60048,7 @@ class FlowDirectionKind(Enum):
     the sum of the phase energies is less than zero:
     <img src="HTS_1.PNG" width="209" height="16" border="0" alt="graphic"/>
     Note: The value passed as a reverse value is always a positive value. It
-    is understood by the label “reverse” that it represents negative flow.
+    is understood by the label �reverse� that it represents negative flow.
     '''
 
     total = 'total'
@@ -61501,11 +60066,12 @@ class FlowDirectionKind(Enum):
     when the sum of the absolute values of the phase energies is greater than
     zero:
     <img src="HTS_1.PNG" width="234" height="16" border="0" alt="graphic"/>
-    In single phase metering, the formulas for “Total” and “Total by phase”
+    In single phase metering, the formulas for �Total� and �Total by phase�
     collapse to the same expression. For communication purposes however, the
-    “Total” enumeration should be used with single phase meter data.
+    �Total� enumeration should be used with single phase meter data.
     '''
 
+@stereotype(CIMStereotype.Enumeration)
 class FuelType(Enum):
     '''
     Type of fuel.
@@ -61563,6 +60129,7 @@ class FuelType(Enum):
     Peat.
     '''
 
+@stereotype(CIMStereotype.Enumeration)
 class GeneratorControlMode(Enum):
     '''
     Unit control modes.
@@ -61578,6 +60145,7 @@ class GeneratorControlMode(Enum):
     Setpoint control mode.
     '''
 
+@stereotype(CIMStereotype.Enumeration)
 class GeneratorControlSource(Enum):
     '''
     The source of controls for a generating unit.
@@ -61603,6 +60171,7 @@ class GeneratorControlSource(Enum):
     Not available.
     '''
 
+@stereotype(CIMStereotype.Enumeration)
 class GeosphericAnalogKind(Enum):
     '''
     Kinds of analogs (floats) measuring a geospheric condition.
@@ -61633,6 +60202,7 @@ class GeosphericAnalogKind(Enum):
     '''
     '''
 
+@stereotype(CIMStereotype.Enumeration)
 class HydroEnergyConversionKind(Enum):
     '''
     Specifies the capability of the hydro generating unit to convert energy
@@ -61649,6 +60219,7 @@ class HydroEnergyConversionKind(Enum):
     Able to both generate power and pump water for energy storage.
     '''
 
+@stereotype(CIMStereotype.Enumeration)
 class HydroPlantStorageKind(Enum):
     '''
     The type of hydro power plant.
@@ -61669,6 +60240,7 @@ class HydroPlantStorageKind(Enum):
     Storage.
     '''
 
+@stereotype(CIMStereotype.Enumeration)
 class HydroTurbineKind(Enum):
     '''
     Type of turbine.
@@ -61689,6 +60261,7 @@ class HydroTurbineKind(Enum):
     Pelton.
     '''
 
+@stereotype(CIMStereotype.Enumeration)
 class HydrosphericAnalogKind(Enum):
     '''
     Kinds of analogs (floats) measuring a hydrospheric condition.
@@ -61714,6 +60287,7 @@ class HydrosphericAnalogKind(Enum):
     '''
     '''
 
+@stereotype(CIMStereotype.Enumeration)
 class ICCPAccessPrivilegeKind(Enum):
     '''
     Provides access privilege information regarding an ICCP point.
@@ -61730,6 +60304,7 @@ class ICCPAccessPrivilegeKind(Enum):
     the value of the ICCP Point.
     '''
 
+@stereotype(CIMStereotype.Enumeration)
 class ICCPPointKind(Enum):
     '''
     The kind of ICCP point that is to be conveyed.
@@ -61765,6 +60340,7 @@ class ICCPPointKind(Enum):
     Indicates that an ICCP state supplemental type is to be conveyed.
     '''
 
+@stereotype(CIMStereotype.Enumeration)
 class ICCPQualityKind(Enum):
     '''
     Indicates the type of quality information that is to be exchanged. For
@@ -61796,6 +60372,7 @@ class ICCPQualityKind(Enum):
     Indicates that only quality is to be provided.
     '''
 
+@stereotype(CIMStereotype.Enumeration)
 class ICCPScopeKind(Enum):
     '''
     Specifies the control centre scope.
@@ -61803,15 +60380,16 @@ class ICCPScopeKind(Enum):
 
     iCC = 'iCC'
     '''
-    Inter-Control Centre scope – available for exchange between the control
+    Inter-Control Centre scope � available for exchange between the control
     centres in the bilateral table.
     '''
 
     vCC = 'vCC'
     '''
-    Virtual Control Centre Scope – globally available.
+    Virtual Control Centre Scope � globally available.
     '''
 
+@stereotype(CIMStereotype.Enumeration)
 class IPAddressKind(Enum):
     '''
     Indicates if the addressing of the IPAccessPoint, gateway, and subnet are
@@ -61828,6 +60406,7 @@ class IPAddressKind(Enum):
     Indicates that an IPv6 dotted decimal is in use.
     '''
 
+@stereotype(CIMStereotype.Enumeration)
 class InUseStateKind(Enum):
     '''
     Possible 'in use' states that an asset can be in.
@@ -61848,6 +60427,7 @@ class InUseStateKind(Enum):
     Asset is ready to be put into use.
     '''
 
+@stereotype(CIMStereotype.Enumeration)
 class IntensityCodeKind(Enum):
     '''
     Kinds of weather condition intensity.
@@ -61869,6 +60449,7 @@ class IntensityCodeKind(Enum):
     '''
     '''
 
+@stereotype(CIMStereotype.Enumeration)
 class InterTieDirection(Enum):
     '''
     Direction of an intertie.
@@ -61884,6 +60465,7 @@ class InterTieDirection(Enum):
     Import.
     '''
 
+@stereotype(CIMStereotype.Enumeration)
 class InterruptingMediumKind(Enum):
     '''
     Kinds of interrupting mediums.
@@ -61924,6 +60506,7 @@ class InterruptingMediumKind(Enum):
     Vacuum.
     '''
 
+@stereotype(CIMStereotype.Enumeration)
 class JointConfigurationKind(Enum):
     '''
     Kind of configuration for joints.
@@ -61945,6 +60528,7 @@ class JointConfigurationKind(Enum):
     '''
     '''
 
+@stereotype(CIMStereotype.Enumeration)
 class JointFillKind(Enum):
     '''
     Kind of fill for Joint.
@@ -61990,6 +60574,7 @@ class JointFillKind(Enum):
     '''
     '''
 
+@stereotype(CIMStereotype.Enumeration)
 class LandPropertyKind(Enum):
     '''
     Kind of (land) property.
@@ -62032,6 +60617,7 @@ class LandPropertyKind(Enum):
     Transmission network switchyard.
     '''
 
+@stereotype(CIMStereotype.Enumeration)
 class LoadForecastType(Enum):
     '''
     Load forecast zone types.
@@ -62047,6 +60633,7 @@ class LoadForecastType(Enum):
     Metered sub system zone.
     '''
 
+@stereotype(CIMStereotype.Enumeration)
 class LocationKind(Enum):
     '''
     The nature of the location being defined for an environmental entity. Possible
@@ -62075,6 +60662,7 @@ class LocationKind(Enum):
     Secondary area to which an environmental alert applies.
     '''
 
+@stereotype(CIMStereotype.Enumeration)
 class MQSCHGType(Enum):
     '''
     For example:
@@ -62090,6 +60678,7 @@ class MQSCHGType(Enum):
     '''
     '''
 
+@stereotype(CIMStereotype.Enumeration)
 class MQSInstructionSource(Enum):
     '''
     Valid values, for example:
@@ -62105,6 +60694,7 @@ class MQSInstructionSource(Enum):
     '''
     '''
 
+@stereotype(CIMStereotype.Enumeration)
 class MacroPeriodKind(Enum):
     '''
     Kind of macro period for calculations on read / measured values.
@@ -62156,6 +60746,7 @@ class MacroPeriodKind(Enum):
     week, it specifies the period from the start of the week until "now."
     '''
 
+@stereotype(CIMStereotype.Enumeration)
 class MarketEventStatusKind(Enum):
     '''
     Market event status types.
@@ -62185,6 +60776,7 @@ class MarketEventStatusKind(Enum):
     Planned (sysdate is less than planned start time)
     '''
 
+@stereotype(CIMStereotype.Enumeration)
 class MarketProductSelfSchedType(Enum):
     '''
     Market product self schedule bid types.
@@ -62235,6 +60827,7 @@ class MarketProductSelfSchedType(Enum):
     Transmission Ownership Right.
     '''
 
+@stereotype(CIMStereotype.Enumeration)
 class MarketProductType(Enum):
     '''
     For example:
@@ -62287,6 +60880,7 @@ class MarketProductType(Enum):
     spinning reserve
     '''
 
+@stereotype(CIMStereotype.Enumeration)
 class MarketType(Enum):
     '''
     Market type.
@@ -62312,6 +60906,7 @@ class MarketType(Enum):
     Residual Unit Commitment.
     '''
 
+@stereotype(CIMStereotype.Enumeration)
 class MeasurementKind(Enum):
     '''
     Kind of read / measured value.
@@ -62365,17 +60960,17 @@ class MeasurementKind(Enum):
 
     billCarryover = 'billCarryover'
     '''
-    Customer’s bill for the (Currency)
+    Customer�s bill for the (Currency)
     '''
 
     billLastPeriod = 'billLastPeriod'
     '''
-    Customer’s bill for the previous billing period (Currency)
+    Customer�s bill for the previous billing period (Currency)
     '''
 
     billToDate = 'billToDate'
     '''
-    Customer’s bill, as known thus far within the present billing period (Currency)
+    Customer�s bill, as known thus far within the present billing period (Currency)
     '''
 
     broadcastAddress = 'broadcastAddress'
@@ -62463,7 +61058,7 @@ class MeasurementKind(Enum):
 
     deviceClass = 'deviceClass'
     '''
-    A unique identifier for the Endpoint’s configuration
+    A unique identifier for the Endpoint�s configuration
     '''
 
     diagnostic = 'diagnostic'
@@ -62485,7 +61080,7 @@ class MeasurementKind(Enum):
     '''
     A measurement in which a V<sup>2</sup> I<sup>2</sup> term has both real
     and reactive components removed leaving only distortion. For example, distortion
-    VAh = Sqrt( (V<sup>2</sup>h)(I<sup>2</sup>h) – (Wh)<sup>2</sup> – (VArh)<sup>2</sup>)
+    VAh = Sqrt( (V<sup>2</sup>h)(I<sup>2</sup>h) � (Wh)<sup>2</sup> � (VArh)<sup>2</sup>)
     '''
 
     electronicSerialNumber = 'electronicSerialNumber'
@@ -62505,7 +61100,7 @@ class MeasurementKind(Enum):
 
     endDeviceID = 'endDeviceID'
     '''
-    A unique identifier of the endDevice – the device providing measurements
+    A unique identifier of the endDevice � the device providing measurements
     or under control of the network
     '''
 
@@ -62543,7 +61138,7 @@ class MeasurementKind(Enum):
 
     fund = 'fund'
     '''
-    Duplicate with “currency”
+    Duplicate with �currency�
     '''
 
     groupAddressType1 = 'groupAddressType1'
@@ -62682,7 +61277,7 @@ class MeasurementKind(Enum):
 
     loss = 'loss'
     '''
-    A quantity lost due to “technical” reasons (such as line loss) or “non-technical”
+    A quantity lost due to �technical� reasons (such as line loss) or �non-technical�
     reasons (such as theft.)
     '''
 
@@ -62867,8 +61462,8 @@ class MeasurementKind(Enum):
 
     switchPosition = 'switchPosition'
     '''
-    A physical or logical switch position status which includes “opened” and
-    “closed”, but for some products may also include “armed,” or other states
+    A physical or logical switch position status which includes �opened� and
+    �closed�, but for some products may also include �armed,� or other states
     that indicate a temporary state due to some condition.
     '''
 
@@ -62977,7 +61572,7 @@ class MeasurementKind(Enum):
 
     watchdogTimeout = 'watchdogTimeout'
     '''
-    A reset triggered by a hardware “watchdog” circuit
+    A reset triggered by a hardware �watchdog� circuit
     '''
 
     zeroFlowDuration = 'zeroFlowDuration'
@@ -62991,6 +61586,7 @@ class MeasurementKind(Enum):
     The zero sequence current is the vector sum of the phase currents
     '''
 
+@stereotype(CIMStereotype.Enumeration)
 class MeasurementKindOld(Enum):
     '''
     Kind of read / measured value.
@@ -63044,17 +61640,17 @@ class MeasurementKindOld(Enum):
 
     billCarryover = 'billCarryover'
     '''
-    Customer’s bill for the (Currency)
+    Customer�s bill for the (Currency)
     '''
 
     billLastPeriod = 'billLastPeriod'
     '''
-    Customer’s bill for the previous billing period (Currency)
+    Customer�s bill for the previous billing period (Currency)
     '''
 
     billToDate = 'billToDate'
     '''
-    Customer’s bill, as known thus far within the present billing period (Currency)
+    Customer�s bill, as known thus far within the present billing period (Currency)
     '''
 
     broadcastAddress = 'broadcastAddress'
@@ -63142,7 +61738,7 @@ class MeasurementKindOld(Enum):
 
     deviceClass = 'deviceClass'
     '''
-    A unique identifier for the Endpoint’s configuration
+    A unique identifier for the Endpoint�s configuration
     '''
 
     diagnostic = 'diagnostic'
@@ -63164,7 +61760,7 @@ class MeasurementKindOld(Enum):
     '''
     A measurement in which a V<sup>2</sup> I<sup>2</sup> term has both real
     and reactive components removed leaving only distortion. For example, distortion
-    VAh = Sqrt( (V<sup>2</sup>h)(I<sup>2</sup>h) – (Wh)<sup>2</sup> – (VArh)<sup>2</sup>)
+    VAh = Sqrt( (V<sup>2</sup>h)(I<sup>2</sup>h) � (Wh)<sup>2</sup> � (VArh)<sup>2</sup>)
     '''
 
     electronicSerialNumber = 'electronicSerialNumber'
@@ -63184,7 +61780,7 @@ class MeasurementKindOld(Enum):
 
     endDeviceID = 'endDeviceID'
     '''
-    A unique identifier of the endDevice – the device providing measurements
+    A unique identifier of the endDevice � the device providing measurements
     or under control of the network
     '''
 
@@ -63222,7 +61818,7 @@ class MeasurementKindOld(Enum):
 
     fund = 'fund'
     '''
-    Duplicate with “currency”
+    Duplicate with �currency�
     '''
 
     groupAddressType1 = 'groupAddressType1'
@@ -63361,7 +61957,7 @@ class MeasurementKindOld(Enum):
 
     loss = 'loss'
     '''
-    A quantity lost due to “technical” reasons (such as line loss) or “non-technical”
+    A quantity lost due to �technical� reasons (such as line loss) or �non-technical�
     reasons (such as theft.)
     '''
 
@@ -63546,8 +62142,8 @@ class MeasurementKindOld(Enum):
 
     switchPosition = 'switchPosition'
     '''
-    A physical or logical switch position status which includes “opened” and
-    “closed”, but for some products may also include “armed,” or other states
+    A physical or logical switch position status which includes �opened� and
+    �closed�, but for some products may also include �armed,� or other states
     that indicate a temporary state due to some condition.
     '''
 
@@ -63656,7 +62252,7 @@ class MeasurementKindOld(Enum):
 
     watchdogTimeout = 'watchdogTimeout'
     '''
-    A reset triggered by a hardware “watchdog” circuit
+    A reset triggered by a hardware �watchdog� circuit
     '''
 
     zeroFlowDuration = 'zeroFlowDuration'
@@ -63670,6 +62266,7 @@ class MeasurementKindOld(Enum):
     The zero sequence current is the vector sum of the phase currents
     '''
 
+@stereotype(CIMStereotype.Enumeration)
 class MeasuringPeriodKind(Enum):
     '''
     Kind of period for reading / measuring values.
@@ -63880,6 +62477,7 @@ class MeasuringPeriodKind(Enum):
     2-minute
     '''
 
+@stereotype(CIMStereotype.Enumeration)
 class MediumKind(Enum):
     '''
     Kind of medium.
@@ -63925,6 +62523,7 @@ class MediumKind(Enum):
     Medium is solid.
     '''
 
+@stereotype(CIMStereotype.Enumeration)
 class MeterMultiplierKind(Enum):
     '''
     Kind of meter multiplier.
@@ -63966,6 +62565,7 @@ class MeterMultiplierKind(Enum):
     Product of the CT ratio and PT ratio.
     '''
 
+@stereotype(CIMStereotype.Enumeration)
 class MktAccountKind(Enum):
     '''
     Kind of Market account.
@@ -63987,6 +62587,7 @@ class MktAccountKind(Enum):
     '''
     '''
 
+@stereotype(CIMStereotype.Enumeration)
 class MktBillMediaKind(Enum):
     '''
     Kind of bill media.
@@ -64004,6 +62605,7 @@ class MktBillMediaKind(Enum):
     '''
     '''
 
+@stereotype(CIMStereotype.Enumeration)
 class MktInvoiceLineItemKind(Enum):
     '''
     Kind of invoice line item.
@@ -64021,6 +62623,7 @@ class MktInvoiceLineItemKind(Enum):
     '''
     '''
 
+@stereotype(CIMStereotype.Enumeration)
 class NotificationTriggerKind(Enum):
     '''
     Kind of trigger to notify customer.
@@ -64051,6 +62654,7 @@ class NotificationTriggerKind(Enum):
     Notify customer when power has been restored.
     '''
 
+@stereotype(CIMStereotype.Enumeration)
 class OilSampleLocation(Enum):
     '''
     Locations where oil can be sampled.
@@ -64071,6 +62675,7 @@ class OilSampleLocation(Enum):
     Sample from other location.
     '''
 
+@stereotype(CIMStereotype.Enumeration)
 class OilTemperatureSource(Enum):
     '''
     Sources for oil temperature.
@@ -64091,6 +62696,7 @@ class OilTemperatureSource(Enum):
     Oil temperature from top oil temperature gauge.
     '''
 
+@stereotype(CIMStereotype.Enumeration)
 class OnOff(Enum):
     '''
     ON
@@ -64105,6 +62711,7 @@ class OnOff(Enum):
     '''
     '''
 
+@stereotype(CIMStereotype.Enumeration)
 class OperatingMechanismKind(Enum):
     '''
     Kinds of operating mechanisms.
@@ -64155,6 +62762,7 @@ class OperatingMechanismKind(Enum):
     Spring motor mechanism.
     '''
 
+@stereotype(CIMStereotype.Enumeration)
 class OperationalLimitDirectionKind(Enum):
     '''
     The direction attribute describes the side of a limit that is a violation.
@@ -64178,6 +62786,7 @@ class OperationalLimitDirectionKind(Enum):
     to a terminal flow, the positive direction is into the terminal.
     '''
 
+@stereotype(CIMStereotype.Enumeration)
 class OrientationKind(Enum):
     '''
     The orientation of the coordinate system with respect to top, left, and
@@ -64199,6 +62808,7 @@ class OrientationKind(Enum):
     also known as a right hand orientation.
     '''
 
+@stereotype(CIMStereotype.Enumeration)
 class OutageCauseKind(Enum):
     '''
     This enumeration describes the primary cause of the outage - planned, unplanned,
@@ -64236,6 +62846,7 @@ class OutageCauseKind(Enum):
     The outage is caused by a tree down
     '''
 
+@stereotype(CIMStereotype.Enumeration)
 class OutageStatusKind(Enum):
     '''
     This defines if the outage have been predicted or confirmed
@@ -64269,6 +62880,7 @@ class OutageStatusKind(Enum):
     All usage points associated with the outage have been restored
     '''
 
+@stereotype(CIMStereotype.Enumeration)
 class PSREventKind(Enum):
     '''
     Kind of power system resource (PSR) event.
@@ -64309,6 +62921,7 @@ class PSREventKind(Enum):
     Unknown power system resource state change.
     '''
 
+@stereotype(CIMStereotype.Enumeration)
 class ParticipationCategoryMPM(Enum):
     '''
     For example:
@@ -64334,6 +62947,7 @@ class ParticipationCategoryMPM(Enum):
     '''
     '''
 
+@stereotype(CIMStereotype.Enumeration)
 class PetersenCoilModeKind(Enum):
     '''
     The mode of operation for a Petersen coil.
@@ -64354,6 +62968,7 @@ class PetersenCoilModeKind(Enum):
     Manual positioning.
     '''
 
+@stereotype(CIMStereotype.Enumeration)
 class PhaseCode(Enum):
     '''
     An unordered enumeration of phase identifiers. Allows designation of phases
@@ -64501,6 +63116,7 @@ class PhaseCode(Enum):
     Secondary phase 2 and neutral.
     '''
 
+@stereotype(CIMStereotype.Enumeration)
 class PhaseConnectedFaultKind(Enum):
     '''
     The type of fault connection among phases.
@@ -64540,6 +63156,7 @@ class PhaseConnectedFaultKind(Enum):
     specified in the fault and ground.
     '''
 
+@stereotype(CIMStereotype.Enumeration)
 class PhaseShuntConnectionKind(Enum):
     '''
     The configuration of phase connections for a single terminal device such
@@ -64573,6 +63190,7 @@ class PhaseShuntConnectionKind(Enum):
     Wye, with neutral brought out for grounding.
     '''
 
+@stereotype(CIMStereotype.Enumeration)
 class PoleBaseKind(Enum):
     '''
     Kind of base for poles.
@@ -64598,6 +63216,7 @@ class PoleBaseKind(Enum):
     '''
     '''
 
+@stereotype(CIMStereotype.Enumeration)
 class PolePreservativeKind(Enum):
     '''
     Preservative kind for poles.
@@ -64631,6 +63250,7 @@ class PolePreservativeKind(Enum):
     '''
     '''
 
+@stereotype(CIMStereotype.Enumeration)
 class PoleTreatmentKind(Enum):
     '''
     Kind of treatment for poles.
@@ -64668,6 +63288,7 @@ class PoleTreatmentKind(Enum):
     '''
     '''
 
+@stereotype(CIMStereotype.Enumeration)
 class PotentialTransformerKind(Enum):
     '''
     The construction kind of the potential transformer.
@@ -64685,6 +63306,7 @@ class PotentialTransformerKind(Enum):
     voltage.
     '''
 
+@stereotype(CIMStereotype.Enumeration)
 class ProcedureKind(Enum):
     '''
     Kind of procedure.
@@ -64715,6 +63337,7 @@ class ProcedureKind(Enum):
     Test procedure.
     '''
 
+@stereotype(CIMStereotype.Enumeration)
 class ProtectiveActionAdjustmentKind(Enum):
     '''
     Categorisation of different protective action adjustments that can be performed
@@ -64742,6 +63365,7 @@ class ProtectiveActionAdjustmentKind(Enum):
     The equipment will operate on the new value.
     '''
 
+@stereotype(CIMStereotype.Enumeration)
 class RandomisationKind(Enum):
     '''
     Kind of randomisation to be applied to control the timing of end device
@@ -64780,6 +63404,7 @@ class RandomisationKind(Enum):
     one or more devices are randomised to prevent simultaneous operation.
     '''
 
+@stereotype(CIMStereotype.Enumeration)
 class ReadingReasonKind(Enum):
     '''
     Reason for the reading being taken.
@@ -64854,6 +63479,7 @@ class ReadingReasonKind(Enum):
     service.
     '''
 
+@stereotype(CIMStereotype.Enumeration)
 class RegulatingControlModeKind(Enum):
     '''
     The kind of regulation model. For example regulating voltage, reactive
@@ -64901,6 +63527,7 @@ class RegulatingControlModeKind(Enum):
     Voltage is specified.
     '''
 
+@stereotype(CIMStereotype.Enumeration)
 class RegulationBranchKind(Enum):
     '''
     Kind of regulation branch for shunt impedance.
@@ -64938,6 +63565,7 @@ class RegulationBranchKind(Enum):
     '''
     '''
 
+@stereotype(CIMStereotype.Enumeration)
 class RelativeDisplacementKind(Enum):
     '''
     The types of relative displacement
@@ -64955,6 +63583,7 @@ class RelativeDisplacementKind(Enum):
     '''
     '''
 
+@stereotype(CIMStereotype.Enumeration)
 class RemoteUnitType(Enum):
     '''
     Type of remote unit.
@@ -64980,6 +63609,7 @@ class RemoteUnitType(Enum):
     Substation control system.
     '''
 
+@stereotype(CIMStereotype.Enumeration)
 class ReportingMethodKind(Enum):
     '''
     Method by which information is gathered from station.
@@ -65000,6 +63630,7 @@ class ReportingMethodKind(Enum):
     Station must be queried to obtain observations.
     '''
 
+@stereotype(CIMStereotype.Enumeration)
 class ResourceCapacityType(Enum):
     '''
     Resource capacity type.
@@ -65045,6 +63676,7 @@ class ResourceCapacityType(Enum):
     Spinning reserve.
     '''
 
+@stereotype(CIMStereotype.Enumeration)
 class ResourceRegistrationStatus(Enum):
     '''
     Types of resource registration status, for example:
@@ -65074,6 +63706,7 @@ class ResourceRegistrationStatus(Enum):
     Registration status is in the planning stage
     '''
 
+@stereotype(CIMStereotype.Enumeration)
 class RetiredReasonKind(Enum):
     '''
     Reason asset retired.
@@ -65114,6 +63747,7 @@ class RetiredReasonKind(Enum):
     Retired and sold.
     '''
 
+@stereotype(CIMStereotype.Enumeration)
 class RevenueKind(Enum):
     '''
     Accounting classification of the type of revenue collected for the customer
@@ -65155,6 +63789,7 @@ class RevenueKind(Enum):
     Streetlight revenue.
     '''
 
+@stereotype(CIMStereotype.Enumeration)
 class RevisionKind(Enum):
     '''
     List of the kinds of revisions that can be made to a SwitchingStep.
@@ -65168,6 +63803,7 @@ class RevisionKind(Enum):
     '''
     '''
 
+@stereotype(CIMStereotype.Enumeration)
 class RiskScoreKind(Enum):
     '''
     Types of risk scores.
@@ -65188,6 +63824,7 @@ class RiskScoreKind(Enum):
     Safety risk score.
     '''
 
+@stereotype(CIMStereotype.Enumeration)
 class SVCControlMode(Enum):
     '''
     Static VAr Compensator control mode.
@@ -65203,6 +63840,7 @@ class SVCControlMode(Enum):
     Voltage control.
     '''
 
+@stereotype(CIMStereotype.Enumeration)
 class SampleContainerType(Enum):
     '''
     Types of sample containers.
@@ -65223,6 +63861,7 @@ class SampleContainerType(Enum):
     Syringe.
     '''
 
+@stereotype(CIMStereotype.Enumeration)
 class ScaleKind(Enum):
     '''
     Kinds of scaling.
@@ -65238,6 +63877,7 @@ class ScaleKind(Enum):
     Linear scale.
     '''
 
+@stereotype(CIMStereotype.Enumeration)
 class SealConditionKind(Enum):
     '''
     Kind of seal condition.
@@ -65268,6 +63908,7 @@ class SealConditionKind(Enum):
     Other kind of seal condition.
     '''
 
+@stereotype(CIMStereotype.Enumeration)
 class SealKind(Enum):
     '''
     Kind of seal.
@@ -65293,6 +63934,7 @@ class SealKind(Enum):
     Steel seal.
     '''
 
+@stereotype(CIMStereotype.Enumeration)
 class SelfSchedReferenceType(Enum):
     '''
     Indication of which type of self schedule is being referenced.
@@ -65308,6 +63950,7 @@ class SelfSchedReferenceType(Enum):
     Transmission ownership right.
     '''
 
+@stereotype(CIMStereotype.Enumeration)
 class ServiceKind(Enum):
     '''
     Kind of service.
@@ -65393,6 +64036,7 @@ class ServiceKind(Enum):
     Water service.
     '''
 
+@stereotype(CIMStereotype.Enumeration)
 class ServiceMultiplierKind(Enum):
     '''
     Kind of service multiplier.
@@ -65415,6 +64059,7 @@ class ServiceMultiplierKind(Enum):
     Product of the CT ratio and PT ratio.
     '''
 
+@stereotype(CIMStereotype.Enumeration)
 class ServiceRequestKind(Enum):
     '''
     Kinds of service requests
@@ -65470,16 +64115,17 @@ class ServiceRequestKind(Enum):
     Test work.
     '''
 
-    turn_off = 'turn_off'
+    turnoff = 'turnoff'
     '''
-    Temporarily turn off the service but leave the connection in place. THIS ATTRIBUTE HAS BEEN RENAMED TO COMPLY WITH PYTHON SYNTAX
-    '''
-
-    turn_on = 'turn_on'
-    '''
-    Turn on the service. THIS ATTRIBUTE HAS BEEN RENAMED TO COMPLY WITH PYTHON SYNTAX
+    Temporarily turn off the service but leave the connection in place.
     '''
 
+    turnon = 'turnon'
+    '''
+    Turn on the service.
+    '''
+
+@stereotype(CIMStereotype.Enumeration)
 class ShortCircuitRotorKind(Enum):
     '''
     Type of rotor, used by short circuit applications.
@@ -65505,6 +64151,7 @@ class ShortCircuitRotorKind(Enum):
     Turbo series 2 in IEC 60909.
     '''
 
+@stereotype(CIMStereotype.Enumeration)
 class ShuntImpedanceControlKind(Enum):
     '''
     Kind of control for shunt impedance.
@@ -65526,6 +64173,7 @@ class ShuntImpedanceControlKind(Enum):
     '''
     '''
 
+@stereotype(CIMStereotype.Enumeration)
 class ShuntImpedanceLocalControlKind(Enum):
     '''
     Kind of local control for shunt impedance.
@@ -65559,6 +64207,7 @@ class ShuntImpedanceLocalControlKind(Enum):
     '''
     '''
 
+@stereotype(CIMStereotype.Enumeration)
 class SinglePhaseKind(Enum):
     '''
     Enumeration of single phase identifiers. Allows designation of single phases
@@ -65595,6 +64244,7 @@ class SinglePhaseKind(Enum):
     Secondary phase 2.
     '''
 
+@stereotype(CIMStereotype.Enumeration)
 class Source(Enum):
     '''
     Source gives information related to the origin of a value.
@@ -65616,6 +64266,7 @@ class Source(Enum):
     The value is provided by input of an operator or by an automatic source.
     '''
 
+@stereotype(CIMStereotype.Enumeration)
 class SpaceAnalogKind(Enum):
     '''
     Kinds of analogs (floats) measuring a space condition.
@@ -65629,6 +64280,7 @@ class SpaceAnalogKind(Enum):
     '''
     '''
 
+@stereotype(CIMStereotype.Enumeration)
 class StreetlightLampKind(Enum):
     '''
     Kind of lamp for the streetlight.
@@ -65650,6 +64302,7 @@ class StreetlightLampKind(Enum):
     '''
     '''
 
+@stereotype(CIMStereotype.Enumeration)
 class StructureMaterialKind(Enum):
     '''
     Kind of material used for structures.
@@ -65671,6 +64324,7 @@ class StructureMaterialKind(Enum):
     '''
     '''
 
+@stereotype(CIMStereotype.Enumeration)
 class StructureSupportKind(Enum):
     '''
     Kind of structure support.
@@ -65684,6 +64338,7 @@ class StructureSupportKind(Enum):
     '''
     '''
 
+@stereotype(CIMStereotype.Enumeration)
 class SupplierKind(Enum):
     '''
     Kind of supplier.
@@ -65723,6 +64378,7 @@ class SupplierKind(Enum):
     Entity that delivers the service to the customer.
     '''
 
+@stereotype(CIMStereotype.Enumeration)
 class SwitchActionKind(Enum):
     '''
     Kind of action on switch.
@@ -65748,6 +64404,7 @@ class SwitchActionKind(Enum):
     Open the switch.
     '''
 
+@stereotype(CIMStereotype.Enumeration)
 class SynchronousMachineKind(Enum):
     '''
     Synchronous machine type.
@@ -65789,6 +64446,7 @@ class SynchronousMachineKind(Enum):
     Indicates the synchronous machine can operate as a motor or as a condenser.
     '''
 
+@stereotype(CIMStereotype.Enumeration)
 class SynchronousMachineOperatingMode(Enum):
     '''
     Synchronous machine operating mode.
@@ -65809,6 +64467,7 @@ class SynchronousMachineOperatingMode(Enum):
     Operating as motor.
     '''
 
+@stereotype(CIMStereotype.Enumeration)
 class TagActionKind(Enum):
     '''
     Kind of action on tag.
@@ -65829,6 +64488,7 @@ class TagActionKind(Enum):
     Verify the tag.
     '''
 
+@stereotype(CIMStereotype.Enumeration)
 class TempEquipActionKind(Enum):
     '''
     Kind of action on temporary equipment (such as cut, jumper, ground, energy
@@ -65855,6 +64515,7 @@ class TempEquipActionKind(Enum):
     Remove the jumper (open) or the cut (close).
     '''
 
+@stereotype(CIMStereotype.Enumeration)
 class TestKind(Enum):
     '''
     The test applied to determine if the condition is met.
@@ -65880,67 +64541,68 @@ class TestKind(Enum):
     '''
     '''
 
+@stereotype(CIMStereotype.Enumeration)
 class TestMethod(Enum):
     '''
     Possible test methods.
     '''
 
-    _60567ByDisplacement = '60567ByDisplacement'
+    _60567ByDisplacement = '_60567ByDisplacement'
     '''
     60567 by displacement method.
     '''
 
-    _60567ByPartition = '60567ByPartition'
+    _60567ByPartition = '_60567ByPartition'
     '''
     60567 by partition method.
     '''
 
-    _60567ByVacuum = '60567ByVacuum'
+    _60567ByVacuum = '_60567ByVacuum'
     '''
     60567 by vacuum method.
     '''
 
-    _60970Automatic = '60970Automatic'
+    _60970Automatic = '_60970Automatic'
     '''
     Automatic method.
     '''
 
-    _60970Manual1 = '60970Manual1'
+    _60970Manual1 = '_60970Manual1'
     '''
     Manual method 1.
     '''
 
-    _60970Manual2 = '60970Manual2'
+    _60970Manual2 = '_60970Manual2'
     '''
     Manual method 2.
     '''
 
-    _61125A = '61125A'
+    _61125A = '_61125A'
     '''
     61125A method.
     '''
 
-    _61125B = '61125B'
+    _61125B = '_61125B'
     '''
     61125B method.
     '''
 
-    _61125C = '61125C'
+    _61125C = '_61125C'
     '''
     61125C method.
     '''
 
-    _62270AnnexA = '62270AnnexA'
+    _62270AnnexA = '_62270AnnexA'
     '''
     62270 Annex A method.
     '''
 
-    _62535AnnexA = '62535AnnexA'
+    _62535AnnexA = '_62535AnnexA'
     '''
     62535 Annex A method.
     '''
 
-    _62535Main = '62535Main'
+    _62535Main = '_62535Main'
     '''
     62535 main method.
     '''
@@ -65970,6 +64632,7 @@ class TestMethod(Enum):
     D3612C method.
     '''
 
+@stereotype(CIMStereotype.Enumeration)
 class TestReason(Enum):
     '''
     Reason for test.
@@ -65995,66 +64658,68 @@ class TestReason(Enum):
     Routine test.
     '''
 
+@stereotype(CIMStereotype.Enumeration)
 class TestVariantKind(Enum):
     '''
     Test variants.
     '''
 
-    _0C = '0C'
+    _0C = '_0C'
     '''
-    Testing done at temperature of 0°C.
-    '''
-
-    _100C = '100C'
-    '''
-    Testing done at temperature of 100°C.
+    Testing done at temperature of 0�C.
     '''
 
-    _164hours = '164hours'
+    _100C = '_100C'
+    '''
+    Testing done at temperature of 100�C.
+    '''
+
+    _164hours = '_164hours'
     '''
     Measurements taken at 164 hours.
     '''
 
-    _1mm = '1mm'
+    _1mm = '_1mm'
     '''
     Specimen of 1 mm thickness used in testing.
     '''
 
-    _25C = '25C'
+    _25C = '_25C'
     '''
-    Testing done at temperature of 25°C.
+    Testing done at temperature of 25�C.
     '''
 
-    _2mm = '2mm'
+    _2mm = '_2mm'
     '''
     Specimen of 2 mm thickness used in testing.
     '''
 
-    _30C = '30C'
+    _30C = '_30C'
     '''
-    Testing done at temperature of 30°C.
-    '''
-
-    _40C = '40C'
-    '''
-    Testing done at temperature of 40°C.
+    Testing done at temperature of 30�C.
     '''
 
-    _72hours = '72hours'
+    _40C = '_40C'
+    '''
+    Testing done at temperature of 40�C.
+    '''
+
+    _72hours = '_72hours'
     '''
     Measurements taken at 72 hours.
     '''
 
     minus30C = 'minus30C'
     '''
-    Testing done at temperature of -30°C.
+    Testing done at temperature of -30�C.
     '''
 
     minus40C = 'minus40C'
     '''
-    Testing done at temperature of -40°C.
+    Testing done at temperature of -40�C.
     '''
 
+@stereotype(CIMStereotype.Enumeration)
 class TimeIntervalKind(Enum):
     '''
     Specifies the unit of time for the intervals in the schedule.
@@ -66090,6 +64755,7 @@ class TimeIntervalKind(Enum):
     Second
     '''
 
+@stereotype(CIMStereotype.Enumeration)
 class TimePeriodUnit(Enum):
     '''
     Units in which reporting frequency is specified.
@@ -66119,6 +64785,7 @@ class TimePeriodUnit(Enum):
     '''
     '''
 
+@stereotype(CIMStereotype.Enumeration)
 class TransactionKind(Enum):
     '''
     Kind of transaction.
@@ -66189,6 +64856,7 @@ class TransactionKind(Enum):
     Reversal of a previous transaction.
     '''
 
+@stereotype(CIMStereotype.Enumeration)
 class TransformerApplicationKind(Enum):
     '''
     Classifications of network roles in which transformers can be deployed.
@@ -66222,6 +64890,7 @@ class TransformerApplicationKind(Enum):
     voltage level.
     '''
 
+@stereotype(CIMStereotype.Enumeration)
 class TransformerControlMode(Enum):
     '''
     Control modes for a transformer.
@@ -66237,6 +64906,7 @@ class TransformerControlMode(Enum):
     Voltage control.
     '''
 
+@stereotype(CIMStereotype.Enumeration)
 class TransformerFailureReasonKind(Enum):
     '''
     Reason for transformer failure.
@@ -66265,6 +64935,7 @@ class TransformerFailureReasonKind(Enum):
     Oil quality-related failure.
     '''
 
+@stereotype(CIMStereotype.Enumeration)
 class TransmissionModeKind(Enum):
     '''
     Transmission mode for end device display controls, applicable to premises
@@ -66289,6 +64960,7 @@ class TransmissionModeKind(Enum):
     devices.
     '''
 
+@stereotype(CIMStereotype.Enumeration)
 class TroubleCallKind(Enum):
     '''
     Describes the type of Trouble, based on customer input.
@@ -66304,6 +64976,7 @@ class TroubleCallKind(Enum):
     The customer is reporting an outage.
     '''
 
+@stereotype(CIMStereotype.Enumeration)
 class TroubleReportingKind(Enum):
     '''
     Kind of trouble reporting.
@@ -66346,6 +65019,7 @@ class TroubleReportingKind(Enum):
     '''
     '''
 
+@stereotype(CIMStereotype.Enumeration)
 class TroubleSymptomsExtentKind(Enum):
     '''
     The enumerated values that define the extent of the problem.
@@ -66371,6 +65045,7 @@ class TroubleSymptomsExtentKind(Enum):
     '''
     '''
 
+@stereotype(CIMStereotype.Enumeration)
 class TroubleSymptomsLightKind(Enum):
     '''
     The list of values that define the light problem.
@@ -66400,6 +65075,7 @@ class TroubleSymptomsLightKind(Enum):
     '''
     '''
 
+@stereotype(CIMStereotype.Enumeration)
 class TroubleSymptomsPoleKind(Enum):
     '''
     The list of values that define the Pole problem.
@@ -66425,6 +65101,7 @@ class TroubleSymptomsPoleKind(Enum):
     '''
     '''
 
+@stereotype(CIMStereotype.Enumeration)
 class TroubleSymptomsTransformerKind(Enum):
     '''
     The list of items that define the transformer problem.
@@ -66442,6 +65119,7 @@ class TroubleSymptomsTransformerKind(Enum):
     '''
     '''
 
+@stereotype(CIMStereotype.Enumeration)
 class TroubleSymptomsTree_Kind(Enum):
     '''
     The list of items that define the tree problem.
@@ -66463,6 +65141,7 @@ class TroubleSymptomsTree_Kind(Enum):
     '''
     '''
 
+@stereotype(CIMStereotype.Enumeration)
 class TroubleSymptomsWireKind(Enum):
     '''
     The list of items that define the wire problem.
@@ -66492,6 +65171,7 @@ class TroubleSymptomsWireKind(Enum):
     '''
     '''
 
+@stereotype(CIMStereotype.Enumeration)
 class UncertaintyKind(Enum):
     '''
     The type of uncertainty for a reading.
@@ -66518,6 +65198,7 @@ class UncertaintyKind(Enum):
     The process of value calculation or measurement is unknown.
     '''
 
+@stereotype(CIMStereotype.Enumeration)
 class UnitMultiplier(Enum):
     '''
     The unit multipliers defined for the CIM. When applied to unit symbols,
@@ -66530,8 +65211,8 @@ class UnitMultiplier(Enum):
     the value is k(m**2/s), and the multiplier applies to the entire final
     value, not to any individual part of the value. This can be conceptualized
     by substituting a derived unit symbol for the unit type. If one imagines
-    that the symbol "Þ" represents the derived unit "m2Pers", then applying
-    the multiplier "k" can be conceptualized simply as "kÞ".
+    that the symbol "�" represents the derived unit "m2Pers", then applying
+    the multiplier "k" can be conceptualized simply as "k�".
     For example, the SI unit for mass is "kg" and not "g". If the unit symbol
     is defined as "kg", then the multiplier is applied to "kg" as a whole and
     does not replace the "k" in front of the "g". In this case, the multiplier
@@ -66540,8 +65221,8 @@ class UnitMultiplier(Enum):
     because the unit symbol in CIM is treated as a derived unit instead of
     as an SI unit, it makes more sense to conceptualize the "kg" as if it were
     replaced by one of the proposed replacements for the SI mass symbol. If
-    one imagines that the "kg" were replaced by a symbol "Þ", then it is easier
-    to conceptualize the multiplier "m" as creating the proper unit "mÞ", and
+    one imagines that the "kg" were replaced by a symbol "�", then it is easier
+    to conceptualize the multiplier "m" as creating the proper unit "m�", and
     not the forbidden unit "mkg".
     '''
 
@@ -66650,6 +65331,7 @@ class UnitMultiplier(Enum):
     Zepto 10**-21.
     '''
 
+@stereotype(CIMStereotype.Enumeration)
 class UnitSymbol(Enum):
     '''
     The derived units defined for usage in the CIM. In some cases, the derived
@@ -66670,7 +65352,7 @@ class UnitSymbol(Enum):
     from the format described in IEC 80000-1. The division symbol "/" is replaced
     by the letters "Per". Exponents are written in plain text after the unit
     as "m3" instead of being formatted as "m" with a superscript of 3 or introducing
-    a symbol as in "m^3". The degree symbol "°" is replaced with the letters
+    a symbol as in "m^3". The degree symbol "�" is replaced with the letters
     "deg". Any clarification of the meaning for a substitution is included
     in the description for the unit symbol.
     Non-SI units are included in list of unit symbols to allow sources of data
@@ -66688,7 +65370,7 @@ class UnitSymbol(Enum):
 
     A2 = 'A2'
     '''
-    Amperes squared (A²).
+    Amperes squared (A�).
     '''
 
     A2h = 'A2h'
@@ -66698,13 +65380,13 @@ class UnitSymbol(Enum):
 
     A2s = 'A2s'
     '''
-    Ampere squared time in square amperes (A²s).
+    Ampere squared time in square amperes (A�s).
     '''
 
     APerA = 'APerA'
     '''
     Current, ratio of amperages. Note: Users may need to supply a prefix such
-    as ‘m’ to show rates such as ‘mA/A’.
+    as �m� to show rates such as �mA/A�.
     '''
 
     APerm = 'APerm'
@@ -66719,7 +65401,7 @@ class UnitSymbol(Enum):
 
     As = 'As'
     '''
-    Ampere seconds (A·s).
+    Ampere seconds (A�s).
     '''
 
     Bq = 'Bq'
@@ -66734,7 +65416,7 @@ class UnitSymbol(Enum):
 
     C = 'C'
     '''
-    Electric charge in coulombs (A·s).
+    Electric charge in coulombs (A�s).
     '''
 
     CPerkg = 'CPerkg'
@@ -66795,7 +65477,7 @@ class UnitSymbol(Enum):
     HzPerHz = 'HzPerHz'
     '''
     Frequency, rate of frequency change. Note: Users may need to supply a prefix
-    such as ‘m’ to show rates such as ‘mHz/Hz’.
+    such as �m� to show rates such as �mHz/Hz�.
     '''
 
     HzPers = 'HzPers'
@@ -66805,7 +65487,7 @@ class UnitSymbol(Enum):
 
     J = 'J'
     '''
-    Energy in joules (N·m = C·V = W·s).
+    Energy in joules (N�m = C�V = W�s).
     '''
 
     JPerK = 'JPerK'
@@ -66871,7 +65553,7 @@ class UnitSymbol(Enum):
 
     N = 'N'
     '''
-    Force in newtons (kg·m/s²).
+    Force in newtons (kg�m/s�).
     '''
 
     NPerm = 'NPerm'
@@ -66891,7 +65573,7 @@ class UnitSymbol(Enum):
 
     Pa = 'Pa'
     '''
-    Pressure in pascals (N/m²). Note: the absolute or relative measurement
+    Pressure in pascals (N/m�). Note: the absolute or relative measurement
     of pressure is implied with this entry. See below for more explicit forms.
     '''
 
@@ -66942,7 +65624,7 @@ class UnitSymbol(Enum):
 
     V2 = 'V2'
     '''
-    Volt squared (W²/A²).
+    Volt squared (W�/A�).
     '''
 
     V2h = 'V2h'
@@ -66962,7 +65644,7 @@ class UnitSymbol(Enum):
 
     VAr = 'VAr'
     '''
-    Reactive power in volt amperes reactive. The “reactive” or “imaginary”
+    Reactive power in volt amperes reactive. The �reactive� or �imaginary�
     component of electrical power (VIsin(phi)). (See also real power and apparent
     power).
     Note: Different meter designs use different methods to arrive at their
@@ -66985,7 +65667,7 @@ class UnitSymbol(Enum):
     VPerV = 'VPerV'
     '''
     Voltage, ratio of voltages. Note: Users may need to supply a prefix such
-    as ‘m’ to show rates such as ‘mV/V’.
+    as �m� to show rates such as �mV/V�.
     '''
 
     VPerVA = 'VPerVA'
@@ -67036,7 +65718,7 @@ class UnitSymbol(Enum):
     WPerW = 'WPerW'
     '''
     Signal Strength, ratio of power. Note: Users may need to supply a prefix
-    such as ‘m’ to show rates such as ‘mW/W’.
+    such as �m� to show rates such as �mW/W�.
     '''
 
     WPerm2 = 'WPerm2'
@@ -67066,7 +65748,7 @@ class UnitSymbol(Enum):
 
     Wb = 'Wb'
     '''
-    Magnetic flux in webers (V·s).
+    Magnetic flux in webers (V�s).
     '''
 
     Wh = 'Wh'
@@ -67109,7 +65791,7 @@ class UnitSymbol(Enum):
     Power factor, dimensionless.
     Note 1: This definition of power factor only holds for balanced systems.
     See the alternative definition under code 153.
-    Note 2 : Beware of differing sign conventions in use between the IEC and
+    Note 2�: Beware of differing sign conventions in use between the IEC and
     EEI. It is assumed that the data consumer understands the type of meter
     in use and the sign convention in use by the utility.
     '''
@@ -67126,14 +65808,14 @@ class UnitSymbol(Enum):
 
     dB = 'dB'
     '''
-    Sound pressure level in decibels. Note: multiplier “d” is included in this
+    Sound pressure level in decibels. Note: multiplier �d� is included in this
     unit symbol for compatibility with IEC 61850-7-3.
     '''
 
     dBm = 'dBm'
     '''
     Power level (logarithmic ratio of signal strength , Bel-mW), normalized
-    to 1mW. Note: multiplier “d” is included in this unit symbol for compatibility
+    to 1mW. Note: multiplier �d� is included in this unit symbol for compatibility
     with IEC 61850-7-3.
     '''
 
@@ -67145,10 +65827,10 @@ class UnitSymbol(Enum):
     degC = 'degC'
     '''
     Relative temperature in degrees Celsius.
-    In the SI unit system the symbol is °C. Electric charge is measured in
+    In the SI unit system the symbol is �C. Electric charge is measured in
     coulomb that has the unit symbol C. To distinguish degree Celsius from
-    coulomb the symbol used in the UML is degC. The reason for not using °C
-    is that the special character ° is difficult to manage in software.
+    coulomb the symbol used in the UML is degC. The reason for not using �C
+    is that the special character � is difficult to manage in software.
     '''
 
     ft3 = 'ft3'
@@ -67159,8 +65841,8 @@ class UnitSymbol(Enum):
     gPerg = 'gPerg'
     '''
     Concentration, The ratio of the mass of a solute divided by the mass of
-    the solution. Note: Users may need use a prefix such a ‘µ’ to express a
-    quantity such as ‘µg/g’.
+    the solution. Note: Users may need use a prefix such a ��� to express a
+    quantity such as ��g/g�.
     '''
 
     gal = 'gal'
@@ -67190,33 +65872,33 @@ class UnitSymbol(Enum):
 
     kg = 'kg'
     '''
-    Mass in kilograms. Note: multiplier “k” is included in this unit symbol
+    Mass in kilograms. Note: multiplier �k� is included in this unit symbol
     for compatibility with IEC 61850-7-3.
     '''
 
     kgPerJ = 'kgPerJ'
     '''
-    Weight per energy in kilograms per joule (kg/J). Note: multiplier “k” is
+    Weight per energy in kilograms per joule (kg/J). Note: multiplier �k� is
     included in this unit symbol for compatibility with IEC 61850-7-3.
     '''
 
     kgPerm3 = 'kgPerm3'
     '''
-    Density in kilogram/cubic metres (kg/m³). Note: multiplier “k” is included
+    Density in kilogram/cubic metres (kg/m�). Note: multiplier �k� is included
     in this unit symbol for compatibility with IEC 61850-7-3.
     '''
 
     kgm = 'kgm'
     '''
-    Moment of mass in kilogram metres (kg·m) (first moment of mass). Note:
-    multiplier “k” is included in this unit symbol for compatibility with IEC
+    Moment of mass in kilogram metres (kg�m) (first moment of mass). Note:
+    multiplier �k� is included in this unit symbol for compatibility with IEC
     61850-7-3.
     '''
 
     kgm2 = 'kgm2'
     '''
-    Moment of mass in kilogram square metres (kg·m²) (Second moment of mass,
-    commonly called the moment of inertia). Note: multiplier “k” is included
+    Moment of mass in kilogram square metres (kg�m�) (Second moment of mass,
+    commonly called the moment of inertia). Note: multiplier �k� is included
     in this unit symbol for compatibility with IEC 61850-7-3.
     '''
 
@@ -67238,8 +65920,8 @@ class UnitSymbol(Enum):
     lPerl = 'lPerl'
     '''
     Concentration, The ratio of the volume of a solute divided by the volume
-    of the solution. Note: Users may need use a prefix such a ‘µ’ to express
-    a quantity such as ‘µL/L’.
+    of the solution. Note: Users may need use a prefix such a ��� to express
+    a quantity such as ��L/L�.
     '''
 
     lPers = 'lPers'
@@ -67249,12 +65931,12 @@ class UnitSymbol(Enum):
 
     lm = 'lm'
     '''
-    Luminous flux in lumens (cd·sr).
+    Luminous flux in lumens (cd�sr).
     '''
 
     lx = 'lx'
     '''
-    Illuminance in lux (lm/m²).
+    Illuminance in lux (lm/m�).
     '''
 
     m = 'm'
@@ -67264,17 +65946,17 @@ class UnitSymbol(Enum):
 
     m2 = 'm2'
     '''
-    Area in square metres (m²).
+    Area in square metres (m�).
     '''
 
     m2Pers = 'm2Pers'
     '''
-    Viscosity in square metres / second (m²/s).
+    Viscosity in square metres / second (m�/s).
     '''
 
     m3 = 'm3'
     '''
-    Volume in cubic metres (m³).
+    Volume in cubic metres (m�).
     '''
 
     m3Compensated = 'm3Compensated'
@@ -67294,7 +65976,7 @@ class UnitSymbol(Enum):
 
     m3Pers = 'm3Pers'
     '''
-    Volumetric flow rate in cubic metres per second (m³/s).
+    Volumetric flow rate in cubic metres per second (m�/s).
     '''
 
     m3Uncompensated = 'm3Uncompensated'
@@ -67304,7 +65986,7 @@ class UnitSymbol(Enum):
 
     mPerm3 = 'mPerm3'
     '''
-    Fuel efficiency in metres per cubic metres (m/m³).
+    Fuel efficiency in metres per cubic metres (m/m�).
     '''
 
     mPers = 'mPers'
@@ -67314,7 +65996,7 @@ class UnitSymbol(Enum):
 
     mPers2 = 'mPers2'
     '''
-    Acceleration in metres per second squared (m/s²).
+    Acceleration in metres per second squared (m/s�).
     '''
 
     min = 'min'
@@ -67341,7 +66023,7 @@ class UnitSymbol(Enum):
     molPerm3 = 'molPerm3'
     '''
     Concentration, The amount of substance concentration, (c), the amount of
-    solvent in moles divided by the volume of solution in m³.
+    solvent in moles divided by the volume of solution in m�.
     '''
 
     molPermol = 'molPermol'
@@ -67417,8 +66099,8 @@ class UnitSymbol(Enum):
 
     sPers = 'sPers'
     '''
-    Time, Ratio of time. Note: Users may need to supply a prefix such as ‘&#181;’
-    to show rates such as ‘&#181;s/s’.
+    Time, Ratio of time. Note: Users may need to supply a prefix such as �&#181;�
+    to show rates such as �&#181;s/s�.
     '''
 
     sr = 'sr'
@@ -67433,9 +66115,10 @@ class UnitSymbol(Enum):
 
     tonne = 'tonne'
     '''
-    Mass in tons, “tonne” or “metric ton” (1000 kg = 1 Mg).
+    Mass in tons, �tonne� or �metric ton� (1000 kg = 1 Mg).
     '''
 
+@stereotype(CIMStereotype.Enumeration)
 class UsagePointConnectedKind(Enum):
     '''
     State of the usage point with respect to connection to the network.
@@ -67464,6 +66147,7 @@ class UsagePointConnectedKind(Enum):
     achieved by utilising a field crew.
     '''
 
+@stereotype(CIMStereotype.Enumeration)
 class Validity(Enum):
     '''
     Validity for MeasurementValue.
@@ -67491,6 +66175,7 @@ class Validity(Enum):
     for determining whether or not values marked "questionable" should be used.
     '''
 
+@stereotype(CIMStereotype.Enumeration)
 class VsPpccControlKind(Enum):
     '''
     Types applicable to the control of real power and/or DC voltage by voltage
@@ -67539,6 +66224,7 @@ class VsPpccControlKind(Enum):
     Control is DC voltage with target value provided by ACDCConverter.targetUdc.
     '''
 
+@stereotype(CIMStereotype.Enumeration)
 class VsQpccControlKind(Enum):
     '''
     Kind of reactive power control at point of common coupling for a voltage
@@ -67568,6 +66254,7 @@ class VsQpccControlKind(Enum):
     Control is voltage at point of common coupling. Target is provided by VsConverter.targetUpcc.
     '''
 
+@stereotype(CIMStereotype.Enumeration)
 class WeatherCodeKind(Enum):
     '''
     Kinds of weather conditions.
@@ -67711,6 +66398,7 @@ class WeatherCodeKind(Enum):
     "WS" weather code ("Wintry Mix").
     '''
 
+@stereotype(CIMStereotype.Enumeration)
 class WindGenUnitKind(Enum):
     '''
     Kind of wind generating unit.
@@ -67726,6 +66414,7 @@ class WindGenUnitKind(Enum):
     The wind generating unit is located onshore.
     '''
 
+@stereotype(CIMStereotype.Enumeration)
 class WindingConnection(Enum):
     '''
     Winding connection type.
@@ -67766,6 +66455,7 @@ class WindingConnection(Enum):
     ZigZag, with neutral brought out for grounding.
     '''
 
+@stereotype(CIMStereotype.Enumeration)
 class WireInsulationKind(Enum):
     '''
     Kind of wire insulation.
@@ -67861,6 +66551,7 @@ class WireInsulationKind(Enum):
     Varnished dacron glass wire insulation.
     '''
 
+@stereotype(CIMStereotype.Enumeration)
 class WireMaterialKind(Enum):
     '''
     Kind of wire material.
@@ -67911,6 +66602,7 @@ class WireMaterialKind(Enum):
     Steel wire.
     '''
 
+@stereotype(CIMStereotype.Enumeration)
 class WireUsageKind(Enum):
     '''
     Kind of wire usage.
@@ -67936,6 +66628,7 @@ class WireUsageKind(Enum):
     Wire is used in extra-high voltage or high voltage network.
     '''
 
+@stereotype(CIMStereotype.Enumeration)
 class WorkTaskKind(Enum):
     '''
     Kinds of work tasks.
@@ -67961,6 +66654,7 @@ class WorkTaskKind(Enum):
     Work task deals with removal of assets.
     '''
 
+@stereotype(CIMStereotype.Enumeration)
 class WorkTimeScheduleKind(Enum):
     '''
     Kind of work schedule.
@@ -67996,6 +66690,7 @@ class WorkTimeScheduleKind(Enum):
     Request work time schedule.
     '''
 
+@stereotype(CIMStereotype.Enumeration)
 class YesNo(Enum):
     '''
     Used as a flag set to Yes or No.
@@ -68009,399 +66704,751 @@ class YesNo(Enum):
     '''
     '''
 
-@dataclass
-class MonthDay():
-    value: str = field(default=None)
-    '''
-    MonthDay format as "--mm-dd", which conforms with XSD data type gMonthDay.
-    '''
-
-@dataclass
-class Susceptance():
-    value: float = field(default=None)
-    '''
-    Imaginary part of admittance.
-    '''
-
-@dataclass
-class Pressure():
-    value: float = field(default=None)
-    '''
-    Pressure in pascals.
-    '''
-
-@dataclass
-class Hours():
-    value: float = field(default=None)
-    '''
-    Time specified in hours.
-    '''
-
-@dataclass
-class Capacitance():
-    value: float = field(default=None)
-    '''
-    Capacitive part of reactance (imaginary part of impedance), at rated frequency.
-    '''
-
-@dataclass
-class Voltage():
-    value: float = field(default=None)
-    '''
-    Electrical voltage, can be both AC and DC.
-    '''
-
-@dataclass
-class CapacitancePerLength():
-    value: float = field(default=None)
-    '''
-    Capacitance per unit of length.
-    '''
-
-@dataclass
-class SusceptancePerLength():
-    value: float = field(default=None)
-    '''
-    Imaginary part of admittance per unit of length.
-    '''
-
-@dataclass
-class Frequency():
-    value: float = field(default=None)
-    '''
-    Cycles per second.
-    '''
-
-@dataclass
-class PU():
-    value: float = field(default=None)
-    '''
-    Per Unit - a positive or negative value referred to a defined base. Values
-    typically range from -10 to +10.
-    '''
-
-@dataclass
-class Speed():
-    value: float = field(default=None)
-    '''
-    Distance per unit of time.
-    '''
-
-@dataclass
-class Minutes():
-    value: float = field(default=None)
-    '''
-    Time in minutes.
-    '''
-
-@dataclass
-class AngleDegrees():
-    value: float = field(default=None)
-    '''
-    Measurement of angle in degrees.
-    '''
-
-@dataclass
-class ActivePowerChangeRate():
-    value: float = field(default=None)
-    '''
-    Rate of change of active power per time.
-    '''
-
-@dataclass
-class RotationSpeed():
-    value: float = field(default=None)
-    '''
-    Number of revolutions per second.
-    '''
-
-@dataclass
-class RealEnergy():
-    value: float = field(default=None)
-    '''
-    Real electrical energy.
-    '''
-
-@dataclass
-class VolumeFlowRate():
-    value: float = field(default=None)
-    '''
-    Volume per time.
-    '''
-
-@dataclass
-class CostPerHeatUnit():
-    value: float = field(default=None)
-    '''
-    Cost, in units of currency, per quantity of heat generated.
-    '''
-
-@dataclass
-class Money():
-    value: str = field(default=None)
-    '''
-    Amount of money.
-    '''
-
-@dataclass
-class MagneticField():
-    value: float = field(default=None)
-    '''
-    Magnetic field in nanotesla.
-    '''
-
-@dataclass
-class Volume():
-    value: float = field(default=None)
-    '''
-    Volume.
-    '''
-
-@dataclass
-class CostPerEnergyUnit():
-    value: float = field(default=None)
-    '''
-    Cost, in units of currency, per quantity of electrical energy generated.
-    '''
-
-@dataclass
-class KiloActivePower():
-    value: float = field(default=None)
-    '''
-    Active power in kilowatts.
-    '''
-
-@dataclass
-class InductancePerLength():
-    value: float = field(default=None)
-    '''
-    Inductance per unit of length.
-    '''
-
-@dataclass
-class Displacement():
-    value: float = field(default=None)
-    '''
-    Unit of displacement relative to a reference position, hence can be negative.
-    '''
-
-@dataclass
-class ApparentPower():
-    value: float = field(default=None)
-    '''
-    Product of the RMS value of the voltage and the RMS value of the current.
-    '''
-
-@dataclass
-class CurrentFlow():
-    value: float = field(default=None)
-    '''
-    Electrical current with sign convention: positive flow is out of the conducting
-    equipment into the connectivity node. Can be both AC and DC.
-    '''
-
-@dataclass
-class ReactivePower():
-    value: float = field(default=None)
-    '''
-    Product of RMS value of the voltage and the RMS value of the quadrature
-    component of the current.
-    '''
-
-@dataclass
-class Temperature():
-    value: float = field(default=None)
-    '''
-    Value of temperature in degrees Celsius.
-    '''
-
-@dataclass
-class Seconds():
-    value: float = field(default=None)
-    '''
-    Time, in seconds.
-    '''
-
-@dataclass
-class Emission():
-    value: float = field(default=None)
-    '''
-    Quantity of emission per fuel heat content.
-    '''
-
-@dataclass
-class ActivePowerPerFrequency():
-    value: float = field(default=None)
-    '''
-    Active power variation with frequency.
-    '''
-
-@dataclass
-class Inductance():
-    value: float = field(default=None)
-    '''
-    Inductive part of reactance (imaginary part of impedance), at rated frequency.
-    '''
-
-@dataclass
-class VoltagePerReactivePower():
-    value: float = field(default=None)
-    '''
-    Voltage variation with reactive power.
-    '''
-
-@dataclass
-class WaterLevel():
-    value: float = field(default=None)
-    '''
-    Reservoir water level referred to a given datum such as mean sea level.
-    '''
-
-@dataclass
-class ActivePower():
-    value: float = field(default=None)
+@stereotype(CIMStereotype.CIMDatatype)
+@dataclass(repr=False)
+class ActivePower(CIMUnit):
     '''
     Product of RMS value of the voltage and the RMS value of the in-phase component
     of the current.
     '''
-
-@dataclass
-class Mass():
     value: float = field(default=None)
-    '''
-    Mass.
-    '''
+    multiplier: UnitMultiplier = field(default=UnitMultiplier.none)
+    @property #read-only
+    def unit(self):
+        return UnitSymbol.W
+    def __init__(self, value, input_unit:str='W', input_multiplier:str=None):
+        self.__pint__(value = value, input_unit=input_unit, input_multiplier=input_multiplier)
 
-@dataclass
-class ConductancePerLength():
+@stereotype(CIMStereotype.CIMDatatype)
+@dataclass(repr=False)
+class ActivePowerChangeRate(CIMUnit):
+    '''
+    Rate of change of active power per time.
+    '''
     value: float = field(default=None)
-    '''
-    Real part of admittance per unit of length.
-    '''
+    multiplier: UnitMultiplier = field(default=UnitMultiplier.none)
+    @property #read-only
+    def unit(self):
+        return UnitSymbol.WPers
+    def __init__(self, value, input_unit:str='WPers', input_multiplier:str=None):
+        self.__pint__(value = value, input_unit=input_unit, input_multiplier=input_multiplier)
 
-@dataclass
-class Reactance():
+@stereotype(CIMStereotype.CIMDatatype)
+@dataclass(repr=False)
+class ActivePowerPerCurrentFlow(CIMUnit):
+    '''
+    Active power variation with current flow.
+    '''
     value: float = field(default=None)
-    '''
-    Reactance (imaginary part of impedance), at rated frequency.
-    '''
+    multiplier: UnitMultiplier = field(default=UnitMultiplier.none)
+    @property #read-only
+    def unit(self):
+        return UnitSymbol.WPerA
+    def __init__(self, value, input_unit:str='WPerA', input_multiplier:str=None):
+        self.__pint__(value = value, input_unit=input_unit, input_multiplier=input_multiplier)
 
-@dataclass
-class Conductance():
+@stereotype(CIMStereotype.CIMDatatype)
+@dataclass(repr=False)
+class ActivePowerPerFrequency(CIMUnit):
+    '''
+    Active power variation with frequency.
+    '''
     value: float = field(default=None)
-    '''
-    Factor by which voltage must be multiplied to give corresponding power
-    lost from a circuit. Real part of admittance.
-    '''
+    multiplier: UnitMultiplier = field(default=UnitMultiplier.none)
+    @property #read-only
+    def unit(self):
+        return UnitSymbol.WPers
+    def __init__(self, value, input_unit:str='WPers', input_multiplier:str=None):
+        self.__pint__(value = value, input_unit=input_unit, input_multiplier=input_multiplier)
 
-@dataclass
-class ReactancePerLength():
+@stereotype(CIMStereotype.CIMDatatype)
+@dataclass(repr=False)
+class AngleDegrees(CIMUnit):
+    '''
+    Measurement of angle in degrees.
+    '''
     value: float = field(default=None)
-    '''
-    Reactance (imaginary part of impedance) per unit of length, at rated frequency.
-    '''
+    multiplier: UnitMultiplier = field(default=UnitMultiplier.none)
+    @property #read-only
+    def unit(self):
+        return UnitSymbol.deg
+    def __init__(self, value, input_unit:str='deg', input_multiplier:str=None):
+        self.__pint__(value = value, input_unit=input_unit, input_multiplier=input_multiplier)
 
-@dataclass
-class Resistance():
+@stereotype(CIMStereotype.CIMDatatype)
+@dataclass(repr=False)
+class AngleRadians(CIMUnit):
+    '''
+    Phase angle in radians.
+    '''
     value: float = field(default=None)
-    '''
-    Resistance (real part of impedance).
-    '''
+    multiplier: UnitMultiplier = field(default=UnitMultiplier.none)
+    @property #read-only
+    def unit(self):
+        return UnitSymbol.rad
+    def __init__(self, value, input_unit:str='rad', input_multiplier:str=None):
+        self.__pint__(value = value, input_unit=input_unit, input_multiplier=input_multiplier)
 
-@dataclass
-class CostPerVolume():
+@stereotype(CIMStereotype.CIMDatatype)
+@dataclass(repr=False)
+class ApparentPower(CIMUnit):
+    '''
+    Product of the RMS value of the voltage and the RMS value of the current.
+    '''
     value: float = field(default=None)
-    '''
-    Cost per unit volume.
-    '''
+    multiplier: UnitMultiplier = field(default=UnitMultiplier.none)
+    @property #read-only
+    def unit(self):
+        return UnitSymbol.VA
+    def __init__(self, value, input_unit:str='VA', input_multiplier:str=None):
+        self.__pint__(value = value, input_unit=input_unit, input_multiplier=input_multiplier)
 
-@dataclass
-class CostRate():
-    value: float = field(default=None)
-    '''
-    Cost, in units of currency, per elapsed time.
-    '''
-
-@dataclass
-class Classification():
-    value: int = field(default=None)
-    '''
-    Classification of level. Specify as 1..n, with 1 being the most detailed,
-    highest priority, etc as described on the attribute using this data type.
-    '''
-
-@dataclass
-class Bearing():
-    value: float = field(default=None)
+@stereotype(CIMStereotype.CIMDatatype)
+@dataclass(repr=False)
+class Bearing(CIMUnit):
     '''
     The bearing in degrees (with 360 degrees being True North). Measured in
     degrees clockwise from True North. 0 degrees indicates no direction being
     given.
     '''
-
-@dataclass
-class ActivePowerPerCurrentFlow():
     value: float = field(default=None)
-    '''
-    Active power variation with current flow.
-    '''
+    multiplier: UnitMultiplier = field(default=UnitMultiplier.none)
+    @property #read-only
+    def unit(self):
+        return UnitSymbol.deg
+    def __init__(self, value, input_unit:str='deg', input_multiplier:str=None):
+        self.__pint__(value = value, input_unit=input_unit, input_multiplier=input_multiplier)
 
-@dataclass
-class Length():
+@stereotype(CIMStereotype.CIMDatatype)
+@dataclass(repr=False)
+class Capacitance(CIMUnit):
+    '''
+    Capacitive part of reactance (imaginary part of impedance), at rated frequency.
+    '''
     value: float = field(default=None)
+    multiplier: UnitMultiplier = field(default=UnitMultiplier.none)
+    @property #read-only
+    def unit(self):
+        return UnitSymbol.F
+    def __init__(self, value, input_unit:str='F', input_multiplier:str=None):
+        self.__pint__(value = value, input_unit=input_unit, input_multiplier=input_multiplier)
+
+@stereotype(CIMStereotype.CIMDatatype)
+@dataclass(repr=False)
+class CapacitancePerLength(CIMUnit):
+    '''
+    Capacitance per unit of length.
+    '''
+    value: float = field(default=None)
+    multiplier: UnitMultiplier = field(default=UnitMultiplier.none)
+    @property #read-only
+    def unit(self):
+        return UnitSymbol.FPerm
+    def __init__(self, value, input_unit:str='FPerm', input_multiplier:str=None):
+        self.__pint__(value = value, input_unit=input_unit, input_multiplier=input_multiplier)
+
+@stereotype(CIMStereotype.CIMDatatype)
+@dataclass(repr=False)
+class Classification(CIMUnit):
+    '''
+    Classification of level. Specify as 1..n, with 1 being the most detailed,
+    highest priority, etc as described on the attribute using this data type.
+    '''
+    value: int = field(default=None)
+    multiplier: UnitMultiplier = field(default=UnitMultiplier.none)
+    @property #read-only
+    def unit(self):
+        return UnitSymbol.none
+    def __init__(self, value, input_unit:str='none', input_multiplier:str=None):
+        self.__pint__(value = value, input_unit=input_unit, input_multiplier=input_multiplier)
+
+@stereotype(CIMStereotype.CIMDatatype)
+@dataclass(repr=False)
+class Conductance(CIMUnit):
+    '''
+    Factor by which voltage must be multiplied to give corresponding power
+    lost from a circuit. Real part of admittance.
+    '''
+    value: float = field(default=None)
+    multiplier: UnitMultiplier = field(default=UnitMultiplier.none)
+    @property #read-only
+    def unit(self):
+        return UnitSymbol.S
+    def __init__(self, value, input_unit:str='S', input_multiplier:str=None):
+        self.__pint__(value = value, input_unit=input_unit, input_multiplier=input_multiplier)
+
+@stereotype(CIMStereotype.CIMDatatype)
+@dataclass(repr=False)
+class ConductancePerLength(CIMUnit):
+    '''
+    Real part of admittance per unit of length.
+    '''
+    value: float = field(default=None)
+    multiplier: UnitMultiplier = field(default=UnitMultiplier.none)
+    @property #read-only
+    def unit(self):
+        return UnitSymbol.SPerm
+    def __init__(self, value, input_unit:str='SPerm', input_multiplier:str=None):
+        self.__pint__(value = value, input_unit=input_unit, input_multiplier=input_multiplier)
+
+@stereotype(CIMStereotype.CIMDatatype)
+@dataclass(repr=False)
+class CostPerEnergyUnit(CIMUnit):
+    '''
+    Cost, in units of currency, per quantity of electrical energy generated.
+    '''
+    value: float = field(default=None)
+    multiplier: UnitMultiplier = field(default=UnitMultiplier.none)
+    @property #read-only
+    def unit(self):
+        return UnitSymbol.none
+    def __init__(self, value, input_unit:str='none', input_multiplier:str=None):
+        self.__pint__(value = value, input_unit=input_unit, input_multiplier=input_multiplier)
+
+@stereotype(CIMStereotype.CIMDatatype)
+@dataclass(repr=False)
+class CostPerHeatUnit(CIMUnit):
+    '''
+    Cost, in units of currency, per quantity of heat generated.
+    '''
+    value: float = field(default=None)
+    multiplier: UnitMultiplier = field(default=UnitMultiplier.none)
+    @property #read-only
+    def unit(self):
+        return UnitSymbol.none
+    def __init__(self, value, input_unit:str='none', input_multiplier:str=None):
+        self.__pint__(value = value, input_unit=input_unit, input_multiplier=input_multiplier)
+
+@stereotype(CIMStereotype.CIMDatatype)
+@dataclass(repr=False)
+class CostPerVolume(CIMUnit):
+    '''
+    Cost per unit volume.
+    '''
+    value: float = field(default=None)
+    multiplier: UnitMultiplier = field(default=UnitMultiplier.none)
+    @property #read-only
+    def unit(self):
+        return UnitSymbol.none
+    def __init__(self, value, input_unit:str='none', input_multiplier:str=None):
+        self.__pint__(value = value, input_unit=input_unit, input_multiplier=input_multiplier)
+
+@stereotype(CIMStereotype.CIMDatatype)
+@dataclass(repr=False)
+class CostRate(CIMUnit):
+    '''
+    Cost, in units of currency, per elapsed time.
+    '''
+    value: float = field(default=None)
+    multiplier: UnitMultiplier = field(default=UnitMultiplier.none)
+    @property #read-only
+    def unit(self):
+        return UnitSymbol.none
+    def __init__(self, value, input_unit:str='none', input_multiplier:str=None):
+        self.__pint__(value = value, input_unit=input_unit, input_multiplier=input_multiplier)
+
+@stereotype(CIMStereotype.CIMDatatype)
+@dataclass(repr=False)
+class CurrentFlow(CIMUnit):
+    '''
+    Electrical current with sign convention: positive flow is out of the conducting
+    equipment into the connectivity node. Can be both AC and DC.
+    '''
+    value: float = field(default=None)
+    multiplier: UnitMultiplier = field(default=UnitMultiplier.none)
+    @property #read-only
+    def unit(self):
+        return UnitSymbol.A
+    def __init__(self, value, input_unit:str='A', input_multiplier:str=None):
+        self.__pint__(value = value, input_unit=input_unit, input_multiplier=input_multiplier)
+
+@stereotype(CIMStereotype.CIMDatatype)
+@dataclass(repr=False)
+class Displacement(CIMUnit):
+    '''
+    Unit of displacement relative to a reference position, hence can be negative.
+    '''
+    value: float = field(default=None)
+    multiplier: UnitMultiplier = field(default=UnitMultiplier.none)
+    @property #read-only
+    def unit(self):
+        return UnitSymbol.m
+    def __init__(self, value, input_unit:str='m', input_multiplier:str=None):
+        self.__pint__(value = value, input_unit=input_unit, input_multiplier=input_multiplier)
+
+@stereotype(CIMStereotype.CIMDatatype)
+@dataclass(repr=False)
+class Emission(CIMUnit):
+    '''
+    Quantity of emission per fuel heat content.
+    '''
+    value: float = field(default=None)
+    multiplier: UnitMultiplier = field(default=UnitMultiplier.none)
+    @property #read-only
+    def unit(self):
+        return UnitSymbol.kgPerJ
+    def __init__(self, value, input_unit:str='kgPerJ', input_multiplier:str=None):
+        self.__pint__(value = value, input_unit=input_unit, input_multiplier=input_multiplier)
+
+@stereotype(CIMStereotype.CIMDatatype)
+@dataclass(repr=False)
+class Frequency(CIMUnit):
+    '''
+    Cycles per second.
+    '''
+    value: float = field(default=None)
+    multiplier: UnitMultiplier = field(default=UnitMultiplier.none)
+    @property #read-only
+    def unit(self):
+        return UnitSymbol.Hz
+    def __init__(self, value, input_unit:str='Hz', input_multiplier:str=None):
+        self.__pint__(value = value, input_unit=input_unit, input_multiplier=input_multiplier)
+
+@stereotype(CIMStereotype.CIMDatatype)
+@dataclass(repr=False)
+class HeatRate(CIMUnit):
+    '''
+    Heat generated, in energy per time unit of elapsed time.
+    '''
+    value: float = field(default=None)
+    multiplier: UnitMultiplier = field(default=UnitMultiplier.none)
+    @property #read-only
+    def unit(self):
+        return UnitSymbol.J
+    def __init__(self, value, input_unit:str='J', input_multiplier:str=None):
+        self.__pint__(value = value, input_unit=input_unit, input_multiplier=input_multiplier)
+
+@stereotype(CIMStereotype.CIMDatatype)
+@dataclass(repr=False)
+class Hours(CIMUnit):
+    '''
+    Time specified in hours.
+    '''
+    value: float = field(default=None)
+    multiplier: UnitMultiplier = field(default=UnitMultiplier.none)
+    @property #read-only
+    def unit(self):
+        return UnitSymbol.h
+    def __init__(self, value, input_unit:str='h', input_multiplier:str=None):
+        self.__pint__(value = value, input_unit=input_unit, input_multiplier=input_multiplier)
+
+@stereotype(CIMStereotype.CIMDatatype)
+@dataclass(repr=False)
+class Impedance(CIMUnit):
+    '''
+    Ratio of voltage to current.
+    '''
+    value: float = field(default=None)
+    multiplier: UnitMultiplier = field(default=UnitMultiplier.none)
+    @property #read-only
+    def unit(self):
+        return UnitSymbol.ohm
+    def __init__(self, value, input_unit:str='ohm', input_multiplier:str=None):
+        self.__pint__(value = value, input_unit=input_unit, input_multiplier=input_multiplier)
+
+@stereotype(CIMStereotype.CIMDatatype)
+@dataclass(repr=False)
+class Inductance(CIMUnit):
+    '''
+    Inductive part of reactance (imaginary part of impedance), at rated frequency.
+    '''
+    value: float = field(default=None)
+    multiplier: UnitMultiplier = field(default=UnitMultiplier.none)
+    @property #read-only
+    def unit(self):
+        return UnitSymbol.H
+    def __init__(self, value, input_unit:str='H', input_multiplier:str=None):
+        self.__pint__(value = value, input_unit=input_unit, input_multiplier=input_multiplier)
+
+@stereotype(CIMStereotype.CIMDatatype)
+@dataclass(repr=False)
+class InductancePerLength(CIMUnit):
+    '''
+    Inductance per unit of length.
+    '''
+    value: float = field(default=None)
+    multiplier: UnitMultiplier = field(default=UnitMultiplier.none)
+    @property #read-only
+    def unit(self):
+        return UnitSymbol.HPerm
+    def __init__(self, value, input_unit:str='HPerm', input_multiplier:str=None):
+        self.__pint__(value = value, input_unit=input_unit, input_multiplier=input_multiplier)
+
+@stereotype(CIMStereotype.CIMDatatype)
+@dataclass(repr=False)
+class KiloActivePower(CIMUnit):
+    '''
+    Active power in kilowatts.
+    '''
+    value: float = field(default=None)
+    multiplier: UnitMultiplier = field(default=UnitMultiplier.k)
+    @property #read-only
+    def unit(self):
+        return UnitSymbol.W
+    def __init__(self, value, input_unit:str='W', input_multiplier:str=None):
+        self.__pint__(value = value, input_unit=input_unit, input_multiplier=input_multiplier)
+
+@stereotype(CIMStereotype.CIMDatatype)
+@dataclass(repr=False)
+class Length(CIMUnit):
     '''
     Unit of length. It shall be a positive value or zero.
     '''
-
-@dataclass
-class ParticulateDensity():
     value: float = field(default=None)
+    multiplier: UnitMultiplier = field(default=UnitMultiplier.none)
+    @property #read-only
+    def unit(self):
+        return UnitSymbol.m
+    def __init__(self, value, input_unit:str='m', input_multiplier:str=None):
+        self.__pint__(value = value, input_unit=input_unit, input_multiplier=input_multiplier)
+
+@stereotype(CIMStereotype.CIMDatatype)
+@dataclass(repr=False)
+class MagneticField(CIMUnit):
+    '''
+    Magnetic field in nanotesla.
+    '''
+    value: float = field(default=None)
+    multiplier: UnitMultiplier = field(default=UnitMultiplier.n)
+    @property #read-only
+    def unit(self):
+        return UnitSymbol.T
+    def __init__(self, value, input_unit:str='T', input_multiplier:str=None):
+        self.__pint__(value = value, input_unit=input_unit, input_multiplier=input_multiplier)
+
+@stereotype(CIMStereotype.CIMDatatype)
+@dataclass(repr=False)
+class Minutes(CIMUnit):
+    '''
+    Time in minutes.
+    '''
+    value: float = field(default=None)
+    multiplier: UnitMultiplier = field(default=UnitMultiplier.none)
+    @property #read-only
+    def unit(self):
+        return UnitSymbol.min
+    def __init__(self, value, input_unit:str='min', input_multiplier:str=None):
+        self.__pint__(value = value, input_unit=input_unit, input_multiplier=input_multiplier)
+
+@stereotype(CIMStereotype.CIMDatatype)
+@dataclass(repr=False)
+class Money(CIMUnit):
+    '''
+    Amount of money.
+    '''
+    value: str = field(default=None)
+    multiplier: UnitMultiplier = field(default=UnitMultiplier.none)
+    @property #read-only
+    def unit(self):
+        return UnitSymbol.none
+    def __init__(self, value, input_unit:str='none', input_multiplier:str=None):
+        self.__pint__(value = value, input_unit=input_unit, input_multiplier=input_multiplier)
+
+@stereotype(CIMStereotype.CIMDatatype)
+@dataclass(repr=False)
+class PU(CIMUnit):
+    '''
+    Per Unit - a positive or negative value referred to a defined base. Values
+    typically range from -10 to +10.
+    '''
+    value: float = field(default=None)
+    multiplier: UnitMultiplier = field(default=UnitMultiplier.none)
+    @property #read-only
+    def unit(self):
+        return UnitSymbol.none
+    def __init__(self, value, input_unit:str='none', input_multiplier:str=None):
+        self.__pint__(value = value, input_unit=input_unit, input_multiplier=input_multiplier)
+
+@stereotype(CIMStereotype.CIMDatatype)
+@dataclass(repr=False)
+class ParticulateDensity(CIMUnit):
     '''
     Particulate density as kg/m<sup>3</sup>.
     '''
-
-@dataclass
-class ResistancePerLength():
     value: float = field(default=None)
-    '''
-    Resistance (real part of impedance) per unit of length.
-    '''
+    multiplier: UnitMultiplier = field(default=UnitMultiplier.none)
+    @property #read-only
+    def unit(self):
+        return UnitSymbol.kgPerm3
+    def __init__(self, value, input_unit:str='kgPerm3', input_multiplier:str=None):
+        self.__pint__(value = value, input_unit=input_unit, input_multiplier=input_multiplier)
 
-@dataclass
-class PerCent():
-    value: float = field(default=None)
+@stereotype(CIMStereotype.CIMDatatype)
+@dataclass(repr=False)
+class PerCent(CIMUnit):
     '''
     Percentage on a defined base. For example, specify as 100 to indicate at
     the defined base.
     '''
-
-@dataclass
-class AngleRadians():
     value: float = field(default=None)
-    '''
-    Phase angle in radians.
-    '''
+    multiplier: UnitMultiplier = field(default=UnitMultiplier.none)
+    @property #read-only
+    def unit(self):
+        return UnitSymbol.none
+    def __init__(self, value, input_unit:str='none', input_multiplier:str=None):
+        self.__pint__(value = value, input_unit=input_unit, input_multiplier=input_multiplier)
 
-@dataclass
-class HeatRate():
+@stereotype(CIMStereotype.CIMDatatype)
+@dataclass(repr=False)
+class Pressure(CIMUnit):
+    '''
+    Pressure in pascals.
+    '''
     value: float = field(default=None)
-    '''
-    Heat generated, in energy per time unit of elapsed time.
-    '''
+    multiplier: UnitMultiplier = field(default=UnitMultiplier.none)
+    @property #read-only
+    def unit(self):
+        return UnitSymbol.Pa
+    def __init__(self, value, input_unit:str='Pa', input_multiplier:str=None):
+        self.__pint__(value = value, input_unit=input_unit, input_multiplier=input_multiplier)
 
-@dataclass
-class Impedance():
+@stereotype(CIMStereotype.CIMDatatype)
+@dataclass(repr=False)
+class Reactance(CIMUnit):
+    '''
+    Reactance (imaginary part of impedance), at rated frequency.
+    '''
     value: float = field(default=None)
-    '''
-    Ratio of voltage to current.
-    '''
+    multiplier: UnitMultiplier = field(default=UnitMultiplier.none)
+    @property #read-only
+    def unit(self):
+        return UnitSymbol.ohm
+    def __init__(self, value, input_unit:str='ohm', input_multiplier:str=None):
+        self.__pint__(value = value, input_unit=input_unit, input_multiplier=input_multiplier)
 
+@stereotype(CIMStereotype.CIMDatatype)
+@dataclass(repr=False)
+class ReactancePerLength(CIMUnit):
+    '''
+    Reactance (imaginary part of impedance) per unit of length, at rated frequency.
+    '''
+    value: float = field(default=None)
+    multiplier: UnitMultiplier = field(default=UnitMultiplier.none)
+    @property #read-only
+    def unit(self):
+        return UnitSymbol.ohmPerm
+    def __init__(self, value, input_unit:str='ohmPerm', input_multiplier:str=None):
+        self.__pint__(value = value, input_unit=input_unit, input_multiplier=input_multiplier)
+
+@stereotype(CIMStereotype.CIMDatatype)
+@dataclass(repr=False)
+class ReactivePower(CIMUnit):
+    '''
+    Product of RMS value of the voltage and the RMS value of the quadrature
+    component of the current.
+    '''
+    value: float = field(default=None)
+    multiplier: UnitMultiplier = field(default=UnitMultiplier.none)
+    @property #read-only
+    def unit(self):
+        return UnitSymbol.VAr
+    def __init__(self, value, input_unit:str='VAr', input_multiplier:str=None):
+        self.__pint__(value = value, input_unit=input_unit, input_multiplier=input_multiplier)
+
+@stereotype(CIMStereotype.CIMDatatype)
+@dataclass(repr=False)
+class RealEnergy(CIMUnit):
+    '''
+    Real electrical energy.
+    '''
+    value: float = field(default=None)
+    multiplier: UnitMultiplier = field(default=UnitMultiplier.none)
+    @property #read-only
+    def unit(self):
+        return UnitSymbol.Wh
+    def __init__(self, value, input_unit:str='Wh', input_multiplier:str=None):
+        self.__pint__(value = value, input_unit=input_unit, input_multiplier=input_multiplier)
+
+@stereotype(CIMStereotype.CIMDatatype)
+@dataclass(repr=False)
+class Resistance(CIMUnit):
+    '''
+    Resistance (real part of impedance).
+    '''
+    value: float = field(default=None)
+    multiplier: UnitMultiplier = field(default=UnitMultiplier.none)
+    @property #read-only
+    def unit(self):
+        return UnitSymbol.ohm
+    def __init__(self, value, input_unit:str='ohm', input_multiplier:str=None):
+        self.__pint__(value = value, input_unit=input_unit, input_multiplier=input_multiplier)
+
+@stereotype(CIMStereotype.CIMDatatype)
+@dataclass(repr=False)
+class ResistancePerLength(CIMUnit):
+    '''
+    Resistance (real part of impedance) per unit of length.
+    '''
+    value: float = field(default=None)
+    multiplier: UnitMultiplier = field(default=UnitMultiplier.none)
+    @property #read-only
+    def unit(self):
+        return UnitSymbol.ohmPerm
+    def __init__(self, value, input_unit:str='ohmPerm', input_multiplier:str=None):
+        self.__pint__(value = value, input_unit=input_unit, input_multiplier=input_multiplier)
+
+@stereotype(CIMStereotype.CIMDatatype)
+@dataclass(repr=False)
+class RotationSpeed(CIMUnit):
+    '''
+    Number of revolutions per second.
+    '''
+    value: float = field(default=None)
+    multiplier: UnitMultiplier = field(default=UnitMultiplier.none)
+    @property #read-only
+    def unit(self):
+        return UnitSymbol.Hz
+    def __init__(self, value, input_unit:str='Hz', input_multiplier:str=None):
+        self.__pint__(value = value, input_unit=input_unit, input_multiplier=input_multiplier)
+
+@stereotype(CIMStereotype.CIMDatatype)
+@dataclass(repr=False)
+class Seconds(CIMUnit):
+    '''
+    Time, in seconds.
+    '''
+    value: float = field(default=None)
+    multiplier: UnitMultiplier = field(default=UnitMultiplier.none)
+    @property #read-only
+    def unit(self):
+        return UnitSymbol.s
+    def __init__(self, value, input_unit:str='s', input_multiplier:str=None):
+        self.__pint__(value = value, input_unit=input_unit, input_multiplier=input_multiplier)
+
+@stereotype(CIMStereotype.CIMDatatype)
+@dataclass(repr=False)
+class Speed(CIMUnit):
+    '''
+    Distance per unit of time.
+    '''
+    value: float = field(default=None)
+    multiplier: UnitMultiplier = field(default=UnitMultiplier.none)
+    @property #read-only
+    def unit(self):
+        return UnitSymbol.mPers
+    def __init__(self, value, input_unit:str='mPers', input_multiplier:str=None):
+        self.__pint__(value = value, input_unit=input_unit, input_multiplier=input_multiplier)
+
+@stereotype(CIMStereotype.CIMDatatype)
+@dataclass(repr=False)
+class Susceptance(CIMUnit):
+    '''
+    Imaginary part of admittance.
+    '''
+    value: float = field(default=None)
+    multiplier: UnitMultiplier = field(default=UnitMultiplier.none)
+    @property #read-only
+    def unit(self):
+        return UnitSymbol.S
+    def __init__(self, value, input_unit:str='S', input_multiplier:str=None):
+        self.__pint__(value = value, input_unit=input_unit, input_multiplier=input_multiplier)
+
+@stereotype(CIMStereotype.CIMDatatype)
+@dataclass(repr=False)
+class SusceptancePerLength(CIMUnit):
+    '''
+    Imaginary part of admittance per unit of length.
+    '''
+    value: float = field(default=None)
+    multiplier: UnitMultiplier = field(default=UnitMultiplier.none)
+    @property #read-only
+    def unit(self):
+        return UnitSymbol.SPerm
+    def __init__(self, value, input_unit:str='SPerm', input_multiplier:str=None):
+        self.__pint__(value = value, input_unit=input_unit, input_multiplier=input_multiplier)
+
+@stereotype(CIMStereotype.CIMDatatype)
+@dataclass(repr=False)
+class Temperature(CIMUnit):
+    '''
+    Value of temperature in degrees Celsius.
+    '''
+    value: float = field(default=None)
+    multiplier: UnitMultiplier = field(default=UnitMultiplier.none)
+    @property #read-only
+    def unit(self):
+        return UnitSymbol.degC
+    def __init__(self, value, input_unit:str='degC', input_multiplier:str=None):
+        self.__pint__(value = value, input_unit=input_unit, input_multiplier=input_multiplier)
+
+@stereotype(CIMStereotype.CIMDatatype)
+@dataclass(repr=False)
+class Voltage(CIMUnit):
+    '''
+    Electrical voltage, can be both AC and DC.
+    '''
+    value: float = field(default=None)
+    multiplier: UnitMultiplier = field(default=UnitMultiplier.none)
+    @property #read-only
+    def unit(self):
+        return UnitSymbol.V
+    def __init__(self, value, input_unit:str='V', input_multiplier:str=None):
+        self.__pint__(value = value, input_unit=input_unit, input_multiplier=input_multiplier)
+
+@stereotype(CIMStereotype.CIMDatatype)
+@dataclass(repr=False)
+class VoltagePerReactivePower(CIMUnit):
+    '''
+    Voltage variation with reactive power.
+    '''
+    value: float = field(default=None)
+    multiplier: UnitMultiplier = field(default=UnitMultiplier.none)
+    @property #read-only
+    def unit(self):
+        return UnitSymbol.VPerVAr
+    def __init__(self, value, input_unit:str='VPerVAr', input_multiplier:str=None):
+        self.__pint__(value = value, input_unit=input_unit, input_multiplier=input_multiplier)
+
+@stereotype(CIMStereotype.CIMDatatype)
+@dataclass(repr=False)
+class Volume(CIMUnit):
+    '''
+    Volume.
+    '''
+    value: float = field(default=None)
+    multiplier: UnitMultiplier = field(default=UnitMultiplier.none)
+    @property #read-only
+    def unit(self):
+        return UnitSymbol.m3
+    def __init__(self, value, input_unit:str='m3', input_multiplier:str=None):
+        self.__pint__(value = value, input_unit=input_unit, input_multiplier=input_multiplier)
+
+@stereotype(CIMStereotype.CIMDatatype)
+@dataclass(repr=False)
+class VolumeFlowRate(CIMUnit):
+    '''
+    Volume per time.
+    '''
+    value: float = field(default=None)
+    multiplier: UnitMultiplier = field(default=UnitMultiplier.none)
+    @property #read-only
+    def unit(self):
+        return UnitSymbol.m3Pers
+    def __init__(self, value, input_unit:str='m3Pers', input_multiplier:str=None):
+        self.__pint__(value = value, input_unit=input_unit, input_multiplier=input_multiplier)
+
+@stereotype(CIMStereotype.CIMDatatype)
+@dataclass(repr=False)
+class WaterLevel(CIMUnit):
+    '''
+    Reservoir water level referred to a given datum such as mean sea level.
+    '''
+    value: float = field(default=None)
+    multiplier: UnitMultiplier = field(default=UnitMultiplier.none)
+    @property #read-only
+    def unit(self):
+        return UnitSymbol.m
+    def __init__(self, value, input_unit:str='m', input_multiplier:str=None):
+        self.__pint__(value = value, input_unit=input_unit, input_multiplier=input_multiplier)
+
+@stereotype(CIMStereotype.Compound)
 @dataclass(repr=False)
 class ASTMStandard(Identity):
     '''
     Standard published by ASTM (ASTM International).
     '''
 
+@stereotype(CIMStereotype.Compound)
 @dataclass(repr=False)
 class AcceptanceTest(Identity):
     '''
@@ -68449,6 +67496,7 @@ class AcceptanceTest(Identity):
     Type of test or group of tests that was conducted on 'dateTime'.
     '''
 
+@stereotype(CIMStereotype.Compound)
 @dataclass(repr=False)
 class AccountingUnit(Identity):
     '''
@@ -68456,12 +67504,14 @@ class AccountingUnit(Identity):
     the unit for 'value'.
     '''
 
+@stereotype(CIMStereotype.Compound)
 @dataclass(repr=False)
 class CIGREStandard(Identity):
     '''
     Standard published by CIGRE (Council on Large Electric Systems).
     '''
 
+@stereotype(CIMStereotype.Attribute)
 @dataclass(repr=False)
 class ControlledAppliance(Identity):
     '''
@@ -68612,12 +67662,14 @@ class ControlledAppliance(Identity):
     True if the appliance is a water heater.
     '''
 
+@stereotype(CIMStereotype.Compound)
 @dataclass(repr=False)
 class DINStandard(Identity):
     '''
     Standard published by DIN (German Institute of Standards).
     '''
 
+@stereotype(CIMStereotype.Compound)
 @dataclass(repr=False)
 class DateInterval(Identity):
     '''
@@ -68648,6 +67700,7 @@ class DateInterval(Identity):
     Start date of this interval.
     '''
 
+@stereotype(CIMStereotype.Compound)
 @dataclass(repr=False)
 class DateTimeInterval(Identity):
     '''
@@ -68681,6 +67734,7 @@ class DateTimeInterval(Identity):
     in the defined interval.
     '''
 
+@stereotype(CIMStereotype.Attribute)
 @dataclass(repr=False)
 class DecimalQuantity(Identity):
     '''
@@ -68735,6 +67789,7 @@ class DecimalQuantity(Identity):
     Unit of this quantity.
     '''
 
+@stereotype(CIMStereotype.Compound)
 @dataclass(repr=False)
 class DeploymentDate(Identity):
     '''
@@ -68803,18 +67858,21 @@ class DeploymentDate(Identity):
     Date and time asset most recently removed.
     '''
 
+@stereotype(CIMStereotype.Compound)
 @dataclass(repr=False)
 class DobleStandard(Identity):
     '''
     Standard published by Doble.
     '''
 
+@stereotype(CIMStereotype.Compound)
 @dataclass(repr=False)
 class EPAStandard(Identity):
     '''
     Standard published by EPA (United States Environmental Protection Agency).
     '''
 
+@stereotype(CIMStereotype.Attribute)
 @dataclass(repr=False)
 class ElectronicAddress(Identity):
     '''
@@ -68918,6 +67976,7 @@ class ElectronicAddress(Identity):
     World wide web address.
     '''
 
+@stereotype(CIMStereotype.Attribute)
 @dataclass(repr=False)
 class EndDeviceCapability(Identity):
     '''
@@ -69141,6 +68200,7 @@ class EndDeviceCapability(Identity):
     True if water metering function is supported.
     '''
 
+@stereotype(CIMStereotype.Compound)
 @dataclass(repr=False)
 class EndDeviceTiming(Identity):
     '''
@@ -69185,20 +68245,7 @@ class EndDeviceTiming(Identity):
     be executed.
     '''
 
-    interval: Optional[DateTimeInterval] = field(
-        default = None,
-        metadata = {
-            'type': 'Attribute',
-            'minOccurs': '0',
-            'maxOccurs': '1',
-            'inverse': '',
-            'namespace': 'http://iec.ch/TC57/CIM100#'
-        })
-    '''
-    Start and end time of an interval during which end device control actions
-    are to be executed.
-    '''
-
+@stereotype(CIMStereotype.Compound)
 @dataclass(repr=False)
 class ExtensionItem(Identity):
     '''
@@ -69241,25 +68288,14 @@ class ExtensionItem(Identity):
     the value of the extension
     '''
 
+@stereotype(CIMStereotype.Compound)
 @dataclass(repr=False)
 class ExtensionsList(Identity):
     '''
     Specifies the enumeration of the extension item
     '''
 
-    extensionsItem: Optional[ExtensionItem] = field(
-        default = None,
-        metadata = {
-            'type': 'Attribute',
-            'minOccurs': '0',
-            'maxOccurs': '1',
-            'inverse': '',
-            'namespace': 'http://iec.ch/TC57/CIM100#'
-        })
-    '''
-    a compound type that defines the extension name, type and value
-    '''
-
+@stereotype(CIMStereotype.Compound)
 @dataclass(repr=False)
 class FaultImpedance(Identity):
     '''
@@ -69314,6 +68350,7 @@ class FaultImpedance(Identity):
     The reactance of the fault between phases.
     '''
 
+@stereotype(CIMStereotype.Attribute)
 @dataclass(repr=False)
 class FloatQuantity(Identity):
     '''
@@ -69356,24 +68393,28 @@ class FloatQuantity(Identity):
     Unit of this quantity.
     '''
 
+@stereotype(CIMStereotype.Compound)
 @dataclass(repr=False)
 class IECStandard(Identity):
     '''
     Standard published by IEC (International Electrotechnical Commission).
     '''
 
+@stereotype(CIMStereotype.Compound)
 @dataclass(repr=False)
 class IEEEStandard(Identity):
     '''
     Standard published by IEEE (Institute of Electrical and Electronics Engineers).
     '''
 
+@stereotype(CIMStereotype.Compound)
 @dataclass(repr=False)
 class ISOStandard(Identity):
     '''
     Standard published by ISO (International Organization for Standardization).
     '''
 
+@stereotype(CIMStereotype.Compound)
 @dataclass(repr=False)
 class InUseDate(Identity):
     '''
@@ -69417,6 +68458,7 @@ class InUseDate(Identity):
     Date of most recent asset transition to ready for use state.
     '''
 
+@stereotype(CIMStereotype.Compound)
 @dataclass(repr=False)
 class IntegerQuantity(Identity):
     '''
@@ -69459,12 +68501,14 @@ class IntegerQuantity(Identity):
     Unit of this quantity.
     '''
 
+@stereotype(CIMStereotype.Compound)
 @dataclass(repr=False)
 class LaborelecStandard(Identity):
     '''
     Standard published by Laborelec.
     '''
 
+@stereotype(CIMStereotype.Compound)
 @dataclass(repr=False)
 class LifecycleDate(Identity):
     '''
@@ -69552,19 +68596,21 @@ class LifecycleDate(Identity):
     removed from service.
     '''
 
+@stereotype(CIMStereotype.Compound)
 @dataclass(repr=False)
 class LineDetail(Identity):
     '''
     Details on an amount line, with rounding, date and note.
     '''
 
+@stereotype(CIMStereotype.Compound)
 @dataclass(repr=False)
 class MonthDayInterval(Identity):
     '''
     Interval between two times specified as month and day.
     '''
 
-    end: Optional[ MonthDay ] = field(
+    end: Optional[ str ] = field(
         default = None,
         metadata = {
             'type': 'Attribute',
@@ -69576,7 +68622,7 @@ class MonthDayInterval(Identity):
     End time of this interval.
     '''
 
-    start: Optional[ MonthDay ] = field(
+    start: Optional[ str ] = field(
         default = None,
         metadata = {
             'type': 'Attribute',
@@ -69588,6 +68634,7 @@ class MonthDayInterval(Identity):
     Start time of this interval.
     '''
 
+@stereotype(CIMStereotype.Compound)
 @dataclass(repr=False)
 class Priority(Identity):
     '''
@@ -69630,6 +68677,7 @@ class Priority(Identity):
     Type describing 'rank'; e.g., high, emergency, etc.
     '''
 
+@stereotype(CIMStereotype.Compound)
 @dataclass(repr=False)
 class RationalNumber(Identity):
     '''
@@ -69660,6 +68708,7 @@ class RationalNumber(Identity):
     Numerator.
     '''
 
+@stereotype(CIMStereotype.Compound)
 @dataclass(repr=False)
 class ReadingInterharmonic(Identity):
     '''
@@ -69698,6 +68747,7 @@ class ReadingInterharmonic(Identity):
     is the fifth harmonic).
     '''
 
+@stereotype(CIMStereotype.Compound)
 @dataclass(repr=False)
 class RelativeDisplacement(Identity):
     '''
@@ -69727,12 +68777,14 @@ class RelativeDisplacement(Identity):
     '''
     '''
 
+@stereotype(CIMStereotype.Compound)
 @dataclass(repr=False)
 class RemoteConnectDisconnectInfo(Identity):
     '''
     Details of remote connect and disconnect function.
     '''
 
+@stereotype(CIMStereotype.Compound)
 @dataclass(repr=False)
 class ServicePointOutageSummary(Identity):
     '''
@@ -69764,6 +68816,7 @@ class ServicePointOutageSummary(Identity):
     Number of all service (delivery) points affected by an outage.
     '''
 
+@stereotype(CIMStereotype.Compound)
 @dataclass(repr=False)
 class Status(Identity):
     '''
@@ -69821,6 +68874,7 @@ class Status(Identity):
     status applies.
     '''
 
+@stereotype(CIMStereotype.Attribute)
 @dataclass(repr=False)
 class StreetAddress(Identity):
     '''
@@ -69864,45 +68918,7 @@ class StreetAddress(Identity):
     Postal code for the address.
     '''
 
-    status: Optional[Status] = field(
-        default = None,
-        metadata = {
-            'type': 'Attribute',
-            'minOccurs': '0',
-            'maxOccurs': '1',
-            'inverse': '',
-            'namespace': 'http://iec.ch/TC57/CIM100#'
-        })
-    '''
-    Status of this address.
-    '''
-
-    streetDetail: Optional[StreetDetail] = field(
-        default = None,
-        metadata = {
-            'type': 'Attribute',
-            'minOccurs': '0',
-            'maxOccurs': '1',
-            'inverse': '',
-            'namespace': 'http://iec.ch/TC57/CIM100#'
-        })
-    '''
-    Street detail.
-    '''
-
-    townDetail: Optional[TownDetail] = field(
-        default = None,
-        metadata = {
-            'type': 'Attribute',
-            'minOccurs': '0',
-            'maxOccurs': '1',
-            'inverse': '',
-            'namespace': 'http://iec.ch/TC57/CIM100#'
-        })
-    '''
-    Town detail.
-    '''
-
+@stereotype(CIMStereotype.Attribute)
 @dataclass(repr=False)
 class StreetDetail(Identity):
     '''
@@ -70074,6 +69090,7 @@ class StreetDetail(Identity):
     specified town (default).
     '''
 
+@stereotype(CIMStereotype.Attribute)
 @dataclass(repr=False)
 class StringQuantity(Identity):
     '''
@@ -70117,12 +69134,14 @@ class StringQuantity(Identity):
     Unit of this quantity.
     '''
 
+@stereotype(CIMStereotype.Compound)
 @dataclass(repr=False)
 class TAPPIStandard(Identity):
     '''
     Standard published by TAPPI.
     '''
 
+@stereotype(CIMStereotype.Attribute)
 @dataclass(repr=False)
 class TelephoneNumber(Identity):
     '''
@@ -70225,6 +69244,7 @@ class TelephoneNumber(Identity):
     Main (local) part of this telephone number.
     '''
 
+@stereotype(CIMStereotype.Compound)
 @dataclass(repr=False)
 class TimeInterval(Identity):
     '''
@@ -70255,6 +69275,7 @@ class TimeInterval(Identity):
     Start time of this interval.
     '''
 
+@stereotype(CIMStereotype.Compound)
 @dataclass(repr=False)
 class TownDetail(Identity):
     '''
@@ -70322,12 +69343,14 @@ class TownDetail(Identity):
     Name of the state or province.
     '''
 
+@stereotype(CIMStereotype.Compound)
 @dataclass(repr=False)
 class UKMinistryOfDefenceStandard(Identity):
     '''
     Standard published by United Kingdom Ministry of Defence.
     '''
 
+@stereotype(CIMStereotype.Compound)
 @dataclass(repr=False)
 class Version(Identity):
     '''
@@ -70385,6 +69408,7 @@ class Version(Identity):
     revision level for this version
     '''
 
+@stereotype(CIMStereotype.Compound)
 @dataclass(repr=False)
 class WEPStandard(Identity):
     '''
