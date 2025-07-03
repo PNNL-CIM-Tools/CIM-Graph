@@ -30,7 +30,7 @@ def write_xml(network: GraphModel, filename: str, namespaces: dict=None, write_i
             default_namespaces.update(namespaces)
     namespaces = default_namespaces
 
-        
+
 
     # Create reverse lookup for namespace
     reverse_ns_lookup = {v: k for k, v in namespaces.items()}

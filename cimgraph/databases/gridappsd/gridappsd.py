@@ -327,10 +327,3 @@ class GridappsdConnection(ConnectionInterface):
                         new_edges.append(value)
                         self.create_value(graph, cim_class, identifier, attribute, value)
         return new_edges
-
-
-
-
-
-
-

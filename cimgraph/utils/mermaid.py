@@ -136,7 +136,7 @@ def class_mermaid(cim_class: type, show_attributes: bool = True, show_inherited:
         mermaid += INDENT*2 + 'unit: ' + getattr(instance, 'unit').value + ' \n'
         mermaid += INDENT*2 + 'multiplier: ' + getattr(instance, 'multiplier').value + ' \n'
         mermaid += INDENT + '}\n'
-        
+
 
     elif type(cim_class) is not enum.EnumMeta:# and len(parent_classes) > 1:
         mermaid = INDENT + 'class ' + cim_class.__name__ + '{\n'
@@ -145,7 +145,7 @@ def class_mermaid(cim_class: type, show_attributes: bool = True, show_inherited:
             mermaid += INDENT*2 + f'<<{stereotype}>>\n'
         except:
             pass
-            
+
         if show_attributes:
             for attribute in cim_class.__annotations__.keys():
                 attr = cim_class.__dataclass_fields__[attribute]
@@ -154,11 +154,11 @@ def class_mermaid(cim_class: type, show_attributes: bool = True, show_inherited:
                     if 'enumeration' in attr.metadata['type']:
                         edge = attr_type.split('[')[1].split(']')[0]
                         mermaid += f'{INDENT*2}+ {attribute}: enum:{edge}\n'
-                        
+
                     elif 'Attribute' in attr.metadata['type']:
                         edge = attr_type.split('[')[1].split(']')[0]
                         mermaid += f'{INDENT*2}+ {attribute}: {edge}\n'
-                    
+
                 except:
                     pass
 

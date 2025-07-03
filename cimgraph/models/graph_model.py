@@ -10,7 +10,8 @@ from uuid import UUID
 from cimgraph.data_profile.identity import Identity
 from cimgraph.databases import ConnectionInterface
 from cimgraph.models.incremental_builder import *
-from cimgraph.shacl import SHACLExportFilter, SHACLCatalogProcessor
+from cimgraph.shacl import SHACLCatalogProcessor, SHACLExportFilter
+
 _log = logging.getLogger(__name__)
 
 jsonld = dict['@id':str(UUID),'@type':str(type)]
@@ -364,7 +365,7 @@ class GraphModel():
                 _log.warning(f'Unknown object of type {type(obj)}')
         dump = json.dumps(dump, indent=4)
         return dump
-    
+
     # -------------------------------------------------------------------------
     # Methods for SHACL validation and access control GraphModel.graph
     # -------------------------------------------------------------------------
@@ -373,18 +374,18 @@ class GraphModel():
         """Export a filtered graph based on SHACL permissions"""
         export_filter = SHACLExportFilter(shacl_file, self.cim)
         return export_filter.create_filtered_graph(self)
-    
-    def export_with_shacl_and_serialize(self, shacl_file: str, output_file: str, 
+
+    def export_with_shacl_and_serialize(self, shacl_file: str, output_file: str,
                            format: str = 'xml') -> None:
         """Export and serialize filtered graph in one step"""
         filtered_graph = self.export_with_shacl(shacl_file)
-        
+
         if format.lower() == 'xml':
             from cimgraph.utils import write_xml
             write_xml(filtered_graph, output_file)
         elif format.lower() in ['jsonld', 'json-ld']:
-            from cimgraph.utils import write_json_ld 
+            from cimgraph.utils import write_json_ld
             write_json_ld(filtered_graph, output_file)
         else:
             raise ValueError(f"Unsupported format: {format}")
-        
+

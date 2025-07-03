@@ -27316,4 +27316,3 @@ class TownDetail(Identity):
     '''
     Name of the state or province.
     '''
-

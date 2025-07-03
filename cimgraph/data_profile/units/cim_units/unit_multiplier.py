@@ -1,4 +1,6 @@
 from enum import Enum
+
+
 class UnitMultiplier( Enum ):
     '''
     The unit multipliers defined for the CIM. When applied to unit symbols,

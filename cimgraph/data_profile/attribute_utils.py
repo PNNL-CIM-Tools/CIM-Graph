@@ -76,7 +76,7 @@ def get_attr_uml_type(cim_class:dataclass, attribute:str):
 
 def get_attr_field_type(cim_class:dataclass, attribute:str):
     attr_field = get_attr_field(cim_class, attribute)
-    field_type = attr_field.type.split('[')[0] 
+    field_type = attr_field.type.split('[')[0]
     return field_type
 
 def get_attr_inverse(cim_class:dataclass, attribute:str):

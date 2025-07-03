@@ -1,4 +1,6 @@
 from enum import Enum
+
+
 class UnitSymbol( Enum ):
     '''
     The derived units defined for usage in the CIM. In some cases, the derived

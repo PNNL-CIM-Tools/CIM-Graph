@@ -30,14 +30,14 @@
             <!-- List all CIM classes to be imported, in alphabetical order -->
             <xsl:for-each select="a:Root|a:ComplexType|a:EnumeratedType|a:CompoundType|a:SimpleType">
                 <xsl:sort select="name" data-type="text" order="ascending"/>
-                
+
                 <xsl:variable name="name">
                     <xsl:call-template name="name">
                         <xsl:with-param name="name" select="@name"/>
                         <xsl:with-param name="type" select="@name"/>
                     </xsl:call-template>
                 </xsl:variable>
-                
+
                 <list begin="" indent="    " end="">
                     <xsl:value-of select="$name" />
                     <xsl:if test="position()!=last()">, </xsl:if>
@@ -52,7 +52,7 @@
             </list>
             <xsl:for-each select="a:Root|a:ComplexType|a:EnumeratedType|a:CompoundType|a:SimpleType">
                 <xsl:sort select="name" data-type="text" order="ascending"/>
-                
+
                 <xsl:variable name="name">
                     <xsl:call-template name="name">
                         <xsl:with-param name="name" select="@name"/>
@@ -68,18 +68,18 @@
             <item>]</item>
         </document>
     </xsl:template>
-    
+
     <!-- Template for error handling of missing or reserved names -->
     <xsl:template name="name">
         <xsl:param name="name" select="@name"/>
         <xsl:param name="type" select="@type"/>
-        
+
         <xsl:variable name="cleanName">
             <xsl:call-template name="removeSpecialChars">
                 <xsl:with-param name="text" select="$name"/>
             </xsl:call-template>
         </xsl:variable>
-        
+
         <xsl:choose>
             <xsl:when test="contains($name,'EAID_')"><xsl:value-of select="$type"/></xsl:when>
             <xsl:when test="string-length($cleanName) > 0 and translate(substring($cleanName,1,1),'0123456789','') = ''">_<xsl:value-of select="$cleanName"/></xsl:when>
@@ -116,12 +116,12 @@
             <xsl:otherwise><xsl:value-of select="$cleanName"/></xsl:otherwise>
         </xsl:choose>
     </xsl:template>
-    
+
     <xsl:template name="removeSpecialChars">
         <xsl:param name="text"/>
         <xsl:param name="pos" select="1"/>
         <xsl:param name="result" select="''"/>
-        
+
         <xsl:choose>
             <xsl:when test="$pos > string-length($text)">
                 <xsl:value-of select="$result"/>
@@ -130,7 +130,7 @@
                 <xsl:variable name="char" select="substring($text, $pos, 1)"/>
                 <xsl:variable name="validChars" select="'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789_'"/>
                 <xsl:variable name="isValidChar" select="contains($validChars, $char)"/>
-                
+
                 <xsl:call-template name="removeSpecialChars">
                     <xsl:with-param name="text" select="$text"/>
                     <xsl:with-param name="pos" select="$pos + 1"/>
@@ -148,6 +148,6 @@
             </xsl:otherwise>
         </xsl:choose>
     </xsl:template>
-    
-    
+
+
 </xsl:stylesheet>

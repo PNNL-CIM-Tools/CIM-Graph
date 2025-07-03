@@ -213,7 +213,7 @@ class XMLFile(ConnectionInterface):
                 except:
                     _log.log(self.log_level, f'Object with ID {edge_uri} not found')
                     return None
-                
+
                 value = self.create_edge(self.graph, cim_class, identifier, sub_tag, edge_class, edge_uri)
                 try:
                     reverse = cim_class.__dataclass_fields__[association].metadata['inverse']
