@@ -186,7 +186,8 @@ class XMLFile(ConnectionInterface):
                 identifier = uri
             obj = self.graph[cim_class][identifier]
             for sub_element in element:
-                self.parse_value(sub_element, cim_class, identifier)
+                if 'Identity.identifier' not in sub_element.tag:
+                    self.parse_value(sub_element, cim_class, identifier)
 
         else:
             _log.log(self.log_level, f'{class_name} not in data profile')
