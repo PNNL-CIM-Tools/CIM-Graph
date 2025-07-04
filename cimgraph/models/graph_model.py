@@ -142,6 +142,8 @@ class GraphModel():
     def list_by_class(self, cim_class:type[T]) -> list[T]:
         '''Get all nodes of a specific type with proper typing.'''
         values = list(self.graph.get(cim_class, {}).values())
+        values = [cast(T, value) for value in values]
+        values = sorted(values, key=lambda x: x.uri())
         return values
 
     def iter_by_class(self, cim_class) -> iter:
