@@ -27,7 +27,7 @@ Key features:
 * Single API method to obtain data for any CIM class. No more custom database queries.
 * Single API method to obtain data for EMS node-breaker transmission models, bus-branch planning models, and distribution feeder models.
 * Singe API method for both centralized and distributed architectures.
-* Support for multiple databases and query languages with no changes to upper-level graph data or API calls. Only need to change host/port specified in ConnectionParameters data object.
+* Support for multiple databases and query languages with no changes to upper-level graph data or API calls. Only need to change host/port specified in environment variables.
 * Ability to create CIM models "from scratch".
 * Open-source data engineering tool for management of CIM models.
 * Knowledge graph approach based on semantic understanding of CIM.
