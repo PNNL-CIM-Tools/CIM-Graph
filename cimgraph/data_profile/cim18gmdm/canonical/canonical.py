@@ -1303,6 +1303,130 @@ class CurveData(Identity):
     '''
 
 @dataclass(repr=False)
+class DiagramObjectGluePoint1(Identity):
+    '''
+    This is used for grouping diagram object points from different diagram
+    objects that are considered to be glued together in a diagram even if they
+    are not at the exact same coordinates.
+    '''
+
+@dataclass(repr=False)
+class DiagramObjectPoint1(Identity):
+    '''
+    A point in a given space defined by 3 coordinates and associated to a diagram
+    object. The coordinates may be positive or negative as the origin does
+    not have to be in the corner of a diagram.
+    '''
+
+    sequenceNumber: Optional[int] = field(
+        default=None,
+        metadata={
+        'type': 'Attribute',
+        'minOccurs': '0',
+        'maxOccurs': '1',
+        'namespace': 'http://cim.ucaiug.io/ns#',
+        'docstring':
+            '''
+            The sequence position of the point, used for defining the order of points
+            for diagram objects acting as a polyline or polygon with more than one
+            point. The attribute shall be a positive value.
+            '''
+
+        })
+    '''
+    The sequence position of the point, used for defining the order of
+    points for diagram objects acting as a polyline or polygon with more
+    than one point. The attribute shall be a positive value.
+    '''
+
+    xPosition: Optional[float] = field(
+        default=None,
+        metadata={
+        'type': 'Attribute',
+        'minOccurs': '0',
+        'maxOccurs': '1',
+        'namespace': 'http://cim.ucaiug.io/ns#',
+        'docstring':
+            '''
+            The X coordinate of this point.
+            '''
+
+        })
+    '''
+    The X coordinate of this point.
+    '''
+
+    yPosition: Optional[float] = field(
+        default=None,
+        metadata={
+        'type': 'Attribute',
+        'minOccurs': '0',
+        'maxOccurs': '1',
+        'namespace': 'http://cim.ucaiug.io/ns#',
+        'docstring':
+            '''
+            The Y coordinate of this point.
+            '''
+
+        })
+    '''
+    The Y coordinate of this point.
+    '''
+
+    zPosition: Optional[float] = field(
+        default=None,
+        metadata={
+        'type': 'Attribute',
+        'minOccurs': '0',
+        'maxOccurs': '1',
+        'namespace': 'http://cim.ucaiug.io/ns#',
+        'docstring':
+            '''
+            The Z coordinate of this point.
+            '''
+
+        })
+    '''
+    The Z coordinate of this point.
+    '''
+
+    DiagramObject: Optional[DiagramObject] = field(
+        default=None,
+        metadata={
+        'type': 'Association',
+        'minOccurs': '0',
+        'maxOccurs': '1',
+        'inverse': 'DiagramObject.DiagramObjectPoints',
+        'namespace': 'http://cim.ucaiug.io/ns#',
+        'docstring':
+            '''
+            The diagram object with which the points are associated.
+            '''
+
+        })
+    '''
+    The diagram object with which the points are associated.
+    '''
+
+    DiagramObjectGluePoint: Optional[DiagramObjectGluePoint] = field(
+        default=None,
+        metadata={
+        'type': 'Association',
+        'minOccurs': '0',
+        'maxOccurs': '1',
+        'inverse': 'DiagramObjectGluePoint.DiagramObjectPoints',
+        'namespace': 'http://cim.ucaiug.io/ns#',
+        'docstring':
+            '''
+            The 'glue' point to which this point is associated.
+            '''
+
+        })
+    '''
+    The 'glue' point to which this point is associated.
+    '''
+
+@dataclass(repr=False)
 class DocumentRole(Identity):
     '''
     An Organisation or Person role with respect to documents.
@@ -1571,11 +1695,77 @@ class Fuel(Identity):
     '''
 
 @dataclass(repr=False)
+class GeometricElement1(Identity):
+    '''
+    Exists solely as the parent of the separate geometry types (Point, Line,
+    Circle, Polygon) in order to create an xsd Choice between the types.
+    '''
+
+    Geometry: Optional[Geometry] = field(
+        default=None,
+        metadata={
+        'type': 'Association',
+        'minOccurs': '0',
+        'maxOccurs': '1',
+        'inverse': 'Geometry.GeometricElement',
+        'namespace': 'http://cim.ucaiug.io/ns#',
+        'docstring':
+            '''
+            '''
+
+        })
+    '''
+    '''
+
+    '''
+    ,
+    '''
+
+    identifier: Optional[str] = field(
+        default=None,
+        metadata={
+        'type': 'Attribute',
+        'minOccurs': '1',
+        'maxOccurs': '1',
+        'namespace': 'http://cim.ucaiug.io/ns#',
+        'docstring':
+            '''
+            A universally unique object identifier. Used to uniquely identify persistent
+            objects between CIM messages.
+            '''
+
+        })
+    '''
+    A universally unique object identifier. Used to uniquely identify persistent
+    objects between CIM messages.
+    '''
+
+@dataclass(repr=False)
 class DiagramObjectGluePoint(Identity):
     '''
     This is used for grouping diagram object points from different diagram
     objects that are considered to be glued together in a diagram even if they
     are not at the exact same coordinates.
+    '''
+
+    DiagramObjectPoints: list[DiagramObjectPoint] = field(
+        default_factory=list,
+        metadata={
+        'type': 'Association',
+        'minOccurs': '0',
+        'maxOccurs': 'unbounded',
+        'inverse': 'DiagramObjectPoint.DiagramObjectGluePoint',
+        'namespace': 'http://cim.ucaiug.io/ns#',
+        'docstring':
+            '''
+            A diagram object glue point is associated with 2 or more object points
+            that are considered to be 'glued' together.
+            '''
+
+        })
+    '''
+    A diagram object glue point is associated with 2 or more object points
+    that are considered to be 'glued' together.
     '''
 
     DiagramObjectPoints: list[DiagramObjectPoint] = field(
@@ -15051,6 +15241,26 @@ class DiagramObject(IdentifiedObject):
     routing (for polylines) or boundary (for polygons).
     '''
 
+    DiagramObjectPoints: list[DiagramObjectPoint] = field(
+        default_factory=list,
+        metadata={
+        'type': 'Association',
+        'minOccurs': '0',
+        'maxOccurs': 'unbounded',
+        'inverse': 'DiagramObjectPoint.DiagramObject',
+        'namespace': 'http://cim.ucaiug.io/ns#',
+        'docstring':
+            '''
+            A diagram object can have 0 or more points to reflect its layout position,
+            routing (for polylines) or boundary (for polygons).
+            '''
+
+        })
+    '''
+    A diagram object can have 0 or more points to reflect its layout position,
+    routing (for polylines) or boundary (for polygons).
+    '''
+
     drawingOrder: Optional[int] = field(
         default=None,
         metadata={
@@ -17242,6 +17452,22 @@ class FossilFuel(IdentifiedObject):
     A fuel allocation schedule shall have a fossil fuel.
     '''
 
+    PowerElectronicsThermalUnit: list[PowerElectronicsThermalUnit] = field(
+        default_factory=list,
+        metadata={
+        'type': 'Association',
+        'minOccurs': '0',
+        'maxOccurs': 'unbounded',
+        'inverse': 'PowerElectronicsThermalUnit.FossilFuels',
+        'namespace': 'http://epri.com/gmdm#',
+        'docstring':
+            '''
+            '''
+
+        })
+    '''
+    '''
+
     fuelHeatContent: Optional[float] = field(
         default=None,
         metadata={
@@ -17493,6 +17719,22 @@ class Geometry(IdentifiedObject):
     '''
     Geo-spatial representation of a physical location. A location may be represented
     as a Point, Line, Polygon, or Circle.
+    '''
+
+    GeometricElement: list[GeometricElement] = field(
+        default_factory=list,
+        metadata={
+        'type': 'Association',
+        'minOccurs': '0',
+        'maxOccurs': 'unbounded',
+        'inverse': 'GeometricElement.Geometry',
+        'namespace': 'http://cim.ucaiug.io/ns#',
+        'docstring':
+            '''
+            '''
+
+        })
+    '''
     '''
 
     GeometricElement: list[GeometricElement] = field(
@@ -21935,6 +22177,24 @@ class PerLengthPhaseImpedance(PerLengthImpedance):
     line segments. Coupled line segments share a single per length phase impedance
     matrix whose entries reflect the self and mutual impedances of all the
     phases of all the wires.
+    '''
+
+    PhaseImpedanceData: list[PhaseImpedanceData] = field(
+        default_factory=list,
+        metadata={
+        'type': 'Association',
+        'minOccurs': '0',
+        'maxOccurs': 'unbounded',
+        'inverse': 'PhaseImpedanceData.PhaseImpedance',
+        'namespace': 'http://cim.ucaiug.io/ns#',
+        'docstring':
+            '''
+            All data that belong to this conductor phase impedance.
+            '''
+
+        })
+    '''
+    All data that belong to this conductor phase impedance.
     '''
 
     PhaseImpedanceData: list[PhaseImpedanceData] = field(
@@ -35059,6 +35319,29 @@ class PowerElectronicsMarineUnit(PowerElectronicsUnit):
     Kind of marine unit.
     '''
 
+@dataclass(repr=False)
+class PowerElectronicsThermalUnit(PowerElectronicsUnit):
+    '''
+    A thermal unit that is connected via an inverter such as through a back-to-back
+    converter
+    '''
+
+    FossilFuels: Optional[FossilFuel] = field(
+        default=None,
+        metadata={
+        'type': 'Association',
+        'minOccurs': '0',
+        'maxOccurs': '1',
+        'inverse': 'FossilFuel.PowerElectronicsThermalUnit',
+        'namespace': 'http://epri.com/gmdm#',
+        'docstring':
+            '''
+            '''
+
+        })
+    '''
+    '''
+
 @stereotype(CIMStereotype.Concrete)
 @dataclass(repr=False)
 class PowerElectronicsWindUnit(PowerElectronicsUnit):
@@ -46193,6 +46476,189 @@ class Operator(Identity):
     '''
 
 @dataclass(repr=False)
+class PhaseImpedanceData1(Identity):
+    '''
+    Per length phase impedance matrix entry describes impedance and conductance
+    matrix element values for a specific row and column of the matrix.
+    The phases to which each entry applies can be determined by means of the
+    row and column attributes which bind to a sequence number provided in either
+    ACLineSegmentPhase or WirePosition (which also specify phase). Due to physical
+    symmetry that is reflected in the matrix, only the lower triangle of the
+    matrix is populated with the row and column method. That is, the column
+    attribute is always less than or equal to the row attribute.
+    '''
+
+    column: Optional[int] = field(
+        default=None,
+        metadata={
+        'type': 'Attribute',
+        'minOccurs': '0',
+        'maxOccurs': '1',
+        'namespace': 'http://cim.ucaiug.io/ns#',
+        'docstring':
+            '''
+            The matrix entry's column number has a range of possible values from 1
+            to the conductor count of the matrix, but due to symmetry, only entries
+            in the lower triangle (including diagonal) of the matrix need be defined.
+            Column number binds to the sequence number in either ACLineSegmentPhase
+            or WirePosition, which then identifies the phase for this entry.
+            '''
+
+        })
+    '''
+    The matrix entry's column number has a range of possible values from
+    1 to the conductor count of the matrix, but due to symmetry, only entries
+    in the lower triangle (including diagonal) of the matrix need be defined.
+    Column number binds to the sequence number in either ACLineSegmentPhase
+    or WirePosition, which then identifies the phase for this entry.
+    '''
+
+    row: Optional[int] = field(
+        default=None,
+        metadata={
+        'type': 'Attribute',
+        'minOccurs': '0',
+        'maxOccurs': '1',
+        'namespace': 'http://cim.ucaiug.io/ns#',
+        'docstring':
+            '''
+            The matrix entry's row number has a range of possible values from 1 to
+            the conductor count of the matrix, but due to symmetry, only entries in
+            the lower triangle (including diagonal) of the matrix need be defined.
+            Row number binds to the sequence number in either ACLineSegmentPhase or
+            WirePosition, which then identifies the phase for this entry.
+            '''
+
+        })
+    '''
+    The matrix entry's row number has a range of possible values from 1
+    to the conductor count of the matrix, but due to symmetry, only entries
+    in the lower triangle (including diagonal) of the matrix need be defined.
+    Row number binds to the sequence number in either ACLineSegmentPhase
+    or WirePosition, which then identifies the phase for this entry.
+    '''
+
+    b: Optional[ float | SusceptancePerLength ] = field(
+        default=None,
+        metadata={
+        'type': 'Attribute',
+        'minOccurs': '0',
+        'maxOccurs': '1',
+        'namespace': 'http://cim.ucaiug.io/ns#',
+        'docstring':
+            '''
+            Susceptance matrix entry value, per length of unit.
+            '''
+
+        })
+    '''
+    Susceptance matrix entry value, per length of unit.
+    '''
+
+    fromPhase: Optional[ SinglePhaseKind ] = field(
+        default=None,
+        metadata={
+        'type': 'enumeration Attribute',
+        'minOccurs': '0',
+        'maxOccurs': '1',
+        'namespace': 'http://cim.ucaiug.io/ns#',
+        'docstring':
+            '''
+            Refer to the class description.
+            '''
+
+        })
+    '''
+    Refer to the class description.
+    '''
+
+    g: Optional[ float | ConductancePerLength ] = field(
+        default=None,
+        metadata={
+        'type': 'Attribute',
+        'minOccurs': '0',
+        'maxOccurs': '1',
+        'namespace': 'http://cim.ucaiug.io/ns#',
+        'docstring':
+            '''
+            Conductance matrix entry value, per length of unit.
+            '''
+
+        })
+    '''
+    Conductance matrix entry value, per length of unit.
+    '''
+
+    r: Optional[ float | ResistancePerLength ] = field(
+        default=None,
+        metadata={
+        'type': 'Attribute',
+        'minOccurs': '0',
+        'maxOccurs': '1',
+        'namespace': 'http://cim.ucaiug.io/ns#',
+        'docstring':
+            '''
+            Resistance matrix entry value, per length of unit.
+            '''
+
+        })
+    '''
+    Resistance matrix entry value, per length of unit.
+    '''
+
+    toPhase: Optional[ SinglePhaseKind ] = field(
+        default=None,
+        metadata={
+        'type': 'enumeration Attribute',
+        'minOccurs': '0',
+        'maxOccurs': '1',
+        'namespace': 'http://cim.ucaiug.io/ns#',
+        'docstring':
+            '''
+            Refer to the class description.
+            '''
+
+        })
+    '''
+    Refer to the class description.
+    '''
+
+    x: Optional[ float | ReactancePerLength ] = field(
+        default=None,
+        metadata={
+        'type': 'Attribute',
+        'minOccurs': '0',
+        'maxOccurs': '1',
+        'namespace': 'http://cim.ucaiug.io/ns#',
+        'docstring':
+            '''
+            Reactance matrix entry value, per length of unit.
+            '''
+
+        })
+    '''
+    Reactance matrix entry value, per length of unit.
+    '''
+
+    PhaseImpedance: Optional[PerLengthPhaseImpedance] = field(
+        default=None,
+        metadata={
+        'type': 'Association',
+        'minOccurs': '0',
+        'maxOccurs': '1',
+        'inverse': 'PerLengthPhaseImpedance.PhaseImpedanceData',
+        'namespace': 'http://cim.ucaiug.io/ns#',
+        'docstring':
+            '''
+            Conductor phase impedance to which this data belongs.
+            '''
+
+        })
+    '''
+    Conductor phase impedance to which this data belongs.
+    '''
+
+@dataclass(repr=False)
 class PriceDescriptor(Identity):
     '''
     The price of a Commodity during a given time interval may change over time.
@@ -49932,6 +50398,24 @@ class ConverterControlModeKind(Enum):
     '''
     '''
 
+@stereotype(CIMStereotype.gmdm)
+@stereotype(CIMStereotype.enumeration)
+class ConverterControlModeKind1(Enum):
+    '''
+    '''
+
+    constantPowerFactor = 'constantPowerFactor'
+    '''
+    '''
+
+    constantReactivePower = 'constantReactivePower'
+    '''
+    '''
+
+    dynamic = 'dynamic'
+    '''
+    '''
+
 @stereotype(CIMStereotype.enumeration)
 @stereotype(CIMStereotype.Attribute)
 class CoolantType(Enum):
@@ -51390,6 +51874,209 @@ class OperationalLimitDirectionKind(Enum):
 @stereotype(CIMStereotype.enumeration)
 @stereotype(CIMStereotype.Attribute)
 class OrderedPhaseCodeKind(Enum):
+    '''
+    In some use cases, the ordering of phases is important. The PhaseCode class
+    does not represent order, but this class addresses such use cases. When
+    two or more phases are present, the individual phases may occur in any
+    order, but the neutral must always occur last. When only one phase and
+    the neutral is present, that phase and the neutral may be re-ordered.
+    '''
+
+    A = 'A'
+    '''
+    '''
+
+    AB = 'AB'
+    '''
+    '''
+
+    ABC = 'ABC'
+    '''
+    '''
+
+    ABCN = 'ABCN'
+    '''
+    '''
+
+    ABN = 'ABN'
+    '''
+    '''
+
+    AC = 'AC'
+    '''
+    '''
+
+    ACB = 'ACB'
+    '''
+    '''
+
+    ACBN = 'ACBN'
+    '''
+    '''
+
+    ACN = 'ACN'
+    '''
+    '''
+
+    AN = 'AN'
+    '''
+    '''
+
+    B = 'B'
+    '''
+    '''
+
+    BA = 'BA'
+    '''
+    '''
+
+    BAC = 'BAC'
+    '''
+    '''
+
+    BACN = 'BACN'
+    '''
+    '''
+
+    BAN = 'BAN'
+    '''
+    '''
+
+    BC = 'BC'
+    '''
+    '''
+
+    BCA = 'BCA'
+    '''
+    '''
+
+    BCAN = 'BCAN'
+    '''
+    '''
+
+    BCN = 'BCN'
+    '''
+    '''
+
+    BN = 'BN'
+    '''
+    '''
+
+    C = 'C'
+    '''
+    '''
+
+    CA = 'CA'
+    '''
+    '''
+
+    CAB = 'CAB'
+    '''
+    '''
+
+    CABN = 'CABN'
+    '''
+    '''
+
+    CAN = 'CAN'
+    '''
+    '''
+
+    CB = 'CB'
+    '''
+    '''
+
+    CBA = 'CBA'
+    '''
+    '''
+
+    CBAN = 'CBAN'
+    '''
+    '''
+
+    CBN = 'CBN'
+    '''
+    '''
+
+    CN = 'CN'
+    '''
+    '''
+
+    NA = 'NA'
+    '''
+    '''
+
+    NB = 'NB'
+    '''
+    '''
+
+    NC = 'NC'
+    '''
+    '''
+
+    Ns1 = 'Ns1'
+    '''
+    '''
+
+    Ns2 = 'Ns2'
+    '''
+    '''
+
+    X = 'X'
+    '''
+    '''
+
+    XN = 'XN'
+    '''
+    '''
+
+    XY = 'XY'
+    '''
+    '''
+
+    XYN = 'XYN'
+    '''
+    '''
+
+    none = 'none'
+    '''
+    '''
+
+    s1 = 's1'
+    '''
+    '''
+
+    s12 = 's12'
+    '''
+    '''
+
+    s12N = 's12N'
+    '''
+    '''
+
+    s1N = 's1N'
+    '''
+    '''
+
+    s2 = 's2'
+    '''
+    '''
+
+    s21 = 's21'
+    '''
+    '''
+
+    s21N = 's21N'
+    '''
+    '''
+
+    s2N = 's2N'
+    '''
+    '''
+
+@stereotype(CIMStereotype.gmdm)
+@stereotype(CIMStereotype.enumeration)
+class OrderedPhaseCodeKind1(Enum):
     '''
     In some use cases, the ordering of phases is important. The PhaseCode class
     does not represent order, but this class addresses such use cases. When

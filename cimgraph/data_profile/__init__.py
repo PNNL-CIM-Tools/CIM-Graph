@@ -7,4 +7,3 @@ class CIM_PROFILE(Enum):
     CIM16V33 = 'cim16v33'
     CIM17V40 = 'cim17v40'
     CIM18GMDM = 'cim18gmdm'
-
