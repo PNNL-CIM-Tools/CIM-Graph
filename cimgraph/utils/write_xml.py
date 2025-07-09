@@ -73,10 +73,10 @@ def write_xml(network: GraphModel, filename: str, namespaces: dict=None, write_i
             for parent in parent_classes:
                 for attribute in parent.__annotations__.keys():
                     # Skip over Identity.identifier attribute
-                    # if attribute == 'identifier' and write_identifier:
-                    #     row = f'  <cim:Identity.identifier>{obj.uri()}</cim:Identity.identifier>\n'
-                    #     f.write(row)
-                    #     continue
+                    if attribute == 'identifier' and write_identifier:
+                        row = f'  <cim:Identity.identifier>{obj.uri()}</cim:Identity.identifier>\n'
+                        f.write(row)
+                        continue
                     attribute_type = cim_class.__dataclass_fields__[attribute].type
                     rdf = f'{parent.__name__}.{attribute}'
                     attr_ns = cim_class.__dataclass_fields__[attribute].metadata['namespace']

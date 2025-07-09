@@ -279,18 +279,20 @@ class GraphModel():
                 value = getattr(obj, field.name)
 
                 if value is not None:
-                    inverse_ref = field.metadata['inverse']
-                    target_attr = inverse_ref.split('.')[1]
+                    try:
+                        inverse_ref = field.metadata['inverse']
+                        target_attr = inverse_ref.split('.')[1]
 
-                    # Handle different cardinality cases
-                    if isinstance(value, (list, set)):
-                        # Many-to-many or one-to-many
-                        for related_obj in value:
-                            clean_inverse_reference(related_obj, target_attr, obj)
-                    else:
-                        # One-to-one or many-to-one
-                        clean_inverse_reference(value, target_attr, obj)
-
+                        # Handle different cardinality cases
+                        if isinstance(value, (list, set)):
+                            # Many-to-many or one-to-many
+                            for related_obj in value:
+                                clean_inverse_reference(related_obj, target_attr, obj)
+                        else:
+                            # One-to-one or many-to-one
+                            clean_inverse_reference(value, target_attr, obj)
+                    except:
+                        _log.warning(f'Error cleaning inverse reference for {field.name} in {cim_class.__name__}')
 
 
         if obj_id in self.graph[cim_class]:
