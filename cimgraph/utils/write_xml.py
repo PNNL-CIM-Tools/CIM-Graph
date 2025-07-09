@@ -9,7 +9,7 @@ from cimgraph.models.graph_model import GraphModel
 _log = logging.getLogger(__name__)
 
 
-def write_xml(network: GraphModel, filename: str, namespaces: dict=None, write_identifier=False) -> None:
+def write_xml(network: GraphModel, filename: str, namespaces: dict=None, write_identifier=True) -> None:
     """
     Write the network graph to an XML file.
 
@@ -60,9 +60,11 @@ def write_xml(network: GraphModel, filename: str, namespaces: dict=None, write_i
     f.write(header)
 
     # Write each object in the network graph to the XML file
-    for root_class in list(network.graph.keys()):
+    classes = list(network.graph.keys())
+    sorted_classes = sorted(classes, key=lambda x: x.__name__)
+    for root_class in sorted_classes:
         counter = 0
-        for obj in network.graph[root_class].values():
+        for obj in network.list_by_class(root_class):
             cim_class = obj.__class__
             header = f'<cim:{cim_class.__name__} {rdf_header}{obj.uri()}">\n'
             f.write(header)
@@ -115,7 +117,7 @@ def write_xml(network: GraphModel, filename: str, namespaces: dict=None, write_i
                                     # except:
                                     #     _log.warning(obj.__dict__)
                         else:
-                            if edge is not None and edge != [] and rdf != 'Identity.identifier':
+                            if edge is not None and edge != []:
                                 row = f'  <{ns_prefix}:{parent.__name__}.{attribute}>{str(edge)}</{ns_prefix}:{parent.__name__}.{attribute}>\n'
                                 f.write(row)
             tail = f'</cim:{cim_class.__name__}>\n'
