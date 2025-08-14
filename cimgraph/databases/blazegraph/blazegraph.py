@@ -23,7 +23,7 @@ class BlazegraphConnection(ConnectionInterface):
     """
 
     def __init__(self):
-
+        super().__init__()
 
         self.sparql_obj = None
         self.url = get_url()
