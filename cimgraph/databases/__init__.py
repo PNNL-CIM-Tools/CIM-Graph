@@ -237,6 +237,5 @@ class ConnectionInterface(ABC):
 from cimgraph.databases.blazegraph import BlazegraphConnection
 from cimgraph.databases.fileparsers import XMLFile
 from cimgraph.databases.graphdb import GraphDBConnection
-from cimgraph.databases.gridappsd import GridappsdConnection
 from cimgraph.databases.neo4j import Neo4jConnection
 from cimgraph.databases.rdflib import RDFlibConnection
