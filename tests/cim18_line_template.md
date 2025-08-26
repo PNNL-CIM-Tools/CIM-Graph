@@ -943,6 +943,11 @@ impedance_3d.WireAssemblyInfo = template_3d
   <cim:IdentifiedObject.name>line_3d</cim:IdentifiedObject.name>
   <cim:Identity.identifier>c5ccb362-10ae-486b-9958-0c3d30b8485c</cim:Identity.identifier>
 </cim:ACLineSegment>
+<cim:CableInfo rdf:about="urn:uuid:487187ef-3bad-41c6-9725-4efccc5e544f">
+  <cim:IdentifiedObject.mRID>487187ef-3bad-41c6-9725-4efccc5e544f</cim:IdentifiedObject.mRID>
+  <cim:IdentifiedObject.name>Buried_Cable</cim:IdentifiedObject.name>
+  <cim:Identity.identifier>487187ef-3bad-41c6-9725-4efccc5e544f</cim:Identity.identifier>
+</cim:CableInfo>
 <cim:PerLengthSequenceImpedance rdf:about="urn:uuid:8b76f5db-b069-4185-8892-6fb449c44f82">
   <cim:PerLengthSequenceImpedance.bch>0.5</cim:PerLengthSequenceImpedance.bch>
   <cim:PerLengthSequenceImpedance.r>1.0</cim:PerLengthSequenceImpedance.r>
@@ -960,4 +965,11 @@ impedance_3d.WireAssemblyInfo = template_3d
   <cim:IdentifiedObject.name>template_3d</cim:IdentifiedObject.name>
   <cim:Identity.identifier>2330e25d-21c5-4fa3-8338-4be5412d105c</cim:Identity.identifier>
 </cim:WireAssemblyInfo>
+<cim:WirePhaseInfo rdf:about="urn:uuid:c308c694-a525-4f3f-a861-6f086a2a4862">
+  <gad:WirePhaseInfo.sequenceNumber>1</gad:WirePhaseInfo.sequenceNumber>
+  <gad:WirePhaseInfo.phase rdf:resource="http://gridappsd.org/CIM/extension#SinglePhaseKind.A"/>
+  <cim:WirePhaseInfo.WireAssemblyInfo rdf:resource="urn:uuid:2330e25d-21c5-4fa3-8338-4be5412d105c"/>
+  <cim:WirePhaseInfo.WireInfo rdf:resource="urn:uuid:487187ef-3bad-41c6-9725-4efccc5e544f"/>
+  <cim:Identity.identifier>c308c694-a525-4f3f-a861-6f086a2a4862</cim:Identity.identifier>
+</cim:WirePhaseInfo>
 ```
