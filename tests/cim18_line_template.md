@@ -196,7 +196,7 @@ impedance_2a.WireAssemblyInfo = template_2a
 
 ------
 
-## Model Option 3a
+## Model Option 2B
 
 Template for lower impedance matrix
 
@@ -375,6 +375,12 @@ classDiagram
         <<ShadowExtension>>
         + wireConstructionKind: enum:WireConstructionKind
     }
+        WireAssemblyInfo --> "0..1" EarthResistivity : EarthResistivity 
+    class EarthResistivity{
+        + earthModelType: enum:EarthModelKind
+        + earthReturnGMR: float | Length
+        + rho: float | Resistance
+    }
 ```
 
 #### CIM-Graph Python
@@ -547,6 +553,12 @@ classDiagram
         + outerJacketKind: enum:CableOuterJacketKind
         + shieldMaterial: enum:CableShieldMaterialKind
     }
+        WireAssemblyInfo --> "0..1" EarthResistivity : EarthResistivity 
+    class EarthResistivity{
+        + earthModelType: enum:EarthModelKind
+        + earthReturnGMR: float | Length
+        + rho: float | Resistance
+    }
 ```
 
 #### CIM-Graph Python
@@ -658,7 +670,7 @@ line_3b.WireAssemblyInfo = template_3b
 
 Transmission wire bundles & spacing
 
-
+```mermaid
 %%{init: {"theme":"neutral'}}%%
 classDiagram
     class ACLineSegment{
@@ -705,6 +717,12 @@ classDiagram
     WireBundleInfo --> "0..1" WireInfo : WireInfo 
     class WireInfo{
 
+    }
+        WireAssemblyInfo --> "0..1" EarthResistivity : EarthResistivity 
+    class EarthResistivity{
+        + earthModelType: enum:EarthModelKind
+        + earthReturnGMR: float | Length
+        + rho: float | Resistance
     }
 ```
 
