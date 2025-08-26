@@ -462,6 +462,11 @@ class UnitSymbol( Enum ):
     Weight per energy in kilograms per joule (kg/J). Note: multiplier “k” is
     included in this unit symbol for compatibility with IEC 61850-7-3.
     '''
+    kgPerm = 'kgPerm'
+    '''
+    Mass per unit length (kg/m) Note: multiplier “k” is included
+    in this unit symbol for compatibility with IEC 61850-7-3.
+    '''
     kgPerm3 = 'kgPerm3'
     '''
     Density in kilogram/cubic metres (kg/m³). Note: multiplier “k” is included

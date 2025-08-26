@@ -5,6 +5,7 @@ import logging
 
 from cimgraph.data_profile.known_problem_classes import ClassesWithManytoMany
 from cimgraph.models.graph_model import GraphModel
+from cimgraph.data_profile.units import CIMUnit
 
 _log = logging.getLogger(__name__)
 
@@ -92,6 +93,9 @@ def write_xml(network: GraphModel, filename: str, namespaces: dict=None, write_i
                                     resource = f'rdf:resource="{attr_ns}{str(edge)}"'
                                     row = f'  <{ns_prefix}:{parent.__name__}.{attribute} {resource}/>\n'
                                     f.write(row)
+                                elif isinstance(edge, CIMUnit):
+                                    row = f'  <{ns_prefix}:{parent.__name__}.{attribute}>{str(edge.quantity.magnitude)}</{ns_prefix}:{parent.__name__}.{attribute}>\n'
+                                    f.write(row)
                                 elif type(edge) is str or type(edge) is bool or type(edge) is float:
                                     row = f'  <{ns_prefix}:{parent.__name__}.{attribute}>{str(edge)}</{ns_prefix}:{parent.__name__}.{attribute}>\n'
                                     f.write(row)
@@ -117,7 +121,10 @@ def write_xml(network: GraphModel, filename: str, namespaces: dict=None, write_i
                                     # except:
                                     #     _log.warning(obj.__dict__)
                         else:
-                            if edge is not None and edge != []:
+                            if isinstance(edge, CIMUnit):
+                                    row = f'  <{ns_prefix}:{parent.__name__}.{attribute}>{str(edge.quantity.magnitude)}</{ns_prefix}:{parent.__name__}.{attribute}>\n'
+                                    f.write(row)
+                            elif edge is not None and edge != []:
                                 row = f'  <{ns_prefix}:{parent.__name__}.{attribute}>{str(edge)}</{ns_prefix}:{parent.__name__}.{attribute}>\n'
                                 f.write(row)
             tail = f'</cim:{cim_class.__name__}>\n'

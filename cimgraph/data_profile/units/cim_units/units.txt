@@ -58,6 +58,7 @@ ft3 = feet * feet * feet = ft³
 gPerg = gram / gram = g/g
 katPerm3 = katal / meter / meter / meter = kat/m³
 kgPerJ = kilogram / joule = kg/J
+kgPerm = kilogram / meter = kg/m
 kgPerm3 = kilogram / meter / meter / meter = kg/m³
 kgm = kilogram * meter = kg·m
 kgm2 = kilogram * meter * meter = kg·m²
