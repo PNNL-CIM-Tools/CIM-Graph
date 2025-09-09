@@ -57,7 +57,7 @@ classDiagram
     class Conductor{
         + length: float | Length
     }
-    ACLineSegment --> "0..1" PerLengthImpedance : PerLengthImpedance 
+    ACLineSegment --> "0..1" PerLengthImpedance : PerLengthImpedance
     class PerLengthImpedance{
     }
     PerLengthImpedance <|-- PerLengthSequenceImpedance : inherits from
@@ -123,13 +123,13 @@ classDiagram
     class Conductor{
         + length: float | Length
     }
-    ACLineSegment --> "0..1" WireAssemblyInfo : WireAssemblyInfo 
+    ACLineSegment --> "0..1" WireAssemblyInfo : WireAssemblyInfo
     class WireAssemblyInfo{
         + numberOfPhases: int
         + installationType: enum:WireInstallationKind
         + usage: enum:WireUsageKind
     }
-    WireAssemblyInfo --> "0..1" PerLengthImpedance : PerLengthImpedance 
+    WireAssemblyInfo --> "0..1" PerLengthImpedance : PerLengthImpedance
     class PerLengthImpedance{
     }
     PerLengthImpedance <|-- PerLengthSequenceImpedance : inherits from
@@ -206,12 +206,12 @@ classDiagram
     class ACLineSegment{
 
     }
-    ACLineSegment --> "0..*" ACLineSegmentPhase : ACLineSegmentPhases 
+    ACLineSegment --> "0..*" ACLineSegmentPhase : ACLineSegmentPhases
     class ACLineSegmentPhase{
         + sequenceNumber: int
         + phase: enum:SinglePhaseKind
     }
-    ACLineSegmentPhase --> "0..1" ACLineSegment : ACLineSegment 
+    ACLineSegmentPhase --> "0..1" ACLineSegment : ACLineSegment
     class PhaseImpedanceData{
         + column: int
         + row: int
@@ -222,19 +222,19 @@ classDiagram
         + toPhase: enum:SinglePhaseKind
         + x: float | ReactancePerLength
     }
-    ACLineSegment --> "0..1" WireAssemblyInfo : WireAssemblyInfo 
+    ACLineSegment --> "0..1" WireAssemblyInfo : WireAssemblyInfo
     class WireAssemblyInfo{
         + numberOfPhases: int
         + installationType: enum:WireInstallationKind
         + usage: enum:WireUsageKind
     }
-    WireAssemblyInfo --> "0..1" PerLengthImpedance : PerLengthImpedance 
+    WireAssemblyInfo --> "0..1" PerLengthImpedance : PerLengthImpedance
     class PerLengthImpedance{
     }
     PerLengthImpedance <|-- PerLengthPhaseImpedance : inherits from
     class PerLengthPhaseImpedance{
     }
-    PhaseImpedanceData --> "0..1" PerLengthPhaseImpedance : PhaseImpedance 
+    PhaseImpedanceData --> "0..1" PerLengthPhaseImpedance : PhaseImpedance
     class PerLengthPhaseImpedance{
         + conductorCount: int
     }
@@ -323,37 +323,37 @@ classDiagram
     class ACLineSegment{
 
     }
-    ACLineSegment --> "0..*" ACLineSegmentPhase : ACLineSegmentPhases 
+    ACLineSegment --> "0..*" ACLineSegmentPhase : ACLineSegmentPhases
     class ACLineSegmentPhase{
         + sequenceNumber: int
         + phase: enum:SinglePhaseKind
     }
-    ACLineSegmentPhase --> "0..1" ACLineSegment : ACLineSegment 
+    ACLineSegmentPhase --> "0..1" ACLineSegment : ACLineSegment
     class WirePosition{
         + sequenceNumber: int
         + phase: enum:SinglePhaseKind
         + xCoord: float | Displacement
         + yCoord: float | Displacement
     }
-    ACLineSegment --> "0..1" WireAssemblyInfo : WireAssemblyInfo 
+    ACLineSegment --> "0..1" WireAssemblyInfo : WireAssemblyInfo
     class WireAssemblyInfo{
         + numberOfPhases: int
         + installationType: enum:WireInstallationKind
         + usage: enum:WireUsageKind
     }
-    WireAssemblyInfo --> "0..1" WireSpacingInfo : WireSpacingInfo 
+    WireAssemblyInfo --> "0..1" WireSpacingInfo : WireSpacingInfo
     class WireSpacingInfo{
         + spacingType: enum:WireSpacingKind
     }
-    WirePosition --> "0..1" WireSpacingInfo : WireSpacingInfo 
+    WirePosition --> "0..1" WireSpacingInfo : WireSpacingInfo
     class WireSpacingInfo{
     }
-    WireAssemblyInfo --> "0..*" WirePhaseInfo : WirePhaseInfo 
+    WireAssemblyInfo --> "0..*" WirePhaseInfo : WirePhaseInfo
     class WirePhaseInfo{
         + sequenceNumber: int
         + phase: enum:SinglePhaseKind
     }
-    WirePhaseInfo --> "0..1" WireInfo : WireInfo 
+    WirePhaseInfo --> "0..1" WireInfo : WireInfo
     class WireInfo{
         <<ShadowExtension>>
         + coreStrandCount: int
@@ -375,7 +375,7 @@ classDiagram
         <<ShadowExtension>>
         + wireConstructionKind: enum:WireConstructionKind
     }
-        WireAssemblyInfo --> "0..1" EarthResistivity : EarthResistivity 
+        WireAssemblyInfo --> "0..1" EarthResistivity : EarthResistivity
     class EarthResistivity{
         + earthModelType: enum:EarthModelKind
         + earthReturnGMR: float | Length
@@ -504,12 +504,12 @@ classDiagram
     class ACLineSegment{
 
     }
-    ACLineSegment --> "0..*" ACLineSegmentPhase : ACLineSegmentPhases 
+    ACLineSegment --> "0..*" ACLineSegmentPhase : ACLineSegmentPhases
     class ACLineSegmentPhase{
         + sequenceNumber: int
         + phase: enum:SinglePhaseKind
     }
-    ACLineSegmentPhase --> "0..1" ACLineSegment : ACLineSegment 
+    ACLineSegmentPhase --> "0..1" ACLineSegment : ACLineSegment
     class PhaseToPhaseSpacing{
         + sequenceNumberWire1: int
         + sequenceNumberWire2: int
@@ -517,25 +517,25 @@ classDiagram
         + fromPhase: enum:SinglePhaseKind
         + toPhase: enum:SinglePhaseKind
     }
-    ACLineSegment --> "0..1" WireAssemblyInfo : WireAssemblyInfo 
+    ACLineSegment --> "0..1" WireAssemblyInfo : WireAssemblyInfo
     class WireAssemblyInfo{
         + numberOfPhases: int
         + installationType: enum:WireInstallationKind
         + usage: enum:WireUsageKind
     }
-    WireAssemblyInfo --> "0..1" WireSpacingInfo : WireSpacingInfo 
+    WireAssemblyInfo --> "0..1" WireSpacingInfo : WireSpacingInfo
     class WireSpacingInfo{
         + spacingType: enum:WireSpacingKind
     }
-    PhaseToPhaseSpacing --> "0..1" WireSpacingInfo : WireSpacingInfo 
+    PhaseToPhaseSpacing --> "0..1" WireSpacingInfo : WireSpacingInfo
     class WireSpacingInfo{
     }
-    WireAssemblyInfo --> "0..*" WirePhaseInfo : WirePhaseInfo 
+    WireAssemblyInfo --> "0..*" WirePhaseInfo : WirePhaseInfo
     class WirePhaseInfo{
         + sequenceNumber: int
         + phase: enum:SinglePhaseKind
     }
-    WirePhaseInfo --> "0..1" WireInfo : WireInfo 
+    WirePhaseInfo --> "0..1" WireInfo : WireInfo
     class WireInfo{
         <<ShadowExtension>>
     }
@@ -553,7 +553,7 @@ classDiagram
         + outerJacketKind: enum:CableOuterJacketKind
         + shieldMaterial: enum:CableShieldMaterialKind
     }
-        WireAssemblyInfo --> "0..1" EarthResistivity : EarthResistivity 
+        WireAssemblyInfo --> "0..1" EarthResistivity : EarthResistivity
     class EarthResistivity{
         + earthModelType: enum:EarthModelKind
         + earthReturnGMR: float | Length
@@ -676,12 +676,12 @@ classDiagram
     class ACLineSegment{
 
     }
-    ACLineSegment --> "0..*" ACLineSegmentPhase : ACLineSegmentPhases 
+    ACLineSegment --> "0..*" ACLineSegmentPhase : ACLineSegmentPhases
     class ACLineSegmentPhase{
         + sequenceNumber: int
         + phase: enum:SinglePhaseKind
     }
-    ACLineSegmentPhase --> "0..1" ACLineSegment : ACLineSegment 
+    ACLineSegmentPhase --> "0..1" ACLineSegment : ACLineSegment
     class PhaseToPhaseSpacing{
         + sequenceNumberWire1: int
         + sequenceNumberWire2: int
@@ -689,36 +689,36 @@ classDiagram
         + fromPhase: enum:SinglePhaseKind
         + toPhase: enum:SinglePhaseKind
     }
-    ACLineSegment --> "0..1" WireAssemblyInfo : WireAssemblyInfo 
+    ACLineSegment --> "0..1" WireAssemblyInfo : WireAssemblyInfo
     class WireAssemblyInfo{
         + numberOfPhases: int
         + installationType: enum:WireInstallationKind
         + usage: enum:WireUsageKind
     }
-    WireAssemblyInfo --> "0..1" WireSpacingInfo : WireSpacingInfo 
+    WireAssemblyInfo --> "0..1" WireSpacingInfo : WireSpacingInfo
     class WireSpacingInfo{
         + spacingType: enum:WireSpacingKind
     }
-    PhaseToPhaseSpacing --> "0..1" WireSpacingInfo : WireSpacingInfo 
+    PhaseToPhaseSpacing --> "0..1" WireSpacingInfo : WireSpacingInfo
     class WireSpacingInfo{
     }
-    WireAssemblyInfo --> "0..*" WirePhaseInfo : WirePhaseInfo 
+    WireAssemblyInfo --> "0..*" WirePhaseInfo : WirePhaseInfo
     class WirePhaseInfo{
         + sequenceNumber: int
         + phase: enum:SinglePhaseKind
     }
-    WirePhaseInfo --> "0..1" WireBundleInfo : WireBundleInfo 
+    WirePhaseInfo --> "0..1" WireBundleInfo : WireBundleInfo
     class WireBundleInfo{
         + wireCount: int
         + gmr: float | Length
         + radius: float | Length
         + wireSpacing: float | Displacement
     }
-    WireBundleInfo --> "0..1" WireInfo : WireInfo 
+    WireBundleInfo --> "0..1" WireInfo : WireInfo
     class WireInfo{
 
     }
-        WireAssemblyInfo --> "0..1" EarthResistivity : EarthResistivity 
+        WireAssemblyInfo --> "0..1" EarthResistivity : EarthResistivity
     class EarthResistivity{
         + earthModelType: enum:EarthModelKind
         + earthReturnGMR: float | Length
@@ -858,13 +858,13 @@ classDiagram
     class Conductor{
         + length: float | Length
     }
-    ACLineSegment --> "0..1" WireAssemblyInfo : WireAssemblyInfo 
+    ACLineSegment --> "0..1" WireAssemblyInfo : WireAssemblyInfo
     class WireAssemblyInfo{
         + numberOfPhases: int
         + installationType: enum:WireInstallationKind
         + usage: enum:WireUsageKind
     }
-    WireAssemblyInfo --> "0..1" PerLengthImpedance : PerLengthImpedance 
+    WireAssemblyInfo --> "0..1" PerLengthImpedance : PerLengthImpedance
     class PerLengthImpedance{
     }
     PerLengthImpedance <|-- PerLengthSequenceImpedance : inherits from
@@ -878,12 +878,12 @@ classDiagram
         + x: float | ReactancePerLength
         + x0: float | ReactancePerLength
     }
-    WireAssemblyInfo --> "0..*" WirePhaseInfo : WirePhaseInfo 
+    WireAssemblyInfo --> "0..*" WirePhaseInfo : WirePhaseInfo
     class WirePhaseInfo{
         + sequenceNumber: int
         + phase: enum:SinglePhaseKind
     }
-    WirePhaseInfo --> "0..1" WireInfo : WireInfo 
+    WirePhaseInfo --> "0..1" WireInfo : WireInfo
     class WireInfo{
         <<ShadowExtension>>
     }

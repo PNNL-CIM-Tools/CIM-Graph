@@ -4,8 +4,8 @@ import enum
 import logging
 
 from cimgraph.data_profile.known_problem_classes import ClassesWithManytoMany
-from cimgraph.models.graph_model import GraphModel
 from cimgraph.data_profile.units import CIMUnit
+from cimgraph.models.graph_model import GraphModel
 
 _log = logging.getLogger(__name__)
 

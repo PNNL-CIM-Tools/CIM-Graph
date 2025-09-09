@@ -5,6 +5,7 @@ from enum import Enum
 from random import Random
 from typing import Any, Dict, List, Optional, Union
 from uuid import UUID, uuid4
+
 from cimgraph.data_profile.units.units import CIMUnit
 
 # Global configuration
@@ -198,11 +199,11 @@ class Identity:
                 if not show_empty:
                     del dump[attribute]
                 continue
-            
+
             # Handle CIM Unit attributes
             elif attribute in dump and isinstance(dump[attribute], CIMUnit):
                 dump[attribute] = dump[attribute].value
-            
+
             # Handle dataclass attributes
             if attribute in dump and is_dataclass(dump[attribute]):
                 if use_names and hasattr(dump[attribute], 'name'):
