@@ -23,9 +23,14 @@ def write_json_ld(network: GraphModel, filename: str, namespaces: dict=None, ind
         None
 
     """
-    if namespaces is None:
-        namespaces = {'cim': 'http://iec.ch/TC57/CIM100#',
-                      'rdf': 'http://www.w3.org/1999/02/22-rdf-syntax-ns#'}
+    default_namespaces = {'cim': 'http://iec.ch/TC57/CIM100#',
+                        'eu': 'http://iec.ch/TC57/CIM100-European#',
+                        'nc': 'http://entsoe.eu/ns/nc#',
+                        'gb': 'http://GB/placeholder/ext#',
+                        'rdf': 'http://www.w3.org/1999/02/22-rdf-syntax-ns#'}
+    if namespaces is not None:
+            default_namespaces.update(namespaces)
+    namespaces = default_namespaces
 
     # Create reverse lookup for namespace
     reverse_ns_lookup = {v: k for k, v in namespaces.items()}
@@ -37,15 +42,7 @@ def write_json_ld(network: GraphModel, filename: str, namespaces: dict=None, ind
     f = open(filename, 'w', encoding='utf-8')
     f.write('{\n')
 
-    context = {
-        'rdf': 'http://www.w3.org/1999/02/22-rdf-syntax-ns#',
-        'cim': 'http://ucaiug.org/ns/CIM#',
-        'eu': 'http://iec.ch/TC57/CIM100-European#',
-        'dcterms': 'http://purl.org/dc/terms/',
-        'dcat': 'http://www.w3.org/ns/dcat#',
-        'prov': 'http://www.w3.org/ns/prov#',
-        'xsd': 'http://www.w3.org/2001/XMLSchema#'
-        }
+    context = namespaces
     f.write(' '*indent + '"@context": ')
     f.write(json.dumps(context, indent=indent).replace('\n', '\n' + ' '*indent)+',\n')
 

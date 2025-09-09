@@ -204,6 +204,7 @@ class Terminal(ACDCTerminal):
     TopologicalNode as well as for equipment between two terminals shall
     be consistent.
     '''
+<<<<<<< HEAD
 
     Bushing: Optional[Bushing] = field(
         default=None,
@@ -221,6 +222,9 @@ class Terminal(ACDCTerminal):
     '''
     '''
 
+=======
+    
+>>>>>>> 81756bc (add usagepoint profile)
     ConductingEquipment: Optional[ConductingEquipment] = field(
         default=None,
         metadata={
@@ -320,6 +324,7 @@ class Bushing(Asset):
     Bushing asset.
     '''
 
+<<<<<<< HEAD
     Terminal: Optional[Terminal] = field(
         default=None,
         metadata={
@@ -338,6 +343,8 @@ class Bushing(Asset):
     Terminal to which this bushing is attached.
     '''
 
+=======
+>>>>>>> 81756bc (add usagepoint profile)
 @dataclass(repr=False)
 class Crossarm(Asset):
     '''
@@ -377,6 +384,30 @@ class Crossarm(Asset):
     '''
     '''
 
+@dataclass(repr=False)
+class OverheadStructure(Asset):
+    '''
+    A structure is an element of an electric transmission or distribution system
+    that supports the overhead conductors and associated equipment used for
+    the transmission of electricity.
+    '''
+
+    Crossarm: list[Crossarm] = field(
+        default_factory=list,
+        metadata={
+        'type': 'Association',
+        'minOccurs': '0',
+        'maxOccurs': 'unbounded',
+        'inverse': 'Crossarm.OverheadStructure',
+        'namespace': 'http://iec.ch/TC57/CIM101#',
+        'docstring':
+            '''
+            '''
+        
+        })
+    '''
+    '''
+    
 @dataclass(repr=False)
 class AssetInfo(IdentifiedObject):
     '''
@@ -624,7 +655,534 @@ class ConductorInfo(ConductingAssetInfo):
     '''
     DC resistance per unit length of the conductor at 20 �C.
     '''
+<<<<<<< HEAD
 
+=======
+    
+@stereotype(CIMStereotype.ShadowExtension)
+@dataclass(repr=False)
+class WireInfo(ConductorInfo):
+    '''
+    Wire data that can be specified per line segment phase, or for the line
+    segment as a whole in case its phases all have the same wire characteristics.
+    '''
+
+    ACLineSegmentPhase: list[ACLineSegmentPhase] = field(
+        default_factory=list,
+        metadata={
+        'type': 'Association',
+        'minOccurs': '0',
+        'maxOccurs': 'unbounded',
+        'inverse': 'ACLineSegmentPhase.WireInfo',
+        'namespace': 'http://iec.ch/TC57/CIM101#',
+        'docstring':
+            '''
+            '''
+        
+        })
+    '''
+    '''
+    
+    WireBundleInfo: list[WireBundleInfo] = field(
+        default_factory=list,
+        metadata={
+        'type': 'Association',
+        'minOccurs': '0',
+        'maxOccurs': 'unbounded',
+        'inverse': 'WireBundleInfo.WireInfo',
+        'namespace': 'http://gridappsd.org/CIM/extension#',
+        'docstring':
+            '''
+            '''
+        
+        })
+    '''
+    '''
+    
+    WirePhaseInfo: list[WirePhaseInfo] = field(
+        default_factory=list,
+        metadata={
+        'type': 'Association',
+        'minOccurs': '0',
+        'maxOccurs': 'unbounded',
+        'inverse': 'WirePhaseInfo.WireInfo',
+        'namespace': 'http://iec.ch/TC57/CIM101#',
+        'docstring':
+            '''
+            Wire phase information associated with this wire information.
+            '''
+        
+        })
+    '''
+    Wire phase information associated with this wire information.
+    '''
+    
+    coreStrandCount: Optional[int] = field(
+        default=None,
+        metadata={
+        'type': 'Attribute',
+        'minOccurs': '0',
+        'maxOccurs': '1',
+        'namespace': 'http://iec.ch/TC57/CIM101#',
+        'docstring':
+            '''
+            (if used) Number of strands in the steel core.
+            '''
+        
+        })
+    '''
+    (if used) Number of strands in the steel core.
+    '''
+    
+    insulated: Optional[bool] = field(
+        default=None,
+        metadata={
+        'type': 'Attribute',
+        'minOccurs': '0',
+        'maxOccurs': '1',
+        'namespace': 'http://iec.ch/TC57/CIM101#',
+        'docstring':
+            '''
+            True if conductor is insulated.
+            '''
+        
+        })
+    '''
+    True if conductor is insulated.
+    '''
+    
+    sizeDescription: Optional[str] = field(
+        default=None,
+        metadata={
+        'type': 'Attribute',
+        'minOccurs': '0',
+        'maxOccurs': '1',
+        'namespace': 'http://iec.ch/TC57/CIM101#',
+        'docstring':
+            '''
+            Describes the wire gauge or cross section (e.g., 4/0, #2, 336.5).
+            '''
+        
+        })
+    '''
+    Describes the wire gauge or cross section (e.g., 4/0, #2, 336.5).
+    '''
+    
+    strandCount: Optional[int] = field(
+        default=None,
+        metadata={
+        'type': 'Attribute',
+        'minOccurs': '0',
+        'maxOccurs': '1',
+        'namespace': 'http://iec.ch/TC57/CIM101#',
+        'docstring':
+            '''
+            Number of strands in the conductor.
+            '''
+        
+        })
+    '''
+    Number of strands in the conductor.
+    '''
+    
+    constructionKind: Optional[ WireMaterialKind ] = field(
+        default=None,
+        metadata={
+        'type': 'enumeration Attribute',
+        'minOccurs': '0',
+        'maxOccurs': '1',
+        'namespace': 'http://iec.ch/TC57/CIM101#',
+        'docstring':
+            '''
+            '''
+        
+        })
+    '''
+    '''
+    
+    coreRadius: Optional[ float | Length ] = field(
+        default=None,
+        metadata={
+        'type': 'Attribute',
+        'minOccurs': '0',
+        'maxOccurs': '1',
+        'namespace': 'http://iec.ch/TC57/CIM101#',
+        'docstring':
+            '''
+            (if there is a different core material) Radius of the central core.
+            '''
+        
+        })
+    '''
+    (if there is a different core material) Radius of the central core.
+    '''
+    
+    coreStrandRadius: Optional[ float | Length ] = field(
+        default=None,
+        metadata={
+        'type': 'Attribute',
+        'minOccurs': '0',
+        'maxOccurs': '1',
+        'namespace': 'http://iec.ch/TC57/CIM101#',
+        'docstring':
+            '''
+            '''
+        
+        })
+    '''
+    '''
+    
+    gmr: Optional[ float | Length ] = field(
+        default=None,
+        metadata={
+        'type': 'Attribute',
+        'minOccurs': '0',
+        'maxOccurs': '1',
+        'namespace': 'http://iec.ch/TC57/CIM101#',
+        'docstring':
+            '''
+            Geometric mean radius. If we replace the conductor by a thin walled tube
+            of radius GMR, then its reactance is identical to the reactance of the
+            actual conductor.
+            '''
+        
+        })
+    '''
+    Geometric mean radius. If we replace the conductor by a thin walled
+    tube of radius GMR, then its reactance is identical to the reactance
+    of the actual conductor.
+    '''
+    
+    insulationMaterial: Optional[ WireInsulationKind ] = field(
+        default=None,
+        metadata={
+        'type': 'enumeration Attribute',
+        'minOccurs': '0',
+        'maxOccurs': '1',
+        'namespace': 'http://iec.ch/TC57/CIM101#',
+        'docstring':
+            '''
+            (if insulated conductor) Material used for insulation.
+            '''
+        
+        })
+    '''
+    (if insulated conductor) Material used for insulation.
+    '''
+    
+    insulationThickness: Optional[ float | Length ] = field(
+        default=None,
+        metadata={
+        'type': 'Attribute',
+        'minOccurs': '0',
+        'maxOccurs': '1',
+        'namespace': 'http://iec.ch/TC57/CIM101#',
+        'docstring':
+            '''
+            (if insulated conductor) Thickness of the insulation.
+            '''
+        
+        })
+    '''
+    (if insulated conductor) Thickness of the insulation.
+    '''
+    
+    radius: Optional[ float | Length ] = field(
+        default=None,
+        metadata={
+        'type': 'Attribute',
+        'minOccurs': '0',
+        'maxOccurs': '1',
+        'namespace': 'http://iec.ch/TC57/CIM101#',
+        'docstring':
+            '''
+            Outside radius of the wire.
+            '''
+        
+        })
+    '''
+    Outside radius of the wire.
+    '''
+    
+    ratedStrength: Optional[ float | Force ] = field(
+        default=None,
+        metadata={
+        'type': 'Attribute',
+        'minOccurs': '0',
+        'maxOccurs': '1',
+        'namespace': 'http://iec.ch/TC57/CIM101#',
+        'docstring':
+            '''
+            '''
+        
+        })
+    '''
+    '''
+    
+    strandRadius: Optional[ float | Length ] = field(
+        default=None,
+        metadata={
+        'type': 'Attribute',
+        'minOccurs': '0',
+        'maxOccurs': '1',
+        'namespace': 'http://iec.ch/TC57/CIM101#',
+        'docstring':
+            '''
+            '''
+        
+        })
+    '''
+    '''
+    
+@stereotype(CIMStereotype.ShadowExtension)
+@dataclass(repr=False)
+class BareWireInfo(WireInfo):
+    '''
+    Bare wire data.
+    '''
+
+    wireConstructionKind: Optional[ WireConstructionKind ] = field(
+        default=None,
+        metadata={
+        'type': 'enumeration Attribute',
+        'minOccurs': '0',
+        'maxOccurs': '1',
+        'namespace': 'http://iec.ch/TC57/CIM101#',
+        'docstring':
+            '''
+            Kind of wire construction
+            '''
+        
+        })
+    '''
+    Kind of wire construction
+    '''
+    
+@stereotype(CIMStereotype.ShadowExtension)
+@dataclass(repr=False)
+class CableInfo(WireInfo):
+    '''
+    Cable data.
+    '''
+
+    InsulationInfo: Optional[InsulationInfo] = field(
+        default=None,
+        metadata={
+        'type': 'Association',
+        'minOccurs': '0',
+        'maxOccurs': '1',
+        'inverse': 'InsulationInfo.CableInfo',
+        'namespace': 'http://iec.ch/TC57/CIM101#',
+        'docstring':
+            '''
+            '''
+        
+        })
+    '''
+    '''
+    
+    isStrandFill: Optional[bool] = field(
+        default=None,
+        metadata={
+        'type': 'Attribute',
+        'minOccurs': '0',
+        'maxOccurs': '1',
+        'namespace': 'http://iec.ch/TC57/CIM101#',
+        'docstring':
+            '''
+            True if wire strands are extruded in a way to fill the voids in the cable.
+            '''
+        
+        })
+    '''
+    True if wire strands are extruded in a way to fill the voids in the
+    cable.
+    '''
+    
+    sheathAsNeutral: Optional[bool] = field(
+        default=None,
+        metadata={
+        'type': 'Attribute',
+        'minOccurs': '0',
+        'maxOccurs': '1',
+        'namespace': 'http://iec.ch/TC57/CIM101#',
+        'docstring':
+            '''
+            True if sheath / shield is used as a neutral (i.e., bonded).
+            '''
+        
+        })
+    '''
+    True if sheath / shield is used as a neutral (i.e., bonded).
+    '''
+    
+    constructionKind: Optional[ CableConstructionKind ] = field(
+        default=None,
+        metadata={
+        'type': 'enumeration Attribute',
+        'minOccurs': '0',
+        'maxOccurs': '1',
+        'namespace': 'http://iec.ch/TC57/CIM101#',
+        'docstring':
+            '''
+            Kind of construction of this cable.
+            '''
+        
+        })
+    '''
+    Kind of construction of this cable.
+    '''
+    
+    diameterOverCore: Optional[ float | Length ] = field(
+        default=None,
+        metadata={
+        'type': 'Attribute',
+        'minOccurs': '0',
+        'maxOccurs': '1',
+        'namespace': 'http://iec.ch/TC57/CIM101#',
+        'docstring':
+            '''
+            Diameter over the core, including any semi-con screen; should be the insulating
+            layer's inside diameter.
+            '''
+        
+        })
+    '''
+    Diameter over the core, including any semi-con screen; should be the
+    insulating layer's inside diameter.
+    '''
+    
+    diameterOverInsulation: Optional[ float | Length ] = field(
+        default=None,
+        metadata={
+        'type': 'Attribute',
+        'minOccurs': '0',
+        'maxOccurs': '1',
+        'namespace': 'http://iec.ch/TC57/CIM101#',
+        'docstring':
+            '''
+            Diameter over the insulating layer, excluding outer screen.
+            '''
+        
+        })
+    '''
+    Diameter over the insulating layer, excluding outer screen.
+    '''
+    
+    diameterOverJacket: Optional[ float | Length ] = field(
+        default=None,
+        metadata={
+        'type': 'Attribute',
+        'minOccurs': '0',
+        'maxOccurs': '1',
+        'namespace': 'http://iec.ch/TC57/CIM101#',
+        'docstring':
+            '''
+            Diameter over the outermost jacketing layer.
+            '''
+        
+        })
+    '''
+    Diameter over the outermost jacketing layer.
+    '''
+    
+    diameterOverScreen: Optional[ float | Length ] = field(
+        default=None,
+        metadata={
+        'type': 'Attribute',
+        'minOccurs': '0',
+        'maxOccurs': '1',
+        'namespace': 'http://iec.ch/TC57/CIM101#',
+        'docstring':
+            '''
+            Diameter over the outer screen; should be the shield's inside diameter.
+            '''
+        
+        })
+    '''
+    Diameter over the outer screen; should be the shield's inside diameter.
+    '''
+    
+    nominalTemperature: Optional[ float | Temperature ] = field(
+        default=None,
+        metadata={
+        'type': 'Attribute',
+        'minOccurs': '0',
+        'maxOccurs': '1',
+        'namespace': 'http://iec.ch/TC57/CIM101#',
+        'docstring':
+            '''
+            Maximum nominal design operating temperature.
+            '''
+        
+        })
+    '''
+    Maximum nominal design operating temperature.
+    '''
+    
+    outerJacketKind: Optional[ CableOuterJacketKind ] = field(
+        default=None,
+        metadata={
+        'type': 'enumeration Attribute',
+        'minOccurs': '0',
+        'maxOccurs': '1',
+        'namespace': 'http://iec.ch/TC57/CIM101#',
+        'docstring':
+            '''
+            Kind of outer jacket of this cable.
+            '''
+        
+        })
+    '''
+    Kind of outer jacket of this cable.
+    '''
+    
+    shieldMaterial: Optional[ CableShieldMaterialKind ] = field(
+        default=None,
+        metadata={
+        'type': 'enumeration Attribute',
+        'minOccurs': '0',
+        'maxOccurs': '1',
+        'namespace': 'http://iec.ch/TC57/CIM101#',
+        'docstring':
+            '''
+            Material of the shield.
+            '''
+        
+        })
+    '''
+    Material of the shield.
+    '''
+    
+@dataclass(repr=False)
+class ConcentricNeutralCableInfo(CableInfo):
+    '''
+    Concentric neutral cable data.
+    '''
+
+@stereotype(CIMStereotype.ShadowExtension)
+@dataclass(repr=False)
+class OverheadWireInfo(WireInfo):
+    '''
+    Overhead wire data.
+    '''
+
+    wireConstructionKind: Optional[ WireConstructionKind ] = field(
+        default=None,
+        metadata={
+        'type': 'enumeration Attribute add',
+        'minOccurs': '0',
+        'maxOccurs': '1',
+        'namespace': 'http://iec.ch/TC57/CIM101#',
+        'docstring':
+            '''
+            '''
+        
+        })
+    '''
+    '''
+    
+>>>>>>> 81756bc (add usagepoint profile)
 @dataclass(repr=False)
 class CrossarmInfo(AssetInfo):
     '''
@@ -835,7 +1393,27 @@ class WireAssemblyInfo(AssetInfo):
         })
     '''
     '''
+<<<<<<< HEAD
 
+=======
+    
+    PerLengthImpedance: Optional[PerLengthImpedance] = field(
+        default=None,
+        metadata={
+        'type': 'Association',
+        'minOccurs': '0',
+        'maxOccurs': '1',
+        'inverse': 'PerLengthImpedance.WireAssemblyInfo',
+        'namespace': 'http://gridappsd.org/CIM/extension#',
+        'docstring':
+            '''
+            '''
+        
+        })
+    '''
+    '''
+    
+>>>>>>> 81756bc (add usagepoint profile)
     WirePhaseInfo: list[WirePhaseInfo] = field(
         default_factory=list,
         metadata={
@@ -1051,8 +1629,13 @@ class WireBundleInfo(AssetInfo):
         })
     '''
     '''
+<<<<<<< HEAD
 
 
+=======
+    
+@stereotype(CIMStereotype.deprecated)
+>>>>>>> 81756bc (add usagepoint profile)
 @dataclass(repr=False)
 class WireSpacingInfo(AssetInfo):
     '''
@@ -1287,6 +1870,31 @@ class GroundAction(IdentifiedObject):
     '''
 
 @dataclass(repr=False)
+class IntraphaseSpacing(IdentifiedObject):
+    '''
+    Wire spacing data that associates multiple wire positions with the line
+    segment, and allows to calculate line segment impedances. Number of phases
+    can be derived from the number of associated wire positions whose phase
+    is not neutral.
+    '''
+
+    ACLineSegmentPhase: list[ACLineSegmentPhase] = field(
+        default_factory=list,
+        metadata={
+        'type': 'Association',
+        'minOccurs': '0',
+        'maxOccurs': 'unbounded',
+        'inverse': 'ACLineSegmentPhase.IntraphaseSpacing',
+        'namespace': 'http://iec.ch/TC57/CIM101#',
+        'docstring':
+            '''
+            '''
+        
+        })
+    '''
+    '''
+    
+@dataclass(repr=False)
 class LineSegmentCoupling(IdentifiedObject):
     '''
     Describes the relationship of a line in a coupled group to the reference
@@ -1312,6 +1920,7 @@ class LineSegmentCoupling(IdentifiedObject):
     '''
 
 @dataclass(repr=False)
+<<<<<<< HEAD
 class OverheadStructure(IdentifiedObject):
     '''
     A structure is an element of an electric transmission or distribution system
@@ -1336,6 +1945,8 @@ class OverheadStructure(IdentifiedObject):
     '''
 
 @dataclass(repr=False)
+=======
+>>>>>>> 81756bc (add usagepoint profile)
 class PerLengthLineParameter(IdentifiedObject):
     '''
     Common type for per-length electrical line parameters.
@@ -1380,7 +1991,114 @@ class PerLengthImpedance(PerLengthLineParameter):
         })
     '''
     '''
+<<<<<<< HEAD
 
+=======
+    
+    isUserDefined: Optional[bool] = field(
+        default=None,
+        metadata={
+        'type': 'Attribute',
+        'minOccurs': '0',
+        'maxOccurs': '1',
+        'namespace': 'http://gridappsd.org/CIM/extension#',
+        'docstring':
+            '''
+            '''
+        
+        })
+    '''
+    '''
+    
+    calculatedFrequency: Optional[ float | Frequency ] = field(
+        default=None,
+        metadata={
+        'type': 'Attribute',
+        'minOccurs': '0',
+        'maxOccurs': '1',
+        'namespace': 'http://gridappsd.org/CIM/extension#',
+        'docstring':
+            '''
+            '''
+        
+        })
+    '''
+    '''
+    
+    calculatedTemperature: Optional[ float | Temperature ] = field(
+        default=None,
+        metadata={
+        'type': 'Attribute',
+        'minOccurs': '0',
+        'maxOccurs': '1',
+        'namespace': 'http://gridappsd.org/CIM/extension#',
+        'docstring':
+            '''
+            '''
+        
+        })
+    '''
+    '''
+    
+    rg: Optional[ float | ResistancePerLength ] = field(
+        default=None,
+        metadata={
+        'type': 'Attribute',
+        'minOccurs': '0',
+        'maxOccurs': '1',
+        'namespace': 'http://gridappsd.org/CIM/extension#',
+        'docstring':
+            '''
+            Carson earth return resistance per unit length used to compute impedance
+            values at base frequency. Used for making better adjustments of line impedance
+            values for frequency for harmonics studies.
+            '''
+        
+        })
+    '''
+    Carson earth return resistance per unit length used to compute impedance
+    values at base frequency. Used for making better adjustments of line
+    impedance values for frequency for harmonics studies.
+    '''
+    
+    xg: Optional[ float | ReactancePerLength ] = field(
+        default=None,
+        metadata={
+        'type': 'Attribute',
+        'minOccurs': '0',
+        'maxOccurs': '1',
+        'namespace': 'http://gridappsd.org/CIM/extension#',
+        'docstring':
+            '''
+            Carson earth return reactance per unit length used to compute impedance
+            values at base frequency. Used for making better adjustments of line impedance
+            values for frequency for harmonics studies.
+            '''
+        
+        })
+    '''
+    Carson earth return reactance per unit length used to compute impedance
+    values at base frequency. Used for making better adjustments of line
+    impedance values for frequency for harmonics studies.
+    '''
+    
+    WireAssemblyInfo: Optional[WireAssemblyInfo] = field(
+        default=None,
+        metadata={
+        'type': 'Association',
+        'minOccurs': '0',
+        'maxOccurs': '1',
+        'inverse': 'WireAssemblyInfo.PerLengthImpedance',
+        'namespace': 'http://gridappsd.org/CIM/extension#',
+        'docstring':
+            '''
+            '''
+        
+        })
+    '''
+    '''
+    
+>>>>>>> 81756bc (add usagepoint profile)
 @dataclass(repr=False)
 class PerLengthPhaseImpedance(PerLengthImpedance):
     '''
@@ -1907,7 +2625,27 @@ class ACLineSegmentPhase(PowerSystemResource):
     '''
     The line segment to which the phase belongs.
     '''
+<<<<<<< HEAD
 
+=======
+    
+    IntraphaseSpacing: Optional[IntraphaseSpacing] = field(
+        default=None,
+        metadata={
+        'type': 'Association',
+        'minOccurs': '0',
+        'maxOccurs': '1',
+        'inverse': 'IntraphaseSpacing.ACLineSegmentPhase',
+        'namespace': 'http://iec.ch/TC57/CIM101#',
+        'docstring':
+            '''
+            '''
+        
+        })
+    '''
+    '''
+    
+>>>>>>> 81756bc (add usagepoint profile)
     WireInfo: Optional[WireInfo] = field(
         default=None,
         metadata={
@@ -2322,6 +3060,7 @@ class Feeder(PowerSystemResource):
     '''
     The normal head terminal or terminals of the feeder.
     '''
+<<<<<<< HEAD
 
 @stereotype(CIMStereotype.ShadowExtension)
 @dataclass(repr=False)
@@ -2840,6 +3579,9 @@ class OverheadWireInfo(WireInfo):
     '''
     '''
 
+=======
+    
+>>>>>>> 81756bc (add usagepoint profile)
 @dataclass(repr=False)
 class WirePosition(IdentifiedObject):
     '''
@@ -3063,6 +3805,7 @@ class WirePhaseInfo(Identity):
     '''
 
 @stereotype(CIMStereotype.enumeration)
+@stereotype(CIMStereotype.Attribute)
 class CableConstructionKind(Enum):
     '''
     Kind of cable construction.
@@ -3104,6 +3847,7 @@ class CableConstructionKind(Enum):
     '''
 
 @stereotype(CIMStereotype.enumeration)
+@stereotype(CIMStereotype.Attribute)
 class CableOuterJacketKind(Enum):
     '''
     Kind of cable outer jacket.
@@ -3145,6 +3889,7 @@ class CableOuterJacketKind(Enum):
     '''
 
 @stereotype(CIMStereotype.enumeration)
+@stereotype(CIMStereotype.Attribute)
 class CableShieldMaterialKind(Enum):
     '''
     Kind of cable shield material.
@@ -3343,6 +4088,7 @@ class PhaseCode(Enum):
     '''
 
 @stereotype(CIMStereotype.enumeration)
+@stereotype(CIMStereotype.Attribute)
 class PhaseCountKind(Enum):
     '''
     Number of phases supported by a device.
@@ -3362,9 +4108,15 @@ class PhaseCountKind(Enum):
     '''
     Three phases
     '''
+<<<<<<< HEAD
 
+=======
+    
+@stereotype(CIMStereotype.ToBeRemoved)
+>>>>>>> 81756bc (add usagepoint profile)
 @stereotype(CIMStereotype.enumeration)
 @stereotype(CIMStereotype.Attribute)
+@stereotype(CIMStereotype.add)
 class SinglePhaseKind(Enum):
     '''
     Enumeration of phase identifiers used to designate the specific phase of
@@ -3404,6 +4156,8 @@ class SinglePhaseKind(Enum):
     '''
 
 @stereotype(CIMStereotype.enumeration)
+@stereotype(CIMStereotype.Attribute)
+@stereotype(CIMStereotype.add)
 class WireConstructionKind(Enum):
     '''
     Kind of cable construction.
@@ -3426,6 +4180,7 @@ class WireConstructionKind(Enum):
 
 @stereotype(CIMStereotype.GridAPPSD)
 @stereotype(CIMStereotype.enumeration)
+@stereotype(CIMStereotype.Attribute)
 class WireInstallationKind(Enum):
     '''
     '''
@@ -3605,6 +4360,7 @@ class WireMaterialKind(Enum):
 
 @stereotype(CIMStereotype.GridAPPSD)
 @stereotype(CIMStereotype.enumeration)
+@stereotype(CIMStereotype.Attribute)
 class WireSpacingKind(Enum):
     '''
     '''
@@ -3626,6 +4382,7 @@ class WireSpacingKind(Enum):
     '''
 
 @stereotype(CIMStereotype.enumeration)
+@stereotype(CIMStereotype.Attribute)
 class WireUsageKind(Enum):
     '''
     Kind of wire usage.

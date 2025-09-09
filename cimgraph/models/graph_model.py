@@ -380,15 +380,15 @@ class GraphModel():
         return export_filter.create_filtered_graph(self)
 
     def export_with_shacl_and_serialize(self, shacl_file: str, output_file: str,
-                           format: str = 'xml') -> None:
+                           format: str = 'xml', namespaces: dict = None ) -> None:
         """Export and serialize filtered graph in one step"""
         filtered_graph = self.export_with_shacl(shacl_file)
 
         if format.lower() == 'xml':
             from cimgraph.utils import write_xml
-            write_xml(filtered_graph, output_file)
+            write_xml(filtered_graph, output_file, namespaces)
         elif format.lower() in ['jsonld', 'json-ld']:
             from cimgraph.utils import write_json_ld
-            write_json_ld(filtered_graph, output_file)
+            write_json_ld(filtered_graph, output_file, namespaces)
         else:
             raise ValueError(f"Unsupported format: {format}")
