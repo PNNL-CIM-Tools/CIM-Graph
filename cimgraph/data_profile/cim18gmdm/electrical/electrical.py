@@ -26,7 +26,7 @@ class CIMStereotype(Enum):
     gmdm = 'gmdm'
 
 BASE_URI = 'http://www.ucaiug.org/gmdm/electrical/unbalanced#'
-ONTOLOGY_URI = 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#'
+ONTOLOGY_URI = 'http://cim.ucaiug.io/CIM101/draft#'
 
 
 @dataclass(repr=False)
@@ -42,7 +42,7 @@ class IdentifiedObject(Identity):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'docstring':
             '''
             The description is a free human readable text describing or naming the
@@ -62,7 +62,7 @@ class IdentifiedObject(Identity):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'docstring':
             '''
             The name is any free human readable and possibly non unique text naming
@@ -97,7 +97,7 @@ class Terminal(ACDCTerminal):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'RegulatingControl.Terminal',
-        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'docstring':
             '''
             The controls regulating this terminal.
@@ -140,7 +140,7 @@ class FossilFuel(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'ThermalGeneratingUnit.FossilFuels',
-        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'docstring':
             '''
             A thermal generating unit may have one or more fossil fuels.
@@ -158,7 +158,7 @@ class FossilFuel(IdentifiedObject):
         'minOccurs': '1',
         'maxOccurs': '1',
         'inverse': '',
-        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'docstring':
             '''
             The type of fossil fuel, such as coal, oil, or gas.
@@ -218,7 +218,7 @@ class LoadResponseCharacteristic(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'EnergyConsumer.LoadResponse',
-        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'docstring':
             '''
             The set of loads that have the response characteristics.
@@ -235,7 +235,7 @@ class LoadResponseCharacteristic(IdentifiedObject):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'docstring':
             '''
             Indicates the exponential voltage dependency model is to be used. If false,
@@ -286,7 +286,7 @@ class LoadResponseCharacteristic(IdentifiedObject):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'docstring':
             '''
             Portion of active power load modelled as constant current.
@@ -303,7 +303,7 @@ class LoadResponseCharacteristic(IdentifiedObject):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'docstring':
             '''
             Portion of active power load modelled as constant impedance.
@@ -320,7 +320,7 @@ class LoadResponseCharacteristic(IdentifiedObject):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'docstring':
             '''
             Portion of active power load modelled as constant power.
@@ -337,7 +337,7 @@ class LoadResponseCharacteristic(IdentifiedObject):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'docstring':
             '''
             Exponent of per unit frequency effecting active power.
@@ -354,7 +354,7 @@ class LoadResponseCharacteristic(IdentifiedObject):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'docstring':
             '''
             Exponent of per unit voltage effecting real power.
@@ -371,7 +371,7 @@ class LoadResponseCharacteristic(IdentifiedObject):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'docstring':
             '''
             Portion of reactive power load modelled as constant current.
@@ -388,7 +388,7 @@ class LoadResponseCharacteristic(IdentifiedObject):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'docstring':
             '''
             Portion of reactive power load modelled as constant impedance.
@@ -405,7 +405,7 @@ class LoadResponseCharacteristic(IdentifiedObject):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'docstring':
             '''
             Portion of reactive power load modelled as constant power.
@@ -422,7 +422,7 @@ class LoadResponseCharacteristic(IdentifiedObject):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'docstring':
             '''
             Exponent of per unit frequency effecting reactive power.
@@ -439,7 +439,7 @@ class LoadResponseCharacteristic(IdentifiedObject):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'docstring':
             '''
             Exponent of per unit voltage effecting reactive power.
@@ -470,7 +470,7 @@ class PerLengthImpedance(PerLengthLineParameter):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'ACLineSegment.PerLengthImpedance',
-        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'docstring':
             '''
             All line segments described by this per-length impedance.
@@ -507,7 +507,7 @@ class PerLengthPhaseImpedance(PerLengthImpedance):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'PhaseImpedanceData.PhaseImpedance',
-        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'docstring':
             '''
             All data that belong to this conductor phase impedance.
@@ -524,7 +524,7 @@ class PerLengthPhaseImpedance(PerLengthImpedance):
         'type': 'Attribute',
         'minOccurs': '1',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'docstring':
             '''
             Conductor count identifies the number of phase, neutral, and other wires
@@ -580,7 +580,7 @@ class ACLineSegmentPhase(PowerSystemResource):
         'type': 'Attribute',
         'minOccurs': '1',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'docstring':
             '''
             Sequence number provides the numbering for this line segment phase. When
@@ -642,7 +642,7 @@ class Conductor(ConductingEquipment):
         'type': 'Attribute',
         'minOccurs': '1',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'docstring':
             '''
             Segment length for calculating line segment capabilities.
@@ -708,7 +708,7 @@ class ACLineSegment(Conductor):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'PerLengthImpedance.ACLineSegments',
-        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'docstring':
             '''
             Per-length impedance of this line segment.
@@ -743,7 +743,7 @@ class EnergyConsumer(EnergyConnection):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'LoadResponseCharacteristic.EnergyConsumer',
-        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'docstring':
             '''
             The load response characteristic of this load. If missing, this load is
@@ -771,7 +771,7 @@ class EnergySource(EnergyConnection):
         'type': 'Attribute',
         'minOccurs': '1',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'docstring':
             '''
             Phase-to-phase nominal voltage.
@@ -788,7 +788,7 @@ class EnergySource(EnergyConnection):
         'type': 'Attribute',
         'minOccurs': '1',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'docstring':
             '''
             Positive sequence Thevenin resistance.
@@ -805,7 +805,7 @@ class EnergySource(EnergyConnection):
         'type': 'Attribute',
         'minOccurs': '1',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'docstring':
             '''
             Positive sequence Thevenin reactance.
@@ -830,7 +830,7 @@ class RegulatingCondEq(EnergyConnection):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'RegulatingControl.RegulatingCondEq',
-        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'docstring':
             '''
             The regulating control scheme in which this equipment participates.
@@ -857,7 +857,7 @@ class PowerElectronicsConnection(RegulatingCondEq):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'PowerElectronicsUnit.PowerElectronicsConnection',
-        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'docstring':
             '''
             An AC network connection may have several power electronics units connecting
@@ -876,7 +876,7 @@ class PowerElectronicsConnection(RegulatingCondEq):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'docstring':
             '''
             Maximum reactive power limit. This is the maximum (nameplate) limit for
@@ -895,7 +895,7 @@ class PowerElectronicsConnection(RegulatingCondEq):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'docstring':
             '''
             Minimum reactive power limit for the unit. This is the minimum (nameplate)
@@ -914,7 +914,7 @@ class PowerElectronicsConnection(RegulatingCondEq):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'docstring':
             '''
             Nameplate apparent power rating for the unit.
@@ -933,7 +933,7 @@ class PowerElectronicsConnection(RegulatingCondEq):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'docstring':
             '''
             Rated voltage (nameplate data, Ur in IEC 60909-0). It is primarily used
@@ -981,7 +981,7 @@ class RotatingMachine(RegulatingCondEq):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'GeneratingUnit.RotatingMachine',
-        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'docstring':
             '''
             A synchronous machine may operate as a generator and as such becomes a
@@ -1000,7 +1000,7 @@ class RotatingMachine(RegulatingCondEq):
         'type': 'Attribute',
         'minOccurs': '1',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'docstring':
             '''
             Nameplate apparent power rating for the unit.
@@ -1019,7 +1019,7 @@ class RotatingMachine(RegulatingCondEq):
         'type': 'Attribute',
         'minOccurs': '1',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'docstring':
             '''
             Rated voltage (nameplate data, Ur in IEC 60909-0). It is primarily used
@@ -1069,7 +1069,7 @@ class ShuntCompensator(RegulatingCondEq):
         'type': 'Attribute',
         'minOccurs': '1',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'docstring':
             '''
             The maximum number of sections that may be switched in.
@@ -1086,7 +1086,7 @@ class ShuntCompensator(RegulatingCondEq):
         'type': 'Attribute',
         'minOccurs': '1',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'docstring':
             '''
             The normal number of sections switched in. The value shall be between zero
@@ -1105,7 +1105,7 @@ class ShuntCompensator(RegulatingCondEq):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'docstring':
             '''
             An automatic voltage regulation delay (AVRDelay) which is the time delay
@@ -1126,7 +1126,7 @@ class ShuntCompensator(RegulatingCondEq):
         'type': 'Attribute',
         'minOccurs': '1',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'docstring':
             '''
             The voltage at which the nominal reactive power may be calculated. This
@@ -1156,7 +1156,7 @@ class LinearShuntCompensator(ShuntCompensator):
         'type': 'Attribute',
         'minOccurs': '1',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'docstring':
             '''
             Positive sequence shunt (charging) susceptance per section.
@@ -1173,7 +1173,7 @@ class LinearShuntCompensator(ShuntCompensator):
         'type': 'Attribute',
         'minOccurs': '1',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'docstring':
             '''
             Positive sequence shunt (charging) conductance per section.
@@ -1218,7 +1218,7 @@ class SeriesCompensator(ConductingEquipment):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'docstring':
             '''
             Positive sequence resistance.
@@ -1235,7 +1235,7 @@ class SeriesCompensator(ConductingEquipment):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'docstring':
             '''
             Positive sequence reactance.
@@ -1262,7 +1262,7 @@ class Switch(ConductingEquipment):
         'type': 'Attribute',
         'minOccurs': '1',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'docstring':
             '''
             The maximum continuous current carrying capacity in amps governed by the
@@ -1314,7 +1314,7 @@ class ProtectedSwitch(Switch):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'docstring':
             '''
             The maximum fault current a breaking device can break safely under prescribed
@@ -1384,7 +1384,7 @@ class GeneratingUnit(Equipment):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'docstring':
             '''
             The unit's gross rated maximum capacity (book value).
@@ -1404,7 +1404,7 @@ class GeneratingUnit(Equipment):
         'minOccurs': '1',
         'maxOccurs': '1',
         'inverse': 'RotatingMachine.GeneratingUnit',
-        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'docstring':
             '''
             A synchronous machine may operate as a generator and as such becomes a
@@ -1432,7 +1432,7 @@ class ThermalGeneratingUnit(GeneratingUnit):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'FossilFuel.ThermalGeneratingUnit',
-        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'docstring':
             '''
             A thermal generating unit may have one or more fossil fuels.
@@ -1457,7 +1457,7 @@ class WindGeneratingUnit(GeneratingUnit):
         'type': 'enumeration Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'docstring':
             '''
             The kind of wind generating unit.
@@ -1481,7 +1481,7 @@ class PowerElectronicsUnit(Equipment):
         'type': 'Attribute',
         'minOccurs': '1',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'docstring':
             '''
             Maximum active power limit. This is the maximum (nameplate) limit for the
@@ -1500,7 +1500,7 @@ class PowerElectronicsUnit(Equipment):
         'type': 'Attribute',
         'minOccurs': '1',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'docstring':
             '''
             Minimum active power limit. This is the minimum (nameplate) limit for the
@@ -1520,7 +1520,7 @@ class PowerElectronicsUnit(Equipment):
         'minOccurs': '1',
         'maxOccurs': '1',
         'inverse': 'PowerElectronicsConnection.PowerElectronicsUnit',
-        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'docstring':
             '''
             A power electronics unit has a connection to the AC network.
@@ -1544,7 +1544,7 @@ class BatteryUnit(PowerElectronicsUnit):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'docstring':
             '''
             Full energy storage capacity of the battery. The attribute shall be a positive
@@ -1639,7 +1639,7 @@ class RegulatingControl(PowerSystemResource):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'RegulatingCondEq.RegulatingControl',
-        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'docstring':
             '''
             The equipment that participates in this regulating control scheme.
@@ -1656,7 +1656,7 @@ class RegulatingControl(PowerSystemResource):
         'type': 'Attribute',
         'minOccurs': '1',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'docstring':
             '''
             If true, indicates that regulation is performed in the simulation in a
@@ -1679,7 +1679,7 @@ class RegulatingControl(PowerSystemResource):
         'type': 'Attribute',
         'minOccurs': '1',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'docstring':
             '''
             The flag tells if regulation is enabled.
@@ -1696,7 +1696,7 @@ class RegulatingControl(PowerSystemResource):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'docstring':
             '''
             This is the deadband set on the controller. It is used with discrete control
@@ -1730,7 +1730,7 @@ class RegulatingControl(PowerSystemResource):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'docstring':
             '''
             The target value set on the controller. It is the starting value for a
@@ -1766,7 +1766,7 @@ class RegulatingControl(PowerSystemResource):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': '',
-        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'docstring':
             '''
             The regulating control mode presently available. This specification allows
@@ -1788,7 +1788,7 @@ class RegulatingControl(PowerSystemResource):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': '',
-        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'docstring':
             '''
             Phase voltage controlling this regulator, measured at regulator location.
@@ -1806,7 +1806,7 @@ class RegulatingControl(PowerSystemResource):
         'minOccurs': '1',
         'maxOccurs': '1',
         'inverse': 'Terminal.RegulatingControl',
-        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'docstring':
             '''
             The terminal associated with this regulating control. The terminal is associated
@@ -1844,7 +1844,7 @@ class TapChangerControl(RegulatingControl):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'TapChanger.TapChangerControl',
-        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'docstring':
             '''
             The tap changers that participates in this regulating tap control scheme.
@@ -1861,7 +1861,7 @@ class TapChangerControl(RegulatingControl):
         'type': 'Attribute',
         'minOccurs': '1',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'docstring':
             '''
             If true, the line drop compensation is to be applied.
@@ -1908,7 +1908,7 @@ class TapChangerControl(RegulatingControl):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'docstring':
             '''
             Line drop compensator resistance setting for normal (forward) power flow.
@@ -1926,7 +1926,7 @@ class TapChangerControl(RegulatingControl):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'docstring':
             '''
             Line drop compensator reactance setting for normal (forward) power flow.
@@ -1944,7 +1944,7 @@ class TapChangerControl(RegulatingControl):
         'type': 'Attribute',
         'minOccurs': '1',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'docstring':
             '''
             Maximum allowed regulated voltage on the PT secondary. This is the locally
@@ -1969,7 +1969,7 @@ class TapChangerControl(RegulatingControl):
         'type': 'Attribute',
         'minOccurs': '1',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'docstring':
             '''
             Minimum allowed regulated voltage on the PT secondary. This is the locally
@@ -1994,7 +1994,7 @@ class TapChangerControl(RegulatingControl):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'docstring':
             '''
             Line drop compensator resistance setting for reverse power flow.
@@ -2011,7 +2011,7 @@ class TapChangerControl(RegulatingControl):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'docstring':
             '''
             Line drop compensator reactance setting for reverse power flow.
@@ -2095,7 +2095,7 @@ class ShuntCompensatorPhase(PowerSystemResource):
         'type': 'Attribute',
         'minOccurs': '1',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'docstring':
             '''
             The maximum number of sections that may be switched in for this phase.
@@ -2112,7 +2112,7 @@ class ShuntCompensatorPhase(PowerSystemResource):
         'type': 'Attribute',
         'minOccurs': '1',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'docstring':
             '''
             For the capacitor phase, the normal number of sections switched in. The
@@ -2140,7 +2140,7 @@ class LinearShuntCompensatorPhase(ShuntCompensatorPhase):
         'type': 'Attribute',
         'minOccurs': '1',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'docstring':
             '''
             Susceptance per section of the phase if shunt compensator is wye connected.
@@ -2160,7 +2160,7 @@ class LinearShuntCompensatorPhase(ShuntCompensatorPhase):
         'type': 'Attribute',
         'minOccurs': '1',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'docstring':
             '''
             Conductance per section for this phase if shunt compensator is wye connected.
@@ -2186,7 +2186,7 @@ class TapChanger(PowerSystemResource):
         'type': 'Attribute',
         'minOccurs': '1',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'docstring':
             '''
             Specifies the regulation status of the equipment. True is regulating, false
@@ -2220,7 +2220,7 @@ class TapChanger(PowerSystemResource):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'docstring':
             '''
             Built-in current transformer ratio. If a value is specified, then RegulatingControl.targetValue
@@ -2243,7 +2243,7 @@ class TapChanger(PowerSystemResource):
         'type': 'Attribute',
         'minOccurs': '1',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'docstring':
             '''
             Highest possible tap step position, advance from neutral.
@@ -2262,7 +2262,7 @@ class TapChanger(PowerSystemResource):
         'type': 'Attribute',
         'minOccurs': '1',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'docstring':
             '''
             Lowest possible tap step position, retard from neutral.
@@ -2279,7 +2279,7 @@ class TapChanger(PowerSystemResource):
         'type': 'Attribute',
         'minOccurs': '1',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'docstring':
             '''
             Specifies whether or not a TapChanger has load tap changing capabilities.
@@ -2296,7 +2296,7 @@ class TapChanger(PowerSystemResource):
         'type': 'Attribute',
         'minOccurs': '1',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'docstring':
             '''
             The neutral tap step position for this winding.
@@ -2324,7 +2324,7 @@ class TapChanger(PowerSystemResource):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'docstring':
             '''
             Built-in potential (voltage) transformer ratio. If a value is specified,
@@ -2349,7 +2349,7 @@ class TapChanger(PowerSystemResource):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'docstring':
             '''
             For an LTC, the delay for initial tap changer operation (first step change).
@@ -2367,7 +2367,7 @@ class TapChanger(PowerSystemResource):
         'type': 'Attribute',
         'minOccurs': '1',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'docstring':
             '''
             Voltage at which the winding operates at the neutral tap setting. It is
@@ -2400,7 +2400,7 @@ class TapChanger(PowerSystemResource):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'docstring':
             '''
             For an LTC, the delay for subsequent tap changer operation (second and
@@ -2420,7 +2420,7 @@ class TapChanger(PowerSystemResource):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'TapChangerControl.TapChanger',
-        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'docstring':
             '''
             The regulating control scheme in which this tap changer participates.
@@ -2450,7 +2450,7 @@ class RatioTapChanger(TapChanger):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'docstring':
             '''
             Tap step increment, in per cent of rated voltage of the power transformer
@@ -2474,7 +2474,7 @@ class RatioTapChanger(TapChanger):
         'minOccurs': '1',
         'maxOccurs': '1',
         'inverse': 'TransformerEnd.RatioTapChanger',
-        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'docstring':
             '''
             Transformer end to which this ratio tap changer belongs.
@@ -2501,7 +2501,7 @@ class TransformerCoreAdmittance(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'TransformerEnd.CoreAdmittance',
-        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'docstring':
             '''
             All transformer ends having this core admittance.
@@ -2518,7 +2518,7 @@ class TransformerCoreAdmittance(IdentifiedObject):
         'type': 'Attribute',
         'minOccurs': '1',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'docstring':
             '''
             Magnetizing branch susceptance (B mag). The value can be positive or negative.
@@ -2536,7 +2536,7 @@ class TransformerCoreAdmittance(IdentifiedObject):
         'type': 'Attribute',
         'minOccurs': '1',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'docstring':
             '''
             Magnetizing branch conductance (G mag).
@@ -2564,7 +2564,7 @@ class TransformerEnd(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'RatioTapChanger.TransformerEnd',
-        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'docstring':
             '''
             Ratio tap changer associated with this transformer end.
@@ -2582,7 +2582,7 @@ class TransformerEnd(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'TransformerMeshImpedance.ToTransformerEnd',
-        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'docstring':
             '''
             All mesh impedances between this 'from' and other 'to' transformer ends.
@@ -2600,7 +2600,7 @@ class TransformerEnd(IdentifiedObject):
         'type': 'Attribute',
         'minOccurs': '1',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'docstring':
             '''
             Used only for Yn and Zn connections indicated by PowerTransformerEnd.connectionKind.
@@ -2623,7 +2623,7 @@ class TransformerEnd(IdentifiedObject):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'docstring':
             '''
             Resistance part of neutral impedance. Zero indicates solidly grounded or
@@ -2642,7 +2642,7 @@ class TransformerEnd(IdentifiedObject):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'docstring':
             '''
             Reactance part of neutral impedance. Zero indicates solidly grounded or
@@ -2662,7 +2662,7 @@ class TransformerEnd(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'TransformerCoreAdmittance.TransformerEnd',
-        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'docstring':
             '''
             Core admittance of this transformer end, representing magnetising current
@@ -2714,7 +2714,7 @@ class PowerTransformerEnd(TransformerEnd):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'docstring':
             '''
             Terminal voltage phase angle displacement where 360 degrees are represented
@@ -2743,7 +2743,7 @@ class PowerTransformerEnd(TransformerEnd):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'docstring':
             '''
             Magnetizing branch susceptance (B mag). The value can be positive or negative.
@@ -2761,7 +2761,7 @@ class PowerTransformerEnd(TransformerEnd):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'docstring':
             '''
             Magnetizing branch conductance.
@@ -2778,7 +2778,7 @@ class PowerTransformerEnd(TransformerEnd):
         'type': 'Attribute',
         'minOccurs': '1',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'docstring':
             '''
             Resistance (star-model) of the transformer end.
@@ -2799,7 +2799,7 @@ class PowerTransformerEnd(TransformerEnd):
         'type': 'Attribute',
         'minOccurs': '1',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'docstring':
             '''
             Normal apparent power rating.
@@ -2820,7 +2820,7 @@ class PowerTransformerEnd(TransformerEnd):
         'type': 'Attribute',
         'minOccurs': '1',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'docstring':
             '''
             Rated voltage: phase-phase for three-phase windings, and either phase-phase
@@ -2846,7 +2846,7 @@ class PowerTransformerEnd(TransformerEnd):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'docstring':
             '''
             Positive sequence series reactance (star-model) of the transformer end.
@@ -2886,7 +2886,7 @@ class TransformerMeshImpedance(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'TransformerEnd.FromMeshImpedance',
-        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'docstring':
             '''
             From end this mesh impedance is connected to. It determines the voltage
@@ -2905,7 +2905,7 @@ class TransformerMeshImpedance(IdentifiedObject):
         'type': 'Attribute',
         'minOccurs': '1',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'docstring':
             '''
             Resistance between the 'from' and the 'to' end, seen from the 'from' end.
@@ -2923,7 +2923,7 @@ class TransformerMeshImpedance(IdentifiedObject):
         'type': 'Attribute',
         'minOccurs': '1',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'docstring':
             '''
             Reactance between the 'from' and the 'to' end, seen from the 'from' end.
@@ -2942,7 +2942,7 @@ class TransformerMeshImpedance(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'TransformerEnd.ToMeshImpedance',
-        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'docstring':
             '''
             All transformer ends this mesh impedance is connected to.
@@ -2973,7 +2973,7 @@ class PhaseImpedanceData(Identity):
         'type': 'Attribute',
         'minOccurs': '1',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'docstring':
             '''
             The matrix entry's column number has a range of possible values from 1
@@ -2998,7 +2998,7 @@ class PhaseImpedanceData(Identity):
         'type': 'Attribute',
         'minOccurs': '1',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'docstring':
             '''
             The matrix entry's row number has a range of possible values from 1 to
@@ -3023,7 +3023,7 @@ class PhaseImpedanceData(Identity):
         'type': 'Attribute',
         'minOccurs': '1',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'docstring':
             '''
             Susceptance matrix entry value, per length of unit.
@@ -3040,7 +3040,7 @@ class PhaseImpedanceData(Identity):
         'type': 'Attribute',
         'minOccurs': '1',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'docstring':
             '''
             Resistance matrix entry value, per length of unit.
@@ -3057,7 +3057,7 @@ class PhaseImpedanceData(Identity):
         'type': 'Attribute',
         'minOccurs': '1',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'docstring':
             '''
             Reactance matrix entry value, per length of unit.
@@ -3075,7 +3075,7 @@ class PhaseImpedanceData(Identity):
         'minOccurs': '1',
         'maxOccurs': '1',
         'inverse': 'PerLengthPhaseImpedance.PhaseImpedanceData',
-        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'docstring':
             '''
             Conductor phase impedance to which this data belongs.
