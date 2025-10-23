@@ -18,9 +18,11 @@ ureg.load_definitions(units_file)
 
 class CIMUnit():
     value: Optional[float]|CIMUnit
+    value: Optional[float]|CIMUnit
     unit: Optional[UnitSymbol]
     multiplier: Optional[UnitMultiplier]
 
+    def __pint__(self, value:float|CIMUnit, input_unit:str, input_multiplier:str=None):
     def __pint__(self, value:float|CIMUnit, input_unit:str, input_multiplier:str=None):
 
         if input_multiplier is not None:
