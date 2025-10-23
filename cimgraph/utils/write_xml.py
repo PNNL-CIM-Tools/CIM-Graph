@@ -10,8 +10,7 @@ from cimgraph.models.graph_model import GraphModel
 _log = logging.getLogger(__name__)
 
 
-def write_xml(network: GraphModel, filename: str, namespaces: dict=None, 
-              write_identifier:bool=True, enforce_rdf_direction:bool=False) -> None:
+def write_xml(network: GraphModel, filename: str, namespaces: dict=None, write_identifier=True) -> None:
     """
     Write the network graph to an XML file.
 
@@ -38,6 +37,8 @@ def write_xml(network: GraphModel, filename: str, namespaces: dict=None,
     reverse_ns_lookup = {v: k for k, v in namespaces.items()}
 
     iec61970_301 = network.connection.iec61970_301
+    classes_with_many_to_many = ClassesWithManytoMany()
+    many_to_many = classes_with_many_to_many.attributes
     # Handling of formatting change between different 301 standard versions
     if int(iec61970_301) > 7:
         rdf_header = 'rdf:about="urn:uuid:'
@@ -66,24 +67,12 @@ def write_xml(network: GraphModel, filename: str, namespaces: dict=None,
         counter = 0
         for obj in network.list_by_class(root_class):
             cim_class = obj.__class__
-            try:
-                class_ns = cim_class.__namespace__
-                cls_ns_prefix = reverse_ns_lookup[class_ns]
-            except:
-                cls_ns_prefix = 'cim'
-            header = f'<{cls_ns_prefix}:{cim_class.__name__} {rdf_header}{obj.uri().lower()}">\n'
+            header = f'<cim:{cim_class.__name__} {rdf_header}{obj.uri().lower()}">\n'
             f.write(header)
             parent_classes = list(cim_class.__mro__)
             parent_classes.pop(len(parent_classes) - 1)
             for parent in parent_classes:
                 for attribute in parent.__annotations__.keys():
-                    try:
-                        serialize = cim_class.__dataclass_fields__[attribute].metadata['serialize']
-                        if not serialize and enforce_rdf_direction:
-                            continue
-                    except:
-                        _log.warning(f'{attribute} missing serialize')
-                        serialize = True
                     # Skip over Identity.identifier attribute
                     if attribute == 'identifier' and write_identifier:
                         row = f'  <cim:Identity.identifier>{obj.uri().lower()}</cim:Identity.identifier>\n'
@@ -94,15 +83,14 @@ def write_xml(network: GraphModel, filename: str, namespaces: dict=None,
                     attr_ns = cim_class.__dataclass_fields__[attribute].metadata['namespace']
                     ns_prefix = reverse_ns_lookup[attr_ns]
                     # Upload attributes that are many-to-one or are known problem classes
-                    if 'list' not in attribute_type or serialize:
+                    if 'list' not in attribute_type or rdf in many_to_many:
                         edge_class = attribute_type.split('[')[1].split(']')[0]
                         edge = getattr(obj, attribute)
                         # Check if attribute is association to a class object
                         if edge_class in network.connection.cim.__all__:
                             if edge is not None and edge != []:
                                 if type(edge.__class__) is enum.EnumMeta:
-                                    enum_ns = edge.__namespace__
-                                    resource = f'rdf:resource="{enum_ns}{str(edge)}"'
+                                    resource = f'rdf:resource="{attr_ns}{str(edge)}"'
                                     row = f'  <{ns_prefix}:{parent.__name__}.{attribute} {resource}/>\n'
                                     f.write(row)
                                 elif isinstance(edge, CIMUnit):
@@ -139,7 +127,7 @@ def write_xml(network: GraphModel, filename: str, namespaces: dict=None,
                             elif edge is not None and edge != []:
                                 row = f'  <{ns_prefix}:{parent.__name__}.{attribute}>{str(edge)}</{ns_prefix}:{parent.__name__}.{attribute}>\n'
                                 f.write(row)
-            tail = f'</{cls_ns_prefix}:{cim_class.__name__}>\n'
+            tail = f'</cim:{cim_class.__name__}>\n'
             f.write(tail)
             counter = counter + 1
         _log.info(f'wrote {counter} {cim_class.__name__} objects')
