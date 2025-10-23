@@ -2875,6 +2875,22 @@ class Terminal(ACDCTerminal):
     '''
     All transformer ends connected at this terminal.
     '''
+    
+    UsagePoint: Optional[UsagePoint] = field(
+        default=None,
+        metadata={
+        'type': 'Association',
+        'minOccurs': '0',
+        'maxOccurs': '1',
+        'inverse': 'UsagePoint.Terminal',
+        'namespace': 'http://epri.com/gmdm/2025#',
+        'docstring':
+            '''
+            '''
+
+        })
+    '''
+    '''
 
     VoltageAngleLimit: list[VoltageAngleLimit] = field(
         default_factory=list,
@@ -3422,23 +3438,7 @@ class ConfigurationEvent(ActivityRecord):
     Service category whose change resulted in this configuration event.
     '''
 
-    ChangedUsagePoint: Optional[UsagePoint] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'UsagePoint.ConfigurationEvents',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'docstring':
-            '''
-            Usage point whose change resulted in this configuration event.
-            '''
 
-        })
-    '''
-    Usage point whose change resulted in this configuration event.
-    '''
 
     FaultCauseType: Optional[FaultCauseType] = field(
         default=None,
@@ -43515,22 +43515,43 @@ class UsagePoint(IdentifiedObject):
     be located; however, it is not required that a meter be present.
     '''
 
-    ConfigurationEvents: list[ConfigurationEvent] = field(
-        default_factory=list,
+    phaseCode: Optional[ PhaseCode ] = field(
+        default=None,
         metadata={
-        'type': 'Association',
+        'type': 'enumeration Attribute',
         'minOccurs': '0',
-        'maxOccurs': 'unbounded',
-        'inverse': 'ConfigurationEvent.ChangedUsagePoint',
+        'maxOccurs': '1',
         'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'docstring':
             '''
-            All configuration events created for this usage point.
+            Phase code. Number of wires and specific nominal phases can be deduced
+            from enumeration literal values. For example, ABCN is three-phase, four-wire,
+            s12n (splitSecondary12N) is single-phase, three-wire, and s1n and s2n are
+            single-phase, two-wire.
             '''
 
         })
     '''
-    All configuration events created for this usage point.
+    Phase code. Number of wires and specific nominal phases can be deduced
+    from enumeration literal values. For example, ABCN is three-phase,
+    four-wire, s12n (splitSecondary12N) is single-phase, three-wire, and
+    s1n and s2n are single-phase, two-wire.
+    '''
+
+    Terminal: Optional[Terminal] = field(
+        default=None,
+        metadata={
+        'type': 'Association',
+        'minOccurs': '0',
+        'maxOccurs': '1',
+        'inverse': 'Terminal.UsagePoint',
+        'namespace': 'http://epri.com/gmdm/2025#',
+        'docstring':
+            '''
+            '''
+
+        })
+    '''
     '''
 
 @dataclass(repr=False)
