@@ -1228,7 +1228,7 @@ class SeriesCompensator(ConductingEquipment):
     '''
     Positive sequence resistance.
     '''
-    
+
     x: Optional[ float | Reactance ] = field(
         default=None,
         metadata={
