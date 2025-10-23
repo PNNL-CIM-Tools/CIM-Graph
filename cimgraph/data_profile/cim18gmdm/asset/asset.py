@@ -24,34 +24,6 @@ class CIMStereotype(Enum):
 
 BASE_URI = 'http://www.ucaiug.org/gmdm/asset#'
 ONTOLOGY_URI = 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#'
-
-@dataclass(repr=False)
-class Identity(Identity):
-    '''
-    This is a root class to provide common identification for all classes.
-    IdentifiedObject and any class to be exchanged with RDF XML now inherits
-    from Identity. mRID is superseded by Identity.identifier, which is typed
-    to be a UUID.
-    '''
-
-    identifier: Optional[str] = field(
-        default=None,
-        metadata={
-        'type': 'Attribute',
-        'minOccurs': '1',
-        'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
-        'docstring':
-            '''
-            A universally unique object identifier. Used to uniquely identify persistent
-            objects between CIM messages.
-            '''
-        
-        })
-    '''
-    A universally unique object identifier. Used to uniquely identify persistent
-    objects between CIM messages.
-    '''
     
 @dataclass(repr=False)
 class IdentifiedObject(Identity):
