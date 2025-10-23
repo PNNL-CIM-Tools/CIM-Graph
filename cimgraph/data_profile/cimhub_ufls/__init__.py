@@ -120,7 +120,7 @@ from cimgraph.data_profile.cimhub_ufls.cimhub_ufls import (PU, Accumulator, Accu
                                                            PhaseTapChangerTable,
                                                            PhaseTapChangerTablePoint,
                                                            PhaseTapChangerTabular,
-                                                           PhotoVoltaicUnit, Plant, PositionPoint,
+                                                           PhotovoltaicUnit, Plant, PositionPoint,
                                                            PowerCutZone,
                                                            PowerElectronicsConnection,
                                                            PowerElectronicsConnectionPhase,

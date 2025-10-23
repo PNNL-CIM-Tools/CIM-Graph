@@ -21,6 +21,7 @@ gridappsd-python =  {version = "^2025.3.2a1", allow-prereleases = true}
 nest-asyncio = "^1.5.8"
 mermaid-python = "^0.1"
 pint = "^0.24.4"
+mcp = {extras = ["cli"], version = "^1.14.1"}
 
 [tool.poetry.group.dev.dependencies]
 pytest = "^8.3.5"

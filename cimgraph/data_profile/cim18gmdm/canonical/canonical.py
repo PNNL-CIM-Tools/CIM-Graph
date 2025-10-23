@@ -38,7 +38,7 @@ class CIMStereotype(Enum):
     moved = 'moved'
 
 BASE_URI = 'http://www.ucaiug.org/gmdm/global#'
-ONTOLOGY_URI = 'http://cim.ucaiug.io/ns#'
+ONTOLOGY_URI = 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#'
 
 @dataclass(repr=False)
 class AdditionalAddressInformation(Identity):
@@ -52,7 +52,7 @@ class AdditionalAddressInformation(Identity):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Text for the additional address information.
@@ -69,7 +69,7 @@ class AdditionalAddressInformation(Identity):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Identifies the type of the additional address information (e.g. mail stop,
@@ -88,7 +88,7 @@ class AdditionalAddressInformation(Identity):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             For an address having multiple instances of additional address information,
@@ -108,7 +108,7 @@ class AdditionalAddressInformation(Identity):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'Address.AdditionalAddressInformation',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The address for which there is additional infomation.
@@ -136,7 +136,7 @@ class AgentCapability(Identity):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'Organisation.AgentCapability',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             '''
@@ -151,7 +151,7 @@ class AgentCapability(Identity):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             This attribute should be used to specify the Agent's capability requirement
@@ -170,7 +170,7 @@ class AgentCapability(Identity):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             This attribute should be used to specify the kind of agent capability skill
@@ -190,7 +190,7 @@ class AgentCapability(Identity):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Reference to the concrete capability, e.g. license number, certificate
@@ -210,7 +210,7 @@ class AgentCapability(Identity):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': '',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Kind of capability reference.
@@ -228,7 +228,7 @@ class AgentCapability(Identity):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': '',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Proficiency level of an Agent to operate or maintain a particular type
@@ -248,7 +248,7 @@ class AgentCapability(Identity):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'Agent.AgentCapability',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             '''
@@ -264,7 +264,7 @@ class AgentCapability(Identity):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'Organisation.AgentCapability',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             '''
@@ -280,7 +280,7 @@ class AgentCapability(Identity):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': '',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Effective period for the capability.
@@ -305,7 +305,7 @@ class AgentRoleQualification(Identity):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             This attribute should be used to specify the kind of qualification when
@@ -326,7 +326,7 @@ class AgentRoleQualification(Identity):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             This attribute should be used to specify the qualifying skill level when
@@ -346,7 +346,7 @@ class AgentRoleQualification(Identity):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             A reference to the description of the qualification.
@@ -363,7 +363,7 @@ class AgentRoleQualification(Identity):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The status of a qualification (the status of a license, for example).
@@ -381,7 +381,7 @@ class AgentRoleQualification(Identity):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': '',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The kind of qualification required to play an agent role.
@@ -399,7 +399,7 @@ class AgentRoleQualification(Identity):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': '',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             A defined level of skill required to qualify for an agent role.
@@ -417,7 +417,7 @@ class AgentRoleQualification(Identity):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'AgentRole.AgentRoleQualification',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             '''
@@ -433,7 +433,7 @@ class AgentRoleQualification(Identity):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': '',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The time period when the status of a qualification is in effect.
@@ -457,7 +457,7 @@ class BranchEndFlow(Identity):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'MktPowerTransformer.EndAFlow',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             '''
@@ -473,7 +473,7 @@ class BranchEndFlow(Identity):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'MktPowerTransformer.EndBFlow',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             '''
@@ -494,7 +494,7 @@ class BranchGroupTerminal(Identity):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The flow into the terminal is summed if set true. The flow out of the terminal
@@ -514,7 +514,7 @@ class BranchGroupTerminal(Identity):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'BranchGroup.BranchGroupTerminal',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The branch group to which the directed branch group terminals belong.
@@ -532,7 +532,7 @@ class BranchGroupTerminal(Identity):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'Terminal.BranchGroupTerminal',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The terminal to be summed.
@@ -560,7 +560,7 @@ class BusinessHours(Identity):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Master resource identifier issued by a model authority. The mRID is unique
@@ -588,7 +588,7 @@ class BusinessHours(Identity):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Closing hour of the place or service on the given day(s) of the week.
@@ -605,7 +605,7 @@ class BusinessHours(Identity):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Opening hour of the place or service on the given day(s) of the week.
@@ -622,7 +622,7 @@ class BusinessHours(Identity):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The date when the item becomes valid.
@@ -639,7 +639,7 @@ class BusinessHours(Identity):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Date after when the item is not valid. For example the end of an offer,
@@ -659,7 +659,7 @@ class BusinessHours(Identity):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': '',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The day of the week for which these opening hours are valid.
@@ -677,7 +677,7 @@ class BusinessHours(Identity):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'ContactPoint.BusinessHours',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             '''
@@ -699,7 +699,7 @@ class ComModuleInfo(Identity):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': '',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Communication direction.
@@ -717,7 +717,7 @@ class ComModuleInfo(Identity):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': '',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Communication technology.
@@ -742,7 +742,7 @@ class ContactPoint(Identity):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'BusinessHours.ContactPoint',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             '''
@@ -757,7 +757,7 @@ class ContactPoint(Identity):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             A unique identifier for the Agent
@@ -774,7 +774,7 @@ class ContactPoint(Identity):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Language someone may use with or at the item, service or place. Please
@@ -801,7 +801,7 @@ class ContactPoint(Identity):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Address to a chat service. Example Skype, WhatsApp etc
@@ -818,7 +818,7 @@ class ContactPoint(Identity):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The email address to be used to contact the Agent in the context of the
@@ -837,7 +837,7 @@ class ContactPoint(Identity):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The name to be used for the Agent in the context of the Agent Role being
@@ -856,7 +856,7 @@ class ContactPoint(Identity):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             A unique identifier for the Agent Role.
@@ -873,7 +873,7 @@ class ContactPoint(Identity):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Address to a web service.
@@ -891,7 +891,7 @@ class ContactPoint(Identity):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': '',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The communication method by which the Agent prefers to be contacted.
@@ -909,7 +909,7 @@ class ContactPoint(Identity):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': '',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The mailing address to be used for the Agent in the context of the Agent
@@ -929,7 +929,7 @@ class ContactPoint(Identity):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'Agent.ContactPoint',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             '''
@@ -945,7 +945,7 @@ class ContactPoint(Identity):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': '',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Fax number. A number assigned to a particular fax machine and used in making
@@ -965,7 +965,7 @@ class ContactPoint(Identity):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': '',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The telephone number to be used to contact the Agent in the context of
@@ -992,7 +992,7 @@ class CrewMembership(Identity):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': '',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The date and time interval a crew member was assigned to a specific crew.
@@ -1026,7 +1026,7 @@ class CurrentDroopOverride(Identity):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'SSSCController.CurrentDroopOverride',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The SSSC controller to which this CurrentDroopOverride applies to.
@@ -1043,7 +1043,7 @@ class CurrentDroopOverride(Identity):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Master resource identifier issued by a model authority. The mRID is unique
@@ -1071,7 +1071,7 @@ class CurrentDroopOverride(Identity):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Droop in capacitive region. The unit is V/A.
@@ -1088,7 +1088,7 @@ class CurrentDroopOverride(Identity):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Droop in inductive region. The unit is V/A.
@@ -1105,7 +1105,7 @@ class CurrentDroopOverride(Identity):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             True, if the current droop override is enabled (active). Otherwise false.
@@ -1123,7 +1123,7 @@ class CurrentDroopOverride(Identity):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Offset in capacitive region.
@@ -1140,7 +1140,7 @@ class CurrentDroopOverride(Identity):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Offset in capacitive region.
@@ -1157,7 +1157,7 @@ class CurrentDroopOverride(Identity):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Setpoint when control is active in capacitive region.
@@ -1174,7 +1174,7 @@ class CurrentDroopOverride(Identity):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Setpoint when control is active in inductive region.
@@ -1192,7 +1192,7 @@ class CurrentDroopOverride(Identity):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'SSSCController.CurrentDroopOverride',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The SSSC controller to which this CurrentDroopOverride applies to.
@@ -1217,7 +1217,7 @@ class CurveData(Identity):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The data value of the X-axis variable, depending on the X-axis units.
@@ -1234,7 +1234,7 @@ class CurveData(Identity):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The data value of the first Y-axis variable, depending on the Y-axis units.
@@ -1252,7 +1252,7 @@ class CurveData(Identity):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The data value of the second Y-axis variable (if present), depending on
@@ -1271,7 +1271,7 @@ class CurveData(Identity):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The data value of the third Y-axis variable (if present), depending on
@@ -1291,7 +1291,7 @@ class CurveData(Identity):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'Curve.CurveDatas',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The curve of this curve data point.
@@ -1324,7 +1324,7 @@ class DiagramObjectPoint1(Identity):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The sequence position of the point, used for defining the order of points
@@ -1345,7 +1345,7 @@ class DiagramObjectPoint1(Identity):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The X coordinate of this point.
@@ -1362,7 +1362,7 @@ class DiagramObjectPoint1(Identity):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The Y coordinate of this point.
@@ -1379,7 +1379,7 @@ class DiagramObjectPoint1(Identity):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The Z coordinate of this point.
@@ -1397,7 +1397,7 @@ class DiagramObjectPoint1(Identity):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'DiagramObject.DiagramObjectPoints',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The diagram object with which the points are associated.
@@ -1415,7 +1415,7 @@ class DiagramObjectPoint1(Identity):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'DiagramObjectGluePoint.DiagramObjectPoints',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The 'glue' point to which this point is associated.
@@ -1446,7 +1446,7 @@ class Approver(DocumentRole):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'Document.Approver',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             All documents for this approver.
@@ -1471,7 +1471,7 @@ class Author(DocumentRole):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'ActivityRecord.Author',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             All activity records with this author.
@@ -1489,7 +1489,7 @@ class Author(DocumentRole):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'Document.Author',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             All documents of this this author.
@@ -1514,7 +1514,7 @@ class Editor(DocumentRole):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'Document.Editor',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             All documents for this editor.
@@ -1539,7 +1539,7 @@ class Issuer(DocumentRole):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'Document.Issuer',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             All documents for this issuer.
@@ -1562,7 +1562,7 @@ class FieldDispatchStep(Identity):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The date and time at which the dispatch status occurred.
@@ -1579,7 +1579,7 @@ class FieldDispatchStep(Identity):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             freeform comments related to the dispatch to perform field work.
@@ -1596,7 +1596,7 @@ class FieldDispatchStep(Identity):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The sequence number of the field dispatch step within the field dispatch
@@ -1616,7 +1616,7 @@ class FieldDispatchStep(Identity):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': '',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The status of one or more crews dispatched to perform field work at one
@@ -1636,7 +1636,7 @@ class FieldDispatchStep(Identity):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'FieldDispatchHistory.FieldDispatchStep',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             '''
@@ -1657,7 +1657,7 @@ class Fuel(Identity):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             An indication of the fuel used for the energy production, or part of the
@@ -1679,7 +1679,7 @@ class Fuel(Identity):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': '',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             An indication of the fuel used for the energy production, or part of the
@@ -1708,7 +1708,7 @@ class GeometricElement1(Identity):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'Geometry.GeometricElement',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             '''
@@ -1727,7 +1727,7 @@ class GeometricElement1(Identity):
         'type': 'Attribute',
         'minOccurs': '1',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             A universally unique object identifier. Used to uniquely identify persistent
@@ -1755,7 +1755,7 @@ class DiagramObjectGluePoint(Identity):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'DiagramObjectPoint.DiagramObjectGluePoint',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             A diagram object glue point is associated with 2 or more object points
@@ -1775,7 +1775,7 @@ class DiagramObjectGluePoint(Identity):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'DiagramObjectPoint.DiagramObjectGluePoint',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             A diagram object glue point is associated with 2 or more object points
@@ -1802,7 +1802,7 @@ class DiagramObjectPoint(Identity):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The sequence position of the point, used for defining the order of points
@@ -1823,7 +1823,7 @@ class DiagramObjectPoint(Identity):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The X coordinate of this point.
@@ -1840,7 +1840,7 @@ class DiagramObjectPoint(Identity):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The Y coordinate of this point.
@@ -1857,7 +1857,7 @@ class DiagramObjectPoint(Identity):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The Z coordinate of this point.
@@ -1875,7 +1875,7 @@ class DiagramObjectPoint(Identity):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'DiagramObject.DiagramObjectPoints',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The diagram object with which the points are associated.
@@ -1893,7 +1893,7 @@ class DiagramObjectPoint(Identity):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'DiagramObjectGluePoint.DiagramObjectPoints',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The 'glue' point to which this point is associated.
@@ -1918,7 +1918,7 @@ class GeometricElement(Identity):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'Geometry.GeometricElement',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             '''
@@ -1943,7 +1943,7 @@ class Circle(GeometricElement):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             A circle may have an inner radius. If specified the area described by the
@@ -1964,7 +1964,7 @@ class Circle(GeometricElement):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Every circle must have an outer radius which describes the outer limit
@@ -1984,7 +1984,7 @@ class Circle(GeometricElement):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'PositionPoint.Circle',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             A point representing the center of a circular area. Any circle object must
@@ -2013,7 +2013,7 @@ class LineElement(GeometricElement):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'Polygon.OuterBoundaryLineElement',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             A polygon for which an outer boundary is defined.
@@ -2044,7 +2044,7 @@ class Polygon(GeometricElement):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'LineElement.Polygon',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             One or more self-closing line segments representing a polygonal area. In
@@ -2089,7 +2089,7 @@ class PositionPoint(GeometricElement):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'Circle.CircleCenterPositionPoint',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The circle for which a point defining the center has been specified.
@@ -2106,7 +2106,7 @@ class PositionPoint(GeometricElement):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://epri.com/gmdm#',
+        'namespace': 'http://epri.com/gmdm/2025#',
         'docstring':
             '''
             '''
@@ -2121,7 +2121,7 @@ class PositionPoint(GeometricElement):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             X axis position.
@@ -2138,7 +2138,7 @@ class PositionPoint(GeometricElement):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Y axis position.
@@ -2155,7 +2155,7 @@ class PositionPoint(GeometricElement):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             (if applicable) Z axis position.
@@ -2173,7 +2173,7 @@ class PositionPoint(GeometricElement):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'Location.PositionPoints',
-        'namespace': 'http://epri.com/gmdm#',
+        'namespace': 'http://epri.com/gmdm/2025#',
         'docstring':
             '''
             '''
@@ -2189,7 +2189,7 @@ class PositionPoint(GeometricElement):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'RelativeHeight.PositionPoint',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             '''
@@ -2213,7 +2213,7 @@ class LinearCoordinate(PositionPoint):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Bulge is a factor that describes a curved line segment between two points.
@@ -2241,7 +2241,7 @@ class LinearCoordinate(PositionPoint):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The order in which linear coordinates are to be connected to form the line
@@ -2268,7 +2268,7 @@ class IdentifiedObject(Identity):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'DiagramObject.IdentifiedObject',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The diagram objects that are associated with the domain object.
@@ -2286,7 +2286,7 @@ class IdentifiedObject(Identity):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'Name.IdentifiedObject',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             All names of this identified object. Names may be but are not guaranteed
@@ -2306,7 +2306,7 @@ class IdentifiedObject(Identity):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'Name.UniqueIdentifiedObject',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             All alternative identifiers of this identified object. No two identified
@@ -2325,7 +2325,7 @@ class IdentifiedObject(Identity):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Master resource identifier issued by a model authority. The mRID is unique
@@ -2353,7 +2353,7 @@ class IdentifiedObject(Identity):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The aliasName is free text human readable name of the object alternative
@@ -2381,7 +2381,7 @@ class IdentifiedObject(Identity):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The description is a free human readable text describing or naming the
@@ -2401,7 +2401,7 @@ class IdentifiedObject(Identity):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The name is any free human readable and possibly non unique text naming
@@ -2429,7 +2429,7 @@ class ACDCTerminal(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'Measurement.Terminal',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Measurements associated with this terminal defining where the measurement
@@ -2454,7 +2454,7 @@ class ACDCTerminal(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'OperationalLimitSet.Terminal',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The operational limit sets at the terminal.
@@ -2471,7 +2471,7 @@ class ACDCTerminal(IdentifiedObject):
         'type': 'deprecated Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The connected status is related to a bus-branch model and the topological
@@ -2504,7 +2504,7 @@ class ACDCTerminal(IdentifiedObject):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The orientation of the terminal connections for a multiple terminal conducting
@@ -2528,7 +2528,7 @@ class ACDCTerminal(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'BusNameMarker.Terminal',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The bus name marker used to name the bus (topological node).
@@ -2555,7 +2555,7 @@ class DCBaseTerminal(ACDCTerminal):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'DCNode.DCTerminals',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The DC connectivity node to which this DC base terminal connects with zero
@@ -2575,7 +2575,7 @@ class DCBaseTerminal(ACDCTerminal):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'DCTopologicalNode.DCTerminals',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             See association end Terminal.TopologicalNode.
@@ -2604,7 +2604,7 @@ class ACDCConverterDCTerminal(DCBaseTerminal):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': '',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Represents the normal network polarity condition. Depending on the converter
@@ -2632,7 +2632,7 @@ class ACDCConverterDCTerminal(DCBaseTerminal):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'ACDCConverter.DCTerminals',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             A DC converter terminal belong to an DC converter.
@@ -2656,7 +2656,7 @@ class DCTerminal(DCBaseTerminal):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'SvDCPowerFlow.DCTerminal',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The DC power flow state variable associated with the DC terminal.
@@ -2674,7 +2674,7 @@ class DCTerminal(DCBaseTerminal):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': '',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Represents the normal network polarity condition. Used in DC system configurations
@@ -2696,7 +2696,7 @@ class DCTerminal(DCBaseTerminal):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'DCConductingEquipment.DCTerminals',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             An DC terminal belong to a DC conducting equipment.
@@ -2721,7 +2721,7 @@ class Terminal(ACDCTerminal):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'ACDCConverter.PccTerminal',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             All converters' DC sides linked to this point of common coupling terminal.
@@ -2739,7 +2739,7 @@ class Terminal(ACDCTerminal):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'AuxiliaryEquipment.Terminal',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The auxiliary equipment connected to the terminal.
@@ -2757,7 +2757,7 @@ class Terminal(ACDCTerminal):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'BranchGroupTerminal.Terminal',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The directed branch group terminals for which this terminal is monitored.
@@ -2775,7 +2775,7 @@ class Terminal(ACDCTerminal):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'MutualCoupling.First_Terminal',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Mutual couplings associated with the branch as the first branch.
@@ -2793,7 +2793,7 @@ class Terminal(ACDCTerminal):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'MutualCoupling.Second_Terminal',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Mutual couplings with the branch associated as the first branch.
@@ -2811,7 +2811,7 @@ class Terminal(ACDCTerminal):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'RegulatingControl.Terminal',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The controls regulating this terminal.
@@ -2829,7 +2829,7 @@ class Terminal(ACDCTerminal):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'SvPowerFlow.Terminal',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The power flow state variable associated with the terminal.
@@ -2847,7 +2847,7 @@ class Terminal(ACDCTerminal):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'TieFlow.Terminal',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The control area tie flows to which this terminal associates.
@@ -2865,7 +2865,7 @@ class Terminal(ACDCTerminal):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'TransformerEnd.Terminal',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             All transformer ends connected at this terminal.
@@ -2883,7 +2883,7 @@ class Terminal(ACDCTerminal):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'VoltageAngleLimit.AngleReferenceTerminal',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The voltage angle limit which has this reference angle terminal.
@@ -2901,7 +2901,7 @@ class Terminal(ACDCTerminal):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': '',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Represents the normal network phasing condition. If the attribute is missing,
@@ -2932,7 +2932,7 @@ class Terminal(ACDCTerminal):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'Bushing.Terminal',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             '''
@@ -2948,7 +2948,7 @@ class Terminal(ACDCTerminal):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'ConductingEquipment.Terminals',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The conducting equipment of the terminal. Conducting equipment have terminals
@@ -2970,7 +2970,7 @@ class Terminal(ACDCTerminal):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'ConnectivityNode.Terminals',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The connectivity node to which this terminal connects with zero impedance.
@@ -2988,7 +2988,7 @@ class Terminal(ACDCTerminal):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'SVSMO4.FromTerminal',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The SVSMO4 model that has this FromTerminal.
@@ -3006,7 +3006,7 @@ class Terminal(ACDCTerminal):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'SVSMO4.ToTerminal',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The SVSMO4 model that has this ToTerminal.
@@ -3024,7 +3024,7 @@ class Terminal(ACDCTerminal):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'Feeder.NormalHeadTerminal',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The feeder that this terminal normally feeds. Only specified for the terminals
@@ -3044,7 +3044,7 @@ class Terminal(ACDCTerminal):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'TopologicalNode.Terminal',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The topological node associated with the terminal. This can be used as
@@ -3070,7 +3070,7 @@ class Terminal(ACDCTerminal):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'WeccREPCC.Terminal',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The WECC REPCC model that has frequency measured at this Terminal.
@@ -3088,7 +3088,7 @@ class Terminal(ACDCTerminal):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'WeccWTGIBFFRA.Terminal',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The WECC WTGIBFFRA model that has frequency measured at this Terminal.
@@ -3106,7 +3106,7 @@ class Terminal(ACDCTerminal):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'WindPlantDynamics.PointOfConnection',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The wind plant that has point of connection.
@@ -3130,7 +3130,7 @@ class MktTerminal(Terminal):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'Flowgate.MktTerminal',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             '''
@@ -3152,7 +3152,7 @@ class ActivityRecord(IdentifiedObject):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Date and time this activity record has been created (different from the
@@ -3173,7 +3173,7 @@ class ActivityRecord(IdentifiedObject):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Reason for event resulting in this activity record, typically supplied
@@ -3192,7 +3192,7 @@ class ActivityRecord(IdentifiedObject):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Severity level of event resulting in this activity record.
@@ -3209,7 +3209,7 @@ class ActivityRecord(IdentifiedObject):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Type of event resulting in this activity record.
@@ -3227,7 +3227,7 @@ class ActivityRecord(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'Author.ActivityRecords',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Author of this activity record.
@@ -3245,7 +3245,7 @@ class ActivityRecord(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': '',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Information on consequence of event resulting in this activity record.
@@ -3263,7 +3263,7 @@ class ActivityRecord(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'WorkRequest.ActivityRecord',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Work request for which activity has been recorded.
@@ -3287,7 +3287,7 @@ class ConfigurationEvent(ActivityRecord):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Date and time this event has or will become effective.
@@ -3304,7 +3304,7 @@ class ConfigurationEvent(ActivityRecord):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Source/initiator of modification.
@@ -3321,7 +3321,7 @@ class ConfigurationEvent(ActivityRecord):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Free text remarks.
@@ -3339,7 +3339,7 @@ class ConfigurationEvent(ActivityRecord):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'AgentRole.ConfigurationEvents',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Agent role whose change resulted in this configuration event.
@@ -3357,7 +3357,7 @@ class ConfigurationEvent(ActivityRecord):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'Asset.ConfigurationEvents',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Asset whose change resulted in this configuration event.
@@ -3375,7 +3375,7 @@ class ConfigurationEvent(ActivityRecord):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'Document.ConfigurationEvents',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Document whose change resulted in this configuration event.
@@ -3393,7 +3393,7 @@ class ConfigurationEvent(ActivityRecord):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'Location.ConfigurationEvents',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Location whose change resulted in this configuration event.
@@ -3411,7 +3411,7 @@ class ConfigurationEvent(ActivityRecord):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'ServiceCategory.ConfigurationEvents',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Service category whose change resulted in this configuration event.
@@ -3429,7 +3429,7 @@ class ConfigurationEvent(ActivityRecord):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'UsagePoint.ConfigurationEvents',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Usage point whose change resulted in this configuration event.
@@ -3447,7 +3447,7 @@ class ConfigurationEvent(ActivityRecord):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'FaultCauseType.ConfigurationEvent',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             '''
@@ -3463,7 +3463,7 @@ class ConfigurationEvent(ActivityRecord):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'PowerSystemResource.ConfigurationEvent',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             '''
@@ -3485,7 +3485,7 @@ class MktActivityRecord(ActivityRecord):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'MarketParticipant.MktActivityRecord',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             '''
@@ -3501,7 +3501,7 @@ class MktActivityRecord(ActivityRecord):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'MktActivityRecord.SelfMktActivityRecord',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             '''
@@ -3517,7 +3517,7 @@ class MktActivityRecord(ActivityRecord):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'MktActivityRecord.MktActivityRecord',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             '''
@@ -3539,7 +3539,7 @@ class Address(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'AdditionalAddressInformation.Address',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Additional information for a given address.
@@ -3556,7 +3556,7 @@ class Address(IdentifiedObject):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             City code.
@@ -3573,7 +3573,7 @@ class Address(IdentifiedObject):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Name of the city.
@@ -3590,7 +3590,7 @@ class Address(IdentifiedObject):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Name of the country in which the address is located. It is recommended
@@ -3611,7 +3611,7 @@ class Address(IdentifiedObject):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Name of the second-level Administrative division of a country in which
@@ -3640,7 +3640,7 @@ class Address(IdentifiedObject):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             A concatenated string specifying the complete address in a single string
@@ -3659,7 +3659,7 @@ class Address(IdentifiedObject):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Postal code for the address.
@@ -3676,7 +3676,7 @@ class Address(IdentifiedObject):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Name of the first-level Administrative division of a country in which the
@@ -3699,7 +3699,7 @@ class Address(IdentifiedObject):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             (if applicable) Utilities often make use of external reference systems,
@@ -3720,7 +3720,7 @@ class Address(IdentifiedObject):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Name of the street.
@@ -3737,7 +3737,7 @@ class Address(IdentifiedObject):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Designator of the specific location on the street.
@@ -3754,7 +3754,7 @@ class Address(IdentifiedObject):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Prefix to the street name. For example: North, South, East, West.
@@ -3771,7 +3771,7 @@ class Address(IdentifiedObject):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Suffix to the street name. For example: North, South, East, West.
@@ -3788,7 +3788,7 @@ class Address(IdentifiedObject):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Number of the apartment or suite.
@@ -3806,7 +3806,7 @@ class Address(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'Cadastre.Address',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Cadastre encompassing one or more physical addresses.
@@ -3824,7 +3824,7 @@ class Address(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': '',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Current status of the address e.g. pending, approved
@@ -3851,7 +3851,7 @@ class PhysicalAddress(Address):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'Building.PhysicalAddress',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             '''
@@ -3867,7 +3867,7 @@ class PhysicalAddress(Address):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'Site.PhysicalAddress',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             '''
@@ -3882,7 +3882,7 @@ class PhysicalAddress(Address):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Community in which the locality is, and which is in the municipality, city
@@ -3903,7 +3903,7 @@ class PhysicalAddress(Address):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Global Location Number (GLN, sometimes also referred to as International
@@ -3925,7 +3925,7 @@ class PhysicalAddress(Address):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             International Standard of Industrial Classification of All Economic Activities
@@ -3946,7 +3946,7 @@ class PhysicalAddress(Address):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             If TRUE, this street is within the legal geographical boundaries of the
@@ -3965,7 +3965,7 @@ class PhysicalAddress(Address):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Name of the municipality within which the address is located. A municipality
@@ -3988,7 +3988,7 @@ class PhysicalAddress(Address):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The names of streets at the nearest intersection to work area.
@@ -4006,7 +4006,7 @@ class PhysicalAddress(Address):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'Building.PhysicalAddress',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             '''
@@ -4022,7 +4022,7 @@ class PhysicalAddress(Address):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'Site.PhysicalAddress',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             '''
@@ -4045,7 +4045,7 @@ class PostalAddress(Address):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Post office box identifier. Typically a numeric or alphanumeric string
@@ -4073,7 +4073,7 @@ class AdjacentCASet(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'RegisteredResource.AdjacentCASet',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             '''
@@ -4096,7 +4096,7 @@ class Agent(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'AgentCapability.Agent',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             '''
@@ -4112,7 +4112,7 @@ class Agent(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'AgentRole.Agent',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             '''
@@ -4128,7 +4128,7 @@ class Agent(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'ContactPoint.Agent',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             '''
@@ -4143,7 +4143,7 @@ class Agent(IdentifiedObject):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             URL of the agent. Uniform Resource Locator (URL), colloquially termed a
@@ -4175,7 +4175,7 @@ class AutonomousAgent(Agent):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'AutonomousFunction.AutonomousAgent',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             '''
@@ -4190,7 +4190,7 @@ class AutonomousAgent(Agent):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Unique descriptors of an organisations device or workload used to authenticate
@@ -4216,7 +4216,7 @@ class AutonomousAgent(Agent):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             This attribute should be used to specify the kind of autonomous agent when
@@ -4236,7 +4236,7 @@ class AutonomousAgent(Agent):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': '',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The kind of autonomous agent.
@@ -4262,7 +4262,7 @@ class Organisation(Agent):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'AgentCapability.CertificationOrganisation',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             '''
@@ -4278,7 +4278,7 @@ class Organisation(Agent):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'Organisation.ParentOrganisation',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             '''
@@ -4293,7 +4293,7 @@ class Organisation(Agent):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             If TRUE, the organisation is a legal entity.
@@ -4310,7 +4310,7 @@ class Organisation(Agent):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Organisation identifier as defined in ISO 6523(-1). Note that many existing
@@ -4333,7 +4333,7 @@ class Organisation(Agent):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The Value-added Tax ID of the organisation.
@@ -4351,7 +4351,7 @@ class Organisation(Agent):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': '',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The list of the kinds of organisations regarded as having particular shared
@@ -4371,7 +4371,7 @@ class Organisation(Agent):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': '',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The kind of legal entity the organisation is as defined by its articles
@@ -4391,7 +4391,7 @@ class Organisation(Agent):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'AgentCapability.CertificationOrganisation',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             '''
@@ -4407,7 +4407,7 @@ class Organisation(Agent):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'Organisation.SubordinateOrganisation',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Parent organisation of this organisation.
@@ -4431,7 +4431,7 @@ class Crew(Organisation):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'CrewMember.Crew',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             All members of this crew.
@@ -4449,7 +4449,7 @@ class Crew(Organisation):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'FieldDispatchHistory.Crew',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             '''
@@ -4465,7 +4465,7 @@ class Crew(Organisation):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'CrewType.Crews',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Type of this crew.
@@ -4483,7 +4483,7 @@ class Crew(Organisation):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'Location.Crew',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             '''
@@ -4499,7 +4499,7 @@ class Crew(Organisation):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': '',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Status of this crew.
@@ -4517,7 +4517,7 @@ class Crew(Organisation):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'SwitchingAction.Crew',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             '''
@@ -4533,7 +4533,7 @@ class Crew(Organisation):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'WorkCapability.Crew',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             '''
@@ -4549,7 +4549,7 @@ class Crew(Organisation):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'WorkManager.Crew',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The work organisation to which crews are assigned.
@@ -4567,7 +4567,7 @@ class Crew(Organisation):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'WorkOrganisation.Crew',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The work organisation to which crews are assigned.
@@ -4593,7 +4593,7 @@ class MarketParticipant(Organisation):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'RegisteredResource.MarketParticipant',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             '''
@@ -4609,7 +4609,7 @@ class MarketParticipant(Organisation):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'MktActivityRecord.MarketParticipant',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             '''
@@ -4631,7 +4631,7 @@ class RTO(MarketParticipant):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'AggregateNode.RTO',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             '''
@@ -4647,7 +4647,7 @@ class RTO(MarketParticipant):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'EnergyMarket.RTO',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             '''
@@ -4663,7 +4663,7 @@ class RTO(MarketParticipant):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'MktConnectivityNode.RTO',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             '''
@@ -4691,7 +4691,7 @@ class WorkOrganisation(Organisation):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'Crew.WorkOrganisation',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Crews assigned to a given work organisation.
@@ -4719,7 +4719,7 @@ class Person(Agent):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'PersonRole.Person',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             All roles of this person.
@@ -4736,7 +4736,7 @@ class Person(Agent):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Person's first name.
@@ -4753,7 +4753,7 @@ class Person(Agent):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Person's last (family, sir) name.
@@ -4770,7 +4770,7 @@ class Person(Agent):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Middle name(s) or initial(s).
@@ -4787,7 +4787,7 @@ class Person(Agent):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The name the person prefers to be used in communications and when spoken
@@ -4806,7 +4806,7 @@ class Person(Agent):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             A prefix or title for the person's name, such as Miss, Mister, Doctor,
@@ -4825,7 +4825,7 @@ class Person(Agent):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             A suffix for the person's name
@@ -4843,7 +4843,7 @@ class Person(Agent):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': '',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             A suffix used to distinguish persons who share the same name within a family,
@@ -4871,7 +4871,7 @@ class OldPerson(Person):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'MeasurementValue.ErpPerson',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             '''
@@ -4887,7 +4887,7 @@ class OldPerson(Person):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'Skill.ErpPerson',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             '''
@@ -4902,7 +4902,7 @@ class OldPerson(Person):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Utility-specific classification for this person, according to the utility's
@@ -4934,7 +4934,7 @@ class OldPerson(Person):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'Customer.ErpPersons',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             '''
@@ -4950,7 +4950,7 @@ class OldPerson(Person):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'ErpCompetency.ErpPersons',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             '''
@@ -4966,7 +4966,7 @@ class OldPerson(Person):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'ErpPersonnel.ErpPersons',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             '''
@@ -4982,7 +4982,7 @@ class OldPerson(Person):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': '',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             '''
@@ -5006,7 +5006,7 @@ class AgentRole(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'AgentRoleQualification.AgentRole',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             '''
@@ -5022,7 +5022,7 @@ class AgentRole(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'ConfigurationEvent.ChangedAgentRole',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             All configuration events created for this agent role.
@@ -5039,7 +5039,7 @@ class AgentRole(IdentifiedObject):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Global Location Number (GLN, sometimes also referred to as International
@@ -5061,7 +5061,7 @@ class AgentRole(IdentifiedObject):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             International Standard of Industrial Classification of All Economic Activities
@@ -5083,7 +5083,7 @@ class AgentRole(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': '',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             This attribute when used applies a restriction on the type of Agent that
@@ -5107,7 +5107,7 @@ class AgentRole(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'Agent.AgentRole',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             '''
@@ -5130,7 +5130,7 @@ class Customer(AgentRole):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'OldPerson.CustomerData',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             '''
@@ -5159,7 +5159,7 @@ class AssetOwner(OrganisationRole):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'Ownership.AssetOwner',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             All ownerships of this owner.
@@ -5183,7 +5183,7 @@ class MarketRole(OrganisationRole):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The kind of market roles that can be played by parties for given domains
@@ -5212,7 +5212,7 @@ class PersonRole(AgentRole):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'Person.PersonRole',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Person having this role.
@@ -5236,7 +5236,7 @@ class CrewMember(PersonRole):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'Crew.CrewMembers',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Crew to which this crew member belongs.
@@ -5261,7 +5261,7 @@ class WorkManager(AgentRole):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'Crew.WorkManager',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Crews assigned to a given work organisation.
@@ -5278,7 +5278,7 @@ class WorkManager(AgentRole):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The type of work organisation e.g. electrical contractor, maintenance department,
@@ -5298,7 +5298,7 @@ class WorkManager(AgentRole):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'WorkRequest.WorkManager',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Work requests assigned to a work organization.
@@ -5324,7 +5324,7 @@ class AggregateNode(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'RegisteredResource.AggregateNode',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             A RegisteredResource can be associated to only one AggregateNode if not
@@ -5343,7 +5343,7 @@ class AggregateNode(IdentifiedObject):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Processing Order for AS self-provisions for this region. The priority of
@@ -5365,7 +5365,7 @@ class AggregateNode(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': '',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Type of aggregated node
@@ -5383,7 +5383,7 @@ class AggregateNode(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'AggregatedPnode.AggregateNode',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             '''
@@ -5399,7 +5399,7 @@ class AggregateNode(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'RTO.AggregateNode',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             '''
@@ -5421,7 +5421,7 @@ class AltGeneratingUnitMeas(IdentifiedObject):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Priority of a measurement usage. Lower numbers have first priority.
@@ -5439,7 +5439,7 @@ class AltGeneratingUnitMeas(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'AnalogValue.AltGeneratingUnit',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The specific analog value used as a source.
@@ -5457,7 +5457,7 @@ class AltGeneratingUnitMeas(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'ControlAreaGeneratingUnit.AltGeneratingUnitMeas',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The control area generating unit to which the prioritized measurement assignment
@@ -5483,7 +5483,7 @@ class AltTieMeas(IdentifiedObject):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Priority of a measurement usage. Lower numbers have first priority.
@@ -5501,7 +5501,7 @@ class AltTieMeas(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'AnalogValue.AltTieMeas',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The specific analog value used as a source.
@@ -5519,7 +5519,7 @@ class AltTieMeas(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'TieFlow.AltTieMeas',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The tie flow of the alternate measurements.
@@ -5542,7 +5542,7 @@ class Appointment(IdentifiedObject):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             True if requested to call customer when someone is about to arrive at their
@@ -5562,7 +5562,7 @@ class Appointment(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': '',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Date and time reserved for appointment.
@@ -5591,7 +5591,7 @@ class Asset(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'ConfigurationEvent.ChangedAsset',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             All configuration events created for this asset.
@@ -5609,7 +5609,7 @@ class Asset(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'Measurement.Asset',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Measurement related to this asset.
@@ -5627,7 +5627,7 @@ class Asset(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'Ownership.Asset',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             All ownerships of this asset.
@@ -5651,7 +5651,7 @@ class Bushing(Asset):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'Terminal.Bushing',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Terminal to which this bushing is attached.
@@ -5678,7 +5678,7 @@ class DuctBank(Asset):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'IntraphaseSpacing.DuctBank',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             '''
@@ -5694,7 +5694,7 @@ class DuctBank(Asset):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'WireSpacingInfo.DuctBank',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             '''
@@ -5722,7 +5722,7 @@ class AssetInfo(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'AssetInfoComponent.ChildAssetInfo',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             '''
@@ -5738,7 +5738,7 @@ class AssetInfo(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'AssetInfoComponent.ParentAssetInfo',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             '''
@@ -5754,7 +5754,7 @@ class AssetInfo(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'PowerSystemResource.AssetDatasheet',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             All power system resources with this datasheet information.
@@ -5772,7 +5772,7 @@ class AssetInfo(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'AssetRequirement.AssetInfo',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             '''
@@ -5788,7 +5788,7 @@ class AssetInfo(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'CatalogAssetType.AssetInfo',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Asset information (nameplate) for this catalog asset type.
@@ -5806,7 +5806,7 @@ class AssetInfo(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'AssetInfoComponent.ParentAssetInfo',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             '''
@@ -5822,7 +5822,7 @@ class AssetInfo(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'AssetInfoComponent.ChildAssetInfo',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             '''
@@ -5838,7 +5838,7 @@ class AssetInfo(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'ProductAssetModel.AssetInfo',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Product asset model which conforms to this catalog asset type.
@@ -5868,7 +5868,7 @@ class ConductingAssetInfo(AssetInfo):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'ShortCircuitResponse.ConductingAssetInfo',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             '''
@@ -5883,7 +5883,7 @@ class ConductingAssetInfo(AssetInfo):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Rated current.
@@ -5900,7 +5900,7 @@ class ConductingAssetInfo(AssetInfo):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Rated frequency such as 50Hz or 60Hz
@@ -5917,7 +5917,7 @@ class ConductingAssetInfo(AssetInfo):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Rated voltage.
@@ -5935,7 +5935,7 @@ class ConductingAssetInfo(AssetInfo):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': '',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Number of phases
@@ -5959,7 +5959,7 @@ class BundledCableInfo(ConductingAssetInfo):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Additional conductor count
@@ -5976,7 +5976,7 @@ class BundledCableInfo(ConductingAssetInfo):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             True if neutral
@@ -5993,7 +5993,7 @@ class BundledCableInfo(ConductingAssetInfo):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             True if neutral wire is insulated
@@ -6010,7 +6010,7 @@ class BundledCableInfo(ConductingAssetInfo):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Neutral wire size description
@@ -6027,7 +6027,7 @@ class BundledCableInfo(ConductingAssetInfo):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Neutral wire strand count
@@ -6044,7 +6044,7 @@ class BundledCableInfo(ConductingAssetInfo):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Neutral strand DC resistance per unit length of the conductor at 20 &#176;C
@@ -6074,7 +6074,7 @@ class BushingInfo(ConductingAssetInfo):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Factory measured capacitance, measured between the power factor tap and
@@ -6093,7 +6093,7 @@ class BushingInfo(ConductingAssetInfo):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Factory measured insulation power factor, measured between the power factor
@@ -6112,7 +6112,7 @@ class BushingInfo(ConductingAssetInfo):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Factory measured capacitance measured between the power factor tap and
@@ -6131,7 +6131,7 @@ class BushingInfo(ConductingAssetInfo):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Factory measured insulation power factor, measured between the power factor
@@ -6150,7 +6150,7 @@ class BushingInfo(ConductingAssetInfo):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Rated impulse withstand voltage, also known as BIL (Basic Impulse Level).
@@ -6167,7 +6167,7 @@ class BushingInfo(ConductingAssetInfo):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Rated line-to-ground voltage. Also referred to as Uy on bushing nameplate.
@@ -6185,7 +6185,7 @@ class BushingInfo(ConductingAssetInfo):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': '',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Kind of insulation.
@@ -6211,7 +6211,7 @@ class CapacitorCanInfo(ConductingAssetInfo):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Type of dielectric fluid used for the capacitors (ex. WEMCOL, DPO, AROCLOR,
@@ -6230,7 +6230,7 @@ class CapacitorCanInfo(ConductingAssetInfo):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Volume of dielectric fluid (oil) in litres.
@@ -6247,7 +6247,7 @@ class CapacitorCanInfo(ConductingAssetInfo):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The factory rating of the capacitor cans in uF (Farads). All the capacitors
@@ -6267,7 +6267,7 @@ class CapacitorCanInfo(ConductingAssetInfo):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The reactive power rating of the capacitor cans in KVAR at the can rated
@@ -6286,7 +6286,7 @@ class CapacitorCanInfo(ConductingAssetInfo):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Total weight of one capacitor can (i.e., 20kG).
@@ -6304,7 +6304,7 @@ class CapacitorCanInfo(ConductingAssetInfo):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': '',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             discharge resister installed, what type is it? (i.e. internal, external
@@ -6324,7 +6324,7 @@ class CapacitorCanInfo(ConductingAssetInfo):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': '',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The type of fusing used (i.e. internal or external). Fuses may be included
@@ -6344,7 +6344,7 @@ class CapacitorCanInfo(ConductingAssetInfo):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': '',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The terminal connection of the capacitor cans (i.e. single bushing double
@@ -6364,7 +6364,7 @@ class CapacitorCanInfo(ConductingAssetInfo):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': '',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The time it takes to discharge to one tenth of the capacitor cans voltage
@@ -6391,7 +6391,7 @@ class CompensatorInfo(ConductingAssetInfo):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Maximum allowed apparent power loss.
@@ -6408,7 +6408,7 @@ class CompensatorInfo(ConductingAssetInfo):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Reactive Power produced by the bank at rated voltage
@@ -6433,7 +6433,7 @@ class CapacitorInfo(CompensatorInfo):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Maximum Operating ambient temperature (i.e., +85 DEG C).
@@ -6450,7 +6450,7 @@ class CapacitorInfo(CompensatorInfo):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Minimum Operating ambient temperature (i.e., -40 DEG C).
@@ -6467,7 +6467,7 @@ class CapacitorInfo(CompensatorInfo):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Total number of cans per phase in the capacitor bank
@@ -6484,7 +6484,7 @@ class CapacitorInfo(CompensatorInfo):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Per phase how many elements are connected in parallel units per series
@@ -6503,7 +6503,7 @@ class CapacitorInfo(CompensatorInfo):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Per phase how many series groups (or sections) in the capacitor unit are
@@ -6522,7 +6522,7 @@ class CapacitorInfo(CompensatorInfo):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Basic Insulation Level voltage in kilovolts (lightening impulse withstand
@@ -6542,7 +6542,7 @@ class CapacitorInfo(CompensatorInfo):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': '',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Rack type used (ie. Enclosed Rack or Open Rack).
@@ -6574,7 +6574,7 @@ class ShuntCapacitorInfo(CapacitorInfo):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': '',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Connection type of the capacitor bank (i.e. wye, grounded wye or delta).
@@ -6598,7 +6598,7 @@ class FACTSInfo(CompensatorInfo):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Description of the harmonic filtering applied in the FACTS (5th order,
@@ -6617,7 +6617,7 @@ class FACTSInfo(CompensatorInfo):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The cooling type of the FACTS Device Thyristors
@@ -6636,7 +6636,7 @@ class FACTSInfo(CompensatorInfo):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Total Capacitor Harmonic Filter Rating in Reactance (imaginary part of
@@ -6656,7 +6656,7 @@ class FACTSInfo(CompensatorInfo):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Capacitive Reactance - Maximum Capacitive reactive impedance the FACTS
@@ -6675,7 +6675,7 @@ class FACTSInfo(CompensatorInfo):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Reactive Reactance - Maximum inductive reactive impedance the FACTS can
@@ -6694,7 +6694,7 @@ class FACTSInfo(CompensatorInfo):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Total capacitor's reactive impedance of mechanically switched Capacitors
@@ -6715,7 +6715,7 @@ class FACTSInfo(CompensatorInfo):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Total inductor's reactive impedance of mechanically switched Reactors under
@@ -6736,7 +6736,7 @@ class FACTSInfo(CompensatorInfo):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Rated Voltage for the shunt capacitors and reactors in the FACTS device.
@@ -6753,7 +6753,7 @@ class FACTSInfo(CompensatorInfo):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Total Reactor Harmonic Filter Rating in Reactance (imaginary part of impedance),
@@ -6778,7 +6778,7 @@ class SVCInfo(FACTSInfo):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Rating in reactance if the Static Var Compensator has a Thyristor Switched
@@ -6797,7 +6797,7 @@ class SVCInfo(FACTSInfo):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Rating in reactance if the Static Var Compensator has a Thyristor Switched
@@ -6817,7 +6817,7 @@ class SVCInfo(FACTSInfo):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': '',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             An SVC can either be set to control the voltage of a bus or provide contant
@@ -6846,7 +6846,7 @@ class SelfSaturatedReactorInfo(SVCInfo):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Slope correcting capacitor rating in reactance which is connected in series
@@ -6865,7 +6865,7 @@ class SelfSaturatedReactorInfo(SVCInfo):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Shunt connected capacitors rating in reactance which are used to provide
@@ -6891,7 +6891,7 @@ class StatComInfo(FACTSInfo):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             If an active power source is available in the STATCOM, the Maximum MW that
@@ -6910,7 +6910,7 @@ class StatComInfo(FACTSInfo):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             If an active power source is available in the STATCOM, the Maximum MW that
@@ -6930,7 +6930,7 @@ class StatComInfo(FACTSInfo):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': '',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Enumeration used to designate the type of Active power source used by the
@@ -6950,7 +6950,7 @@ class StatComInfo(FACTSInfo):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': '',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The type DC to AC converter unit providing the AC compensation
@@ -6968,7 +6968,7 @@ class StatComInfo(FACTSInfo):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': '',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Type of electronics used for the series gates.
@@ -6992,7 +6992,7 @@ class ReactorInfo(CompensatorInfo):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Weight of the core and coils of the device in kilograms.
@@ -7009,7 +7009,7 @@ class ReactorInfo(CompensatorInfo):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Type or designation of oil used for the dielectric medium (ex. VoltEsso,
@@ -7028,7 +7028,7 @@ class ReactorInfo(CompensatorInfo):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Weight of all the oil in the device in kilograms.
@@ -7045,7 +7045,7 @@ class ReactorInfo(CompensatorInfo):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Inductance of device in mH - Milli-Henry.
@@ -7062,7 +7062,7 @@ class ReactorInfo(CompensatorInfo):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The amount of current that creates the maximum allowable force in the conductor
@@ -7081,7 +7081,7 @@ class ReactorInfo(CompensatorInfo):
         'type': 'NeedsWork Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Maximum current the device can withstand for a period of one second.
@@ -7098,7 +7098,7 @@ class ReactorInfo(CompensatorInfo):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Weight of the tanks and fittings of the device in kilograms.
@@ -7115,7 +7115,7 @@ class ReactorInfo(CompensatorInfo):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Insulation class based on temperature (ie: Y, A, E, B, F, N, H, C).
@@ -7132,7 +7132,7 @@ class ReactorInfo(CompensatorInfo):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Temperature rise of equipment over ambient in degrees Celsius.
@@ -7149,7 +7149,7 @@ class ReactorInfo(CompensatorInfo):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Volume of oil in litres.
@@ -7166,7 +7166,7 @@ class ReactorInfo(CompensatorInfo):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Basic Insulation Level voltage in kilovolts (lightening impulse withstand
@@ -7186,7 +7186,7 @@ class ReactorInfo(CompensatorInfo):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': '',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The method used to cool the shunt reactor, O: oil; A: air; N: natural;
@@ -7206,7 +7206,7 @@ class ReactorInfo(CompensatorInfo):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': '',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The type of core of the reactor. Example Air, steel, concrete
@@ -7224,7 +7224,7 @@ class ReactorInfo(CompensatorInfo):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': '',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             This property denotes whether the reactor is air or oil.
@@ -7242,7 +7242,7 @@ class ReactorInfo(CompensatorInfo):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': '',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Kind of oil preservation.
@@ -7274,7 +7274,7 @@ class ShuntReactorInfo(ReactorInfo):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'TapChangerInfo.ShuntReactorInfo',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             '''
@@ -7295,7 +7295,7 @@ class CompositeSwitchInfo(ConductingAssetInfo):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             True if multi-phase switch controls all phases concurrently.
@@ -7312,7 +7312,7 @@ class CompositeSwitchInfo(ConductingAssetInfo):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Initial operating mode, with the following values: Automatic, Manual.
@@ -7329,7 +7329,7 @@ class CompositeSwitchInfo(ConductingAssetInfo):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Supported number of phases, typically 0, 1 or 3.
@@ -7346,7 +7346,7 @@ class CompositeSwitchInfo(ConductingAssetInfo):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             True if device is capable of being operated by remote control.
@@ -7363,7 +7363,7 @@ class CompositeSwitchInfo(ConductingAssetInfo):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Number of switch states represented by the composite switch.
@@ -7380,7 +7380,7 @@ class CompositeSwitchInfo(ConductingAssetInfo):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Breaking capacity, or short circuit rating, is the maximum rated current
@@ -7399,7 +7399,7 @@ class CompositeSwitchInfo(ConductingAssetInfo):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Rated voltage.
@@ -7417,7 +7417,7 @@ class CompositeSwitchInfo(ConductingAssetInfo):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': '',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Kind of composite switch.
@@ -7435,7 +7435,7 @@ class CompositeSwitchInfo(ConductingAssetInfo):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': '',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Phases carried, if applicable.
@@ -7460,7 +7460,7 @@ class ConductorInfo(ConductingAssetInfo):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Phase, neutral, lighting, or something else
@@ -7477,7 +7477,7 @@ class ConductorInfo(ConductingAssetInfo):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Area of conducting material cross section
@@ -7494,7 +7494,7 @@ class ConductorInfo(ConductingAssetInfo):
         'type': 'NeedsWork Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Area of conducting material cross section
@@ -7511,7 +7511,7 @@ class ConductorInfo(ConductingAssetInfo):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             AC resistance per unit length of the conductor at 25 �C.
@@ -7528,7 +7528,7 @@ class ConductorInfo(ConductingAssetInfo):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             AC resistance per unit length of the conductor at 50 �C.
@@ -7545,7 +7545,7 @@ class ConductorInfo(ConductingAssetInfo):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             AC resistance per unit length of the conductor at 75 �C.
@@ -7562,7 +7562,7 @@ class ConductorInfo(ConductingAssetInfo):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             DC resistance per unit length of the conductor at 20 �C.
@@ -7580,7 +7580,7 @@ class ConductorInfo(ConductingAssetInfo):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': '',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Conductor material.
@@ -7613,7 +7613,7 @@ class AngleBusbarInfo(RigidBusbarInfo):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Cross section width of the conductor
@@ -7630,7 +7630,7 @@ class AngleBusbarInfo(RigidBusbarInfo):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Thickness of the angle bus bar
@@ -7654,7 +7654,7 @@ class BarBusbarInfo(RigidBusbarInfo):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Cross section width of the conductor
@@ -7671,7 +7671,7 @@ class BarBusbarInfo(RigidBusbarInfo):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Thickness of bar busbar
@@ -7694,7 +7694,7 @@ class IntegralWebBusbarInfo(RigidBusbarInfo):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Cross section width of the conductor
@@ -7711,7 +7711,7 @@ class IntegralWebBusbarInfo(RigidBusbarInfo):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Cross section width of the conductor
@@ -7728,7 +7728,7 @@ class IntegralWebBusbarInfo(RigidBusbarInfo):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Thickness
@@ -7751,7 +7751,7 @@ class TubeBusbarInfo(RigidBusbarInfo):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Outer diameter
@@ -7768,7 +7768,7 @@ class TubeBusbarInfo(RigidBusbarInfo):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Wall thickness
@@ -7792,7 +7792,7 @@ class PipeBusbarInfo(TubeBusbarInfo):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': '',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             For cylindrical hollow rigid conductor only. Rigid cylindrical conductor
@@ -7825,7 +7825,7 @@ class WireInfo(ConductorInfo):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'ACLineSegmentPhase.WireInfo',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             '''
@@ -7841,7 +7841,7 @@ class WireInfo(ConductorInfo):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'WirePhaseInfo.WireInfo',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Wire phase information associated with this wire information.
@@ -7858,7 +7858,7 @@ class WireInfo(ConductorInfo):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             (if used) Number of strands in the steel core.
@@ -7875,7 +7875,7 @@ class WireInfo(ConductorInfo):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Describes the wire gauge or cross section (e.g., 4/0, #2, 336.5).
@@ -7892,7 +7892,7 @@ class WireInfo(ConductorInfo):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Number of strands in the conductor.
@@ -7909,7 +7909,7 @@ class WireInfo(ConductorInfo):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             (if there is a different core material) Radius of the central core.
@@ -7926,7 +7926,7 @@ class WireInfo(ConductorInfo):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Geometric mean radius. If we replace the conductor by a thin walled tube
@@ -7947,7 +7947,7 @@ class WireInfo(ConductorInfo):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Outside radius of the wire.
@@ -7971,7 +7971,7 @@ class BareWireInfo(WireInfo):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': '',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Kind of wire construction
@@ -7995,7 +7995,7 @@ class CableInfo(WireInfo):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'InsulationInfo.CableInfo',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             '''
@@ -8010,7 +8010,7 @@ class CableInfo(WireInfo):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             True if wire strands are extruded in a way to fill the voids in the cable.
@@ -8028,7 +8028,7 @@ class CableInfo(WireInfo):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             True if sheath / shield is used as a neutral (i.e., bonded).
@@ -8045,7 +8045,7 @@ class CableInfo(WireInfo):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Diameter over the core, including any semi-con screen; should be the insulating
@@ -8064,7 +8064,7 @@ class CableInfo(WireInfo):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Diameter over the insulating layer, excluding outer screen.
@@ -8081,7 +8081,7 @@ class CableInfo(WireInfo):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Diameter over the outermost jacketing layer.
@@ -8098,7 +8098,7 @@ class CableInfo(WireInfo):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Diameter over the outer screen; should be the shield's inside diameter.
@@ -8115,7 +8115,7 @@ class CableInfo(WireInfo):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Maximum nominal design operating temperature.
@@ -8133,7 +8133,7 @@ class CableInfo(WireInfo):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': '',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Kind of construction of this cable.
@@ -8151,7 +8151,7 @@ class CableInfo(WireInfo):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': '',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Kind of outer jacket of this cable.
@@ -8169,7 +8169,7 @@ class CableInfo(WireInfo):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': '',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Material of the shield.
@@ -8187,7 +8187,7 @@ class CableInfo(WireInfo):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'InsulationInfo.CableInfo',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             '''
@@ -8208,7 +8208,7 @@ class ConcentricNeutralCableInfo(CableInfo):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Number of concentric neutral strands.
@@ -8225,7 +8225,7 @@ class ConcentricNeutralCableInfo(CableInfo):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Diameter over the concentric neutral strands.
@@ -8242,7 +8242,7 @@ class ConcentricNeutralCableInfo(CableInfo):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Geometric mean radius of the neutral strand.
@@ -8259,7 +8259,7 @@ class ConcentricNeutralCableInfo(CableInfo):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Outside radius of the neutral strand.
@@ -8276,7 +8276,7 @@ class ConcentricNeutralCableInfo(CableInfo):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             DC resistance per unit length of the neutral strand at 20 �C.
@@ -8299,7 +8299,7 @@ class MultiCoreCableInfo(CableInfo):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             True if neutral is included
@@ -8316,7 +8316,7 @@ class MultiCoreCableInfo(CableInfo):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Neutral wire size description
@@ -8333,7 +8333,7 @@ class MultiCoreCableInfo(CableInfo):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Neutral wire strand count
@@ -8350,7 +8350,7 @@ class MultiCoreCableInfo(CableInfo):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Phase count
@@ -8367,7 +8367,7 @@ class MultiCoreCableInfo(CableInfo):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Neutral strand DC resistance per unit length of the conductor at 20 &#176;C
@@ -8391,7 +8391,7 @@ class TapeShieldCableInfo(CableInfo):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Percentage of the tape shield width that overlaps in each wrap, typically
@@ -8410,7 +8410,7 @@ class TapeShieldCableInfo(CableInfo):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Thickness of the tape shield, before wrapping.
@@ -8435,7 +8435,7 @@ class OverheadWireInfo(WireInfo):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': '',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             '''
@@ -8461,7 +8461,7 @@ class GridEdgeDeviceInfo(ConductingAssetInfo):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Based on IEEE 1547-2018 Table 28:
@@ -8484,7 +8484,7 @@ class GridEdgeDeviceInfo(ConductingAssetInfo):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Based on IEEE 1547-2018 Table 28:
@@ -8505,7 +8505,7 @@ class GridEdgeDeviceInfo(ConductingAssetInfo):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Based on IEEE 1547-2018 Table 28:
@@ -8534,7 +8534,7 @@ class InverterInfo(GridEdgeDeviceInfo):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Based on IEEE 1547-2018 Table 28:
@@ -8557,7 +8557,7 @@ class InverterInfo(GridEdgeDeviceInfo):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Based on IEEE 1547-2018 Table 28:
@@ -8580,7 +8580,7 @@ class InverterInfo(GridEdgeDeviceInfo):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Based on IEEE 1547-2018 Table 28:
@@ -8601,7 +8601,7 @@ class InverterInfo(GridEdgeDeviceInfo):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Based on IEEE 1547-2018 Table 28:
@@ -8622,7 +8622,7 @@ class InverterInfo(GridEdgeDeviceInfo):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Based on IEEE 1547-2018 Table 28:
@@ -8643,7 +8643,7 @@ class InverterInfo(GridEdgeDeviceInfo):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Based on IEEE 1547-2018 Table 28:
@@ -8664,7 +8664,7 @@ class InverterInfo(GridEdgeDeviceInfo):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Based on IEEE 1547-2018 Table 28:
@@ -8686,7 +8686,7 @@ class InverterInfo(GridEdgeDeviceInfo):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Based on IEEE 1547-2018 Table 28:
@@ -8707,7 +8707,7 @@ class InverterInfo(GridEdgeDeviceInfo):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Based on IEEE 1547-2018 Table 28:
@@ -8728,7 +8728,7 @@ class InverterInfo(GridEdgeDeviceInfo):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Based on IEEE 1547-2018 Table 28:
@@ -8750,7 +8750,7 @@ class InverterInfo(GridEdgeDeviceInfo):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'InverterCapabilities.IntervalInfo',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             '''
@@ -8773,7 +8773,7 @@ class GenerationInverterInfo(InverterInfo):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Type of Distribution Generation.
@@ -8811,7 +8811,7 @@ class StorageInverterInfo(InverterInfo):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Type of Distribution Storage.
@@ -8852,7 +8852,7 @@ class StorageInverterInfo(InverterInfo):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Based on IEEE 1547-2018 Table 28:
@@ -8873,7 +8873,7 @@ class StorageInverterInfo(InverterInfo):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Based on IEEE 1547-2018 Table 28:
@@ -8896,7 +8896,7 @@ class StorageInverterInfo(InverterInfo):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             '''
@@ -8917,7 +8917,7 @@ class SwitchInfo(ConductingAssetInfo):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             If true, it is a single phase switch.
@@ -8934,7 +8934,7 @@ class SwitchInfo(ConductingAssetInfo):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             If true, the switch is not ganged (i.e., a switch phase may be operated
@@ -8953,7 +8953,7 @@ class SwitchInfo(ConductingAssetInfo):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The maximum fault current a breaking device can break safely under prescribed
@@ -8972,7 +8972,7 @@ class SwitchInfo(ConductingAssetInfo):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Weight of gas in each tank of SF6 dead tank breaker.
@@ -8989,7 +8989,7 @@ class SwitchInfo(ConductingAssetInfo):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Gas or air pressure at or below which a low pressure alarm is generated.
@@ -9006,7 +9006,7 @@ class SwitchInfo(ConductingAssetInfo):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Gas or air pressure below which the breaker will not open.
@@ -9023,7 +9023,7 @@ class SwitchInfo(ConductingAssetInfo):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Volume of oil in each tank of bulk oil breaker.
@@ -9040,7 +9040,7 @@ class SwitchInfo(ConductingAssetInfo):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Frequency for which switch is rated.
@@ -9057,7 +9057,7 @@ class SwitchInfo(ConductingAssetInfo):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Rated impulse withstand voltage, also known as BIL (Basic Impulse Level).
@@ -9074,7 +9074,7 @@ class SwitchInfo(ConductingAssetInfo):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Switch rated interrupting time in seconds.
@@ -9098,7 +9098,7 @@ class TapChangerInfo(ConductingAssetInfo):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'ShuntReactorInfo.TapChangerInfo',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             '''
@@ -9113,7 +9113,7 @@ class TapChangerInfo(ConductingAssetInfo):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Built-in current transducer ratio.
@@ -9130,7 +9130,7 @@ class TapChangerInfo(ConductingAssetInfo):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Highest possible tap step position, advance from neutral.
@@ -9147,7 +9147,7 @@ class TapChangerInfo(ConductingAssetInfo):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Whether this tap changer has under load tap changing capabilities.
@@ -9164,7 +9164,7 @@ class TapChangerInfo(ConductingAssetInfo):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Lowest possible tap step position, retard from neutral.
@@ -9181,7 +9181,7 @@ class TapChangerInfo(ConductingAssetInfo):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The neutral tap step position for the winding.
@@ -9198,7 +9198,7 @@ class TapChangerInfo(ConductingAssetInfo):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Built-in voltage transducer ratio.
@@ -9215,7 +9215,7 @@ class TapChangerInfo(ConductingAssetInfo):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Basic Insulation Level (BIL) expressed as the impulse crest voltage of
@@ -9236,7 +9236,7 @@ class TapChangerInfo(ConductingAssetInfo):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Built-in current transformer primary rating.
@@ -9253,7 +9253,7 @@ class TapChangerInfo(ConductingAssetInfo):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Frequency at which the ratings apply.
@@ -9270,7 +9270,7 @@ class TapChangerInfo(ConductingAssetInfo):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Voltage at which the winding operates at the neutral tap setting.
@@ -9287,7 +9287,7 @@ class TapChangerInfo(ConductingAssetInfo):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Rated apparent power.
@@ -9304,7 +9304,7 @@ class TapChangerInfo(ConductingAssetInfo):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Phase shift per step position.
@@ -9321,7 +9321,7 @@ class TapChangerInfo(ConductingAssetInfo):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Tap step increment, in per cent of rated Mvar, per step position.
@@ -9338,7 +9338,7 @@ class TapChangerInfo(ConductingAssetInfo):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Tap step increment, in per cent of rated voltage, per step position.
@@ -9362,7 +9362,7 @@ class TransformerEndInfo(ConductingAssetInfo):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'NoLoadTest.EnergisedEnd',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             All no-load test measurements in which this transformer end was energised.
@@ -9380,7 +9380,7 @@ class TransformerEndInfo(ConductingAssetInfo):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'OpenCircuitTest.EnergisedEnd',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             All open-circuit test measurements in which this transformer end was excited.
@@ -9399,7 +9399,7 @@ class TransformerEndInfo(ConductingAssetInfo):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'OpenCircuitTest.OpenEnd',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             All open-circuit test measurements in which this transformer end was not
@@ -9419,7 +9419,7 @@ class TransformerEndInfo(ConductingAssetInfo):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'ShortCircuitTest.EnergisedEnd',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             All short-circuit test measurements in which this transformer end was energised.
@@ -9438,7 +9438,7 @@ class TransformerEndInfo(ConductingAssetInfo):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'ShortCircuitTest.GroundedEnds',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             All short-circuit test measurements in which this transformer end was short-circuited.
@@ -9457,7 +9457,7 @@ class TransformerEndInfo(ConductingAssetInfo):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'TransformerCoreAdmittance.TransformerEndInfo',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Core admittance calculated from this transformer end datasheet, representing
@@ -9479,7 +9479,7 @@ class TransformerEndInfo(ConductingAssetInfo):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'TransformerMeshImpedance.FromTransformerEndInfo',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             All mesh impedances between this 'to' and other 'from' transformer ends.
@@ -9498,7 +9498,7 @@ class TransformerEndInfo(ConductingAssetInfo):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'TransformerStarImpedance.TransformerEndInfo',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Transformer star impedance calculated from this transformer end datasheet.
@@ -9515,7 +9515,7 @@ class TransformerEndInfo(ConductingAssetInfo):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Number for this transformer end, corresponding to the end's order in the
@@ -9536,7 +9536,7 @@ class TransformerEndInfo(ConductingAssetInfo):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Winding phase angle where 360 degrees are represented with clock hours,
@@ -9559,7 +9559,7 @@ class TransformerEndInfo(ConductingAssetInfo):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Apparent power that the winding can carry under emergency conditions (also
@@ -9578,7 +9578,7 @@ class TransformerEndInfo(ConductingAssetInfo):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Basic insulation level voltage rating.
@@ -9595,7 +9595,7 @@ class TransformerEndInfo(ConductingAssetInfo):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             DC resistance.
@@ -9612,7 +9612,7 @@ class TransformerEndInfo(ConductingAssetInfo):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Normal apparent power rating.
@@ -9629,7 +9629,7 @@ class TransformerEndInfo(ConductingAssetInfo):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Apparent power that this winding can carry for a short period of time (in
@@ -9649,7 +9649,7 @@ class TransformerEndInfo(ConductingAssetInfo):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': '',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Kind of connection.
@@ -9667,7 +9667,7 @@ class TransformerEndInfo(ConductingAssetInfo):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'TransformerCoreAdmittance.TransformerEndInfo',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Core admittance calculated from this transformer end datasheet, representing
@@ -9689,7 +9689,7 @@ class TransformerEndInfo(ConductingAssetInfo):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'TransformerStarImpedance.TransformerEndInfo',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Transformer star impedance calculated from this transformer end datasheet.
@@ -9707,7 +9707,7 @@ class TransformerEndInfo(ConductingAssetInfo):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'TransformerTankInfo.TransformerEndInfos',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Transformer tank data that this end description is part of.
@@ -9730,7 +9730,7 @@ class CoolingInfo(AssetInfo):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Type of cooling.
@@ -9748,7 +9748,7 @@ class CoolingInfo(AssetInfo):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'Specification.CoolingInfo',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             '''
@@ -9783,7 +9783,7 @@ class InsulationInfo(AssetInfo):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'CableInfo.InsulationInfo',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             '''
@@ -9798,7 +9798,7 @@ class InsulationInfo(AssetInfo):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             True if conductor is insulated.
@@ -9815,7 +9815,7 @@ class InsulationInfo(AssetInfo):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             (if insulated conductor) Thickness of the insulation.
@@ -9833,7 +9833,7 @@ class InsulationInfo(AssetInfo):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': '',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             (if insulated conductor) Material used for insulation.
@@ -9851,7 +9851,7 @@ class InsulationInfo(AssetInfo):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'CableInfo.InsulationInfo',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             '''
@@ -9879,7 +9879,7 @@ class InterrupterUnitInfo(AssetInfo):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': '',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Interrupting medium.
@@ -9902,7 +9902,7 @@ class OperatingMechanismInfo(AssetInfo):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Close current (nominal).
@@ -9919,7 +9919,7 @@ class OperatingMechanismInfo(AssetInfo):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Close voltage in volts DC.
@@ -9936,7 +9936,7 @@ class OperatingMechanismInfo(AssetInfo):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Rated motor run current in amps.
@@ -9953,7 +9953,7 @@ class OperatingMechanismInfo(AssetInfo):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Rated motor start current in amps.
@@ -9970,7 +9970,7 @@ class OperatingMechanismInfo(AssetInfo):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Nominal motor voltage in volts DC.
@@ -9987,7 +9987,7 @@ class OperatingMechanismInfo(AssetInfo):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Trip current (nominal).
@@ -10004,7 +10004,7 @@ class OperatingMechanismInfo(AssetInfo):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Trip voltage in volts DC.
@@ -10022,7 +10022,7 @@ class OperatingMechanismInfo(AssetInfo):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': '',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Kind of breaker operating mechanism.
@@ -10052,7 +10052,7 @@ class PowerTransformerInfo(AssetInfo):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'TransformerTankInfo.PowerTransformerInfo',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Data for all the tanks described by this power transformer data.
@@ -10076,7 +10076,7 @@ class ShuntCompensatorInfo(AssetInfo):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Maximum allowed apparent power loss.
@@ -10093,7 +10093,7 @@ class ShuntCompensatorInfo(AssetInfo):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Rated current.
@@ -10110,7 +10110,7 @@ class ShuntCompensatorInfo(AssetInfo):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Rated reactive power.
@@ -10127,7 +10127,7 @@ class ShuntCompensatorInfo(AssetInfo):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Rated voltage.
@@ -10145,7 +10145,7 @@ class ShuntCompensatorInfo(AssetInfo):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'ShuntCompensatorControl.ShuntCompensatorInfo',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             '''
@@ -10166,7 +10166,7 @@ class SoundInfo(AssetInfo):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Minimum sound pressure level.
@@ -10184,7 +10184,7 @@ class SoundInfo(AssetInfo):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'Specification.SoundInfo',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             '''
@@ -10205,7 +10205,7 @@ class StructureInfo(AssetInfo):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             True if structure includes a temperature measurement.
@@ -10222,7 +10222,7 @@ class StructureInfo(AssetInfo):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             True if vault is ventilating.
@@ -10239,7 +10239,7 @@ class StructureInfo(AssetInfo):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Material this structure is made of.
@@ -10256,7 +10256,7 @@ class StructureInfo(AssetInfo):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Maximum rated voltage of the equipment that can be mounted on/contained
@@ -10276,7 +10276,7 @@ class StructureInfo(AssetInfo):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': '',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Material this structure is made of.
@@ -10294,7 +10294,7 @@ class StructureInfo(AssetInfo):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'DimensionsInfo.TransportStructureInfo',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             '''
@@ -10316,7 +10316,7 @@ class MarineStructureInfo(StructureInfo):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': '',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Type of submarine structure.
@@ -10346,7 +10346,7 @@ class UndergroundStructureInfo(StructureInfo):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': '',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Kind of underground structure
@@ -10369,7 +10369,7 @@ class SurfaceTreatmentInfo(AssetInfo):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Galvanization thickness.
@@ -10386,7 +10386,7 @@ class SurfaceTreatmentInfo(AssetInfo):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Paint thickness.
@@ -10404,7 +10404,7 @@ class SurfaceTreatmentInfo(AssetInfo):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'Specification.SurfaceTreatmentInfo',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             '''
@@ -10425,7 +10425,7 @@ class ToolInfo(AssetInfo):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Type of the tool
@@ -10449,7 +10449,7 @@ class TransformerTankInfo(AssetInfo):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'TransformerEndInfo.TransformerTankInfo',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Data for all the ends described by this transformer tank data.
@@ -10467,7 +10467,7 @@ class TransformerTankInfo(AssetInfo):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'TransformerTank.TransformerTankInfo',
-        'namespace': 'http://epri.com/gmdm#',
+        'namespace': 'http://epri.com/gmdm/2025#',
         'docstring':
             '''
             '''
@@ -10483,7 +10483,7 @@ class TransformerTankInfo(AssetInfo):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'PowerTransformerInfo.TransformerTankInfos',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Power transformer data that this tank description is part of.
@@ -10506,7 +10506,7 @@ class VehicleInfo(AssetInfo):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Type of vehicle.
@@ -10530,7 +10530,7 @@ class WireAssemblyInfo(AssetInfo):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'PerLengthLineParameter.WireAssemblyInfo',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Per length line parameter associated with this wire assembly.
@@ -10548,7 +10548,7 @@ class WireAssemblyInfo(AssetInfo):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'WirePhaseInfo.WireAssemblyInfo',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Wire phase information associated with this wire assembly.
@@ -10576,7 +10576,7 @@ class WireSpacingInfo(AssetInfo):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'WirePosition.WireSpacingInfo',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             All positions of single wires (phase or neutral) making the conductor.
@@ -10593,7 +10593,7 @@ class WireSpacingInfo(AssetInfo):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             If true, this spacing data describes a cable.
@@ -10610,7 +10610,7 @@ class WireSpacingInfo(AssetInfo):
         'type': 'modify Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Number of wire sub-conductors in the symmetrical bundle (typically between
@@ -10629,7 +10629,7 @@ class WireSpacingInfo(AssetInfo):
         'type': 'modify Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Distance between wire sub-conductors in a symmetrical bundle.
@@ -10647,7 +10647,7 @@ class WireSpacingInfo(AssetInfo):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': '',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Usage of the associated wires.
@@ -10665,7 +10665,7 @@ class WireSpacingInfo(AssetInfo):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'DuctBank.WireSpacingInfos',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             '''
@@ -10687,7 +10687,7 @@ class AssetInfoComponent(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'AssetInfo.ChildAssetInfoComponent',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             '''
@@ -10703,7 +10703,7 @@ class AssetInfoComponent(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'AssetInfo.ParentAssetInfoComponent',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             '''
@@ -10718,7 +10718,7 @@ class AssetInfoComponent(IdentifiedObject):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Type of component
@@ -10736,7 +10736,7 @@ class AssetInfoComponent(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'AssetInfo.ParentAssetInfoComponent',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             '''
@@ -10752,7 +10752,7 @@ class AssetInfoComponent(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'AssetInfo.ChildAssetInfoComponent',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             '''
@@ -10775,7 +10775,7 @@ class AssetRequirement(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'AssetInfo.AssetRequirement',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             '''
@@ -10806,7 +10806,7 @@ class AsynchronousMachineDynamics(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'AsynchronousMachine.AsynchronousMachineDynamics',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Asynchronous machine to which this asynchronous machine dynamics model
@@ -10834,7 +10834,7 @@ class AutonomousFunction(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'AutonomousAgent.AutonomousFunction',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             '''
@@ -10861,7 +10861,7 @@ class BaseFrequency(IdentifiedObject):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The base frequency.
@@ -10884,7 +10884,7 @@ class BasePower(IdentifiedObject):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Value used as base power.
@@ -10910,7 +10910,7 @@ class BaseVoltage(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'ConductingEquipment.BaseVoltage',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             All conducting equipment with this base voltage. Use only when there is
@@ -10932,7 +10932,7 @@ class BaseVoltage(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'TopologicalNode.BaseVoltage',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The topological nodes at the base voltage.
@@ -10950,7 +10950,7 @@ class BaseVoltage(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'TransformerEnd.BaseVoltage',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Transformer ends at the base voltage. This is essential for PU calculation.
@@ -10968,7 +10968,7 @@ class BaseVoltage(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'VoltageLevel.BaseVoltage',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The voltage levels having this base voltage.
@@ -10985,7 +10985,7 @@ class BaseVoltage(IdentifiedObject):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The power system resource's base voltage, expressed on a phase-to-phase
@@ -11010,7 +11010,7 @@ class BasicIntervalSchedule(IdentifiedObject):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The time for the first time point. The value can be a time of day, not
@@ -11029,7 +11029,7 @@ class BasicIntervalSchedule(IdentifiedObject):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Description for value1.
@@ -11046,7 +11046,7 @@ class BasicIntervalSchedule(IdentifiedObject):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Description for value2.
@@ -11063,7 +11063,7 @@ class BasicIntervalSchedule(IdentifiedObject):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Description for value3.
@@ -11081,7 +11081,7 @@ class BasicIntervalSchedule(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': '',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Multiplier for value1.
@@ -11099,7 +11099,7 @@ class BasicIntervalSchedule(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': '',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Value1 units of measure.
@@ -11117,7 +11117,7 @@ class BasicIntervalSchedule(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': '',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Multiplier for value2.
@@ -11135,7 +11135,7 @@ class BasicIntervalSchedule(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': '',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Value2 units of measure.
@@ -11153,7 +11153,7 @@ class BasicIntervalSchedule(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': '',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Multiplier for value3.
@@ -11171,7 +11171,7 @@ class BasicIntervalSchedule(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': '',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Value3 units of measure.
@@ -11196,7 +11196,7 @@ class IrregularIntervalSchedule(BasicIntervalSchedule):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'IrregularTimePoint.IntervalSchedule',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The point data values that define a curve.
@@ -11221,7 +11221,7 @@ class RegularIntervalSchedule(BasicIntervalSchedule):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'RegularTimePoint.IntervalSchedule',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The regular interval time point data values that define this schedule.
@@ -11238,7 +11238,7 @@ class RegularIntervalSchedule(BasicIntervalSchedule):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The time for the last time point. The value can be a time of day, not a
@@ -11257,7 +11257,7 @@ class RegularIntervalSchedule(BasicIntervalSchedule):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The time between each pair of subsequent regular time points in sequence
@@ -11289,7 +11289,7 @@ class GenUnitOpSchedule(RegularIntervalSchedule):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'GeneratingUnit.GenUnitOpSchedule',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             A generating unit may have an operating schedule, indicating the planned
@@ -11309,7 +11309,7 @@ class GenUnitOpSchedule(RegularIntervalSchedule):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'GeneratingUnit.GenUnitOpSchedule',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             A generating unit may have an operating schedule, indicating the planned
@@ -11339,7 +11339,7 @@ class HydroPumpOpSchedule(RegularIntervalSchedule):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'HydroPump.HydroPumpOpSchedule',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The hydro pump has a pumping schedule over time, indicating when pumping
@@ -11359,7 +11359,7 @@ class HydroPumpOpSchedule(RegularIntervalSchedule):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'HydroPump.HydroPumpOpSchedule',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The hydro pump has a pumping schedule over time, indicating when pumping
@@ -11388,7 +11388,7 @@ class InflowForecast(RegularIntervalSchedule):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'Reservoir.InflowForecasts',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             A reservoir may have a "natural" inflow forecast.
@@ -11413,7 +11413,7 @@ class SeasonDayTypeSchedule(RegularIntervalSchedule):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'DayType.SeasonDayTypeSchedules',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             DayType for the Schedule.
@@ -11431,7 +11431,7 @@ class SeasonDayTypeSchedule(RegularIntervalSchedule):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'Season.SeasonDayTypeSchedules',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Season for the Schedule.
@@ -11458,7 +11458,7 @@ class ConformLoadSchedule(SeasonDayTypeSchedule):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'ConformLoadGroup.ConformLoadSchedules',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The ConformLoadGroup where the ConformLoadSchedule belongs.
@@ -11484,7 +11484,7 @@ class NonConformLoadSchedule(SeasonDayTypeSchedule):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'NonConformLoadGroup.NonConformLoadSchedules',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The NonConformLoadGroup where the NonConformLoadSchedule belongs.
@@ -11509,7 +11509,7 @@ class RegulationSchedule(SeasonDayTypeSchedule):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'VoltageControlZone.RegulationSchedule',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             A VoltageControlZone may have a voltage regulation schedule.
@@ -11527,7 +11527,7 @@ class RegulationSchedule(SeasonDayTypeSchedule):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'RegulatingControl.RegulationSchedule',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Regulating controls that have this schedule.
@@ -11552,7 +11552,7 @@ class SwitchSchedule(SeasonDayTypeSchedule):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'Switch.SwitchSchedules',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             A SwitchSchedule is associated with a Switch.
@@ -11576,7 +11576,7 @@ class TapSchedule(SeasonDayTypeSchedule):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'TapChanger.TapSchedules',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             A TapSchedule is associated with a TapChanger.
@@ -11601,7 +11601,7 @@ class SteamSendoutSchedule(RegularIntervalSchedule):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'CogenerationPlant.SteamSendoutSchedule',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             A cogeneration plant has a steam sendout schedule.
@@ -11619,7 +11619,7 @@ class SteamSendoutSchedule(RegularIntervalSchedule):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'CogenerationPlant.SteamSendoutSchedule',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             A cogeneration plant has a steam sendout schedule.
@@ -11645,7 +11645,7 @@ class BranchGroup(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'BranchGroupTerminal.BranchGroup',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The directed branch group terminals to be summed.
@@ -11662,7 +11662,7 @@ class BranchGroup(IdentifiedObject):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Monitor the active power flow.
@@ -11679,7 +11679,7 @@ class BranchGroup(IdentifiedObject):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Monitor the reactive power flow.
@@ -11696,7 +11696,7 @@ class BranchGroup(IdentifiedObject):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The maximum active power flow.
@@ -11713,7 +11713,7 @@ class BranchGroup(IdentifiedObject):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The maximum reactive power flow.
@@ -11730,7 +11730,7 @@ class BranchGroup(IdentifiedObject):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The minimum active power flow.
@@ -11747,7 +11747,7 @@ class BranchGroup(IdentifiedObject):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The minimum reactive power flow.
@@ -11774,7 +11774,7 @@ class Building(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'BuildingSpace.Building',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             '''
@@ -11790,7 +11790,7 @@ class Building(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'PhysicalAddress.Building',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             '''
@@ -11805,7 +11805,7 @@ class Building(IdentifiedObject):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Building number refers to a unique numeric or alphanumeric identifier assigned
@@ -11829,7 +11829,7 @@ class Building(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'Location.Building',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             '''
@@ -11845,7 +11845,7 @@ class Building(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'PhysicalAddress.Building',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             '''
@@ -11861,7 +11861,7 @@ class Building(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'Site.Building',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             '''
@@ -11887,7 +11887,7 @@ class BuildingSpace(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'LocationAccess.BuildingSpace',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             '''
@@ -11902,7 +11902,7 @@ class BuildingSpace(IdentifiedObject):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Floor is referring to the vertical position or designation of the space
@@ -11925,7 +11925,7 @@ class BuildingSpace(IdentifiedObject):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Space Number refers to the floor or building numerical identifier assigned
@@ -11948,7 +11948,7 @@ class BuildingSpace(IdentifiedObject):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Space type is the classification of the space, e.g. Residential, Commercial,
@@ -11968,7 +11968,7 @@ class BuildingSpace(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'Building.BuildingSpace',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             '''
@@ -11984,7 +11984,7 @@ class BuildingSpace(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'LocationAccess.BuildingSpace',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             '''
@@ -12013,7 +12013,7 @@ class BusNameMarker(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'ACDCTerminal.BusNameMarker',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The terminals associated with this bus name marker.
@@ -12030,7 +12030,7 @@ class BusNameMarker(IdentifiedObject):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Priority of bus name marker for use as topology bus name. Use 0 for do
@@ -12052,7 +12052,7 @@ class BusNameMarker(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'ReportingGroup.BusNameMarker',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The reporting group to which this bus name marker belongs.
@@ -12070,7 +12070,7 @@ class BusNameMarker(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'TopologicalNode.BusNameMarker',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             A user defined topological node that was originally defined in a planning
@@ -12101,7 +12101,7 @@ class CSCDynamics(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'CsConverter.CSCDynamics',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Current source converter to which current source converter dynamics model
@@ -12130,7 +12130,7 @@ class Cadastre(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'Address.Cadastre',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Physical addresses encompassed within a given cadastre.
@@ -12148,7 +12148,7 @@ class Cadastre(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'Location.Cadastre',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Location within a cadastre.
@@ -12165,7 +12165,7 @@ class Cadastre(IdentifiedObject):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Administrative level is referring to the organisation that is administrative
@@ -12191,7 +12191,7 @@ class Cadastre(IdentifiedObject):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Local or national unique identification reference for the cadastral for
@@ -12212,7 +12212,7 @@ class Cadastre(IdentifiedObject):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Level Four Division refers to a further subdivision of a Level Three Division
@@ -12235,7 +12235,7 @@ class Cadastre(IdentifiedObject):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Level One Division refers to the highest organizational or reference unit
@@ -12258,7 +12258,7 @@ class Cadastre(IdentifiedObject):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Level Three Division refers to a further subdivision of a Level Two Division
@@ -12281,7 +12281,7 @@ class Cadastre(IdentifiedObject):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Level Two Division refers to a subdivision of a Level One Parcel within
@@ -12305,7 +12305,7 @@ class Cadastre(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'CadastreType.Cadastre',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             '''
@@ -12321,7 +12321,7 @@ class Cadastre(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'Site.Cadastre',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             '''
@@ -12345,7 +12345,7 @@ class CadastreType(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'Cadastre.CadastreType',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             '''
@@ -12360,7 +12360,7 @@ class CadastreType(IdentifiedObject):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Label for the administrative level of a property cadastral, e.g. municipalities,
@@ -12379,7 +12379,7 @@ class CadastreType(IdentifiedObject):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Label for level four of a property cadastral, e.g. [need example(s)].
@@ -12396,7 +12396,7 @@ class CadastreType(IdentifiedObject):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Label for level one of a property cadastral, e.g. [need example(s)].
@@ -12413,7 +12413,7 @@ class CadastreType(IdentifiedObject):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Label for level three of a property cadastral, e.g. [need example(s)].
@@ -12430,7 +12430,7 @@ class CadastreType(IdentifiedObject):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Label for level two of a property cadastral, e.g. [need example(s)].
@@ -12455,7 +12455,7 @@ class CalculationMethodHierarchy(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'Measurement.CalculationMethodHierarchy',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Measurement to which this calculation method hierarchy applies.
@@ -12473,7 +12473,7 @@ class CalculationMethodHierarchy(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'MeasurementValue.CalculationMethodHierarchy',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Measurement value to which this calculation method hierarchy applies.
@@ -12497,7 +12497,7 @@ class CatalogAssetType(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'AssetInfo.CatalogAssetType',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Generic nameplate information associated with this catalog asset type.
@@ -12524,7 +12524,7 @@ class ConnectivityNode(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'ACPointOfCommonCoupling.ConnectivityNode',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Identifies this ConnectivityNode as a point of common coupling AC.
@@ -12560,7 +12560,7 @@ class ConnectivityNode(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'RegisteredResource.ConnectivityNode',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             '''
@@ -12576,7 +12576,7 @@ class ConnectivityNode(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'Terminal.ConnectivityNode',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Terminals interconnected with zero impedance at a this connectivity node.
@@ -12595,7 +12595,7 @@ class ConnectivityNode(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'ACPointOfCommonCoupling.ConnectivityNode',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Identifies this ConnectivityNode as a point of common coupling AC.
@@ -12631,7 +12631,7 @@ class ConnectivityNode(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'ConnectivityNodeContainer.ConnectivityNodes',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Container of this connectivity node.
@@ -12649,7 +12649,7 @@ class ConnectivityNode(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'IndividualPnode.ConnectivityNode',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             '''
@@ -12665,7 +12665,7 @@ class ConnectivityNode(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'TopologicalNode.ConnectivityNodes',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The topological node to which this connectivity node is assigned. May depend
@@ -12691,7 +12691,7 @@ class MktConnectivityNode(ConnectivityNode):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'RTO.MktConnectivityNode',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             '''
@@ -12707,7 +12707,7 @@ class MktConnectivityNode(ConnectivityNode):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'SysLoadDistributionFactor.MktConnectivityNode',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             '''
@@ -12733,7 +12733,7 @@ class ControlAreaGeneratingUnit(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'AltGeneratingUnitMeas.ControlAreaGeneratingUnit',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The link to prioritized measurements for this GeneratingUnit.
@@ -12751,7 +12751,7 @@ class ControlAreaGeneratingUnit(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'ControlArea.ControlAreaGeneratingUnit',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The parent control area for the generating unit specifications.
@@ -12769,7 +12769,7 @@ class ControlAreaGeneratingUnit(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'GeneratingUnit.ControlAreaGeneratingUnit',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The generating unit specified for this control area. Note that a control
@@ -12798,7 +12798,7 @@ class ControlAreaPowerElectronicsUnit(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'ControlArea.ControlAreaPowerElectronicsUnit',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The power electronics unit specifications for the control area.
@@ -12816,7 +12816,7 @@ class ControlAreaPowerElectronicsUnit(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'PowerElectronicsUnit.ControlAreaPowerElectronicsUnit',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The power electronics unit specified for this control area. Note that a
@@ -12842,7 +12842,7 @@ class CoordinateSystem(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'Geometry.CoordinateSystem',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The geometry which uses a given coordinate system.
@@ -12860,7 +12860,7 @@ class CoordinateSystem(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'Location.CoordinateSystem',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             All locations described with position points in this coordinate system.
@@ -12877,7 +12877,7 @@ class CoordinateSystem(IdentifiedObject):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             A Uniform Resource Name (URN) for the coordinate reference system (crs)
@@ -12923,7 +12923,7 @@ class CoupledLineSegmentGroup(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'LineSegmentCoupling.CoupledLineSegmentGroup',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             A coupled line in this coupled group of lines.
@@ -12949,7 +12949,7 @@ class CrewType(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'Crew.CrewType',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             All crews of this type.
@@ -12973,7 +12973,7 @@ class CurrentDroopControlFunction(IdentifiedObject):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Droop in capacitive region. The unit is V/A.
@@ -12990,7 +12990,7 @@ class CurrentDroopControlFunction(IdentifiedObject):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Droop in inductive region. The unit is V/A.
@@ -13007,7 +13007,7 @@ class CurrentDroopControlFunction(IdentifiedObject):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Offset in capacitive region.
@@ -13024,7 +13024,7 @@ class CurrentDroopControlFunction(IdentifiedObject):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Offset in capacitive region.
@@ -13041,7 +13041,7 @@ class CurrentDroopControlFunction(IdentifiedObject):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Setpoint when control is active in capacitive region.
@@ -13058,7 +13058,7 @@ class CurrentDroopControlFunction(IdentifiedObject):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Setpoint when control is active in inductive region.
@@ -13084,7 +13084,7 @@ class Curve(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'CurveData.Curve',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The point data values that define this curve.
@@ -13102,7 +13102,7 @@ class Curve(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': '',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The style or shape of the curve.
@@ -13120,7 +13120,7 @@ class Curve(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': '',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Multiplier for X-axis.
@@ -13138,7 +13138,7 @@ class Curve(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': '',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The X-axis units of measure.
@@ -13156,7 +13156,7 @@ class Curve(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': '',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Multiplier for Y1-axis.
@@ -13174,7 +13174,7 @@ class Curve(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': '',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The Y1-axis units of measure.
@@ -13192,7 +13192,7 @@ class Curve(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': '',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Multiplier for Y2-axis.
@@ -13210,7 +13210,7 @@ class Curve(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': '',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The Y2-axis units of measure.
@@ -13228,7 +13228,7 @@ class Curve(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': '',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Multiplier for Y3-axis.
@@ -13246,7 +13246,7 @@ class Curve(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': '',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The Y3-axis units of measure.
@@ -13271,7 +13271,7 @@ class AmbientTemperatureDependencyCurve(Curve):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'OperationalLimitType.PermanentAmbientTemperatureDependencyCurve',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The operational limit type that has this permanent ambient temperature
@@ -13300,7 +13300,7 @@ class BaseOverloadLimitCurve(Curve):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'OperationalLimitType.TemporaryBaseOverloadLimitCurve',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The operational limit type that has this temporary base overload limit
@@ -13326,7 +13326,7 @@ class ConductorCharacteristicCurve(Curve):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'Conductor.DamageCurve',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             A conductor can have a damage curve associated to it.
@@ -13352,7 +13352,7 @@ class DurationOverloadLimitCurve(Curve):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'OperationalLimitType.TemporaryDurationOverloadLimitCurve',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The operational limit type that has this temporary duration overload limit
@@ -13380,7 +13380,7 @@ class EmissionAccount(Curve):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': '',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The type of emission, for example sulfur dioxide (SO2). The y1AxisUnits
@@ -13402,7 +13402,7 @@ class EmissionAccount(Curve):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': '',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The source of the emission value.
@@ -13420,7 +13420,7 @@ class EmissionAccount(Curve):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'ThermalGeneratingUnit.EmmissionAccounts',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             A thermal generating unit may have one or more emission allowance accounts.
@@ -13445,7 +13445,7 @@ class EmissionCurve(Curve):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Flag is set to true when output is expressed in net active power.
@@ -13462,7 +13462,7 @@ class EmissionCurve(Curve):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The emission content per quantity of fuel burned.
@@ -13480,7 +13480,7 @@ class EmissionCurve(Curve):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': '',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The type of emission, which also gives the production rate measurement
@@ -13502,7 +13502,7 @@ class EmissionCurve(Curve):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'ThermalGeneratingUnit.EmissionCurves',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             A thermal generating unit may have one or more emission curves.
@@ -13526,7 +13526,7 @@ class FuelAllocationSchedule(Curve):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The end time and date of the fuel allocation schedule.
@@ -13543,7 +13543,7 @@ class FuelAllocationSchedule(Curve):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The start time and date of the fuel allocation schedule.
@@ -13560,7 +13560,7 @@ class FuelAllocationSchedule(Curve):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The maximum amount of fuel that is allocated for consumption for the scheduled
@@ -13579,7 +13579,7 @@ class FuelAllocationSchedule(Curve):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The minimum amount of fuel that is allocated for consumption for the scheduled
@@ -13599,7 +13599,7 @@ class FuelAllocationSchedule(Curve):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': '',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The type of fuel, which also indicates the corresponding measurement unit.
@@ -13618,7 +13618,7 @@ class FuelAllocationSchedule(Curve):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'FossilFuel.FuelAllocationSchedules',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             A fuel allocation schedule shall have a fossil fuel.
@@ -13636,7 +13636,7 @@ class FuelAllocationSchedule(Curve):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'ThermalGeneratingUnit.FuelAllocationSchedules',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             A thermal generating unit may have one or more fuel allocation schedules.
@@ -13660,7 +13660,7 @@ class FuseCharacteristicCurve(Curve):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'Fuse.MiinimumMeltCurve',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Fuse this curve is associated to.
@@ -13678,7 +13678,7 @@ class FuseCharacteristicCurve(Curve):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'Fuse.TotalClearingTimeCurve',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Fuse this curve is associated to.
@@ -13704,7 +13704,7 @@ class GenUnitOpCostCurve(Curve):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Flag is set to true when output is expressed in net active power.
@@ -13722,7 +13722,7 @@ class GenUnitOpCostCurve(Curve):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'GeneratingUnit.GenUnitOpCostCurves',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             A generating unit may have one or more cost curves, depending upon fuel
@@ -13753,7 +13753,7 @@ class GrossToNetActivePowerCurve(Curve):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'GeneratingUnit.GrossToNetActivePowerCurves',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             A generating unit may have a gross active power to net active power curve,
@@ -13785,7 +13785,7 @@ class HeatInputCurve(Curve):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'ThermalGeneratingUnit.HeatInputCurve',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             A thermal generating unit may have a heat input curve.
@@ -13802,7 +13802,7 @@ class HeatInputCurve(Curve):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Flag is set to true when output is expressed in net active power.
@@ -13819,7 +13819,7 @@ class HeatInputCurve(Curve):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Power output - auxiliary power multiplier adjustment factor.
@@ -13836,7 +13836,7 @@ class HeatInputCurve(Curve):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Power output - auxiliary power offset adjustment factor.
@@ -13853,7 +13853,7 @@ class HeatInputCurve(Curve):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Heat input - efficiency multiplier adjustment factor.
@@ -13870,7 +13870,7 @@ class HeatInputCurve(Curve):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Heat input - offset adjustment factor.
@@ -13888,7 +13888,7 @@ class HeatInputCurve(Curve):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'ThermalGeneratingUnit.HeatInputCurve',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             A thermal generating unit may have a heat input curve.
@@ -13914,7 +13914,7 @@ class HeatRateCurve(Curve):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'ThermalGeneratingUnit.HeatRateCurve',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             A thermal generating unit may have a heat rate curve.
@@ -13931,7 +13931,7 @@ class HeatRateCurve(Curve):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Flag is set to true when output is expressed in net active power.
@@ -13949,7 +13949,7 @@ class HeatRateCurve(Curve):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'ThermalGeneratingUnit.HeatRateCurve',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             A thermal generating unit may have a heat rate curve.
@@ -13980,7 +13980,7 @@ class HydroGeneratingEfficiencyCurve(Curve):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'HydroGeneratingUnit.HydroGeneratingEfficiencyCurves',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             A hydro generating unit has an efficiency curve.
@@ -14008,7 +14008,7 @@ class IncrementalHeatRateCurve(Curve):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'ThermalGeneratingUnit.IncrementalHeatRateCurve',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             A thermal generating unit may have an incremental heat rate curve.
@@ -14025,7 +14025,7 @@ class IncrementalHeatRateCurve(Curve):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Flag is set to true when output is expressed in net active power.
@@ -14043,7 +14043,7 @@ class IncrementalHeatRateCurve(Curve):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'ThermalGeneratingUnit.IncrementalHeatRateCurve',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             A thermal generating unit may have an incremental heat rate curve.
@@ -14068,7 +14068,7 @@ class LevelVsVolumeCurve(Curve):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'Reservoir.LevelVsVolumeCurves',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             A reservoir may have a level versus volume relationship.
@@ -14092,7 +14092,7 @@ class LossCurve(Curve):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'FACTSEquipment.LossCurve',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The FACTS equipment which has a loss curve.
@@ -14119,7 +14119,7 @@ class PenstockLossCurve(Curve):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'HydroGeneratingUnit.PenstockLossCurve',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             A hydro generating unit has a penstock loss curve.
@@ -14137,7 +14137,7 @@ class PenstockLossCurve(Curve):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'HydroGeneratingUnit.PenstockLossCurve',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             A hydro generating unit has a penstock loss curve.
@@ -14166,7 +14166,7 @@ class ReactiveCapabilityCurve(Curve):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'SynchronousMachine.InitialReactiveCapabilityCurve',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Synchronous machines using this curve as default.
@@ -14183,7 +14183,7 @@ class ReactiveCapabilityCurve(Curve):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The machine's coolant temperature (e.g., ambient air or stator circulating
@@ -14202,7 +14202,7 @@ class ReactiveCapabilityCurve(Curve):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The hydrogen coolant pressure.
@@ -14219,7 +14219,7 @@ class ReactiveCapabilityCurve(Curve):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The reference voltage for which the capability curve is valid.
@@ -14237,7 +14237,7 @@ class ReactiveCapabilityCurve(Curve):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'ExtendedWardEquivalent.ReactiveCapabilityCurve',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The extended ward equivalent using this reactive capability curve.
@@ -14255,7 +14255,7 @@ class ReactiveCapabilityCurve(Curve):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'SynchronousMachine.ReactiveCapabilityCurve',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The synchronous machine using this curve.
@@ -14279,7 +14279,7 @@ class RecoveryOverloadLimitCurve(Curve):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'OperationalLimitType.RecoveryOverloadLimitCurve',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The operational limit type which has recovery time characteristic.
@@ -14305,7 +14305,7 @@ class ShutdownCurve(Curve):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'ThermalGeneratingUnit.ShutdownCurve',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             A thermal generating unit may have a shutdown curve.
@@ -14322,7 +14322,7 @@ class ShutdownCurve(Curve):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The date and time of the most recent generating unit shutdown.
@@ -14339,7 +14339,7 @@ class ShutdownCurve(Curve):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Fixed shutdown cost.
@@ -14357,7 +14357,7 @@ class ShutdownCurve(Curve):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'ThermalGeneratingUnit.ShutdownCurve',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             A thermal generating unit may have a shutdown curve.
@@ -14383,7 +14383,7 @@ class SolarRadiationDependencyCurve(Curve):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'OperationalLimitType.PermanentSolarRadiationCurve',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The operational limit type that has this permanent solar radiation curve.
@@ -14410,7 +14410,7 @@ class StartIgnFuelCurve(Curve):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'StartupModel.StartIgnFuelCurve',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The unit's startup model may have a startup ignition fuel curve.
@@ -14428,7 +14428,7 @@ class StartIgnFuelCurve(Curve):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': '',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Type of ignition fuel.
@@ -14446,7 +14446,7 @@ class StartIgnFuelCurve(Curve):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'StartupModel.StartIgnFuelCurve',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The unit's startup model may have a startup ignition fuel curve.
@@ -14472,7 +14472,7 @@ class StartMainFuelCurve(Curve):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'StartupModel.StartMainFuelCurve',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The unit's startup model may have a startup main fuel curve.
@@ -14490,7 +14490,7 @@ class StartMainFuelCurve(Curve):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': '',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Type of main fuel.
@@ -14508,7 +14508,7 @@ class StartMainFuelCurve(Curve):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'StartupModel.StartMainFuelCurve',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The unit's startup model may have a startup main fuel curve.
@@ -14534,7 +14534,7 @@ class StartRampCurve(Curve):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'StartupModel.StartRampCurve',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The unit's startup model may have a startup ramp curve.
@@ -14551,7 +14551,7 @@ class StartRampCurve(Curve):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The startup ramp rate in gross for a unit that is on hot standby.
@@ -14569,7 +14569,7 @@ class StartRampCurve(Curve):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'StartupModel.StartRampCurve',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The unit's startup model may have a startup ramp curve.
@@ -14596,7 +14596,7 @@ class TailbayLossCurve(Curve):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'HydroGeneratingUnit.TailbayLossCurve',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             A hydro generating unit has a tailbay loss curve.
@@ -14622,7 +14622,7 @@ class TargetLevelSchedule(Curve):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'Reservoir.TargetLevelSchedule',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             A reservoir may have a water level target schedule.
@@ -14639,7 +14639,7 @@ class TargetLevelSchedule(Curve):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             High target level limit, above which the reservoir operation will be penalized.
@@ -14657,7 +14657,7 @@ class TargetLevelSchedule(Curve):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Low target level limit, below which the reservoir operation will be penalized.
@@ -14676,7 +14676,7 @@ class TargetLevelSchedule(Curve):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'Reservoir.TargetLevelSchedule',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             A reservoir may have a water level target schedule.
@@ -14700,7 +14700,7 @@ class VsCapabilityCurve(Curve):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The reference voltage for which the capability curve is valid.
@@ -14718,7 +14718,7 @@ class VsCapabilityCurve(Curve):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'VsConverter.CapabilityCurve',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The voltage source vonverters with this capability curve.
@@ -14743,7 +14743,7 @@ class DCNode(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'DCBaseTerminal.DCNode',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             DC base terminals interconnected with zero impedance at a this DC connectivity
@@ -14763,7 +14763,7 @@ class DCNode(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'DCPointOfCommonCoupling.DCNode',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Identifies that this DC node is a point of common coupling DC.
@@ -14781,7 +14781,7 @@ class DCNode(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'DCEquipmentContainer.DCNodes',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The DC container for the DC nodes.
@@ -14799,7 +14799,7 @@ class DCNode(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'DCPointOfCommonCoupling.DCNode',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Identifies that this DC node is a point of common coupling DC.
@@ -14817,7 +14817,7 @@ class DCNode(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'DCTopologicalNode.DCNodes',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The DC topological node to which this DC connectivity node is assigned.
@@ -14849,7 +14849,7 @@ class DCTopologicalIsland(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'DCTopologicalNode.DCTopologicalIsland',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The DC topological nodes in a DC topological island.
@@ -14873,7 +14873,7 @@ class DCTopologicalNode(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'DCBaseTerminal.DCTopologicalNode',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             See association end TopologicalNode.Terminal.
@@ -14891,7 +14891,7 @@ class DCTopologicalNode(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'DCNode.DCTopologicalNode',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The DC connectivity nodes combined together to form this DC topological
@@ -14911,7 +14911,7 @@ class DCTopologicalNode(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'SvDCVoltage.DCTopologicalNode',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The state DC voltage associated with the DC topological node.
@@ -14929,7 +14929,7 @@ class DCTopologicalNode(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'DCEquipmentContainer.DCTopologicalNode',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The connectivity node container to which the topological node belongs.
@@ -14947,7 +14947,7 @@ class DCTopologicalNode(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'DCTopologicalIsland.DCTopologicalNodes',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             A DC topological node belongs to a DC topological island.
@@ -14971,7 +14971,7 @@ class DERDynamics(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'AsynchronousMachine.DERDynamics',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Asynchronous machine model with which this DER dynamics model is associated.
@@ -14989,7 +14989,7 @@ class DERDynamics(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'PowerElectronicsConnection.DERDynamics',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Power electronics connection with which this DER dynamics model is associated.
@@ -15008,7 +15008,7 @@ class DERDynamics(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'SynchronousMachine.DERDynamics',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Synchronous machine model with which this DER dynamics model is associated.
@@ -15033,7 +15033,7 @@ class DayType(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'SeasonDayTypeSchedule.DayType',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Schedules that use this DayType.
@@ -15058,7 +15058,7 @@ class DesignElement(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'PowerSystemResource.DesignElement',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             An existing or future PSR affected by the conceptual design
@@ -15085,7 +15085,7 @@ class Diagram(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'DiagramObject.Diagram',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             A diagram is made up of multiple diagram objects.
@@ -15102,7 +15102,7 @@ class Diagram(IdentifiedObject):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             X coordinate of the first corner of the initial view.
@@ -15119,7 +15119,7 @@ class Diagram(IdentifiedObject):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             X coordinate of the second corner of the initial view.
@@ -15136,7 +15136,7 @@ class Diagram(IdentifiedObject):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Y coordinate of the first corner of the initial view.
@@ -15153,7 +15153,7 @@ class Diagram(IdentifiedObject):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Y coordinate of the second corner of the initial view.
@@ -15171,7 +15171,7 @@ class Diagram(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': '',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Coordinate system orientation of the diagram. A positive orientation gives
@@ -15201,7 +15201,7 @@ class Diagram(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'DiagramStyle.Diagram',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             A Diagram may have a DiagramStyle.
@@ -15228,7 +15228,7 @@ class DiagramObject(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'DiagramObjectPoint.DiagramObject',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             A diagram object can have 0 or more points to reflect its layout position,
@@ -15248,7 +15248,7 @@ class DiagramObject(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'DiagramObjectPoint.DiagramObject',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             A diagram object can have 0 or more points to reflect its layout position,
@@ -15267,7 +15267,7 @@ class DiagramObject(IdentifiedObject):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The drawing order of this element. The higher the number, the later the
@@ -15288,7 +15288,7 @@ class DiagramObject(IdentifiedObject):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Defines whether or not the diagram objects points define the boundaries
@@ -15310,7 +15310,7 @@ class DiagramObject(IdentifiedObject):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The offset in the X direction. This is used for defining the offset from
@@ -15337,7 +15337,7 @@ class DiagramObject(IdentifiedObject):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The offset in the Y direction. This is used for defining the offset from
@@ -15366,7 +15366,7 @@ class DiagramObject(IdentifiedObject):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Sets the angle of rotation of the diagram object. Zero degrees is pointing
@@ -15403,7 +15403,7 @@ class DiagramObject(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'Diagram.DiagramElements',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             A diagram object is part of a diagram.
@@ -15421,7 +15421,7 @@ class DiagramObject(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'DiagramObjectStyle.StyledObjects',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             A diagram object has a style associated that provides a reference for the
@@ -15441,7 +15441,7 @@ class DiagramObject(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'IdentifiedObject.DiagramObjects',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The domain object to which this diagram object is associated.
@@ -15465,7 +15465,7 @@ class TextDiagramObject(DiagramObject):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The text that is displayed by this text diagram object.
@@ -15491,7 +15491,7 @@ class DiagramObjectStyle(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'DiagramObject.DiagramObjectStyle',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             A style can be assigned to multiple diagram objects.
@@ -15517,7 +15517,7 @@ class DiagramStyle(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'Diagram.DiagramStyle',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             A DiagramStyle can be used by many Diagrams.
@@ -15543,7 +15543,7 @@ class DimensionsInfo(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'StructureInfo.TransportDimensionsInfo',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             '''
@@ -15569,7 +15569,7 @@ class Document(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'ConfigurationEvent.ChangedDocument',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             All configuration events created for this document.
@@ -15587,7 +15587,7 @@ class Document(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'Document.Document',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             '''
@@ -15602,7 +15602,7 @@ class Document(IdentifiedObject):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Free text comment.
@@ -15619,7 +15619,7 @@ class Document(IdentifiedObject):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Date and time that this document was created.
@@ -15636,7 +15636,7 @@ class Document(IdentifiedObject):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Date and time this document was last modified. Documents may potentially
@@ -15655,7 +15655,7 @@ class Document(IdentifiedObject):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Revision number for this document.
@@ -15672,7 +15672,7 @@ class Document(IdentifiedObject):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Document subject.
@@ -15689,7 +15689,7 @@ class Document(IdentifiedObject):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Document title.
@@ -15706,7 +15706,7 @@ class Document(IdentifiedObject):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Utility-specific classification of this document, according to its corporate
@@ -15727,7 +15727,7 @@ class Document(IdentifiedObject):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Electronic address specifying where a document can be found.
@@ -15745,7 +15745,7 @@ class Document(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'Approver.Documents',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Approver of this document.
@@ -15763,7 +15763,7 @@ class Document(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'Author.Documents',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Author of this document.
@@ -15781,7 +15781,7 @@ class Document(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': '',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Status of this document. For status of subject matter this document represents
@@ -15804,7 +15804,7 @@ class Document(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'Document.RelatedDocument',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             '''
@@ -15820,7 +15820,7 @@ class Document(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'Editor.Documents',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Editor of this document.
@@ -15838,7 +15838,7 @@ class Document(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'Issuer.Documents',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Issuer of this document.
@@ -15856,7 +15856,7 @@ class Document(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': '',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Status of subject matter (e.g., Agreement, Work) this document represents.
@@ -15883,7 +15883,7 @@ class Agreement(Document):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             This attribute should be used to specify the kind of pricing when the value
@@ -15902,7 +15902,7 @@ class Agreement(Document):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Date this agreement was consummated among associated persons and/or organisations.
@@ -15921,7 +15921,7 @@ class Agreement(Document):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': '',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The type of pricing for a contractual agreement where goods and services
@@ -15941,7 +15941,7 @@ class Agreement(Document):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': '',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Date and time interval this agreement is valid (from going into effect
@@ -15968,7 +15968,7 @@ class ChargeType(Document):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Sequence of calculation.
@@ -15985,7 +15985,7 @@ class ChargeType(Document):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Charge version.
@@ -16002,7 +16002,7 @@ class ChargeType(Document):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Charge type effective date.
@@ -16019,7 +16019,7 @@ class ChargeType(Document):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Adjustment factor.
@@ -16036,7 +16036,7 @@ class ChargeType(Document):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Frequency of calculation.
@@ -16053,7 +16053,7 @@ class ChargeType(Document):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Charge type termination date.
@@ -16070,7 +16070,7 @@ class ChargeType(Document):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Total number of intervals to indicate if charge is 5 minute (300), 10 minute
@@ -16115,7 +16115,7 @@ class DefaultBid(Document):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'RegisteredResource.DefaultBid',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             '''
@@ -16138,7 +16138,7 @@ class Incident(Document):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'Location.Incident',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Location of this incident.
@@ -16163,7 +16163,7 @@ class InspectionDataSet(Document):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'ScheduledEventData.InspectionDataSet',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             '''
@@ -16199,7 +16199,7 @@ class Outage(Document):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'ConductingEquipment.Outage',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             '''
@@ -16220,7 +16220,7 @@ class PlannedOutage(Outage):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'FieldDispatchHistory.PlannedOutage',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             '''
@@ -16255,7 +16255,7 @@ class UnplannedOutage(Outage):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'FieldDispatchHistory.UnplannedOutage',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             '''
@@ -16277,7 +16277,7 @@ class Skill(Document):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Date and time the skill became effective.
@@ -16295,7 +16295,7 @@ class Skill(Document):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': '',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Level of skill for a Craft.
@@ -16313,7 +16313,7 @@ class Skill(Document):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': '',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Interval between the certification and its expiry.
@@ -16331,7 +16331,7 @@ class Skill(Document):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'OldPerson.Skills',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             '''
@@ -16357,7 +16357,7 @@ class Specification(Document):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'CoolingInfo.Specification',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             '''
@@ -16373,7 +16373,7 @@ class Specification(Document):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'SoundInfo.Specification',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             '''
@@ -16389,7 +16389,7 @@ class Specification(Document):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'SurfaceTreatmentInfo.Specification',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             '''
@@ -16405,7 +16405,7 @@ class Specification(Document):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'UserAttribute.PropertySpecification',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             UserAttributes used to specify further properties of the asset covered
@@ -16427,7 +16427,7 @@ class Specification(Document):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'UserAttribute.RatingSpecification',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             UserAttributes used to specify ratings of the asset covered by this specification.
@@ -16459,7 +16459,7 @@ class SwitchingOrder(Document):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'Location.SwitchingOrder',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             '''
@@ -16485,7 +16485,7 @@ class TimeSchedule(Document):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'TimePoint.TimeSchedule',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Sequence of time points belonging to this time schedule.
@@ -16502,7 +16502,7 @@ class TimeSchedule(Document):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The day of the week associated with a schedule.
@@ -16519,7 +16519,7 @@ class TimeSchedule(Document):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             True if this schedule is deactivated (disabled).
@@ -16536,7 +16536,7 @@ class TimeSchedule(Document):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Interval at which the scheduled action repeats (e.g., first Monday of every
@@ -16555,7 +16555,7 @@ class TimeSchedule(Document):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             '''
@@ -16570,7 +16570,7 @@ class TimeSchedule(Document):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The defined interval or regularity at which a task, event, or process is
@@ -16589,7 +16589,7 @@ class TimeSchedule(Document):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The month in which a schedule occurs.
@@ -16606,7 +16606,7 @@ class TimeSchedule(Document):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The day of the month associated with a schedule.
@@ -16623,7 +16623,7 @@ class TimeSchedule(Document):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The week number associated with a schedule.
@@ -16640,7 +16640,7 @@ class TimeSchedule(Document):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The year associated with a schedule.
@@ -16657,7 +16657,7 @@ class TimeSchedule(Document):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The day of the year associated with a schedule.
@@ -16674,7 +16674,7 @@ class TimeSchedule(Document):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The offset from midnight (i.e., 0 h, 0 min, 0 s) for the periodic time
@@ -16701,7 +16701,7 @@ class TimeSchedule(Document):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Duration between time points, from the beginning of one period to the beginning
@@ -16723,7 +16723,7 @@ class TimeSchedule(Document):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The hour of the day associated with a schedule.
@@ -16740,7 +16740,7 @@ class TimeSchedule(Document):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The minute(s) after the hour associated with a schedule.
@@ -16758,7 +16758,7 @@ class TimeSchedule(Document):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': '',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Schedule date and time interval.
@@ -16783,7 +16783,7 @@ class TroubleOrder(Document):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'Location.TroubleOrder',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             '''
@@ -16805,7 +16805,7 @@ class WorkRequest(Document):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'ActivityRecord.WorkRequest',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Record of activity on a work request.
@@ -16823,7 +16823,7 @@ class WorkRequest(Document):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'WorkManager.WorkRequest',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Work organization assigned to process the work request.
@@ -16847,7 +16847,7 @@ class ElectronicAddress(IdentifiedObject):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Primary email address.
@@ -16864,7 +16864,7 @@ class ElectronicAddress(IdentifiedObject):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Primary email address.
@@ -16881,7 +16881,7 @@ class ElectronicAddress(IdentifiedObject):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Alternate email address.
@@ -16898,7 +16898,7 @@ class ElectronicAddress(IdentifiedObject):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Internet address using internet protocol version 4 format.
@@ -16915,7 +16915,7 @@ class ElectronicAddress(IdentifiedObject):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Internet address using internet protocol version 6 format.
@@ -16932,7 +16932,7 @@ class ElectronicAddress(IdentifiedObject):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Address on local area network.
@@ -16949,7 +16949,7 @@ class ElectronicAddress(IdentifiedObject):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             MAC (Media Access Control) address.
@@ -16966,7 +16966,7 @@ class ElectronicAddress(IdentifiedObject):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Password needed to log in.
@@ -16983,7 +16983,7 @@ class ElectronicAddress(IdentifiedObject):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The unique identifier assigned to a wireless communication device. For
@@ -17002,7 +17002,7 @@ class ElectronicAddress(IdentifiedObject):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The unique identifier assigned to a device capable of sending SMS messages.
@@ -17019,7 +17019,7 @@ class ElectronicAddress(IdentifiedObject):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             User ID needed to log in, which can be for an individual person, an organisation,
@@ -17038,7 +17038,7 @@ class ElectronicAddress(IdentifiedObject):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             World wide web address.
@@ -17066,7 +17066,7 @@ class EnergyArea(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'ControlArea.EnergyArea',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The control area specification that is used for the load forecast.
@@ -17084,7 +17084,7 @@ class EnergyArea(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'ControlArea.EnergyArea',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The control area specification that is used for the load forecast.
@@ -17110,7 +17110,7 @@ class LoadArea(EnergyArea):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'SubLoadArea.LoadArea',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The SubLoadAreas in the LoadArea.
@@ -17136,7 +17136,7 @@ class SubLoadArea(EnergyArea):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'LoadGroup.SubLoadArea',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The Loadgroups in the SubLoadArea.
@@ -17154,7 +17154,7 @@ class SubLoadArea(EnergyArea):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'LoadArea.SubLoadAreas',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The LoadArea where the SubLoadArea belongs.
@@ -17178,7 +17178,7 @@ class EnergySchedulingType(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'EnergySource.EnergySchedulingType',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Energy Source of a particular Energy Scheduling Type.
@@ -17202,7 +17202,7 @@ class EnvironmentalMonitoringStation(IdentifiedObject):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Whether this station is currently reporting using daylight saving time.
@@ -17225,7 +17225,7 @@ class EnvironmentalMonitoringStation(IdentifiedObject):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Indication that station is part of a network of stations used to monitor
@@ -17244,7 +17244,7 @@ class EnvironmentalMonitoringStation(IdentifiedObject):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The time offset from UTC (a.k.a. GMT) configured in the station "clock",
@@ -17271,7 +17271,7 @@ class EnvironmentalMonitoringStation(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'Location.EnvironmentalMonitoringStation',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Location of this monitoring station.
@@ -17300,7 +17300,7 @@ class ErpCompetency(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'OldPerson.ErpCompetency',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             '''
@@ -17324,7 +17324,7 @@ class ErpPersonnel(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'OldPerson.ErpPersonnel',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             '''
@@ -17347,7 +17347,7 @@ class FaultCauseType(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'ConfigurationEvent.FaultCauseType',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             '''
@@ -17369,7 +17369,7 @@ class FieldDispatchHistory(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'FieldDispatchStep.FieldDispatchHistory',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             '''
@@ -17385,7 +17385,7 @@ class FieldDispatchHistory(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'Crew.FieldDispatchHistory',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             '''
@@ -17401,7 +17401,7 @@ class FieldDispatchHistory(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'PlannedOutage.FieldDispatchHistory',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             '''
@@ -17417,7 +17417,7 @@ class FieldDispatchHistory(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'UnplannedOutage.FieldDispatchHistory',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             '''
@@ -17441,7 +17441,7 @@ class FossilFuel(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'FuelAllocationSchedule.FossilFuel',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             A fuel allocation schedule shall have a fossil fuel.
@@ -17459,7 +17459,7 @@ class FossilFuel(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'PowerElectronicsThermalUnit.FossilFuels',
-        'namespace': 'http://epri.com/gmdm#',
+        'namespace': 'http://epri.com/gmdm/2025#',
         'docstring':
             '''
             '''
@@ -17474,7 +17474,7 @@ class FossilFuel(IdentifiedObject):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The amount of heat per weight (or volume) of the given type of fuel.
@@ -17491,7 +17491,7 @@ class FossilFuel(IdentifiedObject):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The cost in terms of heat value for the given type of fuel.
@@ -17508,7 +17508,7 @@ class FossilFuel(IdentifiedObject):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The cost of fuel used for economic dispatching which includes: fuel cost,
@@ -17527,7 +17527,7 @@ class FossilFuel(IdentifiedObject):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The efficiency factor for the fuel (per unit) in terms of the effective
@@ -17546,7 +17546,7 @@ class FossilFuel(IdentifiedObject):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Handling and processing cost associated with this fuel.
@@ -17563,7 +17563,7 @@ class FossilFuel(IdentifiedObject):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Relative amount of the given type of fuel, when multiple fuels are being
@@ -17582,7 +17582,7 @@ class FossilFuel(IdentifiedObject):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The fuel's fraction of pollution credit per unit of heat content.
@@ -17599,7 +17599,7 @@ class FossilFuel(IdentifiedObject):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The active power output level of the unit at which the given type of fuel
@@ -17620,7 +17620,7 @@ class FossilFuel(IdentifiedObject):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The active power output level of the unit at which the given type of fuel
@@ -17642,7 +17642,7 @@ class FossilFuel(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': '',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The type of fossil fuel, such as coal, oil, or gas.
@@ -17660,7 +17660,7 @@ class FossilFuel(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'FuelStorage.FossilFuel',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Fuel storage that store fossil fuels.
@@ -17678,7 +17678,7 @@ class FossilFuel(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'ThermalGeneratingUnit.FossilFuels',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             A thermal generating unit may have one or more fossil fuels.
@@ -17703,7 +17703,7 @@ class GeographicalRegion(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'SubGeographicalRegion.Region',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             All sub-geographical regions within this geographical region.
@@ -17728,7 +17728,7 @@ class Geometry(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'GeometricElement.Geometry',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             '''
@@ -17744,7 +17744,7 @@ class Geometry(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'GeometricElement.Geometry',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             '''
@@ -17759,7 +17759,7 @@ class Geometry(IdentifiedObject):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             A reference to the type of GIS spatial feature represented by this geometry.
@@ -17778,7 +17778,7 @@ class Geometry(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'CoordinateSystem.Geometry',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The coordinate system used for a given geometry.
@@ -17796,7 +17796,7 @@ class Geometry(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'Location.Geometry',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The location for which a geometry is specified.
@@ -17822,7 +17822,7 @@ class HVDCInterconnectionDynamics(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'DCEquipmentContainer.HVDCInterconnectionDynamics',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             DC equipment container to which HVDC interconnection dynamics model applies.
@@ -17847,7 +17847,7 @@ class Hazard(IdentifiedObject):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Type of this hazard.
@@ -17865,7 +17865,7 @@ class Hazard(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': '',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Status of this hazard.
@@ -17890,7 +17890,7 @@ class IOPoint(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'IOPointSource.IOPoint',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Local merasurement value source for an ICCP point.
@@ -17915,7 +17915,7 @@ class Control(IOPoint):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Specifies the type of Control. For example, this specifies if the Control
@@ -17936,7 +17936,7 @@ class Control(IOPoint):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Indicates that a client is currently sending control commands that has
@@ -17955,7 +17955,7 @@ class Control(IOPoint):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The last time a control output was sent.
@@ -17973,7 +17973,7 @@ class Control(IOPoint):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': '',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The unit multiplier of the controlled quantity.
@@ -17991,7 +17991,7 @@ class Control(IOPoint):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': '',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The unit of measure of the controlled quantity.
@@ -18009,7 +18009,7 @@ class Control(IOPoint):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'ControlAction.Control',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             '''
@@ -18025,7 +18025,7 @@ class Control(IOPoint):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'PowerSystemResource.Controls',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Regulating device governed by this control output.
@@ -18043,7 +18043,7 @@ class Control(IOPoint):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'RemoteControl.Control',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The remote point controlling the physical actuator.
@@ -18067,7 +18067,7 @@ class AccumulatorReset(Control):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'AccumulatorValue.AccumulatorReset',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The accumulator value that is reset by the command.
@@ -18085,7 +18085,7 @@ class AccumulatorReset(Control):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'AccumulatorValue.AccumulatorReset',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The accumulator value that is reset by the command.
@@ -18109,7 +18109,7 @@ class AnalogControl(Control):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'AnalogValue.AnalogControl',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The MeasurementValue that is controlled.
@@ -18126,7 +18126,7 @@ class AnalogControl(Control):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Normal value range maximum for any of the Control.value. Used for scaling,
@@ -18145,7 +18145,7 @@ class AnalogControl(Control):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Normal value range minimum for any of the Control.value. Used for scaling,
@@ -18165,7 +18165,7 @@ class AnalogControl(Control):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'AnalogValue.AnalogControl',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The MeasurementValue that is controlled.
@@ -18190,7 +18190,7 @@ class RaiseLowerCommand(AnalogControl):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'ValueAliasSet.RaiseLowerCommands',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The ValueAliasSet used for translation of a Control value to a name.
@@ -18213,7 +18213,7 @@ class SetPoint(AnalogControl):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Normal value for Control.value e.g. used for percentage scaling.
@@ -18230,7 +18230,7 @@ class SetPoint(AnalogControl):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The value representing the actuator output.
@@ -18254,7 +18254,7 @@ class Command(Control):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'DiscreteValue.Command',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The MeasurementValue that is controlled.
@@ -18271,7 +18271,7 @@ class Command(Control):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Normal value for Control.value e.g. used for percentage scaling.
@@ -18288,7 +18288,7 @@ class Command(Control):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The value representing the actuator output.
@@ -18306,7 +18306,7 @@ class Command(Control):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'DiscreteValue.Command',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The MeasurementValue that is controlled.
@@ -18324,7 +18324,7 @@ class Command(Control):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'ValueAliasSet.Commands',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The ValueAliasSet used for translation of a Control value to a name.
@@ -18351,7 +18351,7 @@ class MeasurementValue(IOPoint):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'MeasurementValueQuality.MeasurementValue',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             A MeasurementValue has a MeasurementValueQuality associated with it.
@@ -18368,7 +18368,7 @@ class MeasurementValue(IOPoint):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The time when the value was last updated.
@@ -18385,7 +18385,7 @@ class MeasurementValue(IOPoint):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The limit, expressed as a percentage of the sensor maximum, that errors
@@ -18405,7 +18405,7 @@ class MeasurementValue(IOPoint):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'CalculationMethodHierarchy.MeasurementValue',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             '''
@@ -18421,7 +18421,7 @@ class MeasurementValue(IOPoint):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'OldPerson.MeasurementValues',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             '''
@@ -18437,7 +18437,7 @@ class MeasurementValue(IOPoint):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'MeasurementValueQuality.MeasurementValue',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             A MeasurementValue has a MeasurementValueQuality associated with it.
@@ -18455,7 +18455,7 @@ class MeasurementValue(IOPoint):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'MeasurementValueSource.MeasurementValues',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             A reference to the type of source that updates the MeasurementValue, e.g.
@@ -18477,7 +18477,7 @@ class MeasurementValue(IOPoint):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'RemoteSource.MeasurementValue',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Link to the physical telemetered point associated with this measurement.
@@ -18501,7 +18501,7 @@ class AccumulatorValue(MeasurementValue):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'AccumulatorReset.AccumulatorValue',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The command that resets the accumulator value.
@@ -18518,7 +18518,7 @@ class AccumulatorValue(MeasurementValue):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The value to supervise. The value is positive.
@@ -18536,7 +18536,7 @@ class AccumulatorValue(MeasurementValue):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'Accumulator.AccumulatorValues',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Measurement to which this value is connected.
@@ -18554,7 +18554,7 @@ class AccumulatorValue(MeasurementValue):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'AccumulatorReset.AccumulatorValue',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The command that resets the accumulator value.
@@ -18578,7 +18578,7 @@ class AnalogValue(MeasurementValue):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'AltGeneratingUnitMeas.AnalogValue',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The alternate generating unit for which this measurement value applies.
@@ -18596,7 +18596,7 @@ class AnalogValue(MeasurementValue):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'AltTieMeas.AnalogValue',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The usage of the measurement within the control area specification.
@@ -18614,7 +18614,7 @@ class AnalogValue(MeasurementValue):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'AnalogControl.AnalogValue',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The Control variable associated with the MeasurementValue.
@@ -18631,7 +18631,7 @@ class AnalogValue(MeasurementValue):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The value to supervise.
@@ -18649,7 +18649,7 @@ class AnalogValue(MeasurementValue):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'Analog.AnalogValues',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Measurement to which this value is connected.
@@ -18667,7 +18667,7 @@ class AnalogValue(MeasurementValue):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'AnalogControl.AnalogValue',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The Control variable associated with the MeasurementValue.
@@ -18691,7 +18691,7 @@ class DiscreteValue(MeasurementValue):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'Command.DiscreteValue',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The Control variable associated with the MeasurementValue.
@@ -18708,7 +18708,7 @@ class DiscreteValue(MeasurementValue):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The value to supervise.
@@ -18726,7 +18726,7 @@ class DiscreteValue(MeasurementValue):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'Command.DiscreteValue',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The Control variable associated with the MeasurementValue.
@@ -18744,7 +18744,7 @@ class DiscreteValue(MeasurementValue):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'Discrete.DiscreteValues',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Measurement to which this value is connected.
@@ -18767,7 +18767,7 @@ class StringMeasurementValue(MeasurementValue):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The value to supervise.
@@ -18785,7 +18785,7 @@ class StringMeasurementValue(MeasurementValue):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'StringMeasurement.StringMeasurementValues',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Measurement to which this value is connected.
@@ -18810,7 +18810,7 @@ class ImpedanceTapChangerTable(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'ImpedanceTapChangerTablePoint.ImpedanceTapChangerTable',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The points of this table.
@@ -18828,7 +18828,7 @@ class ImpedanceTapChangerTable(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'ImpedanceTapChangerTabular.ImpedanceTapChangerTable',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The impedance tap changer to which this impedance tap table applies.
@@ -18851,7 +18851,7 @@ class InternalLocation(IdentifiedObject):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Name of building where location is.
@@ -18868,7 +18868,7 @@ class InternalLocation(IdentifiedObject):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Number of building where location is.
@@ -18885,7 +18885,7 @@ class InternalLocation(IdentifiedObject):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Floor of location.
@@ -18902,7 +18902,7 @@ class InternalLocation(IdentifiedObject):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Room number of location.
@@ -18919,7 +18919,7 @@ class InternalLocation(IdentifiedObject):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             '''
@@ -18935,7 +18935,7 @@ class InternalLocation(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'Location.InternalLocation',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             '''
@@ -18960,7 +18960,7 @@ class IntraphaseSpacing(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'ACLineSegment.WireSpacingInfo',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             '''
@@ -18976,7 +18976,7 @@ class IntraphaseSpacing(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'ACLineSegmentPhase.IntraphaseSpacing',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             '''
@@ -18991,7 +18991,7 @@ class IntraphaseSpacing(IdentifiedObject):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             If true, this spacing data describes a cable.
@@ -19008,7 +19008,7 @@ class IntraphaseSpacing(IdentifiedObject):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Number of wire sub-conductors in the symmetrical bundle (typically between
@@ -19027,7 +19027,7 @@ class IntraphaseSpacing(IdentifiedObject):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Distance between wire sub-conductors in a symmetrical bundle.
@@ -19045,7 +19045,7 @@ class IntraphaseSpacing(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': '',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Usage of the associated wires.
@@ -19063,7 +19063,7 @@ class IntraphaseSpacing(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'DuctBank.WireSpacingInfos',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             '''
@@ -19095,7 +19095,7 @@ class AccumulatorLimit(Limit):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The value to supervise against. The value is positive.
@@ -19113,7 +19113,7 @@ class AccumulatorLimit(Limit):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'AccumulatorLimitSet.Limits',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The set of limits.
@@ -19136,7 +19136,7 @@ class AnalogLimit(Limit):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The value to supervise against.
@@ -19154,7 +19154,7 @@ class AnalogLimit(Limit):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'AnalogLimitSet.Limits',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The set of limits.
@@ -19181,7 +19181,7 @@ class LimitSet(IdentifiedObject):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Tells if the limit values are in percentage of normalValue or the specified
@@ -19209,7 +19209,7 @@ class AccumulatorLimitSet(LimitSet):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'AccumulatorLimit.LimitSet',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The limit values used for supervision of Measurements.
@@ -19235,7 +19235,7 @@ class AnalogLimitSet(LimitSet):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'AnalogLimit.LimitSet',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The limit values used for supervision of Measurements.
@@ -19260,7 +19260,7 @@ class LineSegmentCoupling(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'ACLineSegment.LineSegmentCoupling',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The line whose relationship in a coupled group is described.
@@ -19277,7 +19277,7 @@ class LineSegmentCoupling(IdentifiedObject):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Sequence number of coupled line. Value of 1 indicates that line is the
@@ -19298,7 +19298,7 @@ class LineSegmentCoupling(IdentifiedObject):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Indication of whether the reference end of a line in a coupled group is
@@ -19333,7 +19333,7 @@ class LineSegmentCoupling(IdentifiedObject):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The horizontal offset between the horizontal reference point of a coupled
@@ -19360,7 +19360,7 @@ class LineSegmentCoupling(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'ACLineSegment.LineSegmentCoupling',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The line whose relationship in a coupled group is described.
@@ -19378,7 +19378,7 @@ class LineSegmentCoupling(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'CoupledLineSegmentGroup.LineSegmentCoupling',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The coupled group of lines with which this coupled line has relationships.
@@ -19407,7 +19407,7 @@ class LoadDynamics(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'EnergyConsumer.LoadDynamics',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Energy consumer to which this dynamics load model applies.
@@ -19432,7 +19432,7 @@ class LoadGroup(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'SubLoadArea.LoadGroups',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The SubLoadArea where the Loadgroup belongs.
@@ -19457,7 +19457,7 @@ class ConformLoadGroup(LoadGroup):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'ConformLoad.LoadGroup',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Conform loads assigned to this ConformLoadGroup.
@@ -19475,7 +19475,7 @@ class ConformLoadGroup(LoadGroup):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'ConformLoadSchedule.ConformLoadGroup',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The ConformLoadSchedules in the ConformLoadGroup.
@@ -19500,7 +19500,7 @@ class NonConformLoadGroup(LoadGroup):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'NonConformLoad.LoadGroup',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Conform loads assigned to this ConformLoadGroup.
@@ -19518,7 +19518,7 @@ class NonConformLoadGroup(LoadGroup):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'NonConformLoadSchedule.NonConformLoadGroup',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The NonConformLoadSchedules in the NonConformLoadGroup.
@@ -19576,7 +19576,7 @@ class LoadResponseCharacteristic(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'EnergyConsumer.LoadResponse',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The set of loads that have the response characteristics.
@@ -19593,7 +19593,7 @@ class LoadResponseCharacteristic(IdentifiedObject):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Indicates the exponential voltage dependency model is to be used. If false,
@@ -19644,7 +19644,7 @@ class LoadResponseCharacteristic(IdentifiedObject):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Portion of active power load modelled as constant current.
@@ -19661,7 +19661,7 @@ class LoadResponseCharacteristic(IdentifiedObject):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Portion of active power load modelled as constant impedance.
@@ -19678,7 +19678,7 @@ class LoadResponseCharacteristic(IdentifiedObject):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Portion of active power load modelled as constant power.
@@ -19695,7 +19695,7 @@ class LoadResponseCharacteristic(IdentifiedObject):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Exponent of per unit frequency effecting active power.
@@ -19712,7 +19712,7 @@ class LoadResponseCharacteristic(IdentifiedObject):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Exponent of per unit voltage effecting real power.
@@ -19729,7 +19729,7 @@ class LoadResponseCharacteristic(IdentifiedObject):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Portion of reactive power load modelled as constant current.
@@ -19746,7 +19746,7 @@ class LoadResponseCharacteristic(IdentifiedObject):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Portion of reactive power load modelled as constant impedance.
@@ -19763,7 +19763,7 @@ class LoadResponseCharacteristic(IdentifiedObject):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Portion of reactive power load modelled as constant power.
@@ -19780,7 +19780,7 @@ class LoadResponseCharacteristic(IdentifiedObject):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Exponent of per unit frequency effecting reactive power.
@@ -19797,7 +19797,7 @@ class LoadResponseCharacteristic(IdentifiedObject):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Exponent of per unit voltage effecting reactive power.
@@ -19823,7 +19823,7 @@ class Location(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'Building.Location',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             '''
@@ -19839,7 +19839,7 @@ class Location(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'ConfigurationEvent.ChangedLocation',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             All configuration events created for this location.
@@ -19857,7 +19857,7 @@ class Location(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'Crew.Location',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             '''
@@ -19873,7 +19873,7 @@ class Location(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'EnvironmentalMonitoringStation.Location',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Monitoring station located at this location.
@@ -19891,7 +19891,7 @@ class Location(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'Geometry.Location',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The geometry for a given location.
@@ -19909,7 +19909,7 @@ class Location(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'InternalLocation.Location',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             '''
@@ -19925,7 +19925,7 @@ class Location(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'Location.Location',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             '''
@@ -19941,7 +19941,7 @@ class Location(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'LocationAccess.Location',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             '''
@@ -19957,7 +19957,7 @@ class Location(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'PositionPoint.Location',
-        'namespace': 'http://epri.com/gmdm#',
+        'namespace': 'http://epri.com/gmdm/2025#',
         'docstring':
             '''
             '''
@@ -19973,7 +19973,7 @@ class Location(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'PowerSystemResource.Location',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             All power system resources at this location.
@@ -19991,7 +19991,7 @@ class Location(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'Site.Location',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             '''
@@ -20006,7 +20006,7 @@ class Location(IdentifiedObject):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://epri.com/gmdm#',
+        'namespace': 'http://epri.com/gmdm/2025#',
         'docstring':
             '''
             (if applicable) Direction that allows field crews to quickly find a given
@@ -20032,7 +20032,7 @@ class Location(IdentifiedObject):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             (if applicable) Reference to geographical information source, often external
@@ -20051,7 +20051,7 @@ class Location(IdentifiedObject):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Classification by utility's corporate standards and practices, relative
@@ -20073,7 +20073,7 @@ class Location(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'Cadastre.Location',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Cadastre encompassing a location.
@@ -20091,7 +20091,7 @@ class Location(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'CoordinateSystem.Location',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Coordinate system used to describe position points of this location.
@@ -20109,7 +20109,7 @@ class Location(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': '',
-        'namespace': 'http://epri.com/gmdm#',
+        'namespace': 'http://epri.com/gmdm/2025#',
         'docstring':
             '''
             Electronic address.
@@ -20127,7 +20127,7 @@ class Location(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'Incident.Location',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Incident at this location.
@@ -20145,7 +20145,7 @@ class Location(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'Location.SubLocation',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             '''
@@ -20161,7 +20161,7 @@ class Location(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'LocationAccess.Location',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             '''
@@ -20177,7 +20177,7 @@ class Location(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': '',
-        'namespace': 'http://epri.com/gmdm#',
+        'namespace': 'http://epri.com/gmdm/2025#',
         'docstring':
             '''
             Main address of the location.
@@ -20195,7 +20195,7 @@ class Location(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': '',
-        'namespace': 'http://epri.com/gmdm#',
+        'namespace': 'http://epri.com/gmdm/2025#',
         'docstring':
             '''
             Phone number.
@@ -20213,7 +20213,7 @@ class Location(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': '',
-        'namespace': 'http://epri.com/gmdm#',
+        'namespace': 'http://epri.com/gmdm/2025#',
         'docstring':
             '''
             Additional phone number.
@@ -20231,7 +20231,7 @@ class Location(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': '',
-        'namespace': 'http://epri.com/gmdm#',
+        'namespace': 'http://epri.com/gmdm/2025#',
         'docstring':
             '''
             Secondary address of the location. For example, PO Box address may have
@@ -20251,7 +20251,7 @@ class Location(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'Site.Location',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             '''
@@ -20267,7 +20267,7 @@ class Location(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': '',
-        'namespace': 'http://epri.com/gmdm#',
+        'namespace': 'http://epri.com/gmdm/2025#',
         'docstring':
             '''
             Status of this location.
@@ -20285,7 +20285,7 @@ class Location(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'SwitchingOrder.Location',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             '''
@@ -20301,7 +20301,7 @@ class Location(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'TroubleOrder.Location',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             '''
@@ -20324,7 +20324,7 @@ class MarketOccurrence(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'MarketProduct.Market',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             '''
@@ -20346,7 +20346,7 @@ class EnergyMarket(MarketOccurrence):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             A specified period of time in which something occurs or is planned to take
@@ -20366,7 +20366,7 @@ class EnergyMarket(MarketOccurrence):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'MarketResults.EnergyMarket',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             '''
@@ -20382,7 +20382,7 @@ class EnergyMarket(MarketOccurrence):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'RTO.EnergyMarkets',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             '''
@@ -20405,7 +20405,7 @@ class MarketProduct(IdentifiedObject):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Ramping time interval for the specific market product type specified by
@@ -20436,7 +20436,7 @@ class MarketProduct(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': '',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Market product type examples:
@@ -20466,7 +20466,7 @@ class MarketProduct(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'MarketOccurrence.MarketProducts',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             '''
@@ -20482,7 +20482,7 @@ class MarketProduct(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'MarketRegionResults.MarketProduct',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             '''
@@ -20522,7 +20522,7 @@ class Measurement(IdentifiedObject):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Specifies the type of measurement. For example, this specifies if the measurement
@@ -20550,7 +20550,7 @@ class Measurement(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': '',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Indicates to which phases the measurement applies and avoids the need to
@@ -20581,7 +20581,7 @@ class Measurement(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': '',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The unit multiplier of the measured quantity.
@@ -20599,7 +20599,7 @@ class Measurement(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': '',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The unit of measure of the measured quantity.
@@ -20617,7 +20617,7 @@ class Measurement(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'Asset.Measurements',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             '''
@@ -20633,7 +20633,7 @@ class Measurement(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'CalculationMethodHierarchy.Measurement',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Calculation method hierarchy which applies to this analog.
@@ -20651,7 +20651,7 @@ class Measurement(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'MeasurementAction.Measurement',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             '''
@@ -20667,7 +20667,7 @@ class Measurement(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'PowerSystemResource.Measurements',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The power system resource that contains the measurement.
@@ -20685,7 +20685,7 @@ class Measurement(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'ACDCTerminal.Measurements',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             One or more measurements may be associated with a terminal in the network.
@@ -20711,7 +20711,7 @@ class Accumulator(Measurement):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'AccumulatorValue.Accumulator',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The values connected to this measurement.
@@ -20728,7 +20728,7 @@ class Accumulator(Measurement):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Normal value range maximum for any of the MeasurementValue.values. Used
@@ -20754,7 +20754,7 @@ class Analog(Measurement):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'AnalogValue.Analog',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The values connected to this measurement.
@@ -20771,7 +20771,7 @@ class Analog(Measurement):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Normal value range maximum for any of the MeasurementValue.values. Used
@@ -20790,7 +20790,7 @@ class Analog(Measurement):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Normal value range minimum for any of the MeasurementValue.values. Used
@@ -20809,7 +20809,7 @@ class Analog(Measurement):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Normal measurement value, e.g., used for percentage calculations.
@@ -20826,7 +20826,7 @@ class Analog(Measurement):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Indicates the direction of positive flow relative to the primary equipment
@@ -20867,7 +20867,7 @@ class Discrete(Measurement):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'DiscreteValue.Discrete',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The values connected to this measurement.
@@ -20884,7 +20884,7 @@ class Discrete(Measurement):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Normal value range maximum for any of the MeasurementValue.values. Used
@@ -20903,7 +20903,7 @@ class Discrete(Measurement):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Normal value range minimum for any of the MeasurementValue.values. Used
@@ -20922,7 +20922,7 @@ class Discrete(Measurement):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Normal measurement value, e.g., used for percentage calculations.
@@ -20940,7 +20940,7 @@ class Discrete(Measurement):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'ValueAliasSet.Discretes',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The ValueAliasSet used for translation of a MeasurementValue.value to a
@@ -20966,7 +20966,7 @@ class MktMeasurement(Measurement):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'TiePoint.ByMktMeasurement',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             A measurement is made on the B side of a tie point
@@ -20984,7 +20984,7 @@ class MktMeasurement(Measurement):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'TiePoint.ForMktMeasurement',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             A measurement is made on the A side of a tie point
@@ -21002,7 +21002,7 @@ class MktMeasurement(Measurement):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'Pnode.MktMeasurement',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Allows Pnode an association to aggregated resources external DC ties or
@@ -21028,7 +21028,7 @@ class StringMeasurement(Measurement):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'StringMeasurementValue.StringMeasurement',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The values connected to this measurement.
@@ -21054,7 +21054,7 @@ class MeasurementValueSource(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'MeasurementValue.MeasurementValueSource',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The MeasurementValues updated by the source.
@@ -21078,7 +21078,7 @@ class IOPointSource(MeasurementValueSource):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'IOPoint.IOPointSource',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             ICCP point for a local measurement value source.
@@ -21101,7 +21101,7 @@ class MutualCoupling(IdentifiedObject):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Zero sequence mutual coupling shunt (charging) susceptance, uniformly distributed,
@@ -21120,7 +21120,7 @@ class MutualCoupling(IdentifiedObject):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Distance to the start of the coupled region from the first line's terminal
@@ -21139,7 +21139,7 @@ class MutualCoupling(IdentifiedObject):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Distance to the end of the coupled region from the first line's terminal
@@ -21158,7 +21158,7 @@ class MutualCoupling(IdentifiedObject):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Distance to the start of coupled region from the second line's terminal
@@ -21177,7 +21177,7 @@ class MutualCoupling(IdentifiedObject):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Distance to the end of coupled region from the second line's terminal with
@@ -21196,7 +21196,7 @@ class MutualCoupling(IdentifiedObject):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Zero sequence mutual coupling shunt (charging) conductance, uniformly distributed,
@@ -21215,7 +21215,7 @@ class MutualCoupling(IdentifiedObject):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Zero sequence branch-to-branch mutual impedance coupling, resistance.
@@ -21232,7 +21232,7 @@ class MutualCoupling(IdentifiedObject):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Zero sequence branch-to-branch mutual impedance coupling, reactance.
@@ -21250,7 +21250,7 @@ class MutualCoupling(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'Terminal.HasFirstMutualCoupling',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The starting terminal for the calculation of distances along the first
@@ -21274,7 +21274,7 @@ class MutualCoupling(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'Terminal.HasSecondMutualCoupling',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The starting terminal for the calculation of distances along the second
@@ -21303,7 +21303,7 @@ class OperatingParticipant(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'OperatingShare.OperatingParticipant',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The operating shares of this operating participant. An operating participant
@@ -21338,7 +21338,7 @@ class OperationalLimit(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'OperationalLimitSet.OperationalLimitValue',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The limit set to which the limit values belong.
@@ -21356,7 +21356,7 @@ class OperationalLimit(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'OperationalLimitType.OperationalLimit',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The limit type associated with this limit.
@@ -21374,7 +21374,7 @@ class OperationalLimit(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'StepOperationalLimitTable.OperationalLimit',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The step operational limit table for this operational limit.
@@ -21397,7 +21397,7 @@ class ActivePowerLimit(OperationalLimit):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The normal value of active power limit. The attribute shall be a positive
@@ -21416,7 +21416,7 @@ class ActivePowerLimit(OperationalLimit):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Value of active power limit. The attribute shall be a positive value or
@@ -21441,7 +21441,7 @@ class ApparentPowerLimit(OperationalLimit):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The normal apparent power limit. The attribute shall be a positive value
@@ -21460,7 +21460,7 @@ class ApparentPowerLimit(OperationalLimit):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The apparent power limit. The attribute shall be a positive value or zero.
@@ -21485,7 +21485,7 @@ class CurrentLimit(OperationalLimit):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The normal value for limit on current flow. The attribute shall be a positive
@@ -21504,7 +21504,7 @@ class CurrentLimit(OperationalLimit):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Limit on current flow. The attribute shall be a positive value or zero.
@@ -21529,7 +21529,7 @@ class VoltageAngleLimit(OperationalLimit):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             True if the flow is from the operating limit terminal to the angle reference
@@ -21550,7 +21550,7 @@ class VoltageAngleLimit(OperationalLimit):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The difference in angle degrees between referenced by the association end
@@ -21573,7 +21573,7 @@ class VoltageAngleLimit(OperationalLimit):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The difference in angle degrees between referenced by the association end
@@ -21597,7 +21597,7 @@ class VoltageAngleLimit(OperationalLimit):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'Terminal.VoltageAngleLimit',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The angle reference terminal for the voltage angle limit.
@@ -21622,7 +21622,7 @@ class VoltageLimit(OperationalLimit):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The normal limit on voltage. High or low limit nature of the limit depends
@@ -21643,7 +21643,7 @@ class VoltageLimit(OperationalLimit):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Limit on voltage. High or low limit nature of the limit depends upon the
@@ -21677,7 +21677,7 @@ class OperationalLimitSet(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'OperationalLimit.OperationalLimitSet',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Values of equipment limits.
@@ -21695,7 +21695,7 @@ class OperationalLimitSet(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'Equipment.OperationalLimitSet',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The equipment to which the limit set applies.
@@ -21713,7 +21713,7 @@ class OperationalLimitSet(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'ACDCTerminal.OperationalLimitSet',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The terminal where the operational limit set apply.
@@ -21737,7 +21737,7 @@ class OperationalLimitType(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'OperationalLimit.OperationalLimitType',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The operational limits associated with this type of limit.
@@ -21754,7 +21754,7 @@ class OperationalLimitType(IdentifiedObject):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Defines if the operational limit type has infinite duration. If true, the
@@ -21798,7 +21798,7 @@ class OperationalLimitType(IdentifiedObject):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The nominal acceptable duration of the limit. Limits are commonly expressed
@@ -21826,7 +21826,7 @@ class OperationalLimitType(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': '',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The direction of the limit.
@@ -21863,7 +21863,7 @@ class OperationalLimitType(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'AmbientTemperatureDependencyCurve.OperationalLimitType',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The permanent ambient temperature dependency curve for this operational
@@ -21883,7 +21883,7 @@ class OperationalLimitType(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'SolarRadiationDependencyCurve.OperationalLimitType',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The permanent solar radiation curve for this operational limit type.
@@ -21901,7 +21901,7 @@ class OperationalLimitType(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'RecoveryOverloadLimitCurve.OperationalLimitType',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             This is the curve which provides the recovery time information for this
@@ -21921,7 +21921,7 @@ class OperationalLimitType(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'BaseOverloadLimitCurve.OperationalLimitType',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The temporary base overload limit curve for this operational limit type.
@@ -21940,7 +21940,7 @@ class OperationalLimitType(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'DurationOverloadLimitCurve.OperationalLimitType',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The temporary duration overload limit curve for this operational limit
@@ -21965,7 +21965,7 @@ class Ownership(IdentifiedObject):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Share of this ownership.
@@ -21983,7 +21983,7 @@ class Ownership(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'Asset.Ownerships',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Asset that is object of this ownership.
@@ -22001,7 +22001,7 @@ class Ownership(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'AssetOwner.Ownerships',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Asset owner that is subject in this ownership.
@@ -22028,7 +22028,7 @@ class PSRType(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'PowerSystemResource.PSRType',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Power system resources classified with this power system resource type.
@@ -22052,7 +22052,7 @@ class PerLengthLineParameter(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'WireAssemblyInfo.PerLengthLineParameter',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             '''
@@ -22074,7 +22074,7 @@ class PerLengthDCLineParameter(PerLengthLineParameter):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'DCLineSegment.PerLengthParameter',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             All line segments described by this set of per-length parameters.
@@ -22091,7 +22091,7 @@ class PerLengthDCLineParameter(PerLengthLineParameter):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Capacitance per unit of length of the DC line segment; significant for
@@ -22110,7 +22110,7 @@ class PerLengthDCLineParameter(PerLengthLineParameter):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Inductance per unit of length of the DC line segment.
@@ -22127,7 +22127,7 @@ class PerLengthDCLineParameter(PerLengthLineParameter):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Resistance per length of the DC line segment.
@@ -22151,7 +22151,7 @@ class PerLengthImpedance(PerLengthLineParameter):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'ACLineSegment.PerLengthImpedance',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             All line segments described by this per-length impedance.
@@ -22186,7 +22186,7 @@ class PerLengthPhaseImpedance(PerLengthImpedance):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'PhaseImpedanceData.PhaseImpedance',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             All data that belong to this conductor phase impedance.
@@ -22204,7 +22204,7 @@ class PerLengthPhaseImpedance(PerLengthImpedance):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'PhaseImpedanceData.PhaseImpedance',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             All data that belong to this conductor phase impedance.
@@ -22221,7 +22221,7 @@ class PerLengthPhaseImpedance(PerLengthImpedance):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Conductor count identifies the number of phase, neutral, and other wires
@@ -22264,7 +22264,7 @@ class PerLengthSequenceImpedance(PerLengthImpedance):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Zero sequence shunt (charging) susceptance, per unit of length.
@@ -22281,7 +22281,7 @@ class PerLengthSequenceImpedance(PerLengthImpedance):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Positive sequence shunt (charging) susceptance, per unit of length.
@@ -22298,7 +22298,7 @@ class PerLengthSequenceImpedance(PerLengthImpedance):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Zero sequence shunt (charging) conductance, per unit of length.
@@ -22315,7 +22315,7 @@ class PerLengthSequenceImpedance(PerLengthImpedance):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Positive sequence shunt (charging) conductance, per unit of length.
@@ -22332,7 +22332,7 @@ class PerLengthSequenceImpedance(PerLengthImpedance):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Positive sequence series resistance, per unit of length.
@@ -22349,7 +22349,7 @@ class PerLengthSequenceImpedance(PerLengthImpedance):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Zero sequence series resistance, per unit of length.
@@ -22366,7 +22366,7 @@ class PerLengthSequenceImpedance(PerLengthImpedance):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Positive sequence series reactance, per unit of length.
@@ -22383,7 +22383,7 @@ class PerLengthSequenceImpedance(PerLengthImpedance):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Zero sequence series reactance, per unit of length.
@@ -22408,7 +22408,7 @@ class PhaseTapChangerTable(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'PhaseTapChangerTablePoint.PhaseTapChangerTable',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The points of this table.
@@ -22426,7 +22426,7 @@ class PhaseTapChangerTable(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'PhaseTapChangerTabular.PhaseTapChangerTable',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The phase tap changers to which this phase tap table applies.
@@ -22452,7 +22452,7 @@ class ConnectionAngleTapChangerTable(PhaseTapChangerTable):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The phase angle between the in-phase winding and the out-of -phase winding
@@ -22483,7 +22483,7 @@ class ConnectionAngleTapChangerTable(PhaseTapChangerTable):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'ConnectionAngleTapChanger.ConnectionAngleTapChangerTable',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The connection angle tap changer that has this connection angle tap changer
@@ -22511,7 +22511,7 @@ class Pnode(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'MktMeasurement.Pnode',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Allows Measurements to be associated to Pnodes.
@@ -22529,7 +22529,7 @@ class Pnode(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'RegisteredResource.Pnode',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             A registered resource injects power at one or more connectivity nodes related
@@ -22558,7 +22558,7 @@ class AggregatedPnode(Pnode):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'AggregateNode.AggregatedPnode',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             '''
@@ -22580,7 +22580,7 @@ class IndividualPnode(Pnode):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'ConnectivityNode.IndividualPnode',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             '''
@@ -22616,7 +22616,7 @@ class ACPointOfCommonCoupling(PointOfCommonCoupling):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'ConnectivityNode.ACPointOfCommonCoupling',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Connectivity node which is a point of common coupling AC.
@@ -22634,7 +22634,7 @@ class ACPointOfCommonCoupling(PointOfCommonCoupling):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'DCConverterUnit.ACPointOfCommonCoupling',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             DC converter unit that has AC point of common coupling.
@@ -22652,7 +22652,7 @@ class ACPointOfCommonCoupling(PointOfCommonCoupling):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'ConnectivityNode.ACPointOfCommonCoupling',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Connectivity node which is a point of common coupling AC.
@@ -22670,7 +22670,7 @@ class ACPointOfCommonCoupling(PointOfCommonCoupling):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'DCConverterUnit.ACPointOfCommonCoupling',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             DC converter unit that has AC point of common coupling.
@@ -22695,7 +22695,7 @@ class DCPointOfCommonCoupling(PointOfCommonCoupling):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'DCConverterUnit.DCPointOfCommonCoupling',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             DC converter unit that has DC point of common coupling.
@@ -22713,7 +22713,7 @@ class DCPointOfCommonCoupling(PointOfCommonCoupling):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'DCNode.DCPointOfCommonCoupling',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The DCNode that is a point of common coupling DC.
@@ -22731,7 +22731,7 @@ class DCPointOfCommonCoupling(PointOfCommonCoupling):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'DCConverterUnit.DCPointOfCommonCoupling',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             DC converter unit that has DC point of common coupling.
@@ -22749,7 +22749,7 @@ class DCPointOfCommonCoupling(PointOfCommonCoupling):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'DCNode.DCPointOfCommonCoupling',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The DCNode that is a point of common coupling DC.
@@ -22777,7 +22777,7 @@ class PowerSystemResource(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'ConfigurationEvent.PowerSystemResource',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             '''
@@ -22793,7 +22793,7 @@ class PowerSystemResource(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'Control.PowerSystemResource',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The controller outputs used to actually govern a regulating device, e.g.
@@ -22814,7 +22814,7 @@ class PowerSystemResource(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'Measurement.PowerSystemResource',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The measurements associated with this power system resource.
@@ -22832,7 +22832,7 @@ class PowerSystemResource(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'OperatingShare.PowerSystemResource',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The operating shares of this power system resource.
@@ -22850,7 +22850,7 @@ class PowerSystemResource(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'AssetInfo.PowerSystemResources',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Datasheet information for this power system resource.
@@ -22868,7 +22868,7 @@ class PowerSystemResource(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'DesignElement.PowerSystemResource',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Operation to be performed with the resource in context of a particular
@@ -22888,7 +22888,7 @@ class PowerSystemResource(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'Location.PowerSystemResources',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Location of this power system resource.
@@ -22906,7 +22906,7 @@ class PowerSystemResource(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'PSRType.PowerSystemResources',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Custom classification for this power system resource.
@@ -22935,7 +22935,7 @@ class ACLineSegmentPhase(PowerSystemResource):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Sequence number provides the numbering for this line segment phase. When
@@ -22970,7 +22970,7 @@ class ACLineSegmentPhase(PowerSystemResource):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': '',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Phase identifies the phase or neutral connection of the conductor at both
@@ -22990,7 +22990,7 @@ class ACLineSegmentPhase(PowerSystemResource):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'ACLineSegment.ACLineSegmentPhases',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The line segment to which the phase belongs.
@@ -23008,7 +23008,7 @@ class ACLineSegmentPhase(PowerSystemResource):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'IntraphaseSpacing.ACLineSegmentPhase',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             '''
@@ -23024,7 +23024,7 @@ class ACLineSegmentPhase(PowerSystemResource):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'WireInfo.ACLineSegmentPhase',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             '''
@@ -23048,7 +23048,7 @@ class AirCompressor(PowerSystemResource):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'CAESPlant.AirCompressor',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             An air compressor may be a member of a compressed air energy storage plant.
@@ -23066,7 +23066,7 @@ class AirCompressor(PowerSystemResource):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Rating of the CAES air compressor.
@@ -23084,7 +23084,7 @@ class AirCompressor(PowerSystemResource):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'CAESPlant.AirCompressor',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             An air compressor may be a member of a compressed air energy storage plant.
@@ -23103,7 +23103,7 @@ class AirCompressor(PowerSystemResource):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'CombustionTurbine.AirCompressor',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             A CAES air compressor is driven by combustion turbine.
@@ -23127,7 +23127,7 @@ class AreaInterchangeController(PowerSystemResource):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'ControlArea.AreaInterchangeController',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Control area that has a area interchange controller.
@@ -23395,7 +23395,7 @@ class CAESPlant(PowerSystemResource):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'AirCompressor.CAESPlant',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             An air compressor may be a member of a compressed air energy storage plant.
@@ -23414,7 +23414,7 @@ class CAESPlant(PowerSystemResource):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'ThermalGeneratingUnit.CAESPlant',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             A thermal generating unit may be a member of a compressed air energy storage
@@ -23433,7 +23433,7 @@ class CAESPlant(PowerSystemResource):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The rated energy storage capacity. The attribute shall be a positive value.
@@ -23451,7 +23451,7 @@ class CAESPlant(PowerSystemResource):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The CAES plant's gross rated generating capacity. The attribute shall be
@@ -23471,7 +23471,7 @@ class CAESPlant(PowerSystemResource):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'AirCompressor.CAESPlant',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             An air compressor may be a member of a compressed air energy storage plant.
@@ -23490,7 +23490,7 @@ class CAESPlant(PowerSystemResource):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'ThermalGeneratingUnit.CAESPlant',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             A thermal generating unit may be a member of a compressed air energy storage
@@ -23520,7 +23520,7 @@ class CogenerationPlant(PowerSystemResource):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'SteamSendoutSchedule.CogenerationPlant',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             A cogeneration plant has a steam sendout schedule.
@@ -23538,7 +23538,7 @@ class CogenerationPlant(PowerSystemResource):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'ThermalGeneratingUnit.CogenerationPlant',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             A thermal generating unit may be a member of a cogeneration plant.
@@ -23555,7 +23555,7 @@ class CogenerationPlant(PowerSystemResource):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The high pressure steam sendout.
@@ -23572,7 +23572,7 @@ class CogenerationPlant(PowerSystemResource):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The high pressure steam rating.
@@ -23589,7 +23589,7 @@ class CogenerationPlant(PowerSystemResource):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The low pressure steam sendout.
@@ -23606,7 +23606,7 @@ class CogenerationPlant(PowerSystemResource):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The low pressure steam rating.
@@ -23623,7 +23623,7 @@ class CogenerationPlant(PowerSystemResource):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The rated output active power of the cogeneration plant.
@@ -23643,7 +23643,7 @@ class CogenerationPlant(PowerSystemResource):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'SteamSendoutSchedule.CogenerationPlant',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             A cogeneration plant has a steam sendout schedule.
@@ -23669,7 +23669,7 @@ class CombinedCyclePlant(PowerSystemResource):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'ThermalGeneratingUnit.CombinedCyclePlant',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             A thermal generating unit may be a member of a combined cycle plant.
@@ -23686,7 +23686,7 @@ class CombinedCyclePlant(PowerSystemResource):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The combined cycle plant's active power output rating.
@@ -23710,7 +23710,7 @@ class CombustionTurbine(PowerSystemResource):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'AirCompressor.CombustionTurbine',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             A CAES air compressor is driven by combustion turbine.
@@ -23735,7 +23735,7 @@ class ConnectivityNodeContainer(PowerSystemResource):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'ConnectivityNode.ConnectivityNodeContainer',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Connectivity nodes which belong to this connectivity node container.
@@ -23753,7 +23753,7 @@ class ConnectivityNodeContainer(PowerSystemResource):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'TopologicalNode.ConnectivityNodeContainer',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The topological nodes which belong to this connectivity node container.
@@ -23777,7 +23777,7 @@ class EquipmentContainer(ConnectivityNodeContainer):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'Equipment.EquipmentContainer',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Contained equipment.
@@ -23804,7 +23804,7 @@ class Bay(EquipmentContainer):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Indicates the presence/absence of energy measurements.
@@ -23821,7 +23821,7 @@ class Bay(EquipmentContainer):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Indicates the presence/absence of active/reactive power measurements.
@@ -23839,7 +23839,7 @@ class Bay(EquipmentContainer):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': '',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Breaker configuration.
@@ -23857,7 +23857,7 @@ class Bay(EquipmentContainer):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': '',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Busbar configuration.
@@ -23875,7 +23875,7 @@ class Bay(EquipmentContainer):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'Substation.Bays',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Substation containing the bay.
@@ -23893,7 +23893,7 @@ class Bay(EquipmentContainer):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'VoltageLevel.Bays',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The voltage level containing this bay.
@@ -23920,7 +23920,7 @@ class DCEquipmentContainer(EquipmentContainer):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'DCNode.DCEquipmentContainer',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The DC nodes contained in the DC equipment container.
@@ -23938,7 +23938,7 @@ class DCEquipmentContainer(EquipmentContainer):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'DCTopologicalNode.DCEquipmentContainer',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The topological nodes which belong to this connectivity node container.
@@ -23956,7 +23956,7 @@ class DCEquipmentContainer(EquipmentContainer):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'HVDCInterconnectionDynamics.DCEquipmentContainer',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             HVDC interconnection dynamics model used to describe dynamic behaviour
@@ -23986,7 +23986,7 @@ class DCConverterUnit(DCEquipmentContainer):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'ACPointOfCommonCoupling.DCConverterUnit',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             AC point of common coupling for this DC converter unit.
@@ -24004,7 +24004,7 @@ class DCConverterUnit(DCEquipmentContainer):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'DCPointOfCommonCoupling.DCConverterUnit',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             DCNode that is the point of common coupling at DC side of this DCConverterUnit.
@@ -24022,7 +24022,7 @@ class DCConverterUnit(DCEquipmentContainer):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': '',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The operating mode of an DC bipole (bipolar, monopolar metallic return,
@@ -24042,7 +24042,7 @@ class DCConverterUnit(DCEquipmentContainer):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'ACPointOfCommonCoupling.DCConverterUnit',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             AC point of common coupling for this DC converter unit.
@@ -24060,7 +24060,7 @@ class DCConverterUnit(DCEquipmentContainer):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'DCPointOfCommonCoupling.DCConverterUnit',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             DCNode that is the point of common coupling at DC side of this DCConverterUnit.
@@ -24078,7 +24078,7 @@ class DCConverterUnit(DCEquipmentContainer):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'DCPole.DCConverterUnit',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The DC pole that has this DC converter unit.
@@ -24096,7 +24096,7 @@ class DCConverterUnit(DCEquipmentContainer):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'DCSubstation.DCConverterUnit',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             DC substation that has one or more DC converter units.
@@ -24114,7 +24114,7 @@ class DCConverterUnit(DCEquipmentContainer):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'Substation.DCConverterUnit',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The containing substation of the DC converter unit.
@@ -24138,7 +24138,7 @@ class DCLine(DCEquipmentContainer):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'DCPole.DCLine',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The DC pole that has this DC line.
@@ -24156,7 +24156,7 @@ class DCLine(DCEquipmentContainer):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'DCPole.DCLine',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The DC pole that has this DC line.
@@ -24174,7 +24174,7 @@ class DCLine(DCEquipmentContainer):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'SubGeographicalRegion.DCLines',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The SubGeographicalRegion containing the DC line.
@@ -24203,7 +24203,7 @@ class DCSubstation(DCEquipmentContainer):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'DCConverterUnit.DCSubstation',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             DC converter unit that belongs to this DC substation.
@@ -24221,7 +24221,7 @@ class DCSubstation(DCEquipmentContainer):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'DCSubstationBipole.DCSubstation',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             DC substation bipole which is part of the DC substation.
@@ -24239,7 +24239,7 @@ class DCSubstation(DCEquipmentContainer):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'DCSubstationPole.DCSubstation',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             DC substation pole which is part of the DC substation.
@@ -24256,7 +24256,7 @@ class DCSubstation(DCEquipmentContainer):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             DC tapping substation (IEC 60633) is a DC substation, mainly used for inversion,
@@ -24278,7 +24278,7 @@ class DCSubstation(DCEquipmentContainer):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'Substation.DCSubstation',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Substation that contains this DC susbstation.
@@ -24302,7 +24302,7 @@ class DCSubstationBipole(DCEquipmentContainer):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'DCSubstation.DCSubstationBipole',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             DC substation that contains this DC substation bipole part.
@@ -24320,7 +24320,7 @@ class DCSubstationBipole(DCEquipmentContainer):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'DirectCurrentSubstationBipoleController.DCSubstationBipole',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             DC substation bipole controller controlling this DC substation bipole.
@@ -24344,7 +24344,7 @@ class DCSubstationPole(DCEquipmentContainer):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'DCSubstation.DCSubstationPole',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             DC substation that contains this DC substation pole part.
@@ -24362,7 +24362,7 @@ class DCSubstationPole(DCEquipmentContainer):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'DirectCurrentSubstationPoleController.DCSubstationPole',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             DC substation pole controller controlling this DC substation pole.
@@ -24390,7 +24390,7 @@ class Feeder(EquipmentContainer):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'Substation.NamingFeeder',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The secondary substations that are normally energized from the feeder.
@@ -24412,7 +24412,7 @@ class Feeder(EquipmentContainer):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'Terminal.NormalHeadFeeder',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The normal head terminal or terminals of the feeder.
@@ -24430,7 +24430,7 @@ class Feeder(EquipmentContainer):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'Substation.NormalEnergizedFeeder',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The substation that nominally energizes the feeder. Also used for naming
@@ -24457,7 +24457,7 @@ class Line(EquipmentContainer):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'ACTieCorridor.Line',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             ACTieCorridor that the line is part of.
@@ -24475,7 +24475,7 @@ class Line(EquipmentContainer):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'SubGeographicalRegion.Lines',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The sub-geographical region of the line.
@@ -24499,7 +24499,7 @@ class MktLine(Line):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'TransmissionRightOfWay.MktLine',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             '''
@@ -24530,7 +24530,7 @@ class Substation(EquipmentContainer):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'Bay.Substation',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Bays contained in the substation.
@@ -24548,7 +24548,7 @@ class Substation(EquipmentContainer):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'DCConverterUnit.Substation',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The DC converter unit belonging of the substation.
@@ -24566,7 +24566,7 @@ class Substation(EquipmentContainer):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'DCSubstation.Substation',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             DC substation that is part of AC and DC substation.
@@ -24584,7 +24584,7 @@ class Substation(EquipmentContainer):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'Feeder.NormalEnergizingSubstation',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The normal energized feeders of the substation. Also used for naming purposes.
@@ -24603,7 +24603,7 @@ class Substation(EquipmentContainer):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'VoltageLevel.Substation',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The voltage levels within this substation.
@@ -24621,7 +24621,7 @@ class Substation(EquipmentContainer):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'Feeder.NamingSecondarySubstation',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The primary feeder that normally energizes the secondary substation. Used
@@ -24644,7 +24644,7 @@ class Substation(EquipmentContainer):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'SubGeographicalRegion.Substations',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The SubGeographicalRegion containing the substation.
@@ -24672,7 +24672,7 @@ class VoltageLevel(EquipmentContainer):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'Bay.VoltageLevel',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The bays within this voltage level.
@@ -24689,7 +24689,7 @@ class VoltageLevel(EquipmentContainer):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The bus bar's high voltage limit.
@@ -24713,7 +24713,7 @@ class VoltageLevel(EquipmentContainer):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The bus bar's low voltage limit.
@@ -24738,7 +24738,7 @@ class VoltageLevel(EquipmentContainer):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'BaseVoltage.VoltageLevel',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The base voltage used for all equipment within the voltage level.
@@ -24756,7 +24756,7 @@ class VoltageLevel(EquipmentContainer):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'Substation.VoltageLevels',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The substation of the voltage level.
@@ -24805,7 +24805,7 @@ class ControlArea(PowerSystemResource):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'ControlAreaGeneratingUnit.ControlArea',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The generating unit specifications for the control area.
@@ -24823,7 +24823,7 @@ class ControlArea(PowerSystemResource):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'ControlAreaPowerElectronicsUnit.ControlArea',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The parent control area for the power electronics unit specifications.
@@ -24841,7 +24841,7 @@ class ControlArea(PowerSystemResource):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'EnergyArea.ControlArea',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The energy area that is forecast from this control area specification.
@@ -24859,7 +24859,7 @@ class ControlArea(PowerSystemResource):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'TieFlow.ControlArea',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The tie flows associated with the control area.
@@ -24876,7 +24876,7 @@ class ControlArea(PowerSystemResource):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The specified positive net interchange into the control area, i.e. positive
@@ -24895,7 +24895,7 @@ class ControlArea(PowerSystemResource):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Active power net interchange tolerance. The attribute shall be a positive
@@ -24915,7 +24915,7 @@ class ControlArea(PowerSystemResource):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': '',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The primary type of control area definition used to determine if this is
@@ -24941,7 +24941,7 @@ class ControlArea(PowerSystemResource):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'AreaInterchangeController.ControlArea',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Area interchange controller for this control area.
@@ -24959,7 +24959,7 @@ class ControlArea(PowerSystemResource):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'EnergyArea.ControlArea',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The energy area that is forecast from this control area specification.
@@ -24977,7 +24977,7 @@ class ControlArea(PowerSystemResource):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'PowerFrequencyController.ControlArea',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Power frequency controller for this control area.
@@ -25003,7 +25003,7 @@ class DCBiPole(PowerSystemResource):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'BipolarDCSystem.DCBiPole',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Bipolar DC system that has this DC bipole.
@@ -25021,7 +25021,7 @@ class DCBiPole(PowerSystemResource):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'DCPole.DCBiPole',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             DC pole part of the DC system bipole.
@@ -25039,7 +25039,7 @@ class DCBiPole(PowerSystemResource):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'BipolarDCSystem.DCBiPole',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Bipolar DC system that has this DC bipole.
@@ -25066,7 +25066,7 @@ class DCPole(PowerSystemResource):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'DCConverterUnit.DCPole',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The DC converter unit that relates to this DC pole.
@@ -25084,7 +25084,7 @@ class DCPole(PowerSystemResource):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'DCLine.DCPole',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The DC line that is related to this DC pole.
@@ -25102,7 +25102,7 @@ class DCPole(PowerSystemResource):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'MonopolarDCSystem.DCPole',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Asymmetric monopolar DC system that has this DC pole.
@@ -25119,7 +25119,7 @@ class DCPole(PowerSystemResource):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Normal participation factor describing the entity part of the active power
@@ -25152,7 +25152,7 @@ class DCPole(PowerSystemResource):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Participation factor describing the entity part of the active power provided
@@ -25185,7 +25185,7 @@ class DCPole(PowerSystemResource):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Maximum high economic active power limit, that should not exceed the maximum
@@ -25204,7 +25204,7 @@ class DCPole(PowerSystemResource):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Low economic active power limit that shall be greater than or equal to
@@ -25223,7 +25223,7 @@ class DCPole(PowerSystemResource):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Active power injection. Load sign convention is used, i.e. positive sign
@@ -25243,7 +25243,7 @@ class DCPole(PowerSystemResource):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'MonopolarDCSystem.DCPole',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Asymmetric monopolar DC system that has this DC pole.
@@ -25261,7 +25261,7 @@ class DCPole(PowerSystemResource):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'DCBiPole.DCPole',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             DC system bipole that has two independently operatable DC system poles.
@@ -25279,7 +25279,7 @@ class DCPole(PowerSystemResource):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'DCLine.DCPole',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The DC line that is related to this DC pole.
@@ -25297,7 +25297,7 @@ class DCPole(PowerSystemResource):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'DCTieCorridor.DCPole',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The DCTieCorridor that has this DC pole.
@@ -25315,7 +25315,7 @@ class DCPole(PowerSystemResource):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'DirectCurrentPoleController.DCPole',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             DC pole controller that controls this DC pole.
@@ -25340,7 +25340,7 @@ class DCSystem(PowerSystemResource):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': '',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Direction kind of the DC system.
@@ -25358,7 +25358,7 @@ class DCSystem(PowerSystemResource):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': '',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Transmission kind of the DC system.
@@ -25384,7 +25384,7 @@ class BipolarDCSystem(DCSystem):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'DCBiPole.BipolarDCSystem',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             DC bipole that belongs to a bipolar DC system.
@@ -25401,7 +25401,7 @@ class BipolarDCSystem(DCSystem):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             If true, the bipolar DC system is a rigid DC current bipolar system (IEC
@@ -25431,7 +25431,7 @@ class BipolarDCSystem(DCSystem):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'DCBiPole.BipolarDCSystem',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             DC bipole that belongs to a bipolar DC system.
@@ -25455,7 +25455,7 @@ class MonopolarDCSystem(DCSystem):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'DCPole.AsymmetricMonopolarDCSystem',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             DC pole part of the asymmetric DC system.
@@ -25472,7 +25472,7 @@ class MonopolarDCSystem(DCSystem):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             if true, the monopolar DC system is symmetrical monopolar DC system (IEC
@@ -25508,7 +25508,7 @@ class MonopolarDCSystem(DCSystem):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'DCPole.AsymmetricMonopolarDCSystem',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             DC pole part of the asymmetric DC system.
@@ -25531,7 +25531,7 @@ class EnergyConsumerPhase(PowerSystemResource):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Active power of the load. Load sign convention is used, i.e. positive sign
@@ -25554,7 +25554,7 @@ class EnergyConsumerPhase(PowerSystemResource):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Active power of the load that is a fixed quantity. Load sign convention
@@ -25573,7 +25573,7 @@ class EnergyConsumerPhase(PowerSystemResource):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Fixed active power as per cent of load group fixed active power. Load sign
@@ -25592,7 +25592,7 @@ class EnergyConsumerPhase(PowerSystemResource):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Reactive power of the load. Load sign convention is used, i.e. positive
@@ -25615,7 +25615,7 @@ class EnergyConsumerPhase(PowerSystemResource):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Reactive power of the load that is a fixed quantity. Load sign convention
@@ -25634,7 +25634,7 @@ class EnergyConsumerPhase(PowerSystemResource):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Fixed reactive power as per cent of load group fixed reactive power. Load
@@ -25655,7 +25655,7 @@ class EnergyConsumerPhase(PowerSystemResource):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': '',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Phase of this energy consumer component. If the energy consumer is wye
@@ -25681,7 +25681,7 @@ class EnergyConsumerPhase(PowerSystemResource):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'EnergyConsumer.EnergyConsumerPhase',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The energy consumer to which this phase belongs.
@@ -25705,7 +25705,7 @@ class EnergySourcePhase(PowerSystemResource):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': '',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Phase of this energy source component. If the energy source wye connected,
@@ -25731,7 +25731,7 @@ class EnergySourcePhase(PowerSystemResource):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'EnergySource.EnergySourcePhase',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The energy sourceto which the phase belongs.
@@ -25755,7 +25755,7 @@ class Equipment(PowerSystemResource):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'OperationalLimitSet.Equipment',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The operational limit sets associated with this equipment.
@@ -25772,7 +25772,7 @@ class Equipment(PowerSystemResource):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The aggregate flag provides an alternative way of representing an aggregated
@@ -25810,7 +25810,7 @@ class Equipment(PowerSystemResource):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Specifies the availability of the equipment. True means the equipment is
@@ -25833,7 +25833,7 @@ class Equipment(PowerSystemResource):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The equipment is enabled to participate in network analysis. If unspecified,
@@ -25852,7 +25852,7 @@ class Equipment(PowerSystemResource):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Specifies the availability of the equipment under normal operating conditions.
@@ -25877,7 +25877,7 @@ class Equipment(PowerSystemResource):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'EquipmentContainer.Equipments',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Container of this equipment.
@@ -25905,7 +25905,7 @@ class AuxiliaryEquipment(Equipment):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'Terminal.AuxiliaryEquipment',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The Terminal at the equipment where the AuxiliaryEquipment is attached.
@@ -25949,7 +25949,7 @@ class CurrentTransformer(Sensor):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Intended usage of the CT; i.e. metering, protection.
@@ -25966,7 +25966,7 @@ class CurrentTransformer(Sensor):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Percent of rated current for which the CT remains accurate within specified
@@ -25985,7 +25985,7 @@ class CurrentTransformer(Sensor):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Power burden of the CT core.
@@ -26019,7 +26019,7 @@ class PotentialTransformer(Sensor):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Nominal ratio between the primary and secondary voltage.
@@ -26037,7 +26037,7 @@ class PotentialTransformer(Sensor):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': '',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Potential transformer construction type.
@@ -26085,7 +26085,7 @@ class CompositeSwitch(Equipment):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'Switch.CompositeSwitch',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Switches contained in this Composite switch.
@@ -26102,7 +26102,7 @@ class CompositeSwitch(Equipment):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             An alphanumeric code that can be used as a reference to extra information
@@ -26129,7 +26129,7 @@ class ConductingEquipment(Equipment):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'SvStatus.ConductingEquipment',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The status state variable associated with this conducting equipment.
@@ -26147,7 +26147,7 @@ class ConductingEquipment(Equipment):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'Terminal.ConductingEquipment',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Conducting equipment have terminals that may be connected to other conducting
@@ -26168,7 +26168,7 @@ class ConductingEquipment(Equipment):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'BaseVoltage.ConductingEquipment',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Base voltage of this conducting equipment. Use only when there is no voltage
@@ -26190,7 +26190,7 @@ class ConductingEquipment(Equipment):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'GroundAction.GroundedEquipment',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Action involving grounding operation on this conducting equipment.
@@ -26208,7 +26208,7 @@ class ConductingEquipment(Equipment):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'JumperAction.JumpedEquipments',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Jumper action involving jumping operation on this conducting equipment.
@@ -26226,7 +26226,7 @@ class ConductingEquipment(Equipment):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'Outage.OutageIsolationEquipment',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             '''
@@ -26250,7 +26250,7 @@ class ACDCConverter(ConductingEquipment):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'ACDCConverterDCTerminal.DCConductingEquipment',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             A DC converter have DC converter terminals. A converter has two DC converter
@@ -26269,7 +26269,7 @@ class ACDCConverter(ConductingEquipment):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Number of valves in the converter. Used in loss calculations.
@@ -26286,7 +26286,7 @@ class ACDCConverter(ConductingEquipment):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Base apparent power of the converter pole. The attribute shall be a positive
@@ -26305,7 +26305,7 @@ class ACDCConverter(ConductingEquipment):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Converter DC current, also called Id. It is converter's state variable,
@@ -26324,7 +26324,7 @@ class ACDCConverter(ConductingEquipment):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Active power loss in pole at no power transfer. It is the converter's configuration
@@ -26344,7 +26344,7 @@ class ACDCConverter(ConductingEquipment):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Maximum active power limit. The value is overwritten by values of VsCapabilityCurve,
@@ -26363,7 +26363,7 @@ class ACDCConverter(ConductingEquipment):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The maximum voltage on the DC side at which the converter should operate.
@@ -26384,7 +26384,7 @@ class ACDCConverter(ConductingEquipment):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Minimum active power limit. The value is overwritten by values of VsCapabilityCurve,
@@ -26403,7 +26403,7 @@ class ACDCConverter(ConductingEquipment):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The minimum voltage on the DC side at which the converter should operate.
@@ -26424,7 +26424,7 @@ class ACDCConverter(ConductingEquipment):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Active power at the point of common coupling. Load sign convention is used,
@@ -26447,7 +26447,7 @@ class ACDCConverter(ConductingEquipment):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The active power loss at a DC Pole
@@ -26476,7 +26476,7 @@ class ACDCConverter(ConductingEquipment):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Reactive power at the point of common coupling. Load sign convention is
@@ -26499,7 +26499,7 @@ class ACDCConverter(ConductingEquipment):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Rated converter DC voltage, also called UdN. The attribute shall be a positive
@@ -26522,7 +26522,7 @@ class ACDCConverter(ConductingEquipment):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             It is the converter's configuration data used in power flow. Refer to poleLossP.
@@ -26541,7 +26541,7 @@ class ACDCConverter(ConductingEquipment):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Switching losses, relative to the base apparent power 'baseS'. Refer to
@@ -26560,7 +26560,7 @@ class ACDCConverter(ConductingEquipment):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Real power injection target in AC grid, at point of common coupling. Load
@@ -26580,7 +26580,7 @@ class ACDCConverter(ConductingEquipment):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Target value for DC voltage magnitude. The attribute shall be a positive
@@ -26599,7 +26599,7 @@ class ACDCConverter(ConductingEquipment):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Line-to-line converter voltage, the voltage at the AC side of the valve.
@@ -26620,7 +26620,7 @@ class ACDCConverter(ConductingEquipment):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Converter voltage at the DC side, also called Ud. It is converter's state
@@ -26640,7 +26640,7 @@ class ACDCConverter(ConductingEquipment):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Valve threshold voltage, also called Uvalve. Forward voltage drop when
@@ -26662,7 +26662,7 @@ class ACDCConverter(ConductingEquipment):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'ACDCConverterController.ACDCConverter',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Direct current controller which controls the ACDC converter.
@@ -26680,7 +26680,7 @@ class ACDCConverter(ConductingEquipment):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'Terminal.ConverterDCSides',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Point of common coupling terminal for this converter DC side. It is typically
@@ -26730,7 +26730,7 @@ class CsConverter(ACDCConverter):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Firing angle that determines the DC voltage at the converter DC terminal.
@@ -26753,7 +26753,7 @@ class CsConverter(ACDCConverter):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Extinction angle. It is used to limit the DC voltage at the inverter if
@@ -26776,7 +26776,7 @@ class CsConverter(ACDCConverter):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Maximum firing angle. It is the converter's configuration data used in
@@ -26795,7 +26795,7 @@ class CsConverter(ACDCConverter):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Maximum extinction angle. It is the converter's configuration data used
@@ -26814,7 +26814,7 @@ class CsConverter(ACDCConverter):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The maximum direct current (Id) on the DC side at which the converter should
@@ -26835,7 +26835,7 @@ class CsConverter(ACDCConverter):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Minimum firing angle. It is the converter's configuration data used in
@@ -26854,7 +26854,7 @@ class CsConverter(ACDCConverter):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Minimum extinction angle. It is the converter's configuration data used
@@ -26873,7 +26873,7 @@ class CsConverter(ACDCConverter):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The minimum direct current (Id) on the DC side at which the converter should
@@ -26894,7 +26894,7 @@ class CsConverter(ACDCConverter):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Rated converter DC current, also called IdN. The attribute shall be a positive
@@ -26914,7 +26914,7 @@ class CsConverter(ACDCConverter):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Target firing angle. It is converter's control variable used in power flow.
@@ -26937,7 +26937,7 @@ class CsConverter(ACDCConverter):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Target extinction angle. It is converter's control variable used in power
@@ -26960,7 +26960,7 @@ class CsConverter(ACDCConverter):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             DC current target value. It is converter's control variable used in power
@@ -26980,7 +26980,7 @@ class CsConverter(ACDCConverter):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': '',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Indicates whether the DC pole is operating as an inverter or as a rectifier.
@@ -27000,7 +27000,7 @@ class CsConverter(ACDCConverter):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': '',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Kind of active power control.
@@ -27018,7 +27018,7 @@ class CsConverter(ACDCConverter):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'CSCDynamics.CSConverter',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Current source converter dynamics model used to describe dynamic behaviour
@@ -27044,7 +27044,7 @@ class VsConverter(ACDCConverter):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'VsCapabilityCurve.VsConverter',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Capability curve of this converter.
@@ -27061,7 +27061,7 @@ class VsConverter(ACDCConverter):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The maximum quotient between the AC converter voltage (Uc) and DC voltage
@@ -27082,7 +27082,7 @@ class VsConverter(ACDCConverter):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Power factor target at the AC side, at point of common coupling. The attribute
@@ -27101,7 +27101,7 @@ class VsConverter(ACDCConverter):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Magnitude of pulse-modulation factor. The attribute shall be a positive
@@ -27120,7 +27120,7 @@ class VsConverter(ACDCConverter):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Angle between VsConverter.uv and ACDCConverter.uc. It is converter's state
@@ -27141,7 +27141,7 @@ class VsConverter(ACDCConverter):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Droop constant. The pu value is obtained as D [kV/MW] * Sb / Ubdc. The
@@ -27160,7 +27160,7 @@ class VsConverter(ACDCConverter):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Compensation constant. Used to compensate for voltage drop when controlling
@@ -27179,7 +27179,7 @@ class VsConverter(ACDCConverter):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The maximum current through a valve. It is converter's configuration data.
@@ -27197,7 +27197,7 @@ class VsConverter(ACDCConverter):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Reactive power sharing factor among parallel converters on Uac control.
@@ -27216,7 +27216,7 @@ class VsConverter(ACDCConverter):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Phase target at AC side, at point of common coupling. The attribute shall
@@ -27235,7 +27235,7 @@ class VsConverter(ACDCConverter):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Reactive power injection target in AC grid, at point of common coupling.
@@ -27256,7 +27256,7 @@ class VsConverter(ACDCConverter):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Voltage target in AC grid, at point of common coupling. The attribute shall
@@ -27275,7 +27275,7 @@ class VsConverter(ACDCConverter):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Line-to-line voltage on the valve side of the converter transformer. It
@@ -27297,7 +27297,7 @@ class VsConverter(ACDCConverter):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': '',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Kind of control of real power and/or DC voltage.
@@ -27315,7 +27315,7 @@ class VsConverter(ACDCConverter):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': '',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Kind of reactive power control.
@@ -27333,7 +27333,7 @@ class VsConverter(ACDCConverter):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'VSCDynamics.VsConverter',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Voltage source converter dynamics model used to describe dynamic behaviour
@@ -27362,7 +27362,7 @@ class Clamp(ConductingEquipment):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The length to the place where the clamp is located starting from side one
@@ -27384,7 +27384,7 @@ class Clamp(ConductingEquipment):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'ACLineSegment.Clamp',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The line segment to which the clamp is connected.
@@ -27402,7 +27402,7 @@ class Clamp(ConductingEquipment):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'ClampAction.Clamp',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             '''
@@ -27418,7 +27418,7 @@ class Clamp(ConductingEquipment):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'JumperAction.Clamp',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             '''
@@ -27441,7 +27441,7 @@ class Conductor(ConductingEquipment):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Segment length for calculating line segment capabilities.
@@ -27459,7 +27459,7 @@ class Conductor(ConductingEquipment):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'ConductorCharacteristicCurve.Conductor',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Damage curve associated to a conductor.
@@ -27524,7 +27524,7 @@ class ACLineSegment(Conductor):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'ACLineSegmentPhase.ACLineSegment',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The line segment phases which belong to the line segment.
@@ -27542,7 +27542,7 @@ class ACLineSegment(Conductor):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'Clamp.ACLineSegment',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The clamps connected to the line segment.
@@ -27560,7 +27560,7 @@ class ACLineSegment(Conductor):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'Cut.ACLineSegment',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Cuts applied to the line segment.
@@ -27578,7 +27578,7 @@ class ACLineSegment(Conductor):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'LineSegmentCoupling.ACLineSegment',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The description of this line's coupling with other lines in a coupled group.
@@ -27596,7 +27596,7 @@ class ACLineSegment(Conductor):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Zero sequence shunt (charging) susceptance, uniformly distributed, of the
@@ -27615,7 +27615,7 @@ class ACLineSegment(Conductor):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Positive sequence shunt (charging) susceptance, uniformly distributed,
@@ -27636,7 +27636,7 @@ class ACLineSegment(Conductor):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Zero sequence shunt (charging) conductance, uniformly distributed, of the
@@ -27655,7 +27655,7 @@ class ACLineSegment(Conductor):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Positive sequence shunt (charging) conductance, uniformly distributed,
@@ -27674,7 +27674,7 @@ class ACLineSegment(Conductor):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Positive sequence series resistance of the entire line segment.
@@ -27691,7 +27691,7 @@ class ACLineSegment(Conductor):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Zero sequence series resistance of the entire line segment.
@@ -27708,7 +27708,7 @@ class ACLineSegment(Conductor):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Maximum permitted temperature at the end of SC for the calculation of minimum
@@ -27729,7 +27729,7 @@ class ACLineSegment(Conductor):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Positive sequence series reactance of the entire line segment.
@@ -27746,7 +27746,7 @@ class ACLineSegment(Conductor):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Zero sequence series reactance of the entire line segment.
@@ -27764,7 +27764,7 @@ class ACLineSegment(Conductor):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'GroundAction.AlongACLineSegment',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Ground action involving clamp usage (for the case when the ground is applied
@@ -27784,7 +27784,7 @@ class ACLineSegment(Conductor):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'JumperAction.ACLineSegments',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Jumper action involving clamp usage (for the case when the jumper is applied
@@ -27804,7 +27804,7 @@ class ACLineSegment(Conductor):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'LineSegmentCoupling.ACLineSegment',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The description of this line's coupling with other lines in a coupled group.
@@ -27823,7 +27823,7 @@ class ACLineSegment(Conductor):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'PerLengthImpedance.ACLineSegments',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Per-length impedance of this line segment.
@@ -27841,7 +27841,7 @@ class ACLineSegment(Conductor):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'WireSpacingInfo.ACLineSegment',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             '''
@@ -27863,7 +27863,7 @@ class BusSegment(Conductor):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             True if retain
@@ -27880,7 +27880,7 @@ class BusSegment(Conductor):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Bus segment is retained in the topological solution. The flow through retained
@@ -27908,7 +27908,7 @@ class WireSegment(Conductor):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'WireSegmentPhase.WireSegment',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The wire segment phases which belong to the wire segment.
@@ -27947,7 +27947,7 @@ class BusbarSection(Connector):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'VoltageControlZone.BusbarSection',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             A VoltageControlZone is controlled by a designated BusbarSection.
@@ -27964,7 +27964,7 @@ class BusbarSection(Connector):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Maximum allowable peak short-circuit current of busbar (Ipmax in IEC 60909-0).
@@ -27987,7 +27987,7 @@ class BusbarSection(Connector):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'VoltageControlZone.BusbarSection',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             A VoltageControlZone is controlled by a designated BusbarSection.
@@ -28029,7 +28029,7 @@ class EarthFaultCompensator(ConductingEquipment):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Nominal resistance of device.
@@ -28052,7 +28052,7 @@ class GroundingImpedance(EarthFaultCompensator):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Reactance of device.
@@ -28076,7 +28076,7 @@ class PetersenCoil(EarthFaultCompensator):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The nominal voltage for which the coil is designed.
@@ -28093,7 +28093,7 @@ class PetersenCoil(EarthFaultCompensator):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The offset current that the Petersen coil controller is operating from
@@ -28116,7 +28116,7 @@ class PetersenCoil(EarthFaultCompensator):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The control current used to control the Petersen coil also known as the
@@ -28135,7 +28135,7 @@ class PetersenCoil(EarthFaultCompensator):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The maximum reactance.
@@ -28152,7 +28152,7 @@ class PetersenCoil(EarthFaultCompensator):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The minimum reactance.
@@ -28169,7 +28169,7 @@ class PetersenCoil(EarthFaultCompensator):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The nominal reactance. This is the operating point (normally over compensation)
@@ -28193,7 +28193,7 @@ class PetersenCoil(EarthFaultCompensator):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': '',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The mode of operation of the Petersen coil.
@@ -28226,7 +28226,7 @@ class EnergyConsumer(EnergyConnection):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'EnergyConsumerPhase.EnergyConsumer',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The individual phase models for this energy consumer.
@@ -28243,7 +28243,7 @@ class EnergyConsumer(EnergyConnection):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Number of individual customers represented by this demand.
@@ -28260,7 +28260,7 @@ class EnergyConsumer(EnergyConnection):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Required for Yn and I connections (as represented by EnergyConsumer.phaseConnection).
@@ -28279,7 +28279,7 @@ class EnergyConsumer(EnergyConnection):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Active power of the load. Load sign convention is used, i.e. positive sign
@@ -28302,7 +28302,7 @@ class EnergyConsumer(EnergyConnection):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Active power of the load that is a fixed quantity and does not vary as
@@ -28323,7 +28323,7 @@ class EnergyConsumer(EnergyConnection):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Fixed active power as a percentage of load group fixed active power. Used
@@ -28344,7 +28344,7 @@ class EnergyConsumer(EnergyConnection):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Reactive power of the load. Load sign convention is used, i.e. positive
@@ -28367,7 +28367,7 @@ class EnergyConsumer(EnergyConnection):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Reactive power of the load that is a fixed quantity and does not vary as
@@ -28388,7 +28388,7 @@ class EnergyConsumer(EnergyConnection):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Fixed reactive power as a percentage of load group fixed reactive power.
@@ -28410,7 +28410,7 @@ class EnergyConsumer(EnergyConnection):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': '',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The type of phase connection, such as wye or delta.
@@ -28428,7 +28428,7 @@ class EnergyConsumer(EnergyConnection):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'EnergyConsumerAction.EnergyConsumer',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             '''
@@ -28444,7 +28444,7 @@ class EnergyConsumer(EnergyConnection):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'LoadDynamics.EnergyConsumer',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Load dynamics model used to describe dynamic behaviour of this energy consumer.
@@ -28463,7 +28463,7 @@ class EnergyConsumer(EnergyConnection):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'LoadResponseCharacteristic.EnergyConsumer',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The load response characteristic of this load. If missing, this load is
@@ -28483,7 +28483,7 @@ class EnergyConsumer(EnergyConnection):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'PowerCutZone.EnergyConsumers',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The energy consumer is assigned to this power cut zone.
@@ -28509,7 +28509,7 @@ class ConformLoad(EnergyConsumer):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'ConformLoadGroup.EnergyConsumers',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Group of this ConformLoad.
@@ -28535,7 +28535,7 @@ class NonConformLoad(EnergyConsumer):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'NonConformLoadGroup.EnergyConsumers',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Group of this ConformLoad.
@@ -28567,7 +28567,7 @@ class EnergySource(EnergyConnection):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'EnergySourcePhase.EnergySource',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The individual phase information of the energy source.
@@ -28584,7 +28584,7 @@ class EnergySource(EnergyConnection):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             High voltage source active injection. Load sign convention is used, i.e.
@@ -28605,7 +28605,7 @@ class EnergySource(EnergyConnection):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Phase-to-phase nominal voltage.
@@ -28622,7 +28622,7 @@ class EnergySource(EnergyConnection):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             This is the maximum active power that can be produced by the source. Load
@@ -28643,7 +28643,7 @@ class EnergySource(EnergyConnection):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             This is the minimum active power that can be produced by the source. Load
@@ -28664,7 +28664,7 @@ class EnergySource(EnergyConnection):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Positive sequence Thevenin resistance.
@@ -28681,7 +28681,7 @@ class EnergySource(EnergyConnection):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Zero sequence Thevenin resistance.
@@ -28698,7 +28698,7 @@ class EnergySource(EnergyConnection):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Negative sequence Thevenin resistance.
@@ -28715,7 +28715,7 @@ class EnergySource(EnergyConnection):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             High voltage source reactive injection. Load sign convention is used, i.e.
@@ -28736,7 +28736,7 @@ class EnergySource(EnergyConnection):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Phase angle of a-phase open circuit used when voltage characteristics need
@@ -28761,7 +28761,7 @@ class EnergySource(EnergyConnection):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Phase-to-phase open circuit voltage magnitude used when voltage characteristics
@@ -28786,7 +28786,7 @@ class EnergySource(EnergyConnection):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Positive sequence Thevenin reactance.
@@ -28803,7 +28803,7 @@ class EnergySource(EnergyConnection):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Zero sequence Thevenin reactance.
@@ -28820,7 +28820,7 @@ class EnergySource(EnergyConnection):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Negative sequence Thevenin reactance.
@@ -28838,7 +28838,7 @@ class EnergySource(EnergyConnection):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'EnergySchedulingType.EnergySource',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Energy Scheduling Type of an Energy Source.
@@ -28856,7 +28856,7 @@ class EnergySource(EnergyConnection):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'EnergySourceAction.EnergySource',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Action taken with this energy source.
@@ -28880,7 +28880,7 @@ class RegulatingCondEq(EnergyConnection):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Specifies the regulation status of the equipment. True is regulating, false
@@ -28900,7 +28900,7 @@ class RegulatingCondEq(EnergyConnection):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'EquipmentController.RegulatingCondEq',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The equipment controller for this regulating conducting equipment.
@@ -28918,7 +28918,7 @@ class RegulatingCondEq(EnergyConnection):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'RegulatingControl.RegulatingCondEq',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The regulating control scheme in which this equipment participates.
@@ -28949,7 +28949,7 @@ class ExternalNetworkInjection(RegulatingCondEq):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Indicates whether the maximum and minimum initial symmetrical short-circuit
@@ -28972,7 +28972,7 @@ class ExternalNetworkInjection(RegulatingCondEq):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Maximum ratio of zero sequence resistance to zero sequence reactance (R(0)/X(0)
@@ -28994,7 +28994,7 @@ class ExternalNetworkInjection(RegulatingCondEq):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Maximum ratio of positive sequence resistance to positive sequence reactance
@@ -29016,7 +29016,7 @@ class ExternalNetworkInjection(RegulatingCondEq):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Maximum ratio of zero sequence impedance to its positive sequence impedance
@@ -29039,7 +29039,7 @@ class ExternalNetworkInjection(RegulatingCondEq):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Minimum ratio of zero sequence resistance to zero sequence reactance (R(0)/X(0)
@@ -29061,7 +29061,7 @@ class ExternalNetworkInjection(RegulatingCondEq):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Minimum ratio of positive sequence resistance to positive sequence reactance
@@ -29083,7 +29083,7 @@ class ExternalNetworkInjection(RegulatingCondEq):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Minimum ratio of zero sequence impedance to its positive sequence impedance
@@ -29106,7 +29106,7 @@ class ExternalNetworkInjection(RegulatingCondEq):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Priority of unit for use as powerflow voltage phase angle reference bus
@@ -29127,7 +29127,7 @@ class ExternalNetworkInjection(RegulatingCondEq):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Power Frequency Bias. This is the change in power injection divided by
@@ -29148,7 +29148,7 @@ class ExternalNetworkInjection(RegulatingCondEq):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Maximum initial symmetrical short-circuit current (Ik" max) in A. Ik� is
@@ -29167,7 +29167,7 @@ class ExternalNetworkInjection(RegulatingCondEq):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Maximum active power of the injection.
@@ -29184,7 +29184,7 @@ class ExternalNetworkInjection(RegulatingCondEq):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Maximum reactive power of the injection. Used for modelling of infeed for
@@ -29203,7 +29203,7 @@ class ExternalNetworkInjection(RegulatingCondEq):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Minimum initial symmetrical short-circuit current (Ik" min) in A. Ik� is
@@ -29222,7 +29222,7 @@ class ExternalNetworkInjection(RegulatingCondEq):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Minimum active power of the injection.
@@ -29239,7 +29239,7 @@ class ExternalNetworkInjection(RegulatingCondEq):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Minimum reactive power of the injection. Used for modelling of infeed for
@@ -29258,7 +29258,7 @@ class ExternalNetworkInjection(RegulatingCondEq):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Active power injection. Load sign convention is used, i.e. positive sign
@@ -29279,7 +29279,7 @@ class ExternalNetworkInjection(RegulatingCondEq):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Reactive power injection. Load sign convention is used, i.e. positive sign
@@ -29300,7 +29300,7 @@ class ExternalNetworkInjection(RegulatingCondEq):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Voltage factor (c) in pu which has been used to calculate the maximum and
@@ -29331,7 +29331,7 @@ class FACTSEquipment(RegulatingCondEq):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'LossCurve.FACTSEquipment',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The loss curve for the FACTS equipment.
@@ -29348,7 +29348,7 @@ class FACTSEquipment(RegulatingCondEq):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Capacitive reactance at maximum reactive power. Shall always be positive.
@@ -29365,7 +29365,7 @@ class FACTSEquipment(RegulatingCondEq):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Inductive rating at maximum inductive reactive power. Shall always be negative.
@@ -29383,7 +29383,7 @@ class FACTSEquipment(RegulatingCondEq):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Capacitive reactance at minimum reactive power. Shall always be positive.
@@ -29400,7 +29400,7 @@ class FACTSEquipment(RegulatingCondEq):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Inductive rating at minimum inductive reactive power. Shall always be negative.
@@ -29418,7 +29418,7 @@ class FACTSEquipment(RegulatingCondEq):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Reactive power injection. Load sign convention is used, i.e. positive sign
@@ -29439,7 +29439,7 @@ class FACTSEquipment(RegulatingCondEq):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Capacitive reactance at maximum reactive power. Shall always be positive.
@@ -29456,7 +29456,7 @@ class FACTSEquipment(RegulatingCondEq):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Rated current of the FACTS equipment.
@@ -29473,7 +29473,7 @@ class FACTSEquipment(RegulatingCondEq):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Inductive rating at maximum inductive reactive power. Shall always be negative.
@@ -29491,7 +29491,7 @@ class FACTSEquipment(RegulatingCondEq):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Rated voltage of the FACTS equipment.
@@ -29508,7 +29508,7 @@ class FACTSEquipment(RegulatingCondEq):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The characteristics slope which defines how the reactive power output changes
@@ -29569,7 +29569,7 @@ class StaticVarCompensator(FACTSEquipment):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Capacitive reactance at maximum capacitive reactive power. Shall always
@@ -29588,7 +29588,7 @@ class StaticVarCompensator(FACTSEquipment):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Inductive reactance at maximum inductive reactive power. Shall always be
@@ -29607,7 +29607,7 @@ class StaticVarCompensator(FACTSEquipment):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Reactive power injection. Load sign convention is used, i.e. positive sign
@@ -29628,7 +29628,7 @@ class StaticVarCompensator(FACTSEquipment):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The characteristics slope of an SVC defines how the reactive power output
@@ -29651,7 +29651,7 @@ class StaticVarCompensator(FACTSEquipment):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The reactive power output of the SVC is proportional to the difference
@@ -29675,7 +29675,7 @@ class StaticVarCompensator(FACTSEquipment):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': '',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             SVC control mode.
@@ -29693,7 +29693,7 @@ class StaticVarCompensator(FACTSEquipment):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'StaticVarCompensatorDynamics.StaticVarCompensator',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Static Var Compensator dynamics model used to describe dynamic behaviour
@@ -29726,7 +29726,7 @@ class ThyristorControlledSeriesCompensator(FACTSEquipment):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'TCSCCompensationPoint.ThyristorControlledSeriesCompensator',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Compensation point for this TCSC.
@@ -29743,7 +29743,7 @@ class ThyristorControlledSeriesCompensator(FACTSEquipment):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The current section on which the TCSC is operating.
@@ -29760,7 +29760,7 @@ class ThyristorControlledSeriesCompensator(FACTSEquipment):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The actual compensation impedance provided by the compensator. The attribute
@@ -29782,7 +29782,7 @@ class ThyristorControlledSeriesCompensator(FACTSEquipment):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Flexible impedance that can be controlled by the compensator when operating
@@ -29801,7 +29801,7 @@ class ThyristorControlledSeriesCompensator(FACTSEquipment):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Flexible impedance that can be controlled by the compensator when operating
@@ -29820,7 +29820,7 @@ class ThyristorControlledSeriesCompensator(FACTSEquipment):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Minimum current below which the device bypassed.
@@ -29837,7 +29837,7 @@ class ThyristorControlledSeriesCompensator(FACTSEquipment):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The current for which the TCSC returns back to operation after bypass.
@@ -29862,7 +29862,7 @@ class FrequencyConverter(RegulatingCondEq):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Frequency on the AC side.
@@ -29879,7 +29879,7 @@ class FrequencyConverter(RegulatingCondEq):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The maximum active power on the DC side at which the frequency converter
@@ -29898,7 +29898,7 @@ class FrequencyConverter(RegulatingCondEq):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The maximum voltage on the DC side at which the frequency converter should
@@ -29917,7 +29917,7 @@ class FrequencyConverter(RegulatingCondEq):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The minimum active power on the DC side at which the frequency converter
@@ -29936,7 +29936,7 @@ class FrequencyConverter(RegulatingCondEq):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The minimum voltage on the DC side at which the frequency converter should
@@ -29964,7 +29964,7 @@ class PowerElectronicsConnection(RegulatingCondEq):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'PowerElectronicsConnectionPhase.PowerElectronicsConnection',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The individual phases models for the power electronics connection.
@@ -29982,7 +29982,7 @@ class PowerElectronicsConnection(RegulatingCondEq):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'PowerElectronicsUnit.PowerElectronicsConnection',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             An AC network connection may have several power electronics units connecting
@@ -30001,7 +30001,7 @@ class PowerElectronicsConnection(RegulatingCondEq):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Maximum fault current this device will contribute, in per-unit of rated
@@ -30020,7 +30020,7 @@ class PowerElectronicsConnection(RegulatingCondEq):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Maximum reactive power limit. This is the maximum (nameplate) limit for
@@ -30039,7 +30039,7 @@ class PowerElectronicsConnection(RegulatingCondEq):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Minimum reactive power limit for the unit. This is the minimum (nameplate)
@@ -30058,7 +30058,7 @@ class PowerElectronicsConnection(RegulatingCondEq):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Active power injection. Load sign convention is used, i.e. positive sign
@@ -30079,7 +30079,7 @@ class PowerElectronicsConnection(RegulatingCondEq):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Reactive power injection. Load sign convention is used, i.e. positive sign
@@ -30100,7 +30100,7 @@ class PowerElectronicsConnection(RegulatingCondEq):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Nameplate apparent power rating for the unit.
@@ -30119,7 +30119,7 @@ class PowerElectronicsConnection(RegulatingCondEq):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Rated voltage (nameplate data, Ur in IEC 60909-0). It is primarily used
@@ -30141,7 +30141,7 @@ class PowerElectronicsConnection(RegulatingCondEq):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': '',
-        'namespace': 'http://epri.com/gmdm#',
+        'namespace': 'http://epri.com/gmdm/2025#',
         'docstring':
             '''
             Inverter control mode indicating whether reactive power output is based
@@ -30161,7 +30161,7 @@ class PowerElectronicsConnection(RegulatingCondEq):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'DERDynamics.PowerElectronicsConnection',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             DER dynamics model associated with this power electronics connection model.
@@ -30180,7 +30180,7 @@ class PowerElectronicsConnection(RegulatingCondEq):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'StatcomDynamics.PowerElectronicsConnection',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The statcom dynamics model associated with this power electronics connection.
@@ -30198,7 +30198,7 @@ class PowerElectronicsConnection(RegulatingCondEq):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'WindTurbineType3or4Dynamics.PowerElectronicsConnection',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The wind turbine type 3 or type 4 dynamics model associated with this power
@@ -30224,7 +30224,7 @@ class RotatingMachine(RegulatingCondEq):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'HydroPump.RotatingMachine',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The synchronous machine drives the turbine which moves the water from a
@@ -30245,7 +30245,7 @@ class RotatingMachine(RegulatingCondEq):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Power factor (nameplate data). It is primarily used for short circuit data
@@ -30265,7 +30265,7 @@ class RotatingMachine(RegulatingCondEq):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Active power injection. Load sign convention is used, i.e. positive sign
@@ -30286,7 +30286,7 @@ class RotatingMachine(RegulatingCondEq):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Reactive power injection. Load sign convention is used, i.e. positive sign
@@ -30307,7 +30307,7 @@ class RotatingMachine(RegulatingCondEq):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Nameplate apparent power rating for the unit.
@@ -30326,7 +30326,7 @@ class RotatingMachine(RegulatingCondEq):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Rated voltage (nameplate data, Ur in IEC 60909-0). It is primarily used
@@ -30348,7 +30348,7 @@ class RotatingMachine(RegulatingCondEq):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'GeneratingUnit.RotatingMachine',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             A synchronous machine may operate as a generator and as such becomes a
@@ -30368,7 +30368,7 @@ class RotatingMachine(RegulatingCondEq):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'HydroPump.RotatingMachine',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The synchronous machine drives the turbine which moves the water from a
@@ -30398,7 +30398,7 @@ class AsynchronousMachine(RotatingMachine):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Indicates whether the machine is a converter fed drive. Used for short
@@ -30417,7 +30417,7 @@ class AsynchronousMachine(RotatingMachine):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Ratio of locked-rotor current to the rated current of the motor (Ia/Ir).
@@ -30436,7 +30436,7 @@ class AsynchronousMachine(RotatingMachine):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Number of pole pairs of stator. Used for short circuit data exchange according
@@ -30455,7 +30455,7 @@ class AsynchronousMachine(RotatingMachine):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Indicates for converter drive motors if the power can be reversible. Used
@@ -30474,7 +30474,7 @@ class AsynchronousMachine(RotatingMachine):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Locked rotor ratio (R/X). Used for short circuit data exchange according
@@ -30493,7 +30493,7 @@ class AsynchronousMachine(RotatingMachine):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Efficiency of the asynchronous machine at nominal operation as a percentage.
@@ -30514,7 +30514,7 @@ class AsynchronousMachine(RotatingMachine):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Nameplate data indicates if the machine is 50 Hz or 60 Hz.
@@ -30531,7 +30531,7 @@ class AsynchronousMachine(RotatingMachine):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Nameplate data. Depends on the slip and number of pole pairs.
@@ -30548,7 +30548,7 @@ class AsynchronousMachine(RotatingMachine):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Rated mechanical power (Pr in IEC 60909-0). Used for short circuit data
@@ -30567,7 +30567,7 @@ class AsynchronousMachine(RotatingMachine):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Damper 1 winding resistance.
@@ -30584,7 +30584,7 @@ class AsynchronousMachine(RotatingMachine):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Damper 2 winding resistance.
@@ -30601,7 +30601,7 @@ class AsynchronousMachine(RotatingMachine):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Transient rotor time constant (greater than tppo).
@@ -30618,7 +30618,7 @@ class AsynchronousMachine(RotatingMachine):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Sub-transient rotor time constant (greater than 0).
@@ -30635,7 +30635,7 @@ class AsynchronousMachine(RotatingMachine):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Damper 1 winding leakage reactance.
@@ -30652,7 +30652,7 @@ class AsynchronousMachine(RotatingMachine):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Damper 2 winding leakage reactance.
@@ -30669,7 +30669,7 @@ class AsynchronousMachine(RotatingMachine):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Magnetizing reactance.
@@ -30686,7 +30686,7 @@ class AsynchronousMachine(RotatingMachine):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Transient reactance (unsaturated) (greater than or equal to xpp).
@@ -30703,7 +30703,7 @@ class AsynchronousMachine(RotatingMachine):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Sub-transient reactance (unsaturated).
@@ -30720,7 +30720,7 @@ class AsynchronousMachine(RotatingMachine):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Synchronous reactance (greater than xp).
@@ -30738,7 +30738,7 @@ class AsynchronousMachine(RotatingMachine):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': '',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Indicates the type of Asynchronous Machine (motor or generator).
@@ -30756,7 +30756,7 @@ class AsynchronousMachine(RotatingMachine):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'AsynchronousMachineDynamics.AsynchronousMachine',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Asynchronous machine dynamics model used to describe dynamic behaviour
@@ -30776,7 +30776,7 @@ class AsynchronousMachine(RotatingMachine):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'DERDynamics.AsynchronousMachine',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             DER dynamics model associated with this asynchronous machine model.
@@ -30803,7 +30803,7 @@ class SynchronousMachine(RotatingMachine):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'ReactiveCapabilityCurve.SynchronousMachine',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The reactive capability curve for this synchronous machine.
@@ -30820,7 +30820,7 @@ class SynchronousMachine(RotatingMachine):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Temperature or pressure of coolant medium.
@@ -30837,7 +30837,7 @@ class SynchronousMachine(RotatingMachine):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Indicates whether or not the generator is earthed. Used for short circuit
@@ -30856,7 +30856,7 @@ class SynchronousMachine(RotatingMachine):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Factor to calculate the breaking current (4.5.2.1 in IEC 60909-0).
@@ -30877,7 +30877,7 @@ class SynchronousMachine(RotatingMachine):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Priority of unit for use as powerflow voltage phase angle reference bus
@@ -30898,7 +30898,7 @@ class SynchronousMachine(RotatingMachine):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Time delay required when switching from Automatic Voltage Regulation (AVR)
@@ -30917,7 +30917,7 @@ class SynchronousMachine(RotatingMachine):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Time delay required when switching from Automatic Voltage Regulation (AVR)
@@ -30936,7 +30936,7 @@ class SynchronousMachine(RotatingMachine):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Default base reactive power value. This value represents the initial reactive
@@ -30955,7 +30955,7 @@ class SynchronousMachine(RotatingMachine):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Active power consumed when in condenser mode operation.
@@ -30972,7 +30972,7 @@ class SynchronousMachine(RotatingMachine):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Generator star point earthing resistance (Re). Used for short circuit data
@@ -30991,7 +30991,7 @@ class SynchronousMachine(RotatingMachine):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Generator star point earthing reactance (Xe). Used for short circuit data
@@ -31010,7 +31010,7 @@ class SynchronousMachine(RotatingMachine):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Steady-state short-circuit current (in A for the profile) of generator
@@ -31043,7 +31043,7 @@ class SynchronousMachine(RotatingMachine):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Time delay required when switching from Manual to Automatic Voltage Regulation.
@@ -31064,7 +31064,7 @@ class SynchronousMachine(RotatingMachine):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Maximum reactive power limit. This is the maximum (nameplate) limit for
@@ -31083,7 +31083,7 @@ class SynchronousMachine(RotatingMachine):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Maximum voltage limit for the unit.
@@ -31100,7 +31100,7 @@ class SynchronousMachine(RotatingMachine):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Minimum reactive power limit for the unit.
@@ -31117,7 +31117,7 @@ class SynchronousMachine(RotatingMachine):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Minimum voltage limit for the unit.
@@ -31134,7 +31134,7 @@ class SynchronousMachine(RotatingMachine):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Part of the coordinated reactive control that comes from this machine.
@@ -31155,7 +31155,7 @@ class SynchronousMachine(RotatingMachine):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Equivalent resistance (RG) of generator. RG is considered for the calculation
@@ -31176,7 +31176,7 @@ class SynchronousMachine(RotatingMachine):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Zero sequence resistance of the synchronous machine.
@@ -31193,7 +31193,7 @@ class SynchronousMachine(RotatingMachine):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Negative sequence resistance.
@@ -31210,7 +31210,7 @@ class SynchronousMachine(RotatingMachine):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Direct-axis subtransient reactance saturated, also known as Xd"sat.
@@ -31227,7 +31227,7 @@ class SynchronousMachine(RotatingMachine):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Direct-axes saturated synchronous reactance (xdsat); reciprocal of short-circuit
@@ -31248,7 +31248,7 @@ class SynchronousMachine(RotatingMachine):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Saturated Direct-axis transient reactance. The attribute is primarily used
@@ -31267,7 +31267,7 @@ class SynchronousMachine(RotatingMachine):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Range of generator voltage regulation (PG in IEC 60909-0) used for calculation
@@ -31290,7 +31290,7 @@ class SynchronousMachine(RotatingMachine):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Zero sequence reactance of the synchronous machine.
@@ -31307,7 +31307,7 @@ class SynchronousMachine(RotatingMachine):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Negative sequence reactance.
@@ -31325,7 +31325,7 @@ class SynchronousMachine(RotatingMachine):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': '',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Method of cooling the machine.
@@ -31343,7 +31343,7 @@ class SynchronousMachine(RotatingMachine):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': '',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Current mode of operation.
@@ -31361,7 +31361,7 @@ class SynchronousMachine(RotatingMachine):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': '',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Type of rotor, used by short circuit applications, only for single fed
@@ -31381,7 +31381,7 @@ class SynchronousMachine(RotatingMachine):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': '',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Modes that this synchronous machine can operate in.
@@ -31399,7 +31399,7 @@ class SynchronousMachine(RotatingMachine):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'DERDynamics.SynchronousMachine',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             DER dynamics model associated with this synchronous machine model.
@@ -31417,7 +31417,7 @@ class SynchronousMachine(RotatingMachine):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'ReactiveCapabilityCurve.InitiallyUsedBySynchronousMachine',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The default reactive capability curve for use by a synchronous machine.
@@ -31444,7 +31444,7 @@ class SynchronousMachine(RotatingMachine):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'SynchronousMachineDynamics.SynchronousMachine',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Synchronous machine dynamics model used to describe dynamic behaviour of
@@ -31473,7 +31473,7 @@ class ShuntCompensator(RegulatingCondEq):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'ShuntCompensatorPhase.ShuntCompensator',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The individual phases models for the shunt compensator.
@@ -31491,7 +31491,7 @@ class ShuntCompensator(RegulatingCondEq):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'SvShuntCompensatorSections.ShuntCompensator',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The state for the number of shunt compensator sections in service.
@@ -31508,7 +31508,7 @@ class ShuntCompensator(RegulatingCondEq):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Required for Yn and I connections (as represented by ShuntCompensator.phaseConnection).
@@ -31527,7 +31527,7 @@ class ShuntCompensator(RegulatingCondEq):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The maximum number of sections that may be switched in.
@@ -31544,7 +31544,7 @@ class ShuntCompensator(RegulatingCondEq):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The normal number of sections switched in. The value shall be between zero
@@ -31563,7 +31563,7 @@ class ShuntCompensator(RegulatingCondEq):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Shunt compensator sections in use. Starting value for steady state solution.
@@ -31603,7 +31603,7 @@ class ShuntCompensator(RegulatingCondEq):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             An automatic voltage regulation delay (AVRDelay) which is the time delay
@@ -31624,7 +31624,7 @@ class ShuntCompensator(RegulatingCondEq):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The voltage at which the nominal reactive power may be calculated. This
@@ -31645,7 +31645,7 @@ class ShuntCompensator(RegulatingCondEq):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Voltage sensitivity required for the device to regulate the bus voltage,
@@ -31665,7 +31665,7 @@ class ShuntCompensator(RegulatingCondEq):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': '',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The type of phase connection, such as wye or delta.
@@ -31683,7 +31683,7 @@ class ShuntCompensator(RegulatingCondEq):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'ShuntCompensatorAction.ShuntCompensator',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             '''
@@ -31699,7 +31699,7 @@ class ShuntCompensator(RegulatingCondEq):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'ShuntCompensatorDynamics.ShuntCompensator',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Shunt compensator dynamics model used to describe dynamic behaviour of
@@ -31719,7 +31719,7 @@ class ShuntCompensator(RegulatingCondEq):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'StaticVarCompensatorSystemDynamics.ShuntCompensator',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Static Var Compensator system dynamics model used to describe dynamic behaviour
@@ -31746,7 +31746,7 @@ class LinearShuntCompensator(ShuntCompensator):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Zero sequence shunt (charging) susceptance per section.
@@ -31763,7 +31763,7 @@ class LinearShuntCompensator(ShuntCompensator):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Positive sequence shunt (charging) susceptance per section.
@@ -31780,7 +31780,7 @@ class LinearShuntCompensator(ShuntCompensator):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Zero sequence shunt (charging) conductance per section.
@@ -31797,7 +31797,7 @@ class LinearShuntCompensator(ShuntCompensator):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Positive sequence shunt (charging) conductance per section.
@@ -31825,7 +31825,7 @@ class NonlinearShuntCompensator(ShuntCompensator):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'NonlinearShuntCompensatorPoint.NonlinearShuntCompensator',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             All points of the non-linear shunt compensator.
@@ -31862,7 +31862,7 @@ class ExtendedWardEquivalent(ConductingEquipment):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'ReactiveCapabilityCurve.ExtendedWardEquivalent',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The reactive capability curve used by this extended ward equivalent.
@@ -31887,7 +31887,7 @@ class Ground(ConductingEquipment):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'GroundAction.Ground',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Action taken with this ground.
@@ -31924,7 +31924,7 @@ class PowerTransformer(ConductingEquipment):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'PowerTransformerEnd.PowerTransformer',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The ends of this power transformer.
@@ -31942,7 +31942,7 @@ class PowerTransformer(ConductingEquipment):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'TransformerTank.PowerTransformer',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             All transformers that belong to this bank.
@@ -31959,7 +31959,7 @@ class PowerTransformer(ConductingEquipment):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Indicates whether the machine is part of a power station unit. Used for
@@ -31986,7 +31986,7 @@ class PowerTransformer(ConductingEquipment):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             It is used to define if the data (other attributes related to short circuit
@@ -32007,7 +32007,7 @@ class PowerTransformer(ConductingEquipment):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Vector group of the transformer for protective relaying, e.g., Dyn1. For
@@ -32068,7 +32068,7 @@ class PowerTransformer(ConductingEquipment):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The highest operating current (Ib in IEC 60909-0) before short circuit
@@ -32091,7 +32091,7 @@ class PowerTransformer(ConductingEquipment):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The highest operating voltage (Ub in IEC 60909-0) before short circuit.
@@ -32114,7 +32114,7 @@ class PowerTransformer(ConductingEquipment):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The angle of power factor before short circuit (phib in IEC 60909-0). It
@@ -32137,7 +32137,7 @@ class PowerTransformer(ConductingEquipment):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The minimum operating voltage (uQmin in IEC 60909-0) at the high voltage
@@ -32169,7 +32169,7 @@ class MktPowerTransformer(PowerTransformer):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'BranchEndFlow.MktPowerTransformerEndAFlow',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             '''
@@ -32185,7 +32185,7 @@ class MktPowerTransformer(PowerTransformer):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'BranchEndFlow.MktPowerTransformerEndBFlow',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             '''
@@ -32207,7 +32207,7 @@ class SeriesCompensator(ConductingEquipment):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Describe if a metal oxide varistor (mov) for over voltage protection is
@@ -32228,7 +32228,7 @@ class SeriesCompensator(ConductingEquipment):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Positive sequence resistance.
@@ -32245,7 +32245,7 @@ class SeriesCompensator(ConductingEquipment):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Zero sequence resistance.
@@ -32262,7 +32262,7 @@ class SeriesCompensator(ConductingEquipment):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The maximum current the varistor is designed to handle at specified duration.
@@ -32285,7 +32285,7 @@ class SeriesCompensator(ConductingEquipment):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The DC voltage at which the varistor starts conducting. It is used for
@@ -32306,7 +32306,7 @@ class SeriesCompensator(ConductingEquipment):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Positive sequence reactance.
@@ -32323,7 +32323,7 @@ class SeriesCompensator(ConductingEquipment):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Zero sequence reactance.
@@ -32351,7 +32351,7 @@ class Switch(ConductingEquipment):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'SvSwitch.Switch',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The switch state associated with the switch.
@@ -32369,7 +32369,7 @@ class Switch(ConductingEquipment):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'SwitchPhase.Switch',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The individual switch phases for the switch.
@@ -32387,7 +32387,7 @@ class Switch(ConductingEquipment):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'SwitchSchedule.Switch',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             A Switch can be associated with SwitchSchedules.
@@ -32404,7 +32404,7 @@ class Switch(ConductingEquipment):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             If true, the switch is locked. The resulting switch state is a combination
@@ -32434,7 +32434,7 @@ class Switch(ConductingEquipment):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The attribute is used in cases when no Measurement for the status value
@@ -32455,7 +32455,7 @@ class Switch(ConductingEquipment):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The attribute tells if the switch is considered open when used as input
@@ -32474,7 +32474,7 @@ class Switch(ConductingEquipment):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Branch is retained in the topological solution. The flow through retained
@@ -32493,7 +32493,7 @@ class Switch(ConductingEquipment):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The maximum continuous current carrying capacity in amps governed by the
@@ -32515,7 +32515,7 @@ class Switch(ConductingEquipment):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'CompositeSwitch.Switches',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Composite switch to which this Switch belongs.
@@ -32533,7 +32533,7 @@ class Switch(ConductingEquipment):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'SwitchAction.OperatedSwitch',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Action changing status of this switch.
@@ -32567,7 +32567,7 @@ class Cut(Switch):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The length to the place where the cut is located starting from side one
@@ -32589,7 +32589,7 @@ class Cut(Switch):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'ACLineSegment.Cut',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The line segment to which the cut is applied.
@@ -32607,7 +32607,7 @@ class Cut(Switch):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'CutAction.Cut',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Action taken with this cut.
@@ -32656,7 +32656,7 @@ class Fuse(Switch):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'FuseCharacteristicCurve.FuseMinimumMelt',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Curves that define the time-current operation of this fuse (Minimum Melt)
@@ -32675,7 +32675,7 @@ class Fuse(Switch):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'FuseCharacteristicCurve.FuseTotalClearing',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Curves that define the time-current operation of this fuse (Total Clearing
@@ -32710,7 +32710,7 @@ class Jumper(Switch):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'JumperAction.Jumper',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Action taken with this jumper.
@@ -32733,7 +32733,7 @@ class ProtectedSwitch(Switch):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The maximum fault current a breaking device can break safely under prescribed
@@ -32762,7 +32762,7 @@ class Breaker(ProtectedSwitch):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The transition time from open to close.
@@ -32819,7 +32819,7 @@ class DCConductingEquipment(Equipment):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'DCTerminal.DCConductingEquipment',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             A DC conducting equipment has DC terminals.
@@ -32836,7 +32836,7 @@ class DCConductingEquipment(Equipment):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The maximum continuous current carrying capacity in amps governed by the
@@ -32857,7 +32857,7 @@ class DCConductingEquipment(Equipment):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Rated DC device voltage. The attribute shall be a positive value. It is
@@ -32895,7 +32895,7 @@ class DCGround(DCConductingEquipment):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Inductance to ground.
@@ -32912,7 +32912,7 @@ class DCGround(DCConductingEquipment):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Resistance to ground.
@@ -32937,7 +32937,7 @@ class DCLineSegment(DCConductingEquipment):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Capacitance of the DC line segment. Significant for cables only.
@@ -32954,7 +32954,7 @@ class DCLineSegment(DCConductingEquipment):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Inductance of the DC line segment. Negligible compared with DCSeriesDevice
@@ -32973,7 +32973,7 @@ class DCLineSegment(DCConductingEquipment):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Segment length for calculating line section capabilities.
@@ -32990,7 +32990,7 @@ class DCLineSegment(DCConductingEquipment):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Resistance of the DC line segment.
@@ -33008,7 +33008,7 @@ class DCLineSegment(DCConductingEquipment):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'PerLengthDCLineParameter.DCLineSegments',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Set of per-length parameters for this line segment.
@@ -33032,7 +33032,7 @@ class DCSeriesDevice(DCConductingEquipment):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Inductance of the device.
@@ -33049,7 +33049,7 @@ class DCSeriesDevice(DCConductingEquipment):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Resistance of the DC device.
@@ -33096,7 +33096,7 @@ class DCShunt(DCConductingEquipment):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Capacitance of the DC shunt.
@@ -33113,7 +33113,7 @@ class DCShunt(DCConductingEquipment):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Resistance of the DC device.
@@ -33136,7 +33136,7 @@ class DCSwitch(DCConductingEquipment):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             If true, the switch is locked. The resulting switch state is a combination
@@ -33167,7 +33167,7 @@ class DCSwitch(DCConductingEquipment):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The attribute is used in cases when no Measurement for the status value
@@ -33188,7 +33188,7 @@ class DCSwitch(DCConductingEquipment):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The attribute tells if the switch is considered open when used as input
@@ -33207,7 +33207,7 @@ class DCSwitch(DCConductingEquipment):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Branch is retained in the topological solution. The flow through retained
@@ -33344,7 +33344,7 @@ class GeneratingUnit(Equipment):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'ControlAreaGeneratingUnit.GeneratingUnit',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             ControlArea specifications for this generating unit.
@@ -33362,7 +33362,7 @@ class GeneratingUnit(Equipment):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'GenUnitOpCostCurve.GeneratingUnit',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             A generating unit may have one or more cost curves, depending upon fuel
@@ -33382,7 +33382,7 @@ class GeneratingUnit(Equipment):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'GenUnitOpSchedule.GeneratingUnit',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             A generating unit may have an operating schedule, indicating the planned
@@ -33402,7 +33402,7 @@ class GeneratingUnit(Equipment):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'GrossToNetActivePowerCurve.GeneratingUnit',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             A generating unit may have a gross active power to net active power curve,
@@ -33423,7 +33423,7 @@ class GeneratingUnit(Equipment):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'RotatingMachine.GeneratingUnit',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             A synchronous machine may operate as a generator and as such becomes a
@@ -33442,7 +33442,7 @@ class GeneratingUnit(Equipment):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Generating unit long term economic participation factor.
@@ -33459,7 +33459,7 @@ class GeneratingUnit(Equipment):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Generating unit economic participation factor. The sum of the participation
@@ -33482,7 +33482,7 @@ class GeneratingUnit(Equipment):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Defined as: 1 / ( 1 - Incremental Transmission Loss); with the Incremental
@@ -33503,7 +33503,7 @@ class GeneratingUnit(Equipment):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Generating unit short term economic participation factor.
@@ -33520,7 +33520,7 @@ class GeneratingUnit(Equipment):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Generating unit economic participation factor.
@@ -33537,7 +33537,7 @@ class GeneratingUnit(Equipment):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The planned unused capacity (spinning reserve) which can be used to support
@@ -33556,7 +33556,7 @@ class GeneratingUnit(Equipment):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The planned unused capacity which can be used to support automatic control
@@ -33575,7 +33575,7 @@ class GeneratingUnit(Equipment):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             For dispatchable units, this value represents the economic active power
@@ -33598,7 +33598,7 @@ class GeneratingUnit(Equipment):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Unit control error deadband. When a unit's desired active power change
@@ -33619,7 +33619,7 @@ class GeneratingUnit(Equipment):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Pulse high limit which is the largest control pulse that the unit can respond
@@ -33638,7 +33638,7 @@ class GeneratingUnit(Equipment):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Pulse low limit which is the smallest control pulse that the unit can respond
@@ -33657,7 +33657,7 @@ class GeneratingUnit(Equipment):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Unit response rate which specifies the active power change for a control
@@ -33676,7 +33676,7 @@ class GeneratingUnit(Equipment):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The efficiency of the unit in converting mechanical energy, from the prime
@@ -33695,7 +33695,7 @@ class GeneratingUnit(Equipment):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Governor motor position limit.
@@ -33712,7 +33712,7 @@ class GeneratingUnit(Equipment):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Governor Speed Changer Droop. This is the change in generator power output
@@ -33737,7 +33737,7 @@ class GeneratingUnit(Equipment):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             High limit for secondary (AGC) control.
@@ -33754,7 +33754,7 @@ class GeneratingUnit(Equipment):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Default initial active power which is used to store a powerflow result
@@ -33773,7 +33773,7 @@ class GeneratingUnit(Equipment):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Low limit for secondary (AGC) control.
@@ -33790,7 +33790,7 @@ class GeneratingUnit(Equipment):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The normal maximum rate the generating unit active power output can be
@@ -33809,7 +33809,7 @@ class GeneratingUnit(Equipment):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Maximum high economic active power limit, that should not exceed the maximum
@@ -33828,7 +33828,7 @@ class GeneratingUnit(Equipment):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Maximum allowable spinning reserve. Spinning reserve will never be considered
@@ -33848,7 +33848,7 @@ class GeneratingUnit(Equipment):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             This is the maximum operating active power limit the dispatcher can enter
@@ -33867,7 +33867,7 @@ class GeneratingUnit(Equipment):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Low economic active power limit that shall be greater than or equal to
@@ -33886,7 +33886,7 @@ class GeneratingUnit(Equipment):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Minimum time interval between unit shutdown and startup.
@@ -33903,7 +33903,7 @@ class GeneratingUnit(Equipment):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             This is the minimum operating active power limit the dispatcher can enter
@@ -33922,7 +33922,7 @@ class GeneratingUnit(Equipment):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Detail level of the generator model data.
@@ -33939,7 +33939,7 @@ class GeneratingUnit(Equipment):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The nominal power of the generating unit. Used to give precise meaning
@@ -33962,7 +33962,7 @@ class GeneratingUnit(Equipment):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The normal maximum rate the generating unit active power output can be
@@ -33981,7 +33981,7 @@ class GeneratingUnit(Equipment):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The unit's gross rated maximum capacity (book value).
@@ -34000,7 +34000,7 @@ class GeneratingUnit(Equipment):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The gross rated minimum generation level which the unit can safely operate
@@ -34021,7 +34021,7 @@ class GeneratingUnit(Equipment):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The net rated maximum capacity determined by subtracting the auxiliary
@@ -34044,7 +34044,7 @@ class GeneratingUnit(Equipment):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The initial startup cost incurred for each start of the GeneratingUnit.
@@ -34061,7 +34061,7 @@ class GeneratingUnit(Equipment):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Time it takes to get the unit on-line, from the time that the prime mover
@@ -34080,7 +34080,7 @@ class GeneratingUnit(Equipment):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The efficiency of the unit in converting the fuel into electrical energy.
@@ -34097,7 +34097,7 @@ class GeneratingUnit(Equipment):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The variable cost component of production per unit of ActivePower.
@@ -34115,7 +34115,7 @@ class GeneratingUnit(Equipment):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': '',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The unit control mode.
@@ -34133,7 +34133,7 @@ class GeneratingUnit(Equipment):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': '',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The source of controls for a generating unit. Defines the control status
@@ -34153,7 +34153,7 @@ class GeneratingUnit(Equipment):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'GenUnitOpSchedule.GeneratingUnit',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             A generating unit may have an operating schedule, indicating the planned
@@ -34179,7 +34179,7 @@ class GeothermalGeneratingUnit(GeneratingUnit):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': '',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Kind of geothermal generating unit.
@@ -34205,7 +34205,7 @@ class HydroGeneratingUnit(GeneratingUnit):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'HydroGeneratingEfficiencyCurve.HydroGeneratingUnit',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             A hydro generating unit has an efficiency curve.
@@ -34223,7 +34223,7 @@ class HydroGeneratingUnit(GeneratingUnit):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'PenstockLossCurve.HydroGeneratingUnit',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             A hydro generating unit has a penstock loss curve.
@@ -34241,7 +34241,7 @@ class HydroGeneratingUnit(GeneratingUnit):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'TailbayLossCurve.HydroGeneratingUnit',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             A hydro generating unit has a tailbay loss curve.
@@ -34258,7 +34258,7 @@ class HydroGeneratingUnit(GeneratingUnit):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The height water drops from the reservoir mid-point to the turbine.
@@ -34275,7 +34275,7 @@ class HydroGeneratingUnit(GeneratingUnit):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The equivalent cost of water that drives the hydro turbine.
@@ -34293,7 +34293,7 @@ class HydroGeneratingUnit(GeneratingUnit):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': '',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Energy conversion capability for generating.
@@ -34311,7 +34311,7 @@ class HydroGeneratingUnit(GeneratingUnit):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': '',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Type of turbine.
@@ -34329,7 +34329,7 @@ class HydroGeneratingUnit(GeneratingUnit):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'HydroPowerPlant.HydroGeneratingUnits',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The hydro generating unit belongs to a hydro power plant.
@@ -34347,7 +34347,7 @@ class HydroGeneratingUnit(GeneratingUnit):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'PenstockLossCurve.HydroGeneratingUnit',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             A hydro generating unit has a penstock loss curve.
@@ -34428,7 +34428,7 @@ class ThermalGeneratingUnit(GeneratingUnit):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'CAESPlant.ThermalGeneratingUnit',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             A thermal generating unit may be a member of a compressed air energy storage
@@ -34448,7 +34448,7 @@ class ThermalGeneratingUnit(GeneratingUnit):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'EmissionAccount.ThermalGeneratingUnit',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             A thermal generating unit may have one or more emission allowance accounts.
@@ -34466,7 +34466,7 @@ class ThermalGeneratingUnit(GeneratingUnit):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'EmissionCurve.ThermalGeneratingUnit',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             A thermal generating unit may have one or more emission curves.
@@ -34484,7 +34484,7 @@ class ThermalGeneratingUnit(GeneratingUnit):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'FossilFuel.ThermalGeneratingUnit',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             A thermal generating unit may have one or more fossil fuels.
@@ -34502,7 +34502,7 @@ class ThermalGeneratingUnit(GeneratingUnit):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'FuelAllocationSchedule.ThermalGeneratingUnit',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             A thermal generating unit may have one or more fuel allocation schedules.
@@ -34520,7 +34520,7 @@ class ThermalGeneratingUnit(GeneratingUnit):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'HeatInputCurve.ThermalGeneratingUnit',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             A thermal generating unit may have a heat input curve.
@@ -34538,7 +34538,7 @@ class ThermalGeneratingUnit(GeneratingUnit):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'HeatRateCurve.ThermalGeneratingUnit',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             A thermal generating unit may have a heat rate curve.
@@ -34556,7 +34556,7 @@ class ThermalGeneratingUnit(GeneratingUnit):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'IncrementalHeatRateCurve.ThermalGeneratingUnit',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             A thermal generating unit may have an incremental heat rate curve.
@@ -34574,7 +34574,7 @@ class ThermalGeneratingUnit(GeneratingUnit):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'ShutdownCurve.ThermalGeneratingUnit',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             A thermal generating unit may have a shutdown curve.
@@ -34592,7 +34592,7 @@ class ThermalGeneratingUnit(GeneratingUnit):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'StartupModel.ThermalGeneratingUnit',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             A thermal generating unit may have a startup model.
@@ -34609,7 +34609,7 @@ class ThermalGeneratingUnit(GeneratingUnit):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Operating and maintenance cost for the thermal unit.
@@ -34627,7 +34627,7 @@ class ThermalGeneratingUnit(GeneratingUnit):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'CAESPlant.ThermalGeneratingUnit',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             A thermal generating unit may be a member of a compressed air energy storage
@@ -34647,7 +34647,7 @@ class ThermalGeneratingUnit(GeneratingUnit):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'CogenerationPlant.ThermalGeneratingUnits',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             A thermal generating unit may be a member of a cogeneration plant.
@@ -34665,7 +34665,7 @@ class ThermalGeneratingUnit(GeneratingUnit):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'CombinedCyclePlant.ThermalGeneratingUnits',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             A thermal generating unit may be a member of a combined cycle plant.
@@ -34683,7 +34683,7 @@ class ThermalGeneratingUnit(GeneratingUnit):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'HeatInputCurve.ThermalGeneratingUnit',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             A thermal generating unit may have a heat input curve.
@@ -34701,7 +34701,7 @@ class ThermalGeneratingUnit(GeneratingUnit):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'HeatRateCurve.ThermalGeneratingUnit',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             A thermal generating unit may have a heat rate curve.
@@ -34719,7 +34719,7 @@ class ThermalGeneratingUnit(GeneratingUnit):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'IncrementalHeatRateCurve.ThermalGeneratingUnit',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             A thermal generating unit may have an incremental heat rate curve.
@@ -34737,7 +34737,7 @@ class ThermalGeneratingUnit(GeneratingUnit):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'ShutdownCurve.ThermalGeneratingUnit',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             A thermal generating unit may have a shutdown curve.
@@ -34755,7 +34755,7 @@ class ThermalGeneratingUnit(GeneratingUnit):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'StartupModel.ThermalGeneratingUnit',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             A thermal generating unit may have a startup model.
@@ -34780,7 +34780,7 @@ class WindGeneratingUnit(GeneratingUnit):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': '',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The kind of wind generating unit.
@@ -34824,7 +34824,7 @@ class HydroPump(Equipment):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'HydroPumpOpSchedule.HydroPump',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The hydro pump has a pumping schedule over time, indicating when pumping
@@ -34844,7 +34844,7 @@ class HydroPump(Equipment):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'RotatingMachine.HydroPump',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The synchronous machine drives the turbine which moves the water from a
@@ -34865,7 +34865,7 @@ class HydroPump(Equipment):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The pumping discharge under maximum head conditions, usually at full gate.
@@ -34883,7 +34883,7 @@ class HydroPump(Equipment):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The pumping discharge under minimum head conditions, usually at full gate.
@@ -34901,7 +34901,7 @@ class HydroPump(Equipment):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The pumping power under maximum head conditions, usually at full gate.
@@ -34918,7 +34918,7 @@ class HydroPump(Equipment):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The pumping power under minimum head conditions, usually at full gate.
@@ -34936,7 +34936,7 @@ class HydroPump(Equipment):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'HydroPowerPlant.HydroPumps',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The hydro pump may be a member of a pumped storage plant or a pump for
@@ -34956,7 +34956,7 @@ class HydroPump(Equipment):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'HydroPumpOpSchedule.HydroPump',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The hydro pump has a pumping schedule over time, indicating when pumping
@@ -34976,7 +34976,7 @@ class HydroPump(Equipment):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'RotatingMachine.HydroPump',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The synchronous machine drives the turbine which moves the water from a
@@ -35005,7 +35005,7 @@ class PowerElectronicsUnit(Equipment):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'ControlAreaPowerElectronicsUnit.PowerElectronicsUnit',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             ControlArea specifications for this power electronics unit.
@@ -35022,7 +35022,7 @@ class PowerElectronicsUnit(Equipment):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Maximum active power limit. This is the maximum (nameplate) limit for the
@@ -35041,7 +35041,7 @@ class PowerElectronicsUnit(Equipment):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Minimum active power limit. This is the minimum (nameplate) limit for the
@@ -35061,7 +35061,7 @@ class PowerElectronicsUnit(Equipment):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'PowerElectronicsConnection.PowerElectronicsUnit',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             A power electronics unit has a connection to the AC network.
@@ -35079,7 +35079,7 @@ class PowerElectronicsUnit(Equipment):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'PowerElectronicsUnitController.PowerElectronicsUnit',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Power electronics unit controller for this power electronics unit.
@@ -35103,7 +35103,7 @@ class BatteryUnit(PowerElectronicsUnit):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Full energy storage capacity of the battery. The attribute shall be a positive
@@ -35122,7 +35122,7 @@ class BatteryUnit(PowerElectronicsUnit):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Amount of energy currently stored. The attribute shall be a positive value
@@ -35142,7 +35142,7 @@ class BatteryUnit(PowerElectronicsUnit):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': '',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The current state of the battery (charging, full, etc.).
@@ -35174,7 +35174,7 @@ class FlexibleEnergyUnit(PowerElectronicsUnit):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The active power, that has the flexibility to operate as production and/or
@@ -35197,7 +35197,7 @@ class FlexibleEnergyUnit(PowerElectronicsUnit):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The active power, that can be shifted from one pricing interval (market
@@ -35224,7 +35224,7 @@ class FlexibleEnergyUnit(PowerElectronicsUnit):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The active power, that has the flexibility to operate as production without
@@ -35247,7 +35247,7 @@ class FlexibleEnergyUnit(PowerElectronicsUnit):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The active power, that forms the base consumption for the unit. This is
@@ -35283,7 +35283,7 @@ class PowerElectricalChemicalUnit(PowerElectronicsUnit):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': '',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Kind of power electrical chemical unit.
@@ -35308,7 +35308,7 @@ class PowerElectronicsMarineUnit(PowerElectronicsUnit):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': '',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Kind of marine unit.
@@ -35333,7 +35333,7 @@ class PowerElectronicsThermalUnit(PowerElectronicsUnit):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'FossilFuel.PowerElectronicsThermalUnit',
-        'namespace': 'http://epri.com/gmdm#',
+        'namespace': 'http://epri.com/gmdm/2025#',
         'docstring':
             '''
             '''
@@ -35367,7 +35367,7 @@ class TransformerTank(Equipment):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'TransformerTankEnd.TransformerTank',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             All windings of this transformer.
@@ -35385,7 +35385,7 @@ class TransformerTank(Equipment):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'PowerTransformer.TransformerTanks',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Bank this transformer belongs to.
@@ -35403,7 +35403,7 @@ class TransformerTank(Equipment):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'TransformerTankInfo.TransformerTanks',
-        'namespace': 'http://epri.com/gmdm#',
+        'namespace': 'http://epri.com/gmdm/2025#',
         'docstring':
             '''
             '''
@@ -35427,7 +35427,7 @@ class EquipmentController(PowerSystemResource):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'RegulatingCondEq.EquipmentController',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             All regulating conducting equipment that belongs to this equipment controller.
@@ -35454,7 +35454,7 @@ class ACDCConverterController(EquipmentController):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'ACDCConverter.ACDCConverterController',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             ACDC converter controlled by the direct current controller.
@@ -35490,7 +35490,7 @@ class DirectCurrentMasterController(EquipmentController):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'DCTieCorridor.DirectCurrentMasterController',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             DCTieCorridor controlled by this direct current master controller.
@@ -35515,7 +35515,7 @@ class DirectCurrentPoleController(EquipmentController):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'DCPole.DirectCurrentPoleController',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             DC pole that is controlled by a DC pole controller.
@@ -35539,7 +35539,7 @@ class DirectCurrentSubstationBipoleController(EquipmentController):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'DCSubstationBipole.DirectCurrentSubstationBipoleController',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             DC substation bipole that is controlled by a DC substation bipole controller.
@@ -35563,7 +35563,7 @@ class DirectCurrentSubstationPoleController(EquipmentController):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'DCSubstationPole.DirectCurrentSubstationPoleController',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             DC substation pole that is controlled by a DC substation pole controller.
@@ -35588,7 +35588,7 @@ class PowerElectronicsUnitController(EquipmentController):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'PowerElectronicsUnit.PowerElectronicsUnitController',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Power electronics unit that has this power electronics unit controller.
@@ -35612,7 +35612,7 @@ class SSSCController(EquipmentController):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'CurrentDroopOverride.SSSCController',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The current droop override for this SSSC controller. It is not used when
@@ -35631,7 +35631,7 @@ class SSSCController(EquipmentController):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Maximum voltage that the device can inject.
@@ -35648,7 +35648,7 @@ class SSSCController(EquipmentController):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Maximum operating current limit applied for the controller and used by
@@ -35667,7 +35667,7 @@ class SSSCController(EquipmentController):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Minimum voltage that the device can inject.
@@ -35684,7 +35684,7 @@ class SSSCController(EquipmentController):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Minimum operating current limit applied for the controller and used by
@@ -35704,7 +35704,7 @@ class SSSCController(EquipmentController):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': '',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Mode of the Static Synchronous Series compensator controller.
@@ -35722,7 +35722,7 @@ class SSSCController(EquipmentController):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'CurrentDroopOverride.SSSCController',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The current droop override for this SSSC controller. It is not used when
@@ -35742,7 +35742,7 @@ class SSSCController(EquipmentController):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'SSSCSimulationSettings.SSSCController',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The simulation setings that apply for this controller.
@@ -35768,7 +35768,7 @@ class TapChangerController(EquipmentController):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'TapChanger.TapChangeController',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             All tap changers controlled by this controller.
@@ -35794,7 +35794,7 @@ class Flowgate(PowerSystemResource):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'MktTerminal.Flowgate',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             '''
@@ -35817,7 +35817,7 @@ class FuelStorage(PowerSystemResource):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'FossilFuel.FuelStorage',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Fossil fuel stored in a fuel storage.
@@ -35834,7 +35834,7 @@ class FuelStorage(PowerSystemResource):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Amount of energy available in the storage.
@@ -35860,7 +35860,7 @@ class HostControlArea(PowerSystemResource):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'RegisteredResource.HostControlArea',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             '''
@@ -35885,7 +35885,7 @@ class HydroPowerPlant(PowerSystemResource):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'HydroGeneratingUnit.HydroPowerPlant',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The hydro generating unit belongs to a hydro power plant.
@@ -35903,7 +35903,7 @@ class HydroPowerPlant(PowerSystemResource):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'HydroPump.HydroPowerPlant',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The hydro pump may be a member of a pumped storage plant or a pump for
@@ -35922,7 +35922,7 @@ class HydroPowerPlant(PowerSystemResource):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Type and configuration of hydro plant penstock(s).
@@ -35939,7 +35939,7 @@ class HydroPowerPlant(PowerSystemResource):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             A code describing the type (or absence) of surge tank that is associated
@@ -35958,7 +35958,7 @@ class HydroPowerPlant(PowerSystemResource):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Water travel delay from tailbay to next downstream hydro power station.
@@ -35975,7 +35975,7 @@ class HydroPowerPlant(PowerSystemResource):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The hydro plant's generating rating active power for rated head conditions.
@@ -35994,7 +35994,7 @@ class HydroPowerPlant(PowerSystemResource):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Total plant discharge capacity.
@@ -36011,7 +36011,7 @@ class HydroPowerPlant(PowerSystemResource):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The plant's rated gross head.
@@ -36030,7 +36030,7 @@ class HydroPowerPlant(PowerSystemResource):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The hydro plant's pumping rating active power for rated head conditions.
@@ -36049,7 +36049,7 @@ class HydroPowerPlant(PowerSystemResource):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The level at which the surge tank spills.
@@ -36067,7 +36067,7 @@ class HydroPowerPlant(PowerSystemResource):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': '',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The type of hydro power plant water storage.
@@ -36085,7 +36085,7 @@ class HydroPowerPlant(PowerSystemResource):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'Reservoir.UpstreamFromHydroPowerPlants',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Generators are supplied water from or pumps discharge water to an upstream
@@ -36105,7 +36105,7 @@ class HydroPowerPlant(PowerSystemResource):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'Reservoir.HydroPowerPlants',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Generators discharge water to or pumps are supplied water from a downstream
@@ -36132,7 +36132,7 @@ class PowerCutZone(PowerSystemResource):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'EnergyConsumer.PowerCutZone',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Energy consumer is assigned to the power cut zone.
@@ -36149,7 +36149,7 @@ class PowerCutZone(PowerSystemResource):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             First level (amount) of load to cut as a percentage of total zone load.
@@ -36166,7 +36166,7 @@ class PowerCutZone(PowerSystemResource):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Second level (amount) of load to cut as a percentage of total zone load.
@@ -36191,7 +36191,7 @@ class PowerElectronicsConnectionPhase(PowerSystemResource):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Active power injection. Load sign convention is used, i.e. positive sign
@@ -36210,7 +36210,7 @@ class PowerElectronicsConnectionPhase(PowerSystemResource):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Reactive power injection. Load sign convention is used, i.e. positive sign
@@ -36230,7 +36230,7 @@ class PowerElectronicsConnectionPhase(PowerSystemResource):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': '',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Phase of this energy producer component. If the energy producer is wye
@@ -36256,7 +36256,7 @@ class PowerElectronicsConnectionPhase(PowerSystemResource):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'PowerElectronicsConnection.PowerElectronicsConnectionPhase',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Power electronics connection of this power electronics connection phase.
@@ -36287,7 +36287,7 @@ class PowerFrequencyController(PowerSystemResource):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'ControlArea.PowerFrequencyController',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Control area which has a power frequency controller.
@@ -36312,7 +36312,7 @@ class RegisteredResource(PowerSystemResource):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Resource Commercial Operation Date.
@@ -36329,7 +36329,7 @@ class RegisteredResource(PowerSystemResource):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Dispatchable: indicates whether the resource is dispatchable. This implies
@@ -36350,7 +36350,7 @@ class RegisteredResource(PowerSystemResource):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Indication of the last time this item was modified/versioned.
@@ -36367,7 +36367,7 @@ class RegisteredResource(PowerSystemResource):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Maximum base self schedule quantity.
@@ -36384,7 +36384,7 @@ class RegisteredResource(PowerSystemResource):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Maximum on time after start up.
@@ -36401,7 +36401,7 @@ class RegisteredResource(PowerSystemResource):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Minimum off time after shut down.
@@ -36418,7 +36418,7 @@ class RegisteredResource(PowerSystemResource):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Minimum on time after start up.
@@ -36435,7 +36435,7 @@ class RegisteredResource(PowerSystemResource):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Minimum number of consecutive hours a resource shall be dispatched if bid
@@ -36455,7 +36455,7 @@ class RegisteredResource(PowerSystemResource):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': '',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Indication that this resource is associated with an Adjacent Control Area.
@@ -36474,7 +36474,7 @@ class RegisteredResource(PowerSystemResource):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': '',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Indication that the resource participates in the optimization process by
@@ -36494,7 +36494,7 @@ class RegisteredResource(PowerSystemResource):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': '',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Contingent operating reserve availiability (Yes/No). Resource is availiable
@@ -36514,7 +36514,7 @@ class RegisteredResource(PowerSystemResource):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': '',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Indication that this resource is associated with an Embedded Control area.
@@ -36533,7 +36533,7 @@ class RegisteredResource(PowerSystemResource):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': '',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Flexible offer flag (Y/N).
@@ -36551,7 +36551,7 @@ class RegisteredResource(PowerSystemResource):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': '',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Indicates need to dispatch before the start of the operating hour. Only
@@ -36573,7 +36573,7 @@ class RegisteredResource(PowerSystemResource):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': '',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             A flag to indicate if a resource is an aggregated resource.
@@ -36591,7 +36591,7 @@ class RegisteredResource(PowerSystemResource):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': '',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             LMPM flag: indicates whether the resource is subject to the LMPM test (Yes/No).
@@ -36610,7 +36610,7 @@ class RegisteredResource(PowerSystemResource):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': '',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Market Participation flag: indicates whether the resource participate in
@@ -36630,7 +36630,7 @@ class RegisteredResource(PowerSystemResource):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': '',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Must offer flag: indicates whether the unit is subject to the must offer
@@ -36650,7 +36650,7 @@ class RegisteredResource(PowerSystemResource):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': '',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Flag to indicate that the Resource is not participating in the Market Operations.
@@ -36669,7 +36669,7 @@ class RegisteredResource(PowerSystemResource):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': '',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Indication that the registered resource is a Point of Delivery (YES) resource
@@ -36689,7 +36689,7 @@ class RegisteredResource(PowerSystemResource):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': '',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Price setting flag: indicates whether a resource is capable of setting
@@ -36716,7 +36716,7 @@ class RegisteredResource(PowerSystemResource):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': '',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Price setting flag: indicates whether a resource is capable of setting
@@ -36743,7 +36743,7 @@ class RegisteredResource(PowerSystemResource):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': '',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Current state of the resource registration which describes the lifecycle
@@ -36763,7 +36763,7 @@ class RegisteredResource(PowerSystemResource):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': '',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Indication that this resource participates in the resource adequacy function.
@@ -36782,7 +36782,7 @@ class RegisteredResource(PowerSystemResource):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': '',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             SMPM flag: indicates whether the resource is subject to the SMPM test (Yes/No).
@@ -36801,7 +36801,7 @@ class RegisteredResource(PowerSystemResource):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'AdjacentCASet.RegisteredResource',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             '''
@@ -36817,7 +36817,7 @@ class RegisteredResource(PowerSystemResource):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'AggregateNode.RegisteredResource',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             An AggregateNode may be associated with up to many RegisteredResources.
@@ -36835,7 +36835,7 @@ class RegisteredResource(PowerSystemResource):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'ConnectivityNode.RegisteredResource',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             '''
@@ -36851,7 +36851,7 @@ class RegisteredResource(PowerSystemResource):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'DefaultBid.RegisteredResource',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             '''
@@ -36867,7 +36867,7 @@ class RegisteredResource(PowerSystemResource):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'HostControlArea.RegisteredResource',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             '''
@@ -36883,7 +36883,7 @@ class RegisteredResource(PowerSystemResource):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'MarketParticipant.RegisteredResource',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             '''
@@ -36899,7 +36899,7 @@ class RegisteredResource(PowerSystemResource):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'Pnode.RegisteredResources',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             A registered resource injects power at one or more connectivity nodes related
@@ -36919,7 +36919,7 @@ class RegisteredResource(PowerSystemResource):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'ResourceVerifiableCosts.RegisteredResource',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             '''
@@ -36971,7 +36971,7 @@ class RegulatingControl(PowerSystemResource):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'RegulatingCondEq.RegulatingControl',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The equipment that participates in this regulating control scheme.
@@ -36989,7 +36989,7 @@ class RegulatingControl(PowerSystemResource):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'RegulationSchedule.RegulatingControl',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Schedule for this regulating control.
@@ -37006,7 +37006,7 @@ class RegulatingControl(PowerSystemResource):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             If true, indicates that regulation is performed in the simulation in a
@@ -37029,7 +37029,7 @@ class RegulatingControl(PowerSystemResource):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The flag tells if regulation is enabled.
@@ -37046,7 +37046,7 @@ class RegulatingControl(PowerSystemResource):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Maximum allowed target value. See also RegulatingControl description.
@@ -37063,7 +37063,7 @@ class RegulatingControl(PowerSystemResource):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Minimum allowed target value. See also RegulatingControl description.
@@ -37080,7 +37080,7 @@ class RegulatingControl(PowerSystemResource):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             This is the deadband set on the controller. It is used with discrete control
@@ -37114,7 +37114,7 @@ class RegulatingControl(PowerSystemResource):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The target value set on the controller. It is the starting value for a
@@ -37150,7 +37150,7 @@ class RegulatingControl(PowerSystemResource):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': '',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The regulating control mode presently available. This specification allows
@@ -37172,7 +37172,7 @@ class RegulatingControl(PowerSystemResource):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': '',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Phase voltage controlling this regulator, measured at regulator location.
@@ -37190,7 +37190,7 @@ class RegulatingControl(PowerSystemResource):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': '',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Specifies the multiplier used for the targetValue, targetDeadband, .maxAllowedTargetValue,
@@ -37212,7 +37212,7 @@ class RegulatingControl(PowerSystemResource):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'Terminal.RegulatingControl',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The terminal associated with this regulating control. The terminal is associated
@@ -37243,7 +37243,7 @@ class ShuntCompensatorControl(RegulatingControl):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'ShuntCompensatorInfo.ShuntCompensatorControl',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             '''
@@ -37271,7 +37271,7 @@ class TapChangerControl(RegulatingControl):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'TapChanger.TapChangerControl',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The tap changers that participates in this regulating tap control scheme.
@@ -37288,7 +37288,7 @@ class TapChangerControl(RegulatingControl):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             If true, the line drop compensation is to be applied.
@@ -37305,7 +37305,7 @@ class TapChangerControl(RegulatingControl):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://epri.com/gmdm#',
+        'namespace': 'http://epri.com/gmdm/2025#',
         'docstring':
             '''
             '''
@@ -37320,7 +37320,7 @@ class TapChangerControl(RegulatingControl):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://epri.com/gmdm#',
+        'namespace': 'http://epri.com/gmdm/2025#',
         'docstring':
             '''
             '''
@@ -37335,7 +37335,7 @@ class TapChangerControl(RegulatingControl):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Line drop compensator resistance setting for normal (forward) power flow.
@@ -37353,7 +37353,7 @@ class TapChangerControl(RegulatingControl):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Line drop compensator reactance setting for normal (forward) power flow.
@@ -37371,7 +37371,7 @@ class TapChangerControl(RegulatingControl):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Maximum allowed regulated voltage on the PT secondary. This is the locally
@@ -37396,7 +37396,7 @@ class TapChangerControl(RegulatingControl):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Minimum allowed regulated voltage on the PT secondary. This is the locally
@@ -37421,7 +37421,7 @@ class TapChangerControl(RegulatingControl):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Line drop compensator resistance setting for reverse power flow.
@@ -37438,7 +37438,7 @@ class TapChangerControl(RegulatingControl):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Line drop compensator reactance setting for reverse power flow.
@@ -37455,7 +37455,7 @@ class TapChangerControl(RegulatingControl):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://epri.com/gmdm#',
+        'namespace': 'http://epri.com/gmdm/2025#',
         'docstring':
             '''
             '''
@@ -37470,7 +37470,7 @@ class TapChangerControl(RegulatingControl):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://epri.com/gmdm#',
+        'namespace': 'http://epri.com/gmdm/2025#',
         'docstring':
             '''
             '''
@@ -37485,7 +37485,7 @@ class TapChangerControl(RegulatingControl):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://epri.com/gmdm#',
+        'namespace': 'http://epri.com/gmdm/2025#',
         'docstring':
             '''
             '''
@@ -37500,7 +37500,7 @@ class TapChangerControl(RegulatingControl):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://epri.com/gmdm#',
+        'namespace': 'http://epri.com/gmdm/2025#',
         'docstring':
             '''
             '''
@@ -37524,7 +37524,7 @@ class Reservoir(PowerSystemResource):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'HydroPowerPlant.GenSourcePumpDischargeReservoir',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Generators are supplied water from or pumps discharge water to an upstream
@@ -37544,7 +37544,7 @@ class Reservoir(PowerSystemResource):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'HydroPowerPlant.Reservoir',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Generators discharge water to or pumps are supplied water from a downstream
@@ -37564,7 +37564,7 @@ class Reservoir(PowerSystemResource):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'InflowForecast.Reservoir',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             A reservoir may have a "natural" inflow forecast.
@@ -37582,7 +37582,7 @@ class Reservoir(PowerSystemResource):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'LevelVsVolumeCurve.Reservoir',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             A reservoir may have a level versus volume relationship.
@@ -37600,7 +37600,7 @@ class Reservoir(PowerSystemResource):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'Reservoir.SpillsFromReservoir',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             A reservoir may spill into a downstream reservoir.
@@ -37618,7 +37618,7 @@ class Reservoir(PowerSystemResource):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'TargetLevelSchedule.Reservoir',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             A reservoir may have a water level target schedule.
@@ -37635,7 +37635,7 @@ class Reservoir(PowerSystemResource):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The reservoir's energy storage rating in energy for given head conditions.
@@ -37652,7 +37652,7 @@ class Reservoir(PowerSystemResource):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             River outlet works for riparian right releases or other purposes.
@@ -37669,7 +37669,7 @@ class Reservoir(PowerSystemResource):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The flow capacity of the spillway in cubic meters per second.
@@ -37686,7 +37686,7 @@ class Reservoir(PowerSystemResource):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Type of spillway gate, including parameters.
@@ -37703,7 +37703,7 @@ class Reservoir(PowerSystemResource):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Storage volume between the full supply level and the normal minimum operating
@@ -37739,7 +37739,7 @@ class Reservoir(PowerSystemResource):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Full supply level, above which water will spill. This can be the spillway
@@ -37758,7 +37758,7 @@ class Reservoir(PowerSystemResource):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Total capacity of reservoir.
@@ -37775,7 +37775,7 @@ class Reservoir(PowerSystemResource):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Normal minimum operating level below which the penstocks will draw air.
@@ -37793,7 +37793,7 @@ class Reservoir(PowerSystemResource):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The spillway water travel delay to the next downstream reservoir.
@@ -37810,7 +37810,7 @@ class Reservoir(PowerSystemResource):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The length of the spillway crest.
@@ -37827,7 +37827,7 @@ class Reservoir(PowerSystemResource):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Spillway crest level above which water will spill.
@@ -37845,7 +37845,7 @@ class Reservoir(PowerSystemResource):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'Reservoir.SpillsIntoReservoirs',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             A reservoir may spill into a downstream reservoir.
@@ -37863,7 +37863,7 @@ class Reservoir(PowerSystemResource):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'TargetLevelSchedule.Reservoir',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             A reservoir may have a water level target schedule.
@@ -37887,7 +37887,7 @@ class ShuntCompensatorPhase(PowerSystemResource):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The maximum number of sections that may be switched in for this phase.
@@ -37904,7 +37904,7 @@ class ShuntCompensatorPhase(PowerSystemResource):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             For the capacitor phase, the normal number of sections switched in. The
@@ -37923,7 +37923,7 @@ class ShuntCompensatorPhase(PowerSystemResource):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Shunt compensator sections in use. Starting value for steady state solution.
@@ -37964,7 +37964,7 @@ class ShuntCompensatorPhase(PowerSystemResource):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': '',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Phase of this shunt compensator component. If the shunt compensator is
@@ -37990,7 +37990,7 @@ class ShuntCompensatorPhase(PowerSystemResource):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'ShuntCompensator.ShuntCompensatorPhase',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Shunt compensator of this shunt compensator phase.
@@ -38015,7 +38015,7 @@ class LinearShuntCompensatorPhase(ShuntCompensatorPhase):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Susceptance per section of the phase if shunt compensator is wye connected.
@@ -38035,7 +38035,7 @@ class LinearShuntCompensatorPhase(ShuntCompensatorPhase):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Conductance per section for this phase if shunt compensator is wye connected.
@@ -38067,7 +38067,7 @@ class NonlinearShuntCompensatorPhase(ShuntCompensatorPhase):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'NonlinearShuntCompensatorPhasePoint.NonlinearShuntCompensatorPhase',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             All points of the non-linear shunt compensator phase.
@@ -38117,7 +38117,7 @@ class SwitchPhase(PowerSystemResource):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The attribute tells if the switch is considered closed when used as input
@@ -38136,7 +38136,7 @@ class SwitchPhase(PowerSystemResource):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Used in cases when no Measurement for the status value is present. If the
@@ -38157,7 +38157,7 @@ class SwitchPhase(PowerSystemResource):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The maximum continuous current carrying capacity in amps governed by the
@@ -38179,7 +38179,7 @@ class SwitchPhase(PowerSystemResource):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': '',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Phase of this SwitchPhase on the side with terminal sequence number equal
@@ -38199,7 +38199,7 @@ class SwitchPhase(PowerSystemResource):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': '',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Phase of this SwitchPhase on the side with terminal sequence number equal
@@ -38220,7 +38220,7 @@ class SwitchPhase(PowerSystemResource):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'Switch.SwitchPhase',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The switch of the switch phase.
@@ -38244,7 +38244,7 @@ class TapChanger(PowerSystemResource):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'StepOperationalLimitTable.TapChanger',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The step operational limit table for this tap changer.
@@ -38262,7 +38262,7 @@ class TapChanger(PowerSystemResource):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'SvTapStep.TapChanger',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The tap step state associated with the tap changer.
@@ -38280,7 +38280,7 @@ class TapChanger(PowerSystemResource):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'TapSchedule.TapChanger',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             A TapChanger can have TapSchedules.
@@ -38297,7 +38297,7 @@ class TapChanger(PowerSystemResource):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Specifies the regulation status of the equipment. True is regulating, false
@@ -38316,7 +38316,7 @@ class TapChanger(PowerSystemResource):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://epri.com/gmdm#',
+        'namespace': 'http://epri.com/gmdm/2025#',
         'docstring':
             '''
             '''
@@ -38331,7 +38331,7 @@ class TapChanger(PowerSystemResource):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Built-in current transformer ratio. If a value is specified, then RegulatingControl.targetValue
@@ -38354,7 +38354,7 @@ class TapChanger(PowerSystemResource):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Highest possible tap step position, advance from neutral.
@@ -38373,7 +38373,7 @@ class TapChanger(PowerSystemResource):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Lowest possible tap step position, retard from neutral.
@@ -38390,7 +38390,7 @@ class TapChanger(PowerSystemResource):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Specifies whether or not a TapChanger has load tap changing capabilities.
@@ -38407,7 +38407,7 @@ class TapChanger(PowerSystemResource):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The neutral tap step position for this winding.
@@ -38435,7 +38435,7 @@ class TapChanger(PowerSystemResource):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The tap step position used in "normal" network operation for this winding.
@@ -38458,7 +38458,7 @@ class TapChanger(PowerSystemResource):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Built-in potential (voltage) transformer ratio. If a value is specified,
@@ -38483,7 +38483,7 @@ class TapChanger(PowerSystemResource):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Tap changer position.
@@ -38514,7 +38514,7 @@ class TapChanger(PowerSystemResource):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             For an LTC, the delay for initial tap changer operation (first step change).
@@ -38532,7 +38532,7 @@ class TapChanger(PowerSystemResource):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Voltage at which the winding operates at the neutral tap setting. It is
@@ -38565,7 +38565,7 @@ class TapChanger(PowerSystemResource):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             For an LTC, the delay for subsequent tap changer operation (second and
@@ -38585,7 +38585,7 @@ class TapChanger(PowerSystemResource):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'SvTapStep.TapChanger',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The tap step state associated with the tap changer.
@@ -38603,7 +38603,7 @@ class TapChanger(PowerSystemResource):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'TapChangerController.TapChanger',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The tap changer controller that controls this TapChanger.
@@ -38621,7 +38621,7 @@ class TapChanger(PowerSystemResource):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'TapChangerControl.TapChanger',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The regulating control scheme in which this tap changer participates.
@@ -38647,7 +38647,7 @@ class ImpedanceTapChangerTabular(TapChanger):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'ImpedanceTapChangerTable.ImpedanceTapChangerTabular',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The impedance tap changer table for this impedance tap changer.
@@ -38674,7 +38674,7 @@ class PhaseTapChanger(TapChanger):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'TransformerEnd.PhaseTapChanger',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Transformer end to which this phase tap changer belongs.
@@ -38692,7 +38692,7 @@ class PhaseTapChanger(TapChanger):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'TransformerEnd.PhaseTapChanger',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Transformer end to which this phase tap changer belongs.
@@ -38719,7 +38719,7 @@ class PhaseTapChangerLinear(PhaseTapChanger):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Phase shift per step position. A positive value indicates a positive angle
@@ -38746,7 +38746,7 @@ class PhaseTapChangerLinear(PhaseTapChanger):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The reactance depends on the tap position according to a "u" shaped curve.
@@ -38778,7 +38778,7 @@ class PhaseTapChangerNonLinear(PhaseTapChanger):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The voltage step increment on the out of phase winding (the PowerTransformerEnd
@@ -38807,7 +38807,7 @@ class PhaseTapChangerNonLinear(PhaseTapChanger):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The reactance depends on the tap position according to a "u" shaped curve.
@@ -38861,7 +38861,7 @@ class ConnectionAngleTapChanger(PhaseTapChangerNonLinear):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'ConnectionAngleTapChangerTable.ConnectionAngleTapChanger',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The connection angle tap changer table that is applied to this connection
@@ -38880,7 +38880,7 @@ class ConnectionAngleTapChanger(PhaseTapChangerNonLinear):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The supported winding connection angle range is defined by the maximum
@@ -38920,7 +38920,7 @@ class ConnectionAngleTapChanger(PhaseTapChangerNonLinear):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The maximum phase angle between the in-phase winding and the out-of -phase
@@ -38953,7 +38953,7 @@ class ConnectionAngleTapChanger(PhaseTapChangerNonLinear):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The minimum phase angle between the in-phase winding and the out-of -phase
@@ -38984,7 +38984,7 @@ class ConnectionAngleTapChanger(PhaseTapChangerNonLinear):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The normal phase angle between the in-phase winding and the out-of -phase
@@ -39014,7 +39014,7 @@ class ConnectionAngleTapChanger(PhaseTapChangerNonLinear):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The operating phase angle between the in-phase winding and the out-of -phase
@@ -39055,7 +39055,7 @@ class PhaseTapChangerAsymmetrical(PhaseTapChangerNonLinear):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The phase angle between the in-phase winding and the out-of -phase winding
@@ -39101,7 +39101,7 @@ class PhaseTapChangerTabular(PhaseTapChanger):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'PhaseTapChangerTable.PhaseTapChangerTabular',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The phase tap changer table for this phase tap changer.
@@ -39130,7 +39130,7 @@ class RatioTapChanger(TapChanger):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'TransformerEnd.AdditionalRatioTapChanger',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Transformer end to which this ratio tap changer belongs.
@@ -39148,7 +39148,7 @@ class RatioTapChanger(TapChanger):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'TransformerEnd.RatioTapChanger',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Transformer end to which this ratio tap changer belongs.
@@ -39165,7 +39165,7 @@ class RatioTapChanger(TapChanger):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Tap step increment, in per cent of rated voltage of the power transformer
@@ -39189,7 +39189,7 @@ class RatioTapChanger(TapChanger):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'RatioTapChangerTable.RatioTapChanger',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The tap ratio table for this ratio tap changer.
@@ -39207,7 +39207,7 @@ class RatioTapChanger(TapChanger):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'TransformerEnd.RatioTapChanger',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Transformer end to which this ratio tap changer belongs.
@@ -39232,7 +39232,7 @@ class TieCorridor(PowerSystemResource):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'TieFlow.TieCorridor',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Tie flow which belongs to the tie corridor.
@@ -39249,7 +39249,7 @@ class TieCorridor(PowerSystemResource):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Maximum authorized ramp for regulating reserve.
@@ -39266,7 +39266,7 @@ class TieCorridor(PowerSystemResource):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             A positive number that is a multiple of Automatic Generation Control (AGC)
@@ -39286,7 +39286,7 @@ class TieCorridor(PowerSystemResource):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Regulating reserve threshold.
@@ -39311,7 +39311,7 @@ class ACTieCorridor(TieCorridor):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'Line.ACTieCorridor',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Line that is part of the ACTieCorridor.
@@ -39336,7 +39336,7 @@ class DCTieCorridor(TieCorridor):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'DCPole.DCTieCorridor',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The DCPole which is part of the DC corridor.
@@ -39353,7 +39353,7 @@ class DCTieCorridor(TieCorridor):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Maximum regulating reserve.
@@ -39370,7 +39370,7 @@ class DCTieCorridor(TieCorridor):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Minimum regulating reserve.
@@ -39387,7 +39387,7 @@ class DCTieCorridor(TieCorridor):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Active power at the point of common coupling. Load sign convention is used,
@@ -39410,7 +39410,7 @@ class DCTieCorridor(TieCorridor):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Reactive power at the point of common coupling. Load sign convention is
@@ -39434,7 +39434,7 @@ class DCTieCorridor(TieCorridor):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': '',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Ramping principle is used to define a transition from one scheduled value
@@ -39454,7 +39454,7 @@ class DCTieCorridor(TieCorridor):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'DirectCurrentMasterController.DCTieCorridor',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Direct current master controller for this DCTieCorridor.
@@ -39479,7 +39479,7 @@ class TransmissionRightOfWay(PowerSystemResource):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'MktLine.TransmissionRightOfWay',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             '''
@@ -39504,7 +39504,7 @@ class VoltageControlZone(PowerSystemResource):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'BusbarSection.VoltageControlZone',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             A VoltageControlZone is controlled by a designated BusbarSection.
@@ -39522,7 +39522,7 @@ class VoltageControlZone(PowerSystemResource):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'BusbarSection.VoltageControlZone',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             A VoltageControlZone is controlled by a designated BusbarSection.
@@ -39540,7 +39540,7 @@ class VoltageControlZone(PowerSystemResource):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'RegulationSchedule.VoltageControlZones',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             A VoltageControlZone may have a voltage regulation schedule.
@@ -39588,7 +39588,7 @@ class WireSegmentPhase(PowerSystemResource):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Number designation for this wire segment phase. Each wire segment phase
@@ -39608,7 +39608,7 @@ class WireSegmentPhase(PowerSystemResource):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': '',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The phase connection of the wire at both ends.
@@ -39626,7 +39626,7 @@ class WireSegmentPhase(PowerSystemResource):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'WireSegment.WireSegmentPhases',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The wire segment to which the phase belongs.
@@ -39650,7 +39650,7 @@ class ProductAssetModel(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'AssetInfo.ProductAssetModel',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Asset information (nameplate) for this product asset model.
@@ -39675,7 +39675,7 @@ class RatioTapChangerTable(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'RatioTapChanger.RatioTapChangerTable',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The ratio tap changer of this tap ratio table.
@@ -39693,7 +39693,7 @@ class RatioTapChangerTable(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'RatioTapChangerTablePoint.RatioTapChangerTable',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Points of this table.
@@ -39718,7 +39718,7 @@ class RemoteControl(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'Control.RemoteControl',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The Control for the RemoteControl point.
@@ -39743,7 +39743,7 @@ class RemoteSource(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'MeasurementValue.RemoteSource',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Link to the physical telemetered point associated with this measurement.
@@ -39767,7 +39767,7 @@ class ReportingGroup(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'BusNameMarker.ReportingGroup',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The bus name markers that belong to this reporting group.
@@ -39785,7 +39785,7 @@ class ReportingGroup(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'TopologicalNode.ReportingGroup',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The topological nodes that belong to the reporting group.
@@ -39803,7 +39803,7 @@ class ReportingGroup(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'ReportingSuperGroup.ReportingGroup',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Reporting super group to which this reporting group belongs.
@@ -39828,7 +39828,7 @@ class ReportingSuperGroup(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'ReportingGroup.ReportingSuperGroup',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Reporting groups that are grouped under this super group.
@@ -39853,7 +39853,7 @@ class ScheduledEvent(IdentifiedObject):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Type of scheduled event.
@@ -39870,7 +39870,7 @@ class ScheduledEvent(IdentifiedObject):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Duration of the scheduled event, for example, the time to ramp between
@@ -39890,7 +39890,7 @@ class ScheduledEvent(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'ScheduledEventData.ScheduledEvents',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Specification for this scheduled event.
@@ -39908,7 +39908,7 @@ class ScheduledEvent(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': '',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Status of the scheduled event.
@@ -39932,7 +39932,7 @@ class Season(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'SeasonDayTypeSchedule.Season',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Schedules that use this Season.
@@ -39949,7 +39949,7 @@ class Season(IdentifiedObject):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Date season ends.
@@ -39966,7 +39966,7 @@ class Season(IdentifiedObject):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Date season starts.
@@ -39990,7 +39990,7 @@ class ServiceCategory(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'ConfigurationEvent.ChangedServiceCategory',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             All configuration events created for this service category.
@@ -40015,7 +40015,7 @@ class ShuntCompensatorDynamics(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'ShuntCompensator.ShuntCompensatorDynamics',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Shunt compensator to which shunt compensator dynamics model applies.
@@ -40042,7 +40042,7 @@ class StartupModel(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'StartIgnFuelCurve.StartupModel',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The unit's startup model may have a startup ignition fuel curve.
@@ -40060,7 +40060,7 @@ class StartupModel(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'StartMainFuelCurve.StartupModel',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The unit's startup model may have a startup main fuel curve.
@@ -40078,7 +40078,7 @@ class StartupModel(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'StartRampCurve.StartupModel',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The unit's startup model may have a startup ramp curve.
@@ -40096,7 +40096,7 @@ class StartupModel(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'ThermalGeneratingUnit.StartupModel',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             A thermal generating unit may have a startup model.
@@ -40113,7 +40113,7 @@ class StartupModel(IdentifiedObject):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The date and time of the most recent generating unit startup.
@@ -40130,7 +40130,7 @@ class StartupModel(IdentifiedObject):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Startup priority within control area where lower numbers indicate higher
@@ -40150,7 +40150,7 @@ class StartupModel(IdentifiedObject):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Fixed maintenance cost.
@@ -40167,7 +40167,7 @@ class StartupModel(IdentifiedObject):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The amount of heat input per time unit required for hot standby operation.
@@ -40184,7 +40184,7 @@ class StartupModel(IdentifiedObject):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Incremental maintenance cost.
@@ -40201,7 +40201,7 @@ class StartupModel(IdentifiedObject):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The minimum number of hours the unit must be down before restart.
@@ -40218,7 +40218,7 @@ class StartupModel(IdentifiedObject):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The minimum number of hours the unit must be operating before being allowed
@@ -40237,7 +40237,7 @@ class StartupModel(IdentifiedObject):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The opportunity cost associated with the return in monetary unit. This
@@ -40258,7 +40258,7 @@ class StartupModel(IdentifiedObject):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Total miscellaneous start up costs.
@@ -40275,7 +40275,7 @@ class StartupModel(IdentifiedObject):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The unit's auxiliary active power consumption to maintain standby mode.
@@ -40293,7 +40293,7 @@ class StartupModel(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'StartIgnFuelCurve.StartupModel',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The unit's startup model may have a startup ignition fuel curve.
@@ -40311,7 +40311,7 @@ class StartupModel(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'StartMainFuelCurve.StartupModel',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The unit's startup model may have a startup main fuel curve.
@@ -40329,7 +40329,7 @@ class StartupModel(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'StartRampCurve.StartupModel',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The unit's startup model may have a startup ramp curve.
@@ -40347,7 +40347,7 @@ class StartupModel(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'ThermalGeneratingUnit.StartupModel',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             A thermal generating unit may have a startup model.
@@ -40372,7 +40372,7 @@ class StatcomDynamics(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'PowerElectronicsConnection.StatcomDynamics',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The power electronics connection associated with this statcom dynamics
@@ -40399,7 +40399,7 @@ class StaticVarCompensatorDynamics(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'StaticVarCompensator.StaticVarCompensatorDynamics',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Static Var Compensator to which Static Var Compensator dynamics model applies.
@@ -40426,7 +40426,7 @@ class StaticVarCompensatorSystemDynamics(StaticVarCompensatorDynamics):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'ShuntCompensator.StaticVarCompensatorSystemDynamics',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Shunt Compensator to which Static Var Compensator system dynamics model
@@ -40456,7 +40456,7 @@ class SVSMO4(StaticVarCompensatorSystemDynamics):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'Terminal.HasFromTerminalSVSMO4',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The FromTerminal for this SVSMO4 model.
@@ -40474,7 +40474,7 @@ class SVSMO4(StaticVarCompensatorSystemDynamics):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'Terminal.HasToTerminalSVSMO4',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The ToTerminal for this SVSMO4 model.
@@ -40499,7 +40499,7 @@ class StepOperationalLimitTable(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'OperationalLimit.StepOperationalLimitTable',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The operational limit for this table.
@@ -40517,7 +40517,7 @@ class StepOperationalLimitTable(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'StepLimitTablePoint.StepOperationalLimitTable',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The points of this table.
@@ -40535,7 +40535,7 @@ class StepOperationalLimitTable(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'TapChanger.StepOperationalLimitTable',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The tap changer that has a step operational limit table.
@@ -40560,7 +40560,7 @@ class SubGeographicalRegion(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'DCLine.Region',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The DC lines in this sub-geographical region.
@@ -40578,7 +40578,7 @@ class SubGeographicalRegion(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'Line.Region',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The lines within the sub-geographical region.
@@ -40596,7 +40596,7 @@ class SubGeographicalRegion(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'Substation.Region',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The substations in this sub-geographical region.
@@ -40614,7 +40614,7 @@ class SubGeographicalRegion(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'GeographicalRegion.Regions',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The geographical region which this sub-geographical region is within.
@@ -40638,7 +40638,7 @@ class SwitchingAction(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'Crew.SwitchingAction',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             '''
@@ -40660,7 +40660,7 @@ class ClampAction(SwitchingAction):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'Clamp.ClampAction',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             '''
@@ -40682,7 +40682,7 @@ class ControlAction(SwitchingAction):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'Control.ControlAction',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             '''
@@ -40704,7 +40704,7 @@ class CutAction(SwitchingAction):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'Cut.CutAction',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Cut on which this action is taken.
@@ -40728,7 +40728,7 @@ class EnergyConsumerAction(SwitchingAction):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'EnergyConsumer.EnergyConsumerAction',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             '''
@@ -40750,7 +40750,7 @@ class EnergySourceAction(SwitchingAction):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'EnergySource.EnergySourceAction',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Energy source on which this action is taken.
@@ -40774,7 +40774,7 @@ class GroundAction(SwitchingAction):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'ACLineSegment.LineGroundingAction',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The line segment that this ground action will affect. This is the only
@@ -40796,7 +40796,7 @@ class GroundAction(SwitchingAction):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'ConductingEquipment.GroundingAction',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Equipment being grounded with this operation. In case of placing a ground
@@ -40823,7 +40823,7 @@ class GroundAction(SwitchingAction):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'Ground.GroundAction',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Ground on which this action is taken.
@@ -40847,7 +40847,7 @@ class JumperAction(SwitchingAction):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'ACLineSegment.LineJumpingAction',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The line segment that this jumper action will affect. This is the only
@@ -40869,7 +40869,7 @@ class JumperAction(SwitchingAction):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'Clamp.JumperAction',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             '''
@@ -40885,7 +40885,7 @@ class JumperAction(SwitchingAction):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'ConductingEquipment.JumpingAction',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Conducting equipment is affected when the jumper action connects one or
@@ -40915,7 +40915,7 @@ class JumperAction(SwitchingAction):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'Jumper.JumperAction',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Jumper on which this action is taken.
@@ -40939,7 +40939,7 @@ class MeasurementAction(SwitchingAction):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'Measurement.MeasurementAction',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             '''
@@ -40960,7 +40960,7 @@ class ShuntCompensatorAction(SwitchingAction):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'ShuntCompensator.ShuntCompensatorAction',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             '''
@@ -40982,7 +40982,7 @@ class SwitchAction(SwitchingAction):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'Switch.SwitchAction',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Switch that is the object of this switch action.
@@ -41025,7 +41025,7 @@ class SynchronousMachineDynamics(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'SynchronousMachine.SynchronousMachineDynamics',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Synchronous machine to which synchronous machine dynamics model applies.
@@ -41049,7 +41049,7 @@ class TelephoneNumber(IdentifiedObject):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             (if applicable) Area or region code.
@@ -41066,7 +41066,7 @@ class TelephoneNumber(IdentifiedObject):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             City code.
@@ -41083,7 +41083,7 @@ class TelephoneNumber(IdentifiedObject):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Country code.
@@ -41100,7 +41100,7 @@ class TelephoneNumber(IdentifiedObject):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             (if applicable) Dial out code, for instance to call outside an enterprise.
@@ -41117,7 +41117,7 @@ class TelephoneNumber(IdentifiedObject):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             (if applicable) Extension for this telephone number.
@@ -41134,7 +41134,7 @@ class TelephoneNumber(IdentifiedObject):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             (if applicable) Prefix used when calling an international number.
@@ -41151,7 +41151,7 @@ class TelephoneNumber(IdentifiedObject):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Phone number according to International Telecommunication Union (ITU) E.164.
@@ -41169,7 +41169,7 @@ class TelephoneNumber(IdentifiedObject):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Main (local) part of this telephone number.
@@ -41186,7 +41186,7 @@ class TelephoneNumber(IdentifiedObject):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Description of the kind of telephone number when the enumeration is other.
@@ -41204,7 +41204,7 @@ class TelephoneNumber(IdentifiedObject):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Order in which phone number should be used.
@@ -41221,7 +41221,7 @@ class TelephoneNumber(IdentifiedObject):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             '''
@@ -41237,7 +41237,7 @@ class TelephoneNumber(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': '',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The intended use for the telephone number.
@@ -41264,7 +41264,7 @@ class TieFlow(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'AltTieMeas.TieFlow',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The primary and alternate tie flow measurements associated with the tie
@@ -41283,7 +41283,7 @@ class TieFlow(IdentifiedObject):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Specifies the sign of the tie flow associated with a control area. True
@@ -41307,7 +41307,7 @@ class TieFlow(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'ControlArea.TieFlow',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The control area of the tie flows.
@@ -41325,7 +41325,7 @@ class TieFlow(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'Terminal.TieFlow',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The terminal to which this tie flow belongs.
@@ -41343,7 +41343,7 @@ class TieFlow(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'TieCorridor.TieFlow',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Tie corridor which has the tie flow.
@@ -41372,7 +41372,7 @@ class TiePoint(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'MktMeasurement.ByTiePoint',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             A measurement is made on the B side of a tie point
@@ -41390,7 +41390,7 @@ class TiePoint(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'MktMeasurement.ForTiePoint',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             A measurement is made on the A side of a tie point
@@ -41414,7 +41414,7 @@ class TimePoint(IdentifiedObject):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Absolute date and time for this time point. For calendar-based time point,
@@ -41435,7 +41435,7 @@ class TimePoint(IdentifiedObject):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             (if sequence-based) Relative sequence number for this time point.
@@ -41452,7 +41452,7 @@ class TimePoint(IdentifiedObject):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             (if interval-based) A point in time relative to scheduled start time in
@@ -41472,7 +41472,7 @@ class TimePoint(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': '',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Status of this time point.
@@ -41490,7 +41490,7 @@ class TimePoint(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'TimeSchedule.TimePoints',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Time schedule owning this time point.
@@ -41508,7 +41508,7 @@ class TimePoint(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': '',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Interval defining the window of time for which this time point is valid.
@@ -41539,7 +41539,7 @@ class TopologicalIsland(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'TopologicalNode.AngleRefTopologicalIsland',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The angle reference for the island. Normally there is one TopologicalNode
@@ -41561,7 +41561,7 @@ class TopologicalIsland(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'TopologicalNode.TopologicalIsland',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             A topological node belongs to a topological island.
@@ -41579,7 +41579,7 @@ class TopologicalIsland(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'TopologicalNode.AngleRefTopologicalIsland',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The angle reference for the island. Normally there is one TopologicalNode
@@ -41615,7 +41615,7 @@ class TopologicalNode(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'BusNameMarker.TopologicalNode',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             BusnameMarkers that may refer to a pre defined TopologicalNode.
@@ -41633,7 +41633,7 @@ class TopologicalNode(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'ConnectivityNode.TopologicalNode',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The connectivity nodes combine together to form this topological node.
@@ -41653,7 +41653,7 @@ class TopologicalNode(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'SvInjection.TopologicalNode',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The injection flows state variables associated with the topological node.
@@ -41672,7 +41672,7 @@ class TopologicalNode(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'SvVoltage.TopologicalNode',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The state voltage associated with the topological node.
@@ -41690,7 +41690,7 @@ class TopologicalNode(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'Terminal.TopologicalNode',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The terminals associated with the topological node. This can be used as
@@ -41716,7 +41716,7 @@ class TopologicalNode(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'TopologicalIsland.AngleRefTopologicalNode',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The island for which the node is an angle reference. Normally there is
@@ -41735,7 +41735,7 @@ class TopologicalNode(IdentifiedObject):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The active power injected into the bus at this location in addition to
@@ -41758,7 +41758,7 @@ class TopologicalNode(IdentifiedObject):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The reactive power injected into the bus at this location in addition to
@@ -41782,7 +41782,7 @@ class TopologicalNode(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'TopologicalIsland.AngleRefTopologicalNode',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The island for which the node is an angle reference. Normally there is
@@ -41802,7 +41802,7 @@ class TopologicalNode(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'BaseVoltage.TopologicalNode',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The base voltage of the topological node.
@@ -41820,7 +41820,7 @@ class TopologicalNode(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'ConnectivityNodeContainer.TopologicalNode',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The connectivity node container to which the topological node belongs.
@@ -41838,7 +41838,7 @@ class TopologicalNode(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'ReportingGroup.TopologicalNode',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The reporting group to which the topological node belongs.
@@ -41856,7 +41856,7 @@ class TopologicalNode(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'TopologicalIsland.TopologicalNodes',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             A topological node belongs to a topological island.
@@ -41880,7 +41880,7 @@ class Transaction(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'UserAttribute.Transaction',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             All snapshots of meter parameters recorded at the time of this transaction.
@@ -41909,7 +41909,7 @@ class TransformerCoreAdmittance(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'TransformerEnd.CoreAdmittance',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             All transformer ends having this core admittance.
@@ -41927,7 +41927,7 @@ class TransformerCoreAdmittance(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'TransformerEndInfo.CoreAdmittance',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Transformer end datasheet used to calculate this core admittance.
@@ -41944,7 +41944,7 @@ class TransformerCoreAdmittance(IdentifiedObject):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Magnetizing branch susceptance (B mag). The value can be positive or negative.
@@ -41962,7 +41962,7 @@ class TransformerCoreAdmittance(IdentifiedObject):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Zero sequence magnetizing branch susceptance.
@@ -41979,7 +41979,7 @@ class TransformerCoreAdmittance(IdentifiedObject):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Magnetizing branch conductance (G mag).
@@ -41996,7 +41996,7 @@ class TransformerCoreAdmittance(IdentifiedObject):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Zero sequence magnetizing branch conductance.
@@ -42014,7 +42014,7 @@ class TransformerCoreAdmittance(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'TransformerEndInfo.CoreAdmittance',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Transformer end datasheet used to calculate this core admittance.
@@ -42041,7 +42041,7 @@ class TransformerEnd(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'PhaseTapChanger.TransformerEnd',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Phase tap changer associated with this transformer end.
@@ -42059,7 +42059,7 @@ class TransformerEnd(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'RatioTapChanger.TransformerEnd',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Ratio tap changer associated with this transformer end.
@@ -42077,7 +42077,7 @@ class TransformerEnd(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'TransformerMeshImpedance.FromTransformerEnd',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             All mesh impedances between this 'to' and other 'from' transformer ends.
@@ -42096,7 +42096,7 @@ class TransformerEnd(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'TransformerMeshImpedance.ToTransformerEnd',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             All mesh impedances between this 'from' and other 'to' transformer ends.
@@ -42114,7 +42114,7 @@ class TransformerEnd(IdentifiedObject):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Number for this transformer end, corresponding to the end's order in the
@@ -42139,7 +42139,7 @@ class TransformerEnd(IdentifiedObject):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Used only for Yn and Zn connections indicated by PowerTransformerEnd.connectionKind.
@@ -42162,7 +42162,7 @@ class TransformerEnd(IdentifiedObject):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Core shunt magnetizing susceptance in the saturation region.
@@ -42179,7 +42179,7 @@ class TransformerEnd(IdentifiedObject):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The reference voltage at which the magnetizing saturation measurements
@@ -42198,7 +42198,7 @@ class TransformerEnd(IdentifiedObject):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Core magnetizing saturation curve knee flux level.
@@ -42215,7 +42215,7 @@ class TransformerEnd(IdentifiedObject):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Resistance part of neutral impedance. Zero indicates solidly grounded or
@@ -42234,7 +42234,7 @@ class TransformerEnd(IdentifiedObject):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Reactance part of neutral impedance. Zero indicates solidly grounded or
@@ -42254,7 +42254,7 @@ class TransformerEnd(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'RatioTapChanger.TransformerEnd',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             An additional ratio tap changer for this transformer end.
@@ -42272,7 +42272,7 @@ class TransformerEnd(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'BaseVoltage.TransformerEnds',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Base voltage of the transformer end. This is essential for PU calculation.
@@ -42290,7 +42290,7 @@ class TransformerEnd(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'TransformerCoreAdmittance.TransformerEnd',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Core admittance of this transformer end, representing magnetising current
@@ -42312,7 +42312,7 @@ class TransformerEnd(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'PhaseTapChanger.TransformerEnd',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Phase tap changer associated with this transformer end.
@@ -42330,7 +42330,7 @@ class TransformerEnd(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'RatioTapChanger.TransformerEnd',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Ratio tap changer associated with this transformer end.
@@ -42348,7 +42348,7 @@ class TransformerEnd(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'TransformerStarImpedance.TransformerEnd',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             (accurate for 2- or 3-winding transformers only) Pi-model impedances of
@@ -42372,7 +42372,7 @@ class TransformerEnd(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'Terminal.TransformerEnd',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Terminal of the power transformer to which this transformer end belongs.
@@ -42419,7 +42419,7 @@ class PowerTransformerEnd(TransformerEnd):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Terminal voltage phase angle displacement where 360 degrees are represented
@@ -42448,7 +42448,7 @@ class PowerTransformerEnd(TransformerEnd):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Magnetizing branch susceptance (B mag). The value can be positive or negative.
@@ -42466,7 +42466,7 @@ class PowerTransformerEnd(TransformerEnd):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Zero sequence magnetizing branch susceptance.
@@ -42483,7 +42483,7 @@ class PowerTransformerEnd(TransformerEnd):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Magnetizing branch conductance.
@@ -42500,7 +42500,7 @@ class PowerTransformerEnd(TransformerEnd):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Zero sequence magnetizing branch conductance (star-model).
@@ -42517,7 +42517,7 @@ class PowerTransformerEnd(TransformerEnd):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Resistance (star-model) of the transformer end.
@@ -42538,7 +42538,7 @@ class PowerTransformerEnd(TransformerEnd):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Zero sequence series resistance (star-model) of the transformer end.
@@ -42555,7 +42555,7 @@ class PowerTransformerEnd(TransformerEnd):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Normal apparent power rating.
@@ -42576,7 +42576,7 @@ class PowerTransformerEnd(TransformerEnd):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Rated voltage: phase-phase for three-phase windings, and either phase-phase
@@ -42602,7 +42602,7 @@ class PowerTransformerEnd(TransformerEnd):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Positive sequence series reactance (star-model) of the transformer end.
@@ -42620,7 +42620,7 @@ class PowerTransformerEnd(TransformerEnd):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Zero sequence series reactance of the transformer end.
@@ -42638,7 +42638,7 @@ class PowerTransformerEnd(TransformerEnd):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': '',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Kind of connection.
@@ -42656,7 +42656,7 @@ class PowerTransformerEnd(TransformerEnd):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'PowerTransformer.PowerTransformerEnd',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The power transformer of this power transformer end.
@@ -42683,7 +42683,7 @@ class TransformerTankEnd(TransformerEnd):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': '',
-        'namespace': 'http://epri.com/gmdm#',
+        'namespace': 'http://epri.com/gmdm/2025#',
         'docstring':
             '''
             '''
@@ -42699,7 +42699,7 @@ class TransformerTankEnd(TransformerEnd):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': '',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Describes the phases carried by a conducting equipment.
@@ -42717,7 +42717,7 @@ class TransformerTankEnd(TransformerEnd):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'TransformerTank.TransformerTankEnds',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Transformer this winding belongs to.
@@ -42745,7 +42745,7 @@ class TransformerMeshImpedance(IdentifiedObject):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Resistance between the 'from' and the 'to' end, seen from the 'from' end.
@@ -42763,7 +42763,7 @@ class TransformerMeshImpedance(IdentifiedObject):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Zero-sequence resistance between the 'from' and the 'to' end, seen from
@@ -42782,7 +42782,7 @@ class TransformerMeshImpedance(IdentifiedObject):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Reactance between the 'from' and the 'to' end, seen from the 'from' end.
@@ -42800,7 +42800,7 @@ class TransformerMeshImpedance(IdentifiedObject):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Zero-sequence reactance between the 'from' and the 'to' end, seen from
@@ -42820,7 +42820,7 @@ class TransformerMeshImpedance(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'TransformerEnd.FromMeshImpedance',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             From end this mesh impedance is connected to. It determines the voltage
@@ -42840,7 +42840,7 @@ class TransformerMeshImpedance(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'TransformerEndInfo.FromMeshImpedances',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             'from' transformer end datasheet this mesh impedance is calculated from.
@@ -42860,7 +42860,7 @@ class TransformerMeshImpedance(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'TransformerEnd.ToMeshImpedance',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             All transformer ends this mesh impedance is connected to.
@@ -42889,7 +42889,7 @@ class TransformerStarImpedance(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'TransformerEnd.StarImpedance',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             All transformer ends having this star impedance.
@@ -42907,7 +42907,7 @@ class TransformerStarImpedance(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'TransformerEndInfo.TransformerStarImpedance',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Transformer end datasheet used to calculate this transformer star impedance.
@@ -42924,7 +42924,7 @@ class TransformerStarImpedance(IdentifiedObject):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Resistance of the transformer end.
@@ -42941,7 +42941,7 @@ class TransformerStarImpedance(IdentifiedObject):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Zero sequence series resistance of the transformer end.
@@ -42958,7 +42958,7 @@ class TransformerStarImpedance(IdentifiedObject):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Positive sequence series reactance of the transformer end.
@@ -42975,7 +42975,7 @@ class TransformerStarImpedance(IdentifiedObject):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Zero sequence series reactance of the transformer end.
@@ -42993,7 +42993,7 @@ class TransformerStarImpedance(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'TransformerEndInfo.TransformerStarImpedance',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Transformer end datasheet used to calculate this transformer star impedance.
@@ -43017,7 +43017,7 @@ class TransformerTest(IdentifiedObject):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Base power at which the tests are conducted, usually equal to the rateds
@@ -43036,7 +43036,7 @@ class TransformerTest(IdentifiedObject):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Temperature at which the test is conducted.
@@ -43063,7 +43063,7 @@ class NoLoadTest(TransformerTest):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Voltage applied to the winding (end) during test.
@@ -43080,7 +43080,7 @@ class NoLoadTest(TransformerTest):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Exciting current measured from a positive-sequence or single-phase excitation
@@ -43099,7 +43099,7 @@ class NoLoadTest(TransformerTest):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Exciting current measured from a zero-sequence open-circuit excitation
@@ -43118,7 +43118,7 @@ class NoLoadTest(TransformerTest):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Losses measured from a positive-sequence or single-phase excitation test.
@@ -43136,7 +43136,7 @@ class NoLoadTest(TransformerTest):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Losses measured from a zero-sequence excitation test.
@@ -43154,7 +43154,7 @@ class NoLoadTest(TransformerTest):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'TransformerEndInfo.EnergisedEndNoLoadTests',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Transformer end that current is applied to in this no-load test.
@@ -43181,7 +43181,7 @@ class OpenCircuitTest(TransformerTest):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Tap step number for the energised end of the test pair.
@@ -43198,7 +43198,7 @@ class OpenCircuitTest(TransformerTest):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Tap step number for the open end of the test pair.
@@ -43215,7 +43215,7 @@ class OpenCircuitTest(TransformerTest):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Voltage applied to the winding (end) during test.
@@ -43232,7 +43232,7 @@ class OpenCircuitTest(TransformerTest):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Voltage measured at the open-circuited end, with the energised end set
@@ -43251,7 +43251,7 @@ class OpenCircuitTest(TransformerTest):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Phase shift measured at the open end with the energised end set to rated
@@ -43271,7 +43271,7 @@ class OpenCircuitTest(TransformerTest):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'TransformerEndInfo.EnergisedEndOpenCircuitTests',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Transformer end that current is applied to in this open-circuit test.
@@ -43289,7 +43289,7 @@ class OpenCircuitTest(TransformerTest):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'TransformerEndInfo.OpenEndOpenCircuitTests',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Transformer end measured for induced voltage and angle in this open-circuit
@@ -43318,7 +43318,7 @@ class ShortCircuitTest(TransformerTest):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Tap step number for the energised end of the test pair.
@@ -43335,7 +43335,7 @@ class ShortCircuitTest(TransformerTest):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Tap step number for the grounded end of the test pair.
@@ -43352,7 +43352,7 @@ class ShortCircuitTest(TransformerTest):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Short circuit current..
@@ -43369,7 +43369,7 @@ class ShortCircuitTest(TransformerTest):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Leakage impedance measured from a positive-sequence or single-phase short-circuit
@@ -43388,7 +43388,7 @@ class ShortCircuitTest(TransformerTest):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Leakage impedance measured from a zero-sequence short-circuit test.
@@ -43405,7 +43405,7 @@ class ShortCircuitTest(TransformerTest):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Load losses from a positive-sequence or single-phase short-circuit test.
@@ -43423,7 +43423,7 @@ class ShortCircuitTest(TransformerTest):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Load losses from a zero-sequence short-circuit test.
@@ -43440,7 +43440,7 @@ class ShortCircuitTest(TransformerTest):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Short circuit apparent power.
@@ -43457,7 +43457,7 @@ class ShortCircuitTest(TransformerTest):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Short circuit voltage..
@@ -43475,7 +43475,7 @@ class ShortCircuitTest(TransformerTest):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'TransformerEndInfo.EnergisedEndShortCircuitTests',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Transformer end that voltage is applied to in this short-circuit test.
@@ -43496,7 +43496,7 @@ class ShortCircuitTest(TransformerTest):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'TransformerEndInfo.GroundedEndShortCircuitTests',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             All ends short-circuited in this short-circuit test.
@@ -43522,7 +43522,7 @@ class UsagePoint(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'ConfigurationEvent.ChangedUsagePoint',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             All configuration events created for this usage point.
@@ -43547,7 +43547,7 @@ class VSCDynamics(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'VsConverter.VSCDynamics',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Voltage source converter to which voltage source converter dynamics model
@@ -43579,7 +43579,7 @@ class ValueAliasSet(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'Command.ValueAliasSet',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The Commands using the set for translation.
@@ -43597,7 +43597,7 @@ class ValueAliasSet(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'Discrete.ValueAliasSet',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The Measurements using the set for translation.
@@ -43615,7 +43615,7 @@ class ValueAliasSet(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'RaiseLowerCommand.ValueAliasSet',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The Commands using the set for translation.
@@ -43633,7 +43633,7 @@ class ValueAliasSet(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'ValueToAlias.ValueAliasSet',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The ValueToAlias mappings included in the set.
@@ -43657,7 +43657,7 @@ class ValueToAlias(IdentifiedObject):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The value that is mapped.
@@ -43675,7 +43675,7 @@ class ValueToAlias(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'ValueAliasSet.Values',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The ValueAliasSet having the ValueToAlias mappings.
@@ -43706,7 +43706,7 @@ class VisibilityLayer(IdentifiedObject):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The drawing order for this layer. The higher the number, the later the
@@ -43733,7 +43733,7 @@ class VoltageInjectionControlFunction(IdentifiedObject):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Target value for the voltage that the control function is calculating to
@@ -43761,7 +43761,7 @@ class WeccREPCC(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'Terminal.WeccREPCC',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The Terminal where the frequency is measured.
@@ -43788,7 +43788,7 @@ class WeccWTGIBFFRA(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'Terminal.WeccWTGIBFFRA',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The Terminal where the frequency is measured.
@@ -43814,7 +43814,7 @@ class WindPlantDynamics(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'Terminal.WindPlantDynamics',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Point of connection for this wind plant.
@@ -43839,7 +43839,7 @@ class WindTurbineType3or4Dynamics(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'PowerElectronicsConnection.WindTurbineType3or4Dynamics',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The power electronics connection associated with this wind turbine type
@@ -43866,7 +43866,7 @@ class WirePosition(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'WirePhaseInfo.WirePosition',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Wire phase information for this wire position.
@@ -43883,7 +43883,7 @@ class WirePosition(IdentifiedObject):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Numbering for wires on a WireSpacingInfo. Neutrals should be numbered last.
@@ -43901,7 +43901,7 @@ class WirePosition(IdentifiedObject):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Signed horizontal distance from the wire at this position to a common reference
@@ -43920,7 +43920,7 @@ class WirePosition(IdentifiedObject):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Signed vertical distance from the wire at this position: above ground (positive
@@ -43940,7 +43940,7 @@ class WirePosition(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': '',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The phase connection of the wire at both ends.
@@ -43958,7 +43958,7 @@ class WirePosition(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'WireSpacingInfo.WirePositions',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Wire spacing data this wire position belongs to.
@@ -43995,7 +43995,7 @@ class WorkCapability(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'Crew.WorkCapability',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             '''
@@ -44024,7 +44024,7 @@ class PhaseImpedanceData(Identity):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The matrix entry's column number has a range of possible values from 1
@@ -44049,7 +44049,7 @@ class PhaseImpedanceData(Identity):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The matrix entry's row number has a range of possible values from 1 to
@@ -44074,7 +44074,7 @@ class PhaseImpedanceData(Identity):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Susceptance matrix entry value, per length of unit.
@@ -44091,7 +44091,7 @@ class PhaseImpedanceData(Identity):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Conductance matrix entry value, per length of unit.
@@ -44108,7 +44108,7 @@ class PhaseImpedanceData(Identity):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Resistance matrix entry value, per length of unit.
@@ -44125,7 +44125,7 @@ class PhaseImpedanceData(Identity):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Reactance matrix entry value, per length of unit.
@@ -44143,7 +44143,7 @@ class PhaseImpedanceData(Identity):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': '',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Refer to the class description.
@@ -44161,7 +44161,7 @@ class PhaseImpedanceData(Identity):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': '',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Refer to the class description.
@@ -44179,7 +44179,7 @@ class PhaseImpedanceData(Identity):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'PerLengthPhaseImpedance.PhaseImpedanceData',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Conductor phase impedance to which this data belongs.
@@ -44202,7 +44202,7 @@ class ImpedanceTapChangerTablePoint(Identity):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The voltage at the tap step divided by rated voltage of the transformer
@@ -44227,7 +44227,7 @@ class ImpedanceTapChangerTablePoint(Identity):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The tap step.
@@ -44244,7 +44244,7 @@ class ImpedanceTapChangerTablePoint(Identity):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The angle difference in degrees. A positive value indicates a positive
@@ -44265,7 +44265,7 @@ class ImpedanceTapChangerTablePoint(Identity):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The resistance deviation as a percentage of nominal value, r(nominal),
@@ -44291,7 +44291,7 @@ class ImpedanceTapChangerTablePoint(Identity):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The resistance deviation as a percentage of nominal value, r(nominal),
@@ -44317,7 +44317,7 @@ class ImpedanceTapChangerTablePoint(Identity):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The resistance deviation as a percentage of nominal value, r(nominal),
@@ -44343,7 +44343,7 @@ class ImpedanceTapChangerTablePoint(Identity):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The series reactance deviation as a percentage of nominal value, x(nominal),
@@ -44369,7 +44369,7 @@ class ImpedanceTapChangerTablePoint(Identity):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The series reactance deviation as a percentage of nominal value, x(nominal),
@@ -44395,7 +44395,7 @@ class ImpedanceTapChangerTablePoint(Identity):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The series reactance deviation as a percentage of nominal value, x(nominal),
@@ -44422,7 +44422,7 @@ class ImpedanceTapChangerTablePoint(Identity):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'ImpedanceTapChangerTable.ImpedanceTapChangerTablePoint',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The table of this point.
@@ -44448,7 +44448,7 @@ class InverterCapabilities(Identity):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'InverterInfo.InverterCapabilites',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             '''
@@ -44463,7 +44463,7 @@ class InverterCapabilities(Identity):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Flag to identify if the Device is capable of operating in Active Power
@@ -44482,7 +44482,7 @@ class InverterCapabilities(Identity):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Flag to identify if the Device is capable of operating in Constant Power
@@ -44501,7 +44501,7 @@ class InverterCapabilities(Identity):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Flag to identify if the Device is capable of operating in Constant Reactive
@@ -44520,7 +44520,7 @@ class InverterCapabilities(Identity):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Flag to identify if the Device is capable of Frequency Droop protection,
@@ -44539,7 +44539,7 @@ class InverterCapabilities(Identity):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Flag to identify if the Device is capable of operating in Voltage - Active
@@ -44558,7 +44558,7 @@ class InverterCapabilities(Identity):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Flag to identify if the Device is capable of operating in Voltage - Reactive
@@ -44577,7 +44577,7 @@ class InverterCapabilities(Identity):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Flag to identify if the Device is capable of Enter Service After Trip protection.
@@ -44595,7 +44595,7 @@ class InverterCapabilities(Identity):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Flag to identify if the Device is capable of Frequency Trip protection.
@@ -44612,7 +44612,7 @@ class InverterCapabilities(Identity):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Flag to identify if the Device is capable of Limit Maximum Active Power
@@ -44631,7 +44631,7 @@ class InverterCapabilities(Identity):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Flag to identify if the Device is capable of Momentary Cessation (also
@@ -44650,7 +44650,7 @@ class InverterCapabilities(Identity):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Flag to identify if the Device is capable of operating with Voltage Trip
@@ -44675,7 +44675,7 @@ class IrregularTimePoint(Identity):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The first value at the time. The meaning of the value is defined by the
@@ -44694,7 +44694,7 @@ class IrregularTimePoint(Identity):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The second value at the time. The meaning of the value is defined by the
@@ -44713,7 +44713,7 @@ class IrregularTimePoint(Identity):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The third value at the time. The meaning of the value is defined by the
@@ -44732,7 +44732,7 @@ class IrregularTimePoint(Identity):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The time is relative to the schedule starting time.
@@ -44750,7 +44750,7 @@ class IrregularTimePoint(Identity):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'IrregularIntervalSchedule.TimePoints',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             An IrregularTimePoint belongs to an IrregularIntervalSchedule.
@@ -44777,7 +44777,7 @@ class LocationAccess(Identity):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'BuildingSpace.LocationAccess',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             '''
@@ -44793,7 +44793,7 @@ class LocationAccess(Identity):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'Location.LocationAccess',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             '''
@@ -44808,7 +44808,7 @@ class LocationAccess(Identity):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             General availability and functionality of pathways, roads, or other means
@@ -44829,7 +44829,7 @@ class LocationAccess(Identity):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Problems previously encountered when visiting or performing work at this
@@ -44850,7 +44850,7 @@ class LocationAccess(Identity):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Method for the service person to access this usage point location. For
@@ -44871,7 +44871,7 @@ class LocationAccess(Identity):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Accessibility of a site specifically during the summer months, considering
@@ -44892,7 +44892,7 @@ class LocationAccess(Identity):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Accessibility of a site during the winter months, accounting for seasonal
@@ -44912,7 +44912,7 @@ class LocationAccess(Identity):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'BuildingSpace.LocationAccess',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             '''
@@ -44928,7 +44928,7 @@ class LocationAccess(Identity):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'Location.LocationAccess',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             '''
@@ -44953,7 +44953,7 @@ class MarketInvoice(Identity):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'MarketInvoiceLineItem.MarketInvoice',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             '''
@@ -44968,7 +44968,7 @@ class MarketInvoice(Identity):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Calculated date upon which the Invoice amount is due.
@@ -44985,7 +44985,7 @@ class MarketInvoice(Identity):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Date on which the customer billing statement/invoice was printed/mailed.
@@ -45002,7 +45002,7 @@ class MarketInvoice(Identity):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             True if payment is to be paid by a Customer to accept a particular ErpQuote
@@ -45025,7 +45025,7 @@ class MarketInvoice(Identity):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Number of an invoice to be reference by this invoice.
@@ -45042,7 +45042,7 @@ class MarketInvoice(Identity):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Date and time when the invoice is issued.
@@ -45059,7 +45059,7 @@ class MarketInvoice(Identity):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Type of invoice transfer.
@@ -45076,7 +45076,7 @@ class MarketInvoice(Identity):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Total amount due on this invoice based on line items and applicable adjustments.
@@ -45095,7 +45095,7 @@ class MarketInvoice(Identity):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': '',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Kind of media by which the CustomerBillingInfo was delivered.
@@ -45113,7 +45113,7 @@ class MarketInvoice(Identity):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': '',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Kind of invoice (default is 'sales').
@@ -45137,7 +45137,7 @@ class MarketInvoiceLineItem(Identity):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'MarketInvoiceLineItem.ContainerMarketInvoiceLineItem',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             '''
@@ -45152,7 +45152,7 @@ class MarketInvoiceLineItem(Identity):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             General Ledger account code, shall be a valid combination.
@@ -45169,7 +45169,7 @@ class MarketInvoiceLineItem(Identity):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Date and time line item will be posted to the General Ledger.
@@ -45186,7 +45186,7 @@ class MarketInvoiceLineItem(Identity):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Amount due for this line item.
@@ -45203,7 +45203,7 @@ class MarketInvoiceLineItem(Identity):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Line item number on invoice statement.
@@ -45220,7 +45220,7 @@ class MarketInvoiceLineItem(Identity):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Version number of the bill run.
@@ -45237,7 +45237,7 @@ class MarketInvoiceLineItem(Identity):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Net line item charge amount.
@@ -45254,7 +45254,7 @@ class MarketInvoiceLineItem(Identity):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Previous line item charge amount.
@@ -45272,7 +45272,7 @@ class MarketInvoiceLineItem(Identity):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': '',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Kind of line item.
@@ -45290,7 +45290,7 @@ class MarketInvoiceLineItem(Identity):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': '',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Bill period for the line item.
@@ -45308,7 +45308,7 @@ class MarketInvoiceLineItem(Identity):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'MarketInvoiceLineItem.ComponentMarketInvoiceLineItems',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             '''
@@ -45324,7 +45324,7 @@ class MarketInvoiceLineItem(Identity):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'MarketInvoice.MarketInvoiceLineItems',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             '''
@@ -45352,7 +45352,7 @@ class MarketLedger(Identity):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'MarketLedgerEntry.MarketLedger',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             '''
@@ -45374,7 +45374,7 @@ class MarketLedgerEntry(Identity):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Account identifier for this entry.
@@ -45391,7 +45391,7 @@ class MarketLedgerEntry(Identity):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Date and time this entry was posted to the ledger.
@@ -45408,7 +45408,7 @@ class MarketLedgerEntry(Identity):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Date and time journal entry was recorded.
@@ -45425,7 +45425,7 @@ class MarketLedgerEntry(Identity):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The amount of the debit or credit for this account.
@@ -45443,7 +45443,7 @@ class MarketLedgerEntry(Identity):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': '',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Kind of account for this entry.
@@ -45461,7 +45461,7 @@ class MarketLedgerEntry(Identity):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'MarketLedger.MarketLedgerEntries',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             '''
@@ -45477,7 +45477,7 @@ class MarketLedgerEntry(Identity):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': '',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Status of ledger entry.
@@ -45504,7 +45504,7 @@ class MarketRegionResults(Identity):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'MarketProduct.MarketRegionResults',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             '''
@@ -45528,7 +45528,7 @@ class MarketResults(Identity):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'EnergyMarket.MarketResults',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             '''
@@ -45549,7 +45549,7 @@ class MeterInfo(Identity):
         'type': 'moved Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             True if electric metering function is supported.
@@ -45566,7 +45566,7 @@ class MeterInfo(Identity):
         'type': 'moved Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             True if gas metering function is supported.
@@ -45583,7 +45583,7 @@ class MeterInfo(Identity):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             True if a meter is capable of sending the notification ("last gasp") of
@@ -45602,7 +45602,7 @@ class MeterInfo(Identity):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             True if a meter is capable of remote checking ("poll") of its measurements.
@@ -45619,7 +45619,7 @@ class MeterInfo(Identity):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             True if a meter is capable of sending unsolicited measurement readings.
@@ -45636,7 +45636,7 @@ class MeterInfo(Identity):
         'type': 'moved Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             True if outage history function is supported.
@@ -45653,7 +45653,7 @@ class MeterInfo(Identity):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             True if a meter is capable of sending the notification of over voltage
@@ -45672,7 +45672,7 @@ class MeterInfo(Identity):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             True if a meter is capable of sending a notification when an over voltage
@@ -45691,7 +45691,7 @@ class MeterInfo(Identity):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             True if a meter is capable of remote checking ("ping") of its energization
@@ -45710,7 +45710,7 @@ class MeterInfo(Identity):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             True if a meter is capable of sending the notification of reenergization
@@ -45729,7 +45729,7 @@ class MeterInfo(Identity):
         'type': 'moved Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             True if pricing information is supported.
@@ -45746,7 +45746,7 @@ class MeterInfo(Identity):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The number of registers associated with a meter.
@@ -45763,7 +45763,7 @@ class MeterInfo(Identity):
         'type': 'moved Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             True if reverse flow function is supported.
@@ -45780,7 +45780,7 @@ class MeterInfo(Identity):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             True if a meter is capable of sending the notification of under voltage
@@ -45799,7 +45799,7 @@ class MeterInfo(Identity):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             True if a meter is capable of sending a notification when an under voltage
@@ -45818,7 +45818,7 @@ class MeterInfo(Identity):
         'type': 'moved Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             True if water metering function is supported.
@@ -45843,7 +45843,7 @@ class Name(Identity):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Master resource identifier issued by a model authority. The mRID is unique
@@ -45871,7 +45871,7 @@ class Name(Identity):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Shall be specified as an IETF BCP 47 language tag (e.g. en-US). Applies
@@ -45898,7 +45898,7 @@ class Name(Identity):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Any free text that used as a name or alternative identifier of the object.
@@ -45917,7 +45917,7 @@ class Name(Identity):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'IdentifiedObject.Name',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Identified object that this name designates.
@@ -45935,7 +45935,7 @@ class Name(Identity):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'NameType.Name',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Type of this name.
@@ -45953,7 +45953,7 @@ class Name(Identity):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'NamingAuthority.Name',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Authority responsible for managing this name.
@@ -45971,7 +45971,7 @@ class Name(Identity):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'IdentifiedObject.AlternativeIdentifier',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Identified object that this alternative identifier designates.
@@ -46005,7 +46005,7 @@ class NameType(Identity):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'Name.NameType',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             All names of this type.
@@ -46022,7 +46022,7 @@ class NameType(Identity):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Master resource identifier issued by a model authority. The mRID is unique
@@ -46050,7 +46050,7 @@ class NameType(Identity):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Description of the name type.
@@ -46068,7 +46068,7 @@ class NameType(Identity):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'NamingAuthority.NameType',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Authority responsible for managing this name type.
@@ -46093,7 +46093,7 @@ class NamingAuthority(Identity):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'Name.NamingAuthority',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             All names managed by this authority.
@@ -46111,7 +46111,7 @@ class NamingAuthority(Identity):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'NameType.NamingAuthority',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             All name types managed by this authority.
@@ -46128,7 +46128,7 @@ class NamingAuthority(Identity):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Master resource identifier issued by a model authority. The mRID is unique
@@ -46156,7 +46156,7 @@ class NamingAuthority(Identity):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Description of the naming authority.
@@ -46183,7 +46183,7 @@ class NonlinearShuntCompensatorPhasePoint(Identity):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The number of the section.
@@ -46200,7 +46200,7 @@ class NonlinearShuntCompensatorPhasePoint(Identity):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Total positive sequence shunt (charging) susceptance at section noted by
@@ -46219,7 +46219,7 @@ class NonlinearShuntCompensatorPhasePoint(Identity):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Total positive sequence shunt (charging) conductance at section noted by
@@ -46239,7 +46239,7 @@ class NonlinearShuntCompensatorPhasePoint(Identity):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'NonlinearShuntCompensatorPhase.NonlinearShuntCompensatorPhasePoints',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Non-linear shunt compensator phase owning this point.
@@ -46266,7 +46266,7 @@ class NonlinearShuntCompensatorPoint(Identity):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The number of the section.
@@ -46283,7 +46283,7 @@ class NonlinearShuntCompensatorPoint(Identity):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Total zero sequence shunt (charging) susceptance at section noted by sectionNumber.
@@ -46301,7 +46301,7 @@ class NonlinearShuntCompensatorPoint(Identity):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Total positive sequence shunt (charging) susceptance at section noted by
@@ -46320,7 +46320,7 @@ class NonlinearShuntCompensatorPoint(Identity):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Total zero sequence shunt (charging) conductance at section noted by sectionNumber.
@@ -46338,7 +46338,7 @@ class NonlinearShuntCompensatorPoint(Identity):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Total positive sequence shunt (charging) conductance at section noted by
@@ -46358,7 +46358,7 @@ class NonlinearShuntCompensatorPoint(Identity):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'NonlinearShuntCompensator.NonlinearShuntCompensatorPoints',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Non-linear shunt compensator owning this point.
@@ -46386,7 +46386,7 @@ class ObjectType(Identity):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The specialised type of an object when the instance object is serialised
@@ -46416,7 +46416,7 @@ class OperatingShare(Identity):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Percentage operational ownership between the pair (power system resource
@@ -46438,7 +46438,7 @@ class OperatingShare(Identity):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'OperatingParticipant.OperatingShare',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The operating participant having this share with the associated power system
@@ -46458,7 +46458,7 @@ class OperatingShare(Identity):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'PowerSystemResource.OperatingShare',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The power system resource to which the share applies.
@@ -46494,7 +46494,7 @@ class PhaseImpedanceData1(Identity):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The matrix entry's column number has a range of possible values from 1
@@ -46519,7 +46519,7 @@ class PhaseImpedanceData1(Identity):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The matrix entry's row number has a range of possible values from 1 to
@@ -46544,7 +46544,7 @@ class PhaseImpedanceData1(Identity):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Susceptance matrix entry value, per length of unit.
@@ -46561,7 +46561,7 @@ class PhaseImpedanceData1(Identity):
         'type': 'enumeration Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Refer to the class description.
@@ -46578,7 +46578,7 @@ class PhaseImpedanceData1(Identity):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Conductance matrix entry value, per length of unit.
@@ -46595,7 +46595,7 @@ class PhaseImpedanceData1(Identity):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Resistance matrix entry value, per length of unit.
@@ -46612,7 +46612,7 @@ class PhaseImpedanceData1(Identity):
         'type': 'enumeration Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Refer to the class description.
@@ -46629,7 +46629,7 @@ class PhaseImpedanceData1(Identity):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Reactance matrix entry value, per length of unit.
@@ -46647,7 +46647,7 @@ class PhaseImpedanceData1(Identity):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'PerLengthPhaseImpedance.PhaseImpedanceData',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Conductor phase impedance to which this data belongs.
@@ -46677,7 +46677,7 @@ class PriceDescriptor(Identity):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The type of price being described. In general, the priceType will either
@@ -46701,7 +46701,7 @@ class PriceDescriptor(Identity):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': '',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The time frame for the price, using the standard conventions associated
@@ -46721,7 +46721,7 @@ class PriceDescriptor(Identity):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': '',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The "kind" of price being described. In general, the priceType will either
@@ -46750,7 +46750,7 @@ class Priority(Identity):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Justification for 'rank'.
@@ -46767,7 +46767,7 @@ class Priority(Identity):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Priority level; lower number means high priority inside the same 'type'.
@@ -46784,7 +46784,7 @@ class Priority(Identity):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Type describing 'rank'; e.g., high, emergency, etc.
@@ -46808,7 +46808,7 @@ class Quality61850(Identity):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Measurement value may be incorrect due to a reference being out of calibration.
@@ -46826,7 +46826,7 @@ class Quality61850(Identity):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Value has been replaced by State Estimator. estimatorReplaced is not an
@@ -46845,7 +46845,7 @@ class Quality61850(Identity):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             This identifier indicates that a supervision function has detected an internal
@@ -46864,7 +46864,7 @@ class Quality61850(Identity):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Measurement value is old and possibly invalid, as it has not been successfully
@@ -46883,7 +46883,7 @@ class Quality61850(Identity):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Measurement value is blocked and hence unavailable for transmission.
@@ -46900,7 +46900,7 @@ class Quality61850(Identity):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             To prevent some overload of the communication it is sensible to detect
@@ -46943,7 +46943,7 @@ class Quality61850(Identity):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Measurement value is beyond a predefined range of value.
@@ -46960,7 +46960,7 @@ class Quality61850(Identity):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Measurement value is beyond the capability of being represented properly.
@@ -46981,7 +46981,7 @@ class Quality61850(Identity):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             A correlation function has detected that the value is not consistent with
@@ -47000,7 +47000,7 @@ class Quality61850(Identity):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Measurement value is transmitted for test purposes.
@@ -47018,7 +47018,7 @@ class Quality61850(Identity):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': '',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Source gives information related to the origin of a value. The value may
@@ -47038,7 +47038,7 @@ class Quality61850(Identity):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': '',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Validity of the measurement value.
@@ -47065,7 +47065,7 @@ class MeasurementValueQuality(Quality61850):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'MeasurementValue.MeasurementValueQuality',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             A MeasurementValue has a MeasurementValueQuality associated with it.
@@ -47083,7 +47083,7 @@ class MeasurementValueQuality(Quality61850):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'MeasurementValue.MeasurementValueQuality',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             A MeasurementValue has a MeasurementValueQuality associated with it.
@@ -47107,7 +47107,7 @@ class RegularTimePoint(Identity):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The position of the regular time point in the sequence. Note that time
@@ -47136,7 +47136,7 @@ class RegularTimePoint(Identity):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The first value at the time. The meaning of the value is defined by the
@@ -47155,7 +47155,7 @@ class RegularTimePoint(Identity):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The second value at the time. The meaning of the value is defined by the
@@ -47174,7 +47174,7 @@ class RegularTimePoint(Identity):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The third value at the time. The meaning of the value is defined by the
@@ -47194,7 +47194,7 @@ class RegularTimePoint(Identity):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'RegularIntervalSchedule.TimePoints',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Regular interval schedule containing this time point.
@@ -47228,7 +47228,7 @@ class RelativeHeight(Identity):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'PositionPoint.RelativeHeight',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             '''
@@ -47243,7 +47243,7 @@ class RelativeHeight(Identity):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The height from which vertical offset is measured. Examples include �Ground
@@ -47262,7 +47262,7 @@ class RelativeHeight(Identity):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Distance above (positive value) or below (negative value) the specified
@@ -47290,7 +47290,7 @@ class ResourceCapacity(Identity):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             default capacity
@@ -47307,7 +47307,7 @@ class ResourceCapacity(Identity):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             maximum capacity
@@ -47324,7 +47324,7 @@ class ResourceCapacity(Identity):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             minimum capacity
@@ -47342,7 +47342,7 @@ class ResourceCapacity(Identity):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': '',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             capacity type
@@ -47374,7 +47374,7 @@ class ResourceCapacity(Identity):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': '',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Unit Multiplier selection for the capacity values.
@@ -47392,7 +47392,7 @@ class ResourceCapacity(Identity):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': '',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Unit selection for the capacity values.
@@ -47417,7 +47417,7 @@ class ResourceVerifiableCosts(Identity):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'RegisteredResource.ResourceVerifiableCosts',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             '''
@@ -47439,7 +47439,7 @@ class SSSCSimulationSettings(Identity):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'SSSCController.SSSCSimulationSettings',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The controller that uses these simulation settings.
@@ -47456,7 +47456,7 @@ class SSSCSimulationSettings(Identity):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Master resource identifier issued by a model authority. The mRID is unique
@@ -47484,7 +47484,7 @@ class SSSCSimulationSettings(Identity):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Defines if the estimate is considering the dI/dV sensitivity (true) instead
@@ -47503,7 +47503,7 @@ class SSSCSimulationSettings(Identity):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Maximum number of iterations before claiming an open line condition. The
@@ -47524,7 +47524,7 @@ class SSSCSimulationSettings(Identity):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Reactance delta for the solution algorithm. The solution �outer-loop� algorithm
@@ -47547,7 +47547,7 @@ class SSSCSimulationSettings(Identity):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Maximum value of the reactance correction applied between Iterations of
@@ -47568,7 +47568,7 @@ class SSSCSimulationSettings(Identity):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Maximum mismatch tolerance of voltage target value. If mismatch is lower,
@@ -47597,7 +47597,7 @@ class ScheduledEventData(Identity):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'ScheduledEvent.ScheduledEventData',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             All scheduled events with this specification.
@@ -47615,7 +47615,7 @@ class ScheduledEventData(Identity):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': '',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Estimated date and time for activity execution (with earliest possibility
@@ -47635,7 +47635,7 @@ class ScheduledEventData(Identity):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'InspectionDataSet.AccordingToSchedules',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             '''
@@ -47651,7 +47651,7 @@ class ScheduledEventData(Identity):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': '',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Requested date and time interval for activity execution.
@@ -47669,7 +47669,7 @@ class ScheduledEventData(Identity):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': '',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Status of the scheduled event.
@@ -47695,7 +47695,7 @@ class ShortCircuitResponse(Identity):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Current output based on voltage measured at the device terminal. The response
@@ -47715,7 +47715,7 @@ class ShortCircuitResponse(Identity):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Angle of the current output relative to the voltage
@@ -47732,7 +47732,7 @@ class ShortCircuitResponse(Identity):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Voltage measured at the device terminal
@@ -47750,7 +47750,7 @@ class ShortCircuitResponse(Identity):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'ConductingAssetInfo.ShortCircuitRespone',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             '''
@@ -47773,7 +47773,7 @@ class Site(Identity):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'Building.Site',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             '''
@@ -47789,7 +47789,7 @@ class Site(Identity):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'Cadastre.Site',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             '''
@@ -47805,7 +47805,7 @@ class Site(Identity):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'Location.Site',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             '''
@@ -47821,7 +47821,7 @@ class Site(Identity):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'PhysicalAddress.Site',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             '''
@@ -47837,7 +47837,7 @@ class Site(Identity):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'Location.Site',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             '''
@@ -47853,7 +47853,7 @@ class Site(Identity):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'PhysicalAddress.Site',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             '''
@@ -47881,7 +47881,7 @@ class SvDCPowerFlow(StateVariable):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The active power flow. Load sign convention is used, i.e. positive sign
@@ -47902,7 +47902,7 @@ class SvDCPowerFlow(StateVariable):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'DCTerminal.SvDCPowerFlow',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The DC terminal associated with the DC power flow state variable.
@@ -47925,7 +47925,7 @@ class SvDCVoltage(StateVariable):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             State variable for direct current voltage.
@@ -47943,7 +47943,7 @@ class SvDCVoltage(StateVariable):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'DCTopologicalNode.SvDCVoltage',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The DC topological node associated with the DC voltage state.
@@ -47970,7 +47970,7 @@ class SvInjection(StateVariable):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The active power mismatch between calculated injection and initial injection.
@@ -47989,7 +47989,7 @@ class SvInjection(StateVariable):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The reactive power mismatch between calculated injection and initial injection.
@@ -48009,7 +48009,7 @@ class SvInjection(StateVariable):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': '',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The terminal phase at which the connection is applied. If missing, the
@@ -48029,7 +48029,7 @@ class SvInjection(StateVariable):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'TopologicalNode.SvInjection',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The topological node associated with the flow injection state variable.
@@ -48053,7 +48053,7 @@ class SvPowerFlow(StateVariable):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The active power flow. Load sign convention is used, i.e. positive sign
@@ -48073,7 +48073,7 @@ class SvPowerFlow(StateVariable):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The reactive power flow. Load sign convention is used, i.e. positive sign
@@ -48094,7 +48094,7 @@ class SvPowerFlow(StateVariable):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': '',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The individual phase of the flow. If unspecified, then assumed to be balanced
@@ -48114,7 +48114,7 @@ class SvPowerFlow(StateVariable):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'Terminal.SvPowerFlow',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The terminal associated with the power flow state variable.
@@ -48137,7 +48137,7 @@ class SvShuntCompensatorSections(StateVariable):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The number of sections in service as a continuous variable. The attribute
@@ -48158,7 +48158,7 @@ class SvShuntCompensatorSections(StateVariable):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': '',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The terminal phase at which the connection is applied. If missing, the
@@ -48178,7 +48178,7 @@ class SvShuntCompensatorSections(StateVariable):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'ShuntCompensator.SvShuntCompensatorSections',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The shunt compensator for which the state applies.
@@ -48201,7 +48201,7 @@ class SvStatus(StateVariable):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The in service status as a result of topology processing. It indicates
@@ -48226,7 +48226,7 @@ class SvStatus(StateVariable):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': '',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The individual phase status. If the attribute is unspecified, then three
@@ -48246,7 +48246,7 @@ class SvStatus(StateVariable):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'ConductingEquipment.SvStatus',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The conducting equipment associated with the status state variable.
@@ -48269,7 +48269,7 @@ class SvSwitch(StateVariable):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The attribute tells if the computed state of the switch is considered open.
@@ -48288,7 +48288,7 @@ class SvSwitch(StateVariable):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': '',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The terminal phase at which the connection is applied. If missing, the
@@ -48308,7 +48308,7 @@ class SvSwitch(StateVariable):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'Switch.SvSwitch',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The switch associated with the switch state.
@@ -48332,7 +48332,7 @@ class SvTapStep(StateVariable):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'TapChanger.SvTapStep',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The tap changer associated with the tap step state.
@@ -48349,7 +48349,7 @@ class SvTapStep(StateVariable):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The floating point tap position. This is not the tap ratio, but rather
@@ -48372,7 +48372,7 @@ class SvTapStep(StateVariable):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'TapChanger.SvTapStep',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The tap changer associated with the tap step state.
@@ -48395,7 +48395,7 @@ class SvVoltage(StateVariable):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The voltage angle of the topological node complex voltage with respect
@@ -48414,7 +48414,7 @@ class SvVoltage(StateVariable):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The voltage magnitude at the topological node. The attribute shall be a
@@ -48434,7 +48434,7 @@ class SvVoltage(StateVariable):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': '',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             If specified the voltage is the line to ground voltage of the individual
@@ -48454,7 +48454,7 @@ class SvVoltage(StateVariable):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'TopologicalNode.SvVoltage',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The topological node associated with the voltage state.
@@ -48478,7 +48478,7 @@ class Status(Identity):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Date and time for which status 'value' applies.
@@ -48495,7 +48495,7 @@ class Status(Identity):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Reason code or explanation for why an object went to the current status
@@ -48514,7 +48514,7 @@ class Status(Identity):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Pertinent information regarding the current 'value', as free form text.
@@ -48531,7 +48531,7 @@ class Status(Identity):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Status value at 'dateTime'; prior status changes may have been kept in
@@ -48558,7 +48558,7 @@ class StepLimitTablePoint(Identity):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The factor which is used to multiply the value of the operational limit
@@ -48577,7 +48577,7 @@ class StepLimitTablePoint(Identity):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The tap step.
@@ -48595,7 +48595,7 @@ class StepLimitTablePoint(Identity):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'StepOperationalLimitTable.StepLimitTablePoint',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The table of this point.
@@ -48620,7 +48620,7 @@ class StreetDetail(Identity):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             First line of a free form address or some additional address information
@@ -48639,7 +48639,7 @@ class StreetDetail(Identity):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             (if applicable) Second line of a free form address.
@@ -48656,7 +48656,7 @@ class StreetDetail(Identity):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             (if applicable) Third line of a free form address.
@@ -48673,7 +48673,7 @@ class StreetDetail(Identity):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             (if applicable) In certain cases the physical location of the place of
@@ -48696,7 +48696,7 @@ class StreetDetail(Identity):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             (if applicable) Utilities often make use of external reference systems,
@@ -48717,7 +48717,7 @@ class StreetDetail(Identity):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The identification by name or number, expressed as text, of the floor in
@@ -48736,7 +48736,7 @@ class StreetDetail(Identity):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Name of the street.
@@ -48753,7 +48753,7 @@ class StreetDetail(Identity):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Designator of the specific location on the street.
@@ -48770,7 +48770,7 @@ class StreetDetail(Identity):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Prefix to the street name. For example: North, South, East, West.
@@ -48787,7 +48787,7 @@ class StreetDetail(Identity):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Suffix to the street name. For example: North, South, East, West.
@@ -48804,7 +48804,7 @@ class StreetDetail(Identity):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Number of the apartment or suite.
@@ -48821,7 +48821,7 @@ class StreetDetail(Identity):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Type of street. Examples include: street, circle, boulevard, avenue, road,
@@ -48840,7 +48840,7 @@ class StreetDetail(Identity):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             True if this street is within the legal geographical boundaries of the
@@ -48868,7 +48868,7 @@ class SysLoadDistributionFactor(Identity):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'MktConnectivityNode.SysLoadDistribuFactor',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             '''
@@ -48889,7 +48889,7 @@ class TCSCCompensationPoint(Identity):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Master resource identifier issued by a model authority. The mRID is unique
@@ -48917,7 +48917,7 @@ class TCSCCompensationPoint(Identity):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The number of the section.
@@ -48934,7 +48934,7 @@ class TCSCCompensationPoint(Identity):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The compensation impedance for this compensation point.
@@ -48952,7 +48952,7 @@ class TCSCCompensationPoint(Identity):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'ThyristorControlledSeriesCompensator.TCSCCompensationPoint',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             TCSC that has different compensation points.
@@ -48976,7 +48976,7 @@ class TapChangerTablePoint(Identity):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The voltage at the tap step divided by rated voltage of the transformer
@@ -49001,7 +49001,7 @@ class TapChangerTablePoint(Identity):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The tap step.
@@ -49018,7 +49018,7 @@ class TapChangerTablePoint(Identity):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The magnetizing branch susceptance deviation as a percentage of nominal
@@ -49045,7 +49045,7 @@ class TapChangerTablePoint(Identity):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The magnetizing branch conductance deviation as a percentage of nominal
@@ -49074,7 +49074,7 @@ class TapChangerTablePoint(Identity):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The resistance deviation as a percentage of nominal value. The actual reactance
@@ -49102,7 +49102,7 @@ class TapChangerTablePoint(Identity):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The series reactance deviation as a percentage of nominal value. The actual
@@ -49136,7 +49136,7 @@ class PhaseTapChangerTablePoint(TapChangerTablePoint):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The angle difference in degrees. A positive value indicates a positive
@@ -49158,7 +49158,7 @@ class PhaseTapChangerTablePoint(TapChangerTablePoint):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'PhaseTapChangerTable.PhaseTapChangerTablePoint',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The table of this point.
@@ -49182,7 +49182,7 @@ class RatioTapChangerTablePoint(TapChangerTablePoint):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'RatioTapChangerTable.RatioTapChangerTablePoint',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Table of this point.
@@ -49207,7 +49207,7 @@ class TownDetail(Identity):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Town code.
@@ -49224,7 +49224,7 @@ class TownDetail(Identity):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Name of the country.
@@ -49241,7 +49241,7 @@ class TownDetail(Identity):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Town name.
@@ -49258,7 +49258,7 @@ class TownDetail(Identity):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Town section. For example, it is common for there to be 36 sections per
@@ -49277,7 +49277,7 @@ class TownDetail(Identity):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Name of the state or province.
@@ -49302,7 +49302,7 @@ class UserAttribute(Identity):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Name of an attribute.
@@ -49319,7 +49319,7 @@ class UserAttribute(Identity):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Sequence number for this attribute in a list of attributes.
@@ -49337,7 +49337,7 @@ class UserAttribute(Identity):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'Specification.AssetProperites',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             '''
@@ -49353,7 +49353,7 @@ class UserAttribute(Identity):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'Specification.Ratings',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             '''
@@ -49369,7 +49369,7 @@ class UserAttribute(Identity):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'Transaction.UserAttributes',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Transaction for which this snapshot has been recorded.
@@ -49387,7 +49387,7 @@ class UserAttribute(Identity):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': '',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Value of an attribute, including unit information.
@@ -49419,7 +49419,7 @@ class Version(Identity):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Date of this version.
@@ -49436,7 +49436,7 @@ class Version(Identity):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Major release level for this version.
@@ -49453,7 +49453,7 @@ class Version(Identity):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Minor release level for this version.
@@ -49470,7 +49470,7 @@ class Version(Identity):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Revision level for this version.
@@ -49494,7 +49494,7 @@ class WirePhaseInfo(Identity):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': '',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Phase information.
@@ -49512,7 +49512,7 @@ class WirePhaseInfo(Identity):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'WireAssemblyInfo.WirePhaseInfo',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Wire assembly information using this wire phase information.
@@ -49530,7 +49530,7 @@ class WirePhaseInfo(Identity):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'WireInfo.WirePhaseInfo',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Wire information contributing to this wire phase information.
@@ -49548,7 +49548,7 @@ class WirePhaseInfo(Identity):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'WirePosition.WirePhaseInfo',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Wire position with this wire phase information.
@@ -54730,7 +54730,7 @@ class StreetAddress(Identity):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The language in which the address is specified, using ISO 639-1 two digit
@@ -54749,7 +54749,7 @@ class StreetAddress(Identity):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Post office box.
@@ -54766,7 +54766,7 @@ class StreetAddress(Identity):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Postal code for the address.
@@ -54784,7 +54784,7 @@ class StreetAddress(Identity):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': '',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Status of this address.
@@ -54802,7 +54802,7 @@ class StreetAddress(Identity):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': '',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Street detail.
@@ -54820,7 +54820,7 @@ class StreetAddress(Identity):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': '',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             Town detail.
