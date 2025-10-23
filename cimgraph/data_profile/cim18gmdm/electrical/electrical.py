@@ -1212,6 +1212,39 @@ class SeriesCompensator(ConductingEquipment):
     A Series Compensator is a series capacitor or reactor or an AC transmission
     line without charging susceptance. It is a two terminal device.
     '''
+    r: Optional[ float | Resistance ] = field(
+        default=None,
+        metadata={
+        'type': 'Attribute',
+        'minOccurs': '0',
+        'maxOccurs': '1',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
+        'docstring':
+            '''
+            Positive sequence resistance.
+            '''
+
+        })
+    '''
+    Positive sequence resistance.
+    '''
+    
+    x: Optional[ float | Reactance ] = field(
+        default=None,
+        metadata={
+        'type': 'Attribute',
+        'minOccurs': '0',
+        'maxOccurs': '1',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
+        'docstring':
+            '''
+            Positive sequence reactance.
+            '''
+
+        })
+    '''
+    Positive sequence reactance.
+    '''
 
 @dataclass(repr=False)
 class Switch(ConductingEquipment):
