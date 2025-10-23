@@ -67,7 +67,7 @@ def write_xml(network: GraphModel, filename: str, namespaces: dict=None, write_i
         counter = 0
         for obj in network.list_by_class(root_class):
             cim_class = obj.__class__
-            header = f'<cim:{cim_class.__name__} {rdf_header}{obj.uri()}">\n'
+            header = f'<cim:{cim_class.__name__} {rdf_header}{obj.uri().lower()}">\n'
             f.write(header)
             parent_classes = list(cim_class.__mro__)
             parent_classes.pop(len(parent_classes) - 1)
@@ -75,7 +75,7 @@ def write_xml(network: GraphModel, filename: str, namespaces: dict=None, write_i
                 for attribute in parent.__annotations__.keys():
                     # Skip over Identity.identifier attribute
                     if attribute == 'identifier' and write_identifier:
-                        row = f'  <cim:Identity.identifier>{obj.uri()}</cim:Identity.identifier>\n'
+                        row = f'  <cim:Identity.identifier>{obj.uri().lower()}</cim:Identity.identifier>\n'
                         f.write(row)
                         continue
                     attribute_type = cim_class.__dataclass_fields__[attribute].type
@@ -110,12 +110,12 @@ def write_xml(network: GraphModel, filename: str, namespaces: dict=None, write_i
                                             row = f'  <{ns_prefix}:{parent.__name__}.{attribute}>{str(value)}</{ns_prefix}:{parent.__name__}.{attribute}>\n'
                                             f.write(row)
                                         else:
-                                            resource = f'rdf:resource="{rdf_resource}{value.uri()}"'
+                                            resource = f'rdf:resource="{rdf_resource}{value.uri().lower()}"'
                                             row = f'  <{ns_prefix}:{parent.__name__}.{attribute} {resource}/>\n'
                                             f.write(row)
                                 else:
                                     # try:
-                                        resource = f'rdf:resource="{rdf_resource}{edge.uri()}"'
+                                        resource = f'rdf:resource="{rdf_resource}{edge.uri().lower()}"'
                                         row = f'  <{ns_prefix}:{parent.__name__}.{attribute} {resource}/>\n'
                                         f.write(row)
                                     # except:

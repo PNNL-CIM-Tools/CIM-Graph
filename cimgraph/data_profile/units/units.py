@@ -17,14 +17,17 @@ ureg.load_definitions(units_file)
 
 
 class CIMUnit():
-    value: Optional[float]
+    value: Optional[float]|CIMUnit
     unit: Optional[UnitSymbol]
     multiplier: Optional[UnitMultiplier]
 
-    def __pint__(self, value:float, input_unit:str, input_multiplier:str=None):
+    def __pint__(self, value:float|CIMUnit, input_unit:str, input_multiplier:str=None):
 
         if input_multiplier is not None:
             input_unit = input_multiplier + input_unit
+            
+        if isinstance(value, CIMUnit):
+            value = value.quantity.to(input_unit).magnitude
 
         if self.multiplier.value != 'none':
             self.quantity = ureg.Quantity(value=float(value), units=self.multiplier.value+input_unit)
@@ -38,3 +41,13 @@ class CIMUnit():
 
     def __repr__(self):
         return str(self.quantity)
+    
+    def __float__(self):
+        return float(self.quantity.magnitude)
+    
+    def __int__(self):
+        return int(self.quantity.magnitude)
+    
+    def to(self, unit:str):
+        return self.quantity.to(unit).magnitude
+        

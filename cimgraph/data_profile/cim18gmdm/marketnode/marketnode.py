@@ -21,7 +21,7 @@ class CIMStereotype(Enum):
     Primitive = 'Primitive'
 
 BASE_URI = 'http://www.ucaiug.org/gmdm/market/node#'
-ONTOLOGY_URI = 'http://cim.ucaiug.io/ns#'
+ONTOLOGY_URI = 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#'
 
 
 @dataclass(repr=False)
@@ -37,7 +37,7 @@ class IdentifiedObject(Identity):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The description is a free human readable text describing or naming the
@@ -57,7 +57,7 @@ class IdentifiedObject(Identity):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             The name is any free human readable and possibly non unique text naming
@@ -86,7 +86,7 @@ class ConnectivityNode(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'IndividualPnode.ConnectivityNode',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             '''
@@ -117,7 +117,7 @@ class IndividualPnode(Pnode):
         'minOccurs': '1',
         'maxOccurs': '1',
         'inverse': 'ConnectivityNode.IndividualPnode',
-        'namespace': 'http://cim.ucaiug.io/ns#',
+        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
         'docstring':
             '''
             '''
