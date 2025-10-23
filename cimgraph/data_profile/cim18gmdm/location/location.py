@@ -22,7 +22,7 @@ class CIMStereotype(Enum):
     ShadowExtension = 'ShadowExtension'
 
 BASE_URI = 'http://www.ucaiug.org/gmdm/geographical_location#'
-ONTOLOGY_URI = 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#'
+ONTOLOGY_URI = 'http://cim.ucaiug.io/CIM101/draft#'
 
 @dataclass(repr=False)
 class GeometricElement(Identity):
@@ -66,7 +66,7 @@ class PositionPoint(GeometricElement):
         'type': 'Attribute',
         'minOccurs': '1',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'docstring':
             '''
             X axis position.
@@ -83,7 +83,7 @@ class PositionPoint(GeometricElement):
         'type': 'Attribute',
         'minOccurs': '1',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'docstring':
             '''
             Y axis position.
@@ -100,7 +100,7 @@ class PositionPoint(GeometricElement):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'docstring':
             '''
             (if applicable) Z axis position.
@@ -140,7 +140,7 @@ class IdentifiedObject(Identity):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'docstring':
             '''
             The description is a free human readable text describing or naming the
@@ -160,7 +160,7 @@ class IdentifiedObject(Identity):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'docstring':
             '''
             The name is any free human readable and possibly non unique text naming
@@ -187,7 +187,7 @@ class CoordinateSystem(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'Location.CoordinateSystem',
-        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'docstring':
             '''
             All locations described with position points in this coordinate system.
@@ -230,7 +230,7 @@ class Location(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'PowerSystemResource.Location',
-        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'docstring':
             '''
             All power system resources at this location.
@@ -248,7 +248,7 @@ class Location(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'CoordinateSystem.Location',
-        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'docstring':
             '''
             Coordinate system used to describe position points of this location.
@@ -275,7 +275,7 @@ class PowerSystemResource(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'Location.PowerSystemResources',
-        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'docstring':
             '''
             Location of this power system resource.

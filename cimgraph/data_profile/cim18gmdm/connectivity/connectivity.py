@@ -25,7 +25,7 @@ class CIMStereotype(Enum):
     gmdm = 'gmdm'
 
 BASE_URI = 'http://www.ucaiug.org/gmdm/connectivity/unbalanced#'
-ONTOLOGY_URI = 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#'
+ONTOLOGY_URI = 'http://cim.ucaiug.io/CIM101/draft#'
 
 @dataclass(repr=False)
 class Identity(Identity):
@@ -39,7 +39,7 @@ class Identity(Identity):
         'type': 'Attribute',
         'minOccurs': '1',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'docstring':
             '''
             A universally unique object identifier. Used to uniquely identify persistent
@@ -65,7 +65,7 @@ class IdentifiedObject(Identity):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'docstring':
             '''
             The description is a free human readable text describing or naming the
@@ -85,7 +85,7 @@ class IdentifiedObject(Identity):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'docstring':
             '''
             The name is any free human readable and possibly non unique text naming
@@ -112,7 +112,7 @@ class ACDCTerminal(IdentifiedObject):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'docstring':
             '''
             The orientation of the terminal connections for a multiple terminal conducting
@@ -144,7 +144,7 @@ class Terminal(ACDCTerminal):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'TransformerEnd.Terminal',
-        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'docstring':
             '''
             All transformer ends connected at this terminal.
@@ -178,7 +178,7 @@ class Terminal(ACDCTerminal):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'ConductingEquipment.Terminals',
-        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'docstring':
             '''
             The conducting equipment of the terminal. Conducting equipment have terminals
@@ -200,7 +200,7 @@ class Terminal(ACDCTerminal):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'ConnectivityNode.Terminals',
-        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'docstring':
             '''
             The connectivity node to which this terminal connects with zero impedance.
@@ -218,7 +218,7 @@ class Terminal(ACDCTerminal):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'Feeder.NormalHeadTerminal',
-        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'docstring':
             '''
             The feeder that this terminal normally feeds. Only specified for the terminals
@@ -246,7 +246,7 @@ class BaseVoltage(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'ConductingEquipment.BaseVoltage',
-        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'docstring':
             '''
             All conducting equipment with this base voltage. Use only when there is
@@ -268,7 +268,7 @@ class BaseVoltage(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'TransformerEnd.BaseVoltage',
-        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'docstring':
             '''
             Transformer ends at the base voltage. This is essential for PU calculation.
@@ -286,7 +286,7 @@ class BaseVoltage(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'VoltageLevel.BaseVoltage',
-        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'docstring':
             '''
             The voltage levels having this base voltage.
@@ -303,7 +303,7 @@ class BaseVoltage(IdentifiedObject):
         'type': 'Attribute',
         'minOccurs': '1',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'docstring':
             '''
             The power system resource's base voltage, expressed on a phase-to-phase
@@ -331,7 +331,7 @@ class ConnectivityNode(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'Terminal.ConnectivityNode',
-        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'docstring':
             '''
             Terminals interconnected with zero impedance at a this connectivity node.
@@ -370,7 +370,7 @@ class ACLineSegmentPhase(PowerSystemResource):
         'type': 'enumeration Attribute',
         'minOccurs': '1',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'docstring':
             '''
             Phase identifies the phase or neutral connection of the conductor at both
@@ -390,7 +390,7 @@ class ACLineSegmentPhase(PowerSystemResource):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'ACLineSegment.ACLineSegmentPhases',
-        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'docstring':
             '''
             The line segment to which the phase belongs.
@@ -421,7 +421,7 @@ class EquipmentContainer(ConnectivityNodeContainer):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'Equipment.AdditionalEquipmentContainer',
-        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'docstring':
             '''
             The additonal contained equipment. The equipment belong to the equipment
@@ -449,7 +449,7 @@ class EquipmentContainer(ConnectivityNodeContainer):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'Equipment.EquipmentContainer',
-        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'docstring':
             '''
             Contained equipment.
@@ -477,7 +477,7 @@ class Feeder(EquipmentContainer):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'Terminal.NormalHeadFeeder',
-        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'docstring':
             '''
             The normal head terminal or terminals of the feeder.
@@ -495,7 +495,7 @@ class Feeder(EquipmentContainer):
         'minOccurs': '1',
         'maxOccurs': '1',
         'inverse': 'Substation.NormalEnergizedFeeder',
-        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'docstring':
             '''
             The substation that nominally energizes the feeder. Also used for naming
@@ -532,7 +532,7 @@ class Substation(EquipmentContainer):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'Feeder.NormalEnergizingSubstation',
-        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'docstring':
             '''
             The normal energized feeders of the substation. Also used for naming purposes.
@@ -551,7 +551,7 @@ class Substation(EquipmentContainer):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'VoltageLevel.Substation',
-        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'docstring':
             '''
             The voltage levels within this substation.
@@ -579,7 +579,7 @@ class VoltageLevel(EquipmentContainer):
         'minOccurs': '1',
         'maxOccurs': '1',
         'inverse': 'BaseVoltage.VoltageLevel',
-        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'docstring':
             '''
             The base voltage used for all equipment within the voltage level.
@@ -597,7 +597,7 @@ class VoltageLevel(EquipmentContainer):
         'minOccurs': '1',
         'maxOccurs': '1',
         'inverse': 'Substation.VoltageLevels',
-        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'docstring':
             '''
             The substation of the voltage level.
@@ -621,7 +621,7 @@ class EnergyConsumerPhase(PowerSystemResource):
         'type': 'enumeration Attribute',
         'minOccurs': '1',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'docstring':
             '''
             Phase of this energy consumer component. If the energy consumer is wye
@@ -647,7 +647,7 @@ class EnergyConsumerPhase(PowerSystemResource):
         'minOccurs': '1',
         'maxOccurs': '1',
         'inverse': 'EnergyConsumer.EnergyConsumerPhase',
-        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'docstring':
             '''
             The energy consumer to which this phase belongs.
@@ -670,7 +670,7 @@ class Equipment(PowerSystemResource):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'docstring':
             '''
             The aggregate flag provides an alternative way of representing an aggregated
@@ -708,7 +708,7 @@ class Equipment(PowerSystemResource):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'docstring':
             '''
             Specifies the availability of the equipment under normal operating conditions.
@@ -733,7 +733,7 @@ class Equipment(PowerSystemResource):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'EquipmentContainer.AdditionalGroupedEquipment',
-        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'docstring':
             '''
             Additional equipment container beyond the primary equipment container.
@@ -755,7 +755,7 @@ class Equipment(PowerSystemResource):
         'minOccurs': '1',
         'maxOccurs': '1',
         'inverse': 'EquipmentContainer.Equipments',
-        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'docstring':
             '''
             Container of this equipment.
@@ -780,7 +780,7 @@ class ConductingEquipment(Equipment):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'Terminal.ConductingEquipment',
-        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'docstring':
             '''
             Conducting equipment have terminals that may be connected to other conducting
@@ -801,7 +801,7 @@ class ConductingEquipment(Equipment):
         'minOccurs': '1',
         'maxOccurs': '1',
         'inverse': 'BaseVoltage.ConductingEquipment',
-        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'docstring':
             '''
             Base voltage of this conducting equipment. Use only when there is no voltage
@@ -878,7 +878,7 @@ class ACLineSegment(Conductor):
         'minOccurs': '0',
         'maxOccurs': '4',
         'inverse': 'ACLineSegmentPhase.ACLineSegment',
-        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'docstring':
             '''
             The line segment phases which belong to the line segment.
@@ -933,7 +933,7 @@ class EnergyConsumer(EnergyConnection):
         'minOccurs': '0',
         'maxOccurs': '3',
         'inverse': 'EnergyConsumerPhase.EnergyConsumer',
-        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'docstring':
             '''
             The individual phase models for this energy consumer.
@@ -950,7 +950,7 @@ class EnergyConsumer(EnergyConnection):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'docstring':
             '''
             Number of individual customers represented by this demand.
@@ -967,7 +967,7 @@ class EnergyConsumer(EnergyConnection):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'docstring':
             '''
             Required for Yn and I connections (as represented by EnergyConsumer.phaseConnection).
@@ -987,7 +987,7 @@ class EnergyConsumer(EnergyConnection):
         'minOccurs': '1',
         'maxOccurs': '1',
         'inverse': '',
-        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'docstring':
             '''
             The type of phase connection, such as wye or delta.
@@ -1028,7 +1028,7 @@ class PowerElectronicsConnection(RegulatingCondEq):
         'minOccurs': '0',
         'maxOccurs': '3',
         'inverse': 'PowerElectronicsConnectionPhase.PowerElectronicsConnection',
-        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'docstring':
             '''
             The individual phases models for the power electronics connection.
@@ -1079,7 +1079,7 @@ class ShuntCompensator(RegulatingCondEq):
         'minOccurs': '0',
         'maxOccurs': '3',
         'inverse': 'ShuntCompensatorPhase.ShuntCompensator',
-        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'docstring':
             '''
             The individual phases models for the shunt compensator.
@@ -1096,7 +1096,7 @@ class ShuntCompensator(RegulatingCondEq):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'docstring':
             '''
             Required for Yn and I connections (as represented by ShuntCompensator.phaseConnection).
@@ -1116,7 +1116,7 @@ class ShuntCompensator(RegulatingCondEq):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': '',
-        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'docstring':
             '''
             The type of phase connection, such as wye or delta.
@@ -1161,7 +1161,7 @@ class PowerTransformer(ConductingEquipment):
         'minOccurs': '1',
         'maxOccurs': '3',
         'inverse': 'PowerTransformerEnd.PowerTransformer',
-        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'docstring':
             '''
             The ends of this power transformer.
@@ -1179,7 +1179,7 @@ class PowerTransformer(ConductingEquipment):
         'minOccurs': '0',
         'maxOccurs': '3',
         'inverse': 'TransformerTank.PowerTransformer',
-        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'docstring':
             '''
             All transformers that belong to this bank.
@@ -1196,7 +1196,7 @@ class PowerTransformer(ConductingEquipment):
         'type': 'Attribute',
         'minOccurs': '1',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'docstring':
             '''
             Vector group of the transformer for protective relaying, e.g., Dyn1. For
@@ -1276,7 +1276,7 @@ class Switch(ConductingEquipment):
         'minOccurs': '0',
         'maxOccurs': '3',
         'inverse': 'SwitchPhase.Switch',
-        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'docstring':
             '''
             The individual switch phases for the switch.
@@ -1293,7 +1293,7 @@ class Switch(ConductingEquipment):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'docstring':
             '''
             If true, the switch is locked. The resulting switch state is a combination
@@ -1323,7 +1323,7 @@ class Switch(ConductingEquipment):
         'type': 'Attribute',
         'minOccurs': '1',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'docstring':
             '''
             The attribute is used in cases when no Measurement for the status value
@@ -1420,7 +1420,7 @@ class TransformerTank(Equipment):
         'minOccurs': '1',
         'maxOccurs': '3',
         'inverse': 'TransformerTankEnd.TransformerTank',
-        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'docstring':
             '''
             All windings of this transformer.
@@ -1438,7 +1438,7 @@ class TransformerTank(Equipment):
         'minOccurs': '1',
         'maxOccurs': '1',
         'inverse': 'PowerTransformer.TransformerTanks',
-        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'docstring':
             '''
             Bank this transformer belongs to.
@@ -1462,7 +1462,7 @@ class PowerElectronicsConnectionPhase(PowerSystemResource):
         'type': 'enumeration Attribute',
         'minOccurs': '1',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'docstring':
             '''
             Phase of this energy producer component. If the energy producer is wye
@@ -1488,7 +1488,7 @@ class PowerElectronicsConnectionPhase(PowerSystemResource):
         'minOccurs': '1',
         'maxOccurs': '1',
         'inverse': 'PowerElectronicsConnection.PowerElectronicsConnectionPhase',
-        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'docstring':
             '''
             Power electronics connection of this power electronics connection phase.
@@ -1512,7 +1512,7 @@ class ShuntCompensatorPhase(PowerSystemResource):
         'type': 'enumeration Attribute',
         'minOccurs': '1',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'docstring':
             '''
             Phase of this shunt compensator component. If the shunt compensator is
@@ -1538,7 +1538,7 @@ class ShuntCompensatorPhase(PowerSystemResource):
         'minOccurs': '1',
         'maxOccurs': '1',
         'inverse': 'ShuntCompensator.ShuntCompensatorPhase',
-        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'docstring':
             '''
             Shunt compensator of this shunt compensator phase.
@@ -1571,7 +1571,7 @@ class SwitchPhase(PowerSystemResource):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'docstring':
             '''
             Used in cases when no Measurement for the status value is present. If the
@@ -1592,7 +1592,7 @@ class SwitchPhase(PowerSystemResource):
         'type': 'enumeration Attribute',
         'minOccurs': '1',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'docstring':
             '''
             Phase of this SwitchPhase on the side with terminal sequence number equal
@@ -1611,7 +1611,7 @@ class SwitchPhase(PowerSystemResource):
         'type': 'enumeration Attribute',
         'minOccurs': '1',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'docstring':
             '''
             Phase of this SwitchPhase on the side with terminal sequence number equal
@@ -1632,7 +1632,7 @@ class SwitchPhase(PowerSystemResource):
         'minOccurs': '1',
         'maxOccurs': '1',
         'inverse': 'Switch.SwitchPhase',
-        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'docstring':
             '''
             The switch of the switch phase.
@@ -1658,7 +1658,7 @@ class TransformerEnd(IdentifiedObject):
         'type': 'Attribute',
         'minOccurs': '1',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'docstring':
             '''
             Number for this transformer end, corresponding to the end's order in the
@@ -1684,7 +1684,7 @@ class TransformerEnd(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'BaseVoltage.TransformerEnds',
-        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'docstring':
             '''
             Base voltage of the transformer end. This is essential for PU calculation.
@@ -1702,7 +1702,7 @@ class TransformerEnd(IdentifiedObject):
         'minOccurs': '1',
         'maxOccurs': '1',
         'inverse': 'Terminal.TransformerEnd',
-        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'docstring':
             '''
             Terminal of the power transformer to which this transformer end belongs.
@@ -1750,7 +1750,7 @@ class PowerTransformerEnd(TransformerEnd):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': '',
-        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'docstring':
             '''
             Kind of connection.
@@ -1768,7 +1768,7 @@ class PowerTransformerEnd(TransformerEnd):
         'minOccurs': '1',
         'maxOccurs': '1',
         'inverse': 'PowerTransformer.PowerTransformerEnd',
-        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'docstring':
             '''
             The power transformer of this power transformer end.
@@ -1811,7 +1811,7 @@ class TransformerTankEnd(TransformerEnd):
         'minOccurs': '1',
         'maxOccurs': '1',
         'inverse': 'TransformerTank.TransformerTankEnds',
-        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'docstring':
             '''
             Transformer this winding belongs to.
@@ -1836,7 +1836,7 @@ class UsagePoint(IdentifiedObject):
         'type': 'enumeration Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'docstring':
             '''
             Phase code. Number of wires and specific nominal phases can be deduced
