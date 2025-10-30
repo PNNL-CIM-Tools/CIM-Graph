@@ -7,7 +7,8 @@ from cimgraph.data_profile.cim18gmdm.asset.asset import (ApparentPower, AssetInf
                                                          IdentifiedObject, Identity, Impedance,
                                                          KiloActivePower, NoLoadTest, PerCent,
                                                          PhaseCountKind, PowerSystemResource,
-                                                         Resistance, ShortCircuitTest, Temperature,
+                                                         PowerTransformerInfo, Resistance,
+                                                         ShortCircuitTest, Temperature,
                                                          TransformerEndInfo, TransformerTank,
                                                          TransformerTankInfo, TransformerTest,
                                                          Voltage, WindingConnection)
@@ -22,6 +23,7 @@ __all__ = [
     'NoLoadTest' ,
     'PhaseCountKind' ,
     'PowerSystemResource' ,
+    'PowerTransformerInfo' ,
     'ShortCircuitTest' ,
     'TransformerEndInfo' ,
     'TransformerTank' ,

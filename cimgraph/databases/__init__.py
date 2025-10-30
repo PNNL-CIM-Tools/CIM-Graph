@@ -306,7 +306,7 @@ class ConnectionInterface(ABC):
                     value: str) -> bool|int|float|str:
 
         association = self.check_attribute(cim_class, attribute)
-        if association is not None:
+        if association is not None and association != 'identifier':
             attribute_type = cim_class.__dataclass_fields__[association].type
             if 'List' in attribute_type or 'list' in attribute_type:
                 obj_list = getattr(graph[cim_class][identifier], association)

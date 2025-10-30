@@ -26,7 +26,8 @@ class CIMStereotype(Enum):
     gmdm = 'gmdm'
 
 BASE_URI = 'http://www.ucaiug.org/gmdm/asset#'
-ONTOLOGY_URI = 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#'
+ONTOLOGY_URI = 'http://cim.ucaiug.io/CIM101/draft#'
+
 
 @dataclass(repr=False)
 class IdentifiedObject(Identity):
@@ -35,13 +36,18 @@ class IdentifiedObject(Identity):
     identification and naming attributes.
     '''
 
+    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
+    __package__ = 'Core'
+    __minOccurs__ = '0'
+    __maxOccurs__ = 'unbounded'
+
     description: Optional[str] = field(
         default=None,
         metadata={
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'docstring':
             '''
             The description is a free human readable text describing or naming the
@@ -61,7 +67,7 @@ class IdentifiedObject(Identity):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'docstring':
             '''
             The name is any free human readable and possibly non unique text naming
@@ -86,10 +92,55 @@ class AssetInfo(IdentifiedObject):
     planning).
     '''
 
+    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
+    __package__ = 'AssetInfo'
+    __minOccurs__ = '0'
+    __maxOccurs__ = 'unbounded'
+
+    PowerSystemResources: list[PowerSystemResource] = field(
+        default_factory=list,
+        metadata={
+        'type': 'Association',
+        'minOccurs': '0',
+        'maxOccurs': 'unbounded',
+        'inverse': 'PowerSystemResource.AssetDatasheet',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
+        'docstring':
+            '''
+            All power system resources with this datasheet information.
+            '''
+
+        })
+    '''
+    All power system resources with this datasheet information.
+    '''
+
 @dataclass(repr=False)
 class ConductingAssetInfo(AssetInfo):
     '''
     Generic information for conducting asset
+    '''
+
+    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
+    __package__ = 'AssetInfo'
+    __minOccurs__ = '0'
+    __maxOccurs__ = 'unbounded'
+
+    ratedCurrent: Optional[ float | CurrentFlow ] = field(
+        default=None,
+        metadata={
+        'type': 'Attribute',
+        'minOccurs': '0',
+        'maxOccurs': '1',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
+        'docstring':
+            '''
+            Rated current.
+            '''
+
+        })
+    '''
+    Rated current.
     '''
 
     ratedVoltage: Optional[ float | Voltage ] = field(
@@ -98,7 +149,7 @@ class ConductingAssetInfo(AssetInfo):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'docstring':
             '''
             Rated voltage.
@@ -116,6 +167,11 @@ class TransformerEndInfo(ConductingAssetInfo):
     Transformer end data.
     '''
 
+    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
+    __package__ = 'AssetInfo'
+    __minOccurs__ = '0'
+    __maxOccurs__ = 'unbounded'
+
     EnergisedEndNoLoadTests: list[NoLoadTest] = field(
         default_factory=list,
         metadata={
@@ -123,7 +179,7 @@ class TransformerEndInfo(ConductingAssetInfo):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'NoLoadTest.EnergisedEnd',
-        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'docstring':
             '''
             All no-load test measurements in which this transformer end was energised.
@@ -141,7 +197,7 @@ class TransformerEndInfo(ConductingAssetInfo):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'ShortCircuitTest.EnergisedEnd',
-        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'docstring':
             '''
             All short-circuit test measurements in which this transformer end was energised.
@@ -160,7 +216,7 @@ class TransformerEndInfo(ConductingAssetInfo):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'ShortCircuitTest.GroundedEnds',
-        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'docstring':
             '''
             All short-circuit test measurements in which this transformer end was short-circuited.
@@ -178,7 +234,7 @@ class TransformerEndInfo(ConductingAssetInfo):
         'type': 'Attribute',
         'minOccurs': '1',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'docstring':
             '''
             Number for this transformer end, corresponding to the end's order in the
@@ -199,7 +255,7 @@ class TransformerEndInfo(ConductingAssetInfo):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'docstring':
             '''
             Winding phase angle where 360 degrees are represented with clock hours,
@@ -222,7 +278,7 @@ class TransformerEndInfo(ConductingAssetInfo):
         'type': 'enumeration Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'docstring':
             '''
             Kind of connection.
@@ -239,7 +295,7 @@ class TransformerEndInfo(ConductingAssetInfo):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'docstring':
             '''
             Apparent power that the winding can carry under emergency conditions (also
@@ -258,7 +314,7 @@ class TransformerEndInfo(ConductingAssetInfo):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'docstring':
             '''
             Basic insulation level voltage rating.
@@ -275,7 +331,7 @@ class TransformerEndInfo(ConductingAssetInfo):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'docstring':
             '''
             DC resistance.
@@ -292,7 +348,7 @@ class TransformerEndInfo(ConductingAssetInfo):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'docstring':
             '''
             Normal apparent power rating.
@@ -309,7 +365,7 @@ class TransformerEndInfo(ConductingAssetInfo):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'docstring':
             '''
             Apparent power that this winding can carry for a short period of time (in
@@ -329,7 +385,7 @@ class TransformerEndInfo(ConductingAssetInfo):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'TransformerTankInfo.TransformerEndInfos',
-        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'docstring':
             '''
             Transformer tank data that this end description is part of.
@@ -340,14 +396,47 @@ class TransformerEndInfo(ConductingAssetInfo):
     Transformer tank data that this end description is part of.
     '''
 
-@stereotype(CIMStereotype.ShadowExtension)
-@stereotype(CIMStereotype.gmdm)
+@stereotype(CIMStereotype.Concrete)
+@dataclass(repr=False)
+class PowerTransformerInfo(AssetInfo):
+    '''
+    Set of power transformer data, from an equipment library.
+    '''
+
+    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
+    __package__ = 'AssetInfo'
+    __minOccurs__ = '0'
+    __maxOccurs__ = 'unbounded'
+
+    TransformerTankInfos: list[TransformerTankInfo] = field(
+        default_factory=list,
+        metadata={
+        'type': 'Association',
+        'minOccurs': '1',
+        'maxOccurs': 'unbounded',
+        'inverse': 'TransformerTankInfo.PowerTransformerInfo',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
+        'docstring':
+            '''
+            Data for all the tanks described by this power transformer data.
+            '''
+
+        })
+    '''
+    Data for all the tanks described by this power transformer data.
+    '''
+
 @stereotype(CIMStereotype.Concrete)
 @dataclass(repr=False)
 class TransformerTankInfo(AssetInfo):
     '''
     Set of transformer tank data, from an equipment library.
     '''
+
+    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
+    __package__ = 'AssetInfo'
+    __minOccurs__ = '0'
+    __maxOccurs__ = 'unbounded'
 
     TransformerEndInfos: list[TransformerEndInfo] = field(
         default_factory=list,
@@ -356,7 +445,7 @@ class TransformerTankInfo(AssetInfo):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'TransformerEndInfo.TransformerTankInfo',
-        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'docstring':
             '''
             Data for all the ends described by this transformer tank data.
@@ -383,6 +472,24 @@ class TransformerTankInfo(AssetInfo):
     '''
     '''
 
+    PowerTransformerInfo: Optional[PowerTransformerInfo] = field(
+        default=None,
+        metadata={
+        'type': 'ByReference',
+        'minOccurs': '1',
+        'maxOccurs': '1',
+        'inverse': 'PowerTransformerInfo.TransformerTankInfos',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
+        'docstring':
+            '''
+            Power transformer data that this tank description is part of.
+            '''
+
+        })
+    '''
+    Power transformer data that this tank description is part of.
+    '''
+
 @dataclass(repr=False)
 class PowerSystemResource(IdentifiedObject):
     '''
@@ -392,14 +499,40 @@ class PowerSystemResource(IdentifiedObject):
     Power system resources can have measurements associated.
     '''
 
+    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
+    __package__ = 'Core'
+    __minOccurs__ = '0'
+    __maxOccurs__ = 'unbounded'
+
+    AssetDatasheet: Optional[AssetInfo] = field(
+        default=None,
+        metadata={
+        'type': 'Attribute',
+        'minOccurs': '0',
+        'maxOccurs': '1',
+        'inverse': 'AssetInfo.PowerSystemResources',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
+        'docstring':
+            '''
+            Datasheet information for this power system resource.
+            '''
+
+        })
+    '''
+    Datasheet information for this power system resource.
+    '''
+
 @dataclass(repr=False)
 class Equipment(PowerSystemResource):
     '''
     The parts of a power system that are physical devices, electronic or mechanical.
     '''
 
-@stereotype(CIMStereotype.ShadowExtension)
-@stereotype(CIMStereotype.gmdm)
+    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
+    __package__ = 'Core'
+    __minOccurs__ = '0'
+    __maxOccurs__ = 'unbounded'
+
 @stereotype(CIMStereotype.Description)
 @stereotype(CIMStereotype.Concrete)
 @dataclass(repr=False)
@@ -410,6 +543,11 @@ class TransformerTank(Equipment):
     in the same tank. Transformer tank can be used to model both single-phase
     and 3-phase transformers.
     '''
+
+    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
+    __package__ = 'Wires'
+    __minOccurs__ = '0'
+    __maxOccurs__ = 'unbounded'
 
     TransformerTankInfo: Optional[TransformerTankInfo] = field(
         default=None,
@@ -434,13 +572,18 @@ class TransformerTest(IdentifiedObject):
     or no-load test.
     '''
 
+    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
+    __package__ = 'AssetInfo'
+    __minOccurs__ = '0'
+    __maxOccurs__ = 'unbounded'
+
     basePower: Optional[ float | ApparentPower ] = field(
         default=None,
         metadata={
         'type': 'Attribute',
         'minOccurs': '1',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'docstring':
             '''
             Base power at which the tests are conducted, usually equal to the rateds
@@ -459,7 +602,7 @@ class TransformerTest(IdentifiedObject):
         'type': 'Attribute',
         'minOccurs': '1',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'docstring':
             '''
             Temperature at which the test is conducted.
@@ -480,13 +623,18 @@ class NoLoadTest(TransformerTest):
     test may be repeated at different voltages to measure saturation.
     '''
 
+    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
+    __package__ = 'AssetInfo'
+    __minOccurs__ = '0'
+    __maxOccurs__ = 'unbounded'
+
     energisedEndVoltage: Optional[ float | Voltage ] = field(
         default=None,
         metadata={
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'docstring':
             '''
             Voltage applied to the winding (end) during test.
@@ -503,7 +651,7 @@ class NoLoadTest(TransformerTest):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'docstring':
             '''
             Exciting current measured from a positive-sequence or single-phase excitation
@@ -522,7 +670,7 @@ class NoLoadTest(TransformerTest):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'docstring':
             '''
             Exciting current measured from a zero-sequence open-circuit excitation
@@ -541,7 +689,7 @@ class NoLoadTest(TransformerTest):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'docstring':
             '''
             Losses measured from a positive-sequence or single-phase excitation test.
@@ -559,7 +707,7 @@ class NoLoadTest(TransformerTest):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'docstring':
             '''
             Losses measured from a zero-sequence excitation test.
@@ -577,7 +725,7 @@ class NoLoadTest(TransformerTest):
         'minOccurs': '1',
         'maxOccurs': '1',
         'inverse': 'TransformerEndInfo.EnergisedEndNoLoadTests',
-        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'docstring':
             '''
             Transformer end that current is applied to in this no-load test.
@@ -598,13 +746,18 @@ class ShortCircuitTest(TransformerTest):
     be at least one grounded winding.
     '''
 
+    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
+    __package__ = 'AssetInfo'
+    __minOccurs__ = '0'
+    __maxOccurs__ = 'unbounded'
+
     energisedEndStep: Optional[int] = field(
         default=None,
         metadata={
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'docstring':
             '''
             Tap step number for the energised end of the test pair.
@@ -621,7 +774,7 @@ class ShortCircuitTest(TransformerTest):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'docstring':
             '''
             Tap step number for the grounded end of the test pair.
@@ -638,7 +791,7 @@ class ShortCircuitTest(TransformerTest):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'docstring':
             '''
             Leakage impedance measured from a positive-sequence or single-phase short-circuit
@@ -657,7 +810,7 @@ class ShortCircuitTest(TransformerTest):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'docstring':
             '''
             Leakage impedance measured from a zero-sequence short-circuit test.
@@ -674,7 +827,7 @@ class ShortCircuitTest(TransformerTest):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'docstring':
             '''
             Load losses from a positive-sequence or single-phase short-circuit test.
@@ -692,7 +845,7 @@ class ShortCircuitTest(TransformerTest):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'docstring':
             '''
             Load losses from a zero-sequence short-circuit test.
@@ -710,7 +863,7 @@ class ShortCircuitTest(TransformerTest):
         'minOccurs': '1',
         'maxOccurs': '1',
         'inverse': 'TransformerEndInfo.EnergisedEndShortCircuitTests',
-        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'docstring':
             '''
             Transformer end that voltage is applied to in this short-circuit test.
@@ -731,7 +884,7 @@ class ShortCircuitTest(TransformerTest):
         'minOccurs': '1',
         'maxOccurs': 'unbounded',
         'inverse': 'TransformerEndInfo.GroundedEndShortCircuitTests',
-        'namespace': 'http://cim.ucaiug.io/Grid18v15_Enterprise14v04_Market04v18#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'docstring':
             '''
             All ends short-circuited in this short-circuit test.
@@ -751,14 +904,17 @@ class PhaseCountKind(Enum):
 
     other = 'other'
     '''
+    Other
     '''
 
     singlePhase = 'singlePhase'
     '''
+    Single phase
     '''
 
     threePhase = 'threePhase'
     '''
+    Three phases
     '''
 
 @stereotype(CIMStereotype.enumeration)
@@ -770,30 +926,37 @@ class WindingConnection(Enum):
 
     A = 'A'
     '''
+    Autotransformer common winding.
     '''
 
     D = 'D'
     '''
+    Delta.
     '''
 
     I = 'I'
     '''
+    Independent winding, for single-phase connections.
     '''
 
     Y = 'Y'
     '''
+    Wye.
     '''
 
     Yn = 'Yn'
     '''
+    Wye, with neutral brought out for grounding.
     '''
 
     Z = 'Z'
     '''
+    ZigZag.
     '''
 
     Zn = 'Zn'
     '''
+    ZigZag, with neutral brought out for grounding.
     '''
 
 @stereotype(CIMStereotype.CIMDatatype)
@@ -809,6 +972,22 @@ class ApparentPower(CIMUnit):
     def unit(self):
         return UnitSymbol.VA
     def __init__(self, value, input_unit: str='VA', input_multiplier: str=None):
+        self.__pint__(value=value, input_unit=input_unit, input_multiplier=input_multiplier)
+
+@stereotype(CIMStereotype.CIMDatatype)
+@dataclass(repr=False)
+class CurrentFlow(CIMUnit):
+    '''
+    Electrical current with sign convention: positive flow is out of the conducting
+    equipment into the connectivity node. Can be both AC and DC.
+    '''
+
+    value: float = field(default=None)
+    multiplier: UnitMultiplier = field(default=UnitMultiplier.none)
+    @property # read-only
+    def unit(self):
+        return UnitSymbol.A
+    def __init__(self, value, input_unit: str='A', input_multiplier: str=None):
         self.__pint__(value=value, input_unit=input_unit, input_multiplier=input_multiplier)
 
 @stereotype(CIMStereotype.CIMDatatype)

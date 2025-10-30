@@ -50,4 +50,3 @@ class CIMUnit():
 
     def to(self, unit:str):
         return self.quantity.to(unit).magnitude
-

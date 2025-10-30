@@ -55,9 +55,14 @@ def write_json_ld(network: GraphModel, filename: str, namespaces: dict=None, ind
         for obj in network.graph[root_class].values():
 
             cim_class = obj.__class__
+            try:
+                class_ns = cim_class.__namespace__
+                cls_ns_prefix = reverse_ns_lookup[class_ns]
+            except:
+                cls_ns_prefix = 'cim'
             dump = {}
             dump['@id'] = 'urn:uuid:'+obj.uri()
-            dump['@type'] = f'cim:{cim_class.__name__}'
+            dump['@type'] = f'{cls_ns_prefix}:{cim_class.__name__}'
             parent_classes = list(cim_class.__mro__)
             parent_classes.pop(len(parent_classes) - 1)
             for parent in parent_classes:
