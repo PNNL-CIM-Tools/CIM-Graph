@@ -32,6 +32,11 @@ class IdentifiedObject(Identity):
     identification and naming attributes.
     '''
 
+    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
+    __package__ = 'Core'
+    __minOccurs__ = '0'
+    __maxOccurs__ = 'unbounded'
+    
     description: Optional[str] = field(
         default=None,
         metadata={
@@ -83,12 +88,40 @@ class AssetInfo(IdentifiedObject):
     planning).
     '''
 
+    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
+    __package__ = 'AssetInfo'
+    __minOccurs__ = '0'
+    __maxOccurs__ = 'unbounded'
+    
+    PowerSystemResources: list[PowerSystemResource] = field(
+        default_factory=list,
+        metadata={
+        'type': 'Association',
+        'minOccurs': '0',
+        'maxOccurs': 'unbounded',
+        'inverse': 'PowerSystemResource.AssetDatasheet',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
+        'docstring':
+            '''
+            All power system resources with this datasheet information.
+            '''
+        
+        })
+    '''
+    All power system resources with this datasheet information.
+    '''
+    
 @dataclass(repr=False)
 class ConductingAssetInfo(AssetInfo):
     '''
     Generic information for conducting asset
     '''
 
+    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
+    __package__ = 'AssetInfo'
+    __minOccurs__ = '0'
+    __maxOccurs__ = 'unbounded'
+    
     ratedVoltage: Optional[ float | Voltage ] = field(
         default=None,
         metadata={
@@ -113,6 +146,11 @@ class TransformerEndInfo(ConductingAssetInfo):
     Transformer end data.
     '''
 
+    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
+    __package__ = 'AssetInfo'
+    __minOccurs__ = '0'
+    __maxOccurs__ = 'unbounded'
+    
     EnergisedEndNoLoadTests: list[NoLoadTest] = field(
         default_factory=list,
         metadata={
@@ -346,6 +384,11 @@ class TransformerTankInfo(AssetInfo):
     Set of transformer tank data, from an equipment library.
     '''
 
+    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
+    __package__ = 'AssetInfo'
+    __minOccurs__ = '0'
+    __maxOccurs__ = 'unbounded'
+    
     TransformerEndInfos: list[TransformerEndInfo] = field(
         default_factory=list,
         metadata={
@@ -389,14 +432,40 @@ class PowerSystemResource(IdentifiedObject):
     Power system resources can have measurements associated.
     '''
 
+    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
+    __package__ = 'Core'
+    __minOccurs__ = '0'
+    __maxOccurs__ = 'unbounded'
+    
+    AssetDatasheet: Optional[AssetInfo] = field(
+        default=None,
+        metadata={
+        'type': 'Attribute',
+        'minOccurs': '0',
+        'maxOccurs': '1',
+        'inverse': 'AssetInfo.PowerSystemResources',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
+        'docstring':
+            '''
+            Datasheet information for this power system resource.
+            '''
+        
+        })
+    '''
+    Datasheet information for this power system resource.
+    '''
+    
 @dataclass(repr=False)
 class Equipment(PowerSystemResource):
     '''
     The parts of a power system that are physical devices, electronic or mechanical.
     '''
 
-@stereotype(CIMStereotype.ShadowExtension)
-@stereotype(CIMStereotype.gmdm)
+    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
+    __package__ = 'Core'
+    __minOccurs__ = '0'
+    __maxOccurs__ = 'unbounded'
+    
 @stereotype(CIMStereotype.Description)
 @stereotype(CIMStereotype.Concrete)
 @dataclass(repr=False)
@@ -408,6 +477,11 @@ class TransformerTank(Equipment):
     and 3-phase transformers.
     '''
 
+    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
+    __package__ = 'Wires'
+    __minOccurs__ = '0'
+    __maxOccurs__ = 'unbounded'
+    
     TransformerTankInfo: Optional[TransformerTankInfo] = field(
         default=None,
         metadata={
@@ -431,6 +505,11 @@ class TransformerTest(IdentifiedObject):
     or no-load test.
     '''
 
+    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
+    __package__ = 'AssetInfo'
+    __minOccurs__ = '0'
+    __maxOccurs__ = 'unbounded'
+    
     basePower: Optional[ float | ApparentPower ] = field(
         default=None,
         metadata={
@@ -477,6 +556,11 @@ class NoLoadTest(TransformerTest):
     test may be repeated at different voltages to measure saturation.
     '''
 
+    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
+    __package__ = 'AssetInfo'
+    __minOccurs__ = '0'
+    __maxOccurs__ = 'unbounded'
+    
     energisedEndVoltage: Optional[ float | Voltage ] = field(
         default=None,
         metadata={
@@ -595,6 +679,11 @@ class ShortCircuitTest(TransformerTest):
     be at least one grounded winding.
     '''
 
+    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
+    __package__ = 'AssetInfo'
+    __minOccurs__ = '0'
+    __maxOccurs__ = 'unbounded'
+    
     energisedEndStep: Optional[int] = field(
         default=None,
         metadata={
@@ -748,14 +837,17 @@ class PhaseCountKind(Enum):
 
     other = 'other'
     '''
+    Other
     '''
     
     singlePhase = 'singlePhase'
     '''
+    Single phase
     '''
     
     threePhase = 'threePhase'
     '''
+    Three phases
     '''
     
 @stereotype(CIMStereotype.enumeration)
@@ -767,30 +859,37 @@ class WindingConnection(Enum):
 
     A = 'A'
     '''
+    Autotransformer common winding.
     '''
     
     D = 'D'
     '''
+    Delta.
     '''
     
     I = 'I'
     '''
+    Independent winding, for single-phase connections.
     '''
     
     Y = 'Y'
     '''
+    Wye.
     '''
     
     Yn = 'Yn'
     '''
+    Wye, with neutral brought out for grounding.
     '''
     
     Z = 'Z'
     '''
+    ZigZag.
     '''
     
     Zn = 'Zn'
     '''
+    ZigZag, with neutral brought out for grounding.
     '''
     
 @stereotype(CIMStereotype.CIMDatatype)
