@@ -14,29 +14,6 @@ _log = logging.getLogger(__name__)
 BASE_URI = 'http://www.ucaiug.org/gmdm/electrical/unbalanced#'
 ONTOLOGY_URI = 'http://cim.ucaiug.io/CIM101/draft#'
 
-@dataclass(repr=False)
-class Identity(Identity):
-    '''
-    ,
-    '''
-
-    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
-    __package__ = 'Compatible Unit'
-    __minOccurs__ = '0'
-    __maxOccurs__ = 'unbounded'
-    
-    identifier: Optional[str] = field(
-        default=None,
-        metadata={
-        'type': 'Attribute',
-        'minOccurs': '1',
-        'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#'
-        })
-    '''
-    A universally unique object identifier. Used to uniquely identify persistent
-    objects between CIM messages.
-    '''
     
 @dataclass(repr=False)
 class IdentifiedObject(Identity):

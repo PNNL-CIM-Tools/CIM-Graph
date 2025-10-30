@@ -151,7 +151,7 @@ def get_all_location_data(network: GraphModel):
 def get_all_capacitor_data(network: GraphModel):
     classes = ['ShuntCompensator',
     'LinearShuntCompensator',
-    'LinearShuntCompenatorPhase',
+    'LinearShuntCompensatorPhase',
     ]
     query_class_list(network, classes)
 
