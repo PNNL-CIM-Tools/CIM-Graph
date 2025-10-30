@@ -25028,6 +25028,34 @@ class EquipmentContainer(ConnectivityNodeContainer):
     __minOccurs__ = '0'
     __maxOccurs__ = 'unbounded'
     
+    AdditionalGroupedEquipment: list[Equipment] = field(
+        default_factory=list,
+        metadata={
+        'type': 'Association',
+        'minOccurs': '0',
+        'maxOccurs': 'unbounded',
+        'inverse': 'Equipment.AdditionalEquipmentContainer',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
+        'docstring':
+            '''
+            The additonal contained equipment. The equipment belong to the equipment
+            container. The equipment is contained in another equipment container, but
+            also grouped with this equipment container. Examples include when a switch
+            contained in a substation is also desired to be grouped with a line contianer
+            or when a switch is included in a secondary substation and also grouped
+            in a feeder.
+            '''
+        
+        })
+    '''
+    The additonal contained equipment. The equipment belong to the equipment
+    container. The equipment is contained in another equipment container,
+    but also grouped with this equipment container. Examples include when
+    a switch contained in a substation is also desired to be grouped with
+    a line contianer or when a switch is included in a secondary substation
+    and also grouped in a feeder.
+    '''
+    
     Equipments: list[Equipment] = field(
         default_factory=list,
         metadata={
@@ -27236,6 +27264,28 @@ class Equipment(PowerSystemResource):
     which determines if the equipment is energized or not. False means
     that the equipment is treated by network applications as if it is not
     in the model.
+    '''
+    
+    AdditionalEquipmentContainer: list[EquipmentContainer] = field(
+        default_factory=list,
+        metadata={
+        'type': 'Attribute',
+        'minOccurs': '0',
+        'maxOccurs': 'unbounded',
+        'inverse': 'EquipmentContainer.AdditionalGroupedEquipment',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
+        'docstring':
+            '''
+            Additional equipment container beyond the primary equipment container.
+            The equipment is contained in another equipment container, but also grouped
+            with this equipment container.
+            '''
+        
+        })
+    '''
+    Additional equipment container beyond the primary equipment container.
+    The equipment is contained in another equipment container, but also
+    grouped with this equipment container.
     '''
     
     EquipmentContainer: Optional[EquipmentContainer] = field(

@@ -25,35 +25,6 @@ class CIMStereotype(Enum):
 BASE_URI = 'http://www.ucaiug.org/gmdm/asset#'
 ONTOLOGY_URI = 'http://cim.ucaiug.io/CIM101/draft#'
 
-@dataclass(repr=False)
-class Identity(Identity):
-    '''
-    ,
-    '''
-
-    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
-    __package__ = 'Compatible Unit'
-    __minOccurs__ = '0'
-    __maxOccurs__ = 'unbounded'
-    
-    identifier: Optional[str] = field(
-        default=None,
-        metadata={
-        'type': 'Attribute',
-        'minOccurs': '1',
-        'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'docstring':
-            '''
-            A universally unique object identifier. Used to uniquely identify persistent
-            objects between CIM messages.
-            '''
-        
-        })
-    '''
-    A universally unique object identifier. Used to uniquely identify persistent
-    objects between CIM messages.
-    '''
     
 @dataclass(repr=False)
 class IdentifiedObject(Identity):
@@ -151,6 +122,23 @@ class ConductingAssetInfo(AssetInfo):
     __package__ = 'AssetInfo'
     __minOccurs__ = '0'
     __maxOccurs__ = 'unbounded'
+    
+    ratedCurrent: Optional[ float | CurrentFlow ] = field(
+        default=None,
+        metadata={
+        'type': 'Attribute',
+        'minOccurs': '0',
+        'maxOccurs': '1',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
+        'docstring':
+            '''
+            Rated current.
+            '''
+        
+        })
+    '''
+    Rated current.
+    '''
     
     ratedVoltage: Optional[ float | Voltage ] = field(
         default=None,
@@ -981,6 +969,22 @@ class ApparentPower(CIMUnit):
     def unit(self):
         return UnitSymbol.VA
     def __init__(self, value, input_unit: str='VA', input_multiplier: str=None):
+        self.__pint__(value=value, input_unit=input_unit, input_multiplier=input_multiplier)
+
+@stereotype(CIMStereotype.CIMDatatype)
+@dataclass(repr=False)
+class CurrentFlow(CIMUnit):
+    '''
+    Electrical current with sign convention: positive flow is out of the conducting
+    equipment into the connectivity node. Can be both AC and DC.
+    '''
+
+    value: float = field(default=None)
+    multiplier: UnitMultiplier = field(default=UnitMultiplier.none)
+    @property # read-only
+    def unit(self):
+        return UnitSymbol.A
+    def __init__(self, value, input_unit: str='A', input_multiplier: str=None):
         self.__pint__(value=value, input_unit=input_unit, input_multiplier=input_multiplier)
 
 @stereotype(CIMStereotype.CIMDatatype)
