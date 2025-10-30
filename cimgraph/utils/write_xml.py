@@ -66,7 +66,12 @@ def write_xml(network: GraphModel, filename: str, namespaces: dict=None,
         counter = 0
         for obj in network.list_by_class(root_class):
             cim_class = obj.__class__
-            header = f'<cim:{cim_class.__name__} {rdf_header}{obj.uri().lower()}">\n'
+            try:
+                class_ns = cim_class.__namespace__
+                cls_ns_prefix = reverse_ns_lookup[class_ns]
+            except:
+                cls_ns_prefix = 'cim'
+            header = f'<{cls_ns_prefix}:{cim_class.__name__} {rdf_header}{obj.uri().lower()}">\n'
             f.write(header)
             parent_classes = list(cim_class.__mro__)
             parent_classes.pop(len(parent_classes) - 1)
@@ -133,7 +138,7 @@ def write_xml(network: GraphModel, filename: str, namespaces: dict=None,
                             elif edge is not None and edge != []:
                                 row = f'  <{ns_prefix}:{parent.__name__}.{attribute}>{str(edge)}</{ns_prefix}:{parent.__name__}.{attribute}>\n'
                                 f.write(row)
-            tail = f'</cim:{cim_class.__name__}>\n'
+            tail = f'</{cls_ns_prefix}:{cim_class.__name__}>\n'
             f.write(tail)
             counter = counter + 1
         _log.info(f'wrote {counter} {cim_class.__name__} objects')

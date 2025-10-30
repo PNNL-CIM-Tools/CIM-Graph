@@ -1,123 +1,163 @@
 from __future__ import annotations
 
 import logging
-
+import cimgraph.data_profile.cim18gmdm.canonical as cim
 from cimgraph.models.graph_model import GraphModel
+from cimgraph.databases import get_validation_log_level
 
 _log = logging.getLogger(__name__)
+log_level = get_validation_log_level()
+
+def query_class_list(network: GraphModel, classes:list[str]):
+    cim:cim = network.connection.cim
+    for class_name in classes:
+        try:
+            cim_class = getattr(cim, class_name)
+            network.get_all_edges(cim_class)
+        except:
+            pass
+            # _log.log(log_level, f'{class_name} not in profile')
 
 
 def get_all_line_data(network: GraphModel) -> None:
-    cim = network.connection.cim
-    network.get_all_edges(cim.ACLineSegment)
-    network.get_all_edges(cim.ACLineSegmentPhase)
-    network.get_all_edges(cim.PerLengthPhaseImpedance)
-    network.get_all_edges(cim.PhaseImpedanceData)
-    network.get_all_edges(cim.WireSpacingInfo)
-    network.get_all_edges(cim.WirePosition)
-    network.get_all_edges(cim.OverheadWireInfo)
-    network.get_all_edges(cim.ConcentricNeutralCableInfo)
-    network.get_all_edges(cim.TapeShieldCableInfo)
+    classes = ['ACLineSegment',
+    'ACLineSegment',
+    'ACLineSegmentPhase',
+    'PerLengthPhaseImpedance',
+    'PhaseImpedanceData',
+    'WireSpacingInfo',
+    'WirePosition',
+    'OverheadWireInfo',
+    'ConcentricNeutralCableInfo',
+    'TapeShieldCableInfo']
+    query_class_list(network, classes)
+
+            
 
 
 def get_all_transformer_data(network: GraphModel) -> None:
-    cim = network.connection.cim
-    network.get_all_edges(cim.PowerTransformer)
-    network.get_all_edges(cim.TransformerTank)
-    network.get_all_edges(cim.Asset)
-    network.get_all_edges(cim.TransformerTankEnd)
-    network.get_all_edges(cim.TransformerTankInfo)
-    network.get_all_edges(cim.TransformerEndInfo)
-    network.get_all_edges(cim.PowerTransformerEnd)
-    network.get_all_edges(cim.PowerTransformerInfo)
-    network.get_all_edges(cim.TransformerCoreAdmittance)
-    network.get_all_edges(cim.TransformerMeshImpedance)
-    network.get_all_edges(cim.TransformerStarImpedance)
-    network.get_all_edges(cim.ShortCircuitTest)
-    network.get_all_edges(cim.NoLoadTest)
-    network.get_all_edges(cim.RatioTapChanger)
-    network.get_all_edges(cim.TapChanger)
-    network.get_all_edges(cim.TapChangerControl)
-    network.get_all_edges(cim.TapChangerInfo)
+    classes = ['PowerTransformer',
+    'TransformerTank',
+    'Asset',
+    'TransformerTankEnd',
+    'TransformerTankInfo',
+    'TransformerEndInfo',
+    'PowerTransformerEnd',
+    'PowerTransformerInfo',
+    'TransformerCoreAdmittance',
+    'TransformerMeshImpedance',
+    'TransformerStarImpedance',
+    'ShortCircuitTest',
+    'NoLoadTest',
+    'RatioTapChanger',
+    'TapChanger',
+    'TapChangerControl',
+    'TapChangerInfo']
+    query_class_list(network, classes)
 
 
 def get_all_load_data(network: GraphModel) -> None:
-    cim = network.connection.cim
-    network.get_all_edges(cim.EnergySource)
-    network.get_all_edges(cim.EnergyConsumer)
-    network.get_all_edges(cim.ConformLoad)
-    network.get_all_edges(cim.NonConformLoad)
-    network.get_all_edges(cim.EnergyConsumerPhase)
+    cim:cim = network.connection.cim
+    classes = ['EnergySource',
+    'EnergyConsumer',
+    'ConformLoad',
+    'NonConformLoad',
+    'EnergyConsumerPhase',
+    'House',
+    'ThermostatController']
+    query_class_list(network, classes)
+    
     network.get_all_attributes(cim.LoadResponseCharacteristic)
     network.get_all_attributes(cim.PowerCutZone)
-    if 'House' in cim.__all__:
-        network.get_all_edges(cim.House)
-        network.get_all_edges(cim.ThermostatController)
+
+def get_all_generator_data(network:GraphModel) -> None:
+    classes = ['AsynchronousMachine',
+    'SynchronousMachine',
+    'ThermalGeneratingUnit',
+    'WindGeneratingUnit'
+    'FossilFuel']
+    query_class_list(network, classes)
+
 
 
 def get_all_inverter_data(network: GraphModel) -> None:
-    cim = network.connection.cim
-    network.get_all_edges(cim.PowerElectronicsConnection)
-    network.get_all_edges(cim.PowerElectronicsConnectionPhase)
-    network.get_all_edges(cim.BatteryUnit)
-    network.get_all_edges(cim.PowerElectronicsWindUnit)
-    if 'PhotoVoltaicUnit' in cim.__all__:    # handling inconsistent case
-        network.get_all_edges(cim.PhotoVoltaicUnit)
-    elif 'PhotovoltaicUnit' in cim.__all__:    # handling inconsistent case
-        network.get_all_edges(cim.PhotovoltaicUnit)
+    classes = ['PowerElectronicsConnection',
+    'PowerElectronicsConnectionPhase',
+    'BatteryUnit',
+    'PowerElectronicsWindUnit',
+    'PowerElectronicsThermalUnit'
+    'PhotoVoltaicUnit',# handling inconsistent case
+    'PhotovoltaicUnit']
+    query_class_list(network, classes)
+
 
 
 def get_all_switch_data(network: GraphModel) -> None:
-    cim = network.connection.cim
-    network.get_all_edges(cim.Switch)
-    network.get_all_edges(cim.Sectionaliser)
-    network.get_all_edges(cim.Jumper)
-    network.get_all_edges(cim.Fuse)
-    network.get_all_edges(cim.Disconnector)
-    network.get_all_edges(cim.GroundDisconnector)
-    network.get_all_edges(cim.ProtectedSwitch)
-    network.get_all_edges(cim.Breaker)
-    network.get_all_edges(cim.Recloser)
-    network.get_all_edges(cim.LoadBreakSwitch)
-    network.get_all_edges(cim.SwitchPhase)
+    classes = [
+    'Switch',
+    'Sectionaliser',
+    'Jumper',
+    'Fuse',
+    'Disconnector',
+    'GroundDisconnector',
+    'ProtectedSwitch',
+    'Breaker',
+    'Recloser',
+    'LoadBreakSwitch',
+    'SwitchPhase']
+    query_class_list(network, classes)
+    
 
 
 def get_all_bus_data(network: GraphModel) -> None:
-    cim = network.connection.cim
-    network.get_all_edges(cim.ConnectivityNode)
-    network.get_all_edges(cim.Terminal)
-    network.get_all_edges(cim.TopologicalNode)
-    network.get_all_edges(cim.TopologicalIsland)
+    classes = [
+    'ConnectivityNode',
+    'Terminal',
+    'TopologicalNode',
+    'TopologicalIsland']
+    query_class_list(network, classes)
+    
 
 
 def get_all_measurement_data(network: GraphModel) -> None:
-    cim = network.connection.cim
-    network.get_all_edges(cim.Terminal)
-    network.get_all_edges(cim.Measurement)
-    network.get_all_edges(cim.Analog)
-    network.get_all_edges(cim.Discrete)
-    # network.get_all_edges(cim.Accumlator)
-    network.get_all_edges(cim.StringMeasurement)
+    classes = [
+    'Measurement',
+    'Analog',
+    'Discrete',
+    'Accumlator',
+    'StringMeasurement',]
+    query_class_list(network, classes)
+    
 
 
 def get_all_limit_data(network: GraphModel) -> None:
-    cim = network.connection.cim
-    network.get_all_edges(cim.OperationalLimitSet)
-    network.get_all_edges(cim.ActivePowerLimit)
-    network.get_all_edges(cim.ApparentPowerLimit)
-    network.get_all_edges(cim.VoltageLimit)
-    network.get_all_edges(cim.CurrentLimit)
-    network.get_all_edges(cim.OperationalLimitType)
+    classes = [
+    'OperationalLimitSet',
+    'ActivePowerLimit',
+    'ApparentPowerLimit',
+    'VoltageLimit',
+    'CurrentLimit',
+    'OperationalLimitType']
+    query_class_list(network, classes)
+    
 
 
 def get_all_location_data(network: GraphModel):
-    cim = network.connection.cim
-    network.get_all_edges(cim.CoordinateSystem)
+    cim:cim = network.connection.cim
+    network.get_all_attributes(cim.CoordinateSystem)
     network.get_all_edges(cim.Location)
     network.get_all_edges(cim.PositionPoint)
+    
+def get_all_capacitor_data(network: GraphModel):
+    classes = ['ShuntCompensator',
+    'LinearShuntCompensator',
+    'LinearShuntCompenatorPhase',
+    ]
+    query_class_list(network, classes)
+
 
 def get_all_data(network: GraphModel):
-    cim = network.connection.cim
+    cim:cim = network.connection.cim
 
     # Get base data
     get_all_bus_data(network)
