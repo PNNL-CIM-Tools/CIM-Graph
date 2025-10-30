@@ -397,8 +397,8 @@ class GraphModel():
     # -------------------------------------------------------------------------
     # Profile-based Validation
     # -------------------------------------------------------------------------
-    
+
     # def validate(self):
     #     for cim_class in self.graph:
-    #         field = 
-    #         for object in 
+    #         field =
+    #         for object in
