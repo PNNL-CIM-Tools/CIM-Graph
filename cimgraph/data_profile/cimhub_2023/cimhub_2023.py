@@ -40,7 +40,6 @@ class AreaConfiguration(Identity):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             Value 0 means ignore priority. 1 means the highest priority, 2 is the second
@@ -61,7 +60,6 @@ class AreaConfiguration(Identity):
         'maxOccurs': '1',
         'inverse': 'SubSchedulingArea.SinkConfiguration',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             The sink area being energized by the source area.
@@ -80,7 +78,6 @@ class AreaConfiguration(Identity):
         'maxOccurs': '1',
         'inverse': 'SubSchedulingArea.SourceConfiguration',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             The source area which is energizing the sink area
@@ -131,7 +128,6 @@ class AssetOwner(Identity):
         'maxOccurs': 'unbounded',
         'inverse': 'Ownership.AssetOwner',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': False,
         'docstring':
             '''
             All ownerships of this owner.
@@ -155,7 +151,6 @@ class BranchGroupTerminal(Identity):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             The flow into the terminal is summed if set true. The flow out of the terminanl
@@ -176,7 +171,6 @@ class BranchGroupTerminal(Identity):
         'maxOccurs': '1',
         'inverse': 'BranchGroup.BranchGroupTerminal',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             The branch group to which the directed branch group terminals belong.
@@ -195,7 +189,6 @@ class BranchGroupTerminal(Identity):
         'maxOccurs': '1',
         'inverse': 'Terminal.BranchGroupTerminal',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             The terminal to be summed.
@@ -234,7 +227,6 @@ class CurveData(Identity):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             The data value of the X-axis variable, depending on the X-axis units.
@@ -252,7 +244,6 @@ class CurveData(Identity):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             The data value of the first Y-axis variable, depending on the Y-axis units.
@@ -271,7 +262,6 @@ class CurveData(Identity):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             The data value of the second Y-axis variable (if present), depending on
@@ -291,7 +281,6 @@ class CurveData(Identity):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             The data value of the third Y-axis variable (if present), depending on
@@ -312,7 +301,6 @@ class CurveData(Identity):
         'maxOccurs': '1',
         'inverse': 'Curve.CurveDatas',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             The curve of this curve data point.
@@ -363,7 +351,6 @@ class DERDynamics(Identity):
         'maxOccurs': 'unbounded',
         'inverse': 'AsynchronousMachine.DERDynamics',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': False,
         'docstring':
             '''
             Asynchronous machine model with which this DER dynamics model is associated.
@@ -382,7 +369,6 @@ class DERDynamics(Identity):
         'maxOccurs': 'unbounded',
         'inverse': 'PowerElectronicsConnection.DERDynamics',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': False,
         'docstring':
             '''
             Power electronics connection with which this DER dynamics model is associated.
@@ -402,7 +388,6 @@ class DERDynamics(Identity):
         'maxOccurs': 'unbounded',
         'inverse': 'SynchronousMachine.DERDynamics',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': False,
         'docstring':
             '''
             Synchronous machine model with which this DER dynamics model is associated.
@@ -463,7 +448,6 @@ class Estimate(Identity):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             '''
@@ -493,7 +477,6 @@ class Estimate(Identity):
         'maxOccurs': 'unbounded',
         'inverse': 'SvEstVoltage.Estimate',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': False,
         'docstring':
             '''
             '''
@@ -515,7 +498,6 @@ class IEC61968CIMVersion(Identity):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             Form is YYYY-MM-DD for example for January 5, 2009 it is 2009-01-05.
@@ -533,7 +515,6 @@ class IEC61968CIMVersion(Identity):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             Form is IEC61968CIMXXvYY where XX is the major CIM package version and
@@ -572,7 +553,6 @@ class IEC61970CIMVersion(Identity):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             Form is YYYY-MM-DD for example for January 5, 2009 it is 2009-01-05.
@@ -590,7 +570,6 @@ class IEC61970CIMVersion(Identity):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             Form is IEC61970CIMXXvYY where XX is the major CIM package version and
@@ -642,7 +621,6 @@ class IEEE1547ControlSettings(Identity):
         'maxOccurs': 'unbounded',
         'inverse': 'PowerElectronicsConnection.IEEE1547ControlSettings',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': False,
         'docstring':
             '''
             '''
@@ -659,7 +637,6 @@ class IEEE1547ControlSettings(Identity):
         'maxOccurs': 'unbounded',
         'inverse': 'RotatingMachine.IEEE1547ControlSettings',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': False,
         'docstring':
             '''
             '''
@@ -694,7 +671,6 @@ class IEEE1547Setting(Identity):
         'maxOccurs': 'unbounded',
         'inverse': 'PowerElectronicsConnection.IEEE1547Setting',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': False,
         'docstring':
             '''
             '''
@@ -711,7 +687,6 @@ class IEEE1547Setting(Identity):
         'maxOccurs': 'unbounded',
         'inverse': 'RotatingMachine.IEEE1547Setting',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': False,
         'docstring':
             '''
             '''
@@ -746,7 +721,6 @@ class IEEE1547TripSettings(Identity):
         'maxOccurs': 'unbounded',
         'inverse': 'PowerElectronicsConnection.IEEE1547TripSettings',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': False,
         'docstring':
             '''
             '''
@@ -763,7 +737,6 @@ class IEEE1547TripSettings(Identity):
         'maxOccurs': 'unbounded',
         'inverse': 'RotatingMachine.IEEE1547TripSettings',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': False,
         'docstring':
             '''
             '''
@@ -786,7 +759,6 @@ class IdentifiedObject(Identity):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             Master resource identifier issued by a model authority. The mRID is unique
@@ -816,7 +788,6 @@ class IdentifiedObject(Identity):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             The aliasName is free text human readable name of the object alternative
@@ -845,7 +816,6 @@ class IdentifiedObject(Identity):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             The description is a free human readable text describing or naming the
@@ -866,7 +836,6 @@ class IdentifiedObject(Identity):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             The name is any free human readable and possibly non unique text naming
@@ -900,7 +869,6 @@ class IdentifiedObject(Identity):
         'maxOccurs': 'unbounded',
         'inverse': 'Name.IdentifiedObject',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': False,
         'docstring':
             '''
             All names of this identified object.
@@ -926,7 +894,6 @@ class ACDCTerminal(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             The connected status is related to a bus-branch model and the topological
@@ -960,7 +927,6 @@ class ACDCTerminal(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             The orientation of the terminal connections for a multiple terminal conducting
@@ -985,7 +951,6 @@ class ACDCTerminal(IdentifiedObject):
         'maxOccurs': '1',
         'inverse': 'BusNameMarker.Terminal',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             The bus name marker used to name the bus (topological node).
@@ -1004,7 +969,6 @@ class ACDCTerminal(IdentifiedObject):
         'maxOccurs': 'unbounded',
         'inverse': 'Measurement.Terminal',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': False,
         'docstring':
             '''
             Measurements associated with this terminal defining where the measurement
@@ -1030,7 +994,6 @@ class ACDCTerminal(IdentifiedObject):
         'maxOccurs': 'unbounded',
         'inverse': 'OperationalLimitSet.Terminal',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': False,
         'docstring':
             '''
             '''
@@ -1067,7 +1030,6 @@ class Terminal(ACDCTerminal):
         'maxOccurs': '1',
         'inverse': 'SubSchedulingArea.BoundaryTerminals',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             The SubSchedulingArea bounded by the specific Terminal
@@ -1086,7 +1048,6 @@ class Terminal(ACDCTerminal):
         'maxOccurs': '1',
         'inverse': 'Bushing.Terminal',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             '''
@@ -1103,7 +1064,6 @@ class Terminal(ACDCTerminal):
         'maxOccurs': '1',
         'inverse': 'ConductingEquipment.Terminals',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             The conducting equipment of the terminal. Conducting equipment have terminals
@@ -1126,7 +1086,6 @@ class Terminal(ACDCTerminal):
         'maxOccurs': '1',
         'inverse': 'ConnectivityNode.Terminals',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             The connectivity node to which this terminal connects with zero impedance.
@@ -1145,7 +1104,6 @@ class Terminal(ACDCTerminal):
         'maxOccurs': '1',
         'inverse': 'Feeder.NormalHeadTerminal',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             The feeder that this terminal normally feeds. Only specifed for the terminals
@@ -1166,7 +1124,6 @@ class Terminal(ACDCTerminal):
         'maxOccurs': '1',
         'inverse': 'TopologicalNode.Terminal',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             The topological node associated with the terminal. This can be used as
@@ -1193,7 +1150,6 @@ class Terminal(ACDCTerminal):
         'maxOccurs': 'unbounded',
         'inverse': 'BranchGroupTerminal.Terminal',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': False,
         'docstring':
             '''
             The directed branch group terminals for which this terminal is monitored.
@@ -1212,7 +1168,6 @@ class Terminal(ACDCTerminal):
         'maxOccurs': 'unbounded',
         'inverse': 'EquipmentFault.Terminal',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': False,
         'docstring':
             '''
             The equipment faults at this terminal.
@@ -1231,7 +1186,6 @@ class Terminal(ACDCTerminal):
         'maxOccurs': 'unbounded',
         'inverse': 'MutualCoupling.First_Terminal',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': False,
         'docstring':
             '''
             Mutual couplings associated with the branch as the first branch.
@@ -1250,7 +1204,6 @@ class Terminal(ACDCTerminal):
         'maxOccurs': 'unbounded',
         'inverse': 'MutualCoupling.Second_Terminal',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': False,
         'docstring':
             '''
             Mutual couplings with the branch associated as the first branch.
@@ -1269,7 +1222,6 @@ class Terminal(ACDCTerminal):
         'maxOccurs': 'unbounded',
         'inverse': 'RegulatingControl.Terminal',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': False,
         'docstring':
             '''
             The controls regulating this terminal.
@@ -1288,7 +1240,6 @@ class Terminal(ACDCTerminal):
         'maxOccurs': 'unbounded',
         'inverse': 'SvPowerFlow.Terminal',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': False,
         'docstring':
             '''
             The power flow state variable associated with the terminal.
@@ -1307,7 +1258,6 @@ class Terminal(ACDCTerminal):
         'maxOccurs': 'unbounded',
         'inverse': 'TransformerEnd.Terminal',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': False,
         'docstring':
             '''
             All transformer ends connected at this terminal.
@@ -1351,7 +1301,6 @@ class Asset(IdentifiedObject):
         'maxOccurs': 'unbounded',
         'inverse': 'Measurement.Asset',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': False,
         'docstring':
             '''
             '''
@@ -1368,7 +1317,6 @@ class Asset(IdentifiedObject):
         'maxOccurs': 'unbounded',
         'inverse': 'Ownership.Asset',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': False,
         'docstring':
             '''
             All ownerships of this asset.
@@ -1407,7 +1355,6 @@ class Bushing(Asset):
         'maxOccurs': '1',
         'inverse': 'Terminal.Bushing',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': False,
         'docstring':
             '''
             '''
@@ -1446,7 +1393,6 @@ class DuctBank(Asset):
         'maxOccurs': 'unbounded',
         'inverse': 'WireSpacingInfo.DuctBank',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': False,
         'docstring':
             '''
             '''
@@ -1488,7 +1434,6 @@ class AssetInfo(IdentifiedObject):
         'maxOccurs': 'unbounded',
         'inverse': 'PowerSystemResource.AssetDatasheet',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': False,
         'docstring':
             '''
             All power system resources with this datasheet information.
@@ -1526,7 +1471,6 @@ class BusbarSectionInfo(AssetInfo):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             Rated current.
@@ -1544,7 +1488,6 @@ class BusbarSectionInfo(AssetInfo):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             Rated voltage.
@@ -1582,7 +1525,6 @@ class BushingInfo(AssetInfo):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             Factory measured capacitance, measured between the power factor tap and
@@ -1602,7 +1544,6 @@ class BushingInfo(AssetInfo):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             Factory measured insulation power factor, measured between the power factor
@@ -1622,7 +1563,6 @@ class BushingInfo(AssetInfo):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             Factory measured capacitance measured between the power factor tap and
@@ -1642,7 +1582,6 @@ class BushingInfo(AssetInfo):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             Factory measured insulation power factor, measured between the power factor
@@ -1662,7 +1601,6 @@ class BushingInfo(AssetInfo):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             Kind of insulation.
@@ -1680,7 +1618,6 @@ class BushingInfo(AssetInfo):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             Rated current for bushing as installed.
@@ -1698,7 +1635,6 @@ class BushingInfo(AssetInfo):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             Rated impulse withstand voltage, also known as BIL (Basic Impulse Level).
@@ -1716,7 +1652,6 @@ class BushingInfo(AssetInfo):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             Rated line-to-ground voltage. Also referred to as U<sub>y</sub> on bushing
@@ -1736,7 +1671,6 @@ class BushingInfo(AssetInfo):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             Rated voltage. Can be referred to as U<sub>m</sub>, system voltage or class
@@ -1774,7 +1708,6 @@ class IEEE1547Info(AssetInfo):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             '''
@@ -1790,7 +1723,6 @@ class IEEE1547Info(AssetInfo):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             '''
@@ -1806,7 +1738,6 @@ class IEEE1547Info(AssetInfo):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             '''
@@ -1822,7 +1753,6 @@ class IEEE1547Info(AssetInfo):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             '''
@@ -1838,7 +1768,6 @@ class IEEE1547Info(AssetInfo):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             '''
@@ -1854,7 +1783,6 @@ class IEEE1547Info(AssetInfo):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             '''
@@ -1870,7 +1798,6 @@ class IEEE1547Info(AssetInfo):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             '''
@@ -1886,7 +1813,6 @@ class IEEE1547Info(AssetInfo):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             '''
@@ -1902,7 +1828,6 @@ class IEEE1547Info(AssetInfo):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             '''
@@ -1918,7 +1843,6 @@ class IEEE1547Info(AssetInfo):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             '''
@@ -1934,7 +1858,6 @@ class IEEE1547Info(AssetInfo):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             '''
@@ -1950,7 +1873,6 @@ class IEEE1547Info(AssetInfo):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             '''
@@ -1966,7 +1888,6 @@ class IEEE1547Info(AssetInfo):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             '''
@@ -1982,7 +1903,6 @@ class IEEE1547Info(AssetInfo):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             '''
@@ -1998,7 +1918,6 @@ class IEEE1547Info(AssetInfo):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             '''
@@ -2014,7 +1933,6 @@ class IEEE1547Info(AssetInfo):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             '''
@@ -2030,7 +1948,6 @@ class IEEE1547Info(AssetInfo):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             '''
@@ -2046,7 +1963,6 @@ class IEEE1547Info(AssetInfo):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             '''
@@ -2062,7 +1978,6 @@ class IEEE1547Info(AssetInfo):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             '''
@@ -2078,7 +1993,6 @@ class IEEE1547Info(AssetInfo):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             '''
@@ -2094,7 +2008,6 @@ class IEEE1547Info(AssetInfo):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             '''
@@ -2110,7 +2023,6 @@ class IEEE1547Info(AssetInfo):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             '''
@@ -2126,7 +2038,6 @@ class IEEE1547Info(AssetInfo):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             '''
@@ -2142,7 +2053,6 @@ class IEEE1547Info(AssetInfo):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             '''
@@ -2158,7 +2068,6 @@ class IEEE1547Info(AssetInfo):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             '''
@@ -2174,7 +2083,6 @@ class IEEE1547Info(AssetInfo):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             '''
@@ -2190,7 +2098,6 @@ class IEEE1547Info(AssetInfo):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             '''
@@ -2206,7 +2113,6 @@ class IEEE1547Info(AssetInfo):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             '''
@@ -2222,7 +2128,6 @@ class IEEE1547Info(AssetInfo):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             '''
@@ -2238,7 +2143,6 @@ class IEEE1547Info(AssetInfo):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             '''
@@ -2255,7 +2159,6 @@ class IEEE1547Info(AssetInfo):
         'maxOccurs': 'unbounded',
         'inverse': 'PowerElectronicsConnection.IEEE1547Info',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': False,
         'docstring':
             '''
             '''
@@ -2272,7 +2175,6 @@ class IEEE1547Info(AssetInfo):
         'maxOccurs': 'unbounded',
         'inverse': 'RotatingMachine.IEEE1547Info',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': False,
         'docstring':
             '''
             '''
@@ -2325,7 +2227,6 @@ class OperatingMechanismInfo(AssetInfo):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             Close current (nominal).
@@ -2343,7 +2244,6 @@ class OperatingMechanismInfo(AssetInfo):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             Close voltage in volts DC.
@@ -2361,7 +2261,6 @@ class OperatingMechanismInfo(AssetInfo):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             Kind of breaker operating mechanism.
@@ -2379,7 +2278,6 @@ class OperatingMechanismInfo(AssetInfo):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             Rated motor run current in amps.
@@ -2397,7 +2295,6 @@ class OperatingMechanismInfo(AssetInfo):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             Rated motor start current in amps.
@@ -2415,7 +2312,6 @@ class OperatingMechanismInfo(AssetInfo):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             Nominal motor voltage in volts DC.
@@ -2433,7 +2329,6 @@ class OperatingMechanismInfo(AssetInfo):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             Trip current (nominal).
@@ -2451,7 +2346,6 @@ class OperatingMechanismInfo(AssetInfo):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             Trip voltage in volts DC.
@@ -2489,7 +2383,6 @@ class PowerTransformerInfo(AssetInfo):
         'maxOccurs': 'unbounded',
         'inverse': 'TransformerTankInfo.PowerTransformerInfo',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': False,
         'docstring':
             '''
             Data for all the tanks described by this power transformer data.
@@ -2527,7 +2420,6 @@ class ShuntCompensatorInfo(AssetInfo):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             Maximum allowed apparent power loss.
@@ -2545,7 +2437,6 @@ class ShuntCompensatorInfo(AssetInfo):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             Rated current.
@@ -2563,7 +2454,6 @@ class ShuntCompensatorInfo(AssetInfo):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             Rated reactive power.
@@ -2581,7 +2471,6 @@ class ShuntCompensatorInfo(AssetInfo):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             Rated voltage.
@@ -2619,7 +2508,6 @@ class SwitchInfo(AssetInfo):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             If true, it is a single phase switch.
@@ -2637,7 +2525,6 @@ class SwitchInfo(AssetInfo):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             If true, the switch is not ganged (i.e., a switch phase may be operated
@@ -2657,7 +2544,6 @@ class SwitchInfo(AssetInfo):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             The maximum fault current a breaking device can break safely under prescribed
@@ -2677,7 +2563,6 @@ class SwitchInfo(AssetInfo):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             Gas or air pressure at or below which a low pressure alarm is generated.
@@ -2695,7 +2580,6 @@ class SwitchInfo(AssetInfo):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             Gas or air pressure below which the breaker will not open.
@@ -2713,7 +2597,6 @@ class SwitchInfo(AssetInfo):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             Volume of oil in each tank of bulk oil breaker.
@@ -2731,7 +2614,6 @@ class SwitchInfo(AssetInfo):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             Rated current.
@@ -2749,7 +2631,6 @@ class SwitchInfo(AssetInfo):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             Frequency for which switch is rated.
@@ -2767,7 +2648,6 @@ class SwitchInfo(AssetInfo):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             Rated impulse withstand voltage, also known as BIL (Basic Impulse Level).
@@ -2785,7 +2665,6 @@ class SwitchInfo(AssetInfo):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             Switch rated interrupting time in seconds.
@@ -2803,7 +2682,6 @@ class SwitchInfo(AssetInfo):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             Rated voltage.
@@ -2841,7 +2719,6 @@ class TapChangerInfo(AssetInfo):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             Built-in current transducer ratio.
@@ -2859,7 +2736,6 @@ class TapChangerInfo(AssetInfo):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             Built-in voltage transducer ratio.
@@ -2877,7 +2753,6 @@ class TapChangerInfo(AssetInfo):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             Built-in current transformer primary rating.
@@ -2914,7 +2789,6 @@ class TransformerEndInfo(AssetInfo):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             Number for this transformer end, corresponding to the end's order in the
@@ -2936,7 +2810,6 @@ class TransformerEndInfo(AssetInfo):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             Winding phase angle where 360 degrees are represented with clock hours,
@@ -2960,7 +2833,6 @@ class TransformerEndInfo(AssetInfo):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             Kind of connection.
@@ -2978,7 +2850,6 @@ class TransformerEndInfo(AssetInfo):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             Apparent power that the winding can carry under emergency conditions (also
@@ -2998,7 +2869,6 @@ class TransformerEndInfo(AssetInfo):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             Basic insulation level voltage rating.
@@ -3016,7 +2886,6 @@ class TransformerEndInfo(AssetInfo):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             DC resistance.
@@ -3034,7 +2903,6 @@ class TransformerEndInfo(AssetInfo):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             Normal apparent power rating.
@@ -3052,7 +2920,6 @@ class TransformerEndInfo(AssetInfo):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             Rated voltage: phase-phase for three-phase windings, and either phase-phase
@@ -3072,7 +2939,6 @@ class TransformerEndInfo(AssetInfo):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             Apparent power that this winding can carry for a short period of time (in
@@ -3093,7 +2959,6 @@ class TransformerEndInfo(AssetInfo):
         'maxOccurs': '1',
         'inverse': 'TransformerCoreAdmittance.TransformerEndInfo',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             Core admittance calculated from this transformer end datasheet, representing
@@ -3116,7 +2981,6 @@ class TransformerEndInfo(AssetInfo):
         'maxOccurs': '1',
         'inverse': 'TransformerStarImpedance.TransformerEndInfo',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             Transformer star impedance calculated from this transformer end datasheet.
@@ -3135,7 +2999,6 @@ class TransformerEndInfo(AssetInfo):
         'maxOccurs': '1',
         'inverse': 'TransformerTankInfo.TransformerEndInfos',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             Transformer tank data that this end description is part of.
@@ -3154,7 +3017,6 @@ class TransformerEndInfo(AssetInfo):
         'maxOccurs': 'unbounded',
         'inverse': 'NoLoadTest.EnergisedEnd',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': False,
         'docstring':
             '''
             All no-load test measurements in which this transformer end was energised.
@@ -3173,7 +3035,6 @@ class TransformerEndInfo(AssetInfo):
         'maxOccurs': 'unbounded',
         'inverse': 'OpenCircuitTest.EnergisedEnd',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': False,
         'docstring':
             '''
             All open-circuit test measurements in which this transformer end was excited.
@@ -3193,7 +3054,6 @@ class TransformerEndInfo(AssetInfo):
         'maxOccurs': 'unbounded',
         'inverse': 'OpenCircuitTest.OpenEnd',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': False,
         'docstring':
             '''
             All open-circuit test measurements in which this transformer end was not
@@ -3214,7 +3074,6 @@ class TransformerEndInfo(AssetInfo):
         'maxOccurs': 'unbounded',
         'inverse': 'ShortCircuitTest.EnergisedEnd',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': False,
         'docstring':
             '''
             All short-circuit test measurements in which this transformer end was energised.
@@ -3234,7 +3093,6 @@ class TransformerEndInfo(AssetInfo):
         'maxOccurs': 'unbounded',
         'inverse': 'ShortCircuitTest.GroundedEnds',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': False,
         'docstring':
             '''
             All short-circuit test measurements in which this transformer end was short-circuited.
@@ -3254,7 +3112,6 @@ class TransformerEndInfo(AssetInfo):
         'maxOccurs': '1',
         'inverse': 'TransformerCoreAdmittance.TransformerEndInfo',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': False,
         'docstring':
             '''
             Core admittance calculated from this transformer end datasheet, representing
@@ -3277,7 +3134,6 @@ class TransformerEndInfo(AssetInfo):
         'maxOccurs': 'unbounded',
         'inverse': 'TransformerMeshImpedance.FromTransformerEndInfo',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': False,
         'docstring':
             '''
             All mesh impedances between this 'to' and other 'from' transformer ends.
@@ -3297,7 +3153,6 @@ class TransformerEndInfo(AssetInfo):
         'maxOccurs': '1',
         'inverse': 'TransformerStarImpedance.TransformerEndInfo',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': False,
         'docstring':
             '''
             Transformer star impedance calculated from this transformer end datasheet.
@@ -3336,7 +3191,6 @@ class TransformerTankInfo(AssetInfo):
         'maxOccurs': '1',
         'inverse': 'PowerTransformerInfo.TransformerTankInfos',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             Power transformer data that this tank description is part of.
@@ -3355,7 +3209,6 @@ class TransformerTankInfo(AssetInfo):
         'maxOccurs': 'unbounded',
         'inverse': 'TransformerEndInfo.TransformerTankInfo',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': False,
         'docstring':
             '''
             Data for all the ends described by this transformer tank data.
@@ -3374,7 +3227,6 @@ class TransformerTankInfo(AssetInfo):
         'maxOccurs': 'unbounded',
         'inverse': 'TransformerTank.TransformerTankInfo',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': False,
         'docstring':
             '''
             '''
@@ -3410,7 +3262,6 @@ class WireAssemblyInfo(AssetInfo):
         'maxOccurs': '1',
         'inverse': 'WireSpacingInfo.WireAssemblyInfo',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             '''
@@ -3427,7 +3278,6 @@ class WireAssemblyInfo(AssetInfo):
         'maxOccurs': 'unbounded',
         'inverse': 'PerLengthLineParameter.WireAssemblyInfo',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': False,
         'docstring':
             '''
             '''
@@ -3444,7 +3294,6 @@ class WireAssemblyInfo(AssetInfo):
         'maxOccurs': 'unbounded',
         'inverse': 'WirePhaseInfo.WireAssemblyInfo',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': False,
         'docstring':
             '''
             '''
@@ -3480,7 +3329,6 @@ class WireInfo(AssetInfo):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             (if used) Number of strands in the steel core.
@@ -3498,7 +3346,6 @@ class WireInfo(AssetInfo):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             True if conductor is insulated.
@@ -3516,7 +3363,6 @@ class WireInfo(AssetInfo):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             Describes the wire gauge or cross section (e.g., 4/0, #2, 336.5).
@@ -3534,7 +3380,6 @@ class WireInfo(AssetInfo):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             Number of strands in the conductor.
@@ -3552,7 +3397,6 @@ class WireInfo(AssetInfo):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             (if there is a different core material) Radius of the central core.
@@ -3570,7 +3414,6 @@ class WireInfo(AssetInfo):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             Geometric mean radius. If we replace the conductor by a thin walled tube
@@ -3592,7 +3435,6 @@ class WireInfo(AssetInfo):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             (if insulated conductor) Material used for insulation.
@@ -3610,7 +3452,6 @@ class WireInfo(AssetInfo):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             (if insulated conductor) Thickness of the insulation.
@@ -3628,7 +3469,6 @@ class WireInfo(AssetInfo):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             Conductor material.
@@ -3646,7 +3486,6 @@ class WireInfo(AssetInfo):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             AC resistance per unit length of the conductor at 25 �C.
@@ -3664,7 +3503,6 @@ class WireInfo(AssetInfo):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             AC resistance per unit length of the conductor at 50 �C.
@@ -3682,7 +3520,6 @@ class WireInfo(AssetInfo):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             AC resistance per unit length of the conductor at 75 �C.
@@ -3700,7 +3537,6 @@ class WireInfo(AssetInfo):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             Outside radius of the wire.
@@ -3718,7 +3554,6 @@ class WireInfo(AssetInfo):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             Current carrying capacity of the wire under stated thermal conditions.
@@ -3736,7 +3571,6 @@ class WireInfo(AssetInfo):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             DC resistance per unit length of the conductor at 20 �C.
@@ -3755,7 +3589,6 @@ class WireInfo(AssetInfo):
         'maxOccurs': 'unbounded',
         'inverse': 'ACLineSegmentPhase.WireInfo',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': False,
         'docstring':
             '''
             '''
@@ -3772,7 +3605,6 @@ class WireInfo(AssetInfo):
         'maxOccurs': 'unbounded',
         'inverse': 'WirePhaseInfo.WireInfo',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': False,
         'docstring':
             '''
             '''
@@ -3807,7 +3639,6 @@ class CableInfo(WireInfo):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             True if wire strands are extruded in a way to fill the voids in the cable.
@@ -3826,7 +3657,6 @@ class CableInfo(WireInfo):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             '''
@@ -3842,7 +3672,6 @@ class CableInfo(WireInfo):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             True if sheath / shield is used as a neutral (i.e., bonded).
@@ -3860,7 +3689,6 @@ class CableInfo(WireInfo):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             Kind of construction of this cable.
@@ -3878,7 +3706,6 @@ class CableInfo(WireInfo):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             Diameter over the core, including any semi-con screen; should be the insulating
@@ -3898,7 +3725,6 @@ class CableInfo(WireInfo):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             Diameter over the insulating layer, excluding outer screen.
@@ -3916,7 +3742,6 @@ class CableInfo(WireInfo):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             Diameter over the outermost jacketing layer.
@@ -3934,7 +3759,6 @@ class CableInfo(WireInfo):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             Diameter over the outer screen; should be the shield's inside diameter.
@@ -3952,7 +3776,6 @@ class CableInfo(WireInfo):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             Maximum nominal design operating temperature.
@@ -3970,7 +3793,6 @@ class CableInfo(WireInfo):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             Kind of outer jacket of this cable.
@@ -3988,7 +3810,6 @@ class CableInfo(WireInfo):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             Material of the shield.
@@ -4026,7 +3847,6 @@ class ConcentricNeutralCableInfo(CableInfo):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             Number of concentric neutral strands.
@@ -4044,7 +3864,6 @@ class ConcentricNeutralCableInfo(CableInfo):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             Diameter over the concentric neutral strands.
@@ -4062,7 +3881,6 @@ class ConcentricNeutralCableInfo(CableInfo):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             Geometric mean radius of the neutral strand.
@@ -4080,7 +3898,6 @@ class ConcentricNeutralCableInfo(CableInfo):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             Outside radius of the neutral strand.
@@ -4098,7 +3915,6 @@ class ConcentricNeutralCableInfo(CableInfo):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             DC resistance per unit length of the neutral strand at 20 �C.
@@ -4135,7 +3951,6 @@ class TapeShieldCableInfo(CableInfo):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             Percentage of the tape shield width that overlaps in each wrap, typically
@@ -4155,7 +3970,6 @@ class TapeShieldCableInfo(CableInfo):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             Thickness of the tape shield, before wrapping.
@@ -4216,7 +4030,6 @@ class WireSpacingInfo(AssetInfo):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             If true, this spacing data describes a cable.
@@ -4234,7 +4047,6 @@ class WireSpacingInfo(AssetInfo):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             Number of wire sub-conductors in the symmetrical bundle (typically between
@@ -4254,7 +4066,6 @@ class WireSpacingInfo(AssetInfo):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             Distance between wire sub-conductors in a symmetrical bundle.
@@ -4272,7 +4083,6 @@ class WireSpacingInfo(AssetInfo):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             Usage of the associated wires.
@@ -4291,7 +4101,6 @@ class WireSpacingInfo(AssetInfo):
         'maxOccurs': '1',
         'inverse': 'DuctBank.WireSpacingInfos',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             '''
@@ -4308,7 +4117,6 @@ class WireSpacingInfo(AssetInfo):
         'maxOccurs': 'unbounded',
         'inverse': 'ACLineSegment.WireSpacingInfo',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': False,
         'docstring':
             '''
             '''
@@ -4325,7 +4133,6 @@ class WireSpacingInfo(AssetInfo):
         'maxOccurs': 'unbounded',
         'inverse': 'WireAssemblyInfo.WireSpacingInfo',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': False,
         'docstring':
             '''
             '''
@@ -4342,7 +4149,6 @@ class WireSpacingInfo(AssetInfo):
         'maxOccurs': 'unbounded',
         'inverse': 'WirePosition.WireSpacingInfo',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': False,
         'docstring':
             '''
             All positions of single wires (phase or neutral) making the conductor.
@@ -4384,7 +4190,6 @@ class BaseFrequency(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             The base frequency.
@@ -4422,7 +4227,6 @@ class BasePower(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             Value used as base power.
@@ -4460,7 +4264,6 @@ class BaseVoltage(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             The power system resource's base voltage.
@@ -4479,7 +4282,6 @@ class BaseVoltage(IdentifiedObject):
         'maxOccurs': 'unbounded',
         'inverse': 'ConductingEquipment.BaseVoltage',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': False,
         'docstring':
             '''
             All conducting equipment with this base voltage. Use only when there is
@@ -4502,7 +4304,6 @@ class BaseVoltage(IdentifiedObject):
         'maxOccurs': 'unbounded',
         'inverse': 'TopologicalNode.BaseVoltage',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': False,
         'docstring':
             '''
             The topological nodes at the base voltage.
@@ -4521,7 +4322,6 @@ class BaseVoltage(IdentifiedObject):
         'maxOccurs': 'unbounded',
         'inverse': 'TransformerEnd.BaseVoltage',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': False,
         'docstring':
             '''
             Transformer ends at the base voltage. This is essential for PU calculation.
@@ -4540,7 +4340,6 @@ class BaseVoltage(IdentifiedObject):
         'maxOccurs': 'unbounded',
         'inverse': 'VoltageLevel.BaseVoltage',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': False,
         'docstring':
             '''
             The voltage levels having this base voltage.
@@ -4577,7 +4376,6 @@ class BasicIntervalSchedule(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             The time for the first time point. The value can be a time of day, not
@@ -4597,7 +4395,6 @@ class BasicIntervalSchedule(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             Multiplier for value1.
@@ -4615,7 +4412,6 @@ class BasicIntervalSchedule(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             Value1 units of measure.
@@ -4633,7 +4429,6 @@ class BasicIntervalSchedule(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             Multiplier for value2.
@@ -4651,7 +4446,6 @@ class BasicIntervalSchedule(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             Value2 units of measure.
@@ -4690,7 +4484,6 @@ class IrregularIntervalSchedule(BasicIntervalSchedule):
         'maxOccurs': 'unbounded',
         'inverse': 'IrregularTimePoint.IntervalSchedule',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': False,
         'docstring':
             '''
             The point data values that define a curve.
@@ -4728,7 +4521,6 @@ class RegularIntervalSchedule(BasicIntervalSchedule):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             The time for the last time point. The value can be a time of day, not a
@@ -4748,7 +4540,6 @@ class RegularIntervalSchedule(BasicIntervalSchedule):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             The time between each pair of subsequent regular time points in sequence
@@ -4769,7 +4560,6 @@ class RegularIntervalSchedule(BasicIntervalSchedule):
         'maxOccurs': 'unbounded',
         'inverse': 'RegularTimePoint.IntervalSchedule',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': False,
         'docstring':
             '''
             The regular interval time point data values that define this schedule.
@@ -4813,7 +4603,6 @@ class GenUnitOpSchedule(RegularIntervalSchedule):
         'maxOccurs': '1',
         'inverse': 'GeneratingUnit.GenUnitOpSchedule',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             A generating unit may have an operating schedule, indicating the planned
@@ -4834,7 +4623,6 @@ class GenUnitOpSchedule(RegularIntervalSchedule):
         'maxOccurs': '1',
         'inverse': 'GeneratingUnit.GenUnitOpSchedule',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': False,
         'docstring':
             '''
             A generating unit may have an operating schedule, indicating the planned
@@ -4878,7 +4666,6 @@ class HydroPumpOpSchedule(RegularIntervalSchedule):
         'maxOccurs': '1',
         'inverse': 'HydroPump.HydroPumpOpSchedule',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             The hydro pump has a pumping schedule over time, indicating when pumping
@@ -4899,7 +4686,6 @@ class HydroPumpOpSchedule(RegularIntervalSchedule):
         'maxOccurs': '1',
         'inverse': 'HydroPump.HydroPumpOpSchedule',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': False,
         'docstring':
             '''
             The hydro pump has a pumping schedule over time, indicating when pumping
@@ -4942,7 +4728,6 @@ class InflowForecast(RegularIntervalSchedule):
         'maxOccurs': '1',
         'inverse': 'Reservoir.InflowForecasts',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             A reservoir may have a "natural" inflow forecast.
@@ -4981,7 +4766,6 @@ class SeasonDayTypeSchedule(RegularIntervalSchedule):
         'maxOccurs': '1',
         'inverse': 'DayType.SeasonDayTypeSchedules',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             DayType for the Schedule.
@@ -5000,7 +4784,6 @@ class SeasonDayTypeSchedule(RegularIntervalSchedule):
         'maxOccurs': '1',
         'inverse': 'Season.SeasonDayTypeSchedules',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             Season for the Schedule.
@@ -5041,7 +4824,6 @@ class ConformLoadSchedule(SeasonDayTypeSchedule):
         'maxOccurs': '1',
         'inverse': 'ConformLoadGroup.ConformLoadSchedules',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             The ConformLoadGroup where the ConformLoadSchedule belongs.
@@ -5081,7 +4863,6 @@ class NonConformLoadSchedule(SeasonDayTypeSchedule):
         'maxOccurs': '1',
         'inverse': 'NonConformLoadGroup.NonConformLoadSchedules',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             The NonConformLoadGroup where the NonConformLoadSchedule belongs.
@@ -5120,7 +4901,6 @@ class RegulationSchedule(SeasonDayTypeSchedule):
         'maxOccurs': '1',
         'inverse': 'RegulatingControl.RegulationSchedule',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             Regulating controls that have this Schedule.
@@ -5139,7 +4919,6 @@ class RegulationSchedule(SeasonDayTypeSchedule):
         'maxOccurs': 'unbounded',
         'inverse': 'VoltageControlZone.RegulationSchedule',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': False,
         'docstring':
             '''
             A VoltageControlZone may have a voltage regulation schedule.
@@ -5178,7 +4957,6 @@ class SwitchSchedule(SeasonDayTypeSchedule):
         'maxOccurs': '1',
         'inverse': 'Switch.SwitchSchedules',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             A SwitchSchedule is associated with a Switch.
@@ -5216,7 +4994,6 @@ class TapSchedule(SeasonDayTypeSchedule):
         'maxOccurs': '1',
         'inverse': 'TapChanger.TapSchedules',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             A TapSchedule is associated with a TapChanger.
@@ -5255,7 +5032,6 @@ class SteamSendoutSchedule(RegularIntervalSchedule):
         'maxOccurs': '1',
         'inverse': 'CogenerationPlant.SteamSendoutSchedule',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             A cogeneration plant has a steam sendout schedule.
@@ -5274,7 +5050,6 @@ class SteamSendoutSchedule(RegularIntervalSchedule):
         'maxOccurs': '1',
         'inverse': 'CogenerationPlant.SteamSendoutSchedule',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': False,
         'docstring':
             '''
             A cogeneration plant has a steam sendout schedule.
@@ -5313,7 +5088,6 @@ class BranchGroup(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             Monitor the active power flow.
@@ -5331,7 +5105,6 @@ class BranchGroup(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             Monitor the reactive power flow.
@@ -5349,7 +5122,6 @@ class BranchGroup(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             The maximum active power flow.
@@ -5367,7 +5139,6 @@ class BranchGroup(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             The maximum reactive power flow.
@@ -5385,7 +5156,6 @@ class BranchGroup(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             The minimum active power flow.
@@ -5403,7 +5173,6 @@ class BranchGroup(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             The minimum reactive power flow.
@@ -5422,7 +5191,6 @@ class BranchGroup(IdentifiedObject):
         'maxOccurs': 'unbounded',
         'inverse': 'BranchGroupTerminal.BranchGroup',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': False,
         'docstring':
             '''
             The directed branch group terminals to be summed.
@@ -5467,7 +5235,6 @@ class BusNameMarker(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             Priority of bus name marker for use as topology bus name. Use 0 for don
@@ -5490,7 +5257,6 @@ class BusNameMarker(IdentifiedObject):
         'maxOccurs': '1',
         'inverse': 'ReportingGroup.BusNameMarker',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             The reporting group to which this bus name marker belongs.
@@ -5509,7 +5275,6 @@ class BusNameMarker(IdentifiedObject):
         'maxOccurs': '1',
         'inverse': 'TopologicalNode.BusNameMarker',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             A user defined topological node that was originally defined in a planning
@@ -5533,7 +5298,6 @@ class BusNameMarker(IdentifiedObject):
         'maxOccurs': 'unbounded',
         'inverse': 'ACDCTerminal.BusNameMarker',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': False,
         'docstring':
             '''
             The terminals associated with this bus name marker.
@@ -5573,7 +5337,6 @@ class ConnectivityNode(IdentifiedObject):
         'maxOccurs': '1',
         'inverse': 'ConnectivityNodeContainer.ConnectivityNodes',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             Container of this connectivity node.
@@ -5592,7 +5355,6 @@ class ConnectivityNode(IdentifiedObject):
         'maxOccurs': '1',
         'inverse': 'SvVoltage.ConnectivityNode',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             '''
@@ -5609,7 +5371,6 @@ class ConnectivityNode(IdentifiedObject):
         'maxOccurs': '1',
         'inverse': 'TopologicalNode.ConnectivityNodes',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             The topological node to which this connectivity node is assigned. May depend
@@ -5630,7 +5391,6 @@ class ConnectivityNode(IdentifiedObject):
         'maxOccurs': 'unbounded',
         'inverse': 'OperationalLimitSet.ConnectivityNode',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': False,
         'docstring':
             '''
             '''
@@ -5647,7 +5407,6 @@ class ConnectivityNode(IdentifiedObject):
         'maxOccurs': 'unbounded',
         'inverse': 'SvInjection.ConnectivityNode',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': False,
         'docstring':
             '''
             '''
@@ -5664,7 +5423,6 @@ class ConnectivityNode(IdentifiedObject):
         'maxOccurs': '1',
         'inverse': 'SvVoltage.ConnectivityNode',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': False,
         'docstring':
             '''
             '''
@@ -5681,7 +5439,6 @@ class ConnectivityNode(IdentifiedObject):
         'maxOccurs': 'unbounded',
         'inverse': 'Terminal.ConnectivityNode',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': False,
         'docstring':
             '''
             Terminals interconnected with zero impedance at a this connectivity node.
@@ -5722,7 +5479,6 @@ class Contingency(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             Set true if must study this contingency.
@@ -5741,7 +5497,6 @@ class Contingency(IdentifiedObject):
         'maxOccurs': 'unbounded',
         'inverse': 'ContingencyElement.Contingency',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': False,
         'docstring':
             '''
             A contingency can have any number of contingency elements.
@@ -5780,7 +5535,6 @@ class ContingencyElement(IdentifiedObject):
         'maxOccurs': '1',
         'inverse': 'Contingency.ContingencyElement',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             A contingency element belongs to one contingency.
@@ -5818,7 +5572,6 @@ class ContingencyEquipment(ContingencyElement):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             The status for the associated equipment when in the contingency state.
@@ -5842,7 +5595,6 @@ class ContingencyEquipment(ContingencyElement):
         'maxOccurs': '1',
         'inverse': 'Equipment.ContingencyEquipment',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             The single piece of equipment to which to apply the contingency.
@@ -5879,7 +5631,6 @@ class CoordinateSystem(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             A Uniform Resource Name (URN) for the coordinate reference system (crs)
@@ -5918,7 +5669,6 @@ class CoordinateSystem(IdentifiedObject):
         'maxOccurs': 'unbounded',
         'inverse': 'Location.CoordinateSystem',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': False,
         'docstring':
             '''
             All locations described with position points in this coordinate system.
@@ -5957,7 +5707,6 @@ class Curve(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             The style or shape of the curve.
@@ -5975,7 +5724,6 @@ class Curve(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             Multiplier for X-axis.
@@ -5993,7 +5741,6 @@ class Curve(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             The X-axis units of measure.
@@ -6011,7 +5758,6 @@ class Curve(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             Multiplier for Y1-axis.
@@ -6029,7 +5775,6 @@ class Curve(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             The Y1-axis units of measure.
@@ -6047,7 +5792,6 @@ class Curve(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             Multiplier for Y2-axis.
@@ -6065,7 +5809,6 @@ class Curve(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             The Y2-axis units of measure.
@@ -6083,7 +5826,6 @@ class Curve(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             Multiplier for Y3-axis.
@@ -6101,7 +5843,6 @@ class Curve(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             The Y3-axis units of measure.
@@ -6120,7 +5861,6 @@ class Curve(IdentifiedObject):
         'maxOccurs': 'unbounded',
         'inverse': 'CurveData.Curve',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': False,
         'docstring':
             '''
             The point data values that define this curve.
@@ -6159,7 +5899,6 @@ class EmissionAccount(Curve):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             The type of emission, for example sulfur dioxide (SO2). The y1AxisUnits
@@ -6181,7 +5920,6 @@ class EmissionAccount(Curve):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             The source of the emission value.
@@ -6200,7 +5938,6 @@ class EmissionAccount(Curve):
         'maxOccurs': '1',
         'inverse': 'ThermalGeneratingUnit.EmmissionAccounts',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             A thermal generating unit may have one or more emission allowance accounts.
@@ -6239,7 +5976,6 @@ class EmissionCurve(Curve):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             Flag is set to true when output is expressed in net active power.
@@ -6257,7 +5993,6 @@ class EmissionCurve(Curve):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             The emission content per quantity of fuel burned.
@@ -6275,7 +6010,6 @@ class EmissionCurve(Curve):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             The type of emission, which also gives the production rate measurement
@@ -6298,7 +6032,6 @@ class EmissionCurve(Curve):
         'maxOccurs': '1',
         'inverse': 'ThermalGeneratingUnit.EmissionCurves',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             A thermal generating unit may have one or more emission curves.
@@ -6336,7 +6069,6 @@ class FuelAllocationSchedule(Curve):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             The end time and date of the fuel allocation schedule.
@@ -6354,7 +6086,6 @@ class FuelAllocationSchedule(Curve):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             The start time and date of the fuel allocation schedule.
@@ -6372,7 +6103,6 @@ class FuelAllocationSchedule(Curve):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             The maximum amount fuel that is allocated for consumption for the scheduled
@@ -6392,7 +6122,6 @@ class FuelAllocationSchedule(Curve):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             The minimum amount fuel that is allocated for consumption for the scheduled
@@ -6412,7 +6141,6 @@ class FuelAllocationSchedule(Curve):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             The type of fuel, which also indicates the corresponding measurement unit.
@@ -6432,7 +6160,6 @@ class FuelAllocationSchedule(Curve):
         'maxOccurs': '1',
         'inverse': 'FossilFuel.FuelAllocationSchedules',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             A fuel allocation schedule must have a fossil fuel.
@@ -6451,7 +6178,6 @@ class FuelAllocationSchedule(Curve):
         'maxOccurs': '1',
         'inverse': 'ThermalGeneratingUnit.FuelAllocationSchedules',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             A thermal generating unit may have one or more fuel allocation schedules.
@@ -6491,7 +6217,6 @@ class GenUnitOpCostCurve(Curve):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             Flag is set to true when output is expressed in net active power.
@@ -6510,7 +6235,6 @@ class GenUnitOpCostCurve(Curve):
         'maxOccurs': '1',
         'inverse': 'GeneratingUnit.GenUnitOpCostCurves',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             A generating unit may have one or more cost curves, depending upon fuel
@@ -6555,7 +6279,6 @@ class GrossToNetActivePowerCurve(Curve):
         'maxOccurs': '1',
         'inverse': 'GeneratingUnit.GrossToNetActivePowerCurves',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             A generating unit may have a gross active power to net active power curve,
@@ -6600,7 +6323,6 @@ class HeatInputCurve(Curve):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             Flag is set to true when output is expressed in net active power.
@@ -6618,7 +6340,6 @@ class HeatInputCurve(Curve):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             Power output - auxiliary power multiplier adjustment factor.
@@ -6636,7 +6357,6 @@ class HeatInputCurve(Curve):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             Power output - auxiliary power offset adjustment factor.
@@ -6654,7 +6374,6 @@ class HeatInputCurve(Curve):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             Heat input - efficiency multiplier adjustment factor.
@@ -6672,7 +6391,6 @@ class HeatInputCurve(Curve):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             Heat input - offset adjustment factor.
@@ -6691,7 +6409,6 @@ class HeatInputCurve(Curve):
         'maxOccurs': '1',
         'inverse': 'ThermalGeneratingUnit.HeatInputCurve',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             A thermal generating unit may have a heat input curve.
@@ -6710,7 +6427,6 @@ class HeatInputCurve(Curve):
         'maxOccurs': '1',
         'inverse': 'ThermalGeneratingUnit.HeatInputCurve',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': False,
         'docstring':
             '''
             A thermal generating unit may have a heat input curve.
@@ -6749,7 +6465,6 @@ class HeatRateCurve(Curve):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             Flag is set to true when output is expressed in net active power.
@@ -6768,7 +6483,6 @@ class HeatRateCurve(Curve):
         'maxOccurs': '1',
         'inverse': 'ThermalGeneratingUnit.HeatRateCurve',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             A thermal generating unit may have a heat rate curve.
@@ -6787,7 +6501,6 @@ class HeatRateCurve(Curve):
         'maxOccurs': '1',
         'inverse': 'ThermalGeneratingUnit.HeatRateCurve',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': False,
         'docstring':
             '''
             A thermal generating unit may have a heat rate curve.
@@ -6832,7 +6545,6 @@ class HydroGeneratingEfficiencyCurve(Curve):
         'maxOccurs': '1',
         'inverse': 'HydroGeneratingUnit.HydroGeneratingEfficiencyCurves',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             A hydro generating unit has an efficiency curve.
@@ -6873,7 +6585,6 @@ class IncrementalHeatRateCurve(Curve):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             Flag is set to true when output is expressed in net active power.
@@ -6892,7 +6603,6 @@ class IncrementalHeatRateCurve(Curve):
         'maxOccurs': '1',
         'inverse': 'ThermalGeneratingUnit.IncrementalHeatRateCurve',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             A thermal generating unit may have an incremental heat rate curve.
@@ -6911,7 +6621,6 @@ class IncrementalHeatRateCurve(Curve):
         'maxOccurs': '1',
         'inverse': 'ThermalGeneratingUnit.IncrementalHeatRateCurve',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': False,
         'docstring':
             '''
             A thermal generating unit may have an incremental heat rate curve.
@@ -6950,7 +6659,6 @@ class LevelVsVolumeCurve(Curve):
         'maxOccurs': '1',
         'inverse': 'Reservoir.LevelVsVolumeCurves',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             A reservoir may have a level versus volume relationship.
@@ -6991,7 +6699,6 @@ class PenstockLossCurve(Curve):
         'maxOccurs': '1',
         'inverse': 'HydroGeneratingUnit.PenstockLossCurve',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             A hydro generating unit has a penstock loss curve.
@@ -7010,7 +6717,6 @@ class PenstockLossCurve(Curve):
         'maxOccurs': '1',
         'inverse': 'HydroGeneratingUnit.PenstockLossCurve',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': False,
         'docstring':
             '''
             A hydro generating unit has a penstock loss curve.
@@ -7052,7 +6758,6 @@ class ReactiveCapabilityCurve(Curve):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             The machine's coolant temperature (e.g., ambient air or stator circulating
@@ -7072,7 +6777,6 @@ class ReactiveCapabilityCurve(Curve):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             The hydrogen coolant pressure
@@ -7091,7 +6795,6 @@ class ReactiveCapabilityCurve(Curve):
         'maxOccurs': 'unbounded',
         'inverse': 'SynchronousMachine.InitialReactiveCapabilityCurve',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': False,
         'docstring':
             '''
             Synchronous machines using this curve as default.
@@ -7130,7 +6833,6 @@ class ShutdownCurve(Curve):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             The date and time of the most recent generating unit shutdown.
@@ -7148,7 +6850,6 @@ class ShutdownCurve(Curve):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             Fixed shutdown cost.
@@ -7167,7 +6868,6 @@ class ShutdownCurve(Curve):
         'maxOccurs': '1',
         'inverse': 'ThermalGeneratingUnit.ShutdownCurve',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             A thermal generating unit may have a shutdown curve.
@@ -7186,7 +6886,6 @@ class ShutdownCurve(Curve):
         'maxOccurs': '1',
         'inverse': 'ThermalGeneratingUnit.ShutdownCurve',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': False,
         'docstring':
             '''
             A thermal generating unit may have a shutdown curve.
@@ -7225,7 +6924,6 @@ class StartIgnFuelCurve(Curve):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             Type of ignition fuel.
@@ -7244,7 +6942,6 @@ class StartIgnFuelCurve(Curve):
         'maxOccurs': '1',
         'inverse': 'StartupModel.StartIgnFuelCurve',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             The unit's startup model may have a startup ignition fuel curve.
@@ -7263,7 +6960,6 @@ class StartIgnFuelCurve(Curve):
         'maxOccurs': '1',
         'inverse': 'StartupModel.StartIgnFuelCurve',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': False,
         'docstring':
             '''
             The unit's startup model may have a startup ignition fuel curve.
@@ -7302,7 +6998,6 @@ class StartMainFuelCurve(Curve):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             Type of main fuel.
@@ -7321,7 +7016,6 @@ class StartMainFuelCurve(Curve):
         'maxOccurs': '1',
         'inverse': 'StartupModel.StartMainFuelCurve',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             The unit's startup model may have a startup main fuel curve.
@@ -7340,7 +7034,6 @@ class StartMainFuelCurve(Curve):
         'maxOccurs': '1',
         'inverse': 'StartupModel.StartMainFuelCurve',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': False,
         'docstring':
             '''
             The unit's startup model may have a startup main fuel curve.
@@ -7379,7 +7072,6 @@ class StartRampCurve(Curve):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             The startup ramp rate in gross for a unit that is on hot standby.
@@ -7398,7 +7090,6 @@ class StartRampCurve(Curve):
         'maxOccurs': '1',
         'inverse': 'StartupModel.StartRampCurve',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             The unit's startup model may have a startup ramp curve.
@@ -7417,7 +7108,6 @@ class StartRampCurve(Curve):
         'maxOccurs': '1',
         'inverse': 'StartupModel.StartRampCurve',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': False,
         'docstring':
             '''
             The unit's startup model may have a startup ramp curve.
@@ -7458,7 +7148,6 @@ class TailbayLossCurve(Curve):
         'maxOccurs': '1',
         'inverse': 'HydroGeneratingUnit.TailbayLossCurve',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             A hydro generating unit has a tailbay loss curve.
@@ -7497,7 +7186,6 @@ class TargetLevelSchedule(Curve):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             High target level limit, above which the reservoir operation will be penalized.
@@ -7516,7 +7204,6 @@ class TargetLevelSchedule(Curve):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             Low target level limit, below which the reservoir operation will be penalized.
@@ -7536,7 +7223,6 @@ class TargetLevelSchedule(Curve):
         'maxOccurs': '1',
         'inverse': 'Reservoir.TargetLevelSchedule',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             A reservoir may have a water level target schedule.
@@ -7555,7 +7241,6 @@ class TargetLevelSchedule(Curve):
         'maxOccurs': '1',
         'inverse': 'Reservoir.TargetLevelSchedule',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': False,
         'docstring':
             '''
             A reservoir may have a water level target schedule.
@@ -7594,7 +7279,6 @@ class DayType(IdentifiedObject):
         'maxOccurs': 'unbounded',
         'inverse': 'SeasonDayTypeSchedule.DayType',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': False,
         'docstring':
             '''
             Schedules that use this DayType.
@@ -7657,7 +7341,6 @@ class LoadArea(EnergyArea):
         'maxOccurs': 'unbounded',
         'inverse': 'SubLoadArea.LoadArea',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': False,
         'docstring':
             '''
             The SubLoadAreas in the LoadArea.
@@ -7697,7 +7380,6 @@ class SubLoadArea(EnergyArea):
         'maxOccurs': '1',
         'inverse': 'LoadArea.SubLoadAreas',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             The LoadArea where the SubLoadArea belongs.
@@ -7716,7 +7398,6 @@ class SubLoadArea(EnergyArea):
         'maxOccurs': 'unbounded',
         'inverse': 'LoadGroup.SubLoadArea',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': False,
         'docstring':
             '''
             The Loadgroups in the SubLoadArea.
@@ -7756,7 +7437,6 @@ class EnergyConnectionProfile(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             Reference to OpenDSS Daily curve, for Load, Storage, PVSystem, Generator,
@@ -7776,7 +7456,6 @@ class EnergyConnectionProfile(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             Reference to OpenDSS Duty Cycle curve, for Load, Storage, PVSystem, Generator,
@@ -7796,7 +7475,6 @@ class EnergyConnectionProfile(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             Reference to OpenDSS CvrCurve, for Load objects
@@ -7814,7 +7492,6 @@ class EnergyConnectionProfile(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             Reference to OpenDSS Growth curve, for Load objects
@@ -7832,7 +7509,6 @@ class EnergyConnectionProfile(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             Reference to OpenDSS Daily curve, for PVSystem temperature
@@ -7850,7 +7526,6 @@ class EnergyConnectionProfile(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             Reference to OpenDSS Duty Cycle curve, for PVSystem temperature
@@ -7868,7 +7543,6 @@ class EnergyConnectionProfile(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             Reference to OpenDSS Yearly curve, for PVSystem temperature
@@ -7886,7 +7560,6 @@ class EnergyConnectionProfile(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             Reference to OpenDSS harmonic current Spectrum, for Load, Storage, PVSystem,
@@ -7906,7 +7579,6 @@ class EnergyConnectionProfile(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             Reference to OpenDSS Yearly curve, for Load, Storage, PVSystem, Generator,
@@ -7926,7 +7598,6 @@ class EnergyConnectionProfile(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             GridLAB-D Player for base_power attributes on Load and Triplex_Load objects,
@@ -7946,7 +7617,6 @@ class EnergyConnectionProfile(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             GridLAB-D schedule for base_power attributes on Load and Triplex_Load objects,
@@ -7967,7 +7637,6 @@ class EnergyConnectionProfile(IdentifiedObject):
         'maxOccurs': 'unbounded',
         'inverse': 'EnergyConnection.EnergyConnectionProfile',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': False,
         'docstring':
             '''
             '''
@@ -8004,7 +7673,6 @@ class Fault(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             The date and time at which the fault occurred.
@@ -8022,7 +7690,6 @@ class Fault(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             Time when the fault is repaired. If not specified, the fault is temporary
@@ -8042,7 +7709,6 @@ class Fault(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             The kind of phase fault.
@@ -8060,7 +7726,6 @@ class Fault(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             The phases participating in the fault. The fault connections into these
@@ -8081,7 +7746,6 @@ class Fault(IdentifiedObject):
         'maxOccurs': '1',
         'inverse': 'Equipment.Faults',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             Equipment carrying this fault.
@@ -8100,7 +7764,6 @@ class Fault(IdentifiedObject):
         'maxOccurs': '1',
         'inverse': 'Location.Fault',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             '''
@@ -8137,7 +7800,6 @@ class EquipmentFault(Fault):
         'maxOccurs': '1',
         'inverse': 'Terminal.EquipmentFaults',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             The terminal connecting to the bus to which the fault is applied.
@@ -8174,7 +7836,6 @@ class LineFault(Fault):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             The length to the place where the fault is located starting from terminal
@@ -8195,7 +7856,6 @@ class LineFault(Fault):
         'maxOccurs': '1',
         'inverse': 'ACLineSegment.LineFaults',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             The line segment of this line fault.
@@ -8253,7 +7913,6 @@ class FossilFuel(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             The amount of heat per weight (or volume) of the given type of fuel.
@@ -8271,7 +7930,6 @@ class FossilFuel(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             The type of fossil fuel, such as coal, oil, or gas.
@@ -8289,7 +7947,6 @@ class FossilFuel(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             The cost in terms of heat value for the given type of fuel.
@@ -8307,7 +7964,6 @@ class FossilFuel(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             The cost of fuel used for economic dispatching which includes: fuel cost,
@@ -8327,7 +7983,6 @@ class FossilFuel(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             The efficiency factor for the fuel (per unit) in terms of the effective
@@ -8347,7 +8002,6 @@ class FossilFuel(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             Handling and processing cost associated with this fuel.
@@ -8365,7 +8019,6 @@ class FossilFuel(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             Relative amount of the given type of fuel, when multiple fuels are being
@@ -8385,7 +8038,6 @@ class FossilFuel(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             The fuel's fraction of pollution credit per unit of heat content.
@@ -8403,7 +8055,6 @@ class FossilFuel(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             The active power output level of the unit at which the given type of fuel
@@ -8425,7 +8076,6 @@ class FossilFuel(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             The active power output level of the unit at which the given type of fuel
@@ -8448,7 +8098,6 @@ class FossilFuel(IdentifiedObject):
         'maxOccurs': '1',
         'inverse': 'ThermalGeneratingUnit.FossilFuels',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             A thermal generating unit may have one or more fossil fuels.
@@ -8467,7 +8116,6 @@ class FossilFuel(IdentifiedObject):
         'maxOccurs': 'unbounded',
         'inverse': 'FuelAllocationSchedule.FossilFuel',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': False,
         'docstring':
             '''
             A fuel allocation schedule must have a fossil fuel.
@@ -8506,7 +8154,6 @@ class FunctionBlock(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             True, if the function block is enabled (active). Otherwise false.
@@ -8524,7 +8171,6 @@ class FunctionBlock(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             Value 0 means ignore priority. 1 means the highest priority, 2 is the second
@@ -8545,7 +8191,6 @@ class FunctionBlock(IdentifiedObject):
         'maxOccurs': 'unbounded',
         'inverse': 'FunctionInputVariable.Function',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': False,
         'docstring':
             '''
             Function input variable describe the input or domain to the function block.
@@ -8565,7 +8210,6 @@ class FunctionBlock(IdentifiedObject):
         'maxOccurs': 'unbounded',
         'inverse': 'FunctionOutputVariable.FunctionBlock',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': False,
         'docstring':
             '''
             Function output variable describe the output or codomain to the function
@@ -8603,7 +8247,6 @@ class ProtectionFunctionBlock(FunctionBlock):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             '''
@@ -8619,7 +8262,6 @@ class ProtectionFunctionBlock(FunctionBlock):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             '''
@@ -8635,7 +8277,6 @@ class ProtectionFunctionBlock(FunctionBlock):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             '''
@@ -8651,7 +8292,6 @@ class ProtectionFunctionBlock(FunctionBlock):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             '''
@@ -8667,7 +8307,6 @@ class ProtectionFunctionBlock(FunctionBlock):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             '''
@@ -8683,7 +8322,6 @@ class ProtectionFunctionBlock(FunctionBlock):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             '''
@@ -8699,7 +8337,6 @@ class ProtectionFunctionBlock(FunctionBlock):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             '''
@@ -8716,7 +8353,6 @@ class ProtectionFunctionBlock(FunctionBlock):
         'maxOccurs': '1',
         'inverse': 'ProtectedSwitch.ProtectionRelayFunction',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             '''
@@ -8733,7 +8369,6 @@ class ProtectionFunctionBlock(FunctionBlock):
         'maxOccurs': '1',
         'inverse': 'ProtectionEquipment.ProtectionFunctionBlock',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             '''
@@ -8785,7 +8420,6 @@ class FrequencyProtectionFunctionBlock(WideAreaProtectionFunctionBlock):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             '''
@@ -8820,7 +8454,6 @@ class UnderFrequencyProtectionFunctionBlock(FrequencyProtectionFunctionBlock):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             '''
@@ -8856,7 +8489,6 @@ class FunctionInputVariable(IdentifiedObject):
         'maxOccurs': '1',
         'inverse': 'FunctionBlock.Input',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             Function block describe the function that function input variable provides
@@ -8896,7 +8528,6 @@ class FunctionOutputVariable(IdentifiedObject):
         'maxOccurs': '1',
         'inverse': 'FunctionBlock.FunctionOutputVariable',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             Function block describe the function that function output variable provides
@@ -8938,7 +8569,6 @@ class GeographicalRegion(IdentifiedObject):
         'maxOccurs': 'unbounded',
         'inverse': 'SubGeographicalRegion.Region',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': False,
         'docstring':
             '''
             All sub-geograhpical regions within this geographical region.
@@ -8981,7 +8611,6 @@ class House(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             '''
@@ -8997,7 +8626,6 @@ class House(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             '''
@@ -9013,7 +8641,6 @@ class House(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             '''
@@ -9029,7 +8656,6 @@ class House(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             '''
@@ -9045,7 +8671,6 @@ class House(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             '''
@@ -9061,7 +8686,6 @@ class House(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             '''
@@ -9078,7 +8702,6 @@ class House(IdentifiedObject):
         'maxOccurs': '1',
         'inverse': 'EnergyConsumer.House',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             '''
@@ -9095,7 +8718,6 @@ class House(IdentifiedObject):
         'maxOccurs': '1',
         'inverse': 'ThermostatController.House',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             '''
@@ -9112,7 +8734,6 @@ class House(IdentifiedObject):
         'maxOccurs': '1',
         'inverse': 'EnergyConsumer.House',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': False,
         'docstring':
             '''
             '''
@@ -9129,7 +8750,6 @@ class House(IdentifiedObject):
         'maxOccurs': '1',
         'inverse': 'ThermostatController.House',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': False,
         'docstring':
             '''
             '''
@@ -9186,7 +8806,6 @@ class Control(IOPoint):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             Specifies the type of Control, e.g. BreakerOn/Off, GeneratorVoltageSetPoint,
@@ -9208,7 +8827,6 @@ class Control(IOPoint):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             Indicates that a client is currently sending control commands that has
@@ -9228,7 +8846,6 @@ class Control(IOPoint):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             The last time a control output was sent.
@@ -9246,7 +8863,6 @@ class Control(IOPoint):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             The unit multiplier of the controlled quantity.
@@ -9264,7 +8880,6 @@ class Control(IOPoint):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             The unit of measure of the controlled quantity.
@@ -9283,7 +8898,6 @@ class Control(IOPoint):
         'maxOccurs': '1',
         'inverse': 'PowerSystemResource.Controls',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             Regulating device governed by this control output.
@@ -9321,7 +8935,6 @@ class AccumulatorReset(Control):
         'maxOccurs': '1',
         'inverse': 'AccumulatorValue.AccumulatorReset',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             The accumulator value that is reset by the command.
@@ -9340,7 +8953,6 @@ class AccumulatorReset(Control):
         'maxOccurs': '1',
         'inverse': 'AccumulatorValue.AccumulatorReset',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': False,
         'docstring':
             '''
             The accumulator value that is reset by the command.
@@ -9377,7 +8989,6 @@ class AnalogControl(Control):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             Normal value range maximum for any of the Control.value. Used for scaling,
@@ -9397,7 +9008,6 @@ class AnalogControl(Control):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             Normal value range minimum for any of the Control.value. Used for scaling,
@@ -9418,7 +9028,6 @@ class AnalogControl(Control):
         'maxOccurs': '1',
         'inverse': 'AnalogValue.AnalogControl',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             The MeasurementValue that is controlled.
@@ -9437,7 +9046,6 @@ class AnalogControl(Control):
         'maxOccurs': '1',
         'inverse': 'AnalogValue.AnalogControl',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': False,
         'docstring':
             '''
             The MeasurementValue that is controlled.
@@ -9476,7 +9084,6 @@ class RaiseLowerCommand(AnalogControl):
         'maxOccurs': '1',
         'inverse': 'ValueAliasSet.RaiseLowerCommands',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             The ValueAliasSet used for translation of a Control value to a name.
@@ -9513,7 +9120,6 @@ class SetPoint(AnalogControl):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             Normal value for Control.value e.g. used for percentage scaling.
@@ -9531,7 +9137,6 @@ class SetPoint(AnalogControl):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             The value representing the actuator output.
@@ -9568,7 +9173,6 @@ class Command(Control):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             Normal value for Control.value e.g. used for percentage scaling.
@@ -9586,7 +9190,6 @@ class Command(Control):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             The value representing the actuator output.
@@ -9605,7 +9208,6 @@ class Command(Control):
         'maxOccurs': '1',
         'inverse': 'DiscreteValue.Command',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             The MeasurementValue that is controlled.
@@ -9624,7 +9226,6 @@ class Command(Control):
         'maxOccurs': '1',
         'inverse': 'ValueAliasSet.Commands',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             The ValueAliasSet used for translation of a Control value to a name.
@@ -9643,7 +9244,6 @@ class Command(Control):
         'maxOccurs': '1',
         'inverse': 'DiscreteValue.Command',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': False,
         'docstring':
             '''
             The MeasurementValue that is controlled.
@@ -9701,7 +9301,6 @@ class MeasurementValue(IOPoint):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             The time when the value was last updated
@@ -9719,7 +9318,6 @@ class MeasurementValue(IOPoint):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             The limit, expressed as a percentage of the sensor maximum, that errors
@@ -9740,7 +9338,6 @@ class MeasurementValue(IOPoint):
         'maxOccurs': '1',
         'inverse': 'MeasurementValueQuality.MeasurementValue',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             A MeasurementValue has a MeasurementValueQuality associated with it.
@@ -9759,7 +9356,6 @@ class MeasurementValue(IOPoint):
         'maxOccurs': '1',
         'inverse': 'MeasurementValueSource.MeasurementValues',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             A reference to the type of source that updates the MeasurementValue, e.g.
@@ -9782,7 +9378,6 @@ class MeasurementValue(IOPoint):
         'maxOccurs': '1',
         'inverse': 'MeasurementValueQuality.MeasurementValue',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': False,
         'docstring':
             '''
             A MeasurementValue has a MeasurementValueQuality associated with it.
@@ -9819,7 +9414,6 @@ class AccumulatorValue(MeasurementValue):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             The value to supervise. The value is positive.
@@ -9838,7 +9432,6 @@ class AccumulatorValue(MeasurementValue):
         'maxOccurs': '1',
         'inverse': 'Accumulator.AccumulatorValues',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             Measurement to which this value is connected.
@@ -9857,7 +9450,6 @@ class AccumulatorValue(MeasurementValue):
         'maxOccurs': '1',
         'inverse': 'AccumulatorReset.AccumulatorValue',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             The command that reset the accumulator value.
@@ -9876,7 +9468,6 @@ class AccumulatorValue(MeasurementValue):
         'maxOccurs': '1',
         'inverse': 'AccumulatorReset.AccumulatorValue',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': False,
         'docstring':
             '''
             The command that reset the accumulator value.
@@ -9913,7 +9504,6 @@ class AnalogValue(MeasurementValue):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             The value to supervise.
@@ -9932,7 +9522,6 @@ class AnalogValue(MeasurementValue):
         'maxOccurs': '1',
         'inverse': 'Analog.AnalogValues',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             Measurement to which this value is connected.
@@ -9951,7 +9540,6 @@ class AnalogValue(MeasurementValue):
         'maxOccurs': '1',
         'inverse': 'AnalogControl.AnalogValue',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             The Control variable associated with the MeasurementValue.
@@ -9970,7 +9558,6 @@ class AnalogValue(MeasurementValue):
         'maxOccurs': '1',
         'inverse': 'AnalogControl.AnalogValue',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': False,
         'docstring':
             '''
             The Control variable associated with the MeasurementValue.
@@ -10007,7 +9594,6 @@ class DiscreteValue(MeasurementValue):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             The value to supervise.
@@ -10026,7 +9612,6 @@ class DiscreteValue(MeasurementValue):
         'maxOccurs': '1',
         'inverse': 'Command.DiscreteValue',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             The Control variable associated with the MeasurementValue.
@@ -10045,7 +9630,6 @@ class DiscreteValue(MeasurementValue):
         'maxOccurs': '1',
         'inverse': 'Discrete.DiscreteValues',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             Measurement to which this value is connected.
@@ -10064,7 +9648,6 @@ class DiscreteValue(MeasurementValue):
         'maxOccurs': '1',
         'inverse': 'Command.DiscreteValue',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': False,
         'docstring':
             '''
             The Control variable associated with the MeasurementValue.
@@ -10101,7 +9684,6 @@ class StringMeasurementValue(MeasurementValue):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             The value to supervise.
@@ -10120,7 +9702,6 @@ class StringMeasurementValue(MeasurementValue):
         'maxOccurs': '1',
         'inverse': 'StringMeasurement.StringMeasurementValues',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             Measurement to which this value is connected.
@@ -10180,7 +9761,6 @@ class AccumulatorLimit(Limit):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             The value to supervise against. The value is positive.
@@ -10199,7 +9779,6 @@ class AccumulatorLimit(Limit):
         'maxOccurs': '1',
         'inverse': 'AccumulatorLimitSet.Limits',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             The set of limits.
@@ -10236,7 +9815,6 @@ class AnalogLimit(Limit):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             The value to supervise against.
@@ -10255,7 +9833,6 @@ class AnalogLimit(Limit):
         'maxOccurs': '1',
         'inverse': 'AnalogLimitSet.Limits',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             The set of limits.
@@ -10296,7 +9873,6 @@ class LimitSet(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             Tells if the limit values are in percentage of normalValue or the specified
@@ -10338,7 +9914,6 @@ class AccumulatorLimitSet(LimitSet):
         'maxOccurs': 'unbounded',
         'inverse': 'AccumulatorLimit.LimitSet',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': False,
         'docstring':
             '''
             The limit values used for supervision of Measurements.
@@ -10378,7 +9953,6 @@ class AnalogLimitSet(LimitSet):
         'maxOccurs': 'unbounded',
         'inverse': 'AnalogLimit.LimitSet',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': False,
         'docstring':
             '''
             The limit values used for supervision of Measurements.
@@ -10417,7 +9991,6 @@ class LoadGroup(IdentifiedObject):
         'maxOccurs': '1',
         'inverse': 'SubLoadArea.LoadGroups',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             The SubLoadArea where the Loadgroup belongs.
@@ -10456,7 +10029,6 @@ class ConformLoadGroup(LoadGroup):
         'maxOccurs': 'unbounded',
         'inverse': 'ConformLoad.LoadGroup',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': False,
         'docstring':
             '''
             Conform loads assigned to this ConformLoadGroup.
@@ -10475,7 +10047,6 @@ class ConformLoadGroup(LoadGroup):
         'maxOccurs': 'unbounded',
         'inverse': 'ConformLoadSchedule.ConformLoadGroup',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': False,
         'docstring':
             '''
             The ConformLoadSchedules in the ConformLoadGroup.
@@ -10514,7 +10085,6 @@ class NonConformLoadGroup(LoadGroup):
         'maxOccurs': 'unbounded',
         'inverse': 'NonConformLoad.LoadGroup',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': False,
         'docstring':
             '''
             Conform loads assigned to this ConformLoadGroup.
@@ -10533,7 +10103,6 @@ class NonConformLoadGroup(LoadGroup):
         'maxOccurs': 'unbounded',
         'inverse': 'NonConformLoadSchedule.NonConformLoadGroup',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': False,
         'docstring':
             '''
             The NonConformLoadSchedules in the NonConformLoadGroup.
@@ -10579,7 +10148,6 @@ class LoadResponseCharacteristic(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             Indicates the exponential voltage dependency model is to be used. If false,
@@ -10627,7 +10195,6 @@ class LoadResponseCharacteristic(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             Portion of active power load modeled as constant current.
@@ -10645,7 +10212,6 @@ class LoadResponseCharacteristic(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             Portion of active power load modeled as constant impedance.
@@ -10663,7 +10229,6 @@ class LoadResponseCharacteristic(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             Portion of active power load modeled as constant power.
@@ -10681,7 +10246,6 @@ class LoadResponseCharacteristic(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             '''
@@ -10697,7 +10261,6 @@ class LoadResponseCharacteristic(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             Exponent of per unit voltage effecting real power.
@@ -10715,7 +10278,6 @@ class LoadResponseCharacteristic(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             Portion of reactive power load modeled as constant current.
@@ -10733,7 +10295,6 @@ class LoadResponseCharacteristic(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             Portion of reactive power load modeled as constant impedance.
@@ -10751,7 +10312,6 @@ class LoadResponseCharacteristic(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             Portion of reactive power load modeled as constant power.
@@ -10769,7 +10329,6 @@ class LoadResponseCharacteristic(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             '''
@@ -10785,7 +10344,6 @@ class LoadResponseCharacteristic(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             Exponent of per unit voltage effecting reactive power.
@@ -10804,7 +10362,6 @@ class LoadResponseCharacteristic(IdentifiedObject):
         'maxOccurs': 'unbounded',
         'inverse': 'EnergyConsumer.LoadResponse',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': False,
         'docstring':
             '''
             The set of loads that have the response characteristics.
@@ -10843,7 +10400,6 @@ class Location(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             (if applicable) Direction that allows field crews to quickly find a given
@@ -10870,7 +10426,6 @@ class Location(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             (if applicable) Reference to geographical information source, often external
@@ -10890,7 +10445,6 @@ class Location(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             Classification by utility's corporate standards and practices, relative
@@ -10913,7 +10467,6 @@ class Location(IdentifiedObject):
         'maxOccurs': '1',
         'inverse': 'CoordinateSystem.Locations',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             Coordinate system used to describe position points of this location.
@@ -10932,7 +10485,6 @@ class Location(IdentifiedObject):
         'maxOccurs': 'unbounded',
         'inverse': 'Measurement.Locations',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             '''
@@ -10949,7 +10501,6 @@ class Location(IdentifiedObject):
         'maxOccurs': 'unbounded',
         'inverse': 'Fault.Location',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': False,
         'docstring':
             '''
             '''
@@ -10966,7 +10517,6 @@ class Location(IdentifiedObject):
         'maxOccurs': 'unbounded',
         'inverse': 'PositionPoint.Location',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': False,
         'docstring':
             '''
             Sequence of position points describing this location, expressed in coordinate
@@ -10987,7 +10537,6 @@ class Location(IdentifiedObject):
         'maxOccurs': 'unbounded',
         'inverse': 'PowerSystemResource.Location',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': False,
         'docstring':
             '''
             All power system resources at this location.
@@ -11043,7 +10592,6 @@ class Measurement(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             Specifies the type of measurement. For example, this specifies if the measurement
@@ -11071,7 +10619,6 @@ class Measurement(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             Indicates to which phases the measurement applies and avoids the need to
@@ -11103,7 +10650,6 @@ class Measurement(IdentifiedObject):
         'maxOccurs': '1',
         'inverse': 'Asset.Measurements',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             '''
@@ -11120,7 +10666,6 @@ class Measurement(IdentifiedObject):
         'maxOccurs': '1',
         'inverse': 'PowerSystemResource.Measurements',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             The power system resource that contains the measurement.
@@ -11139,7 +10684,6 @@ class Measurement(IdentifiedObject):
         'maxOccurs': '1',
         'inverse': 'ACDCTerminal.Measurements',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             One or more measurements may be associated with a terminal in the network.
@@ -11158,7 +10702,6 @@ class Measurement(IdentifiedObject):
         'maxOccurs': 'unbounded',
         'inverse': 'Location.Measurements',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': False,
         'docstring':
             '''
             '''
@@ -11194,7 +10737,6 @@ class Accumulator(Measurement):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             Normal value range maximum for any of the MeasurementValue.values. Used
@@ -11215,7 +10757,6 @@ class Accumulator(Measurement):
         'maxOccurs': 'unbounded',
         'inverse': 'AccumulatorValue.Accumulator',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': False,
         'docstring':
             '''
             The values connected to this measurement.
@@ -11253,7 +10794,6 @@ class Analog(Measurement):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             Normal value range maximum for any of the MeasurementValue.values. Used
@@ -11273,7 +10813,6 @@ class Analog(Measurement):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             Normal value range minimum for any of the MeasurementValue.values. Used
@@ -11293,7 +10832,6 @@ class Analog(Measurement):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             Normal measurement value, e.g., used for percentage calculations.
@@ -11311,7 +10849,6 @@ class Analog(Measurement):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             If true then this measurement is an active power, reactive power or current
@@ -11334,7 +10871,6 @@ class Analog(Measurement):
         'maxOccurs': 'unbounded',
         'inverse': 'AnalogValue.Analog',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': False,
         'docstring':
             '''
             The values connected to this measurement.
@@ -11373,7 +10909,6 @@ class Discrete(Measurement):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             Normal value range maximum for any of the MeasurementValue.values. Used
@@ -11393,7 +10928,6 @@ class Discrete(Measurement):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             Normal value range minimum for any of the MeasurementValue.values. Used
@@ -11413,7 +10947,6 @@ class Discrete(Measurement):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             Normal measurement value, e.g., used for percentage calculations.
@@ -11432,7 +10965,6 @@ class Discrete(Measurement):
         'maxOccurs': '1',
         'inverse': 'ValueAliasSet.Discretes',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             The ValueAliasSet used for translation of a MeasurementValue.value to a
@@ -11453,7 +10985,6 @@ class Discrete(Measurement):
         'maxOccurs': 'unbounded',
         'inverse': 'DiscreteValue.Discrete',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': False,
         'docstring':
             '''
             The values connected to this measurement.
@@ -11491,7 +11022,6 @@ class StringMeasurement(Measurement):
         'maxOccurs': 'unbounded',
         'inverse': 'StringMeasurementValue.StringMeasurement',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': False,
         'docstring':
             '''
             The values connected to this measurement.
@@ -11531,7 +11061,6 @@ class MeasurementValueSource(IdentifiedObject):
         'maxOccurs': 'unbounded',
         'inverse': 'MeasurementValue.MeasurementValueSource',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': False,
         'docstring':
             '''
             The MeasurementValues updated by the source.
@@ -11568,7 +11097,6 @@ class MutualCoupling(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             Zero sequence mutual coupling shunt (charging) susceptance, uniformly distributed,
@@ -11588,7 +11116,6 @@ class MutualCoupling(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             Distance to the start of the coupled region from the first line's terminal
@@ -11608,7 +11135,6 @@ class MutualCoupling(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             Distance to the end of the coupled region from the first line's terminal
@@ -11628,7 +11154,6 @@ class MutualCoupling(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             Distance to the start of coupled region from the second line's terminal
@@ -11648,7 +11173,6 @@ class MutualCoupling(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             Distance to the end of coupled region from the second line's terminal with
@@ -11668,7 +11192,6 @@ class MutualCoupling(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             Zero sequence mutual coupling shunt (charging) conductance, uniformly distributed,
@@ -11688,7 +11211,6 @@ class MutualCoupling(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             Zero sequence branch-to-branch mutual impedance coupling, resistance.
@@ -11706,7 +11228,6 @@ class MutualCoupling(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             Zero sequence branch-to-branch mutual impedance coupling, reactance.
@@ -11725,7 +11246,6 @@ class MutualCoupling(IdentifiedObject):
         'maxOccurs': '1',
         'inverse': 'Terminal.HasFirstMutualCoupling',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             The starting terminal for the calculation of distances along the first
@@ -11750,7 +11270,6 @@ class MutualCoupling(IdentifiedObject):
         'maxOccurs': '1',
         'inverse': 'Terminal.HasSecondMutualCoupling',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             The starting terminal for the calculation of distances along the second
@@ -11793,7 +11312,6 @@ class OperatingParticipant(IdentifiedObject):
         'maxOccurs': 'unbounded',
         'inverse': 'OperatingShare.OperatingParticipant',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': False,
         'docstring':
             '''
             The operating shares of this operating participant. An operating participant
@@ -11841,7 +11359,6 @@ class OperationalLimit(IdentifiedObject):
         'maxOccurs': '1',
         'inverse': 'OperationalLimitSet.OperationalLimitValue',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             The limit set to which the limit values belong.
@@ -11860,7 +11377,6 @@ class OperationalLimit(IdentifiedObject):
         'maxOccurs': '1',
         'inverse': 'OperationalLimitType.OperationalLimit',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             The limit type associated with this limit.
@@ -11897,7 +11413,6 @@ class ActivePowerLimit(OperationalLimit):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             The normal value of active power limit.
@@ -11915,7 +11430,6 @@ class ActivePowerLimit(OperationalLimit):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             Value of active power limit.
@@ -11952,7 +11466,6 @@ class ApparentPowerLimit(OperationalLimit):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             The normal apparent power limit.
@@ -11970,7 +11483,6 @@ class ApparentPowerLimit(OperationalLimit):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             The apparent power limit.
@@ -12008,7 +11520,6 @@ class CurrentLimit(OperationalLimit):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             The normal value for limit on current flow.
@@ -12026,7 +11537,6 @@ class CurrentLimit(OperationalLimit):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             Limit on current flow.
@@ -12064,7 +11574,6 @@ class VoltageLimit(OperationalLimit):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             The normal limit on voltage. High or low limit nature of the limit depends
@@ -12084,7 +11593,6 @@ class VoltageLimit(OperationalLimit):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             Limit on voltage. High or low limit nature of the limit depends upon the
@@ -12131,7 +11639,6 @@ class OperationalLimitSet(IdentifiedObject):
         'maxOccurs': '1',
         'inverse': 'ConnectivityNode.OperationalLimitSet',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             '''
@@ -12148,7 +11655,6 @@ class OperationalLimitSet(IdentifiedObject):
         'maxOccurs': '1',
         'inverse': 'Equipment.OperationalLimitSet',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             The equipment to which the limit set applies.
@@ -12167,7 +11673,6 @@ class OperationalLimitSet(IdentifiedObject):
         'maxOccurs': '1',
         'inverse': 'ACDCTerminal.OperationalLimitSet',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             '''
@@ -12184,7 +11689,6 @@ class OperationalLimitSet(IdentifiedObject):
         'maxOccurs': 'unbounded',
         'inverse': 'OperationalLimit.OperationalLimitSet',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': False,
         'docstring':
             '''
             Values of equipment limits.
@@ -12222,7 +11726,6 @@ class OperationalLimitType(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             The nominal acceptable duration of the limit. Limits are commonly expressed
@@ -12246,7 +11749,6 @@ class OperationalLimitType(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             The direction of the limit.
@@ -12265,7 +11767,6 @@ class OperationalLimitType(IdentifiedObject):
         'maxOccurs': 'unbounded',
         'inverse': 'OperationalLimit.OperationalLimitType',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': False,
         'docstring':
             '''
             The operational limits associated with this type of limit.
@@ -12302,7 +11803,6 @@ class Ownership(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             Share of this ownership.
@@ -12321,7 +11821,6 @@ class Ownership(IdentifiedObject):
         'maxOccurs': '1',
         'inverse': 'Asset.Ownerships',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             Asset that is object of this ownership.
@@ -12340,7 +11839,6 @@ class Ownership(IdentifiedObject):
         'maxOccurs': '1',
         'inverse': 'AssetOwner.Ownerships',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             Asset owner that is subject in this ownership.
@@ -12381,7 +11879,6 @@ class PSRType(IdentifiedObject):
         'maxOccurs': 'unbounded',
         'inverse': 'PowerSystemResource.PSRType',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': False,
         'docstring':
             '''
             Power system resources classified with this power system resource type.
@@ -12418,7 +11915,6 @@ class ParallelLineSegment(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             '''
@@ -12435,7 +11931,6 @@ class ParallelLineSegment(IdentifiedObject):
         'maxOccurs': '1',
         'inverse': 'ACLineSegment.ParallelLineSegment',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             '''
@@ -12452,7 +11947,6 @@ class ParallelLineSegment(IdentifiedObject):
         'maxOccurs': '1',
         'inverse': 'RightOfWay.ParallelLineSegments',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             '''
@@ -12469,7 +11963,6 @@ class ParallelLineSegment(IdentifiedObject):
         'maxOccurs': '1',
         'inverse': 'ACLineSegment.ParallelLineSegment',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': False,
         'docstring':
             '''
             '''
@@ -12505,7 +11998,6 @@ class PerLengthLineParameter(IdentifiedObject):
         'maxOccurs': '1',
         'inverse': 'WireAssemblyInfo.PerLengthLineParameter',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             '''
@@ -12541,7 +12033,6 @@ class PerLengthImpedance(PerLengthLineParameter):
         'maxOccurs': 'unbounded',
         'inverse': 'ACLineSegment.PerLengthImpedance',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': False,
         'docstring':
             '''
             All line segments described by this per-length impedance.
@@ -12579,7 +12070,6 @@ class PerLengthPhaseImpedance(PerLengthImpedance):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             Number of phase, neutral, and other wires retained. Constrains the number
@@ -12601,7 +12091,6 @@ class PerLengthPhaseImpedance(PerLengthImpedance):
         'maxOccurs': 'unbounded',
         'inverse': 'PhaseImpedanceData.PhaseImpedance',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': False,
         'docstring':
             '''
             All data that belong to this conductor phase impedance.
@@ -12640,7 +12129,6 @@ class PerLengthSequenceImpedance(PerLengthImpedance):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             Zero sequence shunt (charging) susceptance, per unit of length.
@@ -12658,7 +12146,6 @@ class PerLengthSequenceImpedance(PerLengthImpedance):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             Positive sequence shunt (charging) susceptance, per unit of length.
@@ -12676,7 +12163,6 @@ class PerLengthSequenceImpedance(PerLengthImpedance):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             Zero sequence shunt (charging) conductance, per unit of length.
@@ -12694,7 +12180,6 @@ class PerLengthSequenceImpedance(PerLengthImpedance):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             Positive sequence shunt (charging) conductance, per unit of length.
@@ -12712,7 +12197,6 @@ class PerLengthSequenceImpedance(PerLengthImpedance):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             Positive sequence series resistance, per unit of length.
@@ -12730,7 +12214,6 @@ class PerLengthSequenceImpedance(PerLengthImpedance):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             Zero sequence series resistance, per unit of length.
@@ -12748,7 +12231,6 @@ class PerLengthSequenceImpedance(PerLengthImpedance):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             Positive sequence series reactance, per unit of length.
@@ -12766,7 +12248,6 @@ class PerLengthSequenceImpedance(PerLengthImpedance):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             Zero sequence series reactance, per unit of length.
@@ -12805,7 +12286,6 @@ class PhaseTapChangerTable(IdentifiedObject):
         'maxOccurs': 'unbounded',
         'inverse': 'PhaseTapChangerTablePoint.PhaseTapChangerTable',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': False,
         'docstring':
             '''
             The points of this table.
@@ -12824,7 +12304,6 @@ class PhaseTapChangerTable(IdentifiedObject):
         'maxOccurs': 'unbounded',
         'inverse': 'PhaseTapChangerTabular.PhaseTapChangerTable',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': False,
         'docstring':
             '''
             The phase tap changers to which this phase tap table applies.
@@ -12866,7 +12345,6 @@ class PowerSystemResource(IdentifiedObject):
         'maxOccurs': '1',
         'inverse': 'AssetInfo.PowerSystemResources',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             Datasheet information for this power system resource.
@@ -12885,7 +12363,6 @@ class PowerSystemResource(IdentifiedObject):
         'maxOccurs': '1',
         'inverse': 'Location.PowerSystemResources',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             Location of this power system resource.
@@ -12904,7 +12381,6 @@ class PowerSystemResource(IdentifiedObject):
         'maxOccurs': '1',
         'inverse': 'PSRType.PowerSystemResources',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             Custom classification for this power system resource.
@@ -12923,7 +12399,6 @@ class PowerSystemResource(IdentifiedObject):
         'maxOccurs': 'unbounded',
         'inverse': 'Control.PowerSystemResource',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': False,
         'docstring':
             '''
             The controller outputs used to actually govern a regulating device, e.g.
@@ -12945,7 +12420,6 @@ class PowerSystemResource(IdentifiedObject):
         'maxOccurs': 'unbounded',
         'inverse': 'Measurement.PowerSystemResource',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': False,
         'docstring':
             '''
             The measurements associated with this power system resource.
@@ -12964,7 +12438,6 @@ class PowerSystemResource(IdentifiedObject):
         'maxOccurs': 'unbounded',
         'inverse': 'OperatingShare.PowerSystemResource',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': False,
         'docstring':
             '''
             The operating shares of this power system resource.
@@ -13002,7 +12475,6 @@ class ACLineSegmentPhase(PowerSystemResource):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             Number designation for this line segment phase. Each line segment phase
@@ -13034,7 +12506,6 @@ class ACLineSegmentPhase(PowerSystemResource):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             The phase connection of the wire at both ends.
@@ -13053,7 +12524,6 @@ class ACLineSegmentPhase(PowerSystemResource):
         'maxOccurs': '1',
         'inverse': 'ACLineSegment.ACLineSegmentPhases',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             The line segment to which the phase belongs.
@@ -13072,7 +12542,6 @@ class ACLineSegmentPhase(PowerSystemResource):
         'maxOccurs': '1',
         'inverse': 'WireInfo.ACLineSegmentPhases',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             '''
@@ -13109,7 +12578,6 @@ class AirCompressor(PowerSystemResource):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             Rating of the CAES air compressor.
@@ -13128,7 +12596,6 @@ class AirCompressor(PowerSystemResource):
         'maxOccurs': '1',
         'inverse': 'CAESPlant.AirCompressor',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             An air compressor may be a member of a compressed air energy storage plant.
@@ -13148,7 +12615,6 @@ class AirCompressor(PowerSystemResource):
         'maxOccurs': '1',
         'inverse': 'CAESPlant.AirCompressor',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': False,
         'docstring':
             '''
             An air compressor may be a member of a compressed air energy storage plant.
@@ -13187,7 +12653,6 @@ class CAESPlant(PowerSystemResource):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             The rated energy storage capacity.
@@ -13205,7 +12670,6 @@ class CAESPlant(PowerSystemResource):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             The CAES plant's gross rated generating capacity.
@@ -13224,7 +12688,6 @@ class CAESPlant(PowerSystemResource):
         'maxOccurs': '1',
         'inverse': 'AirCompressor.CAESPlant',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             An air compressor may be a member of a compressed air energy storage plant.
@@ -13244,7 +12707,6 @@ class CAESPlant(PowerSystemResource):
         'maxOccurs': '1',
         'inverse': 'ThermalGeneratingUnit.CAESPlant',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             A thermal generating unit may be a member of a compressed air energy storage
@@ -13265,7 +12727,6 @@ class CAESPlant(PowerSystemResource):
         'maxOccurs': '1',
         'inverse': 'AirCompressor.CAESPlant',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': False,
         'docstring':
             '''
             An air compressor may be a member of a compressed air energy storage plant.
@@ -13285,7 +12746,6 @@ class CAESPlant(PowerSystemResource):
         'maxOccurs': '1',
         'inverse': 'ThermalGeneratingUnit.CAESPlant',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': False,
         'docstring':
             '''
             A thermal generating unit may be a member of a compressed air energy storage
@@ -13328,7 +12788,6 @@ class CogenerationPlant(PowerSystemResource):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             The high pressure steam sendout.
@@ -13346,7 +12805,6 @@ class CogenerationPlant(PowerSystemResource):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             The high pressure steam rating.
@@ -13364,7 +12822,6 @@ class CogenerationPlant(PowerSystemResource):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             The low pressure steam sendout.
@@ -13382,7 +12839,6 @@ class CogenerationPlant(PowerSystemResource):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             The low pressure steam rating.
@@ -13400,7 +12856,6 @@ class CogenerationPlant(PowerSystemResource):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             The rated output active power of the cogeneration plant.
@@ -13419,7 +12874,6 @@ class CogenerationPlant(PowerSystemResource):
         'maxOccurs': '1',
         'inverse': 'SteamSendoutSchedule.CogenerationPlant',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             A cogeneration plant has a steam sendout schedule.
@@ -13438,7 +12892,6 @@ class CogenerationPlant(PowerSystemResource):
         'maxOccurs': '1',
         'inverse': 'SteamSendoutSchedule.CogenerationPlant',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': False,
         'docstring':
             '''
             A cogeneration plant has a steam sendout schedule.
@@ -13457,7 +12910,6 @@ class CogenerationPlant(PowerSystemResource):
         'maxOccurs': 'unbounded',
         'inverse': 'ThermalGeneratingUnit.CogenerationPlant',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': False,
         'docstring':
             '''
             A thermal generating unit may be a member of a cogeneration plant.
@@ -13496,7 +12948,6 @@ class CombinedCyclePlant(PowerSystemResource):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             The combined cycle plant's active power output rating.
@@ -13515,7 +12966,6 @@ class CombinedCyclePlant(PowerSystemResource):
         'maxOccurs': 'unbounded',
         'inverse': 'ThermalGeneratingUnit.CombinedCyclePlant',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': False,
         'docstring':
             '''
             A thermal generating unit may be a member of a combined cycle plant.
@@ -13554,7 +13004,6 @@ class ConnectivityNodeContainer(PowerSystemResource):
         'maxOccurs': 'unbounded',
         'inverse': 'ConnectivityNode.ConnectivityNodeContainer',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': False,
         'docstring':
             '''
             Connectivity nodes which belong to this connectivity node container.
@@ -13573,7 +13022,6 @@ class ConnectivityNodeContainer(PowerSystemResource):
         'maxOccurs': 'unbounded',
         'inverse': 'TopologicalNode.ConnectivityNodeContainer',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': False,
         'docstring':
             '''
             The topological nodes which belong to this connectivity node container.
@@ -13612,7 +13060,6 @@ class EquipmentContainer(ConnectivityNodeContainer):
         'maxOccurs': 'unbounded',
         'inverse': 'Equipment.EquipmentContainer',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': False,
         'docstring':
             '''
             Contained equipment.
@@ -13653,7 +13100,6 @@ class Bay(EquipmentContainer):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             Indicates the presence/absence of energy measurements.
@@ -13671,7 +13117,6 @@ class Bay(EquipmentContainer):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             Indicates the presence/absence of active/reactive power measurements.
@@ -13689,7 +13134,6 @@ class Bay(EquipmentContainer):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             Breaker configuration.
@@ -13707,7 +13151,6 @@ class Bay(EquipmentContainer):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             Bus bar configuration.
@@ -13726,7 +13169,6 @@ class Bay(EquipmentContainer):
         'maxOccurs': '1',
         'inverse': 'Substation.Bays',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             Substation containing the bay.
@@ -13745,7 +13187,6 @@ class Bay(EquipmentContainer):
         'maxOccurs': '1',
         'inverse': 'VoltageLevel.Bays',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             The voltage level containing this bay.
@@ -13788,7 +13229,6 @@ class Feeder(EquipmentContainer):
         'maxOccurs': '1',
         'inverse': 'DistributionArea.Feeders',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             The DistributionArea to which the feeder belongs
@@ -13807,7 +13247,6 @@ class Feeder(EquipmentContainer):
         'maxOccurs': '1',
         'inverse': 'FeederArea.Feeder',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             The FeederArea (which contains Equipment not contained in
@@ -13826,7 +13265,6 @@ class Feeder(EquipmentContainer):
         'maxOccurs': '1',
         'inverse': 'Substation.NormalEnergizedFeeder',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             The substation that nominally energizes the feeder. Also used for naming
@@ -13847,7 +13285,6 @@ class Feeder(EquipmentContainer):
         'maxOccurs': '1',
         'inverse': 'FeederArea.Feeder',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': False,
         'docstring':
             '''
             The FeederArea (which contains Equipment not contained in
@@ -13866,7 +13303,6 @@ class Feeder(EquipmentContainer):
         'maxOccurs': 'unbounded',
         'inverse': 'Substation.NamingFeeder',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': False,
         'docstring':
             '''
             The secondary substations that are normally energized from the feeder.
@@ -13889,7 +13325,6 @@ class Feeder(EquipmentContainer):
         'maxOccurs': 'unbounded',
         'inverse': 'Terminal.NormalHeadFeeder',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': False,
         'docstring':
             '''
             The normal head terminal or terminals of the feeder.
@@ -13929,7 +13364,6 @@ class Line(EquipmentContainer):
         'maxOccurs': '1',
         'inverse': 'SubGeographicalRegion.Lines',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             The sub-geographical region of the line.
@@ -13990,7 +13424,6 @@ class Substation(EquipmentContainer):
         'maxOccurs': '1',
         'inverse': 'Feeder.NamingSecondarySubstation',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             The primary feeder that normally energizes the secondary substation. Used
@@ -14014,7 +13447,6 @@ class Substation(EquipmentContainer):
         'maxOccurs': '1',
         'inverse': 'SubGeographicalRegion.Substations',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             The SubGeographicalRegion containing the substation.
@@ -14033,7 +13465,6 @@ class Substation(EquipmentContainer):
         'maxOccurs': '1',
         'inverse': 'SchedulingArea.Substations',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             The SchedulingArea to which the substation is assigned. The highest-level
@@ -14054,7 +13485,6 @@ class Substation(EquipmentContainer):
         'maxOccurs': 'unbounded',
         'inverse': 'Bay.Substation',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': False,
         'docstring':
             '''
             Bays contained in the substation.
@@ -14073,7 +13503,6 @@ class Substation(EquipmentContainer):
         'maxOccurs': 'unbounded',
         'inverse': 'Feeder.NormalEnergizingSubstation',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': False,
         'docstring':
             '''
             The normal energized feeders of the substation. Also used for naming purposes.
@@ -14093,7 +13522,6 @@ class Substation(EquipmentContainer):
         'maxOccurs': 'unbounded',
         'inverse': 'VoltageLevel.Substation',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': False,
         'docstring':
             '''
             The voltage levels within this substation.
@@ -14135,7 +13563,6 @@ class VoltageLevel(EquipmentContainer):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             The bus bar's high voltage limit
@@ -14153,7 +13580,6 @@ class VoltageLevel(EquipmentContainer):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             The bus bar's low voltage limit
@@ -14172,7 +13598,6 @@ class VoltageLevel(EquipmentContainer):
         'maxOccurs': '1',
         'inverse': 'BaseVoltage.VoltageLevel',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             The base voltage used for all equipment within the voltage level.
@@ -14191,7 +13616,6 @@ class VoltageLevel(EquipmentContainer):
         'maxOccurs': '1',
         'inverse': 'Substation.VoltageLevels',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             The substation of the voltage level.
@@ -14210,7 +13634,6 @@ class VoltageLevel(EquipmentContainer):
         'maxOccurs': 'unbounded',
         'inverse': 'Bay.VoltageLevel',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': False,
         'docstring':
             '''
             The bays within this voltage level.
@@ -14248,7 +13671,6 @@ class EnergyConsumerPhase(PowerSystemResource):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             Active power of the load. Load sign convention is used, i.e. positive sign
@@ -14272,7 +13694,6 @@ class EnergyConsumerPhase(PowerSystemResource):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             Phase of this energy consumer component. If the energy consumer is wye
@@ -14298,7 +13719,6 @@ class EnergyConsumerPhase(PowerSystemResource):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             Reactive power of the load. Load sign convention is used, i.e. positive
@@ -14323,7 +13743,6 @@ class EnergyConsumerPhase(PowerSystemResource):
         'maxOccurs': '1',
         'inverse': 'EnergyConsumer.EnergyConsumerPhase',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             The energy consumer to which this phase belongs.
@@ -14361,7 +13780,6 @@ class EnergySourcePhase(PowerSystemResource):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             Phase of this energy source component. If the energy source wye connected,
@@ -14388,7 +13806,6 @@ class EnergySourcePhase(PowerSystemResource):
         'maxOccurs': '1',
         'inverse': 'EnergySource.EnergySourcePhase',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             The energy sourceto which the phase belongs.
@@ -14425,7 +13842,6 @@ class Equipment(PowerSystemResource):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             The single instance of equipment represents multiple pieces of equipment
@@ -14453,7 +13869,6 @@ class Equipment(PowerSystemResource):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             If true, the equipment is in service.
@@ -14471,7 +13886,6 @@ class Equipment(PowerSystemResource):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             The equipment is enabled to participate in network analysis. If unspecified,
@@ -14491,7 +13905,6 @@ class Equipment(PowerSystemResource):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             If true, the equipment is normally in service.
@@ -14510,7 +13923,6 @@ class Equipment(PowerSystemResource):
         'maxOccurs': '1',
         'inverse': 'EquipmentContainer.Equipments',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             Container of this equipment.
@@ -14529,7 +13941,6 @@ class Equipment(PowerSystemResource):
         'maxOccurs': '1',
         'inverse': 'SubSchedulingArea.ContainedEquipment',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             The SubSchedulingArea in which the equipment is contained and controlled.
@@ -14548,7 +13959,6 @@ class Equipment(PowerSystemResource):
         'maxOccurs': '1',
         'inverse': 'UsagePoint.Equipments',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             All usage points connected to the electrical grid through this equipment.
@@ -14567,7 +13977,6 @@ class Equipment(PowerSystemResource):
         'maxOccurs': 'unbounded',
         'inverse': 'ContingencyEquipment.Equipment',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': False,
         'docstring':
             '''
             The contingency equipments in which this equipment participates.
@@ -14586,7 +13995,6 @@ class Equipment(PowerSystemResource):
         'maxOccurs': 'unbounded',
         'inverse': 'Fault.FaultyEquipment',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': False,
         'docstring':
             '''
             All faults on this equipment.
@@ -14605,7 +14013,6 @@ class Equipment(PowerSystemResource):
         'maxOccurs': 'unbounded',
         'inverse': 'OperationalLimitSet.Equipment',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': False,
         'docstring':
             '''
             The operational limit sets associated with this equipment.
@@ -14651,7 +14058,6 @@ class CompositeSwitch(Equipment):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             An alphanumeric code that can be used as a reference to extra information
@@ -14672,7 +14078,6 @@ class CompositeSwitch(Equipment):
         'maxOccurs': 'unbounded',
         'inverse': 'Switch.CompositeSwitch',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': False,
         'docstring':
             '''
             Switches contained in this Composite switch.
@@ -14711,7 +14116,6 @@ class ConductingEquipment(Equipment):
         'maxOccurs': '1',
         'inverse': 'BaseVoltage.ConductingEquipment',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             Base voltage of this conducting equipment. Use only when there is no voltage
@@ -14734,7 +14138,6 @@ class ConductingEquipment(Equipment):
         'maxOccurs': 'unbounded',
         'inverse': 'SvStatus.ConductingEquipment',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': False,
         'docstring':
             '''
             The status state variable associated with this conducting equipment.
@@ -14753,7 +14156,6 @@ class ConductingEquipment(Equipment):
         'maxOccurs': 'unbounded',
         'inverse': 'Terminal.ConductingEquipment',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': False,
         'docstring':
             '''
             Conducting equipment have terminals that may be connected to other conducting
@@ -14797,7 +14199,6 @@ class Clamp(ConductingEquipment):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             The length to the place where the clamp is located starting from side one
@@ -14820,7 +14221,6 @@ class Clamp(ConductingEquipment):
         'maxOccurs': '1',
         'inverse': 'ACLineSegment.Clamp',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             The line segment to which the clamp is connected.
@@ -14859,7 +14259,6 @@ class Conductor(ConductingEquipment):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             Segment length for calculating line section capabilities
@@ -14907,7 +14306,6 @@ class ACLineSegment(Conductor):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             Zero sequence shunt (charging) susceptance, uniformly distributed, of the
@@ -14927,7 +14325,6 @@ class ACLineSegment(Conductor):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             Positive sequence shunt (charging) susceptance, uniformly distributed,
@@ -14949,7 +14346,6 @@ class ACLineSegment(Conductor):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             Zero sequence shunt (charging) conductance, uniformly distributed, of the
@@ -14969,7 +14365,6 @@ class ACLineSegment(Conductor):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             Positive sequence shunt (charging) conductance, uniformly distributed,
@@ -14989,7 +14384,6 @@ class ACLineSegment(Conductor):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             Positive sequence series resistance of the entire line section.
@@ -15007,7 +14401,6 @@ class ACLineSegment(Conductor):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             Zero sequence series resistance of the entire line section.
@@ -15025,7 +14418,6 @@ class ACLineSegment(Conductor):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             Maximum permitted temperature at the end of SC for the calculation of minimum
@@ -15047,7 +14439,6 @@ class ACLineSegment(Conductor):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             Positive sequence series reactance of the entire line section.
@@ -15065,7 +14456,6 @@ class ACLineSegment(Conductor):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             Zero sequence series reactance of the entire line section.
@@ -15084,7 +14474,6 @@ class ACLineSegment(Conductor):
         'maxOccurs': '1',
         'inverse': 'ParallelLineSegment.ACLineSegment',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             '''
@@ -15101,7 +14490,6 @@ class ACLineSegment(Conductor):
         'maxOccurs': '1',
         'inverse': 'PerLengthImpedance.ACLineSegments',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             Per-length impedance of this line segment.
@@ -15120,7 +14508,6 @@ class ACLineSegment(Conductor):
         'maxOccurs': '1',
         'inverse': 'WireSpacingInfo.ACLineSegments',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             '''
@@ -15137,7 +14524,6 @@ class ACLineSegment(Conductor):
         'maxOccurs': 'unbounded',
         'inverse': 'ACLineSegmentPhase.ACLineSegment',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': False,
         'docstring':
             '''
             The line segment phases which belong to the line segment.
@@ -15156,7 +14542,6 @@ class ACLineSegment(Conductor):
         'maxOccurs': 'unbounded',
         'inverse': 'Clamp.ACLineSegment',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': False,
         'docstring':
             '''
             The clamps connected to the line segment.
@@ -15175,7 +14560,6 @@ class ACLineSegment(Conductor):
         'maxOccurs': 'unbounded',
         'inverse': 'Cut.ACLineSegment',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': False,
         'docstring':
             '''
             Cuts applied to the line segment.
@@ -15194,7 +14578,6 @@ class ACLineSegment(Conductor):
         'maxOccurs': 'unbounded',
         'inverse': 'LineFault.ACLineSegment',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': False,
         'docstring':
             '''
             The line faults of the line segment.
@@ -15213,7 +14596,6 @@ class ACLineSegment(Conductor):
         'maxOccurs': '1',
         'inverse': 'ParallelLineSegment.ACLineSegment',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': False,
         'docstring':
             '''
             '''
@@ -15274,7 +14656,6 @@ class BusbarSection(Connector):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             Maximum allowable peak short-circuit current of busbar (Ipmax in the IEC
@@ -15299,7 +14680,6 @@ class BusbarSection(Connector):
         'maxOccurs': '1',
         'inverse': 'VoltageControlZone.BusbarSection',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             A VoltageControlZone is controlled by a designated BusbarSection.
@@ -15318,7 +14698,6 @@ class BusbarSection(Connector):
         'maxOccurs': '1',
         'inverse': 'VoltageControlZone.BusbarSection',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': False,
         'docstring':
             '''
             A VoltageControlZone is controlled by a designated BusbarSection.
@@ -15379,7 +14758,6 @@ class EarthFaultCompensator(ConductingEquipment):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             Nominal resistance of device.
@@ -15416,7 +14794,6 @@ class GroundingImpedance(EarthFaultCompensator):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             Reactance of device.
@@ -15454,7 +14831,6 @@ class PetersenCoil(EarthFaultCompensator):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             The mode of operation of the Petersen coil.
@@ -15472,7 +14848,6 @@ class PetersenCoil(EarthFaultCompensator):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             The nominal voltage for which the coil is designed.
@@ -15490,7 +14865,6 @@ class PetersenCoil(EarthFaultCompensator):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             The offset current that the Petersen coil controller is operating from
@@ -15514,7 +14888,6 @@ class PetersenCoil(EarthFaultCompensator):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             The control current used to control the Petersen coil also known as the
@@ -15534,7 +14907,6 @@ class PetersenCoil(EarthFaultCompensator):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             The maximum reactance.
@@ -15552,7 +14924,6 @@ class PetersenCoil(EarthFaultCompensator):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             The minimum reactance.
@@ -15570,7 +14941,6 @@ class PetersenCoil(EarthFaultCompensator):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             The nominal reactance. This is the operating point (normally over compensation)
@@ -15613,7 +14983,6 @@ class EnergyConnection(ConductingEquipment):
         'maxOccurs': '1',
         'inverse': 'EnergyConnectionProfile.EnergyConnections',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             '''
@@ -15649,7 +15018,6 @@ class EnergyConsumer(EnergyConnection):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             Number of individual customers represented by this demand.
@@ -15667,7 +15035,6 @@ class EnergyConsumer(EnergyConnection):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             Used for Yn and Zn connections. True if the neutral is solidly grounded.
@@ -15685,7 +15052,6 @@ class EnergyConsumer(EnergyConnection):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             Active power of the load. Load sign convention is used, i.e. positive sign
@@ -15709,7 +15075,6 @@ class EnergyConsumer(EnergyConnection):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             The type of phase connection, such as wye or delta.
@@ -15727,7 +15092,6 @@ class EnergyConsumer(EnergyConnection):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             Reactive power of the load. Load sign convention is used, i.e. positive
@@ -15752,7 +15116,6 @@ class EnergyConsumer(EnergyConnection):
         'maxOccurs': '1',
         'inverse': 'House.EnergyConsumer',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             '''
@@ -15769,7 +15132,6 @@ class EnergyConsumer(EnergyConnection):
         'maxOccurs': '1',
         'inverse': 'LoadResponseCharacteristic.EnergyConsumer',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             The load response characteristic of this load. If missing, this load is
@@ -15790,7 +15152,6 @@ class EnergyConsumer(EnergyConnection):
         'maxOccurs': '1',
         'inverse': 'PowerCutZone.EnergyConsumers',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             The energy consumer is assigned to this power cut zone.
@@ -15809,7 +15170,6 @@ class EnergyConsumer(EnergyConnection):
         'maxOccurs': 'unbounded',
         'inverse': 'EnergyConsumerPhase.EnergyConsumer',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': False,
         'docstring':
             '''
             The individual phase models for this energy consumer.
@@ -15828,7 +15188,6 @@ class EnergyConsumer(EnergyConnection):
         'maxOccurs': '1',
         'inverse': 'House.EnergyConsumer',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': False,
         'docstring':
             '''
             '''
@@ -15865,7 +15224,6 @@ class ConformLoad(EnergyConsumer):
         'maxOccurs': '1',
         'inverse': 'ConformLoadGroup.EnergyConsumers',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             Group of this ConformLoad.
@@ -15905,7 +15263,6 @@ class NonConformLoad(EnergyConsumer):
         'maxOccurs': '1',
         'inverse': 'NonConformLoadGroup.EnergyConsumers',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             Group of this ConformLoad.
@@ -15963,7 +15320,6 @@ class EnergySource(EnergyConnection):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             Phase-to-phase nominal voltage.
@@ -15981,7 +15337,6 @@ class EnergySource(EnergyConnection):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             Positive sequence Thevenin resistance.
@@ -15999,7 +15354,6 @@ class EnergySource(EnergyConnection):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             Zero sequence Thevenin resistance.
@@ -16017,7 +15371,6 @@ class EnergySource(EnergyConnection):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             Phase angle of a-phase open circuit.
@@ -16035,7 +15388,6 @@ class EnergySource(EnergyConnection):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             Phase-to-phase open circuit voltage magnitude.
@@ -16053,7 +15405,6 @@ class EnergySource(EnergyConnection):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             Positive sequence Thevenin reactance.
@@ -16071,7 +15422,6 @@ class EnergySource(EnergyConnection):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             Zero sequence Thevenin reactance.
@@ -16090,7 +15440,6 @@ class EnergySource(EnergyConnection):
         'maxOccurs': 'unbounded',
         'inverse': 'EnergySourcePhase.EnergySource',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': False,
         'docstring':
             '''
             The individual phase information of the energy source.
@@ -16128,7 +15477,6 @@ class RegulatingCondEq(EnergyConnection):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             Specifies the regulation status of the equipment. True is regulating, false
@@ -16149,7 +15497,6 @@ class RegulatingCondEq(EnergyConnection):
         'maxOccurs': '1',
         'inverse': 'RegulatingControl.RegulatingCondEq',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             The regulating control scheme in which this equipment participates.
@@ -16186,7 +15533,6 @@ class ExternalNetworkInjection(RegulatingCondEq):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             Indicates whether initial symmetrical short-circuit current and power have
@@ -16206,7 +15552,6 @@ class ExternalNetworkInjection(RegulatingCondEq):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             Maximum ratio of zero sequence resistance of Network Feeder to its zero
@@ -16228,7 +15573,6 @@ class ExternalNetworkInjection(RegulatingCondEq):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             Maximum ratio of positive sequence resistance of Network Feeder to its
@@ -16250,7 +15594,6 @@ class ExternalNetworkInjection(RegulatingCondEq):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             Maximum ratio of zero sequence impedance to its positive sequence impedance
@@ -16272,7 +15615,6 @@ class ExternalNetworkInjection(RegulatingCondEq):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             Indicates whether initial symmetrical short-circuit current and power have
@@ -16294,7 +15636,6 @@ class ExternalNetworkInjection(RegulatingCondEq):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             Minimum ratio of positive sequence resistance of Network Feeder to its
@@ -16316,7 +15657,6 @@ class ExternalNetworkInjection(RegulatingCondEq):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             Minimum ratio of zero sequence impedance to its positive sequence impedance
@@ -16338,7 +15678,6 @@ class ExternalNetworkInjection(RegulatingCondEq):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             Priority of unit for use as powerflow voltage phase angle reference bus
@@ -16360,7 +15699,6 @@ class ExternalNetworkInjection(RegulatingCondEq):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             Power Frequency Bias. This is the change in power injection divided by
@@ -16382,7 +15720,6 @@ class ExternalNetworkInjection(RegulatingCondEq):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             Maximum initial symmetrical short-circuit currents (Ik" max) in A (Ik"
@@ -16404,7 +15741,6 @@ class ExternalNetworkInjection(RegulatingCondEq):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             Maximum active power of the injection.
@@ -16422,7 +15758,6 @@ class ExternalNetworkInjection(RegulatingCondEq):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             Not for short circuit modelling; It is used for modelling of infeed for
@@ -16444,7 +15779,6 @@ class ExternalNetworkInjection(RegulatingCondEq):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             Minimum initial symmetrical short-circuit currents (Ik" min) in A (Ik"
@@ -16466,7 +15800,6 @@ class ExternalNetworkInjection(RegulatingCondEq):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             Minimum active power of the injection.
@@ -16484,7 +15817,6 @@ class ExternalNetworkInjection(RegulatingCondEq):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             Not for short circuit modelling; It is used for modelling of infeed for
@@ -16506,7 +15838,6 @@ class ExternalNetworkInjection(RegulatingCondEq):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             Active power injection. Load sign convention is used, i.e. positive sign
@@ -16528,7 +15859,6 @@ class ExternalNetworkInjection(RegulatingCondEq):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             Reactive power injection. Load sign convention is used, i.e. positive sign
@@ -16550,7 +15880,6 @@ class ExternalNetworkInjection(RegulatingCondEq):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             Voltage factor in pu, which was used to calculate short-circuit current
@@ -16591,7 +15920,6 @@ class FrequencyConverter(RegulatingCondEq):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             Frequency on the AC side.
@@ -16609,7 +15937,6 @@ class FrequencyConverter(RegulatingCondEq):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             The maximum active power on the DC side at which the frequence converter
@@ -16629,7 +15956,6 @@ class FrequencyConverter(RegulatingCondEq):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             The maximum voltage on the DC side at which the frequency converter should
@@ -16649,7 +15975,6 @@ class FrequencyConverter(RegulatingCondEq):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             The minimum active power on the DC side at which the frequence converter
@@ -16669,7 +15994,6 @@ class FrequencyConverter(RegulatingCondEq):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             The minimum voltage on the DC side at which the frequency converter should
@@ -16710,7 +16034,6 @@ class PowerElectronicsConnection(RegulatingCondEq):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             '''
@@ -16726,7 +16049,6 @@ class PowerElectronicsConnection(RegulatingCondEq):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             Maximum fault current this device will contribute, in per-unit of rated
@@ -16746,7 +16068,6 @@ class PowerElectronicsConnection(RegulatingCondEq):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             Maximum reactive power limit. This is the maximum (nameplate) limit for
@@ -16766,7 +16087,6 @@ class PowerElectronicsConnection(RegulatingCondEq):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             Minimum reactive power limit for the unit. This is the minimum (nameplate)
@@ -16786,7 +16106,6 @@ class PowerElectronicsConnection(RegulatingCondEq):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             Active power injection. Load sign convention is used, i.e. positive sign
@@ -16808,7 +16127,6 @@ class PowerElectronicsConnection(RegulatingCondEq):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             Reactive power injection. Load sign convention is used, i.e. positive sign
@@ -16830,7 +16148,6 @@ class PowerElectronicsConnection(RegulatingCondEq):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             Nameplate apparent power rating for the unit.
@@ -16850,7 +16167,6 @@ class PowerElectronicsConnection(RegulatingCondEq):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             Rated voltage (nameplate data, Ur in IEC 60909-0). It is primarily used
@@ -16871,7 +16187,6 @@ class PowerElectronicsConnection(RegulatingCondEq):
         'maxOccurs': '1',
         'inverse': 'DERDynamics.PowerElectronicsConnection',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             DER dynamics model associated with this power electronics connection model.
@@ -16891,7 +16206,6 @@ class PowerElectronicsConnection(RegulatingCondEq):
         'maxOccurs': '1',
         'inverse': 'IEEE1547ControlSettings.PowerElectronicsConnections',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             '''
@@ -16908,7 +16222,6 @@ class PowerElectronicsConnection(RegulatingCondEq):
         'maxOccurs': '1',
         'inverse': 'IEEE1547Info.PowerElectronicsConnections',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             '''
@@ -16925,7 +16238,6 @@ class PowerElectronicsConnection(RegulatingCondEq):
         'maxOccurs': '1',
         'inverse': 'IEEE1547Setting.PowerElectronicsConnections',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             '''
@@ -16942,7 +16254,6 @@ class PowerElectronicsConnection(RegulatingCondEq):
         'maxOccurs': '1',
         'inverse': 'IEEE1547TripSettings.PowerElectronicsConnections',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             '''
@@ -16959,7 +16270,6 @@ class PowerElectronicsConnection(RegulatingCondEq):
         'maxOccurs': 'unbounded',
         'inverse': 'PowerElectronicsConnectionPhase.PowerElectronicsConnection',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': False,
         'docstring':
             '''
             '''
@@ -16976,7 +16286,6 @@ class PowerElectronicsConnection(RegulatingCondEq):
         'maxOccurs': 'unbounded',
         'inverse': 'PowerElectronicsUnit.PowerElectronicsConnection',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': False,
         'docstring':
             '''
             '''
@@ -17011,7 +16320,6 @@ class RotatingMachine(RegulatingCondEq):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             Power factor (nameplate data). It is primarily used for short circuit data
@@ -17031,7 +16339,6 @@ class RotatingMachine(RegulatingCondEq):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             Active power injection. Load sign convention is used, i.e. positive sign
@@ -17053,7 +16360,6 @@ class RotatingMachine(RegulatingCondEq):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             Reactive power injection. Load sign convention is used, i.e. positive sign
@@ -17075,7 +16381,6 @@ class RotatingMachine(RegulatingCondEq):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             Nameplate apparent power rating for the unit.
@@ -17095,7 +16400,6 @@ class RotatingMachine(RegulatingCondEq):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             Rated voltage (nameplate data, Ur in IEC 60909-0). It is primarily used
@@ -17116,7 +16420,6 @@ class RotatingMachine(RegulatingCondEq):
         'maxOccurs': '1',
         'inverse': 'GeneratingUnit.RotatingMachine',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             A synchronous machine may operate as a generator and as such becomes a
@@ -17137,7 +16440,6 @@ class RotatingMachine(RegulatingCondEq):
         'maxOccurs': '1',
         'inverse': 'HydroPump.RotatingMachine',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             The synchronous machine drives the turbine which moves the water from a
@@ -17160,7 +16462,6 @@ class RotatingMachine(RegulatingCondEq):
         'maxOccurs': '1',
         'inverse': 'IEEE1547ControlSettings.RotatingMachines',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             '''
@@ -17177,7 +16478,6 @@ class RotatingMachine(RegulatingCondEq):
         'maxOccurs': '1',
         'inverse': 'IEEE1547Info.RotatingMachines',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             '''
@@ -17194,7 +16494,6 @@ class RotatingMachine(RegulatingCondEq):
         'maxOccurs': '1',
         'inverse': 'IEEE1547Setting.RotatingMachines',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             '''
@@ -17211,7 +16510,6 @@ class RotatingMachine(RegulatingCondEq):
         'maxOccurs': '1',
         'inverse': 'IEEE1547TripSettings.RotatingMachines',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             '''
@@ -17228,7 +16526,6 @@ class RotatingMachine(RegulatingCondEq):
         'maxOccurs': '1',
         'inverse': 'HydroPump.RotatingMachine',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': False,
         'docstring':
             '''
             The synchronous machine drives the turbine which moves the water from a
@@ -17272,7 +16569,6 @@ class AsynchronousMachine(RotatingMachine):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             Indicates whether the machine is a converter fed drive. Used for short
@@ -17292,7 +16588,6 @@ class AsynchronousMachine(RotatingMachine):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             Ratio of locked-rotor current to the rated current of the motor (Ia/Ir).
@@ -17312,7 +16607,6 @@ class AsynchronousMachine(RotatingMachine):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             Number of pole pairs of stator. Used for short circuit data exchange according
@@ -17332,7 +16626,6 @@ class AsynchronousMachine(RotatingMachine):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             Indicates for converter drive motors if the power can be reversible. Used
@@ -17352,7 +16645,6 @@ class AsynchronousMachine(RotatingMachine):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             Locked rotor ratio (R/X). Used for short circuit data exchange according
@@ -17372,7 +16664,6 @@ class AsynchronousMachine(RotatingMachine):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             Indicates the type of Asynchronous Machine (motor or generator).
@@ -17390,7 +16681,6 @@ class AsynchronousMachine(RotatingMachine):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             Efficiency of the asynchronous machine at nominal operation in percent.
@@ -17412,7 +16702,6 @@ class AsynchronousMachine(RotatingMachine):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             Nameplate data indicates if the machine is 50 or 60 Hz.
@@ -17430,7 +16719,6 @@ class AsynchronousMachine(RotatingMachine):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             Nameplate data. Depends on the slip and number of pole pairs.
@@ -17448,7 +16736,6 @@ class AsynchronousMachine(RotatingMachine):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             Rated mechanical power (Pr in the IEC 60909-0). Used for short circuit
@@ -17469,7 +16756,6 @@ class AsynchronousMachine(RotatingMachine):
         'maxOccurs': '1',
         'inverse': 'DERDynamics.AsynchronousMachine',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             DER dynamics model associated with this asynchronous machine model.
@@ -17509,7 +16795,6 @@ class SynchronousMachine(RotatingMachine):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             Steady-state short-circuit current (in A for the profile) of generator
@@ -17543,7 +16828,6 @@ class SynchronousMachine(RotatingMachine):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             Maximum reactive power limit. This is the maximum (nameplate) limit for
@@ -17563,7 +16847,6 @@ class SynchronousMachine(RotatingMachine):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             Minimum reactive power limit for the unit.
@@ -17581,7 +16864,6 @@ class SynchronousMachine(RotatingMachine):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             Current mode of operation.
@@ -17599,7 +16881,6 @@ class SynchronousMachine(RotatingMachine):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             Modes that this synchronous machine can operate in.
@@ -17618,7 +16899,6 @@ class SynchronousMachine(RotatingMachine):
         'maxOccurs': '1',
         'inverse': 'DERDynamics.SynchronousMachine',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             DER dynamics model associated with this synchronous machine model.
@@ -17637,7 +16917,6 @@ class SynchronousMachine(RotatingMachine):
         'maxOccurs': '1',
         'inverse': 'ReactiveCapabilityCurve.InitiallyUsedBySynchronousMachines',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             The default reactive capability curve for use by a synchronous machine.
@@ -17677,7 +16956,6 @@ class ShuntCompensator(RegulatingCondEq):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             Used for Yn and Zn connections. True if the neutral is solidly grounded.
@@ -17695,7 +16973,6 @@ class ShuntCompensator(RegulatingCondEq):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             The maximum number of sections that may be switched in.
@@ -17713,7 +16990,6 @@ class ShuntCompensator(RegulatingCondEq):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             The normal number of sections switched in.
@@ -17731,7 +17007,6 @@ class ShuntCompensator(RegulatingCondEq):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             Shunt compensator sections in use.
@@ -17759,7 +17034,6 @@ class ShuntCompensator(RegulatingCondEq):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             Time delay required for the device to be connected or disconnected by automatic
@@ -17779,7 +17053,6 @@ class ShuntCompensator(RegulatingCondEq):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             The voltage at which the nominal reactive power may be calculated. This
@@ -17801,7 +17074,6 @@ class ShuntCompensator(RegulatingCondEq):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             The type of phase connection, such as wye or delta.
@@ -17820,7 +17092,6 @@ class ShuntCompensator(RegulatingCondEq):
         'maxOccurs': '1',
         'inverse': 'SvShuntCompensatorSections.ShuntCompensator',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             The state for the number of shunt compensator sections in service.
@@ -17839,7 +17110,6 @@ class ShuntCompensator(RegulatingCondEq):
         'maxOccurs': 'unbounded',
         'inverse': 'ShuntCompensatorPhase.ShuntCompensator',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': False,
         'docstring':
             '''
             The individual phases models for the shunt compensator.
@@ -17858,7 +17128,6 @@ class ShuntCompensator(RegulatingCondEq):
         'maxOccurs': '1',
         'inverse': 'SvShuntCompensatorSections.ShuntCompensator',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': False,
         'docstring':
             '''
             The state for the number of shunt compensator sections in service.
@@ -17897,7 +17166,6 @@ class LinearShuntCompensator(ShuntCompensator):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             Zero sequence shunt (charging) susceptance per section
@@ -17915,7 +17183,6 @@ class LinearShuntCompensator(ShuntCompensator):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             Positive sequence shunt (charging) susceptance per section
@@ -17933,7 +17200,6 @@ class LinearShuntCompensator(ShuntCompensator):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             Zero sequence shunt (charging) conductance per section
@@ -17951,7 +17217,6 @@ class LinearShuntCompensator(ShuntCompensator):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             Positive sequence shunt (charging) conductance per section
@@ -17992,7 +17257,6 @@ class NonlinearShuntCompensator(ShuntCompensator):
         'maxOccurs': 'unbounded',
         'inverse': 'NonlinearShuntCompensatorPoint.NonlinearShuntCompensator',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': False,
         'docstring':
             '''
             All points of the non-linear shunt compensator.
@@ -18037,7 +17301,6 @@ class StaticVarCompensator(RegulatingCondEq):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             Maximum available capacitive reactance.
@@ -18055,7 +17318,6 @@ class StaticVarCompensator(RegulatingCondEq):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             Maximum available inductive reactance.
@@ -18073,7 +17335,6 @@ class StaticVarCompensator(RegulatingCondEq):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             Reactive power injection. Load sign convention is used, i.e. positive sign
@@ -18095,7 +17356,6 @@ class StaticVarCompensator(RegulatingCondEq):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             The characteristics slope of an SVC defines how the reactive power output
@@ -18117,7 +17377,6 @@ class StaticVarCompensator(RegulatingCondEq):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             SVC control mode.
@@ -18135,7 +17394,6 @@ class StaticVarCompensator(RegulatingCondEq):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             The reactive power output of the SVC is proportional to the difference
@@ -18211,7 +17469,6 @@ class PowerTransformer(ConductingEquipment):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             Vector group of the transformer for protective relaying, e.g., Dyn1. For
@@ -18274,7 +17531,6 @@ class PowerTransformer(ConductingEquipment):
         'maxOccurs': 'unbounded',
         'inverse': 'PowerTransformerEnd.PowerTransformer',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': False,
         'docstring':
             '''
             The ends of this power transformer.
@@ -18293,7 +17549,6 @@ class PowerTransformer(ConductingEquipment):
         'maxOccurs': 'unbounded',
         'inverse': 'TransformerTank.PowerTransformer',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': False,
         'docstring':
             '''
             All transformers that belong to this bank.
@@ -18332,7 +17587,6 @@ class SeriesCompensator(ConductingEquipment):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             Describe if a metal oxide varistor (mov) for over voltage protection is
@@ -18352,7 +17606,6 @@ class SeriesCompensator(ConductingEquipment):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             Positive sequence resistance.
@@ -18370,7 +17623,6 @@ class SeriesCompensator(ConductingEquipment):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             Zero sequence resistance.
@@ -18388,7 +17640,6 @@ class SeriesCompensator(ConductingEquipment):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             The maximum current the varistor is designed to handle at specified duration.
@@ -18407,7 +17658,6 @@ class SeriesCompensator(ConductingEquipment):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             The dc voltage at which the varistor start conducting.
@@ -18425,7 +17675,6 @@ class SeriesCompensator(ConductingEquipment):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             Positive sequence reactance.
@@ -18443,7 +17692,6 @@ class SeriesCompensator(ConductingEquipment):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             Zero sequence reactance.
@@ -18481,7 +17729,6 @@ class Switch(ConductingEquipment):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             The attribute is used in cases when no Measurement for the status value
@@ -18503,7 +17750,6 @@ class Switch(ConductingEquipment):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             The attribute tells if the switch is considered open when used as input
@@ -18523,7 +17769,6 @@ class Switch(ConductingEquipment):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             Branch is retained in a bus branch model. The flow through retained switches
@@ -18543,7 +17788,6 @@ class Switch(ConductingEquipment):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             The maximum continuous current carrying capacity in amps governed by the
@@ -18564,7 +17808,6 @@ class Switch(ConductingEquipment):
         'maxOccurs': '1',
         'inverse': 'CompositeSwitch.Switches',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             Composite switch to which this Switch belongs.
@@ -18583,7 +17826,6 @@ class Switch(ConductingEquipment):
         'maxOccurs': 'unbounded',
         'inverse': 'SvSwitch.Switch',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': False,
         'docstring':
             '''
             The switch state associated with the switch.
@@ -18602,7 +17844,6 @@ class Switch(ConductingEquipment):
         'maxOccurs': 'unbounded',
         'inverse': 'SwitchPhase.Switch',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': False,
         'docstring':
             '''
             The individual switch phases for the switch.
@@ -18621,7 +17862,6 @@ class Switch(ConductingEquipment):
         'maxOccurs': 'unbounded',
         'inverse': 'SwitchSchedule.Switch',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': False,
         'docstring':
             '''
             A Switch can be associated with SwitchSchedules.
@@ -18669,7 +17909,6 @@ class Cut(Switch):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             The length to the place where the cut is located starting from side one
@@ -18692,7 +17931,6 @@ class Cut(Switch):
         'maxOccurs': '1',
         'inverse': 'ACLineSegment.Cut',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             The line segment to which the cut is applied.
@@ -18814,7 +18052,6 @@ class ProtectedSwitch(Switch):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             The maximum fault current a breaking device can break safely under prescribed
@@ -18835,7 +18072,6 @@ class ProtectedSwitch(Switch):
         'maxOccurs': 'unbounded',
         'inverse': 'ProtectionFunctionBlock.ProtectedSwitch',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': False,
         'docstring':
             '''
             '''
@@ -18874,7 +18110,6 @@ class Breaker(ProtectedSwitch):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             The transition time from open to close.
@@ -18981,7 +18216,6 @@ class GeneratingUnit(Equipment):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             This is the maximum operating active power limit the dispatcher can enter
@@ -19001,7 +18235,6 @@ class GeneratingUnit(Equipment):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             This is the minimum operating active power limit the dispatcher can enter
@@ -19022,7 +18255,6 @@ class GeneratingUnit(Equipment):
         'maxOccurs': '1',
         'inverse': 'GenUnitOpSchedule.GeneratingUnit',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             A generating unit may have an operating schedule, indicating the planned
@@ -19043,7 +18275,6 @@ class GeneratingUnit(Equipment):
         'maxOccurs': 'unbounded',
         'inverse': 'GenUnitOpCostCurve.GeneratingUnit',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': False,
         'docstring':
             '''
             A generating unit may have one or more cost curves, depending upon fuel
@@ -19064,7 +18295,6 @@ class GeneratingUnit(Equipment):
         'maxOccurs': '1',
         'inverse': 'GenUnitOpSchedule.GeneratingUnit',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': False,
         'docstring':
             '''
             A generating unit may have an operating schedule, indicating the planned
@@ -19085,7 +18315,6 @@ class GeneratingUnit(Equipment):
         'maxOccurs': 'unbounded',
         'inverse': 'GrossToNetActivePowerCurve.GeneratingUnit',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': False,
         'docstring':
             '''
             A generating unit may have a gross active power to net active power curve,
@@ -19107,7 +18336,6 @@ class GeneratingUnit(Equipment):
         'maxOccurs': 'unbounded',
         'inverse': 'RotatingMachine.GeneratingUnit',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': False,
         'docstring':
             '''
             A synchronous machine may operate as a generator and as such becomes a
@@ -19148,7 +18376,6 @@ class HydroGeneratingUnit(GeneratingUnit):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             Energy conversion capability for generating.
@@ -19166,7 +18393,6 @@ class HydroGeneratingUnit(GeneratingUnit):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             The equivalent cost of water that drives the hydro turbine.
@@ -19185,7 +18411,6 @@ class HydroGeneratingUnit(GeneratingUnit):
         'maxOccurs': '1',
         'inverse': 'HydroPowerPlant.HydroGeneratingUnits',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             The hydro generating unit belongs to a hydro power plant.
@@ -19204,7 +18429,6 @@ class HydroGeneratingUnit(GeneratingUnit):
         'maxOccurs': '1',
         'inverse': 'PenstockLossCurve.HydroGeneratingUnit',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             A hydro generating unit has a penstock loss curve.
@@ -19223,7 +18447,6 @@ class HydroGeneratingUnit(GeneratingUnit):
         'maxOccurs': 'unbounded',
         'inverse': 'HydroGeneratingEfficiencyCurve.HydroGeneratingUnit',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': False,
         'docstring':
             '''
             A hydro generating unit has an efficiency curve.
@@ -19242,7 +18465,6 @@ class HydroGeneratingUnit(GeneratingUnit):
         'maxOccurs': '1',
         'inverse': 'PenstockLossCurve.HydroGeneratingUnit',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': False,
         'docstring':
             '''
             A hydro generating unit has a penstock loss curve.
@@ -19261,7 +18483,6 @@ class HydroGeneratingUnit(GeneratingUnit):
         'maxOccurs': 'unbounded',
         'inverse': 'TailbayLossCurve.HydroGeneratingUnit',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': False,
         'docstring':
             '''
             A hydro generating unit has a tailbay loss curve.
@@ -19341,7 +18562,6 @@ class ThermalGeneratingUnit(GeneratingUnit):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             Operating and maintenance cost for the thermal unit.
@@ -19360,7 +18580,6 @@ class ThermalGeneratingUnit(GeneratingUnit):
         'maxOccurs': '1',
         'inverse': 'CAESPlant.ThermalGeneratingUnit',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             A thermal generating unit may be a member of a compressed air energy storage
@@ -19381,7 +18600,6 @@ class ThermalGeneratingUnit(GeneratingUnit):
         'maxOccurs': '1',
         'inverse': 'CogenerationPlant.ThermalGeneratingUnits',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             A thermal generating unit may be a member of a cogeneration plant.
@@ -19400,7 +18618,6 @@ class ThermalGeneratingUnit(GeneratingUnit):
         'maxOccurs': '1',
         'inverse': 'CombinedCyclePlant.ThermalGeneratingUnits',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             A thermal generating unit may be a member of a combined cycle plant.
@@ -19419,7 +18636,6 @@ class ThermalGeneratingUnit(GeneratingUnit):
         'maxOccurs': '1',
         'inverse': 'HeatInputCurve.ThermalGeneratingUnit',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             A thermal generating unit may have a heat input curve.
@@ -19438,7 +18654,6 @@ class ThermalGeneratingUnit(GeneratingUnit):
         'maxOccurs': '1',
         'inverse': 'HeatRateCurve.ThermalGeneratingUnit',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             A thermal generating unit may have a heat rate curve.
@@ -19457,7 +18672,6 @@ class ThermalGeneratingUnit(GeneratingUnit):
         'maxOccurs': '1',
         'inverse': 'IncrementalHeatRateCurve.ThermalGeneratingUnit',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             A thermal generating unit may have an incremental heat rate curve.
@@ -19476,7 +18690,6 @@ class ThermalGeneratingUnit(GeneratingUnit):
         'maxOccurs': '1',
         'inverse': 'ShutdownCurve.ThermalGeneratingUnit',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             A thermal generating unit may have a shutdown curve.
@@ -19495,7 +18708,6 @@ class ThermalGeneratingUnit(GeneratingUnit):
         'maxOccurs': '1',
         'inverse': 'StartupModel.ThermalGeneratingUnit',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             A thermal generating unit may have a startup model.
@@ -19514,7 +18726,6 @@ class ThermalGeneratingUnit(GeneratingUnit):
         'maxOccurs': '1',
         'inverse': 'CAESPlant.ThermalGeneratingUnit',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': False,
         'docstring':
             '''
             A thermal generating unit may be a member of a compressed air energy storage
@@ -19535,7 +18746,6 @@ class ThermalGeneratingUnit(GeneratingUnit):
         'maxOccurs': 'unbounded',
         'inverse': 'EmissionAccount.ThermalGeneratingUnit',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': False,
         'docstring':
             '''
             A thermal generating unit may have one or more emission allowance accounts.
@@ -19554,7 +18764,6 @@ class ThermalGeneratingUnit(GeneratingUnit):
         'maxOccurs': 'unbounded',
         'inverse': 'EmissionCurve.ThermalGeneratingUnit',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': False,
         'docstring':
             '''
             A thermal generating unit may have one or more emission curves.
@@ -19573,7 +18782,6 @@ class ThermalGeneratingUnit(GeneratingUnit):
         'maxOccurs': 'unbounded',
         'inverse': 'FossilFuel.ThermalGeneratingUnit',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': False,
         'docstring':
             '''
             A thermal generating unit may have one or more fossil fuels.
@@ -19592,7 +18800,6 @@ class ThermalGeneratingUnit(GeneratingUnit):
         'maxOccurs': 'unbounded',
         'inverse': 'FuelAllocationSchedule.ThermalGeneratingUnit',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': False,
         'docstring':
             '''
             A thermal generating unit may have one or more fuel allocation schedules.
@@ -19611,7 +18818,6 @@ class ThermalGeneratingUnit(GeneratingUnit):
         'maxOccurs': '1',
         'inverse': 'HeatInputCurve.ThermalGeneratingUnit',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': False,
         'docstring':
             '''
             A thermal generating unit may have a heat input curve.
@@ -19630,7 +18836,6 @@ class ThermalGeneratingUnit(GeneratingUnit):
         'maxOccurs': '1',
         'inverse': 'HeatRateCurve.ThermalGeneratingUnit',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': False,
         'docstring':
             '''
             A thermal generating unit may have a heat rate curve.
@@ -19649,7 +18854,6 @@ class ThermalGeneratingUnit(GeneratingUnit):
         'maxOccurs': '1',
         'inverse': 'IncrementalHeatRateCurve.ThermalGeneratingUnit',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': False,
         'docstring':
             '''
             A thermal generating unit may have an incremental heat rate curve.
@@ -19668,7 +18872,6 @@ class ThermalGeneratingUnit(GeneratingUnit):
         'maxOccurs': '1',
         'inverse': 'ShutdownCurve.ThermalGeneratingUnit',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': False,
         'docstring':
             '''
             A thermal generating unit may have a shutdown curve.
@@ -19687,7 +18890,6 @@ class ThermalGeneratingUnit(GeneratingUnit):
         'maxOccurs': '1',
         'inverse': 'StartupModel.ThermalGeneratingUnit',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': False,
         'docstring':
             '''
             A thermal generating unit may have a startup model.
@@ -19726,7 +18928,6 @@ class WindGeneratingUnit(GeneratingUnit):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             The kind of wind generating unit
@@ -19765,7 +18966,6 @@ class HydroPump(Equipment):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             The pumping discharge under maximum head conditions, usually at full gate.
@@ -19784,7 +18984,6 @@ class HydroPump(Equipment):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             The pumping discharge under minimum head conditions, usually at full gate.
@@ -19803,7 +19002,6 @@ class HydroPump(Equipment):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             The pumping power under maximum head conditions, usually at full gate.
@@ -19821,7 +19019,6 @@ class HydroPump(Equipment):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             The pumping power under minimum head conditions, usually at full gate.
@@ -19840,7 +19037,6 @@ class HydroPump(Equipment):
         'maxOccurs': '1',
         'inverse': 'HydroPowerPlant.HydroPumps',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             The hydro pump may be a member of a pumped storage plant or a pump for
@@ -19861,7 +19057,6 @@ class HydroPump(Equipment):
         'maxOccurs': '1',
         'inverse': 'HydroPumpOpSchedule.HydroPump',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             The hydro pump has a pumping schedule over time, indicating when pumping
@@ -19882,7 +19077,6 @@ class HydroPump(Equipment):
         'maxOccurs': '1',
         'inverse': 'RotatingMachine.HydroPump',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             The synchronous machine drives the turbine which moves the water from a
@@ -19905,7 +19099,6 @@ class HydroPump(Equipment):
         'maxOccurs': '1',
         'inverse': 'HydroPumpOpSchedule.HydroPump',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': False,
         'docstring':
             '''
             The hydro pump has a pumping schedule over time, indicating when pumping
@@ -19926,7 +19119,6 @@ class HydroPump(Equipment):
         'maxOccurs': '1',
         'inverse': 'RotatingMachine.HydroPump',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': False,
         'docstring':
             '''
             The synchronous machine drives the turbine which moves the water from a
@@ -19968,7 +19160,6 @@ class PowerElectronicsUnit(Equipment):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             Maximum active power limit. This is the maximum (nameplate) limit for the
@@ -19988,7 +19179,6 @@ class PowerElectronicsUnit(Equipment):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             Minimum active power limit. This is the minimum (nameplate) limit for the
@@ -20009,7 +19199,6 @@ class PowerElectronicsUnit(Equipment):
         'maxOccurs': '1',
         'inverse': 'PowerElectronicsConnection.PowerElectronicsUnit',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             '''
@@ -20045,7 +19234,6 @@ class BatteryUnit(PowerElectronicsUnit):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             indicates whether the battery is charging, discharging or idle
@@ -20063,7 +19251,6 @@ class BatteryUnit(PowerElectronicsUnit):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             full energy storage capacity of the battery
@@ -20081,7 +19268,6 @@ class BatteryUnit(PowerElectronicsUnit):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             amount of energy currently stored; no more than ratedE
@@ -20164,7 +19350,6 @@ class ProtectionEquipment(Equipment):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             The maximum allowable value.
@@ -20182,7 +19367,6 @@ class ProtectionEquipment(Equipment):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             The minimum allowable value.
@@ -20200,7 +19384,6 @@ class ProtectionEquipment(Equipment):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             Direction same as positive active power flow value.
@@ -20218,7 +19401,6 @@ class ProtectionEquipment(Equipment):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             The time delay from detection of abnormal conditions to relay operation.
@@ -20236,7 +19418,6 @@ class ProtectionEquipment(Equipment):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             The unit multiplier of the value.
@@ -20254,7 +19435,6 @@ class ProtectionEquipment(Equipment):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             The unit of measure of the value.
@@ -20273,7 +19453,6 @@ class ProtectionEquipment(Equipment):
         'maxOccurs': 'unbounded',
         'inverse': 'ProtectionFunctionBlock.ProtectionEquipment',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': False,
         'docstring':
             '''
             '''
@@ -20313,7 +19492,6 @@ class TransformerTank(Equipment):
         'maxOccurs': '1',
         'inverse': 'PowerTransformer.TransformerTanks',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             Bank this transformer belongs to.
@@ -20332,7 +19510,6 @@ class TransformerTank(Equipment):
         'maxOccurs': '1',
         'inverse': 'TransformerTankInfo.TransformerTanks',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             '''
@@ -20349,7 +19526,6 @@ class TransformerTank(Equipment):
         'maxOccurs': 'unbounded',
         'inverse': 'TransformerTankEnd.TransformerTank',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': False,
         'docstring':
             '''
             All windings of this transformer.
@@ -20389,7 +19565,6 @@ class HydroPowerPlant(PowerSystemResource):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             Type and configuration of hydro plant penstock(s).
@@ -20407,7 +19582,6 @@ class HydroPowerPlant(PowerSystemResource):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             A code describing the type (or absence) of surge tank that is associated
@@ -20427,7 +19601,6 @@ class HydroPowerPlant(PowerSystemResource):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             Water travel delay from tailbay to next downstream hydro power station.
@@ -20445,7 +19618,6 @@ class HydroPowerPlant(PowerSystemResource):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             The hydro plant's generating rating active power for rated head conditions.
@@ -20463,7 +19635,6 @@ class HydroPowerPlant(PowerSystemResource):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             The type of hydro power plant water storage.
@@ -20481,7 +19652,6 @@ class HydroPowerPlant(PowerSystemResource):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             Total plant discharge capacity.
@@ -20499,7 +19669,6 @@ class HydroPowerPlant(PowerSystemResource):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             The plant's rated gross head.
@@ -20517,7 +19686,6 @@ class HydroPowerPlant(PowerSystemResource):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             The hydro plant's pumping rating active power for rated head conditions.
@@ -20535,7 +19703,6 @@ class HydroPowerPlant(PowerSystemResource):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             The level at which the surge tank spills.
@@ -20554,7 +19721,6 @@ class HydroPowerPlant(PowerSystemResource):
         'maxOccurs': '1',
         'inverse': 'Reservoir.UpstreamFromHydroPowerPlants',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             Generators are supplied water from or pumps discharge water to an upstream
@@ -20575,7 +19741,6 @@ class HydroPowerPlant(PowerSystemResource):
         'maxOccurs': '1',
         'inverse': 'Reservoir.HydroPowerPlants',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             Generators discharge water to or pumps are supplied water from a downstream
@@ -20596,7 +19761,6 @@ class HydroPowerPlant(PowerSystemResource):
         'maxOccurs': 'unbounded',
         'inverse': 'HydroGeneratingUnit.HydroPowerPlant',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': False,
         'docstring':
             '''
             The hydro generating unit belongs to a hydro power plant.
@@ -20615,7 +19779,6 @@ class HydroPowerPlant(PowerSystemResource):
         'maxOccurs': 'unbounded',
         'inverse': 'HydroPump.HydroPowerPlant',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': False,
         'docstring':
             '''
             The hydro pump may be a member of a pumped storage plant or a pump for
@@ -20656,7 +19819,6 @@ class PowerCutZone(PowerSystemResource):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             First level (amount) of load to cut as a percentage of total zone load.
@@ -20674,7 +19836,6 @@ class PowerCutZone(PowerSystemResource):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             Second level (amount) of load to cut as a percentage of total zone load.
@@ -20694,7 +19855,6 @@ class PowerCutZone(PowerSystemResource):
         'maxOccurs': 'unbounded',
         'inverse': 'EnergyConsumer.PowerCutZone',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': False,
         'docstring':
             '''
             Energy consumer is assigned to the power cut zone.
@@ -20731,7 +19891,6 @@ class PowerElectronicsConnectionPhase(PowerSystemResource):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             Active power injection. Load sign convention is used, i.e. positive sign
@@ -20751,7 +19910,6 @@ class PowerElectronicsConnectionPhase(PowerSystemResource):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             Phase of this energy producer component. If the energy producer is wye
@@ -20777,7 +19935,6 @@ class PowerElectronicsConnectionPhase(PowerSystemResource):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             Reactive power injection. Load sign convention is used, i.e. positive sign
@@ -20798,7 +19955,6 @@ class PowerElectronicsConnectionPhase(PowerSystemResource):
         'maxOccurs': '1',
         'inverse': 'PowerElectronicsConnection.PowerElectronicsConnectionPhases',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             '''
@@ -20842,7 +19998,6 @@ class RegulatingControl(PowerSystemResource):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             The regulation is performed in a discrete mode. This applies to equipment
@@ -20862,7 +20017,6 @@ class RegulatingControl(PowerSystemResource):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             The flag tells if regulation is enabled.
@@ -20880,7 +20034,6 @@ class RegulatingControl(PowerSystemResource):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             '''
@@ -20896,7 +20049,6 @@ class RegulatingControl(PowerSystemResource):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             '''
@@ -20912,7 +20064,6 @@ class RegulatingControl(PowerSystemResource):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             This is a deadband used with discrete control to avoid excessive update
@@ -20934,7 +20085,6 @@ class RegulatingControl(PowerSystemResource):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             The target value specified for case input. This value can be used for the
@@ -20956,7 +20106,6 @@ class RegulatingControl(PowerSystemResource):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             The regulating control mode presently available. This specification allows
@@ -20978,7 +20127,6 @@ class RegulatingControl(PowerSystemResource):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             Phase voltage controlling this regulator, measured at regulator location.
@@ -20997,7 +20145,6 @@ class RegulatingControl(PowerSystemResource):
         'maxOccurs': '1',
         'inverse': 'Terminal.RegulatingControl',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             The terminal associated with this regulating control. The terminal is associated
@@ -21026,7 +20173,6 @@ class RegulatingControl(PowerSystemResource):
         'maxOccurs': 'unbounded',
         'inverse': 'RegulatingCondEq.RegulatingControl',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': False,
         'docstring':
             '''
             The equipment that participates in this regulating control scheme.
@@ -21045,7 +20191,6 @@ class RegulatingControl(PowerSystemResource):
         'maxOccurs': 'unbounded',
         'inverse': 'RegulationSchedule.RegulatingControl',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': False,
         'docstring':
             '''
             Schedule for this Regulating regulating control.
@@ -21084,7 +20229,6 @@ class TapChangerControl(RegulatingControl):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             If true, the line drop compensation is to be applied.
@@ -21102,7 +20246,6 @@ class TapChangerControl(RegulatingControl):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             '''
@@ -21118,7 +20261,6 @@ class TapChangerControl(RegulatingControl):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             '''
@@ -21134,7 +20276,6 @@ class TapChangerControl(RegulatingControl):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             Line drop compensator resistance setting for normal (forward) power flow.
@@ -21153,7 +20294,6 @@ class TapChangerControl(RegulatingControl):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             Line drop compensator reactance setting for normal (forward) power flow.
@@ -21172,7 +20312,6 @@ class TapChangerControl(RegulatingControl):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             Maximum allowed regulated voltage on the PT secondary, regardless of line
@@ -21192,7 +20331,6 @@ class TapChangerControl(RegulatingControl):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             '''
@@ -21208,7 +20346,6 @@ class TapChangerControl(RegulatingControl):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             Line drop compensator resistance setting for reverse power flow.
@@ -21226,7 +20363,6 @@ class TapChangerControl(RegulatingControl):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             Line drop compensator reactance setting for reverse power flow.
@@ -21244,7 +20380,6 @@ class TapChangerControl(RegulatingControl):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             '''
@@ -21260,7 +20395,6 @@ class TapChangerControl(RegulatingControl):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             '''
@@ -21277,7 +20411,6 @@ class TapChangerControl(RegulatingControl):
         'maxOccurs': 'unbounded',
         'inverse': 'TapChanger.TapChangerControl',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': False,
         'docstring':
             '''
             The tap changers that participates in this regulating tap control scheme.
@@ -21316,7 +20449,6 @@ class Reservoir(PowerSystemResource):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             The reservoir's energy storage rating in energy for given head conditions.
@@ -21334,7 +20466,6 @@ class Reservoir(PowerSystemResource):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             River outlet works for riparian right releases or other purposes.
@@ -21352,7 +20483,6 @@ class Reservoir(PowerSystemResource):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             The flow capacity of the spillway in cubic meters per second.
@@ -21370,7 +20500,6 @@ class Reservoir(PowerSystemResource):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             Type of spillway gate, including parameters.
@@ -21388,7 +20517,6 @@ class Reservoir(PowerSystemResource):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             Storage volume between the full supply level and the normal minimum operating
@@ -21408,7 +20536,6 @@ class Reservoir(PowerSystemResource):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             Full supply level, above which water will spill. This can be the spillway
@@ -21428,7 +20555,6 @@ class Reservoir(PowerSystemResource):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             Total capacity of reservoir.
@@ -21446,7 +20572,6 @@ class Reservoir(PowerSystemResource):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             Normal minimum operating level below which the penstocks will draw air.
@@ -21465,7 +20590,6 @@ class Reservoir(PowerSystemResource):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             The spillway water travel delay to the next downstream reservoir.
@@ -21483,7 +20607,6 @@ class Reservoir(PowerSystemResource):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             The length of the spillway crest.
@@ -21501,7 +20624,6 @@ class Reservoir(PowerSystemResource):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             Spillway crest level above which water will spill.
@@ -21520,7 +20642,6 @@ class Reservoir(PowerSystemResource):
         'maxOccurs': '1',
         'inverse': 'Reservoir.SpillsIntoReservoirs',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             A reservoir may spill into a downstream reservoir.
@@ -21539,7 +20660,6 @@ class Reservoir(PowerSystemResource):
         'maxOccurs': '1',
         'inverse': 'TargetLevelSchedule.Reservoir',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             A reservoir may have a water level target schedule.
@@ -21558,7 +20678,6 @@ class Reservoir(PowerSystemResource):
         'maxOccurs': 'unbounded',
         'inverse': 'HydroPowerPlant.GenSourcePumpDischargeReservoir',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': False,
         'docstring':
             '''
             Generators are supplied water from or pumps discharge water to an upstream
@@ -21579,7 +20698,6 @@ class Reservoir(PowerSystemResource):
         'maxOccurs': 'unbounded',
         'inverse': 'HydroPowerPlant.Reservoir',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': False,
         'docstring':
             '''
             Generators discharge water to or pumps are supplied water from a downstream
@@ -21600,7 +20718,6 @@ class Reservoir(PowerSystemResource):
         'maxOccurs': 'unbounded',
         'inverse': 'InflowForecast.Reservoir',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': False,
         'docstring':
             '''
             A reservoir may have a "natural" inflow forecast.
@@ -21619,7 +20736,6 @@ class Reservoir(PowerSystemResource):
         'maxOccurs': 'unbounded',
         'inverse': 'LevelVsVolumeCurve.Reservoir',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': False,
         'docstring':
             '''
             A reservoir may have a level versus volume relationship.
@@ -21638,7 +20754,6 @@ class Reservoir(PowerSystemResource):
         'maxOccurs': 'unbounded',
         'inverse': 'Reservoir.SpillsFromReservoir',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': False,
         'docstring':
             '''
             A reservoir may spill into a downstream reservoir.
@@ -21657,7 +20772,6 @@ class Reservoir(PowerSystemResource):
         'maxOccurs': '1',
         'inverse': 'TargetLevelSchedule.Reservoir',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': False,
         'docstring':
             '''
             A reservoir may have a water level target schedule.
@@ -21694,7 +20808,6 @@ class SchedulingArea(PowerSystemResource):
         'maxOccurs': 'unbounded',
         'inverse': 'Substation.SchedulingArea',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': False,
         'docstring':
             '''
             The substations contained within the SchedulingArea.
@@ -21738,7 +20851,6 @@ class SubSchedulingArea(SchedulingArea):
         'maxOccurs': 'unbounded',
         'inverse': 'AreaConfiguration.EnergizedArea',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': False,
         'docstring':
             '''
             Set of possible configurations for the sink area.
@@ -21757,7 +20869,6 @@ class SubSchedulingArea(SchedulingArea):
         'maxOccurs': 'unbounded',
         'inverse': 'AreaConfiguration.EnergizingArea',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': False,
         'docstring':
             '''
             The set of possible configurations for the source area
@@ -21776,7 +20887,6 @@ class SubSchedulingArea(SchedulingArea):
         'maxOccurs': 'unbounded',
         'inverse': 'Equipment.SubSchedulingArea',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': False,
         'docstring':
             '''
             The Equipment contained within the SubSchedulingArea.
@@ -21795,7 +20905,6 @@ class SubSchedulingArea(SchedulingArea):
         'maxOccurs': 'unbounded',
         'inverse': 'Terminal.BoundedSchedulingArea',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': False,
         'docstring':
             '''
             The set of terminals that define the persistent boundaries of the SubSchedulingArea
@@ -21838,7 +20947,6 @@ class DistributionArea(SubSchedulingArea):
         'maxOccurs': 'unbounded',
         'inverse': 'Feeder.DistributionArea',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': False,
         'docstring':
             '''
             Feeders within the service territory of the DistributionArea of a particular
@@ -21859,7 +20967,6 @@ class DistributionArea(SubSchedulingArea):
         'maxOccurs': 'unbounded',
         'inverse': 'FeederArea.DistributionArea',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': False,
         'docstring':
             '''
             '''
@@ -21903,7 +21010,6 @@ class FeederArea(SubSchedulingArea):
         'maxOccurs': '1',
         'inverse': 'DistributionArea.FeederAreas',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             '''
@@ -21920,7 +21026,6 @@ class FeederArea(SubSchedulingArea):
         'maxOccurs': '1',
         'inverse': 'Feeder.FeederArea',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             The Feeder (which contains the ConnectivityNode and all Equipment) associated
@@ -21941,7 +21046,6 @@ class FeederArea(SubSchedulingArea):
         'maxOccurs': '1',
         'inverse': 'Feeder.FeederArea',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': False,
         'docstring':
             '''
             The Feeder (which contains the ConnectivityNode and all Equipment) associated
@@ -21962,7 +21066,6 @@ class FeederArea(SubSchedulingArea):
         'maxOccurs': 'unbounded',
         'inverse': 'SwitchArea.FeederArea',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': False,
         'docstring':
             '''
             The set of SwitchArea normally energized by the FeederArea
@@ -22002,7 +21105,6 @@ class SecondaryArea(SubSchedulingArea):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             Used to represent the ABC phase to which the secondary split-phase transformer
@@ -22030,7 +21132,6 @@ class SecondaryArea(SubSchedulingArea):
         'maxOccurs': '1',
         'inverse': 'SwitchArea.SecondaryAreas',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             The SwitchArea that normally energizes the SecondaryArea
@@ -22074,7 +21175,6 @@ class SwitchArea(SubSchedulingArea):
         'maxOccurs': '1',
         'inverse': 'FeederArea.SwitchAreas',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             The FeederArea that normally energizes the SwitchArea
@@ -22093,7 +21193,6 @@ class SwitchArea(SubSchedulingArea):
         'maxOccurs': 'unbounded',
         'inverse': 'SecondaryArea.SwitchArea',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': False,
         'docstring':
             '''
             The set of SecondAreas normally energized by the SwitchArea
@@ -22153,7 +21252,6 @@ class ShuntCompensatorPhase(PowerSystemResource):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             The maximum number of sections that may be switched in for this phase.
@@ -22171,7 +21269,6 @@ class ShuntCompensatorPhase(PowerSystemResource):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             For the capacitor phase, the normal number of sections switched in.
@@ -22189,7 +21286,6 @@ class ShuntCompensatorPhase(PowerSystemResource):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             Number of sections in use for this phase, when controlled independently
@@ -22211,7 +21307,6 @@ class ShuntCompensatorPhase(PowerSystemResource):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             Phase of this shunt compensator component. If the shunt compensator is
@@ -22238,7 +21333,6 @@ class ShuntCompensatorPhase(PowerSystemResource):
         'maxOccurs': '1',
         'inverse': 'ShuntCompensator.ShuntCompensatorPhase',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             Shunt compensator of this shunt compensator phase.
@@ -22277,7 +21371,6 @@ class LinearShuntCompensatorPhase(ShuntCompensatorPhase):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             Susceptance per section of the phase if shunt compensator is wye connected.
@@ -22298,7 +21391,6 @@ class LinearShuntCompensatorPhase(ShuntCompensatorPhase):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             Conductance per section for this phase if shunt compensator is wye connected.
@@ -22342,7 +21434,6 @@ class NonlinearShuntCompensatorPhase(ShuntCompensatorPhase):
         'maxOccurs': 'unbounded',
         'inverse': 'NonlinearShuntCompensatorPhasePoint.NonlinearShuntCompensatorPhase',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': False,
         'docstring':
             '''
             All points of the non-linear shunt compensator phase.
@@ -22381,7 +21472,6 @@ class SwitchPhase(PowerSystemResource):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             The attribute tells if the switch is considered closed when used as input
@@ -22401,7 +21491,6 @@ class SwitchPhase(PowerSystemResource):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             Used in cases when no Measurement for the status value is present. If the
@@ -22423,7 +21512,6 @@ class SwitchPhase(PowerSystemResource):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             Phase of this SwitchPhase on the side with terminal sequence number equal
@@ -22444,7 +21532,6 @@ class SwitchPhase(PowerSystemResource):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             Phase of this SwitchPhase on the side with terminal sequence number equal
@@ -22466,7 +21553,6 @@ class SwitchPhase(PowerSystemResource):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             Rated current through this phase, if different from the others.
@@ -22485,7 +21571,6 @@ class SwitchPhase(PowerSystemResource):
         'maxOccurs': '1',
         'inverse': 'Switch.SwitchPhase',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             The switch of the switch phase.
@@ -22522,7 +21607,6 @@ class TapChanger(PowerSystemResource):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             Specifies the regulation status of the equipment. True is regulating, false
@@ -22542,7 +21626,6 @@ class TapChanger(PowerSystemResource):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             '''
@@ -22558,7 +21641,6 @@ class TapChanger(PowerSystemResource):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             Highest possible tap step position, advance from neutral.
@@ -22578,7 +21660,6 @@ class TapChanger(PowerSystemResource):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             Lowest possible tap step position, retard from neutral
@@ -22596,7 +21677,6 @@ class TapChanger(PowerSystemResource):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             Specifies whether or not a TapChanger has load tap changing capabilities.
@@ -22614,7 +21694,6 @@ class TapChanger(PowerSystemResource):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             The neutral tap step position for this winding.
@@ -22636,7 +21715,6 @@ class TapChanger(PowerSystemResource):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             The tap step position used in "normal" network operation for this winding.
@@ -22660,7 +21738,6 @@ class TapChanger(PowerSystemResource):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             '''
@@ -22676,7 +21753,6 @@ class TapChanger(PowerSystemResource):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             Tap changer position.
@@ -22708,7 +21784,6 @@ class TapChanger(PowerSystemResource):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             '''
@@ -22724,7 +21799,6 @@ class TapChanger(PowerSystemResource):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             For an LTC, the delay for initial tap changer operation (first step change)
@@ -22743,7 +21817,6 @@ class TapChanger(PowerSystemResource):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             Voltage at which the winding operates at the neutral tap setting.
@@ -22761,7 +21834,6 @@ class TapChanger(PowerSystemResource):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             For an LTC, the delay for subsequent tap changer operation (second and
@@ -22782,7 +21854,6 @@ class TapChanger(PowerSystemResource):
         'maxOccurs': '1',
         'inverse': 'SvTapStep.TapChanger',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             The tap step state associated with the tap changer.
@@ -22801,7 +21872,6 @@ class TapChanger(PowerSystemResource):
         'maxOccurs': '1',
         'inverse': 'TapChangerControl.TapChanger',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             The regulating control scheme in which this tap changer participates.
@@ -22820,7 +21890,6 @@ class TapChanger(PowerSystemResource):
         'maxOccurs': '1',
         'inverse': 'SvTapStep.TapChanger',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': False,
         'docstring':
             '''
             The tap step state associated with the tap changer.
@@ -22839,7 +21908,6 @@ class TapChanger(PowerSystemResource):
         'maxOccurs': 'unbounded',
         'inverse': 'TapSchedule.TapChanger',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': False,
         'docstring':
             '''
             A TapChanger can have TapSchedules.
@@ -22881,7 +21949,6 @@ class PhaseTapChanger(TapChanger):
         'maxOccurs': '1',
         'inverse': 'TransformerEnd.PhaseTapChanger',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             Transformer end to which this phase tap changer belongs.
@@ -22900,7 +21967,6 @@ class PhaseTapChanger(TapChanger):
         'maxOccurs': '1',
         'inverse': 'TransformerEnd.PhaseTapChanger',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': False,
         'docstring':
             '''
             Transformer end to which this phase tap changer belongs.
@@ -22941,7 +22007,6 @@ class PhaseTapChangerLinear(PhaseTapChanger):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             Phase shift per step position. A positive value indicates a positive phase
@@ -22969,7 +22034,6 @@ class PhaseTapChangerLinear(PhaseTapChanger):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             The reactance depend on the tap position according to a "u" shaped curve.
@@ -22990,7 +22054,6 @@ class PhaseTapChangerLinear(PhaseTapChanger):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             The reactance depend on the tap position according to a "u" shaped curve.
@@ -23032,7 +22095,6 @@ class PhaseTapChangerNonLinear(PhaseTapChanger):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             The voltage step increment on the out of phase winding specified in percent
@@ -23056,7 +22118,6 @@ class PhaseTapChangerNonLinear(PhaseTapChanger):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             The reactance depend on the tap position according to a "u" shaped curve.
@@ -23077,7 +22138,6 @@ class PhaseTapChangerNonLinear(PhaseTapChanger):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             The reactance depend on the tap position according to a "u" shaped curve.
@@ -23120,7 +22180,6 @@ class PhaseTapChangerAsymmetrical(PhaseTapChangerNonLinear):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             The phase angle between the in-phase winding and the out-of -phase winding
@@ -23187,7 +22246,6 @@ class PhaseTapChangerTabular(PhaseTapChanger):
         'maxOccurs': '1',
         'inverse': 'PhaseTapChangerTable.PhaseTapChangerTabular',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             The phase tap changer table for this phase tap changer.
@@ -23226,7 +22284,6 @@ class RatioTapChanger(TapChanger):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             Tap step increment, in per cent of neutral voltage, per step position.
@@ -23249,7 +22306,6 @@ class RatioTapChanger(TapChanger):
         'maxOccurs': '1',
         'inverse': 'RatioTapChangerTable.RatioTapChanger',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             The tap ratio table for this ratio tap changer.
@@ -23268,7 +22324,6 @@ class RatioTapChanger(TapChanger):
         'maxOccurs': '1',
         'inverse': 'TransformerEnd.RatioTapChanger',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             Transformer end to which this ratio tap changer belongs.
@@ -23287,7 +22342,6 @@ class RatioTapChanger(TapChanger):
         'maxOccurs': '1',
         'inverse': 'TransformerEnd.RatioTapChanger',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': False,
         'docstring':
             '''
             Transformer end to which this ratio tap changer belongs.
@@ -23327,7 +22381,6 @@ class VoltageControlZone(PowerSystemResource):
         'maxOccurs': '1',
         'inverse': 'BusbarSection.VoltageControlZone',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             A VoltageControlZone is controlled by a designated BusbarSection.
@@ -23346,7 +22399,6 @@ class VoltageControlZone(PowerSystemResource):
         'maxOccurs': '1',
         'inverse': 'RegulationSchedule.VoltageControlZones',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             A VoltageControlZone may have a voltage regulation schedule.
@@ -23365,7 +22417,6 @@ class VoltageControlZone(PowerSystemResource):
         'maxOccurs': '1',
         'inverse': 'BusbarSection.VoltageControlZone',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': False,
         'docstring':
             '''
             A VoltageControlZone is controlled by a designated BusbarSection.
@@ -23401,7 +22452,6 @@ class ProtectionSettingsGroup(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             '''
@@ -23417,7 +22467,6 @@ class ProtectionSettingsGroup(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             '''
@@ -23433,7 +22482,6 @@ class ProtectionSettingsGroup(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             '''
@@ -23470,7 +22518,6 @@ class RatioTapChangerTable(IdentifiedObject):
         'maxOccurs': 'unbounded',
         'inverse': 'RatioTapChanger.RatioTapChangerTable',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': False,
         'docstring':
             '''
             The ratio tap changer of this tap ratio table.
@@ -23489,7 +22536,6 @@ class RatioTapChangerTable(IdentifiedObject):
         'maxOccurs': 'unbounded',
         'inverse': 'RatioTapChangerTablePoint.RatioTapChangerTable',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': False,
         'docstring':
             '''
             Points of this table.
@@ -23527,7 +22573,6 @@ class ReportingGroup(IdentifiedObject):
         'maxOccurs': '1',
         'inverse': 'ReportingSuperGroup.ReportingGroup',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             Reporting super group to which this reporting group belongs.
@@ -23546,7 +22591,6 @@ class ReportingGroup(IdentifiedObject):
         'maxOccurs': 'unbounded',
         'inverse': 'BusNameMarker.ReportingGroup',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': False,
         'docstring':
             '''
             The bus name markers that belong to this reporting group.
@@ -23565,7 +22609,6 @@ class ReportingGroup(IdentifiedObject):
         'maxOccurs': 'unbounded',
         'inverse': 'TopologicalNode.ReportingGroup',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': False,
         'docstring':
             '''
             The topological nodes that belong to the reporting group.
@@ -23604,7 +22647,6 @@ class ReportingSuperGroup(IdentifiedObject):
         'maxOccurs': 'unbounded',
         'inverse': 'ReportingGroup.ReportingSuperGroup',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': False,
         'docstring':
             '''
             Reporting groups that are grouped under this super group.
@@ -23641,7 +22683,6 @@ class RightOfWay(IdentifiedObject):
         'maxOccurs': 'unbounded',
         'inverse': 'ParallelLineSegment.RightOfWay',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': False,
         'docstring':
             '''
             '''
@@ -23676,7 +22717,6 @@ class Season(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             Date season ends.
@@ -23694,7 +22734,6 @@ class Season(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             Date season starts.
@@ -23713,7 +22752,6 @@ class Season(IdentifiedObject):
         'maxOccurs': 'unbounded',
         'inverse': 'SeasonDayTypeSchedule.Season',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': False,
         'docstring':
             '''
             Schedules that use this Season.
@@ -23753,7 +22791,6 @@ class StartupModel(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             The date and time of the most recent generating unit startup.
@@ -23771,7 +22808,6 @@ class StartupModel(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             Startup priority within control area where lower numbers indicate higher
@@ -23792,7 +22828,6 @@ class StartupModel(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             Fixed maintenance cost.
@@ -23810,7 +22845,6 @@ class StartupModel(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             The amount of heat input per time uint required for hot standby operation.
@@ -23828,7 +22862,6 @@ class StartupModel(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             Incremental maintenance cost.
@@ -23846,7 +22879,6 @@ class StartupModel(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             The minimum number of hours the unit must be down before restart.
@@ -23864,7 +22896,6 @@ class StartupModel(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             The minimum number of hours the unit must be operating before being allowed
@@ -23884,7 +22915,6 @@ class StartupModel(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             The opportunity cost associated with the return in monetary unit. This
@@ -23906,7 +22936,6 @@ class StartupModel(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             Total miscellaneous start up costs.
@@ -23924,7 +22953,6 @@ class StartupModel(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             The unit's auxiliary active power consumption to maintain standby mode.
@@ -23943,7 +22971,6 @@ class StartupModel(IdentifiedObject):
         'maxOccurs': '1',
         'inverse': 'StartIgnFuelCurve.StartupModel',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             The unit's startup model may have a startup ignition fuel curve.
@@ -23962,7 +22989,6 @@ class StartupModel(IdentifiedObject):
         'maxOccurs': '1',
         'inverse': 'StartMainFuelCurve.StartupModel',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             The unit's startup model may have a startup main fuel curve.
@@ -23981,7 +23007,6 @@ class StartupModel(IdentifiedObject):
         'maxOccurs': '1',
         'inverse': 'StartRampCurve.StartupModel',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             The unit's startup model may have a startup ramp curve.
@@ -24000,7 +23025,6 @@ class StartupModel(IdentifiedObject):
         'maxOccurs': '1',
         'inverse': 'ThermalGeneratingUnit.StartupModel',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             A thermal generating unit may have a startup model.
@@ -24019,7 +23043,6 @@ class StartupModel(IdentifiedObject):
         'maxOccurs': '1',
         'inverse': 'StartIgnFuelCurve.StartupModel',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': False,
         'docstring':
             '''
             The unit's startup model may have a startup ignition fuel curve.
@@ -24038,7 +23061,6 @@ class StartupModel(IdentifiedObject):
         'maxOccurs': '1',
         'inverse': 'StartMainFuelCurve.StartupModel',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': False,
         'docstring':
             '''
             The unit's startup model may have a startup main fuel curve.
@@ -24057,7 +23079,6 @@ class StartupModel(IdentifiedObject):
         'maxOccurs': '1',
         'inverse': 'StartRampCurve.StartupModel',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': False,
         'docstring':
             '''
             The unit's startup model may have a startup ramp curve.
@@ -24076,7 +23097,6 @@ class StartupModel(IdentifiedObject):
         'maxOccurs': '1',
         'inverse': 'ThermalGeneratingUnit.StartupModel',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': False,
         'docstring':
             '''
             A thermal generating unit may have a startup model.
@@ -24115,7 +23135,6 @@ class SubGeographicalRegion(IdentifiedObject):
         'maxOccurs': '1',
         'inverse': 'GeographicalRegion.Regions',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             The geographical region to which this sub-geographical region is within.
@@ -24134,7 +23153,6 @@ class SubGeographicalRegion(IdentifiedObject):
         'maxOccurs': 'unbounded',
         'inverse': 'Line.Region',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': False,
         'docstring':
             '''
             The lines within the sub-geographical region.
@@ -24153,7 +23171,6 @@ class SubGeographicalRegion(IdentifiedObject):
         'maxOccurs': 'unbounded',
         'inverse': 'Substation.Region',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': False,
         'docstring':
             '''
             The substations in this sub-geographical region.
@@ -24190,7 +23207,6 @@ class ThermostatController(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             user's desired thermostat setpoint, including the effects of pre-programmed
@@ -24210,7 +23226,6 @@ class ThermostatController(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             '''
@@ -24226,7 +23241,6 @@ class ThermostatController(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             maximum price per kwh that the controller will bid, regardless of the market's
@@ -24246,7 +23260,6 @@ class ThermostatController(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             maximum postive offset to the thermostat setpoint
@@ -24264,7 +23277,6 @@ class ThermostatController(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             maximum negative offset to the thermostat setpoint
@@ -24283,7 +23295,6 @@ class ThermostatController(IdentifiedObject):
         'maxOccurs': '1',
         'inverse': 'House.ThermostatController',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             '''
@@ -24300,7 +23311,6 @@ class ThermostatController(IdentifiedObject):
         'maxOccurs': '1',
         'inverse': 'House.ThermostatController',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': False,
         'docstring':
             '''
             '''
@@ -24342,7 +23352,6 @@ class TopologicalIsland(IdentifiedObject):
         'maxOccurs': '1',
         'inverse': 'TopologicalNode.AngleRefTopologicalIsland',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             The angle reference for the island. Normally there is one TopologicalNode
@@ -24365,7 +23374,6 @@ class TopologicalIsland(IdentifiedObject):
         'maxOccurs': '1',
         'inverse': 'TopologicalNode.AngleRefTopologicalIsland',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': False,
         'docstring':
             '''
             The angle reference for the island. Normally there is one TopologicalNode
@@ -24388,7 +23396,6 @@ class TopologicalIsland(IdentifiedObject):
         'maxOccurs': 'unbounded',
         'inverse': 'TopologicalNode.TopologicalIsland',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': False,
         'docstring':
             '''
             A topological node belongs to a topological island.
@@ -24434,7 +23441,6 @@ class TopologicalNode(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             The active power injected into the bus at this location in addition to
@@ -24458,7 +23464,6 @@ class TopologicalNode(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             The reactive power injected into the bus at this location in addition to
@@ -24483,7 +23488,6 @@ class TopologicalNode(IdentifiedObject):
         'maxOccurs': '1',
         'inverse': 'TopologicalIsland.AngleRefTopologicalNode',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             The island for which the node is an angle reference. Normally there is
@@ -24504,7 +23508,6 @@ class TopologicalNode(IdentifiedObject):
         'maxOccurs': '1',
         'inverse': 'BaseVoltage.TopologicalNode',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             The base voltage of the topologocial node.
@@ -24523,7 +23526,6 @@ class TopologicalNode(IdentifiedObject):
         'maxOccurs': '1',
         'inverse': 'ConnectivityNodeContainer.TopologicalNode',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             The connectivity node container to which the toplogical node belongs.
@@ -24542,7 +23544,6 @@ class TopologicalNode(IdentifiedObject):
         'maxOccurs': '1',
         'inverse': 'ReportingGroup.TopologicalNode',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             The reporting group to which the topological node belongs.
@@ -24561,7 +23562,6 @@ class TopologicalNode(IdentifiedObject):
         'maxOccurs': '1',
         'inverse': 'TopologicalIsland.TopologicalNodes',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             A topological node belongs to a topological island.
@@ -24580,7 +23580,6 @@ class TopologicalNode(IdentifiedObject):
         'maxOccurs': 'unbounded',
         'inverse': 'BusNameMarker.TopologicalNode',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': False,
         'docstring':
             '''
             BusnameMarkers that may refer to a pre defined TopologicalNode.
@@ -24599,7 +23598,6 @@ class TopologicalNode(IdentifiedObject):
         'maxOccurs': 'unbounded',
         'inverse': 'ConnectivityNode.TopologicalNode',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': False,
         'docstring':
             '''
             The connectivity nodes combine together to form this topological node.
@@ -24620,7 +23618,6 @@ class TopologicalNode(IdentifiedObject):
         'maxOccurs': 'unbounded',
         'inverse': 'SvInjection.TopologicalNode',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': False,
         'docstring':
             '''
             The injection flows state variables associated with the topological node.
@@ -24640,7 +23637,6 @@ class TopologicalNode(IdentifiedObject):
         'maxOccurs': 'unbounded',
         'inverse': 'SvVoltage.TopologicalNode',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': False,
         'docstring':
             '''
             The state voltage associated with the topological node.
@@ -24659,7 +23655,6 @@ class TopologicalNode(IdentifiedObject):
         'maxOccurs': 'unbounded',
         'inverse': 'Terminal.TopologicalNode',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': False,
         'docstring':
             '''
             The terminals associated with the topological node. This can be used as
@@ -24686,7 +23681,6 @@ class TopologicalNode(IdentifiedObject):
         'maxOccurs': '1',
         'inverse': 'TopologicalIsland.AngleRefTopologicalNode',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': False,
         'docstring':
             '''
             The island for which the node is an angle reference. Normally there is
@@ -24727,7 +23721,6 @@ class TransformerCoreAdmittance(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             Magnetizing branch susceptance (B mag). The value can be positive or negative.
@@ -24746,7 +23739,6 @@ class TransformerCoreAdmittance(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             Zero sequence magnetizing branch susceptance.
@@ -24764,7 +23756,6 @@ class TransformerCoreAdmittance(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             Magnetizing branch conductance (G mag).
@@ -24782,7 +23773,6 @@ class TransformerCoreAdmittance(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             Zero sequence magnetizing branch conductance.
@@ -24801,7 +23791,6 @@ class TransformerCoreAdmittance(IdentifiedObject):
         'maxOccurs': '1',
         'inverse': 'TransformerEndInfo.CoreAdmittance',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             Transformer end datasheet used to calculate this core admittance.
@@ -24820,7 +23809,6 @@ class TransformerCoreAdmittance(IdentifiedObject):
         'maxOccurs': 'unbounded',
         'inverse': 'TransformerEnd.CoreAdmittance',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': False,
         'docstring':
             '''
             All transformer ends having this core admittance.
@@ -24839,7 +23827,6 @@ class TransformerCoreAdmittance(IdentifiedObject):
         'maxOccurs': '1',
         'inverse': 'TransformerEndInfo.CoreAdmittance',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': False,
         'docstring':
             '''
             Transformer end datasheet used to calculate this core admittance.
@@ -24879,7 +23866,6 @@ class TransformerEnd(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             Number for this transformer end, corresponding to the end's order in the
@@ -24905,7 +23891,6 @@ class TransformerEnd(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             (for Yn and Zn connections) True if the neutral is solidly grounded.
@@ -24923,7 +23908,6 @@ class TransformerEnd(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             (for Yn and Zn connections) Resistance part of neutral impedance where
@@ -24943,7 +23927,6 @@ class TransformerEnd(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             (for Yn and Zn connections) Reactive part of neutral impedance where 'grounded'
@@ -24964,7 +23947,6 @@ class TransformerEnd(IdentifiedObject):
         'maxOccurs': '1',
         'inverse': 'BaseVoltage.TransformerEnds',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             Base voltage of the transformer end. This is essential for PU calculation.
@@ -24983,7 +23965,6 @@ class TransformerEnd(IdentifiedObject):
         'maxOccurs': '1',
         'inverse': 'TransformerCoreAdmittance.TransformerEnd',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             Core admittance of this transformer end, representing magnetising current
@@ -25006,7 +23987,6 @@ class TransformerEnd(IdentifiedObject):
         'maxOccurs': '1',
         'inverse': 'PhaseTapChanger.TransformerEnd',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             Phase tap changer associated with this transformer end.
@@ -25025,7 +24005,6 @@ class TransformerEnd(IdentifiedObject):
         'maxOccurs': '1',
         'inverse': 'RatioTapChanger.TransformerEnd',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             Ratio tap changer associated with this transformer end.
@@ -25044,7 +24023,6 @@ class TransformerEnd(IdentifiedObject):
         'maxOccurs': '1',
         'inverse': 'TransformerStarImpedance.TransformerEnd',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             (accurate for 2- or 3-winding transformers only) Pi-model impedances of
@@ -25069,7 +24047,6 @@ class TransformerEnd(IdentifiedObject):
         'maxOccurs': '1',
         'inverse': 'Terminal.TransformerEnd',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             Terminal of the power transformer to which this transformer end belongs.
@@ -25088,7 +24065,6 @@ class TransformerEnd(IdentifiedObject):
         'maxOccurs': '1',
         'inverse': 'PhaseTapChanger.TransformerEnd',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': False,
         'docstring':
             '''
             Phase tap changer associated with this transformer end.
@@ -25107,7 +24083,6 @@ class TransformerEnd(IdentifiedObject):
         'maxOccurs': '1',
         'inverse': 'RatioTapChanger.TransformerEnd',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': False,
         'docstring':
             '''
             Ratio tap changer associated with this transformer end.
@@ -25126,7 +24101,6 @@ class TransformerEnd(IdentifiedObject):
         'maxOccurs': 'unbounded',
         'inverse': 'TransformerMeshImpedance.FromTransformerEnd',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': False,
         'docstring':
             '''
             All mesh impedances between this 'to' and other 'from' transformer ends.
@@ -25146,7 +24120,6 @@ class TransformerEnd(IdentifiedObject):
         'maxOccurs': 'unbounded',
         'inverse': 'TransformerMeshImpedance.ToTransformerEnd',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': False,
         'docstring':
             '''
             All mesh impedances between this 'from' and other 'to' transformer ends.
@@ -25202,7 +24175,6 @@ class PowerTransformerEnd(TransformerEnd):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             Terminal voltage phase angle displacement where 360 degrees are represented
@@ -25232,7 +24204,6 @@ class PowerTransformerEnd(TransformerEnd):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             Kind of connection.
@@ -25250,7 +24221,6 @@ class PowerTransformerEnd(TransformerEnd):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             Resistance (star-model) of the transformer end.
@@ -25271,7 +24241,6 @@ class PowerTransformerEnd(TransformerEnd):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             Normal apparent power rating.
@@ -25293,7 +24262,6 @@ class PowerTransformerEnd(TransformerEnd):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             Rated voltage: phase-phase for three-phase windings, and either phase-phase
@@ -25319,7 +24287,6 @@ class PowerTransformerEnd(TransformerEnd):
         'maxOccurs': '1',
         'inverse': 'PowerTransformer.PowerTransformerEnd',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             The power transformer of this power transformer end.
@@ -25359,7 +24326,6 @@ class TransformerTankEnd(TransformerEnd):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             Identifies the phases present and the order of their connection on this
@@ -25386,7 +24352,6 @@ class TransformerTankEnd(TransformerEnd):
         'maxOccurs': '1',
         'inverse': 'TransformerTank.TransformerTankEnds',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             Transformer this winding belongs to.
@@ -25428,7 +24393,6 @@ class TransformerMeshImpedance(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             Resistance between the 'from' and the 'to' end, seen from the 'from' end.
@@ -25447,7 +24411,6 @@ class TransformerMeshImpedance(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             Zero-sequence resistance between the 'from' and the 'to' end, seen from
@@ -25467,7 +24430,6 @@ class TransformerMeshImpedance(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             Reactance between the 'from' and the 'to' end, seen from the 'from' end.
@@ -25486,7 +24448,6 @@ class TransformerMeshImpedance(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             Zero-sequence reactance between the 'from' and the 'to' end, seen from
@@ -25507,7 +24468,6 @@ class TransformerMeshImpedance(IdentifiedObject):
         'maxOccurs': '1',
         'inverse': 'TransformerEnd.FromMeshImpedance',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             From end this mesh impedance is connected to. It determines the voltage
@@ -25528,7 +24488,6 @@ class TransformerMeshImpedance(IdentifiedObject):
         'maxOccurs': '1',
         'inverse': 'TransformerEndInfo.FromMeshImpedances',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             'from' transformer end datasheet this mesh impedance is calculated from.
@@ -25549,7 +24508,6 @@ class TransformerMeshImpedance(IdentifiedObject):
         'maxOccurs': 'unbounded',
         'inverse': 'TransformerEnd.ToMeshImpedance',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             All transformer ends this mesh impedance is connected to.
@@ -25591,7 +24549,6 @@ class TransformerStarImpedance(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             Resistance of the transformer end.
@@ -25609,7 +24566,6 @@ class TransformerStarImpedance(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             '''
@@ -25625,7 +24581,6 @@ class TransformerStarImpedance(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             Positive sequence series reactance of the transformer end.
@@ -25643,7 +24598,6 @@ class TransformerStarImpedance(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             Zero sequence series reactance of the transformer end.
@@ -25662,7 +24616,6 @@ class TransformerStarImpedance(IdentifiedObject):
         'maxOccurs': '1',
         'inverse': 'TransformerEndInfo.TransformerStarImpedance',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             Transformer end datasheet used to calculate this transformer star impedance.
@@ -25681,7 +24634,6 @@ class TransformerStarImpedance(IdentifiedObject):
         'maxOccurs': 'unbounded',
         'inverse': 'TransformerEnd.StarImpedance',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': False,
         'docstring':
             '''
             All transformer ends having this star impedance.
@@ -25700,7 +24652,6 @@ class TransformerStarImpedance(IdentifiedObject):
         'maxOccurs': '1',
         'inverse': 'TransformerEndInfo.TransformerStarImpedance',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': False,
         'docstring':
             '''
             Transformer end datasheet used to calculate this transformer star impedance.
@@ -25738,7 +24689,6 @@ class TransformerTest(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             Base power at which the tests are conducted, usually equal to the rateds
@@ -25758,7 +24708,6 @@ class TransformerTest(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             Temperature at which the test is conducted.
@@ -25799,7 +24748,6 @@ class NoLoadTest(TransformerTest):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             Voltage applied to the winding (end) during test.
@@ -25817,7 +24765,6 @@ class NoLoadTest(TransformerTest):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             Exciting current measured from a positive-sequence or single-phase excitation
@@ -25837,7 +24784,6 @@ class NoLoadTest(TransformerTest):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             Exciting current measured from a zero-sequence open-circuit excitation
@@ -25857,7 +24803,6 @@ class NoLoadTest(TransformerTest):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             Losses measured from a positive-sequence or single-phase excitation test.
@@ -25876,7 +24821,6 @@ class NoLoadTest(TransformerTest):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             Losses measured from a zero-sequence excitation test.
@@ -25895,7 +24839,6 @@ class NoLoadTest(TransformerTest):
         'maxOccurs': '1',
         'inverse': 'TransformerEndInfo.EnergisedEndNoLoadTests',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             Transformer end that current is applied to in this no-load test.
@@ -25936,7 +24879,6 @@ class OpenCircuitTest(TransformerTest):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             Tap step number for the energised end of the test pair.
@@ -25954,7 +24896,6 @@ class OpenCircuitTest(TransformerTest):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             Tap step number for the open end of the test pair.
@@ -25972,7 +24913,6 @@ class OpenCircuitTest(TransformerTest):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             Voltage applied to the winding (end) during test.
@@ -25990,7 +24930,6 @@ class OpenCircuitTest(TransformerTest):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             Voltage measured at the open-circuited end, with the energised end set
@@ -26010,7 +24949,6 @@ class OpenCircuitTest(TransformerTest):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             Phase shift measured at the open end with the energised end set to rated
@@ -26031,7 +24969,6 @@ class OpenCircuitTest(TransformerTest):
         'maxOccurs': '1',
         'inverse': 'TransformerEndInfo.EnergisedEndOpenCircuitTests',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             Transformer end that current is applied to in this open-circuit test.
@@ -26050,7 +24987,6 @@ class OpenCircuitTest(TransformerTest):
         'maxOccurs': '1',
         'inverse': 'TransformerEndInfo.OpenEndOpenCircuitTests',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             Transformer end measured for induced voltage and angle in this open-circuit
@@ -26093,7 +25029,6 @@ class ShortCircuitTest(TransformerTest):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             Tap step number for the energised end of the test pair.
@@ -26111,7 +25046,6 @@ class ShortCircuitTest(TransformerTest):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             Tap step number for the grounded end of the test pair.
@@ -26129,7 +25063,6 @@ class ShortCircuitTest(TransformerTest):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             Leakage impedance measured from a positive-sequence or single-phase short-circuit
@@ -26149,7 +25082,6 @@ class ShortCircuitTest(TransformerTest):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             Leakage impedance measured from a zero-sequence short-circuit test.
@@ -26167,7 +25099,6 @@ class ShortCircuitTest(TransformerTest):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             Load losses from a positive-sequence or single-phase short-circuit test.
@@ -26186,7 +25117,6 @@ class ShortCircuitTest(TransformerTest):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             Load losses from a zero-sequence short-circuit test.
@@ -26205,7 +25135,6 @@ class ShortCircuitTest(TransformerTest):
         'maxOccurs': '1',
         'inverse': 'TransformerEndInfo.EnergisedEndShortCircuitTests',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             Transformer end that voltage is applied to in this short-circuit test.
@@ -26227,7 +25156,6 @@ class ShortCircuitTest(TransformerTest):
         'maxOccurs': 'unbounded',
         'inverse': 'TransformerEndInfo.GroundedEndShortCircuitTests',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             All ends short-circuited in this short-circuit test.
@@ -26267,7 +25195,6 @@ class UsagePoint(IdentifiedObject):
         'maxOccurs': 'unbounded',
         'inverse': 'Equipment.UsagePoints',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': False,
         'docstring':
             '''
             All equipment connecting this usage point to the electrical grid.
@@ -26312,7 +25239,6 @@ class ValueAliasSet(IdentifiedObject):
         'maxOccurs': 'unbounded',
         'inverse': 'Command.ValueAliasSet',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': False,
         'docstring':
             '''
             The Commands using the set for translation.
@@ -26331,7 +25257,6 @@ class ValueAliasSet(IdentifiedObject):
         'maxOccurs': 'unbounded',
         'inverse': 'Discrete.ValueAliasSet',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': False,
         'docstring':
             '''
             The Measurements using the set for translation.
@@ -26350,7 +25275,6 @@ class ValueAliasSet(IdentifiedObject):
         'maxOccurs': 'unbounded',
         'inverse': 'RaiseLowerCommand.ValueAliasSet',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': False,
         'docstring':
             '''
             The Commands using the set for translation.
@@ -26369,7 +25293,6 @@ class ValueAliasSet(IdentifiedObject):
         'maxOccurs': 'unbounded',
         'inverse': 'ValueToAlias.ValueAliasSet',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': False,
         'docstring':
             '''
             The ValueToAlias mappings included in the set.
@@ -26407,7 +25330,6 @@ class ValueToAlias(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             The value that is mapped.
@@ -26426,7 +25348,6 @@ class ValueToAlias(IdentifiedObject):
         'maxOccurs': '1',
         'inverse': 'ValueAliasSet.Values',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             The ValueAliasSet having the ValueToAlias mappings.
@@ -26465,7 +25386,6 @@ class WirePosition(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             Numbering for wires on a WireSpacingInfo. Neutrals should be numbered last.
@@ -26489,7 +25409,6 @@ class WirePosition(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             Signed horizontal distance from the wire at this position to a common reference
@@ -26509,7 +25428,6 @@ class WirePosition(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             Signed vertical distance from the wire at this position: above ground (positive
@@ -26530,7 +25448,6 @@ class WirePosition(IdentifiedObject):
         'maxOccurs': '1',
         'inverse': 'WireSpacingInfo.WirePositions',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             Wire spacing data this wire position belongs to.
@@ -26549,7 +25466,6 @@ class WirePosition(IdentifiedObject):
         'maxOccurs': 'unbounded',
         'inverse': 'WirePhaseInfo.WirePosition',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': False,
         'docstring':
             '''
             '''
@@ -26584,7 +25500,6 @@ class IrregularTimePoint(Identity):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             The first value at the time. The meaning of the value is defined by the
@@ -26604,7 +25519,6 @@ class IrregularTimePoint(Identity):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             The second value at the time. The meaning of the value is defined by the
@@ -26624,7 +25538,6 @@ class IrregularTimePoint(Identity):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             The time is relative to the schedule starting time.
@@ -26643,7 +25556,6 @@ class IrregularTimePoint(Identity):
         'maxOccurs': '1',
         'inverse': 'IrregularIntervalSchedule.TimePoints',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             An IrregularTimePoint belongs to an IrregularIntervalSchedule.
@@ -26683,7 +25595,6 @@ class Name(Identity):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             Any free text that name the object.
@@ -26702,7 +25613,6 @@ class Name(Identity):
         'maxOccurs': '1',
         'inverse': 'IdentifiedObject.Names',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             Identified object that this name designates.
@@ -26721,7 +25631,6 @@ class Name(Identity):
         'maxOccurs': '1',
         'inverse': 'NameType.Names',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             Type of this name.
@@ -26768,7 +25677,6 @@ class NameType(Identity):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             Description of the name type.
@@ -26786,7 +25694,6 @@ class NameType(Identity):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             Name of the name type.
@@ -26805,7 +25712,6 @@ class NameType(Identity):
         'maxOccurs': '1',
         'inverse': 'NameTypeAuthority.NameTypes',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             Authority responsible for managing names of this type.
@@ -26837,7 +25743,6 @@ class NameType(Identity):
         'maxOccurs': 'unbounded',
         'inverse': 'Name.NameType',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': False,
         'docstring':
             '''
             All names of this type.
@@ -26862,7 +25767,6 @@ class NameTypeAuthority(Identity):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             Description of the name type authority.
@@ -26880,7 +25784,6 @@ class NameTypeAuthority(Identity):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             Name of the name type authority.
@@ -26912,7 +25815,6 @@ class NameTypeAuthority(Identity):
         'maxOccurs': 'unbounded',
         'inverse': 'NameType.NameTypeAuthority',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': False,
         'docstring':
             '''
             All name types managed by this authority.
@@ -26937,7 +25839,6 @@ class NonlinearShuntCompensatorPhasePoint(Identity):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             The number of the section.
@@ -26955,7 +25856,6 @@ class NonlinearShuntCompensatorPhasePoint(Identity):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             Positive sequence shunt (charging) susceptance per section
@@ -26973,7 +25873,6 @@ class NonlinearShuntCompensatorPhasePoint(Identity):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             Positive sequence shunt (charging) conductance per section
@@ -26992,7 +25891,6 @@ class NonlinearShuntCompensatorPhasePoint(Identity):
         'maxOccurs': '1',
         'inverse': 'NonlinearShuntCompensatorPhase.NonlinearShuntCompensatorPhasePoints',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             Non-linear shunt compensator phase owning this point.
@@ -27030,7 +25928,6 @@ class NonlinearShuntCompensatorPoint(Identity):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             The number of the section.
@@ -27048,7 +25945,6 @@ class NonlinearShuntCompensatorPoint(Identity):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             Positive sequence shunt (charging) susceptance per section
@@ -27066,7 +25962,6 @@ class NonlinearShuntCompensatorPoint(Identity):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             Zero sequence shunt (charging) susceptance per section
@@ -27084,7 +25979,6 @@ class NonlinearShuntCompensatorPoint(Identity):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             Positive sequence shunt (charging) conductance per section
@@ -27102,7 +25996,6 @@ class NonlinearShuntCompensatorPoint(Identity):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             Zero sequence shunt (charging) conductance per section
@@ -27121,7 +26014,6 @@ class NonlinearShuntCompensatorPoint(Identity):
         'maxOccurs': '1',
         'inverse': 'NonlinearShuntCompensator.NonlinearShuntCompensatorPoints',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             Non-linear shunt compensator owning this point.
@@ -27159,7 +26051,6 @@ class OperatingShare(Identity):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             Percentage operational ownership between the pair (power system resource
@@ -27182,7 +26073,6 @@ class OperatingShare(Identity):
         'maxOccurs': '1',
         'inverse': 'OperatingParticipant.OperatingShare',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             The operating participant having this share with the associated power system
@@ -27203,7 +26093,6 @@ class OperatingShare(Identity):
         'maxOccurs': '1',
         'inverse': 'PowerSystemResource.OperatingShare',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             The power system resource to which the share applies.
@@ -27245,7 +26134,6 @@ class PhaseImpedanceData(Identity):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             This matrix element's column number, in the range 1 to row. Only the lower
@@ -27273,7 +26161,6 @@ class PhaseImpedanceData(Identity):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             This matrix element's row number, in the range 1 to PerLengthPhaseImpedance.conductorCount.
@@ -27301,7 +26188,6 @@ class PhaseImpedanceData(Identity):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             Susceptance matrix element value, per length of unit.
@@ -27319,7 +26205,6 @@ class PhaseImpedanceData(Identity):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             Conductance matrix element value, per length of unit.
@@ -27337,7 +26222,6 @@ class PhaseImpedanceData(Identity):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             Resistance matrix element value, per length of unit.
@@ -27355,7 +26239,6 @@ class PhaseImpedanceData(Identity):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             Reactance matrix element value, per length of unit.
@@ -27374,7 +26257,6 @@ class PhaseImpedanceData(Identity):
         'maxOccurs': '1',
         'inverse': 'PerLengthPhaseImpedance.PhaseImpedanceData',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             Conductor phase impedance to which this data belongs.
@@ -27417,7 +26299,6 @@ class PositionPoint(Identity):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             Zero-relative sequence number of this group within a series of points;
@@ -27439,7 +26320,6 @@ class PositionPoint(Identity):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             Zero-relative sequence number of this point within a series of points.
@@ -27457,7 +26337,6 @@ class PositionPoint(Identity):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             X axis position.
@@ -27475,7 +26354,6 @@ class PositionPoint(Identity):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             Y axis position.
@@ -27493,7 +26371,6 @@ class PositionPoint(Identity):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             (if applicable) Z axis position.
@@ -27512,7 +26389,6 @@ class PositionPoint(Identity):
         'maxOccurs': '1',
         'inverse': 'Location.PositionPoints',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             Location described by this position point.
@@ -27550,7 +26426,6 @@ class Quality61850(Identity):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             Measurement value may be incorrect due to a reference being out of calibration.
@@ -27569,7 +26444,6 @@ class Quality61850(Identity):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             Value has been replaced by State Estimator. estimatorReplaced is not an
@@ -27589,7 +26463,6 @@ class Quality61850(Identity):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             This identifier indicates that a supervision function has detected an internal
@@ -27609,7 +26482,6 @@ class Quality61850(Identity):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             Measurement value is old and possibly invalid, as it has not been successfully
@@ -27629,7 +26501,6 @@ class Quality61850(Identity):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             Measurement value is blocked and hence unavailable for transmission.
@@ -27647,7 +26518,6 @@ class Quality61850(Identity):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             To prevent some overload of the communication it is sensible to detect
@@ -27692,7 +26562,6 @@ class Quality61850(Identity):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             Measurement value is beyond a predefined range of value.
@@ -27710,7 +26579,6 @@ class Quality61850(Identity):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             Measurement value is beyond the capability of being represented properly.
@@ -27732,7 +26600,6 @@ class Quality61850(Identity):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             A correlation function has detected that the value is not consitent with
@@ -27752,7 +26619,6 @@ class Quality61850(Identity):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             Measurement value is transmitted for test purposes.
@@ -27770,7 +26636,6 @@ class Quality61850(Identity):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             Validity of the measurement value.
@@ -27811,7 +26676,6 @@ class MeasurementValueQuality(Quality61850):
         'maxOccurs': '1',
         'inverse': 'MeasurementValue.MeasurementValueQuality',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             A MeasurementValue has a MeasurementValueQuality associated with it.
@@ -27830,7 +26694,6 @@ class MeasurementValueQuality(Quality61850):
         'maxOccurs': '1',
         'inverse': 'MeasurementValue.MeasurementValueQuality',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': False,
         'docstring':
             '''
             A MeasurementValue has a MeasurementValueQuality associated with it.
@@ -27868,7 +26731,6 @@ class RegularTimePoint(Identity):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             The position of the regular time point in the sequence. Note that time
@@ -27894,7 +26756,6 @@ class RegularTimePoint(Identity):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             The first value at the time. The meaning of the value is defined by the
@@ -27914,7 +26775,6 @@ class RegularTimePoint(Identity):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             The second value at the time. The meaning of the value is defined by the
@@ -27935,7 +26795,6 @@ class RegularTimePoint(Identity):
         'maxOccurs': '1',
         'inverse': 'RegularIntervalSchedule.TimePoints',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             Regular interval schedule containing this time point.
@@ -27995,7 +26854,6 @@ class SvInjection(StateVariable):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             The terminal phase at which the connection is applied. If missing, the
@@ -28015,7 +26873,6 @@ class SvInjection(StateVariable):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             The active power mismatch between calculated injection and initial injection.
@@ -28035,7 +26892,6 @@ class SvInjection(StateVariable):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             The reactive power mismatch between calculated injection and initial injection.
@@ -28056,7 +26912,6 @@ class SvInjection(StateVariable):
         'maxOccurs': '1',
         'inverse': 'ConnectivityNode.SvInjection',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             '''
@@ -28073,7 +26928,6 @@ class SvInjection(StateVariable):
         'maxOccurs': '1',
         'inverse': 'TopologicalNode.SvInjection',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             The topological node associated with the flow injection state variable.
@@ -28111,7 +26965,6 @@ class SvPowerFlow(StateVariable):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             The active power flow. Load sign convention is used, i.e. positive sign
@@ -28132,7 +26985,6 @@ class SvPowerFlow(StateVariable):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             The individual phase of the flow. If unspecified, then assumed to be balanced
@@ -28152,7 +27004,6 @@ class SvPowerFlow(StateVariable):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             The reactive power flow. Load sign convention is used, i.e. positive sign
@@ -28174,7 +27025,6 @@ class SvPowerFlow(StateVariable):
         'maxOccurs': '1',
         'inverse': 'Terminal.SvPowerFlow',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             The terminal associated with the power flow state variable.
@@ -28211,7 +27061,6 @@ class SvShuntCompensatorSections(StateVariable):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             The number of sections in service as a continous variable. To get integer
@@ -28231,7 +27080,6 @@ class SvShuntCompensatorSections(StateVariable):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             The terminal phase at which the connection is applied. If missing, the
@@ -28252,7 +27100,6 @@ class SvShuntCompensatorSections(StateVariable):
         'maxOccurs': '1',
         'inverse': 'ShuntCompensator.SvShuntCompensatorSections',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             The shunt compensator for which the state applies.
@@ -28271,7 +27118,6 @@ class SvShuntCompensatorSections(StateVariable):
         'maxOccurs': '1',
         'inverse': 'ShuntCompensator.SvShuntCompensatorSections',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': False,
         'docstring':
             '''
             The shunt compensator for which the state applies.
@@ -28308,7 +27154,6 @@ class SvStatus(StateVariable):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             The in service status as a result of topology processing.
@@ -28326,7 +27171,6 @@ class SvStatus(StateVariable):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             The individual phase status. If the attribute is unspecified, then three
@@ -28347,7 +27191,6 @@ class SvStatus(StateVariable):
         'maxOccurs': '1',
         'inverse': 'ConductingEquipment.SvStatus',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             The conducting equipment associated with the status state variable.
@@ -28384,7 +27227,6 @@ class SvSwitch(StateVariable):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             The terminal phase at which the connection is applied. If missing, the
@@ -28405,7 +27247,6 @@ class SvSwitch(StateVariable):
         'maxOccurs': '1',
         'inverse': 'Switch.SvSwitch',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             The switch associated with the switch state.
@@ -28442,7 +27283,6 @@ class SvTapStep(StateVariable):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             The floating point tap position. This is not the tap ratio, but rather
@@ -28466,7 +27306,6 @@ class SvTapStep(StateVariable):
         'maxOccurs': '1',
         'inverse': 'TapChanger.SvTapStep',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             The tap changer associated with the tap step state.
@@ -28485,7 +27324,6 @@ class SvTapStep(StateVariable):
         'maxOccurs': '1',
         'inverse': 'TapChanger.SvTapStep',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': False,
         'docstring':
             '''
             The tap changer associated with the tap step state.
@@ -28522,7 +27360,6 @@ class SvVoltage(StateVariable):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             The voltage angle of the topological node complex voltage with respect
@@ -28542,7 +27379,6 @@ class SvVoltage(StateVariable):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             If specified the voltage is the line to ground voltage of the individual
@@ -28562,7 +27398,6 @@ class SvVoltage(StateVariable):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             The voltage magnitude at the topological node.
@@ -28581,7 +27416,6 @@ class SvVoltage(StateVariable):
         'maxOccurs': '1',
         'inverse': 'ConnectivityNode.SvVoltage',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             '''
@@ -28598,7 +27432,6 @@ class SvVoltage(StateVariable):
         'maxOccurs': '1',
         'inverse': 'TopologicalNode.SvVoltage',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             The topological node associated with the voltage state.
@@ -28617,7 +27450,6 @@ class SvVoltage(StateVariable):
         'maxOccurs': '1',
         'inverse': 'ConnectivityNode.SvVoltage',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': False,
         'docstring':
             '''
             '''
@@ -28651,7 +27483,6 @@ class SvEstVoltage(SvVoltage):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             '''
@@ -28667,7 +27498,6 @@ class SvEstVoltage(SvVoltage):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             '''
@@ -28684,7 +27514,6 @@ class SvEstVoltage(SvVoltage):
         'maxOccurs': '1',
         'inverse': 'Estimate.SvEstVoltages',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             '''
@@ -28718,7 +27547,6 @@ class TapChangerTablePoint(Identity):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             The voltage at the tap step divided by rated voltage of the transformer
@@ -28744,7 +27572,6 @@ class TapChangerTablePoint(Identity):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             The tap step.
@@ -28762,7 +27589,6 @@ class TapChangerTablePoint(Identity):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             The magnetizing branch susceptance deviation in percent of nominal value.
@@ -28790,7 +27616,6 @@ class TapChangerTablePoint(Identity):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             The magnetizing branch conductance deviation in percent of nominal value.
@@ -28818,7 +27643,6 @@ class TapChangerTablePoint(Identity):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             The resistance deviation in percent of nominal value. The actual reactance
@@ -28846,7 +27670,6 @@ class TapChangerTablePoint(Identity):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             The series reactance deviation in percent of nominal value. The actual
@@ -28892,7 +27715,6 @@ class PhaseTapChangerTablePoint(TapChangerTablePoint):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             The angle difference in degrees. A positive value indicates a positive
@@ -28915,7 +27737,6 @@ class PhaseTapChangerTablePoint(TapChangerTablePoint):
         'maxOccurs': '1',
         'inverse': 'PhaseTapChangerTable.PhaseTapChangerTablePoint',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             The table of this point.
@@ -28953,7 +27774,6 @@ class RatioTapChangerTablePoint(TapChangerTablePoint):
         'maxOccurs': '1',
         'inverse': 'RatioTapChangerTable.RatioTapChangerTablePoint',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             Table of this point.
@@ -28989,7 +27809,6 @@ class WirePhaseInfo(Identity):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             Numbering for wires on a WireSpacingInfo. Neutrals should be numbered last.
@@ -29008,7 +27827,6 @@ class WirePhaseInfo(Identity):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             '''
@@ -29025,7 +27843,6 @@ class WirePhaseInfo(Identity):
         'maxOccurs': '1',
         'inverse': 'WireAssemblyInfo.WirePhaseInfo',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             '''
@@ -29042,7 +27859,6 @@ class WirePhaseInfo(Identity):
         'maxOccurs': '1',
         'inverse': 'WireInfo.WirePhaseInfo',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             '''
@@ -29059,7 +27875,6 @@ class WirePhaseInfo(Identity):
         'maxOccurs': '1',
         'inverse': 'WirePosition.WirePhaseInfo',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             '''
@@ -34304,7 +33119,6 @@ class DateInterval(Identity):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             End date of this interval.
@@ -34322,7 +33136,6 @@ class DateInterval(Identity):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             Start date of this interval.
@@ -34359,7 +33172,6 @@ class DateTimeInterval(Identity):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             End date and time of this interval.
@@ -34377,7 +33189,6 @@ class DateTimeInterval(Identity):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             Start date and time of this interval.
@@ -34413,7 +33224,6 @@ class DecimalQuantity(Identity):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             '''
@@ -34429,7 +33239,6 @@ class DecimalQuantity(Identity):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             Quantity with decimal value and associated unit or currency information.
@@ -34447,7 +33256,6 @@ class DecimalQuantity(Identity):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             '''
@@ -34463,7 +33271,6 @@ class DecimalQuantity(Identity):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             '''
@@ -34500,7 +33307,6 @@ class FaultImpedance(Identity):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             The resistance of the fault between phases and ground.
@@ -34518,7 +33324,6 @@ class FaultImpedance(Identity):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             The resistance of the fault between phases.
@@ -34536,7 +33341,6 @@ class FaultImpedance(Identity):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             The reactance of the fault between phases and ground.
@@ -34554,7 +33358,6 @@ class FaultImpedance(Identity):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             The reactance of the fault between phases.
@@ -34591,7 +33394,6 @@ class FloatQuantity(Identity):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             '''
@@ -34607,7 +33409,6 @@ class FloatQuantity(Identity):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             '''
@@ -34623,7 +33424,6 @@ class FloatQuantity(Identity):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             '''
@@ -34658,7 +33458,6 @@ class IntegerQuantity(Identity):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             '''
@@ -34674,7 +33473,6 @@ class IntegerQuantity(Identity):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             '''
@@ -34690,7 +33488,6 @@ class IntegerQuantity(Identity):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             '''
@@ -34725,7 +33522,6 @@ class MonthDayInterval(Identity):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             End time of this interval.
@@ -34743,7 +33539,6 @@ class MonthDayInterval(Identity):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             Start time of this interval.
@@ -34781,7 +33576,6 @@ class StringQuantity(Identity):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             '''
@@ -34797,7 +33591,6 @@ class StringQuantity(Identity):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             '''
@@ -34813,7 +33606,6 @@ class StringQuantity(Identity):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             '''
@@ -34848,7 +33640,6 @@ class TimeInterval(Identity):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             End time of this interval.
@@ -34866,7 +33657,6 @@ class TimeInterval(Identity):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': True,
         'docstring':
             '''
             Start time of this interval.
