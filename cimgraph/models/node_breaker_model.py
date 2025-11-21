@@ -2,15 +2,9 @@ from __future__ import annotations
 
 import logging
 from collections import defaultdict
-<<<<<<< HEAD
 from dataclasses import dataclass, field
 
 import cimgraph.data_profile.cim18gad as cim
-=======
-
-from dataclasses import dataclass, field
-
->>>>>>> ff82aee (force rdf directionality)
 from cimgraph.databases import get_cim_profile
 from cimgraph.models.distributed_area import DistributedArea
 from cimgraph.models.graph_model import GraphModel
@@ -48,7 +42,6 @@ class NodeBreakerModel(GraphModel):
     distributed_areas: list[DistributedArea] | None = None
 
     def __post_init__(self):
-<<<<<<< HEAD
         self.incrementals['forwardDifferences'] = defaultdict(dict)
         self.incrementals['reverseDifferences'] = defaultdict(dict)
         cim_profile, cim_module = get_cim_profile()
@@ -57,12 +50,6 @@ class NodeBreakerModel(GraphModel):
         if not self.graph:
             self.graph = defaultdict(lambda: defaultdict(dict))
 
-=======
-        cim_profile, cim_module = get_cim_profile()
-        self.cim:cim = cim_module
-        self.incrementals['forwardDifferences'] = defaultdict(dict)
-        self.incrementals['reverseDifferences'] = defaultdict(dict)
->>>>>>> ff82aee (force rdf directionality)
         if self.connection is not None:    # Check if connection has been specified
             if self.distributed:    # Check if distributed flag is true
                 # Build distributed network model
@@ -73,13 +60,6 @@ class NodeBreakerModel(GraphModel):
         else:    # Log error thant no connection was specified
             _log.error('A ConnectionInterface must be specified')
 
-<<<<<<< HEAD
-=======
-    def initialize_centralized_model(self, container: object) -> None:
-        self.graph = self.connection.create_new_graph(container)
-        if container is not None:
-            self.add_to_graph(container)
->>>>>>> ff82aee (force rdf directionality)
 
 
     def __initialize_centralized_model(self) -> None:
