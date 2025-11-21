@@ -83,7 +83,8 @@ def write_json_ld(network: GraphModel, filename: str, namespaces: dict=None, ind
                         if edge_class in network.connection.cim.__all__:
                             if edge is not None and edge != []:
                                 if type(edge.__class__) is enum.EnumMeta:
-                                    dump[f'{ns_prefix}:{parent.__name__}.{attribute}'] = f'{attr_ns}:{str(edge)}'
+                                    enum_ns = edge.__namespace__
+                                    dump[f'{ns_prefix}:{parent.__name__}.{attribute}'] = f'{enum_ns}:{str(edge)}'
                                 elif type(edge) is str or type(edge) is bool or type(edge) is float:
                                     dump[f'{ns_prefix}:{parent.__name__}.{attribute}'] = str(edge)
                                 elif type(edge) is list:

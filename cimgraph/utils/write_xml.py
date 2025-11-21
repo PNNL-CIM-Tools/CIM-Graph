@@ -101,7 +101,8 @@ def write_xml(network: GraphModel, filename: str, namespaces: dict=None,
                         if edge_class in network.connection.cim.__all__:
                             if edge is not None and edge != []:
                                 if type(edge.__class__) is enum.EnumMeta:
-                                    resource = f'rdf:resource="{attr_ns}{str(edge)}"'
+                                    enum_ns = edge.__namespace__
+                                    resource = f'rdf:resource="{enum_ns}{str(edge)}"'
                                     row = f'  <{ns_prefix}:{parent.__name__}.{attribute} {resource}/>\n'
                                     f.write(row)
                                 elif isinstance(edge, CIMUnit):
