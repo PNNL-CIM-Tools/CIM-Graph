@@ -144,18 +144,21 @@ class XMLFile(ConnectionInterface):
             cim_class = getattr(self.cim, class_name)
             if 'about' in str(element.attrib.keys()):
                 uri = element.get(f'{self.rdf}about')
+                uri = uri.split(':')[-1]  # Extract UUID from the full URI
+                
             elif 'ID' in str(element.attrib.keys()):
                 uri = element.get(f'{self.rdf}ID')
+                uri = uri.split(':')[-1]  # Extract UUID from the full URI
+                
             else:
                 _log.error(f'Unable to parse {element}. Elements must be rdf:ID or rdf:about')
-
-            uri = uri.split(':')[-1]  # Extract UUID from the full URI
+                uri = element
             # try:
             #     identifier = UUID(uri.strip('_').lower())
             # except:
             #     _log.warning(f'Unable to parse URI. Check the IEC61970-301 serialization')
 
-
+            # _log.warning(f'{cim_class.__name__}, {uri}')
             obj = self.create_object(self.graph, cim_class, uri)
             self.class_index[obj.uri()] = cim_class
             if uri != obj.uri():
@@ -211,7 +214,7 @@ class XMLFile(ConnectionInterface):
                 try:
                     edge_class = self.class_index[edge_uri]
                 except:
-                    _log.log(self.log_level, f'Object with ID {edge_uri} not found')
+                    _log.log(self.log_level, f'Object with ID {edge_uri} not found for {sub_tag}')
                     return None
 
                 value = self.create_edge(self.graph, cim_class, identifier, sub_tag, edge_class, edge_uri)
