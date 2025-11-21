@@ -28,6 +28,7 @@ class BlazegraphConnection(ConnectionInterface):
         self.sparql_obj = None
         self.url = get_url()
         self.namespace = get_namespace()
+        self.namespaces = [self.namespace, 'http://epri.com/gmdm/2025#']
         self.iec61970_301 = get_iec61970_301()
         self.cim_profile, self.cim = get_cim_profile()
 
@@ -355,12 +356,13 @@ class BlazegraphConnection(ConnectionInterface):
         for result in query_output['results']['bindings']:
 
             if result['attribute']['value'] != 'type':  #skip 'type' and other single attributes
-
+                parsed = False
                 uri = result['identifier']['value']  #get mRID
                 identifier = UUID(uri.strip('_').lower())
                 attribute = result['attribute']['value']  #edge attribute
                 value = result['value']['value']  #get edge value
                 if 'edge' in result:  #check if association
+                    parsed = True
                     edge = json.loads(result['edge']['value'])
                     edge_mRID = edge['@id']
                     edge_class = edge['@type']
@@ -377,20 +379,22 @@ class BlazegraphConnection(ConnectionInterface):
                     else:
                         self.create_value(graph, cim_class, identifier, attribute, value)
 
-                elif self.namespace in value:  #check if enumeration
-                    enum_text = value.split(self.namespace)[1]
-                    enum_text = enum_text.split('>')[0]
-                    enum_class = enum_text.split('.')[0]
-                    enum_value = enum_text.split('.')[1]
+                for namespace in self.namespaces:
+                    if namespace in value :  #check if enumeration
+                        parsed = True
+                        enum_text = value.split(namespace)[1]
+                        enum_text = enum_text.split('>')[0]
+                        enum_class = enum_text.split('.')[0]
+                        enum_value = enum_text.split('.')[1]
 
-                    if enum_class in self.cim.__all__:  # if enumeration
-                        edge_enum = getattr(self.cim, enum_class)(enum_value)
-                        new_edges.append(edge_enum)
-                        association = self.check_attribute(
-                            cim_class, attribute)
-                        if association is not None:
-                            setattr(graph[cim_class][identifier], association, edge_enum)
-                else:
+                        if enum_class in self.cim.__all__:  # if enumeration
+                            edge_enum = getattr(self.cim, enum_class)(enum_value)
+                            new_edges.append(edge_enum)
+                            association = self.check_attribute(
+                                cim_class, attribute)
+                            if association is not None:
+                                setattr(graph[cim_class][identifier], association, edge_enum)
+                if not parsed:
                     association = self.check_attribute(cim_class, attribute)
                     if association is not None:
                         new_edges.append(value)
