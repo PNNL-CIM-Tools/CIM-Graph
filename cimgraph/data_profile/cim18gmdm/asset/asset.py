@@ -26,6 +26,48 @@ BASE_URI = 'http://www.ucaiug.org/gmdm/asset#'
 ONTOLOGY_URI = 'http://cim.ucaiug.io/CIM101/draft#'
 
 @dataclass(repr=False)
+class Identity(Identity):
+    '''
+    This is a root class to provide common identification for all classes.
+    IdentifiedObject and any class to be exchanged with RDF XML now inherits
+    from Identity. mRID is superseded by Identity.identifier, which is typed
+    to be a UUID.
+    '''
+
+    identifier: Optional[str] = field(
+        default=None,
+        metadata={
+        'type': 'Attribute',
+        'minOccurs': '1',
+        'maxOccurs': '1',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
+        'serialize': True,
+        'docstring':
+            '''
+            A universally unique object identifier. Used to uniquely identify persistent
+            objects between CIM messages.
+            '''
+        
+        })
+    '''
+    A universally unique object identifier. Used to uniquely identify persistent
+    objects between CIM messages.
+    '''
+    
+    @property
+    def __namespace__(self):
+        return 'http://cim.ucaiug.io/CIM101/draft#'
+    @property
+    def __package__(self):
+        return 'Core'
+    @property
+    def __minOccurs__(self):
+        return '0'
+    @property
+    def __maxOccurs__(self):
+        return 'unbounded'
+    
+@dataclass(repr=False)
 class IdentifiedObject(Identity):
     '''
     This is a class that provides common identification for all classes needing
