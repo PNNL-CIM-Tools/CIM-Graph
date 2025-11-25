@@ -34,11 +34,6 @@ class IdentifiedObject(Identity):
     identification and naming attributes.
     '''
 
-    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
-    __package__ = 'Core'
-    __minOccurs__ = '0'
-    __maxOccurs__ = 'unbounded'
-
     description: Optional[str] = field(
         default=None,
         metadata={
@@ -101,11 +96,6 @@ class ACDCTerminal(IdentifiedObject):
     nodes.
     '''
 
-    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
-    __package__ = 'Core'
-    __minOccurs__ = '0'
-    __maxOccurs__ = 'unbounded'
-
     sequenceNumber: Optional[int] = field(
         default=None,
         metadata={
@@ -151,30 +141,7 @@ class Terminal(ACDCTerminal):
     are connected at physical connection points called connectivity nodes.
     '''
 
-    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
-    __package__ = 'Core'
-    __minOccurs__ = '0'
-    __maxOccurs__ = 'unbounded'
-
-    TransformerEnd: list[TransformerEnd] = field(
-        default_factory=list,
-        metadata={
-        'type': 'Association',
-        'minOccurs': '0',
-        'maxOccurs': 'unbounded',
-        'inverse': 'TransformerEnd.Terminal',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'docstring':
-            '''
-            All transformer ends connected at this terminal.
-            '''
-
-        })
-    '''
-    All transformer ends connected at this terminal.
-    '''
-
-    UsagePoint: Optional[UsagePoint] = field(
+    ConductingEquipment: Optional[ConductingEquipment] = field(
         default=None,
         metadata={
         'type': 'ByReference',
@@ -579,11 +546,6 @@ class EquipmentContainer(ConnectivityNodeContainer):
     A modelling construct to provide a root class for containing equipment.
     '''
 
-    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
-    __package__ = 'Core'
-    __minOccurs__ = '0'
-    __maxOccurs__ = 'unbounded'
-
     AdditionalGroupedEquipment: list[Equipment] = field(
         default_factory=list,
         metadata={
@@ -738,11 +700,6 @@ class Substation(EquipmentContainer):
     or modifying its characteristics.
     '''
 
-    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
-    __package__ = 'Core'
-    __minOccurs__ = '0'
-    __maxOccurs__ = 'unbounded'
-
     NormalEnergizedFeeder: list[Feeder] = field(
         default_factory=list,
         metadata={
@@ -804,11 +761,6 @@ class VoltageLevel(EquipmentContainer):
     control, regulation and protection devices as well as assemblies of all
     these.
     '''
-
-    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
-    __package__ = 'Core'
-    __minOccurs__ = '0'
-    __maxOccurs__ = 'unbounded'
 
     BaseVoltage: Optional[BaseVoltage] = field(
         default=None,
@@ -931,11 +883,6 @@ class Equipment(PowerSystemResource):
     '''
     The parts of a power system that are physical devices, electronic or mechanical.
     '''
-
-    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
-    __package__ = 'Core'
-    __minOccurs__ = '0'
-    __maxOccurs__ = 'unbounded'
 
     aggregate: Optional[bool] = field(
         default=None,
@@ -1189,11 +1136,6 @@ class ACLineSegment(Conductor):
     </ul>
     '''
 
-    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
-    __package__ = 'Wires'
-    __minOccurs__ = '0'
-    __maxOccurs__ = 'unbounded'
-
     ACLineSegmentPhases: list[ACLineSegmentPhase] = field(
         default_factory=list,
         metadata={
@@ -1438,11 +1380,6 @@ class PowerElectronicsConnection(RegulatingCondEq):
     A connection to the AC network for energy production or consumption that
     uses power electronics rather than rotating machines.
     '''
-
-    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
-    __package__ = 'Wires'
-    __minOccurs__ = '0'
-    __maxOccurs__ = 'unbounded'
 
     PowerElectronicsConnectionPhase: list[PowerElectronicsConnectionPhase] = field(
         default_factory=list,
@@ -2263,11 +2200,6 @@ class SwitchPhase(PowerSystemResource):
     per phase.
     '''
 
-    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
-    __package__ = 'Wires'
-    __minOccurs__ = '0'
-    __maxOccurs__ = 'unbounded'
-
     normalOpen: Optional[bool] = field(
         default=None,
         metadata={
@@ -3029,157 +2961,6 @@ class PhaseCode(Enum):
     def __maxOccurs__(self):
         return 'unbounded'
     
-@stereotype(CIMStereotype.enumeration)
-class PhaseCode(Enum):
-    '''
-    Enumeration of phase identifiers used to designate the combination of phase
-    and/or neutral conductors at a terminal, measurement or equipment modelled
-    as a single-line balanced equivalent.
-    This is an unordered enumeration of phase identifiers. Allows designation
-    of phases for both transmission and distribution equipment, circuits and
-    loads. The enumeration, by itself, does not describe how the phases are
-    connected together or connected to ground. Ground is not explicitly denoted
-    as a phase.
-    Residential and small commercial loads are often served from single-phase,
-    or split-phase, secondary circuits. For the example of s12N, phases 1 and
-    2 refer to hot wires that are 180 degrees out of phase, while N refers
-    to the neutral wire. Through single-phase transformer connections, these
-    secondary circuits may be served from one or two of the primary phases
-    A, B, and C. For three-phase loads, use the A, B, C phase codes instead
-    of s12N.
-    The integer values are from IEC 61968-9 to support revenue metering applications.
-    '''
-
-    A = 'A'
-    '''
-    Phase A.
-    '''
-
-    AB = 'AB'
-    '''
-    Phases A and B.
-    '''
-
-    ABC = 'ABC'
-    '''
-    Phases A, B, and C.
-    '''
-
-    ABCN = 'ABCN'
-    '''
-    Phases A, B, C, and N.
-    '''
-
-    ABN = 'ABN'
-    '''
-    Phases A, B, and neutral.
-    '''
-
-    AC = 'AC'
-    '''
-    Phases A and C.
-    '''
-
-    ACN = 'ACN'
-    '''
-    Phases A, C and neutral.
-    '''
-
-    AN = 'AN'
-    '''
-    Phases A and neutral.
-    '''
-
-    B = 'B'
-    '''
-    Phase B.
-    '''
-
-    BC = 'BC'
-    '''
-    Phases B and C.
-    '''
-
-    BCN = 'BCN'
-    '''
-    Phases B, C, and neutral.
-    '''
-
-    BN = 'BN'
-    '''
-    Phases B and neutral.
-    '''
-
-    C = 'C'
-    '''
-    Phase C.
-    '''
-
-    CN = 'CN'
-    '''
-    Phases C and neutral.
-    '''
-
-    N = 'N'
-    '''
-    Neutral phase.
-    '''
-
-    X = 'X'
-    '''
-    Unknown non-neutral phase.
-    '''
-
-    XN = 'XN'
-    '''
-    Unknown non-neutral phase plus neutral.
-    '''
-
-    XY = 'XY'
-    '''
-    Two unknown non-neutral phases.
-    '''
-
-    XYN = 'XYN'
-    '''
-    Two unknown non-neutral phases plus neutral.
-    '''
-
-    none = 'none'
-    '''
-    No phases specified.
-    '''
-
-    s1 = 's1'
-    '''
-    Secondary phase 1.
-    '''
-
-    s12 = 's12'
-    '''
-    Secondary phase 1 and 2.
-    '''
-
-    s12N = 's12N'
-    '''
-    Secondary phases 1, 2, and neutral.
-    '''
-
-    s1N = 's1N'
-    '''
-    Secondary phase 1 and neutral.
-    '''
-
-    s2 = 's2'
-    '''
-    Secondary phase 2.
-    '''
-
-    s2N = 's2N'
-    '''
-    Secondary phase 2 and neutral.
-    '''
-
 @stereotype(CIMStereotype.enumeration)
 @stereotype(CIMStereotype.Attribute)
 class PhaseShuntConnectionKind(Enum):

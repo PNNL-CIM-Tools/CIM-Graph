@@ -8,7 +8,6 @@ from dataclasses import dataclass, field, is_dataclass
 from functools import cache
 from uuid import UUID
 
-
 _log = logging.getLogger(__name__)
 
 Graph = dict[type, dict[UUID, object]]

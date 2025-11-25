@@ -392,13 +392,3 @@ class GraphModel():
             write_json_ld(filtered_graph, output_file)
         else:
             raise ValueError(f"Unsupported format: {format}")
-
-
-    # -------------------------------------------------------------------------
-    # Profile-based Validation
-    # -------------------------------------------------------------------------
-    
-    # def validate(self):
-    #     for cim_class in self.graph:
-    #         field = 
-    #         for object in 

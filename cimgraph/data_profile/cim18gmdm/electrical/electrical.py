@@ -32,11 +32,6 @@ class IdentifiedObject(Identity):
     identification and naming attributes.
     '''
 
-    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
-    __package__ = 'Core'
-    __minOccurs__ = '0'
-    __maxOccurs__ = 'unbounded'
-
     description: Optional[str] = field(
         default=None,
         metadata={
@@ -120,11 +115,6 @@ class Terminal(ACDCTerminal):
     An AC electrical connection point to a piece of conducting equipment. Terminals
     are connected at physical connection points called connectivity nodes.
     '''
-
-    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
-    __package__ = 'Core'
-    __minOccurs__ = '0'
-    __maxOccurs__ = 'unbounded'
 
     RegulatingControl: list[RegulatingControl] = field(
         default_factory=list,
@@ -701,11 +691,6 @@ class ACLineSegmentPhase(PowerSystemResource):
     the neutral).
     '''
 
-    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
-    __package__ = 'Wires'
-    __minOccurs__ = '0'
-    __maxOccurs__ = 'unbounded'
-
     sequenceNumber: Optional[int] = field(
         default=None,
         metadata={
@@ -821,11 +806,6 @@ class Conductor(ConductingEquipment):
     in the power system.
     '''
 
-    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
-    __package__ = 'Wires'
-    __minOccurs__ = '0'
-    __maxOccurs__ = 'unbounded'
-
     length: Optional[ float | Length ] = field(
         default=None,
         metadata={
@@ -905,11 +885,6 @@ class ACLineSegment(Conductor):
     </ul>
     '''
 
-    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
-    __package__ = 'Wires'
-    __minOccurs__ = '0'
-    __maxOccurs__ = 'unbounded'
-
     PerLengthImpedance: Optional[PerLengthImpedance] = field(
         default=None,
         metadata={
@@ -972,11 +947,6 @@ class EnergyConsumer(EnergyConnection):
     or if LoadResponseCharacteristic.exponentModel is set to False.
     '''
 
-    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
-    __package__ = 'Wires'
-    __minOccurs__ = '0'
-    __maxOccurs__ = 'unbounded'
-
     LoadResponse: Optional[LoadResponseCharacteristic] = field(
         default=None,
         metadata={
@@ -1019,11 +989,6 @@ class EnergySource(EnergyConnection):
     A generic equivalent for an energy supplier on a transmission or distribution
     voltage level.
     '''
-
-    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
-    __package__ = 'Wires'
-    __minOccurs__ = '0'
-    __maxOccurs__ = 'unbounded'
 
     nominalVoltage: Optional[ float | Voltage ] = field(
         default=None,
@@ -1098,11 +1063,6 @@ class RegulatingCondEq(EnergyConnection):
     A type of conducting equipment that can regulate a quantity (i.e. voltage
     or flow) at a specific point in the network.
     '''
-
-    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
-    __package__ = 'Wires'
-    __minOccurs__ = '0'
-    __maxOccurs__ = 'unbounded'
 
     RegulatingControl: Optional[RegulatingControl] = field(
         default=None,
@@ -1418,11 +1378,6 @@ class ShuntCompensator(RegulatingCondEq):
     is a reactor. ShuntCompensator is a single terminal device. Ground is implied.
     '''
 
-    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
-    __package__ = 'Wires'
-    __minOccurs__ = '0'
-    __maxOccurs__ = 'unbounded'
-
     maximumSections: Optional[int] = field(
         default=None,
         metadata={
@@ -1526,11 +1481,6 @@ class LinearShuntCompensator(ShuntCompensator):
     A linear shunt compensator has banks or sections with equal admittance
     values.
     '''
-
-    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
-    __package__ = 'Wires'
-    __minOccurs__ = '0'
-    __maxOccurs__ = 'unbounded'
 
     bPerSection: Optional[ float | Susceptance ] = field(
         default=None,
@@ -1682,11 +1632,6 @@ class Switch(ConductingEquipment):
     and .locked are relevant.
     '''
 
-    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
-    __package__ = 'Wires'
-    __minOccurs__ = '0'
-    __maxOccurs__ = 'unbounded'
-
     ratedCurrent: Optional[ float | CurrentFlow ] = field(
         default=None,
         metadata={
@@ -1778,11 +1723,6 @@ class ProtectedSwitch(Switch):
     '''
     A ProtectedSwitch is a switching device that can be operated by ProtectionEquipment.
     '''
-
-    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
-    __package__ = 'Wires'
-    __minOccurs__ = '0'
-    __maxOccurs__ = 'unbounded'
 
     breakingCapacity: Optional[ float | CurrentFlow ] = field(
         default=None,
@@ -1920,10 +1860,6 @@ class GeneratingUnit(Equipment):
     the set.
     '''
 
-    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
-    __package__ = 'Production'
-    __minOccurs__ = '0'
-    __maxOccurs__ = 'unbounded'
     ratedGrossMaxP: Optional[ float | ActivePower ] = field(
         default=None,
         metadata={
@@ -1986,11 +1922,6 @@ class ThermalGeneratingUnit(GeneratingUnit):
     turbine, or diesel engine.
     '''
 
-    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
-    __package__ = 'Production'
-    __minOccurs__ = '0'
-    __maxOccurs__ = '1'
-
     FossilFuels: list[FossilFuel] = field(
         default_factory=list,
         metadata={
@@ -2031,11 +1962,6 @@ class WindGeneratingUnit(GeneratingUnit):
     machine. May be used to represent a single turbine or an aggregation.
     '''
 
-    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
-    __package__ = 'Production'
-    __minOccurs__ = '0'
-    __maxOccurs__ = 'unbounded'
-
     windGenUnitType: Optional[ WindGenUnitKind ] = field(
         default=None,
         metadata={
@@ -2073,11 +1999,6 @@ class PowerElectronicsUnit(Equipment):
     A generating unit or battery or aggregation that connects to the AC network
     using power electronics rather than rotating machines.
     '''
-
-    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
-    __package__ = 'Production'
-    __minOccurs__ = '0'
-    __maxOccurs__ = 'unbounded'
 
     maxP: Optional[ float | ActivePower ] = field(
         default=None,
@@ -2158,11 +2079,6 @@ class BatteryUnit(PowerElectronicsUnit):
     An electrochemical energy storage device.
     '''
 
-    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
-    __package__ = 'Production'
-    __minOccurs__ = '0'
-    __maxOccurs__ = 'unbounded'
-
     ratedE: Optional[ float | RealEnergy ] = field(
         default=None,
         metadata={
@@ -2224,11 +2140,6 @@ class PowerElectronicsThermalUnit(PowerElectronicsUnit):
     A thermal unit that is connected via an inverter such as through a back-to-back
     converter
     '''
-
-    __namespace__ = 'http://epri.com/gmdm/2025#'
-    __package__ = 'ProductionEXT'
-    __minOccurs__ = '0'
-    __maxOccurs__ = 'unbounded'
 
     FossilFuels: Optional[FossilFuel] = field(
         default=None,
@@ -2819,11 +2730,6 @@ class ShuntCompensatorPhase(PowerSystemResource):
     be different per phase.
     '''
 
-    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
-    __package__ = 'Wires'
-    __minOccurs__ = '0'
-    __maxOccurs__ = 'unbounded'
-
     maximumSections: Optional[int] = field(
         default=None,
         metadata={
@@ -2883,11 +2789,6 @@ class LinearShuntCompensatorPhase(ShuntCompensatorPhase):
     A per phase linear shunt compensator has banks or sections with equal admittance
     values.
     '''
-
-    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
-    __package__ = 'Wires'
-    __minOccurs__ = '0'
-    __maxOccurs__ = 'unbounded'
 
     bPerSection: Optional[ float | Susceptance ] = field(
         default=None,
@@ -2949,11 +2850,6 @@ class TapChanger(PowerSystemResource):
     '''
     Mechanism for changing transformer winding tap positions.
     '''
-
-    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
-    __package__ = 'Wires'
-    __minOccurs__ = '0'
-    __maxOccurs__ = 'unbounded'
 
     controlEnabled: Optional[bool] = field(
         default=None,
@@ -3241,11 +3137,6 @@ class RatioTapChanger(TapChanger):
     shift from the winding where the tap is located to the other winding (for
     a two-winding transformer).
     '''
-
-    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
-    __package__ = 'Wires'
-    __minOccurs__ = '0'
-    __maxOccurs__ = 'unbounded'
 
     stepVoltageIncrement: Optional[ float | PerCent ] = field(
         default=None,
@@ -3581,11 +3472,6 @@ class PowerTransformerEnd(TransformerEnd):
     EquipmentContainer (Substation, VoltageLevel, etc).
     '''
 
-    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
-    __package__ = 'Wires'
-    __minOccurs__ = '0'
-    __maxOccurs__ = 'unbounded'
-
     phaseAngleClock: Optional[int] = field(
         default=None,
         metadata={
@@ -3895,11 +3781,6 @@ class PhaseImpedanceData(Identity):
     matrix is populated with the row and column method. That is, the column
     attribute is always less than or equal to the row attribute.
     '''
-
-    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
-    __package__ = 'Wires'
-    __minOccurs__ = '0'
-    __maxOccurs__ = 'unbounded'
 
     column: Optional[int] = field(
         default=None,

@@ -32,11 +32,6 @@ class IdentifiedObject(Identity):
     identification and naming attributes.
     '''
 
-    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
-    __package__ = 'Core'
-    __minOccurs__ = '0'
-    __maxOccurs__ = 'unbounded'
-
     description: Optional[str] = field(
         default=None,
         metadata={
@@ -487,36 +482,6 @@ class PowerTransformerInfo(AssetInfo):
     
 @stereotype(CIMStereotype.Concrete)
 @dataclass(repr=False)
-class PowerTransformerInfo(AssetInfo):
-    '''
-    Set of power transformer data, from an equipment library.
-    '''
-
-    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
-    __package__ = 'AssetInfo'
-    __minOccurs__ = '0'
-    __maxOccurs__ = 'unbounded'
-
-    TransformerTankInfos: list[TransformerTankInfo] = field(
-        default_factory=list,
-        metadata={
-        'type': 'Association',
-        'minOccurs': '1',
-        'maxOccurs': 'unbounded',
-        'inverse': 'TransformerTankInfo.PowerTransformerInfo',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'docstring':
-            '''
-            Data for all the tanks described by this power transformer data.
-            '''
-
-        })
-    '''
-    Data for all the tanks described by this power transformer data.
-    '''
-
-@stereotype(CIMStereotype.Concrete)
-@dataclass(repr=False)
 class TransformerTankInfo(AssetInfo):
     '''
     Set of transformer tank data, from an equipment library.
@@ -661,11 +626,6 @@ class TransformerTank(Equipment):
     and 3-phase transformers.
     '''
 
-    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
-    __package__ = 'Wires'
-    __minOccurs__ = '0'
-    __maxOccurs__ = 'unbounded'
-
     TransformerTankInfo: Optional[TransformerTankInfo] = field(
         default=None,
         metadata={
@@ -702,11 +662,6 @@ class TransformerTest(IdentifiedObject):
     Test result for transformer ends, such as short-circuit, open-circuit (excitation)
     or no-load test.
     '''
-
-    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
-    __package__ = 'AssetInfo'
-    __minOccurs__ = '0'
-    __maxOccurs__ = 'unbounded'
 
     basePower: Optional[ float | ApparentPower ] = field(
         default=None,
@@ -768,11 +723,6 @@ class NoLoadTest(TransformerTest):
     winding. The excitation may be positive sequence or zero sequence. The
     test may be repeated at different voltages to measure saturation.
     '''
-
-    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
-    __package__ = 'AssetInfo'
-    __minOccurs__ = '0'
-    __maxOccurs__ = 'unbounded'
 
     energisedEndVoltage: Optional[ float | Voltage ] = field(
         default=None,
@@ -910,11 +860,6 @@ class ShortCircuitTest(TransformerTest):
     can be a positive sequence (the default) or a zero sequence. There shall
     be at least one grounded winding.
     '''
-
-    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
-    __package__ = 'AssetInfo'
-    __minOccurs__ = '0'
-    __maxOccurs__ = 'unbounded'
 
     energisedEndStep: Optional[int] = field(
         default=None,
@@ -1227,22 +1172,6 @@ class CurrentFlow(CIMUnit):
     def __maxOccurs__(self):
         return '1'
     
-
-@stereotype(CIMStereotype.CIMDatatype)
-@dataclass(repr=False)
-class CurrentFlow(CIMUnit):
-    '''
-    Electrical current with sign convention: positive flow is out of the conducting
-    equipment into the connectivity node. Can be both AC and DC.
-    '''
-
-    value: float = field(default=None)
-    multiplier: UnitMultiplier = field(default=UnitMultiplier.none)
-    @property # read-only
-    def unit(self):
-        return UnitSymbol.A
-    def __init__(self, value, input_unit: str='A', input_multiplier: str=None):
-        self.__pint__(value=value, input_unit=input_unit, input_multiplier=input_multiplier)
 
 @stereotype(CIMStereotype.CIMDatatype)
 @dataclass(repr=False)

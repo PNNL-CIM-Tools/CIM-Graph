@@ -43,11 +43,6 @@ class AdditionalAddressInformation(Identity):
     Address information which cannot be specified through the other attributes.
     '''
 
-    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
-    __package__ = 'Common'
-    __minOccurs__ = '0'
-    __maxOccurs__ = 'unbounded'
-
     addressInformationText: Optional[str] = field(
         default=None,
         metadata={
@@ -340,11 +335,6 @@ class AgentRoleQualification(Identity):
     (typically a member of a crew) to be qualified to perform a task.
     '''
 
-    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
-    __package__ = 'Common'
-    __minOccurs__ = '0'
-    __maxOccurs__ = 'unbounded'
-
     otherQualificationKind: Optional[str] = field(
         default=None,
         metadata={
@@ -570,11 +560,6 @@ class BranchGroupTerminal(Identity):
     A specific directed terminal flow for a branch group.
     '''
 
-    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
-    __package__ = 'OperationalLimits'
-    __minOccurs__ = '0'
-    __maxOccurs__ = 'unbounded'
-
     positiveFlowIn: Optional[bool] = field(
         default=None,
         metadata={
@@ -656,11 +641,6 @@ class BusinessHours(Identity):
     If the value for the closes attribute is less than the value for the opens
     attribute then the hour range is assumed to span over the next day.
     '''
-
-    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
-    __package__ = 'Common'
-    __minOccurs__ = '0'
-    __maxOccurs__ = 'unbounded'
 
     mRID: Optional[str] = field(
         default=None,
@@ -819,11 +799,6 @@ class ComModuleInfo(Identity):
     '''
     Communication module asset informtion
     '''
-
-    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
-    __package__ = 'AssetInfo'
-    __minOccurs__ = '0'
-    __maxOccurs__ = 'unbounded'
 
     direction: Optional[ComDirectionKind] = field(
         default=None,
@@ -1159,11 +1134,6 @@ class CrewMembership(Identity):
     to a specific crew.
     '''
 
-    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
-    __package__ = 'Common'
-    __minOccurs__ = '0'
-    __maxOccurs__ = 'unbounded'
-
     effectiveDateTimeInterval: Optional[DateTimeInterval] = field(
         default=None,
         metadata={
@@ -1403,7 +1373,7 @@ class CurrentDroopOverride(Identity):
     SSSCController: Optional[SSSCController] = field(
         default=None,
         metadata={
-        'type': 'Attribute',
+        'type': 'Association',
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'SSSCController.CurrentDroopOverride',
@@ -1426,11 +1396,6 @@ class CurveData(Identity):
     class is discouraged if a more specific class can be used to specify the
     X and Y axis values along with their specific data types.
     '''
-
-    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
-    __package__ = 'Core'
-    __minOccurs__ = '0'
-    __maxOccurs__ = 'unbounded'
 
     xvalue: Optional[float] = field(
         default=None,
@@ -1542,6 +1507,69 @@ class CurveData(Identity):
         return 'unbounded'
     
 @dataclass(repr=False)
+class DiagramObjectGluePoint(Identity):
+    '''
+    This is used for grouping diagram object points from different diagram
+    objects that are considered to be glued together in a diagram even if they
+    are not at the exact same coordinates.
+    '''
+
+    @property
+    def __namespace__(self):
+        return 'http://cim.ucaiug.io/CIM101/draft#'
+    @property
+    def __package__(self):
+        return 'DiagramLayoutEXT'
+    @property
+    def __minOccurs__(self):
+        return '0'
+    @property
+    def __maxOccurs__(self):
+        return 'unbounded'
+    
+    DiagramObjectPoints: list[DiagramObjectPoint] = field(
+        default_factory=list,
+        metadata={
+        'type': 'Association',
+        'minOccurs': '0',
+        'maxOccurs': 'unbounded',
+        'inverse': 'DiagramObjectPoint.DiagramObjectGluePoint',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
+        'serialize': False,
+        'docstring':
+            '''
+            A diagram object glue point is associated with 2 or more object points
+            that are considered to be 'glued' together.
+            '''
+        
+        })
+    '''
+    A diagram object glue point is associated with 2 or more object points
+    that are considered to be 'glued' together.
+    '''
+    
+    DiagramObjectPoints: list[DiagramObjectPoint] = field(
+        default_factory=list,
+        metadata={
+        'type': 'Association',
+        'minOccurs': '0',
+        'maxOccurs': 'unbounded',
+        'inverse': 'DiagramObjectPoint.DiagramObjectGluePoint',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
+        'serialize': False,
+        'docstring':
+            '''
+            A diagram object glue point is associated with 2 or more object points
+            that are considered to be 'glued' together.
+            '''
+        
+        })
+    '''
+    A diagram object glue point is associated with 2 or more object points
+    that are considered to be 'glued' together.
+    '''
+    
+@dataclass(repr=False)
 class DiagramObjectGluePoint1(Identity):
     '''
     This is used for grouping diagram object points from different diagram
@@ -1563,17 +1591,147 @@ class DiagramObjectGluePoint1(Identity):
         return 'unbounded'
     
 @dataclass(repr=False)
-class DiagramObjectPoint1(Identity):
+class DiagramObjectPoint(Identity):
     '''
     A point in a given space defined by 3 coordinates and associated to a diagram
     object. The coordinates may be positive or negative as the origin does
     not have to be in the corner of a diagram.
     '''
 
-    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
-    __package__ = 'DiagramLayout'
-    __minOccurs__ = '0'
-    __maxOccurs__ = 'unbounded'
+    sequenceNumber: Optional[int] = field(
+        default=None,
+        metadata={
+        'type': 'Attribute',
+        'minOccurs': '0',
+        'maxOccurs': '1',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
+        'serialize': True,
+        'docstring':
+            '''
+            The sequence position of the point, used for defining the order of points
+            for diagram objects acting as a polyline or polygon with more than one
+            point. The attribute shall be a positive value.
+            '''
+        
+        })
+    '''
+    The sequence position of the point, used for defining the order of
+    points for diagram objects acting as a polyline or polygon with more
+    than one point. The attribute shall be a positive value.
+    '''
+    
+    xPosition: Optional[float] = field(
+        default=None,
+        metadata={
+        'type': 'Attribute',
+        'minOccurs': '0',
+        'maxOccurs': '1',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
+        'serialize': True,
+        'docstring':
+            '''
+            The X coordinate of this point.
+            '''
+        
+        })
+    '''
+    The X coordinate of this point.
+    '''
+    
+    yPosition: Optional[float] = field(
+        default=None,
+        metadata={
+        'type': 'Attribute',
+        'minOccurs': '0',
+        'maxOccurs': '1',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
+        'serialize': True,
+        'docstring':
+            '''
+            The Y coordinate of this point.
+            '''
+        
+        })
+    '''
+    The Y coordinate of this point.
+    '''
+    
+    zPosition: Optional[float] = field(
+        default=None,
+        metadata={
+        'type': 'Attribute',
+        'minOccurs': '0',
+        'maxOccurs': '1',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
+        'serialize': True,
+        'docstring':
+            '''
+            The Z coordinate of this point.
+            '''
+        
+        })
+    '''
+    The Z coordinate of this point.
+    '''
+    
+    DiagramObject: Optional[DiagramObject] = field(
+        default=None,
+        metadata={
+        'type': 'Attribute',
+        'minOccurs': '0',
+        'maxOccurs': '1',
+        'inverse': 'DiagramObject.DiagramObjectPoints',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
+        'serialize': True,
+        'docstring':
+            '''
+            The diagram object with which the points are associated.
+            '''
+        
+        })
+    '''
+    The diagram object with which the points are associated.
+    '''
+    
+    DiagramObjectGluePoint: Optional[DiagramObjectGluePoint] = field(
+        default=None,
+        metadata={
+        'type': 'Attribute',
+        'minOccurs': '0',
+        'maxOccurs': '1',
+        'inverse': 'DiagramObjectGluePoint.DiagramObjectPoints',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
+        'serialize': True,
+        'docstring':
+            '''
+            The 'glue' point to which this point is associated.
+            '''
+        
+        })
+    '''
+    The 'glue' point to which this point is associated.
+    '''
+    
+    @property
+    def __namespace__(self):
+        return 'http://cim.ucaiug.io/CIM101/draft#'
+    @property
+    def __package__(self):
+        return 'DiagramLayout'
+    @property
+    def __minOccurs__(self):
+        return '0'
+    @property
+    def __maxOccurs__(self):
+        return 'unbounded'
+    
+@dataclass(repr=False)
+class DiagramObjectPoint1(Identity):
+    '''
+    A point in a given space defined by 3 coordinates and associated to a diagram
+    object. The coordinates may be positive or negative as the origin does
+    not have to be in the corner of a diagram.
+    '''
 
     sequenceNumber: Optional[int] = field(
         default=None,
@@ -1728,11 +1886,6 @@ class Approver(DocumentRole):
     Person who accepted/signed or rejected the document.
     '''
 
-    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
-    __package__ = 'Common'
-    __minOccurs__ = '0'
-    __maxOccurs__ = 'unbounded'
-
     Documents: list[Document] = field(
         default_factory=list,
         metadata={
@@ -1771,11 +1924,6 @@ class Author(DocumentRole):
     '''
     Person who created document or activity record.
     '''
-
-    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
-    __package__ = 'Common'
-    __minOccurs__ = '0'
-    __maxOccurs__ = 'unbounded'
 
     ActivityRecords: list[ActivityRecord] = field(
         default_factory=list,
@@ -1835,11 +1983,6 @@ class Editor(DocumentRole):
     Person who modified the document.
     '''
 
-    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
-    __package__ = 'Common'
-    __minOccurs__ = '0'
-    __maxOccurs__ = 'unbounded'
-
     Documents: list[Document] = field(
         default_factory=list,
         metadata={
@@ -1879,11 +2022,6 @@ class Issuer(DocumentRole):
     Person who issued the document and is responsible for its content.
     '''
 
-    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
-    __package__ = 'Common'
-    __minOccurs__ = '0'
-    __maxOccurs__ = 'unbounded'
-
     Documents: list[Document] = field(
         default_factory=list,
         metadata={
@@ -1921,11 +2059,6 @@ class FieldDispatchStep(Identity):
     '''
     Details of the step in the field dispatch history.
     '''
-
-    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
-    __package__ = 'Common'
-    __minOccurs__ = '0'
-    __maxOccurs__ = 'unbounded'
 
     occurredDateTime: Optional[str] = field(
         default=None,
@@ -2040,11 +2173,6 @@ class Fuel(Identity):
     A class indicating the origin of the fuel used at the related object.
     '''
 
-    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
-    __package__ = 'MarketCommon'
-    __minOccurs__ = '0'
-    __maxOccurs__ = 'unbounded'
-
     fuel: Optional[str] = field(
         default=None,
         metadata={
@@ -2104,16 +2232,49 @@ class Fuel(Identity):
         return 'unbounded'
     
 @dataclass(repr=False)
+class GenDistributionFactor(Identity):
+    '''
+    This class models the generation distribution factors. This class needs
+    to be used along with the AggregatedPnode and the IndividualPnode to show
+    the distribution of each individual party.
+    '''
+
+    @property
+    def __namespace__(self):
+        return 'http://cim.ucaiug.io/CIM101/draft#'
+    @property
+    def __package__(self):
+        return 'ExternalInputs'
+    @property
+    def __minOccurs__(self):
+        return '0'
+    @property
+    def __maxOccurs__(self):
+        return 'unbounded'
+    
+    IndividualPnode: Optional[IndividualPnode] = field(
+        default=None,
+        metadata={
+        'type': 'Association',
+        'minOccurs': '0',
+        'maxOccurs': '1',
+        'inverse': 'IndividualPnode.GenDistributionFactor',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
+        'serialize': False,
+        'docstring':
+            '''
+            '''
+        
+        })
+    '''
+    '''
+    
+@dataclass(repr=False)
 class GeometricElement(Identity):
     '''
     Exists solely as the parent of the separate geometry types (Point, Line,
     Circle, Polygon) in order to create an xsd Choice between the types.
     '''
-
-    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
-    __package__ = 'Common'
-    __minOccurs__ = '0'
-    __maxOccurs__ = 'unbounded'
 
     Geometry: Optional[Geometry] = field(
         default=None,
@@ -2154,11 +2315,6 @@ class Circle(GeometricElement):
     If an inner radius is specified, the area within the inner radius is to
     be excluded from the area within the outer radius, forming a ring shape.
     '''
-
-    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
-    __package__ = 'Common'
-    __minOccurs__ = '0'
-    __maxOccurs__ = 'unbounded'
 
     innerRadius: Optional[ float | Length ] = field(
         default=None,
@@ -2245,11 +2401,6 @@ class LineElement(GeometricElement):
     coordinates.
     '''
 
-    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
-    __package__ = 'Common'
-    __minOccurs__ = '0'
-    __maxOccurs__ = 'unbounded'
-
     Polygon: Optional[Polygon] = field(
         default=None,
         metadata={
@@ -2294,11 +2445,6 @@ class Polygon(GeometricElement):
     the outer boundary. Each line description within a polygon (both outer
     and inner boundaries) must contain at least 4 linear coordinates.
     '''
-
-    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
-    __package__ = 'Common'
-    __minOccurs__ = '0'
-    __maxOccurs__ = 'unbounded'
 
     OuterBoundaryLineElement: list[LineElement] = field(
         default_factory=list,
@@ -2383,246 +2529,6 @@ class GeometricElement1(Identity):
         return 'unbounded'
     
 @dataclass(repr=False)
-class Identity(Identity):
-    '''
-    This is a root class to provide common identification for all classes.
-    IdentifiedObject and any class to be exchanged with RDF XML now inherits
-    from Identity. mRID is superseded by Identity.identifier, which is typed
-    to be a UUID.
-    '''
-
-    identifier: Optional[str] = field(
-        default=None,
-        metadata={
-        'type': 'Attribute',
-        'minOccurs': '1',
-        'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': True,
-        'docstring':
-            '''
-            A universally unique object identifier. Used to uniquely identify persistent
-            objects between CIM messages.
-            '''
-        
-        })
-    '''
-    A universally unique object identifier. Used to uniquely identify persistent
-    objects between CIM messages.
-    '''
-    
-    @property
-    def __namespace__(self):
-        return 'http://cim.ucaiug.io/CIM101/draft#'
-    @property
-    def __package__(self):
-        return 'Core'
-    @property
-    def __minOccurs__(self):
-        return '0'
-    @property
-    def __maxOccurs__(self):
-        return 'unbounded'
-    
-@dataclass(repr=False)
-class DiagramObjectGluePoint(Identity):
-    '''
-    This is used for grouping diagram object points from different diagram
-    objects that are considered to be glued together in a diagram even if they
-    are not at the exact same coordinates.
-    '''
-
-    DiagramObjectPoints: list[DiagramObjectPoint] = field(
-        default_factory=list,
-        metadata={
-        'type': 'Association',
-        'minOccurs': '0',
-        'maxOccurs': 'unbounded',
-        'inverse': 'DiagramObjectPoint.DiagramObjectGluePoint',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
-        'docstring':
-            '''
-            A diagram object glue point is associated with 2 or more object points
-            that are considered to be 'glued' together.
-            '''
-        
-        })
-    '''
-    A diagram object glue point is associated with 2 or more object points
-    that are considered to be 'glued' together.
-    '''
-    
-    DiagramObjectPoints: list[DiagramObjectPoint] = field(
-        default_factory=list,
-        metadata={
-        'type': 'Association',
-        'minOccurs': '0',
-        'maxOccurs': 'unbounded',
-        'inverse': 'DiagramObjectPoint.DiagramObjectGluePoint',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
-        'docstring':
-            '''
-            A diagram object glue point is associated with 2 or more object points
-            that are considered to be 'glued' together.
-            '''
-        
-        })
-    '''
-    A diagram object glue point is associated with 2 or more object points
-    that are considered to be 'glued' together.
-    '''
-    
-    @property
-    def __namespace__(self):
-        return 'http://cim.ucaiug.io/CIM101/draft#'
-    @property
-    def __package__(self):
-        return 'DiagramLayoutEXT'
-    @property
-    def __minOccurs__(self):
-        return '0'
-    @property
-    def __maxOccurs__(self):
-        return 'unbounded'
-    
-@dataclass(repr=False)
-class DiagramObjectPoint(Identity):
-    '''
-    A point in a given space defined by 3 coordinates and associated to a diagram
-    object. The coordinates may be positive or negative as the origin does
-    not have to be in the corner of a diagram.
-    '''
-
-    sequenceNumber: Optional[int] = field(
-        default=None,
-        metadata={
-        'type': 'Attribute',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': True,
-        'docstring':
-            '''
-            The sequence position of the point, used for defining the order of points
-            for diagram objects acting as a polyline or polygon with more than one
-            point. The attribute shall be a positive value.
-            '''
-        
-        })
-    '''
-    The sequence position of the point, used for defining the order of
-    points for diagram objects acting as a polyline or polygon with more
-    than one point. The attribute shall be a positive value.
-    '''
-    
-    xPosition: Optional[float] = field(
-        default=None,
-        metadata={
-        'type': 'Attribute',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': True,
-        'docstring':
-            '''
-            The X coordinate of this point.
-            '''
-        
-        })
-    '''
-    The X coordinate of this point.
-    '''
-    
-    yPosition: Optional[float] = field(
-        default=None,
-        metadata={
-        'type': 'Attribute',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': True,
-        'docstring':
-            '''
-            The Y coordinate of this point.
-            '''
-        
-        })
-    '''
-    The Y coordinate of this point.
-    '''
-    
-    zPosition: Optional[float] = field(
-        default=None,
-        metadata={
-        'type': 'Attribute',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': True,
-        'docstring':
-            '''
-            The Z coordinate of this point.
-            '''
-        
-        })
-    '''
-    The Z coordinate of this point.
-    '''
-    
-    DiagramObject: Optional[DiagramObject] = field(
-        default=None,
-        metadata={
-        'type': 'Attribute',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'DiagramObject.DiagramObjectPoints',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': True,
-        'docstring':
-            '''
-            The diagram object with which the points are associated.
-            '''
-        
-        })
-    '''
-    The diagram object with which the points are associated.
-    '''
-    
-    DiagramObjectGluePoint: Optional[DiagramObjectGluePoint] = field(
-        default=None,
-        metadata={
-        'type': 'Attribute',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'DiagramObjectGluePoint.DiagramObjectPoints',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': True,
-        'docstring':
-            '''
-            The 'glue' point to which this point is associated.
-            '''
-        
-        })
-    '''
-    The 'glue' point to which this point is associated.
-    '''
-    
-    @property
-    def __namespace__(self):
-        return 'http://cim.ucaiug.io/CIM101/draft#'
-    @property
-    def __package__(self):
-        return 'DiagramLayout'
-    @property
-    def __minOccurs__(self):
-        return '0'
-    @property
-    def __maxOccurs__(self):
-        return 'unbounded'
-    
-@dataclass(repr=False)
 class IdentifiedObject(Identity):
     '''
     This is a class that provides common identification for all classes needing
@@ -2699,6 +2605,19 @@ class IdentifiedObject(Identity):
     the object.
     '''
     
+    @property
+    def __namespace__(self):
+        return 'http://cim.ucaiug.io/CIM101/draft#'
+    @property
+    def __package__(self):
+        return 'Core'
+    @property
+    def __minOccurs__(self):
+        return '0'
+    @property
+    def __maxOccurs__(self):
+        return 'unbounded'
+    
     DiagramObjects: list[DiagramObject] = field(
         default_factory=list,
         metadata={
@@ -2717,19 +2636,6 @@ class IdentifiedObject(Identity):
     '''
     The diagram objects that are associated with the domain object.
     '''
-    
-    @property
-    def __namespace__(self):
-        return 'http://cim.ucaiug.io/CIM101/draft#'
-    @property
-    def __package__(self):
-        return 'Core'
-    @property
-    def __minOccurs__(self):
-        return '0'
-    @property
-    def __maxOccurs__(self):
-        return 'unbounded'
     
 @dataclass(repr=False)
 class ACDCTerminal(IdentifiedObject):
@@ -2883,11 +2789,6 @@ class DCBaseTerminal(ACDCTerminal):
     The model requires that DC connections are distinct from AC connections.
     '''
 
-    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
-    __package__ = 'DC'
-    __minOccurs__ = '0'
-    __maxOccurs__ = 'unbounded'
-
     DCNode: Optional[DCNode] = field(
         default=None,
         metadata={
@@ -2951,11 +2852,6 @@ class ACDCConverterDCTerminal(DCBaseTerminal):
     restrict the connection with the AC side to AC/DC converter and so that
     no other DC conducting equipment can be connected to the AC side.
     '''
-
-    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
-    __package__ = 'DC'
-    __minOccurs__ = '0'
-    __maxOccurs__ = 'unbounded'
 
     polarity: Optional[DCPolarityKind] = field(
         default=None,
@@ -3566,11 +3462,6 @@ class MktTerminal(Terminal):
     Subclass of IEC61970:Core:Terminal.
     '''
 
-    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
-    __package__ = 'MarketOpCommon'
-    __minOccurs__ = '0'
-    __maxOccurs__ = 'unbounded'
-
     Flowgate: Optional[Flowgate] = field(
         default=None,
         metadata={
@@ -3607,11 +3498,6 @@ class ActivityRecord(IdentifiedObject):
     Records activity for an entity at a point in time; activity may be for
     an event that has already occurred or for a planned activity.
     '''
-
-    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
-    __package__ = 'Common'
-    __minOccurs__ = '0'
-    __maxOccurs__ = 'unbounded'
 
     createdDateTime: Optional[str] = field(
         default=None,
@@ -3767,11 +3653,6 @@ class ConfigurationEvent(ActivityRecord):
     Used to report details on creation, change or deletion of an entity or
     its configuration.
     '''
-
-    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
-    __package__ = 'Common'
-    __minOccurs__ = '0'
-    __maxOccurs__ = 'unbounded'
 
     effectiveDateTime: Optional[str] = field(
         default=None,
@@ -4571,7 +4452,7 @@ class PhysicalAddress(Address):
     Building: Optional[Building] = field(
         default=None,
         metadata={
-        'type': 'Attribute',
+        'type': 'Association',
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'Building.PhysicalAddress',
@@ -4588,7 +4469,7 @@ class PhysicalAddress(Address):
     Site: Optional[Site] = field(
         default=None,
         metadata={
-        'type': 'Attribute',
+        'type': 'Association',
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'Site.PhysicalAddress',
@@ -4622,11 +4503,6 @@ class PostalAddress(Address):
     A reliable, private, and secure mailing address housed within a postal
     facility.
     '''
-
-    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
-    __package__ = 'Common'
-    __minOccurs__ = '0'
-    __maxOccurs__ = 'unbounded'
 
     postOfficeBoxNumber: Optional[str] = field(
         default=None,
@@ -4668,11 +4544,6 @@ class AdjacentCASet(IdentifiedObject):
     '''
     Groups Adjacent Control Areas.
     '''
-
-    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
-    __package__ = 'ReferenceData'
-    __minOccurs__ = '0'
-    __maxOccurs__ = 'unbounded'
 
     RegisteredResource: list[RegisteredResource] = field(
         default_factory=list,
@@ -5052,7 +4923,7 @@ class Organisation(Agent):
     AgentCapability: Optional[AgentCapability] = field(
         default=None,
         metadata={
-        'type': 'Attribute',
+        'type': 'Association',
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'AgentCapability.CertificationOrganisation',
@@ -5322,11 +5193,6 @@ class RTO(MarketParticipant):
     Regional transmission operator.
     '''
 
-    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
-    __package__ = 'ReferenceData'
-    __minOccurs__ = '0'
-    __maxOccurs__ = 'unbounded'
-
     AggregateNode: list[AggregateNode] = field(
         default_factory=list,
         metadata={
@@ -5432,11 +5298,6 @@ class WorkOrganisation(Organisation):
     Identifies an organisation that will be responsible for planning, scheduling
     and performing the work.
     '''
-
-    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
-    __package__ = 'Work'
-    __minOccurs__ = '0'
-    __maxOccurs__ = 'unbounded'
 
     Crew: list[Crew] = field(
         default_factory=list,
@@ -5951,11 +5812,6 @@ class Customer(AgentRole):
     An Organisation or Person receiving services from service supplier.
     '''
 
-    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
-    __package__ = 'Customers'
-    __minOccurs__ = '0'
-    __maxOccurs__ = 'unbounded'
-
     ErpPersons: list[OldPerson] = field(
         default_factory=list,
         metadata={
@@ -6012,11 +5868,6 @@ class AssetOwner(OrganisationRole):
     Owner of the asset.
     '''
 
-    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
-    __package__ = 'Assets'
-    __minOccurs__ = '0'
-    __maxOccurs__ = 'unbounded'
-
     Ownerships: list[Ownership] = field(
         default_factory=list,
         metadata={
@@ -6055,11 +5906,6 @@ class MarketRole(OrganisationRole):
     The external intended behavior played by a party within the electricity
     market.
     '''
-
-    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
-    __package__ = 'MarketCommon'
-    __minOccurs__ = '0'
-    __maxOccurs__ = 'unbounded'
 
     type: Optional[str] = field(
         default=None,
@@ -6103,11 +5949,6 @@ class PersonRole(AgentRole):
     (e.g., contractor, crew member, etc).
     '''
 
-    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
-    __package__ = 'Common'
-    __minOccurs__ = '0'
-    __maxOccurs__ = 'unbounded'
-
     Person: Optional[Person] = field(
         default=None,
         metadata={
@@ -6145,11 +5986,6 @@ class CrewMember(PersonRole):
     '''
     Member of a crew.
     '''
-
-    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
-    __package__ = 'Common'
-    __minOccurs__ = '0'
-    __maxOccurs__ = 'unbounded'
 
     Crew: Optional[Crew] = field(
         default=None,
@@ -6385,11 +6221,6 @@ class AltGeneratingUnitMeas(IdentifiedObject):
     area specification.
     '''
 
-    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
-    __package__ = 'ControlArea'
-    __minOccurs__ = '0'
-    __maxOccurs__ = 'unbounded'
-
     priority: Optional[int] = field(
         default=None,
         metadata={
@@ -6468,11 +6299,6 @@ class AltTieMeas(IdentifiedObject):
     area specification.
     '''
 
-    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
-    __package__ = 'ControlArea'
-    __minOccurs__ = '0'
-    __maxOccurs__ = 'unbounded'
-
     priority: Optional[int] = field(
         default=None,
         metadata={
@@ -6548,11 +6374,6 @@ class Appointment(IdentifiedObject):
     Meeting time and location.
     '''
 
-    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
-    __package__ = 'Common'
-    __minOccurs__ = '0'
-    __maxOccurs__ = 'unbounded'
-
     callAhead: Optional[bool] = field(
         default=None,
         metadata={
@@ -6615,11 +6436,6 @@ class Asset(IdentifiedObject):
     IEC61970::Wires). Asset description places emphasis on the physical characteristics
     of the equipment fulfilling that role.
     '''
-
-    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
-    __package__ = 'Assets'
-    __minOccurs__ = '0'
-    __maxOccurs__ = 'unbounded'
 
     ConfigurationEvents: list[ConfigurationEvent] = field(
         default_factory=list,
@@ -6696,11 +6512,6 @@ class Bushing(Asset):
     '''
     Bushing asset.
     '''
-
-    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
-    __package__ = 'Assets'
-    __minOccurs__ = '0'
-    __maxOccurs__ = 'unbounded'
 
     Terminal: Optional[Terminal] = field(
         default=None,
@@ -7092,11 +6903,6 @@ class BundledCableInfo(ConductingAssetInfo):
     Bundling two or more conductors, at most one bare wire.
     '''
 
-    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
-    __package__ = 'AssetInfo'
-    __minOccurs__ = '0'
-    __maxOccurs__ = 'unbounded'
-
     additionalConductorCount: Optional[int] = field(
         default=None,
         metadata={
@@ -7243,11 +7049,6 @@ class BushingInfo(ConductingAssetInfo):
     '''
     Bushing datasheet information.
     '''
-
-    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
-    __package__ = 'AssetInfo'
-    __minOccurs__ = '0'
-    __maxOccurs__ = 'unbounded'
 
     c1Capacitance: Optional[ float | Capacitance ] = field(
         default=None,
@@ -7405,11 +7206,6 @@ class CapacitorCanInfo(ConductingAssetInfo):
     are connected in series to equal the energized voltage and connected in
     parallel groups to create the desired Mvar ratings.
     '''
-
-    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
-    __package__ = 'AssetInfo'
-    __minOccurs__ = '0'
-    __maxOccurs__ = 'unbounded'
 
     dielectricFluidType: Optional[str] = field(
         default=None,
@@ -7613,11 +7409,6 @@ class CompensatorInfo(ConductingAssetInfo):
     Compensator can be specialized to Capacitor or Reactor.
     '''
 
-    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
-    __package__ = 'AssetInfo'
-    __minOccurs__ = '0'
-    __maxOccurs__ = 'unbounded'
-
     maxPowerLoss: Optional[ float | ApparentPower ] = field(
         default=None,
         metadata={
@@ -7674,11 +7465,6 @@ class CapacitorInfo(CompensatorInfo):
     application.
     Also named as capacitor bank by IEC 60050
     '''
-
-    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
-    __package__ = 'AssetInfo'
-    __minOccurs__ = '0'
-    __maxOccurs__ = 'unbounded'
 
     maxAmbientTempRating: Optional[float] = field(
         default=None,
@@ -7853,11 +7639,6 @@ class ShuntCapacitorInfo(CapacitorInfo):
     and adding attributes for this specialization.
     '''
 
-    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
-    __package__ = 'AssetInfo'
-    __minOccurs__ = '0'
-    __maxOccurs__ = 'unbounded'
-
     connectionKind: Optional[CompensatorConnectionKind] = field(
         default=None,
         metadata={
@@ -7896,11 +7677,6 @@ class FACTSInfo(CompensatorInfo):
     Flexible alternating current transmission system
     High speed reactive compensation device
     '''
-
-    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
-    __package__ = 'AssetInfo'
-    __minOccurs__ = '0'
-    __maxOccurs__ = 'unbounded'
 
     appliedHarmonicFiltering: Optional[str] = field(
         default=None,
@@ -8104,11 +7880,6 @@ class SVCInfo(FACTSInfo):
     Static Var Compensator - High speed switched reactor and capacitor.
     '''
 
-    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
-    __package__ = 'AssetInfo'
-    __minOccurs__ = '0'
-    __maxOccurs__ = 'unbounded'
-
     tcrRating: Optional[ float | Reactance ] = field(
         default=None,
         metadata={
@@ -8193,11 +7964,6 @@ class SelfSaturatedReactorInfo(SVCInfo):
     This is pretty old technology.
     '''
 
-    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
-    __package__ = 'AssetInfo'
-    __minOccurs__ = '0'
-    __maxOccurs__ = 'unbounded'
-
     fixedSeriesCapacitance: Optional[ float | Reactance ] = field(
         default=None,
         metadata={
@@ -8257,11 +8023,6 @@ class StatComInfo(FACTSInfo):
     StatCom - Static Synchronous Compensator High speed continuous reactor
     and capacitor.
     '''
-
-    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
-    __package__ = 'AssetInfo'
-    __minOccurs__ = '0'
-    __maxOccurs__ = 'unbounded'
 
     maxNegativeMW: Optional[ float | ActivePower ] = field(
         default=None,
@@ -8381,11 +8142,6 @@ class ReactorInfo(CompensatorInfo):
     Common properties of reactor asset which can be used in a shunt or series
     application. Reactors may be dry type or oil filled.
     '''
-
-    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
-    __package__ = 'AssetInfo'
-    __minOccurs__ = '0'
-    __maxOccurs__ = 'unbounded'
 
     coreCoilsWeight: Optional[float] = field(
         default=None,
@@ -8709,11 +8465,6 @@ class ShuntReactorInfo(ReactorInfo):
     and adding attributes for this specialization.
     '''
 
-    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
-    __package__ = 'AssetInfo'
-    __minOccurs__ = '0'
-    __maxOccurs__ = 'unbounded'
-
     TapChangerInfo: Optional[TapChangerInfo] = field(
         default=None,
         metadata={
@@ -8749,11 +8500,6 @@ class CompositeSwitchInfo(ConductingAssetInfo):
     '''
     Properties of a composite switch.
     '''
-
-    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
-    __package__ = 'AssetInfo'
-    __minOccurs__ = '0'
-    __maxOccurs__ = 'unbounded'
 
     ganged: Optional[bool] = field(
         default=None,
@@ -8942,11 +8688,6 @@ class ConductorInfo(ConductingAssetInfo):
     current
     '''
 
-    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
-    __package__ = 'AssetInfo'
-    __minOccurs__ = '0'
-    __maxOccurs__ = 'unbounded'
-
     purpose: Optional[str] = field(
         default=None,
         metadata={
@@ -9134,11 +8875,6 @@ class AngleBusbarInfo(RigidBusbarInfo):
     L-shape bar with both legs of uniform thickness and same width
     '''
 
-    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
-    __package__ = 'AssetInfo'
-    __minOccurs__ = '0'
-    __maxOccurs__ = 'unbounded'
-
     crossSectionWidth: Optional[ float | Length ] = field(
         default=None,
         metadata={
@@ -9195,11 +8931,6 @@ class BarBusbarInfo(RigidBusbarInfo):
     One rectangular slab with uniform thickness and width
     '''
 
-    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
-    __package__ = 'AssetInfo'
-    __minOccurs__ = '0'
-    __maxOccurs__ = 'unbounded'
-
     crossSectionWidth: Optional[ float | Length ] = field(
         default=None,
         metadata={
@@ -9254,11 +8985,6 @@ class IntegralWebBusbarInfo(RigidBusbarInfo):
     '''
     I-beam type of conductor with the outer edges, turned into each other.
     '''
-
-    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
-    __package__ = 'AssetInfo'
-    __minOccurs__ = '0'
-    __maxOccurs__ = 'unbounded'
 
     crossSectionHeight: Optional[ float | Length ] = field(
         default=None,
@@ -9333,11 +9059,6 @@ class TubeBusbarInfo(RigidBusbarInfo):
     Tube busbar information
     '''
 
-    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
-    __package__ = 'AssetInfo'
-    __minOccurs__ = '0'
-    __maxOccurs__ = 'unbounded'
-
     outerDiameter: Optional[ float | Length ] = field(
         default=None,
         metadata={
@@ -9392,11 +9113,6 @@ class PipeBusbarInfo(TubeBusbarInfo):
     '''
     Pipe busbar information
     '''
-
-    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
-    __package__ = 'AssetInfo'
-    __minOccurs__ = '0'
-    __maxOccurs__ = 'unbounded'
 
     pipeType: Optional[PipeBusbarKind] = field(
         default=None,
@@ -9612,11 +9328,6 @@ class BareWireInfo(WireInfo):
     '''
     Bare wire data.
     '''
-
-    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
-    __package__ = 'AssetInfo'
-    __minOccurs__ = '0'
-    __maxOccurs__ = 'unbounded'
 
     wireConstructionKind: Optional[WireConstructionKind] = field(
         default=None,
@@ -9863,7 +9574,7 @@ class CableInfo(WireInfo):
     InsulationInfo: Optional[InsulationInfo] = field(
         default=None,
         metadata={
-        'type': 'Attribute',
+        'type': 'Association',
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'InsulationInfo.CableInfo',
@@ -9895,11 +9606,6 @@ class ConcentricNeutralCableInfo(CableInfo):
     '''
     Concentric neutral cable data.
     '''
-
-    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
-    __package__ = 'AssetInfo'
-    __minOccurs__ = '0'
-    __maxOccurs__ = 'unbounded'
 
     neutralStrandCount: Optional[int] = field(
         default=None,
@@ -10009,11 +9715,6 @@ class MultiCoreCableInfo(CableInfo):
     '''
     Multi core cable information
     '''
-
-    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
-    __package__ = 'AssetInfo'
-    __minOccurs__ = '0'
-    __maxOccurs__ = 'unbounded'
 
     hasNeutral: Optional[bool] = field(
         default=None,
@@ -10125,11 +9826,6 @@ class TapeShieldCableInfo(CableInfo):
     Tape shield cable data.
     '''
 
-    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
-    __package__ = 'AssetInfo'
-    __minOccurs__ = '0'
-    __maxOccurs__ = 'unbounded'
-
     tapeLap: Optional[ float | PerCent ] = field(
         default=None,
         metadata={
@@ -10189,11 +9885,6 @@ class OverheadWireInfo(WireInfo):
     Overhead wire data.
     '''
 
-    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
-    __package__ = 'AssetInfo'
-    __minOccurs__ = '0'
-    __maxOccurs__ = 'unbounded'
-
     wireConstructionKind: Optional[WireConstructionKind] = field(
         default=None,
         metadata={
@@ -10234,11 +9925,6 @@ class GridEdgeDeviceInfo(ConductingAssetInfo):
     systems), and electric vehicles (essentially a combination of storage and
     flexible load)
     '''
-
-    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
-    __package__ = 'AssetInfo'
-    __minOccurs__ = '0'
-    __maxOccurs__ = 'unbounded'
 
     apparentPowerMaximum: Optional[ float | ApparentPower ] = field(
         default=None,
@@ -10328,11 +10014,6 @@ class InverterInfo(GridEdgeDeviceInfo):
     sources (and/or sinks) into AC sources (and/or sinks) allowing for the
     power to be synchronized to the grid.
     '''
-
-    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
-    __package__ = 'AssetInfo'
-    __minOccurs__ = '0'
-    __maxOccurs__ = 'unbounded'
 
     operatingCategoryAbnormal: Optional[str] = field(
         default=None,
@@ -10597,11 +10278,6 @@ class GenerationInverterInfo(InverterInfo):
     wind, or other fuels.
     '''
 
-    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
-    __package__ = 'AssetInfo'
-    __minOccurs__ = '0'
-    __maxOccurs__ = 'unbounded'
-
     generationCategory: Optional[str] = field(
         default=None,
         metadata={
@@ -10653,11 +10329,6 @@ class StorageInverterInfo(InverterInfo):
     A Storage Inverter is an inverter backed by a device that is capable of
     storing and later discharging electric energy.
     '''
-
-    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
-    __package__ = 'AssetInfo'
-    __minOccurs__ = '0'
-    __maxOccurs__ = 'unbounded'
 
     storageCategory: Optional[str] = field(
         default=None,
@@ -10781,11 +10452,6 @@ class SwitchInfo(ConductingAssetInfo):
     '''
     Switch datasheet information.
     '''
-
-    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
-    __package__ = 'AssetInfo'
-    __minOccurs__ = '0'
-    __maxOccurs__ = 'unbounded'
 
     isSinglePhase: Optional[bool] = field(
         default=None,
@@ -11605,7 +11271,7 @@ class TransformerEndInfo(ConductingAssetInfo):
     CoreAdmittance: Optional[TransformerCoreAdmittance] = field(
         default=None,
         metadata={
-        'type': 'Attribute',
+        'type': 'Association',
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'TransformerCoreAdmittance.TransformerEndInfo',
@@ -11648,7 +11314,7 @@ class TransformerEndInfo(ConductingAssetInfo):
     TransformerStarImpedance: Optional[TransformerStarImpedance] = field(
         default=None,
         metadata={
-        'type': 'Attribute',
+        'type': 'Association',
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'TransformerStarImpedance.TransformerEndInfo',
@@ -11682,11 +11348,6 @@ class CoolingInfo(AssetInfo):
     '''
     Cooling information
     '''
-
-    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
-    __package__ = 'AssetInfo'
-    __minOccurs__ = '0'
-    __maxOccurs__ = 'unbounded'
 
     typeOfCooling: Optional[str] = field(
         default=None,
@@ -11856,7 +11517,7 @@ class InsulationInfo(AssetInfo):
     CableInfo: Optional[CableInfo] = field(
         default=None,
         metadata={
-        'type': 'ShadowExtension',
+        'type': 'Association',
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'CableInfo.InsulationInfo',
@@ -11908,11 +11569,6 @@ class InterrupterUnitInfo(AssetInfo):
     Interrupter datasheet information.
     '''
 
-    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
-    __package__ = 'AssetInfo'
-    __minOccurs__ = '0'
-    __maxOccurs__ = 'unbounded'
-
     interruptingMedium: Optional[InterruptingMediumKind] = field(
         default=None,
         metadata={
@@ -11950,11 +11606,6 @@ class OperatingMechanismInfo(AssetInfo):
     '''
     Breaker operating mechanism datasheet information.
     '''
-
-    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
-    __package__ = 'AssetInfo'
-    __minOccurs__ = '0'
-    __maxOccurs__ = 'unbounded'
 
     closeAmps: Optional[ float | CurrentFlow ] = field(
         default=None,
@@ -12139,11 +11790,6 @@ class PowerTransformerInfo(AssetInfo):
     Set of power transformer data, from an equipment library.
     '''
 
-    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
-    __package__ = 'AssetInfo'
-    __minOccurs__ = '0'
-    __maxOccurs__ = 'unbounded'
-
     TransformerTankInfos: list[TransformerTankInfo] = field(
         default_factory=list,
         metadata={
@@ -12182,11 +11828,6 @@ class ShuntCompensatorInfo(AssetInfo):
     Properties of shunt capacitor, shunt reactor or switchable bank of shunt
     capacitor or reactor assets.
     '''
-
-    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
-    __package__ = 'AssetInfo'
-    __minOccurs__ = '0'
-    __maxOccurs__ = 'unbounded'
 
     maxPowerLoss: Optional[ float | ApparentPower ] = field(
         default=None,
@@ -12296,11 +11937,6 @@ class SoundInfo(AssetInfo):
     Sound information
     '''
 
-    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
-    __package__ = 'AssetInfo'
-    __minOccurs__ = '0'
-    __maxOccurs__ = 'unbounded'
-
     minSoundPressureLevel: Optional[ float | Pressure ] = field(
         default=None,
         metadata={
@@ -12354,11 +11990,6 @@ class StructureInfo(AssetInfo):
     '''
     Structure information
     '''
-
-    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
-    __package__ = 'AssetInfo'
-    __minOccurs__ = '0'
-    __maxOccurs__ = 'unbounded'
 
     hasTemperatureMeasurement: Optional[bool] = field(
         default=None,
@@ -12472,11 +12103,6 @@ class MarineStructureInfo(StructureInfo):
     Marine structure information.
     '''
 
-    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
-    __package__ = 'AssetInfo'
-    __minOccurs__ = '0'
-    __maxOccurs__ = 'unbounded'
-
     kind: Optional[MarineStructureKind] = field(
         default=None,
         metadata={
@@ -12534,11 +12160,6 @@ class UndergroundStructureInfo(StructureInfo):
     Underground structure information
     '''
 
-    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
-    __package__ = 'AssetInfo'
-    __minOccurs__ = '0'
-    __maxOccurs__ = 'unbounded'
-
     kind: Optional[UndergroundStructureKind] = field(
         default=None,
         metadata={
@@ -12576,11 +12197,6 @@ class SurfaceTreatmentInfo(AssetInfo):
     '''
     Surface treatment information
     '''
-
-    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
-    __package__ = 'AssetInfo'
-    __minOccurs__ = '0'
-    __maxOccurs__ = 'unbounded'
 
     galvanizationThickness: Optional[ float | Length ] = field(
         default=None,
@@ -12653,11 +12269,6 @@ class ToolInfo(AssetInfo):
     '''
     Type of tool needed to perform a certain type of work.
     '''
-
-    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
-    __package__ = 'AssetInfo'
-    __minOccurs__ = '0'
-    __maxOccurs__ = 'unbounded'
 
     toolType: Optional[str] = field(
         default=None,
@@ -12770,11 +12381,6 @@ class VehicleInfo(AssetInfo):
     Type of vehicle needed to perform certain type of work.
     '''
 
-    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
-    __package__ = 'AssetInfo'
-    __minOccurs__ = '0'
-    __maxOccurs__ = 'unbounded'
-
     vehicleType: Optional[str] = field(
         default=None,
         metadata={
@@ -12811,11 +12417,6 @@ class WireAssemblyInfo(AssetInfo):
     '''
     Describes the construction of a multi-conductor wire.<-NOTE: period missing.
     '''
-
-    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
-    __package__ = 'AssetInfo'
-    __minOccurs__ = '0'
-    __maxOccurs__ = 'unbounded'
 
     PerLengthLineParameter: list[PerLengthLineParameter] = field(
         default_factory=list,
@@ -13080,7 +12681,7 @@ class AssetInfoComponent(IdentifiedObject):
     ParentAssetInfo: Optional[AssetInfo] = field(
         default=None,
         metadata={
-        'type': 'Attribute',
+        'type': 'Association',
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'AssetInfo.ChildAssetInfoComponent',
@@ -13131,11 +12732,6 @@ class AssetRequirement(IdentifiedObject):
     It is related to AssetInfo.
     '''
 
-    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
-    __package__ = 'Assets'
-    __minOccurs__ = '0'
-    __maxOccurs__ = 'unbounded'
-
     AssetInfo: list[AssetInfo] = field(
         default_factory=list,
         metadata={
@@ -13181,11 +12777,6 @@ class AsynchronousMachineDynamics(IdentifiedObject):
     </ol>
     '''
 
-    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
-    __package__ = 'AsynchronousMachineDynamics'
-    __minOccurs__ = '0'
-    __maxOccurs__ = 'unbounded'
-
     AsynchronousMachine: Optional[AsynchronousMachine] = field(
         default=None,
         metadata={
@@ -13227,11 +12818,6 @@ class AutonomousFunction(IdentifiedObject):
     can before decision making in an autonomous way. Example are robot or a
     bot program.
     '''
-
-    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
-    __package__ = 'Common'
-    __minOccurs__ = '0'
-    __maxOccurs__ = 'unbounded'
 
     AutonomousAgent: Optional[AutonomousAgent] = field(
         default=None,
@@ -13275,11 +12861,6 @@ class BaseFrequency(IdentifiedObject):
     instance.
     '''
 
-    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
-    __package__ = 'Core'
-    __minOccurs__ = '0'
-    __maxOccurs__ = 'unbounded'
-
     frequency: Optional[ float | Frequency ] = field(
         default=None,
         metadata={
@@ -13316,11 +12897,6 @@ class BasePower(IdentifiedObject):
     '''
     The BasePower class defines the base power used in the per unit calculations.
     '''
-
-    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
-    __package__ = 'Core'
-    __minOccurs__ = '0'
-    __maxOccurs__ = 'unbounded'
 
     basePower: Optional[ float | ApparentPower ] = field(
         default=None,
@@ -13479,11 +13055,6 @@ class BasicIntervalSchedule(IdentifiedObject):
     '''
     Schedule of values at points in time.
     '''
-
-    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
-    __package__ = 'Core'
-    __minOccurs__ = '0'
-    __maxOccurs__ = 'unbounded'
 
     startTime: Optional[str] = field(
         default=None,
@@ -13693,11 +13264,6 @@ class IrregularIntervalSchedule(BasicIntervalSchedule):
     The schedule has time points where the time between them varies.
     '''
 
-    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
-    __package__ = 'Core'
-    __minOccurs__ = '0'
-    __maxOccurs__ = 'unbounded'
-
     TimePoints: list[IrregularTimePoint] = field(
         default_factory=list,
         metadata={
@@ -13821,11 +13387,6 @@ class GenUnitOpSchedule(RegularIntervalSchedule):
     where required.
     '''
 
-    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
-    __package__ = 'Production'
-    __minOccurs__ = '0'
-    __maxOccurs__ = 'unbounded'
-
     GeneratingUnit: Optional[GeneratingUnit] = field(
         default=None,
         metadata={
@@ -13891,11 +13452,6 @@ class HydroPumpOpSchedule(RegularIntervalSchedule):
     to startup or shutdown) (2=must pump).
     '''
 
-    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
-    __package__ = 'Production'
-    __minOccurs__ = '0'
-    __maxOccurs__ = 'unbounded'
-
     HydroPump: Optional[HydroPump] = field(
         default=None,
         metadata={
@@ -13960,11 +13516,6 @@ class InflowForecast(RegularIntervalSchedule):
     increment.
     '''
 
-    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
-    __package__ = 'Production'
-    __minOccurs__ = '0'
-    __maxOccurs__ = 'unbounded'
-
     Reservoir: Optional[Reservoir] = field(
         default=None,
         metadata={
@@ -14003,11 +13554,6 @@ class SeasonDayTypeSchedule(RegularIntervalSchedule):
     A time schedule covering a 24 hour period, with curve data for a specific
     type of season and day.
     '''
-
-    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
-    __package__ = 'LoadModel'
-    __minOccurs__ = '0'
-    __maxOccurs__ = 'unbounded'
 
     DayType: Optional[DayType] = field(
         default=None,
@@ -14069,11 +13615,6 @@ class ConformLoadSchedule(SeasonDayTypeSchedule):
     day type and season.
     '''
 
-    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
-    __package__ = 'LoadModel'
-    __minOccurs__ = '0'
-    __maxOccurs__ = 'unbounded'
-
     ConformLoadGroup: Optional[ConformLoadGroup] = field(
         default=None,
         metadata={
@@ -14113,11 +13654,6 @@ class NonConformLoadSchedule(SeasonDayTypeSchedule):
     versus time (X-axis) for non-conforming loads, e.g., large industrial load
     or power station service (where modelled).
     '''
-
-    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
-    __package__ = 'LoadModel'
-    __minOccurs__ = '0'
-    __maxOccurs__ = 'unbounded'
 
     NonConformLoadGroup: Optional[NonConformLoadGroup] = field(
         default=None,
@@ -14216,11 +13752,6 @@ class SwitchSchedule(SeasonDayTypeSchedule):
     is open. If 1, the switch is closed.
     '''
 
-    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
-    __package__ = 'Wires'
-    __minOccurs__ = '0'
-    __maxOccurs__ = 'unbounded'
-
     Switch: Optional[Switch] = field(
         default=None,
         metadata={
@@ -14258,11 +13789,6 @@ class TapSchedule(SeasonDayTypeSchedule):
     '''
     A pre-established pattern over time for a tap step.
     '''
-
-    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
-    __package__ = 'Wires'
-    __minOccurs__ = '0'
-    __maxOccurs__ = 'unbounded'
 
     TapChanger: Optional[TapChanger] = field(
         default=None,
@@ -14302,11 +13828,6 @@ class SteamSendoutSchedule(RegularIntervalSchedule):
     '''
     The cogeneration plant's steam sendout schedule in volume per time unit.
     '''
-
-    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
-    __package__ = 'Production'
-    __minOccurs__ = '0'
-    __maxOccurs__ = 'unbounded'
 
     CogenerationPlant: Optional[CogenerationPlant] = field(
         default=None,
@@ -14611,7 +14132,7 @@ class Building(IdentifiedObject):
     PhysicalAddress: Optional[PhysicalAddress] = field(
         default=None,
         metadata={
-        'type': 'Attribute',
+        'type': 'Association',
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'PhysicalAddress.Building',
@@ -14753,7 +14274,7 @@ class BuildingSpace(IdentifiedObject):
     LocationAccess: Optional[LocationAccess] = field(
         default=None,
         metadata={
-        'type': 'Attribute',
+        'type': 'Association',
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'LocationAccess.BuildingSpace',
@@ -14897,11 +14418,6 @@ class CSCDynamics(IdentifiedObject):
     CSC function block whose behaviour is described by reference to a standard
     model <font color="#0f0f0f">or by definition of a user-defined model.</font>
     '''
-
-    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
-    __package__ = 'HVDCDynamics'
-    __minOccurs__ = '0'
-    __maxOccurs__ = 'unbounded'
 
     CSConverter: Optional[CsConverter] = field(
         default=None,
@@ -15313,11 +14829,6 @@ class CalculationMethodHierarchy(IdentifiedObject):
     The hierarchy of calculation methods used to derive this measurement.
     '''
 
-    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
-    __package__ = 'AssetMeas'
-    __minOccurs__ = '0'
-    __maxOccurs__ = 'unbounded'
-
     Measurement: list[Measurement] = field(
         default_factory=list,
         metadata={
@@ -15375,11 +14886,6 @@ class CatalogAssetType(IdentifiedObject):
     a Assets that may be used for planning, work or design purposes.
     '''
 
-    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
-    __package__ = 'Assets'
-    __minOccurs__ = '0'
-    __maxOccurs__ = 'unbounded'
-
     AssetInfo: Optional[AssetInfo] = field(
         default=None,
         metadata={
@@ -15420,11 +14926,6 @@ class ConnectivityNode(IdentifiedObject):
     Connectivity nodes are points where terminals of AC conducting equipment
     are connected together with zero impedance.
     '''
-
-    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
-    __package__ = 'Core'
-    __minOccurs__ = '0'
-    __maxOccurs__ = 'unbounded'
 
     ACPointOfCommonCoupling: Optional[ACPointOfCommonCoupling] = field(
         default=None,
@@ -15481,23 +14982,6 @@ class ConnectivityNode(IdentifiedObject):
         })
     '''
     Container of this connectivity node.
-    '''
-    
-    IndividualPnode: Optional[IndividualPnode] = field(
-        default=None,
-        metadata={
-        'type': 'Attribute',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'IndividualPnode.ConnectivityNode',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': True,
-        'docstring':
-            '''
-            '''
-        
-        })
-    '''
     '''
     
     TopologicalNode: Optional[TopologicalNode] = field(
@@ -15559,6 +15043,23 @@ class ConnectivityNode(IdentifiedObject):
     The boundary point associated with the connectivity node.
     '''
     
+    IndividualPnode: Optional[IndividualPnode] = field(
+        default=None,
+        metadata={
+        'type': 'Association',
+        'minOccurs': '0',
+        'maxOccurs': '1',
+        'inverse': 'IndividualPnode.ConnectivityNode',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
+        'serialize': False,
+        'docstring':
+            '''
+            '''
+        
+        })
+    '''
+    '''
+    
     RegisteredResource: list[RegisteredResource] = field(
         default_factory=list,
         metadata={
@@ -15614,11 +15115,6 @@ class MktConnectivityNode(ConnectivityNode):
     '''
     Subclass of IEC61970:Topology:ConnectivityNode.
     '''
-
-    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
-    __package__ = 'MarketOpCommon'
-    __minOccurs__ = '0'
-    __maxOccurs__ = 'unbounded'
 
     RTO: Optional[RTO] = field(
         default=None,
@@ -15757,11 +15253,6 @@ class ControlAreaPowerElectronicsUnit(IdentifiedObject):
     should be noted that only one instance within a control area should reference
     a specific power electronics unit.
     '''
-
-    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
-    __package__ = 'ControlArea'
-    __minOccurs__ = '0'
-    __maxOccurs__ = 'unbounded'
 
     ControlArea: Optional[ControlArea] = field(
         default=None,
@@ -15919,11 +15410,6 @@ class CoupledLineSegmentGroup(IdentifiedObject):
     the lines need to be included in network analysis.
     '''
 
-    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
-    __package__ = 'Wires'
-    __minOccurs__ = '0'
-    __maxOccurs__ = 'unbounded'
-
     LineSegmentCoupling: list[LineSegmentCoupling] = field(
         default_factory=list,
         metadata={
@@ -15964,11 +15450,6 @@ class CrewType(IdentifiedObject):
     trimming, switching, etc.
     '''
 
-    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
-    __package__ = 'Common'
-    __minOccurs__ = '0'
-    __maxOccurs__ = 'unbounded'
-
     Crews: list[Crew] = field(
         default_factory=list,
         metadata={
@@ -16007,11 +15488,6 @@ class CurrentDroopControlFunction(IdentifiedObject):
     Current droop control function is a function block that calculates the
     operating point of the controlled equipment to achieve the target current.
     '''
-
-    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
-    __package__ = 'FACTS'
-    __minOccurs__ = '0'
-    __maxOccurs__ = 'unbounded'
 
     droopCapacitive: Optional[float] = field(
         default=None,
@@ -16352,11 +15828,6 @@ class AmbientTemperatureDependencyCurve(Curve):
     variable (X-axis) and relative temperature dependent (Y-axis) variables.
     '''
 
-    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
-    __package__ = 'SecurityLimit'
-    __minOccurs__ = '0'
-    __maxOccurs__ = 'unbounded'
-
     OperationalLimitType: list[OperationalLimitType] = field(
         default_factory=list,
         metadata={
@@ -16400,11 +15871,6 @@ class BaseOverloadLimitCurve(Curve):
     - temporary overloading (TATL) limiting dependent (Y-axis) variables.
     '''
 
-    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
-    __package__ = 'SecurityLimit'
-    __minOccurs__ = '0'
-    __maxOccurs__ = 'unbounded'
-
     OperationalLimitType: list[OperationalLimitType] = field(
         default_factory=list,
         metadata={
@@ -16445,11 +15911,6 @@ class ConductorCharacteristicCurve(Curve):
     Class to associate damage curves to conductors or to their datasheets.
     '''
 
-    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
-    __package__ = 'Protection'
-    __minOccurs__ = '0'
-    __maxOccurs__ = 'unbounded'
-
     Conductor: list[Conductor] = field(
         default_factory=list,
         metadata={
@@ -16489,11 +15950,6 @@ class DurationOverloadLimitCurve(Curve):
     - the overload duration independent variable (X-axis), and
     - temporary overloading (TATL) limiting dependent (Y-axis) variables.
     '''
-
-    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
-    __package__ = 'SecurityLimit'
-    __minOccurs__ = '0'
-    __maxOccurs__ = 'unbounded'
 
     OperationalLimitType: list[OperationalLimitType] = field(
         default_factory=list,
@@ -16536,11 +15992,6 @@ class EmissionAccount(Curve):
     units. A unit may have zero or more emission accounts, and will typically
     have one for tracking usage and one for tracking credits.
     '''
-
-    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
-    __package__ = 'Production'
-    __minOccurs__ = '0'
-    __maxOccurs__ = 'unbounded'
 
     emissionType: Optional[EmissionType] = field(
         default=None,
@@ -16623,11 +16074,6 @@ class EmissionCurve(Curve):
     (Y-axis) and output active power (X-axis) for a given type of emission.
     This curve applies when only one type of fuel is being burned.
     '''
-
-    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
-    __package__ = 'Production'
-    __minOccurs__ = '0'
-    __maxOccurs__ = 'unbounded'
 
     isNetGrossP: Optional[bool] = field(
         default=None,
@@ -16726,11 +16172,6 @@ class FuelAllocationSchedule(Curve):
     The amount of fuel of a given type which is allocated for consumption over
     a specified period of time.
     '''
-
-    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
-    __package__ = 'Production'
-    __minOccurs__ = '0'
-    __maxOccurs__ = 'unbounded'
 
     fuelAllocationEndDate: Optional[str] = field(
         default=None,
@@ -16885,11 +16326,6 @@ class FuseCharacteristicCurve(Curve):
     This class represents the characteristic curve of fuse.
     '''
 
-    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
-    __package__ = 'Protection'
-    __minOccurs__ = '0'
-    __maxOccurs__ = 'unbounded'
-
     FuseMinimumMelt: Optional[Fuse] = field(
         default=None,
         metadata={
@@ -16949,11 +16385,6 @@ class GenUnitOpCostCurve(Curve):
     heat input and fuel costs. The operating cost curve for hydro units is
     derived from water flow rates and equivalent water costs.
     '''
-
-    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
-    __package__ = 'Production'
-    __minOccurs__ = '0'
-    __maxOccurs__ = 'unbounded'
 
     isNetGrossP: Optional[bool] = field(
         default=None,
@@ -17017,11 +16448,6 @@ class GrossToNetActivePowerCurve(Curve):
     should be treated as non-conforming bus loads. There may be more than one
     curve, depending on the auxiliary equipment that is in service.
     '''
-
-    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
-    __package__ = 'Production'
-    __minOccurs__ = '0'
-    __maxOccurs__ = 'unbounded'
 
     GeneratingUnit: Optional[GeneratingUnit] = field(
         default=None,
@@ -17300,11 +16726,6 @@ class HydroGeneratingEfficiencyCurve(Curve):
     X-axis.
     '''
 
-    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
-    __package__ = 'Production'
-    __minOccurs__ = '0'
-    __maxOccurs__ = 'unbounded'
-
     HydroGeneratingUnit: Optional[HydroGeneratingUnit] = field(
         default=None,
         metadata={
@@ -17423,11 +16844,6 @@ class LevelVsVolumeCurve(Curve):
     at the Y-axis and the reservoir level at the X-axis.
     '''
 
-    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
-    __package__ = 'Production'
-    __minOccurs__ = '0'
-    __maxOccurs__ = 'unbounded'
-
     Reservoir: Optional[Reservoir] = field(
         default=None,
         metadata={
@@ -17465,11 +16881,6 @@ class LossCurve(Curve):
     '''
     Represents the losses in the equipment due to operation position.
     '''
-
-    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
-    __package__ = 'FACTS'
-    __minOccurs__ = '0'
-    __maxOccurs__ = 'unbounded'
 
     FACTSEquipment: Optional[FACTSEquipment] = field(
         default=None,
@@ -17511,11 +16922,6 @@ class PenstockLossCurve(Curve):
     through the penstock (in cubic meters per second). One or more turbines
     may be connected to the same penstock.
     '''
-
-    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
-    __package__ = 'Production'
-    __minOccurs__ = '0'
-    __maxOccurs__ = 'unbounded'
 
     HydroGeneratingUnit: Optional[HydroGeneratingUnit] = field(
         default=None,
@@ -17711,11 +17117,6 @@ class RecoveryOverloadLimitCurve(Curve):
     The relation between the recovery time and an overload limit.
     '''
 
-    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
-    __package__ = 'SecurityLimit'
-    __minOccurs__ = '0'
-    __maxOccurs__ = 'unbounded'
-
     OperationalLimitType: list[OperationalLimitType] = field(
         default_factory=list,
         metadata={
@@ -17850,11 +17251,6 @@ class SolarRadiationDependencyCurve(Curve):
     - the solar radiation independent variable (X-axis), and
     - relative dependent (Y-axis) variables.
     '''
-
-    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
-    __package__ = 'SecurityLimit'
-    __minOccurs__ = '0'
-    __maxOccurs__ = 'unbounded'
 
     OperationalLimitType: list[OperationalLimitType] = field(
         default_factory=list,
@@ -18131,11 +17527,6 @@ class TailbayLossCurve(Curve):
     or river level.
     '''
 
-    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
-    __package__ = 'Production'
-    __minOccurs__ = '0'
-    __maxOccurs__ = 'unbounded'
-
     HydroGeneratingUnit: Optional[HydroGeneratingUnit] = field(
         default=None,
         metadata={
@@ -18271,11 +17662,6 @@ class VsCapabilityCurve(Curve):
     The P-Q capability curve for a voltage source converter, with P on X-axis
     and Qmin and Qmax on Y1-axis and Y2-axis.
     '''
-
-    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
-    __package__ = 'DC'
-    __minOccurs__ = '0'
-    __maxOccurs__ = 'unbounded'
 
     referenceVoltage: Optional[ float | Voltage ] = field(
         default=None,
@@ -18458,11 +17844,6 @@ class DCTopologicalIsland(IdentifiedObject):
     Only energised TopologicalNode-s shall be part of the topological island.
     '''
 
-    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
-    __package__ = 'DC'
-    __minOccurs__ = '0'
-    __maxOccurs__ = 'unbounded'
-
     DCTopologicalNodes: list[DCTopologicalNode] = field(
         default_factory=list,
         metadata={
@@ -18617,11 +17998,6 @@ class DERDynamics(IdentifiedObject):
     Parent class supporting relationships to DER dynamics models.
     '''
 
-    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
-    __package__ = 'IEEE1547Dynamics'
-    __minOccurs__ = '0'
-    __maxOccurs__ = 'unbounded'
-
     AsynchronousMachine: list[AsynchronousMachine] = field(
         default_factory=list,
         metadata={
@@ -18700,11 +18076,6 @@ class DayType(IdentifiedObject):
     weekend, or holidays.
     '''
 
-    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
-    __package__ = 'LoadModel'
-    __minOccurs__ = '0'
-    __maxOccurs__ = 'unbounded'
-
     SeasonDayTypeSchedules: list[SeasonDayTypeSchedule] = field(
         default_factory=list,
         metadata={
@@ -18743,11 +18114,6 @@ class DesignElement(IdentifiedObject):
     An element of a design that places a compatible unit or an asset at a specific
     design location
     '''
-
-    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
-    __package__ = 'Design'
-    __minOccurs__ = '0'
-    __maxOccurs__ = 'unbounded'
 
     PowerSystemResource: Optional[PowerSystemResource] = field(
         default=None,
@@ -19214,11 +18580,6 @@ class TextDiagramObject(DiagramObject):
     domain object.
     '''
 
-    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
-    __package__ = 'DiagramLayout'
-    __minOccurs__ = '0'
-    __maxOccurs__ = 'unbounded'
-
     text: Optional[str] = field(
         default=None,
         metadata={
@@ -19257,11 +18618,6 @@ class DiagramObjectStyle(IdentifiedObject):
     A diagram object style describes information such as line thickness, shape
     such as circle or rectangle etc, and colour.
     '''
-
-    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
-    __package__ = 'DiagramLayout'
-    __minOccurs__ = '0'
-    __maxOccurs__ = 'unbounded'
 
     StyledObjects: list[DiagramObject] = field(
         default_factory=list,
@@ -19302,11 +18658,6 @@ class DiagramStyle(IdentifiedObject):
     a diagram. A diagram style describes information such as schematic, geographic,
     etc.
     '''
-
-    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
-    __package__ = 'DiagramLayout'
-    __minOccurs__ = '0'
-    __maxOccurs__ = 'unbounded'
 
     Diagram: list[Diagram] = field(
         default_factory=list,
@@ -19716,11 +19067,6 @@ class Agreement(Document):
     via one or more service agreements.
     '''
 
-    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
-    __package__ = 'Common'
-    __minOccurs__ = '0'
-    __maxOccurs__ = 'unbounded'
-
     pricingOther: Optional[str] = field(
         default=None,
         metadata={
@@ -19822,11 +19168,6 @@ class ChargeType(Document):
     specific charges for invoicing purpose. Examples such as: Day Ahead Spinning
     Reserve Default Invoice Interest Charge, etc.
     '''
-
-    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
-    __package__ = 'MarketCommon'
-    __minOccurs__ = '0'
-    __maxOccurs__ = 'unbounded'
 
     chargeOrder: Optional[str] = field(
         default=None,
@@ -19994,11 +19335,6 @@ class DefaultBid(Document):
     GPI.
     '''
 
-    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
-    __package__ = 'ExternalInputs'
-    __minOccurs__ = '0'
-    __maxOccurs__ = 'unbounded'
-
     RegisteredResource: Optional[RegisteredResource] = field(
         default=None,
         metadata={
@@ -20035,11 +19371,6 @@ class Incident(Document):
     Description of a problem in the field that may be reported in a trouble
     ticket or come from another source. It may have to do with an outage.
     '''
-
-    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
-    __package__ = 'Operations'
-    __minOccurs__ = '0'
-    __maxOccurs__ = 'unbounded'
 
     Location: Optional[Location] = field(
         default=None,
@@ -20079,11 +19410,6 @@ class InspectionDataSet(Document):
     '''
     Documents the result of one inspection, for a given attribute of an asset.
     '''
-
-    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
-    __package__ = 'Assets'
-    __minOccurs__ = '0'
-    __maxOccurs__ = 'unbounded'
 
     AccordingToSchedules: list[ScheduledEventData] = field(
         default_factory=list,
@@ -20135,11 +19461,6 @@ class Outage(Document):
     - an operator-defined outage for what-if/contingency network analysis.
     '''
 
-    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
-    __package__ = 'Operations'
-    __minOccurs__ = '0'
-    __maxOccurs__ = 'unbounded'
-
     OutageIsolationEquipment: list[ConductingEquipment] = field(
         default_factory=list,
         metadata={
@@ -20174,11 +19495,6 @@ class Outage(Document):
 class PlannedOutage(Outage):
     '''
     '''
-
-    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
-    __package__ = 'Operations'
-    __minOccurs__ = '0'
-    __maxOccurs__ = 'unbounded'
 
     FieldDispatchHistory: Optional[FieldDispatchHistory] = field(
         default=None,
@@ -20229,11 +19545,6 @@ class UnplannedOutage(Outage):
     relationship to the crew and work.
     '''
 
-    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
-    __package__ = 'Operations'
-    __minOccurs__ = '0'
-    __maxOccurs__ = 'unbounded'
-
     FieldDispatchHistory: Optional[FieldDispatchHistory] = field(
         default=None,
         metadata={
@@ -20270,11 +19581,6 @@ class Skill(Document):
     Proficiency level of a craft, which is required to operate or maintain
     a particular type of asset and/or perform certain types of work.
     '''
-
-    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
-    __package__ = 'Common'
-    __minOccurs__ = '0'
-    __maxOccurs__ = 'unbounded'
 
     effectiveDateTime: Optional[str] = field(
         default=None,
@@ -20371,11 +19677,6 @@ class Specification(Document):
     supplied by manufacturers such as asset installation instructions, asset
     maintenance instructions, etc.
     '''
-
-    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
-    __package__ = 'InfAssets'
-    __minOccurs__ = '0'
-    __maxOccurs__ = 'unbounded'
 
     CoolingInfo: list[CoolingInfo] = field(
         default_factory=list,
@@ -20496,11 +19797,6 @@ class SwitchingOrder(Document):
     '''
     Transmits a switching plan to a crew in order for the plan to be executed.
     '''
-
-    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
-    __package__ = 'Operations'
-    __minOccurs__ = '0'
-    __maxOccurs__ = 'unbounded'
 
     Location: list[Location] = field(
         default_factory=list,
@@ -20869,11 +20165,6 @@ class TroubleOrder(Document):
     unplanned outage.
     '''
 
-    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
-    __package__ = 'Operations'
-    __minOccurs__ = '0'
-    __maxOccurs__ = 'unbounded'
-
     Location: Optional[Location] = field(
         default=None,
         metadata={
@@ -20909,11 +20200,6 @@ class WorkRequest(Document):
     '''
     Document used to plan or initiate work
     '''
-
-    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
-    __package__ = 'Work'
-    __minOccurs__ = '0'
-    __maxOccurs__ = 'unbounded'
 
     ActivityRecord: list[ActivityRecord] = field(
         default_factory=list,
@@ -20972,11 +20258,6 @@ class ElectronicAddress(IdentifiedObject):
     '''
     Electronic address information.
     '''
-
-    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
-    __package__ = 'Common'
-    __minOccurs__ = '0'
-    __maxOccurs__ = 'unbounded'
 
     email: Optional[str] = field(
         default=None,
@@ -21221,11 +20502,6 @@ class EnergyArea(IdentifiedObject):
     energy area can be linked to both measured and forecast load levels.
     '''
 
-    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
-    __package__ = 'LoadModel'
-    __minOccurs__ = '0'
-    __maxOccurs__ = 'unbounded'
-
     ControlArea: Optional[ControlArea] = field(
         default=None,
         metadata={
@@ -21248,7 +20524,7 @@ class EnergyArea(IdentifiedObject):
     ControlArea: Optional[ControlArea] = field(
         default=None,
         metadata={
-        'type': 'Attribute',
+        'type': 'Association',
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'ControlArea.EnergyArea',
@@ -21284,11 +20560,6 @@ class LoadArea(EnergyArea):
     The class is the root or first level in a hierarchical structure for grouping
     of loads for the purpose of load flow load scaling.
     '''
-
-    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
-    __package__ = 'LoadModel'
-    __minOccurs__ = '0'
-    __maxOccurs__ = 'unbounded'
 
     SubLoadAreas: list[SubLoadArea] = field(
         default_factory=list,
@@ -21387,11 +20658,6 @@ class EnergySchedulingType(IdentifiedObject):
     Used to define the type of generation for scheduling purposes.
     '''
 
-    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
-    __package__ = 'Wires'
-    __minOccurs__ = '0'
-    __maxOccurs__ = 'unbounded'
-
     EnergySource: list[EnergySource] = field(
         default_factory=list,
         metadata={
@@ -21430,11 +20696,6 @@ class EnvironmentalMonitoringStation(IdentifiedObject):
     An environmental monitoring station, examples of which could be a weather
     station or a seismic monitoring station.
     '''
-
-    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
-    __package__ = 'MarketCommon'
-    __minOccurs__ = '0'
-    __maxOccurs__ = 'unbounded'
 
     dstObserved: Optional[bool] = field(
         default=None,
@@ -21550,11 +20811,6 @@ class ErpCompetency(IdentifiedObject):
     training, etc.
     '''
 
-    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
-    __package__ = 'InfERPSupport'
-    __minOccurs__ = '0'
-    __maxOccurs__ = 'unbounded'
-
     ErpPersons: list[OldPerson] = field(
         default_factory=list,
         metadata={
@@ -21593,11 +20849,6 @@ class ErpPersonnel(IdentifiedObject):
     by ERP applications to transfer Personnel data for a worker.
     '''
 
-    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
-    __package__ = 'InfERPSupport'
-    __minOccurs__ = '0'
-    __maxOccurs__ = 'unbounded'
-
     ErpPersons: list[OldPerson] = field(
         default_factory=list,
         metadata={
@@ -21634,11 +20885,6 @@ class FaultCauseType(IdentifiedObject):
     '''
     Type of cause of the fault.
     '''
-
-    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
-    __package__ = 'Faults'
-    __minOccurs__ = '0'
-    __maxOccurs__ = 'unbounded'
 
     ConfigurationEvent: list[ConfigurationEvent] = field(
         default_factory=list,
@@ -22054,11 +21300,6 @@ class GeographicalRegion(IdentifiedObject):
     A geographical region of a power system network model.
     '''
 
-    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
-    __package__ = 'Core'
-    __minOccurs__ = '0'
-    __maxOccurs__ = 'unbounded'
-
     Regions: list[SubGeographicalRegion] = field(
         default_factory=list,
         metadata={
@@ -22210,11 +21451,6 @@ class HVDCInterconnectionDynamics(IdentifiedObject):
     model.</font>
     '''
 
-    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
-    __package__ = 'HVDCDynamics'
-    __minOccurs__ = '0'
-    __maxOccurs__ = 'unbounded'
-
     DCEquipmentContainer: list[DCEquipmentContainer] = field(
         default_factory=list,
         metadata={
@@ -22254,11 +21490,6 @@ class Hazard(IdentifiedObject):
     An object or a condition that is a danger for causing loss or perils to
     an asset and/or people.
     '''
-
-    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
-    __package__ = 'Common'
-    __minOccurs__ = '0'
-    __maxOccurs__ = 'unbounded'
 
     type: Optional[str] = field(
         default=None,
@@ -22317,11 +21548,6 @@ class IOPoint(IdentifiedObject):
     having attributes and associations common for measurement and control.
     '''
 
-    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
-    __package__ = 'Meas'
-    __minOccurs__ = '0'
-    __maxOccurs__ = 'unbounded'
-
     IOPointSource: Optional[IOPointSource] = field(
         default=None,
         metadata={
@@ -22361,11 +21587,6 @@ class Control(IOPoint):
     that are used to change the state in a process, e.g. close or open breaker,
     a set point value or a raise lower command.
     '''
-
-    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
-    __package__ = 'Meas'
-    __minOccurs__ = '0'
-    __maxOccurs__ = 'unbounded'
 
     controlType: Optional[str] = field(
         default=None,
@@ -22539,11 +21760,6 @@ class AccumulatorReset(Control):
     This command resets the counter value to zero.
     '''
 
-    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
-    __package__ = 'Meas'
-    __minOccurs__ = '0'
-    __maxOccurs__ = 'unbounded'
-
     AccumulatorValue: Optional[AccumulatorValue] = field(
         default=None,
         metadata={
@@ -22566,7 +21782,7 @@ class AccumulatorReset(Control):
     AccumulatorValue: Optional[AccumulatorValue] = field(
         default=None,
         metadata={
-        'type': 'Attribute',
+        'type': 'Association',
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'AccumulatorValue.AccumulatorReset',
@@ -22663,7 +21879,7 @@ class AnalogControl(Control):
     AnalogValue: Optional[AnalogValue] = field(
         default=None,
         metadata={
-        'type': 'Attribute',
+        'type': 'Association',
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'AnalogValue.AnalogControl',
@@ -22698,11 +21914,6 @@ class RaiseLowerCommand(AnalogControl):
     An analog control that increases or decreases a set point value with pulses.
     Unless otherwise specified, one pulse moves the set point by one.
     '''
-
-    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
-    __package__ = 'Meas'
-    __minOccurs__ = '0'
-    __maxOccurs__ = 'unbounded'
 
     ValueAliasSet: Optional[ValueAliasSet] = field(
         default=None,
@@ -22741,11 +21952,6 @@ class SetPoint(AnalogControl):
     '''
     An analog control that issues a set point value.
     '''
-
-    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
-    __package__ = 'Meas'
-    __minOccurs__ = '0'
-    __maxOccurs__ = 'unbounded'
 
     normalValue: Optional[float] = field(
         default=None,
@@ -22879,7 +22085,7 @@ class Command(Control):
     DiscreteValue: Optional[DiscreteValue] = field(
         default=None,
         metadata={
-        'type': 'Attribute',
+        'type': 'Association',
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'DiscreteValue.Command',
@@ -23147,7 +22353,7 @@ class AccumulatorValue(MeasurementValue):
     AccumulatorReset: Optional[AccumulatorReset] = field(
         default=None,
         metadata={
-        'type': 'Attribute',
+        'type': 'Association',
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'AccumulatorReset.AccumulatorValue',
@@ -23279,7 +22485,7 @@ class AnalogValue(MeasurementValue):
     AnalogControl: Optional[AnalogControl] = field(
         default=None,
         metadata={
-        'type': 'Attribute',
+        'type': 'Association',
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'AnalogControl.AnalogValue',
@@ -23373,7 +22579,7 @@ class DiscreteValue(MeasurementValue):
     Command: Optional[Command] = field(
         default=None,
         metadata={
-        'type': 'Attribute',
+        'type': 'Association',
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'Command.DiscreteValue',
@@ -23407,11 +22613,6 @@ class StringMeasurementValue(MeasurementValue):
     '''
     StringMeasurementValue represents a measurement value of type string.
     '''
-
-    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
-    __package__ = 'Meas'
-    __minOccurs__ = '0'
-    __maxOccurs__ = 'unbounded'
 
     value: Optional[str] = field(
         default=None,
@@ -23470,11 +22671,6 @@ class ImpedanceTapChangerTable(IdentifiedObject):
     the tap step.
     '''
 
-    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
-    __package__ = 'Wires'
-    __minOccurs__ = '0'
-    __maxOccurs__ = 'unbounded'
-
     ImpedanceTapChangerTablePoint: list[ImpedanceTapChangerTablePoint] = field(
         default_factory=list,
         metadata={
@@ -23531,11 +22727,6 @@ class InternalLocation(IdentifiedObject):
     '''
     Description of location internal to a building.
     '''
-
-    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
-    __package__ = 'Common'
-    __minOccurs__ = '0'
-    __maxOccurs__ = 'unbounded'
 
     buildingName: Optional[str] = field(
         default=None,
@@ -23816,11 +23007,6 @@ class AccumulatorLimit(Limit):
     Limit values for Accumulator measurements.
     '''
 
-    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
-    __package__ = 'Meas'
-    __minOccurs__ = '0'
-    __maxOccurs__ = 'unbounded'
-
     value: Optional[int] = field(
         default=None,
         metadata={
@@ -23876,11 +23062,6 @@ class AnalogLimit(Limit):
     '''
     Limit values for Analog measurements.
     '''
-
-    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
-    __package__ = 'Meas'
-    __minOccurs__ = '0'
-    __maxOccurs__ = 'unbounded'
 
     value: Optional[float] = field(
         default=None,
@@ -23942,11 +23123,6 @@ class LimitSet(IdentifiedObject):
     limits are used this way.
     '''
 
-    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
-    __package__ = 'Meas'
-    __minOccurs__ = '0'
-    __maxOccurs__ = 'unbounded'
-
     isPercentageLimits: Optional[bool] = field(
         default=None,
         metadata={
@@ -23988,11 +23164,6 @@ class AccumulatorLimitSet(LimitSet):
     an Accumulator measurement.
     '''
 
-    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
-    __package__ = 'Meas'
-    __minOccurs__ = '0'
-    __maxOccurs__ = 'unbounded'
-
     Limits: list[AccumulatorLimit] = field(
         default_factory=list,
         metadata={
@@ -24032,11 +23203,6 @@ class AnalogLimitSet(LimitSet):
     An AnalogLimitSet specifies a set of Limits that are associated with an
     Analog measurement.
     '''
-
-    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
-    __package__ = 'Meas'
-    __minOccurs__ = '0'
-    __maxOccurs__ = 'unbounded'
 
     Limits: list[AnalogLimit] = field(
         default_factory=list,
@@ -24203,7 +23369,7 @@ class LineSegmentCoupling(IdentifiedObject):
     ACLineSegment: Optional[ACLineSegment] = field(
         default=None,
         metadata={
-        'type': 'Attribute',
+        'type': 'Association',
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'ACLineSegment.LineSegmentCoupling',
@@ -24242,11 +23408,6 @@ class LoadDynamics(IdentifiedObject):
     single load definition. The load model is always applied to individual
     bus loads (energy consumers).
     '''
-
-    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
-    __package__ = 'LoadDynamics'
-    __minOccurs__ = '0'
-    __maxOccurs__ = 'unbounded'
 
     EnergyConsumer: list[EnergyConsumer] = field(
         default_factory=list,
@@ -24287,11 +23448,6 @@ class LoadGroup(IdentifiedObject):
     loads for the purpose of load flow load scaling.
     '''
 
-    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
-    __package__ = 'LoadModel'
-    __minOccurs__ = '0'
-    __maxOccurs__ = 'unbounded'
-
     SubLoadArea: Optional[SubLoadArea] = field(
         default=None,
         metadata={
@@ -24330,11 +23486,6 @@ class ConformLoadGroup(LoadGroup):
     '''
     A group of loads conforming to an allocation pattern.
     '''
-
-    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
-    __package__ = 'LoadModel'
-    __minOccurs__ = '0'
-    __maxOccurs__ = 'unbounded'
 
     EnergyConsumers: list[ConformLoad] = field(
         default_factory=list,
@@ -24393,11 +23544,6 @@ class NonConformLoadGroup(LoadGroup):
     '''
     Loads that do not follow a daily and seasonal load variation pattern.
     '''
-
-    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
-    __package__ = 'LoadModel'
-    __minOccurs__ = '0'
-    __maxOccurs__ = 'unbounded'
 
     EnergyConsumers: list[NonConformLoad] = field(
         default_factory=list,
@@ -25304,11 +24450,6 @@ class MarketOccurrence(IdentifiedObject):
     with a defined market start and end time.
     '''
 
-    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
-    __package__ = 'MarketPlan'
-    __minOccurs__ = '0'
-    __maxOccurs__ = 'unbounded'
-
     MarketProducts: list[MarketProduct] = field(
         default_factory=list,
         metadata={
@@ -25345,11 +24486,6 @@ class EnergyMarket(MarketOccurrence):
     Energy and Ancillary Market (e.g. Energy, Spinning Reserve, Non-Spinning
     Reserve) with a description of the Market operation control parameters.
     '''
-
-    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
-    __package__ = 'MarketCommon'
-    __minOccurs__ = '0'
-    __maxOccurs__ = 'unbounded'
 
     timeframe: Optional[str] = field(
         default=None,
@@ -25425,11 +24561,6 @@ class MarketProduct(IdentifiedObject):
     service product examples include: Regulation, Regulation Up, Regulation
     Down, Spinning Reserve, Non-Spinning Reserve, etc.
     '''
-
-    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
-    __package__ = 'MarketCommon'
-    __minOccurs__ = '0'
-    __maxOccurs__ = 'unbounded'
 
     rampInterval: Optional[ float | Minutes ] = field(
         default=None,
@@ -25564,11 +24695,6 @@ class Measurement(IdentifiedObject):
     When the sensor location is needed both Measurement-PSR and Measurement-Terminal
     are used. The Measurement-Terminal association is never used alone.
     '''
-
-    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
-    __package__ = 'Meas'
-    __minOccurs__ = '0'
-    __maxOccurs__ = 'unbounded'
 
     measurementType: Optional[str] = field(
         default=None,
@@ -26090,11 +25216,6 @@ class MktMeasurement(Measurement):
     Subclass of IEC61970:Meas:Measurement.
     '''
 
-    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
-    __package__ = 'MarketOpCommon'
-    __minOccurs__ = '0'
-    __maxOccurs__ = 'unbounded'
-
     ByTiePoint: Optional[TiePoint] = field(
         default=None,
         metadata={
@@ -26174,11 +25295,6 @@ class StringMeasurement(Measurement):
     StringMeasurement represents a measurement with values of type string.
     '''
 
-    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
-    __package__ = 'Meas'
-    __minOccurs__ = '0'
-    __maxOccurs__ = 'unbounded'
-
     StringMeasurementValues: list[StringMeasurementValue] = field(
         default_factory=list,
         metadata={
@@ -26219,11 +25335,6 @@ class MeasurementValueSource(IdentifiedObject):
     defined in IEC 61970-301.
     '''
 
-    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
-    __package__ = 'Meas'
-    __minOccurs__ = '0'
-    __maxOccurs__ = 'unbounded'
-
     MeasurementValues: list[MeasurementValue] = field(
         default_factory=list,
         metadata={
@@ -26262,11 +25373,6 @@ class IOPointSource(MeasurementValueSource):
     Indicates the point source for an IO Point.
     '''
 
-    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
-    __package__ = 'ICCPConfiguration'
-    __minOccurs__ = '0'
-    __maxOccurs__ = 'unbounded'
-
     IOPoint: list[IOPoint] = field(
         default_factory=list,
         metadata={
@@ -26304,11 +25410,6 @@ class MutualCoupling(IdentifiedObject):
     '''
     This class represents the zero sequence line mutual coupling.
     '''
-
-    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
-    __package__ = 'Wires'
-    __minOccurs__ = '0'
-    __maxOccurs__ = 'unbounded'
 
     b0ch: Optional[ float | Susceptance ] = field(
         default=None,
@@ -26534,11 +25635,6 @@ class OperatingParticipant(IdentifiedObject):
     contractual share.
     '''
 
-    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
-    __package__ = 'Core'
-    __minOccurs__ = '0'
-    __maxOccurs__ = 'unbounded'
-
     OperatingShare: list[OperatingShare] = field(
         default_factory=list,
         metadata={
@@ -26587,11 +25683,6 @@ class OperationalLimit(IdentifiedObject):
     for a short duration without causing damage, but a lesser current can be
     allowed to flow for a longer duration.
     '''
-
-    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
-    __package__ = 'OperationalLimits'
-    __minOccurs__ = '0'
-    __maxOccurs__ = 'unbounded'
 
     OperationalLimitSet: Optional[OperationalLimitSet] = field(
         default=None,
@@ -26669,11 +25760,6 @@ class ActivePowerLimit(OperationalLimit):
     Limit on active power flow.
     '''
 
-    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
-    __package__ = 'OperationalLimits'
-    __minOccurs__ = '0'
-    __maxOccurs__ = 'unbounded'
-
     normalValue: Optional[ float | ActivePower ] = field(
         default=None,
         metadata={
@@ -26732,11 +25818,6 @@ class ApparentPowerLimit(OperationalLimit):
     '''
     Apparent power limit.
     '''
-
-    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
-    __package__ = 'OperationalLimits'
-    __minOccurs__ = '0'
-    __maxOccurs__ = 'unbounded'
 
     normalValue: Optional[ float | ApparentPower ] = field(
         default=None,
@@ -26797,11 +25878,6 @@ class CurrentLimit(OperationalLimit):
     Operational limit on current.
     '''
 
-    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
-    __package__ = 'OperationalLimits'
-    __minOccurs__ = '0'
-    __maxOccurs__ = 'unbounded'
-
     normalValue: Optional[ float | CurrentFlow ] = field(
         default=None,
         metadata={
@@ -26860,11 +25936,6 @@ class VoltageAngleLimit(OperationalLimit):
     defines one end and the host of the limit. The association end VoltageAngleLimit.AngleReferenceTerminal
     defines the reference terminal.
     '''
-
-    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
-    __package__ = 'OperationalLimits'
-    __minOccurs__ = '0'
-    __maxOccurs__ = 'unbounded'
 
     isFlowToRefTerminal: Optional[bool] = field(
         default=None,
@@ -26975,11 +26046,6 @@ class VoltageLimit(OperationalLimit):
     The use of operational VoltageLimit is preferred instead of limits defined
     at VoltageLevel. The operational VoltageLimits are used, if present.
     '''
-
-    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
-    __package__ = 'OperationalLimits'
-    __minOccurs__ = '0'
-    __maxOccurs__ = 'unbounded'
 
     normalValue: Optional[ float | Voltage ] = field(
         default=None,
@@ -27379,11 +26445,6 @@ class Ownership(IdentifiedObject):
     Ownership of e.g. asset.
     '''
 
-    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
-    __package__ = 'Common'
-    __minOccurs__ = '0'
-    __maxOccurs__ = 'unbounded'
-
     share: Optional[ float | PerCent ] = field(
         default=None,
         metadata={
@@ -27462,11 +26523,6 @@ class PSRType(IdentifiedObject):
     non standard.
     '''
 
-    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
-    __package__ = 'Core'
-    __minOccurs__ = '0'
-    __maxOccurs__ = 'unbounded'
-
     PowerSystemResources: list[PowerSystemResource] = field(
         default_factory=list,
         metadata={
@@ -27504,11 +26560,6 @@ class PerLengthLineParameter(IdentifiedObject):
     '''
     Common type for per-length electrical line parameters.
     '''
-
-    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
-    __package__ = 'Wires'
-    __minOccurs__ = '0'
-    __maxOccurs__ = 'unbounded'
 
     WireAssemblyInfo: Optional[WireAssemblyInfo] = field(
         default=None,
@@ -27639,11 +26690,6 @@ class PerLengthImpedance(PerLengthLineParameter):
     '''
     Common type for per-length electrical impedances.
     '''
-
-    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
-    __package__ = 'Wires'
-    __minOccurs__ = '0'
-    __maxOccurs__ = 'unbounded'
 
     ACLineSegments: list[ACLineSegment] = field(
         default_factory=list,
@@ -27788,11 +26834,6 @@ class PerLengthSequenceImpedance(PerLengthImpedance):
     = x0 = xself. For 2-phase line segments, define x = xself - xmutual and
     x0 = xself + xmutual.
     '''
-
-    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
-    __package__ = 'Wires'
-    __minOccurs__ = '0'
-    __maxOccurs__ = 'unbounded'
 
     b0ch: Optional[ float | SusceptancePerLength ] = field(
         default=None,
@@ -27958,11 +26999,6 @@ class PhaseTapChangerTable(IdentifiedObject):
     varies with the tap step.
     '''
 
-    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
-    __package__ = 'Wires'
-    __minOccurs__ = '0'
-    __maxOccurs__ = 'unbounded'
-
     PhaseTapChangerTablePoint: list[PhaseTapChangerTablePoint] = field(
         default_factory=list,
         metadata={
@@ -28022,11 +27058,6 @@ class ConnectionAngleTapChangerTable(PhaseTapChangerTable):
     the operating angle of the tap changer. There must be an instance of this
     table for each winding connection angle that can be used.
     '''
-
-    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
-    __package__ = 'Wires'
-    __minOccurs__ = '0'
-    __maxOccurs__ = 'unbounded'
 
     windingConnectionAngle: Optional[ float | AngleDegrees ] = field(
         default=None,
@@ -28101,11 +27132,6 @@ class Pnode(IdentifiedObject):
     buy/sell CRRs, and settle.
     '''
 
-    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
-    __package__ = 'ReferenceData'
-    __minOccurs__ = '0'
-    __maxOccurs__ = 'unbounded'
-
     MktMeasurement: list[MktMeasurement] = field(
         default_factory=list,
         metadata={
@@ -28168,11 +27194,6 @@ class AggregatedPnode(Pnode):
     Non-Participating Load, Trading Hub, Designated Control Area(DCA) Zone.
     '''
 
-    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
-    __package__ = 'ReferenceData'
-    __minOccurs__ = '0'
-    __maxOccurs__ = 'unbounded'
-
     AggregateNode: Optional[AggregateNode] = field(
         default=None,
         metadata={
@@ -28209,20 +27230,49 @@ class IndividualPnode(Pnode):
     Individual pricing node based on Pnode.
     '''
 
-    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
-    __package__ = 'ReferenceData'
-    __minOccurs__ = '0'
-    __maxOccurs__ = 'unbounded'
-
     ConnectivityNode: Optional[ConnectivityNode] = field(
         default=None,
         metadata={
-        'type': 'Association',
+        'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'ConnectivityNode.IndividualPnode',
         'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
+        'serialize': True,
+        'docstring':
+            '''
+            '''
+        
+        })
+    '''
+    '''
+    
+    GenDistributionFactor: Optional[GenDistributionFactor] = field(
+        default=None,
+        metadata={
+        'type': 'Attribute',
+        'minOccurs': '0',
+        'maxOccurs': '1',
+        'inverse': 'GenDistributionFactor.IndividualPnode',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
+        'serialize': True,
+        'docstring':
+            '''
+            '''
+        
+        })
+    '''
+    '''
+    
+    LoadDistributionFactor: Optional[LoadDistributionFactor] = field(
+        default=None,
+        metadata={
+        'type': 'Attribute',
+        'minOccurs': '0',
+        'maxOccurs': '1',
+        'inverse': 'LoadDistributionFactor.IndividualPnode',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
+        'serialize': True,
         'docstring':
             '''
             '''
@@ -28277,11 +27327,6 @@ class ACPointOfCommonCoupling(PointOfCommonCoupling):
     system (IEC 60633).
     '''
 
-    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
-    __package__ = 'Core'
-    __minOccurs__ = '0'
-    __maxOccurs__ = 'unbounded'
-
     ConnectivityNode: Optional[ConnectivityNode] = field(
         default=None,
         metadata={
@@ -28323,7 +27368,7 @@ class ACPointOfCommonCoupling(PointOfCommonCoupling):
     ConnectivityNode: Optional[ConnectivityNode] = field(
         default=None,
         metadata={
-        'type': 'Attribute',
+        'type': 'Association',
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'ConnectivityNode.ACPointOfCommonCoupling',
@@ -28342,7 +27387,7 @@ class ACPointOfCommonCoupling(PointOfCommonCoupling):
     DCConverterUnit: Optional[DCConverterUnit] = field(
         default=None,
         metadata={
-        'type': 'Attribute',
+        'type': 'Association',
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'DCConverterUnit.ACPointOfCommonCoupling',
@@ -28377,11 +27422,6 @@ class DCPointOfCommonCoupling(PointOfCommonCoupling):
     Point of interconnection of the DC converter station to the DC transmission
     line (IEC 60633).
     '''
-
-    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
-    __package__ = 'Core'
-    __minOccurs__ = '0'
-    __maxOccurs__ = 'unbounded'
 
     DCConverterUnit: Optional[DCConverterUnit] = field(
         default=None,
@@ -28424,7 +27464,7 @@ class DCPointOfCommonCoupling(PointOfCommonCoupling):
     DCConverterUnit: Optional[DCConverterUnit] = field(
         default=None,
         metadata={
-        'type': 'Attribute',
+        'type': 'Association',
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'DCConverterUnit.DCPointOfCommonCoupling',
@@ -28443,7 +27483,7 @@ class DCPointOfCommonCoupling(PointOfCommonCoupling):
     DCNode: Optional[DCNode] = field(
         default=None,
         metadata={
-        'type': 'Attribute',
+        'type': 'Association',
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'DCNode.DCPointOfCommonCoupling',
@@ -28661,11 +27701,6 @@ class ACLineSegmentPhase(PowerSystemResource):
     a line segment phase must exist for each position in the assembly (including
     the neutral).
     '''
-
-    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
-    __package__ = 'Wires'
-    __minOccurs__ = '0'
-    __maxOccurs__ = 'unbounded'
 
     sequenceNumber: Optional[int] = field(
         default=None,
@@ -28892,11 +27927,6 @@ class AreaInterchangeController(PowerSystemResource):
     '''
     Area interchange control is set to control active power of an area.
     '''
-
-    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
-    __package__ = 'Control'
-    __minOccurs__ = '0'
-    __maxOccurs__ = 'unbounded'
 
     ControlArea: Optional[ControlArea] = field(
         default=None,
@@ -29306,7 +28336,7 @@ class CAESPlant(PowerSystemResource):
     ThermalGeneratingUnit: Optional[ThermalGeneratingUnit] = field(
         default=None,
         metadata={
-        'type': 'Attribute',
+        'type': 'Association',
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'ThermalGeneratingUnit.CAESPlant',
@@ -29573,11 +28603,6 @@ class CombustionTurbine(PowerSystemResource):
     A prime mover that is typically fuelled by gas or light oil.
     '''
 
-    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
-    __package__ = 'GenerationTrainingSimulation'
-    __minOccurs__ = '0'
-    __maxOccurs__ = 'unbounded'
-
     AirCompressor: Optional[AirCompressor] = field(
         default=None,
         metadata={
@@ -29616,11 +28641,6 @@ class ConnectivityNodeContainer(PowerSystemResource):
     A base class for all objects that may contain connectivity nodes or topological
     nodes.
     '''
-
-    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
-    __package__ = 'Core'
-    __minOccurs__ = '0'
-    __maxOccurs__ = 'unbounded'
 
     ConnectivityNodes: list[ConnectivityNode] = field(
         default_factory=list,
@@ -29749,11 +28769,6 @@ class Bay(EquipmentContainer):
     bay typically represents a physical grouping related to modularization
     of equipment.
     '''
-
-    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
-    __package__ = 'Core'
-    __minOccurs__ = '0'
-    __maxOccurs__ = 'unbounded'
 
     bayEnergyMeasFlag: Optional[bool] = field(
         default=None,
@@ -30144,11 +29159,6 @@ class DCLine(DCEquipmentContainer):
     Overhead lines and/or cables connecting two or more DC substations.
     '''
 
-    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
-    __package__ = 'DC'
-    __minOccurs__ = '0'
-    __maxOccurs__ = 'unbounded'
-
     DCPole: Optional[DCPole] = field(
         default=None,
         metadata={
@@ -30190,7 +29200,7 @@ class DCLine(DCEquipmentContainer):
     DCPole: Optional[DCPole] = field(
         default=None,
         metadata={
-        'type': 'Attribute',
+        'type': 'Association',
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'DCPole.DCLine',
@@ -30347,11 +29357,6 @@ class DCSubstationBipole(DCEquipmentContainer):
     Part of a bipolar DC system (IEC 60633) contained within a DC substation.
     '''
 
-    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
-    __package__ = 'DC'
-    __minOccurs__ = '0'
-    __maxOccurs__ = 'unbounded'
-
     DCSubstation: Optional[DCSubstation] = field(
         default=None,
         metadata={
@@ -30408,11 +29413,6 @@ class DCSubstationPole(DCEquipmentContainer):
     '''
     Part of an DC system pole (IEC 60633) which is contained within a DC substation.
     '''
-
-    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
-    __package__ = 'DC'
-    __minOccurs__ = '0'
-    __maxOccurs__ = 'unbounded'
 
     DCSubstation: Optional[DCSubstation] = field(
         default=None,
@@ -30558,11 +29558,6 @@ class Line(EquipmentContainer):
     line.
     '''
 
-    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
-    __package__ = 'Wires'
-    __minOccurs__ = '0'
-    __maxOccurs__ = 'unbounded'
-
     ACTieCorridor: Optional[ACTieCorridor] = field(
         default=None,
         metadata={
@@ -30619,11 +29614,6 @@ class MktLine(Line):
     '''
     Subclass for IEC61970:Wires:Line.
     '''
-
-    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
-    __package__ = 'MarketOpCommon'
-    __minOccurs__ = '0'
-    __maxOccurs__ = 'unbounded'
 
     TransmissionRightOfWay: Optional[TransmissionRightOfWay] = field(
         default=None,
@@ -31161,7 +30151,7 @@ class ControlArea(PowerSystemResource):
     EnergyArea: Optional[EnergyArea] = field(
         default=None,
         metadata={
-        'type': 'Attribute',
+        'type': 'Association',
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'EnergyArea.ControlArea',
@@ -31217,11 +30207,6 @@ class DCBiPole(PowerSystemResource):
     exhibit opposite direct voltage polarities with respect to earth.
     '''
 
-    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
-    __package__ = 'DC'
-    __minOccurs__ = '0'
-    __maxOccurs__ = 'unbounded'
-
     BipolarDCSystem: Optional[BipolarDCSystem] = field(
         default=None,
         metadata={
@@ -31244,7 +30229,7 @@ class DCBiPole(PowerSystemResource):
     BipolarDCSystem: Optional[BipolarDCSystem] = field(
         default=None,
         metadata={
-        'type': 'Attribute',
+        'type': 'Association',
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'BipolarDCSystem.DCBiPole',
@@ -31546,7 +30531,7 @@ class DCPole(PowerSystemResource):
     DCLine: Optional[DCLine] = field(
         default=None,
         metadata={
-        'type': 'Attribute',
+        'type': 'Association',
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'DCLine.DCPole',
@@ -31565,7 +30550,7 @@ class DCPole(PowerSystemResource):
     AsymmetricMonopolarDCSystem: Optional[MonopolarDCSystem] = field(
         default=None,
         metadata={
-        'type': 'Attribute',
+        'type': 'Association',
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'MonopolarDCSystem.DCPole',
@@ -31600,11 +30585,6 @@ class DCSystem(PowerSystemResource):
     Electrical power system which transfers energy in the form of direct current
     between two or more AC buses (defined in IEC 60633).
     '''
-
-    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
-    __package__ = 'DC'
-    __minOccurs__ = '0'
-    __maxOccurs__ = 'unbounded'
 
     directionKind: Optional[DCSystemDirectionKind] = field(
         default=None,
@@ -31717,7 +30697,7 @@ class BipolarDCSystem(DCSystem):
     DCBiPole: Optional[DCBiPole] = field(
         default=None,
         metadata={
-        'type': 'Attribute',
+        'type': 'Association',
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'DCBiPole.BipolarDCSystem',
@@ -31810,7 +30790,7 @@ class MonopolarDCSystem(DCSystem):
     DCPole: Optional[DCPole] = field(
         default=None,
         metadata={
-        'type': 'Attribute',
+        'type': 'Association',
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'DCPole.AsymmetricMonopolarDCSystem',
@@ -31844,11 +30824,6 @@ class EnergyConsumerPhase(PowerSystemResource):
     '''
     A single phase of an energy consumer.
     '''
-
-    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
-    __package__ = 'Wires'
-    __minOccurs__ = '0'
-    __maxOccurs__ = 'unbounded'
 
     p: Optional[ float | ActivePower ] = field(
         default=None,
@@ -32043,11 +31018,6 @@ class EnergySourcePhase(PowerSystemResource):
     '''
     Represents the single phase information of an unbalanced energy source.
     '''
-
-    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
-    __package__ = 'Wires'
-    __minOccurs__ = '0'
-    __maxOccurs__ = 'unbounded'
 
     phase: Optional[SinglePhaseKind] = field(
         default=None,
@@ -32306,11 +31276,6 @@ class AuxiliaryEquipment(Equipment):
     This class is for AC equipment only.
     '''
 
-    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
-    __package__ = 'AuxiliaryEquipment'
-    __minOccurs__ = '0'
-    __maxOccurs__ = 'unbounded'
-
     Terminal: Optional[Terminal] = field(
         default=None,
         metadata={
@@ -32395,11 +31360,6 @@ class CurrentTransformer(Sensor):
     for the purpose of metering or protection. A typical secondary current
     rating would be 5A.
     '''
-
-    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
-    __package__ = 'AuxiliaryEquipment'
-    __minOccurs__ = '0'
-    __maxOccurs__ = 'unbounded'
 
     usage: Optional[str] = field(
         default=None,
@@ -32499,11 +31459,6 @@ class PotentialTransformer(Sensor):
     or sometimes auxiliary substation supply. A typical secondary voltage rating
     would be 120V.
     '''
-
-    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
-    __package__ = 'AuxiliaryEquipment'
-    __minOccurs__ = '0'
-    __maxOccurs__ = 'unbounded'
 
     nominalRatio: Optional[float] = field(
         default=None,
@@ -33327,11 +32282,6 @@ class CsConverter(ACDCConverter):
     place. The range is typically 17 to 20 degrees.
     '''
 
-    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
-    __package__ = 'DC'
-    __minOccurs__ = '0'
-    __maxOccurs__ = 'unbounded'
-
     alpha: Optional[ float | AngleDegrees ] = field(
         default=None,
         metadata={
@@ -34022,11 +32972,6 @@ class Clamp(ConductingEquipment):
     Clamp ConnectivityNode.
     '''
 
-    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
-    __package__ = 'Wires'
-    __minOccurs__ = '0'
-    __maxOccurs__ = 'unbounded'
-
     lengthFromTerminal1: Optional[ float | Length ] = field(
         default=None,
         metadata={
@@ -34123,11 +33068,6 @@ class Conductor(ConductingEquipment):
     building a single electrical system, used to carry current between points
     in the power system.
     '''
-
-    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
-    __package__ = 'Wires'
-    __minOccurs__ = '0'
-    __maxOccurs__ = 'unbounded'
 
     length: Optional[ float | Length ] = field(
         default=None,
@@ -34597,11 +33537,6 @@ class BusSegment(Conductor):
     bays, etc
     '''
 
-    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
-    __package__ = 'Assets'
-    __minOccurs__ = '0'
-    __maxOccurs__ = 'unbounded'
-
     Retain: Optional[bool] = field(
         default=None,
         metadata={
@@ -34660,11 +33595,6 @@ class WireSegment(Conductor):
     length represented as zero impedance device that can be used to connect
     auxiliary equipment to its terminals.
     '''
-
-    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
-    __package__ = 'Wires'
-    __minOccurs__ = '0'
-    __maxOccurs__ = 'unbounded'
 
     WireSegmentPhases: list[WireSegmentPhase] = field(
         default_factory=list,
@@ -34778,7 +33708,7 @@ class BusbarSection(Connector):
     VoltageControlZone: Optional[VoltageControlZone] = field(
         default=None,
         metadata={
-        'type': 'Attribute',
+        'type': 'Association',
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'VoltageControlZone.BusbarSection',
@@ -34846,11 +33776,6 @@ class EarthFaultCompensator(ConductingEquipment):
     normal connection rules apply.
     '''
 
-    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
-    __package__ = 'Wires'
-    __minOccurs__ = '0'
-    __maxOccurs__ = 'unbounded'
-
     r: Optional[ float | Resistance ] = field(
         default=None,
         metadata={
@@ -34887,11 +33812,6 @@ class GroundingImpedance(EarthFaultCompensator):
     '''
     A fixed impedance device used for grounding.
     '''
-
-    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
-    __package__ = 'Wires'
-    __minOccurs__ = '0'
-    __maxOccurs__ = 'unbounded'
 
     x: Optional[ float | Reactance ] = field(
         default=None,
@@ -34930,11 +33850,6 @@ class PetersenCoil(EarthFaultCompensator):
     A variable impedance device normally used to offset line charging during
     single line faults in an ungrounded section of network.
     '''
-
-    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
-    __package__ = 'Wires'
-    __minOccurs__ = '0'
-    __maxOccurs__ = 'unbounded'
 
     nominalU: Optional[ float | Voltage ] = field(
         default=None,
@@ -35429,11 +34344,6 @@ class ConformLoad(EnergyConsumer):
     the pattern can be used to scale the load with a system load.
     '''
 
-    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
-    __package__ = 'LoadModel'
-    __minOccurs__ = '0'
-    __maxOccurs__ = 'unbounded'
-
     LoadGroup: Optional[ConformLoadGroup] = field(
         default=None,
         metadata={
@@ -35473,11 +34383,6 @@ class NonConformLoad(EnergyConsumer):
     pattern and whose changes are not correlated with the daily load change
     pattern.
     '''
-
-    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
-    __package__ = 'LoadModel'
-    __minOccurs__ = '0'
-    __maxOccurs__ = 'unbounded'
 
     LoadGroup: Optional[NonConformLoadGroup] = field(
         default=None,
@@ -35881,11 +34786,6 @@ class RegulatingCondEq(EnergyConnection):
     or flow) at a specific point in the network.
     '''
 
-    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
-    __package__ = 'Wires'
-    __minOccurs__ = '0'
-    __maxOccurs__ = 'unbounded'
-
     controlEnabled: Optional[bool] = field(
         default=None,
         metadata={
@@ -35970,11 +34870,6 @@ class ExternalNetworkInjection(RegulatingCondEq):
     and minimum initial symmetrical short-circuit currents have to be corrected
     for the fact that they were calculated according the IEC60909-0 method.
     '''
-
-    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
-    __package__ = 'Wires'
-    __minOccurs__ = '0'
-    __maxOccurs__ = 'unbounded'
 
     ikSecond: Optional[bool] = field(
         default=None,
@@ -36677,11 +35572,6 @@ class StaticVarCompensator(FACTSEquipment):
     is zero.
     '''
 
-    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
-    __package__ = 'FACTS'
-    __minOccurs__ = '0'
-    __maxOccurs__ = 'unbounded'
-
     capacitiveRating: Optional[ float | Reactance ] = field(
         default=None,
         metadata={
@@ -37014,11 +35904,6 @@ class FrequencyConverter(RegulatingCondEq):
     F2) comprises a pair of FrequencyConverter instances. One converts from
     F1 to DC, the other converts the DC to F2.
     '''
-
-    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
-    __package__ = 'Wires'
-    __minOccurs__ = '0'
-    __maxOccurs__ = 'unbounded'
 
     frequency: Optional[ float | Frequency ] = field(
         default=None,
@@ -37579,7 +36464,7 @@ class RotatingMachine(RegulatingCondEq):
     HydroPump: Optional[HydroPump] = field(
         default=None,
         metadata={
-        'type': 'Attribute',
+        'type': 'Association',
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'HydroPump.RotatingMachine',
@@ -37620,11 +36505,6 @@ class AsynchronousMachine(RotatingMachine):
     field. Also known as an induction machine with no external connection to
     the rotor windings, e.g. squirrel-cage induction machine.
     '''
-
-    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
-    __package__ = 'Wires'
-    __minOccurs__ = '0'
-    __maxOccurs__ = 'unbounded'
 
     converterFedDrive: Optional[bool] = field(
         default=None,
@@ -39082,11 +37962,6 @@ class LinearShuntCompensator(ShuntCompensator):
     values.
     '''
 
-    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
-    __package__ = 'Wires'
-    __minOccurs__ = '0'
-    __maxOccurs__ = 'unbounded'
-
     b0PerSection: Optional[ float | Susceptance ] = field(
         default=None,
         metadata={
@@ -39182,11 +38057,6 @@ class NonlinearShuntCompensator(ShuntCompensator):
     of a NonlinearShuntCompensatorPoint at a section number specified by NonlinearShuntCompensatorPoint.sectionNumber.
     '''
 
-    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
-    __package__ = 'Wires'
-    __minOccurs__ = '0'
-    __maxOccurs__ = 'unbounded'
-
     NonlinearShuntCompensatorPoints: list[NonlinearShuntCompensatorPoint] = field(
         default_factory=list,
         metadata={
@@ -39251,11 +38121,6 @@ class ExtendedWardEquivalent(ConductingEquipment):
     load and as voltage source with an internal impedance.
     '''
 
-    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
-    __package__ = 'Equivalents'
-    __minOccurs__ = '0'
-    __maxOccurs__ = 'unbounded'
-
     ReactiveCapabilityCurve: list[ReactiveCapabilityCurve] = field(
         default_factory=list,
         metadata={
@@ -39295,11 +38160,6 @@ class Ground(ConductingEquipment):
     A point where the system is grounded used for connecting conducting equipment
     to ground. The power system model can have any number of grounds.
     '''
-
-    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
-    __package__ = 'Wires'
-    __minOccurs__ = '0'
-    __maxOccurs__ = 'unbounded'
 
     GroundAction: Optional[GroundAction] = field(
         default=None,
@@ -39620,11 +38480,6 @@ class MktPowerTransformer(PowerTransformer):
     Subclass of IEC61970:Wires:PowerTransformer.
     '''
 
-    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
-    __package__ = 'MarketOpCommon'
-    __minOccurs__ = '0'
-    __maxOccurs__ = 'unbounded'
-
     EndAFlow: Optional[BranchEndFlow] = field(
         default=None,
         metadata={
@@ -39679,11 +38534,6 @@ class SeriesCompensator(ConductingEquipment):
     A Series Compensator is a series capacitor or reactor or an AC transmission
     line without charging susceptance. It is a two terminal device.
     '''
-
-    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
-    __package__ = 'Wires'
-    __minOccurs__ = '0'
-    __maxOccurs__ = 'unbounded'
 
     varistorPresent: Optional[bool] = field(
         default=None,
@@ -40089,11 +38939,6 @@ class Cut(Switch):
     equipment can be connected at them.
     '''
 
-    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
-    __package__ = 'Wires'
-    __minOccurs__ = '0'
-    __maxOccurs__ = 'unbounded'
-
     lengthFromTerminal1: Optional[ float | Length ] = field(
         default=None,
         metadata={
@@ -40224,11 +39069,6 @@ class Fuse(Switch):
     is considered a switching device because it breaks current.
     '''
 
-    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
-    __package__ = 'Wires'
-    __minOccurs__ = '0'
-    __maxOccurs__ = 'unbounded'
-
     MiinimumMeltCurve: Optional[FuseCharacteristicCurve] = field(
         default=None,
         metadata={
@@ -40311,11 +39151,6 @@ class Jumper(Switch):
     branches can potentially be modelled by other equipment types.
     '''
 
-    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
-    __package__ = 'Wires'
-    __minOccurs__ = '0'
-    __maxOccurs__ = 'unbounded'
-
     JumperAction: Optional[JumperAction] = field(
         default=None,
         metadata={
@@ -40353,11 +39188,6 @@ class ProtectedSwitch(Switch):
     '''
     A ProtectedSwitch is a switching device that can be operated by ProtectionEquipment.
     '''
-
-    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
-    __package__ = 'Wires'
-    __minOccurs__ = '0'
-    __maxOccurs__ = 'unbounded'
 
     breakingCapacity: Optional[ float | CurrentFlow ] = field(
         default=None,
@@ -40401,11 +39231,6 @@ class Breaker(ProtectedSwitch):
     a specified time, and breaking currents under specified abnormal circuit
     conditions e.g. those of short circuit.
     '''
-
-    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
-    __package__ = 'Wires'
-    __minOccurs__ = '0'
-    __maxOccurs__ = 'unbounded'
 
     inTransitTime: Optional[ float | Seconds ] = field(
         default=None,
@@ -40648,11 +39473,6 @@ class DCGround(DCConductingEquipment):
     A ground within a DC system.
     '''
 
-    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
-    __package__ = 'DC'
-    __minOccurs__ = '0'
-    __maxOccurs__ = 'unbounded'
-
     inductance: Optional[ float | Inductance ] = field(
         default=None,
         metadata={
@@ -40709,11 +39529,6 @@ class DCLineSegment(DCConductingEquipment):
     electrical characteristics, used to carry direct current between points
     in the DC region of the power system.
     '''
-
-    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
-    __package__ = 'DC'
-    __minOccurs__ = '0'
-    __maxOccurs__ = 'unbounded'
 
     capacitance: Optional[ float | Capacitance ] = field(
         default=None,
@@ -40827,11 +39642,6 @@ class DCSeriesDevice(DCConductingEquipment):
     A series device within the DC system, typically a reactor used for filtering
     or smoothing. Needed for transient and short circuit studies.
     '''
-
-    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
-    __package__ = 'DC'
-    __minOccurs__ = '0'
-    __maxOccurs__ = 'unbounded'
 
     inductance: Optional[ float | Inductance ] = field(
         default=None,
@@ -40951,11 +39761,6 @@ class DCShunt(DCConductingEquipment):
     for transient and short circuit studies.
     '''
 
-    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
-    __package__ = 'DC'
-    __minOccurs__ = '0'
-    __maxOccurs__ = 'unbounded'
-
     capacitance: Optional[ float | Capacitance ] = field(
         default=None,
         metadata={
@@ -41010,11 +39815,6 @@ class DCSwitch(DCConductingEquipment):
     '''
     A switch within the DC system.
     '''
-
-    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
-    __package__ = 'DC'
-    __minOccurs__ = '0'
-    __maxOccurs__ = 'unbounded'
 
     locked: Optional[bool] = field(
         default=None,
@@ -42274,11 +41074,6 @@ class GeothermalGeneratingUnit(GeneratingUnit):
     Generating unit that is generating electrical power from geothermal energy.
     '''
 
-    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
-    __package__ = 'Production'
-    __minOccurs__ = '0'
-    __maxOccurs__ = 'unbounded'
-
     kind: Optional[GeothermalUnitKind] = field(
         default=None,
         metadata={
@@ -42526,11 +41321,6 @@ class NuclearGeneratingUnit(GeneratingUnit):
     A nuclear generating unit.
     '''
 
-    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
-    __package__ = 'Production'
-    __minOccurs__ = '0'
-    __maxOccurs__ = 'unbounded'
-
     reactorKind: Optional[NuclearReactorKind] = field(
         default=None,
         metadata={
@@ -42569,11 +41359,6 @@ class SolarGeneratingUnit(GeneratingUnit):
     A solar thermal generating unit, connected to the grid by means of a rotating
     machine. This class does not represent photovoltaic (PV) generation.
     '''
-
-    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
-    __package__ = 'Production'
-    __minOccurs__ = '0'
-    __maxOccurs__ = 'unbounded'
 
     SolarPowerPlant: Optional[SolarPowerPlant] = field(
         default=None,
@@ -42999,11 +41784,6 @@ class WindGeneratingUnit(GeneratingUnit):
     machine. May be used to represent a single turbine or an aggregation.
     '''
 
-    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
-    __package__ = 'Production'
-    __minOccurs__ = '0'
-    __maxOccurs__ = 'unbounded'
-
     windGenUnitType: Optional[WindGenUnitKind] = field(
         default=None,
         metadata={
@@ -43226,7 +42006,7 @@ class HydroPump(Equipment):
     RotatingMachine: Optional[RotatingMachine] = field(
         default=None,
         metadata={
-        'type': 'Attribute',
+        'type': 'Association',
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'RotatingMachine.HydroPump',
@@ -43383,11 +42163,6 @@ class BatteryUnit(PowerElectronicsUnit):
     An electrochemical energy storage device.
     '''
 
-    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
-    __package__ = 'Production'
-    __minOccurs__ = '0'
-    __maxOccurs__ = 'unbounded'
-
     ratedE: Optional[ float | RealEnergy ] = field(
         default=None,
         metadata={
@@ -43487,11 +42262,6 @@ class FlexibleEnergyUnit(PowerElectronicsUnit):
     Flexible consumer or embedded producer of energy. The unit cannot be a
     net producer.
     '''
-
-    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
-    __package__ = 'Production'
-    __minOccurs__ = '0'
-    __maxOccurs__ = 'unbounded'
 
     buffer: Optional[ float | ActivePower ] = field(
         default=None,
@@ -43631,11 +42401,6 @@ class PowerElectricalChemicalUnit(PowerElectronicsUnit):
     or using electrical energy to cause chemical reactions.
     '''
 
-    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
-    __package__ = 'Production'
-    __minOccurs__ = '0'
-    __maxOccurs__ = 'unbounded'
-
     kind: Optional[PowerElectricalChemicalUnitKind] = field(
         default=None,
         metadata={
@@ -43675,11 +42440,6 @@ class PowerElectronicsMarineUnit(PowerElectronicsUnit):
     electrical power.
     '''
 
-    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
-    __package__ = 'Production'
-    __minOccurs__ = '0'
-    __maxOccurs__ = 'unbounded'
-
     kind: Optional[MarineUnitKind] = field(
         default=None,
         metadata={
@@ -43718,11 +42478,6 @@ class PowerElectronicsThermalUnit(PowerElectronicsUnit):
     A thermal unit that is connected via an inverter such as through a back-to-back
     converter
     '''
-
-    __namespace__ = 'http://epri.com/gmdm/2025#'
-    __package__ = 'ProductionEXT'
-    __minOccurs__ = '0'
-    __maxOccurs__ = 'unbounded'
 
     FossilFuels: Optional[FossilFuel] = field(
         default=None,
@@ -43861,11 +42616,6 @@ class EquipmentController(PowerSystemResource):
     tolerance.
     '''
 
-    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
-    __package__ = 'Control'
-    __minOccurs__ = '0'
-    __maxOccurs__ = 'unbounded'
-
     RegulatingCondEq: list[RegulatingCondEq] = field(
         default_factory=list,
         metadata={
@@ -43906,11 +42656,6 @@ class ACDCConverterController(EquipmentController):
     system used for the controlling, monitoring and protection of a single
     converter unit.
     '''
-
-    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
-    __package__ = 'Control'
-    __minOccurs__ = '0'
-    __maxOccurs__ = 'unbounded'
 
     ACDCConverter: Optional[ACDCConverter] = field(
         default=None,
@@ -43962,11 +42707,6 @@ class DirectCurrentMasterController(EquipmentController):
     system is under the responsibility of the system operator.
     '''
 
-    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
-    __package__ = 'Control'
-    __minOccurs__ = '0'
-    __maxOccurs__ = 'unbounded'
-
     DCTieCorridor: Optional[DCTieCorridor] = field(
         default=None,
         metadata={
@@ -44006,11 +42746,6 @@ class DirectCurrentPoleController(EquipmentController):
     with IEC 60633.
     '''
 
-    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
-    __package__ = 'Control'
-    __minOccurs__ = '0'
-    __maxOccurs__ = 'unbounded'
-
     DCPole: Optional[DCPole] = field(
         default=None,
         metadata={
@@ -44048,11 +42783,6 @@ class DirectCurrentSubstationBipoleController(EquipmentController):
     '''
     Control system of a substation bipole (IEC 60633).
     '''
-
-    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
-    __package__ = 'Control'
-    __minOccurs__ = '0'
-    __maxOccurs__ = 'unbounded'
 
     DCSubstationBipole: Optional[DCSubstationBipole] = field(
         default=None,
@@ -44092,11 +42822,6 @@ class DirectCurrentSubstationPoleController(EquipmentController):
     Control system of a substation pole (IEC 60633).
     '''
 
-    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
-    __package__ = 'Control'
-    __minOccurs__ = '0'
-    __maxOccurs__ = 'unbounded'
-
     DCSubstationPole: Optional[DCSubstationPole] = field(
         default=None,
         metadata={
@@ -44135,11 +42860,6 @@ class PowerElectronicsUnitController(EquipmentController):
     Power electronics unit controller is controlling the equipment to optimize
     the power electronics unit.
     '''
-
-    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
-    __package__ = 'Control'
-    __minOccurs__ = '0'
-    __maxOccurs__ = 'unbounded'
 
     PowerElectronicsUnit: list[PowerElectronicsUnit] = field(
         default_factory=list,
@@ -44317,7 +43037,7 @@ class SSSCController(EquipmentController):
     CurrentDroopOverride: Optional[CurrentDroopOverride] = field(
         default=None,
         metadata={
-        'type': 'Attribute',
+        'type': 'Association',
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'CurrentDroopOverride.SSSCController',
@@ -44355,11 +43075,6 @@ class TapChangerController(EquipmentController):
     e.g. how the voltage at the end of a line varies with the load level and
     compensation of the voltage drop by tap adjustment.
     '''
-
-    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
-    __package__ = 'Control'
-    __minOccurs__ = '0'
-    __maxOccurs__ = 'unbounded'
 
     TapChanger: list[TapChanger] = field(
         default_factory=list,
@@ -44400,11 +43115,6 @@ class Flowgate(PowerSystemResource):
     MW flow impact relating to transmission limitations and transmission service
     usage.
     '''
-
-    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
-    __package__ = 'ReferenceData'
-    __minOccurs__ = '0'
-    __maxOccurs__ = 'unbounded'
 
     MktTerminal: list[MktTerminal] = field(
         default_factory=list,
@@ -44500,11 +43210,6 @@ class HostControlArea(PowerSystemResource):
     (i.e., AGC). It also has a total load, including transmission and distribution
     losses.
     '''
-
-    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
-    __package__ = 'ReferenceData'
-    __minOccurs__ = '0'
-    __maxOccurs__ = 'unbounded'
 
     RegisteredResource: list[RegisteredResource] = field(
         default_factory=list,
@@ -44894,11 +43599,6 @@ class PowerElectronicsConnectionPhase(PowerSystemResource):
     A single phase of a power electronics connection.
     '''
 
-    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
-    __package__ = 'Wires'
-    __minOccurs__ = '0'
-    __maxOccurs__ = 'unbounded'
-
     p: Optional[ float | ActivePower ] = field(
         default=None,
         metadata={
@@ -45011,11 +43711,6 @@ class PowerFrequencyController(PowerSystemResource):
     a cost-efficient generation delivered by each unit.
     '''
 
-    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
-    __package__ = 'Control'
-    __minOccurs__ = '0'
-    __maxOccurs__ = 'unbounded'
-
     ControlArea: Optional[ControlArea] = field(
         default=None,
         metadata={
@@ -45055,11 +43750,6 @@ class RegisteredResource(PowerSystemResource):
     system. Examples include generating unit, load, and non-physical generator
     or load.
     '''
-
-    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
-    __package__ = 'MarketCommon'
-    __minOccurs__ = '0'
-    __maxOccurs__ = 'unbounded'
 
     commercialOpDate: Optional[str] = field(
         default=None,
@@ -46062,11 +44752,6 @@ class ShuntCompensatorControl(RegulatingControl):
     Distribution capacitor bank control settings.
     '''
 
-    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
-    __package__ = 'InfWiresExt'
-    __minOccurs__ = '0'
-    __maxOccurs__ = 'unbounded'
-
     ShuntCompensatorInfo: Optional[ShuntCompensatorInfo] = field(
         default=None,
         metadata={
@@ -46786,11 +45471,6 @@ class ShuntCompensatorPhase(PowerSystemResource):
     be different per phase.
     '''
 
-    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
-    __package__ = 'Wires'
-    __minOccurs__ = '0'
-    __maxOccurs__ = 'unbounded'
-
     maximumSections: Optional[int] = field(
         default=None,
         metadata={
@@ -46937,11 +45617,6 @@ class LinearShuntCompensatorPhase(ShuntCompensatorPhase):
     values.
     '''
 
-    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
-    __package__ = 'Wires'
-    __minOccurs__ = '0'
-    __maxOccurs__ = 'unbounded'
-
     bPerSection: Optional[ float | Susceptance ] = field(
         default=None,
         metadata={
@@ -47008,11 +45683,6 @@ class NonlinearShuntCompensatorPhase(ShuntCompensatorPhase):
     specified by NonlinearShuntCompensatorPhasePoint.sectionNumber.
     '''
 
-    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
-    __package__ = 'Wires'
-    __minOccurs__ = '0'
-    __maxOccurs__ = 'unbounded'
-
     NonlinearShuntCompensatorPhasePoints: list[NonlinearShuntCompensatorPhasePoint] = field(
         default_factory=list,
         metadata={
@@ -47051,11 +45721,6 @@ class SolarPowerPlant(PowerSystemResource):
     '''
     Solar power plant.
     '''
-
-    __namespace__ = 'http://iec.ch/TC57/CIM100-European#'
-    __package__ = 'Production'
-    __minOccurs__ = '0'
-    __maxOccurs__ = 'unbounded'
 
     SolarGeneratingUnits: list[SolarGeneratingUnit] = field(
         default_factory=list,
@@ -47096,11 +45761,6 @@ class SwitchPhase(PowerSystemResource):
     Single phase of a multi-phase switch when its attributes might be different
     per phase.
     '''
-
-    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
-    __package__ = 'Wires'
-    __minOccurs__ = '0'
-    __maxOccurs__ = 'unbounded'
 
     closed: Optional[bool] = field(
         default=None,
@@ -47626,7 +46286,7 @@ class TapChanger(PowerSystemResource):
     SvTapStep: Optional[SvTapStep] = field(
         default=None,
         metadata={
-        'type': 'Attribute',
+        'type': 'Association',
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'SvTapStep.TapChanger',
@@ -47645,7 +46305,7 @@ class TapChanger(PowerSystemResource):
     TapSchedules: list[TapSchedule] = field(
         default_factory=list,
         metadata={
-        'type': 'Attribute',
+        'type': 'Association',
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'TapSchedule.TapChanger',
@@ -47681,11 +46341,6 @@ class ImpedanceTapChangerTabular(TapChanger):
     tap step and the impedance difference across the windings of a three winding
     transformer.
     '''
-
-    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
-    __package__ = 'Wires'
-    __minOccurs__ = '0'
-    __maxOccurs__ = 'unbounded'
 
     ImpedanceTapChangerTable: Optional[ImpedanceTapChangerTable] = field(
         default=None,
@@ -47728,11 +46383,6 @@ class PhaseTapChanger(TapChanger):
     magnitude.
     '''
 
-    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
-    __package__ = 'Wires'
-    __minOccurs__ = '0'
-    __maxOccurs__ = 'unbounded'
-
     TransformerEnd: Optional[TransformerEnd] = field(
         default=None,
         metadata={
@@ -47755,7 +46405,7 @@ class PhaseTapChanger(TapChanger):
     TransformerEnd: Optional[TransformerEnd] = field(
         default=None,
         metadata={
-        'type': 'Attribute',
+        'type': 'Association',
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'TransformerEnd.PhaseTapChanger',
@@ -47793,11 +46443,6 @@ class PhaseTapChangerLinear(PhaseTapChanger):
     The phase angle is computed as stepPhaseShiftIncrement times the tap position.
     The voltage magnitude of both sides is the same.
     '''
-
-    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
-    __package__ = 'Wires'
-    __minOccurs__ = '0'
-    __maxOccurs__ = 'unbounded'
 
     stepPhaseShiftIncrement: Optional[ float | AngleDegrees ] = field(
         default=None,
@@ -47872,11 +46517,6 @@ class PhaseTapChangerNonLinear(PhaseTapChanger):
     phase tap changer models. The details of these models can be found in IEC
     61970-301.
     '''
-
-    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
-    __package__ = 'Wires'
-    __minOccurs__ = '0'
-    __maxOccurs__ = 'unbounded'
 
     voltageStepIncrement: Optional[ float | PerCent ] = field(
         default=None,
@@ -48189,11 +46829,6 @@ class PhaseTapChangerAsymmetrical(PhaseTapChangerNonLinear):
     magnitude and the winding connection angle.
     '''
 
-    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
-    __package__ = 'Wires'
-    __minOccurs__ = '0'
-    __maxOccurs__ = 'unbounded'
-
     windingConnectionAngle: Optional[ float | AngleDegrees ] = field(
         default=None,
         metadata={
@@ -48265,11 +46900,6 @@ class PhaseTapChangerTabular(PhaseTapChanger):
     Describes a tap changer with a table defining the relation between the
     tap step and the phase angle difference across the transformer.
     '''
-
-    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
-    __package__ = 'Wires'
-    __minOccurs__ = '0'
-    __maxOccurs__ = 'unbounded'
 
     PhaseTapChangerTable: Optional[PhaseTapChangerTable] = field(
         default=None,
@@ -48366,44 +46996,6 @@ class RatioTapChanger(TapChanger):
         'inverse': 'TransformerEnd.RatioTapChanger',
         'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Transformer end to which this ratio tap changer belongs.
-            '''
-        
-        })
-    '''
-    Transformer end to which this ratio tap changer belongs.
-    '''
-    
-    TransformerEnd: Optional[TransformerEnd] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'TransformerEnd.AdditionalRatioTapChanger',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
-        'docstring':
-            '''
-            Transformer end to which this ratio tap changer belongs.
-            '''
-        
-        })
-    '''
-    Transformer end to which this ratio tap changer belongs.
-    '''
-    
-    TransformerEnd: Optional[TransformerEnd] = field(
-        default=None,
-        metadata={
-        'type': 'Attribute',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'TransformerEnd.RatioTapChanger',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
         'docstring':
             '''
             Transformer end to which this ratio tap changer belongs.
@@ -48529,11 +47121,6 @@ class ACTieCorridor(TieCorridor):
     A collection of one or more AC tie lines that connect two different control
     areas.
     '''
-
-    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
-    __package__ = 'DC'
-    __minOccurs__ = '0'
-    __maxOccurs__ = 'unbounded'
 
     Line: list[Line] = field(
         default_factory=list,
@@ -48737,11 +47324,6 @@ class TransmissionRightOfWay(PowerSystemResource):
     A collection of transmission lines that are close proximity to each other.
     '''
 
-    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
-    __package__ = 'InfEnergyScheduling'
-    __minOccurs__ = '0'
-    __maxOccurs__ = 'unbounded'
-
     MktLine: list[MktLine] = field(
         default_factory=list,
         metadata={
@@ -48780,11 +47362,6 @@ class VoltageControlZone(PowerSystemResource):
     control purposes. A voltage control zone consists of a collection of substations
     with a designated bus bar section whose voltage will be controlled.
     '''
-
-    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
-    __package__ = 'Wires'
-    __minOccurs__ = '0'
-    __maxOccurs__ = 'unbounded'
 
     BusbarSection: Optional[BusbarSection] = field(
         default=None,
@@ -48827,7 +47404,7 @@ class VoltageControlZone(PowerSystemResource):
     BusbarSection: Optional[BusbarSection] = field(
         default=None,
         metadata={
-        'type': 'Attribute',
+        'type': 'Association',
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'BusbarSection.VoltageControlZone',
@@ -48862,11 +47439,6 @@ class WindPowerPlant(PowerSystemResource):
     '''
     Wind power plant.
     '''
-
-    __namespace__ = 'http://iec.ch/TC57/CIM100-European#'
-    __package__ = 'Production'
-    __minOccurs__ = '0'
-    __maxOccurs__ = 'unbounded'
 
     WindGeneratingUnits: list[WindGeneratingUnit] = field(
         default_factory=list,
@@ -48905,11 +47477,6 @@ class WireSegmentPhase(PowerSystemResource):
     '''
     Represents a single wire of an alternating current wire segment.
     '''
-
-    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
-    __package__ = 'Wires'
-    __minOccurs__ = '0'
-    __maxOccurs__ = 'unbounded'
 
     sequenceNumber: Optional[int] = field(
         default=None,
@@ -48988,11 +47555,6 @@ class ProductAssetModel(IdentifiedObject):
     Asset model by a specific manufacturer.
     '''
 
-    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
-    __package__ = 'Assets'
-    __minOccurs__ = '0'
-    __maxOccurs__ = 'unbounded'
-
     AssetInfo: Optional[AssetInfo] = field(
         default=None,
         metadata={
@@ -49031,11 +47593,6 @@ class RatioTapChangerTable(IdentifiedObject):
     Describes a curve for how the voltage magnitude and impedance varies with
     the tap step.
     '''
-
-    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
-    __package__ = 'Wires'
-    __minOccurs__ = '0'
-    __maxOccurs__ = 'unbounded'
 
     RatioTapChanger: list[RatioTapChanger] = field(
         default_factory=list,
@@ -49095,11 +47652,6 @@ class RemoteControl(IdentifiedObject):
     in the process.
     '''
 
-    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
-    __package__ = 'SCADA'
-    __minOccurs__ = '0'
-    __maxOccurs__ = 'unbounded'
-
     Control: Optional[Control] = field(
         default=None,
         metadata={
@@ -49138,11 +47690,6 @@ class RemoteSource(IdentifiedObject):
     Remote sources are state variables that are telemetered or calculated within
     the remote unit.
     '''
-
-    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
-    __package__ = 'SCADA'
-    __minOccurs__ = '0'
-    __maxOccurs__ = 'unbounded'
 
     MeasurementValue: Optional[MeasurementValue] = field(
         default=None,
@@ -49259,11 +47806,6 @@ class ReportingSuperGroup(IdentifiedObject):
     A reporting super group, groups reporting groups for a higher level report.
     '''
 
-    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
-    __package__ = 'Core'
-    __minOccurs__ = '0'
-    __maxOccurs__ = 'unbounded'
-
     ReportingGroup: list[ReportingGroup] = field(
         default_factory=list,
         metadata={
@@ -49303,11 +47845,6 @@ class ScheduledEvent(IdentifiedObject):
     a bill, requesting work, when generating units must be scheduled for maintenance,
     when a transformer is scheduled to be refurbished, etc.
     '''
-
-    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
-    __package__ = 'Common'
-    __minOccurs__ = '0'
-    __maxOccurs__ = 'unbounded'
 
     type: Optional[str] = field(
         default=None,
@@ -49478,11 +48015,6 @@ class ServiceCategory(IdentifiedObject):
     Category of service provided to the customer.
     '''
 
-    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
-    __package__ = 'Customers'
-    __minOccurs__ = '0'
-    __maxOccurs__ = 'unbounded'
-
     ConfigurationEvents: list[ConfigurationEvent] = field(
         default_factory=list,
         metadata={
@@ -49521,11 +48053,6 @@ class ShuntCompensatorDynamics(IdentifiedObject):
     Shunt compensator whose behaviour is described by reference to a standard
     model <font color="#0f0f0f">or by definition of a user-defined model.</font>
     '''
-
-    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
-    __package__ = 'ShuntCompensatorDynamics'
-    __minOccurs__ = '0'
-    __maxOccurs__ = 'unbounded'
 
     ShuntCompensator: Optional[ShuntCompensator] = field(
         default=None,
@@ -49929,11 +48456,6 @@ class StatcomDynamics(IdentifiedObject):
     color="#0f0f0f">or by definition of a user-defined model.</font>
     '''
 
-    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
-    __package__ = 'StatcomDynamics'
-    __minOccurs__ = '0'
-    __maxOccurs__ = 'unbounded'
-
     PowerElectronicsConnection: Optional[PowerElectronicsConnection] = field(
         default=None,
         metadata={
@@ -49975,11 +48497,6 @@ class StaticVarCompensatorDynamics(IdentifiedObject):
     model <font color="#0f0f0f">or by definition of a user-defined model.</font>
     '''
 
-    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
-    __package__ = 'StaticVarCompensatorDynamics'
-    __minOccurs__ = '0'
-    __maxOccurs__ = 'unbounded'
-
     StaticVarCompensator: Optional[StaticVarCompensator] = field(
         default=None,
         metadata={
@@ -50020,11 +48537,6 @@ class StaticVarCompensatorSystemDynamics(StaticVarCompensatorDynamics):
     to a standard model <font color="#0f0f0f">or by definition of a user-defined
     model.</font>
     '''
-
-    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
-    __package__ = 'StaticVarCompensatorDynamics'
-    __minOccurs__ = '0'
-    __maxOccurs__ = 'unbounded'
 
     ShuntCompensator: list[ShuntCompensator] = field(
         default_factory=list,
@@ -50069,11 +48581,6 @@ class SVSMO4(StaticVarCompensatorSystemDynamics):
     of the standard.
     Reference: WECC Hybrid STATCOM.
     '''
-
-    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
-    __package__ = 'StaticVarCompensatorDynamics'
-    __minOccurs__ = '0'
-    __maxOccurs__ = 'unbounded'
 
     FromTerminal: Optional[Terminal] = field(
         default=None,
@@ -50305,11 +48812,6 @@ class SwitchingAction(IdentifiedObject):
     Atomic switching action.
     '''
 
-    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
-    __package__ = 'Operations'
-    __minOccurs__ = '0'
-    __maxOccurs__ = 'unbounded'
-
     Crew: list[Crew] = field(
         default_factory=list,
         metadata={
@@ -50345,11 +48847,6 @@ class ClampAction(SwitchingAction):
     '''
     Action on Clamp as a switching step
     '''
-
-    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
-    __package__ = 'Operations'
-    __minOccurs__ = '0'
-    __maxOccurs__ = 'unbounded'
 
     Clamp: Optional[Clamp] = field(
         default=None,
@@ -50387,11 +48884,6 @@ class ControlAction(SwitchingAction):
     Control executed as a switching step.
     '''
 
-    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
-    __package__ = 'Operations'
-    __minOccurs__ = '0'
-    __maxOccurs__ = 'unbounded'
-
     Control: Optional[Control] = field(
         default=None,
         metadata={
@@ -50427,11 +48919,6 @@ class CutAction(SwitchingAction):
     '''
     Action on cut as a switching step.
     '''
-
-    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
-    __package__ = 'Operations'
-    __minOccurs__ = '0'
-    __maxOccurs__ = 'unbounded'
 
     Cut: Optional[Cut] = field(
         default=None,
@@ -50471,11 +48958,6 @@ class EnergyConsumerAction(SwitchingAction):
     Action to connect or disconnect the Energy Consumer from its Terminal
     '''
 
-    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
-    __package__ = 'Operations'
-    __minOccurs__ = '0'
-    __maxOccurs__ = 'unbounded'
-
     EnergyConsumer: Optional[EnergyConsumer] = field(
         default=None,
         metadata={
@@ -50511,11 +48993,6 @@ class EnergySourceAction(SwitchingAction):
     '''
     Action on energy source as a switching step.
     '''
-
-    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
-    __package__ = 'Operations'
-    __minOccurs__ = '0'
-    __maxOccurs__ = 'unbounded'
 
     EnergySource: Optional[EnergySource] = field(
         default=None,
@@ -50554,11 +49031,6 @@ class GroundAction(SwitchingAction):
     '''
     Action on ground as a switching step.
     '''
-
-    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
-    __package__ = 'Operations'
-    __minOccurs__ = '0'
-    __maxOccurs__ = 'unbounded'
 
     AlongACLineSegment: Optional[ACLineSegment] = field(
         default=None,
@@ -50648,11 +49120,6 @@ class JumperAction(SwitchingAction):
     '''
     Action on jumper as a switching step.
     '''
-
-    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
-    __package__ = 'Operations'
-    __minOccurs__ = '0'
-    __maxOccurs__ = 'unbounded'
 
     ACLineSegments: list[ACLineSegment] = field(
         default_factory=list,
@@ -50763,11 +49230,6 @@ class MeasurementAction(SwitchingAction):
     Measurement taken as a switching step.
     '''
 
-    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
-    __package__ = 'Operations'
-    __minOccurs__ = '0'
-    __maxOccurs__ = 'unbounded'
-
     Measurement: Optional[Measurement] = field(
         default=None,
         metadata={
@@ -50802,11 +49264,6 @@ class MeasurementAction(SwitchingAction):
 class ShuntCompensatorAction(SwitchingAction):
     '''
     '''
-
-    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
-    __package__ = 'Operations'
-    __minOccurs__ = '0'
-    __maxOccurs__ = 'unbounded'
 
     ShuntCompensator: Optional[ShuntCompensator] = field(
         default=None,
@@ -50843,11 +49300,6 @@ class SwitchAction(SwitchingAction):
     '''
     Action on switch as a switching step.
     '''
-
-    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
-    __package__ = 'Operations'
-    __minOccurs__ = '0'
-    __maxOccurs__ = 'unbounded'
 
     OperatedSwitch: Optional[Switch] = field(
         default=None,
@@ -50906,11 +49358,6 @@ class SynchronousMachineDynamics(IdentifiedObject):
     </ol>
     '''
 
-    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
-    __package__ = 'SynchronousMachineDynamics'
-    __minOccurs__ = '0'
-    __maxOccurs__ = 'unbounded'
-
     SynchronousMachine: Optional[SynchronousMachine] = field(
         default=None,
         metadata={
@@ -50949,11 +49396,6 @@ class TelephoneNumber(IdentifiedObject):
     '''
     Telephone number information.
     '''
-
-    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
-    __package__ = 'Common'
-    __minOccurs__ = '0'
-    __maxOccurs__ = 'unbounded'
 
     areaCode: Optional[str] = field(
         default=None,
@@ -51320,11 +49762,6 @@ class TiePoint(IdentifiedObject):
     is then corrected for line losses.
     '''
 
-    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
-    __package__ = 'InfReservation'
-    __minOccurs__ = '0'
-    __maxOccurs__ = 'unbounded'
-
     ByMktMeasurement: list[MktMeasurement] = field(
         default_factory=list,
         metadata={
@@ -51382,11 +49819,6 @@ class TimePoint(IdentifiedObject):
     A point in time within a sequence of points in time relative to a time
     schedule.
     '''
-
-    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
-    __package__ = 'Common'
-    __minOccurs__ = '0'
-    __maxOccurs__ = 'unbounded'
 
     dateTime: Optional[str] = field(
         default=None,
@@ -51531,11 +49963,6 @@ class TopologicalIsland(IdentifiedObject):
     Only energised TopologicalNode-s shall be part of the topological island.
     '''
 
-    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
-    __package__ = 'Topology'
-    __minOccurs__ = '0'
-    __maxOccurs__ = 'unbounded'
-
     AngleRefTopologicalNode: Optional[TopologicalNode] = field(
         default=None,
         metadata={
@@ -51562,7 +49989,7 @@ class TopologicalIsland(IdentifiedObject):
     AngleRefTopologicalNode: Optional[TopologicalNode] = field(
         default=None,
         metadata={
-        'type': 'Attribute',
+        'type': 'Association',
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'TopologicalNode.AngleRefTopologicalIsland',
@@ -51919,11 +50346,6 @@ class Transaction(IdentifiedObject):
     The record of details of payment for service or token sale.
     '''
 
-    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
-    __package__ = 'PaymentMetering'
-    __minOccurs__ = '0'
-    __maxOccurs__ = 'unbounded'
-
     UserAttributes: list[UserAttribute] = field(
         default_factory=list,
         metadata={
@@ -52081,7 +50503,7 @@ class TransformerCoreAdmittance(IdentifiedObject):
     TransformerEndInfo: Optional[TransformerEndInfo] = field(
         default=None,
         metadata={
-        'type': 'Attribute',
+        'type': 'Association',
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'TransformerEndInfo.CoreAdmittance',
@@ -52529,11 +50951,6 @@ class PowerTransformerEnd(TransformerEnd):
     EquipmentContainer (Substation, VoltageLevel, etc).
     '''
 
-    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
-    __package__ = 'Wires'
-    __minOccurs__ = '0'
-    __maxOccurs__ = 'unbounded'
-
     phaseAngleClock: Optional[int] = field(
         default=None,
         metadata={
@@ -52823,11 +51240,6 @@ class TransformerTankEnd(TransformerEnd):
     the PowerTransformer).
     '''
 
-    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
-    __package__ = 'Wires'
-    __minOccurs__ = '0'
-    __maxOccurs__ = 'unbounded'
-
     orderedPhases: Optional[OrderedPhaseCodeKind] = field(
         default=None,
         metadata={
@@ -52906,11 +51318,6 @@ class TransformerMeshImpedance(IdentifiedObject):
     end associations are 1. However, in cases where two or more transformer
     ends are modelled the cardinalities are larger than 1.
     '''
-
-    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
-    __package__ = 'Wires'
-    __minOccurs__ = '0'
-    __maxOccurs__ = 'unbounded'
 
     r: Optional[ float | Resistance ] = field(
         default=None,
@@ -53224,11 +51631,6 @@ class TransformerTest(IdentifiedObject):
     or no-load test.
     '''
 
-    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
-    __package__ = 'AssetInfo'
-    __minOccurs__ = '0'
-    __maxOccurs__ = 'unbounded'
-
     basePower: Optional[ float | ApparentPower ] = field(
         default=None,
         metadata={
@@ -53289,11 +51691,6 @@ class NoLoadTest(TransformerTest):
     winding. The excitation may be positive sequence or zero sequence. The
     test may be repeated at different voltages to measure saturation.
     '''
-
-    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
-    __package__ = 'AssetInfo'
-    __minOccurs__ = '0'
-    __maxOccurs__ = 'unbounded'
 
     energisedEndVoltage: Optional[ float | Voltage ] = field(
         default=None,
@@ -53431,11 +51828,6 @@ class OpenCircuitTest(TransformerTest):
     windings, with voltage applied to the energised end. For three-phase windings,
     the excitation can be a positive sequence (the default) or a zero sequence.
     '''
-
-    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
-    __package__ = 'AssetInfo'
-    __minOccurs__ = '0'
-    __maxOccurs__ = 'unbounded'
 
     energisedEndStep: Optional[int] = field(
         default=None,
@@ -53593,11 +51985,6 @@ class ShortCircuitTest(TransformerTest):
     can be a positive sequence (the default) or a zero sequence. There shall
     be at least one grounded winding.
     '''
-
-    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
-    __package__ = 'AssetInfo'
-    __minOccurs__ = '0'
-    __maxOccurs__ = 'unbounded'
 
     energisedEndStep: Optional[int] = field(
         default=None,
@@ -53906,11 +52293,6 @@ class VSCDynamics(IdentifiedObject):
     model <font color="#0f0f0f">or by definition of a user-defined model.</font>
     '''
 
-    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
-    __package__ = 'HVDCDynamics'
-    __minOccurs__ = '0'
-    __maxOccurs__ = 'unbounded'
-
     VsConverter: Optional[VsConverter] = field(
         default=None,
         metadata={
@@ -53956,11 +52338,6 @@ class ValueAliasSet(IdentifiedObject):
     3-&gt;"Intermediate". Each ValueToAlias member in ValueAliasSet.Value describe
     a mapping for one particular value to a name.
     '''
-
-    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
-    __package__ = 'Meas'
-    __minOccurs__ = '0'
-    __maxOccurs__ = 'unbounded'
 
     Commands: list[Command] = field(
         default_factory=list,
@@ -54058,11 +52435,6 @@ class ValueToAlias(IdentifiedObject):
     "Open".
     '''
 
-    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
-    __package__ = 'Meas'
-    __minOccurs__ = '0'
-    __maxOccurs__ = 'unbounded'
-
     value: Optional[int] = field(
         default=None,
         metadata={
@@ -54127,11 +52499,6 @@ class VisibilityLayer(IdentifiedObject):
     m:n.
     '''
 
-    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
-    __package__ = 'DiagramLayout'
-    __minOccurs__ = '0'
-    __maxOccurs__ = 'unbounded'
-
     drawingOrder: Optional[int] = field(
         default=None,
         metadata={
@@ -54172,11 +52539,6 @@ class VoltageInjectionControlFunction(IdentifiedObject):
     the operating point of the controlled equipment to achieve the target voltage
     injection. The controlled point is the Terminal with sequenceNumber =1.
     '''
-
-    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
-    __package__ = 'FACTS'
-    __minOccurs__ = '0'
-    __maxOccurs__ = 'unbounded'
 
     targetValue: Optional[ float | Voltage ] = field(
         default=None,
@@ -54219,11 +52581,6 @@ class WeccREPCC(IdentifiedObject):
     system generic models, 2021.
     '''
 
-    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
-    __package__ = 'WECCDynamics'
-    __minOccurs__ = '0'
-    __maxOccurs__ = 'unbounded'
-
     Terminal: Optional[Terminal] = field(
         default=None,
         metadata={
@@ -54265,11 +52622,6 @@ class WeccWTGIBFFRA(IdentifiedObject):
     system generic models, 2021.
     '''
 
-    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
-    __package__ = 'WECCDynamics'
-    __minOccurs__ = '0'
-    __maxOccurs__ = 'unbounded'
-
     Terminal: Optional[Terminal] = field(
         default=None,
         metadata={
@@ -54310,11 +52662,6 @@ class WindPlantDynamics(IdentifiedObject):
     models.
     '''
 
-    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
-    __package__ = 'WindDynamics'
-    __minOccurs__ = '0'
-    __maxOccurs__ = 'unbounded'
-
     PointOfConnection: Optional[Terminal] = field(
         default=None,
         metadata={
@@ -54353,11 +52700,6 @@ class WindTurbineType3or4Dynamics(IdentifiedObject):
     Parent class supporting relationships to wind turbines type 3 and type
     4 and wind plant including their control models.
     '''
-
-    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
-    __package__ = 'WindDynamics'
-    __minOccurs__ = '0'
-    __maxOccurs__ = 'unbounded'
 
     PowerElectronicsConnection: Optional[PowerElectronicsConnection] = field(
         default=None,
@@ -54548,11 +52890,6 @@ class WorkCapability(IdentifiedObject):
     needs of the particular utility.
     '''
 
-    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
-    __package__ = 'Work'
-    __minOccurs__ = '0'
-    __maxOccurs__ = 'unbounded'
-
     Crew: list[Crew] = field(
         default_factory=list,
         metadata={
@@ -54583,229 +52920,11 @@ class WorkCapability(IdentifiedObject):
     def __maxOccurs__(self):
         return 'unbounded'
     
-@stereotype(CIMStereotype.Concrete)
-@dataclass(repr=False)
-class PhaseImpedanceData(Identity):
-    '''
-    Per length phase impedance matrix entry describes impedance and conductance
-    matrix element values for a specific row and column of the matrix.
-    The phases to which each entry applies can be determined by means of the
-    row and column attributes which bind to a sequence number provided in either
-    ACLineSegmentPhase or WirePosition (which also specify phase). Due to physical
-    symmetry that is reflected in the matrix, only the lower triangle of the
-    matrix is populated with the row and column method. That is, the column
-    attribute is always less than or equal to the row attribute.
-    '''
-
-    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
-    __package__ = 'Wires'
-    __minOccurs__ = '0'
-    __maxOccurs__ = 'unbounded'
-
-    column: Optional[int] = field(
-        default=None,
-        metadata={
-        'type': 'Attribute',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': True,
-        'docstring':
-            '''
-            The matrix entry's column number has a range of possible values from 1
-            to the conductor count of the matrix, but due to symmetry, only entries
-            in the lower triangle (including diagonal) of the matrix need be defined.
-            Column number binds to the sequence number in either ACLineSegmentPhase
-            or WirePosition, which then identifies the phase for this entry.
-            '''
-        
-        })
-    '''
-    The matrix entry's column number has a range of possible values from
-    1 to the conductor count of the matrix, but due to symmetry, only entries
-    in the lower triangle (including diagonal) of the matrix need be defined.
-    Column number binds to the sequence number in either ACLineSegmentPhase
-    or WirePosition, which then identifies the phase for this entry.
-    '''
-    
-    row: Optional[int] = field(
-        default=None,
-        metadata={
-        'type': 'Attribute',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': True,
-        'docstring':
-            '''
-            The matrix entry's row number has a range of possible values from 1 to
-            the conductor count of the matrix, but due to symmetry, only entries in
-            the lower triangle (including diagonal) of the matrix need be defined.
-            Row number binds to the sequence number in either ACLineSegmentPhase or
-            WirePosition, which then identifies the phase for this entry.
-            '''
-        
-        })
-    '''
-    The matrix entry's row number has a range of possible values from 1
-    to the conductor count of the matrix, but due to symmetry, only entries
-    in the lower triangle (including diagonal) of the matrix need be defined.
-    Row number binds to the sequence number in either ACLineSegmentPhase
-    or WirePosition, which then identifies the phase for this entry.
-    '''
-    
-    b: Optional[ float | SusceptancePerLength ] = field(
-        default=None,
-        metadata={
-        'type': 'Attribute',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': True,
-        'docstring':
-            '''
-            Susceptance matrix entry value, per length of unit.
-            '''
-        
-        })
-    '''
-    Susceptance matrix entry value, per length of unit.
-    '''
-    
-    g: Optional[ float | ConductancePerLength ] = field(
-        default=None,
-        metadata={
-        'type': 'Attribute',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': True,
-        'docstring':
-            '''
-            Conductance matrix entry value, per length of unit.
-            '''
-        
-        })
-    '''
-    Conductance matrix entry value, per length of unit.
-    '''
-    
-    r: Optional[ float | ResistancePerLength ] = field(
-        default=None,
-        metadata={
-        'type': 'Attribute',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': True,
-        'docstring':
-            '''
-            Resistance matrix entry value, per length of unit.
-            '''
-        
-        })
-    '''
-    Resistance matrix entry value, per length of unit.
-    '''
-    
-    x: Optional[ float | ReactancePerLength ] = field(
-        default=None,
-        metadata={
-        'type': 'Attribute',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': True,
-        'docstring':
-            '''
-            Reactance matrix entry value, per length of unit.
-            '''
-        
-        })
-    '''
-    Reactance matrix entry value, per length of unit.
-    '''
-    
-    fromPhase: Optional[SinglePhaseKind] = field(
-        default=None,
-        metadata={
-        'type': 'enumeration Attribute',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': '',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': True,
-        'docstring':
-            '''
-            Refer to the class description.
-            '''
-        
-        })
-    '''
-    Refer to the class description.
-    '''
-    
-    toPhase: Optional[SinglePhaseKind] = field(
-        default=None,
-        metadata={
-        'type': 'enumeration Attribute',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': '',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': True,
-        'docstring':
-            '''
-            Refer to the class description.
-            '''
-        
-        })
-    '''
-    Refer to the class description.
-    '''
-    
-    PhaseImpedance: Optional[PerLengthPhaseImpedance] = field(
-        default=None,
-        metadata={
-        'type': 'Attribute',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'PerLengthPhaseImpedance.PhaseImpedanceData',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': True,
-        'docstring':
-            '''
-            Conductor phase impedance to which this data belongs.
-            '''
-        
-        })
-    '''
-    Conductor phase impedance to which this data belongs.
-    '''
-    
-    @property
-    def __namespace__(self):
-        return 'http://cim.ucaiug.io/CIM101/draft#'
-    @property
-    def __package__(self):
-        return 'Wires'
-    @property
-    def __minOccurs__(self):
-        return '0'
-    @property
-    def __maxOccurs__(self):
-        return 'unbounded'
-    
 @dataclass(repr=False)
 class ImpedanceTapChangerTablePoint(Identity):
     '''
     Describes each tap step in the impedance tap changer tabular curve.
     '''
-
-    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
-    __package__ = 'Wires'
-    __minOccurs__ = '0'
-    __maxOccurs__ = 'unbounded'
 
     ratio: Optional[float] = field(
         default=None,
@@ -55328,11 +53447,6 @@ class IrregularTimePoint(Identity):
     TimePoints for a schedule where the time between the points varies.
     '''
 
-    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
-    __package__ = 'Core'
-    __minOccurs__ = '0'
-    __maxOccurs__ = 'unbounded'
-
     value1: Optional[float] = field(
         default=None,
         metadata={
@@ -55442,6 +53556,48 @@ class IrregularTimePoint(Identity):
     @property
     def __maxOccurs__(self):
         return 'unbounded'
+    
+@dataclass(repr=False)
+class LoadDistributionFactor(Identity):
+    '''
+    This class models the load distribution factors. This class should be used
+    in one of two ways:
+    Use it along with the AggregatedPnode and the IndividualPnode to show the
+    distriubtion of each individual party
+    OR
+    Use it with Mkt_EnergyConsumer to represent the current MW/Mvar distribution
+    within it's parnet load group.
+    '''
+
+    @property
+    def __namespace__(self):
+        return 'http://cim.ucaiug.io/CIM101/draft#'
+    @property
+    def __package__(self):
+        return 'ExternalInputs'
+    @property
+    def __minOccurs__(self):
+        return '0'
+    @property
+    def __maxOccurs__(self):
+        return 'unbounded'
+    
+    IndividualPnode: Optional[IndividualPnode] = field(
+        default=None,
+        metadata={
+        'type': 'Association',
+        'minOccurs': '0',
+        'maxOccurs': '1',
+        'inverse': 'IndividualPnode.LoadDistributionFactor',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
+        'serialize': False,
+        'docstring':
+            '''
+            '''
+        
+        })
+    '''
+    '''
     
 @dataclass(repr=False)
 class LocationAccess(Identity):
@@ -55610,7 +53766,7 @@ class LocationAccess(Identity):
     BuildingSpace: Optional[BuildingSpace] = field(
         default=None,
         metadata={
-        'type': 'Attribute',
+        'type': 'Association',
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'BuildingSpace.LocationAccess',
@@ -55627,7 +53783,7 @@ class LocationAccess(Identity):
     Location: Optional[Location] = field(
         default=None,
         metadata={
-        'type': 'Attribute',
+        'type': 'Association',
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'Location.LocationAccess',
@@ -56134,11 +54290,6 @@ class MarketLedgerEntry(Identity):
     on the posted date.
     '''
 
-    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
-    __package__ = 'MarketOpCommon'
-    __minOccurs__ = '0'
-    __maxOccurs__ = 'unbounded'
-
     accountID: Optional[str] = field(
         default=None,
         metadata={
@@ -56361,11 +54512,6 @@ class MeterInfo(Identity):
     '''
     Datasheet of a smart meter, possibly integrating other metering functions
     '''
-
-    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
-    __package__ = 'AssetInfo'
-    __minOccurs__ = '0'
-    __maxOccurs__ = 'unbounded'
 
     electricMetering: Optional[bool] = field(
         default=None,
@@ -56689,11 +54835,6 @@ class Name(Identity):
     provides the means to define any number of names or alternative identifiers
     for an object.
     '''
-
-    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
-    __package__ = 'Core'
-    __minOccurs__ = '0'
-    __maxOccurs__ = 'unbounded'
 
     mRID: Optional[str] = field(
         default=None,
@@ -57051,11 +55192,6 @@ class NonlinearShuntCompensatorPhasePoint(Identity):
     There is no interpolation between NonlinearShuntCompensatorPhasePoint-s.
     '''
 
-    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
-    __package__ = 'Wires'
-    __minOccurs__ = '0'
-    __maxOccurs__ = 'unbounded'
-
     sectionNumber: Optional[int] = field(
         default=None,
         metadata={
@@ -57155,11 +55291,6 @@ class NonlinearShuntCompensatorPoint(Identity):
     shall only be set to one of the NonlinearShuntCompensatorPoint.sectionNumber.
     There is no interpolation between NonlinearShuntCompensatorPoint-s.
     '''
-
-    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
-    __package__ = 'Wires'
-    __minOccurs__ = '0'
-    __maxOccurs__ = 'unbounded'
 
     sectionNumber: Optional[int] = field(
         default=None,
@@ -57300,11 +55431,6 @@ class ObjectType(Identity):
     receiver.
     '''
 
-    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
-    __package__ = 'Core'
-    __minOccurs__ = '0'
-    __maxOccurs__ = 'unbounded'
-
     type: Optional[str] = field(
         default=None,
         metadata={
@@ -57348,11 +55474,6 @@ class OperatingShare(Identity):
     Specifies the operations contract relationship between a power system resource
     and a contract participant.
     '''
-
-    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
-    __package__ = 'Core'
-    __minOccurs__ = '0'
-    __maxOccurs__ = 'unbounded'
 
     percentage: Optional[ float | PerCent ] = field(
         default=None,
@@ -57448,6 +55569,214 @@ class Operator(Identity):
     def __maxOccurs__(self):
         return 'unbounded'
     
+@stereotype(CIMStereotype.Concrete)
+@dataclass(repr=False)
+class PhaseImpedanceData(Identity):
+    '''
+    Per length phase impedance matrix entry describes impedance and conductance
+    matrix element values for a specific row and column of the matrix.
+    The phases to which each entry applies can be determined by means of the
+    row and column attributes which bind to a sequence number provided in either
+    ACLineSegmentPhase or WirePosition (which also specify phase). Due to physical
+    symmetry that is reflected in the matrix, only the lower triangle of the
+    matrix is populated with the row and column method. That is, the column
+    attribute is always less than or equal to the row attribute.
+    '''
+
+    column: Optional[int] = field(
+        default=None,
+        metadata={
+        'type': 'Attribute',
+        'minOccurs': '0',
+        'maxOccurs': '1',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
+        'serialize': True,
+        'docstring':
+            '''
+            The matrix entry's column number has a range of possible values from 1
+            to the conductor count of the matrix, but due to symmetry, only entries
+            in the lower triangle (including diagonal) of the matrix need be defined.
+            Column number binds to the sequence number in either ACLineSegmentPhase
+            or WirePosition, which then identifies the phase for this entry.
+            '''
+        
+        })
+    '''
+    The matrix entry's column number has a range of possible values from
+    1 to the conductor count of the matrix, but due to symmetry, only entries
+    in the lower triangle (including diagonal) of the matrix need be defined.
+    Column number binds to the sequence number in either ACLineSegmentPhase
+    or WirePosition, which then identifies the phase for this entry.
+    '''
+    
+    row: Optional[int] = field(
+        default=None,
+        metadata={
+        'type': 'Attribute',
+        'minOccurs': '0',
+        'maxOccurs': '1',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
+        'serialize': True,
+        'docstring':
+            '''
+            The matrix entry's row number has a range of possible values from 1 to
+            the conductor count of the matrix, but due to symmetry, only entries in
+            the lower triangle (including diagonal) of the matrix need be defined.
+            Row number binds to the sequence number in either ACLineSegmentPhase or
+            WirePosition, which then identifies the phase for this entry.
+            '''
+        
+        })
+    '''
+    The matrix entry's row number has a range of possible values from 1
+    to the conductor count of the matrix, but due to symmetry, only entries
+    in the lower triangle (including diagonal) of the matrix need be defined.
+    Row number binds to the sequence number in either ACLineSegmentPhase
+    or WirePosition, which then identifies the phase for this entry.
+    '''
+    
+    b: Optional[ float | SusceptancePerLength ] = field(
+        default=None,
+        metadata={
+        'type': 'Attribute',
+        'minOccurs': '0',
+        'maxOccurs': '1',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
+        'serialize': True,
+        'docstring':
+            '''
+            Susceptance matrix entry value, per length of unit.
+            '''
+        
+        })
+    '''
+    Susceptance matrix entry value, per length of unit.
+    '''
+    
+    g: Optional[ float | ConductancePerLength ] = field(
+        default=None,
+        metadata={
+        'type': 'Attribute',
+        'minOccurs': '0',
+        'maxOccurs': '1',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
+        'serialize': True,
+        'docstring':
+            '''
+            Conductance matrix entry value, per length of unit.
+            '''
+        
+        })
+    '''
+    Conductance matrix entry value, per length of unit.
+    '''
+    
+    r: Optional[ float | ResistancePerLength ] = field(
+        default=None,
+        metadata={
+        'type': 'Attribute',
+        'minOccurs': '0',
+        'maxOccurs': '1',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
+        'serialize': True,
+        'docstring':
+            '''
+            Resistance matrix entry value, per length of unit.
+            '''
+        
+        })
+    '''
+    Resistance matrix entry value, per length of unit.
+    '''
+    
+    x: Optional[ float | ReactancePerLength ] = field(
+        default=None,
+        metadata={
+        'type': 'Attribute',
+        'minOccurs': '0',
+        'maxOccurs': '1',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
+        'serialize': True,
+        'docstring':
+            '''
+            Reactance matrix entry value, per length of unit.
+            '''
+        
+        })
+    '''
+    Reactance matrix entry value, per length of unit.
+    '''
+    
+    fromPhase: Optional[SinglePhaseKind] = field(
+        default=None,
+        metadata={
+        'type': 'enumeration Attribute',
+        'minOccurs': '0',
+        'maxOccurs': '1',
+        'inverse': '',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
+        'serialize': True,
+        'docstring':
+            '''
+            Refer to the class description.
+            '''
+        
+        })
+    '''
+    Refer to the class description.
+    '''
+    
+    toPhase: Optional[SinglePhaseKind] = field(
+        default=None,
+        metadata={
+        'type': 'enumeration Attribute',
+        'minOccurs': '0',
+        'maxOccurs': '1',
+        'inverse': '',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
+        'serialize': True,
+        'docstring':
+            '''
+            Refer to the class description.
+            '''
+        
+        })
+    '''
+    Refer to the class description.
+    '''
+    
+    PhaseImpedance: Optional[PerLengthPhaseImpedance] = field(
+        default=None,
+        metadata={
+        'type': 'Attribute',
+        'minOccurs': '0',
+        'maxOccurs': '1',
+        'inverse': 'PerLengthPhaseImpedance.PhaseImpedanceData',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
+        'serialize': True,
+        'docstring':
+            '''
+            Conductor phase impedance to which this data belongs.
+            '''
+        
+        })
+    '''
+    Conductor phase impedance to which this data belongs.
+    '''
+    
+    @property
+    def __namespace__(self):
+        return 'http://cim.ucaiug.io/CIM101/draft#'
+    @property
+    def __package__(self):
+        return 'Wires'
+    @property
+    def __minOccurs__(self):
+        return '0'
+    @property
+    def __maxOccurs__(self):
+        return 'unbounded'
+    
 @dataclass(repr=False)
 class PhaseImpedanceData1(Identity):
     '''
@@ -57460,11 +55789,6 @@ class PhaseImpedanceData1(Identity):
     matrix is populated with the row and column method. That is, the column
     attribute is always less than or equal to the row attribute.
     '''
-
-    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
-    __package__ = 'Wires'
-    __minOccurs__ = '0'
-    __maxOccurs__ = 'unbounded'
 
     column: Optional[int] = field(
         default=None,
@@ -57651,6 +55975,26 @@ class PhaseImpedanceData1(Identity):
     @property
     def __package__(self):
         return 'Wires'
+    @property
+    def __minOccurs__(self):
+        return '0'
+    @property
+    def __maxOccurs__(self):
+        return 'unbounded'
+    
+@dataclass(repr=False)
+class PnodeDistributionFactor(Identity):
+    '''
+    This class allows SC to input different distribution factors for pricing
+    node.
+    '''
+
+    @property
+    def __namespace__(self):
+        return 'http://cim.ucaiug.io/CIM101/draft#'
+    @property
+    def __package__(self):
+        return 'ReferenceData'
     @property
     def __minOccurs__(self):
         return '0'
@@ -57892,11 +56236,6 @@ class PriceDescriptor(Identity):
     of potentially many constituent components.
     '''
 
-    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
-    __package__ = 'MarketCommon'
-    __minOccurs__ = '0'
-    __maxOccurs__ = 'unbounded'
-
     type: Optional[str] = field(
         default=None,
         metadata={
@@ -57986,11 +56325,6 @@ class Priority(Identity):
     Priority definition.
     '''
 
-    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
-    __package__ = 'Common'
-    __minOccurs__ = '0'
-    __maxOccurs__ = 'unbounded'
-
     justification: Optional[str] = field(
         default=None,
         metadata={
@@ -58064,11 +56398,6 @@ class Quality61850(Identity):
     Quality flags in this class are as defined in IEC 61850, except for estimatorReplaced,
     which has been included in this class for convenience.
     '''
-
-    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
-    __package__ = 'Meas'
-    __minOccurs__ = '0'
-    __maxOccurs__ = 'unbounded'
 
     badReference: Optional[bool] = field(
         default=None,
@@ -58351,11 +56680,6 @@ class MeasurementValueQuality(Quality61850):
     document. Bits 16-31 are reserved for EMS applications.
     '''
 
-    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
-    __package__ = 'Meas'
-    __minOccurs__ = '0'
-    __maxOccurs__ = 'unbounded'
-
     MeasurementValue: Optional[MeasurementValue] = field(
         default=None,
         metadata={
@@ -58413,11 +56737,6 @@ class RegularTimePoint(Identity):
     Time point for a schedule where the time between the consecutive points
     is constant.
     '''
-
-    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
-    __package__ = 'Core'
-    __minOccurs__ = '0'
-    __maxOccurs__ = 'unbounded'
 
     sequenceNumber: Optional[int] = field(
         default=None,
@@ -58635,11 +56954,6 @@ class ResourceCapacity(Identity):
     trade and so forth. Capacities may be defined for active power or reactive
     power.
     '''
-
-    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
-    __package__ = 'MarketCommon'
-    __minOccurs__ = '0'
-    __maxOccurs__ = 'unbounded'
 
     defaultCapacity: Optional[str] = field(
         default=None,
@@ -59117,11 +57431,6 @@ class ShortCircuitResponse(Identity):
     relative to voltage) at different voltages.
     '''
 
-    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
-    __package__ = 'AssetInfo'
-    __minOccurs__ = '0'
-    __maxOccurs__ = 'unbounded'
-
     outputCurrent: Optional[ float | CurrentFlow ] = field(
         default=None,
         metadata={
@@ -59357,11 +57666,6 @@ class SvDCPowerFlow(StateVariable):
     This means flow out from the DCTopologicalNode into the equipment is positive.
     '''
 
-    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
-    __package__ = 'StateVariables'
-    __minOccurs__ = '0'
-    __maxOccurs__ = 'unbounded'
-
     p: Optional[ float | ActivePower ] = field(
         default=None,
         metadata={
@@ -59420,11 +57724,6 @@ class SvDCVoltage(StateVariable):
     '''
     State variable for direct current voltage.
     '''
-
-    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
-    __package__ = 'StateVariables'
-    __minOccurs__ = '0'
-    __maxOccurs__ = 'unbounded'
 
     v: Optional[ float | Voltage ] = field(
         default=None,
@@ -59485,11 +57784,6 @@ class SvInjection(StateVariable):
     may have the remainder after state estimation or slack after power flow
     calculation.
     '''
-
-    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
-    __package__ = 'StateVariables'
-    __minOccurs__ = '0'
-    __maxOccurs__ = 'unbounded'
 
     pInjection: Optional[ float | ActivePower ] = field(
         default=None,
@@ -59590,11 +57884,6 @@ class SvPowerFlow(StateVariable):
     State variable for power flow. Load convention is used for flow direction.
     This means flow out from the TopologicalNode into the equipment is positive.
     '''
-
-    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
-    __package__ = 'StateVariables'
-    __minOccurs__ = '0'
-    __maxOccurs__ = 'unbounded'
 
     p: Optional[ float | ActivePower ] = field(
         default=None,
@@ -59697,11 +57986,6 @@ class SvShuntCompensatorSections(StateVariable):
     State variable for the number of sections in service for a shunt compensator.
     '''
 
-    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
-    __package__ = 'StateVariables'
-    __minOccurs__ = '0'
-    __maxOccurs__ = 'unbounded'
-
     sections: Optional[float] = field(
         default=None,
         metadata={
@@ -59781,11 +58065,6 @@ class SvStatus(StateVariable):
     '''
     State variable for status.
     '''
-
-    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
-    __package__ = 'StateVariables'
-    __minOccurs__ = '0'
-    __maxOccurs__ = 'unbounded'
 
     inService: Optional[bool] = field(
         default=None,
@@ -59870,11 +58149,6 @@ class SvSwitch(StateVariable):
     '''
     State variable for switch.
     '''
-
-    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
-    __package__ = 'StateVariables'
-    __minOccurs__ = '0'
-    __maxOccurs__ = 'unbounded'
 
     open: Optional[bool] = field(
         default=None,
@@ -59999,7 +58273,7 @@ class SvTapStep(StateVariable):
     TapChanger: Optional[TapChanger] = field(
         default=None,
         metadata={
-        'type': 'Attribute',
+        'type': 'Association',
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'TapChanger.SvTapStep',
@@ -60033,11 +58307,6 @@ class SvVoltage(StateVariable):
     '''
     State variable for voltage.
     '''
-
-    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
-    __package__ = 'StateVariables'
-    __minOccurs__ = '0'
-    __maxOccurs__ = 'unbounded'
 
     angle: Optional[ float | AngleDegrees ] = field(
         default=None,
@@ -60139,11 +58408,6 @@ class Status(Identity):
     Current status information relevant to an entity.
     '''
 
-    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
-    __package__ = 'Common'
-    __minOccurs__ = '0'
-    __maxOccurs__ = 'unbounded'
-
     dateTime: Optional[str] = field(
         default=None,
         metadata={
@@ -60241,11 +58505,6 @@ class StepLimitTablePoint(Identity):
     Describes each limit per step in the operational limit curve.
     '''
 
-    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
-    __package__ = 'Wires'
-    __minOccurs__ = '0'
-    __maxOccurs__ = 'unbounded'
-
     factor: Optional[float] = field(
         default=None,
         metadata={
@@ -60323,11 +58582,6 @@ class StreetDetail(Identity):
     '''
     Street details, in the context of address.
     '''
-
-    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
-    __package__ = 'Common'
-    __minOccurs__ = '0'
-    __maxOccurs__ = 'unbounded'
 
     addressGeneral: Optional[str] = field(
         default=None,
@@ -60638,11 +58892,6 @@ class TCSCCompensationPoint(Identity):
     Compensation point of a TCSC compensator.
     '''
 
-    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
-    __package__ = 'FACTS'
-    __minOccurs__ = '0'
-    __maxOccurs__ = 'unbounded'
-
     mRID: Optional[str] = field(
         default=None,
         metadata={
@@ -60746,11 +58995,6 @@ class TapChangerTablePoint(Identity):
     Describes each tap step in the tabular curve. Note that the upper boundary
     is not constrained to 100 percent.
     '''
-
-    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
-    __package__ = 'Wires'
-    __minOccurs__ = '0'
-    __maxOccurs__ = 'unbounded'
 
     ratio: Optional[float] = field(
         default=None,
@@ -60931,11 +59175,6 @@ class PhaseTapChangerTablePoint(TapChangerTablePoint):
     Describes each tap step in the phase tap changer tabular curve.
     '''
 
-    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
-    __package__ = 'Wires'
-    __minOccurs__ = '0'
-    __maxOccurs__ = 'unbounded'
-
     angle: Optional[ float | AngleDegrees ] = field(
         default=None,
         metadata={
@@ -60996,11 +59235,6 @@ class RatioTapChangerTablePoint(TapChangerTablePoint):
     Describes each tap step in the ratio tap changer tabular curve.
     '''
 
-    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
-    __package__ = 'Wires'
-    __minOccurs__ = '0'
-    __maxOccurs__ = 'unbounded'
-
     RatioTapChangerTable: Optional[RatioTapChangerTable] = field(
         default=None,
         metadata={
@@ -61040,11 +59274,6 @@ class TownDetail(Identity):
     '''
     Town details, in the context of address.
     '''
-
-    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
-    __package__ = 'Common'
-    __minOccurs__ = '0'
-    __maxOccurs__ = 'unbounded'
 
     code: Optional[str] = field(
         default=None,
@@ -61158,11 +59387,6 @@ class UserAttribute(Identity):
     for value; can be used to model parts of information exchange when concrete
     types are not known in advance.
     '''
-
-    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
-    __package__ = 'Common'
-    __minOccurs__ = '0'
-    __maxOccurs__ = 'unbounded'
 
     name: Optional[str] = field(
         default=None,
@@ -61313,11 +59537,6 @@ class Version(Identity):
     of a specific version of a DERGroup.
     '''
 
-    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
-    __package__ = 'Common'
-    __minOccurs__ = '0'
-    __maxOccurs__ = 'unbounded'
-
     date: Optional[str] = field(
         default=None,
         metadata={
@@ -61408,11 +59627,6 @@ class WirePhaseInfo(Identity):
     '''
     Information on a wire carrying a single phase.
     '''
-
-    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
-    __package__ = 'AssetInfo'
-    __minOccurs__ = '0'
-    __maxOccurs__ = 'unbounded'
 
     phaseInfo: Optional[SinglePhaseKind] = field(
         default=None,
@@ -68786,11 +67000,6 @@ class StreetAddress(Identity):
     '''
     General purpose street and postal address information.
     '''
-
-    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
-    __package__ = 'Common'
-    __minOccurs__ = '0'
-    __maxOccurs__ = 'unbounded'
 
     language: Optional[str] = field(
         default=None,
