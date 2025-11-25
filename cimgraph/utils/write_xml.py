@@ -10,7 +10,8 @@ from cimgraph.models.graph_model import GraphModel
 _log = logging.getLogger(__name__)
 
 
-def write_xml(network: GraphModel, filename: str, namespaces: dict=None, write_identifier=True) -> None:
+def write_xml(network: GraphModel, filename: str, namespaces: dict=None, 
+              write_identifier:bool=True, enforce_rdf_direction:bool=False) -> None:
     """
     Write the network graph to an XML file.
 
@@ -37,8 +38,6 @@ def write_xml(network: GraphModel, filename: str, namespaces: dict=None, write_i
     reverse_ns_lookup = {v: k for k, v in namespaces.items()}
 
     iec61970_301 = network.connection.iec61970_301
-    classes_with_many_to_many = ClassesWithManytoMany()
-    many_to_many = classes_with_many_to_many.attributes
     # Handling of formatting change between different 301 standard versions
     if int(iec61970_301) > 7:
         rdf_header = 'rdf:about="urn:uuid:'
@@ -73,6 +72,13 @@ def write_xml(network: GraphModel, filename: str, namespaces: dict=None, write_i
             parent_classes.pop(len(parent_classes) - 1)
             for parent in parent_classes:
                 for attribute in parent.__annotations__.keys():
+                    try:
+                        serialize = cim_class.__dataclass_fields__[attribute].metadata['serialize']
+                        if not serialize and enforce_rdf_direction:
+                            continue
+                    except:
+                        _log.warning(f'{attribute} missing serialize')
+                        serialize = True
                     # Skip over Identity.identifier attribute
                     if attribute == 'identifier' and write_identifier:
                         row = f'  <cim:Identity.identifier>{obj.uri()}</cim:Identity.identifier>\n'
@@ -83,7 +89,7 @@ def write_xml(network: GraphModel, filename: str, namespaces: dict=None, write_i
                     attr_ns = cim_class.__dataclass_fields__[attribute].metadata['namespace']
                     ns_prefix = reverse_ns_lookup[attr_ns]
                     # Upload attributes that are many-to-one or are known problem classes
-                    if 'list' not in attribute_type or rdf in many_to_many:
+                    if 'list' not in attribute_type or serialize:
                         edge_class = attribute_type.split('[')[1].split(']')[0]
                         edge = getattr(obj, attribute)
                         # Check if attribute is association to a class object
