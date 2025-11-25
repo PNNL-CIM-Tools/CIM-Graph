@@ -24,7 +24,7 @@ class CIMStereotype(Enum):
 
 BASE_URI = 'http://www.ucaiug.org/gmdm/geographical_location#'
 ONTOLOGY_URI = 'http://cim.ucaiug.io/CIM101/draft#'
-
+    
 @dataclass(repr=False)
 class IdentifiedObject(Identity):
     '''
@@ -32,11 +32,6 @@ class IdentifiedObject(Identity):
     identification and naming attributes.
     '''
 
-    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
-    __package__ = 'Core'
-    __minOccurs__ = '0'
-    __maxOccurs__ = 'unbounded'
-    
     description: Optional[str] = field(
         default=None,
         metadata={
@@ -44,6 +39,7 @@ class IdentifiedObject(Identity):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
+        'serialize': True,
         'docstring':
             '''
             The description is a free human readable text describing or naming the
@@ -64,6 +60,7 @@ class IdentifiedObject(Identity):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
+        'serialize': True,
         'docstring':
             '''
             The name is any free human readable and possibly non unique text naming
@@ -76,6 +73,19 @@ class IdentifiedObject(Identity):
     the object.
     '''
     
+    @property
+    def __namespace__(self):
+        return 'http://cim.ucaiug.io/CIM101/draft#'
+    @property
+    def __package__(self):
+        return 'Core'
+    @property
+    def __minOccurs__(self):
+        return '0'
+    @property
+    def __maxOccurs__(self):
+        return 'unbounded'
+    
 @stereotype(CIMStereotype.Concrete)
 @dataclass(repr=False)
 class CoordinateSystem(IdentifiedObject):
@@ -83,10 +93,43 @@ class CoordinateSystem(IdentifiedObject):
     Coordinate reference system.
     '''
 
-    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
-    __package__ = 'Common'
-    __minOccurs__ = '0'
-    __maxOccurs__ = 'unbounded'
+    crsUrn: Optional[str] = field(
+        default=None,
+        metadata={
+        'type': 'Attribute',
+        'minOccurs': '1',
+        'maxOccurs': '1',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
+        'serialize': True,
+        'docstring':
+            '''
+            A Uniform Resource Name (URN) for the coordinate reference system (crs)
+            used to define 'Location.PositionPoints'.
+            An example would be the European Petroleum Survey Group (EPSG) code for
+            a coordinate reference system, defined in URN under the Open Geospatial
+            Consortium (OGC) namespace as: urn:ogc:def:crs:EPSG::XXXX, where XXXX is
+            an EPSG code (a full list of codes can be found at the EPSG Registry web
+            site http://www.epsg-registry.org/). To define the coordinate system as
+            being WGS84 (latitude, longitude) using an EPSG OGC, this attribute would
+            be urn:ogc:def:crs:EPSG::4236.
+            A profile should limit this code to a set of allowed URNs agreed to by
+            all sending and receiving parties.
+            '''
+        
+        })
+    '''
+    A Uniform Resource Name (URN) for the coordinate reference system (crs)
+    used to define 'Location.PositionPoints'.
+    An example would be the European Petroleum Survey Group (EPSG) code
+    for a coordinate reference system, defined in URN under the Open Geospatial
+    Consortium (OGC) namespace as: urn:ogc:def:crs:EPSG::XXXX, where XXXX
+    is an EPSG code (a full list of codes can be found at the EPSG Registry
+    web site http://www.epsg-registry.org/). To define the coordinate system
+    as being WGS84 (latitude, longitude) using an EPSG OGC, this attribute
+    would be urn:ogc:def:crs:EPSG::4236.
+    A profile should limit this code to a set of allowed URNs agreed to
+    by all sending and receiving parties.
+    '''
     
     Location: list[Location] = field(
         default_factory=list,
@@ -96,6 +139,7 @@ class CoordinateSystem(IdentifiedObject):
         'maxOccurs': 'unbounded',
         'inverse': 'Location.CoordinateSystem',
         'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
+        'serialize': False,
         'docstring':
             '''
             All locations described with position points in this coordinate system.
@@ -106,6 +150,19 @@ class CoordinateSystem(IdentifiedObject):
     All locations described with position points in this coordinate system.
     '''
     
+    @property
+    def __namespace__(self):
+        return 'http://cim.ucaiug.io/CIM101/draft#'
+    @property
+    def __package__(self):
+        return 'Common'
+    @property
+    def __minOccurs__(self):
+        return '0'
+    @property
+    def __maxOccurs__(self):
+        return 'unbounded'
+    
 @stereotype(CIMStereotype.deprecated)
 @dataclass(repr=False)
 class ElectronicAddress(IdentifiedObject):
@@ -113,10 +170,18 @@ class ElectronicAddress(IdentifiedObject):
     Electronic address information.
     '''
 
-    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
-    __package__ = 'Common'
-    __minOccurs__ = '0'
-    __maxOccurs__ = 'unbounded'
+    @property
+    def __namespace__(self):
+        return 'http://cim.ucaiug.io/CIM101/draft#'
+    @property
+    def __package__(self):
+        return 'Common'
+    @property
+    def __minOccurs__(self):
+        return '0'
+    @property
+    def __maxOccurs__(self):
+        return 'unbounded'
     
 @stereotype(CIMStereotype.Concrete)
 @dataclass(repr=False)
@@ -127,10 +192,24 @@ class Location(IdentifiedObject):
     one or more position points (coordinates) in a given coordinate system.
     '''
 
-    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
-    __package__ = 'Common'
-    __minOccurs__ = '0'
-    __maxOccurs__ = 'unbounded'
+    CoordinateSystem: Optional[CoordinateSystem] = field(
+        default=None,
+        metadata={
+        'type': 'ByReference',
+        'minOccurs': '1',
+        'maxOccurs': '1',
+        'inverse': 'CoordinateSystem.Location',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
+        'serialize': True,
+        'docstring':
+            '''
+            Coordinate system used to describe position points of this location.
+            '''
+        
+        })
+    '''
+    Coordinate system used to describe position points of this location.
+    '''
     
     PositionPoints: list[PositionPoint] = field(
         default_factory=list,
@@ -140,6 +219,7 @@ class Location(IdentifiedObject):
         'maxOccurs': 'unbounded',
         'inverse': 'PositionPoint.Location',
         'namespace': 'http://epri.com/gmdm/2025#',
+        'serialize': False,
         'docstring':
             '''
             '''
@@ -156,6 +236,7 @@ class Location(IdentifiedObject):
         'maxOccurs': 'unbounded',
         'inverse': 'PowerSystemResource.Location',
         'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
+        'serialize': False,
         'docstring':
             '''
             All power system resources at this location.
@@ -166,23 +247,18 @@ class Location(IdentifiedObject):
     All power system resources at this location.
     '''
     
-    CoordinateSystem: Optional[CoordinateSystem] = field(
-        default=None,
-        metadata={
-        'type': 'ByReference',
-        'minOccurs': '1',
-        'maxOccurs': '1',
-        'inverse': 'CoordinateSystem.Location',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'docstring':
-            '''
-            Coordinate system used to describe position points of this location.
-            '''
-        
-        })
-    '''
-    Coordinate system used to describe position points of this location.
-    '''
+    @property
+    def __namespace__(self):
+        return 'http://cim.ucaiug.io/CIM101/draft#'
+    @property
+    def __package__(self):
+        return 'Common'
+    @property
+    def __minOccurs__(self):
+        return '0'
+    @property
+    def __maxOccurs__(self):
+        return 'unbounded'
     
 @dataclass(repr=False)
 class PowerSystemResource(IdentifiedObject):
@@ -193,11 +269,6 @@ class PowerSystemResource(IdentifiedObject):
     Power system resources can have measurements associated.
     '''
 
-    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
-    __package__ = 'Core'
-    __minOccurs__ = '0'
-    __maxOccurs__ = 'unbounded'
-    
     Location: Optional[Location] = field(
         default=None,
         metadata={
@@ -206,6 +277,7 @@ class PowerSystemResource(IdentifiedObject):
         'maxOccurs': '1',
         'inverse': 'Location.PowerSystemResources',
         'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
+        'serialize': True,
         'docstring':
             '''
             Location of this power system resource.
@@ -216,16 +288,99 @@ class PowerSystemResource(IdentifiedObject):
     Location of this power system resource.
     '''
     
+    @property
+    def __namespace__(self):
+        return 'http://cim.ucaiug.io/CIM101/draft#'
+    @property
+    def __package__(self):
+        return 'Core'
+    @property
+    def __minOccurs__(self):
+        return '0'
+    @property
+    def __maxOccurs__(self):
+        return 'unbounded'
+    
+@dataclass(repr=False)
+class ConnectivityNodeContainer(PowerSystemResource):
+    '''
+    A base class for all objects that may contain connectivity nodes or topological
+    nodes.
+    '''
+
+    @property
+    def __namespace__(self):
+        return 'http://cim.ucaiug.io/CIM101/draft#'
+    @property
+    def __package__(self):
+        return 'Core'
+    @property
+    def __minOccurs__(self):
+        return '0'
+    @property
+    def __maxOccurs__(self):
+        return 'unbounded'
+    
+@dataclass(repr=False)
+class EquipmentContainer(ConnectivityNodeContainer):
+    '''
+    A modelling construct to provide a root class for containing equipment.
+    '''
+
+    @property
+    def __namespace__(self):
+        return 'http://cim.ucaiug.io/CIM101/draft#'
+    @property
+    def __package__(self):
+        return 'Core'
+    @property
+    def __minOccurs__(self):
+        return '0'
+    @property
+    def __maxOccurs__(self):
+        return 'unbounded'
+    
+@stereotype(CIMStereotype.Description)
+@stereotype(CIMStereotype.Concrete)
+@dataclass(repr=False)
+class Substation(EquipmentContainer):
+    '''
+    A collection of equipment for purposes other than generation or utilization,
+    through which electric energy in bulk is passed for the purposes of switching
+    or modifying its characteristics.
+    '''
+
+    @property
+    def __namespace__(self):
+        return 'http://cim.ucaiug.io/CIM101/draft#'
+    @property
+    def __package__(self):
+        return 'Core'
+    @property
+    def __minOccurs__(self):
+        return '0'
+    @property
+    def __maxOccurs__(self):
+        return 'unbounded'
+    
 @dataclass(repr=False)
 class Equipment(PowerSystemResource):
     '''
     The parts of a power system that are physical devices, electronic or mechanical.
     '''
 
-    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
-    __package__ = 'Core'
-    __minOccurs__ = '0'
-    __maxOccurs__ = 'unbounded'
+    @property
+    def __namespace__(self):
+        return 'http://cim.ucaiug.io/CIM101/draft#'
+    @property
+    def __package__(self):
+        return 'Core'
+    @property
+    def __minOccurs__(self):
+        return '0'
+    @property
+    def __maxOccurs__(self):
+        return 'unbounded'
     
 @dataclass(repr=False)
 class ConductingEquipment(Equipment):
@@ -234,10 +389,18 @@ class ConductingEquipment(Equipment):
     that are conductively connected through terminals.
     '''
 
-    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
-    __package__ = 'Core'
-    __minOccurs__ = '0'
-    __maxOccurs__ = 'unbounded'
+    @property
+    def __namespace__(self):
+        return 'http://cim.ucaiug.io/CIM101/draft#'
+    @property
+    def __package__(self):
+        return 'Core'
+    @property
+    def __minOccurs__(self):
+        return '0'
+    @property
+    def __maxOccurs__(self):
+        return 'unbounded'
     
 @dataclass(repr=False)
 class Conductor(ConductingEquipment):
@@ -247,10 +410,18 @@ class Conductor(ConductingEquipment):
     in the power system.
     '''
 
-    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
-    __package__ = 'Wires'
-    __minOccurs__ = '0'
-    __maxOccurs__ = 'unbounded'
+    @property
+    def __namespace__(self):
+        return 'http://cim.ucaiug.io/CIM101/draft#'
+    @property
+    def __package__(self):
+        return 'Wires'
+    @property
+    def __minOccurs__(self):
+        return '0'
+    @property
+    def __maxOccurs__(self):
+        return 'unbounded'
     
 @stereotype(CIMStereotype.Description)
 @stereotype(CIMStereotype.Concrete)
@@ -300,10 +471,18 @@ class ACLineSegment(Conductor):
     </ul>
     '''
 
-    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
-    __package__ = 'Wires'
-    __minOccurs__ = '0'
-    __maxOccurs__ = 'unbounded'
+    @property
+    def __namespace__(self):
+        return 'http://cim.ucaiug.io/CIM101/draft#'
+    @property
+    def __package__(self):
+        return 'Wires'
+    @property
+    def __minOccurs__(self):
+        return '0'
+    @property
+    def __maxOccurs__(self):
+        return 'unbounded'
     
 @dataclass(repr=False)
 class Connector(ConductingEquipment):
@@ -313,10 +492,18 @@ class Connector(ConductingEquipment):
     modelled with a single logical terminal.
     '''
 
-    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
-    __package__ = 'Wires'
-    __minOccurs__ = '0'
-    __maxOccurs__ = 'unbounded'
+    @property
+    def __namespace__(self):
+        return 'http://cim.ucaiug.io/CIM101/draft#'
+    @property
+    def __package__(self):
+        return 'Wires'
+    @property
+    def __minOccurs__(self):
+        return '0'
+    @property
+    def __maxOccurs__(self):
+        return 'unbounded'
     
 @stereotype(CIMStereotype.Description)
 @stereotype(CIMStereotype.Concrete)
@@ -332,10 +519,18 @@ class BusbarSection(Connector):
     terminals but for analysis is modelled with exactly one logical terminal.
     '''
 
-    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
-    __package__ = 'Wires'
-    __minOccurs__ = '0'
-    __maxOccurs__ = 'unbounded'
+    @property
+    def __namespace__(self):
+        return 'http://cim.ucaiug.io/CIM101/draft#'
+    @property
+    def __package__(self):
+        return 'Wires'
+    @property
+    def __minOccurs__(self):
+        return '0'
+    @property
+    def __maxOccurs__(self):
+        return 'unbounded'
     
 @dataclass(repr=False)
 class EnergyConnection(ConductingEquipment):
@@ -343,10 +538,18 @@ class EnergyConnection(ConductingEquipment):
     A connection of energy generation or consumption on the power system model.
     '''
 
-    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
-    __package__ = 'Wires'
-    __minOccurs__ = '0'
-    __maxOccurs__ = 'unbounded'
+    @property
+    def __namespace__(self):
+        return 'http://cim.ucaiug.io/CIM101/draft#'
+    @property
+    def __package__(self):
+        return 'Wires'
+    @property
+    def __minOccurs__(self):
+        return '0'
+    @property
+    def __maxOccurs__(self):
+        return 'unbounded'
     
 @stereotype(CIMStereotype.Description)
 @stereotype(CIMStereotype.Concrete)
@@ -359,10 +562,18 @@ class EnergyConsumer(EnergyConnection):
     or if LoadResponseCharacteristic.exponentModel is set to False.
     '''
 
-    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
-    __package__ = 'Wires'
-    __minOccurs__ = '0'
-    __maxOccurs__ = 'unbounded'
+    @property
+    def __namespace__(self):
+        return 'http://cim.ucaiug.io/CIM101/draft#'
+    @property
+    def __package__(self):
+        return 'Wires'
+    @property
+    def __minOccurs__(self):
+        return '0'
+    @property
+    def __maxOccurs__(self):
+        return 'unbounded'
     
 @stereotype(CIMStereotype.Description)
 @stereotype(CIMStereotype.Concrete)
@@ -373,10 +584,18 @@ class EnergySource(EnergyConnection):
     voltage level.
     '''
 
-    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
-    __package__ = 'Wires'
-    __minOccurs__ = '0'
-    __maxOccurs__ = 'unbounded'
+    @property
+    def __namespace__(self):
+        return 'http://cim.ucaiug.io/CIM101/draft#'
+    @property
+    def __package__(self):
+        return 'Wires'
+    @property
+    def __minOccurs__(self):
+        return '0'
+    @property
+    def __maxOccurs__(self):
+        return 'unbounded'
     
 @dataclass(repr=False)
 class RegulatingCondEq(EnergyConnection):
@@ -385,10 +604,18 @@ class RegulatingCondEq(EnergyConnection):
     or flow) at a specific point in the network.
     '''
 
-    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
-    __package__ = 'Wires'
-    __minOccurs__ = '0'
-    __maxOccurs__ = 'unbounded'
+    @property
+    def __namespace__(self):
+        return 'http://cim.ucaiug.io/CIM101/draft#'
+    @property
+    def __package__(self):
+        return 'Wires'
+    @property
+    def __minOccurs__(self):
+        return '0'
+    @property
+    def __maxOccurs__(self):
+        return 'unbounded'
     
 @stereotype(CIMStereotype.Description)
 @stereotype(CIMStereotype.Concrete)
@@ -399,10 +626,18 @@ class PowerElectronicsConnection(RegulatingCondEq):
     uses power electronics rather than rotating machines.
     '''
 
-    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
-    __package__ = 'Wires'
-    __minOccurs__ = '0'
-    __maxOccurs__ = 'unbounded'
+    @property
+    def __namespace__(self):
+        return 'http://cim.ucaiug.io/CIM101/draft#'
+    @property
+    def __package__(self):
+        return 'Wires'
+    @property
+    def __minOccurs__(self):
+        return '0'
+    @property
+    def __maxOccurs__(self):
+        return 'unbounded'
     
 @dataclass(repr=False)
 class RotatingMachine(RegulatingCondEq):
@@ -410,10 +645,18 @@ class RotatingMachine(RegulatingCondEq):
     A rotating machine which may be used as a generator or motor.
     '''
 
-    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
-    __package__ = 'Wires'
-    __minOccurs__ = '0'
-    __maxOccurs__ = 'unbounded'
+    @property
+    def __namespace__(self):
+        return 'http://cim.ucaiug.io/CIM101/draft#'
+    @property
+    def __package__(self):
+        return 'Wires'
+    @property
+    def __minOccurs__(self):
+        return '0'
+    @property
+    def __maxOccurs__(self):
+        return 'unbounded'
     
 @stereotype(CIMStereotype.Description)
 @stereotype(CIMStereotype.Concrete)
@@ -425,10 +668,18 @@ class AsynchronousMachine(RotatingMachine):
     the rotor windings, e.g. squirrel-cage induction machine.
     '''
 
-    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
-    __package__ = 'Wires'
-    __minOccurs__ = '0'
-    __maxOccurs__ = 'unbounded'
+    @property
+    def __namespace__(self):
+        return 'http://cim.ucaiug.io/CIM101/draft#'
+    @property
+    def __package__(self):
+        return 'Wires'
+    @property
+    def __minOccurs__(self):
+        return '0'
+    @property
+    def __maxOccurs__(self):
+        return 'unbounded'
     
 @stereotype(CIMStereotype.Description)
 @stereotype(CIMStereotype.Concrete)
@@ -440,10 +691,18 @@ class SynchronousMachine(RotatingMachine):
     or synchronous condenser or pump.
     '''
 
-    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
-    __package__ = 'Wires'
-    __minOccurs__ = '0'
-    __maxOccurs__ = 'unbounded'
+    @property
+    def __namespace__(self):
+        return 'http://cim.ucaiug.io/CIM101/draft#'
+    @property
+    def __package__(self):
+        return 'Wires'
+    @property
+    def __minOccurs__(self):
+        return '0'
+    @property
+    def __maxOccurs__(self):
+        return 'unbounded'
     
 @dataclass(repr=False)
 class ShuntCompensator(RegulatingCondEq):
@@ -454,10 +713,18 @@ class ShuntCompensator(RegulatingCondEq):
     is a reactor. ShuntCompensator is a single terminal device. Ground is implied.
     '''
 
-    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
-    __package__ = 'Wires'
-    __minOccurs__ = '0'
-    __maxOccurs__ = 'unbounded'
+    @property
+    def __namespace__(self):
+        return 'http://cim.ucaiug.io/CIM101/draft#'
+    @property
+    def __package__(self):
+        return 'Wires'
+    @property
+    def __minOccurs__(self):
+        return '0'
+    @property
+    def __maxOccurs__(self):
+        return 'unbounded'
     
 @stereotype(CIMStereotype.Description)
 @stereotype(CIMStereotype.Concrete)
@@ -468,10 +735,18 @@ class LinearShuntCompensator(ShuntCompensator):
     values.
     '''
 
-    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
-    __package__ = 'Wires'
-    __minOccurs__ = '0'
-    __maxOccurs__ = 'unbounded'
+    @property
+    def __namespace__(self):
+        return 'http://cim.ucaiug.io/CIM101/draft#'
+    @property
+    def __package__(self):
+        return 'Wires'
+    @property
+    def __minOccurs__(self):
+        return '0'
+    @property
+    def __maxOccurs__(self):
+        return 'unbounded'
     
 @stereotype(CIMStereotype.Description)
 @stereotype(CIMStereotype.Concrete)
@@ -493,10 +768,18 @@ class PowerTransformer(ConductingEquipment):
     instead.
     '''
 
-    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
-    __package__ = 'Wires'
-    __minOccurs__ = '0'
-    __maxOccurs__ = 'unbounded'
+    @property
+    def __namespace__(self):
+        return 'http://cim.ucaiug.io/CIM101/draft#'
+    @property
+    def __package__(self):
+        return 'Wires'
+    @property
+    def __minOccurs__(self):
+        return '0'
+    @property
+    def __maxOccurs__(self):
+        return 'unbounded'
     
 @stereotype(CIMStereotype.Description)
 @stereotype(CIMStereotype.Concrete)
@@ -507,10 +790,18 @@ class SeriesCompensator(ConductingEquipment):
     line without charging susceptance. It is a two terminal device.
     '''
 
-    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
-    __package__ = 'Wires'
-    __minOccurs__ = '0'
-    __maxOccurs__ = 'unbounded'
+    @property
+    def __namespace__(self):
+        return 'http://cim.ucaiug.io/CIM101/draft#'
+    @property
+    def __package__(self):
+        return 'Wires'
+    @property
+    def __minOccurs__(self):
+        return '0'
+    @property
+    def __maxOccurs__(self):
+        return 'unbounded'
     
 @dataclass(repr=False)
 class Switch(ConductingEquipment):
@@ -522,10 +813,18 @@ class Switch(ConductingEquipment):
     and .locked are relevant.
     '''
 
-    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
-    __package__ = 'Wires'
-    __minOccurs__ = '0'
-    __maxOccurs__ = 'unbounded'
+    @property
+    def __namespace__(self):
+        return 'http://cim.ucaiug.io/CIM101/draft#'
+    @property
+    def __package__(self):
+        return 'Wires'
+    @property
+    def __minOccurs__(self):
+        return '0'
+    @property
+    def __maxOccurs__(self):
+        return 'unbounded'
     
 @stereotype(CIMStereotype.Description)
 @stereotype(CIMStereotype.Concrete)
@@ -542,10 +841,18 @@ class Disconnector(Switch):
     as those of short circuit.
     '''
 
-    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
-    __package__ = 'Wires'
-    __minOccurs__ = '0'
-    __maxOccurs__ = 'unbounded'
+    @property
+    def __namespace__(self):
+        return 'http://cim.ucaiug.io/CIM101/draft#'
+    @property
+    def __package__(self):
+        return 'Wires'
+    @property
+    def __minOccurs__(self):
+        return '0'
+    @property
+    def __maxOccurs__(self):
+        return 'unbounded'
     
 @stereotype(CIMStereotype.Description)
 @stereotype(CIMStereotype.Concrete)
@@ -557,10 +864,18 @@ class Fuse(Switch):
     is considered a switching device because it breaks current.
     '''
 
-    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
-    __package__ = 'Wires'
-    __minOccurs__ = '0'
-    __maxOccurs__ = 'unbounded'
+    @property
+    def __namespace__(self):
+        return 'http://cim.ucaiug.io/CIM101/draft#'
+    @property
+    def __package__(self):
+        return 'Wires'
+    @property
+    def __minOccurs__(self):
+        return '0'
+    @property
+    def __maxOccurs__(self):
+        return 'unbounded'
     
 @dataclass(repr=False)
 class ProtectedSwitch(Switch):
@@ -568,10 +883,18 @@ class ProtectedSwitch(Switch):
     A ProtectedSwitch is a switching device that can be operated by ProtectionEquipment.
     '''
 
-    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
-    __package__ = 'Wires'
-    __minOccurs__ = '0'
-    __maxOccurs__ = 'unbounded'
+    @property
+    def __namespace__(self):
+        return 'http://cim.ucaiug.io/CIM101/draft#'
+    @property
+    def __package__(self):
+        return 'Wires'
+    @property
+    def __minOccurs__(self):
+        return '0'
+    @property
+    def __maxOccurs__(self):
+        return 'unbounded'
     
 @stereotype(CIMStereotype.Description)
 @stereotype(CIMStereotype.Concrete)
@@ -584,10 +907,18 @@ class Breaker(ProtectedSwitch):
     conditions e.g. those of short circuit.
     '''
 
-    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
-    __package__ = 'Wires'
-    __minOccurs__ = '0'
-    __maxOccurs__ = 'unbounded'
+    @property
+    def __namespace__(self):
+        return 'http://cim.ucaiug.io/CIM101/draft#'
+    @property
+    def __package__(self):
+        return 'Wires'
+    @property
+    def __minOccurs__(self):
+        return '0'
+    @property
+    def __maxOccurs__(self):
+        return 'unbounded'
     
 @stereotype(CIMStereotype.Description)
 @stereotype(CIMStereotype.Concrete)
@@ -598,10 +929,18 @@ class LoadBreakSwitch(ProtectedSwitch):
     currents under normal operating conditions.
     '''
 
-    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
-    __package__ = 'Wires'
-    __minOccurs__ = '0'
-    __maxOccurs__ = 'unbounded'
+    @property
+    def __namespace__(self):
+        return 'http://cim.ucaiug.io/CIM101/draft#'
+    @property
+    def __package__(self):
+        return 'Wires'
+    @property
+    def __minOccurs__(self):
+        return '0'
+    @property
+    def __maxOccurs__(self):
+        return 'unbounded'
     
 @stereotype(CIMStereotype.Description)
 @stereotype(CIMStereotype.Concrete)
@@ -612,10 +951,18 @@ class Recloser(ProtectedSwitch):
     transformer (CT), and supplemental controls.
     '''
 
-    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
-    __package__ = 'Wires'
-    __minOccurs__ = '0'
-    __maxOccurs__ = 'unbounded'
+    @property
+    def __namespace__(self):
+        return 'http://cim.ucaiug.io/CIM101/draft#'
+    @property
+    def __package__(self):
+        return 'Wires'
+    @property
+    def __minOccurs__(self):
+        return '0'
+    @property
+    def __maxOccurs__(self):
+        return 'unbounded'
     
 @stereotype(CIMStereotype.Description)
 @stereotype(CIMStereotype.Concrete)
@@ -628,10 +975,18 @@ class Sectionaliser(Switch):
     high, or too low, for proper coordination of fuses.
     '''
 
-    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
-    __package__ = 'Wires'
-    __minOccurs__ = '0'
-    __maxOccurs__ = 'unbounded'
+    @property
+    def __namespace__(self):
+        return 'http://cim.ucaiug.io/CIM101/draft#'
+    @property
+    def __package__(self):
+        return 'Wires'
+    @property
+    def __minOccurs__(self):
+        return '0'
+    @property
+    def __maxOccurs__(self):
+        return 'unbounded'
     
 @dataclass(repr=False)
 class TelephoneNumber(IdentifiedObject):
@@ -639,10 +994,18 @@ class TelephoneNumber(IdentifiedObject):
     Telephone number information.
     '''
 
-    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
-    __package__ = 'Common'
-    __minOccurs__ = '0'
-    __maxOccurs__ = 'unbounded'
+    @property
+    def __namespace__(self):
+        return 'http://cim.ucaiug.io/CIM101/draft#'
+    @property
+    def __package__(self):
+        return 'Common'
+    @property
+    def __minOccurs__(self):
+        return '0'
+    @property
+    def __maxOccurs__(self):
+        return 'unbounded'
     
 @stereotype(CIMStereotype.Concrete)
 @dataclass(repr=False)
@@ -657,11 +1020,6 @@ class PositionPoint(Identity):
     last position point with the same values).
     '''
 
-    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
-    __package__ = 'Common'
-    __minOccurs__ = '0'
-    __maxOccurs__ = 'unbounded'
-    
     sequenceNumber: Optional[int] = field(
         default=None,
         metadata={
@@ -669,6 +1027,7 @@ class PositionPoint(Identity):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://epri.com/gmdm/2025#',
+        'serialize': True,
         'docstring':
             '''
             '''
@@ -684,6 +1043,7 @@ class PositionPoint(Identity):
         'minOccurs': '1',
         'maxOccurs': '1',
         'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
+        'serialize': True,
         'docstring':
             '''
             X axis position.
@@ -701,6 +1061,7 @@ class PositionPoint(Identity):
         'minOccurs': '1',
         'maxOccurs': '1',
         'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
+        'serialize': True,
         'docstring':
             '''
             Y axis position.
@@ -718,6 +1079,7 @@ class PositionPoint(Identity):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
+        'serialize': True,
         'docstring':
             '''
             (if applicable) Z axis position.
@@ -736,6 +1098,7 @@ class PositionPoint(Identity):
         'maxOccurs': '1',
         'inverse': 'Location.PositionPoints',
         'namespace': 'http://epri.com/gmdm/2025#',
+        'serialize': True,
         'docstring':
             '''
             '''
@@ -744,16 +1107,37 @@ class PositionPoint(Identity):
     '''
     '''
     
+    @property
+    def __namespace__(self):
+        return 'http://cim.ucaiug.io/CIM101/draft#'
+    @property
+    def __package__(self):
+        return 'Common'
+    @property
+    def __minOccurs__(self):
+        return '0'
+    @property
+    def __maxOccurs__(self):
+        return 'unbounded'
+    
 @dataclass(repr=False)
 class Status(Identity):
     '''
     Current status information relevant to an entity.
     '''
 
-    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
-    __package__ = 'Common'
-    __minOccurs__ = '0'
-    __maxOccurs__ = 'unbounded'
+    @property
+    def __namespace__(self):
+        return 'http://cim.ucaiug.io/CIM101/draft#'
+    @property
+    def __package__(self):
+        return 'Common'
+    @property
+    def __minOccurs__(self):
+        return '0'
+    @property
+    def __maxOccurs__(self):
+        return 'unbounded'
     
 @stereotype(CIMStereotype.deprecated)
 @stereotype(CIMStereotype.Compound)
@@ -763,8 +1147,16 @@ class StreetAddress(Identity):
     General purpose street and postal address information.
     '''
 
-    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
-    __package__ = 'Common'
-    __minOccurs__ = '0'
-    __maxOccurs__ = 'unbounded'
+    @property
+    def __namespace__(self):
+        return 'http://cim.ucaiug.io/CIM101/draft#'
+    @property
+    def __package__(self):
+        return 'Common'
+    @property
+    def __minOccurs__(self):
+        return '0'
+    @property
+    def __maxOccurs__(self):
+        return 'unbounded'
     

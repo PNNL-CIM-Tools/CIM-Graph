@@ -26,6 +26,7 @@ class CIMStereotype(Enum):
 BASE_URI = 'http://www.ucaiug.org/gmdm/connectivity/unbalanced#'
 ONTOLOGY_URI = 'http://cim.ucaiug.io/CIM101/draft#'
 
+    
 @dataclass(repr=False)
 class IdentifiedObject(Identity):
     '''
@@ -33,11 +34,6 @@ class IdentifiedObject(Identity):
     identification and naming attributes.
     '''
 
-    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
-    __package__ = 'Core'
-    __minOccurs__ = '0'
-    __maxOccurs__ = 'unbounded'
-    
     description: Optional[str] = field(
         default=None,
         metadata={
@@ -45,6 +41,7 @@ class IdentifiedObject(Identity):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
+        'serialize': True,
         'docstring':
             '''
             The description is a free human readable text describing or naming the
@@ -65,6 +62,7 @@ class IdentifiedObject(Identity):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
+        'serialize': True,
         'docstring':
             '''
             The name is any free human readable and possibly non unique text naming
@@ -77,6 +75,19 @@ class IdentifiedObject(Identity):
     the object.
     '''
     
+    @property
+    def __namespace__(self):
+        return 'http://cim.ucaiug.io/CIM101/draft#'
+    @property
+    def __package__(self):
+        return 'Core'
+    @property
+    def __minOccurs__(self):
+        return '0'
+    @property
+    def __maxOccurs__(self):
+        return 'unbounded'
+    
 @dataclass(repr=False)
 class ACDCTerminal(IdentifiedObject):
     '''
@@ -85,11 +96,6 @@ class ACDCTerminal(IdentifiedObject):
     nodes.
     '''
 
-    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
-    __package__ = 'Core'
-    __minOccurs__ = '0'
-    __maxOccurs__ = 'unbounded'
-    
     sequenceNumber: Optional[int] = field(
         default=None,
         metadata={
@@ -97,6 +103,7 @@ class ACDCTerminal(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
+        'serialize': True,
         'docstring':
             '''
             The orientation of the terminal connections for a multiple terminal conducting
@@ -113,6 +120,19 @@ class ACDCTerminal(IdentifiedObject):
     the "starting point" for a two terminal branch.
     '''
     
+    @property
+    def __namespace__(self):
+        return 'http://cim.ucaiug.io/CIM101/draft#'
+    @property
+    def __package__(self):
+        return 'Core'
+    @property
+    def __minOccurs__(self):
+        return '0'
+    @property
+    def __maxOccurs__(self):
+        return 'unbounded'
+    
 @stereotype(CIMStereotype.Concrete)
 @dataclass(repr=False)
 class Terminal(ACDCTerminal):
@@ -121,45 +141,6 @@ class Terminal(ACDCTerminal):
     are connected at physical connection points called connectivity nodes.
     '''
 
-    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
-    __package__ = 'Core'
-    __minOccurs__ = '0'
-    __maxOccurs__ = 'unbounded'
-    
-    TransformerEnd: list[TransformerEnd] = field(
-        default_factory=list,
-        metadata={
-        'type': 'Association',
-        'minOccurs': '0',
-        'maxOccurs': 'unbounded',
-        'inverse': 'TransformerEnd.Terminal',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'docstring':
-            '''
-            All transformer ends connected at this terminal.
-            '''
-        
-        })
-    '''
-    All transformer ends connected at this terminal.
-    '''
-    
-    UsagePoint: Optional[UsagePoint] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'UsagePoint.Terminal',
-        'namespace': 'http://epri.com/gmdm/2025#',
-        'docstring':
-            '''
-            '''
-        
-        })
-    '''
-    '''
-    
     ConductingEquipment: Optional[ConductingEquipment] = field(
         default=None,
         metadata={
@@ -168,6 +149,7 @@ class Terminal(ACDCTerminal):
         'maxOccurs': '1',
         'inverse': 'ConductingEquipment.Terminals',
         'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
+        'serialize': True,
         'docstring':
             '''
             The conducting equipment of the terminal. Conducting equipment have terminals
@@ -190,6 +172,7 @@ class Terminal(ACDCTerminal):
         'maxOccurs': '1',
         'inverse': 'ConnectivityNode.Terminals',
         'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
+        'serialize': True,
         'docstring':
             '''
             The connectivity node to which this terminal connects with zero impedance.
@@ -208,6 +191,7 @@ class Terminal(ACDCTerminal):
         'maxOccurs': '1',
         'inverse': 'Feeder.NormalHeadTerminal',
         'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
+        'serialize': True,
         'docstring':
             '''
             The feeder that this terminal normally feeds. Only specified for the terminals
@@ -220,6 +204,55 @@ class Terminal(ACDCTerminal):
     terminals at head of feeders.
     '''
     
+    TransformerEnd: list[TransformerEnd] = field(
+        default_factory=list,
+        metadata={
+        'type': 'Association',
+        'minOccurs': '0',
+        'maxOccurs': 'unbounded',
+        'inverse': 'TransformerEnd.Terminal',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
+        'serialize': False,
+        'docstring':
+            '''
+            All transformer ends connected at this terminal.
+            '''
+        
+        })
+    '''
+    All transformer ends connected at this terminal.
+    '''
+    
+    UsagePoint: Optional[UsagePoint] = field(
+        default=None,
+        metadata={
+        'type': 'Association',
+        'minOccurs': '0',
+        'maxOccurs': '1',
+        'inverse': 'UsagePoint.Terminal',
+        'namespace': 'http://epri.com/gmdm/2025#',
+        'serialize': False,
+        'docstring':
+            '''
+            '''
+        
+        })
+    '''
+    '''
+    
+    @property
+    def __namespace__(self):
+        return 'http://cim.ucaiug.io/CIM101/draft#'
+    @property
+    def __package__(self):
+        return 'Core'
+    @property
+    def __minOccurs__(self):
+        return '0'
+    @property
+    def __maxOccurs__(self):
+        return 'unbounded'
+    
 @stereotype(CIMStereotype.Concrete)
 @dataclass(repr=False)
 class BaseVoltage(IdentifiedObject):
@@ -228,10 +261,25 @@ class BaseVoltage(IdentifiedObject):
     than the rated voltage.
     '''
 
-    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
-    __package__ = 'Core'
-    __minOccurs__ = '0'
-    __maxOccurs__ = 'unbounded'
+    nominalVoltage: Optional[ float | Voltage ] = field(
+        default=None,
+        metadata={
+        'type': 'Attribute',
+        'minOccurs': '1',
+        'maxOccurs': '1',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
+        'serialize': True,
+        'docstring':
+            '''
+            The power system resource's base voltage, expressed on a phase-to-phase
+            (line-to-line) basis. Shall be a positive value and not zero.
+            '''
+        
+        })
+    '''
+    The power system resource's base voltage, expressed on a phase-to-phase
+    (line-to-line) basis. Shall be a positive value and not zero.
+    '''
     
     ConductingEquipment: list[ConductingEquipment] = field(
         default_factory=list,
@@ -241,6 +289,7 @@ class BaseVoltage(IdentifiedObject):
         'maxOccurs': 'unbounded',
         'inverse': 'ConductingEquipment.BaseVoltage',
         'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
+        'serialize': False,
         'docstring':
             '''
             All conducting equipment with this base voltage. Use only when there is
@@ -263,6 +312,7 @@ class BaseVoltage(IdentifiedObject):
         'maxOccurs': 'unbounded',
         'inverse': 'TransformerEnd.BaseVoltage',
         'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
+        'serialize': False,
         'docstring':
             '''
             Transformer ends at the base voltage. This is essential for PU calculation.
@@ -281,6 +331,7 @@ class BaseVoltage(IdentifiedObject):
         'maxOccurs': 'unbounded',
         'inverse': 'VoltageLevel.BaseVoltage',
         'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
+        'serialize': False,
         'docstring':
             '''
             The voltage levels having this base voltage.
@@ -291,24 +342,18 @@ class BaseVoltage(IdentifiedObject):
     The voltage levels having this base voltage.
     '''
     
-    nominalVoltage: Optional[ float | Voltage ] = field(
-        default=None,
-        metadata={
-        'type': 'Attribute',
-        'minOccurs': '1',
-        'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'docstring':
-            '''
-            The power system resource's base voltage, expressed on a phase-to-phase
-            (line-to-line) basis. Shall be a positive value and not zero.
-            '''
-        
-        })
-    '''
-    The power system resource's base voltage, expressed on a phase-to-phase
-    (line-to-line) basis. Shall be a positive value and not zero.
-    '''
+    @property
+    def __namespace__(self):
+        return 'http://cim.ucaiug.io/CIM101/draft#'
+    @property
+    def __package__(self):
+        return 'Core'
+    @property
+    def __minOccurs__(self):
+        return '0'
+    @property
+    def __maxOccurs__(self):
+        return 'unbounded'
     
 @stereotype(CIMStereotype.Concrete)
 @dataclass(repr=False)
@@ -318,10 +363,24 @@ class ConnectivityNode(IdentifiedObject):
     are connected together with zero impedance.
     '''
 
-    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
-    __package__ = 'Core'
-    __minOccurs__ = '0'
-    __maxOccurs__ = 'unbounded'
+    ConnectivityNodeContainer: Optional[ConnectivityNodeContainer] = field(
+        default=None,
+        metadata={
+        'type': 'ByReference',
+        'minOccurs': '1',
+        'maxOccurs': '1',
+        'inverse': 'ConnectivityNodeContainer.ConnectivityNodes',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
+        'serialize': True,
+        'docstring':
+            '''
+            Container of this connectivity node.
+            '''
+        
+        })
+    '''
+    Container of this connectivity node.
+    '''
     
     Terminals: list[Terminal] = field(
         default_factory=list,
@@ -331,6 +390,7 @@ class ConnectivityNode(IdentifiedObject):
         'maxOccurs': 'unbounded',
         'inverse': 'Terminal.ConnectivityNode',
         'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
+        'serialize': False,
         'docstring':
             '''
             Terminals interconnected with zero impedance at a this connectivity node.
@@ -342,23 +402,18 @@ class ConnectivityNode(IdentifiedObject):
     node.
     '''
     
-    ConnectivityNodeContainer: Optional[ConnectivityNodeContainer] = field(
-        default=None,
-        metadata={
-        'type': 'ByReference',
-        'minOccurs': '1',
-        'maxOccurs': '1',
-        'inverse': 'ConnectivityNodeContainer.ConnectivityNodes',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'docstring':
-            '''
-            Container of this connectivity node.
-            '''
-        
-        })
-    '''
-    Container of this connectivity node.
-    '''
+    @property
+    def __namespace__(self):
+        return 'http://cim.ucaiug.io/CIM101/draft#'
+    @property
+    def __package__(self):
+        return 'Core'
+    @property
+    def __minOccurs__(self):
+        return '0'
+    @property
+    def __maxOccurs__(self):
+        return 'unbounded'
     
 @dataclass(repr=False)
 class PowerSystemResource(IdentifiedObject):
@@ -369,10 +424,18 @@ class PowerSystemResource(IdentifiedObject):
     Power system resources can have measurements associated.
     '''
 
-    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
-    __package__ = 'Core'
-    __minOccurs__ = '0'
-    __maxOccurs__ = 'unbounded'
+    @property
+    def __namespace__(self):
+        return 'http://cim.ucaiug.io/CIM101/draft#'
+    @property
+    def __package__(self):
+        return 'Core'
+    @property
+    def __minOccurs__(self):
+        return '0'
+    @property
+    def __maxOccurs__(self):
+        return 'unbounded'
     
 @stereotype(CIMStereotype.Concrete)
 @dataclass(repr=False)
@@ -386,11 +449,6 @@ class ACLineSegmentPhase(PowerSystemResource):
     the neutral).
     '''
 
-    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
-    __package__ = 'Wires'
-    __minOccurs__ = '0'
-    __maxOccurs__ = 'unbounded'
-    
     phase: Optional[ SinglePhaseKind ] = field(
         default=None,
         metadata={
@@ -398,6 +456,7 @@ class ACLineSegmentPhase(PowerSystemResource):
         'minOccurs': '1',
         'maxOccurs': '1',
         'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
+        'serialize': True,
         'docstring':
             '''
             Phase identifies the phase or neutral connection of the conductor at both
@@ -418,6 +477,7 @@ class ACLineSegmentPhase(PowerSystemResource):
         'maxOccurs': '1',
         'inverse': 'ACLineSegment.ACLineSegmentPhases',
         'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
+        'serialize': True,
         'docstring':
             '''
             The line segment to which the phase belongs.
@@ -428,6 +488,19 @@ class ACLineSegmentPhase(PowerSystemResource):
     The line segment to which the phase belongs.
     '''
     
+    @property
+    def __namespace__(self):
+        return 'http://cim.ucaiug.io/CIM101/draft#'
+    @property
+    def __package__(self):
+        return 'Wires'
+    @property
+    def __minOccurs__(self):
+        return '0'
+    @property
+    def __maxOccurs__(self):
+        return 'unbounded'
+    
 @dataclass(repr=False)
 class ConnectivityNodeContainer(PowerSystemResource):
     '''
@@ -435,11 +508,6 @@ class ConnectivityNodeContainer(PowerSystemResource):
     nodes.
     '''
 
-    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
-    __package__ = 'Core'
-    __minOccurs__ = '0'
-    __maxOccurs__ = 'unbounded'
-    
     ConnectivityNodes: list[ConnectivityNode] = field(
         default_factory=list,
         metadata={
@@ -448,6 +516,7 @@ class ConnectivityNodeContainer(PowerSystemResource):
         'maxOccurs': 'unbounded',
         'inverse': 'ConnectivityNode.ConnectivityNodeContainer',
         'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
+        'serialize': False,
         'docstring':
             '''
             Connectivity nodes which belong to this connectivity node container.
@@ -458,17 +527,25 @@ class ConnectivityNodeContainer(PowerSystemResource):
     Connectivity nodes which belong to this connectivity node container.
     '''
     
+    @property
+    def __namespace__(self):
+        return 'http://cim.ucaiug.io/CIM101/draft#'
+    @property
+    def __package__(self):
+        return 'Core'
+    @property
+    def __minOccurs__(self):
+        return '0'
+    @property
+    def __maxOccurs__(self):
+        return 'unbounded'
+    
 @dataclass(repr=False)
 class EquipmentContainer(ConnectivityNodeContainer):
     '''
     A modelling construct to provide a root class for containing equipment.
     '''
 
-    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
-    __package__ = 'Core'
-    __minOccurs__ = '0'
-    __maxOccurs__ = 'unbounded'
-    
     AdditionalGroupedEquipment: list[Equipment] = field(
         default_factory=list,
         metadata={
@@ -477,6 +554,7 @@ class EquipmentContainer(ConnectivityNodeContainer):
         'maxOccurs': 'unbounded',
         'inverse': 'Equipment.AdditionalEquipmentContainer',
         'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
+        'serialize': False,
         'docstring':
             '''
             The additonal contained equipment. The equipment belong to the equipment
@@ -505,6 +583,7 @@ class EquipmentContainer(ConnectivityNodeContainer):
         'maxOccurs': 'unbounded',
         'inverse': 'Equipment.EquipmentContainer',
         'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
+        'serialize': False,
         'docstring':
             '''
             Contained equipment.
@@ -514,6 +593,19 @@ class EquipmentContainer(ConnectivityNodeContainer):
     '''
     Contained equipment.
     '''
+    
+    @property
+    def __namespace__(self):
+        return 'http://cim.ucaiug.io/CIM101/draft#'
+    @property
+    def __package__(self):
+        return 'Core'
+    @property
+    def __minOccurs__(self):
+        return '0'
+    @property
+    def __maxOccurs__(self):
+        return 'unbounded'
     
 @stereotype(CIMStereotype.Concrete)
 @dataclass(repr=False)
@@ -525,29 +617,6 @@ class Feeder(EquipmentContainer):
     current operation state.
     '''
 
-    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
-    __package__ = 'Core'
-    __minOccurs__ = '0'
-    __maxOccurs__ = 'unbounded'
-    
-    NormalHeadTerminal: list[Terminal] = field(
-        default_factory=list,
-        metadata={
-        'type': 'Association',
-        'minOccurs': '0',
-        'maxOccurs': 'unbounded',
-        'inverse': 'Terminal.NormalHeadFeeder',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'docstring':
-            '''
-            The normal head terminal or terminals of the feeder.
-            '''
-        
-        })
-    '''
-    The normal head terminal or terminals of the feeder.
-    '''
-    
     NormalEnergizingSubstation: Optional[Substation] = field(
         default=None,
         metadata={
@@ -556,6 +625,7 @@ class Feeder(EquipmentContainer):
         'maxOccurs': '1',
         'inverse': 'Substation.NormalEnergizedFeeder',
         'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
+        'serialize': True,
         'docstring':
             '''
             The substation that nominally energizes the feeder. Also used for naming
@@ -568,6 +638,38 @@ class Feeder(EquipmentContainer):
     purposes.
     '''
     
+    NormalHeadTerminal: list[Terminal] = field(
+        default_factory=list,
+        metadata={
+        'type': 'Association',
+        'minOccurs': '0',
+        'maxOccurs': 'unbounded',
+        'inverse': 'Terminal.NormalHeadFeeder',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
+        'serialize': False,
+        'docstring':
+            '''
+            The normal head terminal or terminals of the feeder.
+            '''
+        
+        })
+    '''
+    The normal head terminal or terminals of the feeder.
+    '''
+    
+    @property
+    def __namespace__(self):
+        return 'http://cim.ucaiug.io/CIM101/draft#'
+    @property
+    def __package__(self):
+        return 'Core'
+    @property
+    def __minOccurs__(self):
+        return '0'
+    @property
+    def __maxOccurs__(self):
+        return 'unbounded'
+    
 @stereotype(CIMStereotype.Concrete)
 @dataclass(repr=False)
 class Line(EquipmentContainer):
@@ -576,10 +678,18 @@ class Line(EquipmentContainer):
     line.
     '''
 
-    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
-    __package__ = 'Wires'
-    __minOccurs__ = '0'
-    __maxOccurs__ = 'unbounded'
+    @property
+    def __namespace__(self):
+        return 'http://cim.ucaiug.io/CIM101/draft#'
+    @property
+    def __package__(self):
+        return 'Wires'
+    @property
+    def __minOccurs__(self):
+        return '0'
+    @property
+    def __maxOccurs__(self):
+        return 'unbounded'
     
 @stereotype(CIMStereotype.Concrete)
 @dataclass(repr=False)
@@ -590,11 +700,6 @@ class Substation(EquipmentContainer):
     or modifying its characteristics.
     '''
 
-    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
-    __package__ = 'Core'
-    __minOccurs__ = '0'
-    __maxOccurs__ = 'unbounded'
-    
     NormalEnergizedFeeder: list[Feeder] = field(
         default_factory=list,
         metadata={
@@ -603,6 +708,7 @@ class Substation(EquipmentContainer):
         'maxOccurs': 'unbounded',
         'inverse': 'Feeder.NormalEnergizingSubstation',
         'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
+        'serialize': False,
         'docstring':
             '''
             The normal energized feeders of the substation. Also used for naming purposes.
@@ -622,6 +728,7 @@ class Substation(EquipmentContainer):
         'maxOccurs': 'unbounded',
         'inverse': 'VoltageLevel.Substation',
         'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
+        'serialize': False,
         'docstring':
             '''
             The voltage levels within this substation.
@@ -631,6 +738,19 @@ class Substation(EquipmentContainer):
     '''
     The voltage levels within this substation.
     '''
+    
+    @property
+    def __namespace__(self):
+        return 'http://cim.ucaiug.io/CIM101/draft#'
+    @property
+    def __package__(self):
+        return 'Core'
+    @property
+    def __minOccurs__(self):
+        return '0'
+    @property
+    def __maxOccurs__(self):
+        return 'unbounded'
     
 @stereotype(CIMStereotype.Concrete)
 @dataclass(repr=False)
@@ -642,11 +762,6 @@ class VoltageLevel(EquipmentContainer):
     these.
     '''
 
-    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
-    __package__ = 'Core'
-    __minOccurs__ = '0'
-    __maxOccurs__ = 'unbounded'
-    
     BaseVoltage: Optional[BaseVoltage] = field(
         default=None,
         metadata={
@@ -655,6 +770,7 @@ class VoltageLevel(EquipmentContainer):
         'maxOccurs': '1',
         'inverse': 'BaseVoltage.VoltageLevel',
         'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
+        'serialize': True,
         'docstring':
             '''
             The base voltage used for all equipment within the voltage level.
@@ -673,6 +789,7 @@ class VoltageLevel(EquipmentContainer):
         'maxOccurs': '1',
         'inverse': 'Substation.VoltageLevels',
         'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
+        'serialize': True,
         'docstring':
             '''
             The substation of the voltage level.
@@ -683,6 +800,19 @@ class VoltageLevel(EquipmentContainer):
     The substation of the voltage level.
     '''
     
+    @property
+    def __namespace__(self):
+        return 'http://cim.ucaiug.io/CIM101/draft#'
+    @property
+    def __package__(self):
+        return 'Core'
+    @property
+    def __minOccurs__(self):
+        return '0'
+    @property
+    def __maxOccurs__(self):
+        return 'unbounded'
+    
 @stereotype(CIMStereotype.Concrete)
 @dataclass(repr=False)
 class EnergyConsumerPhase(PowerSystemResource):
@@ -690,11 +820,6 @@ class EnergyConsumerPhase(PowerSystemResource):
     A single phase of an energy consumer.
     '''
 
-    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
-    __package__ = 'Wires'
-    __minOccurs__ = '0'
-    __maxOccurs__ = 'unbounded'
-    
     phase: Optional[ SinglePhaseKind ] = field(
         default=None,
         metadata={
@@ -702,6 +827,7 @@ class EnergyConsumerPhase(PowerSystemResource):
         'minOccurs': '1',
         'maxOccurs': '1',
         'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
+        'serialize': True,
         'docstring':
             '''
             Phase of this energy consumer component. If the energy consumer is wye
@@ -728,6 +854,7 @@ class EnergyConsumerPhase(PowerSystemResource):
         'maxOccurs': '1',
         'inverse': 'EnergyConsumer.EnergyConsumerPhase',
         'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
+        'serialize': True,
         'docstring':
             '''
             The energy consumer to which this phase belongs.
@@ -738,17 +865,25 @@ class EnergyConsumerPhase(PowerSystemResource):
     The energy consumer to which this phase belongs.
     '''
     
+    @property
+    def __namespace__(self):
+        return 'http://cim.ucaiug.io/CIM101/draft#'
+    @property
+    def __package__(self):
+        return 'Wires'
+    @property
+    def __minOccurs__(self):
+        return '0'
+    @property
+    def __maxOccurs__(self):
+        return 'unbounded'
+    
 @dataclass(repr=False)
 class Equipment(PowerSystemResource):
     '''
     The parts of a power system that are physical devices, electronic or mechanical.
     '''
 
-    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
-    __package__ = 'Core'
-    __minOccurs__ = '0'
-    __maxOccurs__ = 'unbounded'
-    
     aggregate: Optional[bool] = field(
         default=None,
         metadata={
@@ -756,6 +891,7 @@ class Equipment(PowerSystemResource):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
+        'serialize': True,
         'docstring':
             '''
             The aggregate flag provides an alternative way of representing an aggregated
@@ -794,6 +930,7 @@ class Equipment(PowerSystemResource):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
+        'serialize': True,
         'docstring':
             '''
             Specifies the availability of the equipment under normal operating conditions.
@@ -819,6 +956,7 @@ class Equipment(PowerSystemResource):
         'maxOccurs': '1',
         'inverse': 'EquipmentContainer.AdditionalGroupedEquipment',
         'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
+        'serialize': True,
         'docstring':
             '''
             Additional equipment container beyond the primary equipment container.
@@ -837,10 +975,11 @@ class Equipment(PowerSystemResource):
         default=None,
         metadata={
         'type': 'ByReference',
-        'minOccurs': '1',
+        'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'EquipmentContainer.Equipments',
         'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
+        'serialize': True,
         'docstring':
             '''
             Container of this equipment.
@@ -851,6 +990,19 @@ class Equipment(PowerSystemResource):
     Container of this equipment.
     '''
     
+    @property
+    def __namespace__(self):
+        return 'http://cim.ucaiug.io/CIM101/draft#'
+    @property
+    def __package__(self):
+        return 'Core'
+    @property
+    def __minOccurs__(self):
+        return '0'
+    @property
+    def __maxOccurs__(self):
+        return 'unbounded'
+    
 @dataclass(repr=False)
 class ConductingEquipment(Equipment):
     '''
@@ -858,40 +1010,15 @@ class ConductingEquipment(Equipment):
     that are conductively connected through terminals.
     '''
 
-    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
-    __package__ = 'Core'
-    __minOccurs__ = '0'
-    __maxOccurs__ = 'unbounded'
-    
-    Terminals: list[Terminal] = field(
-        default_factory=list,
-        metadata={
-        'type': 'Association',
-        'minOccurs': '0',
-        'maxOccurs': 'unbounded',
-        'inverse': 'Terminal.ConductingEquipment',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'docstring':
-            '''
-            Conducting equipment have terminals that may be connected to other conducting
-            equipment terminals via connectivity nodes or topological nodes.
-            '''
-        
-        })
-    '''
-    Conducting equipment have terminals that may be connected to other
-    conducting equipment terminals via connectivity nodes or topological
-    nodes.
-    '''
-    
     BaseVoltage: Optional[BaseVoltage] = field(
         default=None,
         metadata={
         'type': 'ByReference',
-        'minOccurs': '1',
+        'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'BaseVoltage.ConductingEquipment',
         'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
+        'serialize': True,
         'docstring':
             '''
             Base voltage of this conducting equipment. Use only when there is no voltage
@@ -906,6 +1033,41 @@ class ConductingEquipment(Equipment):
     example, not used for transformers.
     '''
     
+    Terminals: list[Terminal] = field(
+        default_factory=list,
+        metadata={
+        'type': 'Association',
+        'minOccurs': '0',
+        'maxOccurs': 'unbounded',
+        'inverse': 'Terminal.ConductingEquipment',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
+        'serialize': False,
+        'docstring':
+            '''
+            Conducting equipment have terminals that may be connected to other conducting
+            equipment terminals via connectivity nodes or topological nodes.
+            '''
+        
+        })
+    '''
+    Conducting equipment have terminals that may be connected to other
+    conducting equipment terminals via connectivity nodes or topological
+    nodes.
+    '''
+    
+    @property
+    def __namespace__(self):
+        return 'http://cim.ucaiug.io/CIM101/draft#'
+    @property
+    def __package__(self):
+        return 'Core'
+    @property
+    def __minOccurs__(self):
+        return '0'
+    @property
+    def __maxOccurs__(self):
+        return 'unbounded'
+    
 @dataclass(repr=False)
 class Conductor(ConductingEquipment):
     '''
@@ -914,10 +1076,18 @@ class Conductor(ConductingEquipment):
     in the power system.
     '''
 
-    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
-    __package__ = 'Wires'
-    __minOccurs__ = '0'
-    __maxOccurs__ = 'unbounded'
+    @property
+    def __namespace__(self):
+        return 'http://cim.ucaiug.io/CIM101/draft#'
+    @property
+    def __package__(self):
+        return 'Wires'
+    @property
+    def __minOccurs__(self):
+        return '0'
+    @property
+    def __maxOccurs__(self):
+        return 'unbounded'
     
 @stereotype(CIMStereotype.Concrete)
 @dataclass(repr=False)
@@ -966,11 +1136,6 @@ class ACLineSegment(Conductor):
     </ul>
     '''
 
-    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
-    __package__ = 'Wires'
-    __minOccurs__ = '0'
-    __maxOccurs__ = 'unbounded'
-    
     ACLineSegmentPhases: list[ACLineSegmentPhase] = field(
         default_factory=list,
         metadata={
@@ -979,6 +1144,7 @@ class ACLineSegment(Conductor):
         'maxOccurs': '4',
         'inverse': 'ACLineSegmentPhase.ACLineSegment',
         'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
+        'serialize': False,
         'docstring':
             '''
             The line segment phases which belong to the line segment.
@@ -989,6 +1155,19 @@ class ACLineSegment(Conductor):
     The line segment phases which belong to the line segment.
     '''
     
+    @property
+    def __namespace__(self):
+        return 'http://cim.ucaiug.io/CIM101/draft#'
+    @property
+    def __package__(self):
+        return 'Wires'
+    @property
+    def __minOccurs__(self):
+        return '0'
+    @property
+    def __maxOccurs__(self):
+        return 'unbounded'
+    
 @dataclass(repr=False)
 class Connector(ConductingEquipment):
     '''
@@ -997,10 +1176,18 @@ class Connector(ConductingEquipment):
     modelled with a single logical terminal.
     '''
 
-    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
-    __package__ = 'Wires'
-    __minOccurs__ = '0'
-    __maxOccurs__ = 'unbounded'
+    @property
+    def __namespace__(self):
+        return 'http://cim.ucaiug.io/CIM101/draft#'
+    @property
+    def __package__(self):
+        return 'Wires'
+    @property
+    def __minOccurs__(self):
+        return '0'
+    @property
+    def __maxOccurs__(self):
+        return 'unbounded'
     
 @stereotype(CIMStereotype.Concrete)
 @dataclass(repr=False)
@@ -1015,10 +1202,18 @@ class BusbarSection(Connector):
     terminals but for analysis is modelled with exactly one logical terminal.
     '''
 
-    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
-    __package__ = 'Wires'
-    __minOccurs__ = '0'
-    __maxOccurs__ = 'unbounded'
+    @property
+    def __namespace__(self):
+        return 'http://cim.ucaiug.io/CIM101/draft#'
+    @property
+    def __package__(self):
+        return 'Wires'
+    @property
+    def __minOccurs__(self):
+        return '0'
+    @property
+    def __maxOccurs__(self):
+        return 'unbounded'
     
 @dataclass(repr=False)
 class EnergyConnection(ConductingEquipment):
@@ -1026,10 +1221,18 @@ class EnergyConnection(ConductingEquipment):
     A connection of energy generation or consumption on the power system model.
     '''
 
-    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
-    __package__ = 'Wires'
-    __minOccurs__ = '0'
-    __maxOccurs__ = 'unbounded'
+    @property
+    def __namespace__(self):
+        return 'http://cim.ucaiug.io/CIM101/draft#'
+    @property
+    def __package__(self):
+        return 'Wires'
+    @property
+    def __minOccurs__(self):
+        return '0'
+    @property
+    def __maxOccurs__(self):
+        return 'unbounded'
     
 @stereotype(CIMStereotype.Concrete)
 @dataclass(repr=False)
@@ -1041,29 +1244,6 @@ class EnergyConsumer(EnergyConnection):
     or if LoadResponseCharacteristic.exponentModel is set to False.
     '''
 
-    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
-    __package__ = 'Wires'
-    __minOccurs__ = '0'
-    __maxOccurs__ = 'unbounded'
-    
-    EnergyConsumerPhase: list[EnergyConsumerPhase] = field(
-        default_factory=list,
-        metadata={
-        'type': 'Association',
-        'minOccurs': '0',
-        'maxOccurs': '3',
-        'inverse': 'EnergyConsumerPhase.EnergyConsumer',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'docstring':
-            '''
-            The individual phase models for this energy consumer.
-            '''
-        
-        })
-    '''
-    The individual phase models for this energy consumer.
-    '''
-    
     customerCount: Optional[int] = field(
         default=None,
         metadata={
@@ -1071,6 +1251,7 @@ class EnergyConsumer(EnergyConnection):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
+        'serialize': True,
         'docstring':
             '''
             Number of individual customers represented by this demand.
@@ -1088,6 +1269,7 @@ class EnergyConsumer(EnergyConnection):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
+        'serialize': True,
         'docstring':
             '''
             Required for Yn and I connections (as represented by EnergyConsumer.phaseConnection).
@@ -1107,6 +1289,7 @@ class EnergyConsumer(EnergyConnection):
         'minOccurs': '1',
         'maxOccurs': '1',
         'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
+        'serialize': True,
         'docstring':
             '''
             The type of phase connection, such as wye or delta.
@@ -1117,6 +1300,38 @@ class EnergyConsumer(EnergyConnection):
     The type of phase connection, such as wye or delta.
     '''
     
+    EnergyConsumerPhase: list[EnergyConsumerPhase] = field(
+        default_factory=list,
+        metadata={
+        'type': 'Association',
+        'minOccurs': '0',
+        'maxOccurs': '3',
+        'inverse': 'EnergyConsumerPhase.EnergyConsumer',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
+        'serialize': False,
+        'docstring':
+            '''
+            The individual phase models for this energy consumer.
+            '''
+        
+        })
+    '''
+    The individual phase models for this energy consumer.
+    '''
+    
+    @property
+    def __namespace__(self):
+        return 'http://cim.ucaiug.io/CIM101/draft#'
+    @property
+    def __package__(self):
+        return 'Wires'
+    @property
+    def __minOccurs__(self):
+        return '0'
+    @property
+    def __maxOccurs__(self):
+        return 'unbounded'
+    
 @stereotype(CIMStereotype.Concrete)
 @dataclass(repr=False)
 class EnergySource(EnergyConnection):
@@ -1125,10 +1340,18 @@ class EnergySource(EnergyConnection):
     voltage level.
     '''
 
-    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
-    __package__ = 'Wires'
-    __minOccurs__ = '0'
-    __maxOccurs__ = 'unbounded'
+    @property
+    def __namespace__(self):
+        return 'http://cim.ucaiug.io/CIM101/draft#'
+    @property
+    def __package__(self):
+        return 'Wires'
+    @property
+    def __minOccurs__(self):
+        return '0'
+    @property
+    def __maxOccurs__(self):
+        return 'unbounded'
     
 @dataclass(repr=False)
 class RegulatingCondEq(EnergyConnection):
@@ -1137,10 +1360,18 @@ class RegulatingCondEq(EnergyConnection):
     or flow) at a specific point in the network.
     '''
 
-    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
-    __package__ = 'Wires'
-    __minOccurs__ = '0'
-    __maxOccurs__ = 'unbounded'
+    @property
+    def __namespace__(self):
+        return 'http://cim.ucaiug.io/CIM101/draft#'
+    @property
+    def __package__(self):
+        return 'Wires'
+    @property
+    def __minOccurs__(self):
+        return '0'
+    @property
+    def __maxOccurs__(self):
+        return 'unbounded'
     
 @stereotype(CIMStereotype.Concrete)
 @dataclass(repr=False)
@@ -1150,11 +1381,6 @@ class PowerElectronicsConnection(RegulatingCondEq):
     uses power electronics rather than rotating machines.
     '''
 
-    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
-    __package__ = 'Wires'
-    __minOccurs__ = '0'
-    __maxOccurs__ = 'unbounded'
-    
     PowerElectronicsConnectionPhase: list[PowerElectronicsConnectionPhase] = field(
         default_factory=list,
         metadata={
@@ -1163,6 +1389,7 @@ class PowerElectronicsConnection(RegulatingCondEq):
         'maxOccurs': 'unbounded',
         'inverse': 'PowerElectronicsConnectionPhase.PowerElectronicsConnection',
         'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
+        'serialize': False,
         'docstring':
             '''
             The individual phases models for the power electronics connection.
@@ -1173,16 +1400,37 @@ class PowerElectronicsConnection(RegulatingCondEq):
     The individual phases models for the power electronics connection.
     '''
     
+    @property
+    def __namespace__(self):
+        return 'http://cim.ucaiug.io/CIM101/draft#'
+    @property
+    def __package__(self):
+        return 'Wires'
+    @property
+    def __minOccurs__(self):
+        return '0'
+    @property
+    def __maxOccurs__(self):
+        return 'unbounded'
+    
 @dataclass(repr=False)
 class RotatingMachine(RegulatingCondEq):
     '''
     A rotating machine which may be used as a generator or motor.
     '''
 
-    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
-    __package__ = 'Wires'
-    __minOccurs__ = '0'
-    __maxOccurs__ = 'unbounded'
+    @property
+    def __namespace__(self):
+        return 'http://cim.ucaiug.io/CIM101/draft#'
+    @property
+    def __package__(self):
+        return 'Wires'
+    @property
+    def __minOccurs__(self):
+        return '0'
+    @property
+    def __maxOccurs__(self):
+        return 'unbounded'
     
 @stereotype(CIMStereotype.Concrete)
 @dataclass(repr=False)
@@ -1193,10 +1441,18 @@ class AsynchronousMachine(RotatingMachine):
     the rotor windings, e.g. squirrel-cage induction machine.
     '''
 
-    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
-    __package__ = 'Wires'
-    __minOccurs__ = '0'
-    __maxOccurs__ = 'unbounded'
+    @property
+    def __namespace__(self):
+        return 'http://cim.ucaiug.io/CIM101/draft#'
+    @property
+    def __package__(self):
+        return 'Wires'
+    @property
+    def __minOccurs__(self):
+        return '0'
+    @property
+    def __maxOccurs__(self):
+        return 'unbounded'
     
 @stereotype(CIMStereotype.Concrete)
 @dataclass(repr=False)
@@ -1207,10 +1463,18 @@ class SynchronousMachine(RotatingMachine):
     or synchronous condenser or pump.
     '''
 
-    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
-    __package__ = 'Wires'
-    __minOccurs__ = '0'
-    __maxOccurs__ = 'unbounded'
+    @property
+    def __namespace__(self):
+        return 'http://cim.ucaiug.io/CIM101/draft#'
+    @property
+    def __package__(self):
+        return 'Wires'
+    @property
+    def __minOccurs__(self):
+        return '0'
+    @property
+    def __maxOccurs__(self):
+        return 'unbounded'
     
 @dataclass(repr=False)
 class ShuntCompensator(RegulatingCondEq):
@@ -1221,29 +1485,6 @@ class ShuntCompensator(RegulatingCondEq):
     is a reactor. ShuntCompensator is a single terminal device. Ground is implied.
     '''
 
-    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
-    __package__ = 'Wires'
-    __minOccurs__ = '0'
-    __maxOccurs__ = 'unbounded'
-    
-    ShuntCompensatorPhase: list[ShuntCompensatorPhase] = field(
-        default_factory=list,
-        metadata={
-        'type': 'Association',
-        'minOccurs': '0',
-        'maxOccurs': '3',
-        'inverse': 'ShuntCompensatorPhase.ShuntCompensator',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'docstring':
-            '''
-            The individual phases models for the shunt compensator.
-            '''
-        
-        })
-    '''
-    The individual phases models for the shunt compensator.
-    '''
-    
     grounded: Optional[bool] = field(
         default=None,
         metadata={
@@ -1251,6 +1492,7 @@ class ShuntCompensator(RegulatingCondEq):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
+        'serialize': True,
         'docstring':
             '''
             Required for Yn and I connections (as represented by ShuntCompensator.phaseConnection).
@@ -1270,6 +1512,7 @@ class ShuntCompensator(RegulatingCondEq):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
+        'serialize': True,
         'docstring':
             '''
             The type of phase connection, such as wye or delta.
@@ -1280,6 +1523,38 @@ class ShuntCompensator(RegulatingCondEq):
     The type of phase connection, such as wye or delta.
     '''
     
+    ShuntCompensatorPhase: list[ShuntCompensatorPhase] = field(
+        default_factory=list,
+        metadata={
+        'type': 'Association',
+        'minOccurs': '0',
+        'maxOccurs': '3',
+        'inverse': 'ShuntCompensatorPhase.ShuntCompensator',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
+        'serialize': False,
+        'docstring':
+            '''
+            The individual phases models for the shunt compensator.
+            '''
+        
+        })
+    '''
+    The individual phases models for the shunt compensator.
+    '''
+    
+    @property
+    def __namespace__(self):
+        return 'http://cim.ucaiug.io/CIM101/draft#'
+    @property
+    def __package__(self):
+        return 'Wires'
+    @property
+    def __minOccurs__(self):
+        return '0'
+    @property
+    def __maxOccurs__(self):
+        return 'unbounded'
+    
 @stereotype(CIMStereotype.Concrete)
 @dataclass(repr=False)
 class LinearShuntCompensator(ShuntCompensator):
@@ -1288,10 +1563,18 @@ class LinearShuntCompensator(ShuntCompensator):
     values.
     '''
 
-    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
-    __package__ = 'Wires'
-    __minOccurs__ = '0'
-    __maxOccurs__ = 'unbounded'
+    @property
+    def __namespace__(self):
+        return 'http://cim.ucaiug.io/CIM101/draft#'
+    @property
+    def __package__(self):
+        return 'Wires'
+    @property
+    def __minOccurs__(self):
+        return '0'
+    @property
+    def __maxOccurs__(self):
+        return 'unbounded'
     
 @stereotype(CIMStereotype.Concrete)
 @dataclass(repr=False)
@@ -1312,47 +1595,6 @@ class PowerTransformer(ConductingEquipment):
     instead.
     '''
 
-    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
-    __package__ = 'Wires'
-    __minOccurs__ = '0'
-    __maxOccurs__ = 'unbounded'
-    
-    PowerTransformerEnd: list[PowerTransformerEnd] = field(
-        default_factory=list,
-        metadata={
-        'type': 'Association',
-        'minOccurs': '0',
-        'maxOccurs': '3',
-        'inverse': 'PowerTransformerEnd.PowerTransformer',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'docstring':
-            '''
-            The ends of this power transformer.
-            '''
-        
-        })
-    '''
-    The ends of this power transformer.
-    '''
-    
-    TransformerTanks: list[TransformerTank] = field(
-        default_factory=list,
-        metadata={
-        'type': 'Association',
-        'minOccurs': '0',
-        'maxOccurs': 'unbounded',
-        'inverse': 'TransformerTank.PowerTransformer',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'docstring':
-            '''
-            All transformers that belong to this bank.
-            '''
-        
-        })
-    '''
-    All transformers that belong to this bank.
-    '''
-    
     vectorGroup: Optional[str] = field(
         default=None,
         metadata={
@@ -1360,6 +1602,7 @@ class PowerTransformer(ConductingEquipment):
         'minOccurs': '1',
         'maxOccurs': '1',
         'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
+        'serialize': True,
         'docstring':
             '''
             Vector group of the transformer for protective relaying, e.g., Dyn1. For
@@ -1414,6 +1657,57 @@ class PowerTransformer(ConductingEquipment):
     to rotate in a counter-clockwise sense.
     '''
     
+    PowerTransformerEnd: list[PowerTransformerEnd] = field(
+        default_factory=list,
+        metadata={
+        'type': 'Association',
+        'minOccurs': '0',
+        'maxOccurs': '3',
+        'inverse': 'PowerTransformerEnd.PowerTransformer',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
+        'serialize': False,
+        'docstring':
+            '''
+            The ends of this power transformer.
+            '''
+        
+        })
+    '''
+    The ends of this power transformer.
+    '''
+    
+    TransformerTanks: list[TransformerTank] = field(
+        default_factory=list,
+        metadata={
+        'type': 'Association',
+        'minOccurs': '0',
+        'maxOccurs': 'unbounded',
+        'inverse': 'TransformerTank.PowerTransformer',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
+        'serialize': False,
+        'docstring':
+            '''
+            All transformers that belong to this bank.
+            '''
+        
+        })
+    '''
+    All transformers that belong to this bank.
+    '''
+    
+    @property
+    def __namespace__(self):
+        return 'http://cim.ucaiug.io/CIM101/draft#'
+    @property
+    def __package__(self):
+        return 'Wires'
+    @property
+    def __minOccurs__(self):
+        return '0'
+    @property
+    def __maxOccurs__(self):
+        return 'unbounded'
+    
 @stereotype(CIMStereotype.Concrete)
 @dataclass(repr=False)
 class SeriesCompensator(ConductingEquipment):
@@ -1422,10 +1716,18 @@ class SeriesCompensator(ConductingEquipment):
     line without charging susceptance. It is a two terminal device.
     '''
 
-    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
-    __package__ = 'Wires'
-    __minOccurs__ = '0'
-    __maxOccurs__ = 'unbounded'
+    @property
+    def __namespace__(self):
+        return 'http://cim.ucaiug.io/CIM101/draft#'
+    @property
+    def __package__(self):
+        return 'Wires'
+    @property
+    def __minOccurs__(self):
+        return '0'
+    @property
+    def __maxOccurs__(self):
+        return 'unbounded'
     
 @dataclass(repr=False)
 class Switch(ConductingEquipment):
@@ -1437,29 +1739,6 @@ class Switch(ConductingEquipment):
     and .locked are relevant.
     '''
 
-    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
-    __package__ = 'Wires'
-    __minOccurs__ = '0'
-    __maxOccurs__ = 'unbounded'
-    
-    SwitchPhase: list[SwitchPhase] = field(
-        default_factory=list,
-        metadata={
-        'type': 'Association',
-        'minOccurs': '0',
-        'maxOccurs': '3',
-        'inverse': 'SwitchPhase.Switch',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'docstring':
-            '''
-            The individual switch phases for the switch.
-            '''
-        
-        })
-    '''
-    The individual switch phases for the switch.
-    '''
-    
     locked: Optional[bool] = field(
         default=None,
         metadata={
@@ -1467,6 +1746,7 @@ class Switch(ConductingEquipment):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
+        'serialize': True,
         'docstring':
             '''
             If true, the switch is locked. The resulting switch state is a combination
@@ -1497,6 +1777,7 @@ class Switch(ConductingEquipment):
         'minOccurs': '1',
         'maxOccurs': '1',
         'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
+        'serialize': True,
         'docstring':
             '''
             The attribute is used in cases when no Measurement for the status value
@@ -1510,6 +1791,38 @@ class Switch(ConductingEquipment):
     is present. If the Switch has a status measurement the Discrete.normalValue
     is expected to match with the Switch.normalOpen.
     '''
+    
+    SwitchPhase: list[SwitchPhase] = field(
+        default_factory=list,
+        metadata={
+        'type': 'Association',
+        'minOccurs': '0',
+        'maxOccurs': '3',
+        'inverse': 'SwitchPhase.Switch',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
+        'serialize': False,
+        'docstring':
+            '''
+            The individual switch phases for the switch.
+            '''
+        
+        })
+    '''
+    The individual switch phases for the switch.
+    '''
+    
+    @property
+    def __namespace__(self):
+        return 'http://cim.ucaiug.io/CIM101/draft#'
+    @property
+    def __package__(self):
+        return 'Wires'
+    @property
+    def __minOccurs__(self):
+        return '0'
+    @property
+    def __maxOccurs__(self):
+        return 'unbounded'
     
 @stereotype(CIMStereotype.Concrete)
 @dataclass(repr=False)
@@ -1525,10 +1838,18 @@ class Disconnector(Switch):
     as those of short circuit.
     '''
 
-    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
-    __package__ = 'Wires'
-    __minOccurs__ = '0'
-    __maxOccurs__ = 'unbounded'
+    @property
+    def __namespace__(self):
+        return 'http://cim.ucaiug.io/CIM101/draft#'
+    @property
+    def __package__(self):
+        return 'Wires'
+    @property
+    def __minOccurs__(self):
+        return '0'
+    @property
+    def __maxOccurs__(self):
+        return 'unbounded'
     
 @stereotype(CIMStereotype.Concrete)
 @dataclass(repr=False)
@@ -1539,10 +1860,18 @@ class Fuse(Switch):
     is considered a switching device because it breaks current.
     '''
 
-    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
-    __package__ = 'Wires'
-    __minOccurs__ = '0'
-    __maxOccurs__ = 'unbounded'
+    @property
+    def __namespace__(self):
+        return 'http://cim.ucaiug.io/CIM101/draft#'
+    @property
+    def __package__(self):
+        return 'Wires'
+    @property
+    def __minOccurs__(self):
+        return '0'
+    @property
+    def __maxOccurs__(self):
+        return 'unbounded'
     
 @dataclass(repr=False)
 class ProtectedSwitch(Switch):
@@ -1550,10 +1879,18 @@ class ProtectedSwitch(Switch):
     A ProtectedSwitch is a switching device that can be operated by ProtectionEquipment.
     '''
 
-    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
-    __package__ = 'Wires'
-    __minOccurs__ = '0'
-    __maxOccurs__ = 'unbounded'
+    @property
+    def __namespace__(self):
+        return 'http://cim.ucaiug.io/CIM101/draft#'
+    @property
+    def __package__(self):
+        return 'Wires'
+    @property
+    def __minOccurs__(self):
+        return '0'
+    @property
+    def __maxOccurs__(self):
+        return 'unbounded'
     
 @stereotype(CIMStereotype.Concrete)
 @dataclass(repr=False)
@@ -1565,10 +1902,18 @@ class Breaker(ProtectedSwitch):
     conditions e.g. those of short circuit.
     '''
 
-    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
-    __package__ = 'Wires'
-    __minOccurs__ = '0'
-    __maxOccurs__ = 'unbounded'
+    @property
+    def __namespace__(self):
+        return 'http://cim.ucaiug.io/CIM101/draft#'
+    @property
+    def __package__(self):
+        return 'Wires'
+    @property
+    def __minOccurs__(self):
+        return '0'
+    @property
+    def __maxOccurs__(self):
+        return 'unbounded'
     
 @stereotype(CIMStereotype.Concrete)
 @dataclass(repr=False)
@@ -1578,10 +1923,18 @@ class LoadBreakSwitch(ProtectedSwitch):
     currents under normal operating conditions.
     '''
 
-    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
-    __package__ = 'Wires'
-    __minOccurs__ = '0'
-    __maxOccurs__ = 'unbounded'
+    @property
+    def __namespace__(self):
+        return 'http://cim.ucaiug.io/CIM101/draft#'
+    @property
+    def __package__(self):
+        return 'Wires'
+    @property
+    def __minOccurs__(self):
+        return '0'
+    @property
+    def __maxOccurs__(self):
+        return 'unbounded'
     
 @stereotype(CIMStereotype.Concrete)
 @dataclass(repr=False)
@@ -1591,10 +1944,18 @@ class Recloser(ProtectedSwitch):
     transformer (CT), and supplemental controls.
     '''
 
-    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
-    __package__ = 'Wires'
-    __minOccurs__ = '0'
-    __maxOccurs__ = 'unbounded'
+    @property
+    def __namespace__(self):
+        return 'http://cim.ucaiug.io/CIM101/draft#'
+    @property
+    def __package__(self):
+        return 'Wires'
+    @property
+    def __minOccurs__(self):
+        return '0'
+    @property
+    def __maxOccurs__(self):
+        return 'unbounded'
     
 @stereotype(CIMStereotype.Concrete)
 @dataclass(repr=False)
@@ -1606,10 +1967,18 @@ class Sectionaliser(Switch):
     high, or too low, for proper coordination of fuses.
     '''
 
-    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
-    __package__ = 'Wires'
-    __minOccurs__ = '0'
-    __maxOccurs__ = 'unbounded'
+    @property
+    def __namespace__(self):
+        return 'http://cim.ucaiug.io/CIM101/draft#'
+    @property
+    def __package__(self):
+        return 'Wires'
+    @property
+    def __minOccurs__(self):
+        return '0'
+    @property
+    def __maxOccurs__(self):
+        return 'unbounded'
     
 @stereotype(CIMStereotype.Concrete)
 @dataclass(repr=False)
@@ -1621,29 +1990,6 @@ class TransformerTank(Equipment):
     and 3-phase transformers.
     '''
 
-    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
-    __package__ = 'Wires'
-    __minOccurs__ = '0'
-    __maxOccurs__ = 'unbounded'
-    
-    TransformerTankEnds: list[TransformerTankEnd] = field(
-        default_factory=list,
-        metadata={
-        'type': 'Association',
-        'minOccurs': '0',
-        'maxOccurs': 'unbounded',
-        'inverse': 'TransformerTankEnd.TransformerTank',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'docstring':
-            '''
-            All windings of this transformer.
-            '''
-        
-        })
-    '''
-    All windings of this transformer.
-    '''
-    
     PowerTransformer: Optional[PowerTransformer] = field(
         default=None,
         metadata={
@@ -1652,6 +1998,7 @@ class TransformerTank(Equipment):
         'maxOccurs': '1',
         'inverse': 'PowerTransformer.TransformerTanks',
         'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
+        'serialize': True,
         'docstring':
             '''
             Bank this transformer belongs to.
@@ -1662,6 +2009,38 @@ class TransformerTank(Equipment):
     Bank this transformer belongs to.
     '''
     
+    TransformerTankEnds: list[TransformerTankEnd] = field(
+        default_factory=list,
+        metadata={
+        'type': 'Association',
+        'minOccurs': '0',
+        'maxOccurs': 'unbounded',
+        'inverse': 'TransformerTankEnd.TransformerTank',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
+        'serialize': False,
+        'docstring':
+            '''
+            All windings of this transformer.
+            '''
+        
+        })
+    '''
+    All windings of this transformer.
+    '''
+    
+    @property
+    def __namespace__(self):
+        return 'http://cim.ucaiug.io/CIM101/draft#'
+    @property
+    def __package__(self):
+        return 'Wires'
+    @property
+    def __minOccurs__(self):
+        return '0'
+    @property
+    def __maxOccurs__(self):
+        return 'unbounded'
+    
 @stereotype(CIMStereotype.Concrete)
 @dataclass(repr=False)
 class PowerElectronicsConnectionPhase(PowerSystemResource):
@@ -1669,11 +2048,6 @@ class PowerElectronicsConnectionPhase(PowerSystemResource):
     A single phase of a power electronics connection.
     '''
 
-    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
-    __package__ = 'Wires'
-    __minOccurs__ = '0'
-    __maxOccurs__ = 'unbounded'
-    
     phase: Optional[ SinglePhaseKind ] = field(
         default=None,
         metadata={
@@ -1681,6 +2055,7 @@ class PowerElectronicsConnectionPhase(PowerSystemResource):
         'minOccurs': '1',
         'maxOccurs': '1',
         'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
+        'serialize': True,
         'docstring':
             '''
             Phase of this energy producer component. If the energy producer is wye
@@ -1707,6 +2082,7 @@ class PowerElectronicsConnectionPhase(PowerSystemResource):
         'maxOccurs': '1',
         'inverse': 'PowerElectronicsConnection.PowerElectronicsConnectionPhase',
         'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
+        'serialize': True,
         'docstring':
             '''
             Power electronics connection of this power electronics connection phase.
@@ -1717,6 +2093,19 @@ class PowerElectronicsConnectionPhase(PowerSystemResource):
     Power electronics connection of this power electronics connection phase.
     '''
     
+    @property
+    def __namespace__(self):
+        return 'http://cim.ucaiug.io/CIM101/draft#'
+    @property
+    def __package__(self):
+        return 'Wires'
+    @property
+    def __minOccurs__(self):
+        return '0'
+    @property
+    def __maxOccurs__(self):
+        return 'unbounded'
+    
 @dataclass(repr=False)
 class ShuntCompensatorPhase(PowerSystemResource):
     '''
@@ -1724,11 +2113,6 @@ class ShuntCompensatorPhase(PowerSystemResource):
     be different per phase.
     '''
 
-    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
-    __package__ = 'Wires'
-    __minOccurs__ = '0'
-    __maxOccurs__ = 'unbounded'
-    
     phase: Optional[ SinglePhaseKind ] = field(
         default=None,
         metadata={
@@ -1736,6 +2120,7 @@ class ShuntCompensatorPhase(PowerSystemResource):
         'minOccurs': '1',
         'maxOccurs': '1',
         'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
+        'serialize': True,
         'docstring':
             '''
             Phase of this shunt compensator component. If the shunt compensator is
@@ -1762,6 +2147,7 @@ class ShuntCompensatorPhase(PowerSystemResource):
         'maxOccurs': '1',
         'inverse': 'ShuntCompensator.ShuntCompensatorPhase',
         'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
+        'serialize': True,
         'docstring':
             '''
             Shunt compensator of this shunt compensator phase.
@@ -1772,6 +2158,19 @@ class ShuntCompensatorPhase(PowerSystemResource):
     Shunt compensator of this shunt compensator phase.
     '''
     
+    @property
+    def __namespace__(self):
+        return 'http://cim.ucaiug.io/CIM101/draft#'
+    @property
+    def __package__(self):
+        return 'Wires'
+    @property
+    def __minOccurs__(self):
+        return '0'
+    @property
+    def __maxOccurs__(self):
+        return 'unbounded'
+    
 @stereotype(CIMStereotype.Concrete)
 @dataclass(repr=False)
 class LinearShuntCompensatorPhase(ShuntCompensatorPhase):
@@ -1780,10 +2179,18 @@ class LinearShuntCompensatorPhase(ShuntCompensatorPhase):
     values.
     '''
 
-    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
-    __package__ = 'Wires'
-    __minOccurs__ = '0'
-    __maxOccurs__ = 'unbounded'
+    @property
+    def __namespace__(self):
+        return 'http://cim.ucaiug.io/CIM101/draft#'
+    @property
+    def __package__(self):
+        return 'Wires'
+    @property
+    def __minOccurs__(self):
+        return '0'
+    @property
+    def __maxOccurs__(self):
+        return 'unbounded'
     
 @stereotype(CIMStereotype.Concrete)
 @dataclass(repr=False)
@@ -1793,11 +2200,6 @@ class SwitchPhase(PowerSystemResource):
     per phase.
     '''
 
-    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
-    __package__ = 'Wires'
-    __minOccurs__ = '0'
-    __maxOccurs__ = 'unbounded'
-    
     normalOpen: Optional[bool] = field(
         default=None,
         metadata={
@@ -1805,6 +2207,7 @@ class SwitchPhase(PowerSystemResource):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
+        'serialize': True,
         'docstring':
             '''
             Used in cases when no Measurement for the status value is present. If the
@@ -1826,6 +2229,7 @@ class SwitchPhase(PowerSystemResource):
         'minOccurs': '1',
         'maxOccurs': '1',
         'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
+        'serialize': True,
         'docstring':
             '''
             Phase of this SwitchPhase on the side with terminal sequence number equal
@@ -1845,6 +2249,7 @@ class SwitchPhase(PowerSystemResource):
         'minOccurs': '1',
         'maxOccurs': '1',
         'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
+        'serialize': True,
         'docstring':
             '''
             Phase of this SwitchPhase on the side with terminal sequence number equal
@@ -1866,6 +2271,7 @@ class SwitchPhase(PowerSystemResource):
         'maxOccurs': '1',
         'inverse': 'Switch.SwitchPhase',
         'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
+        'serialize': True,
         'docstring':
             '''
             The switch of the switch phase.
@@ -1876,6 +2282,19 @@ class SwitchPhase(PowerSystemResource):
     The switch of the switch phase.
     '''
     
+    @property
+    def __namespace__(self):
+        return 'http://cim.ucaiug.io/CIM101/draft#'
+    @property
+    def __package__(self):
+        return 'Wires'
+    @property
+    def __minOccurs__(self):
+        return '0'
+    @property
+    def __maxOccurs__(self):
+        return 'unbounded'
+    
 @dataclass(repr=False)
 class TransformerEnd(IdentifiedObject):
     '''
@@ -1885,11 +2304,6 @@ class TransformerEnd(IdentifiedObject):
     it associates to terminal but is not a specialization of ConductingEquipment.
     '''
 
-    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
-    __package__ = 'Wires'
-    __minOccurs__ = '0'
-    __maxOccurs__ = 'unbounded'
-    
     endNumber: Optional[int] = field(
         default=None,
         metadata={
@@ -1897,6 +2311,7 @@ class TransformerEnd(IdentifiedObject):
         'minOccurs': '1',
         'maxOccurs': '1',
         'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
+        'serialize': True,
         'docstring':
             '''
             Number for this transformer end, corresponding to the end's order in the
@@ -1923,6 +2338,7 @@ class TransformerEnd(IdentifiedObject):
         'maxOccurs': '1',
         'inverse': 'BaseVoltage.TransformerEnds',
         'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
+        'serialize': True,
         'docstring':
             '''
             Base voltage of the transformer end. This is essential for PU calculation.
@@ -1941,6 +2357,7 @@ class TransformerEnd(IdentifiedObject):
         'maxOccurs': '1',
         'inverse': 'Terminal.TransformerEnd',
         'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
+        'serialize': True,
         'docstring':
             '''
             Terminal of the power transformer to which this transformer end belongs.
@@ -1950,6 +2367,19 @@ class TransformerEnd(IdentifiedObject):
     '''
     Terminal of the power transformer to which this transformer end belongs.
     '''
+    
+    @property
+    def __namespace__(self):
+        return 'http://cim.ucaiug.io/CIM101/draft#'
+    @property
+    def __package__(self):
+        return 'Wires'
+    @property
+    def __minOccurs__(self):
+        return '0'
+    @property
+    def __maxOccurs__(self):
+        return 'unbounded'
     
 @stereotype(CIMStereotype.Concrete)
 @dataclass(repr=False)
@@ -1981,11 +2411,6 @@ class PowerTransformerEnd(TransformerEnd):
     EquipmentContainer (Substation, VoltageLevel, etc).
     '''
 
-    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
-    __package__ = 'Wires'
-    __minOccurs__ = '0'
-    __maxOccurs__ = 'unbounded'
-    
     connectionKind: Optional[ WindingConnection ] = field(
         default=None,
         metadata={
@@ -1993,6 +2418,7 @@ class PowerTransformerEnd(TransformerEnd):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
+        'serialize': True,
         'docstring':
             '''
             Kind of connection.
@@ -2011,6 +2437,7 @@ class PowerTransformerEnd(TransformerEnd):
         'maxOccurs': '1',
         'inverse': 'PowerTransformer.PowerTransformerEnd',
         'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
+        'serialize': True,
         'docstring':
             '''
             The power transformer of this power transformer end.
@@ -2021,6 +2448,19 @@ class PowerTransformerEnd(TransformerEnd):
     The power transformer of this power transformer end.
     '''
     
+    @property
+    def __namespace__(self):
+        return 'http://cim.ucaiug.io/CIM101/draft#'
+    @property
+    def __package__(self):
+        return 'Wires'
+    @property
+    def __minOccurs__(self):
+        return '0'
+    @property
+    def __maxOccurs__(self):
+        return 'unbounded'
+    
 @stereotype(CIMStereotype.Concrete)
 @dataclass(repr=False)
 class TransformerTankEnd(TransformerEnd):
@@ -2030,11 +2470,6 @@ class TransformerTankEnd(TransformerEnd):
     the PowerTransformer).
     '''
 
-    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
-    __package__ = 'Wires'
-    __minOccurs__ = '0'
-    __maxOccurs__ = 'unbounded'
-    
     orderedPhases: Optional[ OrderedPhaseCodeKind ] = field(
         default=None,
         metadata={
@@ -2042,6 +2477,7 @@ class TransformerTankEnd(TransformerEnd):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://epri.com/gmdm/2025#',
+        'serialize': True,
         'docstring':
             '''
             '''
@@ -2058,6 +2494,7 @@ class TransformerTankEnd(TransformerEnd):
         'maxOccurs': '1',
         'inverse': 'TransformerTank.TransformerTankEnds',
         'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
+        'serialize': True,
         'docstring':
             '''
             Transformer this winding belongs to.
@@ -2068,6 +2505,19 @@ class TransformerTankEnd(TransformerEnd):
     Transformer this winding belongs to.
     '''
     
+    @property
+    def __namespace__(self):
+        return 'http://cim.ucaiug.io/CIM101/draft#'
+    @property
+    def __package__(self):
+        return 'Wires'
+    @property
+    def __minOccurs__(self):
+        return '0'
+    @property
+    def __maxOccurs__(self):
+        return 'unbounded'
+    
 @stereotype(CIMStereotype.Concrete)
 @dataclass(repr=False)
 class UsagePoint(IdentifiedObject):
@@ -2077,11 +2527,6 @@ class UsagePoint(IdentifiedObject):
     be located; however, it is not required that a meter be present.
     '''
 
-    __namespace__ = 'http://cim.ucaiug.io/CIM101/draft#'
-    __package__ = 'Metering'
-    __minOccurs__ = '0'
-    __maxOccurs__ = 'unbounded'
-    
     phaseCode: Optional[ PhaseCode ] = field(
         default=None,
         metadata={
@@ -2089,6 +2534,7 @@ class UsagePoint(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
+        'serialize': True,
         'docstring':
             '''
             Phase code. Number of wires and specific nominal phases can be deduced
@@ -2113,6 +2559,7 @@ class UsagePoint(IdentifiedObject):
         'maxOccurs': '1',
         'inverse': 'Terminal.UsagePoint',
         'namespace': 'http://epri.com/gmdm/2025#',
+        'serialize': True,
         'docstring':
             '''
             '''
@@ -2120,6 +2567,19 @@ class UsagePoint(IdentifiedObject):
         })
     '''
     '''
+    
+    @property
+    def __namespace__(self):
+        return 'http://cim.ucaiug.io/CIM101/draft#'
+    @property
+    def __package__(self):
+        return 'Metering'
+    @property
+    def __minOccurs__(self):
+        return '0'
+    @property
+    def __maxOccurs__(self):
+        return 'unbounded'
     
 @stereotype(CIMStereotype.gmdm)
 @stereotype(CIMStereotype.enumeration)
@@ -2324,6 +2784,19 @@ class OrderedPhaseCodeKind(Enum):
     '''
     '''
     
+    @property
+    def __namespace__(self):
+        return 'http://epri.com/gmdm/2025#'
+    @property
+    def __package__(self):
+        return 'AssetInfoEXT'
+    @property
+    def __minOccurs__(self):
+        return '0'
+    @property
+    def __maxOccurs__(self):
+        return 'unbounded'
+    
 @stereotype(CIMStereotype.enumeration)
 class PhaseCode(Enum):
     '''
@@ -2475,6 +2948,19 @@ class PhaseCode(Enum):
     Secondary phase 2 and neutral.
     '''
     
+    @property
+    def __namespace__(self):
+        return 'http://cim.ucaiug.io/CIM101/draft#'
+    @property
+    def __package__(self):
+        return 'Core'
+    @property
+    def __minOccurs__(self):
+        return '0'
+    @property
+    def __maxOccurs__(self):
+        return 'unbounded'
+    
 @stereotype(CIMStereotype.enumeration)
 @stereotype(CIMStereotype.Attribute)
 class PhaseShuntConnectionKind(Enum):
@@ -2509,6 +2995,19 @@ class PhaseShuntConnectionKind(Enum):
     '''
     Wye, with neutral brought out for grounding.
     '''
+    
+    @property
+    def __namespace__(self):
+        return 'http://cim.ucaiug.io/CIM101/draft#'
+    @property
+    def __package__(self):
+        return 'Wires'
+    @property
+    def __minOccurs__(self):
+        return '0'
+    @property
+    def __maxOccurs__(self):
+        return 'unbounded'
     
 @stereotype(CIMStereotype.enumeration)
 @stereotype(CIMStereotype.Attribute)
@@ -2549,6 +3048,19 @@ class SinglePhaseKind(Enum):
     '''
     Secondary phase 2.
     '''
+    
+    @property
+    def __namespace__(self):
+        return 'http://cim.ucaiug.io/CIM101/draft#'
+    @property
+    def __package__(self):
+        return 'Wires'
+    @property
+    def __minOccurs__(self):
+        return '0'
+    @property
+    def __maxOccurs__(self):
+        return 'unbounded'
     
 @stereotype(CIMStereotype.enumeration)
 @stereotype(CIMStereotype.Attribute)
@@ -2592,6 +3104,19 @@ class WindingConnection(Enum):
     ZigZag, with neutral brought out for grounding.
     '''
     
+    @property
+    def __namespace__(self):
+        return 'http://cim.ucaiug.io/CIM101/draft#'
+    @property
+    def __package__(self):
+        return 'Wires'
+    @property
+    def __minOccurs__(self):
+        return '0'
+    @property
+    def __maxOccurs__(self):
+        return 'unbounded'
+    
 @stereotype(CIMStereotype.CIMDatatype)
 @dataclass(repr=False)
 class Voltage(CIMUnit):
@@ -2606,4 +3131,17 @@ class Voltage(CIMUnit):
         return UnitSymbol.V
     def __init__(self, value, input_unit: str='V', input_multiplier: str=None):
         self.__pint__(value=value, input_unit=input_unit, input_multiplier=input_multiplier)
+    @property
+    def __namespace__(self):
+        return '#'
+    @property
+    def __package__(self):
+        return 'Domain'
+    @property
+    def __minOccurs__(self):
+        return '0'
+    @property
+    def __maxOccurs__(self):
+        return '1'
+    
 
