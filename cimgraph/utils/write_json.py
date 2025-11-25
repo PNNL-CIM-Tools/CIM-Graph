@@ -23,14 +23,9 @@ def write_json_ld(network: GraphModel, filename: str, namespaces: dict=None, ind
         None
 
     """
-    default_namespaces = {'cim': 'http://iec.ch/TC57/CIM100#',
-                        'eu': 'http://iec.ch/TC57/CIM100-European#',
-                        'nc': 'http://entsoe.eu/ns/nc#',
-                        'gb': 'http://GB/placeholder/ext#',
-                        'rdf': 'http://www.w3.org/1999/02/22-rdf-syntax-ns#'}
-    if namespaces is not None:
-            default_namespaces.update(namespaces)
-    namespaces = default_namespaces
+    if namespaces is None:
+        namespaces = {'cim': 'http://iec.ch/TC57/CIM100#',
+                      'rdf': 'http://www.w3.org/1999/02/22-rdf-syntax-ns#'}
 
     # Create reverse lookup for namespace
     reverse_ns_lookup = {v: k for k, v in namespaces.items()}
@@ -42,8 +37,17 @@ def write_json_ld(network: GraphModel, filename: str, namespaces: dict=None, ind
     f = open(filename, 'w', encoding='utf-8')
     f.write('{\n')
 
+    context = {
+        'rdf': 'http://www.w3.org/1999/02/22-rdf-syntax-ns#',
+        'cim': 'http://ucaiug.org/ns/CIM#',
+        'eu': 'http://iec.ch/TC57/CIM100-European#',
+        'dcterms': 'http://purl.org/dc/terms/',
+        'dcat': 'http://www.w3.org/ns/dcat#',
+        'prov': 'http://www.w3.org/ns/prov#',
+        'xsd': 'http://www.w3.org/2001/XMLSchema#'
+        }
     f.write(' '*indent + '"@context": ')
-    f.write(json.dumps(namespaces, indent=indent).replace('\n', '\n' + ' '*indent)+',\n')
+    f.write(json.dumps(context, indent=indent).replace('\n', '\n' + ' '*indent)+',\n')
 
     # TODO: Add support for PROV, DCAT, and timestamping of model data
 
@@ -55,14 +59,9 @@ def write_json_ld(network: GraphModel, filename: str, namespaces: dict=None, ind
         for obj in network.graph[root_class].values():
 
             cim_class = obj.__class__
-            try:
-                class_ns = cim_class.__namespace__
-                cls_ns_prefix = reverse_ns_lookup[class_ns]
-            except:
-                cls_ns_prefix = 'cim'
             dump = {}
             dump['@id'] = 'urn:uuid:'+obj.uri()
-            dump['@type'] = f'{cls_ns_prefix}:{cim_class.__name__}'
+            dump['@type'] = f'cim:{cim_class.__name__}'
             parent_classes = list(cim_class.__mro__)
             parent_classes.pop(len(parent_classes) - 1)
             for parent in parent_classes:
@@ -83,8 +82,7 @@ def write_json_ld(network: GraphModel, filename: str, namespaces: dict=None, ind
                         if edge_class in network.connection.cim.__all__:
                             if edge is not None and edge != []:
                                 if type(edge.__class__) is enum.EnumMeta:
-                                    enum_ns = edge.__namespace__
-                                    dump[f'{ns_prefix}:{parent.__name__}.{attribute}'] = f'{enum_ns}:{str(edge)}'
+                                    dump[f'{ns_prefix}:{parent.__name__}.{attribute}'] = f'{attr_ns}:{str(edge)}'
                                 elif type(edge) is str or type(edge) is bool or type(edge) is float:
                                     dump[f'{ns_prefix}:{parent.__name__}.{attribute}'] = str(edge)
                                 elif type(edge) is list:
