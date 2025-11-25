@@ -41,7 +41,7 @@ class CIMStereotype(Enum):
     remove = "remove"
 
 BASE_URI = 'http://www.gridappsd.org/CIM101#'
-ONTOLOGY_URI = 'http://ucaiug.io/CIM101/draft#'
+ONTOLOGY_URI = 'http://cim.ucaiug.io/CIM101/draft#'
 
 @dataclass(repr=False)
 class AutomationBlockGroup(Identity):
@@ -56,7 +56,7 @@ class AutomationBlockGroup(Identity):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -77,7 +77,7 @@ class AutomationBlockGroup(Identity):
         'minOccurs': '1',
         'maxOccurs': '1',
         'inverse': 'AutomationFunction.AutomationBlockGroup',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -91,7 +91,7 @@ class AutomationBlockGroup(Identity):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Protection'
@@ -109,7 +109,7 @@ class AutomationBlockGroup(Identity):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'FunctionBlock.AutomationBlockGroup',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         'docstring':
             '''
@@ -133,7 +133,7 @@ class BranchGroupTerminal(Identity):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -154,7 +154,7 @@ class BranchGroupTerminal(Identity):
         'minOccurs': '1',
         'maxOccurs': '1',
         'inverse': 'BranchGroup.BranchGroupTerminal',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -173,7 +173,7 @@ class BranchGroupTerminal(Identity):
         'minOccurs': '1',
         'maxOccurs': '1',
         'inverse': 'Terminal.BranchGroupTerminal',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -187,7 +187,7 @@ class BranchGroupTerminal(Identity):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'OperationalLimits'
@@ -418,7 +418,7 @@ class ChangeSetMember(Identity):
 
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'GenericDataSet'
@@ -441,7 +441,7 @@ class ComModuleInfo(Identity):
         'type': 'enumeration Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -459,7 +459,7 @@ class ComModuleInfo(Identity):
         'type': 'enumeration Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -473,7 +473,7 @@ class ComModuleInfo(Identity):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'AssetInfo'
@@ -498,7 +498,7 @@ class CurveData(Identity):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -516,7 +516,7 @@ class CurveData(Identity):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -535,7 +535,7 @@ class CurveData(Identity):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -555,7 +555,7 @@ class CurveData(Identity):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -576,7 +576,7 @@ class CurveData(Identity):
         'minOccurs': '1',
         'maxOccurs': '1',
         'inverse': 'Curve.CurveDatas',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -590,7 +590,7 @@ class CurveData(Identity):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Core'
@@ -614,7 +614,7 @@ class FrequencyMonitoringTerminal(Identity):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -643,7 +643,7 @@ class FrequencyMonitoringTerminal(Identity):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -664,7 +664,7 @@ class FrequencyMonitoringTerminal(Identity):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'PowerFrequencyController.FrequencyMonitoringTerminal',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -683,7 +683,7 @@ class FrequencyMonitoringTerminal(Identity):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'Terminal.FrequencyMonitoringTerminal',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -697,7 +697,7 @@ class FrequencyMonitoringTerminal(Identity):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Control'
@@ -724,7 +724,7 @@ class FunctionFunctionLink(Identity):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -742,7 +742,7 @@ class FunctionFunctionLink(Identity):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -761,7 +761,7 @@ class FunctionFunctionLink(Identity):
         'minOccurs': '1',
         'maxOccurs': '1',
         'inverse': 'FunctionBlock.DestinationSideLink',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -782,7 +782,7 @@ class FunctionFunctionLink(Identity):
         'minOccurs': '1',
         'maxOccurs': '1',
         'inverse': 'FunctionBlock.SourceSideLink',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -798,7 +798,7 @@ class FunctionFunctionLink(Identity):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return '62361Draft'
@@ -821,7 +821,7 @@ class FunctionLogicDescription(Identity):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -841,7 +841,7 @@ class FunctionLogicDescription(Identity):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -861,7 +861,7 @@ class FunctionLogicDescription(Identity):
         'type': 'enumeration Attribute',
         'minOccurs': '1',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -882,7 +882,7 @@ class FunctionLogicDescription(Identity):
         'minOccurs': '1',
         'maxOccurs': '1',
         'inverse': 'FunctionBlockType.FunctionLogicDescriptions',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -898,7 +898,7 @@ class FunctionLogicDescription(Identity):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return '62361Draft'
@@ -924,7 +924,7 @@ class FunctionTypeInput(Identity):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -944,7 +944,7 @@ class FunctionTypeInput(Identity):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -962,7 +962,7 @@ class FunctionTypeInput(Identity):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -985,7 +985,7 @@ class FunctionTypeInput(Identity):
         'minOccurs': '1',
         'maxOccurs': '1',
         'inverse': 'FunctionBlockType.FunctionTypeInputs',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -999,7 +999,7 @@ class FunctionTypeInput(Identity):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return '62361Draft'
@@ -1025,7 +1025,7 @@ class FunctionTypeOutput(Identity):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -1043,7 +1043,7 @@ class FunctionTypeOutput(Identity):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -1066,7 +1066,7 @@ class FunctionTypeOutput(Identity):
         'minOccurs': '1',
         'maxOccurs': '1',
         'inverse': 'FunctionBlockType.FunctionTypeOutputs',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -1080,7 +1080,7 @@ class FunctionTypeOutput(Identity):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return '62361Draft'
@@ -1104,7 +1104,7 @@ class FuseInfo(Identity):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'FuseCharacteristicCurve.FuseInfoMinimumMelt',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -1124,7 +1124,7 @@ class FuseInfo(Identity):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'FuseCharacteristicCurve.FusInfoTotalClearing',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -1140,7 +1140,7 @@ class FuseInfo(Identity):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Protection'
@@ -1158,7 +1158,7 @@ class FuseInfo(Identity):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'FuseCharacteristicCurve.FuseInfoMinimumMelt',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         'docstring':
             '''
@@ -1178,7 +1178,7 @@ class FuseInfo(Identity):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'FuseCharacteristicCurve.FusInfoTotalClearing',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         'docstring':
             '''
@@ -1205,7 +1205,7 @@ class IdentifiedObject(Identity):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -1234,7 +1234,7 @@ class IdentifiedObject(Identity):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -1263,7 +1263,7 @@ class IdentifiedObject(Identity):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -1306,7 +1306,7 @@ class IdentifiedObject(Identity):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -1342,7 +1342,7 @@ class IdentifiedObject(Identity):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Core'
@@ -1367,7 +1367,7 @@ class ACDCTerminal(IdentifiedObject):
         'type': 'deprecated Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -1401,7 +1401,7 @@ class ACDCTerminal(IdentifiedObject):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -1426,7 +1426,7 @@ class ACDCTerminal(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'BusNameMarker.Terminal',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -1445,7 +1445,7 @@ class ACDCTerminal(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'Measurement.Terminal',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         'docstring':
             '''
@@ -1471,7 +1471,7 @@ class ACDCTerminal(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'OperationalLimitSet.Terminal',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         'docstring':
             '''
@@ -1485,7 +1485,7 @@ class ACDCTerminal(IdentifiedObject):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Core'
@@ -1509,7 +1509,7 @@ class Terminal(ACDCTerminal):
         'type': 'enumeration Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -1558,7 +1558,7 @@ class Terminal(ACDCTerminal):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'Bushing.Terminal',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -1575,7 +1575,7 @@ class Terminal(ACDCTerminal):
         'minOccurs': '1',
         'maxOccurs': '1',
         'inverse': 'ConductingEquipment.Terminals',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -1598,7 +1598,7 @@ class Terminal(ACDCTerminal):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'ConnectivityNode.Terminals',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -1617,7 +1617,7 @@ class Terminal(ACDCTerminal):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'SVSMO4.FromTerminal',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -1636,7 +1636,7 @@ class Terminal(ACDCTerminal):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'SVSMO4.ToTerminal',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -1655,7 +1655,7 @@ class Terminal(ACDCTerminal):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'Feeder.NormalHeadTerminal',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -1695,7 +1695,7 @@ class Terminal(ACDCTerminal):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'TopologicalNode.Terminal',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -1722,7 +1722,7 @@ class Terminal(ACDCTerminal):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'UsagePoint.Terminal',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -1739,7 +1739,7 @@ class Terminal(ACDCTerminal):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'WeccREPCC.Terminal',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -1758,7 +1758,7 @@ class Terminal(ACDCTerminal):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'WeccWTGIBFFRA.Terminal',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -1777,7 +1777,7 @@ class Terminal(ACDCTerminal):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'WindPlantDynamics.PointOfConnection',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -1796,7 +1796,7 @@ class Terminal(ACDCTerminal):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'BranchGroupTerminal.Terminal',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         'docstring':
             '''
@@ -1815,7 +1815,7 @@ class Terminal(ACDCTerminal):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'FrequencyMonitoringTerminal.Terminal',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         'docstring':
             '''
@@ -1834,7 +1834,7 @@ class Terminal(ACDCTerminal):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'MutualCoupling.First_Terminal',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         'docstring':
             '''
@@ -1853,7 +1853,7 @@ class Terminal(ACDCTerminal):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'MutualCoupling.Second_Terminal',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         'docstring':
             '''
@@ -1872,7 +1872,7 @@ class Terminal(ACDCTerminal):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'ProtectionFunctionBlock.MonitoredTerminal',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         'docstring':
             '''
@@ -1891,7 +1891,7 @@ class Terminal(ACDCTerminal):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'RegulatingControl.Terminal',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         'docstring':
             '''
@@ -1910,7 +1910,7 @@ class Terminal(ACDCTerminal):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'TransformerEnd.Terminal',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         'docstring':
             '''
@@ -1929,7 +1929,7 @@ class Terminal(ACDCTerminal):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'UsagePoint.Terminal',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         'docstring':
             '''
@@ -1946,7 +1946,7 @@ class Terminal(ACDCTerminal):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'VoltageAngleLimit.AngleReferenceTerminal',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         'docstring':
             '''
@@ -1960,7 +1960,7 @@ class Terminal(ACDCTerminal):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'CoreEXT'
@@ -1989,7 +1989,7 @@ class Asset(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'Measurement.Asset',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         'docstring':
             '''
@@ -2003,7 +2003,7 @@ class Asset(IdentifiedObject):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Assets'
@@ -2079,7 +2079,7 @@ class Bushing(Asset):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'Terminal.Bushing',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         'docstring':
             '''
@@ -2093,7 +2093,7 @@ class Bushing(Asset):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Assets'
@@ -2233,7 +2233,7 @@ class Crossarm(Asset):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -2252,7 +2252,7 @@ class Crossarm(Asset):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'OverheadStructure.Crossarm',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -2264,7 +2264,7 @@ class Crossarm(Asset):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'AssetInfoEXT'
@@ -2291,7 +2291,7 @@ class DuctBank(Asset):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'WireSpacingInfo.DuctBank',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         'docstring':
             '''
@@ -2303,7 +2303,7 @@ class DuctBank(Asset):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Assets'
@@ -2390,7 +2390,7 @@ class OverheadStructure(Asset):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'Crossarm.OverheadStructure',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         'docstring':
             '''
@@ -2407,7 +2407,7 @@ class OverheadStructure(Asset):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'Pole.OverheadStructure',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         'docstring':
             '''
@@ -2419,7 +2419,7 @@ class OverheadStructure(Asset):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Assets'
@@ -2442,7 +2442,7 @@ class Pole(Asset):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -2464,7 +2464,7 @@ class Pole(Asset):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -2482,7 +2482,7 @@ class Pole(Asset):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -2500,7 +2500,7 @@ class Pole(Asset):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -2518,7 +2518,7 @@ class Pole(Asset):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -2542,7 +2542,7 @@ class Pole(Asset):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -2560,7 +2560,7 @@ class Pole(Asset):
         'type': 'enumeration Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -2578,7 +2578,7 @@ class Pole(Asset):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -2596,7 +2596,7 @@ class Pole(Asset):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -2616,7 +2616,7 @@ class Pole(Asset):
         'type': 'enumeration Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -2634,7 +2634,7 @@ class Pole(Asset):
         'type': 'enumeration Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -2653,7 +2653,7 @@ class Pole(Asset):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'ACLineSegment.Poles',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -2670,7 +2670,7 @@ class Pole(Asset):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'OverheadStructure.Pole',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -2682,7 +2682,7 @@ class Pole(Asset):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Assets'
@@ -2712,7 +2712,7 @@ class AssetInfo(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'AssetRequirement.AssetInfo',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -2729,7 +2729,7 @@ class AssetInfo(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'CatalogAssetType.AssetInfo',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -2748,7 +2748,7 @@ class AssetInfo(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'AssetInfoComponent.ParentAssetInfo',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -2765,7 +2765,7 @@ class AssetInfo(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'AssetInfoComponent.ChildAssetInfo',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -2782,7 +2782,7 @@ class AssetInfo(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'ProductAssetModel.AssetInfo',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -2801,7 +2801,7 @@ class AssetInfo(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'AssetInfoComponent.ChildAssetInfo',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         'docstring':
             '''
@@ -2818,7 +2818,7 @@ class AssetInfo(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'AssetInfoComponent.ParentAssetInfo',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         'docstring':
             '''
@@ -2835,7 +2835,7 @@ class AssetInfo(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'PowerSystemResource.AssetDatasheet',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         'docstring':
             '''
@@ -2849,7 +2849,7 @@ class AssetInfo(IdentifiedObject):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'AssetInfo'
@@ -2868,7 +2868,7 @@ class CapacitorBankInfo(AssetInfo):
 
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'AssetInfoEXT'
@@ -2966,7 +2966,7 @@ class ConductingAssetInfo(AssetInfo):
         'type': 'enumeration Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -2984,7 +2984,7 @@ class ConductingAssetInfo(AssetInfo):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -3002,7 +3002,7 @@ class ConductingAssetInfo(AssetInfo):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -3020,7 +3020,7 @@ class ConductingAssetInfo(AssetInfo):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -3039,7 +3039,7 @@ class ConductingAssetInfo(AssetInfo):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'ShortCircuitResponse.ConductingAssetInfo',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         'docstring':
             '''
@@ -3051,7 +3051,7 @@ class ConductingAssetInfo(AssetInfo):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'AssetInfo'
@@ -3074,7 +3074,7 @@ class BundledCableInfo(ConductingAssetInfo):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -3092,7 +3092,7 @@ class BundledCableInfo(ConductingAssetInfo):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -3110,7 +3110,7 @@ class BundledCableInfo(ConductingAssetInfo):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -3128,7 +3128,7 @@ class BundledCableInfo(ConductingAssetInfo):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -3146,7 +3146,7 @@ class BundledCableInfo(ConductingAssetInfo):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -3164,7 +3164,7 @@ class BundledCableInfo(ConductingAssetInfo):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -3179,7 +3179,7 @@ class BundledCableInfo(ConductingAssetInfo):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'AssetInfo'
@@ -3198,7 +3198,7 @@ class BusbarSectionInfo(ConductingAssetInfo):
 
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'AssetInfo'
@@ -3221,7 +3221,7 @@ class BushingInfo(ConductingAssetInfo):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -3241,7 +3241,7 @@ class BushingInfo(ConductingAssetInfo):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -3261,7 +3261,7 @@ class BushingInfo(ConductingAssetInfo):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -3281,7 +3281,7 @@ class BushingInfo(ConductingAssetInfo):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -3301,7 +3301,7 @@ class BushingInfo(ConductingAssetInfo):
         'type': 'enumeration Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -3319,7 +3319,7 @@ class BushingInfo(ConductingAssetInfo):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -3337,7 +3337,7 @@ class BushingInfo(ConductingAssetInfo):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -3351,7 +3351,7 @@ class BushingInfo(ConductingAssetInfo):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'AssetInfo'
@@ -3377,7 +3377,7 @@ class CapacitorCanInfo(ConductingAssetInfo):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -3397,7 +3397,7 @@ class CapacitorCanInfo(ConductingAssetInfo):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -3415,7 +3415,7 @@ class CapacitorCanInfo(ConductingAssetInfo):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -3436,7 +3436,7 @@ class CapacitorCanInfo(ConductingAssetInfo):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -3456,7 +3456,7 @@ class CapacitorCanInfo(ConductingAssetInfo):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -3474,7 +3474,7 @@ class CapacitorCanInfo(ConductingAssetInfo):
         'type': 'enumeration Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -3494,7 +3494,7 @@ class CapacitorCanInfo(ConductingAssetInfo):
         'type': 'enumeration Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -3514,7 +3514,7 @@ class CapacitorCanInfo(ConductingAssetInfo):
         'type': 'enumeration Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -3530,7 +3530,7 @@ class CapacitorCanInfo(ConductingAssetInfo):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'AssetInfo'
@@ -3555,7 +3555,7 @@ class CompensatorInfo(ConductingAssetInfo):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -3573,7 +3573,7 @@ class CompensatorInfo(ConductingAssetInfo):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -3587,7 +3587,7 @@ class CompensatorInfo(ConductingAssetInfo):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'AssetInfo'
@@ -3612,7 +3612,7 @@ class CapacitorInfo(CompensatorInfo):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -3630,7 +3630,7 @@ class CapacitorInfo(CompensatorInfo):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -3648,7 +3648,7 @@ class CapacitorInfo(CompensatorInfo):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -3666,7 +3666,7 @@ class CapacitorInfo(CompensatorInfo):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -3686,7 +3686,7 @@ class CapacitorInfo(CompensatorInfo):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -3706,7 +3706,7 @@ class CapacitorInfo(CompensatorInfo):
         'type': 'enumeration Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -3724,7 +3724,7 @@ class CapacitorInfo(CompensatorInfo):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -3740,7 +3740,7 @@ class CapacitorInfo(CompensatorInfo):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'AssetInfo'
@@ -3760,7 +3760,7 @@ class SeriesCapacitorInfo(CapacitorInfo):
 
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'AssetInfo'
@@ -3784,7 +3784,7 @@ class ShuntCapacitorInfo(CapacitorInfo):
         'type': 'enumeration Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -3798,7 +3798,7 @@ class ShuntCapacitorInfo(CapacitorInfo):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'AssetInfo'
@@ -3822,7 +3822,7 @@ class FACTSInfo(CompensatorInfo):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -3842,7 +3842,7 @@ class FACTSInfo(CompensatorInfo):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -3862,7 +3862,7 @@ class FACTSInfo(CompensatorInfo):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -3883,7 +3883,7 @@ class FACTSInfo(CompensatorInfo):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -3903,7 +3903,7 @@ class FACTSInfo(CompensatorInfo):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -3923,7 +3923,7 @@ class FACTSInfo(CompensatorInfo):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -3945,7 +3945,7 @@ class FACTSInfo(CompensatorInfo):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -3967,7 +3967,7 @@ class FACTSInfo(CompensatorInfo):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -3985,7 +3985,7 @@ class FACTSInfo(CompensatorInfo):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -4001,7 +4001,7 @@ class FACTSInfo(CompensatorInfo):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'AssetInfo'
@@ -4024,7 +4024,7 @@ class SVCInfo(FACTSInfo):
         'type': 'enumeration Attribute',
         'minOccurs': '1',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -4044,7 +4044,7 @@ class SVCInfo(FACTSInfo):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -4064,7 +4064,7 @@ class SVCInfo(FACTSInfo):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -4080,7 +4080,7 @@ class SVCInfo(FACTSInfo):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'AssetInfo'
@@ -4107,7 +4107,7 @@ class SelfSaturatedReactorInfo(SVCInfo):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -4127,7 +4127,7 @@ class SelfSaturatedReactorInfo(SVCInfo):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -4143,7 +4143,7 @@ class SelfSaturatedReactorInfo(SVCInfo):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'AssetInfo'
@@ -4167,7 +4167,7 @@ class StatComInfo(FACTSInfo):
         'type': 'enumeration Attribute',
         'minOccurs': '1',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -4187,7 +4187,7 @@ class StatComInfo(FACTSInfo):
         'type': 'enumeration Attribute',
         'minOccurs': '1',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -4205,7 +4205,7 @@ class StatComInfo(FACTSInfo):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -4225,7 +4225,7 @@ class StatComInfo(FACTSInfo):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -4245,7 +4245,7 @@ class StatComInfo(FACTSInfo):
         'type': 'enumeration Attribute',
         'minOccurs': '1',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -4259,7 +4259,7 @@ class StatComInfo(FACTSInfo):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'AssetInfo'
@@ -4283,7 +4283,7 @@ class ReactorInfo(CompensatorInfo):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -4301,7 +4301,7 @@ class ReactorInfo(CompensatorInfo):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -4321,7 +4321,7 @@ class ReactorInfo(CompensatorInfo):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -4339,7 +4339,7 @@ class ReactorInfo(CompensatorInfo):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -4357,7 +4357,7 @@ class ReactorInfo(CompensatorInfo):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -4377,7 +4377,7 @@ class ReactorInfo(CompensatorInfo):
         'type': 'NeedsWork Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -4395,7 +4395,7 @@ class ReactorInfo(CompensatorInfo):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -4413,7 +4413,7 @@ class ReactorInfo(CompensatorInfo):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -4431,7 +4431,7 @@ class ReactorInfo(CompensatorInfo):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -4449,7 +4449,7 @@ class ReactorInfo(CompensatorInfo):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -4467,7 +4467,7 @@ class ReactorInfo(CompensatorInfo):
         'type': 'enumeration Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -4487,7 +4487,7 @@ class ReactorInfo(CompensatorInfo):
         'type': 'enumeration Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -4505,7 +4505,7 @@ class ReactorInfo(CompensatorInfo):
         'type': 'enumeration Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -4523,7 +4523,7 @@ class ReactorInfo(CompensatorInfo):
         'type': 'enumeration Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -4541,7 +4541,7 @@ class ReactorInfo(CompensatorInfo):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -4557,7 +4557,7 @@ class ReactorInfo(CompensatorInfo):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'AssetInfo'
@@ -4577,7 +4577,7 @@ class SeriesReactorInfo(ReactorInfo):
 
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'AssetInfo'
@@ -4602,7 +4602,7 @@ class ShuntReactorInfo(ReactorInfo):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'TapChangerInfo.ShuntReactorInfo',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -4614,7 +4614,7 @@ class ShuntReactorInfo(ReactorInfo):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'AssetInfo'
@@ -4637,7 +4637,7 @@ class CompositeSwitchInfo(ConductingAssetInfo):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -4655,7 +4655,7 @@ class CompositeSwitchInfo(ConductingAssetInfo):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -4673,7 +4673,7 @@ class CompositeSwitchInfo(ConductingAssetInfo):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -4691,7 +4691,7 @@ class CompositeSwitchInfo(ConductingAssetInfo):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -4709,7 +4709,7 @@ class CompositeSwitchInfo(ConductingAssetInfo):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -4727,7 +4727,7 @@ class CompositeSwitchInfo(ConductingAssetInfo):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -4747,7 +4747,7 @@ class CompositeSwitchInfo(ConductingAssetInfo):
         'type': 'enumeration Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -4765,7 +4765,7 @@ class CompositeSwitchInfo(ConductingAssetInfo):
         'type': 'enumeration Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -4783,7 +4783,7 @@ class CompositeSwitchInfo(ConductingAssetInfo):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -4797,7 +4797,7 @@ class CompositeSwitchInfo(ConductingAssetInfo):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'AssetInfo'
@@ -4822,7 +4822,7 @@ class ConductorInfo(ConductingAssetInfo):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -4840,7 +4840,7 @@ class ConductorInfo(ConductingAssetInfo):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -4858,7 +4858,7 @@ class ConductorInfo(ConductingAssetInfo):
         'type': 'NeedsWork Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -4876,7 +4876,7 @@ class ConductorInfo(ConductingAssetInfo):
         'type': 'enumeration Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -4894,7 +4894,7 @@ class ConductorInfo(ConductingAssetInfo):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -4912,7 +4912,7 @@ class ConductorInfo(ConductingAssetInfo):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -4930,7 +4930,7 @@ class ConductorInfo(ConductingAssetInfo):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -4948,7 +4948,7 @@ class ConductorInfo(ConductingAssetInfo):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -4962,7 +4962,7 @@ class ConductorInfo(ConductingAssetInfo):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'AssetInfo'
@@ -4985,7 +4985,7 @@ class RigidBusbarInfo(ConductorInfo):
 
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'AssetInfo'
@@ -5008,7 +5008,7 @@ class AngleBusbarInfo(RigidBusbarInfo):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -5026,7 +5026,7 @@ class AngleBusbarInfo(RigidBusbarInfo):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -5040,7 +5040,7 @@ class AngleBusbarInfo(RigidBusbarInfo):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'AssetInfo'
@@ -5063,7 +5063,7 @@ class BarBusbarInfo(RigidBusbarInfo):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -5081,7 +5081,7 @@ class BarBusbarInfo(RigidBusbarInfo):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -5095,7 +5095,7 @@ class BarBusbarInfo(RigidBusbarInfo):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'AssetInfo'
@@ -5118,7 +5118,7 @@ class IntegralWebBusbarInfo(RigidBusbarInfo):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -5136,7 +5136,7 @@ class IntegralWebBusbarInfo(RigidBusbarInfo):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -5154,7 +5154,7 @@ class IntegralWebBusbarInfo(RigidBusbarInfo):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -5168,7 +5168,7 @@ class IntegralWebBusbarInfo(RigidBusbarInfo):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'AssetInfo'
@@ -5191,7 +5191,7 @@ class TubeBusbarInfo(RigidBusbarInfo):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -5209,7 +5209,7 @@ class TubeBusbarInfo(RigidBusbarInfo):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -5223,7 +5223,7 @@ class TubeBusbarInfo(RigidBusbarInfo):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'AssetInfo'
@@ -5246,7 +5246,7 @@ class PipeBusbarInfo(TubeBusbarInfo):
         'type': 'enumeration Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -5268,7 +5268,7 @@ class PipeBusbarInfo(TubeBusbarInfo):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'AssetInfo'
@@ -5293,7 +5293,7 @@ class WireInfo(ConductorInfo):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -5311,7 +5311,7 @@ class WireInfo(ConductorInfo):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -5329,7 +5329,7 @@ class WireInfo(ConductorInfo):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -5347,7 +5347,7 @@ class WireInfo(ConductorInfo):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -5365,7 +5365,7 @@ class WireInfo(ConductorInfo):
         'type': 'enumeration Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -5381,7 +5381,7 @@ class WireInfo(ConductorInfo):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -5399,7 +5399,7 @@ class WireInfo(ConductorInfo):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -5415,7 +5415,7 @@ class WireInfo(ConductorInfo):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -5437,7 +5437,7 @@ class WireInfo(ConductorInfo):
         'type': 'enumeration Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -5455,7 +5455,7 @@ class WireInfo(ConductorInfo):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -5473,7 +5473,7 @@ class WireInfo(ConductorInfo):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -5491,7 +5491,7 @@ class WireInfo(ConductorInfo):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -5507,7 +5507,7 @@ class WireInfo(ConductorInfo):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -5524,7 +5524,7 @@ class WireInfo(ConductorInfo):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'ACLineSegmentPhase.WireInfo',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         'docstring':
             '''
@@ -5558,7 +5558,7 @@ class WireInfo(ConductorInfo):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'WirePhaseInfo.WireInfo',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         'docstring':
             '''
@@ -5572,7 +5572,7 @@ class WireInfo(ConductorInfo):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'AssetInfoEXT'
@@ -5596,7 +5596,7 @@ class BareWireInfo(WireInfo):
         'type': 'enumeration Attribute',
         'minOccurs': '1',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -5610,7 +5610,7 @@ class BareWireInfo(WireInfo):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'AssetInfo'
@@ -5634,7 +5634,7 @@ class CableInfo(WireInfo):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -5653,7 +5653,7 @@ class CableInfo(WireInfo):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -5671,7 +5671,7 @@ class CableInfo(WireInfo):
         'type': 'enumeration Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -5689,7 +5689,7 @@ class CableInfo(WireInfo):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -5709,7 +5709,7 @@ class CableInfo(WireInfo):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -5727,7 +5727,7 @@ class CableInfo(WireInfo):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -5745,7 +5745,7 @@ class CableInfo(WireInfo):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -5763,7 +5763,7 @@ class CableInfo(WireInfo):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -5781,7 +5781,7 @@ class CableInfo(WireInfo):
         'type': 'enumeration Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -5799,7 +5799,7 @@ class CableInfo(WireInfo):
         'type': 'enumeration Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -5818,7 +5818,7 @@ class CableInfo(WireInfo):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'InsulationInfo.CableInfo',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -5835,7 +5835,7 @@ class CableInfo(WireInfo):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'InsulationInfo.CableInfo',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         'docstring':
             '''
@@ -5847,7 +5847,7 @@ class CableInfo(WireInfo):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'AssetInfo'
@@ -5870,7 +5870,7 @@ class ConcentricNeutralCableInfo(CableInfo):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -5888,7 +5888,7 @@ class ConcentricNeutralCableInfo(CableInfo):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -5906,7 +5906,7 @@ class ConcentricNeutralCableInfo(CableInfo):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -5924,7 +5924,7 @@ class ConcentricNeutralCableInfo(CableInfo):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -5942,7 +5942,7 @@ class ConcentricNeutralCableInfo(CableInfo):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -5956,7 +5956,7 @@ class ConcentricNeutralCableInfo(CableInfo):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'AssetInfo'
@@ -5979,7 +5979,7 @@ class MultiCoreCableInfo(CableInfo):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -5997,7 +5997,7 @@ class MultiCoreCableInfo(CableInfo):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -6015,7 +6015,7 @@ class MultiCoreCableInfo(CableInfo):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -6033,7 +6033,7 @@ class MultiCoreCableInfo(CableInfo):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -6051,7 +6051,7 @@ class MultiCoreCableInfo(CableInfo):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -6066,7 +6066,7 @@ class MultiCoreCableInfo(CableInfo):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'AssetInfo'
@@ -6089,7 +6089,7 @@ class TapeShieldCableInfo(CableInfo):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -6109,7 +6109,7 @@ class TapeShieldCableInfo(CableInfo):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -6123,7 +6123,7 @@ class TapeShieldCableInfo(CableInfo):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'AssetInfo'
@@ -6147,7 +6147,7 @@ class OverheadWireInfo(WireInfo):
         'type': 'enumeration Attribute add',
         'minOccurs': '1',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -6159,7 +6159,7 @@ class OverheadWireInfo(WireInfo):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'AssetInfo'
@@ -6187,7 +6187,7 @@ class GridEdgeDeviceInfo(ConductingAssetInfo):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -6211,7 +6211,7 @@ class GridEdgeDeviceInfo(ConductingAssetInfo):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -6233,7 +6233,7 @@ class GridEdgeDeviceInfo(ConductingAssetInfo):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -6251,7 +6251,7 @@ class GridEdgeDeviceInfo(ConductingAssetInfo):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'AssetInfo'
@@ -6375,7 +6375,7 @@ class InverterInfo(GridEdgeDeviceInfo):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -6399,7 +6399,7 @@ class InverterInfo(GridEdgeDeviceInfo):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -6423,7 +6423,7 @@ class InverterInfo(GridEdgeDeviceInfo):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -6445,7 +6445,7 @@ class InverterInfo(GridEdgeDeviceInfo):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -6467,7 +6467,7 @@ class InverterInfo(GridEdgeDeviceInfo):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -6489,7 +6489,7 @@ class InverterInfo(GridEdgeDeviceInfo):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -6511,7 +6511,7 @@ class InverterInfo(GridEdgeDeviceInfo):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -6534,7 +6534,7 @@ class InverterInfo(GridEdgeDeviceInfo):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -6556,7 +6556,7 @@ class InverterInfo(GridEdgeDeviceInfo):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -6578,7 +6578,7 @@ class InverterInfo(GridEdgeDeviceInfo):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -6601,7 +6601,7 @@ class InverterInfo(GridEdgeDeviceInfo):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'InverterCapabilities.IntervalInfo',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -6613,7 +6613,7 @@ class InverterInfo(GridEdgeDeviceInfo):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'AssetInfo'
@@ -6638,7 +6638,7 @@ class GenerationInverterInfo(InverterInfo):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -6666,7 +6666,7 @@ class GenerationInverterInfo(InverterInfo):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'AssetInfo'
@@ -6690,7 +6690,7 @@ class StorageInverterInfo(InverterInfo):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -6732,7 +6732,7 @@ class StorageInverterInfo(InverterInfo):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -6754,7 +6754,7 @@ class StorageInverterInfo(InverterInfo):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -6778,7 +6778,7 @@ class StorageInverterInfo(InverterInfo):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -6790,7 +6790,7 @@ class StorageInverterInfo(InverterInfo):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'AssetInfo'
@@ -6813,7 +6813,7 @@ class SwitchInfo(ConductingAssetInfo):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -6831,7 +6831,7 @@ class SwitchInfo(ConductingAssetInfo):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -6851,7 +6851,7 @@ class SwitchInfo(ConductingAssetInfo):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -6871,7 +6871,7 @@ class SwitchInfo(ConductingAssetInfo):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -6889,7 +6889,7 @@ class SwitchInfo(ConductingAssetInfo):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -6907,7 +6907,7 @@ class SwitchInfo(ConductingAssetInfo):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -6925,7 +6925,7 @@ class SwitchInfo(ConductingAssetInfo):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -6943,7 +6943,7 @@ class SwitchInfo(ConductingAssetInfo):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -6961,7 +6961,7 @@ class SwitchInfo(ConductingAssetInfo):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -6979,7 +6979,7 @@ class SwitchInfo(ConductingAssetInfo):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -6993,7 +6993,7 @@ class SwitchInfo(ConductingAssetInfo):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'AssetInfo'
@@ -7016,7 +7016,7 @@ class TapChangerInfo(ConductingAssetInfo):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -7034,7 +7034,7 @@ class TapChangerInfo(ConductingAssetInfo):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -7052,7 +7052,7 @@ class TapChangerInfo(ConductingAssetInfo):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -7070,7 +7070,7 @@ class TapChangerInfo(ConductingAssetInfo):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -7088,7 +7088,7 @@ class TapChangerInfo(ConductingAssetInfo):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -7106,7 +7106,7 @@ class TapChangerInfo(ConductingAssetInfo):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -7124,7 +7124,7 @@ class TapChangerInfo(ConductingAssetInfo):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -7146,7 +7146,7 @@ class TapChangerInfo(ConductingAssetInfo):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -7164,7 +7164,7 @@ class TapChangerInfo(ConductingAssetInfo):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -7182,7 +7182,7 @@ class TapChangerInfo(ConductingAssetInfo):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -7200,7 +7200,7 @@ class TapChangerInfo(ConductingAssetInfo):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -7218,7 +7218,7 @@ class TapChangerInfo(ConductingAssetInfo):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -7236,7 +7236,7 @@ class TapChangerInfo(ConductingAssetInfo):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -7254,7 +7254,7 @@ class TapChangerInfo(ConductingAssetInfo):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -7273,7 +7273,7 @@ class TapChangerInfo(ConductingAssetInfo):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'ShuntReactorInfo.TapChangerInfo',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         'docstring':
             '''
@@ -7285,7 +7285,7 @@ class TapChangerInfo(ConductingAssetInfo):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'AssetInfo'
@@ -7308,7 +7308,7 @@ class TransformerEndInfo(ConductingAssetInfo):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -7330,7 +7330,7 @@ class TransformerEndInfo(ConductingAssetInfo):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -7354,7 +7354,7 @@ class TransformerEndInfo(ConductingAssetInfo):
         'type': 'enumeration Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -7372,7 +7372,7 @@ class TransformerEndInfo(ConductingAssetInfo):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -7392,7 +7392,7 @@ class TransformerEndInfo(ConductingAssetInfo):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -7410,7 +7410,7 @@ class TransformerEndInfo(ConductingAssetInfo):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -7428,7 +7428,7 @@ class TransformerEndInfo(ConductingAssetInfo):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -7446,7 +7446,7 @@ class TransformerEndInfo(ConductingAssetInfo):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -7467,7 +7467,7 @@ class TransformerEndInfo(ConductingAssetInfo):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'TransformerCoreAdmittance.TransformerEndInfo',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -7490,7 +7490,7 @@ class TransformerEndInfo(ConductingAssetInfo):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'TransformerStarImpedance.TransformerEndInfo',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -7509,7 +7509,7 @@ class TransformerEndInfo(ConductingAssetInfo):
         'minOccurs': '1',
         'maxOccurs': '1',
         'inverse': 'TransformerTankInfo.TransformerEndInfos',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -7528,7 +7528,7 @@ class TransformerEndInfo(ConductingAssetInfo):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'NoLoadTest.EnergisedEnd',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         'docstring':
             '''
@@ -7547,7 +7547,7 @@ class TransformerEndInfo(ConductingAssetInfo):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'OpenCircuitTest.EnergisedEnd',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         'docstring':
             '''
@@ -7567,7 +7567,7 @@ class TransformerEndInfo(ConductingAssetInfo):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'OpenCircuitTest.OpenEnd',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         'docstring':
             '''
@@ -7588,7 +7588,7 @@ class TransformerEndInfo(ConductingAssetInfo):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'ShortCircuitTest.EnergisedEnd',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         'docstring':
             '''
@@ -7608,7 +7608,7 @@ class TransformerEndInfo(ConductingAssetInfo):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'ShortCircuitTest.GroundedEnds',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         'docstring':
             '''
@@ -7628,7 +7628,7 @@ class TransformerEndInfo(ConductingAssetInfo):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'TransformerCoreAdmittance.TransformerEndInfo',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         'docstring':
             '''
@@ -7651,7 +7651,7 @@ class TransformerEndInfo(ConductingAssetInfo):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'TransformerMeshImpedance.FromTransformerEndInfo',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         'docstring':
             '''
@@ -7671,7 +7671,7 @@ class TransformerEndInfo(ConductingAssetInfo):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'TransformerMeshImpedance.ToTransformerEndInfos',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         'docstring':
             '''
@@ -7691,7 +7691,7 @@ class TransformerEndInfo(ConductingAssetInfo):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'TransformerStarImpedance.TransformerEndInfo',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         'docstring':
             '''
@@ -7705,7 +7705,7 @@ class TransformerEndInfo(ConductingAssetInfo):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'AssetInfo'
@@ -7728,7 +7728,7 @@ class CoolingInfo(AssetInfo):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -7747,7 +7747,7 @@ class CoolingInfo(AssetInfo):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'Specification.CoolingInfo',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -7759,7 +7759,7 @@ class CoolingInfo(AssetInfo):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'AssetInfo'
@@ -7778,7 +7778,7 @@ class CrossarmInfo(AssetInfo):
 
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'AssetInfo'
@@ -7797,7 +7797,7 @@ class DamperInfo(AssetInfo):
 
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'AssetInfo'
@@ -7821,7 +7821,7 @@ class InsulationInfo(AssetInfo):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -7839,7 +7839,7 @@ class InsulationInfo(AssetInfo):
         'type': 'enumeration Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -7857,7 +7857,7 @@ class InsulationInfo(AssetInfo):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -7876,7 +7876,7 @@ class InsulationInfo(AssetInfo):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'CableInfo.InsulationInfo',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -7893,7 +7893,7 @@ class InsulationInfo(AssetInfo):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'CableInfo.InsulationInfo',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         'docstring':
             '''
@@ -7905,7 +7905,7 @@ class InsulationInfo(AssetInfo):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'AssetInfo'
@@ -7924,7 +7924,7 @@ class InsulatorInfo(AssetInfo):
 
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'AssetInfo'
@@ -7947,7 +7947,7 @@ class InterrupterUnitInfo(AssetInfo):
         'type': 'enumeration Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -7961,7 +7961,7 @@ class InterrupterUnitInfo(AssetInfo):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'AssetInfo'
@@ -7984,7 +7984,7 @@ class OperatingMechanismInfo(AssetInfo):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -8002,7 +8002,7 @@ class OperatingMechanismInfo(AssetInfo):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -8020,7 +8020,7 @@ class OperatingMechanismInfo(AssetInfo):
         'type': 'enumeration Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -8038,7 +8038,7 @@ class OperatingMechanismInfo(AssetInfo):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -8056,7 +8056,7 @@ class OperatingMechanismInfo(AssetInfo):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -8074,7 +8074,7 @@ class OperatingMechanismInfo(AssetInfo):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -8092,7 +8092,7 @@ class OperatingMechanismInfo(AssetInfo):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -8110,7 +8110,7 @@ class OperatingMechanismInfo(AssetInfo):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -8124,7 +8124,7 @@ class OperatingMechanismInfo(AssetInfo):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'AssetInfo'
@@ -8259,7 +8259,7 @@ class PoleAssetInfo(AssetInfo):
 
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'AssetInfo'
@@ -8283,7 +8283,7 @@ class PowerTransformerInfo(AssetInfo):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'TransformerTankInfo.PowerTransformerInfo',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         'docstring':
             '''
@@ -8297,7 +8297,7 @@ class PowerTransformerInfo(AssetInfo):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'AssetInfo'
@@ -8321,7 +8321,7 @@ class ShuntCompensatorInfo(AssetInfo):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -8339,7 +8339,7 @@ class ShuntCompensatorInfo(AssetInfo):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -8357,7 +8357,7 @@ class ShuntCompensatorInfo(AssetInfo):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -8375,7 +8375,7 @@ class ShuntCompensatorInfo(AssetInfo):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -8394,7 +8394,7 @@ class ShuntCompensatorInfo(AssetInfo):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'ShuntCompensatorControl.ShuntCompensatorInfo',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -8406,7 +8406,7 @@ class ShuntCompensatorInfo(AssetInfo):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'AssetInfo'
@@ -8429,7 +8429,7 @@ class SoundInfo(AssetInfo):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -8448,7 +8448,7 @@ class SoundInfo(AssetInfo):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'Specification.SoundInfo',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -8460,7 +8460,7 @@ class SoundInfo(AssetInfo):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'AssetInfo'
@@ -8483,7 +8483,7 @@ class StructureInfo(AssetInfo):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -8501,7 +8501,7 @@ class StructureInfo(AssetInfo):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -8519,7 +8519,7 @@ class StructureInfo(AssetInfo):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -8537,7 +8537,7 @@ class StructureInfo(AssetInfo):
         'type': 'enumeration Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -8555,7 +8555,7 @@ class StructureInfo(AssetInfo):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -8576,7 +8576,7 @@ class StructureInfo(AssetInfo):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'Dimension.ConstructedStructureInfo',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -8593,7 +8593,7 @@ class StructureInfo(AssetInfo):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'Dimension.TransportStructureInfo',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -8605,7 +8605,7 @@ class StructureInfo(AssetInfo):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'AssetInfo'
@@ -8628,7 +8628,7 @@ class MarineStructureInfo(StructureInfo):
         'type': 'enumeration Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -8642,7 +8642,7 @@ class MarineStructureInfo(StructureInfo):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'AssetInfo'
@@ -8661,7 +8661,7 @@ class OverheadStructureInfo(StructureInfo):
 
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'AssetInfo'
@@ -8684,7 +8684,7 @@ class UndergroundStructureInfo(StructureInfo):
         'type': 'enumeration Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -8698,7 +8698,7 @@ class UndergroundStructureInfo(StructureInfo):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'AssetInfo'
@@ -8721,7 +8721,7 @@ class SurfaceTreatmentInfo(AssetInfo):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -8739,7 +8739,7 @@ class SurfaceTreatmentInfo(AssetInfo):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -8758,7 +8758,7 @@ class SurfaceTreatmentInfo(AssetInfo):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'Specification.SurfaceTreatmentInfo',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -8770,7 +8770,7 @@ class SurfaceTreatmentInfo(AssetInfo):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'AssetInfo'
@@ -8793,7 +8793,7 @@ class ToolInfo(AssetInfo):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -8807,7 +8807,7 @@ class ToolInfo(AssetInfo):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'AssetInfo'
@@ -8831,7 +8831,7 @@ class TransformerTankInfo(AssetInfo):
         'minOccurs': '1',
         'maxOccurs': '1',
         'inverse': 'PowerTransformerInfo.TransformerTankInfos',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -8850,7 +8850,7 @@ class TransformerTankInfo(AssetInfo):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'TransformerEndInfo.TransformerTankInfo',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         'docstring':
             '''
@@ -8881,7 +8881,7 @@ class TransformerTankInfo(AssetInfo):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'AssetInfo'
@@ -8904,7 +8904,7 @@ class VehicleInfo(AssetInfo):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -8922,7 +8922,7 @@ class VehicleInfo(AssetInfo):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -8940,7 +8940,7 @@ class VehicleInfo(AssetInfo):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -8958,7 +8958,7 @@ class VehicleInfo(AssetInfo):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -8972,7 +8972,7 @@ class VehicleInfo(AssetInfo):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'AssetInfo'
@@ -9234,7 +9234,7 @@ class WireAssemblyInfo(AssetInfo):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'PerLengthLineParameter.WireAssemblyInfo',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         'docstring':
             '''
@@ -9253,7 +9253,7 @@ class WireAssemblyInfo(AssetInfo):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'WirePhaseInfo.WireAssemblyInfo',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         'docstring':
             '''
@@ -9284,7 +9284,7 @@ class WireAssemblyInfo(AssetInfo):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'AssetInfo'
@@ -9435,7 +9435,7 @@ class WireSpacingInfo(AssetInfo):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -9469,7 +9469,7 @@ class WireSpacingInfo(AssetInfo):
         'type': 'modify Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -9489,7 +9489,7 @@ class WireSpacingInfo(AssetInfo):
         'type': 'modify Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -9523,7 +9523,7 @@ class WireSpacingInfo(AssetInfo):
         'type': 'enumeration Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -9542,7 +9542,7 @@ class WireSpacingInfo(AssetInfo):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'DuctBank.WireSpacingInfos',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -9576,7 +9576,7 @@ class WireSpacingInfo(AssetInfo):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'ACLineSegment.WireSpacingInfo',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         'docstring':
             '''
@@ -9627,7 +9627,7 @@ class WireSpacingInfo(AssetInfo):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'WirePosition.WireSpacingInfo',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         'docstring':
             '''
@@ -9641,7 +9641,7 @@ class WireSpacingInfo(AssetInfo):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'AssetInfo'
@@ -9664,7 +9664,7 @@ class AssetInfoComponent(IdentifiedObject):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -9683,7 +9683,7 @@ class AssetInfoComponent(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'AssetInfo.ParentAssetInfoComponent',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -9700,7 +9700,7 @@ class AssetInfoComponent(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'AssetInfo.ChildAssetInfoComponent',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -9717,7 +9717,7 @@ class AssetInfoComponent(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'AssetInfo.ChildAssetInfoComponent',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         'docstring':
             '''
@@ -9734,7 +9734,7 @@ class AssetInfoComponent(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'AssetInfo.ParentAssetInfoComponent',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         'docstring':
             '''
@@ -9746,7 +9746,7 @@ class AssetInfoComponent(IdentifiedObject):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'AssetInfo'
@@ -9771,7 +9771,7 @@ class AssetRequirement(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'AssetInfo.AssetRequirement',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         'docstring':
             '''
@@ -9783,7 +9783,7 @@ class AssetRequirement(IdentifiedObject):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Assets'
@@ -9816,7 +9816,7 @@ class AsynchronousMachineDynamics(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'AsynchronousMachine.AsynchronousMachineDynamics',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         'docstring':
             '''
@@ -9832,7 +9832,7 @@ class AsynchronousMachineDynamics(IdentifiedObject):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'AsynchronousMachineDynamics'
@@ -9860,7 +9860,7 @@ class BaseFrequency(IdentifiedObject):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -9874,7 +9874,7 @@ class BaseFrequency(IdentifiedObject):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Core'
@@ -9897,7 +9897,7 @@ class BasePower(IdentifiedObject):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -9911,7 +9911,7 @@ class BasePower(IdentifiedObject):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Core'
@@ -9935,7 +9935,7 @@ class BaseVoltage(IdentifiedObject):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -9956,7 +9956,7 @@ class BaseVoltage(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'ConductingEquipment.BaseVoltage',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         'docstring':
             '''
@@ -9979,7 +9979,7 @@ class BaseVoltage(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'TopologicalNode.BaseVoltage',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         'docstring':
             '''
@@ -9998,7 +9998,7 @@ class BaseVoltage(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'TransformerEnd.BaseVoltage',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         'docstring':
             '''
@@ -10017,7 +10017,7 @@ class BaseVoltage(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'VoltageLevel.BaseVoltage',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         'docstring':
             '''
@@ -10031,7 +10031,7 @@ class BaseVoltage(IdentifiedObject):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Core'
@@ -10054,7 +10054,7 @@ class BasicIntervalSchedule(IdentifiedObject):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -10074,7 +10074,7 @@ class BasicIntervalSchedule(IdentifiedObject):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -10092,7 +10092,7 @@ class BasicIntervalSchedule(IdentifiedObject):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -10110,7 +10110,7 @@ class BasicIntervalSchedule(IdentifiedObject):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -10128,7 +10128,7 @@ class BasicIntervalSchedule(IdentifiedObject):
         'type': 'enumeration Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -10146,7 +10146,7 @@ class BasicIntervalSchedule(IdentifiedObject):
         'type': 'enumeration Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -10164,7 +10164,7 @@ class BasicIntervalSchedule(IdentifiedObject):
         'type': 'enumeration Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -10182,7 +10182,7 @@ class BasicIntervalSchedule(IdentifiedObject):
         'type': 'enumeration Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -10200,7 +10200,7 @@ class BasicIntervalSchedule(IdentifiedObject):
         'type': 'enumeration Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -10218,7 +10218,7 @@ class BasicIntervalSchedule(IdentifiedObject):
         'type': 'enumeration Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -10232,7 +10232,7 @@ class BasicIntervalSchedule(IdentifiedObject):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Core'
@@ -10257,7 +10257,7 @@ class IrregularIntervalSchedule(BasicIntervalSchedule):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'IrregularTimePoint.IntervalSchedule',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         'docstring':
             '''
@@ -10271,7 +10271,7 @@ class IrregularIntervalSchedule(BasicIntervalSchedule):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Core'
@@ -10295,7 +10295,7 @@ class RegularIntervalSchedule(BasicIntervalSchedule):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -10315,7 +10315,7 @@ class RegularIntervalSchedule(BasicIntervalSchedule):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -10336,7 +10336,7 @@ class RegularIntervalSchedule(BasicIntervalSchedule):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'RegularTimePoint.IntervalSchedule',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         'docstring':
             '''
@@ -10350,7 +10350,7 @@ class RegularIntervalSchedule(BasicIntervalSchedule):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Core'
@@ -10380,7 +10380,7 @@ class GenUnitOpSchedule(RegularIntervalSchedule):
         'minOccurs': '1',
         'maxOccurs': '1',
         'inverse': 'GeneratingUnit.GenUnitOpSchedule',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -10401,7 +10401,7 @@ class GenUnitOpSchedule(RegularIntervalSchedule):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'GeneratingUnit.GenUnitOpSchedule',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         'docstring':
             '''
@@ -10417,7 +10417,7 @@ class GenUnitOpSchedule(RegularIntervalSchedule):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Production'
@@ -10445,7 +10445,7 @@ class HydroPumpOpSchedule(RegularIntervalSchedule):
         'minOccurs': '1',
         'maxOccurs': '1',
         'inverse': 'HydroPump.HydroPumpOpSchedule',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -10466,7 +10466,7 @@ class HydroPumpOpSchedule(RegularIntervalSchedule):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'HydroPump.HydroPumpOpSchedule',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         'docstring':
             '''
@@ -10482,7 +10482,7 @@ class HydroPumpOpSchedule(RegularIntervalSchedule):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Production'
@@ -10509,7 +10509,7 @@ class InflowForecast(RegularIntervalSchedule):
         'minOccurs': '1',
         'maxOccurs': '1',
         'inverse': 'Reservoir.InflowForecasts',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -10523,7 +10523,7 @@ class InflowForecast(RegularIntervalSchedule):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Production'
@@ -10548,7 +10548,7 @@ class SeasonDayTypeSchedule(RegularIntervalSchedule):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'DayType.SeasonDayTypeSchedules',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -10567,7 +10567,7 @@ class SeasonDayTypeSchedule(RegularIntervalSchedule):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'Season.SeasonDayTypeSchedules',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -10581,7 +10581,7 @@ class SeasonDayTypeSchedule(RegularIntervalSchedule):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'LoadModel'
@@ -10608,7 +10608,7 @@ class ConformLoadSchedule(SeasonDayTypeSchedule):
         'minOccurs': '1',
         'maxOccurs': '1',
         'inverse': 'ConformLoadGroup.ConformLoadSchedules',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -10622,7 +10622,7 @@ class ConformLoadSchedule(SeasonDayTypeSchedule):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'LoadModel'
@@ -10648,7 +10648,7 @@ class NonConformLoadSchedule(SeasonDayTypeSchedule):
         'minOccurs': '1',
         'maxOccurs': '1',
         'inverse': 'NonConformLoadGroup.NonConformLoadSchedules',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -10662,7 +10662,7 @@ class NonConformLoadSchedule(SeasonDayTypeSchedule):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'LoadModel'
@@ -10687,7 +10687,7 @@ class RegulationSchedule(SeasonDayTypeSchedule):
         'minOccurs': '1',
         'maxOccurs': '1',
         'inverse': 'RegulatingControl.RegulationSchedule',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -10706,7 +10706,7 @@ class RegulationSchedule(SeasonDayTypeSchedule):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'VoltageControlZone.RegulationSchedule',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         'docstring':
             '''
@@ -10720,7 +10720,7 @@ class RegulationSchedule(SeasonDayTypeSchedule):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Wires'
@@ -10745,7 +10745,7 @@ class SwitchSchedule(SeasonDayTypeSchedule):
         'minOccurs': '1',
         'maxOccurs': '1',
         'inverse': 'Switch.SwitchSchedules',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -10759,7 +10759,7 @@ class SwitchSchedule(SeasonDayTypeSchedule):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Wires'
@@ -10783,7 +10783,7 @@ class TapSchedule(SeasonDayTypeSchedule):
         'minOccurs': '1',
         'maxOccurs': '1',
         'inverse': 'TapChanger.TapSchedules',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -10797,7 +10797,7 @@ class TapSchedule(SeasonDayTypeSchedule):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Wires'
@@ -10822,7 +10822,7 @@ class SteamSendoutSchedule(RegularIntervalSchedule):
         'minOccurs': '1',
         'maxOccurs': '1',
         'inverse': 'CogenerationPlant.SteamSendoutSchedule',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -10841,7 +10841,7 @@ class SteamSendoutSchedule(RegularIntervalSchedule):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'CogenerationPlant.SteamSendoutSchedule',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         'docstring':
             '''
@@ -10855,7 +10855,7 @@ class SteamSendoutSchedule(RegularIntervalSchedule):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Production'
@@ -10885,7 +10885,7 @@ class BilateralExchangeActor(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'CommunicationLink.BilateralExchangeActor',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         'docstring':
             '''
@@ -10901,7 +10901,7 @@ class BilateralExchangeActor(IdentifiedObject):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'ICCPConfiguration'
@@ -10926,7 +10926,7 @@ class BranchGroup(IdentifiedObject):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -10944,7 +10944,7 @@ class BranchGroup(IdentifiedObject):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -10962,7 +10962,7 @@ class BranchGroup(IdentifiedObject):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -10980,7 +10980,7 @@ class BranchGroup(IdentifiedObject):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -10998,7 +10998,7 @@ class BranchGroup(IdentifiedObject):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -11016,7 +11016,7 @@ class BranchGroup(IdentifiedObject):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -11035,7 +11035,7 @@ class BranchGroup(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'BranchGroupTerminal.BranchGroup',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         'docstring':
             '''
@@ -11049,7 +11049,7 @@ class BranchGroup(IdentifiedObject):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'OperationalLimits'
@@ -11079,7 +11079,7 @@ class BusNameMarker(IdentifiedObject):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -11102,7 +11102,7 @@ class BusNameMarker(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'ReportingGroup.BusNameMarker',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -11121,7 +11121,7 @@ class BusNameMarker(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'TopologicalNode.BusNameMarker',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -11146,7 +11146,7 @@ class BusNameMarker(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'ACDCTerminal.BusNameMarker',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         'docstring':
             '''
@@ -11160,7 +11160,7 @@ class BusNameMarker(IdentifiedObject):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Topology'
@@ -11185,7 +11185,7 @@ class CalculationMethodHierarchy(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'Measurement.CalculationMethodHierarchy',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         'docstring':
             '''
@@ -11204,7 +11204,7 @@ class CalculationMethodHierarchy(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'MeasurementValue.CalculationMethodHierarchy',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         'docstring':
             '''
@@ -11218,7 +11218,7 @@ class CalculationMethodHierarchy(IdentifiedObject):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'AssetMeas'
@@ -11242,7 +11242,7 @@ class CatalogAssetType(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'AssetInfo.CatalogAssetType',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         'docstring':
             '''
@@ -11256,7 +11256,7 @@ class CatalogAssetType(IdentifiedObject):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Assets'
@@ -11302,7 +11302,7 @@ class ClampAction(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'Clamp.ClampAction',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         'docstring':
             '''
@@ -11314,7 +11314,7 @@ class ClampAction(IdentifiedObject):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Operations'
@@ -11340,7 +11340,7 @@ class ConnectivityNode(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'ACPointOfCommonCoupling.ConnectivityNode',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -11378,7 +11378,7 @@ class ConnectivityNode(IdentifiedObject):
         'minOccurs': '1',
         'maxOccurs': '1',
         'inverse': 'ConnectivityNodeContainer.ConnectivityNodes',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -11397,7 +11397,7 @@ class ConnectivityNode(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'IndividualPnode.ConnectivityNode',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -11414,7 +11414,7 @@ class ConnectivityNode(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'TopologicalNode.ConnectivityNodes',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -11435,7 +11435,7 @@ class ConnectivityNode(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'ACPointOfCommonCoupling.ConnectivityNode',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         'docstring':
             '''
@@ -11473,7 +11473,7 @@ class ConnectivityNode(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'Terminal.ConnectivityNode',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         'docstring':
             '''
@@ -11488,7 +11488,7 @@ class ConnectivityNode(IdentifiedObject):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Core'
@@ -11514,7 +11514,7 @@ class Contingency(IdentifiedObject):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -11554,7 +11554,7 @@ class Contingency(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'ContingencyElement.Contingency',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         'docstring':
             '''
@@ -11568,7 +11568,7 @@ class Contingency(IdentifiedObject):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Contingency'
@@ -11593,7 +11593,7 @@ class ContingencyElement(IdentifiedObject):
         'minOccurs': '1',
         'maxOccurs': '1',
         'inverse': 'Contingency.ContingencyElement',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -11607,7 +11607,7 @@ class ContingencyElement(IdentifiedObject):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Contingency'
@@ -11631,7 +11631,7 @@ class ContingencyEquipment(ContingencyElement):
         'type': 'enumeration Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -11655,7 +11655,7 @@ class ContingencyEquipment(ContingencyElement):
         'minOccurs': '1',
         'maxOccurs': '1',
         'inverse': 'Equipment.ContingencyEquipment',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -11669,7 +11669,7 @@ class ContingencyEquipment(ContingencyElement):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Contingency'
@@ -11693,7 +11693,7 @@ class ControlAction(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'Control.ControlAction',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         'docstring':
             '''
@@ -11705,7 +11705,7 @@ class ControlAction(IdentifiedObject):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Operations'
@@ -11731,7 +11731,7 @@ class CoupledLineSegmentGroup(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'LineSegmentCoupling.CoupledLineSegmentGroup',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         'docstring':
             '''
@@ -11745,7 +11745,7 @@ class CoupledLineSegmentGroup(IdentifiedObject):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Wires'
@@ -11770,7 +11770,7 @@ class Curve(IdentifiedObject):
         'type': 'enumeration Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -11788,7 +11788,7 @@ class Curve(IdentifiedObject):
         'type': 'enumeration Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -11806,7 +11806,7 @@ class Curve(IdentifiedObject):
         'type': 'enumeration Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -11824,7 +11824,7 @@ class Curve(IdentifiedObject):
         'type': 'enumeration Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -11842,7 +11842,7 @@ class Curve(IdentifiedObject):
         'type': 'enumeration Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -11860,7 +11860,7 @@ class Curve(IdentifiedObject):
         'type': 'enumeration Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -11878,7 +11878,7 @@ class Curve(IdentifiedObject):
         'type': 'enumeration Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -11896,7 +11896,7 @@ class Curve(IdentifiedObject):
         'type': 'enumeration Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -11914,7 +11914,7 @@ class Curve(IdentifiedObject):
         'type': 'enumeration Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -11933,7 +11933,7 @@ class Curve(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'CurveData.Curve',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         'docstring':
             '''
@@ -11947,7 +11947,7 @@ class Curve(IdentifiedObject):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Core'
@@ -11972,7 +11972,7 @@ class AmbientTemperatureDependencyCurve(Curve):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'OperationalLimitType.PermanentAmbientTemperatureDependencyCurve',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         'docstring':
             '''
@@ -11988,7 +11988,7 @@ class AmbientTemperatureDependencyCurve(Curve):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'SecurityLimit'
@@ -12015,7 +12015,7 @@ class BaseOverloadLimitCurve(Curve):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'OperationalLimitType.TemporaryBaseOverloadLimitCurve',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         'docstring':
             '''
@@ -12031,7 +12031,7 @@ class BaseOverloadLimitCurve(Curve):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'SecurityLimit'
@@ -12057,7 +12057,7 @@ class DurationOverloadLimitCurve(Curve):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'OperationalLimitType.TemporaryDurationOverloadLimitCurve',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         'docstring':
             '''
@@ -12073,7 +12073,7 @@ class DurationOverloadLimitCurve(Curve):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'SecurityLimit'
@@ -12098,7 +12098,7 @@ class EmissionAccount(Curve):
         'type': 'enumeration Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -12120,7 +12120,7 @@ class EmissionAccount(Curve):
         'type': 'enumeration Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -12139,7 +12139,7 @@ class EmissionAccount(Curve):
         'minOccurs': '1',
         'maxOccurs': '1',
         'inverse': 'ThermalGeneratingUnit.EmmissionAccounts',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -12153,7 +12153,7 @@ class EmissionAccount(Curve):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Production'
@@ -12178,7 +12178,7 @@ class EmissionCurve(Curve):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -12196,7 +12196,7 @@ class EmissionCurve(Curve):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -12214,7 +12214,7 @@ class EmissionCurve(Curve):
         'type': 'enumeration Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -12237,7 +12237,7 @@ class EmissionCurve(Curve):
         'minOccurs': '1',
         'maxOccurs': '1',
         'inverse': 'ThermalGeneratingUnit.EmissionCurves',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -12251,7 +12251,7 @@ class EmissionCurve(Curve):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Production'
@@ -12275,7 +12275,7 @@ class FuelAllocationSchedule(Curve):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -12293,7 +12293,7 @@ class FuelAllocationSchedule(Curve):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -12311,7 +12311,7 @@ class FuelAllocationSchedule(Curve):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -12331,7 +12331,7 @@ class FuelAllocationSchedule(Curve):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -12351,7 +12351,7 @@ class FuelAllocationSchedule(Curve):
         'type': 'enumeration Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -12371,7 +12371,7 @@ class FuelAllocationSchedule(Curve):
         'minOccurs': '1',
         'maxOccurs': '1',
         'inverse': 'FossilFuel.FuelAllocationSchedules',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -12390,7 +12390,7 @@ class FuelAllocationSchedule(Curve):
         'minOccurs': '1',
         'maxOccurs': '1',
         'inverse': 'ThermalGeneratingUnit.FuelAllocationSchedules',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -12404,7 +12404,7 @@ class FuelAllocationSchedule(Curve):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Production'
@@ -12430,7 +12430,7 @@ class GenUnitOpCostCurve(Curve):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -12449,7 +12449,7 @@ class GenUnitOpCostCurve(Curve):
         'minOccurs': '1',
         'maxOccurs': '1',
         'inverse': 'GeneratingUnit.GenUnitOpCostCurves',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -12465,7 +12465,7 @@ class GenUnitOpCostCurve(Curve):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Production'
@@ -12494,7 +12494,7 @@ class GrossToNetActivePowerCurve(Curve):
         'minOccurs': '1',
         'maxOccurs': '1',
         'inverse': 'GeneratingUnit.GrossToNetActivePowerCurves',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -12511,7 +12511,7 @@ class GrossToNetActivePowerCurve(Curve):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Production'
@@ -12539,7 +12539,7 @@ class HeatInputCurve(Curve):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -12557,7 +12557,7 @@ class HeatInputCurve(Curve):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -12575,7 +12575,7 @@ class HeatInputCurve(Curve):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -12593,7 +12593,7 @@ class HeatInputCurve(Curve):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -12611,7 +12611,7 @@ class HeatInputCurve(Curve):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -12630,7 +12630,7 @@ class HeatInputCurve(Curve):
         'minOccurs': '1',
         'maxOccurs': '1',
         'inverse': 'ThermalGeneratingUnit.HeatInputCurve',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -12649,7 +12649,7 @@ class HeatInputCurve(Curve):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'ThermalGeneratingUnit.HeatInputCurve',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         'docstring':
             '''
@@ -12663,7 +12663,7 @@ class HeatInputCurve(Curve):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Production'
@@ -12688,7 +12688,7 @@ class HeatRateCurve(Curve):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -12707,7 +12707,7 @@ class HeatRateCurve(Curve):
         'minOccurs': '1',
         'maxOccurs': '1',
         'inverse': 'ThermalGeneratingUnit.HeatRateCurve',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -12726,7 +12726,7 @@ class HeatRateCurve(Curve):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'ThermalGeneratingUnit.HeatRateCurve',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         'docstring':
             '''
@@ -12740,7 +12740,7 @@ class HeatRateCurve(Curve):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Production'
@@ -12771,7 +12771,7 @@ class HydroGeneratingEfficiencyCurve(Curve):
         'minOccurs': '1',
         'maxOccurs': '1',
         'inverse': 'HydroGeneratingUnit.HydroGeneratingEfficiencyCurves',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -12785,7 +12785,7 @@ class HydroGeneratingEfficiencyCurve(Curve):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Production'
@@ -12812,7 +12812,7 @@ class IncrementalHeatRateCurve(Curve):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -12831,7 +12831,7 @@ class IncrementalHeatRateCurve(Curve):
         'minOccurs': '1',
         'maxOccurs': '1',
         'inverse': 'ThermalGeneratingUnit.IncrementalHeatRateCurve',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -12850,7 +12850,7 @@ class IncrementalHeatRateCurve(Curve):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'ThermalGeneratingUnit.IncrementalHeatRateCurve',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         'docstring':
             '''
@@ -12864,7 +12864,7 @@ class IncrementalHeatRateCurve(Curve):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Production'
@@ -12889,7 +12889,7 @@ class LevelVsVolumeCurve(Curve):
         'minOccurs': '1',
         'maxOccurs': '1',
         'inverse': 'Reservoir.LevelVsVolumeCurves',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -12903,7 +12903,7 @@ class LevelVsVolumeCurve(Curve):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Production'
@@ -12930,7 +12930,7 @@ class PenstockLossCurve(Curve):
         'minOccurs': '1',
         'maxOccurs': '1',
         'inverse': 'HydroGeneratingUnit.PenstockLossCurve',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -12949,7 +12949,7 @@ class PenstockLossCurve(Curve):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'HydroGeneratingUnit.PenstockLossCurve',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         'docstring':
             '''
@@ -12963,7 +12963,7 @@ class PenstockLossCurve(Curve):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Production'
@@ -12991,7 +12991,7 @@ class ReactiveCapabilityCurve(Curve):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -13011,7 +13011,7 @@ class ReactiveCapabilityCurve(Curve):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -13029,7 +13029,7 @@ class ReactiveCapabilityCurve(Curve):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -13048,7 +13048,7 @@ class ReactiveCapabilityCurve(Curve):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'ExtendedWardEquivalent.ReactiveCapabilityCurve',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -13067,7 +13067,7 @@ class ReactiveCapabilityCurve(Curve):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'SynchronousMachine.ReactiveCapabilityCurve',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -13086,7 +13086,7 @@ class ReactiveCapabilityCurve(Curve):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'SynchronousMachine.InitialReactiveCapabilityCurve',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         'docstring':
             '''
@@ -13100,7 +13100,7 @@ class ReactiveCapabilityCurve(Curve):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Wires'
@@ -13124,7 +13124,7 @@ class RecoveryOverloadLimitCurve(Curve):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'OperationalLimitType.RecoveryOverloadLimitCurve',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         'docstring':
             '''
@@ -13138,7 +13138,7 @@ class RecoveryOverloadLimitCurve(Curve):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'SecurityLimit'
@@ -13163,7 +13163,7 @@ class ShutdownCurve(Curve):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -13181,7 +13181,7 @@ class ShutdownCurve(Curve):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -13200,7 +13200,7 @@ class ShutdownCurve(Curve):
         'minOccurs': '1',
         'maxOccurs': '1',
         'inverse': 'ThermalGeneratingUnit.ShutdownCurve',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -13219,7 +13219,7 @@ class ShutdownCurve(Curve):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'ThermalGeneratingUnit.ShutdownCurve',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         'docstring':
             '''
@@ -13233,7 +13233,7 @@ class ShutdownCurve(Curve):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Production'
@@ -13259,7 +13259,7 @@ class SolarRadiationDependencyCurve(Curve):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'OperationalLimitType.PermanentSolarRadiationCurve',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         'docstring':
             '''
@@ -13274,7 +13274,7 @@ class SolarRadiationDependencyCurve(Curve):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'SecurityLimit'
@@ -13299,7 +13299,7 @@ class StartIgnFuelCurve(Curve):
         'type': 'enumeration Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -13318,7 +13318,7 @@ class StartIgnFuelCurve(Curve):
         'minOccurs': '1',
         'maxOccurs': '1',
         'inverse': 'StartupModel.StartIgnFuelCurve',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -13337,7 +13337,7 @@ class StartIgnFuelCurve(Curve):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'StartupModel.StartIgnFuelCurve',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         'docstring':
             '''
@@ -13351,7 +13351,7 @@ class StartIgnFuelCurve(Curve):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Production'
@@ -13376,7 +13376,7 @@ class StartMainFuelCurve(Curve):
         'type': 'enumeration Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -13395,7 +13395,7 @@ class StartMainFuelCurve(Curve):
         'minOccurs': '1',
         'maxOccurs': '1',
         'inverse': 'StartupModel.StartMainFuelCurve',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -13414,7 +13414,7 @@ class StartMainFuelCurve(Curve):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'StartupModel.StartMainFuelCurve',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         'docstring':
             '''
@@ -13428,7 +13428,7 @@ class StartMainFuelCurve(Curve):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Production'
@@ -13453,7 +13453,7 @@ class StartRampCurve(Curve):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -13472,7 +13472,7 @@ class StartRampCurve(Curve):
         'minOccurs': '1',
         'maxOccurs': '1',
         'inverse': 'StartupModel.StartRampCurve',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -13491,7 +13491,7 @@ class StartRampCurve(Curve):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'StartupModel.StartRampCurve',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         'docstring':
             '''
@@ -13505,7 +13505,7 @@ class StartRampCurve(Curve):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Production'
@@ -13532,7 +13532,7 @@ class TailbayLossCurve(Curve):
         'minOccurs': '1',
         'maxOccurs': '1',
         'inverse': 'HydroGeneratingUnit.TailbayLossCurve',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -13546,7 +13546,7 @@ class TailbayLossCurve(Curve):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Production'
@@ -13571,7 +13571,7 @@ class TargetLevelSchedule(Curve):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -13590,7 +13590,7 @@ class TargetLevelSchedule(Curve):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -13610,7 +13610,7 @@ class TargetLevelSchedule(Curve):
         'minOccurs': '1',
         'maxOccurs': '1',
         'inverse': 'Reservoir.TargetLevelSchedule',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -13629,7 +13629,7 @@ class TargetLevelSchedule(Curve):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'Reservoir.TargetLevelSchedule',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         'docstring':
             '''
@@ -13643,7 +13643,7 @@ class TargetLevelSchedule(Curve):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Production'
@@ -13664,7 +13664,7 @@ class TimeCurrentCurve(Curve):
 
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Protection'
@@ -13688,7 +13688,7 @@ class ConductorCharacteristicCurve(TimeCurrentCurve):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'Conductor.DamageCurve',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         'docstring':
             '''
@@ -13702,7 +13702,7 @@ class ConductorCharacteristicCurve(TimeCurrentCurve):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Protection'
@@ -13726,7 +13726,7 @@ class FuseCharacteristicCurve(TimeCurrentCurve):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'FuseInfo.MinimumMeltCurve',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -13745,7 +13745,7 @@ class FuseCharacteristicCurve(TimeCurrentCurve):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'Fuse.MiinimumMeltCurve',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -13764,7 +13764,7 @@ class FuseCharacteristicCurve(TimeCurrentCurve):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'Fuse.TotalClearingTimeCurve',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -13783,7 +13783,7 @@ class FuseCharacteristicCurve(TimeCurrentCurve):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'FuseInfo.TotalClearingTimeCurve',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -13802,7 +13802,7 @@ class FuseCharacteristicCurve(TimeCurrentCurve):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'Fuse.MiinimumMeltCurve',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         'docstring':
             '''
@@ -13821,7 +13821,7 @@ class FuseCharacteristicCurve(TimeCurrentCurve):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'Fuse.TotalClearingTimeCurve',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         'docstring':
             '''
@@ -13840,7 +13840,7 @@ class FuseCharacteristicCurve(TimeCurrentCurve):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'FuseInfo.MinimumMeltCurve',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         'docstring':
             '''
@@ -13859,7 +13859,7 @@ class FuseCharacteristicCurve(TimeCurrentCurve):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'FuseInfo.TotalClearingTimeCurve',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         'docstring':
             '''
@@ -13873,7 +13873,7 @@ class FuseCharacteristicCurve(TimeCurrentCurve):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Protection'
@@ -13897,7 +13897,7 @@ class ProtectionOperationCharacteristicCurve(TimeCurrentCurve):
         'type': 'enumeration Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -13917,7 +13917,7 @@ class ProtectionOperationCharacteristicCurve(TimeCurrentCurve):
         'minOccurs': '1',
         'maxOccurs': '1',
         'inverse': 'ProtectionFunctionBlock.ProtectionOperationCharacteristicCurve',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -13933,7 +13933,7 @@ class ProtectionOperationCharacteristicCurve(TimeCurrentCurve):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Protection'
@@ -13957,7 +13957,7 @@ class TransformerCharacteristicCurve(TimeCurrentCurve):
         'type': 'enumeration Attribute',
         'minOccurs': '1',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -13969,7 +13969,7 @@ class TransformerCharacteristicCurve(TimeCurrentCurve):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Protection'
@@ -13996,7 +13996,7 @@ class CustomerAgreement(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'UsagePoint.CustomerAgreement',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         'docstring':
             '''
@@ -14010,7 +14010,7 @@ class CustomerAgreement(IdentifiedObject):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Customers'
@@ -14034,7 +14034,7 @@ class CutAction(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'Cut.CutAction',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         'docstring':
             '''
@@ -14048,7 +14048,7 @@ class CutAction(IdentifiedObject):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Operations'
@@ -14073,7 +14073,7 @@ class DCNode(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'DCPointOfCommonCoupling.DCNode',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         'docstring':
             '''
@@ -14087,7 +14087,7 @@ class DCNode(IdentifiedObject):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'DC'
@@ -14111,7 +14111,7 @@ class DERDynamics(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'AsynchronousMachine.DERDynamics',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         'docstring':
             '''
@@ -14130,7 +14130,7 @@ class DERDynamics(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'PowerElectronicsConnection.DERDynamics',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         'docstring':
             '''
@@ -14150,7 +14150,7 @@ class DERDynamics(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'SynchronousMachine.DERDynamics',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         'docstring':
             '''
@@ -14164,7 +14164,7 @@ class DERDynamics(IdentifiedObject):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'IEEE1547Dynamics'
@@ -14189,7 +14189,7 @@ class DayType(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'SeasonDayTypeSchedule.DayType',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         'docstring':
             '''
@@ -14203,7 +14203,7 @@ class DayType(IdentifiedObject):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'LoadModel'
@@ -14228,7 +14228,7 @@ class DesignElement(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'PowerSystemResource.DesignElement',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         'docstring':
             '''
@@ -14242,7 +14242,7 @@ class DesignElement(IdentifiedObject):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Design'
@@ -14268,7 +14268,7 @@ class Dimension(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'StructureInfo.ConstructedDimensions',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         'docstring':
             '''
@@ -14280,7 +14280,7 @@ class Dimension(IdentifiedObject):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Assets'
@@ -14306,7 +14306,7 @@ class DimensionsInfo(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'StructureInfo.TransportDimensionsInfo',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         'docstring':
             '''
@@ -14318,7 +14318,7 @@ class DimensionsInfo(IdentifiedObject):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'InfAssetInfo'
@@ -14451,7 +14451,7 @@ class EnergyArea(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'ControlArea.EnergyArea',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -14465,7 +14465,7 @@ class EnergyArea(IdentifiedObject):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'LoadModel'
@@ -14491,7 +14491,7 @@ class LoadArea(EnergyArea):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'SubLoadArea.LoadArea',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         'docstring':
             '''
@@ -14505,7 +14505,7 @@ class LoadArea(EnergyArea):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'LoadModel'
@@ -14531,7 +14531,7 @@ class SubLoadArea(EnergyArea):
         'minOccurs': '1',
         'maxOccurs': '1',
         'inverse': 'LoadArea.SubLoadAreas',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -14550,7 +14550,7 @@ class SubLoadArea(EnergyArea):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'LoadGroup.SubLoadArea',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         'docstring':
             '''
@@ -14564,7 +14564,7 @@ class SubLoadArea(EnergyArea):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'LoadModel'
@@ -14588,7 +14588,7 @@ class EnergyConsumerAction(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'EnergyConsumer.EnergyConsumerAction',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         'docstring':
             '''
@@ -14600,7 +14600,7 @@ class EnergyConsumerAction(IdentifiedObject):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Operations'
@@ -14624,7 +14624,7 @@ class EnergySchedulingType(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'EnergySource.EnergySchedulingType',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         'docstring':
             '''
@@ -14638,7 +14638,7 @@ class EnergySchedulingType(IdentifiedObject):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Wires'
@@ -14662,7 +14662,7 @@ class EnergySourceAction(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'EnergySource.EnergySourceAction',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         'docstring':
             '''
@@ -14676,7 +14676,7 @@ class EnergySourceAction(IdentifiedObject):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Operations'
@@ -14701,7 +14701,7 @@ class EnvironmentalMonitoringStation(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'UsagePoint.EnvironmentalMonitoringStation',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         'docstring':
             '''
@@ -14713,7 +14713,7 @@ class EnvironmentalMonitoringStation(IdentifiedObject):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'MarketCommon'
@@ -14738,7 +14738,7 @@ class FossilFuel(IdentifiedObject):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -14756,7 +14756,7 @@ class FossilFuel(IdentifiedObject):
         'type': 'enumeration Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -14774,7 +14774,7 @@ class FossilFuel(IdentifiedObject):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -14792,7 +14792,7 @@ class FossilFuel(IdentifiedObject):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -14812,7 +14812,7 @@ class FossilFuel(IdentifiedObject):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -14832,7 +14832,7 @@ class FossilFuel(IdentifiedObject):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -14850,7 +14850,7 @@ class FossilFuel(IdentifiedObject):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -14870,7 +14870,7 @@ class FossilFuel(IdentifiedObject):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -14888,7 +14888,7 @@ class FossilFuel(IdentifiedObject):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -14910,7 +14910,7 @@ class FossilFuel(IdentifiedObject):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -14933,7 +14933,7 @@ class FossilFuel(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'FuelStorage.FossilFuel',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -14952,7 +14952,7 @@ class FossilFuel(IdentifiedObject):
         'minOccurs': '1',
         'maxOccurs': '1',
         'inverse': 'ThermalGeneratingUnit.FossilFuels',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -14971,7 +14971,7 @@ class FossilFuel(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'FuelAllocationSchedule.FossilFuel',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         'docstring':
             '''
@@ -14985,7 +14985,7 @@ class FossilFuel(IdentifiedObject):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Production'
@@ -15010,7 +15010,7 @@ class FunctionBlock(IdentifiedObject):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -15028,7 +15028,7 @@ class FunctionBlock(IdentifiedObject):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -15048,7 +15048,7 @@ class FunctionBlock(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'AutomationBlockGroup.FunctionBlock',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -15067,7 +15067,7 @@ class FunctionBlock(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'AutomationFunction.FunctionBlock',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -15088,7 +15088,7 @@ class FunctionBlock(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'FunctionBlockType.FunctionBlock',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -15109,7 +15109,7 @@ class FunctionBlock(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'FunctionFunctionLink.DestinationFunctionBlock',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         'docstring':
             '''
@@ -15130,7 +15130,7 @@ class FunctionBlock(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'FunctionFunctionLink.SourceFunctionBlock',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         'docstring':
             '''
@@ -15151,7 +15151,7 @@ class FunctionBlock(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'FunctionInputVariable.Function',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         'docstring':
             '''
@@ -15171,7 +15171,7 @@ class FunctionBlock(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'FunctionOutputVariable.FunctionBlock',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         'docstring':
             '''
@@ -15187,7 +15187,7 @@ class FunctionBlock(IdentifiedObject):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Control'
@@ -15213,7 +15213,7 @@ class BooleanLogic(FunctionBlock):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -15236,7 +15236,7 @@ class BooleanLogic(FunctionBlock):
         'type': 'enumeration Attribute',
         'minOccurs': '1',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -15250,7 +15250,7 @@ class BooleanLogic(FunctionBlock):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return '62361Draft'
@@ -15276,7 +15276,7 @@ class ConstantFunctionBlock(FunctionBlock):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -15294,7 +15294,7 @@ class ConstantFunctionBlock(FunctionBlock):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -15314,7 +15314,7 @@ class ConstantFunctionBlock(FunctionBlock):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -15328,7 +15328,7 @@ class ConstantFunctionBlock(FunctionBlock):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return '62361Draft'
@@ -15352,7 +15352,7 @@ class ControlFunctionBlock(FunctionBlock):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -15372,7 +15372,7 @@ class ControlFunctionBlock(FunctionBlock):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -15400,7 +15400,7 @@ class ControlFunctionBlock(FunctionBlock):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -15420,7 +15420,7 @@ class ControlFunctionBlock(FunctionBlock):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -15440,7 +15440,7 @@ class ControlFunctionBlock(FunctionBlock):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -15461,7 +15461,7 @@ class ControlFunctionBlock(FunctionBlock):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -15478,7 +15478,7 @@ class ControlFunctionBlock(FunctionBlock):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Control'
@@ -15514,7 +15514,7 @@ class ACEmulationControlFunction(ControlFunctionBlock):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -15538,7 +15538,7 @@ class ACEmulationControlFunction(ControlFunctionBlock):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -15558,7 +15558,7 @@ class ACEmulationControlFunction(ControlFunctionBlock):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -15580,7 +15580,7 @@ class ACEmulationControlFunction(ControlFunctionBlock):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Control'
@@ -15604,7 +15604,7 @@ class ActivePowerControlFunction(ControlFunctionBlock):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -15620,7 +15620,7 @@ class ActivePowerControlFunction(ControlFunctionBlock):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Control'
@@ -15644,7 +15644,7 @@ class CurrentControlFunction(ControlFunctionBlock):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -15660,7 +15660,7 @@ class CurrentControlFunction(ControlFunctionBlock):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Control'
@@ -15684,7 +15684,7 @@ class DCCurrentControlFunction(ControlFunctionBlock):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -15704,7 +15704,7 @@ class DCCurrentControlFunction(ControlFunctionBlock):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -15724,7 +15724,7 @@ class DCCurrentControlFunction(ControlFunctionBlock):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -15740,7 +15740,7 @@ class DCCurrentControlFunction(ControlFunctionBlock):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Control'
@@ -15764,7 +15764,7 @@ class DCVoltageControlFunction(ControlFunctionBlock):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -15780,7 +15780,7 @@ class DCVoltageControlFunction(ControlFunctionBlock):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Control'
@@ -15804,7 +15804,7 @@ class FrequencyControlFunction(ControlFunctionBlock):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -15824,7 +15824,7 @@ class FrequencyControlFunction(ControlFunctionBlock):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -15840,7 +15840,7 @@ class FrequencyControlFunction(ControlFunctionBlock):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Control'
@@ -15864,7 +15864,7 @@ class ImpedanceControlFunction(ControlFunctionBlock):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -15880,7 +15880,7 @@ class ImpedanceControlFunction(ControlFunctionBlock):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Control'
@@ -15904,7 +15904,7 @@ class PhaseControlFunction(ControlFunctionBlock):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -15920,7 +15920,7 @@ class PhaseControlFunction(ControlFunctionBlock):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Control'
@@ -15944,7 +15944,7 @@ class PowerFactorControlFunction(ControlFunctionBlock):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -15960,7 +15960,7 @@ class PowerFactorControlFunction(ControlFunctionBlock):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Control'
@@ -15985,7 +15985,7 @@ class ReactivePowerControlFunction(ControlFunctionBlock):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -16001,7 +16001,7 @@ class ReactivePowerControlFunction(ControlFunctionBlock):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Control'
@@ -16025,7 +16025,7 @@ class VoltageControlFunction(ControlFunctionBlock):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -16041,7 +16041,7 @@ class VoltageControlFunction(ControlFunctionBlock):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Control'
@@ -16065,7 +16065,7 @@ class DelayTimer(FunctionBlock):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -16087,7 +16087,7 @@ class DelayTimer(FunctionBlock):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -16099,7 +16099,7 @@ class DelayTimer(FunctionBlock):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return '62361Draft'
@@ -16123,7 +16123,7 @@ class EdgeDetector(FunctionBlock):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -16139,7 +16139,7 @@ class EdgeDetector(FunctionBlock):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return '62361Draft'
@@ -16163,7 +16163,7 @@ class FlipFlop(FunctionBlock):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -16179,7 +16179,7 @@ class FlipFlop(FunctionBlock):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return '62361Draft'
@@ -16205,7 +16205,7 @@ class LogicalOperation(FunctionBlock):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -16228,7 +16228,7 @@ class LogicalOperation(FunctionBlock):
         'type': 'enumeration Attribute',
         'minOccurs': '1',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -16242,7 +16242,7 @@ class LogicalOperation(FunctionBlock):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return '62361Draft'
@@ -16265,7 +16265,7 @@ class NumericOperation(FunctionBlock):
         'type': 'enumeration Attribute',
         'minOccurs': '1',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -16277,7 +16277,7 @@ class NumericOperation(FunctionBlock):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return '62361Draft'
@@ -16302,7 +16302,7 @@ class ProtectionFunctionBlock(FunctionBlock):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -16330,7 +16330,7 @@ class ProtectionFunctionBlock(FunctionBlock):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -16362,7 +16362,7 @@ class ProtectionFunctionBlock(FunctionBlock):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -16398,7 +16398,7 @@ class ProtectionFunctionBlock(FunctionBlock):
         'type': 'enumeration Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -16420,7 +16420,7 @@ class ProtectionFunctionBlock(FunctionBlock):
         'type': 'enumeration Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -16440,7 +16440,7 @@ class ProtectionFunctionBlock(FunctionBlock):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -16456,7 +16456,7 @@ class ProtectionFunctionBlock(FunctionBlock):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -16492,7 +16492,7 @@ class ProtectionFunctionBlock(FunctionBlock):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -16527,7 +16527,7 @@ class ProtectionFunctionBlock(FunctionBlock):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'Terminal.ProtectionFunctionBlock',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -16546,7 +16546,7 @@ class ProtectionFunctionBlock(FunctionBlock):
         'minOccurs': '1',
         'maxOccurs': '1',
         'inverse': 'ProtectionEquipment.ProtectionFunctionBlock',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -16565,7 +16565,7 @@ class ProtectionFunctionBlock(FunctionBlock):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'ProtectionSettingsGroup.ProtectionFunctionBlock',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -16588,7 +16588,7 @@ class ProtectionFunctionBlock(FunctionBlock):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'ProprietarySettingValue.ProtectionFunctionBlock',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         'docstring':
             '''
@@ -16607,7 +16607,7 @@ class ProtectionFunctionBlock(FunctionBlock):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'ProtectionOperationCharacteristicCurve.ProtectionFunctionBlock',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         'docstring':
             '''
@@ -16623,7 +16623,7 @@ class ProtectionFunctionBlock(FunctionBlock):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Protection'
@@ -16642,7 +16642,7 @@ class FaultClearanceProtectionFunctionBlock(ProtectionFunctionBlock):
 
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Protection'
@@ -16665,7 +16665,7 @@ class CurrentProtectionFunctionBlock(FaultClearanceProtectionFunctionBlock):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -16677,7 +16677,7 @@ class CurrentProtectionFunctionBlock(FaultClearanceProtectionFunctionBlock):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Protection'
@@ -16700,7 +16700,7 @@ class OverCurrentProtectionFunctionBlock(CurrentProtectionFunctionBlock):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -16718,7 +16718,7 @@ class OverCurrentProtectionFunctionBlock(CurrentProtectionFunctionBlock):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -16736,7 +16736,7 @@ class OverCurrentProtectionFunctionBlock(CurrentProtectionFunctionBlock):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -16754,7 +16754,7 @@ class OverCurrentProtectionFunctionBlock(CurrentProtectionFunctionBlock):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -16772,7 +16772,7 @@ class OverCurrentProtectionFunctionBlock(CurrentProtectionFunctionBlock):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -16791,7 +16791,7 @@ class OverCurrentProtectionFunctionBlock(CurrentProtectionFunctionBlock):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'OverCurrentTypeFunctionBlock.OverCurrentProtectionFunctionBlock',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -16807,7 +16807,7 @@ class OverCurrentProtectionFunctionBlock(CurrentProtectionFunctionBlock):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Protection'
@@ -16826,7 +16826,7 @@ class UnderCurrentProtectionFunctionBlock(CurrentProtectionFunctionBlock):
 
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Protection'
@@ -16850,7 +16850,7 @@ class DifferentialProtectionFuntionBlock(FaultClearanceProtectionFunctionBlock):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -16869,7 +16869,7 @@ class DifferentialProtectionFuntionBlock(FaultClearanceProtectionFunctionBlock):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -16888,7 +16888,7 @@ class DifferentialProtectionFuntionBlock(FaultClearanceProtectionFunctionBlock):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -16908,7 +16908,7 @@ class DifferentialProtectionFuntionBlock(FaultClearanceProtectionFunctionBlock):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -16928,7 +16928,7 @@ class DifferentialProtectionFuntionBlock(FaultClearanceProtectionFunctionBlock):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -16946,7 +16946,7 @@ class DifferentialProtectionFuntionBlock(FaultClearanceProtectionFunctionBlock):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -16966,7 +16966,7 @@ class DifferentialProtectionFuntionBlock(FaultClearanceProtectionFunctionBlock):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -16980,7 +16980,7 @@ class DifferentialProtectionFuntionBlock(FaultClearanceProtectionFunctionBlock):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Protection'
@@ -17003,7 +17003,7 @@ class DirectionalProtectionFunctionBlock(FaultClearanceProtectionFunctionBlock):
         'type': 'enumeration Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -17015,7 +17015,7 @@ class DirectionalProtectionFunctionBlock(FaultClearanceProtectionFunctionBlock):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Protection'
@@ -17034,7 +17034,7 @@ class OverPowerDirectionProtectionFunctionBlock(DirectionalProtectionFunctionBlo
 
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Protection'
@@ -17053,7 +17053,7 @@ class UnderPowerDirectionProtectionFunctionBlock(DirectionalProtectionFunctionBl
 
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Protection'
@@ -17076,7 +17076,7 @@ class DistanceProtectionFunctionBlock(FaultClearanceProtectionFunctionBlock):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -17098,7 +17098,7 @@ class DistanceProtectionFunctionBlock(FaultClearanceProtectionFunctionBlock):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -17118,7 +17118,7 @@ class DistanceProtectionFunctionBlock(FaultClearanceProtectionFunctionBlock):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -17138,7 +17138,7 @@ class DistanceProtectionFunctionBlock(FaultClearanceProtectionFunctionBlock):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -17158,7 +17158,7 @@ class DistanceProtectionFunctionBlock(FaultClearanceProtectionFunctionBlock):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -17178,7 +17178,7 @@ class DistanceProtectionFunctionBlock(FaultClearanceProtectionFunctionBlock):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -17198,7 +17198,7 @@ class DistanceProtectionFunctionBlock(FaultClearanceProtectionFunctionBlock):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -17220,7 +17220,7 @@ class DistanceProtectionFunctionBlock(FaultClearanceProtectionFunctionBlock):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -17242,7 +17242,7 @@ class DistanceProtectionFunctionBlock(FaultClearanceProtectionFunctionBlock):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -17264,7 +17264,7 @@ class DistanceProtectionFunctionBlock(FaultClearanceProtectionFunctionBlock):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -17285,7 +17285,7 @@ class DistanceProtectionFunctionBlock(FaultClearanceProtectionFunctionBlock):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'ImpedanceLocusTypeFunctionBlock.DistanceProtectionFunctionBlock',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -17301,7 +17301,7 @@ class DistanceProtectionFunctionBlock(FaultClearanceProtectionFunctionBlock):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Protection'
@@ -17324,7 +17324,7 @@ class GroundDistanceProtectionFunctionBlock(DistanceProtectionFunctionBlock):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -17345,7 +17345,7 @@ class GroundDistanceProtectionFunctionBlock(DistanceProtectionFunctionBlock):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -17363,7 +17363,7 @@ class GroundDistanceProtectionFunctionBlock(DistanceProtectionFunctionBlock):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Protection'
@@ -17386,7 +17386,7 @@ class VoltageProtectionFunctionBlock(FaultClearanceProtectionFunctionBlock):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -17398,7 +17398,7 @@ class VoltageProtectionFunctionBlock(FaultClearanceProtectionFunctionBlock):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Protection'
@@ -17417,7 +17417,7 @@ class OverVoltageProtectionFunctionBlock(VoltageProtectionFunctionBlock):
 
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Protection'
@@ -17436,7 +17436,7 @@ class UnderVoltageProtectionFunctionBlock(VoltageProtectionFunctionBlock):
 
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Protection'
@@ -17459,7 +17459,7 @@ class ProtectionTripConditioningFunctionBlock(ProtectionFunctionBlock):
 
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Protection'
@@ -17478,7 +17478,7 @@ class WideAreaProtectionFunctionBlock(ProtectionFunctionBlock):
 
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Protection'
@@ -17501,7 +17501,7 @@ class FrequencyProtectionFunctionBlock(WideAreaProtectionFunctionBlock):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -17515,7 +17515,7 @@ class FrequencyProtectionFunctionBlock(WideAreaProtectionFunctionBlock):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Protection'
@@ -17538,7 +17538,7 @@ class OverFrequencyProtectionFunctionBlock(FrequencyProtectionFunctionBlock):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -17554,7 +17554,7 @@ class OverFrequencyProtectionFunctionBlock(FrequencyProtectionFunctionBlock):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Protection'
@@ -17577,7 +17577,7 @@ class RateOfChangeOfFrequencyProtectionFunction(FrequencyProtectionFunctionBlock
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -17597,7 +17597,7 @@ class RateOfChangeOfFrequencyProtectionFunction(FrequencyProtectionFunctionBlock
         'type': 'enumeration Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -17611,7 +17611,7 @@ class RateOfChangeOfFrequencyProtectionFunction(FrequencyProtectionFunctionBlock
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Protection'
@@ -17634,7 +17634,7 @@ class UnderFrequencyProtectionFunctionBlock(FrequencyProtectionFunctionBlock):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -17650,7 +17650,7 @@ class UnderFrequencyProtectionFunctionBlock(FrequencyProtectionFunctionBlock):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Protection'
@@ -17669,7 +17669,7 @@ class OutOfStepProtectionFunctionBlock(WideAreaProtectionFunctionBlock):
 
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Protection'
@@ -17693,7 +17693,7 @@ class ImpedanceLocusTypeFunctionBlock(OutOfStepProtectionFunctionBlock):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'DistanceProtectionFunctionBlock.ImpedanceLocusTypeFunctionBlock',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         'docstring':
             '''
@@ -17709,7 +17709,7 @@ class ImpedanceLocusTypeFunctionBlock(OutOfStepProtectionFunctionBlock):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Protection'
@@ -17729,7 +17729,7 @@ class VoltagePhaseComparisontypeFunctionBlock(OutOfStepProtectionFunctionBlock):
 
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Protection'
@@ -17748,7 +17748,7 @@ class OverLoadProtectionFunctionBlock(WideAreaProtectionFunctionBlock):
 
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Protection'
@@ -17772,7 +17772,7 @@ class OverCurrentTypeFunctionBlock(OverLoadProtectionFunctionBlock):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'OverCurrentProtectionFunctionBlock.OverCurrentTypeFunctionBlock',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         'docstring':
             '''
@@ -17788,7 +17788,7 @@ class OverCurrentTypeFunctionBlock(OverLoadProtectionFunctionBlock):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Protection'
@@ -17808,7 +17808,7 @@ class TemperatureCalculationTypeFunctionBlock(OverLoadProtectionFunctionBlock):
 
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Protection'
@@ -17833,7 +17833,7 @@ class ProtectionRelatedFunctionBlock(FunctionBlock):
         'type': 'enumeration Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -17853,7 +17853,7 @@ class ProtectionRelatedFunctionBlock(FunctionBlock):
         'type': 'enumeration Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -17872,7 +17872,7 @@ class ProtectionRelatedFunctionBlock(FunctionBlock):
         'minOccurs': '1',
         'maxOccurs': '1',
         'inverse': 'ProtectionEquipment.ProtectionRelatedFunctionBlock',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -17891,7 +17891,7 @@ class ProtectionRelatedFunctionBlock(FunctionBlock):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'ProtectionSettingsGroup.ProtectionRelatedFunctionBlock',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -17914,7 +17914,7 @@ class ProtectionRelatedFunctionBlock(FunctionBlock):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'ProprietarySettingValue.ProtectionRelatedFunctionBlock',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         'docstring':
             '''
@@ -17928,7 +17928,7 @@ class ProtectionRelatedFunctionBlock(FunctionBlock):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Protection'
@@ -17951,7 +17951,7 @@ class AutoreclosingFunctionBlock(ProtectionRelatedFunctionBlock):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -17970,7 +17970,7 @@ class AutoreclosingFunctionBlock(ProtectionRelatedFunctionBlock):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'RecloseSequence.AutoreclosingFunctionBlock',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         'docstring':
             '''
@@ -17984,7 +17984,7 @@ class AutoreclosingFunctionBlock(ProtectionRelatedFunctionBlock):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Protection'
@@ -18007,7 +18007,7 @@ class BreakerFailureFunctionBlock(ProtectionRelatedFunctionBlock):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -18029,7 +18029,7 @@ class BreakerFailureFunctionBlock(ProtectionRelatedFunctionBlock):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -18047,7 +18047,7 @@ class BreakerFailureFunctionBlock(ProtectionRelatedFunctionBlock):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -18069,7 +18069,7 @@ class BreakerFailureFunctionBlock(ProtectionRelatedFunctionBlock):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -18089,7 +18089,7 @@ class BreakerFailureFunctionBlock(ProtectionRelatedFunctionBlock):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -18109,7 +18109,7 @@ class BreakerFailureFunctionBlock(ProtectionRelatedFunctionBlock):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -18127,7 +18127,7 @@ class BreakerFailureFunctionBlock(ProtectionRelatedFunctionBlock):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Protection'
@@ -18150,7 +18150,7 @@ class SynchrocheckFunctionBlock(ProtectionRelatedFunctionBlock):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -18168,7 +18168,7 @@ class SynchrocheckFunctionBlock(ProtectionRelatedFunctionBlock):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -18186,7 +18186,7 @@ class SynchrocheckFunctionBlock(ProtectionRelatedFunctionBlock):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -18200,7 +18200,7 @@ class SynchrocheckFunctionBlock(ProtectionRelatedFunctionBlock):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Protection'
@@ -18224,7 +18224,7 @@ class UpDownCounter(FunctionBlock):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -18244,7 +18244,7 @@ class UpDownCounter(FunctionBlock):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -18260,7 +18260,7 @@ class UpDownCounter(FunctionBlock):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return '62361Draft'
@@ -18286,7 +18286,7 @@ class FunctionBlockType(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'FunctionBlock.FunctionBlockType',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         'docstring':
             '''
@@ -18306,7 +18306,7 @@ class FunctionBlockType(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'FunctionLogicDescription.FunctionBlockType',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         'docstring':
             '''
@@ -18325,7 +18325,7 @@ class FunctionBlockType(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'FunctionTypeInput.FunctionBlockType',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         'docstring':
             '''
@@ -18344,7 +18344,7 @@ class FunctionBlockType(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'FunctionTypeOutput.FunctionBlockType',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         'docstring':
             '''
@@ -18358,7 +18358,7 @@ class FunctionBlockType(IdentifiedObject):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return '62361Draft'
@@ -18382,7 +18382,7 @@ class FunctionInputVariable(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'FunctionBlock.Input',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -18398,7 +18398,7 @@ class FunctionInputVariable(IdentifiedObject):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Control'
@@ -18422,7 +18422,7 @@ class FunctionOutputVariable(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'FunctionBlock.FunctionOutputVariable',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -18459,7 +18459,7 @@ class FunctionOutputVariable(IdentifiedObject):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Control'
@@ -18484,7 +18484,7 @@ class GeographicalRegion(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'SubGeographicalRegion.Region',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         'docstring':
             '''
@@ -18498,7 +18498,7 @@ class GeographicalRegion(IdentifiedObject):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Core'
@@ -18522,7 +18522,7 @@ class GroundAction(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'ACLineSegment.LineGroundingAction',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         'docstring':
             '''
@@ -18545,7 +18545,7 @@ class GroundAction(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'ConductingEquipment.GroundingAction',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         'docstring':
             '''
@@ -18573,7 +18573,7 @@ class GroundAction(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'Ground.GroundAction',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         'docstring':
             '''
@@ -18587,7 +18587,7 @@ class GroundAction(IdentifiedObject):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Operations'
@@ -18612,7 +18612,7 @@ class IOPoint(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'IOPointSource.IOPoint',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -18626,7 +18626,7 @@ class IOPoint(IdentifiedObject):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Meas'
@@ -18651,7 +18651,7 @@ class Control(IOPoint):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -18673,7 +18673,7 @@ class Control(IOPoint):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -18693,7 +18693,7 @@ class Control(IOPoint):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -18711,7 +18711,7 @@ class Control(IOPoint):
         'type': 'enumeration Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -18729,7 +18729,7 @@ class Control(IOPoint):
         'type': 'enumeration Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -18748,7 +18748,7 @@ class Control(IOPoint):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'ControlAction.Control',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -18765,7 +18765,7 @@ class Control(IOPoint):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'PowerSystemResource.Controls',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -18784,7 +18784,7 @@ class Control(IOPoint):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'RemoteControl.Control',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -18798,7 +18798,7 @@ class Control(IOPoint):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Meas'
@@ -18822,7 +18822,7 @@ class AccumulatorReset(Control):
         'minOccurs': '1',
         'maxOccurs': '1',
         'inverse': 'AccumulatorValue.AccumulatorReset',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -18841,7 +18841,7 @@ class AccumulatorReset(Control):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'AccumulatorValue.AccumulatorReset',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         'docstring':
             '''
@@ -18855,7 +18855,7 @@ class AccumulatorReset(Control):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Meas'
@@ -18878,7 +18878,7 @@ class AnalogControl(Control):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -18898,7 +18898,7 @@ class AnalogControl(Control):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -18919,7 +18919,7 @@ class AnalogControl(Control):
         'minOccurs': '1',
         'maxOccurs': '1',
         'inverse': 'AnalogValue.AnalogControl',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -18938,7 +18938,7 @@ class AnalogControl(Control):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'AnalogValue.AnalogControl',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         'docstring':
             '''
@@ -18952,7 +18952,7 @@ class AnalogControl(Control):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Meas'
@@ -18977,7 +18977,7 @@ class RaiseLowerCommand(AnalogControl):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'ValueAliasSet.RaiseLowerCommands',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -18991,7 +18991,7 @@ class RaiseLowerCommand(AnalogControl):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Meas'
@@ -19014,7 +19014,7 @@ class SetPoint(AnalogControl):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -19032,7 +19032,7 @@ class SetPoint(AnalogControl):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -19046,7 +19046,7 @@ class SetPoint(AnalogControl):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Meas'
@@ -19069,7 +19069,7 @@ class Command(Control):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -19087,7 +19087,7 @@ class Command(Control):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -19106,7 +19106,7 @@ class Command(Control):
         'minOccurs': '1',
         'maxOccurs': '1',
         'inverse': 'DiscreteValue.Command',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -19125,7 +19125,7 @@ class Command(Control):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'ValueAliasSet.Commands',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -19144,7 +19144,7 @@ class Command(Control):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'DiscreteValue.Command',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         'docstring':
             '''
@@ -19158,7 +19158,7 @@ class Command(Control):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Meas'
@@ -19184,7 +19184,7 @@ class MeasurementValue(IOPoint):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -19202,7 +19202,7 @@ class MeasurementValue(IOPoint):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -19223,7 +19223,7 @@ class MeasurementValue(IOPoint):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'CalculationMethodHierarchy.MeasurementValue',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -19240,7 +19240,7 @@ class MeasurementValue(IOPoint):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'OldPerson.MeasurementValues',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -19257,7 +19257,7 @@ class MeasurementValue(IOPoint):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'MeasurementValueQuality.MeasurementValue',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -19276,7 +19276,7 @@ class MeasurementValue(IOPoint):
         'minOccurs': '1',
         'maxOccurs': '1',
         'inverse': 'MeasurementValueSource.MeasurementValues',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -19299,7 +19299,7 @@ class MeasurementValue(IOPoint):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'RemoteSource.MeasurementValue',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -19318,7 +19318,7 @@ class MeasurementValue(IOPoint):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'MeasurementValueQuality.MeasurementValue',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         'docstring':
             '''
@@ -19332,7 +19332,7 @@ class MeasurementValue(IOPoint):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Meas'
@@ -19355,7 +19355,7 @@ class AccumulatorValue(MeasurementValue):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -19374,7 +19374,7 @@ class AccumulatorValue(MeasurementValue):
         'minOccurs': '1',
         'maxOccurs': '1',
         'inverse': 'Accumulator.AccumulatorValues',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -19393,7 +19393,7 @@ class AccumulatorValue(MeasurementValue):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'AccumulatorReset.AccumulatorValue',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -19412,7 +19412,7 @@ class AccumulatorValue(MeasurementValue):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'AccumulatorReset.AccumulatorValue',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         'docstring':
             '''
@@ -19426,7 +19426,7 @@ class AccumulatorValue(MeasurementValue):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Meas'
@@ -19450,7 +19450,7 @@ class AnalogValue(MeasurementValue):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -19469,7 +19469,7 @@ class AnalogValue(MeasurementValue):
         'minOccurs': '1',
         'maxOccurs': '1',
         'inverse': 'Analog.AnalogValues',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -19488,7 +19488,7 @@ class AnalogValue(MeasurementValue):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'AnalogControl.AnalogValue',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -19507,7 +19507,7 @@ class AnalogValue(MeasurementValue):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'AnalogControl.AnalogValue',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         'docstring':
             '''
@@ -19521,7 +19521,7 @@ class AnalogValue(MeasurementValue):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Meas'
@@ -19544,7 +19544,7 @@ class DiscreteValue(MeasurementValue):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -19563,7 +19563,7 @@ class DiscreteValue(MeasurementValue):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'Command.DiscreteValue',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -19582,7 +19582,7 @@ class DiscreteValue(MeasurementValue):
         'minOccurs': '1',
         'maxOccurs': '1',
         'inverse': 'Discrete.DiscreteValues',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -19601,7 +19601,7 @@ class DiscreteValue(MeasurementValue):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'Command.DiscreteValue',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         'docstring':
             '''
@@ -19615,7 +19615,7 @@ class DiscreteValue(MeasurementValue):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Meas'
@@ -19707,7 +19707,7 @@ class StringMeasurementValue(MeasurementValue):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -19726,7 +19726,7 @@ class StringMeasurementValue(MeasurementValue):
         'minOccurs': '1',
         'maxOccurs': '1',
         'inverse': 'StringMeasurement.StringMeasurementValues',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -19740,7 +19740,7 @@ class StringMeasurementValue(MeasurementValue):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Meas'
@@ -19765,7 +19765,7 @@ class ImpedanceTapChangerTable(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'ImpedanceTapChangerTablePoint.ImpedanceTapChangerTable',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         'docstring':
             '''
@@ -19784,7 +19784,7 @@ class ImpedanceTapChangerTable(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'ImpedanceTapChangerTabular.ImpedanceTapChangerTable',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         'docstring':
             '''
@@ -19798,7 +19798,7 @@ class ImpedanceTapChangerTable(IdentifiedObject):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Wires'
@@ -19822,7 +19822,7 @@ class IndividualPnode(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'ConnectivityNode.IndividualPnode',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         'docstring':
             '''
@@ -19834,7 +19834,7 @@ class IndividualPnode(IdentifiedObject):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'ReferenceData'
@@ -19861,7 +19861,7 @@ class IntraphaseSpacing(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'ACLineSegmentPhase.IntraphaseSpacing',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         'docstring':
             '''
@@ -19873,7 +19873,7 @@ class IntraphaseSpacing(IdentifiedObject):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'AssetInfo'
@@ -19897,7 +19897,7 @@ class JumperAction(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'ACLineSegment.LineJumpingAction',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         'docstring':
             '''
@@ -19920,7 +19920,7 @@ class JumperAction(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'Clamp.JumperAction',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         'docstring':
             '''
@@ -19937,7 +19937,7 @@ class JumperAction(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'ConductingEquipment.JumpingAction',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         'docstring':
             '''
@@ -19968,7 +19968,7 @@ class JumperAction(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'Jumper.JumperAction',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         'docstring':
             '''
@@ -19982,7 +19982,7 @@ class JumperAction(IdentifiedObject):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Operations'
@@ -20005,7 +20005,7 @@ class Limit(IdentifiedObject):
 
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Meas'
@@ -20028,7 +20028,7 @@ class AccumulatorLimit(Limit):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -20047,7 +20047,7 @@ class AccumulatorLimit(Limit):
         'minOccurs': '1',
         'maxOccurs': '1',
         'inverse': 'AccumulatorLimitSet.Limits',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -20061,7 +20061,7 @@ class AccumulatorLimit(Limit):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Meas'
@@ -20084,7 +20084,7 @@ class AnalogLimit(Limit):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -20103,7 +20103,7 @@ class AnalogLimit(Limit):
         'minOccurs': '1',
         'maxOccurs': '1',
         'inverse': 'AnalogLimitSet.Limits',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -20117,7 +20117,7 @@ class AnalogLimit(Limit):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Meas'
@@ -20144,7 +20144,7 @@ class LimitSet(IdentifiedObject):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -20160,7 +20160,7 @@ class LimitSet(IdentifiedObject):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Meas'
@@ -20186,7 +20186,7 @@ class AccumulatorLimitSet(LimitSet):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'AccumulatorLimit.LimitSet',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         'docstring':
             '''
@@ -20200,7 +20200,7 @@ class AccumulatorLimitSet(LimitSet):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Meas'
@@ -20226,7 +20226,7 @@ class AnalogLimitSet(LimitSet):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'AnalogLimit.LimitSet',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         'docstring':
             '''
@@ -20240,7 +20240,7 @@ class AnalogLimitSet(LimitSet):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Meas'
@@ -20264,7 +20264,7 @@ class LineSegmentCoupling(IdentifiedObject):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -20286,7 +20286,7 @@ class LineSegmentCoupling(IdentifiedObject):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -20322,7 +20322,7 @@ class LineSegmentCoupling(IdentifiedObject):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -20350,7 +20350,7 @@ class LineSegmentCoupling(IdentifiedObject):
         'minOccurs': '1',
         'maxOccurs': '1',
         'inverse': 'ACLineSegment.LineSegmentCoupling',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -20369,7 +20369,7 @@ class LineSegmentCoupling(IdentifiedObject):
         'minOccurs': '1',
         'maxOccurs': '1',
         'inverse': 'CoupledLineSegmentGroup.LineSegmentCoupling',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -20388,7 +20388,7 @@ class LineSegmentCoupling(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'ACLineSegment.LineSegmentCoupling',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         'docstring':
             '''
@@ -20402,7 +20402,7 @@ class LineSegmentCoupling(IdentifiedObject):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Wires'
@@ -20431,7 +20431,7 @@ class LoadDynamics(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'EnergyConsumer.LoadDynamics',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         'docstring':
             '''
@@ -20445,7 +20445,7 @@ class LoadDynamics(IdentifiedObject):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'LoadDynamics'
@@ -20470,7 +20470,7 @@ class LoadGroup(IdentifiedObject):
         'minOccurs': '1',
         'maxOccurs': '1',
         'inverse': 'SubLoadArea.LoadGroups',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -20484,7 +20484,7 @@ class LoadGroup(IdentifiedObject):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'LoadModel'
@@ -20509,7 +20509,7 @@ class ConformLoadGroup(LoadGroup):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'ConformLoad.LoadGroup',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         'docstring':
             '''
@@ -20528,7 +20528,7 @@ class ConformLoadGroup(LoadGroup):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'ConformLoadSchedule.ConformLoadGroup',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         'docstring':
             '''
@@ -20542,7 +20542,7 @@ class ConformLoadGroup(LoadGroup):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'LoadModel'
@@ -20567,7 +20567,7 @@ class NonConformLoadGroup(LoadGroup):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'NonConformLoad.LoadGroup',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         'docstring':
             '''
@@ -20586,7 +20586,7 @@ class NonConformLoadGroup(LoadGroup):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'NonConformLoadSchedule.NonConformLoadGroup',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         'docstring':
             '''
@@ -20600,7 +20600,7 @@ class NonConformLoadGroup(LoadGroup):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'LoadModel'
@@ -20657,7 +20657,7 @@ class LoadResponseCharacteristic(IdentifiedObject):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -20709,7 +20709,7 @@ class LoadResponseCharacteristic(IdentifiedObject):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -20727,7 +20727,7 @@ class LoadResponseCharacteristic(IdentifiedObject):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -20745,7 +20745,7 @@ class LoadResponseCharacteristic(IdentifiedObject):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -20763,7 +20763,7 @@ class LoadResponseCharacteristic(IdentifiedObject):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -20781,7 +20781,7 @@ class LoadResponseCharacteristic(IdentifiedObject):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -20799,7 +20799,7 @@ class LoadResponseCharacteristic(IdentifiedObject):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -20817,7 +20817,7 @@ class LoadResponseCharacteristic(IdentifiedObject):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -20835,7 +20835,7 @@ class LoadResponseCharacteristic(IdentifiedObject):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -20853,7 +20853,7 @@ class LoadResponseCharacteristic(IdentifiedObject):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -20871,7 +20871,7 @@ class LoadResponseCharacteristic(IdentifiedObject):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -20890,7 +20890,7 @@ class LoadResponseCharacteristic(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'EnergyConsumer.LoadResponse',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         'docstring':
             '''
@@ -20904,7 +20904,7 @@ class LoadResponseCharacteristic(IdentifiedObject):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'LoadModel'
@@ -20930,7 +20930,7 @@ class Location(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'PowerSystemResource.Location',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         'docstring':
             '''
@@ -20944,7 +20944,7 @@ class Location(IdentifiedObject):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'prov'
@@ -20968,7 +20968,7 @@ class ServiceLocation(Location):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'UsagePoint.ServiceLocation',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         'docstring':
             '''
@@ -20984,7 +20984,7 @@ class ServiceLocation(Location):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Customers'
@@ -21029,7 +21029,7 @@ class UsagePointLocation(Location):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'UsagePoint.UsagePointLocation',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         'docstring':
             '''
@@ -21043,7 +21043,7 @@ class UsagePointLocation(Location):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Metering'
@@ -21085,7 +21085,7 @@ class Measurement(IdentifiedObject):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -21113,7 +21113,7 @@ class Measurement(IdentifiedObject):
         'type': 'enumeration Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -21144,7 +21144,7 @@ class Measurement(IdentifiedObject):
         'type': 'enumeration GridAPPSD Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -21160,7 +21160,7 @@ class Measurement(IdentifiedObject):
         'type': 'enumeration Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -21178,7 +21178,7 @@ class Measurement(IdentifiedObject):
         'type': 'enumeration Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -21197,7 +21197,7 @@ class Measurement(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'Asset.Measurements',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -21214,7 +21214,7 @@ class Measurement(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'CalculationMethodHierarchy.Measurement',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -21233,7 +21233,7 @@ class Measurement(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'MeasurementAction.Measurement',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -21267,7 +21267,7 @@ class Measurement(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'PowerSystemResource.Measurements',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -21286,7 +21286,7 @@ class Measurement(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'ACDCTerminal.Measurements',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -21300,7 +21300,7 @@ class Measurement(IdentifiedObject):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Meas'
@@ -21325,7 +21325,7 @@ class Accumulator(Measurement):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -21346,7 +21346,7 @@ class Accumulator(Measurement):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'AccumulatorValue.Accumulator',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         'docstring':
             '''
@@ -21360,7 +21360,7 @@ class Accumulator(Measurement):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Meas'
@@ -21385,7 +21385,7 @@ class Analog(Measurement):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -21405,7 +21405,7 @@ class Analog(Measurement):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -21425,7 +21425,7 @@ class Analog(Measurement):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -21443,7 +21443,7 @@ class Analog(Measurement):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -21478,7 +21478,7 @@ class Analog(Measurement):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'AnalogValue.Analog',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         'docstring':
             '''
@@ -21492,7 +21492,7 @@ class Analog(Measurement):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Meas'
@@ -21517,7 +21517,7 @@ class Discrete(Measurement):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -21537,7 +21537,7 @@ class Discrete(Measurement):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -21557,7 +21557,7 @@ class Discrete(Measurement):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -21576,7 +21576,7 @@ class Discrete(Measurement):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'ValueAliasSet.Discretes',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -21597,7 +21597,7 @@ class Discrete(Measurement):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'DiscreteValue.Discrete',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         'docstring':
             '''
@@ -21611,7 +21611,7 @@ class Discrete(Measurement):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Meas'
@@ -21636,7 +21636,7 @@ class StringMeasurement(Measurement):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'StringMeasurementValue.StringMeasurement',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         'docstring':
             '''
@@ -21650,7 +21650,7 @@ class StringMeasurement(Measurement):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Meas'
@@ -21674,7 +21674,7 @@ class MeasurementAction(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'Measurement.MeasurementAction',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         'docstring':
             '''
@@ -21686,7 +21686,7 @@ class MeasurementAction(IdentifiedObject):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Operations'
@@ -21712,7 +21712,7 @@ class MeasurementValueSource(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'MeasurementValue.MeasurementValueSource',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         'docstring':
             '''
@@ -21726,7 +21726,7 @@ class MeasurementValueSource(IdentifiedObject):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Meas'
@@ -21750,7 +21750,7 @@ class IOPointSource(MeasurementValueSource):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'IOPoint.IOPointSource',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         'docstring':
             '''
@@ -21764,7 +21764,7 @@ class IOPointSource(MeasurementValueSource):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'ICCPConfiguration'
@@ -21787,7 +21787,7 @@ class MutualCoupling(IdentifiedObject):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -21807,7 +21807,7 @@ class MutualCoupling(IdentifiedObject):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -21827,7 +21827,7 @@ class MutualCoupling(IdentifiedObject):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -21847,7 +21847,7 @@ class MutualCoupling(IdentifiedObject):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -21867,7 +21867,7 @@ class MutualCoupling(IdentifiedObject):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -21887,7 +21887,7 @@ class MutualCoupling(IdentifiedObject):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -21907,7 +21907,7 @@ class MutualCoupling(IdentifiedObject):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -21925,7 +21925,7 @@ class MutualCoupling(IdentifiedObject):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -21944,7 +21944,7 @@ class MutualCoupling(IdentifiedObject):
         'minOccurs': '1',
         'maxOccurs': '1',
         'inverse': 'Terminal.HasFirstMutualCoupling',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -21969,7 +21969,7 @@ class MutualCoupling(IdentifiedObject):
         'minOccurs': '1',
         'maxOccurs': '1',
         'inverse': 'Terminal.HasSecondMutualCoupling',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -21985,7 +21985,7 @@ class MutualCoupling(IdentifiedObject):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Wires'
@@ -22011,7 +22011,7 @@ class OldPerson(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'MeasurementValue.ErpPerson',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         'docstring':
             '''
@@ -22023,7 +22023,7 @@ class OldPerson(IdentifiedObject):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Common'
@@ -22050,7 +22050,7 @@ class OperatingParticipant(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'OperatingShare.OperatingParticipant',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         'docstring':
             '''
@@ -22066,7 +22066,7 @@ class OperatingParticipant(IdentifiedObject):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Core'
@@ -22099,7 +22099,7 @@ class OperationalLimit(IdentifiedObject):
         'minOccurs': '1',
         'maxOccurs': '1',
         'inverse': 'OperationalLimitSet.OperationalLimitValue',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -22118,7 +22118,7 @@ class OperationalLimit(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'OperationalLimitType.OperationalLimit',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -22137,7 +22137,7 @@ class OperationalLimit(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'StepOperationalLimitTable.OperationalLimit',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -22151,7 +22151,7 @@ class OperationalLimit(IdentifiedObject):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'OperationalLimits'
@@ -22174,7 +22174,7 @@ class ActivePowerLimit(OperationalLimit):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -22194,7 +22194,7 @@ class ActivePowerLimit(OperationalLimit):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -22210,7 +22210,7 @@ class ActivePowerLimit(OperationalLimit):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'OperationalLimits'
@@ -22233,7 +22233,7 @@ class ApparentPowerLimit(OperationalLimit):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -22253,7 +22253,7 @@ class ApparentPowerLimit(OperationalLimit):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -22268,7 +22268,7 @@ class ApparentPowerLimit(OperationalLimit):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'OperationalLimits'
@@ -22291,7 +22291,7 @@ class CurrentLimit(OperationalLimit):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -22311,7 +22311,7 @@ class CurrentLimit(OperationalLimit):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -22325,7 +22325,7 @@ class CurrentLimit(OperationalLimit):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'OperationalLimits'
@@ -22350,7 +22350,7 @@ class VoltageAngleLimit(OperationalLimit):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -22372,7 +22372,7 @@ class VoltageAngleLimit(OperationalLimit):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -22396,7 +22396,7 @@ class VoltageAngleLimit(OperationalLimit):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -22421,7 +22421,7 @@ class VoltageAngleLimit(OperationalLimit):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'Terminal.VoltageAngleLimit',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -22435,7 +22435,7 @@ class VoltageAngleLimit(OperationalLimit):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'OperationalLimits'
@@ -22460,7 +22460,7 @@ class VoltageLimit(OperationalLimit):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -22482,7 +22482,7 @@ class VoltageLimit(OperationalLimit):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -22500,7 +22500,7 @@ class VoltageLimit(OperationalLimit):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'OperationalLimits'
@@ -22530,7 +22530,7 @@ class OperationalLimitSet(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'Equipment.OperationalLimitSet',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -22568,7 +22568,7 @@ class OperationalLimitSet(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'ACDCTerminal.OperationalLimitSet',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -22587,7 +22587,7 @@ class OperationalLimitSet(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'OperationalLimit.OperationalLimitSet',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         'docstring':
             '''
@@ -22601,7 +22601,7 @@ class OperationalLimitSet(IdentifiedObject):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'OperationalLimits'
@@ -22624,7 +22624,7 @@ class OperationalLimitType(IdentifiedObject):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -22670,7 +22670,7 @@ class OperationalLimitType(IdentifiedObject):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -22698,7 +22698,7 @@ class OperationalLimitType(IdentifiedObject):
         'type': 'enumeration Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -22736,7 +22736,7 @@ class OperationalLimitType(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'AmbientTemperatureDependencyCurve.OperationalLimitType',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -22757,7 +22757,7 @@ class OperationalLimitType(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'SolarRadiationDependencyCurve.OperationalLimitType',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -22776,7 +22776,7 @@ class OperationalLimitType(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'RecoveryOverloadLimitCurve.OperationalLimitType',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -22797,7 +22797,7 @@ class OperationalLimitType(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'BaseOverloadLimitCurve.OperationalLimitType',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -22817,7 +22817,7 @@ class OperationalLimitType(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'DurationOverloadLimitCurve.OperationalLimitType',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -22838,7 +22838,7 @@ class OperationalLimitType(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'OperationalLimit.OperationalLimitType',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         'docstring':
             '''
@@ -22852,7 +22852,7 @@ class OperationalLimitType(IdentifiedObject):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'OperationalLimits'
@@ -22890,7 +22890,7 @@ class Outage(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'ConductingEquipment.Outage',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         'docstring':
             '''
@@ -22902,7 +22902,7 @@ class Outage(IdentifiedObject):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Operations'
@@ -23303,7 +23303,7 @@ class PSRType(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'PowerSystemResource.PSRType',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         'docstring':
             '''
@@ -23317,7 +23317,7 @@ class PSRType(IdentifiedObject):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Core'
@@ -23341,7 +23341,7 @@ class PerLengthLineParameter(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'WireAssemblyInfo.PerLengthLineParameter',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -23353,7 +23353,7 @@ class PerLengthLineParameter(IdentifiedObject):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Wires'
@@ -23486,7 +23486,7 @@ class PerLengthImpedance(PerLengthLineParameter):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'ACLineSegment.PerLengthImpedance',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         'docstring':
             '''
@@ -23517,7 +23517,7 @@ class PerLengthImpedance(PerLengthLineParameter):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Wires'
@@ -23551,7 +23551,7 @@ class PerLengthPhaseImpedance(PerLengthImpedance):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -23587,7 +23587,7 @@ class PerLengthPhaseImpedance(PerLengthImpedance):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'PhaseImpedanceData.PhaseImpedance',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         'docstring':
             '''
@@ -23601,7 +23601,7 @@ class PerLengthPhaseImpedance(PerLengthImpedance):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Wires'
@@ -23627,7 +23627,7 @@ class PerLengthSequenceImpedance(PerLengthImpedance):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -23645,7 +23645,7 @@ class PerLengthSequenceImpedance(PerLengthImpedance):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -23663,7 +23663,7 @@ class PerLengthSequenceImpedance(PerLengthImpedance):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -23681,7 +23681,7 @@ class PerLengthSequenceImpedance(PerLengthImpedance):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -23699,7 +23699,7 @@ class PerLengthSequenceImpedance(PerLengthImpedance):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -23717,7 +23717,7 @@ class PerLengthSequenceImpedance(PerLengthImpedance):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -23735,7 +23735,7 @@ class PerLengthSequenceImpedance(PerLengthImpedance):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -23753,7 +23753,7 @@ class PerLengthSequenceImpedance(PerLengthImpedance):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -23767,7 +23767,7 @@ class PerLengthSequenceImpedance(PerLengthImpedance):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Wires'
@@ -23797,7 +23797,7 @@ class PhaseImpedanceData(IdentifiedObject):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -23823,7 +23823,7 @@ class PhaseImpedanceData(IdentifiedObject):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -23849,7 +23849,7 @@ class PhaseImpedanceData(IdentifiedObject):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -23867,7 +23867,7 @@ class PhaseImpedanceData(IdentifiedObject):
         'type': 'enumeration Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -23885,7 +23885,7 @@ class PhaseImpedanceData(IdentifiedObject):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -23903,7 +23903,7 @@ class PhaseImpedanceData(IdentifiedObject):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -23921,7 +23921,7 @@ class PhaseImpedanceData(IdentifiedObject):
         'type': 'enumeration Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -23939,7 +23939,7 @@ class PhaseImpedanceData(IdentifiedObject):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -23958,7 +23958,7 @@ class PhaseImpedanceData(IdentifiedObject):
         'minOccurs': '1',
         'maxOccurs': '1',
         'inverse': 'PerLengthPhaseImpedance.PhaseImpedanceData',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -23972,7 +23972,7 @@ class PhaseImpedanceData(IdentifiedObject):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Wires'
@@ -23997,7 +23997,7 @@ class PhaseTapChangerTable(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'PhaseTapChangerTablePoint.PhaseTapChangerTable',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         'docstring':
             '''
@@ -24016,7 +24016,7 @@ class PhaseTapChangerTable(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'PhaseTapChangerTabular.PhaseTapChangerTable',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         'docstring':
             '''
@@ -24030,7 +24030,7 @@ class PhaseTapChangerTable(IdentifiedObject):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Wires'
@@ -24056,7 +24056,7 @@ class ConnectionAngleTapChangerTable(PhaseTapChangerTable):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -24088,7 +24088,7 @@ class ConnectionAngleTapChangerTable(PhaseTapChangerTable):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'ConnectionAngleTapChanger.ConnectionAngleTapChangerTable',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -24104,7 +24104,7 @@ class ConnectionAngleTapChangerTable(PhaseTapChangerTable):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Wires'
@@ -24130,7 +24130,7 @@ class PointOfCommonCoupling(IdentifiedObject):
 
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Core'
@@ -24155,7 +24155,7 @@ class ACPointOfCommonCoupling(PointOfCommonCoupling):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'ConnectivityNode.ACPointOfCommonCoupling',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -24174,7 +24174,7 @@ class ACPointOfCommonCoupling(PointOfCommonCoupling):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'DCConverterUnit.ACPointOfCommonCoupling',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -24193,7 +24193,7 @@ class ACPointOfCommonCoupling(PointOfCommonCoupling):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'ConnectivityNode.ACPointOfCommonCoupling',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         'docstring':
             '''
@@ -24207,7 +24207,7 @@ class ACPointOfCommonCoupling(PointOfCommonCoupling):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Core'
@@ -24232,7 +24232,7 @@ class DCPointOfCommonCoupling(PointOfCommonCoupling):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'DCConverterUnit.DCPointOfCommonCoupling',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -24251,7 +24251,7 @@ class DCPointOfCommonCoupling(PointOfCommonCoupling):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'DCNode.DCPointOfCommonCoupling',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -24265,7 +24265,7 @@ class DCPointOfCommonCoupling(PointOfCommonCoupling):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Core'
@@ -24370,7 +24370,7 @@ class PowerSystemResource(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'AssetInfo.PowerSystemResources',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -24389,7 +24389,7 @@ class PowerSystemResource(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'DesignElement.PowerSystemResource',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -24410,7 +24410,7 @@ class PowerSystemResource(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'Location.PowerSystemResources',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -24429,7 +24429,7 @@ class PowerSystemResource(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'PSRType.PowerSystemResources',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -24448,7 +24448,7 @@ class PowerSystemResource(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'Control.PowerSystemResource',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         'docstring':
             '''
@@ -24470,7 +24470,7 @@ class PowerSystemResource(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'Measurement.PowerSystemResource',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         'docstring':
             '''
@@ -24489,7 +24489,7 @@ class PowerSystemResource(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'OperatingShare.PowerSystemResource',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         'docstring':
             '''
@@ -24503,7 +24503,7 @@ class PowerSystemResource(IdentifiedObject):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Core'
@@ -24532,7 +24532,7 @@ class ACLineSegmentPhase(PowerSystemResource):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -24567,7 +24567,7 @@ class ACLineSegmentPhase(PowerSystemResource):
         'type': 'enumeration Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -24588,7 +24588,7 @@ class ACLineSegmentPhase(PowerSystemResource):
         'minOccurs': '1',
         'maxOccurs': '1',
         'inverse': 'ACLineSegment.ACLineSegmentPhases',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -24607,7 +24607,7 @@ class ACLineSegmentPhase(PowerSystemResource):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'IntraphaseSpacing.ACLineSegmentPhase',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -24624,7 +24624,7 @@ class ACLineSegmentPhase(PowerSystemResource):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'WireInfo.ACLineSegmentPhase',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -24636,7 +24636,7 @@ class ACLineSegmentPhase(PowerSystemResource):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Wires'
@@ -24661,7 +24661,7 @@ class ACTieCorridor(PowerSystemResource):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'Line.ACTieCorridor',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         'docstring':
             '''
@@ -24675,7 +24675,7 @@ class ACTieCorridor(PowerSystemResource):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'DC'
@@ -24700,7 +24700,7 @@ class AirCompressor(PowerSystemResource):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -24719,7 +24719,7 @@ class AirCompressor(PowerSystemResource):
         'minOccurs': '1',
         'maxOccurs': '1',
         'inverse': 'CAESPlant.AirCompressor',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -24739,7 +24739,7 @@ class AirCompressor(PowerSystemResource):
         'minOccurs': '1',
         'maxOccurs': '1',
         'inverse': 'CombustionTurbine.AirCompressor',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -24758,7 +24758,7 @@ class AirCompressor(PowerSystemResource):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'CAESPlant.AirCompressor',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         'docstring':
             '''
@@ -24773,7 +24773,7 @@ class AirCompressor(PowerSystemResource):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Production'
@@ -24899,7 +24899,7 @@ class AutomationFunction(PowerSystemResource):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -24917,7 +24917,7 @@ class AutomationFunction(PowerSystemResource):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -24937,7 +24937,7 @@ class AutomationFunction(PowerSystemResource):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -24956,7 +24956,7 @@ class AutomationFunction(PowerSystemResource):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'AutomationFunction.HasPart',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -24975,7 +24975,7 @@ class AutomationFunction(PowerSystemResource):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'AutomationBlockGroup.AutomationFunction',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         'docstring':
             '''
@@ -24994,7 +24994,7 @@ class AutomationFunction(PowerSystemResource):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'AutomationFunction.PartOf',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         'docstring':
             '''
@@ -25013,7 +25013,7 @@ class AutomationFunction(PowerSystemResource):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'FunctionBlock.AutomationFunction',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         'docstring':
             '''
@@ -25027,7 +25027,7 @@ class AutomationFunction(PowerSystemResource):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Control'
@@ -25053,7 +25053,7 @@ class EquipmentController(AutomationFunction):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'SystemControl.EquipmentController',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -25072,7 +25072,7 @@ class EquipmentController(AutomationFunction):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'RegulatingCondEq.EquipmentController',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         'docstring':
             '''
@@ -25087,7 +25087,7 @@ class EquipmentController(AutomationFunction):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Control'
@@ -25111,7 +25111,7 @@ class CompensatorController(EquipmentController):
         'type': 'enumeration Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -25125,7 +25125,7 @@ class CompensatorController(EquipmentController):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Control'
@@ -25149,7 +25149,7 @@ class DirectCurrentEquipmentController(EquipmentController):
         'type': 'enumeration Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -25163,7 +25163,7 @@ class DirectCurrentEquipmentController(EquipmentController):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Control'
@@ -25189,7 +25189,7 @@ class ACDCConverterController(DirectCurrentEquipmentController):
         'minOccurs': '1',
         'maxOccurs': '1',
         'inverse': 'ACDCConverter.ACDCConverterController',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -25208,7 +25208,7 @@ class ACDCConverterController(DirectCurrentEquipmentController):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'DirectCurrentPoleController.ACDCConverterController',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -25222,7 +25222,7 @@ class ACDCConverterController(DirectCurrentEquipmentController):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Control'
@@ -25247,7 +25247,7 @@ class DirectCurrentBipoleController(DirectCurrentEquipmentController):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'DirectCurrentMasterController.DirectCurrentBipoleController',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -25266,7 +25266,7 @@ class DirectCurrentBipoleController(DirectCurrentEquipmentController):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'DirectCurrentPoleController.DirectCurrentBipoleController',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         'docstring':
             '''
@@ -25280,7 +25280,7 @@ class DirectCurrentBipoleController(DirectCurrentEquipmentController):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Control'
@@ -25316,7 +25316,7 @@ class DirectCurrentMasterController(DirectCurrentEquipmentController):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'DCTieCorridor.DirectCurrentMasterController',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -25335,7 +25335,7 @@ class DirectCurrentMasterController(DirectCurrentEquipmentController):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'DirectCurrentBipoleController.DirectCurrentMasterController',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         'docstring':
             '''
@@ -25356,7 +25356,7 @@ class DirectCurrentMasterController(DirectCurrentEquipmentController):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'DirectCurrentPoleController.DirectCurrentMasterController',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         'docstring':
             '''
@@ -25375,7 +25375,7 @@ class DirectCurrentMasterController(DirectCurrentEquipmentController):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'DirectCurrentSubstationController.MultiterminalControl',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         'docstring':
             '''
@@ -25389,7 +25389,7 @@ class DirectCurrentMasterController(DirectCurrentEquipmentController):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Control'
@@ -25414,7 +25414,7 @@ class DirectCurrentPoleController(DirectCurrentEquipmentController):
         'minOccurs': '1',
         'maxOccurs': '1',
         'inverse': 'DCPole.DirectCurrentPoleController',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -25433,7 +25433,7 @@ class DirectCurrentPoleController(DirectCurrentEquipmentController):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'DirectCurrentBipoleController.DirectCurrentPoleController',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -25452,7 +25452,7 @@ class DirectCurrentPoleController(DirectCurrentEquipmentController):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'DirectCurrentMasterController.DirectCurrentPoleController',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -25471,7 +25471,7 @@ class DirectCurrentPoleController(DirectCurrentEquipmentController):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'ACDCConverterController.DirectCurrentPoleController',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         'docstring':
             '''
@@ -25485,7 +25485,7 @@ class DirectCurrentPoleController(DirectCurrentEquipmentController):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Control'
@@ -25511,7 +25511,7 @@ class DirectCurrentSubstationController(DirectCurrentEquipmentController):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'DirectCurrentMasterController.DirectCurrentSubstationController',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -25525,7 +25525,7 @@ class DirectCurrentSubstationController(DirectCurrentEquipmentController):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Control'
@@ -25549,7 +25549,7 @@ class DirectCurrentSubstationBipoleController(DirectCurrentSubstationController)
         'minOccurs': '1',
         'maxOccurs': '1',
         'inverse': 'DCSubstationBipole.DirectCurrentSubstationBipoleController',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -25563,7 +25563,7 @@ class DirectCurrentSubstationBipoleController(DirectCurrentSubstationController)
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Control'
@@ -25587,7 +25587,7 @@ class DirectCurrentSubstationPoleController(DirectCurrentSubstationController):
         'minOccurs': '1',
         'maxOccurs': '1',
         'inverse': 'DCSubstationPole.DirectCurrentSubstationPoleController',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -25601,7 +25601,7 @@ class DirectCurrentSubstationPoleController(DirectCurrentSubstationController):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Control'
@@ -25625,7 +25625,7 @@ class InjectionController(EquipmentController):
         'type': 'enumeration Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -25639,7 +25639,7 @@ class InjectionController(EquipmentController):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Control'
@@ -25664,7 +25664,7 @@ class PowerElectronicsConnectionController(EquipmentController):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'PowerElectronicsUnitController.PowerElectronicsConnectionController',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         'docstring':
             '''
@@ -25680,7 +25680,7 @@ class PowerElectronicsConnectionController(EquipmentController):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'ControlEXT'
@@ -25705,7 +25705,7 @@ class PowerElectronicsUnitController(EquipmentController):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'PowerElectronicsConnectionController.PowerElectronicsUnitController',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -25726,7 +25726,7 @@ class PowerElectronicsUnitController(EquipmentController):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'PowerElectronicsUnit.PowerElectronicsUnitController',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         'docstring':
             '''
@@ -25740,7 +25740,7 @@ class PowerElectronicsUnitController(EquipmentController):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Control'
@@ -25809,7 +25809,7 @@ class PowerPlantController(EquipmentController):
 
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Control'
@@ -25833,7 +25833,7 @@ class RotatingMachineController(EquipmentController):
         'type': 'enumeration Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -25847,7 +25847,7 @@ class RotatingMachineController(EquipmentController):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Control'
@@ -25886,7 +25886,7 @@ class ScheduleResourceController(EquipmentController):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Control'
@@ -25910,7 +25910,7 @@ class SubstationController(EquipmentController):
         'type': 'enumeration Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -25924,7 +25924,7 @@ class SubstationController(EquipmentController):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Control'
@@ -25948,7 +25948,7 @@ class TCSCController(EquipmentController):
         'type': 'enumeration Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -25962,7 +25962,7 @@ class TCSCController(EquipmentController):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Control'
@@ -25988,7 +25988,7 @@ class TapChangerController(EquipmentController):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'TapChanger.TapChangeController',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         'docstring':
             '''
@@ -26002,7 +26002,7 @@ class TapChangerController(EquipmentController):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Control'
@@ -26022,7 +26022,7 @@ class UnifiedPowerFlowController(EquipmentController):
 
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Control'
@@ -26046,7 +26046,7 @@ class ProtectionFunction(AutomationFunction):
         'type': 'enumeration Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -26064,7 +26064,7 @@ class ProtectionFunction(AutomationFunction):
         'type': 'enumeration Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -26085,7 +26085,7 @@ class ProtectionFunction(AutomationFunction):
         'minOccurs': '1',
         'maxOccurs': '1',
         'inverse': 'ProtectionEquipment.ProtectionFunction',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -26104,7 +26104,7 @@ class ProtectionFunction(AutomationFunction):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'RelayDynamics.ProtectionFunction',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -26123,7 +26123,7 @@ class ProtectionFunction(AutomationFunction):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'ProtectionSettingsGroup.ProtectionFunction',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         'docstring':
             '''
@@ -26138,7 +26138,7 @@ class ProtectionFunction(AutomationFunction):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Protection'
@@ -26170,7 +26170,7 @@ class SystemControl(AutomationFunction):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'EquipmentController.SystemControl',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         'docstring':
             '''
@@ -26184,7 +26184,7 @@ class SystemControl(AutomationFunction):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Control'
@@ -26207,7 +26207,7 @@ class AreaInterchangeController(SystemControl):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -26266,7 +26266,7 @@ class AreaInterchangeController(SystemControl):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'ControlArea.AreaInterchangeController',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -26280,7 +26280,7 @@ class AreaInterchangeController(SystemControl):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Control'
@@ -26310,7 +26310,7 @@ class PowerFrequencyController(SystemControl):
         'type': 'enumeration Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -26329,7 +26329,7 @@ class PowerFrequencyController(SystemControl):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'ControlArea.PowerFrequencyController',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -26386,7 +26386,7 @@ class PowerFrequencyController(SystemControl):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'FrequencyMonitoringTerminal.PowerFrequencyController',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         'docstring':
             '''
@@ -26400,7 +26400,7 @@ class PowerFrequencyController(SystemControl):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Control'
@@ -26771,7 +26771,7 @@ class CAESPlant(PowerSystemResource):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -26790,7 +26790,7 @@ class CAESPlant(PowerSystemResource):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -26811,7 +26811,7 @@ class CAESPlant(PowerSystemResource):
         'minOccurs': '1',
         'maxOccurs': '1',
         'inverse': 'AirCompressor.CAESPlant',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -26831,7 +26831,7 @@ class CAESPlant(PowerSystemResource):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'ThermalGeneratingUnit.CAESPlant',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -26852,7 +26852,7 @@ class CAESPlant(PowerSystemResource):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'AirCompressor.CAESPlant',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         'docstring':
             '''
@@ -26872,7 +26872,7 @@ class CAESPlant(PowerSystemResource):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'ThermalGeneratingUnit.CAESPlant',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         'docstring':
             '''
@@ -26888,7 +26888,7 @@ class CAESPlant(PowerSystemResource):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Production'
@@ -26915,7 +26915,7 @@ class CogenerationPlant(PowerSystemResource):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -26933,7 +26933,7 @@ class CogenerationPlant(PowerSystemResource):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -26951,7 +26951,7 @@ class CogenerationPlant(PowerSystemResource):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -26969,7 +26969,7 @@ class CogenerationPlant(PowerSystemResource):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -26987,7 +26987,7 @@ class CogenerationPlant(PowerSystemResource):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -27008,7 +27008,7 @@ class CogenerationPlant(PowerSystemResource):
         'minOccurs': '1',
         'maxOccurs': '1',
         'inverse': 'SteamSendoutSchedule.CogenerationPlant',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -27027,7 +27027,7 @@ class CogenerationPlant(PowerSystemResource):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'SteamSendoutSchedule.CogenerationPlant',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         'docstring':
             '''
@@ -27046,7 +27046,7 @@ class CogenerationPlant(PowerSystemResource):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'ThermalGeneratingUnit.CogenerationPlant',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         'docstring':
             '''
@@ -27060,7 +27060,7 @@ class CogenerationPlant(PowerSystemResource):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Production'
@@ -27085,7 +27085,7 @@ class CombinedCyclePlant(PowerSystemResource):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -27104,7 +27104,7 @@ class CombinedCyclePlant(PowerSystemResource):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'ThermalGeneratingUnit.CombinedCyclePlant',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         'docstring':
             '''
@@ -27118,7 +27118,7 @@ class CombinedCyclePlant(PowerSystemResource):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Production'
@@ -27142,7 +27142,7 @@ class CombustionTurbine(PowerSystemResource):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'AirCompressor.CombustionTurbine',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         'docstring':
             '''
@@ -27156,7 +27156,7 @@ class CombustionTurbine(PowerSystemResource):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'GenerationTrainingSimulation'
@@ -27183,7 +27183,7 @@ class CommunicationLink(PowerSystemResource):
         'type': 'enumeration GridAPPSD Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -27199,7 +27199,7 @@ class CommunicationLink(PowerSystemResource):
         'type': 'enumeration GridAPPSD Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -27216,7 +27216,7 @@ class CommunicationLink(PowerSystemResource):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'BilateralExchangeActor.CommunicationLink',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -27249,7 +27249,7 @@ class CommunicationLink(PowerSystemResource):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'MeasEXT'
@@ -27274,7 +27274,7 @@ class ConnectivityNodeContainer(PowerSystemResource):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'ConnectivityNode.ConnectivityNodeContainer',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         'docstring':
             '''
@@ -27293,7 +27293,7 @@ class ConnectivityNodeContainer(PowerSystemResource):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'TopologicalNode.ConnectivityNodeContainer',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         'docstring':
             '''
@@ -27307,7 +27307,7 @@ class ConnectivityNodeContainer(PowerSystemResource):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Core'
@@ -27331,7 +27331,7 @@ class EquipmentContainer(ConnectivityNodeContainer):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'Equipment.AdditionalEquipmentContainer',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         'docstring':
             '''
@@ -27360,7 +27360,7 @@ class EquipmentContainer(ConnectivityNodeContainer):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'Equipment.EquipmentContainer',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         'docstring':
             '''
@@ -27374,7 +27374,7 @@ class EquipmentContainer(ConnectivityNodeContainer):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Core'
@@ -27400,7 +27400,7 @@ class Bay(EquipmentContainer):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -27418,7 +27418,7 @@ class Bay(EquipmentContainer):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -27436,7 +27436,7 @@ class Bay(EquipmentContainer):
         'type': 'enumeration Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -27454,7 +27454,7 @@ class Bay(EquipmentContainer):
         'type': 'enumeration Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -27473,7 +27473,7 @@ class Bay(EquipmentContainer):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'Circuit.EndBay',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -27492,7 +27492,7 @@ class Bay(EquipmentContainer):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'Substation.Bays',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -27511,7 +27511,7 @@ class Bay(EquipmentContainer):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'VoltageLevel.Bays',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -27525,7 +27525,7 @@ class Bay(EquipmentContainer):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Core'
@@ -27553,7 +27553,7 @@ class DCConverterUnit(EquipmentContainer):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'ACPointOfCommonCoupling.DCConverterUnit',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         'docstring':
             '''
@@ -27572,7 +27572,7 @@ class DCConverterUnit(EquipmentContainer):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'DCPointOfCommonCoupling.DCConverterUnit',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         'docstring':
             '''
@@ -27586,7 +27586,7 @@ class DCConverterUnit(EquipmentContainer):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'DC'
@@ -27610,7 +27610,7 @@ class DCSubstationBipole(EquipmentContainer):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'DirectCurrentSubstationBipoleController.DCSubstationBipole',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         'docstring':
             '''
@@ -27624,7 +27624,7 @@ class DCSubstationBipole(EquipmentContainer):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'DC'
@@ -27648,7 +27648,7 @@ class DCSubstationPole(EquipmentContainer):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'DirectCurrentSubstationPoleController.DCSubstationPole',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         'docstring':
             '''
@@ -27662,7 +27662,7 @@ class DCSubstationPole(EquipmentContainer):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'DC'
@@ -27690,7 +27690,7 @@ class Feeder(EquipmentContainer):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'Substation.NormalEnergizedFeeder',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -27730,7 +27730,7 @@ class Feeder(EquipmentContainer):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'Substation.NamingFeeder',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         'docstring':
             '''
@@ -27753,7 +27753,7 @@ class Feeder(EquipmentContainer):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'Terminal.NormalHeadFeeder',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         'docstring':
             '''
@@ -27767,7 +27767,7 @@ class Feeder(EquipmentContainer):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Core'
@@ -27792,7 +27792,7 @@ class Line(EquipmentContainer):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'ACTieCorridor.Line',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -27811,7 +27811,7 @@ class Line(EquipmentContainer):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'SubGeographicalRegion.Lines',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -27844,7 +27844,7 @@ class Line(EquipmentContainer):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Wires'
@@ -27869,7 +27869,7 @@ class Circuit(Line):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'Bay.Circuit',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         'docstring':
             '''
@@ -27881,7 +27881,7 @@ class Circuit(Line):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'InfFeeder'
@@ -27900,7 +27900,7 @@ class Plant(EquipmentContainer):
 
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Wires'
@@ -27927,7 +27927,7 @@ class Substation(EquipmentContainer):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'Feeder.NamingSecondarySubstation',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -27951,7 +27951,7 @@ class Substation(EquipmentContainer):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'SubGeographicalRegion.Substations',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -27989,7 +27989,7 @@ class Substation(EquipmentContainer):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'Bay.Substation',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         'docstring':
             '''
@@ -28008,7 +28008,7 @@ class Substation(EquipmentContainer):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'Feeder.NormalEnergizingSubstation',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         'docstring':
             '''
@@ -28028,7 +28028,7 @@ class Substation(EquipmentContainer):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'VoltageLevel.Substation',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         'docstring':
             '''
@@ -28042,7 +28042,7 @@ class Substation(EquipmentContainer):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Core'
@@ -28069,7 +28069,7 @@ class VoltageLevel(EquipmentContainer):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -28094,7 +28094,7 @@ class VoltageLevel(EquipmentContainer):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -28120,7 +28120,7 @@ class VoltageLevel(EquipmentContainer):
         'minOccurs': '1',
         'maxOccurs': '1',
         'inverse': 'BaseVoltage.VoltageLevel',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -28139,7 +28139,7 @@ class VoltageLevel(EquipmentContainer):
         'minOccurs': '1',
         'maxOccurs': '1',
         'inverse': 'Substation.VoltageLevels',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -28158,7 +28158,7 @@ class VoltageLevel(EquipmentContainer):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'Bay.VoltageLevel',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         'docstring':
             '''
@@ -28172,7 +28172,7 @@ class VoltageLevel(EquipmentContainer):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Core'
@@ -28219,7 +28219,7 @@ class ControlArea(PowerSystemResource):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'AreaInterchangeController.ControlArea',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         'docstring':
             '''
@@ -28238,7 +28238,7 @@ class ControlArea(PowerSystemResource):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'EnergyArea.ControlArea',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         'docstring':
             '''
@@ -28257,7 +28257,7 @@ class ControlArea(PowerSystemResource):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'PowerFrequencyController.ControlArea',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         'docstring':
             '''
@@ -28271,7 +28271,7 @@ class ControlArea(PowerSystemResource):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'ControlArea'
@@ -28298,7 +28298,7 @@ class DCPole(PowerSystemResource):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'DirectCurrentPoleController.DCPole',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         'docstring':
             '''
@@ -28312,7 +28312,7 @@ class DCPole(PowerSystemResource):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'DC'
@@ -28337,7 +28337,7 @@ class DCTieCorridor(PowerSystemResource):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'DirectCurrentMasterController.DCTieCorridor',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         'docstring':
             '''
@@ -28351,7 +28351,7 @@ class DCTieCorridor(PowerSystemResource):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'DC'
@@ -28374,7 +28374,7 @@ class EnergyConsumerPhase(PowerSystemResource):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -28398,7 +28398,7 @@ class EnergyConsumerPhase(PowerSystemResource):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -28418,7 +28418,7 @@ class EnergyConsumerPhase(PowerSystemResource):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -28438,7 +28438,7 @@ class EnergyConsumerPhase(PowerSystemResource):
         'type': 'enumeration Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -28464,7 +28464,7 @@ class EnergyConsumerPhase(PowerSystemResource):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -28488,7 +28488,7 @@ class EnergyConsumerPhase(PowerSystemResource):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -28508,7 +28508,7 @@ class EnergyConsumerPhase(PowerSystemResource):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -28530,7 +28530,7 @@ class EnergyConsumerPhase(PowerSystemResource):
         'minOccurs': '1',
         'maxOccurs': '1',
         'inverse': 'EnergyConsumer.EnergyConsumerPhase',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -28544,7 +28544,7 @@ class EnergyConsumerPhase(PowerSystemResource):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Wires'
@@ -28567,7 +28567,7 @@ class EnergySourcePhase(PowerSystemResource):
         'type': 'enumeration Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -28594,7 +28594,7 @@ class EnergySourcePhase(PowerSystemResource):
         'minOccurs': '1',
         'maxOccurs': '1',
         'inverse': 'EnergySource.EnergySourcePhase',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -28608,7 +28608,7 @@ class EnergySourcePhase(PowerSystemResource):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Wires'
@@ -28631,7 +28631,7 @@ class Equipment(PowerSystemResource):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -28670,7 +28670,7 @@ class Equipment(PowerSystemResource):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -28694,7 +28694,7 @@ class Equipment(PowerSystemResource):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -28714,7 +28714,7 @@ class Equipment(PowerSystemResource):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -28740,7 +28740,7 @@ class Equipment(PowerSystemResource):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'EquipmentContainer.AdditionalGroupedEquipment',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -28763,7 +28763,7 @@ class Equipment(PowerSystemResource):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'EquipmentContainer.Equipments',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -28782,7 +28782,7 @@ class Equipment(PowerSystemResource):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'ContingencyEquipment.Equipment',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         'docstring':
             '''
@@ -28801,7 +28801,7 @@ class Equipment(PowerSystemResource):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'OperationalLimitSet.Equipment',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         'docstring':
             '''
@@ -28815,7 +28815,7 @@ class Equipment(PowerSystemResource):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Core'
@@ -28847,7 +28847,7 @@ class CompositeSwitch(Equipment):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -28868,7 +28868,7 @@ class CompositeSwitch(Equipment):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'Switch.CompositeSwitch',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         'docstring':
             '''
@@ -28882,7 +28882,7 @@ class CompositeSwitch(Equipment):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Wires'
@@ -28907,7 +28907,7 @@ class ConductingEquipment(Equipment):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'BaseVoltage.ConductingEquipment',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -28930,7 +28930,7 @@ class ConductingEquipment(Equipment):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'GroundAction.GroundedEquipment',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -28949,7 +28949,7 @@ class ConductingEquipment(Equipment):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'JumperAction.JumpedEquipments',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -28968,7 +28968,7 @@ class ConductingEquipment(Equipment):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'Outage.OutageIsolationEquipment',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -29002,7 +29002,7 @@ class ConductingEquipment(Equipment):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'Terminal.ConductingEquipment',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         'docstring':
             '''
@@ -29019,7 +29019,7 @@ class ConductingEquipment(Equipment):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Core'
@@ -29046,7 +29046,7 @@ class ACDCConverter(ConductingEquipment):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'ACDCConverterController.ACDCConverter',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         'docstring':
             '''
@@ -29060,7 +29060,7 @@ class ACDCConverter(ConductingEquipment):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'DC'
@@ -29088,7 +29088,7 @@ class Clamp(ConductingEquipment):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -29111,7 +29111,7 @@ class Clamp(ConductingEquipment):
         'minOccurs': '1',
         'maxOccurs': '1',
         'inverse': 'ACLineSegment.Clamp',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -29130,7 +29130,7 @@ class Clamp(ConductingEquipment):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'ClampAction.Clamp',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -29147,7 +29147,7 @@ class Clamp(ConductingEquipment):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'JumperAction.Clamp',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -29159,7 +29159,7 @@ class Clamp(ConductingEquipment):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Wires'
@@ -29185,7 +29185,7 @@ class Conductor(ConductingEquipment):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -29204,7 +29204,7 @@ class Conductor(ConductingEquipment):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'ConductorCharacteristicCurve.Conductor',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -29218,7 +29218,7 @@ class Conductor(ConductingEquipment):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Wires'
@@ -29283,7 +29283,7 @@ class ACLineSegment(Conductor):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -29303,7 +29303,7 @@ class ACLineSegment(Conductor):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -29325,7 +29325,7 @@ class ACLineSegment(Conductor):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -29345,7 +29345,7 @@ class ACLineSegment(Conductor):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -29365,7 +29365,7 @@ class ACLineSegment(Conductor):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -29383,7 +29383,7 @@ class ACLineSegment(Conductor):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -29401,7 +29401,7 @@ class ACLineSegment(Conductor):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -29423,7 +29423,7 @@ class ACLineSegment(Conductor):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -29441,7 +29441,7 @@ class ACLineSegment(Conductor):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -29477,7 +29477,7 @@ class ACLineSegment(Conductor):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'GroundAction.AlongACLineSegment',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -29498,7 +29498,7 @@ class ACLineSegment(Conductor):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'JumperAction.ACLineSegments',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -29519,7 +29519,7 @@ class ACLineSegment(Conductor):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'LineSegmentCoupling.ACLineSegment',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -29539,7 +29539,7 @@ class ACLineSegment(Conductor):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'PerLengthImpedance.ACLineSegments',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -29575,7 +29575,7 @@ class ACLineSegment(Conductor):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'WireSpacingInfo.ACLineSegment',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -29592,7 +29592,7 @@ class ACLineSegment(Conductor):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'ACLineSegmentPhase.ACLineSegment',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         'docstring':
             '''
@@ -29611,7 +29611,7 @@ class ACLineSegment(Conductor):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'Clamp.ACLineSegment',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         'docstring':
             '''
@@ -29630,7 +29630,7 @@ class ACLineSegment(Conductor):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'Cut.ACLineSegment',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         'docstring':
             '''
@@ -29649,7 +29649,7 @@ class ACLineSegment(Conductor):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'LineSegmentCoupling.ACLineSegment',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         'docstring':
             '''
@@ -29669,7 +29669,7 @@ class ACLineSegment(Conductor):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'Pole.ACLineSegment',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         'docstring':
             '''
@@ -29681,7 +29681,7 @@ class ACLineSegment(Conductor):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Wires'
@@ -29707,7 +29707,7 @@ class BusSegment(Conductor):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -29725,7 +29725,7 @@ class BusSegment(Conductor):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -29741,7 +29741,7 @@ class BusSegment(Conductor):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Wires'
@@ -29767,7 +29767,7 @@ class WireSegment(Conductor):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'WireSegmentPhase.WireSegment',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         'docstring':
             '''
@@ -29781,7 +29781,7 @@ class WireSegment(Conductor):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Wires'
@@ -29803,7 +29803,7 @@ class Connector(ConductingEquipment):
 
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Wires'
@@ -29832,7 +29832,7 @@ class BusbarSection(Connector):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -29856,7 +29856,7 @@ class BusbarSection(Connector):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'VoltageControlZone.BusbarSection',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -29875,7 +29875,7 @@ class BusbarSection(Connector):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'VoltageControlZone.BusbarSection',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         'docstring':
             '''
@@ -29889,7 +29889,7 @@ class BusbarSection(Connector):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Wires'
@@ -29917,7 +29917,7 @@ class Junction(Connector):
 
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Wires'
@@ -29945,7 +29945,7 @@ class EarthFaultCompensator(ConductingEquipment):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -29959,7 +29959,7 @@ class EarthFaultCompensator(ConductingEquipment):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Wires'
@@ -29982,7 +29982,7 @@ class GroundingImpedance(EarthFaultCompensator):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -29996,7 +29996,7 @@ class GroundingImpedance(EarthFaultCompensator):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Wires'
@@ -30020,7 +30020,7 @@ class PetersenCoil(EarthFaultCompensator):
         'type': 'enumeration Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -30038,7 +30038,7 @@ class PetersenCoil(EarthFaultCompensator):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -30056,7 +30056,7 @@ class PetersenCoil(EarthFaultCompensator):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -30080,7 +30080,7 @@ class PetersenCoil(EarthFaultCompensator):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -30100,7 +30100,7 @@ class PetersenCoil(EarthFaultCompensator):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -30118,7 +30118,7 @@ class PetersenCoil(EarthFaultCompensator):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -30136,7 +30136,7 @@ class PetersenCoil(EarthFaultCompensator):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -30156,7 +30156,7 @@ class PetersenCoil(EarthFaultCompensator):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Wires'
@@ -30176,7 +30176,7 @@ class EnergyConnection(ConductingEquipment):
 
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Wires'
@@ -30203,7 +30203,7 @@ class EnergyConsumer(EnergyConnection):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -30221,7 +30221,7 @@ class EnergyConsumer(EnergyConnection):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -30241,7 +30241,7 @@ class EnergyConsumer(EnergyConnection):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -30265,7 +30265,7 @@ class EnergyConsumer(EnergyConnection):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -30287,7 +30287,7 @@ class EnergyConsumer(EnergyConnection):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -30309,7 +30309,7 @@ class EnergyConsumer(EnergyConnection):
         'type': 'enumeration Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -30327,7 +30327,7 @@ class EnergyConsumer(EnergyConnection):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -30351,7 +30351,7 @@ class EnergyConsumer(EnergyConnection):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -30373,7 +30373,7 @@ class EnergyConsumer(EnergyConnection):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -30415,7 +30415,7 @@ class EnergyConsumer(EnergyConnection):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'EnergyConsumerAction.EnergyConsumer',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -30432,7 +30432,7 @@ class EnergyConsumer(EnergyConnection):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'LoadDynamics.EnergyConsumer',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -30452,7 +30452,7 @@ class EnergyConsumer(EnergyConnection):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'LoadResponseCharacteristic.EnergyConsumer',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -30473,7 +30473,7 @@ class EnergyConsumer(EnergyConnection):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'PowerCutZone.EnergyConsumers',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -30492,7 +30492,7 @@ class EnergyConsumer(EnergyConnection):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'EnergyConsumerPhase.EnergyConsumer',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         'docstring':
             '''
@@ -30506,7 +30506,7 @@ class EnergyConsumer(EnergyConnection):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Wires'
@@ -30531,7 +30531,7 @@ class ConformLoad(EnergyConsumer):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'ConformLoadGroup.EnergyConsumers',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -30545,7 +30545,7 @@ class ConformLoad(EnergyConsumer):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'LoadModel'
@@ -30571,7 +30571,7 @@ class NonConformLoad(EnergyConsumer):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'NonConformLoadGroup.EnergyConsumers',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -30585,7 +30585,7 @@ class NonConformLoad(EnergyConsumer):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'LoadModel'
@@ -30604,7 +30604,7 @@ class StationSupply(EnergyConsumer):
 
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'LoadModel'
@@ -30628,7 +30628,7 @@ class EnergySource(EnergyConnection):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -30644,7 +30644,7 @@ class EnergySource(EnergyConnection):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -30666,7 +30666,7 @@ class EnergySource(EnergyConnection):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -30684,7 +30684,7 @@ class EnergySource(EnergyConnection):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -30706,7 +30706,7 @@ class EnergySource(EnergyConnection):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -30728,7 +30728,7 @@ class EnergySource(EnergyConnection):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -30746,7 +30746,7 @@ class EnergySource(EnergyConnection):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -30764,7 +30764,7 @@ class EnergySource(EnergyConnection):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -30782,7 +30782,7 @@ class EnergySource(EnergyConnection):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -30804,7 +30804,7 @@ class EnergySource(EnergyConnection):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -30830,7 +30830,7 @@ class EnergySource(EnergyConnection):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -30856,7 +30856,7 @@ class EnergySource(EnergyConnection):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -30874,7 +30874,7 @@ class EnergySource(EnergyConnection):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -30892,7 +30892,7 @@ class EnergySource(EnergyConnection):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -30911,7 +30911,7 @@ class EnergySource(EnergyConnection):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'EnergySchedulingType.EnergySource',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -30930,7 +30930,7 @@ class EnergySource(EnergyConnection):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'EnergySourceAction.EnergySource',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -30949,7 +30949,7 @@ class EnergySource(EnergyConnection):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'EnergySourcePhase.EnergySource',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         'docstring':
             '''
@@ -30963,7 +30963,7 @@ class EnergySource(EnergyConnection):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Wires'
@@ -30987,7 +30987,7 @@ class RegulatingCondEq(EnergyConnection):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -31008,7 +31008,7 @@ class RegulatingCondEq(EnergyConnection):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'EquipmentController.RegulatingCondEq',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -31027,7 +31027,7 @@ class RegulatingCondEq(EnergyConnection):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'RegulatingControl.RegulatingCondEq',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -31041,7 +31041,7 @@ class RegulatingCondEq(EnergyConnection):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Wires'
@@ -31072,7 +31072,7 @@ class ExternalNetworkInjection(RegulatingCondEq):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -31096,7 +31096,7 @@ class ExternalNetworkInjection(RegulatingCondEq):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -31119,7 +31119,7 @@ class ExternalNetworkInjection(RegulatingCondEq):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -31142,7 +31142,7 @@ class ExternalNetworkInjection(RegulatingCondEq):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -31166,7 +31166,7 @@ class ExternalNetworkInjection(RegulatingCondEq):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -31189,7 +31189,7 @@ class ExternalNetworkInjection(RegulatingCondEq):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -31212,7 +31212,7 @@ class ExternalNetworkInjection(RegulatingCondEq):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -31236,7 +31236,7 @@ class ExternalNetworkInjection(RegulatingCondEq):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -31258,7 +31258,7 @@ class ExternalNetworkInjection(RegulatingCondEq):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -31280,7 +31280,7 @@ class ExternalNetworkInjection(RegulatingCondEq):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -31300,7 +31300,7 @@ class ExternalNetworkInjection(RegulatingCondEq):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -31318,7 +31318,7 @@ class ExternalNetworkInjection(RegulatingCondEq):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -31338,7 +31338,7 @@ class ExternalNetworkInjection(RegulatingCondEq):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -31358,7 +31358,7 @@ class ExternalNetworkInjection(RegulatingCondEq):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -31376,7 +31376,7 @@ class ExternalNetworkInjection(RegulatingCondEq):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -31396,7 +31396,7 @@ class ExternalNetworkInjection(RegulatingCondEq):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -31418,7 +31418,7 @@ class ExternalNetworkInjection(RegulatingCondEq):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -31440,7 +31440,7 @@ class ExternalNetworkInjection(RegulatingCondEq):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -31461,7 +31461,7 @@ class ExternalNetworkInjection(RegulatingCondEq):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Wires'
@@ -31486,7 +31486,7 @@ class FrequencyConverter(RegulatingCondEq):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -31504,7 +31504,7 @@ class FrequencyConverter(RegulatingCondEq):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -31524,7 +31524,7 @@ class FrequencyConverter(RegulatingCondEq):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -31544,7 +31544,7 @@ class FrequencyConverter(RegulatingCondEq):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -31564,7 +31564,7 @@ class FrequencyConverter(RegulatingCondEq):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -31580,7 +31580,7 @@ class FrequencyConverter(RegulatingCondEq):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Wires'
@@ -31604,7 +31604,7 @@ class PowerElectronicsConnection(RegulatingCondEq):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -31624,7 +31624,7 @@ class PowerElectronicsConnection(RegulatingCondEq):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -31640,7 +31640,7 @@ class PowerElectronicsConnection(RegulatingCondEq):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -31660,7 +31660,7 @@ class PowerElectronicsConnection(RegulatingCondEq):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -31680,7 +31680,7 @@ class PowerElectronicsConnection(RegulatingCondEq):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -31700,7 +31700,7 @@ class PowerElectronicsConnection(RegulatingCondEq):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -31722,7 +31722,7 @@ class PowerElectronicsConnection(RegulatingCondEq):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -31744,7 +31744,7 @@ class PowerElectronicsConnection(RegulatingCondEq):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -31764,7 +31764,7 @@ class PowerElectronicsConnection(RegulatingCondEq):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -31787,7 +31787,7 @@ class PowerElectronicsConnection(RegulatingCondEq):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'DERDynamics.PowerElectronicsConnection',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -31807,7 +31807,7 @@ class PowerElectronicsConnection(RegulatingCondEq):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'StatcomDynamics.PowerElectronicsConnection',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -31826,7 +31826,7 @@ class PowerElectronicsConnection(RegulatingCondEq):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'WindTurbineType3or4Dynamics.PowerElectronicsConnection',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -31847,7 +31847,7 @@ class PowerElectronicsConnection(RegulatingCondEq):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'PowerElectronicsConnectionPhase.PowerElectronicsConnection',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         'docstring':
             '''
@@ -31866,7 +31866,7 @@ class PowerElectronicsConnection(RegulatingCondEq):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'PowerElectronicsUnit.PowerElectronicsConnection',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         'docstring':
             '''
@@ -31882,7 +31882,7 @@ class PowerElectronicsConnection(RegulatingCondEq):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'WiresEXT'
@@ -31950,7 +31950,7 @@ class RotatingMachine(RegulatingCondEq):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -31971,7 +31971,7 @@ class RotatingMachine(RegulatingCondEq):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -31993,7 +31993,7 @@ class RotatingMachine(RegulatingCondEq):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -32015,7 +32015,7 @@ class RotatingMachine(RegulatingCondEq):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -32035,7 +32035,7 @@ class RotatingMachine(RegulatingCondEq):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -32058,7 +32058,7 @@ class RotatingMachine(RegulatingCondEq):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'GeneratingUnit.RotatingMachine',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -32079,7 +32079,7 @@ class RotatingMachine(RegulatingCondEq):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'HydroPump.RotatingMachine',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -32119,7 +32119,7 @@ class RotatingMachine(RegulatingCondEq):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'HydroPump.RotatingMachine',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         'docstring':
             '''
@@ -32154,7 +32154,7 @@ class RotatingMachine(RegulatingCondEq):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Wires'
@@ -32180,7 +32180,7 @@ class AsynchronousMachine(RotatingMachine):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -32200,7 +32200,7 @@ class AsynchronousMachine(RotatingMachine):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -32220,7 +32220,7 @@ class AsynchronousMachine(RotatingMachine):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -32240,7 +32240,7 @@ class AsynchronousMachine(RotatingMachine):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -32260,7 +32260,7 @@ class AsynchronousMachine(RotatingMachine):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -32280,7 +32280,7 @@ class AsynchronousMachine(RotatingMachine):
         'type': 'enumeration Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -32298,7 +32298,7 @@ class AsynchronousMachine(RotatingMachine):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -32320,7 +32320,7 @@ class AsynchronousMachine(RotatingMachine):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -32338,7 +32338,7 @@ class AsynchronousMachine(RotatingMachine):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -32356,7 +32356,7 @@ class AsynchronousMachine(RotatingMachine):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -32376,7 +32376,7 @@ class AsynchronousMachine(RotatingMachine):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -32394,7 +32394,7 @@ class AsynchronousMachine(RotatingMachine):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -32412,7 +32412,7 @@ class AsynchronousMachine(RotatingMachine):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -32430,7 +32430,7 @@ class AsynchronousMachine(RotatingMachine):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -32448,7 +32448,7 @@ class AsynchronousMachine(RotatingMachine):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -32466,7 +32466,7 @@ class AsynchronousMachine(RotatingMachine):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -32484,7 +32484,7 @@ class AsynchronousMachine(RotatingMachine):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -32502,7 +32502,7 @@ class AsynchronousMachine(RotatingMachine):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -32520,7 +32520,7 @@ class AsynchronousMachine(RotatingMachine):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -32538,7 +32538,7 @@ class AsynchronousMachine(RotatingMachine):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -32557,7 +32557,7 @@ class AsynchronousMachine(RotatingMachine):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'AsynchronousMachineDynamics.AsynchronousMachine',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -32578,7 +32578,7 @@ class AsynchronousMachine(RotatingMachine):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'DERDynamics.AsynchronousMachine',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -32592,7 +32592,7 @@ class AsynchronousMachine(RotatingMachine):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Wires'
@@ -32617,7 +32617,7 @@ class SynchronousMachine(RotatingMachine):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -32635,7 +32635,7 @@ class SynchronousMachine(RotatingMachine):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -32655,7 +32655,7 @@ class SynchronousMachine(RotatingMachine):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -32677,7 +32677,7 @@ class SynchronousMachine(RotatingMachine):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -32699,7 +32699,7 @@ class SynchronousMachine(RotatingMachine):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -32719,7 +32719,7 @@ class SynchronousMachine(RotatingMachine):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -32739,7 +32739,7 @@ class SynchronousMachine(RotatingMachine):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -32759,7 +32759,7 @@ class SynchronousMachine(RotatingMachine):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -32777,7 +32777,7 @@ class SynchronousMachine(RotatingMachine):
         'type': 'enumeration Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -32795,7 +32795,7 @@ class SynchronousMachine(RotatingMachine):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -32815,7 +32815,7 @@ class SynchronousMachine(RotatingMachine):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -32835,7 +32835,7 @@ class SynchronousMachine(RotatingMachine):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -32869,7 +32869,7 @@ class SynchronousMachine(RotatingMachine):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -32891,7 +32891,7 @@ class SynchronousMachine(RotatingMachine):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -32911,7 +32911,7 @@ class SynchronousMachine(RotatingMachine):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -32929,7 +32929,7 @@ class SynchronousMachine(RotatingMachine):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -32947,7 +32947,7 @@ class SynchronousMachine(RotatingMachine):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -32965,7 +32965,7 @@ class SynchronousMachine(RotatingMachine):
         'type': 'enumeration Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -32983,7 +32983,7 @@ class SynchronousMachine(RotatingMachine):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -33005,7 +33005,7 @@ class SynchronousMachine(RotatingMachine):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -33027,7 +33027,7 @@ class SynchronousMachine(RotatingMachine):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -33045,7 +33045,7 @@ class SynchronousMachine(RotatingMachine):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -33063,7 +33063,7 @@ class SynchronousMachine(RotatingMachine):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -33081,7 +33081,7 @@ class SynchronousMachine(RotatingMachine):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -33103,7 +33103,7 @@ class SynchronousMachine(RotatingMachine):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -33123,7 +33123,7 @@ class SynchronousMachine(RotatingMachine):
         'type': 'enumeration Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -33143,7 +33143,7 @@ class SynchronousMachine(RotatingMachine):
         'type': 'enumeration Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -33161,7 +33161,7 @@ class SynchronousMachine(RotatingMachine):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -33185,7 +33185,7 @@ class SynchronousMachine(RotatingMachine):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -33203,7 +33203,7 @@ class SynchronousMachine(RotatingMachine):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -33222,7 +33222,7 @@ class SynchronousMachine(RotatingMachine):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'DERDynamics.SynchronousMachine',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -33241,7 +33241,7 @@ class SynchronousMachine(RotatingMachine):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'ReactiveCapabilityCurve.InitiallyUsedBySynchronousMachine',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -33269,7 +33269,7 @@ class SynchronousMachine(RotatingMachine):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'SynchronousMachineDynamics.SynchronousMachine',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -33290,7 +33290,7 @@ class SynchronousMachine(RotatingMachine):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'ReactiveCapabilityCurve.SynchronousMachine',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         'docstring':
             '''
@@ -33304,7 +33304,7 @@ class SynchronousMachine(RotatingMachine):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Wires'
@@ -33330,7 +33330,7 @@ class ShuntCompensator(RegulatingCondEq):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -33350,7 +33350,7 @@ class ShuntCompensator(RegulatingCondEq):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -33368,7 +33368,7 @@ class ShuntCompensator(RegulatingCondEq):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -33388,7 +33388,7 @@ class ShuntCompensator(RegulatingCondEq):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -33429,7 +33429,7 @@ class ShuntCompensator(RegulatingCondEq):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -33451,7 +33451,7 @@ class ShuntCompensator(RegulatingCondEq):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -33473,7 +33473,7 @@ class ShuntCompensator(RegulatingCondEq):
         'type': 'enumeration Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -33491,7 +33491,7 @@ class ShuntCompensator(RegulatingCondEq):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -33512,7 +33512,7 @@ class ShuntCompensator(RegulatingCondEq):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'ShuntCompensatorAction.ShuntCompensator',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -33529,7 +33529,7 @@ class ShuntCompensator(RegulatingCondEq):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'ShuntCompensatorDynamics.ShuntCompensator',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -33550,7 +33550,7 @@ class ShuntCompensator(RegulatingCondEq):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'StaticVarCompensatorSystemDynamics.ShuntCompensator',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -33571,7 +33571,7 @@ class ShuntCompensator(RegulatingCondEq):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'ShuntCompensatorPhase.ShuntCompensator',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         'docstring':
             '''
@@ -33585,7 +33585,7 @@ class ShuntCompensator(RegulatingCondEq):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Wires'
@@ -33609,7 +33609,7 @@ class LinearShuntCompensator(ShuntCompensator):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -33627,7 +33627,7 @@ class LinearShuntCompensator(ShuntCompensator):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -33645,7 +33645,7 @@ class LinearShuntCompensator(ShuntCompensator):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -33663,7 +33663,7 @@ class LinearShuntCompensator(ShuntCompensator):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -33677,7 +33677,7 @@ class LinearShuntCompensator(ShuntCompensator):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Wires'
@@ -33705,7 +33705,7 @@ class NonlinearShuntCompensator(ShuntCompensator):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'NonlinearShuntCompensatorPoint.NonlinearShuntCompensator',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         'docstring':
             '''
@@ -33719,7 +33719,7 @@ class NonlinearShuntCompensator(ShuntCompensator):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Wires'
@@ -33744,7 +33744,7 @@ class VariableShuntCompensator(NonlinearShuntCompensator):
 
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Wires'
@@ -33774,7 +33774,7 @@ class StaticSynchronousSeriesCompensator(RegulatingCondEq):
 
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Control'
@@ -33805,7 +33805,7 @@ class StaticVarCompensator(RegulatingCondEq):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -33825,7 +33825,7 @@ class StaticVarCompensator(RegulatingCondEq):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -33845,7 +33845,7 @@ class StaticVarCompensator(RegulatingCondEq):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -33867,7 +33867,7 @@ class StaticVarCompensator(RegulatingCondEq):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -33891,7 +33891,7 @@ class StaticVarCompensator(RegulatingCondEq):
         'type': 'enumeration Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -33909,7 +33909,7 @@ class StaticVarCompensator(RegulatingCondEq):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -33934,7 +33934,7 @@ class StaticVarCompensator(RegulatingCondEq):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'StaticVarCompensatorDynamics.StaticVarCompensator',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -33950,7 +33950,7 @@ class StaticVarCompensator(RegulatingCondEq):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Wires'
@@ -33975,7 +33975,7 @@ class ExtendedWardEquivalent(ConductingEquipment):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'ReactiveCapabilityCurve.ExtendedWardEquivalent',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         'docstring':
             '''
@@ -33989,7 +33989,7 @@ class ExtendedWardEquivalent(ConductingEquipment):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Equivalents'
@@ -34015,7 +34015,7 @@ class Ground(ConductingEquipment):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'GroundAction.Ground',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -34029,7 +34029,7 @@ class Ground(ConductingEquipment):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Wires'
@@ -34065,7 +34065,7 @@ class PowerTransformer(ConductingEquipment):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -34093,7 +34093,7 @@ class PowerTransformer(ConductingEquipment):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -34115,7 +34115,7 @@ class PowerTransformer(ConductingEquipment):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -34177,7 +34177,7 @@ class PowerTransformer(ConductingEquipment):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -34201,7 +34201,7 @@ class PowerTransformer(ConductingEquipment):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -34225,7 +34225,7 @@ class PowerTransformer(ConductingEquipment):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -34249,7 +34249,7 @@ class PowerTransformer(ConductingEquipment):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -34276,7 +34276,7 @@ class PowerTransformer(ConductingEquipment):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'PowerTransformerEnd.PowerTransformer',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         'docstring':
             '''
@@ -34295,7 +34295,7 @@ class PowerTransformer(ConductingEquipment):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'TransformerTank.PowerTransformer',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         'docstring':
             '''
@@ -34309,7 +34309,7 @@ class PowerTransformer(ConductingEquipment):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Wires'
@@ -34334,7 +34334,7 @@ class SeriesCompensator(ConductingEquipment):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -34356,7 +34356,7 @@ class SeriesCompensator(ConductingEquipment):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -34374,7 +34374,7 @@ class SeriesCompensator(ConductingEquipment):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -34392,7 +34392,7 @@ class SeriesCompensator(ConductingEquipment):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -34416,7 +34416,7 @@ class SeriesCompensator(ConductingEquipment):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -34438,7 +34438,7 @@ class SeriesCompensator(ConductingEquipment):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -34456,7 +34456,7 @@ class SeriesCompensator(ConductingEquipment):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -34470,7 +34470,7 @@ class SeriesCompensator(ConductingEquipment):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Wires'
@@ -34498,7 +34498,7 @@ class Switch(ConductingEquipment):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -34529,7 +34529,7 @@ class Switch(ConductingEquipment):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -34551,7 +34551,7 @@ class Switch(ConductingEquipment):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -34571,7 +34571,7 @@ class Switch(ConductingEquipment):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -34591,7 +34591,7 @@ class Switch(ConductingEquipment):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -34614,7 +34614,7 @@ class Switch(ConductingEquipment):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'CompositeSwitch.Switches',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -34633,7 +34633,7 @@ class Switch(ConductingEquipment):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'SwitchAction.OperatedSwitch',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -34652,7 +34652,7 @@ class Switch(ConductingEquipment):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'SwitchPhase.Switch',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         'docstring':
             '''
@@ -34671,7 +34671,7 @@ class Switch(ConductingEquipment):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'SwitchSchedule.Switch',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         'docstring':
             '''
@@ -34685,7 +34685,7 @@ class Switch(ConductingEquipment):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Wires'
@@ -34719,7 +34719,7 @@ class Cut(Switch):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -34742,7 +34742,7 @@ class Cut(Switch):
         'minOccurs': '1',
         'maxOccurs': '1',
         'inverse': 'ACLineSegment.Cut',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -34761,7 +34761,7 @@ class Cut(Switch):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'CutAction.Cut',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -34775,7 +34775,7 @@ class Cut(Switch):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Wires'
@@ -34801,7 +34801,7 @@ class Disconnector(Switch):
 
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Wires'
@@ -34824,7 +34824,7 @@ class EarthingSwitch(Switch):
 
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Wires'
@@ -34850,7 +34850,7 @@ class Fuse(Switch):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'FuseCharacteristicCurve.FuseMinimumMelt',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -34870,7 +34870,7 @@ class Fuse(Switch):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'FuseCharacteristicCurve.FuseTotalClearing',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -34891,7 +34891,7 @@ class Fuse(Switch):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'FuseCharacteristicCurve.FuseMinimumMelt',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         'docstring':
             '''
@@ -34911,7 +34911,7 @@ class Fuse(Switch):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'FuseCharacteristicCurve.FuseTotalClearing',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         'docstring':
             '''
@@ -34927,7 +34927,7 @@ class Fuse(Switch):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Wires'
@@ -34947,7 +34947,7 @@ class GroundDisconnector(Switch):
 
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Wires'
@@ -34973,7 +34973,7 @@ class Jumper(Switch):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'JumperAction.Jumper',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -34987,7 +34987,7 @@ class Jumper(Switch):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Wires'
@@ -35011,7 +35011,7 @@ class ProtectedSwitch(Switch):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -35054,7 +35054,7 @@ class ProtectedSwitch(Switch):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'RecloseSequence.ProtectedSwitch',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         'docstring':
             '''
@@ -35068,7 +35068,7 @@ class ProtectedSwitch(Switch):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Wires'
@@ -35094,7 +35094,7 @@ class Breaker(ProtectedSwitch):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -35108,7 +35108,7 @@ class Breaker(ProtectedSwitch):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Wires'
@@ -35128,7 +35128,7 @@ class DisconnectingCircuitBreaker(Breaker):
 
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Wires'
@@ -35148,7 +35148,7 @@ class LoadBreakSwitch(ProtectedSwitch):
 
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Wires'
@@ -35168,7 +35168,7 @@ class Recloser(ProtectedSwitch):
 
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Wires'
@@ -35190,7 +35190,7 @@ class Sectionaliser(Switch):
 
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Wires'
@@ -35216,7 +35216,7 @@ class CurrentTransformer(Equipment):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -35234,7 +35234,7 @@ class CurrentTransformer(Equipment):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -35254,7 +35254,7 @@ class CurrentTransformer(Equipment):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -35268,7 +35268,7 @@ class CurrentTransformer(Equipment):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'AuxEqEXT'
@@ -35298,7 +35298,7 @@ class GeneratingUnit(Equipment):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -35316,7 +35316,7 @@ class GeneratingUnit(Equipment):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -35340,7 +35340,7 @@ class GeneratingUnit(Equipment):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -35362,7 +35362,7 @@ class GeneratingUnit(Equipment):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -35380,7 +35380,7 @@ class GeneratingUnit(Equipment):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -35398,7 +35398,7 @@ class GeneratingUnit(Equipment):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -35418,7 +35418,7 @@ class GeneratingUnit(Equipment):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -35438,7 +35438,7 @@ class GeneratingUnit(Equipment):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -35462,7 +35462,7 @@ class GeneratingUnit(Equipment):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -35484,7 +35484,7 @@ class GeneratingUnit(Equipment):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -35504,7 +35504,7 @@ class GeneratingUnit(Equipment):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -35524,7 +35524,7 @@ class GeneratingUnit(Equipment):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -35544,7 +35544,7 @@ class GeneratingUnit(Equipment):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -35564,7 +35564,7 @@ class GeneratingUnit(Equipment):
         'type': 'enumeration Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -35582,7 +35582,7 @@ class GeneratingUnit(Equipment):
         'type': 'enumeration Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -35602,7 +35602,7 @@ class GeneratingUnit(Equipment):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -35620,7 +35620,7 @@ class GeneratingUnit(Equipment):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -35646,7 +35646,7 @@ class GeneratingUnit(Equipment):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -35664,7 +35664,7 @@ class GeneratingUnit(Equipment):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -35684,7 +35684,7 @@ class GeneratingUnit(Equipment):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -35702,7 +35702,7 @@ class GeneratingUnit(Equipment):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -35722,7 +35722,7 @@ class GeneratingUnit(Equipment):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -35742,7 +35742,7 @@ class GeneratingUnit(Equipment):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -35763,7 +35763,7 @@ class GeneratingUnit(Equipment):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -35783,7 +35783,7 @@ class GeneratingUnit(Equipment):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -35803,7 +35803,7 @@ class GeneratingUnit(Equipment):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -35821,7 +35821,7 @@ class GeneratingUnit(Equipment):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -35841,7 +35841,7 @@ class GeneratingUnit(Equipment):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -35859,7 +35859,7 @@ class GeneratingUnit(Equipment):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -35883,7 +35883,7 @@ class GeneratingUnit(Equipment):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -35903,7 +35903,7 @@ class GeneratingUnit(Equipment):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -35923,7 +35923,7 @@ class GeneratingUnit(Equipment):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -35945,7 +35945,7 @@ class GeneratingUnit(Equipment):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -35969,7 +35969,7 @@ class GeneratingUnit(Equipment):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -35987,7 +35987,7 @@ class GeneratingUnit(Equipment):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -36007,7 +36007,7 @@ class GeneratingUnit(Equipment):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -36025,7 +36025,7 @@ class GeneratingUnit(Equipment):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -36063,7 +36063,7 @@ class GeneratingUnit(Equipment):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'GenUnitOpSchedule.GeneratingUnit',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -36103,7 +36103,7 @@ class GeneratingUnit(Equipment):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'GenUnitOpCostCurve.GeneratingUnit',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         'docstring':
             '''
@@ -36124,7 +36124,7 @@ class GeneratingUnit(Equipment):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'GenUnitOpSchedule.GeneratingUnit',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         'docstring':
             '''
@@ -36145,7 +36145,7 @@ class GeneratingUnit(Equipment):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'GrossToNetActivePowerCurve.GeneratingUnit',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         'docstring':
             '''
@@ -36167,7 +36167,7 @@ class GeneratingUnit(Equipment):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'RotatingMachine.GeneratingUnit',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         'docstring':
             '''
@@ -36183,7 +36183,7 @@ class GeneratingUnit(Equipment):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Production'
@@ -36206,7 +36206,7 @@ class GeothermalGeneratingUnit(GeneratingUnit):
         'type': 'enumeration Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -36220,7 +36220,7 @@ class GeothermalGeneratingUnit(GeneratingUnit):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Production'
@@ -36245,7 +36245,7 @@ class HydroGeneratingUnit(GeneratingUnit):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -36263,7 +36263,7 @@ class HydroGeneratingUnit(GeneratingUnit):
         'type': 'enumeration Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -36281,7 +36281,7 @@ class HydroGeneratingUnit(GeneratingUnit):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -36299,7 +36299,7 @@ class HydroGeneratingUnit(GeneratingUnit):
         'type': 'enumeration Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -36318,7 +36318,7 @@ class HydroGeneratingUnit(GeneratingUnit):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'HydroPowerPlant.HydroGeneratingUnits',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -36337,7 +36337,7 @@ class HydroGeneratingUnit(GeneratingUnit):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'PenstockLossCurve.HydroGeneratingUnit',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -36356,7 +36356,7 @@ class HydroGeneratingUnit(GeneratingUnit):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'HydroGeneratingEfficiencyCurve.HydroGeneratingUnit',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         'docstring':
             '''
@@ -36375,7 +36375,7 @@ class HydroGeneratingUnit(GeneratingUnit):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'PenstockLossCurve.HydroGeneratingUnit',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         'docstring':
             '''
@@ -36394,7 +36394,7 @@ class HydroGeneratingUnit(GeneratingUnit):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'TailbayLossCurve.HydroGeneratingUnit',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         'docstring':
             '''
@@ -36408,7 +36408,7 @@ class HydroGeneratingUnit(GeneratingUnit):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Production'
@@ -36445,7 +36445,7 @@ class NuclearGeneratingUnit(GeneratingUnit):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Production'
@@ -36484,7 +36484,7 @@ class SolarGeneratingUnit(GeneratingUnit):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Production'
@@ -36509,7 +36509,7 @@ class ThermalGeneratingUnit(GeneratingUnit):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -36528,7 +36528,7 @@ class ThermalGeneratingUnit(GeneratingUnit):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'CAESPlant.ThermalGeneratingUnit',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -36549,7 +36549,7 @@ class ThermalGeneratingUnit(GeneratingUnit):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'CogenerationPlant.ThermalGeneratingUnits',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -36568,7 +36568,7 @@ class ThermalGeneratingUnit(GeneratingUnit):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'CombinedCyclePlant.ThermalGeneratingUnits',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -36587,7 +36587,7 @@ class ThermalGeneratingUnit(GeneratingUnit):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'HeatInputCurve.ThermalGeneratingUnit',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -36606,7 +36606,7 @@ class ThermalGeneratingUnit(GeneratingUnit):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'HeatRateCurve.ThermalGeneratingUnit',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -36625,7 +36625,7 @@ class ThermalGeneratingUnit(GeneratingUnit):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'IncrementalHeatRateCurve.ThermalGeneratingUnit',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -36644,7 +36644,7 @@ class ThermalGeneratingUnit(GeneratingUnit):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'ShutdownCurve.ThermalGeneratingUnit',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -36663,7 +36663,7 @@ class ThermalGeneratingUnit(GeneratingUnit):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'StartupModel.ThermalGeneratingUnit',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -36682,7 +36682,7 @@ class ThermalGeneratingUnit(GeneratingUnit):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'CAESPlant.ThermalGeneratingUnit',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         'docstring':
             '''
@@ -36703,7 +36703,7 @@ class ThermalGeneratingUnit(GeneratingUnit):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'EmissionAccount.ThermalGeneratingUnit',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         'docstring':
             '''
@@ -36722,7 +36722,7 @@ class ThermalGeneratingUnit(GeneratingUnit):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'EmissionCurve.ThermalGeneratingUnit',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         'docstring':
             '''
@@ -36741,7 +36741,7 @@ class ThermalGeneratingUnit(GeneratingUnit):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'FossilFuel.ThermalGeneratingUnit',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         'docstring':
             '''
@@ -36760,7 +36760,7 @@ class ThermalGeneratingUnit(GeneratingUnit):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'FuelAllocationSchedule.ThermalGeneratingUnit',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         'docstring':
             '''
@@ -36779,7 +36779,7 @@ class ThermalGeneratingUnit(GeneratingUnit):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'HeatInputCurve.ThermalGeneratingUnit',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         'docstring':
             '''
@@ -36798,7 +36798,7 @@ class ThermalGeneratingUnit(GeneratingUnit):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'HeatRateCurve.ThermalGeneratingUnit',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         'docstring':
             '''
@@ -36817,7 +36817,7 @@ class ThermalGeneratingUnit(GeneratingUnit):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'IncrementalHeatRateCurve.ThermalGeneratingUnit',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         'docstring':
             '''
@@ -36836,7 +36836,7 @@ class ThermalGeneratingUnit(GeneratingUnit):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'ShutdownCurve.ThermalGeneratingUnit',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         'docstring':
             '''
@@ -36855,7 +36855,7 @@ class ThermalGeneratingUnit(GeneratingUnit):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'StartupModel.ThermalGeneratingUnit',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         'docstring':
             '''
@@ -36869,7 +36869,7 @@ class ThermalGeneratingUnit(GeneratingUnit):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Production'
@@ -36893,7 +36893,7 @@ class WindGeneratingUnit(GeneratingUnit):
         'type': 'enumeration Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -36926,7 +36926,7 @@ class WindGeneratingUnit(GeneratingUnit):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Production'
@@ -36952,7 +36952,7 @@ class HydroPump(Equipment):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -36971,7 +36971,7 @@ class HydroPump(Equipment):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -36990,7 +36990,7 @@ class HydroPump(Equipment):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -37008,7 +37008,7 @@ class HydroPump(Equipment):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -37046,7 +37046,7 @@ class HydroPump(Equipment):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'HydroPowerPlant.HydroPumps',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -37067,7 +37067,7 @@ class HydroPump(Equipment):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'HydroPumpOpSchedule.HydroPump',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -37088,7 +37088,7 @@ class HydroPump(Equipment):
         'minOccurs': '1',
         'maxOccurs': '1',
         'inverse': 'RotatingMachine.HydroPump',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -37130,7 +37130,7 @@ class HydroPump(Equipment):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'HydroPumpOpSchedule.HydroPump',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         'docstring':
             '''
@@ -37151,7 +37151,7 @@ class HydroPump(Equipment):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'RotatingMachine.HydroPump',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         'docstring':
             '''
@@ -37169,7 +37169,7 @@ class HydroPump(Equipment):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Production'
@@ -37196,7 +37196,7 @@ class PotentialTransformer(Equipment):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -37214,7 +37214,7 @@ class PotentialTransformer(Equipment):
         'type': 'enumeration Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -37228,7 +37228,7 @@ class PotentialTransformer(Equipment):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'AuxiliaryEquipment'
@@ -37253,7 +37253,7 @@ class PowerElectronicsUnit(Equipment):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -37273,7 +37273,7 @@ class PowerElectronicsUnit(Equipment):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -37313,7 +37313,7 @@ class PowerElectronicsUnit(Equipment):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'PowerElectronicsConnection.PowerElectronicsUnit',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -37332,7 +37332,7 @@ class PowerElectronicsUnit(Equipment):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'PowerElectronicsUnitController.PowerElectronicsUnit',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -37384,7 +37384,7 @@ class PowerElectronicsUnit(Equipment):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Production'
@@ -37407,7 +37407,7 @@ class BatteryUnit(PowerElectronicsUnit):
         'type': 'enumeration Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -37523,7 +37523,7 @@ class BatteryUnit(PowerElectronicsUnit):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -37543,7 +37543,7 @@ class BatteryUnit(PowerElectronicsUnit):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -37559,7 +37559,7 @@ class BatteryUnit(PowerElectronicsUnit):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Production'
@@ -37667,7 +37667,7 @@ class ChargingUnit(PowerElectronicsUnit):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Production'
@@ -37691,7 +37691,7 @@ class FlexibleEnergyUnit(PowerElectronicsUnit):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -37715,7 +37715,7 @@ class FlexibleEnergyUnit(PowerElectronicsUnit):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -37743,7 +37743,7 @@ class FlexibleEnergyUnit(PowerElectronicsUnit):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -37767,7 +37767,7 @@ class FlexibleEnergyUnit(PowerElectronicsUnit):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -37785,7 +37785,7 @@ class FlexibleEnergyUnit(PowerElectronicsUnit):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Production'
@@ -37804,7 +37804,7 @@ class PhotoVoltaicUnit(PowerElectronicsUnit):
 
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Production'
@@ -37828,7 +37828,7 @@ class PowerElectricalChemicalUnit(PowerElectronicsUnit):
         'type': 'enumeration Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -37842,7 +37842,7 @@ class PowerElectricalChemicalUnit(PowerElectronicsUnit):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Production'
@@ -37866,7 +37866,7 @@ class PowerElectronicsMarineUnit(PowerElectronicsUnit):
         'type': 'enumeration Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -37880,7 +37880,7 @@ class PowerElectronicsMarineUnit(PowerElectronicsUnit):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Production'
@@ -37918,7 +37918,7 @@ class PowerElectronicsWindUnit(PowerElectronicsUnit):
 
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Production'
@@ -37946,7 +37946,7 @@ class ProtectionEquipment(Equipment):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -37964,7 +37964,7 @@ class ProtectionEquipment(Equipment):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -37982,7 +37982,7 @@ class ProtectionEquipment(Equipment):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -38000,7 +38000,7 @@ class ProtectionEquipment(Equipment):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -38018,7 +38018,7 @@ class ProtectionEquipment(Equipment):
         'type': 'enumeration Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -38036,7 +38036,7 @@ class ProtectionEquipment(Equipment):
         'type': 'enumeration Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -38089,7 +38089,7 @@ class ProtectionEquipment(Equipment):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'ProtectionFunction.ProtectionEquipment',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         'docstring':
             '''
@@ -38108,7 +38108,7 @@ class ProtectionEquipment(Equipment):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'ProtectionFunctionBlock.ProtectionEquipment',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         'docstring':
             '''
@@ -38127,7 +38127,7 @@ class ProtectionEquipment(Equipment):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'ProtectionRelatedFunctionBlock.ProtectionEquipment',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         'docstring':
             '''
@@ -38141,7 +38141,7 @@ class ProtectionEquipment(Equipment):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Protection'
@@ -38165,7 +38165,7 @@ class CurrentRelay(ProtectionEquipment):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -38183,7 +38183,7 @@ class CurrentRelay(ProtectionEquipment):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -38201,7 +38201,7 @@ class CurrentRelay(ProtectionEquipment):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -38219,7 +38219,7 @@ class CurrentRelay(ProtectionEquipment):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -38237,7 +38237,7 @@ class CurrentRelay(ProtectionEquipment):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -38255,7 +38255,7 @@ class CurrentRelay(ProtectionEquipment):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -38273,7 +38273,7 @@ class CurrentRelay(ProtectionEquipment):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -38287,7 +38287,7 @@ class CurrentRelay(ProtectionEquipment):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Protection'
@@ -38313,7 +38313,7 @@ class SynchrocheckRelay(ProtectionEquipment):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -38333,7 +38333,7 @@ class SynchrocheckRelay(ProtectionEquipment):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -38351,7 +38351,7 @@ class SynchrocheckRelay(ProtectionEquipment):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -38365,7 +38365,7 @@ class SynchrocheckRelay(ProtectionEquipment):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Protection'
@@ -38392,7 +38392,7 @@ class TransformerTank(Equipment):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'PowerTransformer.TransformerTanks',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -38428,7 +38428,7 @@ class TransformerTank(Equipment):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'TransformerTankEnd.TransformerTank',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         'docstring':
             '''
@@ -38442,7 +38442,7 @@ class TransformerTank(Equipment):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Wires'
@@ -38466,7 +38466,7 @@ class FuelStorage(PowerSystemResource):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -38485,7 +38485,7 @@ class FuelStorage(PowerSystemResource):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'FossilFuel.FuelStorage',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         'docstring':
             '''
@@ -38499,7 +38499,7 @@ class FuelStorage(PowerSystemResource):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Production'
@@ -38525,7 +38525,7 @@ class HydroPowerPlant(PowerSystemResource):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -38543,7 +38543,7 @@ class HydroPowerPlant(PowerSystemResource):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -38563,7 +38563,7 @@ class HydroPowerPlant(PowerSystemResource):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -38581,7 +38581,7 @@ class HydroPowerPlant(PowerSystemResource):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -38601,7 +38601,7 @@ class HydroPowerPlant(PowerSystemResource):
         'type': 'enumeration Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -38619,7 +38619,7 @@ class HydroPowerPlant(PowerSystemResource):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -38637,7 +38637,7 @@ class HydroPowerPlant(PowerSystemResource):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -38657,7 +38657,7 @@ class HydroPowerPlant(PowerSystemResource):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -38677,7 +38677,7 @@ class HydroPowerPlant(PowerSystemResource):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -38696,7 +38696,7 @@ class HydroPowerPlant(PowerSystemResource):
         'minOccurs': '1',
         'maxOccurs': '1',
         'inverse': 'Reservoir.UpstreamFromHydroPowerPlants',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -38717,7 +38717,7 @@ class HydroPowerPlant(PowerSystemResource):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'Reservoir.HydroPowerPlants',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -38738,7 +38738,7 @@ class HydroPowerPlant(PowerSystemResource):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'HydroGeneratingUnit.HydroPowerPlant',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         'docstring':
             '''
@@ -38757,7 +38757,7 @@ class HydroPowerPlant(PowerSystemResource):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'HydroPump.HydroPowerPlant',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         'docstring':
             '''
@@ -38773,7 +38773,7 @@ class HydroPowerPlant(PowerSystemResource):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Production'
@@ -39282,7 +39282,7 @@ class PowerCutZone(PowerSystemResource):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -39300,7 +39300,7 @@ class PowerCutZone(PowerSystemResource):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -39320,7 +39320,7 @@ class PowerCutZone(PowerSystemResource):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'EnergyConsumer.PowerCutZone',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         'docstring':
             '''
@@ -39334,7 +39334,7 @@ class PowerCutZone(PowerSystemResource):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'LoadModel'
@@ -39357,7 +39357,7 @@ class PowerElectronicsConnectionPhase(PowerSystemResource):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -39377,7 +39377,7 @@ class PowerElectronicsConnectionPhase(PowerSystemResource):
         'type': 'enumeration Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -39403,7 +39403,7 @@ class PowerElectronicsConnectionPhase(PowerSystemResource):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -39424,7 +39424,7 @@ class PowerElectronicsConnectionPhase(PowerSystemResource):
         'minOccurs': '1',
         'maxOccurs': '1',
         'inverse': 'PowerElectronicsConnection.PowerElectronicsConnectionPhase',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -39438,7 +39438,7 @@ class PowerElectronicsConnectionPhase(PowerSystemResource):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Wires'
@@ -39532,7 +39532,7 @@ class RegulatingControl(PowerSystemResource):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -39556,7 +39556,7 @@ class RegulatingControl(PowerSystemResource):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -39574,7 +39574,7 @@ class RegulatingControl(PowerSystemResource):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -39592,7 +39592,7 @@ class RegulatingControl(PowerSystemResource):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -39610,7 +39610,7 @@ class RegulatingControl(PowerSystemResource):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -39645,7 +39645,7 @@ class RegulatingControl(PowerSystemResource):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -39681,7 +39681,7 @@ class RegulatingControl(PowerSystemResource):
         'type': 'enumeration Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -39703,7 +39703,7 @@ class RegulatingControl(PowerSystemResource):
         'type': 'enumeration Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -39721,7 +39721,7 @@ class RegulatingControl(PowerSystemResource):
         'type': 'enumeration Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -39744,7 +39744,7 @@ class RegulatingControl(PowerSystemResource):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'Terminal.RegulatingControl',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -39769,7 +39769,7 @@ class RegulatingControl(PowerSystemResource):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'RegulatingCondEq.RegulatingControl',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         'docstring':
             '''
@@ -39788,7 +39788,7 @@ class RegulatingControl(PowerSystemResource):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'RegulationSchedule.RegulatingControl',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         'docstring':
             '''
@@ -39802,7 +39802,7 @@ class RegulatingControl(PowerSystemResource):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Wires'
@@ -39827,7 +39827,7 @@ class ShuntCompensatorControl(RegulatingControl):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'ShuntCompensatorInfo.ShuntCompensatorControl',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         'docstring':
             '''
@@ -39839,7 +39839,7 @@ class ShuntCompensatorControl(RegulatingControl):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'InfWiresExt'
@@ -39865,7 +39865,7 @@ class TapChangerControl(RegulatingControl):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -39883,7 +39883,7 @@ class TapChangerControl(RegulatingControl):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -39899,7 +39899,7 @@ class TapChangerControl(RegulatingControl):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -39915,7 +39915,7 @@ class TapChangerControl(RegulatingControl):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -39934,7 +39934,7 @@ class TapChangerControl(RegulatingControl):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -39953,7 +39953,7 @@ class TapChangerControl(RegulatingControl):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -39979,7 +39979,7 @@ class TapChangerControl(RegulatingControl):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -40005,7 +40005,7 @@ class TapChangerControl(RegulatingControl):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -40023,7 +40023,7 @@ class TapChangerControl(RegulatingControl):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -40041,7 +40041,7 @@ class TapChangerControl(RegulatingControl):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -40057,7 +40057,7 @@ class TapChangerControl(RegulatingControl):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -40073,7 +40073,7 @@ class TapChangerControl(RegulatingControl):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -40089,7 +40089,7 @@ class TapChangerControl(RegulatingControl):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -40106,7 +40106,7 @@ class TapChangerControl(RegulatingControl):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'TapChanger.TapChangerControl',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         'docstring':
             '''
@@ -40120,7 +40120,7 @@ class TapChangerControl(RegulatingControl):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Wires'
@@ -40145,7 +40145,7 @@ class Reservoir(PowerSystemResource):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -40163,7 +40163,7 @@ class Reservoir(PowerSystemResource):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -40181,7 +40181,7 @@ class Reservoir(PowerSystemResource):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -40199,7 +40199,7 @@ class Reservoir(PowerSystemResource):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -40217,7 +40217,7 @@ class Reservoir(PowerSystemResource):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -40255,7 +40255,7 @@ class Reservoir(PowerSystemResource):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -40275,7 +40275,7 @@ class Reservoir(PowerSystemResource):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -40293,7 +40293,7 @@ class Reservoir(PowerSystemResource):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -40312,7 +40312,7 @@ class Reservoir(PowerSystemResource):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -40330,7 +40330,7 @@ class Reservoir(PowerSystemResource):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -40348,7 +40348,7 @@ class Reservoir(PowerSystemResource):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -40367,7 +40367,7 @@ class Reservoir(PowerSystemResource):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'Reservoir.SpillsIntoReservoirs',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -40386,7 +40386,7 @@ class Reservoir(PowerSystemResource):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'TargetLevelSchedule.Reservoir',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -40405,7 +40405,7 @@ class Reservoir(PowerSystemResource):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'HydroPowerPlant.GenSourcePumpDischargeReservoir',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         'docstring':
             '''
@@ -40426,7 +40426,7 @@ class Reservoir(PowerSystemResource):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'HydroPowerPlant.Reservoir',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         'docstring':
             '''
@@ -40447,7 +40447,7 @@ class Reservoir(PowerSystemResource):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'InflowForecast.Reservoir',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         'docstring':
             '''
@@ -40466,7 +40466,7 @@ class Reservoir(PowerSystemResource):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'LevelVsVolumeCurve.Reservoir',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         'docstring':
             '''
@@ -40485,7 +40485,7 @@ class Reservoir(PowerSystemResource):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'Reservoir.SpillsFromReservoir',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         'docstring':
             '''
@@ -40504,7 +40504,7 @@ class Reservoir(PowerSystemResource):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'TargetLevelSchedule.Reservoir',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         'docstring':
             '''
@@ -40518,7 +40518,7 @@ class Reservoir(PowerSystemResource):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Production'
@@ -40869,7 +40869,7 @@ class ShuntCompensatorPhase(PowerSystemResource):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -40887,7 +40887,7 @@ class ShuntCompensatorPhase(PowerSystemResource):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -40907,7 +40907,7 @@ class ShuntCompensatorPhase(PowerSystemResource):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -40948,7 +40948,7 @@ class ShuntCompensatorPhase(PowerSystemResource):
         'type': 'enumeration Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -40975,7 +40975,7 @@ class ShuntCompensatorPhase(PowerSystemResource):
         'minOccurs': '1',
         'maxOccurs': '1',
         'inverse': 'ShuntCompensator.ShuntCompensatorPhase',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -40989,7 +40989,7 @@ class ShuntCompensatorPhase(PowerSystemResource):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Wires'
@@ -41013,7 +41013,7 @@ class LinearShuntCompensatorPhase(ShuntCompensatorPhase):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -41034,7 +41034,7 @@ class LinearShuntCompensatorPhase(ShuntCompensatorPhase):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -41051,7 +41051,7 @@ class LinearShuntCompensatorPhase(ShuntCompensatorPhase):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Wires'
@@ -41080,7 +41080,7 @@ class NonlinearShuntCompensatorPhase(ShuntCompensatorPhase):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'NonlinearShuntCompensatorPhasePoint.NonlinearShuntCompensatorPhase',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         'docstring':
             '''
@@ -41094,7 +41094,7 @@ class NonlinearShuntCompensatorPhase(ShuntCompensatorPhase):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Wires'
@@ -41157,7 +41157,7 @@ class SwitchPhase(PowerSystemResource):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -41177,7 +41177,7 @@ class SwitchPhase(PowerSystemResource):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -41215,7 +41215,7 @@ class SwitchPhase(PowerSystemResource):
         'type': 'enumeration Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -41235,7 +41235,7 @@ class SwitchPhase(PowerSystemResource):
         'type': 'enumeration Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -41256,7 +41256,7 @@ class SwitchPhase(PowerSystemResource):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -41279,7 +41279,7 @@ class SwitchPhase(PowerSystemResource):
         'minOccurs': '1',
         'maxOccurs': '1',
         'inverse': 'Switch.SwitchPhase',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -41293,7 +41293,7 @@ class SwitchPhase(PowerSystemResource):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Wires'
@@ -41316,7 +41316,7 @@ class TapChanger(PowerSystemResource):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -41336,7 +41336,7 @@ class TapChanger(PowerSystemResource):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -41352,7 +41352,7 @@ class TapChanger(PowerSystemResource):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -41376,7 +41376,7 @@ class TapChanger(PowerSystemResource):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -41396,7 +41396,7 @@ class TapChanger(PowerSystemResource):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -41414,7 +41414,7 @@ class TapChanger(PowerSystemResource):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -41432,7 +41432,7 @@ class TapChanger(PowerSystemResource):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -41461,7 +41461,7 @@ class TapChanger(PowerSystemResource):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -41485,7 +41485,7 @@ class TapChanger(PowerSystemResource):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -41511,7 +41511,7 @@ class TapChanger(PowerSystemResource):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -41543,7 +41543,7 @@ class TapChanger(PowerSystemResource):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -41562,7 +41562,7 @@ class TapChanger(PowerSystemResource):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -41596,7 +41596,7 @@ class TapChanger(PowerSystemResource):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -41617,7 +41617,7 @@ class TapChanger(PowerSystemResource):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'SvTapStep.TapChanger',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -41636,7 +41636,7 @@ class TapChanger(PowerSystemResource):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'TapChangerController.TapChanger',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -41655,7 +41655,7 @@ class TapChanger(PowerSystemResource):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'TapChangerControl.TapChanger',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -41674,7 +41674,7 @@ class TapChanger(PowerSystemResource):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'StepOperationalLimitTable.TapChanger',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         'docstring':
             '''
@@ -41693,7 +41693,7 @@ class TapChanger(PowerSystemResource):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'TapSchedule.TapChanger',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         'docstring':
             '''
@@ -41707,7 +41707,7 @@ class TapChanger(PowerSystemResource):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'WiresEXT'
@@ -41735,7 +41735,7 @@ class ImpedanceTapChangerTabular(TapChanger):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'ImpedanceTapChangerTable.ImpedanceTapChangerTabular',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -41749,7 +41749,7 @@ class ImpedanceTapChangerTabular(TapChanger):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Wires'
@@ -41778,7 +41778,7 @@ class PhaseTapChanger(TapChanger):
         'minOccurs': '1',
         'maxOccurs': '1',
         'inverse': 'TransformerEnd.PhaseTapChanger',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -41797,7 +41797,7 @@ class PhaseTapChanger(TapChanger):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'TransformerEnd.PhaseTapChanger',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         'docstring':
             '''
@@ -41811,7 +41811,7 @@ class PhaseTapChanger(TapChanger):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Wires'
@@ -41838,7 +41838,7 @@ class PhaseTapChangerLinear(PhaseTapChanger):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -41866,7 +41866,7 @@ class PhaseTapChangerLinear(PhaseTapChanger):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -41886,7 +41886,7 @@ class PhaseTapChangerLinear(PhaseTapChanger):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Wires'
@@ -41912,7 +41912,7 @@ class PhaseTapChangerNonLinear(PhaseTapChanger):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -41942,7 +41942,7 @@ class PhaseTapChangerNonLinear(PhaseTapChanger):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -41962,7 +41962,7 @@ class PhaseTapChangerNonLinear(PhaseTapChanger):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Wires'
@@ -42009,7 +42009,7 @@ class ConnectionAngleTapChanger(PhaseTapChangerNonLinear):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -42050,7 +42050,7 @@ class ConnectionAngleTapChanger(PhaseTapChangerNonLinear):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -42084,7 +42084,7 @@ class ConnectionAngleTapChanger(PhaseTapChangerNonLinear):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -42116,7 +42116,7 @@ class ConnectionAngleTapChanger(PhaseTapChangerNonLinear):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -42147,7 +42147,7 @@ class ConnectionAngleTapChanger(PhaseTapChangerNonLinear):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -42179,7 +42179,7 @@ class ConnectionAngleTapChanger(PhaseTapChangerNonLinear):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'ConnectionAngleTapChangerTable.ConnectionAngleTapChanger',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         'docstring':
             '''
@@ -42195,7 +42195,7 @@ class ConnectionAngleTapChanger(PhaseTapChangerNonLinear):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Wires'
@@ -42223,7 +42223,7 @@ class PhaseTapChangerAsymmetrical(PhaseTapChangerNonLinear):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -42247,7 +42247,7 @@ class PhaseTapChangerAsymmetrical(PhaseTapChangerNonLinear):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Wires'
@@ -42271,7 +42271,7 @@ class PhaseTapChangerSymmetrical(PhaseTapChangerNonLinear):
 
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Wires'
@@ -42296,7 +42296,7 @@ class PhaseTapChangerTabular(PhaseTapChanger):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'PhaseTapChangerTable.PhaseTapChangerTabular',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -42310,7 +42310,7 @@ class PhaseTapChangerTabular(PhaseTapChanger):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Wires'
@@ -42339,7 +42339,7 @@ class RatioTapChanger(TapChanger):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -42364,7 +42364,7 @@ class RatioTapChanger(TapChanger):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'RatioTapChangerTable.RatioTapChanger',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -42383,7 +42383,7 @@ class RatioTapChanger(TapChanger):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'TransformerEnd.AdditionalRatioTapChanger',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -42402,7 +42402,7 @@ class RatioTapChanger(TapChanger):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'TransformerEnd.AdditionalRatioTapChanger',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         'docstring':
             '''
@@ -42421,7 +42421,7 @@ class RatioTapChanger(TapChanger):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'TransformerEnd.RatioTapChanger',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         'docstring':
             '''
@@ -42435,7 +42435,7 @@ class RatioTapChanger(TapChanger):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Wires'
@@ -42462,7 +42462,7 @@ class VoltageControlZone(PowerSystemResource):
         'minOccurs': '1',
         'maxOccurs': '1',
         'inverse': 'BusbarSection.VoltageControlZone',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -42481,7 +42481,7 @@ class VoltageControlZone(PowerSystemResource):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'RegulationSchedule.VoltageControlZones',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -42500,7 +42500,7 @@ class VoltageControlZone(PowerSystemResource):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'BusbarSection.VoltageControlZone',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         'docstring':
             '''
@@ -42514,7 +42514,7 @@ class VoltageControlZone(PowerSystemResource):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Wires'
@@ -42576,7 +42576,7 @@ class WireSegmentPhase(PowerSystemResource):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -42596,7 +42596,7 @@ class WireSegmentPhase(PowerSystemResource):
         'type': 'enumeration Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -42615,7 +42615,7 @@ class WireSegmentPhase(PowerSystemResource):
         'minOccurs': '1',
         'maxOccurs': '1',
         'inverse': 'WireSegment.WireSegmentPhases',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -42629,7 +42629,7 @@ class WireSegmentPhase(PowerSystemResource):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Wires'
@@ -42653,7 +42653,7 @@ class ProductAssetModel(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'AssetInfo.ProductAssetModel',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         'docstring':
             '''
@@ -42667,7 +42667,7 @@ class ProductAssetModel(IdentifiedObject):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Assets'
@@ -42690,7 +42690,7 @@ class ProprietarySettingValue(IdentifiedObject):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -42708,7 +42708,7 @@ class ProprietarySettingValue(IdentifiedObject):
         'type': 'enumeration Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -42739,7 +42739,7 @@ class ProprietarySettingValue(IdentifiedObject):
         'type': 'enumeration Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -42757,7 +42757,7 @@ class ProprietarySettingValue(IdentifiedObject):
         'type': 'enumeration Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -42774,7 +42774,7 @@ class ProprietarySettingValue(IdentifiedObject):
         'minOccurs': '1',
         'maxOccurs': '1',
         'inverse': 'ProtectionFunctionBlock.ProprietarySettingValue',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -42793,7 +42793,7 @@ class ProprietarySettingValue(IdentifiedObject):
         'minOccurs': '1',
         'maxOccurs': '1',
         'inverse': 'ProtectionRelatedFunctionBlock.ProprietarySettingValue',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -42809,7 +42809,7 @@ class ProprietarySettingValue(IdentifiedObject):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Protection'
@@ -42828,7 +42828,7 @@ class ProprietaryThresholdvalue(ProprietarySettingValue):
 
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Protection'
@@ -42847,7 +42847,7 @@ class ProprietaryTimerValue(ProprietarySettingValue):
 
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Protection'
@@ -42871,7 +42871,7 @@ class ProtectionSettingsGroup(IdentifiedObject):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -42889,7 +42889,7 @@ class ProtectionSettingsGroup(IdentifiedObject):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -42907,7 +42907,7 @@ class ProtectionSettingsGroup(IdentifiedObject):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -42927,7 +42927,7 @@ class ProtectionSettingsGroup(IdentifiedObject):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -42948,7 +42948,7 @@ class ProtectionSettingsGroup(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'ProtectionFunction.ProtectionSettingsGroup',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -42967,7 +42967,7 @@ class ProtectionSettingsGroup(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'ProtectionFunctionBlock.ProtectionSettingsGroup',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         'docstring':
             '''
@@ -42989,7 +42989,7 @@ class ProtectionSettingsGroup(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'ProtectionRelatedFunctionBlock.ProtectionSettingsGroup',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         'docstring':
             '''
@@ -43007,7 +43007,7 @@ class ProtectionSettingsGroup(IdentifiedObject):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Protection'
@@ -43032,7 +43032,7 @@ class RatioTapChangerTable(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'RatioTapChanger.RatioTapChangerTable',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         'docstring':
             '''
@@ -43051,7 +43051,7 @@ class RatioTapChangerTable(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'RatioTapChangerTablePoint.RatioTapChangerTable',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         'docstring':
             '''
@@ -43065,7 +43065,7 @@ class RatioTapChangerTable(IdentifiedObject):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Wires'
@@ -43089,7 +43089,7 @@ class RecloseSequence(IdentifiedObject):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -43109,7 +43109,7 @@ class RecloseSequence(IdentifiedObject):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -43128,7 +43128,7 @@ class RecloseSequence(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'AutoreclosingFunctionBlock.RecloseSequences',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -43147,7 +43147,7 @@ class RecloseSequence(IdentifiedObject):
         'minOccurs': '1',
         'maxOccurs': '1',
         'inverse': 'ProtectedSwitch.RecloseSequences',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -43161,7 +43161,7 @@ class RecloseSequence(IdentifiedObject):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Protection'
@@ -43186,7 +43186,7 @@ class RelayDynamics(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'ProtectionFunction.RelayDynamics',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         'docstring':
             '''
@@ -43202,7 +43202,7 @@ class RelayDynamics(IdentifiedObject):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'RelayDynamics'
@@ -43227,7 +43227,7 @@ class RemoteControl(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'Control.RemoteControl',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         'docstring':
             '''
@@ -43241,7 +43241,7 @@ class RemoteControl(IdentifiedObject):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'SCADA'
@@ -43266,7 +43266,7 @@ class RemoteSource(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'MeasurementValue.RemoteSource',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         'docstring':
             '''
@@ -43280,7 +43280,7 @@ class RemoteSource(IdentifiedObject):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'SCADA'
@@ -43304,7 +43304,7 @@ class ReportingGroup(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'ReportingSuperGroup.ReportingGroup',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -43323,7 +43323,7 @@ class ReportingGroup(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'BusNameMarker.ReportingGroup',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         'docstring':
             '''
@@ -43342,7 +43342,7 @@ class ReportingGroup(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'TopologicalNode.ReportingGroup',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         'docstring':
             '''
@@ -43356,7 +43356,7 @@ class ReportingGroup(IdentifiedObject):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Core'
@@ -43381,7 +43381,7 @@ class ReportingSuperGroup(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'ReportingGroup.ReportingSuperGroup',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         'docstring':
             '''
@@ -43395,7 +43395,7 @@ class ReportingSuperGroup(IdentifiedObject):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Core'
@@ -43418,7 +43418,7 @@ class Season(IdentifiedObject):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -43436,7 +43436,7 @@ class Season(IdentifiedObject):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -43455,7 +43455,7 @@ class Season(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'SeasonDayTypeSchedule.Season',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         'docstring':
             '''
@@ -43469,7 +43469,7 @@ class Season(IdentifiedObject):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'LoadModel'
@@ -43493,7 +43493,7 @@ class ServiceCategory(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'UsagePoint.ServiceCategory',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         'docstring':
             '''
@@ -43507,7 +43507,7 @@ class ServiceCategory(IdentifiedObject):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Customers'
@@ -43531,7 +43531,7 @@ class ServiceSupplier(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'UsagePoint.ServiceSupplier',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         'docstring':
             '''
@@ -43545,7 +43545,7 @@ class ServiceSupplier(IdentifiedObject):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'PaymentMetering'
@@ -43568,7 +43568,7 @@ class ShuntCompensatorAction(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'ShuntCompensator.ShuntCompensatorAction',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         'docstring':
             '''
@@ -43580,7 +43580,7 @@ class ShuntCompensatorAction(IdentifiedObject):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Operations'
@@ -43605,7 +43605,7 @@ class ShuntCompensatorDynamics(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'ShuntCompensator.ShuntCompensatorDynamics',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         'docstring':
             '''
@@ -43619,7 +43619,7 @@ class ShuntCompensatorDynamics(IdentifiedObject):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'ShuntCompensatorDynamics'
@@ -43646,7 +43646,7 @@ class Specification(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'CoolingInfo.Specification',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         'docstring':
             '''
@@ -43663,7 +43663,7 @@ class Specification(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'SoundInfo.Specification',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         'docstring':
             '''
@@ -43680,7 +43680,7 @@ class Specification(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'SurfaceTreatmentInfo.Specification',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         'docstring':
             '''
@@ -43692,7 +43692,7 @@ class Specification(IdentifiedObject):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'InfAssets'
@@ -43718,7 +43718,7 @@ class StartupModel(IdentifiedObject):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -43736,7 +43736,7 @@ class StartupModel(IdentifiedObject):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -43757,7 +43757,7 @@ class StartupModel(IdentifiedObject):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -43775,7 +43775,7 @@ class StartupModel(IdentifiedObject):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -43793,7 +43793,7 @@ class StartupModel(IdentifiedObject):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -43811,7 +43811,7 @@ class StartupModel(IdentifiedObject):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -43829,7 +43829,7 @@ class StartupModel(IdentifiedObject):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -43849,7 +43849,7 @@ class StartupModel(IdentifiedObject):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -43871,7 +43871,7 @@ class StartupModel(IdentifiedObject):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -43889,7 +43889,7 @@ class StartupModel(IdentifiedObject):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -43908,7 +43908,7 @@ class StartupModel(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'StartIgnFuelCurve.StartupModel',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -43927,7 +43927,7 @@ class StartupModel(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'StartMainFuelCurve.StartupModel',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -43946,7 +43946,7 @@ class StartupModel(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'StartRampCurve.StartupModel',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -43965,7 +43965,7 @@ class StartupModel(IdentifiedObject):
         'minOccurs': '1',
         'maxOccurs': '1',
         'inverse': 'ThermalGeneratingUnit.StartupModel',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -43984,7 +43984,7 @@ class StartupModel(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'StartIgnFuelCurve.StartupModel',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         'docstring':
             '''
@@ -44003,7 +44003,7 @@ class StartupModel(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'StartMainFuelCurve.StartupModel',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         'docstring':
             '''
@@ -44022,7 +44022,7 @@ class StartupModel(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'StartRampCurve.StartupModel',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         'docstring':
             '''
@@ -44041,7 +44041,7 @@ class StartupModel(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'ThermalGeneratingUnit.StartupModel',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         'docstring':
             '''
@@ -44055,7 +44055,7 @@ class StartupModel(IdentifiedObject):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Production'
@@ -44080,7 +44080,7 @@ class StatcomDynamics(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'PowerElectronicsConnection.StatcomDynamics',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         'docstring':
             '''
@@ -44096,7 +44096,7 @@ class StatcomDynamics(IdentifiedObject):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'StatcomDynamics'
@@ -44179,7 +44179,7 @@ class StaticVarCompensatorDynamics(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'StaticVarCompensator.StaticVarCompensatorDynamics',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         'docstring':
             '''
@@ -44194,7 +44194,7 @@ class StaticVarCompensatorDynamics(IdentifiedObject):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'StaticVarCompensatorDynamics'
@@ -44220,7 +44220,7 @@ class StaticVarCompensatorSystemDynamics(StaticVarCompensatorDynamics):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'ShuntCompensator.StaticVarCompensatorSystemDynamics',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         'docstring':
             '''
@@ -44236,7 +44236,7 @@ class StaticVarCompensatorSystemDynamics(StaticVarCompensatorDynamics):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'StaticVarCompensatorDynamics'
@@ -44264,7 +44264,7 @@ class SVSMO4(StaticVarCompensatorSystemDynamics):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'Terminal.HasFromTerminalSVSMO4',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         'docstring':
             '''
@@ -44283,7 +44283,7 @@ class SVSMO4(StaticVarCompensatorSystemDynamics):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'Terminal.HasToTerminalSVSMO4',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         'docstring':
             '''
@@ -44297,7 +44297,7 @@ class SVSMO4(StaticVarCompensatorSystemDynamics):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'StaticVarCompensatorDynamics'
@@ -44322,7 +44322,7 @@ class StepOperationalLimitTable(IdentifiedObject):
         'minOccurs': '1',
         'maxOccurs': '1',
         'inverse': 'TapChanger.StepOperationalLimitTable',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -44341,7 +44341,7 @@ class StepOperationalLimitTable(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'OperationalLimit.StepOperationalLimitTable',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         'docstring':
             '''
@@ -44360,7 +44360,7 @@ class StepOperationalLimitTable(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'StepLimitTablePoint.StepOperationalLimitTable',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         'docstring':
             '''
@@ -44374,7 +44374,7 @@ class StepOperationalLimitTable(IdentifiedObject):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Wires'
@@ -44399,7 +44399,7 @@ class SubGeographicalRegion(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'GeographicalRegion.Regions',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -44418,7 +44418,7 @@ class SubGeographicalRegion(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'Line.Region',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         'docstring':
             '''
@@ -44437,7 +44437,7 @@ class SubGeographicalRegion(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'Substation.Region',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         'docstring':
             '''
@@ -44451,7 +44451,7 @@ class SubGeographicalRegion(IdentifiedObject):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Core'
@@ -44475,7 +44475,7 @@ class SwitchAction(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'Switch.SwitchAction',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         'docstring':
             '''
@@ -44489,7 +44489,7 @@ class SwitchAction(IdentifiedObject):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Operations'
@@ -44532,7 +44532,7 @@ class SynchronousMachineDynamics(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'SynchronousMachine.SynchronousMachineDynamics',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         'docstring':
             '''
@@ -44546,7 +44546,7 @@ class SynchronousMachineDynamics(IdentifiedObject):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'SynchronousMachineDynamics'
@@ -44846,7 +44846,7 @@ class TopologicalIsland(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'TopologicalNode.AngleRefTopologicalIsland',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -44869,7 +44869,7 @@ class TopologicalIsland(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'TopologicalNode.AngleRefTopologicalIsland',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         'docstring':
             '''
@@ -44892,7 +44892,7 @@ class TopologicalIsland(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'TopologicalNode.TopologicalIsland',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         'docstring':
             '''
@@ -44906,7 +44906,7 @@ class TopologicalIsland(IdentifiedObject):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Topology'
@@ -44937,7 +44937,7 @@ class TopologicalNode(IdentifiedObject):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -44961,7 +44961,7 @@ class TopologicalNode(IdentifiedObject):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -44986,7 +44986,7 @@ class TopologicalNode(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'TopologicalIsland.AngleRefTopologicalNode',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -45007,7 +45007,7 @@ class TopologicalNode(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'BaseVoltage.TopologicalNode',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -45026,7 +45026,7 @@ class TopologicalNode(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'ConnectivityNodeContainer.TopologicalNode',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -45045,7 +45045,7 @@ class TopologicalNode(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'ReportingGroup.TopologicalNode',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -45083,7 +45083,7 @@ class TopologicalNode(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'TopologicalIsland.TopologicalNodes',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -45102,7 +45102,7 @@ class TopologicalNode(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'BusNameMarker.TopologicalNode',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         'docstring':
             '''
@@ -45121,7 +45121,7 @@ class TopologicalNode(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'ConnectivityNode.TopologicalNode',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         'docstring':
             '''
@@ -45142,7 +45142,7 @@ class TopologicalNode(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'Terminal.TopologicalNode',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         'docstring':
             '''
@@ -45169,7 +45169,7 @@ class TopologicalNode(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'TopologicalIsland.AngleRefTopologicalNode',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         'docstring':
             '''
@@ -45185,7 +45185,7 @@ class TopologicalNode(IdentifiedObject):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Topology'
@@ -45209,7 +45209,7 @@ class TransformerCoreAdmittance(IdentifiedObject):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -45228,7 +45228,7 @@ class TransformerCoreAdmittance(IdentifiedObject):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -45246,7 +45246,7 @@ class TransformerCoreAdmittance(IdentifiedObject):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -45264,7 +45264,7 @@ class TransformerCoreAdmittance(IdentifiedObject):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -45283,7 +45283,7 @@ class TransformerCoreAdmittance(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'TransformerEndInfo.CoreAdmittance',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -45302,7 +45302,7 @@ class TransformerCoreAdmittance(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'TransformerEnd.CoreAdmittance',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         'docstring':
             '''
@@ -45321,7 +45321,7 @@ class TransformerCoreAdmittance(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'TransformerEndInfo.CoreAdmittance',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         'docstring':
             '''
@@ -45335,7 +45335,7 @@ class TransformerCoreAdmittance(IdentifiedObject):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Wires'
@@ -45361,7 +45361,7 @@ class TransformerEnd(IdentifiedObject):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -45387,7 +45387,7 @@ class TransformerEnd(IdentifiedObject):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -45411,7 +45411,7 @@ class TransformerEnd(IdentifiedObject):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -45429,7 +45429,7 @@ class TransformerEnd(IdentifiedObject):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -45449,7 +45449,7 @@ class TransformerEnd(IdentifiedObject):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -45467,7 +45467,7 @@ class TransformerEnd(IdentifiedObject):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -45487,7 +45487,7 @@ class TransformerEnd(IdentifiedObject):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -45508,7 +45508,7 @@ class TransformerEnd(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'RatioTapChanger.TransformerEnd',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -45527,7 +45527,7 @@ class TransformerEnd(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'BaseVoltage.TransformerEnds',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -45546,7 +45546,7 @@ class TransformerEnd(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'TransformerCoreAdmittance.TransformerEnd',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -45569,7 +45569,7 @@ class TransformerEnd(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'PhaseTapChanger.TransformerEnd',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -45588,7 +45588,7 @@ class TransformerEnd(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'RatioTapChanger.TransformerEnd',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -45607,7 +45607,7 @@ class TransformerEnd(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'TransformerStarImpedance.TransformerEnd',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -45632,7 +45632,7 @@ class TransformerEnd(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'Terminal.TransformerEnd',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -45651,7 +45651,7 @@ class TransformerEnd(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'PhaseTapChanger.TransformerEnd',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         'docstring':
             '''
@@ -45670,7 +45670,7 @@ class TransformerEnd(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'RatioTapChanger.TransformerEnd',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         'docstring':
             '''
@@ -45689,7 +45689,7 @@ class TransformerEnd(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'TransformerMeshImpedance.FromTransformerEnd',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         'docstring':
             '''
@@ -45709,7 +45709,7 @@ class TransformerEnd(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'TransformerMeshImpedance.ToTransformerEnd',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         'docstring':
             '''
@@ -45724,7 +45724,7 @@ class TransformerEnd(IdentifiedObject):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Wires'
@@ -45770,7 +45770,7 @@ class PowerTransformerEnd(TransformerEnd):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -45800,7 +45800,7 @@ class PowerTransformerEnd(TransformerEnd):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -45819,7 +45819,7 @@ class PowerTransformerEnd(TransformerEnd):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -45837,7 +45837,7 @@ class PowerTransformerEnd(TransformerEnd):
         'type': 'enumeration Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -45855,7 +45855,7 @@ class PowerTransformerEnd(TransformerEnd):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -45873,7 +45873,7 @@ class PowerTransformerEnd(TransformerEnd):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -45891,7 +45891,7 @@ class PowerTransformerEnd(TransformerEnd):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -45913,7 +45913,7 @@ class PowerTransformerEnd(TransformerEnd):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -45931,7 +45931,7 @@ class PowerTransformerEnd(TransformerEnd):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -45953,7 +45953,7 @@ class PowerTransformerEnd(TransformerEnd):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -45980,7 +45980,7 @@ class PowerTransformerEnd(TransformerEnd):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -45999,7 +45999,7 @@ class PowerTransformerEnd(TransformerEnd):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -46018,7 +46018,7 @@ class PowerTransformerEnd(TransformerEnd):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'PowerTransformer.PowerTransformerEnd',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -46032,7 +46032,7 @@ class PowerTransformerEnd(TransformerEnd):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Wires'
@@ -46057,7 +46057,7 @@ class TransformerTankEnd(TransformerEnd):
         'type': 'enumeration Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -46076,7 +46076,7 @@ class TransformerTankEnd(TransformerEnd):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'TransformerTank.TransformerTankEnds',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -46090,7 +46090,7 @@ class TransformerTankEnd(TransformerEnd):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Wires'
@@ -46117,7 +46117,7 @@ class TransformerMeshImpedance(IdentifiedObject):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -46136,7 +46136,7 @@ class TransformerMeshImpedance(IdentifiedObject):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -46156,7 +46156,7 @@ class TransformerMeshImpedance(IdentifiedObject):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -46175,7 +46175,7 @@ class TransformerMeshImpedance(IdentifiedObject):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -46196,7 +46196,7 @@ class TransformerMeshImpedance(IdentifiedObject):
         'minOccurs': '1',
         'maxOccurs': '1',
         'inverse': 'TransformerEnd.FromMeshImpedance',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -46217,7 +46217,7 @@ class TransformerMeshImpedance(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'TransformerEndInfo.FromMeshImpedances',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -46238,7 +46238,7 @@ class TransformerMeshImpedance(IdentifiedObject):
         'minOccurs': '1',
         'maxOccurs': 'unbounded',
         'inverse': 'TransformerEnd.ToMeshImpedance',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -46257,7 +46257,7 @@ class TransformerMeshImpedance(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'TransformerEndInfo.ToMeshImpedances',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -46273,7 +46273,7 @@ class TransformerMeshImpedance(IdentifiedObject):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Wires'
@@ -46300,7 +46300,7 @@ class TransformerStarImpedance(IdentifiedObject):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -46318,7 +46318,7 @@ class TransformerStarImpedance(IdentifiedObject):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -46336,7 +46336,7 @@ class TransformerStarImpedance(IdentifiedObject):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -46354,7 +46354,7 @@ class TransformerStarImpedance(IdentifiedObject):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -46373,7 +46373,7 @@ class TransformerStarImpedance(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'TransformerEndInfo.TransformerStarImpedance',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -46392,7 +46392,7 @@ class TransformerStarImpedance(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'TransformerEnd.StarImpedance',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         'docstring':
             '''
@@ -46411,7 +46411,7 @@ class TransformerStarImpedance(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'TransformerEndInfo.TransformerStarImpedance',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         'docstring':
             '''
@@ -46425,7 +46425,7 @@ class TransformerStarImpedance(IdentifiedObject):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Wires'
@@ -46449,7 +46449,7 @@ class TransformerTest(IdentifiedObject):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -46469,7 +46469,7 @@ class TransformerTest(IdentifiedObject):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -46483,7 +46483,7 @@ class TransformerTest(IdentifiedObject):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'AssetInfo'
@@ -46509,7 +46509,7 @@ class NoLoadTest(TransformerTest):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -46527,7 +46527,7 @@ class NoLoadTest(TransformerTest):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -46547,7 +46547,7 @@ class NoLoadTest(TransformerTest):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -46567,7 +46567,7 @@ class NoLoadTest(TransformerTest):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -46586,7 +46586,7 @@ class NoLoadTest(TransformerTest):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -46605,7 +46605,7 @@ class NoLoadTest(TransformerTest):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'TransformerEndInfo.EnergisedEndNoLoadTests',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -46619,7 +46619,7 @@ class NoLoadTest(TransformerTest):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'AssetInfo'
@@ -46645,7 +46645,7 @@ class OpenCircuitTest(TransformerTest):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -46663,7 +46663,7 @@ class OpenCircuitTest(TransformerTest):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -46681,7 +46681,7 @@ class OpenCircuitTest(TransformerTest):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -46699,7 +46699,7 @@ class OpenCircuitTest(TransformerTest):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -46719,7 +46719,7 @@ class OpenCircuitTest(TransformerTest):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -46740,7 +46740,7 @@ class OpenCircuitTest(TransformerTest):
         'minOccurs': '1',
         'maxOccurs': '1',
         'inverse': 'TransformerEndInfo.EnergisedEndOpenCircuitTests',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -46759,7 +46759,7 @@ class OpenCircuitTest(TransformerTest):
         'minOccurs': '1',
         'maxOccurs': '1',
         'inverse': 'TransformerEndInfo.OpenEndOpenCircuitTests',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -46775,7 +46775,7 @@ class OpenCircuitTest(TransformerTest):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'AssetInfo'
@@ -46801,7 +46801,7 @@ class ShortCircuitTest(TransformerTest):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -46819,7 +46819,7 @@ class ShortCircuitTest(TransformerTest):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -46837,7 +46837,7 @@ class ShortCircuitTest(TransformerTest):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -46855,7 +46855,7 @@ class ShortCircuitTest(TransformerTest):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -46875,7 +46875,7 @@ class ShortCircuitTest(TransformerTest):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -46893,7 +46893,7 @@ class ShortCircuitTest(TransformerTest):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -46912,7 +46912,7 @@ class ShortCircuitTest(TransformerTest):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -46930,7 +46930,7 @@ class ShortCircuitTest(TransformerTest):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -46948,7 +46948,7 @@ class ShortCircuitTest(TransformerTest):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -46967,7 +46967,7 @@ class ShortCircuitTest(TransformerTest):
         'minOccurs': '1',
         'maxOccurs': '1',
         'inverse': 'TransformerEndInfo.EnergisedEndShortCircuitTests',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -46989,7 +46989,7 @@ class ShortCircuitTest(TransformerTest):
         'minOccurs': '1',
         'maxOccurs': 'unbounded',
         'inverse': 'TransformerEndInfo.GroundedEndShortCircuitTests',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -47003,7 +47003,7 @@ class ShortCircuitTest(TransformerTest):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'AssetInfo'
@@ -47029,7 +47029,7 @@ class UsagePoint(IdentifiedObject):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -47052,7 +47052,7 @@ class UsagePoint(IdentifiedObject):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -47072,7 +47072,7 @@ class UsagePoint(IdentifiedObject):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -47091,7 +47091,7 @@ class UsagePoint(IdentifiedObject):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -47109,7 +47109,7 @@ class UsagePoint(IdentifiedObject):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -47129,7 +47129,7 @@ class UsagePoint(IdentifiedObject):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -47159,7 +47159,7 @@ class UsagePoint(IdentifiedObject):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -47181,7 +47181,7 @@ class UsagePoint(IdentifiedObject):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -47199,7 +47199,7 @@ class UsagePoint(IdentifiedObject):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -47219,7 +47219,7 @@ class UsagePoint(IdentifiedObject):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -47239,7 +47239,7 @@ class UsagePoint(IdentifiedObject):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -47261,7 +47261,7 @@ class UsagePoint(IdentifiedObject):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -47281,7 +47281,7 @@ class UsagePoint(IdentifiedObject):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -47301,7 +47301,7 @@ class UsagePoint(IdentifiedObject):
         'type': 'move Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -47321,7 +47321,7 @@ class UsagePoint(IdentifiedObject):
         'type': 'enumeration Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -47342,7 +47342,7 @@ class UsagePoint(IdentifiedObject):
         'type': 'enumeration Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -47360,7 +47360,7 @@ class UsagePoint(IdentifiedObject):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -47378,7 +47378,7 @@ class UsagePoint(IdentifiedObject):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -47396,7 +47396,7 @@ class UsagePoint(IdentifiedObject):
         'type': 'enumeration Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -47420,7 +47420,7 @@ class UsagePoint(IdentifiedObject):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -47438,7 +47438,7 @@ class UsagePoint(IdentifiedObject):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -47457,7 +47457,7 @@ class UsagePoint(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'CustomerAgreement.UsagePoints',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -47476,7 +47476,7 @@ class UsagePoint(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'EnvironmentalMonitoringStation.UsagePoint',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -47493,7 +47493,7 @@ class UsagePoint(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'ServiceCategory.UsagePoints',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -47512,7 +47512,7 @@ class UsagePoint(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'ServiceLocation.UsagePoints',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -47532,7 +47532,7 @@ class UsagePoint(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'ServiceSupplier.UsagePoints',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -47551,7 +47551,7 @@ class UsagePoint(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'Terminal.UsagePoint',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -47568,7 +47568,7 @@ class UsagePoint(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'UsagePointLocation.UsagePoints',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -47587,7 +47587,7 @@ class UsagePoint(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'Terminal.UsagePoint',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         'docstring':
             '''
@@ -47599,7 +47599,7 @@ class UsagePoint(IdentifiedObject):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'MarketEXT'
@@ -47629,7 +47629,7 @@ class ValueAliasSet(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'Command.ValueAliasSet',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         'docstring':
             '''
@@ -47648,7 +47648,7 @@ class ValueAliasSet(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'Discrete.ValueAliasSet',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         'docstring':
             '''
@@ -47667,7 +47667,7 @@ class ValueAliasSet(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'RaiseLowerCommand.ValueAliasSet',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         'docstring':
             '''
@@ -47686,7 +47686,7 @@ class ValueAliasSet(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'ValueToAlias.ValueAliasSet',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         'docstring':
             '''
@@ -47700,7 +47700,7 @@ class ValueAliasSet(IdentifiedObject):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Meas'
@@ -47724,7 +47724,7 @@ class ValueToAlias(IdentifiedObject):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -47743,7 +47743,7 @@ class ValueToAlias(IdentifiedObject):
         'minOccurs': '1',
         'maxOccurs': '1',
         'inverse': 'ValueAliasSet.Values',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -47757,7 +47757,7 @@ class ValueToAlias(IdentifiedObject):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Meas'
@@ -47783,7 +47783,7 @@ class WeccREPCC(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'Terminal.WeccREPCC',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         'docstring':
             '''
@@ -47797,7 +47797,7 @@ class WeccREPCC(IdentifiedObject):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'WECCDynamics'
@@ -47824,7 +47824,7 @@ class WeccWTGIBFFRA(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'Terminal.WeccWTGIBFFRA',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         'docstring':
             '''
@@ -47838,7 +47838,7 @@ class WeccWTGIBFFRA(IdentifiedObject):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'WECCDynamics'
@@ -47864,7 +47864,7 @@ class WindPlantDynamics(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'Terminal.WindPlantDynamics',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         'docstring':
             '''
@@ -47878,7 +47878,7 @@ class WindPlantDynamics(IdentifiedObject):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'WindDynamics'
@@ -47903,7 +47903,7 @@ class WindTurbineType3or4Dynamics(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'PowerElectronicsConnection.WindTurbineType3or4Dynamics',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         'docstring':
             '''
@@ -47919,7 +47919,7 @@ class WindTurbineType3or4Dynamics(IdentifiedObject):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'WindDynamics'
@@ -47943,7 +47943,7 @@ class WirePosition(IdentifiedObject):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -47962,7 +47962,7 @@ class WirePosition(IdentifiedObject):
         'type': 'enumeration ToBeRemoved Attribute add',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -47980,7 +47980,7 @@ class WirePosition(IdentifiedObject):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -48000,7 +48000,7 @@ class WirePosition(IdentifiedObject):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -48021,7 +48021,7 @@ class WirePosition(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'WireSpacingInfo.WirePositions',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -48040,7 +48040,7 @@ class WirePosition(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'WirePhaseInfo.WirePosition',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         'docstring':
             '''
@@ -48054,7 +48054,7 @@ class WirePosition(IdentifiedObject):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'AssetInfo'
@@ -48077,7 +48077,7 @@ class ImpedanceTapChangerTablePoint(Identity):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -48103,7 +48103,7 @@ class ImpedanceTapChangerTablePoint(Identity):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -48121,7 +48121,7 @@ class ImpedanceTapChangerTablePoint(Identity):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -48143,7 +48143,7 @@ class ImpedanceTapChangerTablePoint(Identity):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -48170,7 +48170,7 @@ class ImpedanceTapChangerTablePoint(Identity):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -48197,7 +48197,7 @@ class ImpedanceTapChangerTablePoint(Identity):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -48224,7 +48224,7 @@ class ImpedanceTapChangerTablePoint(Identity):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -48251,7 +48251,7 @@ class ImpedanceTapChangerTablePoint(Identity):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -48278,7 +48278,7 @@ class ImpedanceTapChangerTablePoint(Identity):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -48306,7 +48306,7 @@ class ImpedanceTapChangerTablePoint(Identity):
         'minOccurs': '1',
         'maxOccurs': '1',
         'inverse': 'ImpedanceTapChangerTable.ImpedanceTapChangerTablePoint',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -48320,7 +48320,7 @@ class ImpedanceTapChangerTablePoint(Identity):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Wires'
@@ -48340,7 +48340,7 @@ class InstanceSet(Identity):
 
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'GenericDataSet'
@@ -48365,7 +48365,7 @@ class InverterCapabilities(Identity):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -48385,7 +48385,7 @@ class InverterCapabilities(Identity):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -48405,7 +48405,7 @@ class InverterCapabilities(Identity):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -48425,7 +48425,7 @@ class InverterCapabilities(Identity):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -48445,7 +48445,7 @@ class InverterCapabilities(Identity):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -48465,7 +48465,7 @@ class InverterCapabilities(Identity):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -48485,7 +48485,7 @@ class InverterCapabilities(Identity):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -48504,7 +48504,7 @@ class InverterCapabilities(Identity):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -48522,7 +48522,7 @@ class InverterCapabilities(Identity):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -48542,7 +48542,7 @@ class InverterCapabilities(Identity):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -48562,7 +48562,7 @@ class InverterCapabilities(Identity):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -48578,7 +48578,7 @@ class InverterCapabilities(Identity):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'AssetInfo'
@@ -48596,7 +48596,7 @@ class InverterCapabilities(Identity):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'InverterInfo.InverterCapabilites',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         'docstring':
             '''
@@ -48618,7 +48618,7 @@ class IrregularTimePoint(Identity):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -48638,7 +48638,7 @@ class IrregularTimePoint(Identity):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -48658,7 +48658,7 @@ class IrregularTimePoint(Identity):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -48678,7 +48678,7 @@ class IrregularTimePoint(Identity):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -48697,7 +48697,7 @@ class IrregularTimePoint(Identity):
         'minOccurs': '1',
         'maxOccurs': '1',
         'inverse': 'IrregularIntervalSchedule.TimePoints',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -48711,7 +48711,7 @@ class IrregularTimePoint(Identity):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Core'
@@ -48738,7 +48738,7 @@ class MeasurementValueQuality(Identity):
         'minOccurs': '1',
         'maxOccurs': '1',
         'inverse': 'MeasurementValue.MeasurementValueQuality',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -48752,7 +48752,7 @@ class MeasurementValueQuality(Identity):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Meas'
@@ -48770,7 +48770,7 @@ class MeasurementValueQuality(Identity):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'MeasurementValue.MeasurementValueQuality',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         'docstring':
             '''
@@ -48925,7 +48925,7 @@ class Quality61850(MeasurementValueQuality):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -48944,7 +48944,7 @@ class Quality61850(MeasurementValueQuality):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -48964,7 +48964,7 @@ class Quality61850(MeasurementValueQuality):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -48984,7 +48984,7 @@ class Quality61850(MeasurementValueQuality):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -49004,7 +49004,7 @@ class Quality61850(MeasurementValueQuality):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -49022,7 +49022,7 @@ class Quality61850(MeasurementValueQuality):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -49066,7 +49066,7 @@ class Quality61850(MeasurementValueQuality):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -49084,7 +49084,7 @@ class Quality61850(MeasurementValueQuality):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -49106,7 +49106,7 @@ class Quality61850(MeasurementValueQuality):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -49126,7 +49126,7 @@ class Quality61850(MeasurementValueQuality):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -49144,7 +49144,7 @@ class Quality61850(MeasurementValueQuality):
         'type': 'enumeration Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -49164,7 +49164,7 @@ class Quality61850(MeasurementValueQuality):
         'type': 'enumeration Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -49178,7 +49178,7 @@ class Quality61850(MeasurementValueQuality):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Meas'
@@ -49219,7 +49219,7 @@ class MeterInfo(Identity):
         'type': 'moved Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -49237,7 +49237,7 @@ class MeterInfo(Identity):
         'type': 'moved Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -49255,7 +49255,7 @@ class MeterInfo(Identity):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -49275,7 +49275,7 @@ class MeterInfo(Identity):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -49293,7 +49293,7 @@ class MeterInfo(Identity):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -49311,7 +49311,7 @@ class MeterInfo(Identity):
         'type': 'moved Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -49329,7 +49329,7 @@ class MeterInfo(Identity):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -49349,7 +49349,7 @@ class MeterInfo(Identity):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -49369,7 +49369,7 @@ class MeterInfo(Identity):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -49389,7 +49389,7 @@ class MeterInfo(Identity):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -49409,7 +49409,7 @@ class MeterInfo(Identity):
         'type': 'moved Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -49427,7 +49427,7 @@ class MeterInfo(Identity):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -49445,7 +49445,7 @@ class MeterInfo(Identity):
         'type': 'moved Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -49463,7 +49463,7 @@ class MeterInfo(Identity):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -49483,7 +49483,7 @@ class MeterInfo(Identity):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -49503,7 +49503,7 @@ class MeterInfo(Identity):
         'type': 'moved Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -49517,7 +49517,7 @@ class MeterInfo(Identity):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'AssetInfo'
@@ -49544,7 +49544,7 @@ class Name(Identity):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -49573,7 +49573,7 @@ class Name(Identity):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -49601,7 +49601,7 @@ class Name(Identity):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -49621,7 +49621,7 @@ class Name(Identity):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'NameType.Name',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -49635,7 +49635,7 @@ class Name(Identity):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Core'
@@ -49669,7 +49669,7 @@ class NameType(Identity):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -49698,7 +49698,7 @@ class NameType(Identity):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -49712,7 +49712,7 @@ class NameType(Identity):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Core'
@@ -49730,7 +49730,7 @@ class NameType(Identity):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'Name.NameType',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         'docstring':
             '''
@@ -49756,7 +49756,7 @@ class NamingAuthority(Identity):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -49785,7 +49785,7 @@ class NamingAuthority(Identity):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -49799,7 +49799,7 @@ class NamingAuthority(Identity):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Core'
@@ -49826,7 +49826,7 @@ class NonlinearShuntCompensatorPhasePoint(Identity):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -49844,7 +49844,7 @@ class NonlinearShuntCompensatorPhasePoint(Identity):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -49864,7 +49864,7 @@ class NonlinearShuntCompensatorPhasePoint(Identity):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -49885,7 +49885,7 @@ class NonlinearShuntCompensatorPhasePoint(Identity):
         'minOccurs': '1',
         'maxOccurs': '1',
         'inverse': 'NonlinearShuntCompensatorPhase.NonlinearShuntCompensatorPhasePoints',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -49899,7 +49899,7 @@ class NonlinearShuntCompensatorPhasePoint(Identity):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Wires'
@@ -49926,7 +49926,7 @@ class NonlinearShuntCompensatorPoint(Identity):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -49944,7 +49944,7 @@ class NonlinearShuntCompensatorPoint(Identity):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -49963,7 +49963,7 @@ class NonlinearShuntCompensatorPoint(Identity):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -49983,7 +49983,7 @@ class NonlinearShuntCompensatorPoint(Identity):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -50002,7 +50002,7 @@ class NonlinearShuntCompensatorPoint(Identity):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -50023,7 +50023,7 @@ class NonlinearShuntCompensatorPoint(Identity):
         'minOccurs': '1',
         'maxOccurs': '1',
         'inverse': 'NonlinearShuntCompensator.NonlinearShuntCompensatorPoints',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -50037,7 +50037,7 @@ class NonlinearShuntCompensatorPoint(Identity):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Wires'
@@ -50066,7 +50066,7 @@ class ObjectType(Identity):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -50086,7 +50086,7 @@ class ObjectType(Identity):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Core'
@@ -50110,7 +50110,7 @@ class OperatingShare(Identity):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -50133,7 +50133,7 @@ class OperatingShare(Identity):
         'minOccurs': '1',
         'maxOccurs': '1',
         'inverse': 'OperatingParticipant.OperatingShare',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -50154,7 +50154,7 @@ class OperatingShare(Identity):
         'minOccurs': '1',
         'maxOccurs': '1',
         'inverse': 'PowerSystemResource.OperatingShare',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -50168,7 +50168,7 @@ class OperatingShare(Identity):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Core'
@@ -50304,7 +50304,7 @@ class RegularTimePoint(Identity):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -50334,7 +50334,7 @@ class RegularTimePoint(Identity):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -50354,7 +50354,7 @@ class RegularTimePoint(Identity):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -50374,7 +50374,7 @@ class RegularTimePoint(Identity):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -50395,7 +50395,7 @@ class RegularTimePoint(Identity):
         'minOccurs': '1',
         'maxOccurs': '1',
         'inverse': 'RegularIntervalSchedule.TimePoints',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -50409,7 +50409,7 @@ class RegularTimePoint(Identity):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Core'
@@ -50487,7 +50487,7 @@ class ShortCircuitResponse(Identity):
         'type': 'enumeration Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -50505,7 +50505,7 @@ class ShortCircuitResponse(Identity):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -50526,7 +50526,7 @@ class ShortCircuitResponse(Identity):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -50544,7 +50544,7 @@ class ShortCircuitResponse(Identity):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -50563,7 +50563,7 @@ class ShortCircuitResponse(Identity):
         'minOccurs': '1',
         'maxOccurs': '1',
         'inverse': 'ConductingAssetInfo.ShortCircuitRespone',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -50575,7 +50575,7 @@ class ShortCircuitResponse(Identity):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'AssetInfo'
@@ -50598,7 +50598,7 @@ class StepLimitTablePoint(Identity):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -50618,7 +50618,7 @@ class StepLimitTablePoint(Identity):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -50637,7 +50637,7 @@ class StepLimitTablePoint(Identity):
         'minOccurs': '1',
         'maxOccurs': '1',
         'inverse': 'StepOperationalLimitTable.StepLimitTablePoint',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -50651,7 +50651,7 @@ class StepLimitTablePoint(Identity):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Wires'
@@ -50670,7 +50670,7 @@ class SvTapStep(Identity):
 
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'StateVariables'
@@ -50688,7 +50688,7 @@ class SvTapStep(Identity):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'TapChanger.SvTapStep',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         'docstring':
             '''
@@ -50752,7 +50752,7 @@ class TapChangerTablePoint(Identity):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -50778,7 +50778,7 @@ class TapChangerTablePoint(Identity):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -50796,7 +50796,7 @@ class TapChangerTablePoint(Identity):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -50824,7 +50824,7 @@ class TapChangerTablePoint(Identity):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -50854,7 +50854,7 @@ class TapChangerTablePoint(Identity):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -50883,7 +50883,7 @@ class TapChangerTablePoint(Identity):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -50908,7 +50908,7 @@ class TapChangerTablePoint(Identity):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Wires'
@@ -50931,7 +50931,7 @@ class PhaseTapChangerTablePoint(TapChangerTablePoint):
         'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -50954,7 +50954,7 @@ class PhaseTapChangerTablePoint(TapChangerTablePoint):
         'minOccurs': '1',
         'maxOccurs': '1',
         'inverse': 'PhaseTapChangerTable.PhaseTapChangerTablePoint',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -50968,7 +50968,7 @@ class PhaseTapChangerTablePoint(TapChangerTablePoint):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Wires'
@@ -50992,7 +50992,7 @@ class RatioTapChangerTablePoint(TapChangerTablePoint):
         'minOccurs': '1',
         'maxOccurs': '1',
         'inverse': 'RatioTapChangerTable.RatioTapChangerTablePoint',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -51006,7 +51006,7 @@ class RatioTapChangerTablePoint(TapChangerTablePoint):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Wires'
@@ -51061,7 +51061,7 @@ class WirePhaseInfo(Identity):
         'type': 'enumeration Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -51080,7 +51080,7 @@ class WirePhaseInfo(Identity):
         'minOccurs': '1',
         'maxOccurs': '1',
         'inverse': 'WireAssemblyInfo.WirePhaseInfo',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -51116,7 +51116,7 @@ class WirePhaseInfo(Identity):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'WireInfo.WirePhaseInfo',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -51135,7 +51135,7 @@ class WirePhaseInfo(Identity):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'WirePosition.WirePhaseInfo',
-        'namespace': 'http://ucaiug.io/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         'docstring':
             '''
@@ -51149,7 +51149,7 @@ class WirePhaseInfo(Identity):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'AssetInfo'
@@ -51193,7 +51193,7 @@ class ActivePowerSourceKind(Enum):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Assets'
@@ -51254,7 +51254,7 @@ class AmiBillingReadyKind(Enum):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Metering'
@@ -51284,7 +51284,7 @@ class AsynchronousMachineKind(Enum):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Wires'
@@ -51329,7 +51329,7 @@ class BatteryStateKind(Enum):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Production'
@@ -51417,7 +51417,7 @@ class BreakerConfiguration(Enum):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Core'
@@ -51457,7 +51457,7 @@ class BusbarConfiguration(Enum):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Core'
@@ -51507,7 +51507,7 @@ class BushingInsulationKind(Enum):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'AssetInfo'
@@ -51562,7 +51562,7 @@ class CableConstructionKind(Enum):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'AssetInfo'
@@ -51617,7 +51617,7 @@ class CableOuterJacketKind(Enum):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'AssetInfo'
@@ -51662,7 +51662,7 @@ class CableShieldMaterialKind(Enum):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'AssetInfo'
@@ -51702,7 +51702,7 @@ class CalculationKind(Enum):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'SIPS'
@@ -51737,7 +51737,7 @@ class CapacitorCanFusingKind(Enum):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Assets'
@@ -51772,7 +51772,7 @@ class CapacitorRackKind(Enum):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Assets'
@@ -51855,7 +51855,7 @@ class CirculationAndCoolingKind(Enum):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Assets'
@@ -51890,7 +51890,7 @@ class ComDirectionKind(Enum):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Metering'
@@ -51961,7 +51961,7 @@ class ComTechnologyKind(Enum):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Metering'
@@ -52101,7 +52101,7 @@ class CompensatorConnectionKind(Enum):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Assets'
@@ -52131,7 +52131,7 @@ class CompensatorControlModeKind(Enum):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Control'
@@ -52179,7 +52179,7 @@ class CompositeSwitchKind(Enum):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'InfAssetInfo'
@@ -52240,7 +52240,7 @@ class ConnectorTypeKind(Enum):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'AssetInfoEXT'
@@ -52271,7 +52271,7 @@ class ContingencyEquipmentStatusKind(Enum):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Contingency'
@@ -52306,7 +52306,7 @@ class CoolantType(Enum):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Wires'
@@ -52338,7 +52338,7 @@ class CurveStyle(Enum):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Core'
@@ -52373,7 +52373,7 @@ class CyberImpactLevel(Enum):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'MeasEXT'
@@ -52509,7 +52509,7 @@ class DCControlModeKind(Enum):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Control'
@@ -52536,7 +52536,7 @@ class DirectionKind(Enum):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Protection'
@@ -52571,7 +52571,7 @@ class DischargeResistorKind(Enum):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Assets'
@@ -52621,7 +52621,7 @@ class EVTypeKind(Enum):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'AssetEXT'
@@ -52699,7 +52699,7 @@ class EmissionType(Enum):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Production'
@@ -52729,7 +52729,7 @@ class EmissionValueSource(Enum):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Production'
@@ -52801,7 +52801,7 @@ class FuelType(Enum):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Production'
@@ -52830,7 +52830,7 @@ class FuseCurveKind(Enum):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Protection'
@@ -52888,7 +52888,7 @@ class GateLogicKind(Enum):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'SIPS'
@@ -52918,7 +52918,7 @@ class GeneratorControlMode(Enum):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Production'
@@ -52958,7 +52958,7 @@ class GeneratorControlSource(Enum):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Production'
@@ -53000,7 +53000,7 @@ class GeothermalUnitKind(Enum):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Production'
@@ -53031,7 +53031,7 @@ class HydroEnergyConversionKind(Enum):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Production'
@@ -53066,7 +53066,7 @@ class HydroPlantStorageKind(Enum):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Production'
@@ -53101,7 +53101,7 @@ class HydroTurbineKind(Enum):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'GenerationTrainingSimulation'
@@ -53141,7 +53141,7 @@ class InjectionControlModeKind(Enum):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Control'
@@ -53196,7 +53196,7 @@ class InterruptingMediumKind(Enum):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'AssetInfo'
@@ -53368,7 +53368,7 @@ class LogicalOperatorsKind(Enum):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'SIPS'
@@ -53414,7 +53414,7 @@ class MarineStructureKind(Enum):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Assets'
@@ -53461,7 +53461,7 @@ class MarineUnitKind(Enum):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Production'
@@ -53596,7 +53596,7 @@ class NuclearReactorKind(Enum):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Production'
@@ -53632,7 +53632,7 @@ class OilPreservationKind(Enum):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'InfAssetInfo'
@@ -53697,7 +53697,7 @@ class OperatingMechanismKind(Enum):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'AssetInfo'
@@ -53735,7 +53735,7 @@ class OperationalLimitDirectionKind(Enum):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'OperationalLimits'
@@ -53770,7 +53770,7 @@ class PetersenCoilModeKind(Enum):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Wires'
@@ -53935,7 +53935,7 @@ class PhaseCode(Enum):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Core'
@@ -54100,7 +54100,7 @@ class PhaseCodeExtension(Enum):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'CoreExtension'
@@ -54179,7 +54179,7 @@ class PhaseCodeProtection(Enum):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Protection'
@@ -54214,7 +54214,7 @@ class PhaseCountKind(Enum):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Assets'
@@ -54262,7 +54262,7 @@ class PhaseShuntConnectionKind(Enum):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Wires'
@@ -54297,7 +54297,7 @@ class PipeBusbarKind(Enum):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Assets'
@@ -54337,7 +54337,7 @@ class PoleBaseKind(Enum):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'InfAssets'
@@ -54385,7 +54385,7 @@ class PolePreservativeKind(Enum):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'InfAssets'
@@ -54437,7 +54437,7 @@ class PoleTreatmentKind(Enum):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'InfAssets'
@@ -54469,7 +54469,7 @@ class PotentialTransformerKind(Enum):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'AuxiliaryEquipment'
@@ -54508,7 +54508,7 @@ class PowerElectricalChemicalUnitKind(Enum):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Production'
@@ -54553,7 +54553,7 @@ class PowerElectronicsGateKind(Enum):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Assets'
@@ -54588,7 +54588,7 @@ class PowerFrequencyControlKind(Enum):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Control'
@@ -54702,7 +54702,7 @@ class ProgrammingLanguageKind(Enum):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return '62361Draft'
@@ -54745,7 +54745,7 @@ class ProtectionFunctionRoleKind(Enum):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Protection'
@@ -54803,7 +54803,7 @@ class ProtectionFunctionSchemeKInd(Enum):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Protection'
@@ -54877,7 +54877,7 @@ class ProtectionOperatingQuantityKind(Enum):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Protection'
@@ -54955,7 +54955,7 @@ class ProtectionOperationCharacteristicKind(Enum):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Protection'
@@ -54994,7 +54994,7 @@ class ReactorCoreKind(Enum):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Assets'
@@ -55025,7 +55025,7 @@ class ReactorInsulationMediumKind(Enum):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Assets'
@@ -55087,7 +55087,7 @@ class RegulatingControlModeKind(Enum):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Wires'
@@ -55127,7 +55127,7 @@ class RotatingMachineControlModeKind(Enum):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Control'
@@ -55165,7 +55165,7 @@ class STATCOMKind(Enum):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Assets'
@@ -55195,7 +55195,7 @@ class SVCControlMode(Enum):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Wires'
@@ -55233,7 +55233,7 @@ class SVCReactiveControlKind(Enum):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Assets'
@@ -55273,7 +55273,7 @@ class ShortCircuitRotorKind(Enum):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Wires'
@@ -55328,7 +55328,7 @@ class SinglePhaseKind(Enum):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Wires'
@@ -55403,7 +55403,7 @@ class Source(Enum):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'SCADA'
@@ -55439,7 +55439,7 @@ class StructureMaterialKind(Enum):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'InfAssets'
@@ -55474,7 +55474,7 @@ class SubstationControllerModeKind(Enum):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Control'
@@ -55532,7 +55532,7 @@ class SynchronousMachineKind(Enum):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Wires'
@@ -55567,7 +55567,7 @@ class SynchronousMachineOperatingMode(Enum):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Wires'
@@ -55594,7 +55594,7 @@ class SynchrophaserUsageKind(Enum):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'MeasEXT'
@@ -55629,7 +55629,7 @@ class TCSCControlModeKind(Enum):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Control'
@@ -55670,7 +55670,7 @@ class TerminalConnectionKind(Enum):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Assets'
@@ -55725,7 +55725,7 @@ class TimeSourceKind(Enum):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'AuxEqEXT'
@@ -55756,7 +55756,7 @@ class TransformerCharacteristicCurveKind(Enum):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Protection'
@@ -55816,7 +55816,7 @@ class UndergroundStructureKind(Enum):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'InfAssets'
@@ -55963,7 +55963,7 @@ class UnitMultiplier(Enum):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Domain'
@@ -56759,7 +56759,7 @@ class UnitSymbol(Enum):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Domain'
@@ -56802,7 +56802,7 @@ class UsagePointConnectedKind(Enum):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Metering'
@@ -56845,7 +56845,7 @@ class Validity(Enum):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Meas'
@@ -56875,7 +56875,7 @@ class WindGenUnitKind(Enum):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Production'
@@ -56930,7 +56930,7 @@ class WindingConnection(Enum):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Wires'
@@ -56966,7 +56966,7 @@ class WireConstructionKind(Enum):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Assets'
@@ -57120,7 +57120,7 @@ class WireInsulationKind(Enum):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'AssetInfo'
@@ -57185,7 +57185,7 @@ class WireMaterialKind(Enum):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'AssetInfo'
@@ -57261,7 +57261,7 @@ class WireUsageKind(Enum):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'AssetInfo'
@@ -57362,7 +57362,7 @@ class XSDDatatypeKind(Enum):
     
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'DetailedModelDescription'
@@ -58706,7 +58706,7 @@ class DecimalQuantity(Identity):
 
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Domain'
@@ -58727,7 +58727,7 @@ class TimeInterval(Identity):
 
     @property
     def __namespace__(self):
-        return 'http://ucaiug.io/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Domain'
