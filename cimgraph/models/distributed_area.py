@@ -3,8 +3,8 @@ import logging
 from dataclasses import dataclass, field
 from uuid import UUID
 
-from cimgraph.models.graph_model import GraphModel
 from cimgraph.databases import ConnectionInterface
+from cimgraph.models.graph_model import GraphModel
 
 _log = logging.getLogger(__name__)
 

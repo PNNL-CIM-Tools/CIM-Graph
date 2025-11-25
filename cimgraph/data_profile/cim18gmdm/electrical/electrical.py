@@ -1,10 +1,13 @@
 from __future__ import annotations
+
 import logging
 from dataclasses import dataclass, field
-from typing import Optional
 from enum import Enum
+from typing import Optional
+
 from cimgraph.data_profile.identity import Identity, stereotype
-from cimgraph.data_profile.units import CIMUnit, UnitSymbol, UnitMultiplier
+from cimgraph.data_profile.units import CIMUnit, UnitMultiplier, UnitSymbol
+
 _log = logging.getLogger(__name__)
 '''
 Annotated CIMantic Graphs data profile for UnbalancedElectrical
@@ -24,7 +27,7 @@ class CIMStereotype(Enum):
 
 BASE_URI = 'http://www.ucaiug.org/gmdm/electrical/unbalanced#'
 ONTOLOGY_URI = 'http://cim.ucaiug.io/CIM101/draft#'
-    
+
 @dataclass(repr=False)
 class IdentifiedObject(Identity):
     '''
@@ -50,14 +53,14 @@ class IdentifiedObject(Identity):
             The description is a free human readable text describing or naming the
             object. It may be non unique and may not correlate to a naming hierarchy.
             '''
-        
+
         })
     '''
     The description is a free human readable text describing or naming
     the object. It may be non unique and may not correlate to a naming
     hierarchy.
     '''
-    
+
     name: Optional[str] = field(
         default=None,
         metadata={
@@ -71,13 +74,13 @@ class IdentifiedObject(Identity):
             The name is any free human readable and possibly non unique text naming
             the object.
             '''
-        
+
         })
     '''
     The name is any free human readable and possibly non unique text naming
     the object.
     '''
-    
+
     @property
     def __namespace__(self):
         return 'http://cim.ucaiug.io/CIM101/draft#'
@@ -90,7 +93,7 @@ class IdentifiedObject(Identity):
     @property
     def __maxOccurs__(self):
         return 'unbounded'
-    
+
 @dataclass(repr=False)
 class ACDCTerminal(IdentifiedObject):
     '''
@@ -111,7 +114,7 @@ class ACDCTerminal(IdentifiedObject):
     @property
     def __maxOccurs__(self):
         return 'unbounded'
-    
+
 @stereotype(CIMStereotype.Description)
 @stereotype(CIMStereotype.Concrete)
 @dataclass(repr=False)
@@ -139,12 +142,12 @@ class Terminal(ACDCTerminal):
             '''
             The controls regulating this terminal.
             '''
-        
+
         })
     '''
     The controls regulating this terminal.
     '''
-    
+
     @property
     def __namespace__(self):
         return 'http://cim.ucaiug.io/CIM101/draft#'
@@ -157,7 +160,7 @@ class Terminal(ACDCTerminal):
     @property
     def __maxOccurs__(self):
         return 'unbounded'
-    
+
 @stereotype(CIMStereotype.Concrete)
 @dataclass(repr=False)
 class FossilFuel(IdentifiedObject):
@@ -180,12 +183,12 @@ class FossilFuel(IdentifiedObject):
             '''
             A thermal generating unit may have one or more fossil fuels.
             '''
-        
+
         })
     '''
     A thermal generating unit may have one or more fossil fuels.
     '''
-    
+
     PowerElectronicsThermalUnit: list[PowerElectronicsThermalUnit] = field(
         default_factory=list,
         metadata={
@@ -198,11 +201,11 @@ class FossilFuel(IdentifiedObject):
         'docstring':
             '''
             '''
-        
+
         })
     '''
     '''
-    
+
     @property
     def __namespace__(self):
         return 'http://cim.ucaiug.io/CIM101/draft#'
@@ -215,7 +218,7 @@ class FossilFuel(IdentifiedObject):
     @property
     def __maxOccurs__(self):
         return 'unbounded'
-    
+
 @stereotype(CIMStereotype.ByReference)
 @stereotype(CIMStereotype.Concrete)
 @dataclass(repr=False)
@@ -287,7 +290,7 @@ class LoadResponseCharacteristic(IdentifiedObject):
             The sum of qConstantImpedance, qConstantCurrent and qConstantPower shall
             equal 1.
             '''
-        
+
         })
     '''
     Indicates the exponential voltage dependency model is to be used. If
@@ -309,7 +312,7 @@ class LoadResponseCharacteristic(IdentifiedObject):
     The sum of qConstantImpedance, qConstantCurrent and qConstantPower
     shall equal 1.
     '''
-    
+
     pConstantCurrent: Optional[float] = field(
         default=None,
         metadata={
@@ -322,12 +325,12 @@ class LoadResponseCharacteristic(IdentifiedObject):
             '''
             Portion of active power load modelled as constant current.
             '''
-        
+
         })
     '''
     Portion of active power load modelled as constant current.
     '''
-    
+
     pConstantImpedance: Optional[float] = field(
         default=None,
         metadata={
@@ -340,12 +343,12 @@ class LoadResponseCharacteristic(IdentifiedObject):
             '''
             Portion of active power load modelled as constant impedance.
             '''
-        
+
         })
     '''
     Portion of active power load modelled as constant impedance.
     '''
-    
+
     pConstantPower: Optional[float] = field(
         default=None,
         metadata={
@@ -358,12 +361,12 @@ class LoadResponseCharacteristic(IdentifiedObject):
             '''
             Portion of active power load modelled as constant power.
             '''
-        
+
         })
     '''
     Portion of active power load modelled as constant power.
     '''
-    
+
     pFrequencyExponent: Optional[float] = field(
         default=None,
         metadata={
@@ -376,12 +379,12 @@ class LoadResponseCharacteristic(IdentifiedObject):
             '''
             Exponent of per unit frequency effecting active power.
             '''
-        
+
         })
     '''
     Exponent of per unit frequency effecting active power.
     '''
-    
+
     pVoltageExponent: Optional[float] = field(
         default=None,
         metadata={
@@ -394,12 +397,12 @@ class LoadResponseCharacteristic(IdentifiedObject):
             '''
             Exponent of per unit voltage effecting real power.
             '''
-        
+
         })
     '''
     Exponent of per unit voltage effecting real power.
     '''
-    
+
     qConstantCurrent: Optional[float] = field(
         default=None,
         metadata={
@@ -412,12 +415,12 @@ class LoadResponseCharacteristic(IdentifiedObject):
             '''
             Portion of reactive power load modelled as constant current.
             '''
-        
+
         })
     '''
     Portion of reactive power load modelled as constant current.
     '''
-    
+
     qConstantImpedance: Optional[float] = field(
         default=None,
         metadata={
@@ -430,12 +433,12 @@ class LoadResponseCharacteristic(IdentifiedObject):
             '''
             Portion of reactive power load modelled as constant impedance.
             '''
-        
+
         })
     '''
     Portion of reactive power load modelled as constant impedance.
     '''
-    
+
     qConstantPower: Optional[float] = field(
         default=None,
         metadata={
@@ -448,12 +451,12 @@ class LoadResponseCharacteristic(IdentifiedObject):
             '''
             Portion of reactive power load modelled as constant power.
             '''
-        
+
         })
     '''
     Portion of reactive power load modelled as constant power.
     '''
-    
+
     qFrequencyExponent: Optional[float] = field(
         default=None,
         metadata={
@@ -466,12 +469,12 @@ class LoadResponseCharacteristic(IdentifiedObject):
             '''
             Exponent of per unit frequency effecting reactive power.
             '''
-        
+
         })
     '''
     Exponent of per unit frequency effecting reactive power.
     '''
-    
+
     qVoltageExponent: Optional[float] = field(
         default=None,
         metadata={
@@ -484,12 +487,12 @@ class LoadResponseCharacteristic(IdentifiedObject):
             '''
             Exponent of per unit voltage effecting reactive power.
             '''
-        
+
         })
     '''
     Exponent of per unit voltage effecting reactive power.
     '''
-    
+
     EnergyConsumer: list[EnergyConsumer] = field(
         default_factory=list,
         metadata={
@@ -503,12 +506,12 @@ class LoadResponseCharacteristic(IdentifiedObject):
             '''
             The set of loads that have the response characteristics.
             '''
-        
+
         })
     '''
     The set of loads that have the response characteristics.
     '''
-    
+
     @property
     def __namespace__(self):
         return 'http://cim.ucaiug.io/CIM101/draft#'
@@ -521,7 +524,7 @@ class LoadResponseCharacteristic(IdentifiedObject):
     @property
     def __maxOccurs__(self):
         return 'unbounded'
-    
+
 @dataclass(repr=False)
 class PerLengthLineParameter(IdentifiedObject):
     '''
@@ -540,7 +543,7 @@ class PerLengthLineParameter(IdentifiedObject):
     @property
     def __maxOccurs__(self):
         return 'unbounded'
-    
+
 @stereotype(CIMStereotype.ByReference)
 @dataclass(repr=False)
 class PerLengthImpedance(PerLengthLineParameter):
@@ -561,12 +564,12 @@ class PerLengthImpedance(PerLengthLineParameter):
             '''
             All line segments described by this per-length impedance.
             '''
-        
+
         })
     '''
     All line segments described by this per-length impedance.
     '''
-    
+
     @property
     def __namespace__(self):
         return 'http://cim.ucaiug.io/CIM101/draft#'
@@ -579,7 +582,7 @@ class PerLengthImpedance(PerLengthLineParameter):
     @property
     def __maxOccurs__(self):
         return 'unbounded'
-    
+
 @stereotype(CIMStereotype.Concrete)
 @stereotype(CIMStereotype.ByReference)
 @dataclass(repr=False)
@@ -619,7 +622,7 @@ class PerLengthPhaseImpedance(PerLengthImpedance):
             segment group, the conductor count reflects the total of the conductors
             associated with all the coupled line segments in the group.
             '''
-        
+
         })
     '''
     Conductor count identifies the number of phase, neutral, and other
@@ -633,7 +636,7 @@ class PerLengthPhaseImpedance(PerLengthImpedance):
     reflects the total of the conductors associated with all the coupled
     line segments in the group.
     '''
-    
+
     PhaseImpedanceData: list[PhaseImpedanceData] = field(
         default_factory=list,
         metadata={
@@ -647,12 +650,12 @@ class PerLengthPhaseImpedance(PerLengthImpedance):
             '''
             All data that belong to this conductor phase impedance.
             '''
-        
+
         })
     '''
     All data that belong to this conductor phase impedance.
     '''
-    
+
     @property
     def __namespace__(self):
         return 'http://cim.ucaiug.io/CIM101/draft#'
@@ -665,7 +668,7 @@ class PerLengthPhaseImpedance(PerLengthImpedance):
     @property
     def __maxOccurs__(self):
         return 'unbounded'
-    
+
 @dataclass(repr=False)
 class PowerSystemResource(IdentifiedObject):
     '''
@@ -687,7 +690,7 @@ class PowerSystemResource(IdentifiedObject):
     @property
     def __maxOccurs__(self):
         return 'unbounded'
-    
+
 @stereotype(CIMStereotype.Description)
 @stereotype(CIMStereotype.Concrete)
 @dataclass(repr=False)
@@ -726,7 +729,7 @@ class ACLineSegmentPhase(PowerSystemResource):
             associated with the line segment. If there is a line segment phase for
             neutral, it is numbered last.
             '''
-        
+
         })
     '''
     Sequence number provides the numbering for this line segment phase.
@@ -740,7 +743,7 @@ class ACLineSegmentPhase(PowerSystemResource):
     phase associated with the line segment. If there is a line segment
     phase for neutral, it is numbered last.
     '''
-    
+
     @property
     def __namespace__(self):
         return 'http://cim.ucaiug.io/CIM101/draft#'
@@ -753,7 +756,7 @@ class ACLineSegmentPhase(PowerSystemResource):
     @property
     def __maxOccurs__(self):
         return 'unbounded'
-    
+
 @dataclass(repr=False)
 class ConnectivityNodeContainer(PowerSystemResource):
     '''
@@ -773,7 +776,7 @@ class ConnectivityNodeContainer(PowerSystemResource):
     @property
     def __maxOccurs__(self):
         return 'unbounded'
-    
+
 @dataclass(repr=False)
 class Equipment(PowerSystemResource):
     '''
@@ -792,7 +795,7 @@ class Equipment(PowerSystemResource):
     @property
     def __maxOccurs__(self):
         return 'unbounded'
-    
+
 @dataclass(repr=False)
 class ConductingEquipment(Equipment):
     '''
@@ -812,7 +815,7 @@ class ConductingEquipment(Equipment):
     @property
     def __maxOccurs__(self):
         return 'unbounded'
-    
+
 @dataclass(repr=False)
 class Conductor(ConductingEquipment):
     '''
@@ -838,12 +841,12 @@ class Conductor(ConductingEquipment):
             '''
             Segment length for calculating line segment capabilities.
             '''
-        
+
         })
     '''
     Segment length for calculating line segment capabilities.
     '''
-    
+
     @property
     def __namespace__(self):
         return 'http://cim.ucaiug.io/CIM101/draft#'
@@ -856,7 +859,7 @@ class Conductor(ConductingEquipment):
     @property
     def __maxOccurs__(self):
         return 'unbounded'
-    
+
 @stereotype(CIMStereotype.Description)
 @stereotype(CIMStereotype.Concrete)
 @dataclass(repr=False)
@@ -923,12 +926,12 @@ class ACLineSegment(Conductor):
             '''
             Per-length impedance of this line segment.
             '''
-        
+
         })
     '''
     Per-length impedance of this line segment.
     '''
-    
+
     @property
     def __namespace__(self):
         return 'http://cim.ucaiug.io/CIM101/draft#'
@@ -941,7 +944,7 @@ class ACLineSegment(Conductor):
     @property
     def __maxOccurs__(self):
         return 'unbounded'
-    
+
 @dataclass(repr=False)
 class EnergyConnection(ConductingEquipment):
     '''
@@ -960,7 +963,7 @@ class EnergyConnection(ConductingEquipment):
     @property
     def __maxOccurs__(self):
         return 'unbounded'
-    
+
 @stereotype(CIMStereotype.Description)
 @stereotype(CIMStereotype.Concrete)
 @dataclass(repr=False)
@@ -991,13 +994,13 @@ class EnergyConsumer(EnergyConnection):
             The load response characteristic of this load. If missing, this load is
             assumed to be constant power.
             '''
-        
+
         })
     '''
     The load response characteristic of this load. If missing, this load
     is assumed to be constant power.
     '''
-    
+
     @property
     def __namespace__(self):
         return 'http://cim.ucaiug.io/CIM101/draft#'
@@ -1010,7 +1013,7 @@ class EnergyConsumer(EnergyConnection):
     @property
     def __maxOccurs__(self):
         return 'unbounded'
-    
+
 @stereotype(CIMStereotype.Description)
 @stereotype(CIMStereotype.Concrete)
 @dataclass(repr=False)
@@ -1037,12 +1040,12 @@ class EnergySource(EnergyConnection):
             '''
             Phase-to-phase nominal voltage.
             '''
-        
+
         })
     '''
     Phase-to-phase nominal voltage.
     '''
-    
+
     r: Optional[ float | Resistance ] = field(
         default=None,
         metadata={
@@ -1055,12 +1058,12 @@ class EnergySource(EnergyConnection):
             '''
             Positive sequence Thevenin resistance.
             '''
-        
+
         })
     '''
     Positive sequence Thevenin resistance.
     '''
-    
+
     x: Optional[ float | Reactance ] = field(
         default=None,
         metadata={
@@ -1073,12 +1076,12 @@ class EnergySource(EnergyConnection):
             '''
             Positive sequence Thevenin reactance.
             '''
-        
+
         })
     '''
     Positive sequence Thevenin reactance.
     '''
-    
+
     @property
     def __namespace__(self):
         return 'http://cim.ucaiug.io/CIM101/draft#'
@@ -1091,7 +1094,7 @@ class EnergySource(EnergyConnection):
     @property
     def __maxOccurs__(self):
         return 'unbounded'
-    
+
 @dataclass(repr=False)
 class RegulatingCondEq(EnergyConnection):
     '''
@@ -1117,12 +1120,12 @@ class RegulatingCondEq(EnergyConnection):
             '''
             The regulating control scheme in which this equipment participates.
             '''
-        
+
         })
     '''
     The regulating control scheme in which this equipment participates.
     '''
-    
+
     @property
     def __namespace__(self):
         return 'http://cim.ucaiug.io/CIM101/draft#'
@@ -1135,7 +1138,7 @@ class RegulatingCondEq(EnergyConnection):
     @property
     def __maxOccurs__(self):
         return 'unbounded'
-    
+
 @stereotype(CIMStereotype.Concrete)
 @stereotype(CIMStereotype.Description)
 @dataclass(repr=False)
@@ -1158,13 +1161,13 @@ class PowerElectronicsConnection(RegulatingCondEq):
             Inverter control mode indicating whether reactive power output is based
             on constant PF or constant Q
             '''
-        
+
         })
     '''
     Inverter control mode indicating whether reactive power output is based
     on constant PF or constant Q
     '''
-    
+
     maxQ: Optional[ float | ReactivePower ] = field(
         default=None,
         metadata={
@@ -1178,13 +1181,13 @@ class PowerElectronicsConnection(RegulatingCondEq):
             Maximum reactive power limit. This is the maximum (nameplate) limit for
             the unit.
             '''
-        
+
         })
     '''
     Maximum reactive power limit. This is the maximum (nameplate) limit
     for the unit.
     '''
-    
+
     minQ: Optional[ float | ReactivePower ] = field(
         default=None,
         metadata={
@@ -1198,13 +1201,13 @@ class PowerElectronicsConnection(RegulatingCondEq):
             Minimum reactive power limit for the unit. This is the minimum (nameplate)
             limit for the unit.
             '''
-        
+
         })
     '''
     Minimum reactive power limit for the unit. This is the minimum (nameplate)
     limit for the unit.
     '''
-    
+
     ratedS: Optional[ float | ApparentPower ] = field(
         default=None,
         metadata={
@@ -1218,13 +1221,13 @@ class PowerElectronicsConnection(RegulatingCondEq):
             Nameplate apparent power rating for the unit.
             The attribute shall have a positive value.
             '''
-        
+
         })
     '''
     Nameplate apparent power rating for the unit.
     The attribute shall have a positive value.
     '''
-    
+
     ratedU: Optional[ float | Voltage ] = field(
         default=None,
         metadata={
@@ -1239,14 +1242,14 @@ class PowerElectronicsConnection(RegulatingCondEq):
             for short circuit data exchange according to IEC 60909.
             The attribute shall be a positive value.
             '''
-        
+
         })
     '''
     Rated voltage (nameplate data, Ur in IEC 60909-0). It is primarily
     used for short circuit data exchange according to IEC 60909.
     The attribute shall be a positive value.
     '''
-    
+
     PowerElectronicsUnit: list[PowerElectronicsUnit] = field(
         default_factory=list,
         metadata={
@@ -1261,13 +1264,13 @@ class PowerElectronicsConnection(RegulatingCondEq):
             An AC network connection may have several power electronics units connecting
             through it.
             '''
-        
+
         })
     '''
     An AC network connection may have several power electronics units connecting
     through it.
     '''
-    
+
     @property
     def __namespace__(self):
         return 'http://cim.ucaiug.io/CIM101/draft#'
@@ -1280,7 +1283,7 @@ class PowerElectronicsConnection(RegulatingCondEq):
     @property
     def __maxOccurs__(self):
         return 'unbounded'
-    
+
 @dataclass(repr=False)
 class RotatingMachine(RegulatingCondEq):
     '''
@@ -1300,13 +1303,13 @@ class RotatingMachine(RegulatingCondEq):
             Nameplate apparent power rating for the unit.
             The attribute shall have a positive value.
             '''
-        
+
         })
     '''
     Nameplate apparent power rating for the unit.
     The attribute shall have a positive value.
     '''
-    
+
     ratedU: Optional[ float | Voltage ] = field(
         default=None,
         metadata={
@@ -1321,14 +1324,14 @@ class RotatingMachine(RegulatingCondEq):
             for short circuit data exchange according to IEC 60909.
             The attribute shall be a positive value.
             '''
-        
+
         })
     '''
     Rated voltage (nameplate data, Ur in IEC 60909-0). It is primarily
     used for short circuit data exchange according to IEC 60909.
     The attribute shall be a positive value.
     '''
-    
+
     GeneratingUnit: Optional[GeneratingUnit] = field(
         default=None,
         metadata={
@@ -1343,13 +1346,13 @@ class RotatingMachine(RegulatingCondEq):
             A synchronous machine may operate as a generator and as such becomes a
             member of a generating unit.
             '''
-        
+
         })
     '''
     A synchronous machine may operate as a generator and as such becomes
     a member of a generating unit.
     '''
-    
+
     @property
     def __namespace__(self):
         return 'http://cim.ucaiug.io/CIM101/draft#'
@@ -1362,7 +1365,7 @@ class RotatingMachine(RegulatingCondEq):
     @property
     def __maxOccurs__(self):
         return 'unbounded'
-    
+
 @stereotype(CIMStereotype.Description)
 @stereotype(CIMStereotype.Concrete)
 @dataclass(repr=False)
@@ -1385,7 +1388,7 @@ class AsynchronousMachine(RotatingMachine):
     @property
     def __maxOccurs__(self):
         return 'unbounded'
-    
+
 @stereotype(CIMStereotype.Description)
 @stereotype(CIMStereotype.Concrete)
 @dataclass(repr=False)
@@ -1408,7 +1411,7 @@ class SynchronousMachine(RotatingMachine):
     @property
     def __maxOccurs__(self):
         return 'unbounded'
-    
+
 @dataclass(repr=False)
 class ShuntCompensator(RegulatingCondEq):
     '''
@@ -1435,12 +1438,12 @@ class ShuntCompensator(RegulatingCondEq):
             '''
             The maximum number of sections that may be switched in.
             '''
-        
+
         })
     '''
     The maximum number of sections that may be switched in.
     '''
-    
+
     normalSections: Optional[int] = field(
         default=None,
         metadata={
@@ -1454,13 +1457,13 @@ class ShuntCompensator(RegulatingCondEq):
             The normal number of sections switched in. The value shall be between zero
             and ShuntCompensator.maximumSections.
             '''
-        
+
         })
     '''
     The normal number of sections switched in. The value shall be between
     zero and ShuntCompensator.maximumSections.
     '''
-    
+
     aVRDelay: Optional[ float | Seconds ] = field(
         default=None,
         metadata={
@@ -1475,14 +1478,14 @@ class ShuntCompensator(RegulatingCondEq):
             from a change in voltage to when the capacitor is allowed to change state.
             This filters out temporary changes in voltage.
             '''
-        
+
         })
     '''
     An automatic voltage regulation delay (AVRDelay) which is the time
     delay from a change in voltage to when the capacitor is allowed to
     change state. This filters out temporary changes in voltage.
     '''
-    
+
     nomU: Optional[ float | Voltage ] = field(
         default=None,
         metadata={
@@ -1497,14 +1500,14 @@ class ShuntCompensator(RegulatingCondEq):
             should normally be within 10% of the voltage at which the capacitor is
             connected to the network.
             '''
-        
+
         })
     '''
     The voltage at which the nominal reactive power may be calculated.
     This should normally be within 10% of the voltage at which the capacitor
     is connected to the network.
     '''
-    
+
     @property
     def __namespace__(self):
         return 'http://cim.ucaiug.io/CIM101/draft#'
@@ -1517,7 +1520,7 @@ class ShuntCompensator(RegulatingCondEq):
     @property
     def __maxOccurs__(self):
         return 'unbounded'
-    
+
 @stereotype(CIMStereotype.Description)
 @stereotype(CIMStereotype.Concrete)
 @dataclass(repr=False)
@@ -1544,12 +1547,12 @@ class LinearShuntCompensator(ShuntCompensator):
             '''
             Positive sequence shunt (charging) susceptance per section.
             '''
-        
+
         })
     '''
     Positive sequence shunt (charging) susceptance per section.
     '''
-    
+
     gPerSection: Optional[ float | Conductance ] = field(
         default=None,
         metadata={
@@ -1562,12 +1565,12 @@ class LinearShuntCompensator(ShuntCompensator):
             '''
             Positive sequence shunt (charging) conductance per section.
             '''
-        
+
         })
     '''
     Positive sequence shunt (charging) conductance per section.
     '''
-    
+
     @property
     def __namespace__(self):
         return 'http://cim.ucaiug.io/CIM101/draft#'
@@ -1580,7 +1583,7 @@ class LinearShuntCompensator(ShuntCompensator):
     @property
     def __maxOccurs__(self):
         return 'unbounded'
-    
+
 @stereotype(CIMStereotype.Description)
 @stereotype(CIMStereotype.Concrete)
 @dataclass(repr=False)
@@ -1613,7 +1616,7 @@ class PowerTransformer(ConductingEquipment):
     @property
     def __maxOccurs__(self):
         return 'unbounded'
-    
+
 @stereotype(CIMStereotype.Description)
 @stereotype(CIMStereotype.Concrete)
 @dataclass(repr=False)
@@ -1635,12 +1638,12 @@ class SeriesCompensator(ConductingEquipment):
             '''
             Positive sequence resistance.
             '''
-        
+
         })
     '''
     Positive sequence resistance.
     '''
-    
+
     x: Optional[ float | Reactance ] = field(
         default=None,
         metadata={
@@ -1653,12 +1656,12 @@ class SeriesCompensator(ConductingEquipment):
             '''
             Positive sequence reactance.
             '''
-        
+
         })
     '''
     Positive sequence reactance.
     '''
-    
+
     @property
     def __namespace__(self):
         return 'http://cim.ucaiug.io/CIM101/draft#'
@@ -1671,7 +1674,7 @@ class SeriesCompensator(ConductingEquipment):
     @property
     def __maxOccurs__(self):
         return 'unbounded'
-    
+
 @dataclass(repr=False)
 class Switch(ConductingEquipment):
     '''
@@ -1701,14 +1704,14 @@ class Switch(ConductingEquipment):
             device material and construction.
             The attribute shall be a positive value.
             '''
-        
+
         })
     '''
     The maximum continuous current carrying capacity in amps governed by
     the device material and construction.
     The attribute shall be a positive value.
     '''
-    
+
     @property
     def __namespace__(self):
         return 'http://cim.ucaiug.io/CIM101/draft#'
@@ -1721,7 +1724,7 @@ class Switch(ConductingEquipment):
     @property
     def __maxOccurs__(self):
         return 'unbounded'
-    
+
 @stereotype(CIMStereotype.Description)
 @stereotype(CIMStereotype.Concrete)
 @dataclass(repr=False)
@@ -1749,7 +1752,7 @@ class Disconnector(Switch):
     @property
     def __maxOccurs__(self):
         return 'unbounded'
-    
+
 @stereotype(CIMStereotype.Description)
 @stereotype(CIMStereotype.Concrete)
 @dataclass(repr=False)
@@ -1772,7 +1775,7 @@ class Fuse(Switch):
     @property
     def __maxOccurs__(self):
         return 'unbounded'
-    
+
 @dataclass(repr=False)
 class ProtectedSwitch(Switch):
     '''
@@ -1797,13 +1800,13 @@ class ProtectedSwitch(Switch):
             The maximum fault current a breaking device can break safely under prescribed
             conditions of use.
             '''
-        
+
         })
     '''
     The maximum fault current a breaking device can break safely under
     prescribed conditions of use.
     '''
-    
+
     @property
     def __namespace__(self):
         return 'http://cim.ucaiug.io/CIM101/draft#'
@@ -1816,7 +1819,7 @@ class ProtectedSwitch(Switch):
     @property
     def __maxOccurs__(self):
         return 'unbounded'
-    
+
 @stereotype(CIMStereotype.Description)
 @stereotype(CIMStereotype.Concrete)
 @dataclass(repr=False)
@@ -1840,7 +1843,7 @@ class Breaker(ProtectedSwitch):
     @property
     def __maxOccurs__(self):
         return 'unbounded'
-    
+
 @stereotype(CIMStereotype.Description)
 @stereotype(CIMStereotype.Concrete)
 @dataclass(repr=False)
@@ -1862,7 +1865,7 @@ class LoadBreakSwitch(ProtectedSwitch):
     @property
     def __maxOccurs__(self):
         return 'unbounded'
-    
+
 @stereotype(CIMStereotype.Description)
 @stereotype(CIMStereotype.Concrete)
 @dataclass(repr=False)
@@ -1884,7 +1887,7 @@ class Recloser(ProtectedSwitch):
     @property
     def __maxOccurs__(self):
         return 'unbounded'
-    
+
 @stereotype(CIMStereotype.Description)
 @stereotype(CIMStereotype.Concrete)
 @dataclass(repr=False)
@@ -1908,7 +1911,7 @@ class Sectionaliser(Switch):
     @property
     def __maxOccurs__(self):
         return 'unbounded'
-    
+
 @dataclass(repr=False)
 class GeneratingUnit(Equipment):
     '''
@@ -1937,13 +1940,13 @@ class GeneratingUnit(Equipment):
             The unit's gross rated maximum capacity (book value).
             The attribute shall be a positive value.
             '''
-        
+
         })
     '''
     The unit's gross rated maximum capacity (book value).
     The attribute shall be a positive value.
     '''
-    
+
     RotatingMachine: list[RotatingMachine] = field(
         default_factory=list,
         metadata={
@@ -1958,13 +1961,13 @@ class GeneratingUnit(Equipment):
             A synchronous machine may operate as a generator and as such becomes a
             member of a generating unit.
             '''
-        
+
         })
     '''
     A synchronous machine may operate as a generator and as such becomes
     a member of a generating unit.
     '''
-    
+
     @property
     def __namespace__(self):
         return 'http://cim.ucaiug.io/CIM101/draft#'
@@ -1977,7 +1980,7 @@ class GeneratingUnit(Equipment):
     @property
     def __maxOccurs__(self):
         return 'unbounded'
-    
+
 @stereotype(CIMStereotype.Concrete)
 @dataclass(repr=False)
 class ThermalGeneratingUnit(GeneratingUnit):
@@ -2004,12 +2007,12 @@ class ThermalGeneratingUnit(GeneratingUnit):
             '''
             A thermal generating unit may have one or more fossil fuels.
             '''
-        
+
         })
     '''
     A thermal generating unit may have one or more fossil fuels.
     '''
-    
+
     @property
     def __namespace__(self):
         return 'http://cim.ucaiug.io/CIM101/draft#'
@@ -2022,7 +2025,7 @@ class ThermalGeneratingUnit(GeneratingUnit):
     @property
     def __maxOccurs__(self):
         return '1'
-    
+
 @stereotype(CIMStereotype.Concrete)
 @dataclass(repr=False)
 class WindGeneratingUnit(GeneratingUnit):
@@ -2048,12 +2051,12 @@ class WindGeneratingUnit(GeneratingUnit):
             '''
             The kind of wind generating unit.
             '''
-        
+
         })
     '''
     The kind of wind generating unit.
     '''
-    
+
     @property
     def __namespace__(self):
         return 'http://cim.ucaiug.io/CIM101/draft#'
@@ -2066,7 +2069,7 @@ class WindGeneratingUnit(GeneratingUnit):
     @property
     def __maxOccurs__(self):
         return 'unbounded'
-    
+
 @dataclass(repr=False)
 class PowerElectronicsUnit(Equipment):
     '''
@@ -2092,13 +2095,13 @@ class PowerElectronicsUnit(Equipment):
             Maximum active power limit. This is the maximum (nameplate) limit for the
             unit.
             '''
-        
+
         })
     '''
     Maximum active power limit. This is the maximum (nameplate) limit for
     the unit.
     '''
-    
+
     minP: Optional[ float | ActivePower ] = field(
         default=None,
         metadata={
@@ -2112,13 +2115,13 @@ class PowerElectronicsUnit(Equipment):
             Minimum active power limit. This is the minimum (nameplate) limit for the
             unit.
             '''
-        
+
         })
     '''
     Minimum active power limit. This is the minimum (nameplate) limit for
     the unit.
     '''
-    
+
     PowerElectronicsConnection: Optional[PowerElectronicsConnection] = field(
         default=None,
         metadata={
@@ -2132,12 +2135,12 @@ class PowerElectronicsUnit(Equipment):
             '''
             A power electronics unit has a connection to the AC network.
             '''
-        
+
         })
     '''
     A power electronics unit has a connection to the AC network.
     '''
-    
+
     @property
     def __namespace__(self):
         return 'http://cim.ucaiug.io/CIM101/draft#'
@@ -2150,7 +2153,7 @@ class PowerElectronicsUnit(Equipment):
     @property
     def __maxOccurs__(self):
         return 'unbounded'
-    
+
 @stereotype(CIMStereotype.Concrete)
 @dataclass(repr=False)
 class BatteryUnit(PowerElectronicsUnit):
@@ -2176,13 +2179,13 @@ class BatteryUnit(PowerElectronicsUnit):
             Full energy storage capacity of the battery. The attribute shall be a positive
             value.
             '''
-        
+
         })
     '''
     Full energy storage capacity of the battery. The attribute shall be
     a positive value.
     '''
-    
+
     @property
     def __namespace__(self):
         return 'http://cim.ucaiug.io/CIM101/draft#'
@@ -2195,7 +2198,7 @@ class BatteryUnit(PowerElectronicsUnit):
     @property
     def __maxOccurs__(self):
         return 'unbounded'
-    
+
 @stereotype(CIMStereotype.Concrete)
 @dataclass(repr=False)
 class PhotoVoltaicUnit(PowerElectronicsUnit):
@@ -2215,7 +2218,7 @@ class PhotoVoltaicUnit(PowerElectronicsUnit):
     @property
     def __maxOccurs__(self):
         return 'unbounded'
-    
+
 @stereotype(CIMStereotype.gmdm)
 @stereotype(CIMStereotype.Concrete)
 @dataclass(repr=False)
@@ -2242,11 +2245,11 @@ class PowerElectronicsThermalUnit(PowerElectronicsUnit):
         'docstring':
             '''
             '''
-        
+
         })
     '''
     '''
-    
+
     @property
     def __namespace__(self):
         return 'http://epri.com/gmdm/2025#'
@@ -2259,7 +2262,7 @@ class PowerElectronicsThermalUnit(PowerElectronicsUnit):
     @property
     def __maxOccurs__(self):
         return 'unbounded'
-    
+
 @stereotype(CIMStereotype.Concrete)
 @dataclass(repr=False)
 class PowerElectronicsWindUnit(PowerElectronicsUnit):
@@ -2280,7 +2283,7 @@ class PowerElectronicsWindUnit(PowerElectronicsUnit):
     @property
     def __maxOccurs__(self):
         return 'unbounded'
-    
+
 @stereotype(CIMStereotype.ByReference)
 @dataclass(repr=False)
 class RegulatingControl(PowerSystemResource):
@@ -2332,7 +2335,7 @@ class RegulatingControl(PowerSystemResource):
             in the simulation. This applies to equipment with discrete controls, e.g.
             tap changers and shunt compensators.
             '''
-        
+
         })
     '''
     If true, indicates that regulation is performed in the simulation in
@@ -2340,7 +2343,7 @@ class RegulatingControl(PowerSystemResource):
     used in the simulation. This applies to equipment with discrete controls,
     e.g. tap changers and shunt compensators.
     '''
-    
+
     enabled: Optional[bool] = field(
         default=None,
         metadata={
@@ -2353,12 +2356,12 @@ class RegulatingControl(PowerSystemResource):
             '''
             The flag tells if regulation is enabled.
             '''
-        
+
         })
     '''
     The flag tells if regulation is enabled.
     '''
-    
+
     targetDeadband: Optional[float] = field(
         default=None,
         metadata={
@@ -2379,7 +2382,7 @@ class RegulatingControl(PowerSystemResource):
             Note that for instance, if the targetValue is 100 kV and the targetDeadband
             is 2 kV the range is from 99 to 101 kV.
             '''
-        
+
         })
     '''
     This is the deadband set on the controller. It is used with discrete
@@ -2393,7 +2396,7 @@ class RegulatingControl(PowerSystemResource):
     Note that for instance, if the targetValue is 100 kV and the targetDeadband
     is 2 kV the range is from 99 to 101 kV.
     '''
-    
+
     targetValue: Optional[float] = field(
         default=None,
         metadata={
@@ -2414,7 +2417,7 @@ class RegulatingControl(PowerSystemResource):
             If the required primary target is 7128 volts for a single phase tap changer
             then the value of targetValue would equal 118.8 volts secondary (7128/60).
             '''
-        
+
         })
     '''
     The target value set on the controller. It is the starting value for
@@ -2429,7 +2432,7 @@ class RegulatingControl(PowerSystemResource):
     phase tap changer then the value of targetValue would equal 118.8 volts
     secondary (7128/60).
     '''
-    
+
     mode: Optional[ RegulatingControlModeKind ] = field(
         default=None,
         metadata={
@@ -2444,14 +2447,14 @@ class RegulatingControl(PowerSystemResource):
             for determining the kind of regulation without need for obtaining the units
             from a schedule.
             '''
-        
+
         })
     '''
     The regulating control mode presently available. This specification
     allows for determining the kind of regulation without need for obtaining
     the units from a schedule.
     '''
-    
+
     monitoredPhase: Optional[ PhaseCode ] = field(
         default=None,
         metadata={
@@ -2464,12 +2467,12 @@ class RegulatingControl(PowerSystemResource):
             '''
             Phase voltage controlling this regulator, measured at regulator location.
             '''
-        
+
         })
     '''
     Phase voltage controlling this regulator, measured at regulator location.
     '''
-    
+
     Terminal: Optional[Terminal] = field(
         default=None,
         metadata={
@@ -2486,7 +2489,7 @@ class RegulatingControl(PowerSystemResource):
             node or a connectivity node. Sometimes it is useful to model regulation
             at a terminal of a bus bar object.
             '''
-        
+
         })
     '''
     The terminal associated with this regulating control. The terminal
@@ -2494,7 +2497,7 @@ class RegulatingControl(PowerSystemResource):
     either a topological node or a connectivity node. Sometimes it is useful
     to model regulation at a terminal of a bus bar object.
     '''
-    
+
     RegulatingCondEq: list[RegulatingCondEq] = field(
         default_factory=list,
         metadata={
@@ -2508,12 +2511,12 @@ class RegulatingControl(PowerSystemResource):
             '''
             The equipment that participates in this regulating control scheme.
             '''
-        
+
         })
     '''
     The equipment that participates in this regulating control scheme.
     '''
-    
+
     @property
     def __namespace__(self):
         return 'http://cim.ucaiug.io/CIM101/draft#'
@@ -2526,7 +2529,7 @@ class RegulatingControl(PowerSystemResource):
     @property
     def __maxOccurs__(self):
         return 'unbounded'
-    
+
 @stereotype(CIMStereotype.Concrete)
 @dataclass(repr=False)
 class TapChangerControl(RegulatingControl):
@@ -2552,12 +2555,12 @@ class TapChangerControl(RegulatingControl):
             '''
             If true, the line drop compensation is to be applied.
             '''
-        
+
         })
     '''
     If true, the line drop compensation is to be applied.
     '''
-    
+
     reverseToNeutral: Optional[bool] = field(
         default=None,
         metadata={
@@ -2569,11 +2572,11 @@ class TapChangerControl(RegulatingControl):
         'docstring':
             '''
             '''
-        
+
         })
     '''
     '''
-    
+
     reversible: Optional[bool] = field(
         default=None,
         metadata={
@@ -2585,11 +2588,11 @@ class TapChangerControl(RegulatingControl):
         'docstring':
             '''
             '''
-        
+
         })
     '''
     '''
-    
+
     lineDropR: Optional[ float | Resistance ] = field(
         default=None,
         metadata={
@@ -2602,13 +2605,13 @@ class TapChangerControl(RegulatingControl):
             '''
             Line drop compensator resistance setting for normal (forward) power flow.
             '''
-        
+
         })
     '''
     Line drop compensator resistance setting for normal (forward) power
     flow.
     '''
-    
+
     lineDropX: Optional[ float | Reactance ] = field(
         default=None,
         metadata={
@@ -2621,13 +2624,13 @@ class TapChangerControl(RegulatingControl):
             '''
             Line drop compensator reactance setting for normal (forward) power flow.
             '''
-        
+
         })
     '''
     Line drop compensator reactance setting for normal (forward) power
     flow.
     '''
-    
+
     maxLimitVoltage: Optional[ float | Voltage ] = field(
         default=None,
         metadata={
@@ -2644,7 +2647,7 @@ class TapChangerControl(RegulatingControl):
             to as first-house protection. If utilized, then TapChanger.ptRatio must
             be supplied.
             '''
-        
+
         })
     '''
     Maximum allowed regulated voltage on the PT secondary. This is the
@@ -2653,7 +2656,7 @@ class TapChangerControl(RegulatingControl):
     regulator. Sometimes referred to as first-house protection. If utilized,
     then TapChanger.ptRatio must be supplied.
     '''
-    
+
     minLimitVoltage: Optional[ float | Voltage ] = field(
         default=None,
         metadata={
@@ -2670,7 +2673,7 @@ class TapChangerControl(RegulatingControl):
             to as last-house protection. If utilized, then TapChanger.ptRatio must
             be supplied.
             '''
-        
+
         })
     '''
     Minimum allowed regulated voltage on the PT secondary. This is the
@@ -2679,7 +2682,7 @@ class TapChangerControl(RegulatingControl):
     regulator. Sometimes referred to as last-house protection. If utilized,
     then TapChanger.ptRatio must be supplied.
     '''
-    
+
     reverseLineDropR: Optional[ float | Resistance ] = field(
         default=None,
         metadata={
@@ -2692,12 +2695,12 @@ class TapChangerControl(RegulatingControl):
             '''
             Line drop compensator resistance setting for reverse power flow.
             '''
-        
+
         })
     '''
     Line drop compensator resistance setting for reverse power flow.
     '''
-    
+
     reverseLineDropX: Optional[ float | Reactance ] = field(
         default=None,
         metadata={
@@ -2710,12 +2713,12 @@ class TapChangerControl(RegulatingControl):
             '''
             Line drop compensator reactance setting for reverse power flow.
             '''
-        
+
         })
     '''
     Line drop compensator reactance setting for reverse power flow.
     '''
-    
+
     reverseTargetDeadband: Optional[ float | Voltage ] = field(
         default=None,
         metadata={
@@ -2727,11 +2730,11 @@ class TapChangerControl(RegulatingControl):
         'docstring':
             '''
             '''
-        
+
         })
     '''
     '''
-    
+
     reverseTargetValue: Optional[ float | Voltage ] = field(
         default=None,
         metadata={
@@ -2743,11 +2746,11 @@ class TapChangerControl(RegulatingControl):
         'docstring':
             '''
             '''
-        
+
         })
     '''
     '''
-    
+
     reversingDelay: Optional[ float | Seconds ] = field(
         default=None,
         metadata={
@@ -2759,11 +2762,11 @@ class TapChangerControl(RegulatingControl):
         'docstring':
             '''
             '''
-        
+
         })
     '''
     '''
-    
+
     reversingPowerThreshold: Optional[ float | ApparentPower ] = field(
         default=None,
         metadata={
@@ -2775,11 +2778,11 @@ class TapChangerControl(RegulatingControl):
         'docstring':
             '''
             '''
-        
+
         })
     '''
     '''
-    
+
     TapChanger: list[TapChanger] = field(
         default_factory=list,
         metadata={
@@ -2793,12 +2796,12 @@ class TapChangerControl(RegulatingControl):
             '''
             The tap changers that participates in this regulating tap control scheme.
             '''
-        
+
         })
     '''
     The tap changers that participates in this regulating tap control scheme.
     '''
-    
+
     @property
     def __namespace__(self):
         return 'http://cim.ucaiug.io/CIM101/draft#'
@@ -2811,7 +2814,7 @@ class TapChangerControl(RegulatingControl):
     @property
     def __maxOccurs__(self):
         return 'unbounded'
-    
+
 @dataclass(repr=False)
 class ShuntCompensatorPhase(PowerSystemResource):
     '''
@@ -2836,12 +2839,12 @@ class ShuntCompensatorPhase(PowerSystemResource):
             '''
             The maximum number of sections that may be switched in for this phase.
             '''
-        
+
         })
     '''
     The maximum number of sections that may be switched in for this phase.
     '''
-    
+
     normalSections: Optional[int] = field(
         default=None,
         metadata={
@@ -2855,13 +2858,13 @@ class ShuntCompensatorPhase(PowerSystemResource):
             For the capacitor phase, the normal number of sections switched in. The
             value shall be between zero and ShuntCompensatorPhase.maximumSections.
             '''
-        
+
         })
     '''
     For the capacitor phase, the normal number of sections switched in.
     The value shall be between zero and ShuntCompensatorPhase.maximumSections.
     '''
-    
+
     @property
     def __namespace__(self):
         return 'http://cim.ucaiug.io/CIM101/draft#'
@@ -2874,7 +2877,7 @@ class ShuntCompensatorPhase(PowerSystemResource):
     @property
     def __maxOccurs__(self):
         return 'unbounded'
-    
+
 @stereotype(CIMStereotype.Concrete)
 @stereotype(CIMStereotype.Description)
 @dataclass(repr=False)
@@ -2902,14 +2905,14 @@ class LinearShuntCompensatorPhase(ShuntCompensatorPhase):
             Susceptance per section of the phase if shunt compensator is wye connected.
             Susceptance per section phase to phase if shunt compensator is delta connected.
             '''
-        
+
         })
     '''
     Susceptance per section of the phase if shunt compensator is wye connected.
     Susceptance per section phase to phase if shunt compensator is delta
     connected.
     '''
-    
+
     gPerSection: Optional[ float | Conductance ] = field(
         default=None,
         metadata={
@@ -2923,14 +2926,14 @@ class LinearShuntCompensatorPhase(ShuntCompensatorPhase):
             Conductance per section for this phase if shunt compensator is wye connected.
             Conductance per section phase to phase if shunt compensator is delta connected.
             '''
-        
+
         })
     '''
     Conductance per section for this phase if shunt compensator is wye
     connected. Conductance per section phase to phase if shunt compensator
     is delta connected.
     '''
-    
+
     @property
     def __namespace__(self):
         return 'http://cim.ucaiug.io/CIM101/draft#'
@@ -2943,7 +2946,7 @@ class LinearShuntCompensatorPhase(ShuntCompensatorPhase):
     @property
     def __maxOccurs__(self):
         return 'unbounded'
-    
+
 @dataclass(repr=False)
 class TapChanger(PowerSystemResource):
     '''
@@ -2968,13 +2971,13 @@ class TapChanger(PowerSystemResource):
             Specifies the regulation status of the equipment. True is regulating, false
             is not regulating.
             '''
-        
+
         })
     '''
     Specifies the regulation status of the equipment. True is regulating,
     false is not regulating.
     '''
-    
+
     ctRating: Optional[float] = field(
         default=None,
         metadata={
@@ -2986,11 +2989,11 @@ class TapChanger(PowerSystemResource):
         'docstring':
             '''
             '''
-        
+
         })
     '''
     '''
-    
+
     ctRatio: Optional[float] = field(
         default=None,
         metadata={
@@ -3006,7 +3009,7 @@ class TapChanger(PowerSystemResource):
             and RegulatingControl.minAllowedTargetValue) are expressed in secondary
             units.
             '''
-        
+
         })
     '''
     Built-in current transformer ratio. If a value is specified, then RegulatingControl.targetValue
@@ -3014,7 +3017,7 @@ class TapChanger(PowerSystemResource):
     and RegulatingControl.minAllowedTargetValue) are expressed in secondary
     units.
     '''
-    
+
     highStep: Optional[int] = field(
         default=None,
         metadata={
@@ -3028,13 +3031,13 @@ class TapChanger(PowerSystemResource):
             Highest possible tap step position, advance from neutral.
             The attribute shall be greater than lowStep.
             '''
-        
+
         })
     '''
     Highest possible tap step position, advance from neutral.
     The attribute shall be greater than lowStep.
     '''
-    
+
     lowStep: Optional[int] = field(
         default=None,
         metadata={
@@ -3047,12 +3050,12 @@ class TapChanger(PowerSystemResource):
             '''
             Lowest possible tap step position, retard from neutral.
             '''
-        
+
         })
     '''
     Lowest possible tap step position, retard from neutral.
     '''
-    
+
     ltcFlag: Optional[bool] = field(
         default=None,
         metadata={
@@ -3065,12 +3068,12 @@ class TapChanger(PowerSystemResource):
             '''
             Specifies whether or not a TapChanger has load tap changing capabilities.
             '''
-        
+
         })
     '''
     Specifies whether or not a TapChanger has load tap changing capabilities.
     '''
-    
+
     neutralStep: Optional[int] = field(
         default=None,
         metadata={
@@ -3088,7 +3091,7 @@ class TapChanger(PowerSystemResource):
             of the transformer are at the ratedU. If there are other tap changers on
             the transformer those taps are kept constant at their neutralStep.
             '''
-        
+
         })
     '''
     The neutral tap step position for this winding.
@@ -3099,7 +3102,7 @@ class TapChanger(PowerSystemResource):
     tap changers on the transformer those taps are kept constant at their
     neutralStep.
     '''
-    
+
     ptRatio: Optional[float] = field(
         default=None,
         metadata={
@@ -3116,7 +3119,7 @@ class TapChanger(PowerSystemResource):
             as well as TapChangerControl.maxLimitVoltage and TapChangerControl.minLimitVoltage)
             are expressed in secondary units.
             '''
-        
+
         })
     '''
     Built-in potential (voltage) transformer ratio. If a value is specified,
@@ -3125,7 +3128,7 @@ class TapChanger(PowerSystemResource):
     as well as TapChangerControl.maxLimitVoltage and TapChangerControl.minLimitVoltage)
     are expressed in secondary units.
     '''
-    
+
     initialDelay: Optional[ float | Seconds ] = field(
         default=None,
         metadata={
@@ -3138,13 +3141,13 @@ class TapChanger(PowerSystemResource):
             '''
             For an LTC, the delay for initial tap changer operation (first step change).
             '''
-        
+
         })
     '''
     For an LTC, the delay for initial tap changer operation (first step
     change).
     '''
-    
+
     neutralU: Optional[ float | Voltage ] = field(
         default=None,
         metadata={
@@ -3165,7 +3168,7 @@ class TapChanger(PowerSystemResource):
             This attribute is not relevant for PhaseTapChangerAsymmetrical, PhaseTapChangerSymmetrical
             and PhaseTapChangerLinear.
             '''
-        
+
         })
     '''
     Voltage at which the winding operates at the neutral tap setting. It
@@ -3178,7 +3181,7 @@ class TapChanger(PowerSystemResource):
     This attribute is not relevant for PhaseTapChangerAsymmetrical, PhaseTapChangerSymmetrical
     and PhaseTapChangerLinear.
     '''
-    
+
     subsequentDelay: Optional[ float | Seconds ] = field(
         default=None,
         metadata={
@@ -3192,13 +3195,13 @@ class TapChanger(PowerSystemResource):
             For an LTC, the delay for subsequent tap changer operation (second and
             later step changes).
             '''
-        
+
         })
     '''
     For an LTC, the delay for subsequent tap changer operation (second
     and later step changes).
     '''
-    
+
     TapChangerControl: Optional[TapChangerControl] = field(
         default=None,
         metadata={
@@ -3212,12 +3215,12 @@ class TapChanger(PowerSystemResource):
             '''
             The regulating control scheme in which this tap changer participates.
             '''
-        
+
         })
     '''
     The regulating control scheme in which this tap changer participates.
     '''
-    
+
     @property
     def __namespace__(self):
         return 'http://cim.ucaiug.io/CIM101/draft#'
@@ -3230,7 +3233,7 @@ class TapChanger(PowerSystemResource):
     @property
     def __maxOccurs__(self):
         return 'unbounded'
-    
+
 @stereotype(CIMStereotype.Concrete)
 @dataclass(repr=False)
 class RatioTapChanger(TapChanger):
@@ -3262,7 +3265,7 @@ class RatioTapChanger(TapChanger):
             When the increment is negative, the voltage decreases when the tap step
             increases.
             '''
-        
+
         })
     '''
     Tap step increment, in per cent of rated voltage of the power transformer
@@ -3270,7 +3273,7 @@ class RatioTapChanger(TapChanger):
     When the increment is negative, the voltage decreases when the tap
     step increases.
     '''
-    
+
     TransformerEnd: Optional[TransformerEnd] = field(
         default=None,
         metadata={
@@ -3284,12 +3287,12 @@ class RatioTapChanger(TapChanger):
             '''
             Transformer end to which this ratio tap changer belongs.
             '''
-        
+
         })
     '''
     Transformer end to which this ratio tap changer belongs.
     '''
-    
+
     @property
     def __namespace__(self):
         return 'http://cim.ucaiug.io/CIM101/draft#'
@@ -3302,7 +3305,7 @@ class RatioTapChanger(TapChanger):
     @property
     def __maxOccurs__(self):
         return 'unbounded'
-    
+
 @stereotype(CIMStereotype.Concrete)
 @stereotype(CIMStereotype.ByReference)
 @dataclass(repr=False)
@@ -3324,13 +3327,13 @@ class TransformerCoreAdmittance(IdentifiedObject):
             '''
             Magnetizing branch susceptance (B mag). The value can be positive or negative.
             '''
-        
+
         })
     '''
     Magnetizing branch susceptance (B mag). The value can be positive or
     negative.
     '''
-    
+
     g: Optional[ float | Conductance ] = field(
         default=None,
         metadata={
@@ -3343,12 +3346,12 @@ class TransformerCoreAdmittance(IdentifiedObject):
             '''
             Magnetizing branch conductance (G mag).
             '''
-        
+
         })
     '''
     Magnetizing branch conductance (G mag).
     '''
-    
+
     TransformerEnd: list[TransformerEnd] = field(
         default_factory=list,
         metadata={
@@ -3362,12 +3365,12 @@ class TransformerCoreAdmittance(IdentifiedObject):
             '''
             All transformer ends having this core admittance.
             '''
-        
+
         })
     '''
     All transformer ends having this core admittance.
     '''
-    
+
     @property
     def __namespace__(self):
         return 'http://cim.ucaiug.io/CIM101/draft#'
@@ -3380,7 +3383,7 @@ class TransformerCoreAdmittance(IdentifiedObject):
     @property
     def __maxOccurs__(self):
         return 'unbounded'
-    
+
 @stereotype(CIMStereotype.ByReference)
 @dataclass(repr=False)
 class TransformerEnd(IdentifiedObject):
@@ -3406,7 +3409,7 @@ class TransformerEnd(IdentifiedObject):
             and TransformerEnd.xground are required. If false, the attributes TransformerEnd.rground
             and TransformerEnd.xground are not considered.
             '''
-        
+
         })
     '''
     Used only for Yn and Zn connections indicated by PowerTransformerEnd.connectionKind.
@@ -3414,7 +3417,7 @@ class TransformerEnd(IdentifiedObject):
     and TransformerEnd.xground are required. If false, the attributes TransformerEnd.rground
     and TransformerEnd.xground are not considered.
     '''
-    
+
     rground: Optional[ float | Resistance ] = field(
         default=None,
         metadata={
@@ -3428,13 +3431,13 @@ class TransformerEnd(IdentifiedObject):
             Resistance part of neutral impedance. Zero indicates solidly grounded or
             grounded through a reactor.
             '''
-        
+
         })
     '''
     Resistance part of neutral impedance. Zero indicates solidly grounded
     or grounded through a reactor.
     '''
-    
+
     xground: Optional[ float | Reactance ] = field(
         default=None,
         metadata={
@@ -3448,13 +3451,13 @@ class TransformerEnd(IdentifiedObject):
             Reactance part of neutral impedance. Zero indicates solidly grounded or
             grounded through a reactor.
             '''
-        
+
         })
     '''
     Reactance part of neutral impedance. Zero indicates solidly grounded
     or grounded through a reactor.
     '''
-    
+
     CoreAdmittance: Optional[TransformerCoreAdmittance] = field(
         default=None,
         metadata={
@@ -3470,14 +3473,14 @@ class TransformerEnd(IdentifiedObject):
             and core losses. The full values of the transformer should be supplied
             for one transformer end only.
             '''
-        
+
         })
     '''
     Core admittance of this transformer end, representing magnetising current
     and core losses. The full values of the transformer should be supplied
     for one transformer end only.
     '''
-    
+
     RatioTapChanger: Optional[RatioTapChanger] = field(
         default=None,
         metadata={
@@ -3491,12 +3494,12 @@ class TransformerEnd(IdentifiedObject):
             '''
             Ratio tap changer associated with this transformer end.
             '''
-        
+
         })
     '''
     Ratio tap changer associated with this transformer end.
     '''
-    
+
     FromMeshImpedance: list[TransformerMeshImpedance] = field(
         default_factory=list,
         metadata={
@@ -3510,13 +3513,13 @@ class TransformerEnd(IdentifiedObject):
             '''
             All mesh impedances between this 'to' and other 'from' transformer ends.
             '''
-        
+
         })
     '''
     All mesh impedances between this 'to' and other 'from' transformer
     ends.
     '''
-    
+
     ToMeshImpedance: list[TransformerMeshImpedance] = field(
         default_factory=list,
         metadata={
@@ -3530,13 +3533,13 @@ class TransformerEnd(IdentifiedObject):
             '''
             All mesh impedances between this 'from' and other 'to' transformer ends.
             '''
-        
+
         })
     '''
     All mesh impedances between this 'from' and other 'to' transformer
     ends.
     '''
-    
+
     @property
     def __namespace__(self):
         return 'http://cim.ucaiug.io/CIM101/draft#'
@@ -3549,7 +3552,7 @@ class TransformerEnd(IdentifiedObject):
     @property
     def __maxOccurs__(self):
         return 'unbounded'
-    
+
 @stereotype(CIMStereotype.Concrete)
 @stereotype(CIMStereotype.Description)
 @dataclass(repr=False)
@@ -3604,7 +3607,7 @@ class PowerTransformerEnd(TransformerEnd):
             1, is assumed to be zero. Note the transformer end number is not assumed
             to be the same as the terminal sequence number.
             '''
-        
+
         })
     '''
     Terminal voltage phase angle displacement where 360 degrees are represented
@@ -3615,7 +3618,7 @@ class PowerTransformerEnd(TransformerEnd):
     specified as 1, is assumed to be zero. Note the transformer end number
     is not assumed to be the same as the terminal sequence number.
     '''
-    
+
     b: Optional[ float | Susceptance ] = field(
         default=None,
         metadata={
@@ -3628,13 +3631,13 @@ class PowerTransformerEnd(TransformerEnd):
             '''
             Magnetizing branch susceptance (B mag). The value can be positive or negative.
             '''
-        
+
         })
     '''
     Magnetizing branch susceptance (B mag). The value can be positive or
     negative.
     '''
-    
+
     g: Optional[ float | Conductance ] = field(
         default=None,
         metadata={
@@ -3647,12 +3650,12 @@ class PowerTransformerEnd(TransformerEnd):
             '''
             Magnetizing branch conductance.
             '''
-        
+
         })
     '''
     Magnetizing branch conductance.
     '''
-    
+
     r: Optional[ float | Resistance ] = field(
         default=None,
         metadata={
@@ -3667,14 +3670,14 @@ class PowerTransformerEnd(TransformerEnd):
             The attribute shall be equal to or greater than zero for non-equivalent
             transformers.
             '''
-        
+
         })
     '''
     Resistance (star-model) of the transformer end.
     The attribute shall be equal to or greater than zero for non-equivalent
     transformers.
     '''
-    
+
     ratedS: Optional[ float | ApparentPower ] = field(
         default=None,
         metadata={
@@ -3689,14 +3692,14 @@ class PowerTransformerEnd(TransformerEnd):
             The attribute shall be a positive value. For a two-winding transformer
             the values for the high and low voltage sides shall be identical.
             '''
-        
+
         })
     '''
     Normal apparent power rating.
     The attribute shall be a positive value. For a two-winding transformer
     the values for the high and low voltage sides shall be identical.
     '''
-    
+
     ratedU: Optional[ float | Voltage ] = field(
         default=None,
         metadata={
@@ -3713,7 +3716,7 @@ class PowerTransformerEnd(TransformerEnd):
             ratedU that is greater than or equal to ratedU for the lower voltage sides.
             The attribute shall be a positive value.
             '''
-        
+
         })
     '''
     Rated voltage: phase-phase for three-phase windings, and either phase-phase
@@ -3723,7 +3726,7 @@ class PowerTransformerEnd(TransformerEnd):
     sides.
     The attribute shall be a positive value.
     '''
-    
+
     x: Optional[ float | Reactance ] = field(
         default=None,
         metadata={
@@ -3736,13 +3739,13 @@ class PowerTransformerEnd(TransformerEnd):
             '''
             Positive sequence series reactance (star-model) of the transformer end.
             '''
-        
+
         })
     '''
     Positive sequence series reactance (star-model) of the transformer
     end.
     '''
-    
+
     @property
     def __namespace__(self):
         return 'http://cim.ucaiug.io/CIM101/draft#'
@@ -3755,7 +3758,7 @@ class PowerTransformerEnd(TransformerEnd):
     @property
     def __maxOccurs__(self):
         return 'unbounded'
-    
+
 @stereotype(CIMStereotype.Description)
 @stereotype(CIMStereotype.Concrete)
 @dataclass(repr=False)
@@ -3778,7 +3781,7 @@ class TransformerTankEnd(TransformerEnd):
     @property
     def __maxOccurs__(self):
         return 'unbounded'
-    
+
 @stereotype(CIMStereotype.Concrete)
 @dataclass(repr=False)
 class TransformerMeshImpedance(IdentifiedObject):
@@ -3802,13 +3805,13 @@ class TransformerMeshImpedance(IdentifiedObject):
             '''
             Resistance between the 'from' and the 'to' end, seen from the 'from' end.
             '''
-        
+
         })
     '''
     Resistance between the 'from' and the 'to' end, seen from the 'from'
     end.
     '''
-    
+
     x: Optional[ float | Reactance ] = field(
         default=None,
         metadata={
@@ -3821,13 +3824,13 @@ class TransformerMeshImpedance(IdentifiedObject):
             '''
             Reactance between the 'from' and the 'to' end, seen from the 'from' end.
             '''
-        
+
         })
     '''
     Reactance between the 'from' and the 'to' end, seen from the 'from'
     end.
     '''
-    
+
     FromTransformerEnd: Optional[TransformerEnd] = field(
         default=None,
         metadata={
@@ -3842,13 +3845,13 @@ class TransformerMeshImpedance(IdentifiedObject):
             From end this mesh impedance is connected to. It determines the voltage
             reference.
             '''
-        
+
         })
     '''
     From end this mesh impedance is connected to. It determines the voltage
     reference.
     '''
-    
+
     ToTransformerEnd: list[TransformerEnd] = field(
         default_factory=list,
         metadata={
@@ -3862,12 +3865,12 @@ class TransformerMeshImpedance(IdentifiedObject):
             '''
             All transformer ends this mesh impedance is connected to.
             '''
-        
+
         })
     '''
     All transformer ends this mesh impedance is connected to.
     '''
-    
+
     @property
     def __namespace__(self):
         return 'http://cim.ucaiug.io/CIM101/draft#'
@@ -3880,7 +3883,7 @@ class TransformerMeshImpedance(IdentifiedObject):
     @property
     def __maxOccurs__(self):
         return 'unbounded'
-    
+
 @stereotype(CIMStereotype.ShadowExtension)
 @stereotype(CIMStereotype.Concrete)
 @dataclass(repr=False)
@@ -3917,7 +3920,7 @@ class PhaseImpedanceData(Identity):
             Column number binds to the sequence number in either ACLineSegmentPhase
             or WirePosition, which then identifies the phase for this entry.
             '''
-        
+
         })
     '''
     The matrix entry's column number has a range of possible values from
@@ -3926,7 +3929,7 @@ class PhaseImpedanceData(Identity):
     Column number binds to the sequence number in either ACLineSegmentPhase
     or WirePosition, which then identifies the phase for this entry.
     '''
-    
+
     row: Optional[int] = field(
         default=None,
         metadata={
@@ -3943,7 +3946,7 @@ class PhaseImpedanceData(Identity):
             Row number binds to the sequence number in either ACLineSegmentPhase or
             WirePosition, which then identifies the phase for this entry.
             '''
-        
+
         })
     '''
     The matrix entry's row number has a range of possible values from 1
@@ -3952,7 +3955,7 @@ class PhaseImpedanceData(Identity):
     Row number binds to the sequence number in either ACLineSegmentPhase
     or WirePosition, which then identifies the phase for this entry.
     '''
-    
+
     b: Optional[ float | SusceptancePerLength ] = field(
         default=None,
         metadata={
@@ -3965,12 +3968,12 @@ class PhaseImpedanceData(Identity):
             '''
             Susceptance matrix entry value, per length of unit.
             '''
-        
+
         })
     '''
     Susceptance matrix entry value, per length of unit.
     '''
-    
+
     r: Optional[ float | ResistancePerLength ] = field(
         default=None,
         metadata={
@@ -3983,12 +3986,12 @@ class PhaseImpedanceData(Identity):
             '''
             Resistance matrix entry value, per length of unit.
             '''
-        
+
         })
     '''
     Resistance matrix entry value, per length of unit.
     '''
-    
+
     x: Optional[ float | ReactancePerLength ] = field(
         default=None,
         metadata={
@@ -4001,12 +4004,12 @@ class PhaseImpedanceData(Identity):
             '''
             Reactance matrix entry value, per length of unit.
             '''
-        
+
         })
     '''
     Reactance matrix entry value, per length of unit.
     '''
-    
+
     PhaseImpedance: Optional[PerLengthPhaseImpedance] = field(
         default=None,
         metadata={
@@ -4020,12 +4023,12 @@ class PhaseImpedanceData(Identity):
             '''
             Conductor phase impedance to which this data belongs.
             '''
-        
+
         })
     '''
     Conductor phase impedance to which this data belongs.
     '''
-    
+
     @property
     def __namespace__(self):
         return 'http://cim.ucaiug.io/CIM101/draft#'
@@ -4038,7 +4041,7 @@ class PhaseImpedanceData(Identity):
     @property
     def __maxOccurs__(self):
         return 'unbounded'
-    
+
 @stereotype(CIMStereotype.gmdm)
 @stereotype(CIMStereotype.enumeration)
 class ConverterControlModeKind(Enum):
@@ -4048,15 +4051,15 @@ class ConverterControlModeKind(Enum):
     constantPowerFactor = 'constantPowerFactor'
     '''
     '''
-    
+
     constantReactivePower = 'constantReactivePower'
     '''
     '''
-    
+
     dynamic = 'dynamic'
     '''
     '''
-    
+
     @property
     def __namespace__(self):
         return 'http://epri.com/gmdm/2025#'
@@ -4069,7 +4072,7 @@ class ConverterControlModeKind(Enum):
     @property
     def __maxOccurs__(self):
         return 'unbounded'
-    
+
 @stereotype(CIMStereotype.ShadowExtension)
 @stereotype(CIMStereotype.gmdm)
 @stereotype(CIMStereotype.enumeration)
@@ -4082,59 +4085,59 @@ class FuelType(Enum):
     FuelTypediesel = 'FuelTypediesel'
     '''
     '''
-    
+
     brownCoalLignite = 'brownCoalLignite'
     '''
     Brown coal lignite.
     '''
-    
+
     coal = 'coal'
     '''
     Generic coal, not including lignite type.
     '''
-    
+
     coalDerivedGas = 'coalDerivedGas'
     '''
     Coal derived gas.
     '''
-    
+
     gas = 'gas'
     '''
     Natural gas.
     '''
-    
+
     hardCoal = 'hardCoal'
     '''
     Hard coal.
     '''
-    
+
     lignite = 'lignite'
     '''
     The fuel is lignite coal. Note that this is a special type of coal,
     so the other enum of coal is reserved for hard coal types or if the
     exact type of coal is not known.
     '''
-    
+
     oil = 'oil'
     '''
     Oil.
     '''
-    
+
     oilShale = 'oilShale'
     '''
     Oil Shale.
     '''
-    
+
     other = 'other'
     '''
     Any fuel type not included in the rest of the enumerated value.
     '''
-    
+
     peat = 'peat'
     '''
     Peat.
     '''
-    
+
     @property
     def __namespace__(self):
         return 'http://cim.ucaiug.io/CIM101/draft#'
@@ -4147,7 +4150,7 @@ class FuelType(Enum):
     @property
     def __maxOccurs__(self):
         return 'unbounded'
-    
+
 @stereotype(CIMStereotype.enumeration)
 @stereotype(CIMStereotype.Attribute)
 class PhaseCode(Enum):
@@ -4174,132 +4177,132 @@ class PhaseCode(Enum):
     '''
     Phase A.
     '''
-    
+
     AB = 'AB'
     '''
     Phases A and B.
     '''
-    
+
     ABC = 'ABC'
     '''
     Phases A, B, and C.
     '''
-    
+
     ABCN = 'ABCN'
     '''
     Phases A, B, C, and N.
     '''
-    
+
     ABN = 'ABN'
     '''
     Phases A, B, and neutral.
     '''
-    
+
     AC = 'AC'
     '''
     Phases A and C.
     '''
-    
+
     ACN = 'ACN'
     '''
     Phases A, C and neutral.
     '''
-    
+
     AN = 'AN'
     '''
     Phases A and neutral.
     '''
-    
+
     B = 'B'
     '''
     Phase B.
     '''
-    
+
     BC = 'BC'
     '''
     Phases B and C.
     '''
-    
+
     BCN = 'BCN'
     '''
     Phases B, C, and neutral.
     '''
-    
+
     BN = 'BN'
     '''
     Phases B and neutral.
     '''
-    
+
     C = 'C'
     '''
     Phase C.
     '''
-    
+
     CN = 'CN'
     '''
     Phases C and neutral.
     '''
-    
+
     N = 'N'
     '''
     Neutral phase.
     '''
-    
+
     X = 'X'
     '''
     Unknown non-neutral phase.
     '''
-    
+
     XN = 'XN'
     '''
     Unknown non-neutral phase plus neutral.
     '''
-    
+
     XY = 'XY'
     '''
     Two unknown non-neutral phases.
     '''
-    
+
     XYN = 'XYN'
     '''
     Two unknown non-neutral phases plus neutral.
     '''
-    
+
     none = 'none'
     '''
     No phases specified.
     '''
-    
+
     s1 = 's1'
     '''
     Secondary phase 1.
     '''
-    
+
     s12 = 's12'
     '''
     Secondary phase 1 and 2.
     '''
-    
+
     s12N = 's12N'
     '''
     Secondary phases 1, 2, and neutral.
     '''
-    
+
     s1N = 's1N'
     '''
     Secondary phase 1 and neutral.
     '''
-    
+
     s2 = 's2'
     '''
     Secondary phase 2.
     '''
-    
+
     s2N = 's2N'
     '''
     Secondary phase 2 and neutral.
     '''
-    
+
     @property
     def __namespace__(self):
         return 'http://cim.ucaiug.io/CIM101/draft#'
@@ -4312,7 +4315,7 @@ class PhaseCode(Enum):
     @property
     def __maxOccurs__(self):
         return 'unbounded'
-    
+
 @stereotype(CIMStereotype.enumeration)
 @stereotype(CIMStereotype.Attribute)
 class RegulatingControlModeKind(Enum):
@@ -4325,43 +4328,43 @@ class RegulatingControlModeKind(Enum):
     '''
     Active power is specified.
     '''
-    
+
     admittance = 'admittance'
     '''
     Admittance is specified.
     '''
-    
+
     currentFlow = 'currentFlow'
     '''
     Current flow is specified.
     '''
-    
+
     powerFactor = 'powerFactor'
     '''
     Power factor is specified.
     '''
-    
+
     reactivePower = 'reactivePower'
     '''
     Reactive power is specified.
     '''
-    
+
     temperature = 'temperature'
     '''
     Control switches on/off based on the local temperature (i.e., a thermostat).
     '''
-    
+
     timeScheduled = 'timeScheduled'
     '''
     Control switches on/off by time of day. The times may change on the
     weekend, or in different seasons.
     '''
-    
+
     voltage = 'voltage'
     '''
     Voltage is specified.
     '''
-    
+
     @property
     def __namespace__(self):
         return 'http://cim.ucaiug.io/CIM101/draft#'
@@ -4374,7 +4377,7 @@ class RegulatingControlModeKind(Enum):
     @property
     def __maxOccurs__(self):
         return 'unbounded'
-    
+
 @stereotype(CIMStereotype.enumeration)
 class WindGenUnitKind(Enum):
     '''
@@ -4385,12 +4388,12 @@ class WindGenUnitKind(Enum):
     '''
     The wind generating unit is located offshore.
     '''
-    
+
     onshore = 'onshore'
     '''
     The wind generating unit is located onshore.
     '''
-    
+
     @property
     def __namespace__(self):
         return 'http://cim.ucaiug.io/CIM101/draft#'
@@ -4403,7 +4406,7 @@ class WindGenUnitKind(Enum):
     @property
     def __maxOccurs__(self):
         return 'unbounded'
-    
+
 @stereotype(CIMStereotype.CIMDatatype)
 @dataclass(repr=False)
 class ActivePower(CIMUnit):
@@ -4431,7 +4434,7 @@ class ActivePower(CIMUnit):
     @property
     def __maxOccurs__(self):
         return '1'
-    
+
 
 @stereotype(CIMStereotype.CIMDatatype)
 @dataclass(repr=False)
@@ -4459,7 +4462,7 @@ class ApparentPower(CIMUnit):
     @property
     def __maxOccurs__(self):
         return '1'
-    
+
 
 @stereotype(CIMStereotype.CIMDatatype)
 @dataclass(repr=False)
@@ -4488,7 +4491,7 @@ class Conductance(CIMUnit):
     @property
     def __maxOccurs__(self):
         return '1'
-    
+
 
 @stereotype(CIMStereotype.CIMDatatype)
 @dataclass(repr=False)
@@ -4517,7 +4520,7 @@ class CurrentFlow(CIMUnit):
     @property
     def __maxOccurs__(self):
         return '1'
-    
+
 
 @stereotype(CIMStereotype.CIMDatatype)
 @dataclass(repr=False)
@@ -4545,7 +4548,7 @@ class Length(CIMUnit):
     @property
     def __maxOccurs__(self):
         return '1'
-    
+
 
 @stereotype(CIMStereotype.CIMDatatype)
 @dataclass(repr=False)
@@ -4574,7 +4577,7 @@ class PerCent(CIMUnit):
     @property
     def __maxOccurs__(self):
         return '1'
-    
+
 
 @stereotype(CIMStereotype.CIMDatatype)
 @dataclass(repr=False)
@@ -4602,7 +4605,7 @@ class Reactance(CIMUnit):
     @property
     def __maxOccurs__(self):
         return '1'
-    
+
 
 @stereotype(CIMStereotype.CIMDatatype)
 @dataclass(repr=False)
@@ -4630,7 +4633,7 @@ class ReactancePerLength(CIMUnit):
     @property
     def __maxOccurs__(self):
         return '1'
-    
+
 
 @stereotype(CIMStereotype.CIMDatatype)
 @dataclass(repr=False)
@@ -4659,7 +4662,7 @@ class ReactivePower(CIMUnit):
     @property
     def __maxOccurs__(self):
         return '1'
-    
+
 
 @stereotype(CIMStereotype.CIMDatatype)
 @dataclass(repr=False)
@@ -4687,7 +4690,7 @@ class RealEnergy(CIMUnit):
     @property
     def __maxOccurs__(self):
         return '1'
-    
+
 
 @stereotype(CIMStereotype.CIMDatatype)
 @dataclass(repr=False)
@@ -4715,7 +4718,7 @@ class Resistance(CIMUnit):
     @property
     def __maxOccurs__(self):
         return '1'
-    
+
 
 @stereotype(CIMStereotype.CIMDatatype)
 @dataclass(repr=False)
@@ -4743,7 +4746,7 @@ class ResistancePerLength(CIMUnit):
     @property
     def __maxOccurs__(self):
         return '1'
-    
+
 
 @stereotype(CIMStereotype.CIMDatatype)
 @dataclass(repr=False)
@@ -4771,7 +4774,7 @@ class Seconds(CIMUnit):
     @property
     def __maxOccurs__(self):
         return '1'
-    
+
 
 @stereotype(CIMStereotype.CIMDatatype)
 @dataclass(repr=False)
@@ -4799,7 +4802,7 @@ class Susceptance(CIMUnit):
     @property
     def __maxOccurs__(self):
         return '1'
-    
+
 
 @stereotype(CIMStereotype.CIMDatatype)
 @dataclass(repr=False)
@@ -4827,7 +4830,7 @@ class SusceptancePerLength(CIMUnit):
     @property
     def __maxOccurs__(self):
         return '1'
-    
+
 
 @stereotype(CIMStereotype.CIMDatatype)
 @dataclass(repr=False)
@@ -4855,5 +4858,4 @@ class Voltage(CIMUnit):
     @property
     def __maxOccurs__(self):
         return '1'
-    
 

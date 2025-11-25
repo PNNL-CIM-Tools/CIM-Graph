@@ -1,10 +1,13 @@
 from __future__ import annotations
+
 import logging
 from dataclasses import dataclass, field
-from typing import Optional
 from enum import Enum
+from typing import Optional
+
 from cimgraph.data_profile.identity import Identity, stereotype
-from cimgraph.data_profile.units import CIMUnit, UnitSymbol, UnitMultiplier
+from cimgraph.data_profile.units import CIMUnit, UnitMultiplier, UnitSymbol
+
 _log = logging.getLogger(__name__)
 '''
 Annotated CIMantic Graphs data profile for GeographicalLocation
@@ -39,7 +42,7 @@ ONTOLOGY_URI = 'http://cim.ucaiug.io/CIM101/draft#'
 
 BASE_URI = 'http://www.ucaiug.org/gmdm/geographical_location#'
 ONTOLOGY_URI = 'http://cim.ucaiug.io/CIM101/draft#'
-    
+
 >>>>>>> a79a3cd (update profiles)
 @dataclass(repr=False)
 class IdentifiedObject(Identity):
@@ -69,14 +72,14 @@ class IdentifiedObject(Identity):
             The description is a free human readable text describing or naming the
             object. It may be non unique and may not correlate to a naming hierarchy.
             '''
-        
+
         })
     '''
     The description is a free human readable text describing or naming
     the object. It may be non unique and may not correlate to a naming
     hierarchy.
     '''
-    
+
     name: Optional[str] = field(
         default=None,
         metadata={
@@ -93,13 +96,13 @@ class IdentifiedObject(Identity):
             The name is any free human readable and possibly non unique text naming
             the object.
             '''
-        
+
         })
     '''
     The name is any free human readable and possibly non unique text naming
     the object.
     '''
-    
+
     @property
     def __namespace__(self):
         return 'http://cim.ucaiug.io/CIM101/draft#'
@@ -112,7 +115,7 @@ class IdentifiedObject(Identity):
     @property
     def __maxOccurs__(self):
         return 'unbounded'
-    
+
 @stereotype(CIMStereotype.Concrete)
 @dataclass(repr=False)
 class CoordinateSystem(IdentifiedObject):
@@ -149,7 +152,7 @@ class CoordinateSystem(IdentifiedObject):
             A profile should limit this code to a set of allowed URNs agreed to by
             all sending and receiving parties.
             '''
-        
+
         })
     '''
     A Uniform Resource Name (URN) for the coordinate reference system (crs)
@@ -164,7 +167,7 @@ class CoordinateSystem(IdentifiedObject):
     A profile should limit this code to a set of allowed URNs agreed to
     by all sending and receiving parties.
     '''
-    
+
 >>>>>>> a79a3cd (update profiles)
     Location: list[Location] = field(
         default_factory=list,
@@ -182,12 +185,12 @@ class CoordinateSystem(IdentifiedObject):
             '''
             All locations described with position points in this coordinate system.
             '''
-        
+
         })
     '''
     All locations described with position points in this coordinate system.
     '''
-    
+
     @property
     def __namespace__(self):
         return 'http://cim.ucaiug.io/CIM101/draft#'
@@ -200,7 +203,7 @@ class CoordinateSystem(IdentifiedObject):
     @property
     def __maxOccurs__(self):
         return 'unbounded'
-    
+
 @stereotype(CIMStereotype.deprecated)
 @dataclass(repr=False)
 class ElectronicAddress(IdentifiedObject):
@@ -271,7 +274,7 @@ class ElectronicAddress(IdentifiedObject):
     @property
     def __maxOccurs__(self):
         return 'unbounded'
-    
+
 >>>>>>> a79a3cd (update profiles)
 @stereotype(CIMStereotype.Concrete)
 @dataclass(repr=False)
@@ -302,12 +305,12 @@ class Location(IdentifiedObject):
             '''
             Coordinate system used to describe position points of this location.
             '''
-        
+
         })
     '''
     Coordinate system used to describe position points of this location.
     '''
-    
+
 >>>>>>> a79a3cd (update profiles)
     PositionPoints: list[PositionPoint] = field(
         default_factory=list,
@@ -324,11 +327,11 @@ class Location(IdentifiedObject):
         'docstring':
             '''
             '''
-        
+
         })
     '''
     '''
-    
+
     PowerSystemResources: list[PowerSystemResource] = field(
         default_factory=list,
         metadata={
@@ -345,7 +348,7 @@ class Location(IdentifiedObject):
             '''
             All power system resources at this location.
             '''
-        
+
         })
     '''
     All power system resources at this location.
@@ -371,7 +374,7 @@ class Location(IdentifiedObject):
     '''
 
 =======
-    
+
     @property
     def __namespace__(self):
         return 'http://cim.ucaiug.io/CIM101/draft#'
@@ -384,7 +387,7 @@ class Location(IdentifiedObject):
     @property
     def __maxOccurs__(self):
         return 'unbounded'
-    
+
 >>>>>>> a79a3cd (update profiles)
 @dataclass(repr=False)
 class PowerSystemResource(IdentifiedObject):
@@ -416,12 +419,12 @@ class PowerSystemResource(IdentifiedObject):
             '''
             Location of this power system resource.
             '''
-        
+
         })
     '''
     Location of this power system resource.
     '''
-    
+
     @property
     def __namespace__(self):
         return 'http://cim.ucaiug.io/CIM101/draft#'
@@ -434,7 +437,7 @@ class PowerSystemResource(IdentifiedObject):
     @property
     def __maxOccurs__(self):
         return 'unbounded'
-    
+
 @dataclass(repr=False)
 class ConnectivityNodeContainer(PowerSystemResource):
     '''
@@ -454,7 +457,7 @@ class ConnectivityNodeContainer(PowerSystemResource):
     @property
     def __maxOccurs__(self):
         return 'unbounded'
-    
+
 @dataclass(repr=False)
 class EquipmentContainer(ConnectivityNodeContainer):
     '''
@@ -473,7 +476,7 @@ class EquipmentContainer(ConnectivityNodeContainer):
     @property
     def __maxOccurs__(self):
         return 'unbounded'
-    
+
 @stereotype(CIMStereotype.Description)
 @stereotype(CIMStereotype.Concrete)
 @dataclass(repr=False)
@@ -496,7 +499,7 @@ class Substation(EquipmentContainer):
     @property
     def __maxOccurs__(self):
         return 'unbounded'
-    
+
 @dataclass(repr=False)
 class Equipment(PowerSystemResource):
     '''
@@ -522,7 +525,7 @@ class Equipment(PowerSystemResource):
     @property
     def __maxOccurs__(self):
         return 'unbounded'
-    
+
 >>>>>>> a79a3cd (update profiles)
 @dataclass(repr=False)
 class ConductingEquipment(Equipment):
@@ -550,7 +553,7 @@ class ConductingEquipment(Equipment):
     @property
     def __maxOccurs__(self):
         return 'unbounded'
-    
+
 >>>>>>> a79a3cd (update profiles)
 @dataclass(repr=False)
 class Conductor(ConductingEquipment):
@@ -579,7 +582,7 @@ class Conductor(ConductingEquipment):
     @property
     def __maxOccurs__(self):
         return 'unbounded'
-    
+
 >>>>>>> a79a3cd (update profiles)
 @stereotype(CIMStereotype.Description)
 @stereotype(CIMStereotype.Concrete)
@@ -648,7 +651,7 @@ class ACLineSegment(Conductor):
     @property
     def __maxOccurs__(self):
         return 'unbounded'
-    
+
 >>>>>>> a79a3cd (update profiles)
 @dataclass(repr=False)
 class Connector(ConductingEquipment):
@@ -677,7 +680,7 @@ class Connector(ConductingEquipment):
     @property
     def __maxOccurs__(self):
         return 'unbounded'
-    
+
 >>>>>>> a79a3cd (update profiles)
 @stereotype(CIMStereotype.Description)
 @stereotype(CIMStereotype.Concrete)
@@ -712,7 +715,7 @@ class BusbarSection(Connector):
     @property
     def __maxOccurs__(self):
         return 'unbounded'
-    
+
 >>>>>>> a79a3cd (update profiles)
 @dataclass(repr=False)
 class EnergyConnection(ConductingEquipment):
@@ -739,7 +742,7 @@ class EnergyConnection(ConductingEquipment):
     @property
     def __maxOccurs__(self):
         return 'unbounded'
-    
+
 >>>>>>> a79a3cd (update profiles)
 @stereotype(CIMStereotype.Description)
 @stereotype(CIMStereotype.Concrete)
@@ -771,7 +774,7 @@ class EnergyConsumer(EnergyConnection):
     @property
     def __maxOccurs__(self):
         return 'unbounded'
-    
+
 >>>>>>> a79a3cd (update profiles)
 @stereotype(CIMStereotype.Description)
 @stereotype(CIMStereotype.Concrete)
@@ -801,7 +804,7 @@ class EnergySource(EnergyConnection):
     @property
     def __maxOccurs__(self):
         return 'unbounded'
-    
+
 >>>>>>> a79a3cd (update profiles)
 @dataclass(repr=False)
 class RegulatingCondEq(EnergyConnection):
@@ -829,7 +832,7 @@ class RegulatingCondEq(EnergyConnection):
     @property
     def __maxOccurs__(self):
         return 'unbounded'
-    
+
 >>>>>>> a79a3cd (update profiles)
 @stereotype(CIMStereotype.Description)
 @stereotype(CIMStereotype.Concrete)
@@ -859,7 +862,7 @@ class PowerElectronicsConnection(RegulatingCondEq):
     @property
     def __maxOccurs__(self):
         return 'unbounded'
-    
+
 >>>>>>> a79a3cd (update profiles)
 @dataclass(repr=False)
 class RotatingMachine(RegulatingCondEq):
@@ -886,7 +889,7 @@ class RotatingMachine(RegulatingCondEq):
     @property
     def __maxOccurs__(self):
         return 'unbounded'
-    
+
 >>>>>>> a79a3cd (update profiles)
 @stereotype(CIMStereotype.Description)
 @stereotype(CIMStereotype.Concrete)
@@ -917,7 +920,7 @@ class AsynchronousMachine(RotatingMachine):
     @property
     def __maxOccurs__(self):
         return 'unbounded'
-    
+
 >>>>>>> a79a3cd (update profiles)
 @stereotype(CIMStereotype.Description)
 @stereotype(CIMStereotype.Concrete)
@@ -948,7 +951,7 @@ class SynchronousMachine(RotatingMachine):
     @property
     def __maxOccurs__(self):
         return 'unbounded'
-    
+
 >>>>>>> a79a3cd (update profiles)
 @dataclass(repr=False)
 class ShuntCompensator(RegulatingCondEq):
@@ -978,7 +981,7 @@ class ShuntCompensator(RegulatingCondEq):
     @property
     def __maxOccurs__(self):
         return 'unbounded'
-    
+
 >>>>>>> a79a3cd (update profiles)
 @stereotype(CIMStereotype.Description)
 @stereotype(CIMStereotype.Concrete)
@@ -1008,7 +1011,7 @@ class LinearShuntCompensator(ShuntCompensator):
     @property
     def __maxOccurs__(self):
         return 'unbounded'
-    
+
 >>>>>>> a79a3cd (update profiles)
 @stereotype(CIMStereotype.Description)
 @stereotype(CIMStereotype.Concrete)
@@ -1049,7 +1052,7 @@ class PowerTransformer(ConductingEquipment):
     @property
     def __maxOccurs__(self):
         return 'unbounded'
-    
+
 >>>>>>> a79a3cd (update profiles)
 @stereotype(CIMStereotype.Description)
 @stereotype(CIMStereotype.Concrete)
@@ -1079,7 +1082,7 @@ class SeriesCompensator(ConductingEquipment):
     @property
     def __maxOccurs__(self):
         return 'unbounded'
-    
+
 >>>>>>> a79a3cd (update profiles)
 @dataclass(repr=False)
 class Switch(ConductingEquipment):
@@ -1110,7 +1113,7 @@ class Switch(ConductingEquipment):
     @property
     def __maxOccurs__(self):
         return 'unbounded'
-    
+
 >>>>>>> a79a3cd (update profiles)
 @stereotype(CIMStereotype.Description)
 @stereotype(CIMStereotype.Concrete)
@@ -1146,7 +1149,7 @@ class Disconnector(Switch):
     @property
     def __maxOccurs__(self):
         return 'unbounded'
-    
+
 >>>>>>> a79a3cd (update profiles)
 @stereotype(CIMStereotype.Description)
 @stereotype(CIMStereotype.Concrete)
@@ -1177,7 +1180,7 @@ class Fuse(Switch):
     @property
     def __maxOccurs__(self):
         return 'unbounded'
-    
+
 >>>>>>> a79a3cd (update profiles)
 @dataclass(repr=False)
 class ProtectedSwitch(Switch):
@@ -1204,7 +1207,7 @@ class ProtectedSwitch(Switch):
     @property
     def __maxOccurs__(self):
         return 'unbounded'
-    
+
 >>>>>>> a79a3cd (update profiles)
 @stereotype(CIMStereotype.Description)
 @stereotype(CIMStereotype.Concrete)
@@ -1236,7 +1239,7 @@ class Breaker(ProtectedSwitch):
     @property
     def __maxOccurs__(self):
         return 'unbounded'
-    
+
 >>>>>>> a79a3cd (update profiles)
 @stereotype(CIMStereotype.Description)
 @stereotype(CIMStereotype.Concrete)
@@ -1266,7 +1269,7 @@ class LoadBreakSwitch(ProtectedSwitch):
     @property
     def __maxOccurs__(self):
         return 'unbounded'
-    
+
 >>>>>>> a79a3cd (update profiles)
 @stereotype(CIMStereotype.Description)
 @stereotype(CIMStereotype.Concrete)
@@ -1296,7 +1299,7 @@ class Recloser(ProtectedSwitch):
     @property
     def __maxOccurs__(self):
         return 'unbounded'
-    
+
 >>>>>>> a79a3cd (update profiles)
 @stereotype(CIMStereotype.Description)
 @stereotype(CIMStereotype.Concrete)
@@ -1328,7 +1331,7 @@ class Sectionaliser(Switch):
     @property
     def __maxOccurs__(self):
         return 'unbounded'
-    
+
 >>>>>>> a79a3cd (update profiles)
 @dataclass(repr=False)
 class TelephoneNumber(IdentifiedObject):
@@ -1355,7 +1358,7 @@ class TelephoneNumber(IdentifiedObject):
     @property
     def __maxOccurs__(self):
         return 'unbounded'
-    
+
 >>>>>>> a79a3cd (update profiles)
 @stereotype(CIMStereotype.Concrete)
 @dataclass(repr=False)
@@ -1399,11 +1402,11 @@ class PositionPoint(Identity):
         'docstring':
             '''
             '''
-        
+
         })
     '''
     '''
-    
+
 >>>>>>> a79a3cd (update profiles)
     xPosition: Optional[str] = field(
         default=None,
@@ -1423,7 +1426,7 @@ class PositionPoint(Identity):
 <<<<<<< HEAD
 
 =======
-        
+
 >>>>>>> a79a3cd (update profiles)
         })
     '''
@@ -1432,7 +1435,7 @@ class PositionPoint(Identity):
 <<<<<<< HEAD
 
 =======
-    
+
 >>>>>>> a79a3cd (update profiles)
     yPosition: Optional[str] = field(
         default=None,
@@ -1452,7 +1455,7 @@ class PositionPoint(Identity):
 <<<<<<< HEAD
 
 =======
-        
+
 >>>>>>> a79a3cd (update profiles)
         })
     '''
@@ -1461,7 +1464,7 @@ class PositionPoint(Identity):
 <<<<<<< HEAD
 
 =======
-    
+
 >>>>>>> a79a3cd (update profiles)
     zPosition: Optional[str] = field(
         default=None,
@@ -1481,7 +1484,7 @@ class PositionPoint(Identity):
 <<<<<<< HEAD
 
 =======
-        
+
 >>>>>>> a79a3cd (update profiles)
         })
     '''
@@ -1490,7 +1493,7 @@ class PositionPoint(Identity):
 <<<<<<< HEAD
 
 =======
-    
+
 >>>>>>> a79a3cd (update profiles)
     Location: Optional[Location] = field(
         default=None,
@@ -1514,11 +1517,11 @@ class PositionPoint(Identity):
         'docstring':
             '''
             '''
-        
+
         })
     '''
     '''
-    
+
     @property
     def __namespace__(self):
         return 'http://cim.ucaiug.io/CIM101/draft#'
@@ -1531,7 +1534,7 @@ class PositionPoint(Identity):
     @property
     def __maxOccurs__(self):
         return 'unbounded'
-    
+
 >>>>>>> a79a3cd (update profiles)
 @dataclass(repr=False)
 class Status(Identity):
@@ -1558,7 +1561,7 @@ class Status(Identity):
     @property
     def __maxOccurs__(self):
         return 'unbounded'
-    
+
 >>>>>>> a79a3cd (update profiles)
 @stereotype(CIMStereotype.deprecated)
 @stereotype(CIMStereotype.Compound)
@@ -1587,5 +1590,5 @@ class StreetAddress(Identity):
     @property
     def __maxOccurs__(self):
         return 'unbounded'
-    
+
 >>>>>>> a79a3cd (update profiles)

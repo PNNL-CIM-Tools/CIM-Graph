@@ -1,9 +1,10 @@
 from __future__ import annotations
 
 import logging
+
 import cimgraph.data_profile.cim18gmdm.canonical as cim
-from cimgraph.models.graph_model import GraphModel
 from cimgraph.databases import get_validation_log_level
+from cimgraph.models.graph_model import GraphModel
 
 _log = logging.getLogger(__name__)
 log_level = get_validation_log_level()
@@ -32,7 +33,7 @@ def get_all_line_data(network: GraphModel) -> None:
     'TapeShieldCableInfo']
     query_class_list(network, classes)
 
-            
+
 
 
 def get_all_transformer_data(network: GraphModel) -> None:
@@ -66,7 +67,7 @@ def get_all_load_data(network: GraphModel) -> None:
     'House',
     'ThermostatController']
     query_class_list(network, classes)
-    
+
     network.get_all_attributes(cim.LoadResponseCharacteristic)
     network.get_all_attributes(cim.PowerCutZone)
 
@@ -106,7 +107,7 @@ def get_all_switch_data(network: GraphModel) -> None:
     'LoadBreakSwitch',
     'SwitchPhase']
     query_class_list(network, classes)
-    
+
 
 
 def get_all_bus_data(network: GraphModel) -> None:
@@ -116,7 +117,7 @@ def get_all_bus_data(network: GraphModel) -> None:
     'TopologicalNode',
     'TopologicalIsland']
     query_class_list(network, classes)
-    
+
 
 
 def get_all_measurement_data(network: GraphModel) -> None:
@@ -127,7 +128,7 @@ def get_all_measurement_data(network: GraphModel) -> None:
     'Accumlator',
     'StringMeasurement',]
     query_class_list(network, classes)
-    
+
 
 
 def get_all_limit_data(network: GraphModel) -> None:
@@ -139,7 +140,7 @@ def get_all_limit_data(network: GraphModel) -> None:
     'CurrentLimit',
     'OperationalLimitType']
     query_class_list(network, classes)
-    
+
 
 
 def get_all_location_data(network: GraphModel):
@@ -147,7 +148,7 @@ def get_all_location_data(network: GraphModel):
     network.get_all_attributes(cim.CoordinateSystem)
     network.get_all_edges(cim.Location)
     network.get_all_edges(cim.PositionPoint)
-    
+
 def get_all_capacitor_data(network: GraphModel):
     classes = ['ShuntCompensator',
     'LinearShuntCompensator',

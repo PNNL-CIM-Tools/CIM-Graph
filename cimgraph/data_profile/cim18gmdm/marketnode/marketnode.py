@@ -1,10 +1,13 @@
 from __future__ import annotations
+
 import logging
 from dataclasses import dataclass, field
-from typing import Optional
 from enum import Enum
+from typing import Optional
+
 from cimgraph.data_profile.identity import Identity, stereotype
-from cimgraph.data_profile.units import CIMUnit, UnitSymbol, UnitMultiplier
+from cimgraph.data_profile.units import CIMUnit, UnitMultiplier, UnitSymbol
+
 _log = logging.getLogger(__name__)
 '''
 Annotated CIMantic Graphs data profile for MarketNode
@@ -25,7 +28,7 @@ class CIMStereotype(Enum):
 BASE_URI = 'http://www.ucaiug.org/gmdm/marketnode#'
 ONTOLOGY_URI = 'http://cim.ucaiug.io/CIM101/draft#'
 
-    
+
 @dataclass(repr=False)
 class IdentifiedObject(Identity):
     '''
@@ -54,14 +57,14 @@ class IdentifiedObject(Identity):
             The description is a free human readable text describing or naming the
             object. It may be non unique and may not correlate to a naming hierarchy.
             '''
-        
+
         })
     '''
     The description is a free human readable text describing or naming
     the object. It may be non unique and may not correlate to a naming
     hierarchy.
     '''
-    
+
     name: Optional[str] = field(
         default=None,
         metadata={
@@ -78,7 +81,7 @@ class IdentifiedObject(Identity):
             The name is any free human readable and possibly non unique text naming
             the object.
             '''
-        
+
         })
     '''
     The name is any free human readable and possibly non unique text naming
@@ -87,7 +90,7 @@ class IdentifiedObject(Identity):
 <<<<<<< HEAD
 
 =======
-    
+
     @property
     def __namespace__(self):
         return 'http://cim.ucaiug.io/CIM101/draft#'
@@ -100,7 +103,7 @@ class IdentifiedObject(Identity):
     @property
     def __maxOccurs__(self):
         return 'unbounded'
-    
+
 >>>>>>> a79a3cd (update profiles)
 @stereotype(CIMStereotype.ByReference)
 @dataclass(repr=False)
@@ -130,11 +133,11 @@ class ConnectivityNode(IdentifiedObject):
         'docstring':
             '''
             '''
-        
+
         })
     '''
     '''
-    
+
     @property
     def __namespace__(self):
         return 'http://cim.ucaiug.io/CIM101/draft#'
@@ -147,7 +150,7 @@ class ConnectivityNode(IdentifiedObject):
     @property
     def __maxOccurs__(self):
         return 'unbounded'
-    
+
 @dataclass(repr=False)
 class Pnode(IdentifiedObject):
     '''
@@ -175,7 +178,7 @@ class Pnode(IdentifiedObject):
     @property
     def __maxOccurs__(self):
         return 'unbounded'
-    
+
 >>>>>>> a79a3cd (update profiles)
 @dataclass(repr=False)
 class IndividualPnode(Pnode):
@@ -203,14 +206,14 @@ class IndividualPnode(Pnode):
         'docstring':
             '''
             '''
-        
+
         })
     '''
     '''
 <<<<<<< HEAD
 
 =======
-    
+
     @property
     def __namespace__(self):
         return 'http://cim.ucaiug.io/CIM101/draft#'
@@ -223,5 +226,5 @@ class IndividualPnode(Pnode):
     @property
     def __maxOccurs__(self):
         return 'unbounded'
-    
+
 >>>>>>> a79a3cd (update profiles)

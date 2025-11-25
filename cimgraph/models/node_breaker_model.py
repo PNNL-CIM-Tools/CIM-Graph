@@ -6,9 +6,9 @@ from dataclasses import dataclass, field
 
 import cimgraph.data_profile.cim18gad as cim
 from cimgraph.databases import get_cim_profile
+from cimgraph.models.distributed_area import *
 from cimgraph.models.distributed_area import DistributedArea
 from cimgraph.models.graph_model import GraphModel
-from cimgraph.models.distributed_area import *
 
 _log = logging.getLogger(__name__)
 

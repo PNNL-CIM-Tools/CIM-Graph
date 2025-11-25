@@ -145,11 +145,11 @@ class XMLFile(ConnectionInterface):
             if 'about' in str(element.attrib.keys()):
                 uri = element.get(f'{self.rdf}about')
                 uri = uri.split(':')[-1]  # Extract UUID from the full URI
-                
+
             elif 'ID' in str(element.attrib.keys()):
                 uri = element.get(f'{self.rdf}ID')
                 uri = uri.split(':')[-1]  # Extract UUID from the full URI
-                
+
             else:
                 _log.error(f'Unable to parse {element}. Elements must be rdf:ID or rdf:about')
                 uri = element
