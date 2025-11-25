@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "cim-graph"
-version = "0.4.3a2"
+version = "0.4.3a3"
 description = "CIM Graph"
 authors = ["A. Anderson <19935503+AAndersn@users.noreply.github.com>",
            "C. Allwardt <3979063+craig8@users.noreply.github.com>"]
