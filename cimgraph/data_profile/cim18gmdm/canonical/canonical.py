@@ -1507,6 +1507,69 @@ class CurveData(Identity):
         return 'unbounded'
     
 @dataclass(repr=False)
+class DiagramObjectGluePoint(Identity):
+    '''
+    This is used for grouping diagram object points from different diagram
+    objects that are considered to be glued together in a diagram even if they
+    are not at the exact same coordinates.
+    '''
+
+    @property
+    def __namespace__(self):
+        return 'http://cim.ucaiug.io/CIM101/draft#'
+    @property
+    def __package__(self):
+        return 'DiagramLayoutEXT'
+    @property
+    def __minOccurs__(self):
+        return '0'
+    @property
+    def __maxOccurs__(self):
+        return 'unbounded'
+    
+    DiagramObjectPoints: list[DiagramObjectPoint] = field(
+        default_factory=list,
+        metadata={
+        'type': 'Association',
+        'minOccurs': '0',
+        'maxOccurs': 'unbounded',
+        'inverse': 'DiagramObjectPoint.DiagramObjectGluePoint',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
+        'serialize': False,
+        'docstring':
+            '''
+            A diagram object glue point is associated with 2 or more object points
+            that are considered to be 'glued' together.
+            '''
+        
+        })
+    '''
+    A diagram object glue point is associated with 2 or more object points
+    that are considered to be 'glued' together.
+    '''
+    
+    DiagramObjectPoints: list[DiagramObjectPoint] = field(
+        default_factory=list,
+        metadata={
+        'type': 'Association',
+        'minOccurs': '0',
+        'maxOccurs': 'unbounded',
+        'inverse': 'DiagramObjectPoint.DiagramObjectGluePoint',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
+        'serialize': False,
+        'docstring':
+            '''
+            A diagram object glue point is associated with 2 or more object points
+            that are considered to be 'glued' together.
+            '''
+        
+        })
+    '''
+    A diagram object glue point is associated with 2 or more object points
+    that are considered to be 'glued' together.
+    '''
+    
+@dataclass(repr=False)
 class DiagramObjectGluePoint1(Identity):
     '''
     This is used for grouping diagram object points from different diagram
@@ -1520,6 +1583,141 @@ class DiagramObjectGluePoint1(Identity):
     @property
     def __package__(self):
         return 'DiagramLayoutEXT'
+    @property
+    def __minOccurs__(self):
+        return '0'
+    @property
+    def __maxOccurs__(self):
+        return 'unbounded'
+    
+@dataclass(repr=False)
+class DiagramObjectPoint(Identity):
+    '''
+    A point in a given space defined by 3 coordinates and associated to a diagram
+    object. The coordinates may be positive or negative as the origin does
+    not have to be in the corner of a diagram.
+    '''
+
+    sequenceNumber: Optional[int] = field(
+        default=None,
+        metadata={
+        'type': 'Attribute',
+        'minOccurs': '0',
+        'maxOccurs': '1',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
+        'serialize': True,
+        'docstring':
+            '''
+            The sequence position of the point, used for defining the order of points
+            for diagram objects acting as a polyline or polygon with more than one
+            point. The attribute shall be a positive value.
+            '''
+        
+        })
+    '''
+    The sequence position of the point, used for defining the order of
+    points for diagram objects acting as a polyline or polygon with more
+    than one point. The attribute shall be a positive value.
+    '''
+    
+    xPosition: Optional[float] = field(
+        default=None,
+        metadata={
+        'type': 'Attribute',
+        'minOccurs': '0',
+        'maxOccurs': '1',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
+        'serialize': True,
+        'docstring':
+            '''
+            The X coordinate of this point.
+            '''
+        
+        })
+    '''
+    The X coordinate of this point.
+    '''
+    
+    yPosition: Optional[float] = field(
+        default=None,
+        metadata={
+        'type': 'Attribute',
+        'minOccurs': '0',
+        'maxOccurs': '1',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
+        'serialize': True,
+        'docstring':
+            '''
+            The Y coordinate of this point.
+            '''
+        
+        })
+    '''
+    The Y coordinate of this point.
+    '''
+    
+    zPosition: Optional[float] = field(
+        default=None,
+        metadata={
+        'type': 'Attribute',
+        'minOccurs': '0',
+        'maxOccurs': '1',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
+        'serialize': True,
+        'docstring':
+            '''
+            The Z coordinate of this point.
+            '''
+        
+        })
+    '''
+    The Z coordinate of this point.
+    '''
+    
+    DiagramObject: Optional[DiagramObject] = field(
+        default=None,
+        metadata={
+        'type': 'Attribute',
+        'minOccurs': '0',
+        'maxOccurs': '1',
+        'inverse': 'DiagramObject.DiagramObjectPoints',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
+        'serialize': True,
+        'docstring':
+            '''
+            The diagram object with which the points are associated.
+            '''
+        
+        })
+    '''
+    The diagram object with which the points are associated.
+    '''
+    
+    DiagramObjectGluePoint: Optional[DiagramObjectGluePoint] = field(
+        default=None,
+        metadata={
+        'type': 'Attribute',
+        'minOccurs': '0',
+        'maxOccurs': '1',
+        'inverse': 'DiagramObjectGluePoint.DiagramObjectPoints',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
+        'serialize': True,
+        'docstring':
+            '''
+            The 'glue' point to which this point is associated.
+            '''
+        
+        })
+    '''
+    The 'glue' point to which this point is associated.
+    '''
+    
+    @property
+    def __namespace__(self):
+        return 'http://cim.ucaiug.io/CIM101/draft#'
+    @property
+    def __package__(self):
+        return 'DiagramLayout'
     @property
     def __minOccurs__(self):
         return '0'
@@ -2034,6 +2232,44 @@ class Fuel(Identity):
         return 'unbounded'
     
 @dataclass(repr=False)
+class GenDistributionFactor(Identity):
+    '''
+    This class models the generation distribution factors. This class needs
+    to be used along with the AggregatedPnode and the IndividualPnode to show
+    the distribution of each individual party.
+    '''
+
+    @property
+    def __namespace__(self):
+        return 'http://cim.ucaiug.io/CIM101/draft#'
+    @property
+    def __package__(self):
+        return 'ExternalInputs'
+    @property
+    def __minOccurs__(self):
+        return '0'
+    @property
+    def __maxOccurs__(self):
+        return 'unbounded'
+    
+    IndividualPnode: Optional[IndividualPnode] = field(
+        default=None,
+        metadata={
+        'type': 'Association',
+        'minOccurs': '0',
+        'maxOccurs': '1',
+        'inverse': 'IndividualPnode.GenDistributionFactor',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
+        'serialize': False,
+        'docstring':
+            '''
+            '''
+        
+        })
+    '''
+    '''
+    
+@dataclass(repr=False)
 class GeometricElement(Identity):
     '''
     Exists solely as the parent of the separate geometry types (Point, Line,
@@ -2293,246 +2529,6 @@ class GeometricElement1(Identity):
         return 'unbounded'
     
 @dataclass(repr=False)
-class Identity(Identity):
-    '''
-    This is a root class to provide common identification for all classes.
-    IdentifiedObject and any class to be exchanged with RDF XML now inherits
-    from Identity. mRID is superseded by Identity.identifier, which is typed
-    to be a UUID.
-    '''
-
-    identifier: Optional[str] = field(
-        default=None,
-        metadata={
-        'type': 'Attribute',
-        'minOccurs': '1',
-        'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': True,
-        'docstring':
-            '''
-            A universally unique object identifier. Used to uniquely identify persistent
-            objects between CIM messages.
-            '''
-        
-        })
-    '''
-    A universally unique object identifier. Used to uniquely identify persistent
-    objects between CIM messages.
-    '''
-    
-    @property
-    def __namespace__(self):
-        return 'http://cim.ucaiug.io/CIM101/draft#'
-    @property
-    def __package__(self):
-        return 'Core'
-    @property
-    def __minOccurs__(self):
-        return '0'
-    @property
-    def __maxOccurs__(self):
-        return 'unbounded'
-    
-@dataclass(repr=False)
-class DiagramObjectGluePoint(Identity):
-    '''
-    This is used for grouping diagram object points from different diagram
-    objects that are considered to be glued together in a diagram even if they
-    are not at the exact same coordinates.
-    '''
-
-    DiagramObjectPoints: list[DiagramObjectPoint] = field(
-        default_factory=list,
-        metadata={
-        'type': 'Association',
-        'minOccurs': '0',
-        'maxOccurs': 'unbounded',
-        'inverse': 'DiagramObjectPoint.DiagramObjectGluePoint',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
-        'docstring':
-            '''
-            A diagram object glue point is associated with 2 or more object points
-            that are considered to be 'glued' together.
-            '''
-        
-        })
-    '''
-    A diagram object glue point is associated with 2 or more object points
-    that are considered to be 'glued' together.
-    '''
-    
-    DiagramObjectPoints: list[DiagramObjectPoint] = field(
-        default_factory=list,
-        metadata={
-        'type': 'Association',
-        'minOccurs': '0',
-        'maxOccurs': 'unbounded',
-        'inverse': 'DiagramObjectPoint.DiagramObjectGluePoint',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
-        'docstring':
-            '''
-            A diagram object glue point is associated with 2 or more object points
-            that are considered to be 'glued' together.
-            '''
-        
-        })
-    '''
-    A diagram object glue point is associated with 2 or more object points
-    that are considered to be 'glued' together.
-    '''
-    
-    @property
-    def __namespace__(self):
-        return 'http://cim.ucaiug.io/CIM101/draft#'
-    @property
-    def __package__(self):
-        return 'DiagramLayoutEXT'
-    @property
-    def __minOccurs__(self):
-        return '0'
-    @property
-    def __maxOccurs__(self):
-        return 'unbounded'
-    
-@dataclass(repr=False)
-class DiagramObjectPoint(Identity):
-    '''
-    A point in a given space defined by 3 coordinates and associated to a diagram
-    object. The coordinates may be positive or negative as the origin does
-    not have to be in the corner of a diagram.
-    '''
-
-    sequenceNumber: Optional[int] = field(
-        default=None,
-        metadata={
-        'type': 'Attribute',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': True,
-        'docstring':
-            '''
-            The sequence position of the point, used for defining the order of points
-            for diagram objects acting as a polyline or polygon with more than one
-            point. The attribute shall be a positive value.
-            '''
-        
-        })
-    '''
-    The sequence position of the point, used for defining the order of
-    points for diagram objects acting as a polyline or polygon with more
-    than one point. The attribute shall be a positive value.
-    '''
-    
-    xPosition: Optional[float] = field(
-        default=None,
-        metadata={
-        'type': 'Attribute',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': True,
-        'docstring':
-            '''
-            The X coordinate of this point.
-            '''
-        
-        })
-    '''
-    The X coordinate of this point.
-    '''
-    
-    yPosition: Optional[float] = field(
-        default=None,
-        metadata={
-        'type': 'Attribute',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': True,
-        'docstring':
-            '''
-            The Y coordinate of this point.
-            '''
-        
-        })
-    '''
-    The Y coordinate of this point.
-    '''
-    
-    zPosition: Optional[float] = field(
-        default=None,
-        metadata={
-        'type': 'Attribute',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': True,
-        'docstring':
-            '''
-            The Z coordinate of this point.
-            '''
-        
-        })
-    '''
-    The Z coordinate of this point.
-    '''
-    
-    DiagramObject: Optional[DiagramObject] = field(
-        default=None,
-        metadata={
-        'type': 'Attribute',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'DiagramObject.DiagramObjectPoints',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': True,
-        'docstring':
-            '''
-            The diagram object with which the points are associated.
-            '''
-        
-        })
-    '''
-    The diagram object with which the points are associated.
-    '''
-    
-    DiagramObjectGluePoint: Optional[DiagramObjectGluePoint] = field(
-        default=None,
-        metadata={
-        'type': 'Attribute',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'DiagramObjectGluePoint.DiagramObjectPoints',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': True,
-        'docstring':
-            '''
-            The 'glue' point to which this point is associated.
-            '''
-        
-        })
-    '''
-    The 'glue' point to which this point is associated.
-    '''
-    
-    @property
-    def __namespace__(self):
-        return 'http://cim.ucaiug.io/CIM101/draft#'
-    @property
-    def __package__(self):
-        return 'DiagramLayout'
-    @property
-    def __minOccurs__(self):
-        return '0'
-    @property
-    def __maxOccurs__(self):
-        return 'unbounded'
-    
-@dataclass(repr=False)
 class IdentifiedObject(Identity):
     '''
     This is a class that provides common identification for all classes needing
@@ -2609,6 +2605,19 @@ class IdentifiedObject(Identity):
     the object.
     '''
     
+    @property
+    def __namespace__(self):
+        return 'http://cim.ucaiug.io/CIM101/draft#'
+    @property
+    def __package__(self):
+        return 'Core'
+    @property
+    def __minOccurs__(self):
+        return '0'
+    @property
+    def __maxOccurs__(self):
+        return 'unbounded'
+    
     DiagramObjects: list[DiagramObject] = field(
         default_factory=list,
         metadata={
@@ -2627,19 +2636,6 @@ class IdentifiedObject(Identity):
     '''
     The diagram objects that are associated with the domain object.
     '''
-    
-    @property
-    def __namespace__(self):
-        return 'http://cim.ucaiug.io/CIM101/draft#'
-    @property
-    def __package__(self):
-        return 'Core'
-    @property
-    def __minOccurs__(self):
-        return '0'
-    @property
-    def __maxOccurs__(self):
-        return 'unbounded'
     
 @dataclass(repr=False)
 class ACDCTerminal(IdentifiedObject):
@@ -14988,23 +14984,6 @@ class ConnectivityNode(IdentifiedObject):
     Container of this connectivity node.
     '''
     
-    IndividualPnode: Optional[IndividualPnode] = field(
-        default=None,
-        metadata={
-        'type': 'Attribute',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'IndividualPnode.ConnectivityNode',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': True,
-        'docstring':
-            '''
-            '''
-        
-        })
-    '''
-    '''
-    
     TopologicalNode: Optional[TopologicalNode] = field(
         default=None,
         metadata={
@@ -15062,6 +15041,23 @@ class ConnectivityNode(IdentifiedObject):
         })
     '''
     The boundary point associated with the connectivity node.
+    '''
+    
+    IndividualPnode: Optional[IndividualPnode] = field(
+        default=None,
+        metadata={
+        'type': 'Association',
+        'minOccurs': '0',
+        'maxOccurs': '1',
+        'inverse': 'IndividualPnode.ConnectivityNode',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
+        'serialize': False,
+        'docstring':
+            '''
+            '''
+        
+        })
+    '''
     '''
     
     RegisteredResource: list[RegisteredResource] = field(
@@ -27237,12 +27233,46 @@ class IndividualPnode(Pnode):
     ConnectivityNode: Optional[ConnectivityNode] = field(
         default=None,
         metadata={
-        'type': 'Association',
+        'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'ConnectivityNode.IndividualPnode',
         'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
+        'serialize': True,
+        'docstring':
+            '''
+            '''
+        
+        })
+    '''
+    '''
+    
+    GenDistributionFactor: Optional[GenDistributionFactor] = field(
+        default=None,
+        metadata={
+        'type': 'Attribute',
+        'minOccurs': '0',
+        'maxOccurs': '1',
+        'inverse': 'GenDistributionFactor.IndividualPnode',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
+        'serialize': True,
+        'docstring':
+            '''
+            '''
+        
+        })
+    '''
+    '''
+    
+    LoadDistributionFactor: Optional[LoadDistributionFactor] = field(
+        default=None,
+        metadata={
+        'type': 'Attribute',
+        'minOccurs': '0',
+        'maxOccurs': '1',
+        'inverse': 'LoadDistributionFactor.IndividualPnode',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
+        'serialize': True,
         'docstring':
             '''
             '''
@@ -46976,44 +47006,6 @@ class RatioTapChanger(TapChanger):
     Transformer end to which this ratio tap changer belongs.
     '''
     
-    TransformerEnd: Optional[TransformerEnd] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'TransformerEnd.AdditionalRatioTapChanger',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
-        'docstring':
-            '''
-            Transformer end to which this ratio tap changer belongs.
-            '''
-        
-        })
-    '''
-    Transformer end to which this ratio tap changer belongs.
-    '''
-    
-    TransformerEnd: Optional[TransformerEnd] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'TransformerEnd.RatioTapChanger',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
-        'docstring':
-            '''
-            Transformer end to which this ratio tap changer belongs.
-            '''
-        
-        })
-    '''
-    Transformer end to which this ratio tap changer belongs.
-    '''
-    
     @property
     def __namespace__(self):
         return 'http://cim.ucaiug.io/CIM101/draft#'
@@ -52928,214 +52920,6 @@ class WorkCapability(IdentifiedObject):
     def __maxOccurs__(self):
         return 'unbounded'
     
-@stereotype(CIMStereotype.Concrete)
-@dataclass(repr=False)
-class PhaseImpedanceData(Identity):
-    '''
-    Per length phase impedance matrix entry describes impedance and conductance
-    matrix element values for a specific row and column of the matrix.
-    The phases to which each entry applies can be determined by means of the
-    row and column attributes which bind to a sequence number provided in either
-    ACLineSegmentPhase or WirePosition (which also specify phase). Due to physical
-    symmetry that is reflected in the matrix, only the lower triangle of the
-    matrix is populated with the row and column method. That is, the column
-    attribute is always less than or equal to the row attribute.
-    '''
-
-    column: Optional[int] = field(
-        default=None,
-        metadata={
-        'type': 'Attribute',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': True,
-        'docstring':
-            '''
-            The matrix entry's column number has a range of possible values from 1
-            to the conductor count of the matrix, but due to symmetry, only entries
-            in the lower triangle (including diagonal) of the matrix need be defined.
-            Column number binds to the sequence number in either ACLineSegmentPhase
-            or WirePosition, which then identifies the phase for this entry.
-            '''
-        
-        })
-    '''
-    The matrix entry's column number has a range of possible values from
-    1 to the conductor count of the matrix, but due to symmetry, only entries
-    in the lower triangle (including diagonal) of the matrix need be defined.
-    Column number binds to the sequence number in either ACLineSegmentPhase
-    or WirePosition, which then identifies the phase for this entry.
-    '''
-    
-    row: Optional[int] = field(
-        default=None,
-        metadata={
-        'type': 'Attribute',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': True,
-        'docstring':
-            '''
-            The matrix entry's row number has a range of possible values from 1 to
-            the conductor count of the matrix, but due to symmetry, only entries in
-            the lower triangle (including diagonal) of the matrix need be defined.
-            Row number binds to the sequence number in either ACLineSegmentPhase or
-            WirePosition, which then identifies the phase for this entry.
-            '''
-        
-        })
-    '''
-    The matrix entry's row number has a range of possible values from 1
-    to the conductor count of the matrix, but due to symmetry, only entries
-    in the lower triangle (including diagonal) of the matrix need be defined.
-    Row number binds to the sequence number in either ACLineSegmentPhase
-    or WirePosition, which then identifies the phase for this entry.
-    '''
-    
-    b: Optional[ float | SusceptancePerLength ] = field(
-        default=None,
-        metadata={
-        'type': 'Attribute',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': True,
-        'docstring':
-            '''
-            Susceptance matrix entry value, per length of unit.
-            '''
-        
-        })
-    '''
-    Susceptance matrix entry value, per length of unit.
-    '''
-    
-    g: Optional[ float | ConductancePerLength ] = field(
-        default=None,
-        metadata={
-        'type': 'Attribute',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': True,
-        'docstring':
-            '''
-            Conductance matrix entry value, per length of unit.
-            '''
-        
-        })
-    '''
-    Conductance matrix entry value, per length of unit.
-    '''
-    
-    r: Optional[ float | ResistancePerLength ] = field(
-        default=None,
-        metadata={
-        'type': 'Attribute',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': True,
-        'docstring':
-            '''
-            Resistance matrix entry value, per length of unit.
-            '''
-        
-        })
-    '''
-    Resistance matrix entry value, per length of unit.
-    '''
-    
-    x: Optional[ float | ReactancePerLength ] = field(
-        default=None,
-        metadata={
-        'type': 'Attribute',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': True,
-        'docstring':
-            '''
-            Reactance matrix entry value, per length of unit.
-            '''
-        
-        })
-    '''
-    Reactance matrix entry value, per length of unit.
-    '''
-    
-    fromPhase: Optional[SinglePhaseKind] = field(
-        default=None,
-        metadata={
-        'type': 'enumeration Attribute',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': '',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': True,
-        'docstring':
-            '''
-            Refer to the class description.
-            '''
-        
-        })
-    '''
-    Refer to the class description.
-    '''
-    
-    toPhase: Optional[SinglePhaseKind] = field(
-        default=None,
-        metadata={
-        'type': 'enumeration Attribute',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': '',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': True,
-        'docstring':
-            '''
-            Refer to the class description.
-            '''
-        
-        })
-    '''
-    Refer to the class description.
-    '''
-    
-    PhaseImpedance: Optional[PerLengthPhaseImpedance] = field(
-        default=None,
-        metadata={
-        'type': 'Attribute',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'PerLengthPhaseImpedance.PhaseImpedanceData',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': True,
-        'docstring':
-            '''
-            Conductor phase impedance to which this data belongs.
-            '''
-        
-        })
-    '''
-    Conductor phase impedance to which this data belongs.
-    '''
-    
-    @property
-    def __namespace__(self):
-        return 'http://cim.ucaiug.io/CIM101/draft#'
-    @property
-    def __package__(self):
-        return 'Wires'
-    @property
-    def __minOccurs__(self):
-        return '0'
-    @property
-    def __maxOccurs__(self):
-        return 'unbounded'
-    
 @dataclass(repr=False)
 class ImpedanceTapChangerTablePoint(Identity):
     '''
@@ -53772,6 +53556,48 @@ class IrregularTimePoint(Identity):
     @property
     def __maxOccurs__(self):
         return 'unbounded'
+    
+@dataclass(repr=False)
+class LoadDistributionFactor(Identity):
+    '''
+    This class models the load distribution factors. This class should be used
+    in one of two ways:
+    Use it along with the AggregatedPnode and the IndividualPnode to show the
+    distriubtion of each individual party
+    OR
+    Use it with Mkt_EnergyConsumer to represent the current MW/Mvar distribution
+    within it's parnet load group.
+    '''
+
+    @property
+    def __namespace__(self):
+        return 'http://cim.ucaiug.io/CIM101/draft#'
+    @property
+    def __package__(self):
+        return 'ExternalInputs'
+    @property
+    def __minOccurs__(self):
+        return '0'
+    @property
+    def __maxOccurs__(self):
+        return 'unbounded'
+    
+    IndividualPnode: Optional[IndividualPnode] = field(
+        default=None,
+        metadata={
+        'type': 'Association',
+        'minOccurs': '0',
+        'maxOccurs': '1',
+        'inverse': 'IndividualPnode.LoadDistributionFactor',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
+        'serialize': False,
+        'docstring':
+            '''
+            '''
+        
+        })
+    '''
+    '''
     
 @dataclass(repr=False)
 class LocationAccess(Identity):
@@ -55743,6 +55569,214 @@ class Operator(Identity):
     def __maxOccurs__(self):
         return 'unbounded'
     
+@stereotype(CIMStereotype.Concrete)
+@dataclass(repr=False)
+class PhaseImpedanceData(Identity):
+    '''
+    Per length phase impedance matrix entry describes impedance and conductance
+    matrix element values for a specific row and column of the matrix.
+    The phases to which each entry applies can be determined by means of the
+    row and column attributes which bind to a sequence number provided in either
+    ACLineSegmentPhase or WirePosition (which also specify phase). Due to physical
+    symmetry that is reflected in the matrix, only the lower triangle of the
+    matrix is populated with the row and column method. That is, the column
+    attribute is always less than or equal to the row attribute.
+    '''
+
+    column: Optional[int] = field(
+        default=None,
+        metadata={
+        'type': 'Attribute',
+        'minOccurs': '0',
+        'maxOccurs': '1',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
+        'serialize': True,
+        'docstring':
+            '''
+            The matrix entry's column number has a range of possible values from 1
+            to the conductor count of the matrix, but due to symmetry, only entries
+            in the lower triangle (including diagonal) of the matrix need be defined.
+            Column number binds to the sequence number in either ACLineSegmentPhase
+            or WirePosition, which then identifies the phase for this entry.
+            '''
+        
+        })
+    '''
+    The matrix entry's column number has a range of possible values from
+    1 to the conductor count of the matrix, but due to symmetry, only entries
+    in the lower triangle (including diagonal) of the matrix need be defined.
+    Column number binds to the sequence number in either ACLineSegmentPhase
+    or WirePosition, which then identifies the phase for this entry.
+    '''
+    
+    row: Optional[int] = field(
+        default=None,
+        metadata={
+        'type': 'Attribute',
+        'minOccurs': '0',
+        'maxOccurs': '1',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
+        'serialize': True,
+        'docstring':
+            '''
+            The matrix entry's row number has a range of possible values from 1 to
+            the conductor count of the matrix, but due to symmetry, only entries in
+            the lower triangle (including diagonal) of the matrix need be defined.
+            Row number binds to the sequence number in either ACLineSegmentPhase or
+            WirePosition, which then identifies the phase for this entry.
+            '''
+        
+        })
+    '''
+    The matrix entry's row number has a range of possible values from 1
+    to the conductor count of the matrix, but due to symmetry, only entries
+    in the lower triangle (including diagonal) of the matrix need be defined.
+    Row number binds to the sequence number in either ACLineSegmentPhase
+    or WirePosition, which then identifies the phase for this entry.
+    '''
+    
+    b: Optional[ float | SusceptancePerLength ] = field(
+        default=None,
+        metadata={
+        'type': 'Attribute',
+        'minOccurs': '0',
+        'maxOccurs': '1',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
+        'serialize': True,
+        'docstring':
+            '''
+            Susceptance matrix entry value, per length of unit.
+            '''
+        
+        })
+    '''
+    Susceptance matrix entry value, per length of unit.
+    '''
+    
+    g: Optional[ float | ConductancePerLength ] = field(
+        default=None,
+        metadata={
+        'type': 'Attribute',
+        'minOccurs': '0',
+        'maxOccurs': '1',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
+        'serialize': True,
+        'docstring':
+            '''
+            Conductance matrix entry value, per length of unit.
+            '''
+        
+        })
+    '''
+    Conductance matrix entry value, per length of unit.
+    '''
+    
+    r: Optional[ float | ResistancePerLength ] = field(
+        default=None,
+        metadata={
+        'type': 'Attribute',
+        'minOccurs': '0',
+        'maxOccurs': '1',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
+        'serialize': True,
+        'docstring':
+            '''
+            Resistance matrix entry value, per length of unit.
+            '''
+        
+        })
+    '''
+    Resistance matrix entry value, per length of unit.
+    '''
+    
+    x: Optional[ float | ReactancePerLength ] = field(
+        default=None,
+        metadata={
+        'type': 'Attribute',
+        'minOccurs': '0',
+        'maxOccurs': '1',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
+        'serialize': True,
+        'docstring':
+            '''
+            Reactance matrix entry value, per length of unit.
+            '''
+        
+        })
+    '''
+    Reactance matrix entry value, per length of unit.
+    '''
+    
+    fromPhase: Optional[SinglePhaseKind] = field(
+        default=None,
+        metadata={
+        'type': 'enumeration Attribute',
+        'minOccurs': '0',
+        'maxOccurs': '1',
+        'inverse': '',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
+        'serialize': True,
+        'docstring':
+            '''
+            Refer to the class description.
+            '''
+        
+        })
+    '''
+    Refer to the class description.
+    '''
+    
+    toPhase: Optional[SinglePhaseKind] = field(
+        default=None,
+        metadata={
+        'type': 'enumeration Attribute',
+        'minOccurs': '0',
+        'maxOccurs': '1',
+        'inverse': '',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
+        'serialize': True,
+        'docstring':
+            '''
+            Refer to the class description.
+            '''
+        
+        })
+    '''
+    Refer to the class description.
+    '''
+    
+    PhaseImpedance: Optional[PerLengthPhaseImpedance] = field(
+        default=None,
+        metadata={
+        'type': 'Attribute',
+        'minOccurs': '0',
+        'maxOccurs': '1',
+        'inverse': 'PerLengthPhaseImpedance.PhaseImpedanceData',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
+        'serialize': True,
+        'docstring':
+            '''
+            Conductor phase impedance to which this data belongs.
+            '''
+        
+        })
+    '''
+    Conductor phase impedance to which this data belongs.
+    '''
+    
+    @property
+    def __namespace__(self):
+        return 'http://cim.ucaiug.io/CIM101/draft#'
+    @property
+    def __package__(self):
+        return 'Wires'
+    @property
+    def __minOccurs__(self):
+        return '0'
+    @property
+    def __maxOccurs__(self):
+        return 'unbounded'
+    
 @dataclass(repr=False)
 class PhaseImpedanceData1(Identity):
     '''
@@ -55941,6 +55975,26 @@ class PhaseImpedanceData1(Identity):
     @property
     def __package__(self):
         return 'Wires'
+    @property
+    def __minOccurs__(self):
+        return '0'
+    @property
+    def __maxOccurs__(self):
+        return 'unbounded'
+    
+@dataclass(repr=False)
+class PnodeDistributionFactor(Identity):
+    '''
+    This class allows SC to input different distribution factors for pricing
+    node.
+    '''
+
+    @property
+    def __namespace__(self):
+        return 'http://cim.ucaiug.io/CIM101/draft#'
+    @property
+    def __package__(self):
+        return 'ReferenceData'
     @property
     def __minOccurs__(self):
         return '0'
