@@ -141,7 +141,8 @@ class Identity:
         metadata={
             'type': 'Attribute',
             'minOccurs': '1',
-            'maxOccurs': '1'
+            'maxOccurs': '1',
+            'serialize': True
         })
 
     def __post_init__(self) -> None:
