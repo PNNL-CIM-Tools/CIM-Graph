@@ -44,7 +44,13 @@ class NoLoadTest {
 +lossZero : KiloActivePower [0..1]
 }
 
-Number of phases supported by a device.http://langdale.com.au/2005/UML#enumerationhttp://langdale.com.au/2005/UML#attributeOtherSingle phaseThree phases
+class PhaseCountKind {
+<<enumeration>>
+other
+singlePhase
+threePhase
+}
+
 class PowerSystemResource {
 <<abstract>>
 }
@@ -84,45 +90,15 @@ class TransformerTest {
 +temperature : Temperature [1]
 }
 
-Winding connection type.http://langdale.com.au/2005/UML#enumerationhttp://langdale.com.au/2005/UML#attributeAutotransformer common winding.Delta.Independent winding, for single-phase connections.Wye.Wye, with neutral brought out for grounding.ZigZag.ZigZag, with neutral brought out for grounding.
-class ApparentPower {
-<<CIMDatatype>>
-}
-
-class CurrentFlow {
-<<CIMDatatype>>
-}
-
-class Impedance {
-<<CIMDatatype>>
-}
-
-class KiloActivePower {
-<<CIMDatatype>>
-}
-
-class PerCent {
-<<CIMDatatype>>
-}
-
-class Resistance {
-<<CIMDatatype>>
-}
-
-class Temperature {
-<<CIMDatatype>>
-}
-
-class Voltage {
-<<CIMDatatype>>
-}
-
-class Integer {
-<<Primitive>>
-}
-
-class String {
-<<Primitive>>
+class WindingConnection {
+<<enumeration>>
+A
+D
+I
+Y
+Yn
+Z
+Zn
 }
 
 IdentifiedObject <|-- AssetInfo
@@ -149,16 +125,31 @@ TransformerTankInfo "1..* TransformerTankInfos" --> "1 PowerTransformerInfo" Pow
 
 ## Concrete Classes
 
-## Asset-NoLoadTest
+{#Asset-NoLoadTest}
 ### NoLoadTest
 
 Inheritance path = [TransformerTest](#Asset-TransformerTest) => [IdentifiedObject](#Asset-IdentifiedObject) => [Identity](#Asset-Identity)
 
 ```mermaid
 classDiagram
-class NoLoadTest{
+direction TB
+
+class NoLoadTest {
++ energisedEndVoltage : Voltage [0..1]
++ excitingCurrent : PerCent [0..1]
++ excitingCurrentZero : PerCent [0..1]
++ loss : KiloActivePower [0..1]
++ lossZero : KiloActivePower [0..1]
 }
+
+class TransformerTest {
+<<abstract>>
+}
+
 TransformerTest <|-- NoLoadTest : inherits from
+class TransformerEndInfo {
+}
+
 NoLoadTest --> "1" TransformerEndInfo : EnergisedEnd
 ```
 
@@ -186,17 +177,23 @@ No-load test results determine core admittance parameters. They include exciting
 | name [0..1] | [String](#Asset-String) | see [IdentifiedObject](#Asset-IdentifiedObject) | |
 | identifier [1] | [String](#Asset-String) | see [Identity](#Asset-Identity) | |
 
-## Asset-PowerTransformerInfo
+{#Asset-PowerTransformerInfo}
 ### PowerTransformerInfo
 
 Inheritance path = [AssetInfo](#Asset-AssetInfo) => [IdentifiedObject](#Asset-IdentifiedObject) => [Identity](#Asset-Identity)
 
 ```mermaid
 classDiagram
-class PowerTransformerInfo{
+direction TB
+
+class PowerTransformerInfo {
 }
+
+class AssetInfo {
+<<abstract>>
+}
+
 AssetInfo <|-- PowerTransformerInfo : inherits from
-TransformerTankInfo --> "1" PowerTransformerInfo : PowerTransformerInfo
 ```
 
 Set of power transformer data, from an equipment library.
@@ -210,17 +207,36 @@ Set of power transformer data, from an equipment library.
 | name [0..1] | [String](#Asset-String) | see [IdentifiedObject](#Asset-IdentifiedObject) | |
 | identifier [1] | [String](#Asset-String) | see [Identity](#Asset-Identity) | |
 
-## Asset-ShortCircuitTest
+{#Asset-ShortCircuitTest}
 ### ShortCircuitTest
 
 Inheritance path = [TransformerTest](#Asset-TransformerTest) => [IdentifiedObject](#Asset-IdentifiedObject) => [Identity](#Asset-Identity)
 
 ```mermaid
 classDiagram
-class ShortCircuitTest{
+direction TB
+
+class ShortCircuitTest {
++ energisedEndStep : Integer [0..1]
++ groundedEndStep : Integer [0..1]
++ leakageImpedance : Impedance [0..1]
++ leakageImpedanceZero : Impedance [0..1]
++ loss : KiloActivePower [0..1]
++ lossZero : KiloActivePower [0..1]
 }
+
+class TransformerTest {
+<<abstract>>
+}
+
 TransformerTest <|-- ShortCircuitTest : inherits from
+class TransformerEndInfo {
+}
+
 ShortCircuitTest --> "1" TransformerEndInfo : EnergisedEnd
+class TransformerEndInfo {
+}
+
 ShortCircuitTest --> "1..*" TransformerEndInfo : GroundedEnds
 ```
 
@@ -250,20 +266,35 @@ Short-circuit test results determine mesh impedance parameters. They include loa
 | name [0..1] | [String](#Asset-String) | see [IdentifiedObject](#Asset-IdentifiedObject) | |
 | identifier [1] | [String](#Asset-String) | see [Identity](#Asset-Identity) | |
 
-## Asset-TransformerEndInfo
+{#Asset-TransformerEndInfo}
 ### TransformerEndInfo
 
 Inheritance path = [ConductingAssetInfo](#Asset-ConductingAssetInfo) => [AssetInfo](#Asset-AssetInfo) => [IdentifiedObject](#Asset-IdentifiedObject) => [Identity](#Asset-Identity)
 
 ```mermaid
 classDiagram
-class TransformerEndInfo{
+direction TB
+
+class TransformerEndInfo {
++ connectionKind : enum:WindingConnection [0..1]
++ emergencyS : ApparentPower [0..1]
++ endNumber : Integer [1]
++ insulationU : Voltage [0..1]
++ phaseAngleClock : Integer [0..1]
++ r : Resistance [0..1]
++ ratedS : ApparentPower [0..1]
++ shortTermS : ApparentPower [0..1]
 }
+
+class ConductingAssetInfo {
+<<abstract>>
+}
+
 ConductingAssetInfo <|-- TransformerEndInfo : inherits from
+class TransformerTankInfo {
+}
+
 TransformerEndInfo --> "0..1" TransformerTankInfo : TransformerTankInfo
-NoLoadTest --> "1" TransformerEndInfo : EnergisedEnd
-ShortCircuitTest --> "1" TransformerEndInfo : EnergisedEnd
-ShortCircuitTest --> "1..*" TransformerEndInfo : GroundedEnds
 ```
 
 Transformer end data.
@@ -293,20 +324,30 @@ Transformer end data.
 | name [0..1] | [String](#Asset-String) | see [IdentifiedObject](#Asset-IdentifiedObject) | |
 | identifier [1] | [String](#Asset-String) | see [Identity](#Asset-Identity) | |
 
-## Asset-TransformerTank
+{#Asset-TransformerTank}
 ### (Description) TransformerTank
 
 Inheritance path = [Equipment](#Asset-Equipment) => [PowerSystemResource](#Asset-PowerSystemResource) => [IdentifiedObject](#Asset-IdentifiedObject) => [Identity](#Asset-Identity)
 
-> **Note:** This class is tagged in this profile with the 'Description' tag. To refer to the full definition of this class as defined in the profile this one depends on visit [TransformerTank](#Asset-description-profile-TransformerTank).
-
 ```mermaid
 classDiagram
-class TransformerTank{
+direction TB
+
+class TransformerTank {
 }
+
+class Equipment {
+<<abstract>>
+}
+
 Equipment <|-- TransformerTank : inherits from
+class TransformerTankInfo {
+}
+
 TransformerTank --> "0..1" TransformerTankInfo : TransformerTankInfo
 ```
+
+> **Note:** This class is tagged in this profile with the 'Description' tag. To refer to the full definition of this class as defined in the profile this one depends on visit [TransformerTank](#{Asset-description-profile}-TransformerTank).
 
 An assembly of two or more coupled windings that transform electrical power between voltage levels. These windings are bound on a common core and placed in the same tank. Transformer tank can be used to model both single-phase and 3-phase transformers.
 
@@ -326,19 +367,27 @@ An assembly of two or more coupled windings that transform electrical power betw
 | name [0..1] | [String](#Asset-String) | see [IdentifiedObject](#Asset-IdentifiedObject) | |
 | identifier [1] | [String](#Asset-String) | see [Identity](#Asset-Identity) | |
 
-## Asset-TransformerTankInfo
+{#Asset-TransformerTankInfo}
 ### TransformerTankInfo
 
 Inheritance path = [AssetInfo](#Asset-AssetInfo) => [IdentifiedObject](#Asset-IdentifiedObject) => [Identity](#Asset-Identity)
 
 ```mermaid
 classDiagram
-class TransformerTankInfo{
+direction TB
+
+class TransformerTankInfo {
 }
+
+class AssetInfo {
+<<abstract>>
+}
+
 AssetInfo <|-- TransformerTankInfo : inherits from
+class PowerTransformerInfo {
+}
+
 TransformerTankInfo --> "1" PowerTransformerInfo : PowerTransformerInfo
-TransformerEndInfo --> "0..1" TransformerTankInfo : TransformerTankInfo
-TransformerTank --> "0..1" TransformerTankInfo : TransformerTankInfo
 ```
 
 Set of transformer tank data, from an equipment library.
@@ -361,17 +410,24 @@ Set of transformer tank data, from an equipment library.
 
 ## Abstract Classes
 
-## Asset-AssetInfo
+{#Asset-AssetInfo}
 ### AssetInfo
 
 Inheritance path = [IdentifiedObject](#Asset-IdentifiedObject) => [Identity](#Asset-Identity)
 
 ```mermaid
 classDiagram
-class AssetInfo{
+direction TB
+
+class AssetInfo {
+<<abstract>>
 }
+
+class IdentifiedObject {
+<<abstract>>
+}
+
 IdentifiedObject <|-- AssetInfo : inherits from
-PowerSystemResource --> "0..1" AssetInfo : AssetDatasheet
 ```
 
 Set of attributes of an asset, representing typical datasheet information of a physical device that can be instantiated and shared in different data exchange contexts:
@@ -391,15 +447,25 @@ Set of attributes of an asset, representing typical datasheet information of a p
 | name [0..1] | [String](#Asset-String) | see [IdentifiedObject](#Asset-IdentifiedObject) | |
 | identifier [1] | [String](#Asset-String) | see [Identity](#Asset-Identity) | |
 
-## Asset-ConductingAssetInfo
+{#Asset-ConductingAssetInfo}
 ### ConductingAssetInfo
 
 Inheritance path = [AssetInfo](#Asset-AssetInfo) => [IdentifiedObject](#Asset-IdentifiedObject) => [Identity](#Asset-Identity)
 
 ```mermaid
 classDiagram
-class ConductingAssetInfo{
+direction TB
+
+class ConductingAssetInfo {
+<<abstract>>
++ ratedCurrent : CurrentFlow [0..1]
++ ratedVoltage : Voltage [0..1]
 }
+
+class AssetInfo {
+<<abstract>>
+}
+
 AssetInfo <|-- ConductingAssetInfo : inherits from
 ```
 
@@ -421,15 +487,23 @@ Generic information for conducting asset
 | name [0..1] | [String](#Asset-String) | see [IdentifiedObject](#Asset-IdentifiedObject) | |
 | identifier [1] | [String](#Asset-String) | see [Identity](#Asset-Identity) | |
 
-## Asset-Equipment
+{#Asset-Equipment}
 ### Equipment
 
 Inheritance path = [PowerSystemResource](#Asset-PowerSystemResource) => [IdentifiedObject](#Asset-IdentifiedObject) => [Identity](#Asset-Identity)
 
 ```mermaid
 classDiagram
-class Equipment{
+direction TB
+
+class Equipment {
+<<abstract>>
 }
+
+class PowerSystemResource {
+<<abstract>>
+}
+
 PowerSystemResource <|-- Equipment : inherits from
 ```
 
@@ -445,15 +519,25 @@ The parts of a power system that are physical devices, electronic or mechanical.
 | name [0..1] | [String](#Asset-String) | see [IdentifiedObject](#Asset-IdentifiedObject) | |
 | identifier [1] | [String](#Asset-String) | see [Identity](#Asset-Identity) | |
 
-## Asset-IdentifiedObject
+{#Asset-IdentifiedObject}
 ### IdentifiedObject
 
 Inheritance path = [Identity](#Asset-Identity)
 
 ```mermaid
 classDiagram
-class IdentifiedObject{
+direction TB
+
+class IdentifiedObject {
+<<abstract>>
++ description : String [0..1]
++ name : String [0..1]
 }
+
+class Identity {
+<<abstract>>
+}
+
 Identity <|-- IdentifiedObject : inherits from
 ```
 
@@ -473,14 +557,19 @@ This is a class that provides common identification for all classes needing iden
 |------|------|-------------|---------|
 | identifier [1] | [String](#Asset-String) | see [Identity](#Asset-Identity) | |
 
-## Asset-Identity
+{#Asset-Identity}
 ### Identity
 
 
 ```mermaid
 classDiagram
-class Identity{
+direction TB
+
+class Identity {
+<<abstract>>
++ identifier : String [1]
 }
+
 ```
 
 This is a root class to provide common identification for all classes. IdentifiedObject and any class to be exchanged with RDF XML now inherits from Identity. mRID is superseded by Identity.identifier, which is typed to be a UUID.
@@ -492,16 +581,28 @@ This is a root class to provide common identification for all classes. Identifie
 |------|------|-------------|---------|
 | identifier [1] | [String](#Asset-String) | A universally unique object identifier. Used to uniquely identify persistent objects between CIM messages. | |
 
-## Asset-PowerSystemResource
+{#Asset-PowerSystemResource}
 ### PowerSystemResource
 
 Inheritance path = [IdentifiedObject](#Asset-IdentifiedObject) => [Identity](#Asset-Identity)
 
 ```mermaid
 classDiagram
-class PowerSystemResource{
+direction TB
+
+class PowerSystemResource {
+<<abstract>>
 }
+
+class IdentifiedObject {
+<<abstract>>
+}
+
 IdentifiedObject <|-- PowerSystemResource : inherits from
+class AssetInfo {
+<<abstract>>
+}
+
 PowerSystemResource --> "0..1" AssetInfo : AssetDatasheet
 ```
 
@@ -522,15 +623,25 @@ A power system resource (PSR) can be an item of equipment such as a switch, an e
 | name [0..1] | [String](#Asset-String) | see [IdentifiedObject](#Asset-IdentifiedObject) | |
 | identifier [1] | [String](#Asset-String) | see [Identity](#Asset-Identity) | |
 
-## Asset-TransformerTest
+{#Asset-TransformerTest}
 ### TransformerTest
 
 Inheritance path = [IdentifiedObject](#Asset-IdentifiedObject) => [Identity](#Asset-Identity)
 
 ```mermaid
 classDiagram
-class TransformerTest{
+direction TB
+
+class TransformerTest {
+<<abstract>>
++ basePower : ApparentPower [1]
++ temperature : Temperature [1]
 }
+
+class IdentifiedObject {
+<<abstract>>
+}
+
 IdentifiedObject <|-- TransformerTest : inherits from
 ```
 
