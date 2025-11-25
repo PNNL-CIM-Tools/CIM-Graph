@@ -99,6 +99,7 @@ Y
 Yn
 Z
 Zn
+<<<<<<< HEAD
 }
 
 <<<<<<< HEAD
@@ -141,6 +142,8 @@ class Integer {
 
 class String {
 <<Primitive>>
+=======
+>>>>>>> b39ddd6 (update profiles)
 }
 
 >>>>>>> 6fc187f (test adding md)
@@ -169,6 +172,9 @@ TransformerTankInfo "1..* TransformerTankInfos" --> "1 PowerTransformerInfo" Pow
 ## Concrete Classes
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> b39ddd6 (update profiles)
 {#Asset-NoLoadTest}
 ### NoLoadTest
 
@@ -184,6 +190,7 @@ class NoLoadTest {
 + excitingCurrentZero : PerCent [0..1]
 + loss : KiloActivePower [0..1]
 + lossZero : KiloActivePower [0..1]
+<<<<<<< HEAD
 }
 
 class TransformerTest {
@@ -204,8 +211,18 @@ Inheritance path = [TransformerTest](Asset-TransformerTest) => [IdentifiedObject
 ```mermaid
 classDiagram
 class NoLoadTest{
+=======
+>>>>>>> b39ddd6 (update profiles)
 }
+
+class TransformerTest {
+<<abstract>>
+}
+
 TransformerTest <|-- NoLoadTest : inherits from
+class TransformerEndInfo {
+}
+
 NoLoadTest --> "1" TransformerEndInfo : EnergisedEnd
 NoLoadTest --> "0..*" NoLoadTest : EnergisedEndNoLoadTests
 >>>>>>> 6fc187f (test adding md)
@@ -255,6 +272,7 @@ classDiagram
 direction TB
 
 class PowerTransformerInfo {
+<<<<<<< HEAD
 }
 
 class AssetInfo {
@@ -278,6 +296,14 @@ classDiagram
 class PowerTransformerInfo{
 }
 >>>>>>> 6fc187f (test adding md)
+=======
+}
+
+class AssetInfo {
+<<abstract>>
+}
+
+>>>>>>> b39ddd6 (update profiles)
 AssetInfo <|-- PowerTransformerInfo : inherits from
 ```
 
@@ -309,6 +335,7 @@ class ShortCircuitTest {
 + leakageImpedanceZero : Impedance [0..1]
 + loss : KiloActivePower [0..1]
 + lossZero : KiloActivePower [0..1]
+<<<<<<< HEAD
 }
 
 class TransformerTest {
@@ -337,9 +364,22 @@ Inheritance path = [TransformerTest](Asset-TransformerTest) => [IdentifiedObject
 ```mermaid
 classDiagram
 class ShortCircuitTest{
+=======
+>>>>>>> b39ddd6 (update profiles)
 }
+
+class TransformerTest {
+<<abstract>>
+}
+
 TransformerTest <|-- ShortCircuitTest : inherits from
+class TransformerEndInfo {
+}
+
 ShortCircuitTest --> "1" TransformerEndInfo : EnergisedEnd
+class TransformerEndInfo {
+}
+
 ShortCircuitTest --> "1..*" TransformerEndInfo : GroundedEnds
 ShortCircuitTest --> "0..*" ShortCircuitTest : EnergisedEndShortCircuitTests
 ShortCircuitTest --> "0..*" ShortCircuitTest : GroundedEndShortCircuitTests
@@ -402,6 +442,7 @@ class TransformerEndInfo {
 + r : Resistance [0..1]
 + ratedS : ApparentPower [0..1]
 + shortTermS : ApparentPower [0..1]
+<<<<<<< HEAD
 }
 
 class ConductingAssetInfo {
@@ -428,11 +469,24 @@ Inheritance path = [ConductingAssetInfo](Asset-ConductingAssetInfo) => [AssetInf
 ```mermaid
 classDiagram
 class TransformerEndInfo{
+=======
+>>>>>>> b39ddd6 (update profiles)
 }
+
+class ConductingAssetInfo {
+<<abstract>>
+}
+
 ConductingAssetInfo <|-- TransformerEndInfo : inherits from
+class TransformerTankInfo {
+}
+
 TransformerEndInfo --> "0..1" TransformerTankInfo : TransformerTankInfo
+<<<<<<< HEAD
 TransformerEndInfo --> "0..*" TransformerEndInfo : TransformerEndInfos
 >>>>>>> 6fc187f (test adding md)
+=======
+>>>>>>> b39ddd6 (update profiles)
 ```
 
 Transformer end data.
@@ -480,6 +534,7 @@ Transformer end data.
 
 Inheritance path = [Equipment](#Asset-Equipment) => [PowerSystemResource](#Asset-PowerSystemResource) => [IdentifiedObject](#Asset-IdentifiedObject) => [Identity](#Asset-Identity)
 
+<<<<<<< HEAD
 ```mermaid
 classDiagram
 direction TB
@@ -514,16 +569,33 @@ Inheritance path = [Equipment](Asset-Equipment) => [PowerSystemResource](Asset-P
 
 > **Note:** This class is tagged in this profile with the 'Description' tag. To refer to the full definition of this class as defined in the profile this one depends on visit [TransformerTank](Asset-description-profile-TransformerTank).
 
+=======
+>>>>>>> b39ddd6 (update profiles)
 ```mermaid
 classDiagram
-class TransformerTank{
+direction TB
+
+class TransformerTank {
 }
+
+class Equipment {
+<<abstract>>
+}
+
 Equipment <|-- TransformerTank : inherits from
+class TransformerTankInfo {
+}
+
 TransformerTank --> "0..1" TransformerTankInfo : TransformerTankInfo
 TransformerTank --> "0..*" TransformerTank : TransformerTanks
 ```
 
+<<<<<<< HEAD
 >>>>>>> 6fc187f (test adding md)
+=======
+> **Note:** This class is tagged in this profile with the 'Description' tag. To refer to the full definition of this class as defined in the profile this one depends on visit [TransformerTank](#{Asset-description-profile}-TransformerTank).
+
+>>>>>>> b39ddd6 (update profiles)
 An assembly of two or more coupled windings that transform electrical power between voltage levels. These windings are bound on a common core and placed in the same tank. Transformer tank can be used to model both single-phase and 3-phase transformers.
 
 
@@ -557,6 +629,7 @@ classDiagram
 direction TB
 
 class TransformerTankInfo {
+<<<<<<< HEAD
 }
 
 class AssetInfo {
@@ -582,11 +655,24 @@ Inheritance path = [AssetInfo](Asset-AssetInfo) => [IdentifiedObject](Asset-Iden
 ```mermaid
 classDiagram
 class TransformerTankInfo{
+=======
+>>>>>>> b39ddd6 (update profiles)
 }
+
+class AssetInfo {
+<<abstract>>
+}
+
 AssetInfo <|-- TransformerTankInfo : inherits from
+class PowerTransformerInfo {
+}
+
 TransformerTankInfo --> "1" PowerTransformerInfo : PowerTransformerInfo
+<<<<<<< HEAD
 TransformerTankInfo --> "1..*" TransformerTankInfo : TransformerTankInfos
 >>>>>>> 6fc187f (test adding md)
+=======
+>>>>>>> b39ddd6 (update profiles)
 ```
 
 Set of transformer tank data, from an equipment library.
@@ -620,6 +706,9 @@ Set of transformer tank data, from an equipment library.
 ## Abstract Classes
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> b39ddd6 (update profiles)
 {#Asset-AssetInfo}
 ### AssetInfo
 
@@ -631,6 +720,7 @@ direction TB
 
 class AssetInfo {
 <<abstract>>
+<<<<<<< HEAD
 }
 
 class IdentifiedObject {
@@ -648,6 +738,14 @@ classDiagram
 class AssetInfo{
 }
 >>>>>>> 6fc187f (test adding md)
+=======
+}
+
+class IdentifiedObject {
+<<abstract>>
+}
+
+>>>>>>> b39ddd6 (update profiles)
 IdentifiedObject <|-- AssetInfo : inherits from
 ```
 
@@ -682,6 +780,7 @@ class ConductingAssetInfo {
 <<abstract>>
 + ratedCurrent : CurrentFlow [0..1]
 + ratedVoltage : Voltage [0..1]
+<<<<<<< HEAD
 }
 
 class AssetInfo {
@@ -703,6 +802,14 @@ classDiagram
 class ConductingAssetInfo{
 }
 >>>>>>> 6fc187f (test adding md)
+=======
+}
+
+class AssetInfo {
+<<abstract>>
+}
+
+>>>>>>> b39ddd6 (update profiles)
 AssetInfo <|-- ConductingAssetInfo : inherits from
 ```
 
@@ -741,6 +848,7 @@ direction TB
 
 class Equipment {
 <<abstract>>
+<<<<<<< HEAD
 }
 
 class PowerSystemResource {
@@ -762,6 +870,14 @@ classDiagram
 class Equipment{
 }
 >>>>>>> 6fc187f (test adding md)
+=======
+}
+
+class PowerSystemResource {
+<<abstract>>
+}
+
+>>>>>>> b39ddd6 (update profiles)
 PowerSystemResource <|-- Equipment : inherits from
 ```
 
@@ -791,6 +907,7 @@ class IdentifiedObject {
 <<abstract>>
 + description : String [0..1]
 + name : String [0..1]
+<<<<<<< HEAD
 }
 
 class Identity {
@@ -813,6 +930,14 @@ classDiagram
 class IdentifiedObject{
 }
 >>>>>>> 6fc187f (test adding md)
+=======
+}
+
+class Identity {
+<<abstract>>
+}
+
+>>>>>>> b39ddd6 (update profiles)
 Identity <|-- IdentifiedObject : inherits from
 ```
 
@@ -839,28 +964,39 @@ This is a class that provides common identification for all classes needing iden
 | identifier [1] | [String](#Asset-String) | see [Identity](#Asset-Identity) | |
 
 {#Asset-Identity}
+<<<<<<< HEAD
 =======
 | identifier [1] | [String](Asset-String) | see [Identity](Asset-Identity) | |
 
 Asset-Identity
 >>>>>>> 6fc187f (test adding md)
+=======
+>>>>>>> b39ddd6 (update profiles)
 ### Identity
 
 
 ```mermaid
 classDiagram
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> b39ddd6 (update profiles)
 direction TB
 
 class Identity {
 <<abstract>>
 + identifier : String [1]
+<<<<<<< HEAD
 }
 
 =======
 class Identity{
 }
 >>>>>>> 6fc187f (test adding md)
+=======
+}
+
+>>>>>>> b39ddd6 (update profiles)
 ```
 
 This is a root class to provide common identification for all classes. IdentifiedObject and any class to be exchanged with RDF XML now inherits from Identity. mRID is superseded by Identity.identifier, which is typed to be a UUID.
@@ -884,6 +1020,7 @@ direction TB
 
 class PowerSystemResource {
 <<abstract>>
+<<<<<<< HEAD
 }
 
 class IdentifiedObject {
@@ -907,8 +1044,19 @@ Inheritance path = [IdentifiedObject](Asset-IdentifiedObject) => [Identity](Asse
 ```mermaid
 classDiagram
 class PowerSystemResource{
+=======
+>>>>>>> b39ddd6 (update profiles)
 }
+
+class IdentifiedObject {
+<<abstract>>
+}
+
 IdentifiedObject <|-- PowerSystemResource : inherits from
+class AssetInfo {
+<<abstract>>
+}
+
 PowerSystemResource --> "0..1" AssetInfo : AssetDatasheet
 PowerSystemResource --> "0..*" PowerSystemResource : PowerSystemResources
 >>>>>>> 6fc187f (test adding md)
@@ -949,6 +1097,7 @@ class TransformerTest {
 <<abstract>>
 + basePower : ApparentPower [1]
 + temperature : Temperature [1]
+<<<<<<< HEAD
 }
 
 class IdentifiedObject {
@@ -970,6 +1119,14 @@ classDiagram
 class TransformerTest{
 }
 >>>>>>> 6fc187f (test adding md)
+=======
+}
+
+class IdentifiedObject {
+<<abstract>>
+}
+
+>>>>>>> b39ddd6 (update profiles)
 IdentifiedObject <|-- TransformerTest : inherits from
 ```
 
