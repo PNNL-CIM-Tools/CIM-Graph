@@ -10,7 +10,7 @@ from cimgraph.models.graph_model import GraphModel
 _log = logging.getLogger(__name__)
 
 
-def write_xml(network: GraphModel, filename: str, namespaces: dict=None, 
+def write_xml(network: GraphModel, filename: str, namespaces: dict=None,
               write_identifier:bool=True, enforce_rdf_direction:bool=False) -> None:
     """
     Write the network graph to an XML file.

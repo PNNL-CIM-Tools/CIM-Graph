@@ -90,7 +90,7 @@ def object_mermaid(obj: object) -> str:
         edge = getattr(obj, attribute)
         if isinstance(edge, CIMUnit):
             mermaid += short_attr_mermaid(obj, attribute, num_indent=2)
-            
+
         elif is_dataclass(edge) and edge is not None:
             if len(attribute) > 22:
                 mermaid += f'\n{INDENT*2}[{attribute[:22]}\n'

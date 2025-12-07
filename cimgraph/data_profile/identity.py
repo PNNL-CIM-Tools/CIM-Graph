@@ -6,8 +6,8 @@ from random import Random
 from typing import Any, Dict, List, Optional, Union
 from uuid import UUID, uuid4
 
-from cimgraph.data_profile.units.units import CIMUnit
 from cimgraph.core import get_validation_log_level
+from cimgraph.data_profile.units.units import CIMUnit
 
 # Global configuration
 ARCHIVE_JSON_LD = True
@@ -87,7 +87,7 @@ class UUID_Meta:
                 # If URI is not a valid UUID, use it as seed
                 seed = seed + uri
                 log_level = get_validation_log_level()
-                
+
                 _log.log(log_level, f'URI {uri} not a valid UUID, generating new UUID')
                 mRID = str(uri)
 

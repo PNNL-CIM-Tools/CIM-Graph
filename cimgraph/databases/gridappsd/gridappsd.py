@@ -10,9 +10,9 @@ from uuid import UUID
 from gridappsd import GridAPPSD
 
 import cimgraph.queries.sparql as sparql
-from cimgraph.databases import (ConnectionInterface, Graph, QueryResponse)
 from cimgraph.core import (get_cim_profile, get_database, get_host, get_iec61970_301,
                            get_namespace, get_password, get_port, get_url, get_username)
+from cimgraph.databases import ConnectionInterface, Graph, QueryResponse
 
 _log = logging.getLogger(__name__)
 

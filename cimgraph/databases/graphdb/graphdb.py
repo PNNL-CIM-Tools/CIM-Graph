@@ -12,8 +12,8 @@ from SPARQLWrapper import JSON, POST, SPARQLWrapper
 
 import cimgraph.queries.ontotext as ontotext
 import cimgraph.queries.sparql as sparql
-from cimgraph.databases import (ConnectionInterface, Graph, QueryResponse)
-from cimgraph.core import (get_cim_profile, get_iec61970_301, get_namespace, get_url)
+from cimgraph.core import get_cim_profile, get_iec61970_301, get_namespace, get_url
+from cimgraph.databases import ConnectionInterface, Graph, QueryResponse
 
 _log = logging.getLogger(__name__)
 
