@@ -13,8 +13,8 @@ from defusedxml.ElementTree import parse
 
 from cimgraph.data_profile.identity import Identity
 from cimgraph.data_profile.known_problem_classes import ClassesWithManytoMany
-from cimgraph.databases import (ConnectionInterface, Graph, QueryResponse, get_cim_profile,
-                                get_iec61970_301, get_namespace, get_validation_log_level)
+from cimgraph.databases import (ConnectionInterface, Graph, QueryResponse)
+from cimgraph.core import (get_cim_profile, get_iec61970_301, get_namespace, get_validation_log_level)
 
 # from cimgraph.utils.timing import timing as time_func
 
@@ -162,7 +162,7 @@ class XMLFile(ConnectionInterface):
             obj = self.create_object(self.graph, cim_class, uri)
             self.class_index[obj.uri()] = cim_class
             if uri != obj.uri():
-                self.class_index[uri]=obj.uri()
+                self.class_index[uri]=cim_class
 
         else:
             _log.log(self.log_level, f'{class_name} not in data profile')
@@ -301,8 +301,9 @@ class XMLFile(ConnectionInterface):
                             continue
                         # Upload attributes that are many-to-one or are known problem classes
                         if 'list' not in attribute_type or rdf in many_to_many:
-                            edge_class = attribute_type.split('[')[1].split(']')[0]
+                            # edge_class = attribute_type.split('[')[1].split(']')[0]
                             edge = getattr(obj, attribute)
+                            edge_class = edge.__class__
                             # Check if attribute is association to a class object
                             if edge_class in self.cim.__all__:
                                 if edge is not None and edge != []:

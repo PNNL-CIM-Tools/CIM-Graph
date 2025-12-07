@@ -5,7 +5,7 @@ from collections import defaultdict
 
 from dataclasses import dataclass, field
 
-from cimgraph.databases import get_cim_profile
+from cimgraph.core import get_cim_profile
 from cimgraph.models.distributed_area import DistributedArea
 from cimgraph.models.graph_model import GraphModel
 
