@@ -88,7 +88,10 @@ def object_mermaid(obj: object) -> str:
     # Expand and build all connected objects
     for attribute in obj.__dataclass_fields__:
         edge = getattr(obj, attribute)
-        if is_dataclass(edge) and edge is not None:
+        if isinstance(edge, CIMUnit):
+            mermaid += short_attr_mermaid(obj, attribute, num_indent=2)
+
+        elif is_dataclass(edge) and edge is not None:
             if len(attribute) > 22:
                 mermaid += f'\n{INDENT*2}[{attribute[:22]}\n'
                 mermaid += f'{INDENT*2}{attribute[22:]}]\n'

@@ -2,8 +2,8 @@ from __future__ import annotations
 
 from uuid import UUID
 
+from cimgraph.core import get_cim_profile, get_iec61970_301, get_namespace, get_url
 from cimgraph.data_profile.known_problem_classes import ClassesWithoutMRID
-from cimgraph.databases import get_cim_profile, get_iec61970_301, get_namespace, get_url
 
 
 def get_all_attributes_sparql(graph:dict[type, dict[UUID, object]], cim_class: str, uuid_list: list[UUID]) -> str:

@@ -394,7 +394,7 @@ class ConnectionInterface(ABC):
         try:
             identifier = UUID(uri.strip('_').lower())
         except:
-            _log.warning(f'URI {uri} for object {class_type.__name__} is not a valid UUID')
+            # _log.warning(f'URI {uri} for object {class_type.__name__} is not a valid UUID')
             identifier = uri
 
         # Check if object exists in graph
