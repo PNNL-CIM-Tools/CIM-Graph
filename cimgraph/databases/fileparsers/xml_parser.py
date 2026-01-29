@@ -13,7 +13,7 @@ from defusedxml.ElementTree import parse
 
 from cimgraph.core import (get_cim_profile, get_iec61970_301, get_namespace,
                            get_validation_log_level)
-from cimgraph.data_profile.identity import Identity
+from cimgraph.data_profile.identity import Identity, CIMUnit
 from cimgraph.data_profile.known_problem_classes import ClassesWithManytoMany
 from cimgraph.databases import ConnectionInterface, Graph, QueryResponse
 
@@ -200,24 +200,28 @@ class XMLFile(ConnectionInterface):
         value = None
         sub_tag = sub_element.tag.split('}')[-1]
         association = self.check_attribute(cim_class, sub_tag)
+        
+        # Check for rdf:datatype attribute
+        datatype_uri = sub_element.attrib.get(f'{self.rdf}datatype', None)
+        
         try:
             edge_uri = sub_element.attrib[f'{self.rdf}resource'].split('uuid:')[-1].strip('#')
         except:
             edge_uri = None
-
+        
         if edge_uri is not None:
+            # ... existing edge handling code ...
+            # (keep all your existing edge handling logic here)
             if (edge_uri.split('#')[0] + '#') not in self.namespaces.values():
                 try:
                     edge_uuid = UUID(edge_uri.strip('#').strip('_').lower())
                 except:
                     edge_uuid = edge_uri
-
                 try:
                     edge_class = self.class_index[edge_uri]
                 except:
                     _log.log(self.log_level, f'Object with ID {edge_uri} not found for {sub_tag}')
                     return None
-
                 value = self.create_edge(self.graph, cim_class, identifier, sub_tag, edge_class, edge_uri)
                 try:
                     reverse = cim_class.__dataclass_fields__[association].metadata['inverse']
@@ -225,11 +229,6 @@ class XMLFile(ConnectionInterface):
                                         cim_class, self.graph[cim_class][identifier].uri())
                 except Exception as e:
                     _log.log(self.log_level, f'Could not identify inverse for {cim_class.__name__} association {association}')
-                # except:
-                #     value = self.get_object(edge_uri)
-
-                # except:
-                #     _log.warning(f'unable to create object with uuid {edge_uri}')
             else:
                 try:
                     enum_text = edge_uri.split('#')[1]
@@ -243,9 +242,10 @@ class XMLFile(ConnectionInterface):
                     pass
         else:
             if association is not None:
-                value = self.create_value(self.graph, cim_class, identifier, sub_tag, sub_element.text)
+                # Pass datatype to create_value
+                value = self.create_value(self.graph, cim_class, identifier, sub_tag, 
+                                        sub_element.text, datatype_uri)
         return value
-        # return graph
 
     def parse_node_query(self, graph: dict, query_output: dict) -> Graph:
         pass
@@ -339,9 +339,18 @@ class XMLFile(ConnectionInterface):
                                         # except:
                                         #     _log.warning(obj.__dict__)
                             else:
+                                # In the upload method, modify the attribute writing section:
                                 if edge is not None and edge != [] and rdf != 'Identity.identifier':
-                                    row = f'  <cim:{parent.__name__}.{attribute}>{str(edge)}</cim:{parent.__name__}.'
-                                    row += f'{attribute}>\n'
+                                    # Check if this is a CIMUnit instance
+                                    if isinstance(edge, CIMUnit):
+                                        # Write with datatype
+                                        unit_str = str(edge.quantity.units)
+                                        datatype = f'{namespace}{edge.__class__.__name__}.{unit_str}'
+                                        row = f'  <cim:{parent.__name__}.{attribute} rdf:datatype="{datatype}">'
+                                        row += f'{str(edge.value)}</cim:{parent.__name__}.{attribute}>\n'
+                                    else:
+                                        row = f'  <cim:{parent.__name__}.{attribute}>{str(edge)}</cim:{parent.__name__}.'
+                                        row += f'{attribute}>\n'
                                     f.write(row)
                 tail = f'</cim:{cim_class.__name__}>\n'
                 f.write(tail)

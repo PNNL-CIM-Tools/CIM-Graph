@@ -8,208 +8,14 @@ from dataclasses import dataclass, field, is_dataclass
 from functools import cache
 from uuid import UUID
 
+from cimgraph.core import (get_cim_profile,get_database,get_host,get_port,get_url,
+                           get_iec61970_301,get_namespace,get_password,get_undefined_handling,
+                           get_use_units,get_username,get_validation_log_level)
+
+
 _log = logging.getLogger(__name__)
 
 Graph = dict[type, dict[UUID, object]]
-
-DEFAULT_NAMESPACE = 'http://iec.ch/TC57/CIM100#'
-DEFAULT_CIM_PROFILE = 'cimhub_2023'
-DEFAULT_URL = 'http://localhost:8889/bigdata/namespace/kb/sparql'
-DEFAULT_DATABASE = 'powergridmodel'
-DEFAULT_HOST = 'localhost'
-DEFAULT_PORT = '61613'
-DEFAULT_USERNAME = 'system'
-DEFAULT_PASSWORD = 'manager'
-DEFAULT_IEC61970_301 = 8
-DEFAULT_USE_UNITS = 'false'
-DEFAULT_VALIDATION_LOG_LEVEL = 'WARNING'
-DEFAULT_ALLOW_UNDEFINED_ATTRIBUTES = 'false'
-
-@cache
-def get_cim_profile() -> str:
-    """
-    Returns the CIM profile to be used for object graph
-    Returns:
-        cim_profile: library
-    """
-    cim_profile = os.getenv('CIMG_CIM_PROFILE')
-    if cim_profile is None:
-        raise ValueError('CIMG_CIM_PROFILE environment variable is not set.')
-    else:
-        # try:
-            if '.' in cim_profile:
-                cim = importlib.import_module(cim_profile)
-            else:
-                cim = importlib.import_module('cimgraph.data_profile.'+cim_profile)
-        # except:
-        #     raise ValueError('CIMG_CIM_PROFILE environment variable must be name of a valid object module on the PATH')
-    return cim_profile, cim
-
-@cache
-def get_namespace() -> str:
-    """
-    Returns the namespace for the cimgraph database
-    Returns:
-        namespace: the namespace for the cimgraph database
-    """
-    namespace = os.getenv('CIMG_NAMESPACE')
-    if namespace is None:
-        namespace = DEFAULT_NAMESPACE
-        _log.debug('Default namespace for CIM100 used')
-        # raise ValueError('CIMG_NAMESPACE environment variable is not set.')
-    return namespace
-
-@cache
-def get_iec61970_301() -> int:
-    """
-    Returns the IEC61970_301 version for the cimgraph database
-    Returns:
-        iec61970_301: the IEC61970_301 version for the cimgraph database
-    """
-    iec61970_301 = os.getenv('CIMG_IEC61970_301')
-    if iec61970_301 is None:
-        iec61970_301 = DEFAULT_IEC61970_301
-        _log.info('CIMG_IEC61970_301 environment variable not set. Defaulting to 8 for urn:uuid:mRID. Set to 7 for mRIDs with underscores')
-    else:
-        try:
-            iec61970_301 = int(iec61970_301)
-        except:
-            raise ValueError('CIMG_IEC61970_301 environment variable should be an integer')
-    return iec61970_301
-
-
-@cache
-def get_url() -> str:
-    """
-    Returns the URL for the cimgraph database
-    Returns:
-        url: the URL for the cimgraph database
-    """
-    url = os.getenv('CIMG_URL')
-    if url is None:
-        _log.warning('CIMG_URL environment variable is not set. Using Blazegraph default')
-        url = DEFAULT_URL
-        # raise ValueError('CIMG_URL environment variable is not set.')
-    return url
-
-@cache
-def get_database() -> str:
-    """
-    Returns the database name for the cimgraph database
-    Returns:
-        database: the database name for the cimgraph database
-    """
-    database = os.getenv('CIMG_DATABASE')
-    if database is None:
-        _log.warning('CIMG_DATABASE environment variable is not set.')
-        database = DEFAULT_DATABASE
-        # raise ValueError('CIMG_DATABASE environment variable is not set.')
-    return database
-
-@cache
-def get_use_units() -> bool:
-    """
-    Returns the use_units flag for the cimgraph database
-    Returns:
-        use_units: the use_units flag for the cimgraph database
-    """
-    use_units = os.getenv('CIMG_USE_UNITS')
-    if use_units is None:
-        use_units = DEFAULT_USE_UNITS
-        _log.debug('CIMG_USE_UNITS environment variable is not set. Defaulting to false.')
-    return use_units.lower() == 'true'
-
-@cache
-def get_username() -> str:
-    """
-    Returns the CIM profile to be used for object graph
-    Returns:
-        username: str
-    """
-    username = os.getenv('CIMG_USERNAME')
-    if username is None:
-        _log.warning('CIMG_USERNAME environment variable is not set.')
-        username = DEFAULT_USERNAME
-    return username
-
-@cache
-def get_password() -> str:
-    """
-    Returns the CIM profile to be used for object graph
-    Returns:
-        password: str
-    """
-    password = os.getenv('CIMG_PASSWORD')
-    if password is None:
-        _log.warning('CIMG_PASSWORD environment variable is not set.')
-        password = DEFAULT_PASSWORD
-    return password
-
-@cache
-def get_host() -> str:
-    """
-    Returns the CIM profile to be used for object graph
-    Returns:
-        host: str
-    """
-    host = os.getenv('CIMG_HOST')
-    if host is None:
-        _log.warning('CIMG_HOST environment variable is not set.')
-        host = DEFAULT_HOST
-    return host
-
-@cache
-def get_port() -> str:
-    """
-    Returns the CIM profile to be used for object graph
-    Returns:
-        port: str
-    """
-    port = os.getenv('CIMG_PORT')
-    if port is None:
-        _log.warning('CIMG_PORT environment variable is not set.')
-        port = DEFAULT_PORT
-    return port
-
-@cache
-def get_validation_log_level() -> str:
-    '''
-    Returns the log level used for validation warnings
-    Returns:
-        log_level: str
-    '''
-    log_level = getattr(logging, os.environ.get('CIMG_VALIDATION_LOG_LEVEL',
-                        DEFAULT_VALIDATION_LOG_LEVEL).upper(), logging.WARNING)
-    return log_level
-
-@cache
-def get_undefined_handling() -> str:
-    '''
-    Returns the log level used for validation warnings
-    Returns:
-        log_level: str
-    '''
-    handling = os.environ.get('CIMG_ALLOW_UNDEFINED_ATTRIBUTES',
-                        DEFAULT_ALLOW_UNDEFINED_ATTRIBUTES)
-    return handling.lower() == 'true'
-
-
-@dataclass
-class ConnectionParameters:
-    cim_profile: str = field(default_factory=str)
-    url: str = field(default_factory=str)
-    host: str = field(default_factory=str)
-    port: str = field(default_factory=str)
-    username: str = field(default_factory=str)
-    password: str = field(default_factory=str)
-    database: str = field(default_factory=str)
-    namespace: str = field(default='http://iec.ch/TC57/CIM100#')
-    iec61970_301: int = field(default=7)
-    filename: str = field(default_factory=str)
-    use_units: bool = field(default=False)
-    def __post_init__(self):
-        _log.warning('ConnectionParameters class is deprecated and will be deleted in a future release')
-        _log.warning('Set environment variables for required authentication')
 
 @dataclass
 class QueryResponse:
@@ -303,16 +109,31 @@ class ConnectionInterface(ABC):
 
     def create_value(self, graph: dict[type, dict[str, object]],
                     cim_class: type, identifier: UUID, attribute: str,
-                    value: str) -> bool|int|float|str:
-
+                    value: str, datatype_uri: str = None) -> bool|int|float|str|object:
         association = self.check_attribute(cim_class, attribute)
         if association is not None and association != 'identifier':
             attribute_type = cim_class.__dataclass_fields__[association].type
+            
+            # Handle datatype if present
+            if datatype_uri is not None:
+                unit_class = self._extract_unit_class_from_datatype(datatype_uri)
+                if unit_class is not None:
+                    try:
+                        # Extract unit information from datatype URI
+                        unit_info = self._parse_datatype_uri(datatype_uri)
+                        unit_instance = unit_class(value=float(value), 
+                                                input_unit=unit_info['unit'],
+                                                input_multiplier=unit_info.get('multiplier'))
+                        setattr(graph[cim_class][identifier], association, unit_instance)
+                        return unit_instance
+                    except Exception as e:
+                        _log.warning(f'Failed to create unit instance from datatype {datatype_uri}: {e}')
+                        # Fall through to standard handling
+            
             if 'List' in attribute_type or 'list' in attribute_type:
                 obj_list = getattr(graph[cim_class][identifier], association)
                 if value not in str(obj_list):
                     obj_list.append(value)
-
             elif 'bool' in attribute_type:
                 if str(value).lower() == 'true' or str(value).lower() == '1':
                     value = True
@@ -320,32 +141,74 @@ class ConnectionInterface(ABC):
                     value = False
                 else:
                     _log.log(self.log_level, f'{value} for {cim_class.__name__}.{association} is not a boolean')
-
                 setattr(graph[cim_class][identifier], association, value)
-
-
             elif 'int' in attribute_type:
                 try:
                     value = int(float(value))
                 except:
                     _log.log(self.log_level, f'{value} for {cim_class.__name__}.{association} is not an integer')
-
                 setattr(graph[cim_class][identifier], association, value)
-
             elif 'float' in attribute_type:
                 try:
                     value = float(value)
                 except:
                     _log.log(self.log_level, f'{value} for {cim_class.__name__}.{association} is not a float')
                 setattr(graph[cim_class][identifier], association, value)
-
             else:
-                if get_use_units():
-                    pass
-                    #TODO: Implement evaluation of units
-                else:
-                    setattr(graph[cim_class][identifier], association, value)
+                setattr(graph[cim_class][identifier], association, value)
         return value
+
+    def _extract_unit_class_from_datatype(self, datatype_uri: str) -> type:
+        """
+        Extract the CIM unit class from a datatype URI.
+        Example: "http://cim.ucaiug.io/CIM101/draft#ApparentPower.MVA" -> ApparentPower
+        """
+        try:
+            # Extract class name from URI (e.g., "ApparentPower.MVA" or "ApparentPower")
+            datatype_part = datatype_uri.split('#')[-1]
+            class_name = datatype_part.split('.')[0]
+            
+            # Try to get the class from the cim module
+            if hasattr(self.cim, class_name):
+                unit_class = getattr(self.cim, class_name)
+                # Verify it's a CIMUnit subclass
+                if hasattr(unit_class, '__pint__'):
+                    return unit_class
+        except Exception as e:
+            _log.debug(f'Could not extract unit class from datatype URI {datatype_uri}: {e}')
+        return None
+
+    def _parse_datatype_uri(self, datatype_uri: str) -> dict:
+        """
+        Parse a datatype URI to extract unit and multiplier information.
+        Examples:
+        - "http://example.com#ApparentPower.MVA" -> {'unit': 'VA', 'multiplier': 'M'}
+        - "http://example.com#ApparentPower" -> {'unit': 'VA', 'multiplier': None}
+        """
+        unit_info = {'unit': None, 'multiplier': None}
+        
+        try:
+            datatype_part = datatype_uri.split('#')[-1]
+            parts = datatype_part.split('.')
+            
+            if len(parts) > 1:
+                # Has unit specification (e.g., "ApparentPower.MVA")
+                unit_with_mult = parts[1]
+                
+                # Parse multiplier and unit
+                # Common multipliers: k, M, G, T, m, µ, n, p
+                multipliers = {'k': 'k', 'M': 'M', 'G': 'G', 'T': 'T', 
+                            'm': 'm', 'µ': 'µ', 'u': 'µ', 'n': 'n', 'p': 'p'}
+                
+                if unit_with_mult[0] in multipliers:
+                    unit_info['multiplier'] = multipliers[unit_with_mult[0]]
+                    unit_info['unit'] = unit_with_mult[1:]
+                else:
+                    unit_info['unit'] = unit_with_mult
+        except Exception as e:
+            _log.debug(f'Could not parse datatype URI {datatype_uri}: {e}')
+        
+        return unit_info
 
 
 

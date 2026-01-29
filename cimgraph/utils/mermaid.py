@@ -34,10 +34,10 @@ def short_attr_mermaid(obj: object, attr: str, num_indent: int = 1) -> str:
     else:
         mermaid += '\n' + INDENT*(num_indent) + f'{attr}: '
     if len(str(edge)) > 22:
-        mermaid += f'{edge[:22]}\n'
-        mermaid += f'{edge[22:]}'
+        mermaid += f'{str(edge)[:22]}\n'
+        mermaid += f'{str(edge)[22:]}'
     else:
-        mermaid += f'{edge}'
+        mermaid += str(edge)
     return mermaid
 
 def short_uri_mermaid(obj: object, num_indent: int = 1) -> str:
@@ -322,7 +322,7 @@ def add_object_path_mermaid(root: object, path: str, mermaid: str) -> str:
             if '[' in attr:
                 attr_list = attr.split('[')
                 next_edge = getattr(edge, attr_list[0])
-                next_edge = eval(f'next_edge[{attr_list[1]}')
+                next_edge = eval(f'next_str(edge)[{attr_list[1]}')
             else:
                 next_edge = getattr(edge, attr)
         elif type(edge) is list:
