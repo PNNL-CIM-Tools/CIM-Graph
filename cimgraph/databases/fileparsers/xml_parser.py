@@ -5,6 +5,7 @@ import enum
 import importlib
 import logging
 import os
+import re
 from collections import defaultdict
 from concurrent.futures import ThreadPoolExecutor
 from uuid import UUID
@@ -50,6 +51,19 @@ class XMLFile(ConnectionInterface):
             try:
                 self.tree = parse(self.filename)
                 self.root = self.tree.getroot()
+                # Extract namespaces from the XML header
+                extracted_ns = self.extract_namespaces_from_header()
+
+                # Update namespaces with extracted ones (file namespaces take precedence)
+                # Note: 'rdf' is stored with curly braces for backward compatibility
+                for prefix, uri in extracted_ns.items():
+                    if prefix == 'rdf':
+                        # Keep rdf with curly braces for direct attribute access
+                        self.rdf = '{' + uri + '}'
+                        self.namespaces[prefix] = uri
+                    else:
+                        # Other namespaces without curly braces for find/findall
+                        self.namespaces[prefix] = uri
 
             except:
                 _log.warning(f'File {self.filename} not found. Defaulting to empty network graph')
@@ -60,6 +74,57 @@ class XMLFile(ConnectionInterface):
         else:
             raise ValueError('filename must be specified')
 
+    def extract_namespaces_from_header(self) -> dict:
+        """
+        Extract namespace declarations from the XML root element.
+
+        This method parses the xmlns: attributes from the root RDF element by reading
+        the raw XML file and using regex to extract namespace declarations.
+
+        Returns:
+            dict: Dictionary mapping namespace prefixes to their URIs WITHOUT curly braces.
+                  This format is compatible with ElementTree find/findall operations.
+                  For direct tag matching, add curly braces when needed.
+                  e.g., {'cim': 'http://example.com#'}
+        """
+        if self.filename is None:
+            _log.warning('No filename specified, cannot extract namespaces')
+            return {}
+
+        namespaces = {}
+
+        try:
+            # Read the file to extract namespace declarations
+            with open(self.filename, 'r', encoding='utf-8') as f:
+                # Read only the first few KB to find the root element
+                content = f.read(8192)  # Read first 8KB which should contain the root element
+
+            # Pattern to match xmlns:prefix="uri" or xmlns="uri"
+            # This regex captures both prefixed and default namespaces
+            xmlns_pattern = r'xmlns(?::([a-zA-Z0-9_-]+))?=["\']([^"\']+)["\']'
+
+            matches = re.finditer(xmlns_pattern, content)
+
+            for match in matches:
+                prefix = match.group(1)  # The namespace prefix (None for default namespace)
+                uri = match.group(2)     # The namespace URI
+
+                if prefix:
+                    # Prefixed namespace like xmlns:cim="..."
+                    # Store WITHOUT curly braces for ElementTree find/findall compatibility
+                    namespaces[prefix] = uri
+                    _log.debug(f'Found namespace: {prefix} -> {uri}')
+                else:
+                    # Default namespace like xmlns="..."
+                    namespaces['default'] = uri
+                    _log.debug(f'Found default namespace: {uri}')
+
+            _log.info(f'Extracted {len(namespaces)} namespaces from XML header')
+
+        except Exception as e:
+            _log.error(f'Error extracting namespaces: {e}')
+
+        return namespaces
 
     def disconnect(self):
         del self.tree
