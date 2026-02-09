@@ -31,7 +31,7 @@ class CIMUnit():
 
         if isinstance(value, CIMUnit):
             value = value.quantity.to(input_unit).magnitude
-            
+
         if isinstance(value,ureg.Quantity):
             value = value.to(input_unit).magnitude
 

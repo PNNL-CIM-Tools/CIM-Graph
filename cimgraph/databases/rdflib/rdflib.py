@@ -3,10 +3,10 @@ from __future__ import annotations
 import json
 import logging
 import math
+from uuid import UUID
 
 from rdflib import Graph, Namespace
 from rdflib.namespace import RDF
-from uuid import UUID
 
 import cimgraph.queries.rdflib as rdflib_sparql
 from cimgraph.databases import Graph as GraphType
@@ -92,10 +92,10 @@ class RDFlibConnection(SPARQLEndpointConnection):
         """
         try:
             self.connection_obj.update(update_message)
-            return "Update completed"
+            return 'Update completed'
         except AttributeError:
-            _log.warning("RDFlib update not fully supported in this version")
-            raise NotImplementedError("Update operations not supported for RDFlib backend")
+            _log.warning('RDFlib update not fully supported in this version')
+            raise NotImplementedError('Update operations not supported for RDFlib backend')
 
     # -------------------------------------------------------------------------
     # Override query generation to use RDFlib-specific queries
