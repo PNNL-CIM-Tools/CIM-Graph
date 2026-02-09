@@ -128,8 +128,13 @@ def write_xml(network: GraphModel, filename: str, namespaces: dict=None,
                                     #     _log.warning(obj.__dict__)
                         else:
                             if isinstance(edge, CIMUnit):
-                                    row = f'  <{ns_prefix}:{parent.__name__}.{attribute}>{str(edge.quantity.magnitude)}</{ns_prefix}:{parent.__name__}.{attribute}>\n'
-                                    f.write(row)
+                                unit_str = str(edge.quantity.units)
+                                datatype = f'{attr_ns}UnitSymbol.{unit_str}'
+                                row = f'  <cim:{parent.__name__}.{attribute} rdf:datatype="{datatype}">'
+                                row += f'{str(edge.value)}</cim:{parent.__name__}.{attribute}>\n'
+                                f.write(row)
+                                    # row = f'  <{ns_prefix}:{parent.__name__}.{attribute}>{str(edge.quantity.magnitude)}</{ns_prefix}:{parent.__name__}.{attribute}>\n'
+                                    # f.write(row)
                             elif edge is not None and edge != []:
                                 row = f'  <{ns_prefix}:{parent.__name__}.{attribute}>{str(edge)}</{ns_prefix}:{parent.__name__}.{attribute}>\n'
                                 f.write(row)

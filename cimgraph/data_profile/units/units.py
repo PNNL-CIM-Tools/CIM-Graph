@@ -23,11 +23,17 @@ class CIMUnit():
 
     def __pint__(self, value:float|CIMUnit, input_unit:str, input_multiplier:str=None):
 
+        if input_unit is None:
+            input_unit = self.unit.value
+
         if input_multiplier is not None:
             input_unit = input_multiplier + input_unit
 
         if isinstance(value, CIMUnit):
             value = value.quantity.to(input_unit).magnitude
+            
+        if isinstance(value,ureg.Quantity):
+            value = value.to(input_unit).magnitude
 
         if self.multiplier.value != 'none':
             self.quantity = ureg.Quantity(value=float(value), units=self.multiplier.value+input_unit)
