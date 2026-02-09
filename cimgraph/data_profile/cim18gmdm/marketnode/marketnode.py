@@ -178,4 +178,3 @@ class IndividualPnode(Pnode):
     @property
     def __maxOccurs__(self):
         return 'unbounded'
-
