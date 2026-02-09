@@ -289,6 +289,7 @@ class ConnectionInterface(ABC):
             graph[type(obj)][obj.identifier] = obj
 
 
+from cimgraph.databases.sparql_endpoint import SPARQLEndpointConnection
 from cimgraph.databases.blazegraph import BlazegraphConnection
 from cimgraph.databases.fileparsers import XMLFile
 from cimgraph.databases.graphdb import GraphDBConnection
