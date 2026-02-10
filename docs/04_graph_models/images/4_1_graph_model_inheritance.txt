@@ -1,0 +1,27 @@
+%%{init: {"theme":"base"}}%%
+classDiagram
+    class GraphModel{
+        <<abstract>>
+        + connection: ConnectionInterface
+        + container: cim.EquipmentContainer
+        + graph: dict[type, uuid]
+        + distributed: bool
+        
+        + add_to_graph(object)
+        + add_jsonld_to_graph(str)
+        + get_all_edges(cim.ClassName)
+        + get_object(mRID)
+        + get_from_triple(object,attribute)
+        + first(cim.ClassName)
+        + next(cim.ClassName)
+        + pprint(cim.ClassName)
+        + upload()
+    }
+
+    class BusBranchModel{
+    }
+
+    GraphModel <|-- BusBranchModel : inherits from
+    GraphModel <|-- NodeBreakerModel : inherits from
+    GraphModel <|-- FeederModel : inherits from
+    GraphModel <|-- DistributedArea : inherits from

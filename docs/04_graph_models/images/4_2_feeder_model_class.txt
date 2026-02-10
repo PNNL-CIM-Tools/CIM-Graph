@@ -1,0 +1,20 @@
+classDiagram
+    class FeederModel{
+        + connection: ConnectionInterface
+        + container: cim.EquipmentContainer
+        + graph: dict[type, uuid]
+        + distributed: optional[bool]
+        + topology_message: optional[bool]
+        + distributed_areas: list[DistributedArea]
+        
+        + add_to_graph(object)
+        + add_jsonld_to_graph(object)
+        + get_all_edges(cim.ClassName)
+        + get_object(mRID)
+        + get_from_triple(object,attribute)
+        + pprint(cim.ClassName)
+        + upload()
+        - __initialize_centralized_model()
+        - __initialize_distributed_model()
+    }
+
