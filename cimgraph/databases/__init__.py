@@ -291,7 +291,7 @@ class ConnectionInterface(ABC):
 
 from cimgraph.databases.sparql_endpoint import SPARQLEndpointConnection
 from cimgraph.databases.blazegraph import BlazegraphConnection
-from cimgraph.databases.fileparsers import XMLFile
+from cimgraph.databases.fileparsers import XMLFile, JSONLDFile
 from cimgraph.databases.graphdb import GraphDBConnection
 from cimgraph.databases.gridappsd import GridappsdConnection
 from cimgraph.databases.neo4j import Neo4jConnection
