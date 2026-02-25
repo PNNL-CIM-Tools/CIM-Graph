@@ -1,6 +1,6 @@
 [project]
 name = "cim-graph"
-version = "0.4.3a9"
+version = "0.4.3a10"
 description = "CIM Graph"
 authors = [
     {name = "A. Anderson", email = "19935503+AAndersn@users.noreply.github.com"},
