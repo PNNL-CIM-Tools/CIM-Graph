@@ -1,0 +1,17 @@
+%%{init: {"theme":"base"}}%%
+sequenceDiagram
+    actor User
+    participant ConnectionInterface
+    participant SPARQLWrapper
+    participant BlazegraphEndpoint
+    note right of User: Executes SPARQL query
+    User ->>+ ConnectionInterface: execute(query_message)
+    ConnectionInterface ->> ConnectionInterface: connect()
+    ConnectionInterface ->> SPARQLWrapper: setQuery(query_message)
+    ConnectionInterface ->> SPARQLWrapper: setMethod(POST)
+    ConnectionInterface ->>+ SPARQLWrapper: query()
+    SPARQLWrapper ->>+ BlazegraphEndpoint: HTTP POST request
+    BlazegraphEndpoint -->>- SPARQLWrapper: HTTP response
+    SPARQLWrapper ->> SPARQLWrapper: convert()
+    SPARQLWrapper -->>- ConnectionInterface: QueryResponse
+    ConnectionInterface -->>- User: query_output

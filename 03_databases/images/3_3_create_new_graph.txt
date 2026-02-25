@@ -1,0 +1,19 @@
+%%{init: {"theme":"base"}}%%
+sequenceDiagram
+    actor User
+    participant GraphModel
+    participant ConnectionInterface
+    participant SPARQL Queries
+    participant Database
+
+    note right of User: Creates new GraphModel
+
+    User ->>+ GraphModel: GraphModel(container)
+    GraphModel ->>+ ConnectionInterface: create_new_graph(container)
+    ConnectionInterface ->>+ SPARQL Queries: get_all_nodes_from_container()
+    SPARQL Queries -->>- ConnectionInterface: str[query text]
+    ConnectionInterface ->>+ Database: execute(query_text)
+    Database -->>- ConnectionInterface: json[query response]
+    ConnectionInterface ->> ConnectionInterface: parse_node_query()
+    ConnectionInterface -->>- GraphModel: dict[type, uuid]
+    GraphModel -->>- User: network object
