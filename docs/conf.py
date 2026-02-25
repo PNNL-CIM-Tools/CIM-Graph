@@ -69,7 +69,7 @@ html_static_path = ['_static']
 
 # Don't execute notebook contents when writing to html
 nbsphinx_allow_errors = True
-nbsphinx_execute = 'never'  
+nbsphinx_execute = 'never'
 
 # Use LuaLaTex
 latex_engine = 'lualatex'
@@ -88,12 +88,12 @@ nbsphinx_prolog = """
         div.nbinput.container div.prompt.container.hide_input + div.input_area {
             display: none;
         }
-        
+
         /* Alternative selector that should work with newer nbsphinx */
         .tag_hide_input .jp-CodeCell-inputWrapper {
             display: none !important;
         }
-        
+
         /* For nbsphinx 0.8.0+ */
         .tag_hide_input .nbinput {
             display: none !important;
@@ -111,7 +111,7 @@ nbsphinx_preprocessor_config = {
 
 # Additional options for fine-grained control
 nbsphinx_execute_arguments = [
-    "--TagRemovePreprocessor.enabled=True",
+    '--TagRemovePreprocessor.enabled=True',
     "--TagRemovePreprocessor.remove_cell_tags={'hide_cell'}", # Hide the entire cell
     "--TagRemovePreprocessor.remove_input_tags={'hide_input'}", # Hide only the input
     "--TagRemovePreprocessor.remove_output_tags={'hide_output'}", # Hide only the output

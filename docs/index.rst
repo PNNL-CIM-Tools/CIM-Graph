@@ -69,7 +69,7 @@ To install CIMantic Graphs clone the github repository or use pip install: pip i
 .. toctree::
    :caption: Utils Shortcuts
    :maxdepth: 2
-   
+
    05_utils/5_1_file_writers
    05_utils/5_2_get_all_data
    05_utils/5_3_mermaid

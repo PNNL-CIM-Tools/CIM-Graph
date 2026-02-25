@@ -89,7 +89,7 @@ Defensive coding is good; paranoia everywhere is not.
 
 - Place try/catch/try-except blocks around specific risky operations, not whole functions.
 - When catching, either:
-  - recover in a well-defined way, or  
+  - recover in a well-defined way, or
   - log and rethrow / propagate with context.
 - Do not hide failures or swallow exceptions silently.
 
@@ -170,6 +170,6 @@ When generating or modifying code in this repository, ask:
 
 If the answer to any of these is “no” or “not really”, rewrite until it is.
 
-Agents must prioritize:  
-**KISS → DRY → Readable → Maintainable**  
+Agents must prioritize:
+**KISS → DRY → Readable → Maintainable**
 over cleverness, over-engineering, and defensive complexity.

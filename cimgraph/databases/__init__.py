@@ -8,10 +8,9 @@ from dataclasses import dataclass, field, is_dataclass
 from functools import cache
 from uuid import UUID
 
-from cimgraph.core import (get_cim_profile,get_database,get_host,get_port,get_url,
-                           get_iec61970_301,get_namespace,get_password,get_undefined_handling,
-                           get_use_units,get_username,get_validation_log_level)
-
+from cimgraph.core import (get_cim_profile, get_database, get_host, get_iec61970_301,
+                           get_namespace, get_password, get_port, get_undefined_handling, get_url,
+                           get_use_units, get_username, get_validation_log_level)
 
 _log = logging.getLogger(__name__)
 
@@ -113,7 +112,7 @@ class ConnectionInterface(ABC):
         association = self.check_attribute(cim_class, attribute)
         if association is not None and association != 'identifier':
             attribute_type = cim_class.__dataclass_fields__[association].type
-            
+
             # Handle datatype if present
             if datatype_uri is not None:
                 unit_class = self._extract_unit_class_from_datatype(datatype_uri)
@@ -121,7 +120,7 @@ class ConnectionInterface(ABC):
                     try:
                         # Extract unit information from datatype URI
                         unit_info = self._parse_datatype_uri(datatype_uri)
-                        unit_instance = unit_class(value=float(value), 
+                        unit_instance = unit_class(value=float(value),
                                                 input_unit=unit_info['unit'],
                                                 input_multiplier=unit_info.get('multiplier'))
                         setattr(graph[cim_class][identifier], association, unit_instance)
@@ -129,7 +128,7 @@ class ConnectionInterface(ABC):
                     except Exception as e:
                         _log.warning(f'Failed to create unit instance from datatype {datatype_uri}: {e}')
                         # Fall through to standard handling
-            
+
             if 'List' in attribute_type or 'list' in attribute_type:
                 obj_list = getattr(graph[cim_class][identifier], association)
                 if value not in str(obj_list):
@@ -167,7 +166,7 @@ class ConnectionInterface(ABC):
             # Extract class name from URI (e.g., "ApparentPower.MVA" or "ApparentPower")
             datatype_part = datatype_uri.split('#')[-1]
             class_name = datatype_part.split('.')[0]
-            
+
             # Try to get the class from the cim module
             if hasattr(self.cim, class_name):
                 unit_class = getattr(self.cim, class_name)
@@ -186,20 +185,20 @@ class ConnectionInterface(ABC):
         - "http://example.com#ApparentPower" -> {'unit': 'VA', 'multiplier': None}
         """
         unit_info = {'unit': None, 'multiplier': None}
-        
+
         try:
             datatype_part = datatype_uri.split('#')[-1]
             parts = datatype_part.split('.')
-            
+
             if len(parts) > 1:
                 # Has unit specification (e.g., "ApparentPower.MVA")
                 unit_with_mult = parts[1]
-                
+
                 # Parse multiplier and unit
                 # Common multipliers: k, M, G, T, m, µ, n, p
-                multipliers = {'k': 'k', 'M': 'M', 'G': 'G', 'T': 'T', 
+                multipliers = {'k': 'k', 'M': 'M', 'G': 'G', 'T': 'T',
                             'm': 'm', 'µ': 'µ', 'u': 'µ', 'n': 'n', 'p': 'p'}
-                
+
                 if unit_with_mult[0] in multipliers:
                     unit_info['multiplier'] = multipliers[unit_with_mult[0]]
                     unit_info['unit'] = unit_with_mult[1:]
@@ -207,7 +206,7 @@ class ConnectionInterface(ABC):
                     unit_info['unit'] = unit_with_mult
         except Exception as e:
             _log.debug(f'Could not parse datatype URI {datatype_uri}: {e}')
-        
+
         return unit_info
 
 
@@ -289,10 +288,10 @@ class ConnectionInterface(ABC):
             graph[type(obj)][obj.identifier] = obj
 
 
-from cimgraph.databases.sparql_endpoint import SPARQLEndpointConnection
 from cimgraph.databases.blazegraph import BlazegraphConnection
-from cimgraph.databases.fileparsers import XMLFile, JSONLDFile
+from cimgraph.databases.fileparsers import JSONLDFile, XMLFile
 from cimgraph.databases.graphdb import GraphDBConnection
 from cimgraph.databases.gridappsd import GridappsdConnection
 from cimgraph.databases.neo4j import Neo4jConnection
 from cimgraph.databases.rdflib import RDFlibConnection
+from cimgraph.databases.sparql_endpoint import SPARQLEndpointConnection

@@ -9,7 +9,7 @@ sequenceDiagram
     User ->>+ GraphModel: get_all_edges(cim_class)
     %% alt cim_class not in graph
     %%     GraphModel -->>- User: None
-    %% else 
+    %% else
     %%     GraphModel ->> GraphModel: exit
     %%     %% GraphModel -->>- User: None
     %% end

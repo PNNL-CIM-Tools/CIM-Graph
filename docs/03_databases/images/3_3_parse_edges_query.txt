@@ -19,7 +19,7 @@ sequenceDiagram
 
     loop For each result in query response
         ConnectionInterface ->> ConnectionInterface: Parse Graph Edges JSON-LD
-        
+
         alt is edge to another object
             ConnectionInterface ->>+ ConnectionInterface: create_edge(association, edge_uri)
         else is enumeration

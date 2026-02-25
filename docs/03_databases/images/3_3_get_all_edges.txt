@@ -13,7 +13,7 @@ sequenceDiagram
     ConnectionInterface ->> ConnectionInterface: Create uuid_list from graph[cim_class]
     ConnectionInterface ->> ConnectionInterface: Split uuid_list into batches of 100
     ConnectionInterface ->>+ ThreadPoolExecutor: Create executor with cpu_count workers
-    
+
     loop For each batch of uuids
         ThreadPoolExecutor ->> ThreadPoolExecutor: Submit process_batch(batch)
         activate ThreadPoolExecutor
@@ -25,7 +25,7 @@ sequenceDiagram
         ThreadPoolExecutor ->> ConnectionInterface: edge_query_parser(query_output, graph, cim_class)
         deactivate ThreadPoolExecutor
     end
-    
+
     ConnectionInterface ->> ThreadPoolExecutor: Wait for all futures to complete
     ThreadPoolExecutor -->>- ConnectionInterface: All batches processed
     ConnectionInterface -->>- GraphModel: None

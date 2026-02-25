@@ -19,7 +19,7 @@ sequenceDiagram
 
     loop For each result in query response
         ConnectionInterface ->> ConnectionInterface: Parse Equipment JSON-LD
-        
+
         %% alt equipment class in data profile
         %%     ConnectionInterface ->>+ ConnectionInterface: create_object(Equipment Object)
         %% else equipment class not in data profile

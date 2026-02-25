@@ -6,7 +6,7 @@ classDiagram
         + distributed: optional[bool]
         + topology_message: optional[bool]
         + distributed_areas: list[DistributedArea]
-        
+
         + add_to_graph(object)
         + add_jsonld_to_graph(object)
         + get_all_edges(cim.ClassName)
@@ -17,4 +17,3 @@ classDiagram
         - __initialize_centralized_model()
         - __initialize_distributed_model()
     }
-
