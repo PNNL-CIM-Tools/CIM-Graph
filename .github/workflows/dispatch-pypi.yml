@@ -1,6 +1,4 @@
 ---
-# Documentation located
-# https://github.com/marketplace/actions/publish-python-poetry-package
 name: Dispatch to PyPi
 
 on:
@@ -27,11 +25,17 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
 
-      - name: Build and publish to pypi
-        uses: JRubics/poetry-publish@v1.16
+      - name: Set up Python
+        uses: actions/setup-python@v4
         with:
-          # These are only needed when using test.pypi
-          #repository_name: testpypi
-          #repository_url: https://test.pypi.org/legacy/
-          pypi_token: ${{ secrets.PYPI_TOKEN }}
-          ignore_dev_requirements: "yes"
+          python-version: '3.10'
+
+      - name: Install UV
+        uses: astral-sh/setup-uv@v5
+        with:
+          enable-cache: true
+
+      - name: Build and publish to pypi
+        run: |
+          uv build
+          uv publish --token ${{ secrets.PYPI_TOKEN }}
