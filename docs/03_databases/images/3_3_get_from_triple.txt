@@ -1,0 +1,15 @@
+%%{init: {"theme":"base"}}%%
+sequenceDiagram
+    actor User
+    participant ConnectionInterface
+    participant SPARQL Queries
+    participant Database
+    note right of User: Query using RDF triple
+    User ->>+ ConnectionInterface: get_from_triple(subject, predicate)
+    ConnectionInterface ->> ConnectionInterface: add_to_graph(subject, graph)
+    ConnectionInterface ->>+ SPARQL Queries: get_triple_sparql(subject, predicate)
+    SPARQL Queries -->>- ConnectionInterface: str[query text]
+    ConnectionInterface ->>+ Database: execute(query_text)
+    Database -->>- ConnectionInterface: json[query response]
+    ConnectionInterface ->> ConnectionInterface: edge_query_parser()
+    ConnectionInterface -->>- User: list[CIM object]

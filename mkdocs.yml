@@ -1,0 +1,139 @@
+site_name: CIMantic Graphs
+site_url: https://pnnl-cim-tools.github.io/CIM-Graph/
+site_description: Open-source library for creating, parsing, and editing CIM power system models using in-memory knowledge graphs
+site_author: Alex Anderson & CIMantic Graphs Team
+repo_url: https://github.com/PNNL-CIM-Tools/CIM-Graph
+repo_name: PNNL-CIM-Tools/CIM-Graph
+
+# Copyright
+copyright: Copyright &copy; 2025 Battelle Memorial Institute, All rights reserved.
+
+theme:
+  name: material
+  palette:
+    # Palette toggle for light mode
+    - scheme: default
+      primary: indigo
+      accent: indigo
+      toggle:
+        icon: material/brightness-7
+        name: Switch to dark mode
+    # Palette toggle for dark mode
+    - scheme: slate
+      primary: indigo
+      accent: indigo
+      toggle:
+        icon: material/brightness-4
+        name: Switch to light mode
+  features:
+    - navigation.tabs
+    - navigation.tabs.sticky
+    - navigation.sections
+    - navigation.expand
+    - navigation.top
+    - navigation.footer
+    - search.suggest
+    - search.highlight
+    - content.code.copy
+    - content.code.annotate
+    - toc.follow
+
+plugins:
+  - search
+  - mkdocs-jupyter:
+      include_source: True
+      execute: false
+      allow_errors: false
+      ignore_h1_titles: True
+      show_input: True
+      theme: dark
+
+markdown_extensions:
+  # Python Markdown
+  - abbr
+  - admonition
+  - attr_list
+  - def_list
+  - footnotes
+  - md_in_html
+  - tables
+  - toc:
+      permalink: true
+      toc_depth: 3
+
+  # Python Markdown Extensions
+  - pymdownx.arithmatex:
+      generic: true
+  - pymdownx.betterem:
+      smart_enable: all
+  - pymdownx.caret
+  - pymdownx.details
+  - pymdownx.emoji:
+      emoji_index: !!python/name:material.extensions.emoji.twemoji
+      emoji_generator: !!python/name:material.extensions.emoji.to_svg
+  - pymdownx.highlight:
+      anchor_linenums: true
+      line_spans: __span
+      pygments_lang_class: true
+  - pymdownx.inlinehilite
+  - pymdownx.keys
+  - pymdownx.mark
+  - pymdownx.smartsymbols
+  - pymdownx.superfences:
+      custom_fences:
+        - name: mermaid
+          class: mermaid
+          format: !!python/name:pymdownx.superfences.fence_code_format
+  - pymdownx.tabbed:
+      alternate_style: true
+  - pymdownx.tasklist:
+      custom_checkbox: true
+  - pymdownx.tilde
+
+extra:
+  social:
+    - icon: fontawesome/brands/github
+      link: https://github.com/PNNL-CIM-Tools/CIM-Graph
+    - icon: fontawesome/brands/python
+      link: https://pypi.org/project/cim-graph/
+  version:
+    provider: mike
+
+extra_css:
+  - stylesheets/extra.css
+
+# Page tree
+nav:
+  - Home: index.md
+  - Overview:
+      - Overview & Quick Start: 01_overview/1_1_overview.ipynb
+      - Installation: 01_overview/1_2_installation.ipynb
+      - Structure: 01_overview/1_3_structure.ipynb
+      - Contributing: 01_overview/1_4_contributing.ipynb
+  - CIM Profiles:
+      - Profiles Overview: 02_cim_profiles/2_1_profiles_overview.ipynb
+      - Building Profiles: 02_cim_profiles/2_2_building_profiles.ipynb
+      - Using Objects: 02_cim_profiles/2_3_using_objects.ipynb
+      - Using Incrementals: 02_cim_profiles/2_4_using_incrementals.ipynb
+      - Using Units: 02_cim_profiles/2_5_using_units.ipynb
+  - Databases:
+      - Databases Overview: 03_databases/3_1_databases_overview.ipynb
+      - Environment Variables: 03_databases/3_2_env_variables.ipynb
+      - Blazegraph: 03_databases/3_3_blazegraph.ipynb
+      - Neo4j: 03_databases/3_4_neo4j.ipynb
+      - GraphDB: 03_databases/3_5_graphdb.ipynb
+      - MySQL: 03_databases/3_6_mysql.ipynb
+      - GridAPPS-D: 03_databases/3_7_gridappsd.ipynb
+      - XML File Parser: 03_databases/3_8_xml_file_parser.ipynb
+      - JSON-LD File Parser: 03_databases/3_9_jsonld_file_parser.ipynb
+      - RDFLib Parser: 03_databases/3_10_rdflib_parser.ipynb
+  - Graph Models:
+      - Graph Models Overview: 04_graph_models/4_1_graph_models.ipynb
+      - Feeder Model: 04_graph_models/4_2_feeder_model.ipynb
+      - Node Breaker: 04_graph_models/4_3_node_breaker.ipynb
+      - Bus Branch: 04_graph_models/4_4_bus_branch.ipynb
+      - Distributed Area: 04_graph_models/4_5_distributed_area.ipynb
+  - Utils & Shortcuts:
+      - File Writers: 05_utils/5_1_file_writers.ipynb
+      - Get All Data: 05_utils/5_2_get_all_data.ipynb
+      - Mermaid Diagrams: 05_utils/5_3_mermaid.ipynb

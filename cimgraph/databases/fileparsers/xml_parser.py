@@ -1,26 +1,23 @@
 from __future__ import annotations
 
-import concurrent.futures
 import enum
 import importlib
 import logging
 import os
 import re
 from collections import defaultdict
-from concurrent.futures import ThreadPoolExecutor
 from uuid import UUID
 
 from defusedxml.ElementTree import parse
 
 from cimgraph.core import (get_cim_profile, get_iec61970_301, get_namespace,
                            get_validation_log_level)
-from cimgraph.data_profile.identity import Identity, CIMUnit
+from cimgraph.data_profile.identity import CIMUnit, Identity
 from cimgraph.data_profile.known_problem_classes import ClassesWithManytoMany
 from cimgraph.databases import ConnectionInterface, Graph, QueryResponse
 
-# from cimgraph.utils.timing import timing as time_func
-
 _log = logging.getLogger(__name__)
+
 
 class XMLFile(ConnectionInterface):
 
@@ -173,20 +170,20 @@ class XMLFile(ConnectionInterface):
     def create_new_graph(self, container: object, graph:dict = None) -> Graph:
         if graph is not None:
             self.graph = graph
-        if self.root is not None:
-            for element in self.root:
-                self.parse_nodes(element)
 
-            for element in self.root:
-                self.parse_edges(element)
-
-            # with ThreadPoolExecutor(max_workers=os.cpu_count()) as executor:
-
-            #     futures = [executor.submit(self.parse_edges, element) for element in self.root]
-            #     results = [future.result() for future in concurrent.futures.as_completed(futures)]
-        else:
+        if self.root is None:
             _log.warning('No root element found in XML file')
             self.graph = defaultdict(lambda: defaultdict(dict))
+            return self.graph
+
+        # Pass 1: create all node objects
+        for element in self.root:
+            self.parse_nodes(element)
+
+        # Pass 2: wire up all edges and attribute values
+        for element in self.root:
+            self.parse_edges(element)
+
         return self.graph
 
     def parse_nodes(self, element:object) -> Identity:
@@ -251,7 +248,6 @@ class XMLFile(ConnectionInterface):
                 uri = uri.split(':')[-1]  # Extract UUID from the full URI
                 identifier = UUID(uri.strip('#').strip('_').lower())
             except:
-                # identifier = UUID(self.class_index[uri].strip('_').lower())
                 identifier = uri
             obj = self.graph[cim_class][identifier]
             for sub_element in element:
@@ -265,15 +261,15 @@ class XMLFile(ConnectionInterface):
         value = None
         sub_tag = sub_element.tag.split('}')[-1]
         association = self.check_attribute(cim_class, sub_tag)
-        
+
         # Check for rdf:datatype attribute
         datatype_uri = sub_element.attrib.get(f'{self.rdf}datatype', None)
-        
+
         try:
             edge_uri = sub_element.attrib[f'{self.rdf}resource'].split('uuid:')[-1].strip('#')
         except:
             edge_uri = None
-        
+
         if edge_uri is not None:
             # ... existing edge handling code ...
             # (keep all your existing edge handling logic here)
@@ -291,7 +287,7 @@ class XMLFile(ConnectionInterface):
                 try:
                     reverse = cim_class.__dataclass_fields__[association].metadata['inverse']
                     self.create_edge(self.graph, edge_class, edge_uuid, reverse,
-                                        cim_class, self.graph[cim_class][identifier].uri())
+                                        cim_class, identifier)
                 except Exception as e:
                     _log.log(self.log_level, f'Could not identify inverse for {cim_class.__name__} association {association}')
             else:
@@ -308,7 +304,7 @@ class XMLFile(ConnectionInterface):
         else:
             if association is not None:
                 # Pass datatype to create_value
-                value = self.create_value(self.graph, cim_class, identifier, sub_tag, 
+                value = self.create_value(self.graph, cim_class, identifier, sub_tag,
                                         sub_element.text, datatype_uri)
         return value
 

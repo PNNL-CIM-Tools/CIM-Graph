@@ -4,8 +4,7 @@ import logging
 
 from SPARQLWrapper import JSON, POST, SPARQLWrapper
 
-from cimgraph.core import (get_cim_profile, get_iec61970_301, get_namespace,
-                           get_url)
+from cimgraph.core import get_cim_profile, get_iec61970_301, get_namespace, get_url
 from cimgraph.databases.sparql_endpoint import SPARQLEndpointConnection
 
 _log = logging.getLogger(__name__)

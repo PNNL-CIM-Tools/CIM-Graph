@@ -190,7 +190,59 @@ Additional examples of usage are available on ReadTheDocs.
 
 ## Developer Install
 
-We use poetry as the package manager.  We require poetry >= 2.0.0 which was released in early 2025.
+We use [UV](https://github.com/astral-sh/uv) as the package manager and build tool. UV is an extremely fast Python package installer and resolver written in Rust.
+
+### Install UV
+
+**Linux, macOS, and WSL2:**
+```bash
+curl -LsSf https://astral.sh/uv/install.sh | sh
+```
+
+**Windows PowerShell:**
+```powershell
+powershell -ExecutionPolicy ByPass -c "irm https://astral.sh/uv/install.ps1 | iex"
+```
+
+**Alternative (using pip):**
+```bash
+pip install uv
+```
+
+### Install from Source
+
+Clone the repository and install with UV:
+
+```bash
+git clone https://github.com/PNNL-CIM-Tools/CIM-Graph.git
+cd CIM-Graph
+uv sync
+```
+
+This will create a virtual environment in `.venv/` and install all dependencies.
+
+To include development dependencies:
+```bash
+uv sync --extra dev
+```
+
+Activate the virtual environment:
+```bash
+# Linux/macOS/WSL2
+source .venv/bin/activate
+
+# Windows PowerShell
+.venv\Scripts\Activate.ps1
+```
+
+### Build Package
+
+To build distribution packages:
+```bash
+uv build
+```
+
+This creates wheel and source distributions in the `dist/` directory.
 
 ## Attribution and Disclaimer
 

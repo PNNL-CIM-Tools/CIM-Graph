@@ -301,6 +301,16 @@ class Identity:
         if 'mRID' in self.__dataclass_fields__:
             if mRID is not None:
                 self.mRID = mRID
+            elif uri is not None:
+                # If uri was provided and couldn't be converted to UUID, use it as mRID
+                # This preserves the original non-UUID identifier
+                try:
+                    UUID(uri.strip('_').lower())
+                    # URI is a valid UUID, use the normalized identifier
+                    self.mRID = str(self.identifier)
+                except ValueError:
+                    # URI is not a valid UUID, preserve it as mRID
+                    self.mRID = uri
             else:
                 self.mRID = str(self.identifier)
 

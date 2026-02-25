@@ -49,7 +49,7 @@ class SPARQLEndpointConnection(ConnectionInterface):
         This method should create and configure the connection object
         (e.g., SPARQLWrapper for Blazegraph/GraphDB, rdflib.Graph for RDFlib).
         """
-        raise NotImplementedError("Subclass must implement _setup_connection()")
+        raise NotImplementedError('Subclass must implement _setup_connection()')
 
     @abstractmethod
     def _execute_raw_query(self, query_message: str) -> QueryResponse:
@@ -62,7 +62,7 @@ class SPARQLEndpointConnection(ConnectionInterface):
         Returns:
             QueryResponse: The raw query results in database-specific format
         """
-        raise NotImplementedError("Subclass must implement _execute_raw_query()")
+        raise NotImplementedError('Subclass must implement _execute_raw_query()')
 
     @abstractmethod
     def _parse_result_field(self, result: dict, field_name: str) -> str:
@@ -80,7 +80,7 @@ class SPARQLEndpointConnection(ConnectionInterface):
         Returns:
             str: The field value, or None if field doesn't exist
         """
-        raise NotImplementedError("Subclass must implement _parse_result_field()")
+        raise NotImplementedError('Subclass must implement _parse_result_field()')
 
     @abstractmethod
     def _update_raw(self, update_message: str) -> str:
@@ -93,7 +93,7 @@ class SPARQLEndpointConnection(ConnectionInterface):
         Returns:
             str: The response from the update statement
         """
-        raise NotImplementedError("Subclass must implement _update_raw()")
+        raise NotImplementedError('Subclass must implement _update_raw()')
 
     # -------------------------------------------------------------------------
     # Hook methods - Optional overrides for customization
