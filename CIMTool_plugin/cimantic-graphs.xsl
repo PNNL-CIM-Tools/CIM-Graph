@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xsl:stylesheet version="3.0"
-    xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
-    xmlns:xs="http://www.w3.org/2001/XMLSchema"
-    xmlns:a="http://langdale.com.au/2005/Message#"
-    xmlns:sawsdl="http://www.w3.org/ns/sawsdl"
-    xmlns:fn="http://www.w3.org/2005/xpath-functions"
-    xmlns:local="urn:local-functions"
-    xmlns="http://langdale.com.au/2009/Indent"
-    exclude-result-prefixes="xs fn local">
+                xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
+                xmlns:xs="http://www.w3.org/2001/XMLSchema"
+                xmlns:a="http://langdale.com.au/2005/Message#"
+                xmlns:sawsdl="http://www.w3.org/ns/sawsdl"
+                xmlns:fn="http://www.w3.org/2005/xpath-functions"
+                xmlns:local="urn:local-functions"
+                xmlns="http://langdale.com.au/2009/Indent"
+                exclude-result-prefixes="xs fn local">
 
     <xsl:output indent="yes" method="xml" encoding="utf-8"/>
 
@@ -48,8 +48,8 @@
             <item>ONTOLOGY_URI = '<xsl:value-of select="$ontologyURI"/>#'</item>
             <item/>
 
-            <!-- Process classes hierarchically -->
-            <xsl:apply-templates select="a:Root[not(a:SuperType)] | a:ComplexType[not(a:SuperType)]" mode="super"/>
+            <!-- Process classes hierarchically, excluding Identity -->
+            <xsl:apply-templates select="(a:Root | a:ComplexType)[not(a:SuperType)]" mode="super"/>
 
             <!-- Process enumerations -->
             <xsl:apply-templates select="a:EnumeratedType" mode="enumeration"/>
@@ -94,6 +94,9 @@
 
         <xsl:call-template name="generate_class_docstring"/>
 
+        <!-- Add class metadata -->
+        <xsl:call-template name="generate-class-metadata"/>
+
         <!-- Process inverse references first (they come from other classes) -->
         <xsl:apply-templates select="key('inverse_references', @name)" mode="inverse_association"/>
 
@@ -119,6 +122,9 @@
 
                 <xsl:call-template name="generate_class_docstring"/>
 
+                <!-- Add class metadata -->
+                <xsl:call-template name="generate-class-metadata"/>
+
                 <!-- Process inverse references first (they come from other classes) -->
                 <xsl:apply-templates select="key('inverse_references', @name)" mode="inverse_association"/>
 
@@ -143,14 +149,14 @@
 
     <!-- Generate class docstring -->
     <xsl:template name="generate_class_docstring">
-            <list begin="    '''" indent="    " end="    '''">
-                <xsl:for-each select="a:Comment">
-                    <wrap width="70">
-                        <xsl:value-of select="."/>
-                    </wrap>
-                </xsl:for-each>
-            </list>
-            <item/>
+        <list begin="    '''" indent="    " end="    '''">
+            <xsl:for-each select="a:Comment">
+                <wrap width="70">
+                    <xsl:value-of select="."/>
+                </wrap>
+            </xsl:for-each>
+        </list>
+        <item/>
     </xsl:template>
 
     <!-- Generate class docstring -->
@@ -363,8 +369,8 @@
         <item>'maxOccurs': '<xsl:value-of select="(@maxOccurs, '1')[1]"/>',</item>
         <item>'namespace': '<xsl:value-of select="substring-before((@baseProperty, '#')[1],'#')"/>#',</item>
         <!-- Uncomment lines below to include docstring in attribute metadata (for AI training, etc.)-->
-        <!-- <item> 'docstring': </item> -->
-        <!-- <xsl:call-template name="generate_class_docstring"/> -->
+        <item> 'docstring': </item>
+        <xsl:call-template name="generate_class_docstring"/>
     </xsl:template>
 
     <!-- Generate association metadata -->
@@ -380,8 +386,8 @@
         <item>'inverse': '<xsl:value-of select="substring-after((@inverseBaseProperty, '#')[1],'#')"/>',</item>
         <item>'namespace': '<xsl:value-of select="substring-before((@baseProperty, '#')[1],'#')"/>#',</item>
         <!-- Uncomment lines below to include docstring in attribute metadata (for AI training, etc.)-->
-        <!-- <item> 'docstring': </item> -->
-        <!-- <xsl:call-template name="generate_class_docstring"/> -->
+        <item> 'docstring': </item>
+        <xsl:call-template name="generate_class_docstring"/>
     </xsl:template>
 
     <!-- Generate inverse association metadata -->
@@ -392,8 +398,24 @@
         <item>'inverse': '<xsl:value-of select="substring-after(@inverseBaseProperty, '#')"/>',</item>
         <item>'namespace': '<xsl:value-of select="substring-before(@baseProperty,'#')"/>#',</item>
         <!-- Uncomment lines below to include docstring in attribute metadata (for AI training, etc.)-->
-        <!-- <item> 'docstring': </item> -->
-        <!-- <xsl:call-template name="generate_class_docstring"/> -->
+        <item> 'docstring': </item>
+        <xsl:call-template name="generate_class_docstring"/>
+    </xsl:template>
+
+    <!-- Generate class metadata attributes -->
+    <xsl:template name="generate-class-metadata">
+        <xsl:variable name="namespace" select="substring-before(@baseClass, '#')"/>
+        <xsl:variable name="package" select="@package"/>
+        <xsl:variable name="minOccurs" select="(@minOccurs, '0')[1]"/>
+        <xsl:variable name="maxOccurs" select="(@maxOccurs, '1')[1]"/>
+
+        <list begin="" indent="    " end="">
+            <item>__namespace__ = '<xsl:value-of select="$namespace"/>#'</item>
+            <item>__package__ = '<xsl:value-of select="$package"/>'</item>
+            <item>__minOccurs__ = '<xsl:value-of select="$minOccurs"/>'</item>
+            <item>__maxOccurs__ = '<xsl:value-of select="$maxOccurs"/>'</item>
+            <item/>
+        </list>
     </xsl:template>
 
     <!-- Function to get Python type mapping using explicit choose/when -->
@@ -420,20 +442,23 @@
             if (contains($name, 'EAID_')) then $type
             else replace($name, '[^a-zA-Z0-9_]', '')"/>
 
+        <!-- Remove all whitespace characters (spaces, tabs, newlines, etc.) -->
+        <xsl:variable name="no_whitespace" select="replace($clean_name, '\s+', '')"/>
+
         <!-- Handle empty names -->
         <xsl:variable name="safe_name" select="
-            if (string-length($clean_name) = 0) then 'unnamed'
-            else $clean_name"/>
+            if (string-length($no_whitespace) = 0) then 'unnamed'
+            else $no_whitespace"/>
 
         <!-- Handle names starting with digits -->
-        <xsl:variable name="prefixed-name" select="
+        <xsl:variable name="prefixed_name" select="
             if (matches($safe_name, '^[0-9]')) then concat('_', $safe_name)
             else $safe_name"/>
 
         <!-- Handle Python keywords -->
         <xsl:sequence select="
-            if ($prefixed-name = $python_keywords) then concat('_', $prefixed-name)
-            else $prefixed-name"/>
+            if ($prefixed_name = $python_keywords) then concat('_', $prefixed_name)
+            else $prefixed_name"/>
     </xsl:function>
 
     <!-- Template to generate CIMStereotype enum from all stereotypes in the document -->

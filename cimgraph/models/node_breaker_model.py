@@ -1,9 +1,10 @@
 from __future__ import annotations
 
 import logging
+from collections import defaultdict
 from dataclasses import dataclass, field
 
-from cimgraph.databases import ConnectionInterface
+from cimgraph.core import get_cim_profile
 from cimgraph.models.distributed_area import DistributedArea
 from cimgraph.models.graph_model import GraphModel
 
@@ -38,6 +39,10 @@ class NodeBreakerModel(GraphModel):
     aggregate_lower_areas: bool = field(default=True)
 
     def __post_init__(self):
+        cim_profile, cim_module = get_cim_profile()
+        self.cim:cim = cim_module
+        self.incrementals['forwardDifferences'] = defaultdict(dict)
+        self.incrementals['reverseDifferences'] = defaultdict(dict)
         if self.connection is not None:    # Check if connection has been specified
             # self.cim = self.connection.cim    # Set CIM data profile
             if self.distributed:    # Check if distributed flag is true
@@ -51,7 +56,8 @@ class NodeBreakerModel(GraphModel):
 
     def initialize_centralized_model(self, container: object) -> None:
         self.graph = self.connection.create_new_graph(container)
-        self.add_to_graph(container)
+        if container is not None:
+            self.add_to_graph(container)
 
     def initialize_distributed_model(self, container: object) -> None:
         self.graph = {}

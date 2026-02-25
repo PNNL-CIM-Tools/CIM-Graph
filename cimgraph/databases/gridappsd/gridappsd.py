@@ -10,9 +10,9 @@ from uuid import UUID
 from gridappsd import GridAPPSD
 
 import cimgraph.queries.sparql as sparql
-from cimgraph.databases import (ConnectionInterface, Graph, QueryResponse, get_cim_profile,
-                                get_database, get_host, get_iec61970_301, get_namespace,
-                                get_password, get_port, get_url, get_username)
+from cimgraph.core import (get_cim_profile, get_database, get_host, get_iec61970_301,
+                           get_namespace, get_password, get_port, get_url, get_username)
+from cimgraph.databases import ConnectionInterface, Graph, QueryResponse
 
 _log = logging.getLogger(__name__)
 
@@ -205,7 +205,7 @@ class GridappsdConnection(ConnectionInterface):
         for index in range(math.ceil(len(mrid_list) / 100)):
             eq_mrids = mrid_list[index * 100:(index + 1) * 100]
             #generate SPARQL message from correct loaders>sparql python script based on class name
-            sparql_message = sparql.get_all_attributes_sparql(cim_class, eq_mrids)
+            sparql_message = sparql.get_all_attributes_sparql(graph, cim_class, eq_mrids)
             #execute sparql query
             query_output = self.execute(sparql_message)
             self.edge_query_parser(query_output, graph, cim_class)

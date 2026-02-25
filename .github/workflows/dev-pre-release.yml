@@ -44,36 +44,58 @@ jobs:
         with:
           python-version: '3.10'
 
-      - name: Install Poetry
-        uses: snok/install-poetry@v1.4.1
+      - name: Install UV
+        uses: astral-sh/setup-uv@v5
         with:
-          virtualenvs-in-project: true
-          installer-parallel: true
-
-      - name: Install Poetry Plugins
-        run: |
-          poetry self add poetry-plugin-export
+          enable-cache: true
 
       - name: Bump version
         id: bump-version
         run: |
           echo "Bumping version..."
-          echo "From: $(poetry version -s)"
-          poetry version prerelease
-          NEW_TAG=v$(poetry version --short)
-          echo "To: $(poetry version -s)"
-          echo "NEW_TAG=$(echo ${NEW_TAG})" >> $GITHUB_ENV
 
-      - name: Install dependencies
+          # Get current version
+          CURRENT_VERSION=$(uv run python -c "import tomllib; print(tomllib.load(open('pyproject.toml', 'rb'))['project']['version'])")
+          echo "From: $CURRENT_VERSION"
+
+          # Parse version and bump prerelease
+          IFS='.' read -ra VERSION_PARTS <<< "$CURRENT_VERSION"
+          MAJOR="${VERSION_PARTS[0]}"
+          MINOR="${VERSION_PARTS[1]}"
+          PATCH_AND_PRE="${VERSION_PARTS[2]}"
+
+          # Check if already a prerelease
+          if [[ $PATCH_AND_PRE == *"a"* ]]; then
+            # Extract patch and prerelease number
+            PATCH="${PATCH_AND_PRE%%a*}"
+            PRE="${PATCH_AND_PRE##*a}"
+            NEW_PRE=$((PRE + 1))
+            NEW_VERSION="${MAJOR}.${MINOR}.${PATCH}a${NEW_PRE}"
+          else
+            # First prerelease
+            PATCH="$PATCH_AND_PRE"
+            NEW_PATCH=$((PATCH + 1))
+            NEW_VERSION="${MAJOR}.${MINOR}.${NEW_PATCH}a0"
+          fi
+
+          echo "To: $NEW_VERSION"
+
+          # Update pyproject.toml
+          sed -i "s/version = \"$CURRENT_VERSION\"/version = \"$NEW_VERSION\"/" pyproject.toml
+
+          NEW_TAG="v${NEW_VERSION}"
+          echo "NEW_TAG=${NEW_TAG}" >> $GITHUB_ENV
+
+      - name: Build package
         run: |
-          poetry install --without dev
-          poetry build
+          uv build
 
       - name: Commit bumped version
         run: |
           git config --global user.name 'gridappsd[bot]'
           git config --global user.email 'gridappsd[bot]@users.noreply.github.com'
-          git commit -am "Bump version to $(poetry version -s)"
+          NEW_VERSION=$(uv run python -c "import tomllib; print(tomllib.load(open('pyproject.toml', 'rb'))['project']['version'])")
+          git commit -am "Bump version to $NEW_VERSION"
           git push origin develop
 
       - name: Create Release
@@ -91,9 +113,4 @@ jobs:
       - name: Publish to PyPI
         id: publish-to-pypi
         run: |
-          # This is needed, because the poetry publish will fail at the top level of the project
-          # so ./scripts/run_on_each.sh fails for that.
-          echo "POETRY_PUBLISH_OPTIONS=''" >> $GITHUB_ENV
-
-          poetry config pypi-token.pypi ${{ secrets.PYPI_TOKEN }}
-          poetry publish
+          uv publish --token ${{ secrets.PYPI_TOKEN }}

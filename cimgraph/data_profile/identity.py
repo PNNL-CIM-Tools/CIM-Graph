@@ -6,6 +6,9 @@ from random import Random
 from typing import Any, Dict, List, Optional, Union
 from uuid import UUID, uuid4
 
+from cimgraph.core import get_validation_log_level
+from cimgraph.data_profile.units.units import CIMUnit
+
 # Global configuration
 ARCHIVE_JSON_LD = True
 _log = logging.getLogger(__name__)
@@ -83,7 +86,9 @@ class UUID_Meta:
             except ValueError:
                 # If URI is not a valid UUID, use it as seed
                 seed = seed + uri
-                _log.warning(f'URI {uri} not a valid UUID, generating new UUID')
+                log_level = get_validation_log_level()
+
+                _log.log(log_level, f'URI {uri} not a valid UUID, generating new UUID')
                 mRID = str(uri)
 
         # Try creating UUID from mRID if URI failed or wasn't provided
@@ -139,7 +144,8 @@ class Identity:
         metadata={
             'type': 'Attribute',
             'minOccurs': '1',
-            'maxOccurs': '1'
+            'maxOccurs': '1',
+            'serialize': True
         })
 
     def __post_init__(self) -> None:
@@ -197,6 +203,10 @@ class Identity:
                 if not show_empty:
                     del dump[attribute]
                 continue
+
+            # Handle CIM Unit attributes
+            elif attribute in dump and isinstance(dump[attribute], CIMUnit):
+                dump[attribute] = dump[attribute].value
 
             # Handle dataclass attributes
             if attribute in dump and is_dataclass(dump[attribute]):
@@ -291,6 +301,16 @@ class Identity:
         if 'mRID' in self.__dataclass_fields__:
             if mRID is not None:
                 self.mRID = mRID
+            elif uri is not None:
+                # If uri was provided and couldn't be converted to UUID, use it as mRID
+                # This preserves the original non-UUID identifier
+                try:
+                    UUID(uri.strip('_').lower())
+                    # URI is a valid UUID, use the normalized identifier
+                    self.mRID = str(self.identifier)
+                except ValueError:
+                    # URI is not a valid UUID, preserve it as mRID
+                    self.mRID = uri
             else:
                 self.mRID = str(self.identifier)
 

@@ -1,0 +1,17 @@
+:root  > * {
+    --md-primary-fg-color:        #d57826;
+    --md-primary-fg-color--light: #d57826;
+    --md-primary-fg-color--dark:  #d57826;
+  }
+/* Maximum space for text block */
+.md-grid {
+    max-width: 90%; /* or 100%, if you want to stretch to full-width */
+}
+
+.md-sidebar__title,
+.md-nav__title {
+    font-weight: bold !important; /* Make it bold */
+    color: #d57826 !important;  /* Change text color */
+    border-bottom: 1px solid gray !important;  /* Add white border */
+    padding: 5px; /* Add some spacing inside the border */
+}

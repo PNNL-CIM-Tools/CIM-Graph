@@ -12,9 +12,9 @@ from neo4j.exceptions import DriverError, Neo4jError
 
 import cimgraph.data_profile.cimhub_2023 as cim
 import cimgraph.queries.cypher as cypher
-from cimgraph.databases import (ConnectionInterface, Graph, QueryResponse, get_cim_profile,
-                                get_database, get_iec61970_301, get_namespace, get_password,
-                                get_url, get_username)
+from cimgraph.core import (get_cim_profile, get_database, get_iec61970_301, get_namespace,
+                           get_password, get_url, get_username)
+from cimgraph.databases import ConnectionInterface, Graph, QueryResponse
 
 nest_asyncio.apply()
 
@@ -249,13 +249,14 @@ class Neo4jConnection(ConnectionInterface):
     async def get_all_edges_async(self, mrid_list, graph: dict[type, dict[str, object]],
                                   cim_class: type):
         for f in asyncio.as_completed([
-                self.edge_query_runner(mrid_list, index, graph, cim_class)
+                self.edge_query_runner(mrid_list, index, graph, cim_class, True)
                 for index in range(math.ceil(len(mrid_list) / 100))
         ]):
             await f
 
     async def edge_query_runner(self, mrid_list: list[str], index: int,
-                                graph: dict[type, dict[str, object]], cim_class: type):
+                                graph: dict[type, dict[str, object]],
+                                cim_class: type, expand_graph:bool):
 
         # Run a batch of 100 UUIDs at a time
         eq_mrids = mrid_list[index * 100:(index + 1) * 100]
@@ -263,7 +264,7 @@ class Neo4jConnection(ConnectionInterface):
         cypher_message = cypher.get_all_edges_cypher(graph, cim_class, eq_mrids)
         #async_execute cypher query
         query_output = asyncio.run(self.async_execute(cypher_message))
-        self.edge_query_parser(query_output, graph, cim_class)
+        self.edge_query_parser(query_output, graph, cim_class, expand_graph)
 
         #generate cypher message from graph and CIM class name
         cypher_message = cypher.get_all_properties_cypher(graph, cim_class, eq_mrids)
@@ -298,9 +299,13 @@ class Neo4jConnection(ConnectionInterface):
                     _log.warning(f'Class {edge_class} not in data profile')
                     continue
 
-                edge_object = self.create_edge(graph, cim_class, identifier,
-                                            attribute, edge_class, edge_value)
-                new_edges.append(edge_object)
+                if expand_graph:
+                    edge_object = self.create_edge(graph, cim_class, identifier,
+                                        attribute, edge_class, edge_value)
+                    new_edges.append(edge_object)
+                else:
+                    self.create_value(graph, cim_class, identifier, attribute, edge_value)
+
             else:
                 if self.namespace in edge_value: # Check if enumeration
                     enum_text = edge_value.split(self.namespace)[1]
@@ -344,7 +349,18 @@ class Neo4jConnection(ConnectionInterface):
 
 
     def get_all_attributes(self, graph, cim_class):
-        pass
+        uuid_list = list(graph[cim_class].keys())
+
+        asyncio.run(self.get_all_attributes_async(uuid_list, graph, cim_class))
+
+
+    async def get_all_attributes_async(self, mrid_list, graph: dict[type, dict[str, object]],
+                                  cim_class: type):
+        for f in asyncio.as_completed([
+                self.edge_query_runner(mrid_list, index, graph, cim_class, False)
+                for index in range(math.ceil(len(mrid_list) / 100))
+        ]):
+            await f
 
     def upload(self, graph):
         pass

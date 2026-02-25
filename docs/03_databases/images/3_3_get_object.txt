@@ -1,0 +1,16 @@
+%%{init: {"theme":"base"}}%%
+sequenceDiagram
+    actor User
+    participant ConnectionInterface
+    participant SPARQL Queries
+    participant Database
+
+    note right of User: Requests object of given mRID
+
+    User ->>+ ConnectionInterface: get_object(mRID)
+    ConnectionInterface ->>+ SPARQL Queries: get_object_sparql(mRID)
+    SPARQL Queries -->>- ConnectionInterface: str[query text]
+    ConnectionInterface ->>+ Database: execute(query_text)
+    Database -->>- ConnectionInterface: json[query response]
+    ConnectionInterface ->> ConnectionInterface: create_object()
+    ConnectionInterface -->>- User: CIM object

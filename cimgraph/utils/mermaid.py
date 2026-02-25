@@ -34,10 +34,10 @@ def short_attr_mermaid(obj: object, attr: str, num_indent: int = 1) -> str:
     else:
         mermaid += '\n' + INDENT*(num_indent) + f'{attr}: '
     if len(str(edge)) > 22:
-        mermaid += f'{edge[:22]}\n'
-        mermaid += f'{edge[22:]}'
+        mermaid += f'{str(edge)[:22]}\n'
+        mermaid += f'{str(edge)[22:]}'
     else:
-        mermaid += f'{edge}'
+        mermaid += str(edge)
     return mermaid
 
 def short_uri_mermaid(obj: object, num_indent: int = 1) -> str:
@@ -88,7 +88,10 @@ def object_mermaid(obj: object) -> str:
     # Expand and build all connected objects
     for attribute in obj.__dataclass_fields__:
         edge = getattr(obj, attribute)
-        if is_dataclass(edge) and edge is not None:
+        if isinstance(edge, CIMUnit):
+            mermaid += short_attr_mermaid(obj, attribute, num_indent=2)
+
+        elif is_dataclass(edge) and edge is not None:
             if len(attribute) > 22:
                 mermaid += f'\n{INDENT*2}[{attribute[:22]}\n'
                 mermaid += f'{INDENT*2}{attribute[22:]}]\n'
@@ -319,7 +322,7 @@ def add_object_path_mermaid(root: object, path: str, mermaid: str) -> str:
             if '[' in attr:
                 attr_list = attr.split('[')
                 next_edge = getattr(edge, attr_list[0])
-                next_edge = eval(f'next_edge[{attr_list[1]}')
+                next_edge = eval(f'next_str(edge)[{attr_list[1]}')
             else:
                 next_edge = getattr(edge, attr)
         elif type(edge) is list:

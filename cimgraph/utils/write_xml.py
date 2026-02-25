@@ -4,12 +4,14 @@ import enum
 import logging
 
 from cimgraph.data_profile.known_problem_classes import ClassesWithManytoMany
+from cimgraph.data_profile.units import CIMUnit
 from cimgraph.models.graph_model import GraphModel
 
 _log = logging.getLogger(__name__)
 
 
-def write_xml(network: GraphModel, filename: str, namespaces: dict=None, write_identifier=False) -> None:
+def write_xml(network: GraphModel, filename: str, namespaces: dict=None,
+              write_identifier:bool=True, enforce_rdf_direction:bool=False) -> None:
     """
     Write the network graph to an XML file.
 
@@ -36,8 +38,6 @@ def write_xml(network: GraphModel, filename: str, namespaces: dict=None, write_i
     reverse_ns_lookup = {v: k for k, v in namespaces.items()}
 
     iec61970_301 = network.connection.iec61970_301
-    classes_with_many_to_many = ClassesWithManytoMany()
-    many_to_many = classes_with_many_to_many.attributes
     # Handling of formatting change between different 301 standard versions
     if int(iec61970_301) > 7:
         rdf_header = 'rdf:about="urn:uuid:'
@@ -60,9 +60,11 @@ def write_xml(network: GraphModel, filename: str, namespaces: dict=None, write_i
     f.write(header)
 
     # Write each object in the network graph to the XML file
-    for root_class in list(network.graph.keys()):
+    classes = list(network.graph.keys())
+    sorted_classes = sorted(classes, key=lambda x: x.__name__)
+    for root_class in sorted_classes:
         counter = 0
-        for obj in network.graph[root_class].values():
+        for obj in network.list_by_class(root_class):
             cim_class = obj.__class__
             header = f'<cim:{cim_class.__name__} {rdf_header}{obj.uri()}">\n'
             f.write(header)
@@ -70,6 +72,13 @@ def write_xml(network: GraphModel, filename: str, namespaces: dict=None, write_i
             parent_classes.pop(len(parent_classes) - 1)
             for parent in parent_classes:
                 for attribute in parent.__annotations__.keys():
+                    try:
+                        serialize = cim_class.__dataclass_fields__[attribute].metadata['serialize']
+                        if not serialize and enforce_rdf_direction:
+                            continue
+                    except:
+                        _log.warning(f'{attribute} missing serialize')
+                        serialize = True
                     # Skip over Identity.identifier attribute
                     if attribute == 'identifier' and write_identifier:
                         row = f'  <cim:Identity.identifier>{obj.uri()}</cim:Identity.identifier>\n'
@@ -80,7 +89,7 @@ def write_xml(network: GraphModel, filename: str, namespaces: dict=None, write_i
                     attr_ns = cim_class.__dataclass_fields__[attribute].metadata['namespace']
                     ns_prefix = reverse_ns_lookup[attr_ns]
                     # Upload attributes that are many-to-one or are known problem classes
-                    if 'list' not in attribute_type or rdf in many_to_many:
+                    if 'list' not in attribute_type or serialize:
                         edge_class = attribute_type.split('[')[1].split(']')[0]
                         edge = getattr(obj, attribute)
                         # Check if attribute is association to a class object
@@ -89,6 +98,9 @@ def write_xml(network: GraphModel, filename: str, namespaces: dict=None, write_i
                                 if type(edge.__class__) is enum.EnumMeta:
                                     resource = f'rdf:resource="{attr_ns}{str(edge)}"'
                                     row = f'  <{ns_prefix}:{parent.__name__}.{attribute} {resource}/>\n'
+                                    f.write(row)
+                                elif isinstance(edge, CIMUnit):
+                                    row = f'  <{ns_prefix}:{parent.__name__}.{attribute}>{str(edge.quantity.magnitude)}</{ns_prefix}:{parent.__name__}.{attribute}>\n'
                                     f.write(row)
                                 elif type(edge) is str or type(edge) is bool or type(edge) is float:
                                     row = f'  <{ns_prefix}:{parent.__name__}.{attribute}>{str(edge)}</{ns_prefix}:{parent.__name__}.{attribute}>\n'
@@ -115,7 +127,15 @@ def write_xml(network: GraphModel, filename: str, namespaces: dict=None, write_i
                                     # except:
                                     #     _log.warning(obj.__dict__)
                         else:
-                            if edge is not None and edge != [] and rdf != 'Identity.identifier':
+                            if isinstance(edge, CIMUnit):
+                                unit_str = str(edge.quantity.units)
+                                datatype = f'{attr_ns}UnitSymbol.{unit_str}'
+                                row = f'  <cim:{parent.__name__}.{attribute} rdf:datatype="{datatype}">'
+                                row += f'{str(edge.value)}</cim:{parent.__name__}.{attribute}>\n'
+                                f.write(row)
+                                    # row = f'  <{ns_prefix}:{parent.__name__}.{attribute}>{str(edge.quantity.magnitude)}</{ns_prefix}:{parent.__name__}.{attribute}>\n'
+                                    # f.write(row)
+                            elif edge is not None and edge != []:
                                 row = f'  <{ns_prefix}:{parent.__name__}.{attribute}>{str(edge)}</{ns_prefix}:{parent.__name__}.{attribute}>\n'
                                 f.write(row)
             tail = f'</cim:{cim_class.__name__}>\n'

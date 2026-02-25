@@ -1,24 +1,23 @@
 from __future__ import annotations
 
-import concurrent.futures
 import enum
 import importlib
 import logging
 import os
+import re
 from collections import defaultdict
-from concurrent.futures import ThreadPoolExecutor
 from uuid import UUID
 
 from defusedxml.ElementTree import parse
 
-from cimgraph.data_profile.identity import Identity
+from cimgraph.core import (get_cim_profile, get_iec61970_301, get_namespace,
+                           get_validation_log_level)
+from cimgraph.data_profile.identity import CIMUnit, Identity
 from cimgraph.data_profile.known_problem_classes import ClassesWithManytoMany
-from cimgraph.databases import (ConnectionInterface, Graph, QueryResponse, get_cim_profile,
-                                get_iec61970_301, get_namespace, get_validation_log_level)
-
-# from cimgraph.utils.timing import timing as time_func
+from cimgraph.databases import ConnectionInterface, Graph, QueryResponse
 
 _log = logging.getLogger(__name__)
+
 
 class XMLFile(ConnectionInterface):
 
@@ -49,6 +48,19 @@ class XMLFile(ConnectionInterface):
             try:
                 self.tree = parse(self.filename)
                 self.root = self.tree.getroot()
+                # Extract namespaces from the XML header
+                extracted_ns = self.extract_namespaces_from_header()
+
+                # Update namespaces with extracted ones (file namespaces take precedence)
+                # Note: 'rdf' is stored with curly braces for backward compatibility
+                for prefix, uri in extracted_ns.items():
+                    if prefix == 'rdf':
+                        # Keep rdf with curly braces for direct attribute access
+                        self.rdf = '{' + uri + '}'
+                        self.namespaces[prefix] = uri
+                    else:
+                        # Other namespaces without curly braces for find/findall
+                        self.namespaces[prefix] = uri
 
             except:
                 _log.warning(f'File {self.filename} not found. Defaulting to empty network graph')
@@ -59,6 +71,57 @@ class XMLFile(ConnectionInterface):
         else:
             raise ValueError('filename must be specified')
 
+    def extract_namespaces_from_header(self) -> dict:
+        """
+        Extract namespace declarations from the XML root element.
+
+        This method parses the xmlns: attributes from the root RDF element by reading
+        the raw XML file and using regex to extract namespace declarations.
+
+        Returns:
+            dict: Dictionary mapping namespace prefixes to their URIs WITHOUT curly braces.
+                  This format is compatible with ElementTree find/findall operations.
+                  For direct tag matching, add curly braces when needed.
+                  e.g., {'cim': 'http://example.com#'}
+        """
+        if self.filename is None:
+            _log.warning('No filename specified, cannot extract namespaces')
+            return {}
+
+        namespaces = {}
+
+        try:
+            # Read the file to extract namespace declarations
+            with open(self.filename, 'r', encoding='utf-8') as f:
+                # Read only the first few KB to find the root element
+                content = f.read(8192)  # Read first 8KB which should contain the root element
+
+            # Pattern to match xmlns:prefix="uri" or xmlns="uri"
+            # This regex captures both prefixed and default namespaces
+            xmlns_pattern = r'xmlns(?::([a-zA-Z0-9_-]+))?=["\']([^"\']+)["\']'
+
+            matches = re.finditer(xmlns_pattern, content)
+
+            for match in matches:
+                prefix = match.group(1)  # The namespace prefix (None for default namespace)
+                uri = match.group(2)     # The namespace URI
+
+                if prefix:
+                    # Prefixed namespace like xmlns:cim="..."
+                    # Store WITHOUT curly braces for ElementTree find/findall compatibility
+                    namespaces[prefix] = uri
+                    _log.debug(f'Found namespace: {prefix} -> {uri}')
+                else:
+                    # Default namespace like xmlns="..."
+                    namespaces['default'] = uri
+                    _log.debug(f'Found default namespace: {uri}')
+
+            _log.info(f'Extracted {len(namespaces)} namespaces from XML header')
+
+        except Exception as e:
+            _log.error(f'Error extracting namespaces: {e}')
+
+        return namespaces
 
     def disconnect(self):
         del self.tree
@@ -107,20 +170,20 @@ class XMLFile(ConnectionInterface):
     def create_new_graph(self, container: object, graph:dict = None) -> Graph:
         if graph is not None:
             self.graph = graph
-        if self.root is not None:
-            for element in self.root:
-                self.parse_nodes(element)
 
-            for element in self.root:
-                self.parse_edges(element)
-
-            # with ThreadPoolExecutor(max_workers=os.cpu_count()) as executor:
-
-            #     futures = [executor.submit(self.parse_edges, element) for element in self.root]
-            #     results = [future.result() for future in concurrent.futures.as_completed(futures)]
-        else:
+        if self.root is None:
             _log.warning('No root element found in XML file')
             self.graph = defaultdict(lambda: defaultdict(dict))
+            return self.graph
+
+        # Pass 1: create all node objects
+        for element in self.root:
+            self.parse_nodes(element)
+
+        # Pass 2: wire up all edges and attribute values
+        for element in self.root:
+            self.parse_edges(element)
+
         return self.graph
 
     def parse_nodes(self, element:object) -> Identity:
@@ -144,22 +207,25 @@ class XMLFile(ConnectionInterface):
             cim_class = getattr(self.cim, class_name)
             if 'about' in str(element.attrib.keys()):
                 uri = element.get(f'{self.rdf}about')
+                uri = uri.split(':')[-1]  # Extract UUID from the full URI
+
             elif 'ID' in str(element.attrib.keys()):
                 uri = element.get(f'{self.rdf}ID')
+                uri = uri.split(':')[-1]  # Extract UUID from the full URI
+
             else:
                 _log.error(f'Unable to parse {element}. Elements must be rdf:ID or rdf:about')
-
-            uri = uri.split(':')[-1]  # Extract UUID from the full URI
+                uri = element
             # try:
             #     identifier = UUID(uri.strip('_').lower())
             # except:
             #     _log.warning(f'Unable to parse URI. Check the IEC61970-301 serialization')
 
-
+            # _log.warning(f'{cim_class.__name__}, {uri}')
             obj = self.create_object(self.graph, cim_class, uri)
             self.class_index[obj.uri()] = cim_class
             if uri != obj.uri():
-                self.class_index[uri]=obj.uri()
+                self.class_index[uri]=cim_class
 
         else:
             _log.log(self.log_level, f'{class_name} not in data profile')
@@ -182,7 +248,6 @@ class XMLFile(ConnectionInterface):
                 uri = uri.split(':')[-1]  # Extract UUID from the full URI
                 identifier = UUID(uri.strip('#').strip('_').lower())
             except:
-                # identifier = UUID(self.class_index[uri].strip('_').lower())
                 identifier = uri
             obj = self.graph[cim_class][identifier]
             for sub_element in element:
@@ -196,36 +261,35 @@ class XMLFile(ConnectionInterface):
         value = None
         sub_tag = sub_element.tag.split('}')[-1]
         association = self.check_attribute(cim_class, sub_tag)
+
+        # Check for rdf:datatype attribute
+        datatype_uri = sub_element.attrib.get(f'{self.rdf}datatype', None)
+
         try:
             edge_uri = sub_element.attrib[f'{self.rdf}resource'].split('uuid:')[-1].strip('#')
         except:
             edge_uri = None
 
         if edge_uri is not None:
+            # ... existing edge handling code ...
+            # (keep all your existing edge handling logic here)
             if (edge_uri.split('#')[0] + '#') not in self.namespaces.values():
                 try:
                     edge_uuid = UUID(edge_uri.strip('#').strip('_').lower())
                 except:
                     edge_uuid = edge_uri
-
                 try:
                     edge_class = self.class_index[edge_uri]
                 except:
-                    _log.log(self.log_level, f'Object with ID {edge_uri} not found')
+                    _log.log(self.log_level, f'Object with ID {edge_uri} not found for {sub_tag}')
                     return None
-
                 value = self.create_edge(self.graph, cim_class, identifier, sub_tag, edge_class, edge_uri)
                 try:
                     reverse = cim_class.__dataclass_fields__[association].metadata['inverse']
                     self.create_edge(self.graph, edge_class, edge_uuid, reverse,
-                                        cim_class, self.graph[cim_class][identifier].uri())
+                                        cim_class, identifier)
                 except Exception as e:
                     _log.log(self.log_level, f'Could not identify inverse for {cim_class.__name__} association {association}')
-                # except:
-                #     value = self.get_object(edge_uri)
-
-                # except:
-                #     _log.warning(f'unable to create object with uuid {edge_uri}')
             else:
                 try:
                     enum_text = edge_uri.split('#')[1]
@@ -239,9 +303,10 @@ class XMLFile(ConnectionInterface):
                     pass
         else:
             if association is not None:
-                value = self.create_value(self.graph, cim_class, identifier, sub_tag, sub_element.text)
+                # Pass datatype to create_value
+                value = self.create_value(self.graph, cim_class, identifier, sub_tag,
+                                        sub_element.text, datatype_uri)
         return value
-        # return graph
 
     def parse_node_query(self, graph: dict, query_output: dict) -> Graph:
         pass
@@ -298,8 +363,9 @@ class XMLFile(ConnectionInterface):
                             continue
                         # Upload attributes that are many-to-one or are known problem classes
                         if 'list' not in attribute_type or rdf in many_to_many:
-                            edge_class = attribute_type.split('[')[1].split(']')[0]
+                            # edge_class = attribute_type.split('[')[1].split(']')[0]
                             edge = getattr(obj, attribute)
+                            edge_class = edge.__class__
                             # Check if attribute is association to a class object
                             if edge_class in self.cim.__all__:
                                 if edge is not None and edge != []:
@@ -334,9 +400,18 @@ class XMLFile(ConnectionInterface):
                                         # except:
                                         #     _log.warning(obj.__dict__)
                             else:
+                                # In the upload method, modify the attribute writing section:
                                 if edge is not None and edge != [] and rdf != 'Identity.identifier':
-                                    row = f'  <cim:{parent.__name__}.{attribute}>{str(edge)}</cim:{parent.__name__}.'
-                                    row += f'{attribute}>\n'
+                                    # Check if this is a CIMUnit instance
+                                    if isinstance(edge, CIMUnit):
+                                        # Write with datatype
+                                        unit_str = str(edge.quantity.units)
+                                        datatype = f'{namespace}{edge.__class__.__name__}.{unit_str}'
+                                        row = f'  <cim:{parent.__name__}.{attribute} rdf:datatype="{datatype}">'
+                                        row += f'{str(edge.value)}</cim:{parent.__name__}.{attribute}>\n'
+                                    else:
+                                        row = f'  <cim:{parent.__name__}.{attribute}>{str(edge)}</cim:{parent.__name__}.'
+                                        row += f'{attribute}>\n'
                                     f.write(row)
                 tail = f'</cim:{cim_class.__name__}>\n'
                 f.write(tail)

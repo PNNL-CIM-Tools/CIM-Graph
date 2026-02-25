@@ -1,0 +1,12 @@
+
+nbsphinx
+pandoc
+jinja2
+IPython
+ipykernel
+sphinx-autobuild
+sphinx-rtd-theme
+recommonmark
+gitpython
+myst-parser
+pdftex
