@@ -56,8 +56,8 @@ jobs:
         run: |
           echo "Finalizing version..."
 
-          # Get current version
-          CURRENT_VERSION=$(uv run python -c "import tomllib; print(tomllib.load(open('pyproject.toml', 'rb'))['project']['version'])")
+          # Get current version from pyproject.toml
+          CURRENT_VERSION=$(grep '^version = ' pyproject.toml | sed 's/version = "\(.*\)"/\1/')
           echo "From: $CURRENT_VERSION"
 
           # Strip prerelease suffix if present (e.g., 0.4.3a8 -> 0.4.3)
