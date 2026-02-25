@@ -12,7 +12,7 @@ from defusedxml.ElementTree import parse
 
 from cimgraph.core import (get_cim_profile, get_iec61970_301, get_namespace,
                            get_validation_log_level)
-from cimgraph.data_profile.identity import Identity, CIMUnit
+from cimgraph.data_profile.identity import CIMUnit, Identity
 from cimgraph.data_profile.known_problem_classes import ClassesWithManytoMany
 from cimgraph.databases import ConnectionInterface, Graph, QueryResponse
 
@@ -261,15 +261,15 @@ class XMLFile(ConnectionInterface):
         value = None
         sub_tag = sub_element.tag.split('}')[-1]
         association = self.check_attribute(cim_class, sub_tag)
-        
+
         # Check for rdf:datatype attribute
         datatype_uri = sub_element.attrib.get(f'{self.rdf}datatype', None)
-        
+
         try:
             edge_uri = sub_element.attrib[f'{self.rdf}resource'].split('uuid:')[-1].strip('#')
         except:
             edge_uri = None
-        
+
         if edge_uri is not None:
             # ... existing edge handling code ...
             # (keep all your existing edge handling logic here)
@@ -304,7 +304,7 @@ class XMLFile(ConnectionInterface):
         else:
             if association is not None:
                 # Pass datatype to create_value
-                value = self.create_value(self.graph, cim_class, identifier, sub_tag, 
+                value = self.create_value(self.graph, cim_class, identifier, sub_tag,
                                         sub_element.text, datatype_uri)
         return value
 
