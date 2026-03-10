@@ -19,8 +19,8 @@ class BlazegraphConnection(SPARQLEndpointConnection):
     - SPARQLWrapper-based connection
     """
 
-    def __init__(self):
-        super().__init__()
+    def __init__(self, cim_override=None):
+        super().__init__(cim_override=cim_override)
         self.url = get_url()
         # Blazegraph supports multiple namespaces for enumeration parsing
         self.namespaces = [self.namespace, 'http://epri.com/gmdm/2025#']

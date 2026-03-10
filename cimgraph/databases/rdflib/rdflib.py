@@ -25,8 +25,8 @@ class RDFlibConnection(SPARQLEndpointConnection):
     - Attribute-based result access pattern
     """
 
-    def __init__(self, filename: str = None, use_oxigraph: bool = True):
-        super().__init__()
+    def __init__(self, filename: str = None, use_oxigraph: bool = True, cim_override=None):
+        super().__init__(cim_override=cim_override)
         self.filename = filename
         self.use_oxigraph = use_oxigraph
         self.connect()

@@ -63,7 +63,7 @@ class ConnectionInterface(ABC):
     def create_distributed_graph(self, area: object, graph: Graph = None) -> Graph:
         raise RuntimeError('Must have implemented query in the inherited class')
 
-    def __init__(self):
+    def __init__(self, cim_override=None):
         # clear cached env variables
         get_namespace.cache_clear()
         get_cim_profile.cache_clear()
@@ -71,7 +71,11 @@ class ConnectionInterface(ABC):
         get_validation_log_level.cache_clear()
 
         # retrieve env variables
-        self.cim_profile, self.cim = get_cim_profile()
+        if cim_override is not None:
+            self.cim_profile = 'merged'
+            self.cim = cim_override
+        else:
+            self.cim_profile, self.cim = get_cim_profile()
         self.namespace = get_namespace()
         self.iec61970_301 = get_iec61970_301()
         self.log_level = get_validation_log_level()

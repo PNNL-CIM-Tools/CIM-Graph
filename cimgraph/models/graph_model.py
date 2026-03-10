@@ -178,7 +178,7 @@ class GraphModel():
         if not valid:
             _log.warning(f'{attribute} with {value} should have datatype {attr_datatype}')
         for cim_object in self.graph.get(cim_class, {}).values():
-            if str(getattr(cim_object, attribute)) == str(value):
+            if str(value) in str(getattr(cim_object, attribute)):
                 matching.append(cim_object)
         return matching
 

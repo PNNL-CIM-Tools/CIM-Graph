@@ -19,7 +19,7 @@ _log = logging.getLogger(__name__)
 
 class GridappsdConnection(ConnectionInterface):
 
-    def __init__(self):
+    def __init__(self, cim_override=None):
 
         # clear cached env variables
         get_url.cache_clear()
@@ -32,7 +32,11 @@ class GridappsdConnection(ConnectionInterface):
         get_password.cache_clear()
 
         # retrieve env variables
-        self.cim_profile, self.cim = get_cim_profile()
+        if cim_override is not None:
+            self.cim_profile = 'merged'
+            self.cim = cim_override
+        else:
+            self.cim_profile, self.cim = get_cim_profile()
         self.namespace = get_namespace()
         self.iec61970_301 = get_iec61970_301()
         self.host = get_host()
