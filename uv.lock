@@ -215,7 +215,7 @@ wheels = [
 
 [[package]]
 name = "cim-graph"
-version = "0.4.3a9"
+version = "0.4.3a10"
 source = { editable = "." }
 dependencies = [
     { name = "defusedxml" },

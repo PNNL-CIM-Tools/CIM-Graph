@@ -20107,6 +20107,27 @@ class BatteryUnit(PowerElectronicsUnit):
     @property
     def __maxOccurs__(self):
         return 'unbounded'
+    
+    
+@dataclass(repr=False, kw_only=True)
+class PhotoVoltaicUnit(PowerElectronicsUnit):
+    '''
+    A photovoltaic device or an aggregation of such devices.
+    '''
+
+    @property
+    def __namespace__(self):
+        return 'http://iec.ch/TC57/CIM100#'
+    @property
+    def __package__(self):
+        return 'Production'
+    @property
+    def __minOccurs__(self):
+        return '0'
+    @property
+    def __maxOccurs__(self):
+        return 'unbounded'
+
 
 @stereotype(CIMStereotype.Concrete)
 @dataclass(repr=False)
