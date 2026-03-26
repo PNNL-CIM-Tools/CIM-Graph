@@ -2,8 +2,13 @@
 from __future__ import annotations
 
 import dataclasses
+import importlib
+import os
+import sys
+import textwrap
 from dataclasses import fields, is_dataclass
 from enum import Enum
+from pathlib import Path
 
 import pytest
 
@@ -159,3 +164,114 @@ def test_merge_three_profiles():
     assert conn_names.issubset(merged_names)
     assert elec_names.issubset(merged_names)
     assert loc_names.issubset(merged_names)
+
+
+# ── Type-stub generation tests ─────────────────────────────────────────
+
+
+def test_generate_type_stubs_creates_file(tmp_path):
+    """generate_type_stubs writes a .py file that can be imported."""
+    from cimgraph.data_profile.cim18gmdm import connectivity, electrical
+    from cimgraph.data_profile.merge import generate_type_stubs
+
+    out = tmp_path / 'cim_stubs.py'
+    generate_type_stubs(connectivity, electrical, output_path=str(out))
+
+    assert out.exists()
+    content = out.read_text()
+    assert 'from __future__ import annotations' in content
+    assert '__all__' in content
+
+
+def test_generate_type_stubs_has_all_names(tmp_path):
+    """__all__ in the stub file should match merge_profiles output."""
+    from cimgraph.data_profile.cim18gmdm import connectivity, electrical
+    from cimgraph.data_profile.merge import generate_type_stubs, merge_profiles
+
+    out = tmp_path / 'cim_stubs.py'
+    generate_type_stubs(connectivity, electrical, output_path=str(out))
+
+    merged = merge_profiles(connectivity, electrical)
+
+    # Import the generated stub module
+    sys.path.insert(0, str(tmp_path))
+    try:
+        stub_mod = importlib.import_module('cim_stubs')
+        assert set(stub_mod.__all__) == set(merged.__all__)
+    finally:
+        sys.path.pop(0)
+        sys.modules.pop('cim_stubs', None)
+
+
+def test_generate_type_stubs_overlapping_classes(tmp_path):
+    """Overlapping dataclasses should use multi-inheritance stub pattern."""
+    from cimgraph.data_profile.cim18gmdm import connectivity, electrical
+    from cimgraph.data_profile.merge import generate_type_stubs
+
+    out = tmp_path / 'cim_stubs.py'
+    generate_type_stubs(connectivity, electrical, output_path=str(out))
+
+    content = out.read_text()
+    # ACLineSegment is in both profiles — should be a multi-inherit class
+    assert 'class ACLineSegment(' in content
+    assert '_p0_ACLineSegment' in content
+    assert '_p1_ACLineSegment' in content
+    assert 'type: ignore[misc]' in content
+
+
+def test_generate_type_stubs_non_overlapping_reexported(tmp_path):
+    """Non-overlapping classes should be simple re-exports."""
+    from cimgraph.data_profile.cim18gmdm import connectivity, electrical
+    from cimgraph.data_profile.merge import generate_type_stubs
+
+    out = tmp_path / 'cim_stubs.py'
+    generate_type_stubs(connectivity, electrical, output_path=str(out))
+
+    content = out.read_text()
+    # ConnectivityNode is only in connectivity — should be a re-export
+    assert 'import ConnectivityNode as ConnectivityNode' in content
+
+
+def test_generate_type_stubs_importable(tmp_path):
+    """The generated stub file should be importable without errors."""
+    from cimgraph.data_profile.cim18gmdm import connectivity, electrical
+    from cimgraph.data_profile.merge import generate_type_stubs
+
+    out = tmp_path / 'cim_stubs_import.py'
+    generate_type_stubs(connectivity, electrical, output_path=str(out))
+
+    sys.path.insert(0, str(tmp_path))
+    try:
+        stub_mod = importlib.import_module('cim_stubs_import')
+        # Should have ACLineSegment as a class
+        assert hasattr(stub_mod, 'ACLineSegment')
+        assert isinstance(stub_mod.ACLineSegment, type)
+        # Should have ConnectivityNode re-exported
+        assert hasattr(stub_mod, 'ConnectivityNode')
+    finally:
+        sys.path.pop(0)
+        sys.modules.pop('cim_stubs_import', None)
+
+
+def test_generate_type_stubs_requires_two_modules():
+    """generate_type_stubs should raise ValueError with fewer than 2 modules."""
+    from cimgraph.data_profile.cim18gmdm import connectivity
+    from cimgraph.data_profile.merge import generate_type_stubs
+
+    with pytest.raises(ValueError):
+        generate_type_stubs(connectivity, output_path='/dev/null')
+
+
+def test_generate_type_stubs_three_profiles(tmp_path):
+    """Stub generation should work with three profiles."""
+    from cimgraph.data_profile.cim18gmdm import connectivity, electrical, location
+    from cimgraph.data_profile.merge import generate_type_stubs
+
+    out = tmp_path / 'cim_stubs_three.py'
+    generate_type_stubs(connectivity, electrical, location, output_path=str(out))
+
+    content = out.read_text()
+    # ACLineSegment is in all three — should reference _p0, _p1, _p2
+    assert '_p0_ACLineSegment' in content
+    assert '_p1_ACLineSegment' in content
+    assert '_p2_ACLineSegment' in content
