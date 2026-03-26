@@ -19,7 +19,7 @@ class GraphDBConnection(SPARQLEndpointConnection):
     - SPARQLWrapper-based connection
     """
 
-    def __init__(self) -> None:
+    def __init__(self, cim_override=None) -> None:
         # Clear cached env variables before parent init
         get_url.cache_clear()
         get_namespace.cache_clear()
@@ -27,7 +27,7 @@ class GraphDBConnection(SPARQLEndpointConnection):
         get_iec61970_301.cache_clear()
 
         # Initialize parent class (which sets up standard variables)
-        super().__init__()
+        super().__init__(cim_override=cim_override)
 
         # Set GraphDB-specific URL
         self.url = get_url()

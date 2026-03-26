@@ -27,7 +27,7 @@ class Neo4jConnection(ConnectionInterface):
 
     """
 
-    def __init__(self):
+    def __init__(self, cim_override=None):
 
         # clear cached env variables
         get_url.cache_clear()
@@ -39,8 +39,12 @@ class Neo4jConnection(ConnectionInterface):
         get_database.cache_clear()
 
         # retrieve env variables
-        self.cim_profile, cim_module = get_cim_profile()
-        self.cim:cim = cim_module
+        if cim_override is not None:
+            self.cim_profile = 'merged'
+            self.cim:cim = cim_override
+        else:
+            self.cim_profile, cim_module = get_cim_profile()
+            self.cim:cim = cim_module
         self.namespace = get_namespace()
         self.url = get_url()
         self.username = get_username()

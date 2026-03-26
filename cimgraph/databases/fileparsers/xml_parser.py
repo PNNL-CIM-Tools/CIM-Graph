@@ -11,7 +11,7 @@ from uuid import UUID
 from defusedxml.ElementTree import parse
 
 from cimgraph.core import (get_cim_profile, get_iec61970_301, get_namespace,
-                           get_validation_log_level)
+                           get_use_units, get_validation_log_level)
 from cimgraph.data_profile.identity import CIMUnit, Identity
 from cimgraph.data_profile.known_problem_classes import ClassesWithManytoMany
 from cimgraph.databases import ConnectionInterface, Graph, QueryResponse
@@ -21,18 +21,24 @@ _log = logging.getLogger(__name__)
 
 class XMLFile(ConnectionInterface):
 
-    def __init__(self, filename:str|list[str], namespaces:dict=None):
+    def __init__(self, filename:str|list[str], namespaces:dict=None, cim_override=None):
         # clear cached env variables
         get_namespace.cache_clear()
         get_cim_profile.cache_clear()
         get_iec61970_301.cache_clear()
         get_validation_log_level.cache_clear()
+        get_use_units.cache_clear()
 
         # retrieve env variables
-        self.cim_profile, self.cim = get_cim_profile()
+        if cim_override is not None:
+            self.cim_profile = 'merged'
+            self.cim = cim_override
+        else:
+            self.cim_profile, self.cim = get_cim_profile()
         self.namespace = get_namespace()
         self.iec61970_301 = get_iec61970_301()
         self.log_level = get_validation_log_level()
+        self.use_units = get_use_units()
         self.filename = filename
         self.rdf = '''{http://www.w3.org/1999/02/22-rdf-syntax-ns#}'''
 

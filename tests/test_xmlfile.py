@@ -3,10 +3,8 @@ import unittest
 from uuid import UUID
 
 import cimgraph.data_profile.cimhub_2023 as cim
-from cimgraph import utils
 from cimgraph.databases import XMLFile
 from cimgraph.models import FeederModel
-from cimgraph.queries import sparql
 
 
 class TestXMLFile(unittest.TestCase):

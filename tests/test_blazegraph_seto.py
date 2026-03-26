@@ -100,5 +100,36 @@ class TestBlazegraphSETO(unittest.TestCase):
         self.assertEqual(phase.ACLineSegment, line)
 
 
+    def test_merged_profile_feeder_model(self):
+        """Test FeederModel with a merged connectivity+electrical profile."""
+        from cimgraph.data_profile.cim18gmdm import connectivity, electrical
+        from cimgraph.data_profile.merge import merge_profiles
+
+        merged = merge_profiles(connectivity, electrical)
+        database = BlazegraphConnection(cim_override=merged)
+
+        feeder = merged.Feeder(identifier=self.feeder_mrid)
+        network = FeederModel(connection=database, container=feeder, distributed=False)
+
+        # Graph should have been populated
+        self.assertGreater(len(network.graph.keys()), 0)
+
+        # ACLineSegment should exist and be the merged type
+        MergedACLineSegment = getattr(merged, 'ACLineSegment')
+        self.assertIn(MergedACLineSegment, network.graph)
+
+        # Get a specific line and check it has fields from both profiles
+        line = network.graph[MergedACLineSegment][UUID('0bbd0ea3-f665-465b-86fd-fc8b8466ad53')]
+        self.assertEqual(len(line.Terminals), 2)
+
+        # Expand edges to populate attributes
+        network.get_all_edges(MergedACLineSegment)
+
+        # Fields from connectivity profile
+        self.assertIsInstance(line.ACLineSegmentPhases, list)
+        # Fields from electrical profile
+        self.assertIn('PerLengthImpedance', MergedACLineSegment.__dataclass_fields__)
+
+
 if __name__ == '__main__':
     unittest.main()
