@@ -25,7 +25,7 @@
       
       
       <link rel="icon" href="../../assets/images/favicon.png">
-      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.3">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.6">
     
     
       
@@ -4530,8 +4530,8 @@ print(f"Substation: {substation}")</div>
 </pre></div>
 <div class="clipboard-copy-txt" id="cell-8"># Custom SPARQL query to find all feeders
 query_text = '''
-PREFIX r:  <http: 02="" 1999="" 22-rdf-syntax-ns#="" www.w3.org="">
-PREFIX cim:  <http: cim100#="" iec.ch="" tc57="">
+PREFIX r:  &lt;http://www.w3.org/1999/02/22-rdf-syntax-ns#&gt;
+PREFIX cim:  &lt;http://iec.ch/TC57/CIM100#&gt;
 SELECT DISTINCT ?identifier ?name
 WHERE {
     ?feeder r:type cim:Feeder .
@@ -4548,7 +4548,7 @@ print("Available Feeders:")
 for result in results['results']['bindings']:
     mrid = result['identifier']['value']
     name = result.get('name', {}).get('value', 'Unnamed')
-    print(f"  - {name}: {mrid}")</http:></http:></div>
+    print(f"  - {name}: {mrid}")</div>
 </div>
 </div>
 </div>

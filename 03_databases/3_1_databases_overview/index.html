@@ -25,7 +25,7 @@
       
       
       <link rel="icon" href="../../assets/images/favicon.png">
-      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.3">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.6">
     
     
       
@@ -3746,7 +3746,7 @@ span.linenos.special { color: #000000; background-color: #ffffc0; padding-left: 
 diagram_text = """%%{init: {"theme":"base"}}%%
 classDiagram
     class ConnectionInterface {
-        &lt;<abstract>&gt;
+        &lt;&lt;abstract&gt;&gt;
         +Graph: TypeAlias
         +cim_profile: str
         +namespace: str
@@ -3769,7 +3769,7 @@ classDiagram
     }
     
     class SPARQLEndpointConnection {
-        &lt;<abstract>&gt;
+        &lt;&lt;abstract&gt;&gt;
         +connection_obj: object
         #_setup_connection()*
         #_execute_raw_query(query)* QueryResponse
@@ -3821,7 +3821,7 @@ classDiagram
     ConnectionInterface &lt;|-- Neo4jConnection
 """
 
-Mermaid(diagram_text)</abstract></abstract></div>
+Mermaid(diagram_text)</div>
 </div>
 </div>
 </div>

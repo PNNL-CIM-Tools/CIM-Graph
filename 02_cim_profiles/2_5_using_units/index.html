@@ -25,7 +25,7 @@
       
       
       <link rel="icon" href="../../assets/images/favicon.png">
-      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.3">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.6">
     
     
       
@@ -4030,7 +4030,7 @@ print(f"\\n{power} ÷ {voltage} = {(power / voltage).to('A')}")</div>
 <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"In kilovolts: </span><span class="si">{</span><span class="n">voltage</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="s1">'kV'</span><span class="p">)</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
 
 <span class="c1"># Get numeric value in specific unit</span>
-<span class="n">kv_value</span> <span class="o">=</span> <span class="n">voltage</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="s1">'kV'</span><span class="p">)</span><span class="o">.</span><span class="n">magnitude</span>
+<span class="n">kv_value</span> <span class="o">=</span> <span class="n">voltage</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="s1">'kV'</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"</span><span class="se">\\</span><span class="s2">nNumeric value in kV: </span><span class="si">{</span><span class="n">kv_value</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
 
 <span class="c1"># Create power quantities</span>
@@ -4049,7 +4049,7 @@ print(f"In megavolts: {voltage.to('MV')}")
 print(f"In kilovolts: {voltage.to('kV')}")
 
 # Get numeric value in specific unit
-kv_value = voltage.to('kV').magnitude
+kv_value = voltage.to('kV')
 print(f"\\nNumeric value in kV: {kv_value}")
 
 # Create power quantities
