@@ -10,8 +10,8 @@ from uuid import UUID
 
 from defusedxml.ElementTree import parse
 
-from cimgraph.core import (get_cim_profile, get_iec61970_301, get_namespace,
-                           get_use_units, get_validation_log_level)
+from cimgraph.core import (get_cim_profile, get_iec61970_301, get_namespace, get_use_units,
+                           get_validation_log_level)
 from cimgraph.data_profile.identity import CIMUnit, Identity
 from cimgraph.data_profile.known_problem_classes import ClassesWithManytoMany
 from cimgraph.databases import ConnectionInterface, Graph, QueryResponse

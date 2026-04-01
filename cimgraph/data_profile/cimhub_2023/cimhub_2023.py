@@ -20107,8 +20107,8 @@ class BatteryUnit(PowerElectronicsUnit):
     @property
     def __maxOccurs__(self):
         return 'unbounded'
-    
-    
+
+
 @dataclass(repr=False, kw_only=True)
 class PhotoVoltaicUnit(PowerElectronicsUnit):
     '''
