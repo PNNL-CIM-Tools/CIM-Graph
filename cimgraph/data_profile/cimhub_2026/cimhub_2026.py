@@ -2447,6 +2447,236 @@ class WireInfo(ConductorInfo):
     segment as a whole in case its phases all have the same wire characteristics.
     '''
 
+    coreStrandCount: Optional[int] = field(
+        default=None,
+        metadata={
+        'type': 'Attribute',
+        'minOccurs': '0',
+        'maxOccurs': '1',
+        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'serialize': True,
+        'docstring':
+            '''
+            (if used) Number of strands in the steel core.
+            '''
+        
+        })
+    '''
+    (if used) Number of strands in the steel core.
+    '''
+    
+    insulated: Optional[bool] = field(
+        default=None,
+        metadata={
+        'type': 'Attribute',
+        'minOccurs': '0',
+        'maxOccurs': '1',
+        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'serialize': True,
+        'docstring':
+            '''
+            True if conductor is insulated.
+            '''
+        
+        })
+    '''
+    True if conductor is insulated.
+    '''
+    
+    sizeDescription: Optional[str] = field(
+        default=None,
+        metadata={
+        'type': 'Attribute',
+        'minOccurs': '0',
+        'maxOccurs': '1',
+        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'serialize': True,
+        'docstring':
+            '''
+            Describes the wire gauge or cross section (e.g., 4/0, #2, 336.5).
+            '''
+        
+        })
+    '''
+    Describes the wire gauge or cross section (e.g., 4/0, #2, 336.5).
+    '''
+    
+    strandCount: Optional[int] = field(
+        default=None,
+        metadata={
+        'type': 'Attribute',
+        'minOccurs': '0',
+        'maxOccurs': '1',
+        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'serialize': True,
+        'docstring':
+            '''
+            Number of strands in the conductor.
+            '''
+        
+        })
+    '''
+    Number of strands in the conductor.
+    '''
+    
+    constructionKind: Optional[ WireMaterialKind ] = field(
+        default=None,
+        metadata={
+        'type': 'enumeration Attribute',
+        'minOccurs': '0',
+        'maxOccurs': '1',
+        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'serialize': True,
+        'docstring':
+            '''
+            '''
+        
+        })
+    '''
+    '''
+    
+    coreRadius: Optional[ float | Length ] = field(
+        default=None,
+        metadata={
+        'type': 'Attribute',
+        'minOccurs': '0',
+        'maxOccurs': '1',
+        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'serialize': True,
+        'docstring':
+            '''
+            (if there is a different core material) Radius of the central core.
+            '''
+        
+        })
+    '''
+    (if there is a different core material) Radius of the central core.
+    '''
+    
+    coreStrandRadius: Optional[ float | Length ] = field(
+        default=None,
+        metadata={
+        'type': 'Attribute',
+        'minOccurs': '0',
+        'maxOccurs': '1',
+        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'serialize': True,
+        'docstring':
+            '''
+            '''
+        
+        })
+    '''
+    '''
+    
+    gmr: Optional[ float | Length ] = field(
+        default=None,
+        metadata={
+        'type': 'Attribute',
+        'minOccurs': '0',
+        'maxOccurs': '1',
+        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'serialize': True,
+        'docstring':
+            '''
+            Geometric mean radius. If we replace the conductor by a thin walled tube
+            of radius GMR, then its reactance is identical to the reactance of the
+            actual conductor.
+            '''
+        
+        })
+    '''
+    Geometric mean radius. If we replace the conductor by a thin walled
+    tube of radius GMR, then its reactance is identical to the reactance
+    of the actual conductor.
+    '''
+    
+    insulationMaterial: Optional[ WireInsulationKind ] = field(
+        default=None,
+        metadata={
+        'type': 'enumeration Attribute',
+        'minOccurs': '0',
+        'maxOccurs': '1',
+        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'serialize': True,
+        'docstring':
+            '''
+            (if insulated conductor) Material used for insulation.
+            '''
+        
+        })
+    '''
+    (if insulated conductor) Material used for insulation.
+    '''
+    
+    insulationThickness: Optional[ float | Length ] = field(
+        default=None,
+        metadata={
+        'type': 'Attribute',
+        'minOccurs': '0',
+        'maxOccurs': '1',
+        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'serialize': True,
+        'docstring':
+            '''
+            (if insulated conductor) Thickness of the insulation.
+            '''
+        
+        })
+    '''
+    (if insulated conductor) Thickness of the insulation.
+    '''
+    
+    radius: Optional[ float | Length ] = field(
+        default=None,
+        metadata={
+        'type': 'Attribute',
+        'minOccurs': '0',
+        'maxOccurs': '1',
+        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'serialize': True,
+        'docstring':
+            '''
+            Outside radius of the wire.
+            '''
+        
+        })
+    '''
+    Outside radius of the wire.
+    '''
+    
+    ratedStrength: Optional[ float | Force ] = field(
+        default=None,
+        metadata={
+        'type': 'Attribute',
+        'minOccurs': '0',
+        'maxOccurs': '1',
+        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'serialize': True,
+        'docstring':
+            '''
+            '''
+        
+        })
+    '''
+    '''
+    
+    strandRadius: Optional[ float | Length ] = field(
+        default=None,
+        metadata={
+        'type': 'Attribute',
+        'minOccurs': '0',
+        'maxOccurs': '1',
+        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'serialize': True,
+        'docstring':
+            '''
+            '''
+        
+        })
+    '''
+    '''
+    
     ACLineSegmentPhase: list[ACLineSegmentPhase] = field(
         default_factory=list,
         metadata={
@@ -4404,6 +4634,25 @@ class PowerTransformerInfo(AssetInfo):
     Set of power transformer data, from an equipment library.
     '''
 
+    TransformerTankInfos: list[TransformerTankInfo] = field(
+        default_factory=list,
+        metadata={
+        'type': 'Association',
+        'minOccurs': '0',
+        'maxOccurs': 'unbounded',
+        'inverse': 'TransformerTankInfo.PowerTransformerInfo',
+        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'serialize': False,
+        'docstring':
+            '''
+            Data for all the tanks described by this power transformer data.
+            '''
+        
+        })
+    '''
+    Data for all the tanks described by this power transformer data.
+    '''
+    
     @property
     def __namespace__(self):
         return 'http://iec.ch/TC57/CIM101/draft#'
@@ -4423,6 +4672,25 @@ class TransformerTankInfo(AssetInfo):
     Set of transformer tank data, from an equipment library.
     '''
 
+    PowerTransformerInfo: Optional[PowerTransformerInfo] = field(
+        default=None,
+        metadata={
+        'type': 'Attribute',
+        'minOccurs': '0',
+        'maxOccurs': '1',
+        'inverse': 'PowerTransformerInfo.TransformerTankInfos',
+        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'serialize': True,
+        'docstring':
+            '''
+            Power transformer data that this tank description is part of.
+            '''
+        
+        })
+    '''
+    Power transformer data that this tank description is part of.
+    '''
+    
     TransformerEndInfos: list[TransformerEndInfo] = field(
         default_factory=list,
         metadata={
@@ -6502,7 +6770,7 @@ class ControlAreaGeneratingUnit(IdentifiedObject):
     GeneratingUnit: Optional[GeneratingUnit] = field(
         default=None,
         metadata={
-        'type': 'NC',
+        'type': 'Attribute',
         'minOccurs': '1',
         'maxOccurs': '1',
         'inverse': 'GeneratingUnit.ControlAreaGeneratingUnit',
@@ -6583,7 +6851,7 @@ class ControlAreaPowerElectronicsUnit(IdentifiedObject):
     PowerElectronicsUnit: Optional[PowerElectronicsUnit] = field(
         default=None,
         metadata={
-        'type': 'NC',
+        'type': 'Attribute',
         'minOccurs': '1',
         'maxOccurs': '1',
         'inverse': 'PowerElectronicsUnit.ControlAreaPowerElectronicsUnit',
@@ -7620,6 +7888,58 @@ class EarthResistivity(IdentifiedObject):
     Resistance of earth (soil)
     '''
 
+    earthModelType: Optional[ EarthModelKind ] = field(
+        default=None,
+        metadata={
+        'type': 'enumeration GridAPPSD Attribute',
+        'minOccurs': '0',
+        'maxOccurs': '1',
+        'namespace': 'http://gridappsd.org/CIM/extension#',
+        'serialize': True,
+        'docstring':
+            '''
+            '''
+        
+        })
+    '''
+    '''
+    
+    earthReturnGMR: Optional[ float | Length ] = field(
+        default=None,
+        metadata={
+        'type': 'Attribute',
+        'minOccurs': '0',
+        'maxOccurs': '1',
+        'namespace': 'http://gridappsd.org/CIM/extension#',
+        'serialize': True,
+        'docstring':
+            '''
+            Geometry mean radius of a set of hypothetical conductors with same impedance
+            as the earth return, per Carson's Equations
+            '''
+        
+        })
+    '''
+    Geometry mean radius of a set of hypothetical conductors with same
+    impedance as the earth return, per Carson's Equations
+    '''
+    
+    rho: Optional[ float | Resistance ] = field(
+        default=None,
+        metadata={
+        'type': 'Attribute',
+        'minOccurs': '0',
+        'maxOccurs': '1',
+        'namespace': 'http://gridappsd.org/CIM/extension#',
+        'serialize': True,
+        'docstring':
+            '''
+            '''
+        
+        })
+    '''
+    '''
+    
     ACLineSegments: list[ACLineSegment] = field(
         default_factory=list,
         metadata={
@@ -11555,7 +11875,7 @@ class PMUConfiguration(IdentifiedObject):
     PMUConfigurationFrame: Optional[PMUConfigurationFrame] = field(
         default=None,
         metadata={
-        'type': 'OfAggregate GridAPPSD',
+        'type': 'GridAPPSD OfAggregate',
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'PMUConfigurationFrame.PMUConfigurations',
@@ -18305,7 +18625,7 @@ class RotatingMachine(RegulatingCondEq):
     GeneratingUnit: Optional[GeneratingUnit] = field(
         default=None,
         metadata={
-        'type': 'NC',
+        'type': 'Attribute',
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'GeneratingUnit.RotatingMachine',
@@ -24040,6 +24360,22 @@ class RegulatingControl(PowerSystemResource):
     maxAllowedTargetValue.
     '''
 
+    ctRatio: Optional[float] = field(
+        default=None,
+        metadata={
+        'type': 'Attribute',
+        'minOccurs': '0',
+        'maxOccurs': '1',
+        'namespace': 'http://gridappsd.org/CIM/extension#',
+        'serialize': True,
+        'docstring':
+            '''
+            '''
+        
+        })
+    '''
+    '''
+    
     discrete: Optional[bool] = field(
         default=None,
         metadata={
@@ -24116,6 +24452,22 @@ class RegulatingControl(PowerSystemResource):
         })
     '''
     Minimum allowed target value. See also RegulatingControl description.
+    '''
+    
+    ptRatio: Optional[float] = field(
+        default=None,
+        metadata={
+        'type': 'Attribute',
+        'minOccurs': '0',
+        'maxOccurs': '1',
+        'namespace': 'http://gridappsd.org/CIM/extension#',
+        'serialize': True,
+        'docstring':
+            '''
+            '''
+        
+        })
+    '''
     '''
     
     reverseTargetDeadband: Optional[float] = field(
@@ -35511,6 +35863,7 @@ class EVTypeKind(Enum):
     
 @stereotype(CIMStereotype.GridAPPSD)
 @stereotype(CIMStereotype.enumeration)
+@stereotype(CIMStereotype.Attribute)
 class EarthModelKind(Enum):
     '''
     '''
@@ -38767,6 +39120,34 @@ class Displacement(CIMUnit):
     def unit(self):
         return UnitSymbol.m
     def __init__(self, value, input_unit: str='m', input_multiplier: str=None):
+        self.__pint__(value=value, input_unit=input_unit, input_multiplier=input_multiplier)
+    @property
+    def __namespace__(self):
+        return '#'
+    @property
+    def __package__(self):
+        return 'Domain'
+    @property
+    def __minOccurs__(self):
+        return '0'
+    @property
+    def __maxOccurs__(self):
+        return '1'
+    
+
+@stereotype(CIMStereotype.CIMDatatype)
+@dataclass(repr=False)
+class Force(CIMUnit):
+    '''
+    Force in newtons. It shall be a positive value or zero.
+    '''
+
+    value: float = field(default=None)
+    multiplier: UnitMultiplier = field(default=UnitMultiplier.none)
+    @property # read-only
+    def unit(self):
+        return UnitSymbol.N
+    def __init__(self, value, input_unit: str='N', input_multiplier: str=None):
         self.__pint__(value=value, input_unit=input_unit, input_multiplier=input_multiplier)
     @property
     def __namespace__(self):
