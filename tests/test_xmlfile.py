@@ -1,4 +1,5 @@
 import os
+import tempfile
 import unittest
 from uuid import UUID
 
@@ -73,6 +74,51 @@ class TestXMLFile(unittest.TestCase):
                break
         self.assertEqual(phase.name, '645646_C')
         self.assertEqual(phase.ACLineSegment, line)
+
+    def test_units_disabled_raw_float(self):
+        os.environ['CIMG_USE_UNITS'] = 'false'
+        database = XMLFile(filename='tests/test_models/ieee13.xml')
+        feeder = cim.Feeder(mRID=self.feeder_mrid)
+        network = FeederModel(connection=database, container=feeder, distributed=False)
+        line = network.graph[cim.ACLineSegment][UUID('0bbd0ea3-f665-465b-86fd-fc8b8466ad53')]
+        self.assertIs(type(line.length), float)
+        self.assertEqual(line.length, 91.44)
+
+    def test_units_enabled_si_fallback(self):
+        os.environ['CIMG_USE_UNITS'] = 'true'
+        database = XMLFile(filename='tests/test_models/ieee13.xml')
+        feeder = cim.Feeder(mRID=self.feeder_mrid)
+        network = FeederModel(connection=database, container=feeder, distributed=False)
+        line = network.graph[cim.ACLineSegment][UUID('0bbd0ea3-f665-465b-86fd-fc8b8466ad53')]
+        self.assertIsInstance(line.length, cim.Length)
+        self.assertEqual(float(line.length), 91.44)
+        self.assertAlmostEqual(line.length.to('km'), 0.09144)
+
+    def test_upload_round_trip_via_write_xml(self):
+        database = XMLFile(filename='tests/test_models/ieee13.xml')
+        feeder = cim.Feeder(mRID=self.feeder_mrid)
+        network = FeederModel(connection=database, container=feeder, distributed=False)
+        line_uuid = UUID('0bbd0ea3-f665-465b-86fd-fc8b8466ad53')
+        line = network.graph[cim.ACLineSegment][line_uuid]
+        original_name = line.name
+        original_length = line.length
+
+        tmp = tempfile.NamedTemporaryFile(suffix='.xml', delete=False)
+        tmp.close()
+        tmp_path = tmp.name
+        try:
+            network.connection.filename = tmp_path
+            network.upload()
+
+            database2 = XMLFile(filename=tmp_path)
+            feeder2 = cim.Feeder(mRID=self.feeder_mrid)
+            network2 = FeederModel(connection=database2, container=feeder2, distributed=False)
+            line2 = network2.graph[cim.ACLineSegment][line_uuid]
+
+            self.assertEqual(line2.name, original_name)
+            self.assertEqual(line2.length, original_length)
+        finally:
+            os.unlink(tmp_path)
 
 
 if __name__ == '__main__':

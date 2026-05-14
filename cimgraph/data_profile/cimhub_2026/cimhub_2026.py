@@ -1,8 +1,8 @@
 from __future__ import annotations
 import logging
 from dataclasses import dataclass, field
-from typing import Optional
 from enum import Enum
+from typing import Optional
 from cimgraph.data_profile.identity import Identity, stereotype
 from cimgraph.data_profile.units import CIMUnit, UnitSymbol, UnitMultiplier
 _log = logging.getLogger(__name__)
@@ -15,9 +15,11 @@ class CIMStereotype(Enum):
     AggregateOf = "AggregateOf"
     Attribute = "Attribute"
     CIMDatatype = "CIMDatatype"
+    Compound = "Compound"
     European = "European"
     GB = "GB"
     GridAPPSD = "GridAPPSD"
+    MCT = "MCT"
     NC = "NC"
     NeedsWork = "NeedsWork"
     OfAggregate = "OfAggregate"
@@ -47,16 +49,11 @@ class BranchGroupTerminal(Identity):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            The flow into the terminal is summed if set true. The flow out of the terminal
-            is summed if set false.
-            '''
-        
         })
     '''
     The flow into the terminal is summed if set true. The flow out of the
@@ -66,17 +63,13 @@ class BranchGroupTerminal(Identity):
     BranchGroup: Optional[BranchGroup] = field(
         default=None,
         metadata={
-        'type': 'OfAggregate',
+        'type': 'Association',
+        'stereotypes': ['OfAggregate'],
         'minOccurs': '1',
         'maxOccurs': '1',
         'inverse': 'BranchGroup.BranchGroupTerminal',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            The branch group to which the directed branch group terminals belong.
-            '''
-        
         })
     '''
     The branch group to which the directed branch group terminals belong.
@@ -85,17 +78,13 @@ class BranchGroupTerminal(Identity):
     Terminal: Optional[Terminal] = field(
         default=None,
         metadata={
-        'type': 'Attribute',
+        'type': 'Association',
+        'stereotypes': [],
         'minOccurs': '1',
         'maxOccurs': '1',
         'inverse': 'Terminal.BranchGroupTerminal',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            The terminal to be summed.
-            '''
-        
         })
     '''
     The terminal to be summed.
@@ -114,6 +103,8 @@ class BranchGroupTerminal(Identity):
     def __maxOccurs__(self):
         return 'unbounded'
     
+@stereotype(CIMStereotype.MCT)
+@stereotype(CIMStereotype.GridAPPSD)
 @dataclass(repr=False)
 class CableArmorInfo(Identity):
     '''
@@ -123,14 +114,11 @@ class CableArmorInfo(Identity):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://gridappsd.org/CIM/extension#',
         'serialize': True,
-        'docstring':
-            '''
-            '''
-        
         })
     '''
     '''
@@ -139,14 +127,11 @@ class CableArmorInfo(Identity):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://gridappsd.org/CIM/extension#',
         'serialize': True,
-        'docstring':
-            '''
-            '''
-        
         })
     '''
     '''
@@ -155,14 +140,11 @@ class CableArmorInfo(Identity):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://gridappsd.org/CIM/extension#',
         'serialize': True,
-        'docstring':
-            '''
-            '''
-        
         })
     '''
     '''
@@ -171,14 +153,11 @@ class CableArmorInfo(Identity):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://gridappsd.org/CIM/extension#',
         'serialize': True,
-        'docstring':
-            '''
-            '''
-        
         })
     '''
     '''
@@ -187,14 +166,11 @@ class CableArmorInfo(Identity):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://gridappsd.org/CIM/extension#',
         'serialize': True,
-        'docstring':
-            '''
-            '''
-        
         })
     '''
     '''
@@ -203,14 +179,11 @@ class CableArmorInfo(Identity):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://gridappsd.org/CIM/extension#',
         'serialize': True,
-        'docstring':
-            '''
-            '''
-        
         })
     '''
     '''
@@ -219,14 +192,11 @@ class CableArmorInfo(Identity):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://gridappsd.org/CIM/extension#',
         'serialize': True,
-        'docstring':
-            '''
-            '''
-        
         })
     '''
     '''
@@ -235,14 +205,11 @@ class CableArmorInfo(Identity):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://gridappsd.org/CIM/extension#',
         'serialize': True,
-        'docstring':
-            '''
-            '''
-        
         })
     '''
     '''
@@ -251,14 +218,11 @@ class CableArmorInfo(Identity):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://gridappsd.org/CIM/extension#',
         'serialize': True,
-        'docstring':
-            '''
-            '''
-        
         })
     '''
     '''
@@ -267,14 +231,11 @@ class CableArmorInfo(Identity):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://gridappsd.org/CIM/extension#',
         'serialize': True,
-        'docstring':
-            '''
-            '''
-        
         })
     '''
     '''
@@ -283,14 +244,11 @@ class CableArmorInfo(Identity):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://gridappsd.org/CIM/extension#',
         'serialize': True,
-        'docstring':
-            '''
-            '''
-        
         })
     '''
     '''
@@ -346,20 +304,11 @@ class CurrentDroopOverride(Identity):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Master resource identifier issued by a model authority. The mRID is unique
-            within an exchange context. Global uniqueness is easily achieved by using
-            a UUID, as specified in RFC 4122, for the mRID. The use of UUID is strongly
-            recommended.
-            For CIMXML data files in RDF syntax conforming to IEC 61970-552, the mRID
-            is mapped to rdf:ID or rdf:about attributes that identify CIM object elements.
-            '''
-        
         })
     '''
     Master resource identifier issued by a model authority. The mRID is
@@ -375,15 +324,11 @@ class CurrentDroopOverride(Identity):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Droop in capacitive region. The unit is V/A.
-            '''
-        
         })
     '''
     Droop in capacitive region. The unit is V/A.
@@ -393,15 +338,11 @@ class CurrentDroopOverride(Identity):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Droop in inductive region. The unit is V/A.
-            '''
-        
         })
     '''
     Droop in inductive region. The unit is V/A.
@@ -411,15 +352,11 @@ class CurrentDroopOverride(Identity):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            True, if the current droop override is enabled (active). Otherwise false.
-            '''
-        
         })
     '''
     True, if the current droop override is enabled (active). Otherwise
@@ -430,15 +367,11 @@ class CurrentDroopOverride(Identity):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Offset in capacitive region.
-            '''
-        
         })
     '''
     Offset in capacitive region.
@@ -448,15 +381,11 @@ class CurrentDroopOverride(Identity):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Offset in capacitive region.
-            '''
-        
         })
     '''
     Offset in capacitive region.
@@ -466,15 +395,11 @@ class CurrentDroopOverride(Identity):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Setpoint when control is active in capacitive region.
-            '''
-        
         })
     '''
     Setpoint when control is active in capacitive region.
@@ -484,15 +409,11 @@ class CurrentDroopOverride(Identity):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Setpoint when control is active in inductive region.
-            '''
-        
         })
     '''
     Setpoint when control is active in inductive region.
@@ -501,17 +422,13 @@ class CurrentDroopOverride(Identity):
     SSSCController: Optional[SSSCController] = field(
         default=None,
         metadata={
-        'type': 'Attribute',
+        'type': 'Association',
+        'stereotypes': [],
         'minOccurs': '1',
         'maxOccurs': '1',
         'inverse': 'SSSCController.CurrentDroopOverride',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            The SSSC controller to which this CurrentDroopOverride applies to.
-            '''
-        
         })
     '''
     The SSSC controller to which this CurrentDroopOverride applies to.
@@ -534,16 +451,12 @@ class CurrentDroopOverride(Identity):
         default=None,
         metadata={
         'type': 'Association',
+        'stereotypes': [],
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'SSSCController.CurrentDroopOverride',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': False,
-        'docstring':
-            '''
-            The SSSC controller to which this CurrentDroopOverride applies to.
-            '''
-        
         })
     '''
     The SSSC controller to which this CurrentDroopOverride applies to.
@@ -561,15 +474,11 @@ class CurveData(Identity):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            The data value of the X-axis variable, depending on the X-axis units.
-            '''
-        
         })
     '''
     The data value of the X-axis variable, depending on the X-axis units.
@@ -579,15 +488,11 @@ class CurveData(Identity):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            The data value of the first Y-axis variable, depending on the Y-axis units.
-            '''
-        
         })
     '''
     The data value of the first Y-axis variable, depending on the Y-axis
@@ -598,16 +503,11 @@ class CurveData(Identity):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            The data value of the second Y-axis variable (if present), depending on
-            the Y-axis units.
-            '''
-        
         })
     '''
     The data value of the second Y-axis variable (if present), depending
@@ -618,16 +518,11 @@ class CurveData(Identity):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            The data value of the third Y-axis variable (if present), depending on
-            the Y-axis units.
-            '''
-        
         })
     '''
     The data value of the third Y-axis variable (if present), depending
@@ -637,17 +532,13 @@ class CurveData(Identity):
     Curve: Optional[Curve] = field(
         default=None,
         metadata={
-        'type': 'OfAggregate',
+        'type': 'Association',
+        'stereotypes': ['OfAggregate'],
         'minOccurs': '1',
         'maxOccurs': '1',
         'inverse': 'Curve.CurveDatas',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            The curve of this curve data point.
-            '''
-        
         })
     '''
     The curve of this curve data point.
@@ -736,20 +627,11 @@ class IdentifiedObject(Identity):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Master resource identifier issued by a model authority. The mRID is unique
-            within an exchange context. Global uniqueness is easily achieved by using
-            a UUID, as specified in IETF RFC 4122, for the mRID. The use of UUID is
-            strongly recommended.
-            For CIMXML data files in RDF syntax conforming to IEC 61970-552, the mRID
-            is mapped to rdf:ID or rdf:about attributes that identify CIM object elements.
-            '''
-        
         })
     '''
     Master resource identifier issued by a model authority. The mRID is
@@ -765,20 +647,11 @@ class IdentifiedObject(Identity):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            The aliasName is free text human readable name of the object alternative
-            to IdentifiedObject.name. It may be non unique and may not correlate to
-            a naming hierarchy.
-            The attribute aliasName is retained because of backwards compatibility
-            between CIM releases. It is however recommended to replace aliasName with
-            the Name class as aliasName is planned for retirement at a future time.
-            '''
-        
         })
     '''
     The aliasName is free text human readable name of the object alternative
@@ -794,16 +667,11 @@ class IdentifiedObject(Identity):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            The description is a free human readable text describing or naming the
-            object. It may be non unique and may not correlate to a naming hierarchy.
-            '''
-        
         })
     '''
     The description is a free human readable text describing or naming
@@ -815,16 +683,11 @@ class IdentifiedObject(Identity):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            The name is any free human readable and possibly non unique text naming
-            the object.
-            '''
-        
         })
     '''
     The name is any free human readable and possibly non unique text naming
@@ -834,17 +697,13 @@ class IdentifiedObject(Identity):
     InstanceSet: Optional[InstanceSet] = field(
         default=None,
         metadata={
-        'type': 'Attribute',
+        'type': 'Association',
+        'stereotypes': [],
         'minOccurs': '1',
         'maxOccurs': '1',
         'inverse': 'InstanceSet.InstanceSetMember',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Dataset containing the data objects.
-            '''
-        
         })
     '''
     Dataset containing the data objects.
@@ -874,24 +733,12 @@ class ACDCTerminal(IdentifiedObject):
     connected: Optional[bool] = field(
         default=None,
         metadata={
-        'type': 'deprecated Attribute',
+        'type': 'Attribute',
+        'stereotypes': ['deprecated', 'Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            The connected status is related to a bus-branch model and the topological
-            node to terminal relation. True implies the terminal is connected to the
-            related topological node and false implies it is not.
-            In a bus-branch model, the connected status is used to tell if equipment
-            is disconnected without having to change the connectivity described by
-            the topological node to terminal relation. A valid case is that conducting
-            equipment can be connected in one end and open in the other. In particular
-            for an AC line segment, where the reactive line charging can be significant,
-            this is a relevant case.
-            '''
-        
         })
     '''
     The connected status is related to a bus-branch model and the topological
@@ -909,18 +756,11 @@ class ACDCTerminal(IdentifiedObject):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            The orientation of the terminal connections for a multiple terminal conducting
-            equipment. The sequence numbering starts with 1 and additional terminals
-            should follow in increasing order. The first terminal is the "starting
-            point" for a two terminal branch.
-            '''
-        
         })
     '''
     The orientation of the terminal connections for a multiple terminal
@@ -932,17 +772,13 @@ class ACDCTerminal(IdentifiedObject):
     BusNameMarker: Optional[BusNameMarker] = field(
         default=None,
         metadata={
-        'type': 'Attribute',
+        'type': 'Association',
+        'stereotypes': [],
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'BusNameMarker.Terminal',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            The bus name marker used to name the bus (topological node).
-            '''
-        
         })
     '''
     The bus name marker used to name the bus (topological node).
@@ -952,19 +788,12 @@ class ACDCTerminal(IdentifiedObject):
         default_factory=list,
         metadata={
         'type': 'Association',
+        'stereotypes': [],
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'Measurement.Terminal',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': False,
-        'docstring':
-            '''
-            Measurements associated with this terminal defining where the measurement
-            is placed in the network topology. It may be used, for instance, to capture
-            the sensor position, such as a voltage transformer (PT) at a busbar or
-            a current transformer (CT) at the bar between a breaker and an isolator.
-            '''
-        
         })
     '''
     Measurements associated with this terminal defining where the measurement
@@ -978,16 +807,12 @@ class ACDCTerminal(IdentifiedObject):
         default_factory=list,
         metadata={
         'type': 'Association',
+        'stereotypes': [],
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'OperationalLimitSet.Terminal',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': False,
-        'docstring':
-            '''
-            The operational limit sets at the terminal.
-            '''
-        
         })
     '''
     The operational limit sets at the terminal.
@@ -1016,16 +841,12 @@ class DCTerminal(ACDCTerminal):
         default_factory=list,
         metadata={
         'type': 'Association',
+        'stereotypes': [],
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'SvDCPowerFlow.DCTerminal',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': False,
-        'docstring':
-            '''
-            The DC power flow state variable associated with the DC terminal.
-            '''
-        
         })
     '''
     The DC power flow state variable associated with the DC terminal.
@@ -1044,6 +865,7 @@ class DCTerminal(ACDCTerminal):
     def __maxOccurs__(self):
         return 'unbounded'
     
+@stereotype(CIMStereotype.ShadowExtension)
 @dataclass(repr=False)
 class Terminal(ACDCTerminal):
     '''
@@ -1054,22 +876,12 @@ class Terminal(ACDCTerminal):
     phases: Optional[ PhaseCode ] = field(
         default=None,
         metadata={
-        'type': 'enumeration Attribute',
+        'type': 'Attribute',
+        'stereotypes': ['enumeration', 'Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Represents the normal network phasing condition. If the attribute is missing,
-            three phases (ABC) shall be assumed, except for terminals of grounding
-            classes (specializations of EarthFaultCompensator, GroundDisconnector,
-            and Ground) which will be assumed to be N. Therefore, phase code ABCN is
-            explicitly declared when needed, e.g. for star point grounding equipment.
-            The phase code on terminals connecting the same ConnectivityNode or TopologicalNode
-            as well as for equipment between two terminals shall be consistent.
-            '''
-        
         })
     '''
     Represents the normal network phasing condition. If the attribute is
@@ -1085,18 +897,13 @@ class Terminal(ACDCTerminal):
     BoundedConnectivityArea: Optional[ConnectivityArea] = field(
         default=None,
         metadata={
-        'type': 'Attribute',
+        'type': 'Association',
+        'stereotypes': [],
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'ConnectivityArea.BoundaryTerminals',
         'namespace': 'http://gridappsd.org/CIM/extension#',
         'serialize': True,
-        'docstring':
-            '''
-            The persistent connectivity-based containment for which the Terminal serves
-            as a boundary
-            '''
-        
         })
     '''
     The persistent connectivity-based containment for which the Terminal
@@ -1106,16 +913,13 @@ class Terminal(ACDCTerminal):
     BoundedContainer: Optional[ResourceContainer] = field(
         default=None,
         metadata={
-        'type': 'Attribute',
+        'type': 'Association',
+        'stereotypes': [],
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'ResourceContainer.BoundaryTerminals',
         'namespace': 'http://gridappsd.org/CIM/extension#',
         'serialize': True,
-        'docstring':
-            '''
-            '''
-        
         })
     '''
     '''
@@ -1123,16 +927,13 @@ class Terminal(ACDCTerminal):
     Bushing: Optional[Bushing] = field(
         default=None,
         metadata={
-        'type': 'Attribute',
+        'type': 'Association',
+        'stereotypes': [],
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'Bushing.Terminal',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            '''
-        
         })
     '''
     '''
@@ -1140,19 +941,13 @@ class Terminal(ACDCTerminal):
     ConductingEquipment: Optional[ConductingEquipment] = field(
         default=None,
         metadata={
-        'type': 'Attribute',
+        'type': 'Association',
+        'stereotypes': [],
         'minOccurs': '1',
         'maxOccurs': '1',
         'inverse': 'ConductingEquipment.Terminals',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            The conducting equipment of the terminal. Conducting equipment have terminals
-            that may be connected to other conducting equipment terminals via connectivity
-            nodes or topological nodes.
-            '''
-        
         })
     '''
     The conducting equipment of the terminal. Conducting equipment have
@@ -1163,17 +958,13 @@ class Terminal(ACDCTerminal):
     ConnectivityNode: Optional[ConnectivityNode] = field(
         default=None,
         metadata={
-        'type': 'Attribute',
+        'type': 'Association',
+        'stereotypes': [],
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'ConnectivityNode.Terminals',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            The connectivity node to which this terminal connects with zero impedance.
-            '''
-        
         })
     '''
     The connectivity node to which this terminal connects with zero impedance.
@@ -1182,18 +973,13 @@ class Terminal(ACDCTerminal):
     NormalHeadFeeder: Optional[Feeder] = field(
         default=None,
         metadata={
-        'type': 'Attribute',
+        'type': 'Association',
+        'stereotypes': [],
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'Feeder.NormalHeadTerminal',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            The feeder that this terminal normally feeds. Only specified for the terminals
-            at head of feeders.
-            '''
-        
         })
     '''
     The feeder that this terminal normally feeds. Only specified for the
@@ -1203,17 +989,13 @@ class Terminal(ACDCTerminal):
     StateShortCircuitResult: Optional[StateShortCircuitResult] = field(
         default=None,
         metadata={
-        'type': 'GB',
+        'type': 'Association',
+        'stereotypes': ['GB'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'StateShortCircuitResult.Terminal',
         'namespace': 'http://GB/placeholder/ext#',
         'serialize': True,
-        'docstring':
-            '''
-            The short-circuit result for the terminal.
-            '''
-        
         })
     '''
     The short-circuit result for the terminal.
@@ -1222,21 +1004,13 @@ class Terminal(ACDCTerminal):
     TopologicalNode: Optional[TopologicalNode] = field(
         default=None,
         metadata={
-        'type': 'OfAggregate',
+        'type': 'Association',
+        'stereotypes': ['OfAggregate'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'TopologicalNode.Terminal',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            The topological node associated with the terminal. This can be used as
-            an alternative to the connectivity node path to topological node, thus
-            making it unnecessary to model connectivity nodes in some cases. Note that
-            the if connectivity nodes are in the model, this association would probably
-            not be used as an input specification.
-            '''
-        
         })
     '''
     The topological node associated with the terminal. This can be used
@@ -1249,16 +1023,13 @@ class Terminal(ACDCTerminal):
     UsagePoint: Optional[UsagePoint] = field(
         default=None,
         metadata={
-        'type': 'Attribute',
+        'type': 'Association',
+        'stereotypes': [],
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'UsagePoint.Terminal',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            '''
-        
         })
     '''
     '''
@@ -1267,16 +1038,12 @@ class Terminal(ACDCTerminal):
         default_factory=list,
         metadata={
         'type': 'Association',
+        'stereotypes': [],
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'BranchGroupTerminal.Terminal',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': False,
-        'docstring':
-            '''
-            The directed branch group terminals for which this terminal is monitored.
-            '''
-        
         })
     '''
     The directed branch group terminals for which this terminal is monitored.
@@ -1286,16 +1053,12 @@ class Terminal(ACDCTerminal):
         default_factory=list,
         metadata={
         'type': 'Association',
+        'stereotypes': [],
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'MutualCoupling.First_Terminal',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': False,
-        'docstring':
-            '''
-            Mutual couplings associated with the branch as the first branch.
-            '''
-        
         })
     '''
     Mutual couplings associated with the branch as the first branch.
@@ -1305,16 +1068,12 @@ class Terminal(ACDCTerminal):
         default_factory=list,
         metadata={
         'type': 'Association',
+        'stereotypes': [],
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'MutualCoupling.Second_Terminal',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': False,
-        'docstring':
-            '''
-            Mutual couplings with the branch associated as the first branch.
-            '''
-        
         })
     '''
     Mutual couplings with the branch associated as the first branch.
@@ -1324,16 +1083,12 @@ class Terminal(ACDCTerminal):
         default_factory=list,
         metadata={
         'type': 'Association',
+        'stereotypes': [],
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'RegulatingControl.Terminal',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': False,
-        'docstring':
-            '''
-            The controls regulating this terminal.
-            '''
-        
         })
     '''
     The controls regulating this terminal.
@@ -1343,16 +1098,12 @@ class Terminal(ACDCTerminal):
         default_factory=list,
         metadata={
         'type': 'Association',
+        'stereotypes': [],
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'SvPowerFlow.Terminal',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': False,
-        'docstring':
-            '''
-            The power flow state variable associated with the terminal.
-            '''
-        
         })
     '''
     The power flow state variable associated with the terminal.
@@ -1362,16 +1113,12 @@ class Terminal(ACDCTerminal):
         default_factory=list,
         metadata={
         'type': 'Association',
+        'stereotypes': [],
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'TieFlow.Terminal',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': False,
-        'docstring':
-            '''
-            The control area tie flows to which this terminal associates.
-            '''
-        
         })
     '''
     The control area tie flows to which this terminal associates.
@@ -1381,16 +1128,12 @@ class Terminal(ACDCTerminal):
         default_factory=list,
         metadata={
         'type': 'Association',
+        'stereotypes': [],
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'TransformerEnd.Terminal',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': False,
-        'docstring':
-            '''
-            All transformer ends connected at this terminal.
-            '''
-        
         })
     '''
     All transformer ends connected at this terminal.
@@ -1400,16 +1143,12 @@ class Terminal(ACDCTerminal):
         default_factory=list,
         metadata={
         'type': 'Association',
+        'stereotypes': [],
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'VoltageAngleLimit.AngleReferenceTerminal',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': False,
-        'docstring':
-            '''
-            The voltage angle limit which has this reference angle terminal.
-            '''
-        
         })
     '''
     The voltage angle limit which has this reference angle terminal.
@@ -1438,17 +1177,13 @@ class ACPointOfCommonCoupling(IdentifiedObject):
     ConnectivityNode: Optional[ConnectivityNode] = field(
         default=None,
         metadata={
-        'type': 'Attribute',
+        'type': 'Association',
+        'stereotypes': [],
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'ConnectivityNode.ACPointOfCommonCoupling',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Connectivity node which is a point of common coupling AC.
-            '''
-        
         })
     '''
     Connectivity node which is a point of common coupling AC.
@@ -1457,17 +1192,13 @@ class ACPointOfCommonCoupling(IdentifiedObject):
     DCConverterUnit: Optional[DCConverterUnit] = field(
         default=None,
         metadata={
-        'type': 'Attribute',
+        'type': 'Association',
+        'stereotypes': [],
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'DCConverterUnit.ACPointOfCommonCoupling',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            DC converter unit that has AC point of common coupling.
-            '''
-        
         })
     '''
     DC converter unit that has AC point of common coupling.
@@ -1477,16 +1208,12 @@ class ACPointOfCommonCoupling(IdentifiedObject):
         default=None,
         metadata={
         'type': 'Association',
+        'stereotypes': [],
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'ConnectivityNode.ACPointOfCommonCoupling',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': False,
-        'docstring':
-            '''
-            Connectivity node which is a point of common coupling AC.
-            '''
-        
         })
     '''
     Connectivity node which is a point of common coupling AC.
@@ -1516,15 +1243,11 @@ class AltGeneratingUnitMeas(IdentifiedObject):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Priority of a measurement usage. Lower numbers have first priority.
-            '''
-        
         })
     '''
     Priority of a measurement usage. Lower numbers have first priority.
@@ -1533,17 +1256,13 @@ class AltGeneratingUnitMeas(IdentifiedObject):
     AnalogValue: Optional[AnalogValue] = field(
         default=None,
         metadata={
-        'type': 'Attribute',
+        'type': 'Association',
+        'stereotypes': [],
         'minOccurs': '1',
         'maxOccurs': '1',
         'inverse': 'AnalogValue.AltGeneratingUnit',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            The specific analog value used as a source.
-            '''
-        
         })
     '''
     The specific analog value used as a source.
@@ -1552,18 +1271,13 @@ class AltGeneratingUnitMeas(IdentifiedObject):
     ControlAreaGeneratingUnit: Optional[ControlAreaGeneratingUnit] = field(
         default=None,
         metadata={
-        'type': 'OfAggregate',
+        'type': 'Association',
+        'stereotypes': ['OfAggregate'],
         'minOccurs': '1',
         'maxOccurs': '1',
         'inverse': 'ControlAreaGeneratingUnit.AltGeneratingUnitMeas',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            The control area generating unit to which the prioritized measurement assignment
-            is applied.
-            '''
-        
         })
     '''
     The control area generating unit to which the prioritized measurement
@@ -1594,15 +1308,11 @@ class AltTieMeas(IdentifiedObject):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Priority of a measurement usage. Lower numbers have first priority.
-            '''
-        
         })
     '''
     Priority of a measurement usage. Lower numbers have first priority.
@@ -1611,17 +1321,13 @@ class AltTieMeas(IdentifiedObject):
     AnalogValue: Optional[AnalogValue] = field(
         default=None,
         metadata={
-        'type': 'Attribute',
+        'type': 'Association',
+        'stereotypes': [],
         'minOccurs': '1',
         'maxOccurs': '1',
         'inverse': 'AnalogValue.AltTieMeas',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            The specific analog value used as a source.
-            '''
-        
         })
     '''
     The specific analog value used as a source.
@@ -1630,17 +1336,13 @@ class AltTieMeas(IdentifiedObject):
     TieFlow: Optional[TieFlow] = field(
         default=None,
         metadata={
-        'type': 'OfAggregate',
+        'type': 'Association',
+        'stereotypes': ['OfAggregate'],
         'minOccurs': '1',
         'maxOccurs': '1',
         'inverse': 'TieFlow.AltTieMeas',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            The tie flow of the alternate measurements.
-            '''
-        
         })
     '''
     The tie flow of the alternate measurements.
@@ -1674,16 +1376,12 @@ class Asset(IdentifiedObject):
         default_factory=list,
         metadata={
         'type': 'Association',
+        'stereotypes': [],
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'Measurement.Asset',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': False,
-        'docstring':
-            '''
-            Measurement related to this asset.
-            '''
-        
         })
     '''
     Measurement related to this asset.
@@ -1712,16 +1410,12 @@ class Bushing(Asset):
         default=None,
         metadata={
         'type': 'Association',
+        'stereotypes': [],
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'Terminal.Bushing',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': False,
-        'docstring':
-            '''
-            Terminal to which this bushing is attached.
-            '''
-        
         })
     '''
     Terminal to which this bushing is attached.
@@ -1740,6 +1434,7 @@ class Bushing(Asset):
     def __maxOccurs__(self):
         return 'unbounded'
     
+@stereotype(CIMStereotype.GridAPPSD)
 @dataclass(repr=False)
 class ChargingStation(Asset):
     '''
@@ -1751,14 +1446,11 @@ class ChargingStation(Asset):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://gridappsd.org/CIM/extension#',
         'serialize': True,
-        'docstring':
-            '''
-            '''
-        
         })
     '''
     '''
@@ -1767,14 +1459,11 @@ class ChargingStation(Asset):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://gridappsd.org/CIM/extension#',
         'serialize': True,
-        'docstring':
-            '''
-            '''
-        
         })
     '''
     '''
@@ -1783,14 +1472,11 @@ class ChargingStation(Asset):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://gridappsd.org/CIM/extension#',
         'serialize': True,
-        'docstring':
-            '''
-            '''
-        
         })
     '''
     '''
@@ -1799,14 +1485,11 @@ class ChargingStation(Asset):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://gridappsd.org/CIM/extension#',
         'serialize': True,
-        'docstring':
-            '''
-            '''
-        
         })
     '''
     '''
@@ -1815,14 +1498,11 @@ class ChargingStation(Asset):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://gridappsd.org/CIM/extension#',
         'serialize': True,
-        'docstring':
-            '''
-            '''
-        
         })
     '''
     '''
@@ -1830,16 +1510,13 @@ class ChargingStation(Asset):
     ChargingConnector: Optional[ChargingConnectorInfo] = field(
         default=None,
         metadata={
-        'type': 'Attribute',
+        'type': 'Association',
+        'stereotypes': [],
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'ChargingConnectorInfo.ChargingStation',
         'namespace': 'http://gridappsd.org/CIM/extension#',
         'serialize': True,
-        'docstring':
-            '''
-            '''
-        
         })
     '''
     '''
@@ -1870,24 +1547,17 @@ class DuctBank(Asset):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Number of circuits in duct bank. Refer to associations between a duct (ConductorAsset)
-            and an ACLineSegment to understand which circuits are in which ducts.
-            '''
-        
         })
     '''
     Number of circuits in duct bank. Refer to associations between a duct
     (ConductorAsset) and an ACLineSegment to understand which circuits
     are in which ducts.
     '''
-
-    
     @property
     def __namespace__(self):
         return 'http://iec.ch/TC57/CIM101/draft#'
@@ -1916,17 +1586,13 @@ class AssetInfo(IdentifiedObject):
     CatalogAssetType: Optional[CatalogAssetType] = field(
         default=None,
         metadata={
-        'type': 'Attribute',
+        'type': 'Association',
+        'stereotypes': [],
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'CatalogAssetType.AssetInfo',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Asset information (nameplate) for this catalog asset type.
-            '''
-        
         })
     '''
     Asset information (nameplate) for this catalog asset type.
@@ -1935,17 +1601,13 @@ class AssetInfo(IdentifiedObject):
     ProductAssetModel: Optional[ProductAssetModel] = field(
         default=None,
         metadata={
-        'type': 'Attribute',
+        'type': 'Association',
+        'stereotypes': [],
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'ProductAssetModel.AssetInfo',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Product asset model which conforms to this catalog asset type.
-            '''
-        
         })
     '''
     Product asset model which conforms to this catalog asset type.
@@ -1955,16 +1617,12 @@ class AssetInfo(IdentifiedObject):
         default_factory=list,
         metadata={
         'type': 'Association',
+        'stereotypes': [],
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'PowerSystemResource.AssetDatasheet',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': False,
-        'docstring':
-            '''
-            All power system resources with this datasheet information.
-            '''
-        
         })
     '''
     All power system resources with this datasheet information.
@@ -1983,6 +1641,7 @@ class AssetInfo(IdentifiedObject):
     def __maxOccurs__(self):
         return 'unbounded'
     
+@stereotype(CIMStereotype.GridAPPSD)
 @dataclass(repr=False)
 class BundleConfiguration(AssetInfo):
     '''
@@ -1992,14 +1651,11 @@ class BundleConfiguration(AssetInfo):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://gridappsd.org/CIM/extension#',
         'serialize': True,
-        'docstring':
-            '''
-            '''
-        
         })
     '''
     '''
@@ -2008,15 +1664,11 @@ class BundleConfiguration(AssetInfo):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://gridappsd.org/CIM/extension#',
         'serialize': True,
-        'docstring':
-            '''
-            Distance between wire sub-conductors in a symmetrical bundle.
-            '''
-        
         })
     '''
     Distance between wire sub-conductors in a symmetrical bundle.
@@ -2026,16 +1678,11 @@ class BundleConfiguration(AssetInfo):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://gridappsd.org/CIM/extension#',
         'serialize': True,
-        'docstring':
-            '''
-            Equivalent geometric mean radius of the symmetric conductor bundle, calculated
-            from the radius
-            '''
-        
         })
     '''
     Equivalent geometric mean radius of the symmetric conductor bundle,
@@ -2046,15 +1693,11 @@ class BundleConfiguration(AssetInfo):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://gridappsd.org/CIM/extension#',
         'serialize': True,
-        'docstring':
-            '''
-            Equivalent radius of the conductor
-            '''
-        
         })
     '''
     Equivalent radius of the conductor
@@ -2063,16 +1706,13 @@ class BundleConfiguration(AssetInfo):
     WireInfo: Optional[WireInfo] = field(
         default=None,
         metadata={
-        'type': 'Attribute',
+        'type': 'Association',
+        'stereotypes': [],
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'WireInfo.WireBundleInfo',
         'namespace': 'http://gridappsd.org/CIM/extension#',
         'serialize': True,
-        'docstring':
-            '''
-            '''
-        
         })
     '''
     '''
@@ -2102,15 +1742,12 @@ class ChargingConnectorInfo(AssetInfo):
         default_factory=list,
         metadata={
         'type': 'Association',
+        'stereotypes': [],
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'ChargingStation.ChargingConnector',
         'namespace': 'http://gridappsd.org/CIM/extension#',
         'serialize': False,
-        'docstring':
-            '''
-            '''
-        
         })
     '''
     '''
@@ -2137,16 +1774,12 @@ class ConductingAssetInfo(AssetInfo):
     phaseCount: Optional[ PhaseCountKind ] = field(
         default=None,
         metadata={
-        'type': 'enumeration Attribute',
+        'type': 'Attribute',
+        'stereotypes': ['enumeration', 'Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Number of phases
-            '''
-        
         })
     '''
     Number of phases
@@ -2156,15 +1789,11 @@ class ConductingAssetInfo(AssetInfo):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Rated current.
-            '''
-        
         })
     '''
     Rated current.
@@ -2174,15 +1803,11 @@ class ConductingAssetInfo(AssetInfo):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Rated frequency such as 50Hz or 60Hz
-            '''
-        
         })
     '''
     Rated frequency such as 50Hz or 60Hz
@@ -2192,15 +1817,11 @@ class ConductingAssetInfo(AssetInfo):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Rated voltage.
-            '''
-        
         })
     '''
     Rated voltage.
@@ -2231,15 +1852,11 @@ class ConductorInfo(ConductingAssetInfo):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Phase, neutral, lighting, or something else
-            '''
-        
         })
     '''
     Phase, neutral, lighting, or something else
@@ -2249,15 +1866,11 @@ class ConductorInfo(ConductingAssetInfo):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Area of conducting material cross section
-            '''
-        
         })
     '''
     Area of conducting material cross section
@@ -2266,16 +1879,12 @@ class ConductorInfo(ConductingAssetInfo):
     massPerLength: Optional[ float | MassPerLength ] = field(
         default=None,
         metadata={
-        'type': 'NeedsWork Attribute',
+        'type': 'Attribute',
+        'stereotypes': ['NeedsWork', 'Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Area of conducting material cross section
-            '''
-        
         })
     '''
     Area of conducting material cross section
@@ -2284,16 +1893,12 @@ class ConductorInfo(ConductingAssetInfo):
     material: Optional[ WireMaterialKind ] = field(
         default=None,
         metadata={
-        'type': 'enumeration Attribute',
+        'type': 'Attribute',
+        'stereotypes': ['enumeration', 'Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Conductor material.
-            '''
-        
         })
     '''
     Conductor material.
@@ -2303,15 +1908,11 @@ class ConductorInfo(ConductingAssetInfo):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            AC resistance per unit length of the conductor at 25 �C.
-            '''
-        
         })
     '''
     AC resistance per unit length of the conductor at 25 �C.
@@ -2321,15 +1922,11 @@ class ConductorInfo(ConductingAssetInfo):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            AC resistance per unit length of the conductor at 50 �C.
-            '''
-        
         })
     '''
     AC resistance per unit length of the conductor at 50 �C.
@@ -2339,15 +1936,11 @@ class ConductorInfo(ConductingAssetInfo):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            AC resistance per unit length of the conductor at 75 �C.
-            '''
-        
         })
     '''
     AC resistance per unit length of the conductor at 75 �C.
@@ -2357,15 +1950,11 @@ class ConductorInfo(ConductingAssetInfo):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            DC resistance per unit length of the conductor at 20 �C.
-            '''
-        
         })
     '''
     DC resistance per unit length of the conductor at 20 �C.
@@ -2394,15 +1983,11 @@ class AngleBusbarInfo(ConductorInfo):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Cross section width of the conductor
-            '''
-        
         })
     '''
     Cross section width of the conductor
@@ -2412,15 +1997,11 @@ class AngleBusbarInfo(ConductorInfo):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Thickness of the angle bus bar
-            '''
-        
         })
     '''
     Thickness of the angle bus bar
@@ -2451,15 +2032,11 @@ class WireInfo(ConductorInfo):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            (if used) Number of strands in the steel core.
-            '''
-        
         })
     '''
     (if used) Number of strands in the steel core.
@@ -2469,15 +2046,11 @@ class WireInfo(ConductorInfo):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            True if conductor is insulated.
-            '''
-        
         })
     '''
     True if conductor is insulated.
@@ -2487,15 +2060,11 @@ class WireInfo(ConductorInfo):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Describes the wire gauge or cross section (e.g., 4/0, #2, 336.5).
-            '''
-        
         })
     '''
     Describes the wire gauge or cross section (e.g., 4/0, #2, 336.5).
@@ -2505,15 +2074,11 @@ class WireInfo(ConductorInfo):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Number of strands in the conductor.
-            '''
-        
         })
     '''
     Number of strands in the conductor.
@@ -2522,15 +2087,12 @@ class WireInfo(ConductorInfo):
     constructionKind: Optional[ WireMaterialKind ] = field(
         default=None,
         metadata={
-        'type': 'enumeration Attribute',
+        'type': 'Attribute',
+        'stereotypes': ['enumeration', 'Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            '''
-        
         })
     '''
     '''
@@ -2539,15 +2101,11 @@ class WireInfo(ConductorInfo):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            (if there is a different core material) Radius of the central core.
-            '''
-        
         })
     '''
     (if there is a different core material) Radius of the central core.
@@ -2557,14 +2115,11 @@ class WireInfo(ConductorInfo):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            '''
-        
         })
     '''
     '''
@@ -2573,17 +2128,11 @@ class WireInfo(ConductorInfo):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Geometric mean radius. If we replace the conductor by a thin walled tube
-            of radius GMR, then its reactance is identical to the reactance of the
-            actual conductor.
-            '''
-        
         })
     '''
     Geometric mean radius. If we replace the conductor by a thin walled
@@ -2594,16 +2143,12 @@ class WireInfo(ConductorInfo):
     insulationMaterial: Optional[ WireInsulationKind ] = field(
         default=None,
         metadata={
-        'type': 'enumeration Attribute',
+        'type': 'Attribute',
+        'stereotypes': ['enumeration', 'Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            (if insulated conductor) Material used for insulation.
-            '''
-        
         })
     '''
     (if insulated conductor) Material used for insulation.
@@ -2613,15 +2158,11 @@ class WireInfo(ConductorInfo):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            (if insulated conductor) Thickness of the insulation.
-            '''
-        
         })
     '''
     (if insulated conductor) Thickness of the insulation.
@@ -2631,15 +2172,11 @@ class WireInfo(ConductorInfo):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Outside radius of the wire.
-            '''
-        
         })
     '''
     Outside radius of the wire.
@@ -2649,14 +2186,11 @@ class WireInfo(ConductorInfo):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            '''
-        
         })
     '''
     '''
@@ -2665,14 +2199,11 @@ class WireInfo(ConductorInfo):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            '''
-        
         })
     '''
     '''
@@ -2681,15 +2212,12 @@ class WireInfo(ConductorInfo):
         default_factory=list,
         metadata={
         'type': 'Association',
+        'stereotypes': [],
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'ACLineSegmentPhase.WireInfo',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': False,
-        'docstring':
-            '''
-            '''
-        
         })
     '''
     '''
@@ -2698,15 +2226,12 @@ class WireInfo(ConductorInfo):
         default_factory=list,
         metadata={
         'type': 'Association',
+        'stereotypes': [],
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'BundleConfiguration.WireInfo',
         'namespace': 'http://gridappsd.org/CIM/extension#',
         'serialize': False,
-        'docstring':
-            '''
-            '''
-        
         })
     '''
     '''
@@ -2715,16 +2240,12 @@ class WireInfo(ConductorInfo):
         default_factory=list,
         metadata={
         'type': 'Association',
+        'stereotypes': [],
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'WirePhaseInfo.WireInfo',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': False,
-        'docstring':
-            '''
-            Wire phase information associated with this wire information.
-            '''
-        
         })
     '''
     Wire phase information associated with this wire information.
@@ -2753,16 +2274,12 @@ class BareWireInfo(WireInfo):
     wireConstructionKind: Optional[ WireConstructionKind ] = field(
         default=None,
         metadata={
-        'type': 'enumeration Attribute',
+        'type': 'Attribute',
+        'stereotypes': ['enumeration', 'Attribute'],
         'minOccurs': '1',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Kind of wire construction
-            '''
-        
         })
     '''
     Kind of wire construction
@@ -2792,15 +2309,11 @@ class CableInfo(WireInfo):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            True if wire strands are extruded in a way to fill the voids in the cable.
-            '''
-        
         })
     '''
     True if wire strands are extruded in a way to fill the voids in the
@@ -2811,15 +2324,11 @@ class CableInfo(WireInfo):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            True if sheath / shield is used as a neutral (i.e., bonded).
-            '''
-        
         })
     '''
     True if sheath / shield is used as a neutral (i.e., bonded).
@@ -2828,16 +2337,12 @@ class CableInfo(WireInfo):
     constructionKind: Optional[ CableConstructionKind ] = field(
         default=None,
         metadata={
-        'type': 'enumeration Attribute',
+        'type': 'Attribute',
+        'stereotypes': ['enumeration', 'Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Kind of construction of this cable.
-            '''
-        
         })
     '''
     Kind of construction of this cable.
@@ -2847,16 +2352,11 @@ class CableInfo(WireInfo):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Diameter over the core, including any semi-con screen; should be the insulating
-            layer's inside diameter.
-            '''
-        
         })
     '''
     Diameter over the core, including any semi-con screen; should be the
@@ -2867,15 +2367,11 @@ class CableInfo(WireInfo):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Diameter over the insulating layer, excluding outer screen.
-            '''
-        
         })
     '''
     Diameter over the insulating layer, excluding outer screen.
@@ -2885,15 +2381,11 @@ class CableInfo(WireInfo):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Diameter over the outermost jacketing layer.
-            '''
-        
         })
     '''
     Diameter over the outermost jacketing layer.
@@ -2903,15 +2395,11 @@ class CableInfo(WireInfo):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Diameter over the outer screen; should be the shield's inside diameter.
-            '''
-        
         })
     '''
     Diameter over the outer screen; should be the shield's inside diameter.
@@ -2921,15 +2409,11 @@ class CableInfo(WireInfo):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Maximum nominal design operating temperature.
-            '''
-        
         })
     '''
     Maximum nominal design operating temperature.
@@ -2938,16 +2422,12 @@ class CableInfo(WireInfo):
     outerJacketKind: Optional[ CableOuterJacketKind ] = field(
         default=None,
         metadata={
-        'type': 'enumeration Attribute',
+        'type': 'Attribute',
+        'stereotypes': ['enumeration', 'Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Kind of outer jacket of this cable.
-            '''
-        
         })
     '''
     Kind of outer jacket of this cable.
@@ -2956,16 +2436,12 @@ class CableInfo(WireInfo):
     shieldMaterial: Optional[ CableShieldMaterialKind ] = field(
         default=None,
         metadata={
-        'type': 'enumeration Attribute',
+        'type': 'Attribute',
+        'stereotypes': ['enumeration', 'Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Material of the shield.
-            '''
-        
         })
     '''
     Material of the shield.
@@ -2974,16 +2450,13 @@ class CableInfo(WireInfo):
     InsulationInfo: Optional[InsulationInfo] = field(
         default=None,
         metadata={
-        'type': 'Attribute',
+        'type': 'Association',
+        'stereotypes': [],
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'InsulationInfo.CableInfo',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            '''
-        
         })
     '''
     '''
@@ -2992,15 +2465,12 @@ class CableInfo(WireInfo):
         default=None,
         metadata={
         'type': 'Association',
+        'stereotypes': [],
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'InsulationInfo.CableInfo',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': False,
-        'docstring':
-            '''
-            '''
-        
         })
     '''
     '''
@@ -3028,15 +2498,11 @@ class ConcentricNeutralCableInfo(CableInfo):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Number of concentric neutral strands.
-            '''
-        
         })
     '''
     Number of concentric neutral strands.
@@ -3046,15 +2512,11 @@ class ConcentricNeutralCableInfo(CableInfo):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Diameter over the concentric neutral strands.
-            '''
-        
         })
     '''
     Diameter over the concentric neutral strands.
@@ -3064,15 +2526,11 @@ class ConcentricNeutralCableInfo(CableInfo):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Geometric mean radius of the neutral strand.
-            '''
-        
         })
     '''
     Geometric mean radius of the neutral strand.
@@ -3082,15 +2540,11 @@ class ConcentricNeutralCableInfo(CableInfo):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Outside radius of the neutral strand.
-            '''
-        
         })
     '''
     Outside radius of the neutral strand.
@@ -3100,15 +2554,11 @@ class ConcentricNeutralCableInfo(CableInfo):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            DC resistance per unit length of the neutral strand at 20 �C.
-            '''
-        
         })
     '''
     DC resistance per unit length of the neutral strand at 20 �C.
@@ -3137,16 +2587,11 @@ class TapeShieldCableInfo(CableInfo):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Percentage of the tape shield width that overlaps in each wrap, typically
-            10% to 25%.
-            '''
-        
         })
     '''
     Percentage of the tape shield width that overlaps in each wrap, typically
@@ -3157,15 +2602,11 @@ class TapeShieldCableInfo(CableInfo):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Thickness of the tape shield, before wrapping.
-            '''
-        
         })
     '''
     Thickness of the tape shield, before wrapping.
@@ -3194,15 +2635,12 @@ class OverheadWireInfo(WireInfo):
     wireConstructionKind: Optional[ WireConstructionKind ] = field(
         default=None,
         metadata={
-        'type': 'enumeration Attribute add',
+        'type': 'Attribute',
+        'stereotypes': ['enumeration', 'Attribute', 'add'],
         'minOccurs': '1',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            '''
-        
         })
     '''
     '''
@@ -3235,18 +2673,11 @@ class GridEdgeDeviceInfo(ConductingAssetInfo):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Based on IEEE 1547-2018 Table 28:
-            <i>Apparent power maximum rating</i>
-            <i>
-            </i>Maximum apparent power rating in voltamperes
-            '''
-        
         })
     '''
     Based on IEEE 1547-2018 Table 28:
@@ -3259,17 +2690,11 @@ class GridEdgeDeviceInfo(ConductingAssetInfo):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Based on IEEE 1547-2018 Table 28:
-            <i>AC voltage maximum rating</i>
-            Maximum AC voltage rating in RMS volts
-            '''
-        
         })
     '''
     Based on IEEE 1547-2018 Table 28:
@@ -3281,17 +2706,11 @@ class GridEdgeDeviceInfo(ConductingAssetInfo):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Based on IEEE 1547-2018 Table 28:
-            <i>AC voltage minimum rating</i>
-            Minimum AC voltage rating in RMS volts
-            '''
-        
         })
     '''
     Based on IEEE 1547-2018 Table 28:
@@ -3324,18 +2743,11 @@ class InverterInfo(GridEdgeDeviceInfo):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Based on IEEE 1547-2018 Table 28:
-            <i>Abnormal operating performance category</i>
-            Indication of voltage and frequency ride-through capability
-            Values = Category I, Category II, Category III
-            '''
-        
         })
     '''
     Based on IEEE 1547-2018 Table 28:
@@ -3348,18 +2760,11 @@ class InverterInfo(GridEdgeDeviceInfo):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Based on IEEE 1547-2018 Table 28:
-            <i>Normal operating performance category</i>
-            Indication of reactive power and voltage/power control capability.
-            Values = Category A, Category B
-            '''
-        
         })
     '''
     Based on IEEE 1547-2018 Table 28:
@@ -3372,17 +2777,11 @@ class InverterInfo(GridEdgeDeviceInfo):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Based on IEEE 1547-2018 Table 28:
-            <i>Specified over-excited power factor</i>
-            Over-excited power factor
-            '''
-        
         })
     '''
     Based on IEEE 1547-2018 Table 28:
@@ -3394,17 +2793,11 @@ class InverterInfo(GridEdgeDeviceInfo):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Based on IEEE 1547-2018 Table 28:
-            <i>Specified under-excited power factor</i>
-            Under-excited power factor
-            '''
-        
         })
     '''
     Based on IEEE 1547-2018 Table 28:
@@ -3416,17 +2809,11 @@ class InverterInfo(GridEdgeDeviceInfo):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Based on IEEE 1547-2018 Table 28:
-            <i>Active power rating at specified over-excited power factor</i>
-            Active power rating in watts at specified over-excited power factor
-            '''
-        
         })
     '''
     Based on IEEE 1547-2018 Table 28:
@@ -3438,17 +2825,11 @@ class InverterInfo(GridEdgeDeviceInfo):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Based on IEEE 1547-2018 Table 28:
-            <i>Active power rating at specified under-excited power factor</i>
-            Active power rating in watts at specified under-excited power factor
-            '''
-        
         })
     '''
     Based on IEEE 1547-2018 Table 28:
@@ -3460,17 +2841,11 @@ class InverterInfo(GridEdgeDeviceInfo):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Based on IEEE 1547-2018 Table 28:
-            <i>Active power rating at unity power factor (nameplate active power rating)</i>
-            Active power rating in watts at unity power factor
-            '''
-        
         })
     '''
     Based on IEEE 1547-2018 Table 28:
@@ -3483,17 +2858,11 @@ class InverterInfo(GridEdgeDeviceInfo):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Based on IEEE 1547-2018 Table 28:
-            <i>Reactive power absorbed maximum rating</i>
-            Maximum absorbed reactive power rating in vars
-            '''
-        
         })
     '''
     Based on IEEE 1547-2018 Table 28:
@@ -3505,17 +2874,11 @@ class InverterInfo(GridEdgeDeviceInfo):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Based on IEEE 1547-2018 Table 28:
-            <i>Reactive power injected maximum rating</i>
-            Maximum injected reactive power rating in vars
-            '''
-        
         })
     '''
     Based on IEEE 1547-2018 Table 28:
@@ -3527,17 +2890,11 @@ class InverterInfo(GridEdgeDeviceInfo):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Based on IEEE 1547-2018 Table 28:
-            <i>Reactive susceptance that remains connected to the Area EPS in the cease
-            to energize and trip state</i>
-            '''
-        
         })
     '''
     Based on IEEE 1547-2018 Table 28:
@@ -3548,16 +2905,13 @@ class InverterInfo(GridEdgeDeviceInfo):
     InverterCapabilites: Optional[InverterCapabilities] = field(
         default=None,
         metadata={
-        'type': 'Attribute',
+        'type': 'Association',
+        'stereotypes': [],
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'InverterCapabilities.IntervalInfo',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            '''
-        
         })
     '''
     '''
@@ -3585,15 +2939,11 @@ class TapChangerInfo(ConductingAssetInfo):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Built-in current transducer ratio.
-            '''
-        
         })
     '''
     Built-in current transducer ratio.
@@ -3603,15 +2953,11 @@ class TapChangerInfo(ConductingAssetInfo):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Highest possible tap step position, advance from neutral.
-            '''
-        
         })
     '''
     Highest possible tap step position, advance from neutral.
@@ -3621,15 +2967,11 @@ class TapChangerInfo(ConductingAssetInfo):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Whether this tap changer has under load tap changing capabilities.
-            '''
-        
         })
     '''
     Whether this tap changer has under load tap changing capabilities.
@@ -3639,15 +2981,11 @@ class TapChangerInfo(ConductingAssetInfo):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Lowest possible tap step position, retard from neutral.
-            '''
-        
         })
     '''
     Lowest possible tap step position, retard from neutral.
@@ -3657,15 +2995,11 @@ class TapChangerInfo(ConductingAssetInfo):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            The neutral tap step position for the winding.
-            '''
-        
         })
     '''
     The neutral tap step position for the winding.
@@ -3675,15 +3009,11 @@ class TapChangerInfo(ConductingAssetInfo):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Built-in voltage transducer ratio.
-            '''
-        
         })
     '''
     Built-in voltage transducer ratio.
@@ -3693,17 +3023,11 @@ class TapChangerInfo(ConductingAssetInfo):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Basic Insulation Level (BIL) expressed as the impulse crest voltage of
-            a nominal wave, typically 1.2 X 50 microsecond. This is a measure of the
-            ability of the insulation to withstand very high voltage surges.
-            '''
-        
         })
     '''
     Basic Insulation Level (BIL) expressed as the impulse crest voltage
@@ -3715,15 +3039,11 @@ class TapChangerInfo(ConductingAssetInfo):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Built-in current transformer primary rating.
-            '''
-        
         })
     '''
     Built-in current transformer primary rating.
@@ -3733,15 +3053,11 @@ class TapChangerInfo(ConductingAssetInfo):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Frequency at which the ratings apply.
-            '''
-        
         })
     '''
     Frequency at which the ratings apply.
@@ -3751,15 +3067,11 @@ class TapChangerInfo(ConductingAssetInfo):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Voltage at which the winding operates at the neutral tap setting.
-            '''
-        
         })
     '''
     Voltage at which the winding operates at the neutral tap setting.
@@ -3769,15 +3081,11 @@ class TapChangerInfo(ConductingAssetInfo):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Rated apparent power.
-            '''
-        
         })
     '''
     Rated apparent power.
@@ -3787,15 +3095,11 @@ class TapChangerInfo(ConductingAssetInfo):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Phase shift per step position.
-            '''
-        
         })
     '''
     Phase shift per step position.
@@ -3805,15 +3109,11 @@ class TapChangerInfo(ConductingAssetInfo):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Tap step increment, in per cent of rated Mvar, per step position.
-            '''
-        
         })
     '''
     Tap step increment, in per cent of rated Mvar, per step position.
@@ -3823,15 +3123,11 @@ class TapChangerInfo(ConductingAssetInfo):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Tap step increment, in per cent of rated voltage, per step position.
-            '''
-        
         })
     '''
     Tap step increment, in per cent of rated voltage, per step position.
@@ -3860,17 +3156,11 @@ class TransformerEndInfo(ConductingAssetInfo):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Number for this transformer end, corresponding to the end's order in the
-            PowerTransformer.vectorGroup attribute. Highest voltage winding should
-            be 1.
-            '''
-        
         })
     '''
     Number for this transformer end, corresponding to the end's order in
@@ -3882,18 +3172,11 @@ class TransformerEndInfo(ConductingAssetInfo):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Winding phase angle where 360 degrees are represented with clock hours,
-            so the valid values are {0, ..., 11}. For example, to express the second
-            winding in code 'Dyn11', set attributes as follows: 'endNumber'=2, 'connectionKind'
-            = Yn and 'phaseAngleClock' = 11.
-            '''
-        
         })
     '''
     Winding phase angle where 360 degrees are represented with clock hours,
@@ -3905,16 +3188,12 @@ class TransformerEndInfo(ConductingAssetInfo):
     connectionKind: Optional[ WindingConnection ] = field(
         default=None,
         metadata={
-        'type': 'enumeration Attribute',
+        'type': 'Attribute',
+        'stereotypes': ['enumeration', 'Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Kind of connection.
-            '''
-        
         })
     '''
     Kind of connection.
@@ -3924,16 +3203,11 @@ class TransformerEndInfo(ConductingAssetInfo):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Apparent power that the winding can carry under emergency conditions (also
-            called long-term emergency power).
-            '''
-        
         })
     '''
     Apparent power that the winding can carry under emergency conditions
@@ -3944,15 +3218,11 @@ class TransformerEndInfo(ConductingAssetInfo):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Basic insulation level voltage rating.
-            '''
-        
         })
     '''
     Basic insulation level voltage rating.
@@ -3962,15 +3232,11 @@ class TransformerEndInfo(ConductingAssetInfo):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            DC resistance.
-            '''
-        
         })
     '''
     DC resistance.
@@ -3980,15 +3246,11 @@ class TransformerEndInfo(ConductingAssetInfo):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Normal apparent power rating.
-            '''
-        
         })
     '''
     Normal apparent power rating.
@@ -3998,16 +3260,11 @@ class TransformerEndInfo(ConductingAssetInfo):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Apparent power that this winding can carry for a short period of time (in
-            emergency).
-            '''
-        
         })
     '''
     Apparent power that this winding can carry for a short period of time
@@ -4017,19 +3274,13 @@ class TransformerEndInfo(ConductingAssetInfo):
     CoreAdmittance: Optional[TransformerCoreAdmittance] = field(
         default=None,
         metadata={
-        'type': 'Attribute',
+        'type': 'Association',
+        'stereotypes': [],
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'TransformerCoreAdmittance.TransformerEndInfo',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Core admittance calculated from this transformer end datasheet, representing
-            magnetising current and core losses. The full values of the transformer
-            should be supplied for one transformer end info only.
-            '''
-        
         })
     '''
     Core admittance calculated from this transformer end datasheet, representing
@@ -4040,17 +3291,13 @@ class TransformerEndInfo(ConductingAssetInfo):
     TransformerStarImpedance: Optional[TransformerStarImpedance] = field(
         default=None,
         metadata={
-        'type': 'Attribute',
+        'type': 'Association',
+        'stereotypes': [],
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'TransformerStarImpedance.TransformerEndInfo',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Transformer star impedance calculated from this transformer end datasheet.
-            '''
-        
         })
     '''
     Transformer star impedance calculated from this transformer end datasheet.
@@ -4059,17 +3306,13 @@ class TransformerEndInfo(ConductingAssetInfo):
     TransformerTankInfo: Optional[TransformerTankInfo] = field(
         default=None,
         metadata={
-        'type': 'Attribute',
+        'type': 'Association',
+        'stereotypes': [],
         'minOccurs': '1',
         'maxOccurs': '1',
         'inverse': 'TransformerTankInfo.TransformerEndInfos',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Transformer tank data that this end description is part of.
-            '''
-        
         })
     '''
     Transformer tank data that this end description is part of.
@@ -4079,16 +3322,12 @@ class TransformerEndInfo(ConductingAssetInfo):
         default_factory=list,
         metadata={
         'type': 'Association',
+        'stereotypes': [],
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'NoLoadTest.EnergisedEnd',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': False,
-        'docstring':
-            '''
-            All no-load test measurements in which this transformer end was energised.
-            '''
-        
         })
     '''
     All no-load test measurements in which this transformer end was energised.
@@ -4098,16 +3337,12 @@ class TransformerEndInfo(ConductingAssetInfo):
         default_factory=list,
         metadata={
         'type': 'Association',
+        'stereotypes': [],
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'OpenCircuitTest.EnergisedEnd',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': False,
-        'docstring':
-            '''
-            All open-circuit test measurements in which this transformer end was excited.
-            '''
-        
         })
     '''
     All open-circuit test measurements in which this transformer end was
@@ -4118,17 +3353,12 @@ class TransformerEndInfo(ConductingAssetInfo):
         default_factory=list,
         metadata={
         'type': 'Association',
+        'stereotypes': [],
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'OpenCircuitTest.OpenEnd',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': False,
-        'docstring':
-            '''
-            All open-circuit test measurements in which this transformer end was not
-            excited.
-            '''
-        
         })
     '''
     All open-circuit test measurements in which this transformer end was
@@ -4139,16 +3369,12 @@ class TransformerEndInfo(ConductingAssetInfo):
         default_factory=list,
         metadata={
         'type': 'Association',
+        'stereotypes': [],
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'ShortCircuitTest.EnergisedEnd',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': False,
-        'docstring':
-            '''
-            All short-circuit test measurements in which this transformer end was energised.
-            '''
-        
         })
     '''
     All short-circuit test measurements in which this transformer end was
@@ -4159,16 +3385,12 @@ class TransformerEndInfo(ConductingAssetInfo):
         default_factory=list,
         metadata={
         'type': 'Association',
+        'stereotypes': [],
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'ShortCircuitTest.GroundedEnds',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': False,
-        'docstring':
-            '''
-            All short-circuit test measurements in which this transformer end was short-circuited.
-            '''
-        
         })
     '''
     All short-circuit test measurements in which this transformer end was
@@ -4179,18 +3401,12 @@ class TransformerEndInfo(ConductingAssetInfo):
         default=None,
         metadata={
         'type': 'Association',
+        'stereotypes': [],
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'TransformerCoreAdmittance.TransformerEndInfo',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': False,
-        'docstring':
-            '''
-            Core admittance calculated from this transformer end datasheet, representing
-            magnetising current and core losses. The full values of the transformer
-            should be supplied for one transformer end info only.
-            '''
-        
         })
     '''
     Core admittance calculated from this transformer end datasheet, representing
@@ -4202,16 +3418,12 @@ class TransformerEndInfo(ConductingAssetInfo):
         default_factory=list,
         metadata={
         'type': 'Association',
+        'stereotypes': [],
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'TransformerMeshImpedance.FromTransformerEndInfo',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': False,
-        'docstring':
-            '''
-            All mesh impedances between this 'to' and other 'from' transformer ends.
-            '''
-        
         })
     '''
     All mesh impedances between this 'to' and other 'from' transformer
@@ -4222,16 +3434,12 @@ class TransformerEndInfo(ConductingAssetInfo):
         default_factory=list,
         metadata={
         'type': 'Association',
+        'stereotypes': [],
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'TransformerMeshImpedance.ToTransformerEndInfos',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': False,
-        'docstring':
-            '''
-            All mesh impedances between this 'from' and other 'to' transformer ends.
-            '''
-        
         })
     '''
     All mesh impedances between this 'from' and other 'to' transformer
@@ -4242,16 +3450,12 @@ class TransformerEndInfo(ConductingAssetInfo):
         default=None,
         metadata={
         'type': 'Association',
+        'stereotypes': [],
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'TransformerStarImpedance.TransformerEndInfo',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': False,
-        'docstring':
-            '''
-            Transformer star impedance calculated from this transformer end datasheet.
-            '''
-        
         })
     '''
     Transformer star impedance calculated from this transformer end datasheet.
@@ -4270,6 +3474,7 @@ class TransformerEndInfo(ConductingAssetInfo):
     def __maxOccurs__(self):
         return 'unbounded'
     
+@stereotype(CIMStereotype.GridAPPSD)
 @dataclass(repr=False)
 class ConductorDistance(AssetInfo):
     '''
@@ -4280,14 +3485,11 @@ class ConductorDistance(AssetInfo):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://gridappsd.org/CIM/extension#',
         'serialize': True,
-        'docstring':
-            '''
-            '''
-        
         })
     '''
     '''
@@ -4296,14 +3498,11 @@ class ConductorDistance(AssetInfo):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://gridappsd.org/CIM/extension#',
         'serialize': True,
-        'docstring':
-            '''
-            '''
-        
         })
     '''
     '''
@@ -4312,14 +3511,11 @@ class ConductorDistance(AssetInfo):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://gridappsd.org/CIM/extension#',
         'serialize': True,
-        'docstring':
-            '''
-            '''
-        
         })
     '''
     '''
@@ -4327,15 +3523,12 @@ class ConductorDistance(AssetInfo):
     fromPhase: Optional[ SinglePhaseKind ] = field(
         default=None,
         metadata={
-        'type': 'enumeration Attribute',
+        'type': 'Attribute',
+        'stereotypes': ['enumeration', 'Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://gridappsd.org/CIM/extension#',
         'serialize': True,
-        'docstring':
-            '''
-            '''
-        
         })
     '''
     '''
@@ -4343,15 +3536,12 @@ class ConductorDistance(AssetInfo):
     toPhase: Optional[ SinglePhaseKind ] = field(
         default=None,
         metadata={
-        'type': 'enumeration Attribute',
+        'type': 'Attribute',
+        'stereotypes': ['enumeration', 'Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://gridappsd.org/CIM/extension#',
         'serialize': True,
-        'docstring':
-            '''
-            '''
-        
         })
     '''
     '''
@@ -4359,16 +3549,13 @@ class ConductorDistance(AssetInfo):
     WireSpacing: Optional[ConductorDistanceSpacing] = field(
         default=None,
         metadata={
-        'type': 'GridAPPSD',
+        'type': 'Association',
+        'stereotypes': ['GridAPPSD'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'ConductorDistanceSpacing.ConductorDistance',
         'namespace': 'http://gridappsd.org/CIM/extension#',
         'serialize': True,
-        'docstring':
-            '''
-            '''
-        
         })
     '''
     '''
@@ -4386,6 +3573,7 @@ class ConductorDistance(AssetInfo):
     def __maxOccurs__(self):
         return 'unbounded'
     
+@stereotype(CIMStereotype.GridAPPSD)
 @dataclass(repr=False)
 class DCConductingAssetInfo(AssetInfo):
     '''
@@ -4414,14 +3602,11 @@ class BatteryInfo(DCConductingAssetInfo):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://gridappsd.org/CIM/extension#',
         'serialize': True,
-        'docstring':
-            '''
-            '''
-        
         })
     '''
     '''
@@ -4430,14 +3615,11 @@ class BatteryInfo(DCConductingAssetInfo):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://gridappsd.org/CIM/extension#',
         'serialize': True,
-        'docstring':
-            '''
-            '''
-        
         })
     '''
     '''
@@ -4445,15 +3627,12 @@ class BatteryInfo(DCConductingAssetInfo):
     batteryType: Optional[ BatteryTypeKind ] = field(
         default=None,
         metadata={
-        'type': 'enumeration GridAPPSD Attribute',
+        'type': 'Attribute',
+        'stereotypes': ['enumeration', 'GridAPPSD', 'Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://gridappsd.org/CIM/extension#',
         'serialize': True,
-        'docstring':
-            '''
-            '''
-        
         })
     '''
     '''
@@ -4462,14 +3641,11 @@ class BatteryInfo(DCConductingAssetInfo):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://gridappsd.org/CIM/extension#',
         'serialize': True,
-        'docstring':
-            '''
-            '''
-        
         })
     '''
     '''
@@ -4478,14 +3654,11 @@ class BatteryInfo(DCConductingAssetInfo):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://gridappsd.org/CIM/extension#',
         'serialize': True,
-        'docstring':
-            '''
-            '''
-        
         })
     '''
     '''
@@ -4494,15 +3667,12 @@ class BatteryInfo(DCConductingAssetInfo):
         default_factory=list,
         metadata={
         'type': 'Association',
+        'stereotypes': [],
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'ElectricVehicleInfo.BatteryInfo',
         'namespace': 'http://gridappsd.org/CIM/extension#',
         'serialize': False,
-        'docstring':
-            '''
-            '''
-        
         })
     '''
     '''
@@ -4531,15 +3701,11 @@ class InsulationInfo(AssetInfo):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            True if conductor is insulated.
-            '''
-        
         })
     '''
     True if conductor is insulated.
@@ -4548,16 +3714,12 @@ class InsulationInfo(AssetInfo):
     insulationMaterial: Optional[ WireInsulationKind ] = field(
         default=None,
         metadata={
-        'type': 'enumeration Attribute',
+        'type': 'Attribute',
+        'stereotypes': ['enumeration', 'Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            (if insulated conductor) Material used for insulation.
-            '''
-        
         })
     '''
     (if insulated conductor) Material used for insulation.
@@ -4567,15 +3729,11 @@ class InsulationInfo(AssetInfo):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            (if insulated conductor) Thickness of the insulation.
-            '''
-        
         })
     '''
     (if insulated conductor) Thickness of the insulation.
@@ -4584,16 +3742,13 @@ class InsulationInfo(AssetInfo):
     CableInfo: Optional[CableInfo] = field(
         default=None,
         metadata={
-        'type': 'ShadowExtension',
+        'type': 'Association',
+        'stereotypes': ['ShadowExtension'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'CableInfo.InsulationInfo',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            '''
-        
         })
     '''
     '''
@@ -4602,15 +3757,12 @@ class InsulationInfo(AssetInfo):
         default=None,
         metadata={
         'type': 'Association',
+        'stereotypes': [],
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'CableInfo.InsulationInfo',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': False,
-        'docstring':
-            '''
-            '''
-        
         })
     '''
     '''
@@ -4638,16 +3790,12 @@ class PowerTransformerInfo(AssetInfo):
         default_factory=list,
         metadata={
         'type': 'Association',
+        'stereotypes': [],
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'TransformerTankInfo.PowerTransformerInfo',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': False,
-        'docstring':
-            '''
-            Data for all the tanks described by this power transformer data.
-            '''
-        
         })
     '''
     Data for all the tanks described by this power transformer data.
@@ -4675,17 +3823,13 @@ class TransformerTankInfo(AssetInfo):
     PowerTransformerInfo: Optional[PowerTransformerInfo] = field(
         default=None,
         metadata={
-        'type': 'Attribute',
+        'type': 'Association',
+        'stereotypes': [],
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'PowerTransformerInfo.TransformerTankInfos',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Power transformer data that this tank description is part of.
-            '''
-        
         })
     '''
     Power transformer data that this tank description is part of.
@@ -4695,16 +3839,12 @@ class TransformerTankInfo(AssetInfo):
         default_factory=list,
         metadata={
         'type': 'Association',
+        'stereotypes': [],
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'TransformerEndInfo.TransformerTankInfo',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': False,
-        'docstring':
-            '''
-            Data for all the ends described by this transformer tank data.
-            '''
-        
         })
     '''
     Data for all the ends described by this transformer tank data.
@@ -4714,15 +3854,12 @@ class TransformerTankInfo(AssetInfo):
         default_factory=list,
         metadata={
         'type': 'Association',
+        'stereotypes': [],
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'TransformerTank.TransformerTankInfo',
         'namespace': 'http://gridappsd.org/CIM/extension#',
         'serialize': False,
-        'docstring':
-            '''
-            '''
-        
         })
     '''
     '''
@@ -4740,6 +3877,7 @@ class TransformerTankInfo(AssetInfo):
     def __maxOccurs__(self):
         return 'unbounded'
     
+@stereotype(CIMStereotype.ShadowExtension)
 @dataclass(repr=False)
 class VehicleInfo(AssetInfo):
     '''
@@ -4750,15 +3888,11 @@ class VehicleInfo(AssetInfo):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Vehicle manufacturer (OEM)
-            '''
-        
         })
     '''
     Vehicle manufacturer (OEM)
@@ -4768,15 +3902,11 @@ class VehicleInfo(AssetInfo):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Vehicle model name
-            '''
-        
         })
     '''
     Vehicle model name
@@ -4786,15 +3916,11 @@ class VehicleInfo(AssetInfo):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Type of vehicle.
-            '''
-        
         })
     '''
     Type of vehicle.
@@ -4804,15 +3930,11 @@ class VehicleInfo(AssetInfo):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Model year of the vehicle
-            '''
-        
         })
     '''
     Model year of the vehicle
@@ -4832,6 +3954,7 @@ class VehicleInfo(AssetInfo):
         return 'unbounded'
     
 @stereotype(CIMStereotype.ShadowExtension)
+@stereotype(CIMStereotype.GridAPPSD)
 @dataclass(repr=False)
 class ElectricVehicleInfo(VehicleInfo):
     '''
@@ -4844,14 +3967,11 @@ class ElectricVehicleInfo(VehicleInfo):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://gridappsd.org/CIM/extension#',
         'serialize': True,
-        'docstring':
-            '''
-            '''
-        
         })
     '''
     '''
@@ -4860,14 +3980,11 @@ class ElectricVehicleInfo(VehicleInfo):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://gridappsd.org/CIM/extension#',
         'serialize': True,
-        'docstring':
-            '''
-            '''
-        
         })
     '''
     '''
@@ -4875,16 +3992,12 @@ class ElectricVehicleInfo(VehicleInfo):
     evType: Optional[ EVTypeKind ] = field(
         default=None,
         metadata={
-        'type': 'enumeration Attribute',
+        'type': 'Attribute',
+        'stereotypes': ['enumeration', 'Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://gridappsd.org/CIM/extension#',
         'serialize': True,
-        'docstring':
-            '''
-            Type of EV (e.g., BEV, PHEV, bus, truck, motorcycle).
-            '''
-        
         })
     '''
     Type of EV (e.g., BEV, PHEV, bus, truck, motorcycle).
@@ -4894,14 +4007,11 @@ class ElectricVehicleInfo(VehicleInfo):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://gridappsd.org/CIM/extension#',
         'serialize': True,
-        'docstring':
-            '''
-            '''
-        
         })
     '''
     '''
@@ -4909,16 +4019,13 @@ class ElectricVehicleInfo(VehicleInfo):
     BatteryInfo: Optional[BatteryInfo] = field(
         default=None,
         metadata={
-        'type': 'GridAPPSD',
+        'type': 'Association',
+        'stereotypes': ['GridAPPSD'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'BatteryInfo.ElectricVehicleInfo',
         'namespace': 'http://gridappsd.org/CIM/extension#',
         'serialize': True,
-        'docstring':
-            '''
-            '''
-        
         })
     '''
     '''
@@ -4946,16 +4053,12 @@ class WireAssemblyInfo(AssetInfo):
         default_factory=list,
         metadata={
         'type': 'Association',
+        'stereotypes': [],
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'PerLengthLineParameter.WireAssemblyInfo',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': False,
-        'docstring':
-            '''
-            Per length line parameter associated with this wire assembly.
-            '''
-        
         })
     '''
     Per length line parameter associated with this wire assembly.
@@ -4965,16 +4068,12 @@ class WireAssemblyInfo(AssetInfo):
         default_factory=list,
         metadata={
         'type': 'Association',
+        'stereotypes': [],
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'WirePhaseInfo.WireAssemblyInfo',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': False,
-        'docstring':
-            '''
-            Wire phase information associated with this wire assembly.
-            '''
-        
         })
     '''
     Wire phase information associated with this wire assembly.
@@ -5007,15 +4106,11 @@ class WireSpacingInfo(AssetInfo):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            If true, this spacing data describes a cable.
-            '''
-        
         })
     '''
     If true, this spacing data describes a cable.
@@ -5024,17 +4119,12 @@ class WireSpacingInfo(AssetInfo):
     phaseWireCount: Optional[int] = field(
         default=None,
         metadata={
-        'type': 'modify Attribute',
+        'type': 'Attribute',
+        'stereotypes': ['modify', 'Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Number of wire sub-conductors in the symmetrical bundle (typically between
-            1 and 4).
-            '''
-        
         })
     '''
     Number of wire sub-conductors in the symmetrical bundle (typically
@@ -5044,16 +4134,12 @@ class WireSpacingInfo(AssetInfo):
     phaseWireSpacing: Optional[ float | Length ] = field(
         default=None,
         metadata={
-        'type': 'modify Attribute',
+        'type': 'Attribute',
+        'stereotypes': ['modify', 'Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Distance between wire sub-conductors in a symmetrical bundle.
-            '''
-        
         })
     '''
     Distance between wire sub-conductors in a symmetrical bundle.
@@ -5062,16 +4148,12 @@ class WireSpacingInfo(AssetInfo):
     usage: Optional[ WireUsageKind ] = field(
         default=None,
         metadata={
-        'type': 'enumeration Attribute',
+        'type': 'Attribute',
+        'stereotypes': ['enumeration', 'Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Usage of the associated wires.
-            '''
-        
         })
     '''
     Usage of the associated wires.
@@ -5080,16 +4162,13 @@ class WireSpacingInfo(AssetInfo):
     DuctBank: Optional[DuctBank] = field(
         default=None,
         metadata={
-        'type': 'informative',
+        'type': 'Association',
+        'stereotypes': ['informative'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'DuctBank.WireSpacingInfos',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            '''
-        
         })
     '''
     '''
@@ -5098,15 +4177,12 @@ class WireSpacingInfo(AssetInfo):
         default_factory=list,
         metadata={
         'type': 'Association',
+        'stereotypes': [],
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'ACLineSegment.WireSpacingInfo',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': False,
-        'docstring':
-            '''
-            '''
-        
         })
     '''
     '''
@@ -5115,16 +4191,12 @@ class WireSpacingInfo(AssetInfo):
         default_factory=list,
         metadata={
         'type': 'Association',
+        'stereotypes': [],
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'WirePosition.WireSpacingInfo',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': False,
-        'docstring':
-            '''
-            All positions of single wires (phase or neutral) making the conductor.
-            '''
-        
         })
     '''
     All positions of single wires (phase or neutral) making the conductor.
@@ -5162,17 +4234,12 @@ class AsynchronousMachineDynamics(IdentifiedObject):
         default=None,
         metadata={
         'type': 'Association',
+        'stereotypes': [],
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'AsynchronousMachine.AsynchronousMachineDynamics',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': False,
-        'docstring':
-            '''
-            Asynchronous machine to which this asynchronous machine dynamics model
-            applies.
-            '''
-        
         })
     '''
     Asynchronous machine to which this asynchronous machine dynamics model
@@ -5207,15 +4274,11 @@ class BaseFrequency(IdentifiedObject):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            The base frequency.
-            '''
-        
         })
     '''
     The base frequency.
@@ -5244,15 +4307,11 @@ class BasePower(IdentifiedObject):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Value used as base power.
-            '''
-        
         })
     '''
     Value used as base power.
@@ -5271,6 +4330,7 @@ class BasePower(IdentifiedObject):
     def __maxOccurs__(self):
         return 'unbounded'
     
+@stereotype(CIMStereotype.ShadowExtension)
 @dataclass(repr=False)
 class BaseVoltage(IdentifiedObject):
     '''
@@ -5282,16 +4342,11 @@ class BaseVoltage(IdentifiedObject):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            The power system resource's base voltage, expressed on a phase-to-phase
-            (line-to-line) basis. Shall be a positive value and not zero.
-            '''
-        
         })
     '''
     The power system resource's base voltage, expressed on a phase-to-phase
@@ -5302,18 +4357,12 @@ class BaseVoltage(IdentifiedObject):
         default_factory=list,
         metadata={
         'type': 'Association',
+        'stereotypes': [],
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'ConductingEquipment.BaseVoltage',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': False,
-        'docstring':
-            '''
-            All conducting equipment with this base voltage. Use only when there is
-            no voltage level container used and only one base voltage applies. For
-            example, not used for transformers.
-            '''
-        
         })
     '''
     All conducting equipment with this base voltage. Use only when there
@@ -5325,15 +4374,12 @@ class BaseVoltage(IdentifiedObject):
         default_factory=list,
         metadata={
         'type': 'Association',
+        'stereotypes': [],
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'ConnectivityNode.BaseVoltage',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': False,
-        'docstring':
-            '''
-            '''
-        
         })
     '''
     '''
@@ -5342,16 +4388,12 @@ class BaseVoltage(IdentifiedObject):
         default_factory=list,
         metadata={
         'type': 'Association',
+        'stereotypes': [],
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'TopologicalNode.BaseVoltage',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': False,
-        'docstring':
-            '''
-            The topological nodes at the base voltage.
-            '''
-        
         })
     '''
     The topological nodes at the base voltage.
@@ -5361,16 +4403,12 @@ class BaseVoltage(IdentifiedObject):
         default_factory=list,
         metadata={
         'type': 'Association',
+        'stereotypes': [],
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'TransformerEnd.BaseVoltage',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': False,
-        'docstring':
-            '''
-            Transformer ends at the base voltage. This is essential for PU calculation.
-            '''
-        
         })
     '''
     Transformer ends at the base voltage. This is essential for PU calculation.
@@ -5380,16 +4418,12 @@ class BaseVoltage(IdentifiedObject):
         default_factory=list,
         metadata={
         'type': 'Association',
+        'stereotypes': [],
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'VoltageLevel.BaseVoltage',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': False,
-        'docstring':
-            '''
-            The voltage levels having this base voltage.
-            '''
-        
         })
     '''
     The voltage levels having this base voltage.
@@ -5418,16 +4452,11 @@ class BasicIntervalSchedule(IdentifiedObject):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            The time for the first time point. The value can be a time of day, not
-            a specific date.
-            '''
-        
         })
     '''
     The time for the first time point. The value can be a time of day,
@@ -5438,15 +4467,11 @@ class BasicIntervalSchedule(IdentifiedObject):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Description for value1.
-            '''
-        
         })
     '''
     Description for value1.
@@ -5456,15 +4481,11 @@ class BasicIntervalSchedule(IdentifiedObject):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Description for value2.
-            '''
-        
         })
     '''
     Description for value2.
@@ -5474,15 +4495,11 @@ class BasicIntervalSchedule(IdentifiedObject):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Description for value3.
-            '''
-        
         })
     '''
     Description for value3.
@@ -5491,16 +4508,12 @@ class BasicIntervalSchedule(IdentifiedObject):
     value1Multiplier: Optional[ UnitMultiplier ] = field(
         default=None,
         metadata={
-        'type': 'enumeration Attribute',
+        'type': 'Attribute',
+        'stereotypes': ['enumeration', 'Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Multiplier for value1.
-            '''
-        
         })
     '''
     Multiplier for value1.
@@ -5509,16 +4522,12 @@ class BasicIntervalSchedule(IdentifiedObject):
     value1Unit: Optional[ UnitSymbol ] = field(
         default=None,
         metadata={
-        'type': 'enumeration Attribute',
+        'type': 'Attribute',
+        'stereotypes': ['enumeration', 'Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Value1 units of measure.
-            '''
-        
         })
     '''
     Value1 units of measure.
@@ -5527,16 +4536,12 @@ class BasicIntervalSchedule(IdentifiedObject):
     value2Multiplier: Optional[ UnitMultiplier ] = field(
         default=None,
         metadata={
-        'type': 'enumeration Attribute',
+        'type': 'Attribute',
+        'stereotypes': ['enumeration', 'Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Multiplier for value2.
-            '''
-        
         })
     '''
     Multiplier for value2.
@@ -5545,16 +4550,12 @@ class BasicIntervalSchedule(IdentifiedObject):
     value2Unit: Optional[ UnitSymbol ] = field(
         default=None,
         metadata={
-        'type': 'enumeration Attribute',
+        'type': 'Attribute',
+        'stereotypes': ['enumeration', 'Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Value2 units of measure.
-            '''
-        
         })
     '''
     Value2 units of measure.
@@ -5563,16 +4564,12 @@ class BasicIntervalSchedule(IdentifiedObject):
     value3Multiplier: Optional[ UnitMultiplier ] = field(
         default=None,
         metadata={
-        'type': 'enumeration Attribute',
+        'type': 'Attribute',
+        'stereotypes': ['enumeration', 'Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Multiplier for value3.
-            '''
-        
         })
     '''
     Multiplier for value3.
@@ -5581,16 +4578,12 @@ class BasicIntervalSchedule(IdentifiedObject):
     value3Unit: Optional[ UnitSymbol ] = field(
         default=None,
         metadata={
-        'type': 'enumeration Attribute',
+        'type': 'Attribute',
+        'stereotypes': ['enumeration', 'Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Value3 units of measure.
-            '''
-        
         })
     '''
     Value3 units of measure.
@@ -5619,17 +4612,13 @@ class IrregularIntervalSchedule(BasicIntervalSchedule):
     TimePoints: list[IrregularTimePoint] = field(
         default_factory=list,
         metadata={
-        'type': 'AggregateOf',
+        'type': 'Association',
+        'stereotypes': ['AggregateOf'],
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'IrregularTimePoint.IntervalSchedule',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': False,
-        'docstring':
-            '''
-            The point data values that define a curve.
-            '''
-        
         })
     '''
     The point data values that define a curve.
@@ -5659,16 +4648,11 @@ class RegularIntervalSchedule(BasicIntervalSchedule):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            The time for the last time point. The value can be a time of day, not a
-            specific date.
-            '''
-        
         })
     '''
     The time for the last time point. The value can be a time of day, not
@@ -5679,16 +4663,11 @@ class RegularIntervalSchedule(BasicIntervalSchedule):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            The time between each pair of subsequent regular time points in sequence
-            order.
-            '''
-        
         })
     '''
     The time between each pair of subsequent regular time points in sequence
@@ -5698,17 +4677,13 @@ class RegularIntervalSchedule(BasicIntervalSchedule):
     TimePoints: list[RegularTimePoint] = field(
         default_factory=list,
         metadata={
-        'type': 'AggregateOf',
+        'type': 'Association',
+        'stereotypes': ['AggregateOf'],
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'RegularTimePoint.IntervalSchedule',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': False,
-        'docstring':
-            '''
-            The regular interval time point data values that define this schedule.
-            '''
-        
         })
     '''
     The regular interval time point data values that define this schedule.
@@ -5727,6 +4702,7 @@ class RegularIntervalSchedule(BasicIntervalSchedule):
     def __maxOccurs__(self):
         return 'unbounded'
     
+@stereotype(CIMStereotype.GridAPPSD)
 @dataclass(repr=False)
 class PointOnWaveValue(RegularIntervalSchedule):
     '''
@@ -5735,17 +4711,13 @@ class PointOnWaveValue(RegularIntervalSchedule):
     Analog: Optional[Analog] = field(
         default=None,
         metadata={
-        'type': 'ShadowExtension',
+        'type': 'Association',
+        'stereotypes': ['ShadowExtension'],
         'minOccurs': '1',
         'maxOccurs': '1',
         'inverse': 'Analog.PointOnWaveValues',
         'namespace': 'http://gridappsd.org/CIM/extension#',
         'serialize': True,
-        'docstring':
-            '''
-            Analog class representing the data source
-            '''
-        
         })
     '''
     Analog class representing the data source
@@ -5774,17 +4746,13 @@ class SeasonDayTypeSchedule(RegularIntervalSchedule):
     DayType: Optional[DayType] = field(
         default=None,
         metadata={
-        'type': 'Attribute',
+        'type': 'Association',
+        'stereotypes': [],
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'DayType.SeasonDayTypeSchedules',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            DayType for the Schedule.
-            '''
-        
         })
     '''
     DayType for the Schedule.
@@ -5793,17 +4761,13 @@ class SeasonDayTypeSchedule(RegularIntervalSchedule):
     Season: Optional[Season] = field(
         default=None,
         metadata={
-        'type': 'Attribute',
+        'type': 'Association',
+        'stereotypes': [],
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'Season.SeasonDayTypeSchedules',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Season for the Schedule.
-            '''
-        
         })
     '''
     Season for the Schedule.
@@ -5834,17 +4798,13 @@ class ConformLoadSchedule(SeasonDayTypeSchedule):
     ConformLoadGroup: Optional[ConformLoadGroup] = field(
         default=None,
         metadata={
-        'type': 'OfAggregate',
+        'type': 'Association',
+        'stereotypes': ['OfAggregate'],
         'minOccurs': '1',
         'maxOccurs': '1',
         'inverse': 'ConformLoadGroup.ConformLoadSchedules',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            The ConformLoadGroup where the ConformLoadSchedule belongs.
-            '''
-        
         })
     '''
     The ConformLoadGroup where the ConformLoadSchedule belongs.
@@ -5874,17 +4834,13 @@ class NonConformLoadSchedule(SeasonDayTypeSchedule):
     NonConformLoadGroup: Optional[NonConformLoadGroup] = field(
         default=None,
         metadata={
-        'type': 'OfAggregate',
+        'type': 'Association',
+        'stereotypes': ['OfAggregate'],
         'minOccurs': '1',
         'maxOccurs': '1',
         'inverse': 'NonConformLoadGroup.NonConformLoadSchedules',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            The NonConformLoadGroup where the NonConformLoadSchedule belongs.
-            '''
-        
         })
     '''
     The NonConformLoadGroup where the NonConformLoadSchedule belongs.
@@ -5913,17 +4869,13 @@ class RegulationSchedule(SeasonDayTypeSchedule):
     RegulatingControl: Optional[RegulatingControl] = field(
         default=None,
         metadata={
-        'type': 'ShadowExtension',
+        'type': 'Association',
+        'stereotypes': ['ShadowExtension'],
         'minOccurs': '1',
         'maxOccurs': '1',
         'inverse': 'RegulatingControl.RegulationSchedule',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Regulating controls that have this schedule.
-            '''
-        
         })
     '''
     Regulating controls that have this schedule.
@@ -5933,16 +4885,12 @@ class RegulationSchedule(SeasonDayTypeSchedule):
         default_factory=list,
         metadata={
         'type': 'Association',
+        'stereotypes': [],
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'VoltageControlZone.RegulationSchedule',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': False,
-        'docstring':
-            '''
-            A VoltageControlZone may have a voltage regulation schedule.
-            '''
-        
         })
     '''
     A VoltageControlZone may have a voltage regulation schedule.
@@ -5971,17 +4919,13 @@ class SwitchSchedule(SeasonDayTypeSchedule):
     Switch: Optional[Switch] = field(
         default=None,
         metadata={
-        'type': 'ShadowExtension',
+        'type': 'Association',
+        'stereotypes': ['ShadowExtension'],
         'minOccurs': '1',
         'maxOccurs': '1',
         'inverse': 'Switch.SwitchSchedules',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            A SwitchSchedule is associated with a Switch.
-            '''
-        
         })
     '''
     A SwitchSchedule is associated with a Switch.
@@ -6009,17 +4953,13 @@ class TapSchedule(SeasonDayTypeSchedule):
     TapChanger: Optional[TapChanger] = field(
         default=None,
         metadata={
-        'type': 'ShadowExtension',
+        'type': 'Association',
+        'stereotypes': ['ShadowExtension'],
         'minOccurs': '1',
         'maxOccurs': '1',
         'inverse': 'TapChanger.TapSchedules',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            A TapSchedule is associated with a TapChanger.
-            '''
-        
         })
     '''
     A TapSchedule is associated with a TapChanger.
@@ -6054,17 +4994,12 @@ class BilateralExchangeActor(IdentifiedObject):
         default_factory=list,
         metadata={
         'type': 'Association',
+        'stereotypes': [],
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'CommunicationLink.BilateralExchangeActor',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': False,
-        'docstring':
-            '''
-            Communication addressing for a Bilateral Table used by a ICCP data provider
-            or consumer.
-            '''
-        
         })
     '''
     Communication addressing for a Bilateral Table used by a ICCP data
@@ -6096,15 +5031,11 @@ class BranchGroup(IdentifiedObject):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Monitor the active power flow.
-            '''
-        
         })
     '''
     Monitor the active power flow.
@@ -6114,15 +5045,11 @@ class BranchGroup(IdentifiedObject):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Monitor the reactive power flow.
-            '''
-        
         })
     '''
     Monitor the reactive power flow.
@@ -6132,15 +5059,11 @@ class BranchGroup(IdentifiedObject):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            The maximum active power flow.
-            '''
-        
         })
     '''
     The maximum active power flow.
@@ -6150,15 +5073,11 @@ class BranchGroup(IdentifiedObject):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            The maximum reactive power flow.
-            '''
-        
         })
     '''
     The maximum reactive power flow.
@@ -6168,15 +5087,11 @@ class BranchGroup(IdentifiedObject):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            The minimum active power flow.
-            '''
-        
         })
     '''
     The minimum active power flow.
@@ -6186,15 +5101,11 @@ class BranchGroup(IdentifiedObject):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            The minimum reactive power flow.
-            '''
-        
         })
     '''
     The minimum reactive power flow.
@@ -6203,17 +5114,13 @@ class BranchGroup(IdentifiedObject):
     BranchGroupTerminal: list[BranchGroupTerminal] = field(
         default_factory=list,
         metadata={
-        'type': 'AggregateOf',
+        'type': 'Association',
+        'stereotypes': ['AggregateOf'],
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'BranchGroupTerminal.BranchGroup',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': False,
-        'docstring':
-            '''
-            The directed branch group terminals to be summed.
-            '''
-        
         })
     '''
     The directed branch group terminals to be summed.
@@ -6249,17 +5156,11 @@ class BusNameMarker(IdentifiedObject):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Priority of bus name marker for use as topology bus name. Use 0 for do
-            not care. Use 1 for highest priority. Use 2 as priority is less than 1
-            and so on.
-            '''
-        
         })
     '''
     Priority of bus name marker for use as topology bus name. Use 0 for
@@ -6270,17 +5171,13 @@ class BusNameMarker(IdentifiedObject):
     ReportingGroup: Optional[ReportingGroup] = field(
         default=None,
         metadata={
-        'type': 'Attribute',
+        'type': 'Association',
+        'stereotypes': [],
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'ReportingGroup.BusNameMarker',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            The reporting group to which this bus name marker belongs.
-            '''
-        
         })
     '''
     The reporting group to which this bus name marker belongs.
@@ -6289,20 +5186,13 @@ class BusNameMarker(IdentifiedObject):
     TopologicalNode: Optional[TopologicalNode] = field(
         default=None,
         metadata={
-        'type': 'Attribute',
+        'type': 'Association',
+        'stereotypes': [],
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'TopologicalNode.BusNameMarker',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            A user defined topological node that was originally defined in a planning
-            model not yet having topology described by ConnectivityNodes. Once ConnectivityNodes
-            have been created they may be linked to user defined ToplogicalNodes using
-            BusNameMarkers.
-            '''
-        
         })
     '''
     A user defined topological node that was originally defined in a planning
@@ -6315,16 +5205,12 @@ class BusNameMarker(IdentifiedObject):
         default_factory=list,
         metadata={
         'type': 'Association',
+        'stereotypes': [],
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'ACDCTerminal.BusNameMarker',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': False,
-        'docstring':
-            '''
-            The terminals associated with this bus name marker.
-            '''
-        
         })
     '''
     The terminals associated with this bus name marker.
@@ -6354,16 +5240,12 @@ class CalculationMethodHierarchy(IdentifiedObject):
         default_factory=list,
         metadata={
         'type': 'Association',
+        'stereotypes': [],
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'Measurement.CalculationMethodHierarchy',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': False,
-        'docstring':
-            '''
-            Measurement to which this calculation method hierarchy applies.
-            '''
-        
         })
     '''
     Measurement to which this calculation method hierarchy applies.
@@ -6372,17 +5254,13 @@ class CalculationMethodHierarchy(IdentifiedObject):
     MeasurementValue: Optional[MeasurementValue] = field(
         default=None,
         metadata={
-        'type': 'harmonization',
+        'type': 'Association',
+        'stereotypes': ['harmonization'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'MeasurementValue.CalculationMethodHierarchy',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': False,
-        'docstring':
-            '''
-            Measurement value to which this calculation method hierarchy applies.
-            '''
-        
         })
     '''
     Measurement value to which this calculation method hierarchy applies.
@@ -6411,15 +5289,11 @@ class CatalogAssetType(IdentifiedObject):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            True if item is a stock item (default).
-            '''
-        
         })
     '''
     True if item is a stock item (default).
@@ -6429,15 +5303,11 @@ class CatalogAssetType(IdentifiedObject):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Description of type of asset.
-            '''
-        
         })
     '''
     Description of type of asset.
@@ -6447,16 +5317,11 @@ class CatalogAssetType(IdentifiedObject):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Estimated unit cost (or cost per unit length) of this type of asset. It
-            does not include labor to install, construct or configure it.
-            '''
-        
         })
     '''
     Estimated unit cost (or cost per unit length) of this type of asset.
@@ -6466,16 +5331,12 @@ class CatalogAssetType(IdentifiedObject):
     kind: Optional[ AssetKind ] = field(
         default=None,
         metadata={
-        'type': 'enumeration Attribute',
+        'type': 'Attribute',
+        'stereotypes': ['enumeration', 'Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Kind of asset (from enumerated list).
-            '''
-        
         })
     '''
     Kind of asset (from enumerated list).
@@ -6485,16 +5346,12 @@ class CatalogAssetType(IdentifiedObject):
         default=None,
         metadata={
         'type': 'Association',
+        'stereotypes': [],
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'AssetInfo.CatalogAssetType',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': False,
-        'docstring':
-            '''
-            Generic nameplate information associated with this catalog asset type.
-            '''
-        
         })
     '''
     Generic nameplate information associated with this catalog asset type.
@@ -6524,15 +5381,12 @@ class Company(IdentifiedObject):
         default_factory=list,
         metadata={
         'type': 'Association',
+        'stereotypes': [],
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'PowerSystemResource.OperatedByCompany',
         'namespace': 'http://gridappsd.org/CIM/extension#',
         'serialize': False,
-        'docstring':
-            '''
-            '''
-        
         })
     '''
     '''
@@ -6550,6 +5404,7 @@ class Company(IdentifiedObject):
     def __maxOccurs__(self):
         return 'unbounded'
     
+@stereotype(CIMStereotype.ShadowExtension)
 @dataclass(repr=False)
 class ConnectivityNode(IdentifiedObject):
     '''
@@ -6560,17 +5415,13 @@ class ConnectivityNode(IdentifiedObject):
     ACPointOfCommonCoupling: Optional[ACPointOfCommonCoupling] = field(
         default=None,
         metadata={
-        'type': 'Attribute',
+        'type': 'Association',
+        'stereotypes': [],
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'ACPointOfCommonCoupling.ConnectivityNode',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Identifies this ConnectivityNode as a point of common coupling AC.
-            '''
-        
         })
     '''
     Identifies this ConnectivityNode as a point of common coupling AC.
@@ -6579,16 +5430,13 @@ class ConnectivityNode(IdentifiedObject):
     BaseVoltage: Optional[BaseVoltage] = field(
         default=None,
         metadata={
-        'type': 'Attribute',
+        'type': 'Association',
+        'stereotypes': [],
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'BaseVoltage.ConnectivityNodes',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            '''
-        
         })
     '''
     '''
@@ -6596,17 +5444,13 @@ class ConnectivityNode(IdentifiedObject):
     BoundaryPoint: Optional[BoundaryPoint] = field(
         default=None,
         metadata={
-        'type': 'ShadowExtension European',
+        'type': 'Association',
+        'stereotypes': ['ShadowExtension', 'European'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'BoundaryPoint.ConnectivityNode',
         'namespace': 'http://iec.ch/TC57/CIM100-European#',
         'serialize': True,
-        'docstring':
-            '''
-            The boundary point associated with the connectivity node.
-            '''
-        
         })
     '''
     The boundary point associated with the connectivity node.
@@ -6615,17 +5459,13 @@ class ConnectivityNode(IdentifiedObject):
     ConnectivityNodeContainer: Optional[ConnectivityNodeContainer] = field(
         default=None,
         metadata={
-        'type': 'ShadowExtension',
+        'type': 'Association',
+        'stereotypes': ['ShadowExtension'],
         'minOccurs': '1',
         'maxOccurs': '1',
         'inverse': 'ConnectivityNodeContainer.ConnectivityNodes',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Container of this connectivity node.
-            '''
-        
         })
     '''
     Container of this connectivity node.
@@ -6634,16 +5474,13 @@ class ConnectivityNode(IdentifiedObject):
     IndividualPnode: Optional[IndividualPnode] = field(
         default=None,
         metadata={
-        'type': 'Attribute',
+        'type': 'Association',
+        'stereotypes': [],
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'IndividualPnode.ConnectivityNode',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            '''
-        
         })
     '''
     '''
@@ -6651,18 +5488,13 @@ class ConnectivityNode(IdentifiedObject):
     TopologicalNode: Optional[TopologicalNode] = field(
         default=None,
         metadata={
-        'type': 'OfAggregate',
+        'type': 'Association',
+        'stereotypes': ['OfAggregate'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'TopologicalNode.ConnectivityNodes',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            The topological node to which this connectivity node is assigned. May depend
-            on the current state of switches in the network.
-            '''
-        
         })
     '''
     The topological node to which this connectivity node is assigned. May
@@ -6673,16 +5505,12 @@ class ConnectivityNode(IdentifiedObject):
         default=None,
         metadata={
         'type': 'Association',
+        'stereotypes': [],
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'ACPointOfCommonCoupling.ConnectivityNode',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': False,
-        'docstring':
-            '''
-            Identifies this ConnectivityNode as a point of common coupling AC.
-            '''
-        
         })
     '''
     Identifies this ConnectivityNode as a point of common coupling AC.
@@ -6692,15 +5520,12 @@ class ConnectivityNode(IdentifiedObject):
         default=None,
         metadata={
         'type': 'Association',
+        'stereotypes': [],
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'IndividualPnode.ConnectivityNode',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': False,
-        'docstring':
-            '''
-            '''
-        
         })
     '''
     '''
@@ -6709,16 +5534,12 @@ class ConnectivityNode(IdentifiedObject):
         default_factory=list,
         metadata={
         'type': 'Association',
+        'stereotypes': [],
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'Terminal.ConnectivityNode',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': False,
-        'docstring':
-            '''
-            Terminals interconnected with zero impedance at a this connectivity node.
-            '''
-        
         })
     '''
     Terminals interconnected with zero impedance at a this connectivity
@@ -6751,17 +5572,13 @@ class ControlAreaGeneratingUnit(IdentifiedObject):
     ControlArea: Optional[ControlArea] = field(
         default=None,
         metadata={
-        'type': 'ShadowExtension OfAggregate',
+        'type': 'Association',
+        'stereotypes': ['ShadowExtension', 'OfAggregate'],
         'minOccurs': '1',
         'maxOccurs': '1',
         'inverse': 'ControlArea.ControlAreaGeneratingUnit',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            The parent control area for the generating unit specifications.
-            '''
-        
         })
     '''
     The parent control area for the generating unit specifications.
@@ -6770,18 +5587,13 @@ class ControlAreaGeneratingUnit(IdentifiedObject):
     GeneratingUnit: Optional[GeneratingUnit] = field(
         default=None,
         metadata={
-        'type': 'Attribute',
+        'type': 'Association',
+        'stereotypes': ['NC'],
         'minOccurs': '1',
         'maxOccurs': '1',
         'inverse': 'GeneratingUnit.ControlAreaGeneratingUnit',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            The generating unit specified for this control area. Note that a control
-            area should include a GeneratingUnit only once.
-            '''
-        
         })
     '''
     The generating unit specified for this control area. Note that a control
@@ -6791,17 +5603,13 @@ class ControlAreaGeneratingUnit(IdentifiedObject):
     AltGeneratingUnitMeas: list[AltGeneratingUnitMeas] = field(
         default_factory=list,
         metadata={
-        'type': 'AggregateOf',
+        'type': 'Association',
+        'stereotypes': ['AggregateOf'],
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'AltGeneratingUnitMeas.ControlAreaGeneratingUnit',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': False,
-        'docstring':
-            '''
-            The link to prioritized measurements for this GeneratingUnit.
-            '''
-        
         })
     '''
     The link to prioritized measurements for this GeneratingUnit.
@@ -6832,17 +5640,13 @@ class ControlAreaPowerElectronicsUnit(IdentifiedObject):
     ControlArea: Optional[ControlArea] = field(
         default=None,
         metadata={
-        'type': 'ShadowExtension',
+        'type': 'Association',
+        'stereotypes': ['ShadowExtension'],
         'minOccurs': '1',
         'maxOccurs': '1',
         'inverse': 'ControlArea.ControlAreaPowerElectronicsUnit',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            The power electronics unit specifications for the control area.
-            '''
-        
         })
     '''
     The power electronics unit specifications for the control area.
@@ -6851,18 +5655,13 @@ class ControlAreaPowerElectronicsUnit(IdentifiedObject):
     PowerElectronicsUnit: Optional[PowerElectronicsUnit] = field(
         default=None,
         metadata={
-        'type': 'Attribute',
+        'type': 'Association',
+        'stereotypes': [],
         'minOccurs': '1',
         'maxOccurs': '1',
         'inverse': 'PowerElectronicsUnit.ControlAreaPowerElectronicsUnit',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            The power electronics unit specified for this control area. Note that a
-            control area should include a PowerElectronicsUnit only once.
-            '''
-        
         })
     '''
     The power electronics unit specified for this control area. Note that
@@ -6894,16 +5693,12 @@ class CoupledLineSegmentGroup(IdentifiedObject):
         default_factory=list,
         metadata={
         'type': 'Association',
+        'stereotypes': [],
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'LineSegmentCoupling.CoupledLineSegmentGroup',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': False,
-        'docstring':
-            '''
-            A coupled line in this coupled group of lines.
-            '''
-        
         })
     '''
     A coupled line in this coupled group of lines.
@@ -6933,15 +5728,11 @@ class CurrentDroopControlFunction(IdentifiedObject):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Droop in capacitive region. The unit is V/A.
-            '''
-        
         })
     '''
     Droop in capacitive region. The unit is V/A.
@@ -6951,15 +5742,11 @@ class CurrentDroopControlFunction(IdentifiedObject):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Droop in inductive region. The unit is V/A.
-            '''
-        
         })
     '''
     Droop in inductive region. The unit is V/A.
@@ -6969,15 +5756,11 @@ class CurrentDroopControlFunction(IdentifiedObject):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Offset in capacitive region.
-            '''
-        
         })
     '''
     Offset in capacitive region.
@@ -6987,15 +5770,11 @@ class CurrentDroopControlFunction(IdentifiedObject):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Offset in capacitive region.
-            '''
-        
         })
     '''
     Offset in capacitive region.
@@ -7005,15 +5784,11 @@ class CurrentDroopControlFunction(IdentifiedObject):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Setpoint when control is active in capacitive region.
-            '''
-        
         })
     '''
     Setpoint when control is active in capacitive region.
@@ -7023,15 +5798,11 @@ class CurrentDroopControlFunction(IdentifiedObject):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Setpoint when control is active in inductive region.
-            '''
-        
         })
     '''
     Setpoint when control is active in inductive region.
@@ -7061,16 +5832,12 @@ class Curve(IdentifiedObject):
     curveStyle: Optional[ CurveStyle ] = field(
         default=None,
         metadata={
-        'type': 'enumeration Attribute',
+        'type': 'Attribute',
+        'stereotypes': ['enumeration', 'Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            The style or shape of the curve.
-            '''
-        
         })
     '''
     The style or shape of the curve.
@@ -7079,16 +5846,12 @@ class Curve(IdentifiedObject):
     xMultiplier: Optional[ UnitMultiplier ] = field(
         default=None,
         metadata={
-        'type': 'enumeration Attribute',
+        'type': 'Attribute',
+        'stereotypes': ['enumeration', 'Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Multiplier for X-axis.
-            '''
-        
         })
     '''
     Multiplier for X-axis.
@@ -7097,16 +5860,12 @@ class Curve(IdentifiedObject):
     xUnit: Optional[ UnitSymbol ] = field(
         default=None,
         metadata={
-        'type': 'enumeration Attribute',
+        'type': 'Attribute',
+        'stereotypes': ['enumeration', 'Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            The X-axis units of measure.
-            '''
-        
         })
     '''
     The X-axis units of measure.
@@ -7115,16 +5874,12 @@ class Curve(IdentifiedObject):
     y1Multiplier: Optional[ UnitMultiplier ] = field(
         default=None,
         metadata={
-        'type': 'enumeration Attribute',
+        'type': 'Attribute',
+        'stereotypes': ['enumeration', 'Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Multiplier for Y1-axis.
-            '''
-        
         })
     '''
     Multiplier for Y1-axis.
@@ -7133,16 +5888,12 @@ class Curve(IdentifiedObject):
     y1Unit: Optional[ UnitSymbol ] = field(
         default=None,
         metadata={
-        'type': 'enumeration Attribute',
+        'type': 'Attribute',
+        'stereotypes': ['enumeration', 'Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            The Y1-axis units of measure.
-            '''
-        
         })
     '''
     The Y1-axis units of measure.
@@ -7151,16 +5902,12 @@ class Curve(IdentifiedObject):
     y2Multiplier: Optional[ UnitMultiplier ] = field(
         default=None,
         metadata={
-        'type': 'enumeration Attribute',
+        'type': 'Attribute',
+        'stereotypes': ['enumeration', 'Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Multiplier for Y2-axis.
-            '''
-        
         })
     '''
     Multiplier for Y2-axis.
@@ -7169,16 +5916,12 @@ class Curve(IdentifiedObject):
     y2Unit: Optional[ UnitSymbol ] = field(
         default=None,
         metadata={
-        'type': 'enumeration Attribute',
+        'type': 'Attribute',
+        'stereotypes': ['enumeration', 'Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            The Y2-axis units of measure.
-            '''
-        
         })
     '''
     The Y2-axis units of measure.
@@ -7187,16 +5930,12 @@ class Curve(IdentifiedObject):
     y3Multiplier: Optional[ UnitMultiplier ] = field(
         default=None,
         metadata={
-        'type': 'enumeration Attribute',
+        'type': 'Attribute',
+        'stereotypes': ['enumeration', 'Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Multiplier for Y3-axis.
-            '''
-        
         })
     '''
     Multiplier for Y3-axis.
@@ -7205,16 +5944,12 @@ class Curve(IdentifiedObject):
     y3Unit: Optional[ UnitSymbol ] = field(
         default=None,
         metadata={
-        'type': 'enumeration Attribute',
+        'type': 'Attribute',
+        'stereotypes': ['enumeration', 'Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            The Y3-axis units of measure.
-            '''
-        
         })
     '''
     The Y3-axis units of measure.
@@ -7223,17 +5958,13 @@ class Curve(IdentifiedObject):
     CurveDatas: list[CurveData] = field(
         default_factory=list,
         metadata={
-        'type': 'AggregateOf',
+        'type': 'Association',
+        'stereotypes': ['AggregateOf'],
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'CurveData.Curve',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': False,
-        'docstring':
-            '''
-            The point data values that define this curve.
-            '''
-        
         })
     '''
     The point data values that define this curve.
@@ -7263,17 +5994,12 @@ class AmbientTemperatureDependencyCurve(Curve):
         default_factory=list,
         metadata={
         'type': 'Association',
+        'stereotypes': [],
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'OperationalLimitType.PermanentAmbientTemperatureDependencyCurve',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': False,
-        'docstring':
-            '''
-            The operational limit type that has this permanent ambient temperature
-            dependency curve.
-            '''
-        
         })
     '''
     The operational limit type that has this permanent ambient temperature
@@ -7306,17 +6032,12 @@ class BaseOverloadLimitCurve(Curve):
         default_factory=list,
         metadata={
         'type': 'Association',
+        'stereotypes': [],
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'OperationalLimitType.TemporaryBaseOverloadLimitCurve',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': False,
-        'docstring':
-            '''
-            The operational limit type that has this temporary base overload limit
-            curve.
-            '''
-        
         })
     '''
     The operational limit type that has this temporary base overload limit
@@ -7346,16 +6067,12 @@ class ConductorCharacteristicCurve(Curve):
         default_factory=list,
         metadata={
         'type': 'Association',
+        'stereotypes': [],
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'Conductor.DamageCurve',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': False,
-        'docstring':
-            '''
-            A conductor can have a damage curve associated to it.
-            '''
-        
         })
     '''
     A conductor can have a damage curve associated to it.
@@ -7386,17 +6103,12 @@ class DurationOverloadLimitCurve(Curve):
         default_factory=list,
         metadata={
         'type': 'Association',
+        'stereotypes': [],
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'OperationalLimitType.TemporaryDurationOverloadLimitCurve',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': False,
-        'docstring':
-            '''
-            The operational limit type that has this temporary duration overload limit
-            curve.
-            '''
-        
         })
     '''
     The operational limit type that has this temporary duration overload
@@ -7426,16 +6138,12 @@ class FuseCharacteristicCurve(Curve):
         default=None,
         metadata={
         'type': 'Association',
+        'stereotypes': [],
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'Fuse.MiinimumMeltCurve',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': False,
-        'docstring':
-            '''
-            Fuse this curve is associated to.
-            '''
-        
         })
     '''
     Fuse this curve is associated to.
@@ -7445,16 +6153,12 @@ class FuseCharacteristicCurve(Curve):
         default=None,
         metadata={
         'type': 'Association',
+        'stereotypes': [],
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'Fuse.TotalClearingTimeCurve',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': False,
-        'docstring':
-            '''
-            Fuse this curve is associated to.
-            '''
-        
         })
     '''
     Fuse this curve is associated to.
@@ -7482,17 +6186,13 @@ class LossCurve(Curve):
     FACTSEquipment: Optional[FACTSEquipment] = field(
         default=None,
         metadata={
-        'type': 'Attribute',
+        'type': 'Association',
+        'stereotypes': [],
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'FACTSEquipment.LossCurve',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            The FACTS equipment which has a loss curve.
-            '''
-        
         })
     '''
     The FACTS equipment which has a loss curve.
@@ -7526,16 +6226,11 @@ class ReactiveCapabilityCurve(Curve):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            The machine's coolant temperature (e.g., ambient air or stator circulating
-            water).
-            '''
-        
         })
     '''
     The machine's coolant temperature (e.g., ambient air or stator circulating
@@ -7546,15 +6241,11 @@ class ReactiveCapabilityCurve(Curve):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            The hydrogen coolant pressure.
-            '''
-        
         })
     '''
     The hydrogen coolant pressure.
@@ -7564,15 +6255,11 @@ class ReactiveCapabilityCurve(Curve):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            The reference voltage for which the capability curve is valid.
-            '''
-        
         })
     '''
     The reference voltage for which the capability curve is valid.
@@ -7581,17 +6268,13 @@ class ReactiveCapabilityCurve(Curve):
     ExtendedWardEquivalent: Optional[ExtendedWardEquivalent] = field(
         default=None,
         metadata={
-        'type': 'Attribute',
+        'type': 'Association',
+        'stereotypes': [],
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'ExtendedWardEquivalent.ReactiveCapabilityCurve',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            The extended ward equivalent using this reactive capability curve.
-            '''
-        
         })
     '''
     The extended ward equivalent using this reactive capability curve.
@@ -7600,17 +6283,13 @@ class ReactiveCapabilityCurve(Curve):
     SynchronousMachine: Optional[SynchronousMachine] = field(
         default=None,
         metadata={
-        'type': 'Attribute',
+        'type': 'Association',
+        'stereotypes': [],
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'SynchronousMachine.ReactiveCapabilityCurve',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            The synchronous machine using this curve.
-            '''
-        
         })
     '''
     The synchronous machine using this curve.
@@ -7620,16 +6299,12 @@ class ReactiveCapabilityCurve(Curve):
         default_factory=list,
         metadata={
         'type': 'Association',
+        'stereotypes': [],
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'SynchronousMachine.InitialReactiveCapabilityCurve',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': False,
-        'docstring':
-            '''
-            Synchronous machines using this curve as default.
-            '''
-        
         })
     '''
     Synchronous machines using this curve as default.
@@ -7658,16 +6333,12 @@ class RecoveryOverloadLimitCurve(Curve):
         default_factory=list,
         metadata={
         'type': 'Association',
+        'stereotypes': [],
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'OperationalLimitType.RecoveryOverloadLimitCurve',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': False,
-        'docstring':
-            '''
-            The operational limit type which has recovery time characteristic.
-            '''
-        
         })
     '''
     The operational limit type which has recovery time characteristic.
@@ -7698,16 +6369,12 @@ class SolarRadiationDependencyCurve(Curve):
         default_factory=list,
         metadata={
         'type': 'Association',
+        'stereotypes': [],
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'OperationalLimitType.PermanentSolarRadiationCurve',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': False,
-        'docstring':
-            '''
-            The operational limit type that has this permanent solar radiation curve.
-            '''
-        
         })
     '''
     The operational limit type that has this permanent solar radiation
@@ -7737,16 +6404,12 @@ class CutAction(IdentifiedObject):
         default=None,
         metadata={
         'type': 'Association',
+        'stereotypes': [],
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'Cut.CutAction',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': False,
-        'docstring':
-            '''
-            Cut on which this action is taken.
-            '''
-        
         })
     '''
     Cut on which this action is taken.
@@ -7775,16 +6438,12 @@ class DCTopologicalNode(IdentifiedObject):
         default_factory=list,
         metadata={
         'type': 'Association',
+        'stereotypes': [],
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'SvDCVoltage.DCTopologicalNode',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': False,
-        'docstring':
-            '''
-            The state DC voltage associated with the DC topological node.
-            '''
-        
         })
     '''
     The state DC voltage associated with the DC topological node.
@@ -7814,16 +6473,12 @@ class DayType(IdentifiedObject):
         default_factory=list,
         metadata={
         'type': 'Association',
+        'stereotypes': [],
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'SeasonDayTypeSchedule.DayType',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': False,
-        'docstring':
-            '''
-            Schedules that use this DayType.
-            '''
-        
         })
     '''
     Schedules that use this DayType.
@@ -7853,16 +6508,12 @@ class DesignElement(IdentifiedObject):
         default=None,
         metadata={
         'type': 'Association',
+        'stereotypes': [],
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'PowerSystemResource.DesignElement',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': False,
-        'docstring':
-            '''
-            An existing or future PSR affected by the conceptual design
-            '''
-        
         })
     '''
     An existing or future PSR affected by the conceptual design
@@ -7891,15 +6542,12 @@ class EarthResistivity(IdentifiedObject):
     earthModelType: Optional[ EarthModelKind ] = field(
         default=None,
         metadata={
-        'type': 'enumeration GridAPPSD Attribute',
+        'type': 'Attribute',
+        'stereotypes': ['enumeration', 'GridAPPSD', 'Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://gridappsd.org/CIM/extension#',
         'serialize': True,
-        'docstring':
-            '''
-            '''
-        
         })
     '''
     '''
@@ -7908,16 +6556,11 @@ class EarthResistivity(IdentifiedObject):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://gridappsd.org/CIM/extension#',
         'serialize': True,
-        'docstring':
-            '''
-            Geometry mean radius of a set of hypothetical conductors with same impedance
-            as the earth return, per Carson's Equations
-            '''
-        
         })
     '''
     Geometry mean radius of a set of hypothetical conductors with same
@@ -7928,14 +6571,11 @@ class EarthResistivity(IdentifiedObject):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://gridappsd.org/CIM/extension#',
         'serialize': True,
-        'docstring':
-            '''
-            '''
-        
         })
     '''
     '''
@@ -7944,15 +6584,12 @@ class EarthResistivity(IdentifiedObject):
         default_factory=list,
         metadata={
         'type': 'Association',
+        'stereotypes': [],
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'ACLineSegment.EarthResistivity',
         'namespace': 'http://gridappsd.org/CIM/extension#',
         'serialize': False,
-        'docstring':
-            '''
-            '''
-        
         })
     '''
     '''
@@ -7983,17 +6620,13 @@ class EnergyArea(IdentifiedObject):
     ControlArea: Optional[ControlArea] = field(
         default=None,
         metadata={
-        'type': 'ShadowExtension',
+        'type': 'Association',
+        'stereotypes': ['ShadowExtension'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'ControlArea.EnergyArea',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            The control area specification that is used for the load forecast.
-            '''
-        
         })
     '''
     The control area specification that is used for the load forecast.
@@ -8003,16 +6636,12 @@ class EnergyArea(IdentifiedObject):
         default=None,
         metadata={
         'type': 'Association',
+        'stereotypes': [],
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'ControlArea.EnergyArea',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': False,
-        'docstring':
-            '''
-            The control area specification that is used for the load forecast.
-            '''
-        
         })
     '''
     The control area specification that is used for the load forecast.
@@ -8031,6 +6660,7 @@ class EnergyArea(IdentifiedObject):
     def __maxOccurs__(self):
         return 'unbounded'
     
+@stereotype(CIMStereotype.ShadowExtension)
 @stereotype(CIMStereotype.OfAggregate)
 @dataclass(repr=False)
 class LoadArea(EnergyArea):
@@ -8043,14 +6673,11 @@ class LoadArea(EnergyArea):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            '''
-        
         })
     '''
     '''
@@ -8058,17 +6685,13 @@ class LoadArea(EnergyArea):
     SubLoadAreas: list[SubLoadArea] = field(
         default_factory=list,
         metadata={
-        'type': 'AggregateOf',
+        'type': 'Association',
+        'stereotypes': ['AggregateOf'],
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'SubLoadArea.LoadArea',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': False,
-        'docstring':
-            '''
-            The SubLoadAreas in the LoadArea.
-            '''
-        
         })
     '''
     The SubLoadAreas in the LoadArea.
@@ -8098,17 +6721,13 @@ class SubLoadArea(EnergyArea):
     LoadArea: Optional[LoadArea] = field(
         default=None,
         metadata={
-        'type': 'OfAggregate',
+        'type': 'Association',
+        'stereotypes': ['OfAggregate'],
         'minOccurs': '1',
         'maxOccurs': '1',
         'inverse': 'LoadArea.SubLoadAreas',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            The LoadArea where the SubLoadArea belongs.
-            '''
-        
         })
     '''
     The LoadArea where the SubLoadArea belongs.
@@ -8117,17 +6736,13 @@ class SubLoadArea(EnergyArea):
     LoadGroups: list[LoadGroup] = field(
         default_factory=list,
         metadata={
-        'type': 'AggregateOf',
+        'type': 'Association',
+        'stereotypes': ['AggregateOf'],
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'LoadGroup.SubLoadArea',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': False,
-        'docstring':
-            '''
-            The Loadgroups in the SubLoadArea.
-            '''
-        
         })
     '''
     The Loadgroups in the SubLoadArea.
@@ -8156,15 +6771,12 @@ class EnergyConsumerAction(IdentifiedObject):
         default=None,
         metadata={
         'type': 'Association',
+        'stereotypes': [],
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'EnergyConsumer.EnergyConsumerAction',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': False,
-        'docstring':
-            '''
-            '''
-        
         })
     '''
     '''
@@ -8192,16 +6804,12 @@ class EnergySchedulingType(IdentifiedObject):
         default_factory=list,
         metadata={
         'type': 'Association',
+        'stereotypes': [],
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'EnergySource.EnergySchedulingType',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': False,
-        'docstring':
-            '''
-            Energy Source of a particular Energy Scheduling Type.
-            '''
-        
         })
     '''
     Energy Source of a particular Energy Scheduling Type.
@@ -8230,16 +6838,12 @@ class EnergySourceAction(IdentifiedObject):
         default=None,
         metadata={
         'type': 'Association',
+        'stereotypes': [],
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'EnergySource.EnergySourceAction',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': False,
-        'docstring':
-            '''
-            Energy source on which this action is taken.
-            '''
-        
         })
     '''
     Energy source on which this action is taken.
@@ -8270,15 +6874,11 @@ class FossilFuel(IdentifiedObject):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            The amount of heat per weight (or volume) of the given type of fuel.
-            '''
-        
         })
     '''
     The amount of heat per weight (or volume) of the given type of fuel.
@@ -8287,16 +6887,12 @@ class FossilFuel(IdentifiedObject):
     fossilFuelType: Optional[ FuelType ] = field(
         default=None,
         metadata={
-        'type': 'enumeration Attribute',
+        'type': 'Attribute',
+        'stereotypes': ['enumeration', 'Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            The type of fossil fuel, such as coal, oil, or gas.
-            '''
-        
         })
     '''
     The type of fossil fuel, such as coal, oil, or gas.
@@ -8306,15 +6902,11 @@ class FossilFuel(IdentifiedObject):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            The cost in terms of heat value for the given type of fuel.
-            '''
-        
         })
     '''
     The cost in terms of heat value for the given type of fuel.
@@ -8324,16 +6916,11 @@ class FossilFuel(IdentifiedObject):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            The cost of fuel used for economic dispatching which includes: fuel cost,
-            transportation cost, and incremental maintenance cost.
-            '''
-        
         })
     '''
     The cost of fuel used for economic dispatching which includes: fuel
@@ -8344,16 +6931,11 @@ class FossilFuel(IdentifiedObject):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            The efficiency factor for the fuel (per unit) in terms of the effective
-            energy absorbed.
-            '''
-        
         })
     '''
     The efficiency factor for the fuel (per unit) in terms of the effective
@@ -8364,15 +6946,11 @@ class FossilFuel(IdentifiedObject):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Handling and processing cost associated with this fuel.
-            '''
-        
         })
     '''
     Handling and processing cost associated with this fuel.
@@ -8382,16 +6960,11 @@ class FossilFuel(IdentifiedObject):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Relative amount of the given type of fuel, when multiple fuels are being
-            consumed.
-            '''
-        
         })
     '''
     Relative amount of the given type of fuel, when multiple fuels are
@@ -8402,15 +6975,11 @@ class FossilFuel(IdentifiedObject):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            The fuel's fraction of pollution credit per unit of heat content.
-            '''
-        
         })
     '''
     The fuel's fraction of pollution credit per unit of heat content.
@@ -8420,17 +6989,11 @@ class FossilFuel(IdentifiedObject):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            The active power output level of the unit at which the given type of fuel
-            is switched on. This fuel (e.g., oil) is sometimes used to supplement the
-            base fuel (e.g., coal) at high active power output levels.
-            '''
-        
         })
     '''
     The active power output level of the unit at which the given type of
@@ -8442,17 +7005,11 @@ class FossilFuel(IdentifiedObject):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            The active power output level of the unit at which the given type of fuel
-            is switched off. This fuel (e.g., oil) is sometimes used to stabilize the
-            base fuel (e.g., coal) at low active power output levels.
-            '''
-        
         })
     '''
     The active power output level of the unit at which the given type of
@@ -8463,17 +7020,13 @@ class FossilFuel(IdentifiedObject):
     FuelStorage: Optional[FuelStorage] = field(
         default=None,
         metadata={
-        'type': 'ShadowExtension',
+        'type': 'Association',
+        'stereotypes': ['ShadowExtension'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'FuelStorage.FossilFuel',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Fuel storage that store fossil fuels.
-            '''
-        
         })
     '''
     Fuel storage that store fossil fuels.
@@ -8482,17 +7035,13 @@ class FossilFuel(IdentifiedObject):
     ThermalGeneratingUnit: Optional[ThermalGeneratingUnit] = field(
         default=None,
         metadata={
-        'type': 'Attribute',
+        'type': 'Association',
+        'stereotypes': [],
         'minOccurs': '1',
         'maxOccurs': '1',
         'inverse': 'ThermalGeneratingUnit.FossilFuels',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            A thermal generating unit may have one or more fossil fuels.
-            '''
-        
         })
     '''
     A thermal generating unit may have one or more fossil fuels.
@@ -8521,17 +7070,13 @@ class GeographicalRegion(IdentifiedObject):
     Regions: list[SubGeographicalRegion] = field(
         default_factory=list,
         metadata={
-        'type': 'AggregateOf',
+        'type': 'Association',
+        'stereotypes': ['AggregateOf'],
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'SubGeographicalRegion.Region',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': False,
-        'docstring':
-            '''
-            All sub-geographical regions within this geographical region.
-            '''
-        
         })
     '''
     All sub-geographical regions within this geographical region.
@@ -8560,20 +7105,12 @@ class GroundAction(IdentifiedObject):
         default=None,
         metadata={
         'type': 'Association',
+        'stereotypes': [],
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'ConductingEquipment.GroundingAction',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': False,
-        'docstring':
-            '''
-            Equipment being grounded with this operation. In case of placing a ground
-            anywhere along a line segment, you must use the clamp (to get the distance
-            from one terminal), so use the explicit relation with line segment. In
-            all other cases (including placing the ground at a line segment terminal),
-            reference to one or more conducting equipment is sufficient.
-            '''
-        
         })
     '''
     Equipment being grounded with this operation. In case of placing a
@@ -8588,16 +7125,12 @@ class GroundAction(IdentifiedObject):
         default=None,
         metadata={
         'type': 'Association',
+        'stereotypes': [],
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'Ground.GroundAction',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': False,
-        'docstring':
-            '''
-            Ground on which this action is taken.
-            '''
-        
         })
     '''
     Ground on which this action is taken.
@@ -8626,17 +7159,13 @@ class IOPoint(IdentifiedObject):
     IOPointSource: Optional[IOPointSource] = field(
         default=None,
         metadata={
-        'type': 'Attribute',
+        'type': 'Association',
+        'stereotypes': [],
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'IOPointSource.IOPoint',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Local merasurement value source for an ICCP point.
-            '''
-        
         })
     '''
     Local merasurement value source for an ICCP point.
@@ -8668,15 +7197,11 @@ class MeasurementValue(IOPoint):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            The time when the value was last updated.
-            '''
-        
         })
     '''
     The time when the value was last updated.
@@ -8686,16 +7211,11 @@ class MeasurementValue(IOPoint):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            The limit, expressed as a percentage of the sensor maximum, that errors
-            will not exceed when the sensor is used under reference conditions.
-            '''
-        
         })
     '''
     The limit, expressed as a percentage of the sensor maximum, that errors
@@ -8705,16 +7225,13 @@ class MeasurementValue(IOPoint):
     CalculationMethodHierarchy: Optional[CalculationMethodHierarchy] = field(
         default=None,
         metadata={
-        'type': 'harmonization',
+        'type': 'Association',
+        'stereotypes': ['harmonization'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'CalculationMethodHierarchy.MeasurementValue',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            '''
-        
         })
     '''
     '''
@@ -8722,16 +7239,13 @@ class MeasurementValue(IOPoint):
     ErpPerson: Optional[OldPerson] = field(
         default=None,
         metadata={
-        'type': 'ShadowExtension informative',
+        'type': 'Association',
+        'stereotypes': ['ShadowExtension', 'informative'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'OldPerson.MeasurementValues',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            '''
-        
         })
     '''
     '''
@@ -8739,17 +7253,13 @@ class MeasurementValue(IOPoint):
     MeasurementValueQuality: Optional[MeasurementValueQuality] = field(
         default=None,
         metadata={
-        'type': 'AggregateOf',
+        'type': 'Association',
+        'stereotypes': ['AggregateOf'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'MeasurementValueQuality.MeasurementValue',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            A MeasurementValue has a MeasurementValueQuality associated with it.
-            '''
-        
         })
     '''
     A MeasurementValue has a MeasurementValueQuality associated with it.
@@ -8758,19 +7268,13 @@ class MeasurementValue(IOPoint):
     MeasurementValueSource: Optional[MeasurementValueSource] = field(
         default=None,
         metadata={
-        'type': 'Attribute',
+        'type': 'Association',
+        'stereotypes': [],
         'minOccurs': '1',
         'maxOccurs': '1',
         'inverse': 'MeasurementValueSource.MeasurementValues',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            A reference to the type of source that updates the MeasurementValue, e.g.
-            SCADA, CCLink, manual, etc. User conventions for the names of sources are
-            contained in the introduction to IEC 61970-301.
-            '''
-        
         })
     '''
     A reference to the type of source that updates the MeasurementValue,
@@ -8781,17 +7285,13 @@ class MeasurementValue(IOPoint):
     RemoteSource: Optional[RemoteSource] = field(
         default=None,
         metadata={
-        'type': 'Attribute',
+        'type': 'Association',
+        'stereotypes': [],
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'RemoteSource.MeasurementValue',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Link to the physical telemetered point associated with this measurement.
-            '''
-        
         })
     '''
     Link to the physical telemetered point associated with this measurement.
@@ -8800,17 +7300,13 @@ class MeasurementValue(IOPoint):
     MeasurementValueQuality: Optional[MeasurementValueQuality] = field(
         default=None,
         metadata={
-        'type': 'AggregateOf',
+        'type': 'Association',
+        'stereotypes': ['AggregateOf'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'MeasurementValueQuality.MeasurementValue',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': False,
-        'docstring':
-            '''
-            A MeasurementValue has a MeasurementValueQuality associated with it.
-            '''
-        
         })
     '''
     A MeasurementValue has a MeasurementValueQuality associated with it.
@@ -8839,15 +7335,11 @@ class AnalogValue(MeasurementValue):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            The value to supervise.
-            '''
-        
         })
     '''
     The value to supervise.
@@ -8856,17 +7348,13 @@ class AnalogValue(MeasurementValue):
     Analog: Optional[Analog] = field(
         default=None,
         metadata={
-        'type': 'ShadowExtension',
+        'type': 'Association',
+        'stereotypes': ['ShadowExtension'],
         'minOccurs': '1',
         'maxOccurs': '1',
         'inverse': 'Analog.AnalogValues',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Measurement to which this value is connected.
-            '''
-        
         })
     '''
     Measurement to which this value is connected.
@@ -8876,16 +7364,12 @@ class AnalogValue(MeasurementValue):
         default_factory=list,
         metadata={
         'type': 'Association',
+        'stereotypes': [],
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'AltGeneratingUnitMeas.AnalogValue',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': False,
-        'docstring':
-            '''
-            The alternate generating unit for which this measurement value applies.
-            '''
-        
         })
     '''
     The alternate generating unit for which this measurement value applies.
@@ -8895,16 +7379,12 @@ class AnalogValue(MeasurementValue):
         default_factory=list,
         metadata={
         'type': 'Association',
+        'stereotypes': [],
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'AltTieMeas.AnalogValue',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': False,
-        'docstring':
-            '''
-            The usage of the measurement within the control area specification.
-            '''
-        
         })
     '''
     The usage of the measurement within the control area specification.
@@ -8923,6 +7403,7 @@ class AnalogValue(MeasurementValue):
     def __maxOccurs__(self):
         return 'unbounded'
     
+@stereotype(CIMStereotype.GridAPPSD)
 @dataclass(repr=False)
 class MeasurementVector(MeasurementValue):
     '''
@@ -8932,14 +7413,11 @@ class MeasurementVector(MeasurementValue):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://gridappsd.org/CIM/extension#',
         'serialize': True,
-        'docstring':
-            '''
-            '''
-        
         })
     '''
     '''
@@ -8948,14 +7426,11 @@ class MeasurementVector(MeasurementValue):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://gridappsd.org/CIM/extension#',
         'serialize': True,
-        'docstring':
-            '''
-            '''
-        
         })
     '''
     '''
@@ -9003,16 +7478,12 @@ class ImpedanceTapChangerTable(IdentifiedObject):
         default_factory=list,
         metadata={
         'type': 'Association',
+        'stereotypes': [],
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'ImpedanceTapChangerTablePoint.ImpedanceTapChangerTable',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': False,
-        'docstring':
-            '''
-            The points of this table.
-            '''
-        
         })
     '''
     The points of this table.
@@ -9022,16 +7493,12 @@ class ImpedanceTapChangerTable(IdentifiedObject):
         default_factory=list,
         metadata={
         'type': 'Association',
+        'stereotypes': [],
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'ImpedanceTapChangerTabular.ImpedanceTapChangerTable',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': False,
-        'docstring':
-            '''
-            The impedance tap changer to which this impedance tap table applies.
-            '''
-        
         })
     '''
     The impedance tap changer to which this impedance tap table applies.
@@ -9059,16 +7526,13 @@ class IndividualPnode(IdentifiedObject):
     ConnectivityNode: Optional[ConnectivityNode] = field(
         default=None,
         metadata={
-        'type': 'Attribute',
+        'type': 'Association',
+        'stereotypes': [],
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'ConnectivityNode.IndividualPnode',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            '''
-        
         })
     '''
     '''
@@ -9077,15 +7541,12 @@ class IndividualPnode(IdentifiedObject):
         default=None,
         metadata={
         'type': 'Association',
+        'stereotypes': [],
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'ConnectivityNode.IndividualPnode',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': False,
-        'docstring':
-            '''
-            '''
-        
         })
     '''
     '''
@@ -9113,22 +7574,12 @@ class JumperAction(IdentifiedObject):
         default_factory=list,
         metadata={
         'type': 'Association',
+        'stereotypes': [],
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'ConductingEquipment.JumpingAction',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': False,
-        'docstring':
-            '''
-            Conducting equipment is affected when the jumper action connects one or
-            both ends of a jumper to the conducting equipment. If the jumper action
-            involves placing one or both ends of a jumper anywhere along a line segment,
-            you must use the clamp (to get the distance from one terminal), using the
-            explicit relation with clamp. In the case of placing one or both ends of
-            the jumper at a line segment terminal, reference to one or more line segments
-            is sufficient.
-            '''
-        
         })
     '''
     Conducting equipment is affected when the jumper action connects one
@@ -9144,16 +7595,12 @@ class JumperAction(IdentifiedObject):
         default=None,
         metadata={
         'type': 'Association',
+        'stereotypes': [],
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'Jumper.JumperAction',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': False,
-        'docstring':
-            '''
-            Jumper on which this action is taken.
-            '''
-        
         })
     '''
     Jumper on which this action is taken.
@@ -9183,17 +7630,11 @@ class LineSegmentCoupling(IdentifiedObject):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Sequence number of coupled line. Value of 1 indicates that line is the
-            reference line. Valid value range is from 1 to number of coupled lines
-            in the group.
-            '''
-        
         })
     '''
     Sequence number of coupled line. Value of 1 indicates that line is
@@ -9205,24 +7646,11 @@ class LineSegmentCoupling(IdentifiedObject):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Indication of whether the reference end of a line in a coupled group is
-            the same as the reference end of the reference line.
-            Set reverseFlow to True for any lines that do not have their Terminal with
-            sequenceNumber = 1 at the same end as the reference line.
-            Set reverseFlow to False for the reference line and for any lines that
-            have their Terminal with sequenceNumber = 1 at the same end as the reference
-            line.
-            The sign of the coupled voltage drop of an ACLineSegment reverses when
-            two coupled lines have their Terminals with sequenceNumber = 1 at opposite
-            ends.
-            '''
-        
         })
     '''
     Indication of whether the reference end of a line in a coupled group
@@ -9241,19 +7669,11 @@ class LineSegmentCoupling(IdentifiedObject):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            The horizontal offset between the horizontal reference point of a coupled
-            line and the horizontal reference point of the reference line in the group.
-            The horizontal reference point for a line is established by the line's
-            WireAssembly. It is the zero x position on which the xCoord values of WirePositions
-            in the WireAssembly are based.
-            '''
-        
         })
     '''
     The horizontal offset between the horizontal reference point of a coupled
@@ -9267,17 +7687,13 @@ class LineSegmentCoupling(IdentifiedObject):
     ACLineSegment: Optional[ACLineSegment] = field(
         default=None,
         metadata={
-        'type': 'Attribute',
+        'type': 'Association',
+        'stereotypes': [],
         'minOccurs': '1',
         'maxOccurs': '1',
         'inverse': 'ACLineSegment.LineSegmentCoupling',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            The line whose relationship in a coupled group is described.
-            '''
-        
         })
     '''
     The line whose relationship in a coupled group is described.
@@ -9286,17 +7702,13 @@ class LineSegmentCoupling(IdentifiedObject):
     CoupledLineSegmentGroup: Optional[CoupledLineSegmentGroup] = field(
         default=None,
         metadata={
-        'type': 'Attribute',
+        'type': 'Association',
+        'stereotypes': [],
         'minOccurs': '1',
         'maxOccurs': '1',
         'inverse': 'CoupledLineSegmentGroup.LineSegmentCoupling',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            The coupled group of lines with which this coupled line has relationships.
-            '''
-        
         })
     '''
     The coupled group of lines with which this coupled line has relationships.
@@ -9330,16 +7742,12 @@ class LoadDynamics(IdentifiedObject):
         default_factory=list,
         metadata={
         'type': 'Association',
+        'stereotypes': [],
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'EnergyConsumer.LoadDynamics',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': False,
-        'docstring':
-            '''
-            Energy consumer to which this dynamics load model applies.
-            '''
-        
         })
     '''
     Energy consumer to which this dynamics load model applies.
@@ -9368,17 +7776,13 @@ class LoadGroup(IdentifiedObject):
     SubLoadArea: Optional[SubLoadArea] = field(
         default=None,
         metadata={
-        'type': 'OfAggregate',
+        'type': 'Association',
+        'stereotypes': ['OfAggregate'],
         'minOccurs': '1',
         'maxOccurs': '1',
         'inverse': 'SubLoadArea.LoadGroups',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            The SubLoadArea where the Loadgroup belongs.
-            '''
-        
         })
     '''
     The SubLoadArea where the Loadgroup belongs.
@@ -9408,16 +7812,12 @@ class ConformLoadGroup(LoadGroup):
         default_factory=list,
         metadata={
         'type': 'Association',
+        'stereotypes': [],
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'ConformLoad.LoadGroup',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': False,
-        'docstring':
-            '''
-            Conform loads assigned to this ConformLoadGroup.
-            '''
-        
         })
     '''
     Conform loads assigned to this ConformLoadGroup.
@@ -9426,17 +7826,13 @@ class ConformLoadGroup(LoadGroup):
     ConformLoadSchedules: list[ConformLoadSchedule] = field(
         default_factory=list,
         metadata={
-        'type': 'AggregateOf',
+        'type': 'Association',
+        'stereotypes': ['AggregateOf'],
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'ConformLoadSchedule.ConformLoadGroup',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': False,
-        'docstring':
-            '''
-            The ConformLoadSchedules in the ConformLoadGroup.
-            '''
-        
         })
     '''
     The ConformLoadSchedules in the ConformLoadGroup.
@@ -9466,16 +7862,12 @@ class NonConformLoadGroup(LoadGroup):
         default_factory=list,
         metadata={
         'type': 'Association',
+        'stereotypes': [],
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'NonConformLoad.LoadGroup',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': False,
-        'docstring':
-            '''
-            Conform loads assigned to this ConformLoadGroup.
-            '''
-        
         })
     '''
     Conform loads assigned to this ConformLoadGroup.
@@ -9484,17 +7876,13 @@ class NonConformLoadGroup(LoadGroup):
     NonConformLoadSchedules: list[NonConformLoadSchedule] = field(
         default_factory=list,
         metadata={
-        'type': 'AggregateOf',
+        'type': 'Association',
+        'stereotypes': ['AggregateOf'],
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'NonConformLoadSchedule.NonConformLoadGroup',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': False,
-        'docstring':
-            '''
-            The NonConformLoadSchedules in the NonConformLoadGroup.
-            '''
-        
         })
     '''
     The NonConformLoadSchedules in the NonConformLoadGroup.
@@ -9557,32 +7945,11 @@ class LoadResponseCharacteristic(IdentifiedObject):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Indicates the exponential voltage dependency model is to be used. If false,
-            the coefficient model is to be used.
-            The exponential voltage dependency model consist of the attributes:
-            - pVoltageExponent
-            - qVoltageExponent
-            - pFrequencyExponent
-            - qFrequencyExponent.
-            The coefficient model consist of the attributes:
-            - pConstantImpedance
-            - pConstantCurrent
-            - pConstantPower
-            - qConstantImpedance
-            - qConstantCurrent
-            - qConstantPower.
-            The sum of pConstantImpedance, pConstantCurrent and pConstantPower shall
-            equal 1.
-            The sum of qConstantImpedance, qConstantCurrent and qConstantPower shall
-            equal 1.
-            '''
-        
         })
     '''
     Indicates the exponential voltage dependency model is to be used. If
@@ -9609,15 +7976,11 @@ class LoadResponseCharacteristic(IdentifiedObject):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Portion of active power load modelled as constant current.
-            '''
-        
         })
     '''
     Portion of active power load modelled as constant current.
@@ -9627,15 +7990,11 @@ class LoadResponseCharacteristic(IdentifiedObject):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Portion of active power load modelled as constant impedance.
-            '''
-        
         })
     '''
     Portion of active power load modelled as constant impedance.
@@ -9645,15 +8004,11 @@ class LoadResponseCharacteristic(IdentifiedObject):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Portion of active power load modelled as constant power.
-            '''
-        
         })
     '''
     Portion of active power load modelled as constant power.
@@ -9663,15 +8018,11 @@ class LoadResponseCharacteristic(IdentifiedObject):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Exponent of per unit frequency effecting active power.
-            '''
-        
         })
     '''
     Exponent of per unit frequency effecting active power.
@@ -9681,15 +8032,11 @@ class LoadResponseCharacteristic(IdentifiedObject):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Exponent of per unit voltage effecting real power.
-            '''
-        
         })
     '''
     Exponent of per unit voltage effecting real power.
@@ -9699,15 +8046,11 @@ class LoadResponseCharacteristic(IdentifiedObject):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Portion of reactive power load modelled as constant current.
-            '''
-        
         })
     '''
     Portion of reactive power load modelled as constant current.
@@ -9717,15 +8060,11 @@ class LoadResponseCharacteristic(IdentifiedObject):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Portion of reactive power load modelled as constant impedance.
-            '''
-        
         })
     '''
     Portion of reactive power load modelled as constant impedance.
@@ -9735,15 +8074,11 @@ class LoadResponseCharacteristic(IdentifiedObject):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Portion of reactive power load modelled as constant power.
-            '''
-        
         })
     '''
     Portion of reactive power load modelled as constant power.
@@ -9753,15 +8088,11 @@ class LoadResponseCharacteristic(IdentifiedObject):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Exponent of per unit frequency effecting reactive power.
-            '''
-        
         })
     '''
     Exponent of per unit frequency effecting reactive power.
@@ -9771,15 +8102,11 @@ class LoadResponseCharacteristic(IdentifiedObject):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Exponent of per unit voltage effecting reactive power.
-            '''
-        
         })
     '''
     Exponent of per unit voltage effecting reactive power.
@@ -9789,16 +8116,12 @@ class LoadResponseCharacteristic(IdentifiedObject):
         default_factory=list,
         metadata={
         'type': 'Association',
+        'stereotypes': [],
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'EnergyConsumer.LoadResponse',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': False,
-        'docstring':
-            '''
-            The set of loads that have the response characteristics.
-            '''
-        
         })
     '''
     The set of loads that have the response characteristics.
@@ -9837,15 +8160,12 @@ class Location(IdentifiedObject):
         default_factory=list,
         metadata={
         'type': 'Association',
+        'stereotypes': [],
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'PositionPoint.Location',
         'namespace': 'http://gridappsd.org/CIM/extension#',
         'serialize': False,
-        'docstring':
-            '''
-            '''
-        
         })
     '''
     '''
@@ -9854,16 +8174,12 @@ class Location(IdentifiedObject):
         default_factory=list,
         metadata={
         'type': 'Association',
+        'stereotypes': [],
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'PowerSystemResource.Location',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': False,
-        'docstring':
-            '''
-            All power system resources at this location.
-            '''
-        
         })
     '''
     All power system resources at this location.
@@ -9882,6 +8198,7 @@ class Location(IdentifiedObject):
     def __maxOccurs__(self):
         return 'unbounded'
     
+@stereotype(CIMStereotype.GridAPPSD)
 @dataclass(repr=False)
 class ChargingSite(Location):
     '''
@@ -9903,6 +8220,7 @@ class ChargingSite(Location):
     def __maxOccurs__(self):
         return 'unbounded'
     
+@stereotype(CIMStereotype.ShadowExtension)
 @dataclass(repr=False)
 class Measurement(IdentifiedObject):
     '''
@@ -9932,20 +8250,11 @@ class Measurement(IdentifiedObject):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Specifies the type of measurement. For example, this specifies if the measurement
-            represents an indoor temperature, outdoor temperature, bus voltage, line
-            flow, etc.
-            When the measurementType is set to "Specialization", the type of Measurement
-            is defined in more detail by the specialized class which inherits from
-            Measurement.
-            '''
-        
         })
     '''
     Specifies the type of measurement. For example, this specifies if the
@@ -9959,22 +8268,12 @@ class Measurement(IdentifiedObject):
     phases: Optional[ PhaseCode ] = field(
         default=None,
         metadata={
-        'type': 'enumeration Attribute',
+        'type': 'Attribute',
+        'stereotypes': ['enumeration', 'Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Indicates to which phases the measurement applies and avoids the need to
-            use 'measurementType' to also encode phase information (which would explode
-            the types). The phase information in Measurement, along with 'measurementType'
-            and 'phases' uniquely defines a Measurement for a device, based on normal
-            network phase. Their meaning will not change when the computed energizing
-            phasing is changed due to jumpers or other reasons.
-            If the attribute is missing three phases (ABC) shall be assumed.
-            '''
-        
         })
     '''
     Indicates to which phases the measurement applies and avoids the need
@@ -9990,15 +8289,12 @@ class Measurement(IdentifiedObject):
     sourceType: Optional[ MeasurementSourceKind ] = field(
         default=None,
         metadata={
-        'type': 'enumeration GridAPPSD Attribute',
+        'type': 'Attribute',
+        'stereotypes': ['enumeration', 'GridAPPSD', 'Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            '''
-        
         })
     '''
     '''
@@ -10006,16 +8302,12 @@ class Measurement(IdentifiedObject):
     unitMultiplier: Optional[ UnitMultiplier ] = field(
         default=None,
         metadata={
-        'type': 'enumeration Attribute',
+        'type': 'Attribute',
+        'stereotypes': ['enumeration', 'Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            The unit multiplier of the measured quantity.
-            '''
-        
         })
     '''
     The unit multiplier of the measured quantity.
@@ -10024,16 +8316,12 @@ class Measurement(IdentifiedObject):
     unitSymbol: Optional[ UnitSymbol ] = field(
         default=None,
         metadata={
-        'type': 'enumeration Attribute',
+        'type': 'Attribute',
+        'stereotypes': ['enumeration', 'Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            The unit of measure of the measured quantity.
-            '''
-        
         })
     '''
     The unit of measure of the measured quantity.
@@ -10042,16 +8330,13 @@ class Measurement(IdentifiedObject):
     Asset: Optional[Asset] = field(
         default=None,
         metadata={
-        'type': 'Attribute',
+        'type': 'Association',
+        'stereotypes': [],
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'Asset.Measurements',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            '''
-        
         })
     '''
     '''
@@ -10059,17 +8344,13 @@ class Measurement(IdentifiedObject):
     CalculationMethodHierarchy: Optional[CalculationMethodHierarchy] = field(
         default=None,
         metadata={
-        'type': 'Attribute',
+        'type': 'Association',
+        'stereotypes': [],
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'CalculationMethodHierarchy.Measurement',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Calculation method hierarchy which applies to this analog.
-            '''
-        
         })
     '''
     Calculation method hierarchy which applies to this analog.
@@ -10078,16 +8359,13 @@ class Measurement(IdentifiedObject):
     MeasurementAction: Optional[MeasurementAction] = field(
         default=None,
         metadata={
-        'type': 'Attribute',
+        'type': 'Association',
+        'stereotypes': [],
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'MeasurementAction.Measurement',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            '''
-        
         })
     '''
     '''
@@ -10095,16 +8373,13 @@ class Measurement(IdentifiedObject):
     MeasurementSystem: Optional[MeasurementSystem] = field(
         default=None,
         metadata={
-        'type': 'ShadowExtension',
+        'type': 'Association',
+        'stereotypes': ['ShadowExtension'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'MeasurementSystem.Measurements',
         'namespace': 'http://gridappsd.org/CIM/extension#',
         'serialize': True,
-        'docstring':
-            '''
-            '''
-        
         })
     '''
     '''
@@ -10112,17 +8387,13 @@ class Measurement(IdentifiedObject):
     PowerSystemResource: Optional[PowerSystemResource] = field(
         default=None,
         metadata={
-        'type': 'Attribute',
+        'type': 'Association',
+        'stereotypes': [],
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'PowerSystemResource.Measurements',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            The power system resource that contains the measurement.
-            '''
-        
         })
     '''
     The power system resource that contains the measurement.
@@ -10131,17 +8402,13 @@ class Measurement(IdentifiedObject):
     Terminal: Optional[ACDCTerminal] = field(
         default=None,
         metadata={
-        'type': 'Attribute',
+        'type': 'Association',
+        'stereotypes': [],
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'ACDCTerminal.Measurements',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            One or more measurements may be associated with a terminal in the network.
-            '''
-        
         })
     '''
     One or more measurements may be associated with a terminal in the network.
@@ -10171,16 +8438,12 @@ class Analog(Measurement):
         default_factory=list,
         metadata={
         'type': 'Association',
+        'stereotypes': [],
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'AnalogValue.Analog',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': False,
-        'docstring':
-            '''
-            The values connected to this measurement.
-            '''
-        
         })
     '''
     The values connected to this measurement.
@@ -10190,16 +8453,12 @@ class Analog(Measurement):
         default_factory=list,
         metadata={
         'type': 'Association',
+        'stereotypes': [],
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'PointOnWaveValue.Analog',
         'namespace': 'http://gridappsd.org/CIM/extension#',
         'serialize': False,
-        'docstring':
-            '''
-            Set of Point on wave datastream chunks
-            '''
-        
         })
     '''
     Set of Point on wave datastream chunks
@@ -10230,16 +8489,11 @@ class Discrete(Measurement):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Normal value range maximum for any of the MeasurementValue.values. Used
-            for scaling, e.g. in bar graphs or of telemetered raw values.
-            '''
-        
         })
     '''
     Normal value range maximum for any of the MeasurementValue.values.
@@ -10250,16 +8504,11 @@ class Discrete(Measurement):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Normal value range minimum for any of the MeasurementValue.values. Used
-            for scaling, e.g. in bar graphs or of telemetered raw values.
-            '''
-        
         })
     '''
     Normal value range minimum for any of the MeasurementValue.values.
@@ -10270,15 +8519,11 @@ class Discrete(Measurement):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Normal measurement value, e.g., used for percentage calculations.
-            '''
-        
         })
     '''
     Normal measurement value, e.g., used for percentage calculations.
@@ -10287,18 +8532,13 @@ class Discrete(Measurement):
     ValueAliasSet: Optional[ValueAliasSet] = field(
         default=None,
         metadata={
-        'type': 'Attribute',
+        'type': 'Association',
+        'stereotypes': [],
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'ValueAliasSet.Discretes',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            The ValueAliasSet used for translation of a MeasurementValue.value to a
-            name.
-            '''
-        
         })
     '''
     The ValueAliasSet used for translation of a MeasurementValue.value
@@ -10328,15 +8568,12 @@ class MeasurementAction(IdentifiedObject):
         default=None,
         metadata={
         'type': 'Association',
+        'stereotypes': [],
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'Measurement.MeasurementAction',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': False,
-        'docstring':
-            '''
-            '''
-        
         })
     '''
     '''
@@ -10366,16 +8603,12 @@ class MeasurementValueSource(IdentifiedObject):
         default_factory=list,
         metadata={
         'type': 'Association',
+        'stereotypes': [],
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'MeasurementValue.MeasurementValueSource',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': False,
-        'docstring':
-            '''
-            The MeasurementValues updated by the source.
-            '''
-        
         })
     '''
     The MeasurementValues updated by the source.
@@ -10404,16 +8637,12 @@ class IOPointSource(MeasurementValueSource):
         default_factory=list,
         metadata={
         'type': 'Association',
+        'stereotypes': [],
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'IOPoint.IOPointSource',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': False,
-        'docstring':
-            '''
-            ICCP point for a local measurement value source.
-            '''
-        
         })
     '''
     ICCP point for a local measurement value source.
@@ -10432,6 +8661,7 @@ class IOPointSource(MeasurementValueSource):
     def __maxOccurs__(self):
         return 'unbounded'
     
+@stereotype(CIMStereotype.deprecated)
 @dataclass(repr=False)
 class MutualCoupling(IdentifiedObject):
     '''
@@ -10442,16 +8672,11 @@ class MutualCoupling(IdentifiedObject):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Zero sequence mutual coupling shunt (charging) susceptance, uniformly distributed,
-            of the entire line section.
-            '''
-        
         })
     '''
     Zero sequence mutual coupling shunt (charging) susceptance, uniformly
@@ -10462,16 +8687,11 @@ class MutualCoupling(IdentifiedObject):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Distance to the start of the coupled region from the first line's terminal
-            having sequence number equal to 1.
-            '''
-        
         })
     '''
     Distance to the start of the coupled region from the first line's terminal
@@ -10482,16 +8702,11 @@ class MutualCoupling(IdentifiedObject):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Distance to the end of the coupled region from the first line's terminal
-            with sequence number equal to 1.
-            '''
-        
         })
     '''
     Distance to the end of the coupled region from the first line's terminal
@@ -10502,16 +8717,11 @@ class MutualCoupling(IdentifiedObject):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Distance to the start of coupled region from the second line's terminal
-            with sequence number equal to 1.
-            '''
-        
         })
     '''
     Distance to the start of coupled region from the second line's terminal
@@ -10522,16 +8732,11 @@ class MutualCoupling(IdentifiedObject):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Distance to the end of coupled region from the second line's terminal with
-            sequence number equal to 1.
-            '''
-        
         })
     '''
     Distance to the end of coupled region from the second line's terminal
@@ -10542,16 +8747,11 @@ class MutualCoupling(IdentifiedObject):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Zero sequence mutual coupling shunt (charging) conductance, uniformly distributed,
-            of the entire line section.
-            '''
-        
         })
     '''
     Zero sequence mutual coupling shunt (charging) conductance, uniformly
@@ -10562,15 +8762,11 @@ class MutualCoupling(IdentifiedObject):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Zero sequence branch-to-branch mutual impedance coupling, resistance.
-            '''
-        
         })
     '''
     Zero sequence branch-to-branch mutual impedance coupling, resistance.
@@ -10580,15 +8776,11 @@ class MutualCoupling(IdentifiedObject):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Zero sequence branch-to-branch mutual impedance coupling, reactance.
-            '''
-        
         })
     '''
     Zero sequence branch-to-branch mutual impedance coupling, reactance.
@@ -10597,20 +8789,13 @@ class MutualCoupling(IdentifiedObject):
     First_Terminal: Optional[Terminal] = field(
         default=None,
         metadata={
-        'type': 'Attribute',
+        'type': 'Association',
+        'stereotypes': [],
         'minOccurs': '1',
         'maxOccurs': '1',
         'inverse': 'Terminal.HasFirstMutualCoupling',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            The starting terminal for the calculation of distances along the first
-            branch of the mutual coupling. Normally MutualCoupling would only be used
-            for terminals of AC line segments. The first and second terminals of a
-            mutual coupling should point to different AC line segments.
-            '''
-        
         })
     '''
     The starting terminal for the calculation of distances along the first
@@ -10622,18 +8807,13 @@ class MutualCoupling(IdentifiedObject):
     Second_Terminal: Optional[Terminal] = field(
         default=None,
         metadata={
-        'type': 'Attribute',
+        'type': 'Association',
+        'stereotypes': [],
         'minOccurs': '1',
         'maxOccurs': '1',
         'inverse': 'Terminal.HasSecondMutualCoupling',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            The starting terminal for the calculation of distances along the second
-            branch of the mutual coupling.
-            '''
-        
         })
     '''
     The starting terminal for the calculation of distances along the second
@@ -10665,16 +8845,13 @@ class OldPerson(IdentifiedObject):
     MeasurementValues: list[MeasurementValue] = field(
         default_factory=list,
         metadata={
-        'type': 'informative',
+        'type': 'Association',
+        'stereotypes': ['informative'],
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'MeasurementValue.ErpPerson',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': False,
-        'docstring':
-            '''
-            '''
-        
         })
     '''
     '''
@@ -10692,6 +8869,7 @@ class OldPerson(IdentifiedObject):
     def __maxOccurs__(self):
         return 'unbounded'
     
+@stereotype(CIMStereotype.GridAPPSD)
 @dataclass(repr=False)
 class OperationalAuthority(IdentifiedObject):
     '''
@@ -10728,17 +8906,13 @@ class OperationalLimit(IdentifiedObject):
     OperationalLimitSet: Optional[OperationalLimitSet] = field(
         default=None,
         metadata={
-        'type': 'OfAggregate',
+        'type': 'Association',
+        'stereotypes': ['OfAggregate'],
         'minOccurs': '1',
         'maxOccurs': '1',
         'inverse': 'OperationalLimitSet.OperationalLimitValue',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            The limit set to which the limit values belong.
-            '''
-        
         })
     '''
     The limit set to which the limit values belong.
@@ -10747,17 +8921,13 @@ class OperationalLimit(IdentifiedObject):
     OperationalLimitType: Optional[OperationalLimitType] = field(
         default=None,
         metadata={
-        'type': 'Attribute',
+        'type': 'Association',
+        'stereotypes': [],
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'OperationalLimitType.OperationalLimit',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            The limit type associated with this limit.
-            '''
-        
         })
     '''
     The limit type associated with this limit.
@@ -10766,17 +8936,13 @@ class OperationalLimit(IdentifiedObject):
     StepOperationalLimitTable: Optional[StepOperationalLimitTable] = field(
         default=None,
         metadata={
-        'type': 'Attribute',
+        'type': 'Association',
+        'stereotypes': [],
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'StepOperationalLimitTable.OperationalLimit',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            The step operational limit table for this operational limit.
-            '''
-        
         })
     '''
     The step operational limit table for this operational limit.
@@ -10805,16 +8971,11 @@ class ActivePowerLimit(OperationalLimit):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            The normal value of active power limit. The attribute shall be a positive
-            value or zero.
-            '''
-        
         })
     '''
     The normal value of active power limit. The attribute shall be a positive
@@ -10825,16 +8986,11 @@ class ActivePowerLimit(OperationalLimit):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Value of active power limit. The attribute shall be a positive value or
-            zero.
-            '''
-        
         })
     '''
     Value of active power limit. The attribute shall be a positive value
@@ -10864,16 +9020,11 @@ class ApparentPowerLimit(OperationalLimit):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            The normal apparent power limit. The attribute shall be a positive value
-            or zero.
-            '''
-        
         })
     '''
     The normal apparent power limit. The attribute shall be a positive
@@ -10884,15 +9035,11 @@ class ApparentPowerLimit(OperationalLimit):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            The apparent power limit. The attribute shall be a positive value or zero.
-            '''
-        
         })
     '''
     The apparent power limit. The attribute shall be a positive value or
@@ -10922,16 +9069,11 @@ class CurrentLimit(OperationalLimit):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            The normal value for limit on current flow. The attribute shall be a positive
-            value or zero.
-            '''
-        
         })
     '''
     The normal value for limit on current flow. The attribute shall be
@@ -10942,15 +9084,11 @@ class CurrentLimit(OperationalLimit):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Limit on current flow. The attribute shall be a positive value or zero.
-            '''
-        
         })
     '''
     Limit on current flow. The attribute shall be a positive value or zero.
@@ -10981,17 +9119,11 @@ class VoltageAngleLimit(OperationalLimit):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            True if the flow is from the operating limit terminal to the angle reference
-            terminal. False means that the flow is the other direction. When it is
-            not given, the limit is the same for both directions.
-            '''
-        
         })
     '''
     True if the flow is from the operating limit terminal to the angle
@@ -11003,18 +9135,11 @@ class VoltageAngleLimit(OperationalLimit):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            The difference in angle degrees between referenced by the association end
-            OperationalLimitSet.Terminal and the Terminal referenced by the association
-            end VoltageAngleLimit.AngleReferenceTerminal. The value shall be positive
-            (greater than zero).
-            '''
-        
         })
     '''
     The difference in angle degrees between referenced by the association
@@ -11027,18 +9152,11 @@ class VoltageAngleLimit(OperationalLimit):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            The difference in angle degrees between referenced by the association end
-            OperationalLimitSet.Terminal and the Terminal referenced by the association
-            end VoltageAngleLimit.AngleReferenceTerminal. The value shall be positive
-            (greater than zero).
-            '''
-        
         })
     '''
     The difference in angle degrees between referenced by the association
@@ -11050,17 +9168,13 @@ class VoltageAngleLimit(OperationalLimit):
     AngleReferenceTerminal: Optional[Terminal] = field(
         default=None,
         metadata={
-        'type': 'Attribute',
+        'type': 'Association',
+        'stereotypes': [],
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'Terminal.VoltageAngleLimit',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            The angle reference terminal for the voltage angle limit.
-            '''
-        
         })
     '''
     The angle reference terminal for the voltage angle limit.
@@ -11091,17 +9205,11 @@ class VoltageLimit(OperationalLimit):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            The normal limit on voltage. High or low limit nature of the limit depends
-            upon the properties of the operational limit type. The attribute shall
-            be a positive value or zero.
-            '''
-        
         })
     '''
     The normal limit on voltage. High or low limit nature of the limit
@@ -11113,17 +9221,11 @@ class VoltageLimit(OperationalLimit):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Limit on voltage. High or low limit nature of the limit depends upon the
-            properties of the operational limit type. The attribute shall be a positive
-            value or zero.
-            '''
-        
         })
     '''
     Limit on voltage. High or low limit nature of the limit depends upon
@@ -11159,17 +9261,13 @@ class OperationalLimitSet(IdentifiedObject):
     Equipment: Optional[Equipment] = field(
         default=None,
         metadata={
-        'type': 'ShadowExtension',
+        'type': 'Association',
+        'stereotypes': ['ShadowExtension'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'Equipment.OperationalLimitSet',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            The equipment to which the limit set applies.
-            '''
-        
         })
     '''
     The equipment to which the limit set applies.
@@ -11178,17 +9276,13 @@ class OperationalLimitSet(IdentifiedObject):
     PowerTransferCorridor: Optional[PowerTransferCorridor] = field(
         default=None,
         metadata={
-        'type': 'ShadowExtension NC',
+        'type': 'Association',
+        'stereotypes': ['ShadowExtension', 'NC'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'PowerTransferCorridor.OperationalLimitSet',
         'namespace': 'http://entsoe.eu/ns/nc#',
         'serialize': True,
-        'docstring':
-            '''
-            The power transfer corridor that has this operational limit set.
-            '''
-        
         })
     '''
     The power transfer corridor that has this operational limit set.
@@ -11197,17 +9291,13 @@ class OperationalLimitSet(IdentifiedObject):
     Terminal: Optional[ACDCTerminal] = field(
         default=None,
         metadata={
-        'type': 'Attribute',
+        'type': 'Association',
+        'stereotypes': [],
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'ACDCTerminal.OperationalLimitSet',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            The terminal where the operational limit set apply.
-            '''
-        
         })
     '''
     The terminal where the operational limit set apply.
@@ -11216,17 +9306,13 @@ class OperationalLimitSet(IdentifiedObject):
     OperationalLimitValue: list[OperationalLimit] = field(
         default_factory=list,
         metadata={
-        'type': 'AggregateOf',
+        'type': 'Association',
+        'stereotypes': ['AggregateOf'],
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'OperationalLimit.OperationalLimitSet',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': False,
-        'docstring':
-            '''
-            Values of equipment limits.
-            '''
-        
         })
     '''
     Values of equipment limits.
@@ -11255,17 +9341,11 @@ class OperationalLimitType(IdentifiedObject):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Defines if the operational limit type has infinite duration. If true, the
-            limit has infinite duration. If false, the limit has definite duration
-            which is defined by the attribute acceptableDuration.
-            '''
-        
         })
     '''
     Defines if the operational limit type has infinite duration. If true,
@@ -11276,19 +9356,12 @@ class OperationalLimitType(IdentifiedObject):
     isMinimum: Optional[bool] = field(
         default=None,
         metadata={
-        'type': 'NC Attribute',
+        'type': 'Attribute',
+        'stereotypes': ['NC', 'Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://entsoe.eu/ns/nc#',
         'serialize': True,
-        'docstring':
-            '''
-            Defines if the operational limit type is minimum. If true, the value is
-            a minimum value of the same kind. This applies to stability and PATL. If
-            false, the limit has the normal behaviour. OperationalLimitType.direction
-            attribute shall be absoluteValue.
-            '''
-        
         })
     '''
     Defines if the operational limit type is minimum. If true, the value
@@ -11301,20 +9374,11 @@ class OperationalLimitType(IdentifiedObject):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            The nominal acceptable duration of the limit. Limits are commonly expressed
-            in terms of the time limit for which the limit is normally acceptable.
-            The actual acceptable duration of a specific limit may depend on other
-            local factors such as temperature or wind speed. The attribute has meaning
-            only if the flag isInfiniteDuration is set to false, hence it shall not
-            be exchanged when isInfiniteDuration is set to true.
-            '''
-        
         })
     '''
     The nominal acceptable duration of the limit. Limits are commonly expressed
@@ -11328,16 +9392,12 @@ class OperationalLimitType(IdentifiedObject):
     direction: Optional[ OperationalLimitDirectionKind ] = field(
         default=None,
         metadata={
-        'type': 'enumeration Attribute',
+        'type': 'Attribute',
+        'stereotypes': ['enumeration', 'Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            The direction of the limit.
-            '''
-        
         })
     '''
     The direction of the limit.
@@ -11346,16 +9406,12 @@ class OperationalLimitType(IdentifiedObject):
     kind: Optional[ LimitKind ] = field(
         default=None,
         metadata={
-        'type': 'enumeration European Attribute',
+        'type': 'Attribute',
+        'stereotypes': ['enumeration', 'European', 'Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100-European#',
         'serialize': True,
-        'docstring':
-            '''
-            Types of limits defined in the ENTSO-E Operational Handbook Policy 3.
-            '''
-        
         })
     '''
     Types of limits defined in the ENTSO-E Operational Handbook Policy
@@ -11365,18 +9421,13 @@ class OperationalLimitType(IdentifiedObject):
     PermanentAmbientTemperatureDependencyCurve: Optional[AmbientTemperatureDependencyCurve] = field(
         default=None,
         metadata={
-        'type': 'Attribute',
+        'type': 'Association',
+        'stereotypes': [],
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'AmbientTemperatureDependencyCurve.OperationalLimitType',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            The permanent ambient temperature dependency curve for this operational
-            limit type.
-            '''
-        
         })
     '''
     The permanent ambient temperature dependency curve for this operational
@@ -11386,17 +9437,13 @@ class OperationalLimitType(IdentifiedObject):
     PermanentSolarRadiationCurve: Optional[SolarRadiationDependencyCurve] = field(
         default=None,
         metadata={
-        'type': 'Attribute',
+        'type': 'Association',
+        'stereotypes': [],
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'SolarRadiationDependencyCurve.OperationalLimitType',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            The permanent solar radiation curve for this operational limit type.
-            '''
-        
         })
     '''
     The permanent solar radiation curve for this operational limit type.
@@ -11405,18 +9452,13 @@ class OperationalLimitType(IdentifiedObject):
     RecoveryOverloadLimitCurve: Optional[RecoveryOverloadLimitCurve] = field(
         default=None,
         metadata={
-        'type': 'Attribute',
+        'type': 'Association',
+        'stereotypes': [],
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'RecoveryOverloadLimitCurve.OperationalLimitType',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            This is the curve which provides the recovery time information for this
-            limit type.
-            '''
-        
         })
     '''
     This is the curve which provides the recovery time information for
@@ -11426,17 +9468,13 @@ class OperationalLimitType(IdentifiedObject):
     TemporaryBaseOverloadLimitCurve: Optional[BaseOverloadLimitCurve] = field(
         default=None,
         metadata={
-        'type': 'Attribute',
+        'type': 'Association',
+        'stereotypes': [],
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'BaseOverloadLimitCurve.OperationalLimitType',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            The temporary base overload limit curve for this operational limit type.
-            '''
-        
         })
     '''
     The temporary base overload limit curve for this operational limit
@@ -11446,18 +9484,13 @@ class OperationalLimitType(IdentifiedObject):
     TemporaryDurationOverloadLimitCurve: Optional[DurationOverloadLimitCurve] = field(
         default=None,
         metadata={
-        'type': 'Attribute',
+        'type': 'Association',
+        'stereotypes': [],
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'DurationOverloadLimitCurve.OperationalLimitType',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            The temporary duration overload limit curve for this operational limit
-            type.
-            '''
-        
         })
     '''
     The temporary duration overload limit curve for this operational limit
@@ -11468,16 +9501,12 @@ class OperationalLimitType(IdentifiedObject):
         default_factory=list,
         metadata={
         'type': 'Association',
+        'stereotypes': [],
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'OperationalLimit.OperationalLimitType',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': False,
-        'docstring':
-            '''
-            The operational limits associated with this type of limit.
-            '''
-        
         })
     '''
     The operational limits associated with this type of limit.
@@ -11520,15 +9549,12 @@ class Outage(IdentifiedObject):
         default_factory=list,
         metadata={
         'type': 'Association',
+        'stereotypes': [],
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'ConductingEquipment.Outage',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': False,
-        'docstring':
-            '''
-            '''
-        
         })
     '''
     '''
@@ -11546,6 +9572,7 @@ class Outage(IdentifiedObject):
     def __maxOccurs__(self):
         return 'unbounded'
     
+@stereotype(CIMStereotype.GridAPPSD)
 @dataclass(repr=False)
 class PMUConfiguration(IdentifiedObject):
     '''
@@ -11556,15 +9583,11 @@ class PMUConfiguration(IdentifiedObject):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://gridappsd.org/CIM/extension#',
         'serialize': True,
-        'docstring':
-            '''
-            Number of analog values
-            '''
-        
         })
     '''
     Number of analog values
@@ -11574,15 +9597,11 @@ class PMUConfiguration(IdentifiedObject):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://gridappsd.org/CIM/extension#',
         'serialize': True,
-        'docstring':
-            '''
-            Conversion factor for analog channels. Same as for FRSCALE
-            '''
-        
         })
     '''
     Conversion factor for analog channels. Same as for FRSCALE
@@ -11592,14 +9611,11 @@ class PMUConfiguration(IdentifiedObject):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://gridappsd.org/CIM/extension#',
         'serialize': True,
-        'docstring':
-            '''
-            '''
-        
         })
     '''
     '''
@@ -11608,14 +9624,11 @@ class PMUConfiguration(IdentifiedObject):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://gridappsd.org/CIM/extension#',
         'serialize': True,
-        'docstring':
-            '''
-            '''
-        
         })
     '''
     '''
@@ -11624,15 +9637,11 @@ class PMUConfiguration(IdentifiedObject):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://gridappsd.org/CIM/extension#',
         'serialize': True,
-        'docstring':
-            '''
-            Number of ROCOF df/dt signals
-            '''
-        
         })
     '''
     Number of ROCOF df/dt signals
@@ -11642,15 +9651,11 @@ class PMUConfiguration(IdentifiedObject):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://gridappsd.org/CIM/extension#',
         'serialize': True,
-        'docstring':
-            '''
-            Conversion factor for ROCOF channels. Same as for FRSCALE
-            '''
-        
         })
     '''
     Conversion factor for ROCOF channels. Same as for FRSCALE
@@ -11660,16 +9665,11 @@ class PMUConfiguration(IdentifiedObject):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://gridappsd.org/CIM/extension#',
         'serialize': True,
-        'docstring':
-            '''
-            Data format within the periodic data frame given by Table 4 of IEEE Std.
-            C37.118
-            '''
-        
         })
     '''
     Data format within the periodic data frame given by Table 4 of IEEE
@@ -11680,15 +9680,11 @@ class PMUConfiguration(IdentifiedObject):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://gridappsd.org/CIM/extension#',
         'serialize': True,
-        'docstring':
-            '''
-            Number of frequency signals
-            '''
-        
         })
     '''
     Number of frequency signals
@@ -11698,17 +9694,11 @@ class PMUConfiguration(IdentifiedObject):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://gridappsd.org/CIM/extension#',
         'serialize': True,
-        'docstring':
-            '''
-            Conversion factor for frequency channels. If frequency values are transmitted
-            in floating-point format and scaled
-            already, these values shall be set to 1.0, and 0.0, respectively.
-            '''
-        
         })
     '''
     Conversion factor for frequency channels. If frequency values are transmitted
@@ -11720,16 +9710,11 @@ class PMUConfiguration(IdentifiedObject):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://gridappsd.org/CIM/extension#',
         'serialize': True,
-        'docstring':
-            '''
-            Phasor measurement group delay including all filters and estimation windows
-            in effect. Value is in �s
-            '''
-        
         })
     '''
     Phasor measurement group delay including all filters and estimation
@@ -11740,15 +9725,11 @@ class PMUConfiguration(IdentifiedObject):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://gridappsd.org/CIM/extension#',
         'serialize': True,
-        'docstring':
-            '''
-            Number of phasors
-            '''
-        
         })
     '''
     Number of phasors
@@ -11758,18 +9739,11 @@ class PMUConfiguration(IdentifiedObject):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://gridappsd.org/CIM/extension#',
         'serialize': True,
-        'docstring':
-            '''
-            Conversion factor for phasor channels with flags.
-            Magnitude and angle scaling for phasors with data flags. This factor has
-            four 4-B long words: The first is bit-mapped flags, the second is a magnitude
-            scale factor, the third is an angle offset, and the fourth is voltage class
-            '''
-        
         })
     '''
     Conversion factor for phasor channels with flags.
@@ -11783,16 +9757,11 @@ class PMUConfiguration(IdentifiedObject):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://gridappsd.org/CIM/extension#',
         'serialize': True,
-        'docstring':
-            '''
-            Rate of data transmissions from this PMU. 2-B integer word (�32 767 to
-            +32 767) e.g., PMU_DATA_RATE = 15 is 15 frames per second
-            '''
-        
         })
     '''
     Rate of data transmissions from this PMU. 2-B integer word (�32 767
@@ -11803,15 +9772,11 @@ class PMUConfiguration(IdentifiedObject):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://gridappsd.org/CIM/extension#',
         'serialize': True,
-        'docstring':
-            '''
-            Rate of data transmission for the composite frame in this stream
-            '''
-        
         })
     '''
     Rate of data transmission for the composite frame in this stream
@@ -11821,15 +9786,11 @@ class PMUConfiguration(IdentifiedObject):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://gridappsd.org/CIM/extension#',
         'serialize': True,
-        'docstring':
-            '''
-            PDC wait time, milliseconds
-            '''
-        
         })
     '''
     PDC wait time, milliseconds
@@ -11839,16 +9800,11 @@ class PMUConfiguration(IdentifiedObject):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://gridappsd.org/CIM/extension#',
         'serialize': True,
-        'docstring':
-            '''
-            Phasor measurement window length including all filters and estimation windows
-            in effect. Value is in �s
-            '''
-        
         })
     '''
     Phasor measurement window length including all filters and estimation
@@ -11858,16 +9814,13 @@ class PMUConfiguration(IdentifiedObject):
     PhasorMeasurementUnit: Optional[PhasorMeasurementUnit] = field(
         default=None,
         metadata={
-        'type': 'GridAPPSD',
+        'type': 'Association',
+        'stereotypes': ['GridAPPSD'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'PhasorMeasurementUnit.PMUConfiguration',
         'namespace': 'http://gridappsd.org/CIM/extension#',
         'serialize': True,
-        'docstring':
-            '''
-            '''
-        
         })
     '''
     '''
@@ -11875,16 +9828,13 @@ class PMUConfiguration(IdentifiedObject):
     PMUConfigurationFrame: Optional[PMUConfigurationFrame] = field(
         default=None,
         metadata={
-        'type': 'GridAPPSD OfAggregate',
+        'type': 'Association',
+        'stereotypes': ['GridAPPSD', 'OfAggregate'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'PMUConfigurationFrame.PMUConfigurations',
         'namespace': 'http://gridappsd.org/CIM/extension#',
         'serialize': True,
-        'docstring':
-            '''
-            '''
-        
         })
     '''
     '''
@@ -11893,15 +9843,12 @@ class PMUConfiguration(IdentifiedObject):
         default=None,
         metadata={
         'type': 'Association',
+        'stereotypes': [],
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'PhasorMeasurementUnit.PMUConfiguration',
         'namespace': 'http://gridappsd.org/CIM/extension#',
         'serialize': False,
-        'docstring':
-            '''
-            '''
-        
         })
     '''
     '''
@@ -11932,16 +9879,12 @@ class PSRType(IdentifiedObject):
         default_factory=list,
         metadata={
         'type': 'Association',
+        'stereotypes': [],
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'PowerSystemResource.PSRType',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': False,
-        'docstring':
-            '''
-            Power system resources classified with this power system resource type.
-            '''
-        
         })
     '''
     Power system resources classified with this power system resource type.
@@ -11969,16 +9912,13 @@ class PerLengthLineParameter(IdentifiedObject):
     WireAssemblyInfo: Optional[WireAssemblyInfo] = field(
         default=None,
         metadata={
-        'type': 'Attribute',
+        'type': 'Association',
+        'stereotypes': [],
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'WireAssemblyInfo.PerLengthLineParameter',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            '''
-        
         })
     '''
     '''
@@ -12006,14 +9946,11 @@ class PerLengthImpedance(PerLengthLineParameter):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://gridappsd.org/CIM/extension#',
         'serialize': True,
-        'docstring':
-            '''
-            '''
-        
         })
     '''
     '''
@@ -12022,14 +9959,11 @@ class PerLengthImpedance(PerLengthLineParameter):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://gridappsd.org/CIM/extension#',
         'serialize': True,
-        'docstring':
-            '''
-            '''
-        
         })
     '''
     '''
@@ -12038,14 +9972,11 @@ class PerLengthImpedance(PerLengthLineParameter):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://gridappsd.org/CIM/extension#',
         'serialize': True,
-        'docstring':
-            '''
-            '''
-        
         })
     '''
     '''
@@ -12054,17 +9985,11 @@ class PerLengthImpedance(PerLengthLineParameter):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://gridappsd.org/CIM/extension#',
         'serialize': True,
-        'docstring':
-            '''
-            Carson earth return resistance per unit length used to compute impedance
-            values at base frequency. Used for making better adjustments of line impedance
-            values for frequency for harmonics studies.
-            '''
-        
         })
     '''
     Carson earth return resistance per unit length used to compute impedance
@@ -12076,17 +10001,11 @@ class PerLengthImpedance(PerLengthLineParameter):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://gridappsd.org/CIM/extension#',
         'serialize': True,
-        'docstring':
-            '''
-            Carson earth return reactance per unit length used to compute impedance
-            values at base frequency. Used for making better adjustments of line impedance
-            values for frequency for harmonics studies.
-            '''
-        
         })
     '''
     Carson earth return reactance per unit length used to compute impedance
@@ -12097,16 +10016,13 @@ class PerLengthImpedance(PerLengthLineParameter):
     WireAssemblyInfo: Optional[WireTemplate] = field(
         default=None,
         metadata={
-        'type': 'Attribute',
+        'type': 'Association',
+        'stereotypes': [],
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'WireTemplate.PerLengthImpedance',
         'namespace': 'http://gridappsd.org/CIM/extension#',
         'serialize': True,
-        'docstring':
-            '''
-            '''
-        
         })
     '''
     '''
@@ -12115,16 +10031,12 @@ class PerLengthImpedance(PerLengthLineParameter):
         default_factory=list,
         metadata={
         'type': 'Association',
+        'stereotypes': [],
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'ACLineSegment.PerLengthImpedance',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': False,
-        'docstring':
-            '''
-            All line segments described by this per-length impedance.
-            '''
-        
         })
     '''
     All line segments described by this per-length impedance.
@@ -12164,23 +10076,11 @@ class PerLengthPhaseImpedance(PerLengthImpedance):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Conductor count identifies the number of phase, neutral, and other wires
-            represented in the phase impedance matrix and constrains the number of
-            elements in the matrix. Typically, Kron reduction is used for incorporating
-            effects of neutral impedance in the phase conductor values (so conductor
-            count only considers phase wires), but neutrals can be included in the
-            matrix (in which case conductor count would include the neutral wire(s)).
-            For a phase impedance matrix associated with the lines of a coupled line
-            segment group, the conductor count reflects the total of the conductors
-            associated with all the coupled line segments in the group.
-            '''
-        
         })
     '''
     Conductor count identifies the number of phase, neutral, and other
@@ -12199,16 +10099,12 @@ class PerLengthPhaseImpedance(PerLengthImpedance):
         default_factory=list,
         metadata={
         'type': 'Association',
+        'stereotypes': [],
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'PhaseImpedanceData.PhaseImpedance',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': False,
-        'docstring':
-            '''
-            All data that belong to this conductor phase impedance.
-            '''
-        
         })
     '''
     All data that belong to this conductor phase impedance.
@@ -12240,15 +10136,11 @@ class PerLengthSequenceImpedance(PerLengthImpedance):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Zero sequence shunt (charging) susceptance, per unit of length.
-            '''
-        
         })
     '''
     Zero sequence shunt (charging) susceptance, per unit of length.
@@ -12258,15 +10150,11 @@ class PerLengthSequenceImpedance(PerLengthImpedance):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Positive sequence shunt (charging) susceptance, per unit of length.
-            '''
-        
         })
     '''
     Positive sequence shunt (charging) susceptance, per unit of length.
@@ -12276,15 +10164,11 @@ class PerLengthSequenceImpedance(PerLengthImpedance):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Zero sequence shunt (charging) conductance, per unit of length.
-            '''
-        
         })
     '''
     Zero sequence shunt (charging) conductance, per unit of length.
@@ -12294,15 +10178,11 @@ class PerLengthSequenceImpedance(PerLengthImpedance):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Positive sequence shunt (charging) conductance, per unit of length.
-            '''
-        
         })
     '''
     Positive sequence shunt (charging) conductance, per unit of length.
@@ -12312,15 +10192,11 @@ class PerLengthSequenceImpedance(PerLengthImpedance):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Positive sequence series resistance, per unit of length.
-            '''
-        
         })
     '''
     Positive sequence series resistance, per unit of length.
@@ -12330,15 +10206,11 @@ class PerLengthSequenceImpedance(PerLengthImpedance):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Zero sequence series resistance, per unit of length.
-            '''
-        
         })
     '''
     Zero sequence series resistance, per unit of length.
@@ -12348,15 +10220,11 @@ class PerLengthSequenceImpedance(PerLengthImpedance):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Positive sequence series reactance, per unit of length.
-            '''
-        
         })
     '''
     Positive sequence series reactance, per unit of length.
@@ -12366,15 +10234,11 @@ class PerLengthSequenceImpedance(PerLengthImpedance):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Zero sequence series reactance, per unit of length.
-            '''
-        
         })
     '''
     Zero sequence series reactance, per unit of length.
@@ -12393,6 +10257,7 @@ class PerLengthSequenceImpedance(PerLengthImpedance):
     def __maxOccurs__(self):
         return 'unbounded'
     
+@stereotype(CIMStereotype.ShadowExtension)
 @dataclass(repr=False)
 class PhaseImpedanceData(IdentifiedObject):
     '''
@@ -12410,19 +10275,11 @@ class PhaseImpedanceData(IdentifiedObject):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            The matrix entry's column number has a range of possible values from 1
-            to the conductor count of the matrix, but due to symmetry, only entries
-            in the lower triangle (including diagonal) of the matrix need be defined.
-            Column number binds to the sequence number in either ACLineSegmentPhase
-            or WirePosition, which then identifies the phase for this entry.
-            '''
-        
         })
     '''
     The matrix entry's column number has a range of possible values from
@@ -12436,19 +10293,11 @@ class PhaseImpedanceData(IdentifiedObject):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            The matrix entry's row number has a range of possible values from 1 to
-            the conductor count of the matrix, but due to symmetry, only entries in
-            the lower triangle (including diagonal) of the matrix need be defined.
-            Row number binds to the sequence number in either ACLineSegmentPhase or
-            WirePosition, which then identifies the phase for this entry.
-            '''
-        
         })
     '''
     The matrix entry's row number has a range of possible values from 1
@@ -12462,15 +10311,11 @@ class PhaseImpedanceData(IdentifiedObject):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Susceptance matrix entry value, per length of unit.
-            '''
-        
         })
     '''
     Susceptance matrix entry value, per length of unit.
@@ -12479,16 +10324,12 @@ class PhaseImpedanceData(IdentifiedObject):
     fromPhase: Optional[ SinglePhaseKind ] = field(
         default=None,
         metadata={
-        'type': 'enumeration Attribute',
+        'type': 'Attribute',
+        'stereotypes': ['enumeration', 'Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Refer to the class description.
-            '''
-        
         })
     '''
     Refer to the class description.
@@ -12498,15 +10339,11 @@ class PhaseImpedanceData(IdentifiedObject):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Conductance matrix entry value, per length of unit.
-            '''
-        
         })
     '''
     Conductance matrix entry value, per length of unit.
@@ -12516,15 +10353,11 @@ class PhaseImpedanceData(IdentifiedObject):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Resistance matrix entry value, per length of unit.
-            '''
-        
         })
     '''
     Resistance matrix entry value, per length of unit.
@@ -12533,16 +10366,12 @@ class PhaseImpedanceData(IdentifiedObject):
     toPhase: Optional[ SinglePhaseKind ] = field(
         default=None,
         metadata={
-        'type': 'enumeration Attribute',
+        'type': 'Attribute',
+        'stereotypes': ['enumeration', 'Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Refer to the class description.
-            '''
-        
         })
     '''
     Refer to the class description.
@@ -12552,15 +10381,11 @@ class PhaseImpedanceData(IdentifiedObject):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Reactance matrix entry value, per length of unit.
-            '''
-        
         })
     '''
     Reactance matrix entry value, per length of unit.
@@ -12569,17 +10394,13 @@ class PhaseImpedanceData(IdentifiedObject):
     PhaseImpedance: Optional[PerLengthPhaseImpedance] = field(
         default=None,
         metadata={
-        'type': 'Attribute',
+        'type': 'Association',
+        'stereotypes': [],
         'minOccurs': '1',
         'maxOccurs': '1',
         'inverse': 'PerLengthPhaseImpedance.PhaseImpedanceData',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Conductor phase impedance to which this data belongs.
-            '''
-        
         })
     '''
     Conductor phase impedance to which this data belongs.
@@ -12609,16 +10430,12 @@ class PhaseTapChangerTable(IdentifiedObject):
         default_factory=list,
         metadata={
         'type': 'Association',
+        'stereotypes': [],
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'PhaseTapChangerTablePoint.PhaseTapChangerTable',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': False,
-        'docstring':
-            '''
-            The points of this table.
-            '''
-        
         })
     '''
     The points of this table.
@@ -12628,16 +10445,12 @@ class PhaseTapChangerTable(IdentifiedObject):
         default_factory=list,
         metadata={
         'type': 'Association',
+        'stereotypes': [],
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'PhaseTapChangerTabular.PhaseTapChangerTable',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': False,
-        'docstring':
-            '''
-            The phase tap changers to which this phase tap table applies.
-            '''
-        
         })
     '''
     The phase tap changers to which this phase tap table applies.
@@ -12669,21 +10482,11 @@ class ConnectionAngleTapChangerTable(PhaseTapChangerTable):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            The phase angle between the in-phase winding and the out-of -phase winding
-            used for creating phase shift. The out-of-phase winding produces what is
-            known as the difference voltage. Setting this angle to 90 degrees is not
-            the same as a symmetrical transformer. In this scenario you will still
-            treat the 90-degree angle as a phase shifting transformer. The attribute
-            can only be multiples of 30 degrees. When 0 degree is used the asymmetrical
-            phase tap changer acts as ratio tap changer controlling voltage.
-            '''
-        
         })
     '''
     The phase angle between the in-phase winding and the out-of -phase
@@ -12699,18 +10502,13 @@ class ConnectionAngleTapChangerTable(PhaseTapChangerTable):
     ConnectionAngleTapChanger: Optional[ConnectionAngleTapChanger] = field(
         default=None,
         metadata={
-        'type': 'Attribute',
+        'type': 'Association',
+        'stereotypes': [],
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'ConnectionAngleTapChanger.ConnectionAngleTapChangerTable',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            The connection angle tap changer that has this connection angle tap changer
-            table.
-            '''
-        
         })
     '''
     The connection angle tap changer that has this connection angle tap
@@ -12730,6 +10528,7 @@ class ConnectionAngleTapChangerTable(PhaseTapChangerTable):
     def __maxOccurs__(self):
         return 'unbounded'
     
+@stereotype(CIMStereotype.ShadowExtension)
 @dataclass(repr=False)
 class PowerSystemResource(IdentifiedObject):
     '''
@@ -12742,17 +10541,13 @@ class PowerSystemResource(IdentifiedObject):
     AssetDatasheet: Optional[AssetInfo] = field(
         default=None,
         metadata={
-        'type': 'Attribute',
+        'type': 'Association',
+        'stereotypes': [],
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'AssetInfo.PowerSystemResources',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Datasheet information for this power system resource.
-            '''
-        
         })
     '''
     Datasheet information for this power system resource.
@@ -12761,18 +10556,13 @@ class PowerSystemResource(IdentifiedObject):
     DesignElement: Optional[DesignElement] = field(
         default=None,
         metadata={
-        'type': 'Attribute',
+        'type': 'Association',
+        'stereotypes': [],
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'DesignElement.PowerSystemResource',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Operation to be performed with the resource in context of a particular
-            design
-            '''
-        
         })
     '''
     Operation to be performed with the resource in context of a particular
@@ -12782,17 +10572,13 @@ class PowerSystemResource(IdentifiedObject):
     Location: Optional[Location] = field(
         default=None,
         metadata={
-        'type': 'Attribute',
+        'type': 'Association',
+        'stereotypes': [],
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'Location.PowerSystemResources',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Location of this power system resource.
-            '''
-        
         })
     '''
     Location of this power system resource.
@@ -12801,16 +10587,13 @@ class PowerSystemResource(IdentifiedObject):
     OperatedByCompany: Optional[Company] = field(
         default=None,
         metadata={
-        'type': 'ShadowExtension',
+        'type': 'Association',
+        'stereotypes': ['ShadowExtension'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'Company.PowerSystemResources',
         'namespace': 'http://gridappsd.org/CIM/extension#',
         'serialize': True,
-        'docstring':
-            '''
-            '''
-        
         })
     '''
     '''
@@ -12818,17 +10601,13 @@ class PowerSystemResource(IdentifiedObject):
     PSRType: Optional[PSRType] = field(
         default=None,
         metadata={
-        'type': 'Attribute',
+        'type': 'Association',
+        'stereotypes': [],
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'PSRType.PowerSystemResources',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Custom classification for this power system resource.
-            '''
-        
         })
     '''
     Custom classification for this power system resource.
@@ -12837,16 +10616,13 @@ class PowerSystemResource(IdentifiedObject):
     ResourceContainer: Optional[ResourceContainer] = field(
         default=None,
         metadata={
-        'type': 'Attribute',
+        'type': 'Association',
+        'stereotypes': [],
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'ResourceContainer.ContainedResources',
         'namespace': 'http://gridappsd.org/CIM/extension#',
         'serialize': True,
-        'docstring':
-            '''
-            '''
-        
         })
     '''
     '''
@@ -12855,16 +10631,12 @@ class PowerSystemResource(IdentifiedObject):
         default_factory=list,
         metadata={
         'type': 'Association',
+        'stereotypes': [],
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'Measurement.PowerSystemResource',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': False,
-        'docstring':
-            '''
-            The measurements associated with this power system resource.
-            '''
-        
         })
     '''
     The measurements associated with this power system resource.
@@ -12899,23 +10671,11 @@ class ACLineSegmentPhase(PowerSystemResource):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Sequence number provides the numbering for this line segment phase. When
-            impedance is directly described, sequence number binds the phase to the
-            column and row for entries in the per length phase impedance matrix (PhaseImpedanceData
-            of PerLengthPhaseImpedance). When used in conjunction with a wire assembly
-            description, sequence number associates the line segment phase to a position.
-            For a line segment not a part of a parallel line segment group, sequence
-            number starts at one and increments by one through each line segment phase
-            associated with the line segment. If there is a line segment phase for
-            neutral, it is numbered last.
-            '''
-        
         })
     '''
     Sequence number provides the numbering for this line segment phase.
@@ -12933,17 +10693,12 @@ class ACLineSegmentPhase(PowerSystemResource):
     phase: Optional[ SinglePhaseKind ] = field(
         default=None,
         metadata={
-        'type': 'enumeration Attribute',
+        'type': 'Attribute',
+        'stereotypes': ['enumeration', 'Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Phase identifies the phase or neutral connection of the conductor at both
-            ends.
-            '''
-        
         })
     '''
     Phase identifies the phase or neutral connection of the conductor at
@@ -12953,17 +10708,13 @@ class ACLineSegmentPhase(PowerSystemResource):
     ACLineSegment: Optional[ACLineSegment] = field(
         default=None,
         metadata={
-        'type': 'Attribute',
+        'type': 'Association',
+        'stereotypes': [],
         'minOccurs': '1',
         'maxOccurs': '1',
         'inverse': 'ACLineSegment.ACLineSegmentPhases',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            The line segment to which the phase belongs.
-            '''
-        
         })
     '''
     The line segment to which the phase belongs.
@@ -12972,16 +10723,13 @@ class ACLineSegmentPhase(PowerSystemResource):
     WireInfo: Optional[WireInfo] = field(
         default=None,
         metadata={
-        'type': 'Attribute',
+        'type': 'Association',
+        'stereotypes': [],
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'WireInfo.ACLineSegmentPhase',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            '''
-        
         })
     '''
     '''
@@ -13014,16 +10762,12 @@ class AreaDispatchableUnit(PowerSystemResource):
         default=None,
         metadata={
         'type': 'Association',
+        'stereotypes': [],
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'EnergyConsumer.AreaDispatchableUnit',
         'namespace': 'http://entsoe.eu/ns/nc#',
         'serialize': False,
-        'docstring':
-            '''
-            Energy consumer for this area dispatchable unit.
-            '''
-        
         })
     '''
     Energy consumer for this area dispatchable unit.
@@ -13052,16 +10796,11 @@ class AreaInterchangeController(PowerSystemResource):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Active power net interchange tolerance. The attribute shall be a positive
-            value or zero.
-            '''
-        
         })
     '''
     Active power net interchange tolerance. The attribute shall be a positive
@@ -13071,17 +10810,13 @@ class AreaInterchangeController(PowerSystemResource):
     ControlArea: Optional[ControlArea] = field(
         default=None,
         metadata={
-        'type': 'ShadowExtension',
+        'type': 'Association',
+        'stereotypes': ['ShadowExtension'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'ControlArea.AreaInterchangeController',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Control area that has a area interchange controller.
-            '''
-        
         })
     '''
     Control area that has a area interchange controller.
@@ -13091,16 +10826,12 @@ class AreaInterchangeController(PowerSystemResource):
         default=None,
         metadata={
         'type': 'Association',
+        'stereotypes': [],
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'ControlArea.AreaInterchangeController',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': False,
-        'docstring':
-            '''
-            Control area that has a area interchange controller.
-            '''
-        
         })
     '''
     Control area that has a area interchange controller.
@@ -13120,6 +10851,7 @@ class AreaInterchangeController(PowerSystemResource):
         return 'unbounded'
     
 @stereotype(CIMStereotype.NC)
+@stereotype(CIMStereotype.GridAPPSD)
 @dataclass(repr=False)
 class BalancingControlArea(PowerSystemResource):
     '''
@@ -13154,17 +10886,13 @@ class BoundaryPoint(PowerSystemResource):
     ConnectivityNode: Optional[ConnectivityNode] = field(
         default=None,
         metadata={
-        'type': 'European',
+        'type': 'Association',
+        'stereotypes': ['European'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'ConnectivityNode.BoundaryPoint',
         'namespace': 'http://iec.ch/TC57/CIM100-European#',
         'serialize': False,
-        'docstring':
-            '''
-            The connectivity node that is designated as a boundary point.
-            '''
-        
         })
     '''
     The connectivity node that is designated as a boundary point.
@@ -13197,15 +10925,12 @@ class CommunicationLink(PowerSystemResource):
     communicationMediumKind: Optional[ CommunicationMediumKind ] = field(
         default=None,
         metadata={
-        'type': 'enumeration GridAPPSD Attribute',
+        'type': 'Attribute',
+        'stereotypes': ['enumeration', 'GridAPPSD', 'Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            '''
-        
         })
     '''
     '''
@@ -13213,15 +10938,12 @@ class CommunicationLink(PowerSystemResource):
     communicationProtocolType: Optional[ CommunicationProtocolKind ] = field(
         default=None,
         metadata={
-        'type': 'enumeration GridAPPSD Attribute',
+        'type': 'Attribute',
+        'stereotypes': ['enumeration', 'GridAPPSD', 'Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            '''
-        
         })
     '''
     '''
@@ -13229,18 +10951,13 @@ class CommunicationLink(PowerSystemResource):
     BilateralExchangeActor: Optional[BilateralExchangeActor] = field(
         default=None,
         metadata={
-        'type': 'Attribute',
+        'type': 'Association',
+        'stereotypes': [],
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'BilateralExchangeActor.CommunicationLink',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            ICCP data provider or consumer using communication addressing for a Bilateral
-            table.
-            '''
-        
         })
     '''
     ICCP data provider or consumer using communication addressing for a
@@ -13251,15 +10968,12 @@ class CommunicationLink(PowerSystemResource):
         default_factory=list,
         metadata={
         'type': 'Association',
+        'stereotypes': [],
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'MeasurementSystem.CommunicationLink',
         'namespace': 'http://gridappsd.org/CIM/extension#',
         'serialize': False,
-        'docstring':
-            '''
-            '''
-        
         })
     '''
     '''
@@ -13289,16 +11003,12 @@ class ConnectivityNodeContainer(PowerSystemResource):
         default_factory=list,
         metadata={
         'type': 'Association',
+        'stereotypes': [],
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'ConnectivityNode.ConnectivityNodeContainer',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': False,
-        'docstring':
-            '''
-            Connectivity nodes which belong to this connectivity node container.
-            '''
-        
         })
     '''
     Connectivity nodes which belong to this connectivity node container.
@@ -13308,16 +11018,12 @@ class ConnectivityNodeContainer(PowerSystemResource):
         default_factory=list,
         metadata={
         'type': 'Association',
+        'stereotypes': [],
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'TopologicalNode.ConnectivityNodeContainer',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': False,
-        'docstring':
-            '''
-            The topological nodes which belong to this connectivity node container.
-            '''
-        
         })
     '''
     The topological nodes which belong to this connectivity node container.
@@ -13346,21 +11052,12 @@ class EquipmentContainer(ConnectivityNodeContainer):
         default_factory=list,
         metadata={
         'type': 'Association',
+        'stereotypes': [],
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'Equipment.AdditionalEquipmentContainer',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': False,
-        'docstring':
-            '''
-            The additonal contained equipment. The equipment belong to the equipment
-            container. The equipment is contained in another equipment container, but
-            also grouped with this equipment container. Examples include when a switch
-            contained in a substation is also desired to be grouped with a line contianer
-            or when a switch is included in a secondary substation and also grouped
-            in a feeder.
-            '''
-        
         })
     '''
     The additonal contained equipment. The equipment belong to the equipment
@@ -13375,16 +11072,12 @@ class EquipmentContainer(ConnectivityNodeContainer):
         default_factory=list,
         metadata={
         'type': 'Association',
+        'stereotypes': [],
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'Equipment.EquipmentContainer',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': False,
-        'docstring':
-            '''
-            Contained equipment.
-            '''
-        
         })
     '''
     Contained equipment.
@@ -13416,15 +11109,11 @@ class Bay(EquipmentContainer):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Indicates the presence/absence of energy measurements.
-            '''
-        
         })
     '''
     Indicates the presence/absence of energy measurements.
@@ -13434,15 +11123,11 @@ class Bay(EquipmentContainer):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Indicates the presence/absence of active/reactive power measurements.
-            '''
-        
         })
     '''
     Indicates the presence/absence of active/reactive power measurements.
@@ -13451,16 +11136,12 @@ class Bay(EquipmentContainer):
     breakerConfiguration: Optional[ BreakerConfiguration ] = field(
         default=None,
         metadata={
-        'type': 'enumeration Attribute',
+        'type': 'Attribute',
+        'stereotypes': ['enumeration', 'Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Breaker configuration.
-            '''
-        
         })
     '''
     Breaker configuration.
@@ -13469,16 +11150,12 @@ class Bay(EquipmentContainer):
     busBarConfiguration: Optional[ BusbarConfiguration ] = field(
         default=None,
         metadata={
-        'type': 'enumeration Attribute',
+        'type': 'Attribute',
+        'stereotypes': ['enumeration', 'Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Busbar configuration.
-            '''
-        
         })
     '''
     Busbar configuration.
@@ -13487,17 +11164,13 @@ class Bay(EquipmentContainer):
     Substation: Optional[Substation] = field(
         default=None,
         metadata={
-        'type': 'OfAggregate',
+        'type': 'Association',
+        'stereotypes': ['OfAggregate'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'Substation.Bays',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Substation containing the bay.
-            '''
-        
         })
     '''
     Substation containing the bay.
@@ -13506,17 +11179,13 @@ class Bay(EquipmentContainer):
     VoltageLevel: Optional[VoltageLevel] = field(
         default=None,
         metadata={
-        'type': 'OfAggregate',
+        'type': 'Association',
+        'stereotypes': ['OfAggregate'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'VoltageLevel.Bays',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            The voltage level containing this bay.
-            '''
-        
         })
     '''
     The voltage level containing this bay.
@@ -13553,16 +11222,12 @@ class ConnectivityArea(EquipmentContainer):
     areaType: Optional[ ConnectivityAreaKind ] = field(
         default=None,
         metadata={
-        'type': 'enumeration GridAPPSD Attribute',
+        'type': 'Attribute',
+        'stereotypes': ['enumeration', 'GridAPPSD', 'Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://gridappsd.org/CIM/extension#',
         'serialize': True,
-        'docstring':
-            '''
-            Specifies the type of connectivity area
-            '''
-        
         })
     '''
     Specifies the type of connectivity area
@@ -13571,16 +11236,13 @@ class ConnectivityArea(EquipmentContainer):
     AdjacentArea: Optional[ConnectivityArea] = field(
         default=None,
         metadata={
-        'type': 'Attribute',
+        'type': 'Association',
+        'stereotypes': [],
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': '',
         'namespace': 'http://gridappsd.org/CIM/extension#',
         'serialize': True,
-        'docstring':
-            '''
-            '''
-        
         })
     '''
     '''
@@ -13588,18 +11250,13 @@ class ConnectivityArea(EquipmentContainer):
     ContainedWithin: Optional[ConnectivityArea] = field(
         default=None,
         metadata={
-        'type': 'Attribute',
+        'type': 'Association',
+        'stereotypes': [],
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'ConnectivityArea.ContainedAreas',
         'namespace': 'http://gridappsd.org/CIM/extension#',
         'serialize': True,
-        'docstring':
-            '''
-            The larger superset area within which the given connectivity area is contained
-            (e.g. distribution area that contains a feeder area)
-            '''
-        
         })
     '''
     The larger superset area within which the given connectivity area is
@@ -13610,17 +11267,12 @@ class ConnectivityArea(EquipmentContainer):
         default_factory=list,
         metadata={
         'type': 'Association',
+        'stereotypes': [],
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'ConnectivityArea.ContainedWithin',
         'namespace': 'http://gridappsd.org/CIM/extension#',
         'serialize': False,
-        'docstring':
-            '''
-            The set of subset areas contained within the givin connectivity area (e.g.
-            the set of feeder areas contained within a distribution area)
-            '''
-        
         })
     '''
     The set of subset areas contained within the givin connectivity area
@@ -13631,16 +11283,12 @@ class ConnectivityArea(EquipmentContainer):
         default_factory=list,
         metadata={
         'type': 'Association',
+        'stereotypes': [],
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'Terminal.BoundedConnectivityArea',
         'namespace': 'http://gridappsd.org/CIM/extension#',
         'serialize': False,
-        'docstring':
-            '''
-            Terminals that form a boundary for the containment area
-            '''
-        
         })
     '''
     Terminals that form a boundary for the containment area
@@ -13673,16 +11321,12 @@ class DCConverterUnit(EquipmentContainer):
         default=None,
         metadata={
         'type': 'Association',
+        'stereotypes': [],
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'ACPointOfCommonCoupling.DCConverterUnit',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': False,
-        'docstring':
-            '''
-            AC point of common coupling for this DC converter unit.
-            '''
-        
         })
     '''
     AC point of common coupling for this DC converter unit.
@@ -13701,6 +11345,7 @@ class DCConverterUnit(EquipmentContainer):
     def __maxOccurs__(self):
         return 'unbounded'
     
+@stereotype(CIMStereotype.ShadowExtension)
 @stereotype(CIMStereotype.OfAggregate)
 @dataclass(repr=False)
 class Feeder(EquipmentContainer):
@@ -13714,18 +11359,13 @@ class Feeder(EquipmentContainer):
     NormalEnergizingSubstation: Optional[Substation] = field(
         default=None,
         metadata={
-        'type': 'OfAggregate',
+        'type': 'Association',
+        'stereotypes': ['OfAggregate'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'Substation.NormalEnergizedFeeder',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            The substation that nominally energizes the feeder. Also used for naming
-            purposes.
-            '''
-        
         })
     '''
     The substation that nominally energizes the feeder. Also used for naming
@@ -13735,17 +11375,13 @@ class Feeder(EquipmentContainer):
     SubSchedulingArea: Optional[SubSchedulingArea] = field(
         default=None,
         metadata={
-        'type': 'NC',
+        'type': 'Association',
+        'stereotypes': ['NC'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'SubSchedulingArea.Feeder',
         'namespace': 'http://entsoe.eu/ns/nc#',
         'serialize': True,
-        'docstring':
-            '''
-            The subscheduling area that has this feeder.
-            '''
-        
         })
     '''
     The subscheduling area that has this feeder.
@@ -13754,19 +11390,13 @@ class Feeder(EquipmentContainer):
     NamingSecondarySubstation: list[Substation] = field(
         default_factory=list,
         metadata={
-        'type': 'AggregateOf',
+        'type': 'Association',
+        'stereotypes': ['AggregateOf'],
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'Substation.NamingFeeder',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': False,
-        'docstring':
-            '''
-            The secondary substations that are normally energized from the feeder.
-            Used for naming purposes. Should be consistent with the other associations
-            for energizing terminal specification and the feeder energization specification.
-            '''
-        
         })
     '''
     The secondary substations that are normally energized from the feeder.
@@ -13778,16 +11408,12 @@ class Feeder(EquipmentContainer):
         default_factory=list,
         metadata={
         'type': 'Association',
+        'stereotypes': [],
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'Terminal.NormalHeadFeeder',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': False,
-        'docstring':
-            '''
-            The normal head terminal or terminals of the feeder.
-            '''
-        
         })
     '''
     The normal head terminal or terminals of the feeder.
@@ -13816,17 +11442,13 @@ class Line(EquipmentContainer):
     ACTieCorridor: Optional[ACTieCorridor] = field(
         default=None,
         metadata={
-        'type': 'Attribute',
+        'type': 'Association',
+        'stereotypes': [],
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'ACTieCorridor.Line',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            ACTieCorridor that the line is part of.
-            '''
-        
         })
     '''
     ACTieCorridor that the line is part of.
@@ -13835,17 +11457,13 @@ class Line(EquipmentContainer):
     Region: Optional[SubGeographicalRegion] = field(
         default=None,
         metadata={
-        'type': 'OfAggregate',
+        'type': 'Association',
+        'stereotypes': ['OfAggregate'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'SubGeographicalRegion.Lines',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            The sub-geographical region of the line.
-            '''
-        
         })
     '''
     The sub-geographical region of the line.
@@ -13854,17 +11472,13 @@ class Line(EquipmentContainer):
     SchedulingArea: Optional[SchedulingArea] = field(
         default=None,
         metadata={
-        'type': 'ShadowExtension NC',
+        'type': 'Association',
+        'stereotypes': ['ShadowExtension', 'NC'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'SchedulingArea.Line',
         'namespace': 'http://entsoe.eu/ns/nc#',
         'serialize': True,
-        'docstring':
-            '''
-            The scheduling area that has this line.
-            '''
-        
         })
     '''
     The scheduling area that has this line.
@@ -13914,19 +11528,13 @@ class Substation(EquipmentContainer):
     NamingFeeder: Optional[Feeder] = field(
         default=None,
         metadata={
-        'type': 'OfAggregate',
+        'type': 'Association',
+        'stereotypes': ['OfAggregate'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'Feeder.NamingSecondarySubstation',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            The primary feeder that normally energizes the secondary substation. Used
-            for naming purposes. Either this association or the substation to subgeographical
-            region should be used for hierarchical containment specification.
-            '''
-        
         })
     '''
     The primary feeder that normally energizes the secondary substation.
@@ -13938,17 +11546,13 @@ class Substation(EquipmentContainer):
     Region: Optional[SubGeographicalRegion] = field(
         default=None,
         metadata={
-        'type': 'OfAggregate',
+        'type': 'Association',
+        'stereotypes': ['OfAggregate'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'SubGeographicalRegion.Substations',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            The SubGeographicalRegion containing the substation.
-            '''
-        
         })
     '''
     The SubGeographicalRegion containing the substation.
@@ -13957,17 +11561,13 @@ class Substation(EquipmentContainer):
     SchedulingArea: Optional[SchedulingArea] = field(
         default=None,
         metadata={
-        'type': 'ShadowExtension NC',
+        'type': 'Association',
+        'stereotypes': ['ShadowExtension', 'NC'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'SchedulingArea.Substation',
         'namespace': 'http://entsoe.eu/ns/nc#',
         'serialize': True,
-        'docstring':
-            '''
-            The scheduling area that has this substation.
-            '''
-        
         })
     '''
     The scheduling area that has this substation.
@@ -13976,17 +11576,13 @@ class Substation(EquipmentContainer):
     Bays: list[Bay] = field(
         default_factory=list,
         metadata={
-        'type': 'AggregateOf',
+        'type': 'Association',
+        'stereotypes': ['AggregateOf'],
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'Bay.Substation',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': False,
-        'docstring':
-            '''
-            Bays contained in the substation.
-            '''
-        
         })
     '''
     Bays contained in the substation.
@@ -13995,17 +11591,13 @@ class Substation(EquipmentContainer):
     NormalEnergizedFeeder: list[Feeder] = field(
         default_factory=list,
         metadata={
-        'type': 'AggregateOf',
+        'type': 'Association',
+        'stereotypes': ['AggregateOf'],
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'Feeder.NormalEnergizingSubstation',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': False,
-        'docstring':
-            '''
-            The normal energized feeders of the substation. Also used for naming purposes.
-            '''
-        
         })
     '''
     The normal energized feeders of the substation. Also used for naming
@@ -14015,17 +11607,13 @@ class Substation(EquipmentContainer):
     VoltageLevels: list[VoltageLevel] = field(
         default_factory=list,
         metadata={
-        'type': 'AggregateOf',
+        'type': 'Association',
+        'stereotypes': ['AggregateOf'],
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'VoltageLevel.Substation',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': False,
-        'docstring':
-            '''
-            The voltage levels within this substation.
-            '''
-        
         })
     '''
     The voltage levels within this substation.
@@ -14058,18 +11646,11 @@ class VoltageLevel(EquipmentContainer):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            The bus bar's high voltage limit.
-            The limit applies to all equipment and nodes contained in a given VoltageLevel.
-            It is not required that it is exchanged in pair with lowVoltageLimit. It
-            is preferable to use operational VoltageLimit, which prevails, if present.
-            '''
-        
         })
     '''
     The bus bar's high voltage limit.
@@ -14083,18 +11664,11 @@ class VoltageLevel(EquipmentContainer):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            The bus bar's low voltage limit.
-            The limit applies to all equipment and nodes contained in a given VoltageLevel.
-            It is not required that it is exchanged in pair with highVoltageLimit.
-            It is preferable to use operational VoltageLimit, which prevails, if present.
-            '''
-        
         })
     '''
     The bus bar's low voltage limit.
@@ -14107,17 +11681,13 @@ class VoltageLevel(EquipmentContainer):
     BaseVoltage: Optional[BaseVoltage] = field(
         default=None,
         metadata={
-        'type': 'Attribute',
+        'type': 'Association',
+        'stereotypes': [],
         'minOccurs': '1',
         'maxOccurs': '1',
         'inverse': 'BaseVoltage.VoltageLevel',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            The base voltage used for all equipment within the voltage level.
-            '''
-        
         })
     '''
     The base voltage used for all equipment within the voltage level.
@@ -14126,17 +11696,13 @@ class VoltageLevel(EquipmentContainer):
     Substation: Optional[Substation] = field(
         default=None,
         metadata={
-        'type': 'OfAggregate',
+        'type': 'Association',
+        'stereotypes': ['OfAggregate'],
         'minOccurs': '1',
         'maxOccurs': '1',
         'inverse': 'Substation.VoltageLevels',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            The substation of the voltage level.
-            '''
-        
         })
     '''
     The substation of the voltage level.
@@ -14145,17 +11711,13 @@ class VoltageLevel(EquipmentContainer):
     Bays: list[Bay] = field(
         default_factory=list,
         metadata={
-        'type': 'AggregateOf',
+        'type': 'Association',
+        'stereotypes': ['AggregateOf'],
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'Bay.VoltageLevel',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': False,
-        'docstring':
-            '''
-            The bays within this voltage level.
-            '''
-        
         })
     '''
     The bays within this voltage level.
@@ -14208,17 +11770,12 @@ class ControlArea(PowerSystemResource):
     netInterchange: Optional[ float | ActivePower ] = field(
         default=None,
         metadata={
-        'type': 'ToBeDeleted Attribute',
+        'type': 'Attribute',
+        'stereotypes': ['ToBeDeleted', 'Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            The specified positive net interchange into the control area, i.e. positive
-            sign means flow into the area.
-            '''
-        
         })
     '''
     The specified positive net interchange into the control area, i.e.
@@ -14228,17 +11785,12 @@ class ControlArea(PowerSystemResource):
     pTolerance: Optional[ float | ActivePower ] = field(
         default=None,
         metadata={
-        'type': 'ToBeDeleted Attribute',
+        'type': 'Attribute',
+        'stereotypes': ['ToBeDeleted', 'Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Active power net interchange tolerance. The attribute shall be a positive
-            value or zero.
-            '''
-        
         })
     '''
     Active power net interchange tolerance. The attribute shall be a positive
@@ -14248,20 +11800,12 @@ class ControlArea(PowerSystemResource):
     type: Optional[ ControlAreaTypeKind ] = field(
         default=None,
         metadata={
-        'type': 'enumeration ToBeDeleted Attribute',
+        'type': 'Attribute',
+        'stereotypes': ['enumeration', 'ToBeDeleted', 'Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            The primary type of control area definition used to determine if this is
-            used for automatic generation control, for planning interchange control,
-            or other purposes. A control area specified with primary type of automatic
-            generation control could still be forecast and used as an interchange area
-            in power flow analysis.
-            '''
-        
         })
     '''
     The primary type of control area definition used to determine if this
@@ -14274,17 +11818,13 @@ class ControlArea(PowerSystemResource):
     AreaInterchangeController: Optional[AreaInterchangeController] = field(
         default=None,
         metadata={
-        'type': 'Attribute',
+        'type': 'Association',
+        'stereotypes': [],
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'AreaInterchangeController.ControlArea',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Area interchange controller for this control area.
-            '''
-        
         })
     '''
     Area interchange controller for this control area.
@@ -14293,17 +11833,13 @@ class ControlArea(PowerSystemResource):
     EnergyArea: Optional[EnergyArea] = field(
         default=None,
         metadata={
-        'type': 'Attribute',
+        'type': 'Association',
+        'stereotypes': [],
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'EnergyArea.ControlArea',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            The energy area that is forecast from this control area specification.
-            '''
-        
         })
     '''
     The energy area that is forecast from this control area specification.
@@ -14312,17 +11848,13 @@ class ControlArea(PowerSystemResource):
     OutageCoordinationRegion: Optional[OutageCoordinationRegion] = field(
         default=None,
         metadata={
-        'type': 'NC',
+        'type': 'Association',
+        'stereotypes': ['NC'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'OutageCoordinationRegion.ControlArea',
         'namespace': 'http://entsoe.eu/ns/nc#',
         'serialize': True,
-        'docstring':
-            '''
-            The outage coordination region that has this control area.
-            '''
-        
         })
     '''
     The outage coordination region that has this control area.
@@ -14331,17 +11863,13 @@ class ControlArea(PowerSystemResource):
     PowerFrequencyController: Optional[PowerFrequencyController] = field(
         default=None,
         metadata={
-        'type': 'Attribute',
+        'type': 'Association',
+        'stereotypes': [],
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'PowerFrequencyController.ControlArea',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Power frequency controller for this control area.
-            '''
-        
         })
     '''
     Power frequency controller for this control area.
@@ -14350,17 +11878,13 @@ class ControlArea(PowerSystemResource):
     SystemOperator: Optional[SystemOperator] = field(
         default=None,
         metadata={
-        'type': 'NC',
+        'type': 'Association',
+        'stereotypes': ['NC'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'SystemOperator.ControlArea',
         'namespace': 'http://entsoe.eu/ns/nc#',
         'serialize': True,
-        'docstring':
-            '''
-            The system operator that operates this control area.
-            '''
-        
         })
     '''
     The system operator that operates this control area.
@@ -14370,16 +11894,12 @@ class ControlArea(PowerSystemResource):
         default=None,
         metadata={
         'type': 'Association',
+        'stereotypes': [],
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'AreaInterchangeController.ControlArea',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': False,
-        'docstring':
-            '''
-            Area interchange controller for this control area.
-            '''
-        
         })
     '''
     Area interchange controller for this control area.
@@ -14388,17 +11908,13 @@ class ControlArea(PowerSystemResource):
     ControlAreaGeneratingUnit: list[ControlAreaGeneratingUnit] = field(
         default_factory=list,
         metadata={
-        'type': 'AggregateOf',
+        'type': 'Association',
+        'stereotypes': ['AggregateOf'],
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'ControlAreaGeneratingUnit.ControlArea',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': False,
-        'docstring':
-            '''
-            The generating unit specifications for the control area.
-            '''
-        
         })
     '''
     The generating unit specifications for the control area.
@@ -14408,16 +11924,12 @@ class ControlArea(PowerSystemResource):
         default_factory=list,
         metadata={
         'type': 'Association',
+        'stereotypes': [],
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'ControlAreaPowerElectronicsUnit.ControlArea',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': False,
-        'docstring':
-            '''
-            The parent control area for the power electronics unit specifications.
-            '''
-        
         })
     '''
     The parent control area for the power electronics unit specifications.
@@ -14427,16 +11939,12 @@ class ControlArea(PowerSystemResource):
         default=None,
         metadata={
         'type': 'Association',
+        'stereotypes': [],
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'EnergyArea.ControlArea',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': False,
-        'docstring':
-            '''
-            The energy area that is forecast from this control area specification.
-            '''
-        
         })
     '''
     The energy area that is forecast from this control area specification.
@@ -14445,17 +11953,13 @@ class ControlArea(PowerSystemResource):
     TieFlow: list[TieFlow] = field(
         default_factory=list,
         metadata={
-        'type': 'AggregateOf',
+        'type': 'Association',
+        'stereotypes': ['AggregateOf'],
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'TieFlow.ControlArea',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': False,
-        'docstring':
-            '''
-            The tie flows associated with the control area.
-            '''
-        
         })
     '''
     The tie flows associated with the control area.
@@ -14475,6 +11979,7 @@ class ControlArea(PowerSystemResource):
         return 'unbounded'
     
 @stereotype(CIMStereotype.ShadowExtension)
+@stereotype(CIMStereotype.GridAPPSD)
 @dataclass(repr=False)
 class DistributionControlArea(ControlArea):
     '''
@@ -14494,6 +11999,7 @@ class DistributionControlArea(ControlArea):
         return 'unbounded'
     
 @stereotype(CIMStereotype.ShadowExtension)
+@stereotype(CIMStereotype.GridAPPSD)
 @dataclass(repr=False)
 class TransmissionControlArea(ControlArea):
     '''
@@ -14523,18 +12029,11 @@ class EnergyConsumerPhase(PowerSystemResource):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Active power of the load. Load sign convention is used, i.e. positive sign
-            means flow out from a node.
-            For voltage dependent loads the value is at rated voltage.
-            Starting value for a steady state solution.
-            '''
-        
         })
     '''
     Active power of the load. Load sign convention is used, i.e. positive
@@ -14547,16 +12046,11 @@ class EnergyConsumerPhase(PowerSystemResource):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Active power of the load that is a fixed quantity. Load sign convention
-            is used, i.e. positive sign means flow out from a node.
-            '''
-        
         })
     '''
     Active power of the load that is a fixed quantity. Load sign convention
@@ -14567,16 +12061,11 @@ class EnergyConsumerPhase(PowerSystemResource):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Fixed active power as per cent of load group fixed active power. Load sign
-            convention is used, i.e. positive sign means flow out from a node.
-            '''
-        
         })
     '''
     Fixed active power as per cent of load group fixed active power. Load
@@ -14586,20 +12075,12 @@ class EnergyConsumerPhase(PowerSystemResource):
     phase: Optional[ SinglePhaseKind ] = field(
         default=None,
         metadata={
-        'type': 'enumeration Attribute',
+        'type': 'Attribute',
+        'stereotypes': ['enumeration', 'Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Phase of this energy consumer component. If the energy consumer is wye
-            connected, the connection is from the indicated phase to the central ground
-            or neutral point. If the energy consumer is delta connected, the phase
-            indicates an energy consumer connected from the indicated phase to the
-            next logical non-neutral phase.
-            '''
-        
         })
     '''
     Phase of this energy consumer component. If the energy consumer is
@@ -14613,18 +12094,11 @@ class EnergyConsumerPhase(PowerSystemResource):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Reactive power of the load. Load sign convention is used, i.e. positive
-            sign means flow out from a node.
-            For voltage dependent loads the value is at rated voltage.
-            Starting value for a steady state solution.
-            '''
-        
         })
     '''
     Reactive power of the load. Load sign convention is used, i.e. positive
@@ -14637,16 +12111,11 @@ class EnergyConsumerPhase(PowerSystemResource):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Reactive power of the load that is a fixed quantity. Load sign convention
-            is used, i.e. positive sign means flow out from a node.
-            '''
-        
         })
     '''
     Reactive power of the load that is a fixed quantity. Load sign convention
@@ -14657,16 +12126,11 @@ class EnergyConsumerPhase(PowerSystemResource):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Fixed reactive power as per cent of load group fixed reactive power. Load
-            sign convention is used, i.e. positive sign means flow out from a node.
-            '''
-        
         })
     '''
     Fixed reactive power as per cent of load group fixed reactive power.
@@ -14677,17 +12141,13 @@ class EnergyConsumerPhase(PowerSystemResource):
     EnergyConsumer: Optional[EnergyConsumer] = field(
         default=None,
         metadata={
-        'type': 'NC',
+        'type': 'Association',
+        'stereotypes': ['NC'],
         'minOccurs': '1',
         'maxOccurs': '1',
         'inverse': 'EnergyConsumer.EnergyConsumerPhase',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            The energy consumer to which this phase belongs.
-            '''
-        
         })
     '''
     The energy consumer to which this phase belongs.
@@ -14716,20 +12176,12 @@ class EnergySourcePhase(PowerSystemResource):
     phase: Optional[ SinglePhaseKind ] = field(
         default=None,
         metadata={
-        'type': 'enumeration Attribute',
+        'type': 'Attribute',
+        'stereotypes': ['enumeration', 'Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Phase of this energy source component. If the energy source wye connected,
-            the connection is from the indicated phase to the central ground or neutral
-            point. If the energy source is delta connected, the phase indicates an
-            energy source connected from the indicated phase to the next logical non-neutral
-            phase.
-            '''
-        
         })
     '''
     Phase of this energy source component. If the energy source wye connected,
@@ -14742,17 +12194,13 @@ class EnergySourcePhase(PowerSystemResource):
     EnergySource: Optional[EnergySource] = field(
         default=None,
         metadata={
-        'type': 'Attribute',
+        'type': 'Association',
+        'stereotypes': [],
         'minOccurs': '1',
         'maxOccurs': '1',
         'inverse': 'EnergySource.EnergySourcePhase',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            The energy sourceto which the phase belongs.
-            '''
-        
         })
     '''
     The energy sourceto which the phase belongs.
@@ -14782,25 +12230,11 @@ class Equipment(PowerSystemResource):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            The aggregate flag provides an alternative way of representing an aggregated
-            (equivalent) element. It is applicable in cases when the dedicated classes
-            for equivalent equipment do not have all of the attributes necessary to
-            represent the required level of detail. In case the flag is set to "true"
-            the single instance of equipment represents multiple pieces of equipment
-            that have been modelled together as an aggregate equivalent obtained by
-            a network reduction procedure. Examples would be power transformers or
-            synchronous machines operating in parallel modelled as a single aggregate
-            power transformer or aggregate synchronous machine.
-            The attribute is not used for EquivalentBranch, EquivalentShunt, EquivalentInjection
-            and ExternalNetworkInjection.
-            '''
-        
         })
     '''
     The aggregate flag provides an alternative way of representing an aggregated
@@ -14821,18 +12255,11 @@ class Equipment(PowerSystemResource):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Specifies the availability of the equipment. True means the equipment is
-            available for topology processing, which determines if the equipment is
-            energized or not. False means that the equipment is treated by network
-            applications as if it is not in the model.
-            '''
-        
         })
     '''
     Specifies the availability of the equipment. True means the equipment
@@ -14845,16 +12272,11 @@ class Equipment(PowerSystemResource):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            The equipment is enabled to participate in network analysis. If unspecified,
-            the value is assumed to be true.
-            '''
-        
         })
     '''
     The equipment is enabled to participate in network analysis. If unspecified,
@@ -14865,18 +12287,11 @@ class Equipment(PowerSystemResource):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Specifies the availability of the equipment under normal operating conditions.
-            True means the equipment is available for topology processing, which determines
-            if the equipment is energized or not. False means that the equipment is
-            treated by network applications as if it is not in the model.
-            '''
-        
         })
     '''
     Specifies the availability of the equipment under normal operating
@@ -14889,19 +12304,13 @@ class Equipment(PowerSystemResource):
     AdditionalEquipmentContainer: list[EquipmentContainer] = field(
         default_factory=list,
         metadata={
-        'type': 'Attribute',
+        'type': 'Association',
+        'stereotypes': [],
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'EquipmentContainer.AdditionalGroupedEquipment',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Additional equipment container beyond the primary equipment container.
-            The equipment is contained in another equipment container, but also grouped
-            with this equipment container.
-            '''
-        
         })
     '''
     Additional equipment container beyond the primary equipment container.
@@ -14912,17 +12321,13 @@ class Equipment(PowerSystemResource):
     EquipmentContainer: Optional[EquipmentContainer] = field(
         default=None,
         metadata={
-        'type': 'Attribute',
+        'type': 'Association',
+        'stereotypes': [],
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'EquipmentContainer.Equipments',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Container of this equipment.
-            '''
-        
         })
     '''
     Container of this equipment.
@@ -14932,16 +12337,12 @@ class Equipment(PowerSystemResource):
         default_factory=list,
         metadata={
         'type': 'Association',
+        'stereotypes': [],
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'OperationalLimitSet.Equipment',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': False,
-        'docstring':
-            '''
-            The operational limit sets associated with this equipment.
-            '''
-        
         })
     '''
     The operational limit sets associated with this equipment.
@@ -14979,16 +12380,11 @@ class CompositeSwitch(Equipment):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            An alphanumeric code that can be used as a reference to extra information
-            such as the description of the interlocking scheme if any.
-            '''
-        
         })
     '''
     An alphanumeric code that can be used as a reference to extra information
@@ -14998,17 +12394,13 @@ class CompositeSwitch(Equipment):
     Switches: list[Switch] = field(
         default_factory=list,
         metadata={
-        'type': 'AggregateOf',
+        'type': 'Association',
+        'stereotypes': ['AggregateOf'],
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'Switch.CompositeSwitch',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': False,
-        'docstring':
-            '''
-            Switches contained in this Composite switch.
-            '''
-        
         })
     '''
     Switches contained in this Composite switch.
@@ -15027,6 +12419,7 @@ class CompositeSwitch(Equipment):
     def __maxOccurs__(self):
         return 'unbounded'
     
+@stereotype(CIMStereotype.ShadowExtension)
 @dataclass(repr=False)
 class ConductingEquipment(Equipment):
     '''
@@ -15037,19 +12430,13 @@ class ConductingEquipment(Equipment):
     BaseVoltage: Optional[BaseVoltage] = field(
         default=None,
         metadata={
-        'type': 'Attribute',
+        'type': 'Association',
+        'stereotypes': [],
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'BaseVoltage.ConductingEquipment',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Base voltage of this conducting equipment. Use only when there is no voltage
-            level container used and only one base voltage applies. For example, not
-            used for transformers.
-            '''
-        
         })
     '''
     Base voltage of this conducting equipment. Use only when there is no
@@ -15060,17 +12447,13 @@ class ConductingEquipment(Equipment):
     GroundingAction: Optional[GroundAction] = field(
         default=None,
         metadata={
-        'type': 'Attribute',
+        'type': 'Association',
+        'stereotypes': [],
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'GroundAction.GroundedEquipment',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Action involving grounding operation on this conducting equipment.
-            '''
-        
         })
     '''
     Action involving grounding operation on this conducting equipment.
@@ -15079,17 +12462,13 @@ class ConductingEquipment(Equipment):
     JumpingAction: Optional[JumperAction] = field(
         default=None,
         metadata={
-        'type': 'Attribute',
+        'type': 'Association',
+        'stereotypes': [],
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'JumperAction.JumpedEquipments',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Jumper action involving jumping operation on this conducting equipment.
-            '''
-        
         })
     '''
     Jumper action involving jumping operation on this conducting equipment.
@@ -15098,16 +12477,13 @@ class ConductingEquipment(Equipment):
     Outage: Optional[Outage] = field(
         default=None,
         metadata={
-        'type': 'Attribute',
+        'type': 'Association',
+        'stereotypes': [],
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'Outage.OutageIsolationEquipment',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            '''
-        
         })
     '''
     '''
@@ -15116,16 +12492,12 @@ class ConductingEquipment(Equipment):
         default_factory=list,
         metadata={
         'type': 'Association',
+        'stereotypes': [],
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'SvStatus.ConductingEquipment',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': False,
-        'docstring':
-            '''
-            The status state variable associated with this conducting equipment.
-            '''
-        
         })
     '''
     The status state variable associated with this conducting equipment.
@@ -15135,17 +12507,12 @@ class ConductingEquipment(Equipment):
         default_factory=list,
         metadata={
         'type': 'Association',
+        'stereotypes': [],
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'Terminal.ConductingEquipment',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': False,
-        'docstring':
-            '''
-            Conducting equipment have terminals that may be connected to other conducting
-            equipment terminals via connectivity nodes or topological nodes.
-            '''
-        
         })
     '''
     Conducting equipment have terminals that may be connected to other
@@ -15181,17 +12548,11 @@ class Clamp(ConductingEquipment):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            The length to the place where the clamp is located starting from side one
-            of the line segment, i.e. the line segment terminal with sequence number
-            equal to 1.
-            '''
-        
         })
     '''
     The length to the place where the clamp is located starting from side
@@ -15202,17 +12563,13 @@ class Clamp(ConductingEquipment):
     ACLineSegment: Optional[ACLineSegment] = field(
         default=None,
         metadata={
-        'type': 'Attribute',
+        'type': 'Association',
+        'stereotypes': [],
         'minOccurs': '1',
         'maxOccurs': '1',
         'inverse': 'ACLineSegment.Clamp',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            The line segment to which the clamp is connected.
-            '''
-        
         })
     '''
     The line segment to which the clamp is connected.
@@ -15244,15 +12601,11 @@ class Conductor(ConductingEquipment):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Segment length for calculating line segment capabilities.
-            '''
-        
         })
     '''
     Segment length for calculating line segment capabilities.
@@ -15261,17 +12614,13 @@ class Conductor(ConductingEquipment):
     DamageCurve: Optional[ConductorCharacteristicCurve] = field(
         default=None,
         metadata={
-        'type': 'Attribute',
+        'type': 'Association',
+        'stereotypes': [],
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'ConductorCharacteristicCurve.Conductor',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Damage curve associated to a conductor.
-            '''
-        
         })
     '''
     Damage curve associated to a conductor.
@@ -15340,14 +12689,11 @@ class ACLineSegment(Conductor):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://gridappsd.org/CIM/extension#',
         'serialize': True,
-        'docstring':
-            '''
-            '''
-        
         })
     '''
     '''
@@ -15356,14 +12702,11 @@ class ACLineSegment(Conductor):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://gridappsd.org/CIM/extension#',
         'serialize': True,
-        'docstring':
-            '''
-            '''
-        
         })
     '''
     '''
@@ -15372,16 +12715,11 @@ class ACLineSegment(Conductor):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Zero sequence shunt (charging) susceptance, uniformly distributed, of the
-            entire line segment.
-            '''
-        
         })
     '''
     Zero sequence shunt (charging) susceptance, uniformly distributed,
@@ -15392,17 +12730,11 @@ class ACLineSegment(Conductor):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Positive sequence shunt (charging) susceptance, uniformly distributed,
-            of the entire line segment. This value represents the full charging over
-            the full length of the line segment.
-            '''
-        
         })
     '''
     Positive sequence shunt (charging) susceptance, uniformly distributed,
@@ -15414,16 +12746,11 @@ class ACLineSegment(Conductor):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Zero sequence shunt (charging) conductance, uniformly distributed, of the
-            entire line segment.
-            '''
-        
         })
     '''
     Zero sequence shunt (charging) conductance, uniformly distributed,
@@ -15434,16 +12761,11 @@ class ACLineSegment(Conductor):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Positive sequence shunt (charging) conductance, uniformly distributed,
-            of the entire line segment.
-            '''
-        
         })
     '''
     Positive sequence shunt (charging) conductance, uniformly distributed,
@@ -15454,15 +12776,11 @@ class ACLineSegment(Conductor):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Positive sequence series resistance of the entire line segment.
-            '''
-        
         })
     '''
     Positive sequence series resistance of the entire line segment.
@@ -15472,15 +12790,11 @@ class ACLineSegment(Conductor):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Zero sequence series resistance of the entire line segment.
-            '''
-        
         })
     '''
     Zero sequence series resistance of the entire line segment.
@@ -15490,17 +12804,11 @@ class ACLineSegment(Conductor):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Maximum permitted temperature at the end of SC for the calculation of minimum
-            short-circuit currents. Used for short circuit data exchange according
-            to IEC 60909.
-            '''
-        
         })
     '''
     Maximum permitted temperature at the end of SC for the calculation
@@ -15512,15 +12820,11 @@ class ACLineSegment(Conductor):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Positive sequence series reactance of the entire line segment.
-            '''
-        
         })
     '''
     Positive sequence series reactance of the entire line segment.
@@ -15530,15 +12834,11 @@ class ACLineSegment(Conductor):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Zero sequence series reactance of the entire line segment.
-            '''
-        
         })
     '''
     Zero sequence series reactance of the entire line segment.
@@ -15547,16 +12847,13 @@ class ACLineSegment(Conductor):
     EarthResistivity: Optional[EarthResistivity] = field(
         default=None,
         metadata={
-        'type': 'Attribute',
+        'type': 'Association',
+        'stereotypes': [],
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'EarthResistivity.ACLineSegments',
         'namespace': 'http://gridappsd.org/CIM/extension#',
         'serialize': True,
-        'docstring':
-            '''
-            '''
-        
         })
     '''
     '''
@@ -15564,17 +12861,13 @@ class ACLineSegment(Conductor):
     PerLengthImpedance: Optional[PerLengthImpedance] = field(
         default=None,
         metadata={
-        'type': 'Attribute',
+        'type': 'Association',
+        'stereotypes': [],
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'PerLengthImpedance.ACLineSegments',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Per-length impedance of this line segment.
-            '''
-        
         })
     '''
     Per-length impedance of this line segment.
@@ -15583,16 +12876,13 @@ class ACLineSegment(Conductor):
     WireSpacing: Optional[WireSpacing] = field(
         default=None,
         metadata={
-        'type': 'Attribute',
+        'type': 'Association',
+        'stereotypes': [],
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'WireSpacing.ACLineSegements',
         'namespace': 'http://gridappsd.org/CIM/extension#',
         'serialize': True,
-        'docstring':
-            '''
-            '''
-        
         })
     '''
     '''
@@ -15600,16 +12890,13 @@ class ACLineSegment(Conductor):
     WireSpacingInfo: Optional[WireSpacingInfo] = field(
         default=None,
         metadata={
-        'type': 'Attribute',
+        'type': 'Association',
+        'stereotypes': [],
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'WireSpacingInfo.ACLineSegment',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            '''
-        
         })
     '''
     '''
@@ -15618,16 +12905,12 @@ class ACLineSegment(Conductor):
         default_factory=list,
         metadata={
         'type': 'Association',
+        'stereotypes': [],
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'ACLineSegmentPhase.ACLineSegment',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': False,
-        'docstring':
-            '''
-            The line segment phases which belong to the line segment.
-            '''
-        
         })
     '''
     The line segment phases which belong to the line segment.
@@ -15637,16 +12920,12 @@ class ACLineSegment(Conductor):
         default_factory=list,
         metadata={
         'type': 'Association',
+        'stereotypes': [],
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'Clamp.ACLineSegment',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': False,
-        'docstring':
-            '''
-            The clamps connected to the line segment.
-            '''
-        
         })
     '''
     The clamps connected to the line segment.
@@ -15656,16 +12935,12 @@ class ACLineSegment(Conductor):
         default_factory=list,
         metadata={
         'type': 'Association',
+        'stereotypes': [],
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'Cut.ACLineSegment',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': False,
-        'docstring':
-            '''
-            Cuts applied to the line segment.
-            '''
-        
         })
     '''
     Cuts applied to the line segment.
@@ -15675,16 +12950,12 @@ class ACLineSegment(Conductor):
         default=None,
         metadata={
         'type': 'Association',
+        'stereotypes': [],
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'LineSegmentCoupling.ACLineSegment',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': False,
-        'docstring':
-            '''
-            The description of this line's coupling with other lines in a coupled group.
-            '''
-        
         })
     '''
     The description of this line's coupling with other lines in a coupled
@@ -15717,15 +12988,11 @@ class BusSegment(Conductor):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            True if retain
-            '''
-        
         })
     '''
     True if retain
@@ -15735,16 +13002,11 @@ class BusSegment(Conductor):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Bus segment is retained in the topological solution. The flow through retained
-            bus sections will normally be calculated in power flow.
-            '''
-        
         })
     '''
     Bus segment is retained in the topological solution. The flow through
@@ -15776,16 +13038,12 @@ class WireSegment(Conductor):
         default_factory=list,
         metadata={
         'type': 'Association',
+        'stereotypes': [],
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'WireSegmentPhase.WireSegment',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': False,
-        'docstring':
-            '''
-            The wire segment phases which belong to the wire segment.
-            '''
-        
         })
     '''
     The wire segment phases which belong to the wire segment.
@@ -15842,17 +13100,11 @@ class BusbarSection(Connector):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Maximum allowable peak short-circuit current of busbar (Ipmax in IEC 60909-0).
-            Mechanical limit of the busbar in the substation itself. Used for short
-            circuit data exchange according to IEC 60909.
-            '''
-        
         })
     '''
     Maximum allowable peak short-circuit current of busbar (Ipmax in IEC
@@ -15864,17 +13116,13 @@ class BusbarSection(Connector):
     VoltageControlZone: Optional[VoltageControlZone] = field(
         default=None,
         metadata={
-        'type': 'ShadowExtension',
+        'type': 'Association',
+        'stereotypes': ['ShadowExtension'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'VoltageControlZone.BusbarSection',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            A VoltageControlZone is controlled by a designated BusbarSection.
-            '''
-        
         })
     '''
     A VoltageControlZone is controlled by a designated BusbarSection.
@@ -15884,16 +13132,12 @@ class BusbarSection(Connector):
         default=None,
         metadata={
         'type': 'Association',
+        'stereotypes': [],
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'VoltageControlZone.BusbarSection',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': False,
-        'docstring':
-            '''
-            A VoltageControlZone is controlled by a designated BusbarSection.
-            '''
-        
         })
     '''
     A VoltageControlZone is controlled by a designated BusbarSection.
@@ -15955,15 +13199,11 @@ class EarthFaultCompensator(ConductingEquipment):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Nominal resistance of device.
-            '''
-        
         })
     '''
     Nominal resistance of device.
@@ -15992,15 +13232,11 @@ class GroundingImpedance(EarthFaultCompensator):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Reactance of device.
-            '''
-        
         })
     '''
     Reactance of device.
@@ -16029,16 +13265,12 @@ class PetersenCoil(EarthFaultCompensator):
     mode: Optional[ PetersenCoilModeKind ] = field(
         default=None,
         metadata={
-        'type': 'enumeration Attribute',
+        'type': 'Attribute',
+        'stereotypes': ['enumeration', 'Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            The mode of operation of the Petersen coil.
-            '''
-        
         })
     '''
     The mode of operation of the Petersen coil.
@@ -16048,15 +13280,11 @@ class PetersenCoil(EarthFaultCompensator):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            The nominal voltage for which the coil is designed.
-            '''
-        
         })
     '''
     The nominal voltage for which the coil is designed.
@@ -16066,18 +13294,11 @@ class PetersenCoil(EarthFaultCompensator):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            The offset current that the Petersen coil controller is operating from
-            the resonant point. This is normally a fixed amount for which the controller
-            is configured and could be positive or negative. Typically 0 to 60 A depending
-            on voltage and resonance conditions.
-            '''
-        
         })
     '''
     The offset current that the Petersen coil controller is operating from
@@ -16090,16 +13311,11 @@ class PetersenCoil(EarthFaultCompensator):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            The control current used to control the Petersen coil also known as the
-            position current. Typically in the range of 20 mA to 200 mA.
-            '''
-        
         })
     '''
     The control current used to control the Petersen coil also known as
@@ -16110,15 +13326,11 @@ class PetersenCoil(EarthFaultCompensator):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            The maximum reactance.
-            '''
-        
         })
     '''
     The maximum reactance.
@@ -16128,15 +13340,11 @@ class PetersenCoil(EarthFaultCompensator):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            The minimum reactance.
-            '''
-        
         })
     '''
     The minimum reactance.
@@ -16146,18 +13354,11 @@ class PetersenCoil(EarthFaultCompensator):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            The nominal reactance. This is the operating point (normally over compensation)
-            that is defined based on the resonance point in the healthy network condition.
-            The impedance is calculated based on nominal voltage divided by position
-            current.
-            '''
-        
         })
     '''
     The nominal reactance. This is the operating point (normally over compensation)
@@ -16213,15 +13414,11 @@ class EnergyConsumer(EnergyConnection):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Number of individual customers represented by this demand.
-            '''
-        
         })
     '''
     Number of individual customers represented by this demand.
@@ -16231,16 +13428,11 @@ class EnergyConsumer(EnergyConnection):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Required for Yn and I connections (as represented by EnergyConsumer.phaseConnection).
-            True if the neutral is solidly grounded.
-            '''
-        
         })
     '''
     Required for Yn and I connections (as represented by EnergyConsumer.phaseConnection).
@@ -16251,18 +13443,11 @@ class EnergyConsumer(EnergyConnection):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Active power of the load. Load sign convention is used, i.e. positive sign
-            means flow out from a node.
-            For voltage dependent loads the value is at rated voltage.
-            Starting value for a steady state solution.
-            '''
-        
         })
     '''
     Active power of the load. Load sign convention is used, i.e. positive
@@ -16275,17 +13460,11 @@ class EnergyConsumer(EnergyConnection):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Active power of the load that is a fixed quantity and does not vary as
-            load group value varies. Load sign convention is used, i.e. positive sign
-            means flow out from a node.
-            '''
-        
         })
     '''
     Active power of the load that is a fixed quantity and does not vary
@@ -16297,17 +13476,11 @@ class EnergyConsumer(EnergyConnection):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Fixed active power as a percentage of load group fixed active power. Used
-            to represent the time-varying components. Load sign convention is used,
-            i.e. positive sign means flow out from a node.
-            '''
-        
         })
     '''
     Fixed active power as a percentage of load group fixed active power.
@@ -16318,16 +13491,12 @@ class EnergyConsumer(EnergyConnection):
     phaseConnection: Optional[ PhaseShuntConnectionKind ] = field(
         default=None,
         metadata={
-        'type': 'enumeration Attribute',
+        'type': 'Attribute',
+        'stereotypes': ['enumeration', 'Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            The type of phase connection, such as wye or delta.
-            '''
-        
         })
     '''
     The type of phase connection, such as wye or delta.
@@ -16337,18 +13506,11 @@ class EnergyConsumer(EnergyConnection):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Reactive power of the load. Load sign convention is used, i.e. positive
-            sign means flow out from a node.
-            For voltage dependent loads the value is at rated voltage.
-            Starting value for a steady state solution.
-            '''
-        
         })
     '''
     Reactive power of the load. Load sign convention is used, i.e. positive
@@ -16361,17 +13523,11 @@ class EnergyConsumer(EnergyConnection):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Reactive power of the load that is a fixed quantity and does not vary as
-            load group value varies. Load sign convention is used, i.e. positive sign
-            means flow out from a node.
-            '''
-        
         })
     '''
     Reactive power of the load that is a fixed quantity and does not vary
@@ -16383,17 +13539,11 @@ class EnergyConsumer(EnergyConnection):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Fixed reactive power as a percentage of load group fixed reactive power.
-            Used to represent the time-varying components. Load sign convention is
-            used, i.e. positive sign means flow out from a node.
-            '''
-        
         })
     '''
     Fixed reactive power as a percentage of load group fixed reactive power.
@@ -16404,17 +13554,13 @@ class EnergyConsumer(EnergyConnection):
     AreaDispatchableUnit: Optional[AreaDispatchableUnit] = field(
         default=None,
         metadata={
-        'type': 'ShadowExtension',
+        'type': 'Association',
+        'stereotypes': ['ShadowExtension'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'AreaDispatchableUnit.EnergyConsumer',
         'namespace': 'http://entsoe.eu/ns/nc#',
         'serialize': True,
-        'docstring':
-            '''
-            Area dispatchable unit that has this energy consumer.
-            '''
-        
         })
     '''
     Area dispatchable unit that has this energy consumer.
@@ -16423,16 +13569,13 @@ class EnergyConsumer(EnergyConnection):
     EnergyConsumerAction: Optional[EnergyConsumerAction] = field(
         default=None,
         metadata={
-        'type': 'Attribute',
+        'type': 'Association',
+        'stereotypes': [],
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'EnergyConsumerAction.EnergyConsumer',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            '''
-        
         })
     '''
     '''
@@ -16440,17 +13583,13 @@ class EnergyConsumer(EnergyConnection):
     LoadDynamics: Optional[LoadDynamics] = field(
         default=None,
         metadata={
-        'type': 'Attribute',
+        'type': 'Association',
+        'stereotypes': [],
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'LoadDynamics.EnergyConsumer',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Load dynamics model used to describe dynamic behaviour of this energy consumer.
-            '''
-        
         })
     '''
     Load dynamics model used to describe dynamic behaviour of this energy
@@ -16460,18 +13599,13 @@ class EnergyConsumer(EnergyConnection):
     LoadResponse: Optional[LoadResponseCharacteristic] = field(
         default=None,
         metadata={
-        'type': 'Attribute',
+        'type': 'Association',
+        'stereotypes': [],
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'LoadResponseCharacteristic.EnergyConsumer',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            The load response characteristic of this load. If missing, this load is
-            assumed to be constant power.
-            '''
-        
         })
     '''
     The load response characteristic of this load. If missing, this load
@@ -16481,17 +13615,13 @@ class EnergyConsumer(EnergyConnection):
     PowerCutZone: Optional[PowerCutZone] = field(
         default=None,
         metadata={
-        'type': 'ShadowExtension OfAggregate',
+        'type': 'Association',
+        'stereotypes': ['ShadowExtension', 'OfAggregate'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'PowerCutZone.EnergyConsumers',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            The energy consumer is assigned to this power cut zone.
-            '''
-        
         })
     '''
     The energy consumer is assigned to this power cut zone.
@@ -16501,16 +13631,12 @@ class EnergyConsumer(EnergyConnection):
         default_factory=list,
         metadata={
         'type': 'Association',
+        'stereotypes': [],
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'EnergyConsumerPhase.EnergyConsumer',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': False,
-        'docstring':
-            '''
-            The individual phase models for this energy consumer.
-            '''
-        
         })
     '''
     The individual phase models for this energy consumer.
@@ -16539,17 +13665,13 @@ class ConformLoad(EnergyConsumer):
     LoadGroup: Optional[ConformLoadGroup] = field(
         default=None,
         metadata={
-        'type': 'Attribute',
+        'type': 'Association',
+        'stereotypes': [],
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'ConformLoadGroup.EnergyConsumers',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Group of this ConformLoad.
-            '''
-        
         })
     '''
     Group of this ConformLoad.
@@ -16579,17 +13701,13 @@ class NonConformLoad(EnergyConsumer):
     LoadGroup: Optional[NonConformLoadGroup] = field(
         default=None,
         metadata={
-        'type': 'Attribute',
+        'type': 'Association',
+        'stereotypes': [],
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'NonConformLoadGroup.EnergyConsumers',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Group of this ConformLoad.
-            '''
-        
         })
     '''
     Group of this ConformLoad.
@@ -16627,6 +13745,7 @@ class StationSupply(EnergyConsumer):
     def __maxOccurs__(self):
         return 'unbounded'
     
+@stereotype(CIMStereotype.ShadowExtension)
 @dataclass(repr=False)
 class EnergySource(EnergyConnection):
     '''
@@ -16638,14 +13757,11 @@ class EnergySource(EnergyConnection):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            '''
-        
         })
     '''
     '''
@@ -16654,17 +13770,11 @@ class EnergySource(EnergyConnection):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            High voltage source active injection. Load sign convention is used, i.e.
-            positive sign means flow out from a node.
-            Starting value for steady state solutions.
-            '''
-        
         })
     '''
     High voltage source active injection. Load sign convention is used,
@@ -16676,15 +13786,11 @@ class EnergySource(EnergyConnection):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Phase-to-phase nominal voltage.
-            '''
-        
         })
     '''
     Phase-to-phase nominal voltage.
@@ -16694,17 +13800,11 @@ class EnergySource(EnergyConnection):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            This is the maximum active power that can be produced by the source. Load
-            sign convention is used, i.e. positive sign means flow out from a TopologicalNode
-            (bus) into the conducting equipment.
-            '''
-        
         })
     '''
     This is the maximum active power that can be produced by the source.
@@ -16716,17 +13816,11 @@ class EnergySource(EnergyConnection):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            This is the minimum active power that can be produced by the source. Load
-            sign convention is used, i.e. positive sign means flow out from a TopologicalNode
-            (bus) into the conducting equipment.
-            '''
-        
         })
     '''
     This is the minimum active power that can be produced by the source.
@@ -16738,15 +13832,11 @@ class EnergySource(EnergyConnection):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Positive sequence Thevenin resistance.
-            '''
-        
         })
     '''
     Positive sequence Thevenin resistance.
@@ -16756,15 +13846,11 @@ class EnergySource(EnergyConnection):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Zero sequence Thevenin resistance.
-            '''
-        
         })
     '''
     Zero sequence Thevenin resistance.
@@ -16774,15 +13860,11 @@ class EnergySource(EnergyConnection):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Negative sequence Thevenin resistance.
-            '''
-        
         })
     '''
     Negative sequence Thevenin resistance.
@@ -16792,17 +13874,11 @@ class EnergySource(EnergyConnection):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            High voltage source reactive injection. Load sign convention is used, i.e.
-            positive sign means flow out from a node.
-            Starting value for steady state solutions.
-            '''
-        
         })
     '''
     High voltage source reactive injection. Load sign convention is used,
@@ -16814,19 +13890,11 @@ class EnergySource(EnergyConnection):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Phase angle of a-phase open circuit used when voltage characteristics need
-            to be imposed at the node associated with the terminal of the energy source,
-            such as when voltages and angles from the transmission level are used as
-            input to the distribution network. The attribute shall be a positive value
-            or zero.
-            '''
-        
         })
     '''
     Phase angle of a-phase open circuit used when voltage characteristics
@@ -16840,19 +13908,11 @@ class EnergySource(EnergyConnection):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Phase-to-phase open circuit voltage magnitude used when voltage characteristics
-            need to be imposed at the node associated with the terminal of the energy
-            source, such as when voltages and angles from the transmission level are
-            used as input to the distribution network. The attribute shall be a positive
-            value or zero.
-            '''
-        
         })
     '''
     Phase-to-phase open circuit voltage magnitude used when voltage characteristics
@@ -16866,15 +13926,11 @@ class EnergySource(EnergyConnection):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Positive sequence Thevenin reactance.
-            '''
-        
         })
     '''
     Positive sequence Thevenin reactance.
@@ -16884,15 +13940,11 @@ class EnergySource(EnergyConnection):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Zero sequence Thevenin reactance.
-            '''
-        
         })
     '''
     Zero sequence Thevenin reactance.
@@ -16902,15 +13954,11 @@ class EnergySource(EnergyConnection):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Negative sequence Thevenin reactance.
-            '''
-        
         })
     '''
     Negative sequence Thevenin reactance.
@@ -16919,17 +13967,13 @@ class EnergySource(EnergyConnection):
     EnergySchedulingType: Optional[EnergySchedulingType] = field(
         default=None,
         metadata={
-        'type': 'Attribute',
+        'type': 'Association',
+        'stereotypes': [],
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'EnergySchedulingType.EnergySource',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Energy Scheduling Type of an Energy Source.
-            '''
-        
         })
     '''
     Energy Scheduling Type of an Energy Source.
@@ -16938,17 +13982,13 @@ class EnergySource(EnergyConnection):
     EnergySourceAction: Optional[EnergySourceAction] = field(
         default=None,
         metadata={
-        'type': 'Attribute',
+        'type': 'Association',
+        'stereotypes': [],
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'EnergySourceAction.EnergySource',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Action taken with this energy source.
-            '''
-        
         })
     '''
     Action taken with this energy source.
@@ -16958,16 +13998,12 @@ class EnergySource(EnergyConnection):
         default_factory=list,
         metadata={
         'type': 'Association',
+        'stereotypes': [],
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'EnergySourcePhase.EnergySource',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': False,
-        'docstring':
-            '''
-            The individual phase information of the energy source.
-            '''
-        
         })
     '''
     The individual phase information of the energy source.
@@ -16997,16 +14033,11 @@ class RegulatingCondEq(EnergyConnection):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Specifies the regulation status of the equipment. True is regulating, false
-            is not regulating.
-            '''
-        
         })
     '''
     Specifies the regulation status of the equipment. True is regulating,
@@ -17016,17 +14047,13 @@ class RegulatingCondEq(EnergyConnection):
     EquipmentController: Optional[EquipmentController] = field(
         default=None,
         metadata={
-        'type': 'Attribute',
+        'type': 'Association',
+        'stereotypes': [],
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'EquipmentController.RegulatingCondEq',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            The equipment controller for this regulating conducting equipment.
-            '''
-        
         })
     '''
     The equipment controller for this regulating conducting equipment.
@@ -17035,17 +14062,13 @@ class RegulatingCondEq(EnergyConnection):
     RegulatingControl: Optional[RegulatingControl] = field(
         default=None,
         metadata={
-        'type': 'ShadowExtension',
+        'type': 'Association',
+        'stereotypes': ['ShadowExtension'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'RegulatingControl.RegulatingCondEq',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            The regulating control scheme in which this equipment participates.
-            '''
-        
         })
     '''
     The regulating control scheme in which this equipment participates.
@@ -17082,18 +14105,11 @@ class ExternalNetworkInjection(RegulatingCondEq):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Indicates whether the maximum and minimum initial symmetrical short-circuit
-            currents (Ik� max and Ik� min) have been calculated according to the IEC
-            60909-0 method. Is only used in short-circuit calculations done according
-            to the superposition method.
-            '''
-        
         })
     '''
     Indicates whether the maximum and minimum initial symmetrical short-circuit
@@ -17106,17 +14122,11 @@ class ExternalNetworkInjection(RegulatingCondEq):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Maximum ratio of zero sequence resistance to zero sequence reactance (R(0)/X(0)
-            max). R0 and X0 are the real and imaginary parts of the zero sequence short-circuit
-            impedance Z0 defined in clause 3.19.3 of IEC 60909-0:2016.
-            '''
-        
         })
     '''
     Maximum ratio of zero sequence resistance to zero sequence reactance
@@ -17129,17 +14139,11 @@ class ExternalNetworkInjection(RegulatingCondEq):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Maximum ratio of positive sequence resistance to positive sequence reactance
-            (R(1)/X(1) max). R1 and X1 are the real and imaginary parts of the positive
-            sequence short-circuit impedance Z1 defined in clause 3.19.1 of IEC 60909-0:2016.
-            '''
-        
         })
     '''
     Maximum ratio of positive sequence resistance to positive sequence
@@ -17152,18 +14156,11 @@ class ExternalNetworkInjection(RegulatingCondEq):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Maximum ratio of zero sequence impedance to its positive sequence impedance
-            (Z(0)/Z(1) max). Z0 is the zero sequence short-circuit impedance defined
-            in clause 3.19.3 of IEC 60909-0:2016. Z1 is the positive sequence short-circuit
-            impedance defined in clause 3.19.1 of IEC 60909-0:2016.
-            '''
-        
         })
     '''
     Maximum ratio of zero sequence impedance to its positive sequence impedance
@@ -17176,17 +14173,11 @@ class ExternalNetworkInjection(RegulatingCondEq):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Minimum ratio of zero sequence resistance to zero sequence reactance (R(0)/X(0)
-            min). R0 and X0 are the real and imaginary parts of the zero sequence short-circuit
-            impedance Z0 defined in clause 3.19.3 of IEC 60909-0:2016.
-            '''
-        
         })
     '''
     Minimum ratio of zero sequence resistance to zero sequence reactance
@@ -17199,17 +14190,11 @@ class ExternalNetworkInjection(RegulatingCondEq):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Minimum ratio of positive sequence resistance to positive sequence reactance
-            (R(1)/X(1) min). R1 and X1 are the real and imaginary parts of the positive
-            sequence short-circuit impedance Z1 defined in clause 3.19.1 of IEC 60909-0:2016.
-            '''
-        
         })
     '''
     Minimum ratio of positive sequence resistance to positive sequence
@@ -17222,18 +14207,11 @@ class ExternalNetworkInjection(RegulatingCondEq):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Minimum ratio of zero sequence impedance to its positive sequence impedance
-            (Z(0)/Z(1) min). Z0 is the zero sequence short-circuit impedance defined
-            in clause 3.19.3 of IEC 60909-0:2016. Z1 is the positive sequence short-circuit
-            impedance defined in clause 3.19.1 of IEC 60909-0:2016.
-            '''
-        
         })
     '''
     Minimum ratio of zero sequence impedance to its positive sequence impedance
@@ -17246,17 +14224,11 @@ class ExternalNetworkInjection(RegulatingCondEq):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Priority of unit for use as powerflow voltage phase angle reference bus
-            selection. 0 = don t care (default) 1 = highest priority. 2 is less than
-            1 and so on.
-            '''
-        
         })
     '''
     Priority of unit for use as powerflow voltage phase angle reference
@@ -17268,17 +14240,11 @@ class ExternalNetworkInjection(RegulatingCondEq):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Power Frequency Bias. This is the change in power injection divided by
-            the change in frequency and negated. A positive value of the power frequency
-            bias provides additional power injection upon a drop in frequency.
-            '''
-        
         })
     '''
     Power Frequency Bias. This is the change in power injection divided
@@ -17290,16 +14256,11 @@ class ExternalNetworkInjection(RegulatingCondEq):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Maximum initial symmetrical short-circuit current (Ik" max) in A. Ik� is
-            defined in clause 3.5 of IEC 60909-0:2016.
-            '''
-        
         })
     '''
     Maximum initial symmetrical short-circuit current (Ik" max) in A. Ik�
@@ -17310,15 +14271,11 @@ class ExternalNetworkInjection(RegulatingCondEq):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Maximum active power of the injection.
-            '''
-        
         })
     '''
     Maximum active power of the injection.
@@ -17328,16 +14285,11 @@ class ExternalNetworkInjection(RegulatingCondEq):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Maximum reactive power of the injection. Used for modelling of infeed for
-            load flow exchange. Not used for short-circuit modelling.
-            '''
-        
         })
     '''
     Maximum reactive power of the injection. Used for modelling of infeed
@@ -17348,16 +14300,11 @@ class ExternalNetworkInjection(RegulatingCondEq):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Minimum initial symmetrical short-circuit current (Ik" min) in A. Ik� is
-            defined in clause 3.5 of IEC 60909-0:2016.
-            '''
-        
         })
     '''
     Minimum initial symmetrical short-circuit current (Ik" min) in A. Ik�
@@ -17368,15 +14315,11 @@ class ExternalNetworkInjection(RegulatingCondEq):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Minimum active power of the injection.
-            '''
-        
         })
     '''
     Minimum active power of the injection.
@@ -17386,16 +14329,11 @@ class ExternalNetworkInjection(RegulatingCondEq):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Minimum reactive power of the injection. Used for modelling of infeed for
-            load flow exchange. Not used for short-circuit modelling.
-            '''
-        
         })
     '''
     Minimum reactive power of the injection. Used for modelling of infeed
@@ -17406,17 +14344,11 @@ class ExternalNetworkInjection(RegulatingCondEq):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Active power injection. Load sign convention is used, i.e. positive sign
-            means flow out from a node.
-            Starting value for steady state solutions.
-            '''
-        
         })
     '''
     Active power injection. Load sign convention is used, i.e. positive
@@ -17428,17 +14360,11 @@ class ExternalNetworkInjection(RegulatingCondEq):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Reactive power injection. Load sign convention is used, i.e. positive sign
-            means flow out from a node.
-            Starting value for steady state solutions.
-            '''
-        
         })
     '''
     Reactive power injection. Load sign convention is used, i.e. positive
@@ -17450,18 +14376,11 @@ class ExternalNetworkInjection(RegulatingCondEq):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Voltage factor (c) in pu which has been used to calculate the maximum and
-            minimum initial symmetrical short-circuit currents (Ik� max and Ik� min).
-            Is only used in short-circuit calculations done according to the superposition
-            method. The voltage factor is defined in clause 3.15 of IEC 60909-0:2016.
-            '''
-        
         })
     '''
     Voltage factor (c) in pu which has been used to calculate the maximum
@@ -17494,15 +14413,11 @@ class FACTSEquipment(RegulatingCondEq):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Capacitive reactance at maximum reactive power. Shall always be positive.
-            '''
-        
         })
     '''
     Capacitive reactance at maximum reactive power. Shall always be positive.
@@ -17512,15 +14427,11 @@ class FACTSEquipment(RegulatingCondEq):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Inductive rating at maximum inductive reactive power. Shall always be negative.
-            '''
-        
         })
     '''
     Inductive rating at maximum inductive reactive power. Shall always
@@ -17531,15 +14442,11 @@ class FACTSEquipment(RegulatingCondEq):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Capacitive reactance at minimum reactive power. Shall always be positive.
-            '''
-        
         })
     '''
     Capacitive reactance at minimum reactive power. Shall always be positive.
@@ -17549,15 +14456,11 @@ class FACTSEquipment(RegulatingCondEq):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Inductive rating at minimum inductive reactive power. Shall always be negative.
-            '''
-        
         })
     '''
     Inductive rating at minimum inductive reactive power. Shall always
@@ -17568,17 +14471,11 @@ class FACTSEquipment(RegulatingCondEq):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Reactive power injection. Load sign convention is used, i.e. positive sign
-            means flow out from a node.
-            Starting value for a steady state solution.
-            '''
-        
         })
     '''
     Reactive power injection. Load sign convention is used, i.e. positive
@@ -17590,15 +14487,11 @@ class FACTSEquipment(RegulatingCondEq):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Capacitive reactance at maximum reactive power. Shall always be positive.
-            '''
-        
         })
     '''
     Capacitive reactance at maximum reactive power. Shall always be positive.
@@ -17608,15 +14501,11 @@ class FACTSEquipment(RegulatingCondEq):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Rated current of the FACTS equipment.
-            '''
-        
         })
     '''
     Rated current of the FACTS equipment.
@@ -17626,15 +14515,11 @@ class FACTSEquipment(RegulatingCondEq):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Inductive rating at maximum inductive reactive power. Shall always be negative.
-            '''
-        
         })
     '''
     Inductive rating at maximum inductive reactive power. Shall always
@@ -17645,15 +14530,11 @@ class FACTSEquipment(RegulatingCondEq):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Rated voltage of the FACTS equipment.
-            '''
-        
         })
     '''
     Rated voltage of the FACTS equipment.
@@ -17663,18 +14544,11 @@ class FACTSEquipment(RegulatingCondEq):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            The characteristics slope which defines how the reactive power output changes
-            in proportion to the difference between the regulated bus voltage and the
-            voltage setpoint.
-            The attribute shall be a positive value or zero.
-            '''
-        
         })
     '''
     The characteristics slope which defines how the reactive power output
@@ -17687,16 +14561,12 @@ class FACTSEquipment(RegulatingCondEq):
         default_factory=list,
         metadata={
         'type': 'Association',
+        'stereotypes': [],
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'LossCurve.FACTSEquipment',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': False,
-        'docstring':
-            '''
-            The loss curve for the FACTS equipment.
-            '''
-        
         })
     '''
     The loss curve for the FACTS equipment.
@@ -17783,16 +14653,11 @@ class StaticVarCompensator(FACTSEquipment):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Capacitive reactance at maximum capacitive reactive power. Shall always
-            be positive.
-            '''
-        
         })
     '''
     Capacitive reactance at maximum capacitive reactive power. Shall always
@@ -17803,16 +14668,11 @@ class StaticVarCompensator(FACTSEquipment):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Inductive reactance at maximum inductive reactive power. Shall always be
-            negative.
-            '''
-        
         })
     '''
     Inductive reactance at maximum inductive reactive power. Shall always
@@ -17823,17 +14683,11 @@ class StaticVarCompensator(FACTSEquipment):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Reactive power injection. Load sign convention is used, i.e. positive sign
-            means flow out from a node.
-            Starting value for a steady state solution.
-            '''
-        
         })
     '''
     Reactive power injection. Load sign convention is used, i.e. positive
@@ -17845,18 +14699,11 @@ class StaticVarCompensator(FACTSEquipment):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            The characteristics slope of an SVC defines how the reactive power output
-            changes in proportion to the difference between the regulated bus voltage
-            and the voltage setpoint.
-            The attribute shall be a positive value or zero.
-            '''
-        
         })
     '''
     The characteristics slope of an SVC defines how the reactive power
@@ -17868,16 +14715,12 @@ class StaticVarCompensator(FACTSEquipment):
     sVCControlMode: Optional[ SVCControlMode ] = field(
         default=None,
         metadata={
-        'type': 'enumeration Attribute',
+        'type': 'Attribute',
+        'stereotypes': ['enumeration', 'Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            SVC control mode.
-            '''
-        
         })
     '''
     SVC control mode.
@@ -17887,18 +14730,11 @@ class StaticVarCompensator(FACTSEquipment):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            The reactive power output of the SVC is proportional to the difference
-            between the voltage at the regulated bus and the voltage setpoint. When
-            the regulated bus voltage is equal to the voltage setpoint, the reactive
-            power output is zero.
-            '''
-        
         })
     '''
     The reactive power output of the SVC is proportional to the difference
@@ -17910,18 +14746,13 @@ class StaticVarCompensator(FACTSEquipment):
     StaticVarCompensatorDynamics: Optional[StaticVarCompensatorDynamics] = field(
         default=None,
         metadata={
-        'type': 'Attribute',
+        'type': 'Association',
+        'stereotypes': [],
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'StaticVarCompensatorDynamics.StaticVarCompensator',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Static Var Compensator dynamics model used to describe dynamic behaviour
-            of this Static Var Compensator.
-            '''
-        
         })
     '''
     Static Var Compensator dynamics model used to describe dynamic behaviour
@@ -17958,15 +14789,11 @@ class ThyristorControlledSeriesCompensator(FACTSEquipment):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            The current section on which the TCSC is operating.
-            '''
-        
         })
     '''
     The current section on which the TCSC is operating.
@@ -17976,17 +14803,11 @@ class ThyristorControlledSeriesCompensator(FACTSEquipment):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            The actual compensation impedance provided by the compensator. The attribute
-            value shall be positive if compensation is in the capacitive range. The
-            attribute value shall be negative if compensation is in the inductive rating.
-            '''
-        
         })
     '''
     The actual compensation impedance provided by the compensator. The
@@ -17999,16 +14820,11 @@ class ThyristorControlledSeriesCompensator(FACTSEquipment):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Flexible impedance that can be controlled by the compensator when operating
-            in the capacitive range. Shall always be positive.
-            '''
-        
         })
     '''
     Flexible impedance that can be controlled by the compensator when operating
@@ -18019,16 +14835,11 @@ class ThyristorControlledSeriesCompensator(FACTSEquipment):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Flexible impedance that can be controlled by the compensator when operating
-            in the inductive range. Shall always be negative.
-            '''
-        
         })
     '''
     Flexible impedance that can be controlled by the compensator when operating
@@ -18039,15 +14850,11 @@ class ThyristorControlledSeriesCompensator(FACTSEquipment):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Minimum current below which the device bypassed.
-            '''
-        
         })
     '''
     Minimum current below which the device bypassed.
@@ -18057,15 +14864,11 @@ class ThyristorControlledSeriesCompensator(FACTSEquipment):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            The current for which the TCSC returns back to operation after bypass.
-            '''
-        
         })
     '''
     The current for which the TCSC returns back to operation after bypass.
@@ -18075,16 +14878,12 @@ class ThyristorControlledSeriesCompensator(FACTSEquipment):
         default_factory=list,
         metadata={
         'type': 'Association',
+        'stereotypes': [],
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'TCSCCompensationPoint.ThyristorControlledSeriesCompensator',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': False,
-        'docstring':
-            '''
-            Compensation point for this TCSC.
-            '''
-        
         })
     '''
     Compensation point for this TCSC.
@@ -18115,15 +14914,11 @@ class FrequencyConverter(RegulatingCondEq):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Frequency on the AC side.
-            '''
-        
         })
     '''
     Frequency on the AC side.
@@ -18133,16 +14928,11 @@ class FrequencyConverter(RegulatingCondEq):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            The maximum active power on the DC side at which the frequency converter
-            should operate.
-            '''
-        
         })
     '''
     The maximum active power on the DC side at which the frequency converter
@@ -18153,16 +14943,11 @@ class FrequencyConverter(RegulatingCondEq):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            The maximum voltage on the DC side at which the frequency converter should
-            operate.
-            '''
-        
         })
     '''
     The maximum voltage on the DC side at which the frequency converter
@@ -18173,16 +14958,11 @@ class FrequencyConverter(RegulatingCondEq):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            The minimum active power on the DC side at which the frequency converter
-            should operate.
-            '''
-        
         })
     '''
     The minimum active power on the DC side at which the frequency converter
@@ -18193,16 +14973,11 @@ class FrequencyConverter(RegulatingCondEq):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            The minimum voltage on the DC side at which the frequency converter should
-            operate.
-            '''
-        
         })
     '''
     The minimum voltage on the DC side at which the frequency converter
@@ -18222,6 +14997,7 @@ class FrequencyConverter(RegulatingCondEq):
     def __maxOccurs__(self):
         return 'unbounded'
     
+@stereotype(CIMStereotype.ShadowExtension)
 @dataclass(repr=False)
 class PowerElectronicsConnection(RegulatingCondEq):
     '''
@@ -18233,16 +15009,11 @@ class PowerElectronicsConnection(RegulatingCondEq):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Indicates whether the inverter entered (true) or not (false) into Safe
-            Mode.
-            '''
-        
         })
     '''
     Indicates whether the inverter entered (true) or not (false) into Safe
@@ -18253,14 +15024,11 @@ class PowerElectronicsConnection(RegulatingCondEq):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            '''
-        
         })
     '''
     '''
@@ -18269,16 +15037,11 @@ class PowerElectronicsConnection(RegulatingCondEq):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Maximum fault current this device will contribute, in per-unit of rated
-            current, before the converter protection will trip or bypass.
-            '''
-        
         })
     '''
     Maximum fault current this device will contribute, in per-unit of rated
@@ -18289,16 +15052,11 @@ class PowerElectronicsConnection(RegulatingCondEq):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Maximum reactive power limit. This is the maximum (nameplate) limit for
-            the unit.
-            '''
-        
         })
     '''
     Maximum reactive power limit. This is the maximum (nameplate) limit
@@ -18309,16 +15067,11 @@ class PowerElectronicsConnection(RegulatingCondEq):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Minimum reactive power limit for the unit. This is the minimum (nameplate)
-            limit for the unit.
-            '''
-        
         })
     '''
     Minimum reactive power limit for the unit. This is the minimum (nameplate)
@@ -18329,17 +15082,11 @@ class PowerElectronicsConnection(RegulatingCondEq):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Active power injection. Load sign convention is used, i.e. positive sign
-            means flow out from a node.
-            Starting value for a steady state solution.
-            '''
-        
         })
     '''
     Active power injection. Load sign convention is used, i.e. positive
@@ -18351,17 +15098,11 @@ class PowerElectronicsConnection(RegulatingCondEq):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Reactive power injection. Load sign convention is used, i.e. positive sign
-            means flow out from a node.
-            Starting value for a steady state solution.
-            '''
-        
         })
     '''
     Reactive power injection. Load sign convention is used, i.e. positive
@@ -18373,16 +15114,11 @@ class PowerElectronicsConnection(RegulatingCondEq):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Nameplate apparent power rating for the unit.
-            The attribute shall have a positive value.
-            '''
-        
         })
     '''
     Nameplate apparent power rating for the unit.
@@ -18393,17 +15129,11 @@ class PowerElectronicsConnection(RegulatingCondEq):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Rated voltage (nameplate data, Ur in IEC 60909-0). It is primarily used
-            for short circuit data exchange according to IEC 60909.
-            The attribute shall be a positive value.
-            '''
-        
         })
     '''
     Rated voltage (nameplate data, Ur in IEC 60909-0). It is primarily
@@ -18415,16 +15145,12 @@ class PowerElectronicsConnection(RegulatingCondEq):
         default_factory=list,
         metadata={
         'type': 'Association',
+        'stereotypes': [],
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'PowerElectronicsConnectionPhase.PowerElectronicsConnection',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': False,
-        'docstring':
-            '''
-            The individual phases models for the power electronics connection.
-            '''
-        
         })
     '''
     The individual phases models for the power electronics connection.
@@ -18434,17 +15160,12 @@ class PowerElectronicsConnection(RegulatingCondEq):
         default_factory=list,
         metadata={
         'type': 'Association',
+        'stereotypes': [],
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'PowerElectronicsUnit.PowerElectronicsConnection',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': False,
-        'docstring':
-            '''
-            An AC network connection may have several power electronics units connecting
-            through it.
-            '''
-        
         })
     '''
     An AC network connection may have several power electronics units connecting
@@ -18465,6 +15186,7 @@ class PowerElectronicsConnection(RegulatingCondEq):
         return 'unbounded'
     
 @stereotype(CIMStereotype.ShadowExtension)
+@stereotype(CIMStereotype.GridAPPSD)
 @dataclass(repr=False)
 class EVSE1(PowerElectronicsConnection):
     '''
@@ -18483,15 +15205,12 @@ class EVSE1(PowerElectronicsConnection):
     chargingModeType: Optional[ ChargingModeKind ] = field(
         default=None,
         metadata={
-        'type': 'enumeration GridAPPSD Attribute',
+        'type': 'Attribute',
+        'stereotypes': ['enumeration', 'GridAPPSD', 'Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://gridappsd.org/CIM/extension#',
         'serialize': True,
-        'docstring':
-            '''
-            '''
-        
         })
     '''
     '''
@@ -18519,16 +15238,11 @@ class RotatingMachine(RegulatingCondEq):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Power factor (nameplate data). It is primarily used for short circuit data
-            exchange according to IEC 60909. The attribute cannot be a negative value.
-            '''
-        
         })
     '''
     Power factor (nameplate data). It is primarily used for short circuit
@@ -18540,17 +15254,11 @@ class RotatingMachine(RegulatingCondEq):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Active power injection. Load sign convention is used, i.e. positive sign
-            means flow out from a node.
-            Starting value for a steady state solution.
-            '''
-        
         })
     '''
     Active power injection. Load sign convention is used, i.e. positive
@@ -18562,17 +15270,11 @@ class RotatingMachine(RegulatingCondEq):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Reactive power injection. Load sign convention is used, i.e. positive sign
-            means flow out from a node.
-            Starting value for a steady state solution.
-            '''
-        
         })
     '''
     Reactive power injection. Load sign convention is used, i.e. positive
@@ -18584,16 +15286,11 @@ class RotatingMachine(RegulatingCondEq):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Nameplate apparent power rating for the unit.
-            The attribute shall have a positive value.
-            '''
-        
         })
     '''
     Nameplate apparent power rating for the unit.
@@ -18604,17 +15301,11 @@ class RotatingMachine(RegulatingCondEq):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Rated voltage (nameplate data, Ur in IEC 60909-0). It is primarily used
-            for short circuit data exchange according to IEC 60909.
-            The attribute shall be a positive value.
-            '''
-        
         })
     '''
     Rated voltage (nameplate data, Ur in IEC 60909-0). It is primarily
@@ -18625,18 +15316,13 @@ class RotatingMachine(RegulatingCondEq):
     GeneratingUnit: Optional[GeneratingUnit] = field(
         default=None,
         metadata={
-        'type': 'Attribute',
+        'type': 'Association',
+        'stereotypes': ['NC'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'GeneratingUnit.RotatingMachine',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            A synchronous machine may operate as a generator and as such becomes a
-            member of a generating unit.
-            '''
-        
         })
     '''
     A synchronous machine may operate as a generator and as such becomes
@@ -18646,19 +15332,13 @@ class RotatingMachine(RegulatingCondEq):
     HydroPump: Optional[HydroPump] = field(
         default=None,
         metadata={
-        'type': 'NC',
+        'type': 'Association',
+        'stereotypes': [],
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'HydroPump.RotatingMachine',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            The synchronous machine drives the turbine which moves the water from a
-            low elevation to a higher elevation. The direction of machine rotation
-            for pumping may or may not be the same as for generating.
-            '''
-        
         })
     '''
     The synchronous machine drives the turbine which moves the water from
@@ -18669,16 +15349,13 @@ class RotatingMachine(RegulatingCondEq):
     RotatingMachinePhase: Optional[RotatingMachinePhase] = field(
         default=None,
         metadata={
-        'type': 'ShadowExtension',
+        'type': 'Association',
+        'stereotypes': ['ShadowExtension'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'RotatingMachinePhase.RotatingMachine',
         'namespace': 'http://gridappsd.org/CIM/extension#',
         'serialize': True,
-        'docstring':
-            '''
-            '''
-        
         })
     '''
     '''
@@ -18708,16 +15385,11 @@ class AsynchronousMachine(RotatingMachine):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Indicates whether the machine is a converter fed drive. Used for short
-            circuit data exchange according to IEC 60909.
-            '''
-        
         })
     '''
     Indicates whether the machine is a converter fed drive. Used for short
@@ -18728,16 +15400,11 @@ class AsynchronousMachine(RotatingMachine):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Ratio of locked-rotor current to the rated current of the motor (Ia/Ir).
-            Used for short circuit data exchange according to IEC 60909.
-            '''
-        
         })
     '''
     Ratio of locked-rotor current to the rated current of the motor (Ia/Ir).
@@ -18748,16 +15415,11 @@ class AsynchronousMachine(RotatingMachine):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Number of pole pairs of stator. Used for short circuit data exchange according
-            to IEC 60909.
-            '''
-        
         })
     '''
     Number of pole pairs of stator. Used for short circuit data exchange
@@ -18768,16 +15430,11 @@ class AsynchronousMachine(RotatingMachine):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Indicates for converter drive motors if the power can be reversible. Used
-            for short circuit data exchange according to IEC 60909.
-            '''
-        
         })
     '''
     Indicates for converter drive motors if the power can be reversible.
@@ -18788,16 +15445,11 @@ class AsynchronousMachine(RotatingMachine):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Locked rotor ratio (R/X). Used for short circuit data exchange according
-            to IEC 60909.
-            '''
-        
         })
     '''
     Locked rotor ratio (R/X). Used for short circuit data exchange according
@@ -18807,16 +15459,12 @@ class AsynchronousMachine(RotatingMachine):
     asynchronousMachineType: Optional[ AsynchronousMachineKind ] = field(
         default=None,
         metadata={
-        'type': 'enumeration Attribute',
+        'type': 'Attribute',
+        'stereotypes': ['enumeration', 'Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Indicates the type of Asynchronous Machine (motor or generator).
-            '''
-        
         })
     '''
     Indicates the type of Asynchronous Machine (motor or generator).
@@ -18826,17 +15474,11 @@ class AsynchronousMachine(RotatingMachine):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Efficiency of the asynchronous machine at nominal operation as a percentage.
-            Indicator for converter drive motors. Used for short circuit data exchange
-            according to IEC 60909.
-            '''
-        
         })
     '''
     Efficiency of the asynchronous machine at nominal operation as a percentage.
@@ -18848,15 +15490,11 @@ class AsynchronousMachine(RotatingMachine):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Nameplate data indicates if the machine is 50 Hz or 60 Hz.
-            '''
-        
         })
     '''
     Nameplate data indicates if the machine is 50 Hz or 60 Hz.
@@ -18866,15 +15504,11 @@ class AsynchronousMachine(RotatingMachine):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Nameplate data. Depends on the slip and number of pole pairs.
-            '''
-        
         })
     '''
     Nameplate data. Depends on the slip and number of pole pairs.
@@ -18884,16 +15518,11 @@ class AsynchronousMachine(RotatingMachine):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Rated mechanical power (Pr in IEC 60909-0). Used for short circuit data
-            exchange according to IEC 60909.
-            '''
-        
         })
     '''
     Rated mechanical power (Pr in IEC 60909-0). Used for short circuit
@@ -18904,15 +15533,11 @@ class AsynchronousMachine(RotatingMachine):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Damper 1 winding resistance.
-            '''
-        
         })
     '''
     Damper 1 winding resistance.
@@ -18922,15 +15547,11 @@ class AsynchronousMachine(RotatingMachine):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Damper 2 winding resistance.
-            '''
-        
         })
     '''
     Damper 2 winding resistance.
@@ -18940,15 +15561,11 @@ class AsynchronousMachine(RotatingMachine):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Transient rotor time constant (greater than tppo).
-            '''
-        
         })
     '''
     Transient rotor time constant (greater than tppo).
@@ -18958,15 +15575,11 @@ class AsynchronousMachine(RotatingMachine):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Sub-transient rotor time constant (greater than 0).
-            '''
-        
         })
     '''
     Sub-transient rotor time constant (greater than 0).
@@ -18976,15 +15589,11 @@ class AsynchronousMachine(RotatingMachine):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Damper 1 winding leakage reactance.
-            '''
-        
         })
     '''
     Damper 1 winding leakage reactance.
@@ -18994,15 +15603,11 @@ class AsynchronousMachine(RotatingMachine):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Damper 2 winding leakage reactance.
-            '''
-        
         })
     '''
     Damper 2 winding leakage reactance.
@@ -19012,15 +15617,11 @@ class AsynchronousMachine(RotatingMachine):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Magnetizing reactance.
-            '''
-        
         })
     '''
     Magnetizing reactance.
@@ -19030,15 +15631,11 @@ class AsynchronousMachine(RotatingMachine):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Transient reactance (unsaturated) (greater than or equal to xpp).
-            '''
-        
         })
     '''
     Transient reactance (unsaturated) (greater than or equal to xpp).
@@ -19048,15 +15645,11 @@ class AsynchronousMachine(RotatingMachine):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Sub-transient reactance (unsaturated).
-            '''
-        
         })
     '''
     Sub-transient reactance (unsaturated).
@@ -19066,15 +15659,11 @@ class AsynchronousMachine(RotatingMachine):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Synchronous reactance (greater than xp).
-            '''
-        
         })
     '''
     Synchronous reactance (greater than xp).
@@ -19083,18 +15672,13 @@ class AsynchronousMachine(RotatingMachine):
     AsynchronousMachineDynamics: Optional[AsynchronousMachineDynamics] = field(
         default=None,
         metadata={
-        'type': 'Attribute',
+        'type': 'Association',
+        'stereotypes': [],
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'AsynchronousMachineDynamics.AsynchronousMachine',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Asynchronous machine dynamics model used to describe dynamic behaviour
-            of this asynchronous machine.
-            '''
-        
         })
     '''
     Asynchronous machine dynamics model used to describe dynamic behaviour
@@ -19126,15 +15710,11 @@ class SynchronousMachine(RotatingMachine):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Temperature or pressure of coolant medium.
-            '''
-        
         })
     '''
     Temperature or pressure of coolant medium.
@@ -19144,16 +15724,11 @@ class SynchronousMachine(RotatingMachine):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Indicates whether or not the generator is earthed. Used for short circuit
-            data exchange according to IEC 60909.
-            '''
-        
         })
     '''
     Indicates whether or not the generator is earthed. Used for short circuit
@@ -19164,17 +15739,11 @@ class SynchronousMachine(RotatingMachine):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Factor to calculate the breaking current (4.5.2.1 in IEC 60909-0).
-            Used only for single fed short circuit on a generator (4.3.4.2. in IEC
-            60909-0).
-            '''
-        
         })
     '''
     Factor to calculate the breaking current (4.5.2.1 in IEC 60909-0).
@@ -19186,17 +15755,11 @@ class SynchronousMachine(RotatingMachine):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Priority of unit for use as powerflow voltage phase angle reference bus
-            selection. 0 = don t care (default) 1 = highest priority. 2 is less than
-            1 and so on.
-            '''
-        
         })
     '''
     Priority of unit for use as powerflow voltage phase angle reference
@@ -19208,16 +15771,11 @@ class SynchronousMachine(RotatingMachine):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Time delay required when switching from Automatic Voltage Regulation (AVR)
-            to Manual for a lagging MVAr violation.
-            '''
-        
         })
     '''
     Time delay required when switching from Automatic Voltage Regulation
@@ -19228,16 +15786,11 @@ class SynchronousMachine(RotatingMachine):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Time delay required when switching from Automatic Voltage Regulation (AVR)
-            to Manual for a leading MVAr violation.
-            '''
-        
         })
     '''
     Time delay required when switching from Automatic Voltage Regulation
@@ -19248,16 +15801,11 @@ class SynchronousMachine(RotatingMachine):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Default base reactive power value. This value represents the initial reactive
-            power that can be used by any application function.
-            '''
-        
         })
     '''
     Default base reactive power value. This value represents the initial
@@ -19268,15 +15816,11 @@ class SynchronousMachine(RotatingMachine):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Active power consumed when in condenser mode operation.
-            '''
-        
         })
     '''
     Active power consumed when in condenser mode operation.
@@ -19285,16 +15829,12 @@ class SynchronousMachine(RotatingMachine):
     coolantType: Optional[ CoolantType ] = field(
         default=None,
         metadata={
-        'type': 'enumeration Attribute',
+        'type': 'Attribute',
+        'stereotypes': ['enumeration', 'Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Method of cooling the machine.
-            '''
-        
         })
     '''
     Method of cooling the machine.
@@ -19304,16 +15844,11 @@ class SynchronousMachine(RotatingMachine):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Generator star point earthing resistance (Re). Used for short circuit data
-            exchange according to IEC 60909.
-            '''
-        
         })
     '''
     Generator star point earthing resistance (Re). Used for short circuit
@@ -19324,16 +15859,11 @@ class SynchronousMachine(RotatingMachine):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Generator star point earthing reactance (Xe). Used for short circuit data
-            exchange according to IEC 60909.
-            '''
-        
         })
     '''
     Generator star point earthing reactance (Xe). Used for short circuit
@@ -19344,23 +15874,11 @@ class SynchronousMachine(RotatingMachine):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Steady-state short-circuit current (in A for the profile) of generator
-            with compound excitation during 3-phase short circuit.
-            - Ikk=0: Generator with no compound excitation.
-            - Ikk&lt;&gt;0: Generator with compound excitation.
-            Ikk is used to calculate the minimum steady-state short-circuit current
-            for generators with compound excitation.
-            (4.6.1.2 in IEC 60909-0:2001).
-            Used only for single fed short circuit on a generator. (4.3.4.2. in IEC
-            60909-0:2001).
-            '''
-        
         })
     '''
     Steady-state short-circuit current (in A for the profile) of generator
@@ -19378,17 +15896,11 @@ class SynchronousMachine(RotatingMachine):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Time delay required when switching from Manual to Automatic Voltage Regulation.
-            This value is used in the accelerating power reference frame for powerflow
-            solutions.
-            '''
-        
         })
     '''
     Time delay required when switching from Manual to Automatic Voltage
@@ -19400,16 +15912,11 @@ class SynchronousMachine(RotatingMachine):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Maximum reactive power limit. This is the maximum (nameplate) limit for
-            the unit.
-            '''
-        
         })
     '''
     Maximum reactive power limit. This is the maximum (nameplate) limit
@@ -19420,15 +15927,11 @@ class SynchronousMachine(RotatingMachine):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Maximum voltage limit for the unit.
-            '''
-        
         })
     '''
     Maximum voltage limit for the unit.
@@ -19438,15 +15941,11 @@ class SynchronousMachine(RotatingMachine):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Minimum reactive power limit for the unit.
-            '''
-        
         })
     '''
     Minimum reactive power limit for the unit.
@@ -19456,15 +15955,11 @@ class SynchronousMachine(RotatingMachine):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Minimum voltage limit for the unit.
-            '''
-        
         })
     '''
     Minimum voltage limit for the unit.
@@ -19473,16 +15968,12 @@ class SynchronousMachine(RotatingMachine):
     operatingMode: Optional[ SynchronousMachineOperatingMode ] = field(
         default=None,
         metadata={
-        'type': 'enumeration Attribute',
+        'type': 'Attribute',
+        'stereotypes': ['enumeration', 'Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Current mode of operation.
-            '''
-        
         })
     '''
     Current mode of operation.
@@ -19492,17 +15983,11 @@ class SynchronousMachine(RotatingMachine):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Part of the coordinated reactive control that comes from this machine.
-            The attribute is used as a participation factor not necessarily summing
-            up to 100 % for the participating devices in the control.
-            '''
-        
         })
     '''
     Part of the coordinated reactive control that comes from this machine.
@@ -19514,17 +15999,11 @@ class SynchronousMachine(RotatingMachine):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Equivalent resistance (RG) of generator. RG is considered for the calculation
-            of all currents, except for the calculation of the peak current ip. Used
-            for short circuit data exchange according to IEC 60909.
-            '''
-        
         })
     '''
     Equivalent resistance (RG) of generator. RG is considered for the calculation
@@ -19536,15 +16015,11 @@ class SynchronousMachine(RotatingMachine):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Zero sequence resistance of the synchronous machine.
-            '''
-        
         })
     '''
     Zero sequence resistance of the synchronous machine.
@@ -19554,15 +16029,11 @@ class SynchronousMachine(RotatingMachine):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Negative sequence resistance.
-            '''
-        
         })
     '''
     Negative sequence resistance.
@@ -19572,15 +16043,11 @@ class SynchronousMachine(RotatingMachine):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Direct-axis subtransient reactance saturated, also known as Xd"sat.
-            '''
-        
         })
     '''
     Direct-axis subtransient reactance saturated, also known as Xd"sat.
@@ -19590,17 +16057,11 @@ class SynchronousMachine(RotatingMachine):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Direct-axes saturated synchronous reactance (xdsat); reciprocal of short-circuit
-            ration. Used for short circuit data exchange, only for single fed short
-            circuit on a generator. (4.3.4.2. in IEC 60909-0:2001).
-            '''
-        
         })
     '''
     Direct-axes saturated synchronous reactance (xdsat); reciprocal of
@@ -19612,16 +16073,11 @@ class SynchronousMachine(RotatingMachine):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Saturated Direct-axis transient reactance. The attribute is primarily used
-            for short circuit calculations according to ANSI.
-            '''
-        
         })
     '''
     Saturated Direct-axis transient reactance. The attribute is primarily
@@ -19631,17 +16087,12 @@ class SynchronousMachine(RotatingMachine):
     shortCircuitRotorType: Optional[ ShortCircuitRotorKind ] = field(
         default=None,
         metadata={
-        'type': 'enumeration Attribute',
+        'type': 'Attribute',
+        'stereotypes': ['enumeration', 'Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Type of rotor, used by short circuit applications, only for single fed
-            short circuit according to IEC 60909.
-            '''
-        
         })
     '''
     Type of rotor, used by short circuit applications, only for single
@@ -19651,16 +16102,12 @@ class SynchronousMachine(RotatingMachine):
     type: Optional[ SynchronousMachineKind ] = field(
         default=None,
         metadata={
-        'type': 'enumeration Attribute',
+        'type': 'Attribute',
+        'stereotypes': ['enumeration', 'Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Modes that this synchronous machine can operate in.
-            '''
-        
         })
     '''
     Modes that this synchronous machine can operate in.
@@ -19670,18 +16117,11 @@ class SynchronousMachine(RotatingMachine):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Range of generator voltage regulation (PG in IEC 60909-0) used for calculation
-            of the impedance correction factor KG defined in IEC 60909-0.
-            This attribute is used to describe the operating voltage of the generating
-            unit.
-            '''
-        
         })
     '''
     Range of generator voltage regulation (PG in IEC 60909-0) used for
@@ -19694,15 +16134,11 @@ class SynchronousMachine(RotatingMachine):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Zero sequence reactance of the synchronous machine.
-            '''
-        
         })
     '''
     Zero sequence reactance of the synchronous machine.
@@ -19712,15 +16148,11 @@ class SynchronousMachine(RotatingMachine):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Negative sequence reactance.
-            '''
-        
         })
     '''
     Negative sequence reactance.
@@ -19729,21 +16161,13 @@ class SynchronousMachine(RotatingMachine):
     InitialReactiveCapabilityCurve: Optional[ReactiveCapabilityCurve] = field(
         default=None,
         metadata={
-        'type': 'Attribute',
+        'type': 'Association',
+        'stereotypes': [],
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'ReactiveCapabilityCurve.InitiallyUsedBySynchronousMachine',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            The default reactive capability curve for use by a synchronous machine.
-            The reference voltage (exchanged by ReactiveCapabilityCurve.referenceVoltage)
-            for this ReactiveCapabilityCurve shall be equal to the BaseVoltage.nominalVoltage
-            of the ConnectivityNode to which the Equipment is connected to. The information
-            is obtained via the containment of the Equipment or the ConnectivityNode.
-            '''
-        
         })
     '''
     The default reactive capability curve for use by a synchronous machine.
@@ -19757,18 +16181,13 @@ class SynchronousMachine(RotatingMachine):
     SynchronousMachineDynamics: Optional[SynchronousMachineDynamics] = field(
         default=None,
         metadata={
-        'type': 'Attribute',
+        'type': 'Association',
+        'stereotypes': [],
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'SynchronousMachineDynamics.SynchronousMachine',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Synchronous machine dynamics model used to describe dynamic behaviour of
-            this synchronous machine.
-            '''
-        
         })
     '''
     Synchronous machine dynamics model used to describe dynamic behaviour
@@ -19779,16 +16198,12 @@ class SynchronousMachine(RotatingMachine):
         default_factory=list,
         metadata={
         'type': 'Association',
+        'stereotypes': [],
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'ReactiveCapabilityCurve.SynchronousMachine',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': False,
-        'docstring':
-            '''
-            The reactive capability curve for this synchronous machine.
-            '''
-        
         })
     '''
     The reactive capability curve for this synchronous machine.
@@ -19820,16 +16235,11 @@ class ShuntCompensator(RegulatingCondEq):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Required for Yn and I connections (as represented by ShuntCompensator.phaseConnection).
-            True if the neutral is solidly grounded.
-            '''
-        
         })
     '''
     Required for Yn and I connections (as represented by ShuntCompensator.phaseConnection).
@@ -19840,15 +16250,11 @@ class ShuntCompensator(RegulatingCondEq):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            The maximum number of sections that may be switched in.
-            '''
-        
         })
     '''
     The maximum number of sections that may be switched in.
@@ -19858,16 +16264,11 @@ class ShuntCompensator(RegulatingCondEq):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            The normal number of sections switched in. The value shall be between zero
-            and ShuntCompensator.maximumSections.
-            '''
-        
         })
     '''
     The normal number of sections switched in. The value shall be between
@@ -19878,26 +16279,11 @@ class ShuntCompensator(RegulatingCondEq):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Shunt compensator sections in use. Starting value for steady state solution.
-            The attribute shall be a positive value or zero. Non integer values are
-            allowed to support continuous variables. The reasons for continuous value
-            are to support study cases where no discrete shunt compensators has yet
-            been designed, a solutions where a narrow voltage band force the sections
-            to oscillate or accommodate for a continuous solution as input.
-            For LinearShuntConpensator the value shall be between zero and ShuntCompensator.maximumSections.
-            At value zero the shunt compensator conductance and admittance is zero.
-            Linear interpolation of conductance and admittance between the previous
-            and next integer section is applied in case of non-integer values.
-            For NonlinearShuntCompensator(-s) shall only be set to one of the NonlinearShuntCompenstorPoint.sectionNumber.
-            There is no interpolation between NonlinearShuntCompenstorPoint(-s).
-            '''
-        
         })
     '''
     Shunt compensator sections in use. Starting value for steady state
@@ -19919,17 +16305,11 @@ class ShuntCompensator(RegulatingCondEq):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            An automatic voltage regulation delay (AVRDelay) which is the time delay
-            from a change in voltage to when the capacitor is allowed to change state.
-            This filters out temporary changes in voltage.
-            '''
-        
         })
     '''
     An automatic voltage regulation delay (AVRDelay) which is the time
@@ -19941,17 +16321,11 @@ class ShuntCompensator(RegulatingCondEq):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            The voltage at which the nominal reactive power may be calculated. This
-            should normally be within 10% of the voltage at which the capacitor is
-            connected to the network.
-            '''
-        
         })
     '''
     The voltage at which the nominal reactive power may be calculated.
@@ -19962,16 +16336,12 @@ class ShuntCompensator(RegulatingCondEq):
     phaseConnection: Optional[ PhaseShuntConnectionKind ] = field(
         default=None,
         metadata={
-        'type': 'enumeration Attribute',
+        'type': 'Attribute',
+        'stereotypes': ['enumeration', 'Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            The type of phase connection, such as wye or delta.
-            '''
-        
         })
     '''
     The type of phase connection, such as wye or delta.
@@ -19981,16 +16351,11 @@ class ShuntCompensator(RegulatingCondEq):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Voltage sensitivity required for the device to regulate the bus voltage,
-            in voltage/reactive power.
-            '''
-        
         })
     '''
     Voltage sensitivity required for the device to regulate the bus voltage,
@@ -20000,16 +16365,13 @@ class ShuntCompensator(RegulatingCondEq):
     ShuntCompensatorAction: Optional[ShuntCompensatorAction] = field(
         default=None,
         metadata={
-        'type': 'Attribute',
+        'type': 'Association',
+        'stereotypes': [],
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'ShuntCompensatorAction.ShuntCompensator',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            '''
-        
         })
     '''
     '''
@@ -20017,18 +16379,13 @@ class ShuntCompensator(RegulatingCondEq):
     ShuntCompensatorDynamics: Optional[ShuntCompensatorDynamics] = field(
         default=None,
         metadata={
-        'type': 'Attribute',
+        'type': 'Association',
+        'stereotypes': [],
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'ShuntCompensatorDynamics.ShuntCompensator',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Shunt compensator dynamics model used to describe dynamic behaviour of
-            this shunt compensator.
-            '''
-        
         })
     '''
     Shunt compensator dynamics model used to describe dynamic behaviour
@@ -20038,18 +16395,13 @@ class ShuntCompensator(RegulatingCondEq):
     StaticVarCompensatorSystemDynamics: Optional[StaticVarCompensatorSystemDynamics] = field(
         default=None,
         metadata={
-        'type': 'Attribute',
+        'type': 'Association',
+        'stereotypes': [],
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'StaticVarCompensatorSystemDynamics.ShuntCompensator',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Static Var Compensator system dynamics model used to describe dynamic behaviour
-            of this Static Var Compensator system.
-            '''
-        
         })
     '''
     Static Var Compensator system dynamics model used to describe dynamic
@@ -20060,16 +16412,12 @@ class ShuntCompensator(RegulatingCondEq):
         default_factory=list,
         metadata={
         'type': 'Association',
+        'stereotypes': [],
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'ShuntCompensatorPhase.ShuntCompensator',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': False,
-        'docstring':
-            '''
-            The individual phases models for the shunt compensator.
-            '''
-        
         })
     '''
     The individual phases models for the shunt compensator.
@@ -20079,16 +16427,12 @@ class ShuntCompensator(RegulatingCondEq):
         default_factory=list,
         metadata={
         'type': 'Association',
+        'stereotypes': [],
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'SvShuntCompensatorSections.ShuntCompensator',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': False,
-        'docstring':
-            '''
-            The state for the number of shunt compensator sections in service.
-            '''
-        
         })
     '''
     The state for the number of shunt compensator sections in service.
@@ -20118,15 +16462,11 @@ class LinearShuntCompensator(ShuntCompensator):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Zero sequence shunt (charging) susceptance per section.
-            '''
-        
         })
     '''
     Zero sequence shunt (charging) susceptance per section.
@@ -20136,15 +16476,11 @@ class LinearShuntCompensator(ShuntCompensator):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Positive sequence shunt (charging) susceptance per section.
-            '''
-        
         })
     '''
     Positive sequence shunt (charging) susceptance per section.
@@ -20154,15 +16490,11 @@ class LinearShuntCompensator(ShuntCompensator):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Zero sequence shunt (charging) conductance per section.
-            '''
-        
         })
     '''
     Zero sequence shunt (charging) conductance per section.
@@ -20172,15 +16504,11 @@ class LinearShuntCompensator(ShuntCompensator):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Positive sequence shunt (charging) conductance per section.
-            '''
-        
         })
     '''
     Positive sequence shunt (charging) conductance per section.
@@ -20190,16 +16518,11 @@ class LinearShuntCompensator(ShuntCompensator):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://gridappsd.org/CIM/extension#',
         'serialize': True,
-        'docstring':
-            '''
-            series resistance in each phase [need to verify this is same as discharge
-            resistance]
-            '''
-        
         })
     '''
     series resistance in each phase [need to verify this is same as discharge
@@ -20210,16 +16533,11 @@ class LinearShuntCompensator(ShuntCompensator):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://gridappsd.org/CIM/extension#',
         'serialize': True,
-        'docstring':
-            '''
-            series inductive reactance(s) in each phase (line) for filter, ohms at
-            base frequency
-            '''
-        
         })
     '''
     series inductive reactance(s) in each phase (line) for filter, ohms
@@ -20252,17 +16570,13 @@ class NonlinearShuntCompensator(ShuntCompensator):
     NonlinearShuntCompensatorPoints: list[NonlinearShuntCompensatorPoint] = field(
         default_factory=list,
         metadata={
-        'type': 'AggregateOf',
+        'type': 'Association',
+        'stereotypes': ['AggregateOf'],
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'NonlinearShuntCompensatorPoint.NonlinearShuntCompensator',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': False,
-        'docstring':
-            '''
-            All points of the non-linear shunt compensator.
-            '''
-        
         })
     '''
     All points of the non-linear shunt compensator.
@@ -20317,16 +16631,12 @@ class ExtendedWardEquivalent(ConductingEquipment):
         default_factory=list,
         metadata={
         'type': 'Association',
+        'stereotypes': [],
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'ReactiveCapabilityCurve.ExtendedWardEquivalent',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': False,
-        'docstring':
-            '''
-            The reactive capability curve used by this extended ward equivalent.
-            '''
-        
         })
     '''
     The reactive capability curve used by this extended ward equivalent.
@@ -20356,17 +16666,13 @@ class Ground(ConductingEquipment):
     GroundAction: Optional[GroundAction] = field(
         default=None,
         metadata={
-        'type': 'Attribute',
+        'type': 'Association',
+        'stereotypes': [],
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'GroundAction.Ground',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Action taken with this ground.
-            '''
-        
         })
     '''
     Action taken with this ground.
@@ -20408,20 +16714,11 @@ class PowerTransformer(ConductingEquipment):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Indicates whether the machine is part of a power station unit. Used for
-            short circuit data exchange according to IEC 60909. It has an impact on
-            how the correction factors are calculated for transformers, since the transformer
-            is not necessarily part of a synchronous machine and generating unit. It
-            is not always possible to derive this information from the model. This
-            is why the attribute is necessary.
-            '''
-        
         })
     '''
     Indicates whether the machine is part of a power station unit. Used
@@ -20436,17 +16733,11 @@ class PowerTransformer(ConductingEquipment):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            It is used to define if the data (other attributes related to short circuit
-            data exchange) defines long term operational conditions or not. Used for
-            short circuit data exchange according to IEC 60909.
-            '''
-        
         })
     '''
     It is used to define if the data (other attributes related to short
@@ -20458,37 +16749,11 @@ class PowerTransformer(ConductingEquipment):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Vector group of the transformer for protective relaying, e.g., Dyn1. For
-            unbalanced transformers, this may not be simply determined from the constituent
-            winding connections and phase angle displacements.
-            The vectorGroup string consists of the following components in the order
-            listed: high voltage winding connection, mid voltage winding connection
-            (for three winding transformers), phase displacement clock number from
-            0 to 11, low voltage winding connection
-            phase displacement clock number from 0 to 11. The winding connections are
-            D (delta), Y (wye), YN (wye with neutral), Z (zigzag), ZN (zigzag with
-            neutral), A (auto transformer). Upper case means the high voltage, lower
-            case mid or low. The high voltage winding always has clock position 0 and
-            is not included in the vector group string. Some examples: YNy0 (two winding
-            wye to wye with no phase displacement), YNd11 (two winding wye to delta
-            with 330 degrees phase displacement), YNyn0d5 (three winding transformer
-            wye with neutral high voltage, wye with neutral mid voltage and no phase
-            displacement, delta low voltage with 150 degrees displacement).
-            Phase displacement is defined as the angular difference between the phasors
-            representing the voltages between the neutral point (real or imaginary)
-            and the corresponding terminals of two windings, a positive sequence voltage
-            system being applied to the high-voltage terminals, following each other
-            in alphabetical sequence if they are lettered, or in numerical sequence
-            if they are numbered: the phasors are assumed to rotate in a counter-clockwise
-            sense.
-            '''
-        
         })
     '''
     Vector group of the transformer for protective relaying, e.g., Dyn1.
@@ -20520,18 +16785,11 @@ class PowerTransformer(ConductingEquipment):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            The highest operating current (Ib in IEC 60909-0) before short circuit
-            (depends on network configuration and relevant reliability philosophy).
-            It is used for calculation of the impedance correction factor KT defined
-            in IEC 60909-0.
-            '''
-        
         })
     '''
     The highest operating current (Ib in IEC 60909-0) before short circuit
@@ -20544,18 +16802,11 @@ class PowerTransformer(ConductingEquipment):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            The highest operating voltage (Ub in IEC 60909-0) before short circuit.
-            It is used for calculation of the impedance correction factor KT defined
-            in IEC 60909-0. This is worst case voltage on the low side winding (3.7.1
-            of IEC 60909:2001). Used to define operating conditions.
-            '''
-        
         })
     '''
     The highest operating voltage (Ub in IEC 60909-0) before short circuit.
@@ -20568,18 +16819,11 @@ class PowerTransformer(ConductingEquipment):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            The angle of power factor before short circuit (phib in IEC 60909-0). It
-            is used for calculation of the impedance correction factor KT defined in
-            IEC 60909-0. This is the worst case power factor. Used to define operating
-            conditions.
-            '''
-        
         })
     '''
     The angle of power factor before short circuit (phib in IEC 60909-0).
@@ -20592,19 +16836,11 @@ class PowerTransformer(ConductingEquipment):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            The minimum operating voltage (uQmin in IEC 60909-0) at the high voltage
-            side (Q side) of the unit transformer of the power station unit. A value
-            well established from long-term operating experience of the system. It
-            is used for calculation of the impedance correction factor KG defined in
-            IEC 60909-0.
-            '''
-        
         })
     '''
     The minimum operating voltage (uQmin in IEC 60909-0) at the high voltage
@@ -20618,16 +16854,12 @@ class PowerTransformer(ConductingEquipment):
         default_factory=list,
         metadata={
         'type': 'Association',
+        'stereotypes': [],
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'PowerTransformerEnd.PowerTransformer',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': False,
-        'docstring':
-            '''
-            The ends of this power transformer.
-            '''
-        
         })
     '''
     The ends of this power transformer.
@@ -20637,16 +16869,12 @@ class PowerTransformer(ConductingEquipment):
         default_factory=list,
         metadata={
         'type': 'Association',
+        'stereotypes': [],
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'TransformerTank.PowerTransformer',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': False,
-        'docstring':
-            '''
-            All transformers that belong to this bank.
-            '''
-        
         })
     '''
     All transformers that belong to this bank.
@@ -20677,17 +16905,11 @@ class SeriesCompensator(ConductingEquipment):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Describe if a metal oxide varistor (mov) for over voltage protection is
-            configured in parallel with the series compensator. It is used for short
-            circuit calculations.
-            '''
-        
         })
     '''
     Describe if a metal oxide varistor (mov) for over voltage protection
@@ -20699,15 +16921,11 @@ class SeriesCompensator(ConductingEquipment):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Positive sequence resistance.
-            '''
-        
         })
     '''
     Positive sequence resistance.
@@ -20717,15 +16935,11 @@ class SeriesCompensator(ConductingEquipment):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Zero sequence resistance.
-            '''
-        
         })
     '''
     Zero sequence resistance.
@@ -20735,18 +16949,11 @@ class SeriesCompensator(ConductingEquipment):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            The maximum current the varistor is designed to handle at specified duration.
-            It is used for short circuit calculations and exchanged only if SeriesCompensator.varistorPresent
-            is true.
-            The attribute shall be a positive value.
-            '''
-        
         })
     '''
     The maximum current the varistor is designed to handle at specified
@@ -20759,17 +16966,11 @@ class SeriesCompensator(ConductingEquipment):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            The DC voltage at which the varistor starts conducting. It is used for
-            short circuit calculations and exchanged only if SeriesCompensator.varistorPresent
-            is true.
-            '''
-        
         })
     '''
     The DC voltage at which the varistor starts conducting. It is used
@@ -20781,15 +16982,11 @@ class SeriesCompensator(ConductingEquipment):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Positive sequence reactance.
-            '''
-        
         })
     '''
     Positive sequence reactance.
@@ -20799,15 +16996,11 @@ class SeriesCompensator(ConductingEquipment):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Zero sequence reactance.
-            '''
-        
         })
     '''
     Zero sequence reactance.
@@ -20841,21 +17034,11 @@ class Switch(ConductingEquipment):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            If true, the switch is locked. The resulting switch state is a combination
-            of locked and Switch.open attributes as follows:
-            <ul>
-            <li>locked=true and Switch.open=true. The resulting state is open and locked;</li>
-            <li>locked=false and Switch.open=true. The resulting state is open;</li>
-            <li>locked=false and Switch.open=false. The resulting state is closed.</li>
-            </ul>
-            '''
-        
         })
     '''
     If true, the switch is locked. The resulting switch state is a combination
@@ -20872,17 +17055,11 @@ class Switch(ConductingEquipment):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            The attribute is used in cases when no Measurement for the status value
-            is present. If the Switch has a status measurement the Discrete.normalValue
-            is expected to match with the Switch.normalOpen.
-            '''
-        
         })
     '''
     The attribute is used in cases when no Measurement for the status value
@@ -20894,16 +17071,11 @@ class Switch(ConductingEquipment):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            The attribute tells if the switch is considered open when used as input
-            to topology processing.
-            '''
-        
         })
     '''
     The attribute tells if the switch is considered open when used as input
@@ -20914,16 +17086,11 @@ class Switch(ConductingEquipment):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Branch is retained in the topological solution. The flow through retained
-            switches will normally be calculated in power flow.
-            '''
-        
         })
     '''
     Branch is retained in the topological solution. The flow through retained
@@ -20934,17 +17101,11 @@ class Switch(ConductingEquipment):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            The maximum continuous current carrying capacity in amps governed by the
-            device material and construction.
-            The attribute shall be a positive value.
-            '''
-        
         })
     '''
     The maximum continuous current carrying capacity in amps governed by
@@ -20955,17 +17116,12 @@ class Switch(ConductingEquipment):
     topologicalUsageType: Optional[ TopologicalUsageKind ] = field(
         default=None,
         metadata={
-        'type': 'enumeration GridAPPSD Attribute',
+        'type': 'Attribute',
+        'stereotypes': ['enumeration', 'GridAPPSD', 'Attribute'],
         'minOccurs': '1',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Usage of switch as a boundary device across persistent connectivity areas,
-            such as across a transmission-distribution boundary
-            '''
-        
         })
     '''
     Usage of switch as a boundary device across persistent connectivity
@@ -20975,17 +17131,13 @@ class Switch(ConductingEquipment):
     CompositeSwitch: Optional[CompositeSwitch] = field(
         default=None,
         metadata={
-        'type': 'OfAggregate',
+        'type': 'Association',
+        'stereotypes': ['OfAggregate'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'CompositeSwitch.Switches',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Composite switch to which this Switch belongs.
-            '''
-        
         })
     '''
     Composite switch to which this Switch belongs.
@@ -20994,17 +17146,13 @@ class Switch(ConductingEquipment):
     SwitchAction: Optional[SwitchAction] = field(
         default=None,
         metadata={
-        'type': 'Attribute',
+        'type': 'Association',
+        'stereotypes': [],
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'SwitchAction.OperatedSwitch',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Action changing status of this switch.
-            '''
-        
         })
     '''
     Action changing status of this switch.
@@ -21014,16 +17162,12 @@ class Switch(ConductingEquipment):
         default_factory=list,
         metadata={
         'type': 'Association',
+        'stereotypes': [],
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'SvSwitch.Switch',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': False,
-        'docstring':
-            '''
-            The switch state associated with the switch.
-            '''
-        
         })
     '''
     The switch state associated with the switch.
@@ -21033,16 +17177,12 @@ class Switch(ConductingEquipment):
         default_factory=list,
         metadata={
         'type': 'Association',
+        'stereotypes': [],
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'SwitchPhase.Switch',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': False,
-        'docstring':
-            '''
-            The individual switch phases for the switch.
-            '''
-        
         })
     '''
     The individual switch phases for the switch.
@@ -21052,16 +17192,12 @@ class Switch(ConductingEquipment):
         default_factory=list,
         metadata={
         'type': 'Association',
+        'stereotypes': [],
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'SwitchSchedule.Switch',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': False,
-        'docstring':
-            '''
-            A Switch can be associated with SwitchSchedules.
-            '''
-        
         })
     '''
     A Switch can be associated with SwitchSchedules.
@@ -21102,17 +17238,11 @@ class Cut(Switch):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            The length to the place where the cut is located starting from side one
-            of the cut line segment, i.e. the line segment Terminal with sequenceNumber
-            equal to 1.
-            '''
-        
         })
     '''
     The length to the place where the cut is located starting from side
@@ -21123,17 +17253,13 @@ class Cut(Switch):
     ACLineSegment: Optional[ACLineSegment] = field(
         default=None,
         metadata={
-        'type': 'Attribute',
+        'type': 'Association',
+        'stereotypes': [],
         'minOccurs': '1',
         'maxOccurs': '1',
         'inverse': 'ACLineSegment.Cut',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            The line segment to which the cut is applied.
-            '''
-        
         })
     '''
     The line segment to which the cut is applied.
@@ -21142,17 +17268,13 @@ class Cut(Switch):
     CutAction: Optional[CutAction] = field(
         default=None,
         metadata={
-        'type': 'Attribute',
+        'type': 'Association',
+        'stereotypes': [],
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'CutAction.Cut',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Action taken with this cut.
-            '''
-        
         })
     '''
     Action taken with this cut.
@@ -21234,17 +17356,13 @@ class Fuse(Switch):
     MiinimumMeltCurve: Optional[FuseCharacteristicCurve] = field(
         default=None,
         metadata={
-        'type': 'Attribute',
+        'type': 'Association',
+        'stereotypes': [],
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'FuseCharacteristicCurve.FuseMinimumMelt',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Curves that define the time-current operation of this fuse (Minimum Melt)
-            '''
-        
         })
     '''
     Curves that define the time-current operation of this fuse (Minimum
@@ -21254,18 +17372,13 @@ class Fuse(Switch):
     TotalClearingTimeCurve: Optional[FuseCharacteristicCurve] = field(
         default=None,
         metadata={
-        'type': 'Attribute',
+        'type': 'Association',
+        'stereotypes': [],
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'FuseCharacteristicCurve.FuseTotalClearing',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Curves that define the time-current operation of this fuse (Total Clearing
-            Time Curves)
-            '''
-        
         })
     '''
     Curves that define the time-current operation of this fuse (Total Clearing
@@ -21286,6 +17399,7 @@ class Fuse(Switch):
         return 'unbounded'
     
 @stereotype(CIMStereotype.ShadowExtension)
+@stereotype(CIMStereotype.deprecated)
 @dataclass(repr=False)
 class GroundDisconnector(Switch):
     '''
@@ -21318,17 +17432,13 @@ class Jumper(Switch):
     JumperAction: Optional[JumperAction] = field(
         default=None,
         metadata={
-        'type': 'Attribute',
+        'type': 'Association',
+        'stereotypes': [],
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'JumperAction.Jumper',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Action taken with this jumper.
-            '''
-        
         })
     '''
     Action taken with this jumper.
@@ -21358,16 +17468,11 @@ class ProtectedSwitch(Switch):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            The maximum fault current a breaking device can break safely under prescribed
-            conditions of use.
-            '''
-        
         })
     '''
     The maximum fault current a breaking device can break safely under
@@ -21377,18 +17482,12 @@ class ProtectedSwitch(Switch):
     makingCapacity: Optional[ float | CurrentFlow ] = field(
         default=None,
         metadata={
-        'type': 'GB Attribute',
+        'type': 'Attribute',
+        'stereotypes': ['GB', 'Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://GB/placeholder/ext#',
         'serialize': True,
-        'docstring':
-            '''
-            The making current of the circuit breaker is the maximum peak value of
-            the current that the breaker can interrupt without any damage if the breaker
-            is closed at fault.
-            '''
-        
         })
     '''
     The making current of the circuit breaker is the maximum peak value
@@ -21422,15 +17521,11 @@ class Breaker(ProtectedSwitch):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            The transition time from open to close.
-            '''
-        
         })
     '''
     The transition time from open to close.
@@ -21532,6 +17627,7 @@ class Sectionaliser(Switch):
     def __maxOccurs__(self):
         return 'unbounded'
     
+@stereotype(CIMStereotype.ShadowExtension)
 @dataclass(repr=False)
 class CurrentTransformer(Equipment):
     '''
@@ -21545,15 +17641,11 @@ class CurrentTransformer(Equipment):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Intended usage of the CT; i.e. metering, protection.
-            '''
-        
         })
     '''
     Intended usage of the CT; i.e. metering, protection.
@@ -21563,16 +17655,11 @@ class CurrentTransformer(Equipment):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Percent of rated current for which the CT remains accurate within specified
-            limits.
-            '''
-        
         })
     '''
     Percent of rated current for which the CT remains accurate within specified
@@ -21583,15 +17670,11 @@ class CurrentTransformer(Equipment):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Power burden of the CT core.
-            '''
-        
         })
     '''
     Power burden of the CT core.
@@ -21626,15 +17709,11 @@ class GeneratingUnit(Equipment):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Generating unit long term economic participation factor.
-            '''
-        
         })
     '''
     Generating unit long term economic participation factor.
@@ -21644,18 +17723,11 @@ class GeneratingUnit(Equipment):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Generating unit economic participation factor. The sum of the participation
-            factors across generating units does not have to sum to one. It is used
-            for representing distributed slack participation factor. The attribute
-            shall be a positive value or zero.
-            '''
-        
         })
     '''
     Generating unit economic participation factor. The sum of the participation
@@ -21668,17 +17740,11 @@ class GeneratingUnit(Equipment):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Defined as: 1 / ( 1 - Incremental Transmission Loss); with the Incremental
-            Transmission Loss expressed as a plus or minus value. The typical range
-            of penalty factors is (0.9 to 1.1).
-            '''
-        
         })
     '''
     Defined as: 1 / ( 1 - Incremental Transmission Loss); with the Incremental
@@ -21690,15 +17756,11 @@ class GeneratingUnit(Equipment):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Generating unit short term economic participation factor.
-            '''
-        
         })
     '''
     Generating unit short term economic participation factor.
@@ -21708,15 +17770,11 @@ class GeneratingUnit(Equipment):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Generating unit economic participation factor.
-            '''
-        
         })
     '''
     Generating unit economic participation factor.
@@ -21726,16 +17784,11 @@ class GeneratingUnit(Equipment):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            The planned unused capacity (spinning reserve) which can be used to support
-            emergency load.
-            '''
-        
         })
     '''
     The planned unused capacity (spinning reserve) which can be used to
@@ -21746,16 +17799,11 @@ class GeneratingUnit(Equipment):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            The planned unused capacity which can be used to support automatic control
-            overruns.
-            '''
-        
         })
     '''
     The planned unused capacity which can be used to support automatic
@@ -21766,18 +17814,11 @@ class GeneratingUnit(Equipment):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            For dispatchable units, this value represents the economic active power
-            basepoint, for units that are not dispatchable, this value represents the
-            fixed generation value. The value shall be between the operating low and
-            high limits.
-            '''
-        
         })
     '''
     For dispatchable units, this value represents the economic active power
@@ -21790,17 +17831,11 @@ class GeneratingUnit(Equipment):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Unit control error deadband. When a unit's desired active power change
-            is less than this deadband, then no control pulses will be sent to the
-            unit.
-            '''
-        
         })
     '''
     Unit control error deadband. When a unit's desired active power change
@@ -21812,16 +17847,11 @@ class GeneratingUnit(Equipment):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Pulse high limit which is the largest control pulse that the unit can respond
-            to.
-            '''
-        
         })
     '''
     Pulse high limit which is the largest control pulse that the unit can
@@ -21832,16 +17862,11 @@ class GeneratingUnit(Equipment):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Pulse low limit which is the smallest control pulse that the unit can respond
-            to.
-            '''
-        
         })
     '''
     Pulse low limit which is the smallest control pulse that the unit can
@@ -21852,16 +17877,11 @@ class GeneratingUnit(Equipment):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Unit response rate which specifies the active power change for a control
-            pulse of one second in the most responsive loading level of the unit.
-            '''
-        
         })
     '''
     Unit response rate which specifies the active power change for a control
@@ -21872,16 +17892,11 @@ class GeneratingUnit(Equipment):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            The efficiency of the unit in converting mechanical energy, from the prime
-            mover, into electrical energy.
-            '''
-        
         })
     '''
     The efficiency of the unit in converting mechanical energy, from the
@@ -21891,16 +17906,12 @@ class GeneratingUnit(Equipment):
     genControlMode: Optional[ GeneratorControlMode ] = field(
         default=None,
         metadata={
-        'type': 'enumeration Attribute',
+        'type': 'Attribute',
+        'stereotypes': ['enumeration', 'Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            The unit control mode.
-            '''
-        
         })
     '''
     The unit control mode.
@@ -21909,17 +17920,12 @@ class GeneratingUnit(Equipment):
     genControlSource: Optional[ GeneratorControlSource ] = field(
         default=None,
         metadata={
-        'type': 'enumeration Attribute',
+        'type': 'Attribute',
+        'stereotypes': ['enumeration', 'Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            The source of controls for a generating unit. Defines the control status
-            of the generating unit.
-            '''
-        
         })
     '''
     The source of controls for a generating unit. Defines the control status
@@ -21930,15 +17936,11 @@ class GeneratingUnit(Equipment):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Governor motor position limit.
-            '''
-        
         })
     '''
     Governor motor position limit.
@@ -21948,19 +17950,11 @@ class GeneratingUnit(Equipment):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Governor Speed Changer Droop. This is the change in generator power output
-            divided by the change in frequency normalized by the nominal power of the
-            generator and the nominal frequency and expressed in percent and negated.
-            A positive value of speed change droop provides additional generator output
-            upon a drop in frequency.
-            '''
-        
         })
     '''
     Governor Speed Changer Droop. This is the change in generator power
@@ -21974,15 +17968,11 @@ class GeneratingUnit(Equipment):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            High limit for secondary (AGC) control.
-            '''
-        
         })
     '''
     High limit for secondary (AGC) control.
@@ -21992,16 +17982,11 @@ class GeneratingUnit(Equipment):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Default initial active power which is used to store a powerflow result
-            for the initial active power for this unit in this network configuration.
-            '''
-        
         })
     '''
     Default initial active power which is used to store a powerflow result
@@ -22012,15 +17997,11 @@ class GeneratingUnit(Equipment):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Low limit for secondary (AGC) control.
-            '''
-        
         })
     '''
     Low limit for secondary (AGC) control.
@@ -22030,16 +18011,11 @@ class GeneratingUnit(Equipment):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            The normal maximum rate the generating unit active power output can be
-            lowered by control actions.
-            '''
-        
         })
     '''
     The normal maximum rate the generating unit active power output can
@@ -22050,16 +18026,11 @@ class GeneratingUnit(Equipment):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Maximum high economic active power limit, that should not exceed the maximum
-            operating active power limit.
-            '''
-        
         })
     '''
     Maximum high economic active power limit, that should not exceed the
@@ -22070,16 +18041,11 @@ class GeneratingUnit(Equipment):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Maximum allowable spinning reserve. Spinning reserve will never be considered
-            greater than this value regardless of the current operating point.
-            '''
-        
         })
     '''
     Maximum allowable spinning reserve. Spinning reserve will never be
@@ -22091,16 +18057,11 @@ class GeneratingUnit(Equipment):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            This is the maximum operating active power limit the dispatcher can enter
-            for this unit.
-            '''
-        
         })
     '''
     This is the maximum operating active power limit the dispatcher can
@@ -22111,16 +18072,11 @@ class GeneratingUnit(Equipment):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Low economic active power limit that shall be greater than or equal to
-            the minimum operating active power limit.
-            '''
-        
         })
     '''
     Low economic active power limit that shall be greater than or equal
@@ -22131,15 +18087,11 @@ class GeneratingUnit(Equipment):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Minimum time interval between unit shutdown and startup.
-            '''
-        
         })
     '''
     Minimum time interval between unit shutdown and startup.
@@ -22149,16 +18101,11 @@ class GeneratingUnit(Equipment):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            This is the minimum operating active power limit the dispatcher can enter
-            for this unit.
-            '''
-        
         })
     '''
     This is the minimum operating active power limit the dispatcher can
@@ -22169,15 +18116,11 @@ class GeneratingUnit(Equipment):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Detail level of the generator model data.
-            '''
-        
         })
     '''
     Detail level of the generator model data.
@@ -22187,18 +18130,11 @@ class GeneratingUnit(Equipment):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            The nominal power of the generating unit. Used to give precise meaning
-            to percentage based attributes such as the governor speed change droop
-            (governorSCD attribute).
-            The attribute shall be a positive value equal to or less than RotatingMachine.ratedS.
-            '''
-        
         })
     '''
     The nominal power of the generating unit. Used to give precise meaning
@@ -22211,16 +18147,11 @@ class GeneratingUnit(Equipment):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            The normal maximum rate the generating unit active power output can be
-            raised by control actions.
-            '''
-        
         })
     '''
     The normal maximum rate the generating unit active power output can
@@ -22231,16 +18162,11 @@ class GeneratingUnit(Equipment):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            The unit's gross rated maximum capacity (book value).
-            The attribute shall be a positive value.
-            '''
-        
         })
     '''
     The unit's gross rated maximum capacity (book value).
@@ -22251,17 +18177,11 @@ class GeneratingUnit(Equipment):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            The gross rated minimum generation level which the unit can safely operate
-            at while delivering power to the transmission grid.
-            The attribute shall be a positive value.
-            '''
-        
         })
     '''
     The gross rated minimum generation level which the unit can safely
@@ -22273,18 +18193,11 @@ class GeneratingUnit(Equipment):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            The net rated maximum capacity determined by subtracting the auxiliary
-            power used to operate the internal plant machinery from the rated gross
-            maximum capacity.
-            The attribute shall be a positive value.
-            '''
-        
         })
     '''
     The net rated maximum capacity determined by subtracting the auxiliary
@@ -22297,15 +18210,11 @@ class GeneratingUnit(Equipment):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            The initial startup cost incurred for each start of the GeneratingUnit.
-            '''
-        
         })
     '''
     The initial startup cost incurred for each start of the GeneratingUnit.
@@ -22315,16 +18224,11 @@ class GeneratingUnit(Equipment):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Time it takes to get the unit on-line, from the time that the prime mover
-            mechanical power is applied.
-            '''
-        
         })
     '''
     Time it takes to get the unit on-line, from the time that the prime
@@ -22335,15 +18239,11 @@ class GeneratingUnit(Equipment):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            The efficiency of the unit in converting the fuel into electrical energy.
-            '''
-        
         })
     '''
     The efficiency of the unit in converting the fuel into electrical energy.
@@ -22353,15 +18253,11 @@ class GeneratingUnit(Equipment):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            The variable cost component of production per unit of ActivePower.
-            '''
-        
         })
     '''
     The variable cost component of production per unit of ActivePower.
@@ -22371,16 +18267,12 @@ class GeneratingUnit(Equipment):
         default_factory=list,
         metadata={
         'type': 'Association',
+        'stereotypes': [],
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'ControlAreaGeneratingUnit.GeneratingUnit',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': False,
-        'docstring':
-            '''
-            ControlArea specifications for this generating unit.
-            '''
-        
         })
     '''
     ControlArea specifications for this generating unit.
@@ -22390,17 +18282,12 @@ class GeneratingUnit(Equipment):
         default_factory=list,
         metadata={
         'type': 'Association',
+        'stereotypes': [],
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'RotatingMachine.GeneratingUnit',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': False,
-        'docstring':
-            '''
-            A synchronous machine may operate as a generator and as such becomes a
-            member of a generating unit.
-            '''
-        
         })
     '''
     A synchronous machine may operate as a generator and as such becomes
@@ -22430,17 +18317,13 @@ class SolarGeneratingUnit(GeneratingUnit):
     SolarPowerPlant: Optional[SolarPowerPlant] = field(
         default=None,
         metadata={
-        'type': 'ShadowExtension European',
+        'type': 'Association',
+        'stereotypes': ['ShadowExtension', 'European'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'SolarPowerPlant.SolarGeneratingUnits',
         'namespace': 'http://iec.ch/TC57/CIM100-European#',
         'serialize': True,
-        'docstring':
-            '''
-            A solar power plant may have solar generating units.
-            '''
-        
         })
     '''
     A solar power plant may have solar generating units.
@@ -22470,16 +18353,12 @@ class ThermalGeneratingUnit(GeneratingUnit):
         default_factory=list,
         metadata={
         'type': 'Association',
+        'stereotypes': [],
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'FossilFuel.ThermalGeneratingUnit',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': False,
-        'docstring':
-            '''
-            A thermal generating unit may have one or more fossil fuels.
-            '''
-        
         })
     '''
     A thermal generating unit may have one or more fossil fuels.
@@ -22508,16 +18387,12 @@ class WindGeneratingUnit(GeneratingUnit):
     windGenUnitType: Optional[ WindGenUnitKind ] = field(
         default=None,
         metadata={
-        'type': 'enumeration Attribute',
+        'type': 'Attribute',
+        'stereotypes': ['enumeration', 'Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            The kind of wind generating unit.
-            '''
-        
         })
     '''
     The kind of wind generating unit.
@@ -22526,17 +18401,13 @@ class WindGeneratingUnit(GeneratingUnit):
     WindPowerPlant: Optional[WindPowerPlant] = field(
         default=None,
         metadata={
-        'type': 'ShadowExtension European',
+        'type': 'Association',
+        'stereotypes': ['ShadowExtension', 'European'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'WindPowerPlant.WindGeneratingUnits',
         'namespace': 'http://iec.ch/TC57/CIM100-European#',
         'serialize': True,
-        'docstring':
-            '''
-            A wind power plant may have wind generating units.
-            '''
-        
         })
     '''
     A wind power plant may have wind generating units.
@@ -22567,18 +18438,12 @@ class HydroPump(Equipment):
         default=None,
         metadata={
         'type': 'Association',
+        'stereotypes': [],
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'RotatingMachine.HydroPump',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': False,
-        'docstring':
-            '''
-            The synchronous machine drives the turbine which moves the water from a
-            low elevation to a higher elevation. The direction of machine rotation
-            for pumping may or may not be the same as for generating.
-            '''
-        
         })
     '''
     The synchronous machine drives the turbine which moves the water from
@@ -22599,6 +18464,7 @@ class HydroPump(Equipment):
     def __maxOccurs__(self):
         return 'unbounded'
     
+@stereotype(CIMStereotype.ShadowExtension)
 @dataclass(repr=False)
 class PotentialTransformer(Equipment):
     '''
@@ -22613,15 +18479,11 @@ class PotentialTransformer(Equipment):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Nominal ratio between the primary and secondary voltage.
-            '''
-        
         })
     '''
     Nominal ratio between the primary and secondary voltage.
@@ -22630,16 +18492,12 @@ class PotentialTransformer(Equipment):
     type: Optional[ PotentialTransformerKind ] = field(
         default=None,
         metadata={
-        'type': 'enumeration Attribute',
+        'type': 'Attribute',
+        'stereotypes': ['enumeration', 'Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Potential transformer construction type.
-            '''
-        
         })
     '''
     Potential transformer construction type.
@@ -22670,16 +18528,11 @@ class PowerElectronicsUnit(Equipment):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Maximum active power limit. This is the maximum (nameplate) limit for the
-            unit.
-            '''
-        
         })
     '''
     Maximum active power limit. This is the maximum (nameplate) limit for
@@ -22690,16 +18543,11 @@ class PowerElectronicsUnit(Equipment):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Minimum active power limit. This is the minimum (nameplate) limit for the
-            unit.
-            '''
-        
         })
     '''
     Minimum active power limit. This is the minimum (nameplate) limit for
@@ -22709,17 +18557,13 @@ class PowerElectronicsUnit(Equipment):
     PowerElectronicsConnection: Optional[PowerElectronicsConnection] = field(
         default=None,
         metadata={
-        'type': 'Attribute',
+        'type': 'Association',
+        'stereotypes': [],
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'PowerElectronicsConnection.PowerElectronicsUnit',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            A power electronics unit has a connection to the AC network.
-            '''
-        
         })
     '''
     A power electronics unit has a connection to the AC network.
@@ -22728,17 +18572,13 @@ class PowerElectronicsUnit(Equipment):
     PowerElectronicsUnitController: Optional[PowerElectronicsUnitController] = field(
         default=None,
         metadata={
-        'type': 'Attribute',
+        'type': 'Association',
+        'stereotypes': [],
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'PowerElectronicsUnitController.PowerElectronicsUnit',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Power electronics unit controller for this power electronics unit.
-            '''
-        
         })
     '''
     Power electronics unit controller for this power electronics unit.
@@ -22748,16 +18588,12 @@ class PowerElectronicsUnit(Equipment):
         default_factory=list,
         metadata={
         'type': 'Association',
+        'stereotypes': [],
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'ControlAreaPowerElectronicsUnit.PowerElectronicsUnit',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': False,
-        'docstring':
-            '''
-            ControlArea specifications for this power electronics unit.
-            '''
-        
         })
     '''
     ControlArea specifications for this power electronics unit.
@@ -22785,16 +18621,12 @@ class BatteryUnit(PowerElectronicsUnit):
     batteryState: Optional[ BatteryStateKind ] = field(
         default=None,
         metadata={
-        'type': 'enumeration Attribute',
+        'type': 'Attribute',
+        'stereotypes': ['enumeration', 'Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            The current state of the battery (charging, full, etc.).
-            '''
-        
         })
     '''
     The current state of the battery (charging, full, etc.).
@@ -22804,14 +18636,11 @@ class BatteryUnit(PowerElectronicsUnit):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://gridappsd.org/CIM/extension#',
         'serialize': True,
-        'docstring':
-            '''
-            '''
-        
         })
     '''
     '''
@@ -22820,14 +18649,11 @@ class BatteryUnit(PowerElectronicsUnit):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://gridappsd.org/CIM/extension#',
         'serialize': True,
-        'docstring':
-            '''
-            '''
-        
         })
     '''
     '''
@@ -22836,15 +18662,11 @@ class BatteryUnit(PowerElectronicsUnit):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://gridappsd.org/CIM/extension#',
         'serialize': True,
-        'docstring':
-            '''
-            Real power consumed while idling
-            '''
-        
         })
     '''
     Real power consumed while idling
@@ -22854,18 +18676,11 @@ class BatteryUnit(PowerElectronicsUnit):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://gridappsd.org/CIM/extension#',
         'serialize': True,
-        'docstring':
-            '''
-            Reactive power consumed while idling
-            &lt;&lt;conversion note&gt;&gt;
-            DSS equivalent is %Idlingkvar, Percent of rated kW consumed as reactive
-            power (kvar) while idling. Default =
-            '''
-        
         })
     '''
     Reactive power consumed while idling
@@ -22878,18 +18693,11 @@ class BatteryUnit(PowerElectronicsUnit):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://gridappsd.org/CIM/extension#',
         'serialize': True,
-        'docstring':
-            '''
-            Percent of rated kWh storage capacity to be held in reserve for normal
-            operation. This is treated as the minimum energy discharge level unless
-            there is an emergency. For emergency operation set this property lower.
-            Cannot be less than zero.
-            '''
-        
         })
     '''
     Percent of rated kWh storage capacity to be held in reserve for normal
@@ -22902,16 +18710,11 @@ class BatteryUnit(PowerElectronicsUnit):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Full energy storage capacity of the battery. The attribute shall be a positive
-            value.
-            '''
-        
         })
     '''
     Full energy storage capacity of the battery. The attribute shall be
@@ -22922,16 +18725,11 @@ class BatteryUnit(PowerElectronicsUnit):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Amount of energy currently stored. The attribute shall be a positive value
-            or zero and lower than BatteryUnit.ratedE.
-            '''
-        
         })
     '''
     Amount of energy currently stored. The attribute shall be a positive
@@ -22951,6 +18749,7 @@ class BatteryUnit(PowerElectronicsUnit):
     def __maxOccurs__(self):
         return 'unbounded'
     
+@stereotype(CIMStereotype.GridAPPSD)
 @dataclass(repr=False)
 class MobileElectricalUnit(BatteryUnit):
     '''
@@ -22959,16 +18758,13 @@ class MobileElectricalUnit(BatteryUnit):
     ChargingUnit: Optional[ChargingUnit] = field(
         default=None,
         metadata={
-        'type': 'Attribute',
+        'type': 'Association',
+        'stereotypes': [],
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'ChargingUnit.MobileElectricalUnit',
         'namespace': 'http://gridappsd.org/CIM/extension#',
         'serialize': True,
-        'docstring':
-            '''
-            '''
-        
         })
     '''
     '''
@@ -22996,14 +18792,11 @@ class ElectricalVehicleUnit(MobileElectricalUnit):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://gridappsd.org/CIM/extension#',
         'serialize': True,
-        'docstring':
-            '''
-            '''
-        
         })
     '''
     '''
@@ -23033,15 +18826,12 @@ class ChargingUnit(PowerElectronicsUnit):
         default_factory=list,
         metadata={
         'type': 'Association',
+        'stereotypes': [],
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'MobileElectricalUnit.ChargingUnit',
         'namespace': 'http://gridappsd.org/CIM/extension#',
         'serialize': False,
-        'docstring':
-            '''
-            '''
-        
         })
     '''
     '''
@@ -23088,16 +18878,12 @@ class PowerElectricalChemicalUnit(PowerElectronicsUnit):
     kind: Optional[ PowerElectricalChemicalUnitKind ] = field(
         default=None,
         metadata={
-        'type': 'enumeration Attribute',
+        'type': 'Attribute',
+        'stereotypes': ['enumeration', 'Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Kind of power electrical chemical unit.
-            '''
-        
         })
     '''
     Kind of power electrical chemical unit.
@@ -23126,16 +18912,12 @@ class PowerElectronicsMarineUnit(PowerElectronicsUnit):
     kind: Optional[ MarineUnitKind ] = field(
         default=None,
         metadata={
-        'type': 'enumeration Attribute',
+        'type': 'Attribute',
+        'stereotypes': ['enumeration', 'Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Kind of marine unit.
-            '''
-        
         })
     '''
     Kind of marine unit.
@@ -23154,6 +18936,7 @@ class PowerElectronicsMarineUnit(PowerElectronicsUnit):
     def __maxOccurs__(self):
         return 'unbounded'
     
+@stereotype(CIMStereotype.GridAPPSD)
 @dataclass(repr=False)
 class PowerElectronicsThermalUnit(PowerElectronicsUnit):
     '''
@@ -23204,17 +18987,13 @@ class TransformerTank(Equipment):
     PowerTransformer: Optional[PowerTransformer] = field(
         default=None,
         metadata={
-        'type': 'ShadowExtension',
+        'type': 'Association',
+        'stereotypes': ['ShadowExtension'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'PowerTransformer.TransformerTanks',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Bank this transformer belongs to.
-            '''
-        
         })
     '''
     Bank this transformer belongs to.
@@ -23223,16 +19002,13 @@ class TransformerTank(Equipment):
     TransformerTankInfo: Optional[TransformerTankInfo] = field(
         default=None,
         metadata={
-        'type': 'Attribute',
+        'type': 'Association',
+        'stereotypes': [],
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'TransformerTankInfo.TransformerTanks',
         'namespace': 'http://gridappsd.org/CIM/extension#',
         'serialize': True,
-        'docstring':
-            '''
-            '''
-        
         })
     '''
     '''
@@ -23241,16 +19017,12 @@ class TransformerTank(Equipment):
         default_factory=list,
         metadata={
         'type': 'Association',
+        'stereotypes': [],
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'TransformerTankEnd.TransformerTank',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': False,
-        'docstring':
-            '''
-            All windings of this transformer.
-            '''
-        
         })
     '''
     All windings of this transformer.
@@ -23281,16 +19053,12 @@ class EquipmentController(PowerSystemResource):
         default_factory=list,
         metadata={
         'type': 'Association',
+        'stereotypes': [],
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'RegulatingCondEq.EquipmentController',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': False,
-        'docstring':
-            '''
-            All regulating conducting equipment that belongs to this equipment controller.
-            '''
-        
         })
     '''
     All regulating conducting equipment that belongs to this equipment
@@ -23321,16 +19089,12 @@ class PowerElectronicsUnitController(EquipmentController):
         default_factory=list,
         metadata={
         'type': 'Association',
+        'stereotypes': [],
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'PowerElectronicsUnit.PowerElectronicsUnitController',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': False,
-        'docstring':
-            '''
-            Power electronics unit that has this power electronics unit controller.
-            '''
-        
         })
     '''
     Power electronics unit that has this power electronics unit controller.
@@ -23359,15 +19123,11 @@ class SSSCController(EquipmentController):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Maximum voltage that the device can inject.
-            '''
-        
         })
     '''
     Maximum voltage that the device can inject.
@@ -23377,16 +19137,11 @@ class SSSCController(EquipmentController):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Maximum operating current limit applied for the controller and used by
-            any of the available control functions.
-            '''
-        
         })
     '''
     Maximum operating current limit applied for the controller and used
@@ -23397,15 +19152,11 @@ class SSSCController(EquipmentController):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Minimum voltage that the device can inject.
-            '''
-        
         })
     '''
     Minimum voltage that the device can inject.
@@ -23415,16 +19166,11 @@ class SSSCController(EquipmentController):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Minimum operating current limit applied for the controller and used by
-            any of the available control functions.
-            '''
-        
         })
     '''
     Minimum operating current limit applied for the controller and used
@@ -23434,16 +19180,12 @@ class SSSCController(EquipmentController):
     mode: Optional[ SSSCControlModeKind ] = field(
         default=None,
         metadata={
-        'type': 'enumeration Attribute',
+        'type': 'Attribute',
+        'stereotypes': ['enumeration', 'Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Mode of the Static Synchronous Series compensator controller.
-            '''
-        
         })
     '''
     Mode of the Static Synchronous Series compensator controller.
@@ -23452,18 +19194,13 @@ class SSSCController(EquipmentController):
     CurrentDroopOverride: Optional[CurrentDroopOverride] = field(
         default=None,
         metadata={
-        'type': 'Attribute',
+        'type': 'Association',
+        'stereotypes': [],
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'CurrentDroopOverride.SSSCController',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            The current droop override for this SSSC controller. It is not used when
-            the SSSC controller is in mode currentDroop.
-            '''
-        
         })
     '''
     The current droop override for this SSSC controller. It is not used
@@ -23473,17 +19210,13 @@ class SSSCController(EquipmentController):
     SSSCSimulationSettings: Optional[SSSCSimulationSettings] = field(
         default=None,
         metadata={
-        'type': 'Attribute',
+        'type': 'Association',
+        'stereotypes': [],
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'SSSCSimulationSettings.SSSCController',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            The simulation setings that apply for this controller.
-            '''
-        
         })
     '''
     The simulation setings that apply for this controller.
@@ -23493,17 +19226,12 @@ class SSSCController(EquipmentController):
         default=None,
         metadata={
         'type': 'Association',
+        'stereotypes': [],
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'CurrentDroopOverride.SSSCController',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': False,
-        'docstring':
-            '''
-            The current droop override for this SSSC controller. It is not used when
-            the SSSC controller is in mode currentDroop.
-            '''
-        
         })
     '''
     The current droop override for this SSSC controller. It is not used
@@ -23535,16 +19263,12 @@ class TapChangerController(EquipmentController):
         default_factory=list,
         metadata={
         'type': 'Association',
+        'stereotypes': [],
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'TapChanger.TapChangeController',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': False,
-        'docstring':
-            '''
-            All tap changers controlled by this controller.
-            '''
-        
         })
     '''
     All tap changers controlled by this controller.
@@ -23575,16 +19299,12 @@ class FuelStorage(PowerSystemResource):
         default_factory=list,
         metadata={
         'type': 'Association',
+        'stereotypes': [],
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'FossilFuel.FuelStorage',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': False,
-        'docstring':
-            '''
-            Fossil fuel stored in a fuel storage.
-            '''
-        
         })
     '''
     Fossil fuel stored in a fuel storage.
@@ -23614,18 +19334,11 @@ class MeasurementSystem(PowerSystemResource):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://gridappsd.org/CIM/extension#',
         'serialize': True,
-        'docstring':
-            '''
-            For periodic data frames, PMUs shall support data reporting (by recording
-            or output) at sub-multiples of the
-            nominal power system frequency. Required rates are provided in Table 18
-            in IEEE Std. C37.118
-            '''
-        
         })
     '''
     For periodic data frames, PMUs shall support data reporting (by recording
@@ -23637,16 +19350,13 @@ class MeasurementSystem(PowerSystemResource):
     CommunicationLink: Optional[CommunicationLink] = field(
         default=None,
         metadata={
-        'type': 'ShadowExtension',
+        'type': 'Association',
+        'stereotypes': ['ShadowExtension'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'CommunicationLink.Sensors',
         'namespace': 'http://gridappsd.org/CIM/extension#',
         'serialize': True,
-        'docstring':
-            '''
-            '''
-        
         })
     '''
     '''
@@ -23655,15 +19365,12 @@ class MeasurementSystem(PowerSystemResource):
         default_factory=list,
         metadata={
         'type': 'Association',
+        'stereotypes': [],
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'Measurement.MeasurementSystem',
         'namespace': 'http://gridappsd.org/CIM/extension#',
         'serialize': False,
-        'docstring':
-            '''
-            '''
-        
         })
     '''
     '''
@@ -23747,18 +19454,12 @@ class PhasorMeasurementUnit(MeasurementSystem):
     timeSourceType: Optional[ TimeSourceKind ] = field(
         default=None,
         metadata={
-        'type': 'enumeration Attribute',
+        'type': 'Attribute',
+        'stereotypes': ['enumeration', 'Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://gridappsd.org/CIM/extension#',
         'serialize': True,
-        'docstring':
-            '''
-            PMU must have a time source, which may be a dedicated GPS antenna for each
-            PMU or an alternate source (used to prevent vulnerabilities from GPS spoofing).
-            The PMU can only use one time source at a time.
-            '''
-        
         })
     '''
     PMU must have a time source, which may be a dedicated GPS antenna for
@@ -23769,17 +19470,12 @@ class PhasorMeasurementUnit(MeasurementSystem):
     usageType: Optional[ SynchrophaserUsageKind ] = field(
         default=None,
         metadata={
-        'type': 'enumeration Attribute',
+        'type': 'Attribute',
+        'stereotypes': ['enumeration', 'Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://gridappsd.org/CIM/extension#',
         'serialize': True,
-        'docstring':
-            '''
-            P-type units use a single electrical cycle for protection applications.
-            M-type units use 5 or more cycles for higher quality frequency measurements.
-            '''
-        
         })
     '''
     P-type units use a single electrical cycle for protection applications.
@@ -23789,50 +19485,13 @@ class PhasorMeasurementUnit(MeasurementSystem):
     PhasorDataConcentrator: Optional[PhasorDataConcentrator] = field(
         default=None,
         metadata={
-        'type': 'ShadowExtension OfAggregate',
+        'type': 'Association',
+        'stereotypes': ['ShadowExtension', 'OfAggregate'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'PhasorDataConcentrator.PhasorMeasurementUnits',
         'namespace': 'http://gridappsd.org/CIM/extension#',
         'serialize': True,
-        'docstring':
-            '''
-            '''
-        
-        })
-    '''
-    '''
-    
-    PMUConfiguration: Optional[PMUConfiguration] = field(
-        default=None,
-        metadata={
-        'type': 'Attribute',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'PMUConfiguration.PhasorMeasurementUnit',
-        'namespace': 'http://gridappsd.org/CIM/extension#',
-        'serialize': True,
-        'docstring':
-            '''
-            '''
-        
-        })
-    '''
-    '''
-    
-    PMUStream: Optional[PMUStream] = field(
-        default=None,
-        metadata={
-        'type': 'Attribute',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'PMUStream.PMU',
-        'namespace': 'http://gridappsd.org/CIM/extension#',
-        'serialize': True,
-        'docstring':
-            '''
-            '''
-        
         })
     '''
     '''
@@ -23841,15 +19500,12 @@ class PhasorMeasurementUnit(MeasurementSystem):
         default=None,
         metadata={
         'type': 'Association',
+        'stereotypes': [],
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'PMUConfiguration.PhasorMeasurementUnit',
         'namespace': 'http://gridappsd.org/CIM/extension#',
-        'serialize': False,
-        'docstring':
-            '''
-            '''
-        
+        'serialize': True,
         })
     '''
     '''
@@ -23858,15 +19514,40 @@ class PhasorMeasurementUnit(MeasurementSystem):
         default=None,
         metadata={
         'type': 'Association',
+        'stereotypes': [],
+        'minOccurs': '0',
+        'maxOccurs': '1',
+        'inverse': 'PMUStream.PMU',
+        'namespace': 'http://gridappsd.org/CIM/extension#',
+        'serialize': True,
+        })
+    '''
+    '''
+    
+    PMUConfiguration: Optional[PMUConfiguration] = field(
+        default=None,
+        metadata={
+        'type': 'Association',
+        'stereotypes': [],
+        'minOccurs': '0',
+        'maxOccurs': '1',
+        'inverse': 'PMUConfiguration.PhasorMeasurementUnit',
+        'namespace': 'http://gridappsd.org/CIM/extension#',
+        'serialize': False,
+        })
+    '''
+    '''
+    
+    PMUStream: Optional[PMUStream] = field(
+        default=None,
+        metadata={
+        'type': 'Association',
+        'stereotypes': [],
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'PMUStream.PMU',
         'namespace': 'http://gridappsd.org/CIM/extension#',
         'serialize': False,
-        'docstring':
-            '''
-            '''
-        
         })
     '''
     '''
@@ -23934,17 +19615,13 @@ class OutageCoordinationRegion(PowerSystemResource):
     ControlArea: list[ControlArea] = field(
         default_factory=list,
         metadata={
-        'type': 'NC',
+        'type': 'Association',
+        'stereotypes': ['NC'],
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'ControlArea.OutageCoordinationRegion',
         'namespace': 'http://entsoe.eu/ns/nc#',
         'serialize': False,
-        'docstring':
-            '''
-            The control area that is part of this outage coordination region.
-            '''
-        
         })
     '''
     The control area that is part of this outage coordination region.
@@ -23963,6 +19640,7 @@ class OutageCoordinationRegion(PowerSystemResource):
     def __maxOccurs__(self):
         return 'unbounded'
     
+@stereotype(CIMStereotype.GridAPPSD)
 @stereotype(CIMStereotype.OfAggregate)
 @stereotype(CIMStereotype.ShadowExtension)
 @dataclass(repr=False)
@@ -23973,17 +19651,12 @@ class PhasorDataConcentrator(PowerSystemResource):
     timeSourceType: Optional[ TimeSourceKind ] = field(
         default=None,
         metadata={
-        'type': 'enumeration Attribute',
+        'type': 'Attribute',
+        'stereotypes': ['enumeration', 'Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://gridappsd.org/CIM/extension#',
         'serialize': True,
-        'docstring':
-            '''
-            PDC may or may not have its own dedicated time source. The timestamp issued
-            by PDC will not supersede the timestamp from individual PMUs.
-            '''
-        
         })
     '''
     PDC may or may not have its own dedicated time source. The timestamp
@@ -23993,16 +19666,13 @@ class PhasorDataConcentrator(PowerSystemResource):
     CentralPDC: Optional[PhasorDataConcentrator] = field(
         default=None,
         metadata={
-        'type': 'ShadowExtension',
+        'type': 'Association',
+        'stereotypes': ['ShadowExtension'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'PhasorDataConcentrator.LocalPDC',
         'namespace': 'http://gridappsd.org/CIM/extension#',
         'serialize': True,
-        'docstring':
-            '''
-            '''
-        
         })
     '''
     '''
@@ -24011,15 +19681,12 @@ class PhasorDataConcentrator(PowerSystemResource):
         default_factory=list,
         metadata={
         'type': 'Association',
+        'stereotypes': [],
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'PhasorDataConcentrator.CentralPDC',
         'namespace': 'http://gridappsd.org/CIM/extension#',
         'serialize': False,
-        'docstring':
-            '''
-            '''
-        
         })
     '''
     '''
@@ -24027,16 +19694,13 @@ class PhasorDataConcentrator(PowerSystemResource):
     PhasorMeasurementUnits: list[PhasorMeasurementUnit] = field(
         default_factory=list,
         metadata={
-        'type': 'AggregateOf',
+        'type': 'Association',
+        'stereotypes': ['AggregateOf'],
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'PhasorMeasurementUnit.PhasorDataConcentrator',
         'namespace': 'http://gridappsd.org/CIM/extension#',
         'serialize': False,
-        'docstring':
-            '''
-            '''
-        
         })
     '''
     '''
@@ -24066,15 +19730,11 @@ class PowerCutZone(PowerSystemResource):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            First level (amount) of load to cut as a percentage of total zone load.
-            '''
-        
         })
     '''
     First level (amount) of load to cut as a percentage of total zone load.
@@ -24084,15 +19744,11 @@ class PowerCutZone(PowerSystemResource):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Second level (amount) of load to cut as a percentage of total zone load.
-            '''
-        
         })
     '''
     Second level (amount) of load to cut as a percentage of total zone
@@ -24102,17 +19758,13 @@ class PowerCutZone(PowerSystemResource):
     EnergyConsumers: list[EnergyConsumer] = field(
         default_factory=list,
         metadata={
-        'type': 'AggregateOf',
+        'type': 'Association',
+        'stereotypes': ['AggregateOf'],
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'EnergyConsumer.PowerCutZone',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': False,
-        'docstring':
-            '''
-            Energy consumer is assigned to the power cut zone.
-            '''
-        
         })
     '''
     Energy consumer is assigned to the power cut zone.
@@ -24142,16 +19794,11 @@ class PowerElectronicsConnectionPhase(PowerSystemResource):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Active power injection. Load sign convention is used, i.e. positive sign
-            means flow into the equipment from the network.
-            '''
-        
         })
     '''
     Active power injection. Load sign convention is used, i.e. positive
@@ -24161,20 +19808,12 @@ class PowerElectronicsConnectionPhase(PowerSystemResource):
     phase: Optional[ SinglePhaseKind ] = field(
         default=None,
         metadata={
-        'type': 'enumeration Attribute',
+        'type': 'Attribute',
+        'stereotypes': ['enumeration', 'Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Phase of this energy producer component. If the energy producer is wye
-            connected, the connection is from the indicated phase to the central ground
-            or neutral point. If the energy producer is delta connected, the phase
-            indicates an energy producer connected from the indicated phase to the
-            next logical non-neutral phase.
-            '''
-        
         })
     '''
     Phase of this energy producer component. If the energy producer is
@@ -24188,16 +19827,11 @@ class PowerElectronicsConnectionPhase(PowerSystemResource):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Reactive power injection. Load sign convention is used, i.e. positive sign
-            means flow into the equipment from the network.
-            '''
-        
         })
     '''
     Reactive power injection. Load sign convention is used, i.e. positive
@@ -24207,17 +19841,13 @@ class PowerElectronicsConnectionPhase(PowerSystemResource):
     PowerElectronicsConnection: Optional[PowerElectronicsConnection] = field(
         default=None,
         metadata={
-        'type': 'Attribute',
+        'type': 'Association',
+        'stereotypes': [],
         'minOccurs': '1',
         'maxOccurs': '1',
         'inverse': 'PowerElectronicsConnection.PowerElectronicsConnectionPhase',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Power electronics connection of this power electronics connection phase.
-            '''
-        
         })
     '''
     Power electronics connection of this power electronics connection phase.
@@ -24253,16 +19883,12 @@ class PowerFrequencyController(PowerSystemResource):
         default=None,
         metadata={
         'type': 'Association',
+        'stereotypes': [],
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'ControlArea.PowerFrequencyController',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': False,
-        'docstring':
-            '''
-            Control area which has a power frequency controller.
-            '''
-        
         })
     '''
     Control area which has a power frequency controller.
@@ -24295,17 +19921,13 @@ class PowerTransferCorridor(PowerSystemResource):
     OperationalLimitSet: list[OperationalLimitSet] = field(
         default_factory=list,
         metadata={
-        'type': 'NC',
+        'type': 'Association',
+        'stereotypes': ['NC'],
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'OperationalLimitSet.PowerTransferCorridor',
         'namespace': 'http://entsoe.eu/ns/nc#',
         'serialize': False,
-        'docstring':
-            '''
-            The operational limit set relevant for this power transfer corridor.
-            '''
-        
         })
     '''
     The operational limit set relevant for this power transfer corridor.
@@ -24364,14 +19986,11 @@ class RegulatingControl(PowerSystemResource):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://gridappsd.org/CIM/extension#',
         'serialize': True,
-        'docstring':
-            '''
-            '''
-        
         })
     '''
     '''
@@ -24380,18 +19999,11 @@ class RegulatingControl(PowerSystemResource):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            If true, indicates that regulation is performed in the simulation in a
-            discrete mode. If false, indicates that non-discrete regulation is used
-            in the simulation. This applies to equipment with discrete controls, e.g.
-            tap changers and shunt compensators.
-            '''
-        
         })
     '''
     If true, indicates that regulation is performed in the simulation in
@@ -24404,15 +20016,11 @@ class RegulatingControl(PowerSystemResource):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            The flag tells if regulation is enabled.
-            '''
-        
         })
     '''
     The flag tells if regulation is enabled.
@@ -24422,15 +20030,11 @@ class RegulatingControl(PowerSystemResource):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Maximum allowed target value. See also RegulatingControl description.
-            '''
-        
         })
     '''
     Maximum allowed target value. See also RegulatingControl description.
@@ -24440,15 +20044,11 @@ class RegulatingControl(PowerSystemResource):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Minimum allowed target value. See also RegulatingControl description.
-            '''
-        
         })
     '''
     Minimum allowed target value. See also RegulatingControl description.
@@ -24458,14 +20058,11 @@ class RegulatingControl(PowerSystemResource):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://gridappsd.org/CIM/extension#',
         'serialize': True,
-        'docstring':
-            '''
-            '''
-        
         })
     '''
     '''
@@ -24474,14 +20071,11 @@ class RegulatingControl(PowerSystemResource):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://gridappsd.org/CIM/extension#',
         'serialize': True,
-        'docstring':
-            '''
-            '''
-        
         })
     '''
     '''
@@ -24490,14 +20084,11 @@ class RegulatingControl(PowerSystemResource):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://gridappsd.org/CIM/extension#',
         'serialize': True,
-        'docstring':
-            '''
-            '''
-        
         })
     '''
     '''
@@ -24506,23 +20097,11 @@ class RegulatingControl(PowerSystemResource):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            This is the deadband set on the controller. It is used with discrete control
-            to avoid excessive tap changes in tap changers and state changes in shunt
-            compensator banks while regulating. The units in which deadband is expressed
-            are based on RegulatingControl.mode. The attribute shall be a positive
-            value or zero. If RegulatingControl.discrete is set to "false", the RegulatingControl.targetDeadband
-            is to be ignored in simulations. If TapChanger.ctRatio or TapChanger.ptRatio
-            are populated, deadband shall be expressed in secondary units.
-            Note that for instance, if the targetValue is 100 kV and the targetDeadband
-            is 2 kV the range is from 99 to 101 kV.
-            '''
-        
         })
     '''
     This is the deadband set on the controller. It is used with discrete
@@ -24541,23 +20120,11 @@ class RegulatingControl(PowerSystemResource):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            The target value set on the controller. It is the starting value for a
-            steady state solution. This value can be used for the target value without
-            the use of schedules. The value has the units appropriate to the mode attribute.
-            If used for a TapChangerControl and if TapChanger.ctRatio or TapChanger.ptRatio
-            are populated, the target value shall be expressed in secondary units.
-            As an example, with PT ratio of 60 on a 12.47 KV distribution system, a
-            phase to ground PT has a ratio of 7200 volts primary to 120 volts secondary.
-            If the required primary target is 7128 volts for a single phase tap changer
-            then the value of targetValue would equal 118.8 volts secondary (7128/60).
-            '''
-        
         })
     '''
     The target value set on the controller. It is the starting value for
@@ -24576,18 +20143,12 @@ class RegulatingControl(PowerSystemResource):
     mode: Optional[ RegulatingControlModeKind ] = field(
         default=None,
         metadata={
-        'type': 'enumeration Attribute',
+        'type': 'Attribute',
+        'stereotypes': ['enumeration', 'Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            The regulating control mode presently available. This specification allows
-            for determining the kind of regulation without need for obtaining the units
-            from a schedule.
-            '''
-        
         })
     '''
     The regulating control mode presently available. This specification
@@ -24598,16 +20159,12 @@ class RegulatingControl(PowerSystemResource):
     monitoredPhase: Optional[ PhaseCode ] = field(
         default=None,
         metadata={
-        'type': 'enumeration Attribute',
+        'type': 'Attribute',
+        'stereotypes': ['enumeration', 'Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Phase voltage controlling this regulator, measured at regulator location.
-            '''
-        
         })
     '''
     Phase voltage controlling this regulator, measured at regulator location.
@@ -24616,18 +20173,12 @@ class RegulatingControl(PowerSystemResource):
     targetValueUnitMultiplier: Optional[ UnitMultiplier ] = field(
         default=None,
         metadata={
-        'type': 'enumeration Attribute',
+        'type': 'Attribute',
+        'stereotypes': ['enumeration', 'Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Specifies the multiplier used for the targetValue, targetDeadband, .maxAllowedTargetValue,
-            .minAllowedTargetValue as well as TapChangerControl.maxLimitVoltage and
-            TapChangerControl.minLimitVoltage.
-            '''
-        
         })
     '''
     Specifies the multiplier used for the targetValue, targetDeadband,
@@ -24638,20 +20189,13 @@ class RegulatingControl(PowerSystemResource):
     Terminal: Optional[Terminal] = field(
         default=None,
         metadata={
-        'type': 'Attribute',
+        'type': 'Association',
+        'stereotypes': [],
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'Terminal.RegulatingControl',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            The terminal associated with this regulating control. The terminal is associated
-            instead of a node, since the terminal could connect into either a topological
-            node or a connectivity node. Sometimes it is useful to model regulation
-            at a terminal of a bus bar object.
-            '''
-        
         })
     '''
     The terminal associated with this regulating control. The terminal
@@ -24664,16 +20208,12 @@ class RegulatingControl(PowerSystemResource):
         default_factory=list,
         metadata={
         'type': 'Association',
+        'stereotypes': [],
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'RegulatingCondEq.RegulatingControl',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': False,
-        'docstring':
-            '''
-            The equipment that participates in this regulating control scheme.
-            '''
-        
         })
     '''
     The equipment that participates in this regulating control scheme.
@@ -24683,16 +20223,12 @@ class RegulatingControl(PowerSystemResource):
         default_factory=list,
         metadata={
         'type': 'Association',
+        'stereotypes': [],
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'RegulationSchedule.RegulatingControl',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': False,
-        'docstring':
-            '''
-            Schedule for this regulating control.
-            '''
-        
         })
     '''
     Schedule for this regulating control.
@@ -24727,15 +20263,11 @@ class TapChangerControl(RegulatingControl):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            If true, the line drop compensation is to be applied.
-            '''
-        
         })
     '''
     If true, the line drop compensation is to be applied.
@@ -24745,14 +20277,11 @@ class TapChangerControl(RegulatingControl):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://gridappsd.org/CIM/extension#',
         'serialize': True,
-        'docstring':
-            '''
-            '''
-        
         })
     '''
     '''
@@ -24761,14 +20290,11 @@ class TapChangerControl(RegulatingControl):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://gridappsd.org/CIM/extension#',
         'serialize': True,
-        'docstring':
-            '''
-            '''
-        
         })
     '''
     '''
@@ -24777,15 +20303,11 @@ class TapChangerControl(RegulatingControl):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Line drop compensator resistance setting for normal (forward) power flow.
-            '''
-        
         })
     '''
     Line drop compensator resistance setting for normal (forward) power
@@ -24796,15 +20318,11 @@ class TapChangerControl(RegulatingControl):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Line drop compensator reactance setting for normal (forward) power flow.
-            '''
-        
         })
     '''
     Line drop compensator reactance setting for normal (forward) power
@@ -24815,19 +20333,11 @@ class TapChangerControl(RegulatingControl):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Maximum allowed regulated voltage on the PT secondary. This is the locally
-            measured secondary voltage, including the effect of any line drop compensation.
-            Typically used for distribution circuit voltage regulator. Sometimes referred
-            to as first-house protection. If utilized, then TapChanger.ptRatio must
-            be supplied.
-            '''
-        
         })
     '''
     Maximum allowed regulated voltage on the PT secondary. This is the
@@ -24841,19 +20351,11 @@ class TapChangerControl(RegulatingControl):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Minimum allowed regulated voltage on the PT secondary. This is the locally
-            measured secondary voltage, including the effect of any line drop compensation.
-            Typically used for distribution circuit voltage regulator. Sometimes referred
-            to as last-house protection. If utilized, then TapChanger.ptRatio must
-            be supplied.
-            '''
-        
         })
     '''
     Minimum allowed regulated voltage on the PT secondary. This is the
@@ -24867,15 +20369,11 @@ class TapChangerControl(RegulatingControl):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Line drop compensator resistance setting for reverse power flow.
-            '''
-        
         })
     '''
     Line drop compensator resistance setting for reverse power flow.
@@ -24885,15 +20383,11 @@ class TapChangerControl(RegulatingControl):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Line drop compensator reactance setting for reverse power flow.
-            '''
-        
         })
     '''
     Line drop compensator reactance setting for reverse power flow.
@@ -24903,14 +20397,11 @@ class TapChangerControl(RegulatingControl):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://gridappsd.org/CIM/extension#',
         'serialize': True,
-        'docstring':
-            '''
-            '''
-        
         })
     '''
     '''
@@ -24919,14 +20410,11 @@ class TapChangerControl(RegulatingControl):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://gridappsd.org/CIM/extension#',
         'serialize': True,
-        'docstring':
-            '''
-            '''
-        
         })
     '''
     '''
@@ -24935,16 +20423,12 @@ class TapChangerControl(RegulatingControl):
         default_factory=list,
         metadata={
         'type': 'Association',
+        'stereotypes': [],
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'TapChanger.TapChangerControl',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': False,
-        'docstring':
-            '''
-            The tap changers that participates in this regulating tap control scheme.
-            '''
-        
         })
     '''
     The tap changers that participates in this regulating tap control scheme.
@@ -24978,15 +20462,12 @@ class RotatingMachinePhase(PowerSystemResource):
         default=None,
         metadata={
         'type': 'Association',
+        'stereotypes': [],
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'RotatingMachine.RotatingMachinePhase',
         'namespace': 'http://gridappsd.org/CIM/extension#',
         'serialize': False,
-        'docstring':
-            '''
-            '''
-        
         })
     '''
     '''
@@ -25024,17 +20505,13 @@ class SchedulingArea(PowerSystemResource):
     Line: list[Line] = field(
         default_factory=list,
         metadata={
-        'type': 'NC',
+        'type': 'Association',
+        'stereotypes': ['NC'],
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'Line.SchedulingArea',
         'namespace': 'http://entsoe.eu/ns/nc#',
         'serialize': False,
-        'docstring':
-            '''
-            The line that is part of this scheduling area.
-            '''
-        
         })
     '''
     The line that is part of this scheduling area.
@@ -25043,17 +20520,13 @@ class SchedulingArea(PowerSystemResource):
     Substation: list[Substation] = field(
         default_factory=list,
         metadata={
-        'type': 'NC',
+        'type': 'Association',
+        'stereotypes': ['NC'],
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'Substation.SchedulingArea',
         'namespace': 'http://entsoe.eu/ns/nc#',
         'serialize': False,
-        'docstring':
-            '''
-            The substation that is part of this scheduling area.
-            '''
-        
         })
     '''
     The substation that is part of this scheduling area.
@@ -25087,17 +20560,13 @@ class SubSchedulingArea(SchedulingArea):
     Feeder: list[Feeder] = field(
         default_factory=list,
         metadata={
-        'type': 'NC',
+        'type': 'Association',
+        'stereotypes': ['NC'],
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'Feeder.SubSchedulingArea',
         'namespace': 'http://entsoe.eu/ns/nc#',
         'serialize': False,
-        'docstring':
-            '''
-            The feeder that is part of this subscheduling area.
-            '''
-        
         })
     '''
     The feeder that is part of this subscheduling area.
@@ -25128,15 +20597,11 @@ class ShuntCompensatorPhase(PowerSystemResource):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            The maximum number of sections that may be switched in for this phase.
-            '''
-        
         })
     '''
     The maximum number of sections that may be switched in for this phase.
@@ -25146,16 +20611,11 @@ class ShuntCompensatorPhase(PowerSystemResource):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            For the capacitor phase, the normal number of sections switched in. The
-            value shall be between zero and ShuntCompensatorPhase.maximumSections.
-            '''
-        
         })
     '''
     For the capacitor phase, the normal number of sections switched in.
@@ -25166,26 +20626,11 @@ class ShuntCompensatorPhase(PowerSystemResource):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Shunt compensator sections in use. Starting value for steady state solution.
-            The attribute shall be a positive value or zero. Non integer values are
-            allowed to support continuous variables. The reasons for continuous value
-            are to support study cases where no discrete shunt compensators has yet
-            been designed, a solutions where a narrow voltage band force the sections
-            to oscillate or accommodate for a continuous solution as input.
-            For LinearShuntConpensator the value shall be between zero and ShuntCompensatorPhase.maximumSections.
-            At value zero the shunt compensator conductance and admittance is zero.
-            Linear interpolation of conductance and admittance between the previous
-            and next integer section is applied in case of non-integer values.
-            For NonlinearShuntCompensator-s shall only be set to one of the NonlinearShuntCompenstorPhasePoint.sectionNumber.
-            There is no interpolation between NonlinearShuntCompenstorPhasePoint-s.
-            '''
-        
         })
     '''
     Shunt compensator sections in use. Starting value for steady state
@@ -25206,20 +20651,12 @@ class ShuntCompensatorPhase(PowerSystemResource):
     phase: Optional[ SinglePhaseKind ] = field(
         default=None,
         metadata={
-        'type': 'enumeration Attribute',
+        'type': 'Attribute',
+        'stereotypes': ['enumeration', 'Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Phase of this shunt compensator component. If the shunt compensator is
-            wye connected, the connection is from the indicated phase to the central
-            ground or neutral point. If the shunt compensator is delta connected, the
-            phase indicates a shunt compensator connected from the indicated phase
-            to the next logical non-neutral phase.
-            '''
-        
         })
     '''
     Phase of this shunt compensator component. If the shunt compensator
@@ -25232,17 +20669,13 @@ class ShuntCompensatorPhase(PowerSystemResource):
     ShuntCompensator: Optional[ShuntCompensator] = field(
         default=None,
         metadata={
-        'type': 'Attribute',
+        'type': 'Association',
+        'stereotypes': [],
         'minOccurs': '1',
         'maxOccurs': '1',
         'inverse': 'ShuntCompensator.ShuntCompensatorPhase',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Shunt compensator of this shunt compensator phase.
-            '''
-        
         })
     '''
     Shunt compensator of this shunt compensator phase.
@@ -25272,16 +20705,11 @@ class LinearShuntCompensatorPhase(ShuntCompensatorPhase):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Susceptance per section of the phase if shunt compensator is wye connected.
-            Susceptance per section phase to phase if shunt compensator is delta connected.
-            '''
-        
         })
     '''
     Susceptance per section of the phase if shunt compensator is wye connected.
@@ -25293,16 +20721,11 @@ class LinearShuntCompensatorPhase(ShuntCompensatorPhase):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Conductance per section for this phase if shunt compensator is wye connected.
-            Conductance per section phase to phase if shunt compensator is delta connected.
-            '''
-        
         })
     '''
     Conductance per section for this phase if shunt compensator is wye
@@ -25314,16 +20737,11 @@ class LinearShuntCompensatorPhase(ShuntCompensatorPhase):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://gridappsd.org/CIM/extension#',
         'serialize': True,
-        'docstring':
-            '''
-            series resistance in each phase [need to verify this is same as discharge
-            resistance]
-            '''
-        
         })
     '''
     series resistance in each phase [need to verify this is same as discharge
@@ -25334,15 +20752,11 @@ class LinearShuntCompensatorPhase(ShuntCompensatorPhase):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://gridappsd.org/CIM/extension#',
         'serialize': True,
-        'docstring':
-            '''
-            Internal inductance of the capacitor unit and internal wiring.
-            '''
-        
         })
     '''
     Internal inductance of the capacitor unit and internal wiring.
@@ -25352,16 +20766,11 @@ class LinearShuntCompensatorPhase(ShuntCompensatorPhase):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://gridappsd.org/CIM/extension#',
         'serialize': True,
-        'docstring':
-            '''
-            series inductive reactance(s) in each phase (line) for filter, ohms at
-            base frequency
-            '''
-        
         })
     '''
     series inductive reactance(s) in each phase (line) for filter, ohms
@@ -25395,17 +20804,13 @@ class NonlinearShuntCompensatorPhase(ShuntCompensatorPhase):
     NonlinearShuntCompensatorPhasePoints: list[NonlinearShuntCompensatorPhasePoint] = field(
         default_factory=list,
         metadata={
-        'type': 'AggregateOf',
+        'type': 'Association',
+        'stereotypes': ['AggregateOf'],
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'NonlinearShuntCompensatorPhasePoint.NonlinearShuntCompensatorPhase',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': False,
-        'docstring':
-            '''
-            All points of the non-linear shunt compensator phase.
-            '''
-        
         })
     '''
     All points of the non-linear shunt compensator phase.
@@ -25435,17 +20840,13 @@ class SolarPowerPlant(PowerSystemResource):
     SolarGeneratingUnits: list[SolarGeneratingUnit] = field(
         default_factory=list,
         metadata={
-        'type': 'European',
+        'type': 'Association',
+        'stereotypes': ['European'],
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'SolarGeneratingUnit.SolarPowerPlant',
         'namespace': 'http://iec.ch/TC57/CIM100-European#',
         'serialize': False,
-        'docstring':
-            '''
-            A solar generating unit or units may be a member of a solar power plant.
-            '''
-        
         })
     '''
     A solar generating unit or units may be a member of a solar power plant.
@@ -25476,16 +20877,11 @@ class SwitchPhase(PowerSystemResource):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            The attribute tells if the switch is considered closed when used as input
-            to topology processing.
-            '''
-        
         })
     '''
     The attribute tells if the switch is considered closed when used as
@@ -25496,17 +20892,11 @@ class SwitchPhase(PowerSystemResource):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Used in cases when no Measurement for the status value is present. If the
-            SwitchPhase has a status measurement the Discrete.normalValue is expected
-            to match with this value.
-            '''
-        
         })
     '''
     Used in cases when no Measurement for the status value is present.
@@ -25518,14 +20908,11 @@ class SwitchPhase(PowerSystemResource):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://gridappsd.org/CIM/extension#',
         'serialize': True,
-        'docstring':
-            '''
-            '''
-        
         })
     '''
     '''
@@ -25533,17 +20920,12 @@ class SwitchPhase(PowerSystemResource):
     phaseSide1: Optional[ SinglePhaseKind ] = field(
         default=None,
         metadata={
-        'type': 'enumeration Attribute',
+        'type': 'Attribute',
+        'stereotypes': ['enumeration', 'Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Phase of this SwitchPhase on the side with terminal sequence number equal
-            to 1. Should be a phase contained in that terminal's phases attribute.
-            '''
-        
         })
     '''
     Phase of this SwitchPhase on the side with terminal sequence number
@@ -25553,17 +20935,12 @@ class SwitchPhase(PowerSystemResource):
     phaseSide2: Optional[ SinglePhaseKind ] = field(
         default=None,
         metadata={
-        'type': 'enumeration Attribute',
+        'type': 'Attribute',
+        'stereotypes': ['enumeration', 'Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Phase of this SwitchPhase on the side with terminal sequence number equal
-            to 2. Should be a phase contained in that terminal's Terminal.phases attribute.
-            '''
-        
         })
     '''
     Phase of this SwitchPhase on the side with terminal sequence number
@@ -25575,17 +20952,11 @@ class SwitchPhase(PowerSystemResource):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            The maximum continuous current carrying capacity in amps governed by the
-            device material and construction.
-            The attribute shall be a positive value.
-            '''
-        
         })
     '''
     The maximum continuous current carrying capacity in amps governed by
@@ -25596,17 +20967,13 @@ class SwitchPhase(PowerSystemResource):
     Switch: Optional[Switch] = field(
         default=None,
         metadata={
-        'type': 'ShadowExtension',
+        'type': 'Association',
+        'stereotypes': ['ShadowExtension'],
         'minOccurs': '1',
         'maxOccurs': '1',
         'inverse': 'Switch.SwitchPhase',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            The switch of the switch phase.
-            '''
-        
         })
     '''
     The switch of the switch phase.
@@ -25637,16 +21004,11 @@ class TapChanger(PowerSystemResource):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Specifies the regulation status of the equipment. True is regulating, false
-            is not regulating.
-            '''
-        
         })
     '''
     Specifies the regulation status of the equipment. True is regulating,
@@ -25657,14 +21019,11 @@ class TapChanger(PowerSystemResource):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            '''
-        
         })
     '''
     '''
@@ -25673,18 +21032,11 @@ class TapChanger(PowerSystemResource):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Built-in current transformer ratio. If a value is specified, then RegulatingControl.targetValue
-            (and RegulatingControl.targetDeadband, RegulatingControl.maxAllowedTargetValue
-            and RegulatingControl.minAllowedTargetValue) are expressed in secondary
-            units.
-            '''
-        
         })
     '''
     Built-in current transformer ratio. If a value is specified, then RegulatingControl.targetValue
@@ -25697,16 +21049,11 @@ class TapChanger(PowerSystemResource):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Highest possible tap step position, advance from neutral.
-            The attribute shall be greater than lowStep.
-            '''
-        
         })
     '''
     Highest possible tap step position, advance from neutral.
@@ -25717,15 +21064,11 @@ class TapChanger(PowerSystemResource):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Lowest possible tap step position, retard from neutral.
-            '''
-        
         })
     '''
     Lowest possible tap step position, retard from neutral.
@@ -25735,15 +21078,11 @@ class TapChanger(PowerSystemResource):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Specifies whether or not a TapChanger has load tap changing capabilities.
-            '''
-        
         })
     '''
     Specifies whether or not a TapChanger has load tap changing capabilities.
@@ -25753,20 +21092,11 @@ class TapChanger(PowerSystemResource):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            The neutral tap step position for this winding.
-            The attribute shall be equal to or greater than lowStep and equal or less
-            than highStep.
-            It is the step position where the voltage is neutralU when the other terminals
-            of the transformer are at the ratedU. If there are other tap changers on
-            the transformer those taps are kept constant at their neutralStep.
-            '''
-        
         })
     '''
     The neutral tap step position for this winding.
@@ -25782,18 +21112,11 @@ class TapChanger(PowerSystemResource):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            The tap step position used in "normal" network operation for this winding.
-            For a "Fixed" tap changer indicates the current physical tap setting.
-            The attribute shall be equal to or greater than lowStep and equal to or
-            less than highStep.
-            '''
-        
         })
     '''
     The tap step position used in "normal" network operation for this winding.
@@ -25806,19 +21129,11 @@ class TapChanger(PowerSystemResource):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Built-in potential (voltage) transformer ratio. If a value is specified,
-            then RegulatingControl.targetValue (and RegulatingControl.targetDeadband,
-            RegulatingControl.maxAllowedTargetValue, RegulatingControl.minAllowedTargetValue
-            as well as TapChangerControl.maxLimitVoltage and TapChangerControl.minLimitVoltage)
-            are expressed in secondary units.
-            '''
-        
         })
     '''
     Built-in potential (voltage) transformer ratio. If a value is specified,
@@ -25832,22 +21147,11 @@ class TapChanger(PowerSystemResource):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Tap changer position.
-            Starting step for a steady state solution. Non integer values are allowed
-            to support continuous tap variables. The reasons for continuous value are
-            to support study cases where no discrete tap changer has yet been designed,
-            a solution where a narrow voltage band forces the tap step to oscillate
-            or to accommodate for a continuous solution as input.
-            The attribute shall be equal to or greater than lowStep and equal to or
-            less than highStep.
-            '''
-        
         })
     '''
     Tap changer position.
@@ -25864,15 +21168,11 @@ class TapChanger(PowerSystemResource):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            For an LTC, the delay for initial tap changer operation (first step change).
-            '''
-        
         })
     '''
     For an LTC, the delay for initial tap changer operation (first step
@@ -25883,23 +21183,11 @@ class TapChanger(PowerSystemResource):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Voltage at which the winding operates at the neutral tap setting. It is
-            the voltage at the terminal of the PowerTransformerEnd associated with
-            the tap changer when all tap changers on the transformer are at their neutralStep
-            position. Normally neutralU of the tap changer is the same as ratedU of
-            the PowerTransformerEnd, but it can differ in special cases such as when
-            the tapping mechanism is separate from the winding more common on lower
-            voltage transformers.
-            This attribute is not relevant for PhaseTapChangerAsymmetrical, PhaseTapChangerSymmetrical
-            and PhaseTapChangerLinear.
-            '''
-        
         })
     '''
     Voltage at which the winding operates at the neutral tap setting. It
@@ -25916,15 +21204,12 @@ class TapChanger(PowerSystemResource):
     ptPhase: Optional[ PhaseCode ] = field(
         default=None,
         metadata={
-        'type': 'enumeration Attribute',
+        'type': 'Attribute',
+        'stereotypes': ['enumeration', 'Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            '''
-        
         })
     '''
     '''
@@ -25933,16 +21218,11 @@ class TapChanger(PowerSystemResource):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            For an LTC, the delay for subsequent tap changer operation (second and
-            later step changes).
-            '''
-        
         })
     '''
     For an LTC, the delay for subsequent tap changer operation (second
@@ -25952,17 +21232,13 @@ class TapChanger(PowerSystemResource):
     SvTapStep: Optional[SvTapStep] = field(
         default=None,
         metadata={
-        'type': 'Attribute',
+        'type': 'Association',
+        'stereotypes': [],
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'SvTapStep.TapChanger',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            The tap step state associated with the tap changer.
-            '''
-        
         })
     '''
     The tap step state associated with the tap changer.
@@ -25971,17 +21247,13 @@ class TapChanger(PowerSystemResource):
     TapChangeController: Optional[TapChangerController] = field(
         default=None,
         metadata={
-        'type': 'Attribute',
+        'type': 'Association',
+        'stereotypes': [],
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'TapChangerController.TapChanger',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            The tap changer controller that controls this TapChanger.
-            '''
-        
         })
     '''
     The tap changer controller that controls this TapChanger.
@@ -25990,17 +21262,13 @@ class TapChanger(PowerSystemResource):
     TapChangerControl: Optional[TapChangerControl] = field(
         default=None,
         metadata={
-        'type': 'Attribute',
+        'type': 'Association',
+        'stereotypes': [],
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'TapChangerControl.TapChanger',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            The regulating control scheme in which this tap changer participates.
-            '''
-        
         })
     '''
     The regulating control scheme in which this tap changer participates.
@@ -26010,16 +21278,12 @@ class TapChanger(PowerSystemResource):
         default_factory=list,
         metadata={
         'type': 'Association',
+        'stereotypes': [],
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'StepOperationalLimitTable.TapChanger',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': False,
-        'docstring':
-            '''
-            The step operational limit table for this tap changer.
-            '''
-        
         })
     '''
     The step operational limit table for this tap changer.
@@ -26029,16 +21293,12 @@ class TapChanger(PowerSystemResource):
         default=None,
         metadata={
         'type': 'Association',
+        'stereotypes': [],
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'SvTapStep.TapChanger',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': False,
-        'docstring':
-            '''
-            The tap step state associated with the tap changer.
-            '''
-        
         })
     '''
     The tap step state associated with the tap changer.
@@ -26048,16 +21308,12 @@ class TapChanger(PowerSystemResource):
         default_factory=list,
         metadata={
         'type': 'Association',
+        'stereotypes': [],
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'TapSchedule.TapChanger',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': False,
-        'docstring':
-            '''
-            A TapChanger can have TapSchedules.
-            '''
-        
         })
     '''
     A TapChanger can have TapSchedules.
@@ -26089,17 +21345,13 @@ class ImpedanceTapChangerTabular(TapChanger):
     ImpedanceTapChangerTable: Optional[ImpedanceTapChangerTable] = field(
         default=None,
         metadata={
-        'type': 'Attribute',
+        'type': 'Association',
+        'stereotypes': [],
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'ImpedanceTapChangerTable.ImpedanceTapChangerTabular',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            The impedance tap changer table for this impedance tap changer.
-            '''
-        
         })
     '''
     The impedance tap changer table for this impedance tap changer.
@@ -26132,17 +21384,13 @@ class PhaseTapChanger(TapChanger):
     TransformerEnd: Optional[TransformerEnd] = field(
         default=None,
         metadata={
-        'type': 'Attribute',
+        'type': 'Association',
+        'stereotypes': [],
         'minOccurs': '1',
         'maxOccurs': '1',
         'inverse': 'TransformerEnd.PhaseTapChanger',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Transformer end to which this phase tap changer belongs.
-            '''
-        
         })
     '''
     Transformer end to which this phase tap changer belongs.
@@ -26152,16 +21400,12 @@ class PhaseTapChanger(TapChanger):
         default=None,
         metadata={
         'type': 'Association',
+        'stereotypes': [],
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'TransformerEnd.PhaseTapChanger',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': False,
-        'docstring':
-            '''
-            Transformer end to which this phase tap changer belongs.
-            '''
-        
         })
     '''
     Transformer end to which this phase tap changer belongs.
@@ -26194,20 +21438,11 @@ class PhaseTapChangerLinear(PhaseTapChanger):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Phase shift per step position. A positive value indicates a positive angle
-            variation from the Terminal at the PowerTransformerEnd, where the TapChanger
-            is located, into the transformer.
-            The actual phase shift increment might be more accurately computed from
-            the symmetrical or asymmetrical models or a tap step table lookup if those
-            are available.
-            '''
-        
         })
     '''
     Phase shift per step position. A positive value indicates a positive
@@ -26222,18 +21457,11 @@ class PhaseTapChangerLinear(PhaseTapChanger):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            The reactance depends on the tap position according to a "u" shaped curve.
-            The maximum reactance (xMax) appears at the low and high tap positions.
-            Depending on the "u" curve the attribute can be either higher or lower
-            than PowerTransformerEnd.x.
-            '''
-        
         })
     '''
     The reactance depends on the tap position according to a "u" shaped
@@ -26268,21 +21496,11 @@ class PhaseTapChangerNonLinear(PhaseTapChanger):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            The voltage step increment on the out of phase winding (the PowerTransformerEnd
-            where the TapChanger is located) specified in percent of rated voltage
-            of the PowerTransformerEnd. A positive value means a positive voltage variation
-            from the Terminal at the PowerTransformerEnd, where the TapChanger is located,
-            into the transformer.
-            When the increment is negative, the voltage decreases when the tap step
-            increases.
-            '''
-        
         })
     '''
     The voltage step increment on the out of phase winding (the PowerTransformerEnd
@@ -26298,18 +21516,11 @@ class PhaseTapChangerNonLinear(PhaseTapChanger):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            The reactance depends on the tap position according to a "u" shaped curve.
-            The maximum reactance (xMax) appears at the low and high tap positions.
-            Depending on the "u" curve the attribute can be either higher or lower
-            than PowerTransformerEnd.x.
-            '''
-        
         })
     '''
     The reactance depends on the tap position according to a "u" shaped
@@ -26365,26 +21576,11 @@ class ConnectionAngleTapChanger(PhaseTapChangerNonLinear):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            The supported winding connection angle range is defined by the maximum
-            winding connection angle and the minimum winding connection angle. The
-            connection angle step size is used to define the allowed winding connection
-            angles for the tap changer. The attribute shall be a positive value and
-            can only be multiples of 30 degrees. For example, if the tap changer has
-            maximum winding connection angle equal to 60 degrees, minimum winding connection
-            angle equal to -60 degrees and the connection angle step size is equal
-            to 60, the allowed winding connection angle that can be used for this tap
-            changer are -60 degrees, 0 degrees and -60 degrees. When using connection
-            angle tap changer table there is no need to provide information on winding
-            connection angle range and connection angle step size as the allowed winding
-            connection angles are defined by the table.
-            '''
-        
         })
     '''
     The supported winding connection angle range is defined by the maximum
@@ -26406,23 +21602,11 @@ class ConnectionAngleTapChanger(PhaseTapChangerNonLinear):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            The maximum phase angle between the in-phase winding and the out-of -phase
-            winding used for creating phase shift. The attribute can be positive, negative
-            or zero and can only be multiples of 30 degrees. When 0 degree is used
-            the asymmetrical phase tap changer acts as ratio tap changer controlling
-            voltage. The maximum winding connection angle shall be greater than the
-            minimum winding connection angle. When using connection angle tap changer
-            table there is no need to provide information on winding connection angle
-            range and connection angle step size as the allowed winding connection
-            angles are defined by the table.
-            '''
-        
         })
     '''
     The maximum phase angle between the in-phase winding and the out-of
@@ -26440,22 +21624,11 @@ class ConnectionAngleTapChanger(PhaseTapChangerNonLinear):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            The minimum phase angle between the in-phase winding and the out-of -phase
-            winding used for creating phase shift. The attribute can be positive, negative
-            or zero and can only be multiples of 30 degrees. When 0 degree is used
-            the asymmetrical phase tap changer acts as ratio tap changer controlling
-            voltage. When using connection angle tap changer table there is no need
-            to provide information on winding connection angle range and connection
-            angle step size as the allowed winding connection angles are defined by
-            the table.
-            '''
-        
         })
     '''
     The minimum phase angle between the in-phase winding and the out-of
@@ -26472,21 +21645,11 @@ class ConnectionAngleTapChanger(PhaseTapChangerNonLinear):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            The normal phase angle between the in-phase winding and the out-of -phase
-            winding used for creating phase shift. The out-of-phase winding produces
-            what is known as the difference voltage. Setting this angle to 90 degrees
-            is not the same as a symmetrical transformer. In this scenario you will
-            still treat the 90-degree angle as a phase shifting transformer. The attribute
-            can only be multiples of 30 degrees. When 0 degree is used the asymmetrical
-            phase tap changer acts as ratio tap changer controlling voltage.
-            '''
-        
         })
     '''
     The normal phase angle between the in-phase winding and the out-of
@@ -26503,21 +21666,11 @@ class ConnectionAngleTapChanger(PhaseTapChangerNonLinear):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            The operating phase angle between the in-phase winding and the out-of -phase
-            winding used for creating phase shift. The out-of-phase winding produces
-            what is known as the difference voltage. Setting this angle to 90 degrees
-            is not the same as a symmetrical transformer. In this scenario you will
-            still treat the 90-degree angle as a phase shifting transformer. The attribute
-            can only be multiples of 30 degrees. When 0 degree is used the asymmetrical
-            phase tap changer acts as ratio tap changer controlling voltage.
-            '''
-        
         })
     '''
     The operating phase angle between the in-phase winding and the out-of
@@ -26534,17 +21687,12 @@ class ConnectionAngleTapChanger(PhaseTapChangerNonLinear):
         default_factory=list,
         metadata={
         'type': 'Association',
+        'stereotypes': [],
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'ConnectionAngleTapChangerTable.ConnectionAngleTapChanger',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': False,
-        'docstring':
-            '''
-            The connection angle tap changer table that is applied to this connection
-            angle tap changer.
-            '''
-        
         })
     '''
     The connection angle tap changer table that is applied to this connection
@@ -26579,20 +21727,11 @@ class PhaseTapChangerAsymmetrical(PhaseTapChangerNonLinear):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            The phase angle between the in-phase winding and the out-of -phase winding
-            used for creating phase shift. The out-of-phase winding produces what is
-            known as the difference voltage. Setting this angle to 90 degrees is not
-            the same as a symmetrical transformer. The attribute can only be multiples
-            of 30 degrees. The allowed range is -150 degrees to 150 degrees excluding
-            0.
-            '''
-        
         })
     '''
     The phase angle between the in-phase winding and the out-of -phase
@@ -26650,17 +21789,13 @@ class PhaseTapChangerTabular(PhaseTapChanger):
     PhaseTapChangerTable: Optional[PhaseTapChangerTable] = field(
         default=None,
         metadata={
-        'type': 'Attribute',
+        'type': 'Association',
+        'stereotypes': [],
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'PhaseTapChangerTable.PhaseTapChangerTabular',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            The phase tap changer table for this phase tap changer.
-            '''
-        
         })
     '''
     The phase tap changer table for this phase tap changer.
@@ -26695,18 +21830,11 @@ class RatioTapChanger(TapChanger):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Tap step increment, in per cent of rated voltage of the power transformer
-            end, per step position.
-            When the increment is negative, the voltage decreases when the tap step
-            increases.
-            '''
-        
         })
     '''
     Tap step increment, in per cent of rated voltage of the power transformer
@@ -26718,17 +21846,13 @@ class RatioTapChanger(TapChanger):
     RatioTapChangerTable: Optional[RatioTapChangerTable] = field(
         default=None,
         metadata={
-        'type': 'Attribute',
+        'type': 'Association',
+        'stereotypes': [],
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'RatioTapChangerTable.RatioTapChanger',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            The tap ratio table for this ratio tap changer.
-            '''
-        
         })
     '''
     The tap ratio table for this ratio tap changer.
@@ -26737,17 +21861,13 @@ class RatioTapChanger(TapChanger):
     TransformerEnd: Optional[TransformerEnd] = field(
         default=None,
         metadata={
-        'type': 'Attribute',
+        'type': 'Association',
+        'stereotypes': [],
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'TransformerEnd.AdditionalRatioTapChanger',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Transformer end to which this ratio tap changer belongs.
-            '''
-        
         })
     '''
     Transformer end to which this ratio tap changer belongs.
@@ -26757,16 +21877,12 @@ class RatioTapChanger(TapChanger):
         default=None,
         metadata={
         'type': 'Association',
+        'stereotypes': [],
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'TransformerEnd.AdditionalRatioTapChanger',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': False,
-        'docstring':
-            '''
-            Transformer end to which this ratio tap changer belongs.
-            '''
-        
         })
     '''
     Transformer end to which this ratio tap changer belongs.
@@ -26776,16 +21892,12 @@ class RatioTapChanger(TapChanger):
         default=None,
         metadata={
         'type': 'Association',
+        'stereotypes': [],
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'TransformerEnd.RatioTapChanger',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': False,
-        'docstring':
-            '''
-            Transformer end to which this ratio tap changer belongs.
-            '''
-        
         })
     '''
     Transformer end to which this ratio tap changer belongs.
@@ -26816,16 +21928,12 @@ class TieCorridor(PowerSystemResource):
         default_factory=list,
         metadata={
         'type': 'Association',
+        'stereotypes': [],
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'TieFlow.TieCorridor',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': False,
-        'docstring':
-            '''
-            Tie flow which belongs to the tie corridor.
-            '''
-        
         })
     '''
     Tie flow which belongs to the tie corridor.
@@ -26855,16 +21963,12 @@ class ACTieCorridor(TieCorridor):
         default_factory=list,
         metadata={
         'type': 'Association',
+        'stereotypes': [],
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'Line.ACTieCorridor',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': False,
-        'docstring':
-            '''
-            Line that is part of the ACTieCorridor.
-            '''
-        
         })
     '''
     Line that is part of the ACTieCorridor.
@@ -26896,17 +22000,13 @@ class VoltageControlZone(PowerSystemResource):
     BusbarSection: Optional[BusbarSection] = field(
         default=None,
         metadata={
-        'type': 'Attribute',
+        'type': 'Association',
+        'stereotypes': [],
         'minOccurs': '1',
         'maxOccurs': '1',
         'inverse': 'BusbarSection.VoltageControlZone',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            A VoltageControlZone is controlled by a designated BusbarSection.
-            '''
-        
         })
     '''
     A VoltageControlZone is controlled by a designated BusbarSection.
@@ -26915,17 +22015,13 @@ class VoltageControlZone(PowerSystemResource):
     RegulationSchedule: Optional[RegulationSchedule] = field(
         default=None,
         metadata={
-        'type': 'Attribute',
+        'type': 'Association',
+        'stereotypes': [],
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'RegulationSchedule.VoltageControlZones',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            A VoltageControlZone may have a voltage regulation schedule.
-            '''
-        
         })
     '''
     A VoltageControlZone may have a voltage regulation schedule.
@@ -26935,16 +22031,12 @@ class VoltageControlZone(PowerSystemResource):
         default=None,
         metadata={
         'type': 'Association',
+        'stereotypes': [],
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'BusbarSection.VoltageControlZone',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': False,
-        'docstring':
-            '''
-            A VoltageControlZone is controlled by a designated BusbarSection.
-            '''
-        
         })
     '''
     A VoltageControlZone is controlled by a designated BusbarSection.
@@ -26974,17 +22066,13 @@ class WindPowerPlant(PowerSystemResource):
     WindGeneratingUnits: list[WindGeneratingUnit] = field(
         default_factory=list,
         metadata={
-        'type': 'European',
+        'type': 'Association',
+        'stereotypes': ['European'],
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'WindGeneratingUnit.WindPowerPlant',
         'namespace': 'http://iec.ch/TC57/CIM100-European#',
         'serialize': False,
-        'docstring':
-            '''
-            A wind generating unit or units may be a member of a wind power plant.
-            '''
-        
         })
     '''
     A wind generating unit or units may be a member of a wind power plant.
@@ -27014,16 +22102,11 @@ class WireSegmentPhase(PowerSystemResource):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Number designation for this wire segment phase. Each wire segment phase
-            within a wire segment should have a unique sequence number.
-            '''
-        
         })
     '''
     Number designation for this wire segment phase. Each wire segment phase
@@ -27033,16 +22116,12 @@ class WireSegmentPhase(PowerSystemResource):
     phase: Optional[ SinglePhaseKind ] = field(
         default=None,
         metadata={
-        'type': 'enumeration Attribute',
+        'type': 'Attribute',
+        'stereotypes': ['enumeration', 'Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            The phase connection of the wire at both ends.
-            '''
-        
         })
     '''
     The phase connection of the wire at both ends.
@@ -27051,17 +22130,13 @@ class WireSegmentPhase(PowerSystemResource):
     WireSegment: Optional[WireSegment] = field(
         default=None,
         metadata={
-        'type': 'Attribute',
+        'type': 'Association',
+        'stereotypes': [],
         'minOccurs': '1',
         'maxOccurs': '1',
         'inverse': 'WireSegment.WireSegmentPhases',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            The wire segment to which the phase belongs.
-            '''
-        
         })
     '''
     The wire segment to which the phase belongs.
@@ -27090,16 +22165,12 @@ class ProductAssetModel(IdentifiedObject):
         default=None,
         metadata={
         'type': 'Association',
+        'stereotypes': [],
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'AssetInfo.ProductAssetModel',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': False,
-        'docstring':
-            '''
-            Asset information (nameplate) for this product asset model.
-            '''
-        
         })
     '''
     Asset information (nameplate) for this product asset model.
@@ -27129,16 +22200,12 @@ class RatioTapChangerTable(IdentifiedObject):
         default_factory=list,
         metadata={
         'type': 'Association',
+        'stereotypes': [],
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'RatioTapChanger.RatioTapChangerTable',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': False,
-        'docstring':
-            '''
-            The ratio tap changer of this tap ratio table.
-            '''
-        
         })
     '''
     The ratio tap changer of this tap ratio table.
@@ -27148,16 +22215,12 @@ class RatioTapChangerTable(IdentifiedObject):
         default_factory=list,
         metadata={
         'type': 'Association',
+        'stereotypes': [],
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'RatioTapChangerTablePoint.RatioTapChangerTable',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': False,
-        'docstring':
-            '''
-            Points of this table.
-            '''
-        
         })
     '''
     Points of this table.
@@ -27187,16 +22250,12 @@ class RemoteSource(IdentifiedObject):
         default=None,
         metadata={
         'type': 'Association',
+        'stereotypes': [],
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'MeasurementValue.RemoteSource',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': False,
-        'docstring':
-            '''
-            Link to the physical telemetered point associated with this measurement.
-            '''
-        
         })
     '''
     Link to the physical telemetered point associated with this measurement.
@@ -27225,16 +22284,12 @@ class ReportingGroup(IdentifiedObject):
         default_factory=list,
         metadata={
         'type': 'Association',
+        'stereotypes': [],
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'BusNameMarker.ReportingGroup',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': False,
-        'docstring':
-            '''
-            The bus name markers that belong to this reporting group.
-            '''
-        
         })
     '''
     The bus name markers that belong to this reporting group.
@@ -27244,16 +22299,12 @@ class ReportingGroup(IdentifiedObject):
         default_factory=list,
         metadata={
         'type': 'Association',
+        'stereotypes': [],
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'TopologicalNode.ReportingGroup',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': False,
-        'docstring':
-            '''
-            The topological nodes that belong to the reporting group.
-            '''
-        
         })
     '''
     The topological nodes that belong to the reporting group.
@@ -27282,15 +22333,11 @@ class Season(IdentifiedObject):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Date season ends.
-            '''
-        
         })
     '''
     Date season ends.
@@ -27300,15 +22347,11 @@ class Season(IdentifiedObject):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Date season starts.
-            '''
-        
         })
     '''
     Date season starts.
@@ -27318,16 +22361,12 @@ class Season(IdentifiedObject):
         default_factory=list,
         metadata={
         'type': 'Association',
+        'stereotypes': [],
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'SeasonDayTypeSchedule.Season',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': False,
-        'docstring':
-            '''
-            Schedules that use this Season.
-            '''
-        
         })
     '''
     Schedules that use this Season.
@@ -27355,15 +22394,12 @@ class ShuntCompensatorAction(IdentifiedObject):
         default=None,
         metadata={
         'type': 'Association',
+        'stereotypes': [],
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'ShuntCompensator.ShuntCompensatorAction',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': False,
-        'docstring':
-            '''
-            '''
-        
         })
     '''
     '''
@@ -27392,16 +22428,12 @@ class ShuntCompensatorDynamics(IdentifiedObject):
         default=None,
         metadata={
         'type': 'Association',
+        'stereotypes': [],
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'ShuntCompensator.ShuntCompensatorDynamics',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': False,
-        'docstring':
-            '''
-            Shunt compensator to which shunt compensator dynamics model applies.
-            '''
-        
         })
     '''
     Shunt compensator to which shunt compensator dynamics model applies.
@@ -27450,17 +22482,13 @@ class StateShortCircuitResult(IdentifiedObject):
     Terminal: Optional[Terminal] = field(
         default=None,
         metadata={
-        'type': 'GB',
+        'type': 'Association',
+        'stereotypes': ['GB'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'Terminal.StateShortCircuitResult',
         'namespace': 'http://GB/placeholder/ext#',
         'serialize': False,
-        'docstring':
-            '''
-            The terminal to which the result is exchanged.
-            '''
-        
         })
     '''
     The terminal to which the result is exchanged.
@@ -27469,17 +22497,13 @@ class StateShortCircuitResult(IdentifiedObject):
     TopologicalNode: Optional[TopologicalNode] = field(
         default=None,
         metadata={
-        'type': 'GB',
+        'type': 'Association',
+        'stereotypes': ['GB'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'TopologicalNode.StateShortCircuitResult',
         'namespace': 'http://GB/placeholder/ext#',
         'serialize': False,
-        'docstring':
-            '''
-            The TopologicalNode on which the short-circuit information is reported.
-            '''
-        
         })
     '''
     The TopologicalNode on which the short-circuit information is reported.
@@ -27509,16 +22533,12 @@ class StaticVarCompensatorDynamics(IdentifiedObject):
         default=None,
         metadata={
         'type': 'Association',
+        'stereotypes': [],
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'StaticVarCompensator.StaticVarCompensatorDynamics',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': False,
-        'docstring':
-            '''
-            Static Var Compensator to which Static Var Compensator dynamics model applies.
-            '''
-        
         })
     '''
     Static Var Compensator to which Static Var Compensator dynamics model
@@ -27550,17 +22570,12 @@ class StaticVarCompensatorSystemDynamics(StaticVarCompensatorDynamics):
         default_factory=list,
         metadata={
         'type': 'Association',
+        'stereotypes': [],
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'ShuntCompensator.StaticVarCompensatorSystemDynamics',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': False,
-        'docstring':
-            '''
-            Shunt Compensator to which Static Var Compensator system dynamics model
-            applies.
-            '''
-        
         })
     '''
     Shunt Compensator to which Static Var Compensator system dynamics model
@@ -27613,17 +22628,13 @@ class StepOperationalLimitTable(IdentifiedObject):
     TapChanger: Optional[TapChanger] = field(
         default=None,
         metadata={
-        'type': 'ShadowExtension',
+        'type': 'Association',
+        'stereotypes': ['ShadowExtension'],
         'minOccurs': '1',
         'maxOccurs': '1',
         'inverse': 'TapChanger.StepOperationalLimitTable',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            The tap changer that has a step operational limit table.
-            '''
-        
         })
     '''
     The tap changer that has a step operational limit table.
@@ -27633,16 +22644,12 @@ class StepOperationalLimitTable(IdentifiedObject):
         default_factory=list,
         metadata={
         'type': 'Association',
+        'stereotypes': [],
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'OperationalLimit.StepOperationalLimitTable',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': False,
-        'docstring':
-            '''
-            The operational limit for this table.
-            '''
-        
         })
     '''
     The operational limit for this table.
@@ -27652,16 +22659,12 @@ class StepOperationalLimitTable(IdentifiedObject):
         default_factory=list,
         metadata={
         'type': 'Association',
+        'stereotypes': [],
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'StepLimitTablePoint.StepOperationalLimitTable',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': False,
-        'docstring':
-            '''
-            The points of this table.
-            '''
-        
         })
     '''
     The points of this table.
@@ -27690,17 +22693,13 @@ class SubGeographicalRegion(IdentifiedObject):
     Region: Optional[GeographicalRegion] = field(
         default=None,
         metadata={
-        'type': 'OfAggregate',
+        'type': 'Association',
+        'stereotypes': ['OfAggregate'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'GeographicalRegion.Regions',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            The geographical region which this sub-geographical region is within.
-            '''
-        
         })
     '''
     The geographical region which this sub-geographical region is within.
@@ -27709,17 +22708,13 @@ class SubGeographicalRegion(IdentifiedObject):
     Lines: list[Line] = field(
         default_factory=list,
         metadata={
-        'type': 'AggregateOf',
+        'type': 'Association',
+        'stereotypes': ['AggregateOf'],
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'Line.Region',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': False,
-        'docstring':
-            '''
-            The lines within the sub-geographical region.
-            '''
-        
         })
     '''
     The lines within the sub-geographical region.
@@ -27728,17 +22723,13 @@ class SubGeographicalRegion(IdentifiedObject):
     Substations: list[Substation] = field(
         default_factory=list,
         metadata={
-        'type': 'AggregateOf',
+        'type': 'Association',
+        'stereotypes': ['AggregateOf'],
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'Substation.Region',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': False,
-        'docstring':
-            '''
-            The substations in this sub-geographical region.
-            '''
-        
         })
     '''
     The substations in this sub-geographical region.
@@ -27767,16 +22758,12 @@ class SwitchAction(IdentifiedObject):
         default=None,
         metadata={
         'type': 'Association',
+        'stereotypes': [],
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'Switch.SwitchAction',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': False,
-        'docstring':
-            '''
-            Switch that is the object of this switch action.
-            '''
-        
         })
     '''
     Switch that is the object of this switch action.
@@ -27824,16 +22811,12 @@ class SynchronousMachineDynamics(IdentifiedObject):
         default=None,
         metadata={
         'type': 'Association',
+        'stereotypes': [],
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'SynchronousMachine.SynchronousMachineDynamics',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': False,
-        'docstring':
-            '''
-            Synchronous machine to which synchronous machine dynamics model applies.
-            '''
-        
         })
     '''
     Synchronous machine to which synchronous machine dynamics model applies.
@@ -27852,6 +22835,7 @@ class SynchronousMachineDynamics(IdentifiedObject):
     def __maxOccurs__(self):
         return 'unbounded'
     
+@stereotype(CIMStereotype.GridAPPSD)
 @dataclass(repr=False)
 class SynchrophaserFrame(IdentifiedObject):
     '''
@@ -27863,15 +22847,11 @@ class SynchrophaserFrame(IdentifiedObject):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://gridappsd.org/CIM/extension#',
         'serialize': True,
-        'docstring':
-            '''
-            From IEEE c37.118, CRC-CCITT, 16-bit unsigned integer.
-            '''
-        
         })
     '''
     From IEEE c37.118, CRC-CCITT, 16-bit unsigned integer.
@@ -27881,17 +22861,11 @@ class SynchrophaserFrame(IdentifiedObject):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://gridappsd.org/CIM/extension#',
         'serialize': True,
-        'docstring':
-            '''
-            From c37.118, Fraction of second time of measurement for all data frames
-            or time of frame transmission for non-data frames. It is an unsigned 24-bit
-            integer number.
-            '''
-        
         })
     '''
     From c37.118, Fraction of second time of measurement for all data frames
@@ -27903,17 +22877,11 @@ class SynchrophaserFrame(IdentifiedObject):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://gridappsd.org/CIM/extension#',
         'serialize': True,
-        'docstring':
-            '''
-            From IEEEc37.118: Total number of bytes in the transmitted frame, including
-            CHK.
-            16-bit unsigned integer. Range = maximum 65 535.
-            '''
-        
         })
     '''
     From IEEEc37.118: Total number of bytes in the transmitted frame, including
@@ -27925,15 +22893,11 @@ class SynchrophaserFrame(IdentifiedObject):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://gridappsd.org/CIM/extension#',
         'serialize': True,
-        'docstring':
-            '''
-            Unix timestamp, 32-bit integer
-            '''
-        
         })
     '''
     Unix timestamp, 32-bit integer
@@ -27943,18 +22907,11 @@ class SynchrophaserFrame(IdentifiedObject):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://gridappsd.org/CIM/extension#',
         'serialize': True,
-        'docstring':
-            '''
-            From IEEE c37.118: Data stream ID number, 16-bit unsigned integer, assigned
-            by user, 1 to 65534
-            (0 and 65535 are reserved). Identifies destination data stream for commands
-            and source data stream for other messages
-            '''
-        
         })
     '''
     From IEEE c37.118: Data stream ID number, 16-bit unsigned integer,
@@ -27968,15 +22925,11 @@ class SynchrophaserFrame(IdentifiedObject):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://gridappsd.org/CIM/extension#',
         'serialize': True,
-        'docstring':
-            '''
-            Frame synchronization word from IEEE c37.118
-            '''
-        
         })
     '''
     Frame synchronization word from IEEE c37.118
@@ -27986,15 +22939,11 @@ class SynchrophaserFrame(IdentifiedObject):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://gridappsd.org/CIM/extension#',
         'serialize': True,
-        'docstring':
-            '''
-            Leap second information from IEEE c37.118
-            '''
-        
         })
     '''
     Leap second information from IEEE c37.118
@@ -28024,14 +22973,11 @@ class PMUConfigurationFrame(SynchrophaserFrame):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://gridappsd.org/CIM/extension#',
         'serialize': True,
-        'docstring':
-            '''
-            '''
-        
         })
     '''
     '''
@@ -28040,14 +22986,11 @@ class PMUConfigurationFrame(SynchrophaserFrame):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://gridappsd.org/CIM/extension#',
         'serialize': True,
-        'docstring':
-            '''
-            '''
-        
         })
     '''
     '''
@@ -28056,14 +22999,11 @@ class PMUConfigurationFrame(SynchrophaserFrame):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://gridappsd.org/CIM/extension#',
         'serialize': True,
-        'docstring':
-            '''
-            '''
-        
         })
     '''
     '''
@@ -28072,18 +23012,11 @@ class PMUConfigurationFrame(SynchrophaserFrame):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://gridappsd.org/CIM/extension#',
         'serialize': True,
-        'docstring':
-            '''
-            Resolution of FRACSEC time stamp. It shall be an integer multiple of the
-            PMU data transmission rate given by PhasorMeasurementUnit.reportingUnit
-            in Table 18 of IEEE Std. C37.118. It shall also be large enough to support
-            the time resolution required for the discrete event data frames
-            '''
-        
         })
     '''
     Resolution of FRACSEC time stamp. It shall be an integer multiple of
@@ -28095,16 +23028,13 @@ class PMUConfigurationFrame(SynchrophaserFrame):
     PMUConfigurations: list[PMUConfiguration] = field(
         default_factory=list,
         metadata={
-        'type': 'AggregateOf',
+        'type': 'Association',
+        'stereotypes': ['AggregateOf'],
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'PMUConfiguration.PMUConfigurationFrame',
         'namespace': 'http://gridappsd.org/CIM/extension#',
         'serialize': False,
-        'docstring':
-            '''
-            '''
-        
         })
     '''
     '''
@@ -28135,18 +23065,11 @@ class TieFlow(IdentifiedObject):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Specifies the sign of the tie flow associated with a control area. True
-            if positive flow into the terminal (load convention) is also positive flow
-            into the control area. See the description of ControlArea for further explanation
-            of how TieFlow.positiveFlowIn is used.
-            '''
-        
         })
     '''
     Specifies the sign of the tie flow associated with a control area.
@@ -28158,17 +23081,13 @@ class TieFlow(IdentifiedObject):
     ControlArea: Optional[ControlArea] = field(
         default=None,
         metadata={
-        'type': 'ShadowExtension OfAggregate',
+        'type': 'Association',
+        'stereotypes': ['ShadowExtension', 'OfAggregate'],
         'minOccurs': '1',
         'maxOccurs': '1',
         'inverse': 'ControlArea.TieFlow',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            The control area of the tie flows.
-            '''
-        
         })
     '''
     The control area of the tie flows.
@@ -28177,17 +23096,13 @@ class TieFlow(IdentifiedObject):
     Terminal: Optional[Terminal] = field(
         default=None,
         metadata={
-        'type': 'Attribute',
+        'type': 'Association',
+        'stereotypes': [],
         'minOccurs': '1',
         'maxOccurs': '1',
         'inverse': 'Terminal.TieFlow',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            The terminal to which this tie flow belongs.
-            '''
-        
         })
     '''
     The terminal to which this tie flow belongs.
@@ -28196,17 +23111,13 @@ class TieFlow(IdentifiedObject):
     TieCorridor: Optional[TieCorridor] = field(
         default=None,
         metadata={
-        'type': 'ShadowExtension',
+        'type': 'Association',
+        'stereotypes': ['ShadowExtension'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'TieCorridor.TieFlow',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Tie corridor which has the tie flow.
-            '''
-        
         })
     '''
     Tie corridor which has the tie flow.
@@ -28215,18 +23126,13 @@ class TieFlow(IdentifiedObject):
     AltTieMeas: list[AltTieMeas] = field(
         default_factory=list,
         metadata={
-        'type': 'AggregateOf',
+        'type': 'Association',
+        'stereotypes': ['AggregateOf'],
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'AltTieMeas.TieFlow',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': False,
-        'docstring':
-            '''
-            The primary and alternate tie flow measurements associated with the tie
-            flow.
-            '''
-        
         })
     '''
     The primary and alternate tie flow measurements associated with the
@@ -28246,6 +23152,7 @@ class TieFlow(IdentifiedObject):
     def __maxOccurs__(self):
         return 'unbounded'
     
+@stereotype(CIMStereotype.GridAPPSD)
 @dataclass(repr=False)
 class TopologicalArea(IdentifiedObject):
     '''
@@ -28256,16 +23163,12 @@ class TopologicalArea(IdentifiedObject):
     topologyType: Optional[ TopologicalAreaKind ] = field(
         default=None,
         metadata={
-        'type': 'enumeration GridAPPSD Attribute',
+        'type': 'Attribute',
+        'stereotypes': ['enumeration', 'GridAPPSD', 'Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://gridappsd.org/CIM/extension#',
         'serialize': True,
-        'docstring':
-            '''
-            Type of local topology structure (radial vs meshed)
-            '''
-        
         })
     '''
     Type of local topology structure (radial vs meshed)
@@ -28274,16 +23177,13 @@ class TopologicalArea(IdentifiedObject):
     TopologicalIsland: Optional[TopologicalIsland] = field(
         default=None,
         metadata={
-        'type': 'OfAggregate',
+        'type': 'Association',
+        'stereotypes': ['OfAggregate'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'TopologicalIsland.TopologicalAreas',
         'namespace': 'http://gridappsd.org/CIM/extension#',
         'serialize': True,
-        'docstring':
-            '''
-            '''
-        
         })
     '''
     '''
@@ -28301,6 +23201,7 @@ class TopologicalArea(IdentifiedObject):
     def __maxOccurs__(self):
         return 'unbounded'
     
+@stereotype(CIMStereotype.ShadowExtension)
 @stereotype(CIMStereotype.OfAggregate)
 @dataclass(repr=False)
 class TopologicalIsland(IdentifiedObject):
@@ -28316,19 +23217,13 @@ class TopologicalIsland(IdentifiedObject):
     AngleRefTopologicalNode: Optional[TopologicalNode] = field(
         default=None,
         metadata={
-        'type': 'Attribute',
+        'type': 'Association',
+        'stereotypes': [],
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'TopologicalNode.AngleRefTopologicalIsland',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            The angle reference for the island. Normally there is one TopologicalNode
-            that is selected as the angle reference for each island. Other reference
-            schemes exist, so the association is typically optional.
-            '''
-        
         })
     '''
     The angle reference for the island. Normally there is one TopologicalNode
@@ -28339,16 +23234,13 @@ class TopologicalIsland(IdentifiedObject):
     TopologicalAreas: list[TopologicalArea] = field(
         default_factory=list,
         metadata={
-        'type': 'AggregateOf',
+        'type': 'Association',
+        'stereotypes': ['AggregateOf'],
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'TopologicalArea.TopologicalIsland',
         'namespace': 'http://gridappsd.org/CIM/extension#',
         'serialize': False,
-        'docstring':
-            '''
-            '''
-        
         })
     '''
     '''
@@ -28357,18 +23249,12 @@ class TopologicalIsland(IdentifiedObject):
         default=None,
         metadata={
         'type': 'Association',
+        'stereotypes': [],
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'TopologicalNode.AngleRefTopologicalIsland',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': False,
-        'docstring':
-            '''
-            The angle reference for the island. Normally there is one TopologicalNode
-            that is selected as the angle reference for each island. Other reference
-            schemes exist, so the association is typically optional.
-            '''
-        
         })
     '''
     The angle reference for the island. Normally there is one TopologicalNode
@@ -28379,17 +23265,13 @@ class TopologicalIsland(IdentifiedObject):
     TopologicalNodes: list[TopologicalNode] = field(
         default_factory=list,
         metadata={
-        'type': 'AggregateOf',
+        'type': 'Association',
+        'stereotypes': ['AggregateOf'],
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'TopologicalNode.TopologicalIsland',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': False,
-        'docstring':
-            '''
-            A topological node belongs to a topological island.
-            '''
-        
         })
     '''
     A topological node belongs to a topological island.
@@ -28427,14 +23309,11 @@ class TopologicalNode(IdentifiedObject):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            '''
-        
         })
     '''
     '''
@@ -28443,14 +23322,11 @@ class TopologicalNode(IdentifiedObject):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            '''
-        
         })
     '''
     '''
@@ -28459,18 +23335,11 @@ class TopologicalNode(IdentifiedObject):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            The active power injected into the bus at this location in addition to
-            injections from equipment. Positive sign means injection into the TopologicalNode
-            (bus).
-            Starting value for a steady state solution.
-            '''
-        
         })
     '''
     The active power injected into the bus at this location in addition
@@ -28483,18 +23352,11 @@ class TopologicalNode(IdentifiedObject):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            The reactive power injected into the bus at this location in addition to
-            injections from equipment. Positive sign means injection into the TopologicalNode
-            (bus).
-            Starting value for a steady state solution.
-            '''
-        
         })
     '''
     The reactive power injected into the bus at this location in addition
@@ -28506,18 +23368,13 @@ class TopologicalNode(IdentifiedObject):
     AngleRefTopologicalIsland: Optional[TopologicalIsland] = field(
         default=None,
         metadata={
-        'type': 'Attribute',
+        'type': 'Association',
+        'stereotypes': [],
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'TopologicalIsland.AngleRefTopologicalNode',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            The island for which the node is an angle reference. Normally there is
-            one angle reference node for each island.
-            '''
-        
         })
     '''
     The island for which the node is an angle reference. Normally there
@@ -28527,17 +23384,13 @@ class TopologicalNode(IdentifiedObject):
     BaseVoltage: Optional[BaseVoltage] = field(
         default=None,
         metadata={
-        'type': 'Attribute',
+        'type': 'Association',
+        'stereotypes': [],
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'BaseVoltage.TopologicalNode',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            The base voltage of the topological node.
-            '''
-        
         })
     '''
     The base voltage of the topological node.
@@ -28546,17 +23399,13 @@ class TopologicalNode(IdentifiedObject):
     ConnectivityNodeContainer: Optional[ConnectivityNodeContainer] = field(
         default=None,
         metadata={
-        'type': 'ShadowExtension',
+        'type': 'Association',
+        'stereotypes': ['ShadowExtension'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'ConnectivityNodeContainer.TopologicalNode',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            The connectivity node container to which the topological node belongs.
-            '''
-        
         })
     '''
     The connectivity node container to which the topological node belongs.
@@ -28565,17 +23414,13 @@ class TopologicalNode(IdentifiedObject):
     ReportingGroup: Optional[ReportingGroup] = field(
         default=None,
         metadata={
-        'type': 'Attribute',
+        'type': 'Association',
+        'stereotypes': [],
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'ReportingGroup.TopologicalNode',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            The reporting group to which the topological node belongs.
-            '''
-        
         })
     '''
     The reporting group to which the topological node belongs.
@@ -28584,17 +23429,13 @@ class TopologicalNode(IdentifiedObject):
     StateShortCircuitResult: Optional[StateShortCircuitResult] = field(
         default=None,
         metadata={
-        'type': 'GB',
+        'type': 'Association',
+        'stereotypes': ['GB'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'StateShortCircuitResult.TopologicalNode',
         'namespace': 'http://GB/placeholder/ext#',
         'serialize': True,
-        'docstring':
-            '''
-            The short-circuit information reported for the TopologicalNode.
-            '''
-        
         })
     '''
     The short-circuit information reported for the TopologicalNode.
@@ -28603,17 +23444,13 @@ class TopologicalNode(IdentifiedObject):
     TopologicalIsland: Optional[TopologicalIsland] = field(
         default=None,
         metadata={
-        'type': 'OfAggregate',
+        'type': 'Association',
+        'stereotypes': ['OfAggregate'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'TopologicalIsland.TopologicalNodes',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            A topological node belongs to a topological island.
-            '''
-        
         })
     '''
     A topological node belongs to a topological island.
@@ -28623,16 +23460,12 @@ class TopologicalNode(IdentifiedObject):
         default_factory=list,
         metadata={
         'type': 'Association',
+        'stereotypes': [],
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'BusNameMarker.TopologicalNode',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': False,
-        'docstring':
-            '''
-            BusnameMarkers that may refer to a pre defined TopologicalNode.
-            '''
-        
         })
     '''
     BusnameMarkers that may refer to a pre defined TopologicalNode.
@@ -28641,18 +23474,13 @@ class TopologicalNode(IdentifiedObject):
     ConnectivityNodes: list[ConnectivityNode] = field(
         default_factory=list,
         metadata={
-        'type': 'AggregateOf',
+        'type': 'Association',
+        'stereotypes': ['AggregateOf'],
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'ConnectivityNode.TopologicalNode',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': False,
-        'docstring':
-            '''
-            The connectivity nodes combine together to form this topological node.
-            May depend on the current state of switches in the network.
-            '''
-        
         })
     '''
     The connectivity nodes combine together to form this topological node.
@@ -28663,16 +23491,12 @@ class TopologicalNode(IdentifiedObject):
         default_factory=list,
         metadata={
         'type': 'Association',
+        'stereotypes': [],
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'SvInjection.TopologicalNode',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': False,
-        'docstring':
-            '''
-            The injection flows state variables associated with the topological node.
-            '''
-        
         })
     '''
     The injection flows state variables associated with the topological
@@ -28683,16 +23507,12 @@ class TopologicalNode(IdentifiedObject):
         default_factory=list,
         metadata={
         'type': 'Association',
+        'stereotypes': [],
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'SvVoltage.TopologicalNode',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': False,
-        'docstring':
-            '''
-            The state voltage associated with the topological node.
-            '''
-        
         })
     '''
     The state voltage associated with the topological node.
@@ -28701,21 +23521,13 @@ class TopologicalNode(IdentifiedObject):
     Terminal: list[Terminal] = field(
         default_factory=list,
         metadata={
-        'type': 'AggregateOf',
+        'type': 'Association',
+        'stereotypes': ['AggregateOf'],
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'Terminal.TopologicalNode',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': False,
-        'docstring':
-            '''
-            The terminals associated with the topological node. This can be used as
-            an alternative to the connectivity node path to terminal, thus making it
-            unnecessary to model connectivity nodes in some cases. Note that if connectivity
-            nodes are in the model, this association would probably not be used as
-            an input specification.
-            '''
-        
         })
     '''
     The terminals associated with the topological node. This can be used
@@ -28729,17 +23541,12 @@ class TopologicalNode(IdentifiedObject):
         default=None,
         metadata={
         'type': 'Association',
+        'stereotypes': [],
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'TopologicalIsland.AngleRefTopologicalNode',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': False,
-        'docstring':
-            '''
-            The island for which the node is an angle reference. Normally there is
-            one angle reference node for each island.
-            '''
-        
         })
     '''
     The island for which the node is an angle reference. Normally there
@@ -28770,15 +23577,11 @@ class TransformerCoreAdmittance(IdentifiedObject):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Magnetizing branch susceptance (B mag). The value can be positive or negative.
-            '''
-        
         })
     '''
     Magnetizing branch susceptance (B mag). The value can be positive or
@@ -28789,15 +23592,11 @@ class TransformerCoreAdmittance(IdentifiedObject):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Zero sequence magnetizing branch susceptance.
-            '''
-        
         })
     '''
     Zero sequence magnetizing branch susceptance.
@@ -28807,15 +23606,11 @@ class TransformerCoreAdmittance(IdentifiedObject):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Magnetizing branch conductance (G mag).
-            '''
-        
         })
     '''
     Magnetizing branch conductance (G mag).
@@ -28825,15 +23620,11 @@ class TransformerCoreAdmittance(IdentifiedObject):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Zero sequence magnetizing branch conductance.
-            '''
-        
         })
     '''
     Zero sequence magnetizing branch conductance.
@@ -28842,17 +23633,13 @@ class TransformerCoreAdmittance(IdentifiedObject):
     TransformerEndInfo: Optional[TransformerEndInfo] = field(
         default=None,
         metadata={
-        'type': 'Attribute',
+        'type': 'Association',
+        'stereotypes': [],
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'TransformerEndInfo.CoreAdmittance',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Transformer end datasheet used to calculate this core admittance.
-            '''
-        
         })
     '''
     Transformer end datasheet used to calculate this core admittance.
@@ -28862,16 +23649,12 @@ class TransformerCoreAdmittance(IdentifiedObject):
         default_factory=list,
         metadata={
         'type': 'Association',
+        'stereotypes': [],
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'TransformerEnd.CoreAdmittance',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': False,
-        'docstring':
-            '''
-            All transformer ends having this core admittance.
-            '''
-        
         })
     '''
     All transformer ends having this core admittance.
@@ -28881,16 +23664,12 @@ class TransformerCoreAdmittance(IdentifiedObject):
         default=None,
         metadata={
         'type': 'Association',
+        'stereotypes': [],
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'TransformerEndInfo.CoreAdmittance',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': False,
-        'docstring':
-            '''
-            Transformer end datasheet used to calculate this core admittance.
-            '''
-        
         })
     '''
     Transformer end datasheet used to calculate this core admittance.
@@ -28922,19 +23701,11 @@ class TransformerEnd(IdentifiedObject):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Number for this transformer end, corresponding to the end's order in the
-            power transformer vector group or phase angle clock number. Highest voltage
-            winding should be 1. Each end within a power transformer should have a
-            unique subsequent end number. Note the transformer end number need not
-            match the terminal sequence number.
-            '''
-        
         })
     '''
     Number for this transformer end, corresponding to the end's order in
@@ -28948,18 +23719,11 @@ class TransformerEnd(IdentifiedObject):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Used only for Yn and Zn connections indicated by PowerTransformerEnd.connectionKind.
-            If true, the neutral is grounded and attributes TransformerEnd.rground
-            and TransformerEnd.xground are required. If false, the attributes TransformerEnd.rground
-            and TransformerEnd.xground are not considered.
-            '''
-        
         })
     '''
     Used only for Yn and Zn connections indicated by PowerTransformerEnd.connectionKind.
@@ -28972,15 +23736,11 @@ class TransformerEnd(IdentifiedObject):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Core shunt magnetizing susceptance in the saturation region.
-            '''
-        
         })
     '''
     Core shunt magnetizing susceptance in the saturation region.
@@ -28990,16 +23750,11 @@ class TransformerEnd(IdentifiedObject):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            The reference voltage at which the magnetizing saturation measurements
-            were made.
-            '''
-        
         })
     '''
     The reference voltage at which the magnetizing saturation measurements
@@ -29010,15 +23765,11 @@ class TransformerEnd(IdentifiedObject):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Core magnetizing saturation curve knee flux level.
-            '''
-        
         })
     '''
     Core magnetizing saturation curve knee flux level.
@@ -29028,16 +23779,11 @@ class TransformerEnd(IdentifiedObject):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Resistance part of neutral impedance. Zero indicates solidly grounded or
-            grounded through a reactor.
-            '''
-        
         })
     '''
     Resistance part of neutral impedance. Zero indicates solidly grounded
@@ -29048,16 +23794,11 @@ class TransformerEnd(IdentifiedObject):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Reactance part of neutral impedance. Zero indicates solidly grounded or
-            grounded through a reactor.
-            '''
-        
         })
     '''
     Reactance part of neutral impedance. Zero indicates solidly grounded
@@ -29067,17 +23808,13 @@ class TransformerEnd(IdentifiedObject):
     AdditionalRatioTapChanger: Optional[RatioTapChanger] = field(
         default=None,
         metadata={
-        'type': 'gmdm ShadowExtension',
+        'type': 'Association',
+        'stereotypes': ['gmdm', 'ShadowExtension'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'RatioTapChanger.TransformerEnd',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            An additional ratio tap changer for this transformer end.
-            '''
-        
         })
     '''
     An additional ratio tap changer for this transformer end.
@@ -29086,17 +23823,13 @@ class TransformerEnd(IdentifiedObject):
     BaseVoltage: Optional[BaseVoltage] = field(
         default=None,
         metadata={
-        'type': 'Attribute',
+        'type': 'Association',
+        'stereotypes': [],
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'BaseVoltage.TransformerEnds',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Base voltage of the transformer end. This is essential for PU calculation.
-            '''
-        
         })
     '''
     Base voltage of the transformer end. This is essential for PU calculation.
@@ -29105,19 +23838,13 @@ class TransformerEnd(IdentifiedObject):
     CoreAdmittance: Optional[TransformerCoreAdmittance] = field(
         default=None,
         metadata={
-        'type': 'Attribute',
+        'type': 'Association',
+        'stereotypes': [],
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'TransformerCoreAdmittance.TransformerEnd',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Core admittance of this transformer end, representing magnetising current
-            and core losses. The full values of the transformer should be supplied
-            for one transformer end only.
-            '''
-        
         })
     '''
     Core admittance of this transformer end, representing magnetising current
@@ -29128,17 +23855,13 @@ class TransformerEnd(IdentifiedObject):
     PhaseTapChanger: Optional[PhaseTapChanger] = field(
         default=None,
         metadata={
-        'type': 'gmdm ShadowExtension',
+        'type': 'Association',
+        'stereotypes': ['gmdm', 'ShadowExtension'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'PhaseTapChanger.TransformerEnd',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Phase tap changer associated with this transformer end.
-            '''
-        
         })
     '''
     Phase tap changer associated with this transformer end.
@@ -29147,17 +23870,13 @@ class TransformerEnd(IdentifiedObject):
     RatioTapChanger: Optional[RatioTapChanger] = field(
         default=None,
         metadata={
-        'type': 'gmdm ShadowExtension',
+        'type': 'Association',
+        'stereotypes': ['gmdm', 'ShadowExtension'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'RatioTapChanger.TransformerEnd',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Ratio tap changer associated with this transformer end.
-            '''
-        
         })
     '''
     Ratio tap changer associated with this transformer end.
@@ -29166,20 +23885,13 @@ class TransformerEnd(IdentifiedObject):
     StarImpedance: Optional[TransformerStarImpedance] = field(
         default=None,
         metadata={
-        'type': 'Attribute',
+        'type': 'Association',
+        'stereotypes': [],
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'TransformerStarImpedance.TransformerEnd',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            (accurate for 2- or 3-winding transformers only) Pi-model impedances of
-            this transformer end. By convention, for a two winding transformer, the
-            full values of the transformer should be entered on the high voltage end
-            (endNumber=1).
-            '''
-        
         })
     '''
     (accurate for 2- or 3-winding transformers only) Pi-model impedances
@@ -29191,17 +23903,13 @@ class TransformerEnd(IdentifiedObject):
     Terminal: Optional[Terminal] = field(
         default=None,
         metadata={
-        'type': 'Attribute',
+        'type': 'Association',
+        'stereotypes': [],
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'Terminal.TransformerEnd',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Terminal of the power transformer to which this transformer end belongs.
-            '''
-        
         })
     '''
     Terminal of the power transformer to which this transformer end belongs.
@@ -29211,16 +23919,12 @@ class TransformerEnd(IdentifiedObject):
         default=None,
         metadata={
         'type': 'Association',
+        'stereotypes': [],
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'PhaseTapChanger.TransformerEnd',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': False,
-        'docstring':
-            '''
-            Phase tap changer associated with this transformer end.
-            '''
-        
         })
     '''
     Phase tap changer associated with this transformer end.
@@ -29230,16 +23934,12 @@ class TransformerEnd(IdentifiedObject):
         default=None,
         metadata={
         'type': 'Association',
+        'stereotypes': [],
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'RatioTapChanger.TransformerEnd',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': False,
-        'docstring':
-            '''
-            An additional ratio tap changer for this transformer end.
-            '''
-        
         })
     '''
     An additional ratio tap changer for this transformer end.
@@ -29249,16 +23949,12 @@ class TransformerEnd(IdentifiedObject):
         default_factory=list,
         metadata={
         'type': 'Association',
+        'stereotypes': [],
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'TransformerMeshImpedance.FromTransformerEnd',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': False,
-        'docstring':
-            '''
-            All mesh impedances between this 'to' and other 'from' transformer ends.
-            '''
-        
         })
     '''
     All mesh impedances between this 'to' and other 'from' transformer
@@ -29269,16 +23965,12 @@ class TransformerEnd(IdentifiedObject):
         default_factory=list,
         metadata={
         'type': 'Association',
+        'stereotypes': [],
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'TransformerMeshImpedance.ToTransformerEnd',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': False,
-        'docstring':
-            '''
-            All mesh impedances between this 'from' and other 'to' transformer ends.
-            '''
-        
         })
     '''
     All mesh impedances between this 'from' and other 'to' transformer
@@ -29331,21 +24023,11 @@ class PowerTransformerEnd(TransformerEnd):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Terminal voltage phase angle displacement where 360 degrees are represented
-            with clock hours. The valid values are 0 to 11. For example, for the secondary
-            side end of a transformer with vector group code of 'Dyn11', specify the
-            connection kind as wye with neutral and specify the phase angle of the
-            clock as 11. The clock value of the transformer end number specified as
-            1, is assumed to be zero. Note the transformer end number is not assumed
-            to be the same as the terminal sequence number.
-            '''
-        
         })
     '''
     Terminal voltage phase angle displacement where 360 degrees are represented
@@ -29361,15 +24043,11 @@ class PowerTransformerEnd(TransformerEnd):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Magnetizing branch susceptance (B mag). The value can be positive or negative.
-            '''
-        
         })
     '''
     Magnetizing branch susceptance (B mag). The value can be positive or
@@ -29380,15 +24058,11 @@ class PowerTransformerEnd(TransformerEnd):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Zero sequence magnetizing branch susceptance.
-            '''
-        
         })
     '''
     Zero sequence magnetizing branch susceptance.
@@ -29397,16 +24071,12 @@ class PowerTransformerEnd(TransformerEnd):
     connectionKind: Optional[ WindingConnection ] = field(
         default=None,
         metadata={
-        'type': 'enumeration Attribute',
+        'type': 'Attribute',
+        'stereotypes': ['enumeration', 'Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Kind of connection.
-            '''
-        
         })
     '''
     Kind of connection.
@@ -29416,15 +24086,11 @@ class PowerTransformerEnd(TransformerEnd):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Magnetizing branch conductance.
-            '''
-        
         })
     '''
     Magnetizing branch conductance.
@@ -29434,15 +24100,11 @@ class PowerTransformerEnd(TransformerEnd):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Zero sequence magnetizing branch conductance (star-model).
-            '''
-        
         })
     '''
     Zero sequence magnetizing branch conductance (star-model).
@@ -29452,17 +24114,11 @@ class PowerTransformerEnd(TransformerEnd):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Resistance (star-model) of the transformer end.
-            The attribute shall be equal to or greater than zero for non-equivalent
-            transformers.
-            '''
-        
         })
     '''
     Resistance (star-model) of the transformer end.
@@ -29474,15 +24130,11 @@ class PowerTransformerEnd(TransformerEnd):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Zero sequence series resistance (star-model) of the transformer end.
-            '''
-        
         })
     '''
     Zero sequence series resistance (star-model) of the transformer end.
@@ -29492,17 +24144,11 @@ class PowerTransformerEnd(TransformerEnd):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Normal apparent power rating.
-            The attribute shall be a positive value. For a two-winding transformer
-            the values for the high and low voltage sides shall be identical.
-            '''
-        
         })
     '''
     Normal apparent power rating.
@@ -29514,19 +24160,11 @@ class PowerTransformerEnd(TransformerEnd):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Rated voltage: phase-phase for three-phase windings, and either phase-phase
-            or phase-neutral for single-phase windings.
-            A high voltage side, as given by TransformerEnd.endNumber, shall have a
-            ratedU that is greater than or equal to ratedU for the lower voltage sides.
-            The attribute shall be a positive value.
-            '''
-        
         })
     '''
     Rated voltage: phase-phase for three-phase windings, and either phase-phase
@@ -29541,15 +24179,11 @@ class PowerTransformerEnd(TransformerEnd):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Positive sequence series reactance (star-model) of the transformer end.
-            '''
-        
         })
     '''
     Positive sequence series reactance (star-model) of the transformer
@@ -29560,15 +24194,11 @@ class PowerTransformerEnd(TransformerEnd):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Zero sequence series reactance of the transformer end.
-            '''
-        
         })
     '''
     Zero sequence series reactance of the transformer end.
@@ -29577,17 +24207,13 @@ class PowerTransformerEnd(TransformerEnd):
     PowerTransformer: Optional[PowerTransformer] = field(
         default=None,
         metadata={
-        'type': 'ShadowExtension',
+        'type': 'Association',
+        'stereotypes': ['ShadowExtension'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'PowerTransformer.PowerTransformerEnd',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            The power transformer of this power transformer end.
-            '''
-        
         })
     '''
     The power transformer of this power transformer end.
@@ -29617,15 +24243,12 @@ class TransformerTankEnd(TransformerEnd):
     orderedPhases: Optional[ OrderedPhaseCodeKind ] = field(
         default=None,
         metadata={
-        'type': 'enumeration GridAPPSD Attribute',
+        'type': 'Attribute',
+        'stereotypes': ['enumeration', 'GridAPPSD', 'Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://gridappsd.org/CIM/extension#',
         'serialize': True,
-        'docstring':
-            '''
-            '''
-        
         })
     '''
     '''
@@ -29633,16 +24256,12 @@ class TransformerTankEnd(TransformerEnd):
     phases: Optional[ PhaseCode ] = field(
         default=None,
         metadata={
-        'type': 'enumeration Attribute',
+        'type': 'Attribute',
+        'stereotypes': ['enumeration', 'Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Describes the phases carried by a conducting equipment.
-            '''
-        
         })
     '''
     Describes the phases carried by a conducting equipment.
@@ -29651,17 +24270,13 @@ class TransformerTankEnd(TransformerEnd):
     TransformerTank: Optional[TransformerTank] = field(
         default=None,
         metadata={
-        'type': 'Attribute',
+        'type': 'Association',
+        'stereotypes': [],
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'TransformerTank.TransformerTankEnds',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Transformer this winding belongs to.
-            '''
-        
         })
     '''
     Transformer this winding belongs to.
@@ -29694,15 +24309,11 @@ class TransformerMeshImpedance(IdentifiedObject):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Resistance between the 'from' and the 'to' end, seen from the 'from' end.
-            '''
-        
         })
     '''
     Resistance between the 'from' and the 'to' end, seen from the 'from'
@@ -29713,16 +24324,11 @@ class TransformerMeshImpedance(IdentifiedObject):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Zero-sequence resistance between the 'from' and the 'to' end, seen from
-            the 'from' end.
-            '''
-        
         })
     '''
     Zero-sequence resistance between the 'from' and the 'to' end, seen
@@ -29733,15 +24339,11 @@ class TransformerMeshImpedance(IdentifiedObject):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Reactance between the 'from' and the 'to' end, seen from the 'from' end.
-            '''
-        
         })
     '''
     Reactance between the 'from' and the 'to' end, seen from the 'from'
@@ -29752,16 +24354,11 @@ class TransformerMeshImpedance(IdentifiedObject):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Zero-sequence reactance between the 'from' and the 'to' end, seen from
-            the 'from' end.
-            '''
-        
         })
     '''
     Zero-sequence reactance between the 'from' and the 'to' end, seen from
@@ -29771,18 +24368,13 @@ class TransformerMeshImpedance(IdentifiedObject):
     FromTransformerEnd: Optional[TransformerEnd] = field(
         default=None,
         metadata={
-        'type': 'Attribute',
+        'type': 'Association',
+        'stereotypes': [],
         'minOccurs': '1',
         'maxOccurs': '1',
         'inverse': 'TransformerEnd.FromMeshImpedance',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            From end this mesh impedance is connected to. It determines the voltage
-            reference.
-            '''
-        
         })
     '''
     From end this mesh impedance is connected to. It determines the voltage
@@ -29792,18 +24384,13 @@ class TransformerMeshImpedance(IdentifiedObject):
     FromTransformerEndInfo: Optional[TransformerEndInfo] = field(
         default=None,
         metadata={
-        'type': 'Attribute',
+        'type': 'Association',
+        'stereotypes': [],
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'TransformerEndInfo.FromMeshImpedances',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            'from' transformer end datasheet this mesh impedance is calculated from.
-            It determines the voltage reference.
-            '''
-        
         })
     '''
     'from' transformer end datasheet this mesh impedance is calculated
@@ -29813,17 +24400,13 @@ class TransformerMeshImpedance(IdentifiedObject):
     ToTransformerEnd: list[TransformerEnd] = field(
         default_factory=list,
         metadata={
-        'type': 'Attribute',
+        'type': 'Association',
+        'stereotypes': [],
         'minOccurs': '1',
         'maxOccurs': 'unbounded',
         'inverse': 'TransformerEnd.ToMeshImpedance',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            All transformer ends this mesh impedance is connected to.
-            '''
-        
         })
     '''
     All transformer ends this mesh impedance is connected to.
@@ -29832,18 +24415,13 @@ class TransformerMeshImpedance(IdentifiedObject):
     ToTransformerEndInfos: list[TransformerEndInfo] = field(
         default_factory=list,
         metadata={
-        'type': 'Attribute',
+        'type': 'Association',
+        'stereotypes': [],
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'TransformerEndInfo.ToMeshImpedances',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            All 'to' transformer end datasheets this mesh impedance for 'from' transformer
-            end is calculated from.
-            '''
-        
         })
     '''
     All 'to' transformer end datasheets this mesh impedance for 'from'
@@ -29877,15 +24455,11 @@ class TransformerStarImpedance(IdentifiedObject):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Resistance of the transformer end.
-            '''
-        
         })
     '''
     Resistance of the transformer end.
@@ -29895,15 +24469,11 @@ class TransformerStarImpedance(IdentifiedObject):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Zero sequence series resistance of the transformer end.
-            '''
-        
         })
     '''
     Zero sequence series resistance of the transformer end.
@@ -29913,15 +24483,11 @@ class TransformerStarImpedance(IdentifiedObject):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Positive sequence series reactance of the transformer end.
-            '''
-        
         })
     '''
     Positive sequence series reactance of the transformer end.
@@ -29931,15 +24497,11 @@ class TransformerStarImpedance(IdentifiedObject):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Zero sequence series reactance of the transformer end.
-            '''
-        
         })
     '''
     Zero sequence series reactance of the transformer end.
@@ -29948,17 +24510,13 @@ class TransformerStarImpedance(IdentifiedObject):
     TransformerEndInfo: Optional[TransformerEndInfo] = field(
         default=None,
         metadata={
-        'type': 'Attribute',
+        'type': 'Association',
+        'stereotypes': [],
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'TransformerEndInfo.TransformerStarImpedance',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Transformer end datasheet used to calculate this transformer star impedance.
-            '''
-        
         })
     '''
     Transformer end datasheet used to calculate this transformer star impedance.
@@ -29968,16 +24526,12 @@ class TransformerStarImpedance(IdentifiedObject):
         default_factory=list,
         metadata={
         'type': 'Association',
+        'stereotypes': [],
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'TransformerEnd.StarImpedance',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': False,
-        'docstring':
-            '''
-            All transformer ends having this star impedance.
-            '''
-        
         })
     '''
     All transformer ends having this star impedance.
@@ -29987,16 +24541,12 @@ class TransformerStarImpedance(IdentifiedObject):
         default=None,
         metadata={
         'type': 'Association',
+        'stereotypes': [],
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'TransformerEndInfo.TransformerStarImpedance',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': False,
-        'docstring':
-            '''
-            Transformer end datasheet used to calculate this transformer star impedance.
-            '''
-        
         })
     '''
     Transformer end datasheet used to calculate this transformer star impedance.
@@ -30048,15 +24598,11 @@ class NoLoadTest(TransformerTest):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Voltage applied to the winding (end) during test.
-            '''
-        
         })
     '''
     Voltage applied to the winding (end) during test.
@@ -30066,16 +24612,11 @@ class NoLoadTest(TransformerTest):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Exciting current measured from a positive-sequence or single-phase excitation
-            test.
-            '''
-        
         })
     '''
     Exciting current measured from a positive-sequence or single-phase
@@ -30086,16 +24627,11 @@ class NoLoadTest(TransformerTest):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Exciting current measured from a zero-sequence open-circuit excitation
-            test.
-            '''
-        
         })
     '''
     Exciting current measured from a zero-sequence open-circuit excitation
@@ -30106,15 +24642,11 @@ class NoLoadTest(TransformerTest):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Losses measured from a positive-sequence or single-phase excitation test.
-            '''
-        
         })
     '''
     Losses measured from a positive-sequence or single-phase excitation
@@ -30125,15 +24657,11 @@ class NoLoadTest(TransformerTest):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Losses measured from a zero-sequence excitation test.
-            '''
-        
         })
     '''
     Losses measured from a zero-sequence excitation test.
@@ -30142,17 +24670,13 @@ class NoLoadTest(TransformerTest):
     EnergisedEnd: Optional[TransformerEndInfo] = field(
         default=None,
         metadata={
-        'type': 'Attribute',
+        'type': 'Association',
+        'stereotypes': [],
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'TransformerEndInfo.EnergisedEndNoLoadTests',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Transformer end that current is applied to in this no-load test.
-            '''
-        
         })
     '''
     Transformer end that current is applied to in this no-load test.
@@ -30184,15 +24708,11 @@ class OpenCircuitTest(TransformerTest):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Tap step number for the energised end of the test pair.
-            '''
-        
         })
     '''
     Tap step number for the energised end of the test pair.
@@ -30202,15 +24722,11 @@ class OpenCircuitTest(TransformerTest):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Tap step number for the open end of the test pair.
-            '''
-        
         })
     '''
     Tap step number for the open end of the test pair.
@@ -30220,15 +24736,11 @@ class OpenCircuitTest(TransformerTest):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Voltage applied to the winding (end) during test.
-            '''
-        
         })
     '''
     Voltage applied to the winding (end) during test.
@@ -30238,16 +24750,11 @@ class OpenCircuitTest(TransformerTest):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Voltage measured at the open-circuited end, with the energised end set
-            to rated voltage and all other ends open.
-            '''
-        
         })
     '''
     Voltage measured at the open-circuited end, with the energised end
@@ -30258,16 +24765,11 @@ class OpenCircuitTest(TransformerTest):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Phase shift measured at the open end with the energised end set to rated
-            voltage and all other ends open.
-            '''
-        
         })
     '''
     Phase shift measured at the open end with the energised end set to
@@ -30277,17 +24779,13 @@ class OpenCircuitTest(TransformerTest):
     EnergisedEnd: Optional[TransformerEndInfo] = field(
         default=None,
         metadata={
-        'type': 'Attribute',
+        'type': 'Association',
+        'stereotypes': [],
         'minOccurs': '1',
         'maxOccurs': '1',
         'inverse': 'TransformerEndInfo.EnergisedEndOpenCircuitTests',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Transformer end that current is applied to in this open-circuit test.
-            '''
-        
         })
     '''
     Transformer end that current is applied to in this open-circuit test.
@@ -30296,18 +24794,13 @@ class OpenCircuitTest(TransformerTest):
     OpenEnd: Optional[TransformerEndInfo] = field(
         default=None,
         metadata={
-        'type': 'Attribute',
+        'type': 'Association',
+        'stereotypes': [],
         'minOccurs': '1',
         'maxOccurs': '1',
         'inverse': 'TransformerEndInfo.OpenEndOpenCircuitTests',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Transformer end measured for induced voltage and angle in this open-circuit
-            test.
-            '''
-        
         })
     '''
     Transformer end measured for induced voltage and angle in this open-circuit
@@ -30340,15 +24833,11 @@ class ShortCircuitTest(TransformerTest):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Tap step number for the energised end of the test pair.
-            '''
-        
         })
     '''
     Tap step number for the energised end of the test pair.
@@ -30358,15 +24847,11 @@ class ShortCircuitTest(TransformerTest):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Tap step number for the grounded end of the test pair.
-            '''
-        
         })
     '''
     Tap step number for the grounded end of the test pair.
@@ -30376,15 +24861,11 @@ class ShortCircuitTest(TransformerTest):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Short circuit current..
-            '''
-        
         })
     '''
     Short circuit current..
@@ -30394,16 +24875,11 @@ class ShortCircuitTest(TransformerTest):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Leakage impedance measured from a positive-sequence or single-phase short-circuit
-            test.
-            '''
-        
         })
     '''
     Leakage impedance measured from a positive-sequence or single-phase
@@ -30414,15 +24890,11 @@ class ShortCircuitTest(TransformerTest):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Leakage impedance measured from a zero-sequence short-circuit test.
-            '''
-        
         })
     '''
     Leakage impedance measured from a zero-sequence short-circuit test.
@@ -30432,15 +24904,11 @@ class ShortCircuitTest(TransformerTest):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Load losses from a positive-sequence or single-phase short-circuit test.
-            '''
-        
         })
     '''
     Load losses from a positive-sequence or single-phase short-circuit
@@ -30451,15 +24919,11 @@ class ShortCircuitTest(TransformerTest):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Load losses from a zero-sequence short-circuit test.
-            '''
-        
         })
     '''
     Load losses from a zero-sequence short-circuit test.
@@ -30469,15 +24933,11 @@ class ShortCircuitTest(TransformerTest):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Short circuit apparent power.
-            '''
-        
         })
     '''
     Short circuit apparent power.
@@ -30487,15 +24947,11 @@ class ShortCircuitTest(TransformerTest):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Short circuit voltage..
-            '''
-        
         })
     '''
     Short circuit voltage..
@@ -30504,18 +24960,13 @@ class ShortCircuitTest(TransformerTest):
     EnergisedEnd: Optional[TransformerEndInfo] = field(
         default=None,
         metadata={
-        'type': 'Attribute',
+        'type': 'Association',
+        'stereotypes': [],
         'minOccurs': '1',
         'maxOccurs': '1',
         'inverse': 'TransformerEndInfo.EnergisedEndShortCircuitTests',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Transformer end that voltage is applied to in this short-circuit test.
-            The test voltage is chosen to induce rated current in the energised end.
-            '''
-        
         })
     '''
     Transformer end that voltage is applied to in this short-circuit test.
@@ -30526,17 +24977,13 @@ class ShortCircuitTest(TransformerTest):
     GroundedEnds: list[TransformerEndInfo] = field(
         default_factory=list,
         metadata={
-        'type': 'Attribute',
+        'type': 'Association',
+        'stereotypes': [],
         'minOccurs': '1',
         'maxOccurs': 'unbounded',
         'inverse': 'TransformerEndInfo.GroundedEndShortCircuitTests',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            All ends short-circuited in this short-circuit test.
-            '''
-        
         })
     '''
     All ends short-circuited in this short-circuit test.
@@ -30568,15 +25015,12 @@ class UsagePoint(IdentifiedObject):
         default=None,
         metadata={
         'type': 'Association',
+        'stereotypes': [],
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'Terminal.UsagePoint',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': False,
-        'docstring':
-            '''
-            '''
-        
         })
     '''
     '''
@@ -30610,16 +25054,12 @@ class ValueAliasSet(IdentifiedObject):
         default_factory=list,
         metadata={
         'type': 'Association',
+        'stereotypes': [],
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'Discrete.ValueAliasSet',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': False,
-        'docstring':
-            '''
-            The Measurements using the set for translation.
-            '''
-        
         })
     '''
     The Measurements using the set for translation.
@@ -30650,16 +25090,11 @@ class VoltageInjectionControlFunction(IdentifiedObject):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Target value for the voltage that the control function is calculating to
-            achieve by adjusting the operational setting to the controlled equipment.
-            '''
-        
         })
     '''
     Target value for the voltage that the control function is calculating
@@ -30774,15 +25209,11 @@ class WirePosition(IdentifiedObject):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Numbering for wires on a WireSpacingInfo. Neutrals should be numbered last.
-            '''
-        
         })
     '''
     Numbering for wires on a WireSpacingInfo. Neutrals should be numbered
@@ -30792,16 +25223,12 @@ class WirePosition(IdentifiedObject):
     phase: Optional[ SinglePhaseKind ] = field(
         default=None,
         metadata={
-        'type': 'enumeration ToBeRemoved Attribute add',
+        'type': 'Attribute',
+        'stereotypes': ['enumeration', 'ToBeRemoved', 'Attribute', 'add'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            The phase connection of the wire at both ends.
-            '''
-        
         })
     '''
     The phase connection of the wire at both ends.
@@ -30811,16 +25238,11 @@ class WirePosition(IdentifiedObject):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Signed horizontal distance from the wire at this position to a common reference
-            point.
-            '''
-        
         })
     '''
     Signed horizontal distance from the wire at this position to a common
@@ -30831,16 +25253,11 @@ class WirePosition(IdentifiedObject):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Signed vertical distance from the wire at this position: above ground (positive
-            value) or burial depth below ground (negative value).
-            '''
-        
         })
     '''
     Signed vertical distance from the wire at this position: above ground
@@ -30850,17 +25267,13 @@ class WirePosition(IdentifiedObject):
     WireSpacingInfo: Optional[WireSpacingInfo] = field(
         default=None,
         metadata={
-        'type': 'Attribute',
+        'type': 'Association',
+        'stereotypes': [],
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'WireSpacingInfo.WirePositions',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Wire spacing data this wire position belongs to.
-            '''
-        
         })
     '''
     Wire spacing data this wire position belongs to.
@@ -30870,16 +25283,12 @@ class WirePosition(IdentifiedObject):
         default_factory=list,
         metadata={
         'type': 'Association',
+        'stereotypes': [],
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'WirePhaseInfo.WirePosition',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': False,
-        'docstring':
-            '''
-            Wire phase information for this wire position.
-            '''
-        
         })
     '''
     Wire phase information for this wire position.
@@ -30908,19 +25317,11 @@ class ImpedanceTapChangerTablePoint(Identity):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            The voltage at the tap step divided by rated voltage of the transformer
-            end having the tap changer. Hence this is a value close to one. For example,
-            if the ratio at step 1 is 1.01, and the rated voltage of the transformer
-            end is 110kV, then the voltage obtained by setting the tap changer to step
-            1 to is 111.1kV.
-            '''
-        
         })
     '''
     The voltage at the tap step divided by rated voltage of the transformer
@@ -30934,15 +25335,11 @@ class ImpedanceTapChangerTablePoint(Identity):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            The tap step.
-            '''
-        
         })
     '''
     The tap step.
@@ -30952,17 +25349,11 @@ class ImpedanceTapChangerTablePoint(Identity):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            The angle difference in degrees. A positive value indicates a positive
-            angle variation from the Terminal at the PowerTransformerEnd, where the
-            TapChanger is located, into the transformer.
-            '''
-        
         })
     '''
     The angle difference in degrees. A positive value indicates a positive
@@ -30974,19 +25365,11 @@ class ImpedanceTapChangerTablePoint(Identity):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            The resistance deviation as a percentage of nominal value, r(nominal),
-            for the winding with TransformerEnd.endNumber equal to 1. The actual reactance
-            is calculated as follows: calculated resistance = r(nominal) * (1 + r(from
-            this class)/100). This model assumes the star impedance (pi model) form.
-            Note that the upper boundary is not constrained to 100 percent.
-            '''
-        
         })
     '''
     The resistance deviation as a percentage of nominal value, r(nominal),
@@ -31001,19 +25384,11 @@ class ImpedanceTapChangerTablePoint(Identity):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            The resistance deviation as a percentage of nominal value, r(nominal),
-            for the winding with TransformerEnd.endNumber equal to 2. The actual reactance
-            is calculated as follows: calculated resistance = r(nominal) * (1 + r(from
-            this class)/100). This model assumes the star impedance (pi model) form.
-            Note that the upper boundary is not constrained to 100 percent.
-            '''
-        
         })
     '''
     The resistance deviation as a percentage of nominal value, r(nominal),
@@ -31028,19 +25403,11 @@ class ImpedanceTapChangerTablePoint(Identity):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            The resistance deviation as a percentage of nominal value, r(nominal),
-            for the winding with TransformerEnd.endNumber equal to 3. The actual reactance
-            is calculated as follows: calculated resistance = r(nominal) * (1 + r(from
-            this class)/100). This model assumes the star impedance (pi model) form.
-            Note that the upper boundary is not constrained to 100 percent.
-            '''
-        
         })
     '''
     The resistance deviation as a percentage of nominal value, r(nominal),
@@ -31055,19 +25422,11 @@ class ImpedanceTapChangerTablePoint(Identity):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            The series reactance deviation as a percentage of nominal value, x(nominal),
-            for the winding with TransformerEnd.endNumber equal to 1. The actual reactance
-            is calculated as follows: calculated reactance = x(nominal) * (1 + x (from
-            this class)/100). This model assumes the star impedance (pi model) form.
-            Note that the upper boundary is not constrained to 100 percent.
-            '''
-        
         })
     '''
     The series reactance deviation as a percentage of nominal value, x(nominal),
@@ -31082,19 +25441,11 @@ class ImpedanceTapChangerTablePoint(Identity):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            The series reactance deviation as a percentage of nominal value, x(nominal),
-            for the winding with TransformerEnd.endNumber equal to 2. The actual reactance
-            is calculated as follows: calculated reactance = x(nominal) * (1 + x(from
-            this class)/100). This model assumes the star impedance (pi model) form.
-            Note that the upper boundary is not constrained to 100 percent.
-            '''
-        
         })
     '''
     The series reactance deviation as a percentage of nominal value, x(nominal),
@@ -31109,19 +25460,11 @@ class ImpedanceTapChangerTablePoint(Identity):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            The series reactance deviation as a percentage of nominal value, x(nominal),
-            for the winding with TransformerEnd.endNumber equal to 3. The actual reactance
-            is calculated as follows: calculated reactance = x(nominal) * (1 + x(from
-            this class)/100). This model assumes the star impedance (pi model) form.
-            Note that the upper boundary is not constrained to 100 percent.
-            '''
-        
         })
     '''
     The series reactance deviation as a percentage of nominal value, x(nominal),
@@ -31135,17 +25478,13 @@ class ImpedanceTapChangerTablePoint(Identity):
     ImpedanceTapChangerTable: Optional[ImpedanceTapChangerTable] = field(
         default=None,
         metadata={
-        'type': 'Attribute',
+        'type': 'Association',
+        'stereotypes': [],
         'minOccurs': '1',
         'maxOccurs': '1',
         'inverse': 'ImpedanceTapChangerTable.ImpedanceTapChangerTablePoint',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            The table of this point.
-            '''
-        
         })
     '''
     The table of this point.
@@ -31188,16 +25527,12 @@ class InstanceSet(Identity):
         default_factory=list,
         metadata={
         'type': 'Association',
+        'stereotypes': [],
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'IdentifiedObject.InstanceSet',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': False,
-        'docstring':
-            '''
-            Data objects contained in the dataset.
-            '''
-        
         })
     '''
     Data objects contained in the dataset.
@@ -31215,16 +25550,11 @@ class InverterCapabilities(Identity):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Flag to identify if the Device is capable of operating in Active Power
-            - Reactive Power (PQ) mode.
-            '''
-        
         })
     '''
     Flag to identify if the Device is capable of operating in Active Power
@@ -31235,16 +25565,11 @@ class InverterCapabilities(Identity):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Flag to identify if the Device is capable of operating in Constant Power
-            Factor (PF) mode.
-            '''
-        
         })
     '''
     Flag to identify if the Device is capable of operating in Constant
@@ -31255,16 +25580,11 @@ class InverterCapabilities(Identity):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Flag to identify if the Device is capable of operating in Constant Reactive
-            Power (Q) mode.
-            '''
-        
         })
     '''
     Flag to identify if the Device is capable of operating in Constant
@@ -31275,16 +25595,11 @@ class InverterCapabilities(Identity):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Flag to identify if the Device is capable of Frequency Droop protection,
-            also known as Frequency - Active Power (FP) mode.
-            '''
-        
         })
     '''
     Flag to identify if the Device is capable of Frequency Droop protection,
@@ -31295,16 +25610,11 @@ class InverterCapabilities(Identity):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Flag to identify if the Device is capable of operating in Voltage - Active
-            Power (VP) mode.
-            '''
-        
         })
     '''
     Flag to identify if the Device is capable of operating in Voltage -
@@ -31315,16 +25625,11 @@ class InverterCapabilities(Identity):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Flag to identify if the Device is capable of operating in Voltage - Reactive
-            Power (VQ) mode.
-            '''
-        
         })
     '''
     Flag to identify if the Device is capable of operating in Voltage -
@@ -31335,15 +25640,11 @@ class InverterCapabilities(Identity):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Flag to identify if the Device is capable of Enter Service After Trip protection.
-            '''
-        
         })
     '''
     Flag to identify if the Device is capable of Enter Service After Trip
@@ -31354,15 +25655,11 @@ class InverterCapabilities(Identity):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Flag to identify if the Device is capable of Frequency Trip protection.
-            '''
-        
         })
     '''
     Flag to identify if the Device is capable of Frequency Trip protection.
@@ -31372,16 +25669,11 @@ class InverterCapabilities(Identity):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Flag to identify if the Device is capable of Limit Maximum Active Power
-            protection.
-            '''
-        
         })
     '''
     Flag to identify if the Device is capable of Limit Maximum Active Power
@@ -31392,16 +25684,11 @@ class InverterCapabilities(Identity):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Flag to identify if the Device is capable of Momentary Cessation (also
-            known as Voltage Ride-Through) protection.
-            '''
-        
         })
     '''
     Flag to identify if the Device is capable of Momentary Cessation (also
@@ -31412,16 +25699,11 @@ class InverterCapabilities(Identity):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Flag to identify if the Device is capable of operating with Voltage Trip
-            protection.
-            '''
-        
         })
     '''
     Flag to identify if the Device is capable of operating with Voltage
@@ -31445,15 +25727,12 @@ class InverterCapabilities(Identity):
         default_factory=list,
         metadata={
         'type': 'Association',
+        'stereotypes': [],
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'InverterInfo.InverterCapabilites',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': False,
-        'docstring':
-            '''
-            '''
-        
         })
     '''
     '''
@@ -31468,16 +25747,11 @@ class IrregularTimePoint(Identity):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            The first value at the time. The meaning of the value is defined by the
-            derived type of the associated schedule.
-            '''
-        
         })
     '''
     The first value at the time. The meaning of the value is defined by
@@ -31488,16 +25762,11 @@ class IrregularTimePoint(Identity):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            The second value at the time. The meaning of the value is defined by the
-            derived type of the associated schedule.
-            '''
-        
         })
     '''
     The second value at the time. The meaning of the value is defined by
@@ -31508,16 +25777,11 @@ class IrregularTimePoint(Identity):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            The third value at the time. The meaning of the value is defined by the
-            derived type of the associated schedule.
-            '''
-        
         })
     '''
     The third value at the time. The meaning of the value is defined by
@@ -31528,15 +25792,11 @@ class IrregularTimePoint(Identity):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            The time is relative to the schedule starting time.
-            '''
-        
         })
     '''
     The time is relative to the schedule starting time.
@@ -31545,17 +25805,13 @@ class IrregularTimePoint(Identity):
     IntervalSchedule: Optional[IrregularIntervalSchedule] = field(
         default=None,
         metadata={
-        'type': 'OfAggregate',
+        'type': 'Association',
+        'stereotypes': ['OfAggregate'],
         'minOccurs': '1',
         'maxOccurs': '1',
         'inverse': 'IrregularIntervalSchedule.TimePoints',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            An IrregularTimePoint belongs to an IrregularIntervalSchedule.
-            '''
-        
         })
     '''
     An IrregularTimePoint belongs to an IrregularIntervalSchedule.
@@ -31586,17 +25842,13 @@ class MeasurementValueQuality(Identity):
     MeasurementValue: Optional[MeasurementValue] = field(
         default=None,
         metadata={
-        'type': 'OfAggregate',
+        'type': 'Association',
+        'stereotypes': ['OfAggregate'],
         'minOccurs': '1',
         'maxOccurs': '1',
         'inverse': 'MeasurementValue.MeasurementValueQuality',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            A MeasurementValue has a MeasurementValueQuality associated with it.
-            '''
-        
         })
     '''
     A MeasurementValue has a MeasurementValueQuality associated with it.
@@ -31618,22 +25870,19 @@ class MeasurementValueQuality(Identity):
     MeasurementValue: Optional[MeasurementValue] = field(
         default=None,
         metadata={
-        'type': 'OfAggregate',
+        'type': 'Association',
+        'stereotypes': ['OfAggregate'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'MeasurementValue.MeasurementValueQuality',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': False,
-        'docstring':
-            '''
-            A MeasurementValue has a MeasurementValueQuality associated with it.
-            '''
-        
         })
     '''
     A MeasurementValue has a MeasurementValueQuality associated with it.
     '''
     
+@stereotype(CIMStereotype.GridAPPSD)
 @dataclass(repr=False)
 class PMUValueQuality(MeasurementValueQuality):
     '''
@@ -31643,18 +25892,11 @@ class PMUValueQuality(MeasurementValueQuality):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://gridappsd.org/CIM/extension#',
         'serialize': True,
-        'docstring':
-            '''
-            0 = Normal data.
-            1 = Do not use.
-            PMU data is included in the data frame, but PDC�s ask users to not use
-            it.
-            '''
-        
         })
     '''
     0 = Normal data.
@@ -31667,18 +25909,11 @@ class PMUValueQuality(MeasurementValueQuality):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://gridappsd.org/CIM/extension#',
         'serialize': True,
-        'docstring':
-            '''
-            0 0 = Good measurement data, no errors.
-            1 0 = PMU in test mode.a
-            0 1 = Internal error detected by PMU. Data should be used with caution.
-            1 1 = Reserved.
-            '''
-        
         })
     '''
     0 0 = Good measurement data, no errors.
@@ -31691,16 +25926,11 @@ class PMUValueQuality(MeasurementValueQuality):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://gridappsd.org/CIM/extension#',
         'serialize': True,
-        'docstring':
-            '''
-            Always set to 0 by PMU. Set to 1 by PDC only when there
-            is no PMU data, and PDC substitutes it with any data.
-            '''
-        
         })
     '''
     Always set to 0 by PMU. Set to 1 by PDC only when there
@@ -31711,17 +25941,11 @@ class PMUValueQuality(MeasurementValueQuality):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://gridappsd.org/CIM/extension#',
         'serialize': True,
-        'docstring':
-            '''
-            0 = Normal data.
-            1 = The data had a different time stamp. The PDC has assigned the current
-            time stamp to this data frame.
-            '''
-        
         })
     '''
     0 = Normal data.
@@ -31733,17 +25957,11 @@ class PMUValueQuality(MeasurementValueQuality):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://gridappsd.org/CIM/extension#',
         'serialize': True,
-        'docstring':
-            '''
-            Time sync uncertainty indicator
-            0 = Time sync uncertainty is 250 ns or less.
-            1 = Time sync uncertainty exceeds 250 ns
-            '''
-        
         })
     '''
     Time sync uncertainty indicator
@@ -31778,15 +25996,11 @@ class NonlinearShuntCompensatorPhasePoint(Identity):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            The number of the section.
-            '''
-        
         })
     '''
     The number of the section.
@@ -31796,16 +26010,11 @@ class NonlinearShuntCompensatorPhasePoint(Identity):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Total positive sequence shunt (charging) susceptance at section noted by
-            sectionNumber.
-            '''
-        
         })
     '''
     Total positive sequence shunt (charging) susceptance at section noted
@@ -31816,16 +26025,11 @@ class NonlinearShuntCompensatorPhasePoint(Identity):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Total positive sequence shunt (charging) conductance at section noted by
-            sectionNumber.
-            '''
-        
         })
     '''
     Total positive sequence shunt (charging) conductance at section noted
@@ -31835,17 +26039,13 @@ class NonlinearShuntCompensatorPhasePoint(Identity):
     NonlinearShuntCompensatorPhase: Optional[NonlinearShuntCompensatorPhase] = field(
         default=None,
         metadata={
-        'type': 'OfAggregate',
+        'type': 'Association',
+        'stereotypes': ['OfAggregate'],
         'minOccurs': '1',
         'maxOccurs': '1',
         'inverse': 'NonlinearShuntCompensatorPhase.NonlinearShuntCompensatorPhasePoints',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Non-linear shunt compensator phase owning this point.
-            '''
-        
         })
     '''
     Non-linear shunt compensator phase owning this point.
@@ -31878,15 +26078,11 @@ class NonlinearShuntCompensatorPoint(Identity):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            The number of the section.
-            '''
-        
         })
     '''
     The number of the section.
@@ -31896,15 +26092,11 @@ class NonlinearShuntCompensatorPoint(Identity):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Total zero sequence shunt (charging) susceptance at section noted by sectionNumber.
-            '''
-        
         })
     '''
     Total zero sequence shunt (charging) susceptance at section noted by
@@ -31915,16 +26107,11 @@ class NonlinearShuntCompensatorPoint(Identity):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Total positive sequence shunt (charging) susceptance at section noted by
-            sectionNumber.
-            '''
-        
         })
     '''
     Total positive sequence shunt (charging) susceptance at section noted
@@ -31935,15 +26122,11 @@ class NonlinearShuntCompensatorPoint(Identity):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Total zero sequence shunt (charging) conductance at section noted by sectionNumber.
-            '''
-        
         })
     '''
     Total zero sequence shunt (charging) conductance at section noted by
@@ -31954,16 +26137,11 @@ class NonlinearShuntCompensatorPoint(Identity):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Total positive sequence shunt (charging) conductance at section noted by
-            sectionNumber.
-            '''
-        
         })
     '''
     Total positive sequence shunt (charging) conductance at section noted
@@ -31973,17 +26151,13 @@ class NonlinearShuntCompensatorPoint(Identity):
     NonlinearShuntCompensator: Optional[NonlinearShuntCompensator] = field(
         default=None,
         metadata={
-        'type': 'OfAggregate',
+        'type': 'Association',
+        'stereotypes': ['OfAggregate'],
         'minOccurs': '1',
         'maxOccurs': '1',
         'inverse': 'NonlinearShuntCompensator.NonlinearShuntCompensatorPoints',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Non-linear shunt compensator owning this point.
-            '''
-        
         })
     '''
     Non-linear shunt compensator owning this point.
@@ -32027,6 +26201,7 @@ class ObjectType(Identity):
     def __maxOccurs__(self):
         return 'unbounded'
     
+@stereotype(CIMStereotype.GridAPPSD)
 @dataclass(repr=False)
 class PMUStream(Identity):
     '''
@@ -32035,16 +26210,13 @@ class PMUStream(Identity):
     PMU: Optional[PhasorMeasurementUnit] = field(
         default=None,
         metadata={
-        'type': 'GridAPPSD',
+        'type': 'Association',
+        'stereotypes': ['GridAPPSD'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'PhasorMeasurementUnit.PMUStream',
         'namespace': 'http://gridappsd.org/CIM/extension#',
         'serialize': True,
-        'docstring':
-            '''
-            '''
-        
         })
     '''
     '''
@@ -32066,19 +26238,17 @@ class PMUStream(Identity):
         default=None,
         metadata={
         'type': 'Association',
+        'stereotypes': [],
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'PhasorMeasurementUnit.PMUStream',
         'namespace': 'http://gridappsd.org/CIM/extension#',
         'serialize': False,
-        'docstring':
-            '''
-            '''
-        
         })
     '''
     '''
     
+@stereotype(CIMStereotype.GridAPPSD)
 @dataclass(repr=False)
 class PMUValueConcentration(Identity):
     '''
@@ -32113,14 +26283,11 @@ class PositionPoint(Identity):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://gridappsd.org/CIM/extension#',
         'serialize': True,
-        'docstring':
-            '''
-            '''
-        
         })
     '''
     '''
@@ -32129,15 +26296,11 @@ class PositionPoint(Identity):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            X axis position.
-            '''
-        
         })
     '''
     X axis position.
@@ -32147,15 +26310,11 @@ class PositionPoint(Identity):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Y axis position.
-            '''
-        
         })
     '''
     Y axis position.
@@ -32165,15 +26324,11 @@ class PositionPoint(Identity):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            (if applicable) Z axis position.
-            '''
-        
         })
     '''
     (if applicable) Z axis position.
@@ -32182,16 +26337,13 @@ class PositionPoint(Identity):
     Location: Optional[Location] = field(
         default=None,
         metadata={
-        'type': 'Attribute',
+        'type': 'Association',
+        'stereotypes': [],
         'minOccurs': '1',
         'maxOccurs': '1',
         'inverse': 'Location.PositionPoints',
         'namespace': 'http://gridappsd.org/CIM/extension#',
         'serialize': True,
-        'docstring':
-            '''
-            '''
-        
         })
     '''
     '''
@@ -32199,16 +26351,13 @@ class PositionPoint(Identity):
     RelativeHeight: Optional[RelativeHeight] = field(
         default=None,
         metadata={
-        'type': 'Attribute',
+        'type': 'Association',
+        'stereotypes': [],
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'RelativeHeight.PositionPoint',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            '''
-        
         })
     '''
     '''
@@ -32237,21 +26386,11 @@ class RegularTimePoint(Identity):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            The position of the regular time point in the sequence. Note that time
-            points don't have to be sequential, i.e. time points may be omitted. The
-            actual time for a RegularTimePoint is computed by multiplying the associated
-            regular interval schedule's time step with the regular time point sequence
-            number and adding the associated schedules start time. To specify values
-            for the start time, use sequence number 0. The sequence number cannot be
-            negative.
-            '''
-        
         })
     '''
     The position of the regular time point in the sequence. Note that time
@@ -32267,16 +26406,11 @@ class RegularTimePoint(Identity):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            The first value at the time. The meaning of the value is defined by the
-            derived type of the associated schedule.
-            '''
-        
         })
     '''
     The first value at the time. The meaning of the value is defined by
@@ -32287,16 +26421,11 @@ class RegularTimePoint(Identity):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            The second value at the time. The meaning of the value is defined by the
-            derived type of the associated schedule.
-            '''
-        
         })
     '''
     The second value at the time. The meaning of the value is defined by
@@ -32307,16 +26436,11 @@ class RegularTimePoint(Identity):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            The third value at the time. The meaning of the value is defined by the
-            derived type of the associated schedule.
-            '''
-        
         })
     '''
     The third value at the time. The meaning of the value is defined by
@@ -32326,17 +26450,13 @@ class RegularTimePoint(Identity):
     IntervalSchedule: Optional[RegularIntervalSchedule] = field(
         default=None,
         metadata={
-        'type': 'OfAggregate',
+        'type': 'Association',
+        'stereotypes': ['OfAggregate'],
         'minOccurs': '1',
         'maxOccurs': '1',
         'inverse': 'RegularIntervalSchedule.TimePoints',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Regular interval schedule containing this time point.
-            '''
-        
         })
     '''
     Regular interval schedule containing this time point.
@@ -32388,15 +26508,12 @@ class RelativeHeight(Identity):
         default_factory=list,
         metadata={
         'type': 'Association',
+        'stereotypes': [],
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'PositionPoint.RelativeHeight',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': False,
-        'docstring':
-            '''
-            '''
-        
         })
     '''
     '''
@@ -32424,15 +26541,12 @@ class ResourceContainer(Identity):
         default_factory=list,
         metadata={
         'type': 'Association',
+        'stereotypes': [],
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'PowerSystemResource.ResourceContainer',
         'namespace': 'http://gridappsd.org/CIM/extension#',
         'serialize': False,
-        'docstring':
-            '''
-            '''
-        
         })
     '''
     '''
@@ -32441,15 +26555,12 @@ class ResourceContainer(Identity):
         default_factory=list,
         metadata={
         'type': 'Association',
+        'stereotypes': [],
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'Terminal.BoundedContainer',
         'namespace': 'http://gridappsd.org/CIM/extension#',
         'serialize': False,
-        'docstring':
-            '''
-            '''
-        
         })
     '''
     '''
@@ -32464,20 +26575,11 @@ class SSSCSimulationSettings(Identity):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Master resource identifier issued by a model authority. The mRID is unique
-            within an exchange context. Global uniqueness is easily achieved by using
-            a UUID, as specified in RFC 4122, for the mRID. The use of UUID is strongly
-            recommended.
-            For CIMXML data files in RDF syntax conforming to IEC 61970-552, the mRID
-            is mapped to rdf:ID or rdf:about attributes that identify CIM object elements.
-            '''
-        
         })
     '''
     Master resource identifier issued by a model authority. The mRID is
@@ -32493,16 +26595,11 @@ class SSSCSimulationSettings(Identity):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Defines if the estimate is considering the dI/dV sensitivity (true) instead
-            of the secant algorithm (false).
-            '''
-        
         })
     '''
     Defines if the estimate is considering the dI/dV sensitivity (true)
@@ -32513,17 +26610,11 @@ class SSSCSimulationSettings(Identity):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Maximum number of iterations before claiming an open line condition. The
-            algorithm uses it to assess if a line is really open by making sure low-currents
-            are observed on various consecutive iterations.
-            '''
-        
         })
     '''
     Maximum number of iterations before claiming an open line condition.
@@ -32535,18 +26626,11 @@ class SSSCSimulationSettings(Identity):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Reactance delta for the solution algorithm. The solution �outer-loop� algorithm
-            is based on a secant method which needs two initial points. The second
-            point is calculated from the first one by either adding or subtracting
-            this �delta�. The �seed� is assumed to be 0 ohms.
-            '''
-        
         })
     '''
     Reactance delta for the solution algorithm. The solution �outer-loop�
@@ -32559,17 +26643,11 @@ class SSSCSimulationSettings(Identity):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Maximum value of the reactance correction applied between Iterations of
-            the power flow calculation algorithm for the purpose of achieving control
-            target value.
-            '''
-        
         })
     '''
     Maximum value of the reactance correction applied between Iterations
@@ -32581,17 +26659,11 @@ class SSSCSimulationSettings(Identity):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Maximum mismatch tolerance of voltage target value. If mismatch is lower,
-            convergence is claimed. It is only used for voltageInjection and currentDroop
-            control modes.
-            '''
-        
         })
     '''
     Maximum mismatch tolerance of voltage target value. If mismatch is
@@ -32616,16 +26688,12 @@ class SSSCSimulationSettings(Identity):
         default_factory=list,
         metadata={
         'type': 'Association',
+        'stereotypes': [],
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'SSSCController.SSSCSimulationSettings',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': False,
-        'docstring':
-            '''
-            The controller that uses these simulation settings.
-            '''
-        
         })
     '''
     The controller that uses these simulation settings.
@@ -32661,16 +26729,11 @@ class SvDCPowerFlow(StateVariable):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            The active power flow. Load sign convention is used, i.e. positive sign
-            means flow out from a DCTopologicalNode (bus) into the conducting equipment.
-            '''
-        
         })
     '''
     The active power flow. Load sign convention is used, i.e. positive
@@ -32681,17 +26744,13 @@ class SvDCPowerFlow(StateVariable):
     DCTerminal: Optional[DCTerminal] = field(
         default=None,
         metadata={
-        'type': 'Attribute',
+        'type': 'Association',
+        'stereotypes': [],
         'minOccurs': '1',
         'maxOccurs': '1',
         'inverse': 'DCTerminal.SvDCPowerFlow',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            The DC terminal associated with the DC power flow state variable.
-            '''
-        
         })
     '''
     The DC terminal associated with the DC power flow state variable.
@@ -32720,15 +26779,11 @@ class SvDCVoltage(StateVariable):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            State variable for direct current voltage.
-            '''
-        
         })
     '''
     State variable for direct current voltage.
@@ -32737,17 +26792,13 @@ class SvDCVoltage(StateVariable):
     DCTopologicalNode: Optional[DCTopologicalNode] = field(
         default=None,
         metadata={
-        'type': 'Attribute',
+        'type': 'Association',
+        'stereotypes': [],
         'minOccurs': '1',
         'maxOccurs': '1',
         'inverse': 'DCTopologicalNode.SvDCVoltage',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            The DC topological node associated with the DC voltage state.
-            '''
-        
         })
     '''
     The DC topological node associated with the DC voltage state.
@@ -32779,17 +26830,12 @@ class SvInjection(StateVariable):
     phase: Optional[ SinglePhaseKind ] = field(
         default=None,
         metadata={
-        'type': 'enumeration Attribute',
+        'type': 'Attribute',
+        'stereotypes': ['enumeration', 'Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            The terminal phase at which the connection is applied. If missing, the
-            injection is assumed to be balanced among non-neutral phases.
-            '''
-        
         })
     '''
     The terminal phase at which the connection is applied. If missing,
@@ -32800,16 +26846,11 @@ class SvInjection(StateVariable):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            The active power mismatch between calculated injection and initial injection.
-            Positive sign means injection into the TopologicalNode (bus).
-            '''
-        
         })
     '''
     The active power mismatch between calculated injection and initial
@@ -32820,16 +26861,11 @@ class SvInjection(StateVariable):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            The reactive power mismatch between calculated injection and initial injection.
-            Positive sign means injection into the TopologicalNode (bus).
-            '''
-        
         })
     '''
     The reactive power mismatch between calculated injection and initial
@@ -32839,17 +26875,13 @@ class SvInjection(StateVariable):
     TopologicalNode: Optional[TopologicalNode] = field(
         default=None,
         metadata={
-        'type': 'Attribute',
+        'type': 'Association',
+        'stereotypes': [],
         'minOccurs': '1',
         'maxOccurs': '1',
         'inverse': 'TopologicalNode.SvInjection',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            The topological node associated with the flow injection state variable.
-            '''
-        
         })
     '''
     The topological node associated with the flow injection state variable.
@@ -32879,16 +26911,11 @@ class SvPowerFlow(StateVariable):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            The active power flow. Load sign convention is used, i.e. positive sign
-            means flow out from a TopologicalNode (bus) into the conducting equipment.
-            '''
-        
         })
     '''
     The active power flow. Load sign convention is used, i.e. positive
@@ -32899,17 +26926,12 @@ class SvPowerFlow(StateVariable):
     phase: Optional[ SinglePhaseKind ] = field(
         default=None,
         metadata={
-        'type': 'enumeration Attribute',
+        'type': 'Attribute',
+        'stereotypes': ['enumeration', 'Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            The individual phase of the flow. If unspecified, then assumed to be balanced
-            among phases.
-            '''
-        
         })
     '''
     The individual phase of the flow. If unspecified, then assumed to be
@@ -32920,16 +26942,11 @@ class SvPowerFlow(StateVariable):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            The reactive power flow. Load sign convention is used, i.e. positive sign
-            means flow out from a TopologicalNode (bus) into the conducting equipment.
-            '''
-        
         })
     '''
     The reactive power flow. Load sign convention is used, i.e. positive
@@ -32940,17 +26957,13 @@ class SvPowerFlow(StateVariable):
     Terminal: Optional[Terminal] = field(
         default=None,
         metadata={
-        'type': 'Attribute',
+        'type': 'Association',
+        'stereotypes': [],
         'minOccurs': '1',
         'maxOccurs': '1',
         'inverse': 'Terminal.SvPowerFlow',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            The terminal associated with the power flow state variable.
-            '''
-        
         })
     '''
     The terminal associated with the power flow state variable.
@@ -32979,16 +26992,11 @@ class SvShuntCompensatorSections(StateVariable):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            The number of sections in service as a continuous variable. The attribute
-            shall be a positive value or zero. To get integer value scale with ShuntCompensator.bPerSection.
-            '''
-        
         })
     '''
     The number of sections in service as a continuous variable. The attribute
@@ -32999,17 +27007,12 @@ class SvShuntCompensatorSections(StateVariable):
     phase: Optional[ SinglePhaseKind ] = field(
         default=None,
         metadata={
-        'type': 'enumeration Attribute',
+        'type': 'Attribute',
+        'stereotypes': ['enumeration', 'Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            The terminal phase at which the connection is applied. If missing, the
-            injection is assumed to be balanced among non-neutral phases.
-            '''
-        
         })
     '''
     The terminal phase at which the connection is applied. If missing,
@@ -33019,17 +27022,13 @@ class SvShuntCompensatorSections(StateVariable):
     ShuntCompensator: Optional[ShuntCompensator] = field(
         default=None,
         metadata={
-        'type': 'Attribute',
+        'type': 'Association',
+        'stereotypes': [],
         'minOccurs': '1',
         'maxOccurs': '1',
         'inverse': 'ShuntCompensator.SvShuntCompensatorSections',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            The shunt compensator for which the state applies.
-            '''
-        
         })
     '''
     The shunt compensator for which the state applies.
@@ -33058,18 +27057,11 @@ class SvStatus(StateVariable):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            The in service status as a result of topology processing. It indicates
-            if the equipment is considered as energized by the power flow. It reflects
-            if the equipment is connected within a solvable island. It does not necessarily
-            reflect whether or not the island was solved by the power flow.
-            '''
-        
         })
     '''
     The in service status as a result of topology processing. It indicates
@@ -33082,17 +27074,12 @@ class SvStatus(StateVariable):
     phase: Optional[ SinglePhaseKind ] = field(
         default=None,
         metadata={
-        'type': 'enumeration Attribute',
+        'type': 'Attribute',
+        'stereotypes': ['enumeration', 'Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            The individual phase status. If the attribute is unspecified, then three
-            phase model is assumed.
-            '''
-        
         })
     '''
     The individual phase status. If the attribute is unspecified, then
@@ -33102,17 +27089,13 @@ class SvStatus(StateVariable):
     ConductingEquipment: Optional[ConductingEquipment] = field(
         default=None,
         metadata={
-        'type': 'Attribute',
+        'type': 'Association',
+        'stereotypes': [],
         'minOccurs': '1',
         'maxOccurs': '1',
         'inverse': 'ConductingEquipment.SvStatus',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            The conducting equipment associated with the status state variable.
-            '''
-        
         })
     '''
     The conducting equipment associated with the status state variable.
@@ -33141,15 +27124,11 @@ class SvSwitch(StateVariable):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            The attribute tells if the computed state of the switch is considered open.
-            '''
-        
         })
     '''
     The attribute tells if the computed state of the switch is considered
@@ -33159,17 +27138,12 @@ class SvSwitch(StateVariable):
     phase: Optional[ SinglePhaseKind ] = field(
         default=None,
         metadata={
-        'type': 'enumeration Attribute',
+        'type': 'Attribute',
+        'stereotypes': ['enumeration', 'Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            The terminal phase at which the connection is applied. If missing, the
-            injection is assumed to be balanced among non-neutral phases.
-            '''
-        
         })
     '''
     The terminal phase at which the connection is applied. If missing,
@@ -33179,17 +27153,13 @@ class SvSwitch(StateVariable):
     Switch: Optional[Switch] = field(
         default=None,
         metadata={
-        'type': 'ShadowExtension',
+        'type': 'Association',
+        'stereotypes': ['ShadowExtension'],
         'minOccurs': '1',
         'maxOccurs': '1',
         'inverse': 'Switch.SvSwitch',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            The switch associated with the switch state.
-            '''
-        
         })
     '''
     The switch associated with the switch state.
@@ -33218,17 +27188,11 @@ class SvTapStep(StateVariable):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            The floating point tap position. This is not the tap ratio, but rather
-            the tap step position as defined by the related tap changer model and normally
-            is constrained to be within the range of minimum and maximum tap positions.
-            '''
-        
         })
     '''
     The floating point tap position. This is not the tap ratio, but rather
@@ -33240,17 +27204,13 @@ class SvTapStep(StateVariable):
     TapChanger: Optional[TapChanger] = field(
         default=None,
         metadata={
-        'type': 'ShadowExtension',
+        'type': 'Association',
+        'stereotypes': ['ShadowExtension'],
         'minOccurs': '1',
         'maxOccurs': '1',
         'inverse': 'TapChanger.SvTapStep',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            The tap changer associated with the tap step state.
-            '''
-        
         })
     '''
     The tap changer associated with the tap step state.
@@ -33260,16 +27220,12 @@ class SvTapStep(StateVariable):
         default=None,
         metadata={
         'type': 'Association',
+        'stereotypes': [],
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'TapChanger.SvTapStep',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': False,
-        'docstring':
-            '''
-            The tap changer associated with the tap step state.
-            '''
-        
         })
     '''
     The tap changer associated with the tap step state.
@@ -33298,16 +27254,11 @@ class SvVoltage(StateVariable):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            The voltage angle of the topological node complex voltage with respect
-            to system reference.
-            '''
-        
         })
     '''
     The voltage angle of the topological node complex voltage with respect
@@ -33317,17 +27268,12 @@ class SvVoltage(StateVariable):
     phase: Optional[ SinglePhaseKind ] = field(
         default=None,
         metadata={
-        'type': 'enumeration Attribute',
+        'type': 'Attribute',
+        'stereotypes': ['enumeration', 'Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            If specified the voltage is the line to ground voltage of the individual
-            phase. If unspecified, then the voltage is assumed balanced.
-            '''
-        
         })
     '''
     If specified the voltage is the line to ground voltage of the individual
@@ -33338,16 +27284,11 @@ class SvVoltage(StateVariable):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            The voltage magnitude at the topological node. The attribute shall be a
-            positive value.
-            '''
-        
         })
     '''
     The voltage magnitude at the topological node. The attribute shall
@@ -33357,17 +27298,13 @@ class SvVoltage(StateVariable):
     TopologicalNode: Optional[TopologicalNode] = field(
         default=None,
         metadata={
-        'type': 'Attribute',
+        'type': 'Association',
+        'stereotypes': [],
         'minOccurs': '1',
         'maxOccurs': '1',
         'inverse': 'TopologicalNode.SvVoltage',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            The topological node associated with the voltage state.
-            '''
-        
         })
     '''
     The topological node associated with the voltage state.
@@ -33396,16 +27333,11 @@ class StepLimitTablePoint(Identity):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            The factor which is used to multiply the value of the operational limit
-            associated with the table.
-            '''
-        
         })
     '''
     The factor which is used to multiply the value of the operational limit
@@ -33416,15 +27348,11 @@ class StepLimitTablePoint(Identity):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            The tap step.
-            '''
-        
         })
     '''
     The tap step.
@@ -33433,17 +27361,13 @@ class StepLimitTablePoint(Identity):
     StepOperationalLimitTable: Optional[StepOperationalLimitTable] = field(
         default=None,
         metadata={
-        'type': 'Attribute',
+        'type': 'Association',
+        'stereotypes': [],
         'minOccurs': '1',
         'maxOccurs': '1',
         'inverse': 'StepOperationalLimitTable.StepLimitTablePoint',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            The table of this point.
-            '''
-        
         })
     '''
     The table of this point.
@@ -33485,17 +27409,13 @@ class SystemOperator(Identity):
     ControlArea: list[ControlArea] = field(
         default_factory=list,
         metadata={
-        'type': 'NC',
+        'type': 'Association',
+        'stereotypes': ['NC'],
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'ControlArea.SystemOperator',
         'namespace': 'http://entsoe.eu/ns/nc#',
         'serialize': False,
-        'docstring':
-            '''
-            The control area that is related to this system operator.
-            '''
-        
         })
     '''
     The control area that is related to this system operator.
@@ -33511,20 +27431,11 @@ class TCSCCompensationPoint(Identity):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Master resource identifier issued by a model authority. The mRID is unique
-            within an exchange context. Global uniqueness is easily achieved by using
-            a UUID, as specified in RFC 4122, for the mRID. The use of UUID is strongly
-            recommended.
-            For CIMXML data files in RDF syntax conforming to IEC 61970-552, the mRID
-            is mapped to rdf:ID or rdf:about attributes that identify CIM object elements.
-            '''
-        
         })
     '''
     Master resource identifier issued by a model authority. The mRID is
@@ -33540,15 +27451,11 @@ class TCSCCompensationPoint(Identity):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            The number of the section.
-            '''
-        
         })
     '''
     The number of the section.
@@ -33558,15 +27465,11 @@ class TCSCCompensationPoint(Identity):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            The compensation impedance for this compensation point.
-            '''
-        
         })
     '''
     The compensation impedance for this compensation point.
@@ -33575,17 +27478,13 @@ class TCSCCompensationPoint(Identity):
     ThyristorControlledSeriesCompensator: Optional[ThyristorControlledSeriesCompensator] = field(
         default=None,
         metadata={
-        'type': 'Attribute',
+        'type': 'Association',
+        'stereotypes': [],
         'minOccurs': '1',
         'maxOccurs': '1',
         'inverse': 'ThyristorControlledSeriesCompensator.TCSCCompensationPoint',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            TCSC that has different compensation points.
-            '''
-        
         })
     '''
     TCSC that has different compensation points.
@@ -33615,19 +27514,11 @@ class TapChangerTablePoint(Identity):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            The voltage at the tap step divided by rated voltage of the transformer
-            end having the tap changer. Hence this is a value close to one.
-            For example, if the ratio at step 1 is 1.01, and the rated voltage of the
-            transformer end is 110kV, then the voltage obtained by setting the tap
-            changer to step 1 to is 111.1kV.
-            '''
-        
         })
     '''
     The voltage at the tap step divided by rated voltage of the transformer
@@ -33641,15 +27532,11 @@ class TapChangerTablePoint(Identity):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            The tap step.
-            '''
-        
         })
     '''
     The tap step.
@@ -33659,20 +27546,11 @@ class TapChangerTablePoint(Identity):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            The magnetizing branch susceptance deviation as a percentage of nominal
-            value. The actual susceptance is calculated as follows:
-            calculated magnetizing susceptance = b(nominal) * (1 + b(from this class)/100).
-            The b(nominal) is defined as the static magnetizing susceptance on the
-            associated power transformer end or ends. This model assumes the star impedance
-            (pi model) form.
-            '''
-        
         })
     '''
     The magnetizing branch susceptance deviation as a percentage of nominal
@@ -33687,21 +27565,11 @@ class TapChangerTablePoint(Identity):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            The magnetizing branch conductance deviation as a percentage of nominal
-            value. The actual conductance is calculated as follows:
-            calculated magnetizing conductance = g(nominal) * (1 + g(from this class)/100).
-            The g(nominal) is defined as the static magnetizing conductance on the
-            associated power transformer end or ends. This model assumes the star impedance
-            (pi model) form. Note that the upper boundary is not constrained to 100
-            percent.
-            '''
-        
         })
     '''
     The magnetizing branch conductance deviation as a percentage of nominal
@@ -33717,20 +27585,11 @@ class TapChangerTablePoint(Identity):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            The resistance deviation as a percentage of nominal value. The actual reactance
-            is calculated as follows:
-            calculated resistance = r(nominal) * (1 + r(from this class)/100). The
-            r(nominal) is defined as the static resistance on the associated power
-            transformer end or ends. This model assumes the star impedance (pi model)
-            form. Note that the upper boundary is not constrained to 100 percent.
-            '''
-        
         })
     '''
     The resistance deviation as a percentage of nominal value. The actual
@@ -33746,20 +27605,11 @@ class TapChangerTablePoint(Identity):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            The series reactance deviation as a percentage of nominal value. The actual
-            reactance is calculated as follows:
-            calculated reactance = x(nominal) * (1 + x(from this class)/100). The x(nominal)
-            is defined as the static series reactance on the associated power transformer
-            end or ends. This model assumes the star impedance (pi model) form. Note
-            that the upper boundary is not constrained to 100 percent.
-            '''
-        
         })
     '''
     The series reactance deviation as a percentage of nominal value. The
@@ -33794,17 +27644,11 @@ class PhaseTapChangerTablePoint(TapChangerTablePoint):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            The angle difference in degrees. A positive value indicates a positive
-            angle variation from the Terminal at the PowerTransformerEnd, where the
-            TapChanger is located, into the transformer.
-            '''
-        
         })
     '''
     The angle difference in degrees. A positive value indicates a positive
@@ -33815,17 +27659,13 @@ class PhaseTapChangerTablePoint(TapChangerTablePoint):
     PhaseTapChangerTable: Optional[PhaseTapChangerTable] = field(
         default=None,
         metadata={
-        'type': 'Attribute',
+        'type': 'Association',
+        'stereotypes': [],
         'minOccurs': '1',
         'maxOccurs': '1',
         'inverse': 'PhaseTapChangerTable.PhaseTapChangerTablePoint',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            The table of this point.
-            '''
-        
         })
     '''
     The table of this point.
@@ -33853,17 +27693,13 @@ class RatioTapChangerTablePoint(TapChangerTablePoint):
     RatioTapChangerTable: Optional[RatioTapChangerTable] = field(
         default=None,
         metadata={
-        'type': 'Attribute',
+        'type': 'Association',
+        'stereotypes': [],
         'minOccurs': '1',
         'maxOccurs': '1',
         'inverse': 'RatioTapChangerTable.RatioTapChangerTablePoint',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Table of this point.
-            '''
-        
         })
     '''
     Table of this point.
@@ -33891,16 +27727,12 @@ class WirePhaseInfo(Identity):
     phaseInfo: Optional[ SinglePhaseKind ] = field(
         default=None,
         metadata={
-        'type': 'enumeration Attribute',
+        'type': 'Attribute',
+        'stereotypes': ['enumeration', 'Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Phase information.
-            '''
-        
         })
     '''
     Phase information.
@@ -33909,17 +27741,13 @@ class WirePhaseInfo(Identity):
     WireAssemblyInfo: Optional[WireAssemblyInfo] = field(
         default=None,
         metadata={
-        'type': 'Attribute',
+        'type': 'Association',
+        'stereotypes': [],
         'minOccurs': '1',
         'maxOccurs': '1',
         'inverse': 'WireAssemblyInfo.WirePhaseInfo',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Wire assembly information using this wire phase information.
-            '''
-        
         })
     '''
     Wire assembly information using this wire phase information.
@@ -33928,17 +27756,13 @@ class WirePhaseInfo(Identity):
     WireInfo: Optional[WireInfo] = field(
         default=None,
         metadata={
-        'type': 'Attribute',
+        'type': 'Association',
+        'stereotypes': [],
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'WireInfo.WirePhaseInfo',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Wire information contributing to this wire phase information.
-            '''
-        
         })
     '''
     Wire information contributing to this wire phase information.
@@ -33947,17 +27771,13 @@ class WirePhaseInfo(Identity):
     WirePosition: Optional[WirePosition] = field(
         default=None,
         metadata={
-        'type': 'Attribute',
+        'type': 'Association',
+        'stereotypes': [],
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'WirePosition.WirePhaseInfo',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Wire position with this wire phase information.
-            '''
-        
         })
     '''
     Wire position with this wire phase information.
@@ -33999,15 +27819,12 @@ class WireSpacing(Identity):
         default_factory=list,
         metadata={
         'type': 'Association',
+        'stereotypes': [],
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'ACLineSegment.WireSpacing',
         'namespace': 'http://gridappsd.org/CIM/extension#',
         'serialize': False,
-        'docstring':
-            '''
-            '''
-        
         })
     '''
     '''
@@ -34022,15 +27839,12 @@ class ConductorDistanceSpacing(WireSpacing):
         default_factory=list,
         metadata={
         'type': 'Association',
+        'stereotypes': [],
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'ConductorDistance.WireSpacing',
         'namespace': 'http://gridappsd.org/CIM/extension#',
         'serialize': False,
-        'docstring':
-            '''
-            '''
-        
         })
     '''
     '''
@@ -34058,14 +27872,11 @@ class EquivalentDistanceSpacing(WireSpacing):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://gridappsd.org/CIM/extension#',
         'serialize': True,
-        'docstring':
-            '''
-            '''
-        
         })
     '''
     '''
@@ -34074,14 +27885,11 @@ class EquivalentDistanceSpacing(WireSpacing):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://gridappsd.org/CIM/extension#',
         'serialize': True,
-        'docstring':
-            '''
-            '''
-        
         })
     '''
     '''
@@ -34090,14 +27898,11 @@ class EquivalentDistanceSpacing(WireSpacing):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://gridappsd.org/CIM/extension#',
         'serialize': True,
-        'docstring':
-            '''
-            '''
-        
         })
     '''
     '''
@@ -34106,14 +27911,11 @@ class EquivalentDistanceSpacing(WireSpacing):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://gridappsd.org/CIM/extension#',
         'serialize': True,
-        'docstring':
-            '''
-            '''
-        
         })
     '''
     '''
@@ -34131,6 +27933,7 @@ class EquivalentDistanceSpacing(WireSpacing):
     def __maxOccurs__(self):
         return 'unbounded'
     
+@stereotype(CIMStereotype.GridAPPSD)
 @dataclass(repr=False)
 class WireTemplate(Identity):
     '''
@@ -34153,15 +27956,12 @@ class WireTemplate(Identity):
         default=None,
         metadata={
         'type': 'Association',
+        'stereotypes': [],
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'PerLengthImpedance.WireAssemblyInfo',
         'namespace': 'http://gridappsd.org/CIM/extension#',
         'serialize': False,
-        'docstring':
-            '''
-            '''
-        
         })
     '''
     '''
@@ -35889,6 +29689,8 @@ class EarthModelKind(Enum):
     def __maxOccurs__(self):
         return 'unbounded'
     
+@stereotype(CIMStereotype.ShadowExtension)
+@stereotype(CIMStereotype.gmdm)
 @stereotype(CIMStereotype.enumeration)
 @stereotype(CIMStereotype.Attribute)
 class FuelType(Enum):
@@ -39810,6 +33612,7 @@ class VoltagePerReactivePower(CIMUnit):
         return '1'
     
 
+@stereotype(CIMStereotype.Compound)
 @dataclass(repr=False)
 class DateInterval(Identity):
     '''
@@ -39820,15 +33623,11 @@ class DateInterval(Identity):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            End date of this interval.
-            '''
-        
         })
     '''
     End date of this interval.
@@ -39838,15 +33637,11 @@ class DateInterval(Identity):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Start date of this interval.
-            '''
-        
         })
     '''
     Start date of this interval.
@@ -39865,6 +33660,7 @@ class DateInterval(Identity):
     def __maxOccurs__(self):
         return 'unbounded'
     
+@stereotype(CIMStereotype.Compound)
 @dataclass(repr=False)
 class DateTimeInterval(Identity):
     '''
@@ -39898,16 +33694,11 @@ class DateTimeInterval(Identity):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            End date and time of this interval. The end date and time where the interval
-            is defined up to, but excluded.
-            '''
-        
         })
     '''
     End date and time of this interval. The end date and time where the
@@ -39918,16 +33709,11 @@ class DateTimeInterval(Identity):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Start date and time of this interval. The start date and time is included
-            in the defined interval.
-            '''
-        
         })
     '''
     Start date and time of this interval. The start date and time is included
@@ -39937,16 +33723,13 @@ class DateTimeInterval(Identity):
     timehasDateTimeDescription: Optional[GeneralDateTimeDescription] = field(
         default=None,
         metadata={
-        'type': 'Attribute',
+        'type': 'Association',
+        'stereotypes': [],
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': '',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            '''
-        
         })
     '''
     '''
@@ -39964,6 +33747,7 @@ class DateTimeInterval(Identity):
     def __maxOccurs__(self):
         return 'unbounded'
     
+@stereotype(CIMStereotype.Compound)
 @dataclass(repr=False)
 class DecimalQuantity(Identity):
     '''
@@ -39974,15 +33758,11 @@ class DecimalQuantity(Identity):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Value of this quantity.
-            '''
-        
         })
     '''
     Value of this quantity.
@@ -39991,16 +33771,12 @@ class DecimalQuantity(Identity):
     currency: Optional[ Currency ] = field(
         default=None,
         metadata={
-        'type': 'enumeration Attribute',
+        'type': 'Attribute',
+        'stereotypes': ['enumeration', 'Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Currency of this quantity.
-            '''
-        
         })
     '''
     Currency of this quantity.
@@ -40009,16 +33785,12 @@ class DecimalQuantity(Identity):
     multiplier: Optional[ UnitMultiplier ] = field(
         default=None,
         metadata={
-        'type': 'enumeration Attribute',
+        'type': 'Attribute',
+        'stereotypes': ['enumeration', 'Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Unit multiplier of this quantity.
-            '''
-        
         })
     '''
     Unit multiplier of this quantity.
@@ -40027,16 +33799,12 @@ class DecimalQuantity(Identity):
     unit: Optional[ UnitSymbol ] = field(
         default=None,
         metadata={
-        'type': 'enumeration Attribute',
+        'type': 'Attribute',
+        'stereotypes': ['enumeration', 'Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Unit of this quantity.
-            '''
-        
         })
     '''
     Unit of this quantity.
@@ -40055,6 +33823,7 @@ class DecimalQuantity(Identity):
     def __maxOccurs__(self):
         return 'unbounded'
     
+@stereotype(CIMStereotype.Compound)
 @dataclass(repr=False)
 class FloatQuantity(Identity):
     '''
@@ -40065,15 +33834,11 @@ class FloatQuantity(Identity):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Value of this quantity.
-            '''
-        
         })
     '''
     Value of this quantity.
@@ -40082,16 +33847,12 @@ class FloatQuantity(Identity):
     multiplier: Optional[ UnitMultiplier ] = field(
         default=None,
         metadata={
-        'type': 'enumeration Attribute',
+        'type': 'Attribute',
+        'stereotypes': ['enumeration', 'Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Unit multiplier of this quantity.
-            '''
-        
         })
     '''
     Unit multiplier of this quantity.
@@ -40100,16 +33861,12 @@ class FloatQuantity(Identity):
     unit: Optional[ UnitSymbol ] = field(
         default=None,
         metadata={
-        'type': 'enumeration Attribute',
+        'type': 'Attribute',
+        'stereotypes': ['enumeration', 'Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Unit of this quantity.
-            '''
-        
         })
     '''
     Unit of this quantity.
@@ -40128,6 +33885,7 @@ class FloatQuantity(Identity):
     def __maxOccurs__(self):
         return 'unbounded'
     
+@stereotype(CIMStereotype.Compound)
 @dataclass(repr=False)
 class IntegerQuantity(Identity):
     '''
@@ -40138,15 +33896,11 @@ class IntegerQuantity(Identity):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Value of this quantity.
-            '''
-        
         })
     '''
     Value of this quantity.
@@ -40155,16 +33909,12 @@ class IntegerQuantity(Identity):
     multiplier: Optional[ UnitMultiplier ] = field(
         default=None,
         metadata={
-        'type': 'enumeration Attribute',
+        'type': 'Attribute',
+        'stereotypes': ['enumeration', 'Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Unit multiplier of this quantity.
-            '''
-        
         })
     '''
     Unit multiplier of this quantity.
@@ -40173,16 +33923,12 @@ class IntegerQuantity(Identity):
     unit: Optional[ UnitSymbol ] = field(
         default=None,
         metadata={
-        'type': 'enumeration Attribute',
+        'type': 'Attribute',
+        'stereotypes': ['enumeration', 'Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Unit of this quantity.
-            '''
-        
         })
     '''
     Unit of this quantity.
@@ -40201,6 +33947,7 @@ class IntegerQuantity(Identity):
     def __maxOccurs__(self):
         return 'unbounded'
     
+@stereotype(CIMStereotype.Compound)
 @dataclass(repr=False)
 class MonthDayInterval(Identity):
     '''
@@ -40211,15 +33958,11 @@ class MonthDayInterval(Identity):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            End time of this interval.
-            '''
-        
         })
     '''
     End time of this interval.
@@ -40229,15 +33972,11 @@ class MonthDayInterval(Identity):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Start time of this interval.
-            '''
-        
         })
     '''
     Start time of this interval.
@@ -40256,6 +33995,7 @@ class MonthDayInterval(Identity):
     def __maxOccurs__(self):
         return 'unbounded'
     
+@stereotype(CIMStereotype.Compound)
 @dataclass(repr=False)
 class StringQuantity(Identity):
     '''
@@ -40267,15 +34007,11 @@ class StringQuantity(Identity):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Value of this quantity.
-            '''
-        
         })
     '''
     Value of this quantity.
@@ -40284,16 +34020,12 @@ class StringQuantity(Identity):
     multiplier: Optional[ UnitMultiplier ] = field(
         default=None,
         metadata={
-        'type': 'enumeration Attribute',
+        'type': 'Attribute',
+        'stereotypes': ['enumeration', 'Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Unit multiplier of this quantity.
-            '''
-        
         })
     '''
     Unit multiplier of this quantity.
@@ -40302,16 +34034,12 @@ class StringQuantity(Identity):
     unit: Optional[ UnitSymbol ] = field(
         default=None,
         metadata={
-        'type': 'enumeration Attribute',
+        'type': 'Attribute',
+        'stereotypes': ['enumeration', 'Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Unit of this quantity.
-            '''
-        
         })
     '''
     Unit of this quantity.
@@ -40330,6 +34058,7 @@ class StringQuantity(Identity):
     def __maxOccurs__(self):
         return 'unbounded'
     
+@stereotype(CIMStereotype.Compound)
 @dataclass(repr=False)
 class TimeInterval(Identity):
     '''
@@ -40340,15 +34069,11 @@ class TimeInterval(Identity):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            End time of this interval.
-            '''
-        
         })
     '''
     End time of this interval.
@@ -40358,15 +34083,11 @@ class TimeInterval(Identity):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Start time of this interval.
-            '''
-        
         })
     '''
     Start time of this interval.

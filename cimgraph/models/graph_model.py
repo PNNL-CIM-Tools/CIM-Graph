@@ -274,7 +274,7 @@ class GraphModel():
         # First, iterate over fields of the object to find inverse references
         for field in fields(obj):
             # Check if this field has metadata about inverse relationships
-            if 'inverse' in field.metadata and field.metadata['type'] != 'enumeration':
+            if field.metadata.get('type') == 'Association' and 'inverse' in field.metadata:
                 # Get the value of this field
                 value = getattr(obj, field.name)
 
@@ -355,6 +355,13 @@ class GraphModel():
         print(json_dump)
 
     def upload(self) -> None:
+        # Lazy imports: utils.write_xml imports GraphModel, and XMLFile lives
+        # under databases.fileparsers — keeping these local avoids the cycle.
+        from cimgraph.databases.fileparsers import XMLFile
+        if isinstance(self.connection, XMLFile):
+            from cimgraph.utils.write_xml import write_xml
+            write_xml(self, self.connection.filename)
+            return
         self.connection.upload(self.graph)
 
     def __dumps__(self, cim_class: type, show_empty: bool = False,

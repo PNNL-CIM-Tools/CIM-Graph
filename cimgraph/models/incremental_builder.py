@@ -313,19 +313,20 @@ def incremantal_row(cim_class:type, uri:str, difference:dict) -> str:
             for parent in parent_classes:
                 if attribute in parent.__annotations__:
 
-                    attr_type = attr_fields[attribute].metadata['type']
-                    ns_prefix = REVERSE_NS[attr_fields[attribute].metadata['namespace']]
+                    attr_meta = attr_fields[attribute].metadata
+                    attr_type = attr_meta['type']
+                    stereotypes = attr_meta.get('stereotypes', [])
+                    is_enum = 'enumeration' in stereotypes or 'enumeration' in attr_type.lower()
+                    ns_prefix = REVERSE_NS[attr_meta['namespace']]
                     row += INDENT*3 + f'<{ns_prefix}:{parent.__name__}.{attribute}'
-                    if 'attribute' in attr_type.lower() or 'enumeration' in attr_type.lower():
-                        row += f'>{str(value)}</{ns_prefix}:{parent.__name__}.{attribute}>\n'
-                    elif 'enumeration' in attr_type.lower():
+                    if is_enum:
                         row += f' rdf:resouce={ns_prefix}{str(value)}>\n'
+                    elif 'attribute' in attr_type.lower():
+                        row += f'>{str(value)}</{ns_prefix}:{parent.__name__}.{attribute}>\n'
                     else:
                         if isinstance(value, Identity):
                             row += f' rdf:resouce={ns_prefix}{value}>\n'
-                            # row += f' rdf:resouce={ns_prefix}{value.uri()}>\n'
                         else:
-                            # _log.warning(f'unknown format of {str(value)}')
                             row += f' rdf:resouce={ns_prefix}{str(value)}>\n'
     row += '</rdf:Description>\n'
     return row
