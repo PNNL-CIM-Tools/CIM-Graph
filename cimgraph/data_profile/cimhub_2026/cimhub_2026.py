@@ -21,7 +21,6 @@ class CIMStereotype(Enum):
     GridAPPSD = "GridAPPSD"
     MCT = "MCT"
     NC = "NC"
-    NeedsWork = "NeedsWork"
     OfAggregate = "OfAggregate"
     Primitive = "Primitive"
     ShadowExtension = "ShadowExtension"
@@ -37,7 +36,7 @@ class CIMStereotype(Enum):
     profcim = "profcim"
 
 BASE_URI = 'http://www.gridappsd.org/cimhub#'
-ONTOLOGY_URI = 'http://iec.ch/TC57/CIM101/draft#'
+ONTOLOGY_URI = 'http://cim.ucaiug.io/CIM101/draft#'
 
 @dataclass(repr=False)
 class BranchGroupTerminal(Identity):
@@ -52,7 +51,7 @@ class BranchGroupTerminal(Identity):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -68,7 +67,7 @@ class BranchGroupTerminal(Identity):
         'minOccurs': '1',
         'maxOccurs': '1',
         'inverse': 'BranchGroup.BranchGroupTerminal',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -79,11 +78,11 @@ class BranchGroupTerminal(Identity):
         default=None,
         metadata={
         'type': 'Association',
-        'stereotypes': [],
+        'stereotypes': ['ShadowExtension'],
         'minOccurs': '1',
         'maxOccurs': '1',
         'inverse': 'Terminal.BranchGroupTerminal',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -92,7 +91,7 @@ class BranchGroupTerminal(Identity):
     
     @property
     def __namespace__(self):
-        return 'http://iec.ch/TC57/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'OperationalLimits'
@@ -110,58 +109,6 @@ class CableArmorInfo(Identity):
     '''
     '''
 
-    materialName: Optional[str] = field(
-        default=None,
-        metadata={
-        'type': 'Attribute',
-        'stereotypes': ['Attribute'],
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'namespace': 'http://gridappsd.org/CIM/extension#',
-        'serialize': True,
-        })
-    '''
-    '''
-    
-    numberOfTapes: Optional[int] = field(
-        default=None,
-        metadata={
-        'type': 'Attribute',
-        'stereotypes': ['Attribute'],
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'namespace': 'http://gridappsd.org/CIM/extension#',
-        'serialize': True,
-        })
-    '''
-    '''
-    
-    strandCount: Optional[int] = field(
-        default=None,
-        metadata={
-        'type': 'Attribute',
-        'stereotypes': ['Attribute'],
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'namespace': 'http://gridappsd.org/CIM/extension#',
-        'serialize': True,
-        })
-    '''
-    '''
-    
-    Type: Optional[str] = field(
-        default=None,
-        metadata={
-        'type': 'Attribute',
-        'stereotypes': ['Attribute'],
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'namespace': 'http://gridappsd.org/CIM/extension#',
-        'serialize': True,
-        })
-    '''
-    '''
-    
     diameterOverArmor: Optional[ float | Length ] = field(
         default=None,
         metadata={
@@ -274,7 +221,7 @@ class ChangeSetMember(Identity):
 
     @property
     def __namespace__(self):
-        return 'http://iec.ch/TC57/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'GenericDataSet'
@@ -307,7 +254,7 @@ class CurrentDroopOverride(Identity):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -327,7 +274,7 @@ class CurrentDroopOverride(Identity):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -341,7 +288,7 @@ class CurrentDroopOverride(Identity):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -355,7 +302,7 @@ class CurrentDroopOverride(Identity):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -370,7 +317,7 @@ class CurrentDroopOverride(Identity):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -384,7 +331,7 @@ class CurrentDroopOverride(Identity):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -398,7 +345,7 @@ class CurrentDroopOverride(Identity):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -412,7 +359,7 @@ class CurrentDroopOverride(Identity):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -427,7 +374,7 @@ class CurrentDroopOverride(Identity):
         'minOccurs': '1',
         'maxOccurs': '1',
         'inverse': 'SSSCController.CurrentDroopOverride',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -436,7 +383,7 @@ class CurrentDroopOverride(Identity):
     
     @property
     def __namespace__(self):
-        return 'http://iec.ch/TC57/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'FACTS'
@@ -455,7 +402,7 @@ class CurrentDroopOverride(Identity):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'SSSCController.CurrentDroopOverride',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         })
     '''
@@ -477,7 +424,7 @@ class CurveData(Identity):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -491,7 +438,7 @@ class CurveData(Identity):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -506,7 +453,7 @@ class CurveData(Identity):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -521,7 +468,7 @@ class CurveData(Identity):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -537,7 +484,7 @@ class CurveData(Identity):
         'minOccurs': '1',
         'maxOccurs': '1',
         'inverse': 'Curve.CurveDatas',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -546,28 +493,10 @@ class CurveData(Identity):
     
     @property
     def __namespace__(self):
-        return 'http://iec.ch/TC57/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Core'
-    @property
-    def __minOccurs__(self):
-        return '0'
-    @property
-    def __maxOccurs__(self):
-        return 'unbounded'
-    
-@dataclass(repr=False)
-class EVSE(Identity):
-    '''
-    '''
-
-    @property
-    def __namespace__(self):
-        return 'http://iec.ch/TC57/CIM101/draft#'
-    @property
-    def __package__(self):
-        return 'CustomerEXT'
     @property
     def __minOccurs__(self):
         return '0'
@@ -605,7 +534,7 @@ class GeneralDateTimeDescription(Identity):
 
     @property
     def __namespace__(self):
-        return 'http://iec.ch/TC57/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'time'
@@ -630,7 +559,7 @@ class IdentifiedObject(Identity):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -650,7 +579,7 @@ class IdentifiedObject(Identity):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -670,7 +599,7 @@ class IdentifiedObject(Identity):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -686,7 +615,7 @@ class IdentifiedObject(Identity):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -702,7 +631,7 @@ class IdentifiedObject(Identity):
         'minOccurs': '1',
         'maxOccurs': '1',
         'inverse': 'InstanceSet.InstanceSetMember',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -711,7 +640,7 @@ class IdentifiedObject(Identity):
     
     @property
     def __namespace__(self):
-        return 'http://iec.ch/TC57/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Core'
@@ -737,7 +666,7 @@ class ACDCTerminal(IdentifiedObject):
         'stereotypes': ['deprecated', 'Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -759,7 +688,7 @@ class ACDCTerminal(IdentifiedObject):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -777,7 +706,7 @@ class ACDCTerminal(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'BusNameMarker.Terminal',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -792,7 +721,7 @@ class ACDCTerminal(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'Measurement.Terminal',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         })
     '''
@@ -811,7 +740,7 @@ class ACDCTerminal(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'OperationalLimitSet.Terminal',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         })
     '''
@@ -820,7 +749,7 @@ class ACDCTerminal(IdentifiedObject):
     
     @property
     def __namespace__(self):
-        return 'http://iec.ch/TC57/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Core'
@@ -845,7 +774,7 @@ class DCTerminal(ACDCTerminal):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'SvDCPowerFlow.DCTerminal',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         })
     '''
@@ -854,7 +783,7 @@ class DCTerminal(ACDCTerminal):
     
     @property
     def __namespace__(self):
-        return 'http://iec.ch/TC57/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'DC'
@@ -880,7 +809,7 @@ class Terminal(ACDCTerminal):
         'stereotypes': ['enumeration', 'Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -898,7 +827,7 @@ class Terminal(ACDCTerminal):
         default=None,
         metadata={
         'type': 'Association',
-        'stereotypes': [],
+        'stereotypes': ['GridAPPSD'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'ConnectivityArea.BoundaryTerminals',
@@ -914,7 +843,7 @@ class Terminal(ACDCTerminal):
         default=None,
         metadata={
         'type': 'Association',
-        'stereotypes': [],
+        'stereotypes': ['GridAPPSD'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'ResourceContainer.BoundaryTerminals',
@@ -932,7 +861,7 @@ class Terminal(ACDCTerminal):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'Bushing.Terminal',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -942,11 +871,11 @@ class Terminal(ACDCTerminal):
         default=None,
         metadata={
         'type': 'Association',
-        'stereotypes': [],
+        'stereotypes': ['ShadowExtension'],
         'minOccurs': '1',
         'maxOccurs': '1',
         'inverse': 'ConductingEquipment.Terminals',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -959,11 +888,11 @@ class Terminal(ACDCTerminal):
         default=None,
         metadata={
         'type': 'Association',
-        'stereotypes': [],
+        'stereotypes': ['ShadowExtension'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'ConnectivityNode.Terminals',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -974,11 +903,11 @@ class Terminal(ACDCTerminal):
         default=None,
         metadata={
         'type': 'Association',
-        'stereotypes': [],
+        'stereotypes': ['ShadowExtension'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'Feeder.NormalHeadTerminal',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -1005,11 +934,11 @@ class Terminal(ACDCTerminal):
         default=None,
         metadata={
         'type': 'Association',
-        'stereotypes': ['OfAggregate'],
+        'stereotypes': ['ShadowExtension', 'OfAggregate'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'TopologicalNode.Terminal',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -1024,11 +953,11 @@ class Terminal(ACDCTerminal):
         default=None,
         metadata={
         'type': 'Association',
-        'stereotypes': [],
+        'stereotypes': ['ShadowExtension'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'UsagePoint.Terminal',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -1042,7 +971,7 @@ class Terminal(ACDCTerminal):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'BranchGroupTerminal.Terminal',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         })
     '''
@@ -1057,7 +986,7 @@ class Terminal(ACDCTerminal):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'MutualCoupling.First_Terminal',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         })
     '''
@@ -1072,7 +1001,7 @@ class Terminal(ACDCTerminal):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'MutualCoupling.Second_Terminal',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         })
     '''
@@ -1087,7 +1016,7 @@ class Terminal(ACDCTerminal):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'RegulatingControl.Terminal',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         })
     '''
@@ -1102,7 +1031,7 @@ class Terminal(ACDCTerminal):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'SvPowerFlow.Terminal',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         })
     '''
@@ -1117,7 +1046,7 @@ class Terminal(ACDCTerminal):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'TieFlow.Terminal',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         })
     '''
@@ -1132,7 +1061,7 @@ class Terminal(ACDCTerminal):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'TransformerEnd.Terminal',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         })
     '''
@@ -1147,7 +1076,7 @@ class Terminal(ACDCTerminal):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'VoltageAngleLimit.AngleReferenceTerminal',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         })
     '''
@@ -1156,7 +1085,7 @@ class Terminal(ACDCTerminal):
     
     @property
     def __namespace__(self):
-        return 'http://iec.ch/TC57/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Core'
@@ -1178,11 +1107,11 @@ class ACPointOfCommonCoupling(IdentifiedObject):
         default=None,
         metadata={
         'type': 'Association',
-        'stereotypes': [],
+        'stereotypes': ['ShadowExtension'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'ConnectivityNode.ACPointOfCommonCoupling',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -1197,7 +1126,7 @@ class ACPointOfCommonCoupling(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'DCConverterUnit.ACPointOfCommonCoupling',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -1212,7 +1141,7 @@ class ACPointOfCommonCoupling(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'ConnectivityNode.ACPointOfCommonCoupling',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         })
     '''
@@ -1221,7 +1150,7 @@ class ACPointOfCommonCoupling(IdentifiedObject):
     
     @property
     def __namespace__(self):
-        return 'http://iec.ch/TC57/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Core'
@@ -1246,7 +1175,7 @@ class AltGeneratingUnitMeas(IdentifiedObject):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -1261,7 +1190,7 @@ class AltGeneratingUnitMeas(IdentifiedObject):
         'minOccurs': '1',
         'maxOccurs': '1',
         'inverse': 'AnalogValue.AltGeneratingUnit',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -1276,7 +1205,7 @@ class AltGeneratingUnitMeas(IdentifiedObject):
         'minOccurs': '1',
         'maxOccurs': '1',
         'inverse': 'ControlAreaGeneratingUnit.AltGeneratingUnitMeas',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -1286,7 +1215,7 @@ class AltGeneratingUnitMeas(IdentifiedObject):
     
     @property
     def __namespace__(self):
-        return 'http://iec.ch/TC57/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'ControlArea'
@@ -1311,7 +1240,7 @@ class AltTieMeas(IdentifiedObject):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -1326,7 +1255,7 @@ class AltTieMeas(IdentifiedObject):
         'minOccurs': '1',
         'maxOccurs': '1',
         'inverse': 'AnalogValue.AltTieMeas',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -1341,7 +1270,7 @@ class AltTieMeas(IdentifiedObject):
         'minOccurs': '1',
         'maxOccurs': '1',
         'inverse': 'TieFlow.AltTieMeas',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -1350,7 +1279,7 @@ class AltTieMeas(IdentifiedObject):
     
     @property
     def __namespace__(self):
-        return 'http://iec.ch/TC57/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'ControlArea'
@@ -1380,7 +1309,7 @@ class Asset(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'Measurement.Asset',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         })
     '''
@@ -1389,7 +1318,7 @@ class Asset(IdentifiedObject):
     
     @property
     def __namespace__(self):
-        return 'http://iec.ch/TC57/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Assets'
@@ -1414,7 +1343,7 @@ class Bushing(Asset):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'Terminal.Bushing',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         })
     '''
@@ -1423,7 +1352,7 @@ class Bushing(Asset):
     
     @property
     def __namespace__(self):
-        return 'http://iec.ch/TC57/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Assets'
@@ -1511,7 +1440,7 @@ class ChargingStation(Asset):
         default=None,
         metadata={
         'type': 'Association',
-        'stereotypes': [],
+        'stereotypes': ['GridAPPSD'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'ChargingConnectorInfo.ChargingStation',
@@ -1550,7 +1479,7 @@ class DuctBank(Asset):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -1558,9 +1487,24 @@ class DuctBank(Asset):
     (ConductorAsset) and an ACLineSegment to understand which circuits
     are in which ducts.
     '''
+    
+    WireSpacingInfos: list[WireSpacingInfo] = field(
+        default_factory=list,
+        metadata={
+        'type': 'Association',
+        'stereotypes': ['informative'],
+        'minOccurs': '0',
+        'maxOccurs': 'unbounded',
+        'inverse': 'WireSpacingInfo.DuctBank',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
+        'serialize': False,
+        })
+    '''
+    '''
+    
     @property
     def __namespace__(self):
-        return 'http://iec.ch/TC57/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Assets'
@@ -1591,7 +1535,7 @@ class AssetInfo(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'CatalogAssetType.AssetInfo',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -1606,7 +1550,7 @@ class AssetInfo(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'ProductAssetModel.AssetInfo',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -1621,7 +1565,7 @@ class AssetInfo(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'PowerSystemResource.AssetDatasheet',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         })
     '''
@@ -1630,7 +1574,7 @@ class AssetInfo(IdentifiedObject):
     
     @property
     def __namespace__(self):
-        return 'http://iec.ch/TC57/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'AssetInfo'
@@ -1707,7 +1651,7 @@ class BundleConfiguration(AssetInfo):
         default=None,
         metadata={
         'type': 'Association',
-        'stereotypes': [],
+        'stereotypes': ['ShadowExtension'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'WireInfo.WireBundleInfo',
@@ -1778,7 +1722,7 @@ class ConductingAssetInfo(AssetInfo):
         'stereotypes': ['enumeration', 'Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -1792,7 +1736,7 @@ class ConductingAssetInfo(AssetInfo):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -1806,7 +1750,7 @@ class ConductingAssetInfo(AssetInfo):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -1820,7 +1764,7 @@ class ConductingAssetInfo(AssetInfo):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -1829,7 +1773,7 @@ class ConductingAssetInfo(AssetInfo):
     
     @property
     def __namespace__(self):
-        return 'http://iec.ch/TC57/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'AssetInfo'
@@ -1855,7 +1799,7 @@ class ConductorInfo(ConductingAssetInfo):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -1869,21 +1813,7 @@ class ConductorInfo(ConductingAssetInfo):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
-        'serialize': True,
-        })
-    '''
-    Area of conducting material cross section
-    '''
-    
-    massPerLength: Optional[ float | MassPerLength ] = field(
-        default=None,
-        metadata={
-        'type': 'Attribute',
-        'stereotypes': ['NeedsWork', 'Attribute'],
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -1897,7 +1827,7 @@ class ConductorInfo(ConductingAssetInfo):
         'stereotypes': ['enumeration', 'Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -1911,7 +1841,7 @@ class ConductorInfo(ConductingAssetInfo):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -1925,7 +1855,7 @@ class ConductorInfo(ConductingAssetInfo):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -1939,7 +1869,7 @@ class ConductorInfo(ConductingAssetInfo):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -1953,7 +1883,7 @@ class ConductorInfo(ConductingAssetInfo):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -1962,7 +1892,7 @@ class ConductorInfo(ConductingAssetInfo):
     
     @property
     def __namespace__(self):
-        return 'http://iec.ch/TC57/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'AssetInfo'
@@ -1986,7 +1916,7 @@ class AngleBusbarInfo(ConductorInfo):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -2000,7 +1930,7 @@ class AngleBusbarInfo(ConductorInfo):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -2009,7 +1939,7 @@ class AngleBusbarInfo(ConductorInfo):
     
     @property
     def __namespace__(self):
-        return 'http://iec.ch/TC57/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'AssetInfo'
@@ -2035,7 +1965,7 @@ class WireInfo(ConductorInfo):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -2049,7 +1979,7 @@ class WireInfo(ConductorInfo):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -2063,7 +1993,7 @@ class WireInfo(ConductorInfo):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -2077,7 +2007,7 @@ class WireInfo(ConductorInfo):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -2091,7 +2021,7 @@ class WireInfo(ConductorInfo):
         'stereotypes': ['enumeration', 'Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -2104,7 +2034,7 @@ class WireInfo(ConductorInfo):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -2118,7 +2048,7 @@ class WireInfo(ConductorInfo):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -2131,7 +2061,7 @@ class WireInfo(ConductorInfo):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -2147,7 +2077,7 @@ class WireInfo(ConductorInfo):
         'stereotypes': ['enumeration', 'Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -2161,7 +2091,7 @@ class WireInfo(ConductorInfo):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -2175,7 +2105,7 @@ class WireInfo(ConductorInfo):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -2189,7 +2119,7 @@ class WireInfo(ConductorInfo):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -2202,7 +2132,7 @@ class WireInfo(ConductorInfo):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -2216,7 +2146,7 @@ class WireInfo(ConductorInfo):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'ACLineSegmentPhase.WireInfo',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         })
     '''
@@ -2244,7 +2174,7 @@ class WireInfo(ConductorInfo):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'WirePhaseInfo.WireInfo',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         })
     '''
@@ -2253,10 +2183,10 @@ class WireInfo(ConductorInfo):
     
     @property
     def __namespace__(self):
-        return 'http://iec.ch/TC57/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
-        return 'AssetInfoEXT'
+        return 'AssetInfo'
     @property
     def __minOccurs__(self):
         return '0'
@@ -2278,7 +2208,7 @@ class BareWireInfo(WireInfo):
         'stereotypes': ['enumeration', 'Attribute'],
         'minOccurs': '1',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -2287,7 +2217,7 @@ class BareWireInfo(WireInfo):
     
     @property
     def __namespace__(self):
-        return 'http://iec.ch/TC57/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'AssetInfo'
@@ -2312,7 +2242,7 @@ class CableInfo(WireInfo):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -2327,7 +2257,7 @@ class CableInfo(WireInfo):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -2341,7 +2271,7 @@ class CableInfo(WireInfo):
         'stereotypes': ['enumeration', 'Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -2355,7 +2285,7 @@ class CableInfo(WireInfo):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -2370,7 +2300,7 @@ class CableInfo(WireInfo):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -2384,7 +2314,7 @@ class CableInfo(WireInfo):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -2398,7 +2328,7 @@ class CableInfo(WireInfo):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -2412,7 +2342,7 @@ class CableInfo(WireInfo):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -2426,7 +2356,7 @@ class CableInfo(WireInfo):
         'stereotypes': ['enumeration', 'Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -2440,7 +2370,7 @@ class CableInfo(WireInfo):
         'stereotypes': ['enumeration', 'Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -2455,7 +2385,7 @@ class CableInfo(WireInfo):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'InsulationInfo.CableInfo',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -2469,7 +2399,7 @@ class CableInfo(WireInfo):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'InsulationInfo.CableInfo',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         })
     '''
@@ -2477,7 +2407,7 @@ class CableInfo(WireInfo):
     
     @property
     def __namespace__(self):
-        return 'http://iec.ch/TC57/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'AssetInfo'
@@ -2501,7 +2431,7 @@ class ConcentricNeutralCableInfo(CableInfo):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -2515,7 +2445,7 @@ class ConcentricNeutralCableInfo(CableInfo):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -2529,7 +2459,7 @@ class ConcentricNeutralCableInfo(CableInfo):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -2543,7 +2473,7 @@ class ConcentricNeutralCableInfo(CableInfo):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -2557,7 +2487,7 @@ class ConcentricNeutralCableInfo(CableInfo):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -2566,7 +2496,7 @@ class ConcentricNeutralCableInfo(CableInfo):
     
     @property
     def __namespace__(self):
-        return 'http://iec.ch/TC57/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'AssetInfo'
@@ -2590,7 +2520,7 @@ class TapeShieldCableInfo(CableInfo):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -2605,7 +2535,7 @@ class TapeShieldCableInfo(CableInfo):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -2614,7 +2544,7 @@ class TapeShieldCableInfo(CableInfo):
     
     @property
     def __namespace__(self):
-        return 'http://iec.ch/TC57/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'AssetInfo'
@@ -2639,7 +2569,7 @@ class OverheadWireInfo(WireInfo):
         'stereotypes': ['enumeration', 'Attribute', 'add'],
         'minOccurs': '1',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -2647,7 +2577,7 @@ class OverheadWireInfo(WireInfo):
     
     @property
     def __namespace__(self):
-        return 'http://iec.ch/TC57/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'AssetInfo'
@@ -2676,7 +2606,7 @@ class GridEdgeDeviceInfo(ConductingAssetInfo):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -2693,7 +2623,7 @@ class GridEdgeDeviceInfo(ConductingAssetInfo):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -2709,7 +2639,7 @@ class GridEdgeDeviceInfo(ConductingAssetInfo):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -2720,7 +2650,7 @@ class GridEdgeDeviceInfo(ConductingAssetInfo):
     
     @property
     def __namespace__(self):
-        return 'http://iec.ch/TC57/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'AssetInfo'
@@ -2739,40 +2669,6 @@ class InverterInfo(GridEdgeDeviceInfo):
     power to be synchronized to the grid.
     '''
 
-    operatingCategoryAbnormal: Optional[str] = field(
-        default=None,
-        metadata={
-        'type': 'Attribute',
-        'stereotypes': ['Attribute'],
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
-        'serialize': True,
-        })
-    '''
-    Based on IEEE 1547-2018 Table 28:
-    <i>Abnormal operating performance category</i>
-    Indication of voltage and frequency ride-through capability
-    Values = Category I, Category II, Category III
-    '''
-    
-    operatingCategoryNormal: Optional[str] = field(
-        default=None,
-        metadata={
-        'type': 'Attribute',
-        'stereotypes': ['Attribute'],
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
-        'serialize': True,
-        })
-    '''
-    Based on IEEE 1547-2018 Table 28:
-    <i>Normal operating performance category</i>
-    Indication of reactive power and voltage/power control capability.
-    Values = Category A, Category B
-    '''
-    
     powerFactorOverExcited: Optional[float] = field(
         default=None,
         metadata={
@@ -2780,7 +2676,7 @@ class InverterInfo(GridEdgeDeviceInfo):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -2796,7 +2692,7 @@ class InverterInfo(GridEdgeDeviceInfo):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -2812,7 +2708,7 @@ class InverterInfo(GridEdgeDeviceInfo):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -2828,7 +2724,7 @@ class InverterInfo(GridEdgeDeviceInfo):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -2844,7 +2740,7 @@ class InverterInfo(GridEdgeDeviceInfo):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -2861,7 +2757,7 @@ class InverterInfo(GridEdgeDeviceInfo):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -2877,7 +2773,7 @@ class InverterInfo(GridEdgeDeviceInfo):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -2893,7 +2789,7 @@ class InverterInfo(GridEdgeDeviceInfo):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -2910,7 +2806,7 @@ class InverterInfo(GridEdgeDeviceInfo):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'InverterCapabilities.IntervalInfo',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -2918,7 +2814,7 @@ class InverterInfo(GridEdgeDeviceInfo):
     
     @property
     def __namespace__(self):
-        return 'http://iec.ch/TC57/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'AssetInfo'
@@ -2942,7 +2838,7 @@ class TapChangerInfo(ConductingAssetInfo):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -2956,7 +2852,7 @@ class TapChangerInfo(ConductingAssetInfo):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -2970,7 +2866,7 @@ class TapChangerInfo(ConductingAssetInfo):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -2984,7 +2880,7 @@ class TapChangerInfo(ConductingAssetInfo):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -2998,7 +2894,7 @@ class TapChangerInfo(ConductingAssetInfo):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -3012,7 +2908,7 @@ class TapChangerInfo(ConductingAssetInfo):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -3026,7 +2922,7 @@ class TapChangerInfo(ConductingAssetInfo):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -3042,7 +2938,7 @@ class TapChangerInfo(ConductingAssetInfo):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -3056,7 +2952,7 @@ class TapChangerInfo(ConductingAssetInfo):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -3070,7 +2966,7 @@ class TapChangerInfo(ConductingAssetInfo):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -3084,7 +2980,7 @@ class TapChangerInfo(ConductingAssetInfo):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -3098,7 +2994,7 @@ class TapChangerInfo(ConductingAssetInfo):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -3112,7 +3008,7 @@ class TapChangerInfo(ConductingAssetInfo):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -3126,7 +3022,7 @@ class TapChangerInfo(ConductingAssetInfo):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -3135,7 +3031,7 @@ class TapChangerInfo(ConductingAssetInfo):
     
     @property
     def __namespace__(self):
-        return 'http://iec.ch/TC57/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'AssetInfo'
@@ -3159,7 +3055,7 @@ class TransformerEndInfo(ConductingAssetInfo):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -3175,7 +3071,7 @@ class TransformerEndInfo(ConductingAssetInfo):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -3192,7 +3088,7 @@ class TransformerEndInfo(ConductingAssetInfo):
         'stereotypes': ['enumeration', 'Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -3206,7 +3102,7 @@ class TransformerEndInfo(ConductingAssetInfo):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -3221,7 +3117,7 @@ class TransformerEndInfo(ConductingAssetInfo):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -3235,7 +3131,7 @@ class TransformerEndInfo(ConductingAssetInfo):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -3249,7 +3145,7 @@ class TransformerEndInfo(ConductingAssetInfo):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -3263,7 +3159,7 @@ class TransformerEndInfo(ConductingAssetInfo):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -3279,7 +3175,7 @@ class TransformerEndInfo(ConductingAssetInfo):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'TransformerCoreAdmittance.TransformerEndInfo',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -3296,7 +3192,7 @@ class TransformerEndInfo(ConductingAssetInfo):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'TransformerStarImpedance.TransformerEndInfo',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -3311,7 +3207,7 @@ class TransformerEndInfo(ConductingAssetInfo):
         'minOccurs': '1',
         'maxOccurs': '1',
         'inverse': 'TransformerTankInfo.TransformerEndInfos',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -3326,7 +3222,7 @@ class TransformerEndInfo(ConductingAssetInfo):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'NoLoadTest.EnergisedEnd',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         })
     '''
@@ -3341,7 +3237,7 @@ class TransformerEndInfo(ConductingAssetInfo):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'OpenCircuitTest.EnergisedEnd',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         })
     '''
@@ -3357,7 +3253,7 @@ class TransformerEndInfo(ConductingAssetInfo):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'OpenCircuitTest.OpenEnd',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         })
     '''
@@ -3373,7 +3269,7 @@ class TransformerEndInfo(ConductingAssetInfo):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'ShortCircuitTest.EnergisedEnd',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         })
     '''
@@ -3389,7 +3285,7 @@ class TransformerEndInfo(ConductingAssetInfo):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'ShortCircuitTest.GroundedEnds',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         })
     '''
@@ -3405,7 +3301,7 @@ class TransformerEndInfo(ConductingAssetInfo):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'TransformerCoreAdmittance.TransformerEndInfo',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         })
     '''
@@ -3422,7 +3318,7 @@ class TransformerEndInfo(ConductingAssetInfo):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'TransformerMeshImpedance.FromTransformerEndInfo',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         })
     '''
@@ -3438,7 +3334,7 @@ class TransformerEndInfo(ConductingAssetInfo):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'TransformerMeshImpedance.ToTransformerEndInfos',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         })
     '''
@@ -3454,7 +3350,7 @@ class TransformerEndInfo(ConductingAssetInfo):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'TransformerStarImpedance.TransformerEndInfo',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         })
     '''
@@ -3463,7 +3359,7 @@ class TransformerEndInfo(ConductingAssetInfo):
     
     @property
     def __namespace__(self):
-        return 'http://iec.ch/TC57/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'AssetInfo'
@@ -3628,7 +3524,7 @@ class BatteryInfo(DCConductingAssetInfo):
         default=None,
         metadata={
         'type': 'Attribute',
-        'stereotypes': ['enumeration', 'GridAPPSD', 'Attribute'],
+        'stereotypes': ['GridAPPSD', 'enumeration', 'Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://gridappsd.org/CIM/extension#',
@@ -3704,7 +3600,7 @@ class InsulationInfo(AssetInfo):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -3718,7 +3614,7 @@ class InsulationInfo(AssetInfo):
         'stereotypes': ['enumeration', 'Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -3732,7 +3628,7 @@ class InsulationInfo(AssetInfo):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -3743,11 +3639,11 @@ class InsulationInfo(AssetInfo):
         default=None,
         metadata={
         'type': 'Association',
-        'stereotypes': ['ShadowExtension'],
+        'stereotypes': [],
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'CableInfo.InsulationInfo',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -3761,7 +3657,7 @@ class InsulationInfo(AssetInfo):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'CableInfo.InsulationInfo',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         })
     '''
@@ -3769,7 +3665,7 @@ class InsulationInfo(AssetInfo):
     
     @property
     def __namespace__(self):
-        return 'http://iec.ch/TC57/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'AssetInfo'
@@ -3794,7 +3690,7 @@ class PowerTransformerInfo(AssetInfo):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'TransformerTankInfo.PowerTransformerInfo',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         })
     '''
@@ -3803,7 +3699,7 @@ class PowerTransformerInfo(AssetInfo):
     
     @property
     def __namespace__(self):
-        return 'http://iec.ch/TC57/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'AssetInfo'
@@ -3825,10 +3721,10 @@ class TransformerTankInfo(AssetInfo):
         metadata={
         'type': 'Association',
         'stereotypes': [],
-        'minOccurs': '0',
+        'minOccurs': '1',
         'maxOccurs': '1',
         'inverse': 'PowerTransformerInfo.TransformerTankInfos',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -3843,7 +3739,7 @@ class TransformerTankInfo(AssetInfo):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'TransformerEndInfo.TransformerTankInfo',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         })
     '''
@@ -3866,7 +3762,7 @@ class TransformerTankInfo(AssetInfo):
     
     @property
     def __namespace__(self):
-        return 'http://iec.ch/TC57/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'AssetInfo'
@@ -3891,7 +3787,7 @@ class VehicleInfo(AssetInfo):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -3905,7 +3801,7 @@ class VehicleInfo(AssetInfo):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -3919,7 +3815,7 @@ class VehicleInfo(AssetInfo):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -3933,7 +3829,7 @@ class VehicleInfo(AssetInfo):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -3942,7 +3838,7 @@ class VehicleInfo(AssetInfo):
     
     @property
     def __namespace__(self):
-        return 'http://iec.ch/TC57/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'AssetInfo'
@@ -4057,7 +3953,7 @@ class WireAssemblyInfo(AssetInfo):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'PerLengthLineParameter.WireAssemblyInfo',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         })
     '''
@@ -4072,7 +3968,7 @@ class WireAssemblyInfo(AssetInfo):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'WirePhaseInfo.WireAssemblyInfo',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         })
     '''
@@ -4081,7 +3977,7 @@ class WireAssemblyInfo(AssetInfo):
     
     @property
     def __namespace__(self):
-        return 'http://iec.ch/TC57/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'AssetInfo'
@@ -4109,7 +4005,7 @@ class WireSpacingInfo(AssetInfo):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -4123,7 +4019,7 @@ class WireSpacingInfo(AssetInfo):
         'stereotypes': ['modify', 'Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -4138,7 +4034,7 @@ class WireSpacingInfo(AssetInfo):
         'stereotypes': ['modify', 'Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -4152,7 +4048,7 @@ class WireSpacingInfo(AssetInfo):
         'stereotypes': ['enumeration', 'Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -4167,7 +4063,7 @@ class WireSpacingInfo(AssetInfo):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'DuctBank.WireSpacingInfos',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -4181,7 +4077,7 @@ class WireSpacingInfo(AssetInfo):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'ACLineSegment.WireSpacingInfo',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         })
     '''
@@ -4195,7 +4091,7 @@ class WireSpacingInfo(AssetInfo):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'WirePosition.WireSpacingInfo',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         })
     '''
@@ -4204,7 +4100,7 @@ class WireSpacingInfo(AssetInfo):
     
     @property
     def __namespace__(self):
-        return 'http://iec.ch/TC57/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'AssetInfo'
@@ -4238,7 +4134,7 @@ class AsynchronousMachineDynamics(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'AsynchronousMachine.AsynchronousMachineDynamics',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         })
     '''
@@ -4248,7 +4144,7 @@ class AsynchronousMachineDynamics(IdentifiedObject):
     
     @property
     def __namespace__(self):
-        return 'http://iec.ch/TC57/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'AsynchronousMachineDynamics'
@@ -4277,7 +4173,7 @@ class BaseFrequency(IdentifiedObject):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -4286,7 +4182,7 @@ class BaseFrequency(IdentifiedObject):
     
     @property
     def __namespace__(self):
-        return 'http://iec.ch/TC57/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Core'
@@ -4310,7 +4206,7 @@ class BasePower(IdentifiedObject):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -4319,7 +4215,7 @@ class BasePower(IdentifiedObject):
     
     @property
     def __namespace__(self):
-        return 'http://iec.ch/TC57/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Core'
@@ -4345,7 +4241,7 @@ class BaseVoltage(IdentifiedObject):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -4361,7 +4257,7 @@ class BaseVoltage(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'ConductingEquipment.BaseVoltage',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         })
     '''
@@ -4378,7 +4274,7 @@ class BaseVoltage(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'ConnectivityNode.BaseVoltage',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         })
     '''
@@ -4392,7 +4288,7 @@ class BaseVoltage(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'TopologicalNode.BaseVoltage',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         })
     '''
@@ -4407,7 +4303,7 @@ class BaseVoltage(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'TransformerEnd.BaseVoltage',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         })
     '''
@@ -4422,7 +4318,7 @@ class BaseVoltage(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'VoltageLevel.BaseVoltage',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         })
     '''
@@ -4431,7 +4327,7 @@ class BaseVoltage(IdentifiedObject):
     
     @property
     def __namespace__(self):
-        return 'http://iec.ch/TC57/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'CoreEXT'
@@ -4455,7 +4351,7 @@ class BasicIntervalSchedule(IdentifiedObject):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -4470,7 +4366,7 @@ class BasicIntervalSchedule(IdentifiedObject):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -4484,7 +4380,7 @@ class BasicIntervalSchedule(IdentifiedObject):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -4498,7 +4394,7 @@ class BasicIntervalSchedule(IdentifiedObject):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -4512,7 +4408,7 @@ class BasicIntervalSchedule(IdentifiedObject):
         'stereotypes': ['enumeration', 'Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -4526,7 +4422,7 @@ class BasicIntervalSchedule(IdentifiedObject):
         'stereotypes': ['enumeration', 'Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -4540,7 +4436,7 @@ class BasicIntervalSchedule(IdentifiedObject):
         'stereotypes': ['enumeration', 'Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -4554,7 +4450,7 @@ class BasicIntervalSchedule(IdentifiedObject):
         'stereotypes': ['enumeration', 'Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -4568,7 +4464,7 @@ class BasicIntervalSchedule(IdentifiedObject):
         'stereotypes': ['enumeration', 'Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -4582,7 +4478,7 @@ class BasicIntervalSchedule(IdentifiedObject):
         'stereotypes': ['enumeration', 'Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -4591,7 +4487,7 @@ class BasicIntervalSchedule(IdentifiedObject):
     
     @property
     def __namespace__(self):
-        return 'http://iec.ch/TC57/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Core'
@@ -4617,7 +4513,7 @@ class IrregularIntervalSchedule(BasicIntervalSchedule):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'IrregularTimePoint.IntervalSchedule',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         })
     '''
@@ -4626,7 +4522,7 @@ class IrregularIntervalSchedule(BasicIntervalSchedule):
     
     @property
     def __namespace__(self):
-        return 'http://iec.ch/TC57/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Core'
@@ -4651,7 +4547,7 @@ class RegularIntervalSchedule(BasicIntervalSchedule):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -4666,7 +4562,7 @@ class RegularIntervalSchedule(BasicIntervalSchedule):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -4682,7 +4578,7 @@ class RegularIntervalSchedule(BasicIntervalSchedule):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'RegularTimePoint.IntervalSchedule',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         })
     '''
@@ -4691,7 +4587,7 @@ class RegularIntervalSchedule(BasicIntervalSchedule):
     
     @property
     def __namespace__(self):
-        return 'http://iec.ch/TC57/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Core'
@@ -4712,7 +4608,7 @@ class PointOnWaveValue(RegularIntervalSchedule):
         default=None,
         metadata={
         'type': 'Association',
-        'stereotypes': ['ShadowExtension'],
+        'stereotypes': [],
         'minOccurs': '1',
         'maxOccurs': '1',
         'inverse': 'Analog.PointOnWaveValues',
@@ -4751,7 +4647,7 @@ class SeasonDayTypeSchedule(RegularIntervalSchedule):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'DayType.SeasonDayTypeSchedules',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -4766,7 +4662,7 @@ class SeasonDayTypeSchedule(RegularIntervalSchedule):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'Season.SeasonDayTypeSchedules',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -4775,7 +4671,7 @@ class SeasonDayTypeSchedule(RegularIntervalSchedule):
     
     @property
     def __namespace__(self):
-        return 'http://iec.ch/TC57/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'LoadModel'
@@ -4803,7 +4699,7 @@ class ConformLoadSchedule(SeasonDayTypeSchedule):
         'minOccurs': '1',
         'maxOccurs': '1',
         'inverse': 'ConformLoadGroup.ConformLoadSchedules',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -4812,7 +4708,7 @@ class ConformLoadSchedule(SeasonDayTypeSchedule):
     
     @property
     def __namespace__(self):
-        return 'http://iec.ch/TC57/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'LoadModel'
@@ -4839,7 +4735,7 @@ class NonConformLoadSchedule(SeasonDayTypeSchedule):
         'minOccurs': '1',
         'maxOccurs': '1',
         'inverse': 'NonConformLoadGroup.NonConformLoadSchedules',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -4848,7 +4744,7 @@ class NonConformLoadSchedule(SeasonDayTypeSchedule):
     
     @property
     def __namespace__(self):
-        return 'http://iec.ch/TC57/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'LoadModel'
@@ -4870,11 +4766,11 @@ class RegulationSchedule(SeasonDayTypeSchedule):
         default=None,
         metadata={
         'type': 'Association',
-        'stereotypes': ['ShadowExtension'],
+        'stereotypes': [],
         'minOccurs': '1',
         'maxOccurs': '1',
         'inverse': 'RegulatingControl.RegulationSchedule',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -4889,7 +4785,7 @@ class RegulationSchedule(SeasonDayTypeSchedule):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'VoltageControlZone.RegulationSchedule',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         })
     '''
@@ -4898,7 +4794,7 @@ class RegulationSchedule(SeasonDayTypeSchedule):
     
     @property
     def __namespace__(self):
-        return 'http://iec.ch/TC57/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Wires'
@@ -4924,7 +4820,7 @@ class SwitchSchedule(SeasonDayTypeSchedule):
         'minOccurs': '1',
         'maxOccurs': '1',
         'inverse': 'Switch.SwitchSchedules',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -4933,7 +4829,7 @@ class SwitchSchedule(SeasonDayTypeSchedule):
     
     @property
     def __namespace__(self):
-        return 'http://iec.ch/TC57/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Wires'
@@ -4944,30 +4840,16 @@ class SwitchSchedule(SeasonDayTypeSchedule):
     def __maxOccurs__(self):
         return 'unbounded'
     
+@stereotype(CIMStereotype.NC)
 @dataclass(repr=False)
 class TapSchedule(SeasonDayTypeSchedule):
     '''
     A pre-established pattern over time for a tap step.
     '''
 
-    TapChanger: Optional[TapChanger] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'stereotypes': ['ShadowExtension'],
-        'minOccurs': '1',
-        'maxOccurs': '1',
-        'inverse': 'TapChanger.TapSchedules',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
-        'serialize': True,
-        })
-    '''
-    A TapSchedule is associated with a TapChanger.
-    '''
-    
     @property
     def __namespace__(self):
-        return 'http://iec.ch/TC57/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Wires'
@@ -4998,7 +4880,7 @@ class BilateralExchangeActor(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'CommunicationLink.BilateralExchangeActor',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         })
     '''
@@ -5008,7 +4890,7 @@ class BilateralExchangeActor(IdentifiedObject):
     
     @property
     def __namespace__(self):
-        return 'http://iec.ch/TC57/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'ICCPConfiguration'
@@ -5034,7 +4916,7 @@ class BranchGroup(IdentifiedObject):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -5048,7 +4930,7 @@ class BranchGroup(IdentifiedObject):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -5062,7 +4944,7 @@ class BranchGroup(IdentifiedObject):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -5076,7 +4958,7 @@ class BranchGroup(IdentifiedObject):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -5090,7 +4972,7 @@ class BranchGroup(IdentifiedObject):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -5104,7 +4986,7 @@ class BranchGroup(IdentifiedObject):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -5119,7 +5001,7 @@ class BranchGroup(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'BranchGroupTerminal.BranchGroup',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         })
     '''
@@ -5128,7 +5010,7 @@ class BranchGroup(IdentifiedObject):
     
     @property
     def __namespace__(self):
-        return 'http://iec.ch/TC57/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'OperationalLimits'
@@ -5159,7 +5041,7 @@ class BusNameMarker(IdentifiedObject):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -5176,7 +5058,7 @@ class BusNameMarker(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'ReportingGroup.BusNameMarker',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -5187,11 +5069,11 @@ class BusNameMarker(IdentifiedObject):
         default=None,
         metadata={
         'type': 'Association',
-        'stereotypes': [],
+        'stereotypes': ['ShadowExtension'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'TopologicalNode.BusNameMarker',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -5209,7 +5091,7 @@ class BusNameMarker(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'ACDCTerminal.BusNameMarker',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         })
     '''
@@ -5218,7 +5100,7 @@ class BusNameMarker(IdentifiedObject):
     
     @property
     def __namespace__(self):
-        return 'http://iec.ch/TC57/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Topology'
@@ -5244,7 +5126,7 @@ class CalculationMethodHierarchy(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'Measurement.CalculationMethodHierarchy',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         })
     '''
@@ -5259,7 +5141,7 @@ class CalculationMethodHierarchy(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'MeasurementValue.CalculationMethodHierarchy',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         })
     '''
@@ -5268,7 +5150,7 @@ class CalculationMethodHierarchy(IdentifiedObject):
     
     @property
     def __namespace__(self):
-        return 'http://iec.ch/TC57/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'AssetMeas'
@@ -5292,7 +5174,7 @@ class CatalogAssetType(IdentifiedObject):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -5306,7 +5188,7 @@ class CatalogAssetType(IdentifiedObject):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -5320,7 +5202,7 @@ class CatalogAssetType(IdentifiedObject):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -5335,7 +5217,7 @@ class CatalogAssetType(IdentifiedObject):
         'stereotypes': ['enumeration', 'Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -5350,7 +5232,7 @@ class CatalogAssetType(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'AssetInfo.CatalogAssetType',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         })
     '''
@@ -5359,7 +5241,7 @@ class CatalogAssetType(IdentifiedObject):
     
     @property
     def __namespace__(self):
-        return 'http://iec.ch/TC57/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Assets'
@@ -5420,7 +5302,7 @@ class ConnectivityNode(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'ACPointOfCommonCoupling.ConnectivityNode',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -5431,11 +5313,11 @@ class ConnectivityNode(IdentifiedObject):
         default=None,
         metadata={
         'type': 'Association',
-        'stereotypes': [],
+        'stereotypes': ['ShadowExtension'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'BaseVoltage.ConnectivityNodes',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -5445,7 +5327,7 @@ class ConnectivityNode(IdentifiedObject):
         default=None,
         metadata={
         'type': 'Association',
-        'stereotypes': ['ShadowExtension', 'European'],
+        'stereotypes': ['European'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'BoundaryPoint.ConnectivityNode',
@@ -5460,11 +5342,11 @@ class ConnectivityNode(IdentifiedObject):
         default=None,
         metadata={
         'type': 'Association',
-        'stereotypes': ['ShadowExtension'],
+        'stereotypes': [],
         'minOccurs': '1',
         'maxOccurs': '1',
         'inverse': 'ConnectivityNodeContainer.ConnectivityNodes',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -5479,7 +5361,7 @@ class ConnectivityNode(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'IndividualPnode.ConnectivityNode',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -5489,11 +5371,11 @@ class ConnectivityNode(IdentifiedObject):
         default=None,
         metadata={
         'type': 'Association',
-        'stereotypes': ['OfAggregate'],
+        'stereotypes': ['ShadowExtension', 'OfAggregate'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'TopologicalNode.ConnectivityNodes',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -5509,7 +5391,7 @@ class ConnectivityNode(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'ACPointOfCommonCoupling.ConnectivityNode',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         })
     '''
@@ -5524,7 +5406,7 @@ class ConnectivityNode(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'IndividualPnode.ConnectivityNode',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         })
     '''
@@ -5538,7 +5420,7 @@ class ConnectivityNode(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'Terminal.ConnectivityNode',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         })
     '''
@@ -5548,10 +5430,10 @@ class ConnectivityNode(IdentifiedObject):
     
     @property
     def __namespace__(self):
-        return 'http://iec.ch/TC57/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
-        return 'CoreEXT'
+        return 'Core'
     @property
     def __minOccurs__(self):
         return '0'
@@ -5577,7 +5459,7 @@ class ControlAreaGeneratingUnit(IdentifiedObject):
         'minOccurs': '1',
         'maxOccurs': '1',
         'inverse': 'ControlArea.ControlAreaGeneratingUnit',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -5588,11 +5470,11 @@ class ControlAreaGeneratingUnit(IdentifiedObject):
         default=None,
         metadata={
         'type': 'Association',
-        'stereotypes': ['NC'],
+        'stereotypes': [],
         'minOccurs': '1',
         'maxOccurs': '1',
         'inverse': 'GeneratingUnit.ControlAreaGeneratingUnit',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -5608,7 +5490,7 @@ class ControlAreaGeneratingUnit(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'AltGeneratingUnitMeas.ControlAreaGeneratingUnit',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         })
     '''
@@ -5617,7 +5499,7 @@ class ControlAreaGeneratingUnit(IdentifiedObject):
     
     @property
     def __namespace__(self):
-        return 'http://iec.ch/TC57/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'ControlArea'
@@ -5645,7 +5527,7 @@ class ControlAreaPowerElectronicsUnit(IdentifiedObject):
         'minOccurs': '1',
         'maxOccurs': '1',
         'inverse': 'ControlArea.ControlAreaPowerElectronicsUnit',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -5660,7 +5542,7 @@ class ControlAreaPowerElectronicsUnit(IdentifiedObject):
         'minOccurs': '1',
         'maxOccurs': '1',
         'inverse': 'PowerElectronicsUnit.ControlAreaPowerElectronicsUnit',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -5670,7 +5552,7 @@ class ControlAreaPowerElectronicsUnit(IdentifiedObject):
     
     @property
     def __namespace__(self):
-        return 'http://iec.ch/TC57/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'ControlArea'
@@ -5697,7 +5579,7 @@ class CoupledLineSegmentGroup(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'LineSegmentCoupling.CoupledLineSegmentGroup',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         })
     '''
@@ -5706,7 +5588,7 @@ class CoupledLineSegmentGroup(IdentifiedObject):
     
     @property
     def __namespace__(self):
-        return 'http://iec.ch/TC57/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Wires'
@@ -5731,7 +5613,7 @@ class CurrentDroopControlFunction(IdentifiedObject):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -5745,7 +5627,7 @@ class CurrentDroopControlFunction(IdentifiedObject):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -5759,7 +5641,7 @@ class CurrentDroopControlFunction(IdentifiedObject):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -5773,7 +5655,7 @@ class CurrentDroopControlFunction(IdentifiedObject):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -5787,7 +5669,7 @@ class CurrentDroopControlFunction(IdentifiedObject):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -5801,7 +5683,7 @@ class CurrentDroopControlFunction(IdentifiedObject):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -5810,7 +5692,7 @@ class CurrentDroopControlFunction(IdentifiedObject):
     
     @property
     def __namespace__(self):
-        return 'http://iec.ch/TC57/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'FACTS'
@@ -5836,7 +5718,7 @@ class Curve(IdentifiedObject):
         'stereotypes': ['enumeration', 'Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -5850,7 +5732,7 @@ class Curve(IdentifiedObject):
         'stereotypes': ['enumeration', 'Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -5864,7 +5746,7 @@ class Curve(IdentifiedObject):
         'stereotypes': ['enumeration', 'Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -5878,7 +5760,7 @@ class Curve(IdentifiedObject):
         'stereotypes': ['enumeration', 'Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -5892,7 +5774,7 @@ class Curve(IdentifiedObject):
         'stereotypes': ['enumeration', 'Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -5906,7 +5788,7 @@ class Curve(IdentifiedObject):
         'stereotypes': ['enumeration', 'Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -5920,7 +5802,7 @@ class Curve(IdentifiedObject):
         'stereotypes': ['enumeration', 'Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -5934,7 +5816,7 @@ class Curve(IdentifiedObject):
         'stereotypes': ['enumeration', 'Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -5948,7 +5830,7 @@ class Curve(IdentifiedObject):
         'stereotypes': ['enumeration', 'Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -5963,7 +5845,7 @@ class Curve(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'CurveData.Curve',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         })
     '''
@@ -5972,7 +5854,7 @@ class Curve(IdentifiedObject):
     
     @property
     def __namespace__(self):
-        return 'http://iec.ch/TC57/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Core'
@@ -5998,7 +5880,7 @@ class AmbientTemperatureDependencyCurve(Curve):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'OperationalLimitType.PermanentAmbientTemperatureDependencyCurve',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         })
     '''
@@ -6008,7 +5890,7 @@ class AmbientTemperatureDependencyCurve(Curve):
     
     @property
     def __namespace__(self):
-        return 'http://iec.ch/TC57/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'SecurityLimit'
@@ -6036,7 +5918,7 @@ class BaseOverloadLimitCurve(Curve):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'OperationalLimitType.TemporaryBaseOverloadLimitCurve',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         })
     '''
@@ -6046,7 +5928,7 @@ class BaseOverloadLimitCurve(Curve):
     
     @property
     def __namespace__(self):
-        return 'http://iec.ch/TC57/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'SecurityLimit'
@@ -6071,7 +5953,7 @@ class ConductorCharacteristicCurve(Curve):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'Conductor.DamageCurve',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         })
     '''
@@ -6080,7 +5962,7 @@ class ConductorCharacteristicCurve(Curve):
     
     @property
     def __namespace__(self):
-        return 'http://iec.ch/TC57/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Protection'
@@ -6107,7 +5989,7 @@ class DurationOverloadLimitCurve(Curve):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'OperationalLimitType.TemporaryDurationOverloadLimitCurve',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         })
     '''
@@ -6117,7 +5999,7 @@ class DurationOverloadLimitCurve(Curve):
     
     @property
     def __namespace__(self):
-        return 'http://iec.ch/TC57/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'SecurityLimit'
@@ -6142,7 +6024,7 @@ class FuseCharacteristicCurve(Curve):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'Fuse.MiinimumMeltCurve',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         })
     '''
@@ -6157,7 +6039,7 @@ class FuseCharacteristicCurve(Curve):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'Fuse.TotalClearingTimeCurve',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         })
     '''
@@ -6166,7 +6048,7 @@ class FuseCharacteristicCurve(Curve):
     
     @property
     def __namespace__(self):
-        return 'http://iec.ch/TC57/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Protection'
@@ -6191,7 +6073,7 @@ class LossCurve(Curve):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'FACTSEquipment.LossCurve',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -6200,7 +6082,7 @@ class LossCurve(Curve):
     
     @property
     def __namespace__(self):
-        return 'http://iec.ch/TC57/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'FACTS'
@@ -6229,7 +6111,7 @@ class ReactiveCapabilityCurve(Curve):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -6244,7 +6126,7 @@ class ReactiveCapabilityCurve(Curve):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -6258,7 +6140,7 @@ class ReactiveCapabilityCurve(Curve):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -6273,7 +6155,7 @@ class ReactiveCapabilityCurve(Curve):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'ExtendedWardEquivalent.ReactiveCapabilityCurve',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -6288,7 +6170,7 @@ class ReactiveCapabilityCurve(Curve):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'SynchronousMachine.ReactiveCapabilityCurve',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -6303,7 +6185,7 @@ class ReactiveCapabilityCurve(Curve):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'SynchronousMachine.InitialReactiveCapabilityCurve',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         })
     '''
@@ -6312,7 +6194,7 @@ class ReactiveCapabilityCurve(Curve):
     
     @property
     def __namespace__(self):
-        return 'http://iec.ch/TC57/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Wires'
@@ -6337,7 +6219,7 @@ class RecoveryOverloadLimitCurve(Curve):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'OperationalLimitType.RecoveryOverloadLimitCurve',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         })
     '''
@@ -6346,7 +6228,7 @@ class RecoveryOverloadLimitCurve(Curve):
     
     @property
     def __namespace__(self):
-        return 'http://iec.ch/TC57/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'SecurityLimit'
@@ -6373,7 +6255,7 @@ class SolarRadiationDependencyCurve(Curve):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'OperationalLimitType.PermanentSolarRadiationCurve',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         })
     '''
@@ -6383,7 +6265,7 @@ class SolarRadiationDependencyCurve(Curve):
     
     @property
     def __namespace__(self):
-        return 'http://iec.ch/TC57/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'SecurityLimit'
@@ -6408,7 +6290,7 @@ class CutAction(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'Cut.CutAction',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         })
     '''
@@ -6417,7 +6299,7 @@ class CutAction(IdentifiedObject):
     
     @property
     def __namespace__(self):
-        return 'http://iec.ch/TC57/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Operations'
@@ -6442,7 +6324,7 @@ class DCTopologicalNode(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'SvDCVoltage.DCTopologicalNode',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         })
     '''
@@ -6451,7 +6333,7 @@ class DCTopologicalNode(IdentifiedObject):
     
     @property
     def __namespace__(self):
-        return 'http://iec.ch/TC57/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'DC'
@@ -6477,7 +6359,7 @@ class DayType(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'SeasonDayTypeSchedule.DayType',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         })
     '''
@@ -6486,7 +6368,7 @@ class DayType(IdentifiedObject):
     
     @property
     def __namespace__(self):
-        return 'http://iec.ch/TC57/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'LoadModel'
@@ -6512,7 +6394,7 @@ class DesignElement(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'PowerSystemResource.DesignElement',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         })
     '''
@@ -6521,7 +6403,7 @@ class DesignElement(IdentifiedObject):
     
     @property
     def __namespace__(self):
-        return 'http://iec.ch/TC57/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Design'
@@ -6543,7 +6425,7 @@ class EarthResistivity(IdentifiedObject):
         default=None,
         metadata={
         'type': 'Attribute',
-        'stereotypes': ['enumeration', 'GridAPPSD', 'Attribute'],
+        'stereotypes': ['GridAPPSD', 'enumeration', 'Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://gridappsd.org/CIM/extension#',
@@ -6625,7 +6507,7 @@ class EnergyArea(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'ControlArea.EnergyArea',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -6640,7 +6522,7 @@ class EnergyArea(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'ControlArea.EnergyArea',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         })
     '''
@@ -6649,7 +6531,7 @@ class EnergyArea(IdentifiedObject):
     
     @property
     def __namespace__(self):
-        return 'http://iec.ch/TC57/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'LoadModel'
@@ -6676,7 +6558,7 @@ class LoadArea(EnergyArea):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -6690,7 +6572,7 @@ class LoadArea(EnergyArea):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'SubLoadArea.LoadArea',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         })
     '''
@@ -6699,7 +6581,7 @@ class LoadArea(EnergyArea):
     
     @property
     def __namespace__(self):
-        return 'http://iec.ch/TC57/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'LoadEXT'
@@ -6722,11 +6604,11 @@ class SubLoadArea(EnergyArea):
         default=None,
         metadata={
         'type': 'Association',
-        'stereotypes': ['OfAggregate'],
+        'stereotypes': ['ShadowExtension', 'OfAggregate'],
         'minOccurs': '1',
         'maxOccurs': '1',
         'inverse': 'LoadArea.SubLoadAreas',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -6741,7 +6623,7 @@ class SubLoadArea(EnergyArea):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'LoadGroup.SubLoadArea',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         })
     '''
@@ -6750,7 +6632,7 @@ class SubLoadArea(EnergyArea):
     
     @property
     def __namespace__(self):
-        return 'http://iec.ch/TC57/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'LoadModel'
@@ -6775,7 +6657,7 @@ class EnergyConsumerAction(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'EnergyConsumer.EnergyConsumerAction',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         })
     '''
@@ -6783,7 +6665,7 @@ class EnergyConsumerAction(IdentifiedObject):
     
     @property
     def __namespace__(self):
-        return 'http://iec.ch/TC57/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Operations'
@@ -6808,7 +6690,7 @@ class EnergySchedulingType(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'EnergySource.EnergySchedulingType',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         })
     '''
@@ -6817,7 +6699,7 @@ class EnergySchedulingType(IdentifiedObject):
     
     @property
     def __namespace__(self):
-        return 'http://iec.ch/TC57/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Wires'
@@ -6842,7 +6724,7 @@ class EnergySourceAction(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'EnergySource.EnergySourceAction',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         })
     '''
@@ -6851,7 +6733,7 @@ class EnergySourceAction(IdentifiedObject):
     
     @property
     def __namespace__(self):
-        return 'http://iec.ch/TC57/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Operations'
@@ -6877,7 +6759,7 @@ class FossilFuel(IdentifiedObject):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -6891,7 +6773,7 @@ class FossilFuel(IdentifiedObject):
         'stereotypes': ['enumeration', 'Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -6905,7 +6787,7 @@ class FossilFuel(IdentifiedObject):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -6919,7 +6801,7 @@ class FossilFuel(IdentifiedObject):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -6934,7 +6816,7 @@ class FossilFuel(IdentifiedObject):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -6949,7 +6831,7 @@ class FossilFuel(IdentifiedObject):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -6963,7 +6845,7 @@ class FossilFuel(IdentifiedObject):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -6978,7 +6860,7 @@ class FossilFuel(IdentifiedObject):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -6992,7 +6874,7 @@ class FossilFuel(IdentifiedObject):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -7008,7 +6890,7 @@ class FossilFuel(IdentifiedObject):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -7021,11 +6903,11 @@ class FossilFuel(IdentifiedObject):
         default=None,
         metadata={
         'type': 'Association',
-        'stereotypes': ['ShadowExtension'],
+        'stereotypes': [],
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'FuelStorage.FossilFuel',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -7040,7 +6922,7 @@ class FossilFuel(IdentifiedObject):
         'minOccurs': '1',
         'maxOccurs': '1',
         'inverse': 'ThermalGeneratingUnit.FossilFuels',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -7049,7 +6931,7 @@ class FossilFuel(IdentifiedObject):
     
     @property
     def __namespace__(self):
-        return 'http://iec.ch/TC57/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Production'
@@ -7075,7 +6957,7 @@ class GeographicalRegion(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'SubGeographicalRegion.Region',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         })
     '''
@@ -7084,7 +6966,7 @@ class GeographicalRegion(IdentifiedObject):
     
     @property
     def __namespace__(self):
-        return 'http://iec.ch/TC57/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Core'
@@ -7109,7 +6991,7 @@ class GroundAction(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'ConductingEquipment.GroundingAction',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         })
     '''
@@ -7129,7 +7011,7 @@ class GroundAction(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'Ground.GroundAction',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         })
     '''
@@ -7138,7 +7020,7 @@ class GroundAction(IdentifiedObject):
     
     @property
     def __namespace__(self):
-        return 'http://iec.ch/TC57/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Operations'
@@ -7164,7 +7046,7 @@ class IOPoint(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'IOPointSource.IOPoint',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -7173,7 +7055,7 @@ class IOPoint(IdentifiedObject):
     
     @property
     def __namespace__(self):
-        return 'http://iec.ch/TC57/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Meas'
@@ -7200,7 +7082,7 @@ class MeasurementValue(IOPoint):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -7214,7 +7096,7 @@ class MeasurementValue(IOPoint):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -7230,7 +7112,7 @@ class MeasurementValue(IOPoint):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'CalculationMethodHierarchy.MeasurementValue',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -7240,11 +7122,11 @@ class MeasurementValue(IOPoint):
         default=None,
         metadata={
         'type': 'Association',
-        'stereotypes': ['ShadowExtension', 'informative'],
+        'stereotypes': ['informative', 'deprecated'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'OldPerson.MeasurementValues',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -7258,7 +7140,7 @@ class MeasurementValue(IOPoint):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'MeasurementValueQuality.MeasurementValue',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -7273,7 +7155,7 @@ class MeasurementValue(IOPoint):
         'minOccurs': '1',
         'maxOccurs': '1',
         'inverse': 'MeasurementValueSource.MeasurementValues',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -7290,7 +7172,7 @@ class MeasurementValue(IOPoint):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'RemoteSource.MeasurementValue',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -7305,7 +7187,7 @@ class MeasurementValue(IOPoint):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'MeasurementValueQuality.MeasurementValue',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         })
     '''
@@ -7314,7 +7196,7 @@ class MeasurementValue(IOPoint):
     
     @property
     def __namespace__(self):
-        return 'http://iec.ch/TC57/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Meas'
@@ -7338,7 +7220,7 @@ class AnalogValue(MeasurementValue):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -7349,11 +7231,11 @@ class AnalogValue(MeasurementValue):
         default=None,
         metadata={
         'type': 'Association',
-        'stereotypes': ['ShadowExtension'],
+        'stereotypes': [],
         'minOccurs': '1',
         'maxOccurs': '1',
         'inverse': 'Analog.AnalogValues',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -7368,7 +7250,7 @@ class AnalogValue(MeasurementValue):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'AltGeneratingUnitMeas.AnalogValue',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         })
     '''
@@ -7383,7 +7265,7 @@ class AnalogValue(MeasurementValue):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'AltTieMeas.AnalogValue',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         })
     '''
@@ -7392,7 +7274,7 @@ class AnalogValue(MeasurementValue):
     
     @property
     def __namespace__(self):
-        return 'http://iec.ch/TC57/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Meas'
@@ -7482,7 +7364,7 @@ class ImpedanceTapChangerTable(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'ImpedanceTapChangerTablePoint.ImpedanceTapChangerTable',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         })
     '''
@@ -7497,7 +7379,7 @@ class ImpedanceTapChangerTable(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'ImpedanceTapChangerTabular.ImpedanceTapChangerTable',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         })
     '''
@@ -7506,7 +7388,7 @@ class ImpedanceTapChangerTable(IdentifiedObject):
     
     @property
     def __namespace__(self):
-        return 'http://iec.ch/TC57/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Wires'
@@ -7527,11 +7409,11 @@ class IndividualPnode(IdentifiedObject):
         default=None,
         metadata={
         'type': 'Association',
-        'stereotypes': [],
-        'minOccurs': '0',
+        'stereotypes': ['ShadowExtension'],
+        'minOccurs': '1',
         'maxOccurs': '1',
         'inverse': 'ConnectivityNode.IndividualPnode',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -7545,7 +7427,7 @@ class IndividualPnode(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'ConnectivityNode.IndividualPnode',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         })
     '''
@@ -7553,7 +7435,7 @@ class IndividualPnode(IdentifiedObject):
     
     @property
     def __namespace__(self):
-        return 'http://iec.ch/TC57/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'ReferenceData'
@@ -7578,7 +7460,7 @@ class JumperAction(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'ConductingEquipment.JumpingAction',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         })
     '''
@@ -7599,7 +7481,7 @@ class JumperAction(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'Jumper.JumperAction',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         })
     '''
@@ -7608,7 +7490,7 @@ class JumperAction(IdentifiedObject):
     
     @property
     def __namespace__(self):
-        return 'http://iec.ch/TC57/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Operations'
@@ -7633,7 +7515,7 @@ class LineSegmentCoupling(IdentifiedObject):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -7649,7 +7531,7 @@ class LineSegmentCoupling(IdentifiedObject):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -7672,7 +7554,7 @@ class LineSegmentCoupling(IdentifiedObject):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -7692,7 +7574,7 @@ class LineSegmentCoupling(IdentifiedObject):
         'minOccurs': '1',
         'maxOccurs': '1',
         'inverse': 'ACLineSegment.LineSegmentCoupling',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -7707,7 +7589,7 @@ class LineSegmentCoupling(IdentifiedObject):
         'minOccurs': '1',
         'maxOccurs': '1',
         'inverse': 'CoupledLineSegmentGroup.LineSegmentCoupling',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -7716,7 +7598,7 @@ class LineSegmentCoupling(IdentifiedObject):
     
     @property
     def __namespace__(self):
-        return 'http://iec.ch/TC57/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Wires'
@@ -7746,7 +7628,7 @@ class LoadDynamics(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'EnergyConsumer.LoadDynamics',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         })
     '''
@@ -7755,7 +7637,7 @@ class LoadDynamics(IdentifiedObject):
     
     @property
     def __namespace__(self):
-        return 'http://iec.ch/TC57/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'LoadDynamics'
@@ -7781,7 +7663,7 @@ class LoadGroup(IdentifiedObject):
         'minOccurs': '1',
         'maxOccurs': '1',
         'inverse': 'SubLoadArea.LoadGroups',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -7790,7 +7672,7 @@ class LoadGroup(IdentifiedObject):
     
     @property
     def __namespace__(self):
-        return 'http://iec.ch/TC57/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'LoadModel'
@@ -7816,7 +7698,7 @@ class ConformLoadGroup(LoadGroup):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'ConformLoad.LoadGroup',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         })
     '''
@@ -7831,7 +7713,7 @@ class ConformLoadGroup(LoadGroup):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'ConformLoadSchedule.ConformLoadGroup',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         })
     '''
@@ -7840,7 +7722,7 @@ class ConformLoadGroup(LoadGroup):
     
     @property
     def __namespace__(self):
-        return 'http://iec.ch/TC57/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'LoadModel'
@@ -7866,7 +7748,7 @@ class NonConformLoadGroup(LoadGroup):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'NonConformLoad.LoadGroup',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         })
     '''
@@ -7881,7 +7763,7 @@ class NonConformLoadGroup(LoadGroup):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'NonConformLoadSchedule.NonConformLoadGroup',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         })
     '''
@@ -7890,7 +7772,7 @@ class NonConformLoadGroup(LoadGroup):
     
     @property
     def __namespace__(self):
-        return 'http://iec.ch/TC57/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'LoadModel'
@@ -7948,7 +7830,7 @@ class LoadResponseCharacteristic(IdentifiedObject):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -7979,7 +7861,7 @@ class LoadResponseCharacteristic(IdentifiedObject):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -7993,7 +7875,7 @@ class LoadResponseCharacteristic(IdentifiedObject):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -8007,7 +7889,7 @@ class LoadResponseCharacteristic(IdentifiedObject):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -8021,7 +7903,7 @@ class LoadResponseCharacteristic(IdentifiedObject):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -8035,7 +7917,7 @@ class LoadResponseCharacteristic(IdentifiedObject):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -8049,7 +7931,7 @@ class LoadResponseCharacteristic(IdentifiedObject):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -8063,7 +7945,7 @@ class LoadResponseCharacteristic(IdentifiedObject):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -8077,7 +7959,7 @@ class LoadResponseCharacteristic(IdentifiedObject):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -8091,7 +7973,7 @@ class LoadResponseCharacteristic(IdentifiedObject):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -8105,7 +7987,7 @@ class LoadResponseCharacteristic(IdentifiedObject):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -8120,7 +8002,7 @@ class LoadResponseCharacteristic(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'EnergyConsumer.LoadResponse',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         })
     '''
@@ -8129,7 +8011,7 @@ class LoadResponseCharacteristic(IdentifiedObject):
     
     @property
     def __namespace__(self):
-        return 'http://iec.ch/TC57/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'LoadModel'
@@ -8143,17 +8025,9 @@ class LoadResponseCharacteristic(IdentifiedObject):
 @dataclass(repr=False)
 class Location(IdentifiedObject):
     '''
-    rdfs:isDefinedBy : http://www.w3.org/ns/prov-o#
-    <http://www.w3.org/ns/prov#n> : "http://www.w3.org/TR/2013/REC-prov-n-20130430/#expression-attribute"^^xsd:anyURI
-    <http://www.w3.org/ns/prov#category> : "expanded"^^xsd:string
-    rdfs:seeAlso : http://www.w3.org/ns/prov#atLocation
-    rdfs:label : "Location"^^xsd:string
-    <http://www.w3.org/ns/prov#dm> : "http://www.w3.org/TR/2013/REC-prov-dm-20130430/#term-attribute-location"^^xsd:anyURI
-    <http://www.w3.org/ns/prov#definition> : "A location can be an identifiable
-    geographic place (ISO 19112), but it can also be a non-geographic place
-    such as a directory, row, or column. As such, there are numerous ways in
-    which location can be expressed, such as by a coordinate, address, landmark,
-    and so forth."@en
+    The place, scene, or point of something where someone or something has
+    been, is, and/or will be at a given moment in time. It can be defined with
+    one or more position points (coordinates) in a given coordinate system.
     '''
 
     PositionPoints: list[PositionPoint] = field(
@@ -8178,7 +8052,7 @@ class Location(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'PowerSystemResource.Location',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         })
     '''
@@ -8187,7 +8061,7 @@ class Location(IdentifiedObject):
     
     @property
     def __namespace__(self):
-        return 'http://iec.ch/TC57/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'prov'
@@ -8253,7 +8127,7 @@ class Measurement(IdentifiedObject):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -8272,7 +8146,7 @@ class Measurement(IdentifiedObject):
         'stereotypes': ['enumeration', 'Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -8290,10 +8164,10 @@ class Measurement(IdentifiedObject):
         default=None,
         metadata={
         'type': 'Attribute',
-        'stereotypes': ['enumeration', 'GridAPPSD', 'Attribute'],
+        'stereotypes': ['GridAPPSD', 'enumeration', 'Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -8306,7 +8180,7 @@ class Measurement(IdentifiedObject):
         'stereotypes': ['enumeration', 'Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -8320,7 +8194,7 @@ class Measurement(IdentifiedObject):
         'stereotypes': ['enumeration', 'Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -8335,7 +8209,7 @@ class Measurement(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'Asset.Measurements',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -8349,7 +8223,7 @@ class Measurement(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'CalculationMethodHierarchy.Measurement',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -8364,7 +8238,7 @@ class Measurement(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'MeasurementAction.Measurement',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -8374,7 +8248,7 @@ class Measurement(IdentifiedObject):
         default=None,
         metadata={
         'type': 'Association',
-        'stereotypes': ['ShadowExtension'],
+        'stereotypes': ['GridAPPSD'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'MeasurementSystem.Measurements',
@@ -8388,11 +8262,11 @@ class Measurement(IdentifiedObject):
         default=None,
         metadata={
         'type': 'Association',
-        'stereotypes': [],
+        'stereotypes': ['ShadowExtension'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'PowerSystemResource.Measurements',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -8407,7 +8281,7 @@ class Measurement(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'ACDCTerminal.Measurements',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -8416,7 +8290,7 @@ class Measurement(IdentifiedObject):
     
     @property
     def __namespace__(self):
-        return 'http://iec.ch/TC57/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'MeasEXT'
@@ -8442,7 +8316,7 @@ class Analog(Measurement):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'AnalogValue.Analog',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         })
     '''
@@ -8466,7 +8340,7 @@ class Analog(Measurement):
     
     @property
     def __namespace__(self):
-        return 'http://iec.ch/TC57/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Meas'
@@ -8492,7 +8366,7 @@ class Discrete(Measurement):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -8507,7 +8381,7 @@ class Discrete(Measurement):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -8522,7 +8396,7 @@ class Discrete(Measurement):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -8537,7 +8411,7 @@ class Discrete(Measurement):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'ValueAliasSet.Discretes',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -8547,7 +8421,7 @@ class Discrete(Measurement):
     
     @property
     def __namespace__(self):
-        return 'http://iec.ch/TC57/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Meas'
@@ -8572,7 +8446,7 @@ class MeasurementAction(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'Measurement.MeasurementAction',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         })
     '''
@@ -8580,7 +8454,7 @@ class MeasurementAction(IdentifiedObject):
     
     @property
     def __namespace__(self):
-        return 'http://iec.ch/TC57/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Operations'
@@ -8607,7 +8481,7 @@ class MeasurementValueSource(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'MeasurementValue.MeasurementValueSource',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         })
     '''
@@ -8616,7 +8490,7 @@ class MeasurementValueSource(IdentifiedObject):
     
     @property
     def __namespace__(self):
-        return 'http://iec.ch/TC57/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Meas'
@@ -8641,7 +8515,7 @@ class IOPointSource(MeasurementValueSource):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'IOPoint.IOPointSource',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         })
     '''
@@ -8650,7 +8524,7 @@ class IOPointSource(MeasurementValueSource):
     
     @property
     def __namespace__(self):
-        return 'http://iec.ch/TC57/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'ICCPConfiguration'
@@ -8675,7 +8549,7 @@ class MutualCoupling(IdentifiedObject):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -8690,7 +8564,7 @@ class MutualCoupling(IdentifiedObject):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -8705,7 +8579,7 @@ class MutualCoupling(IdentifiedObject):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -8720,7 +8594,7 @@ class MutualCoupling(IdentifiedObject):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -8735,7 +8609,7 @@ class MutualCoupling(IdentifiedObject):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -8750,7 +8624,7 @@ class MutualCoupling(IdentifiedObject):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -8765,7 +8639,7 @@ class MutualCoupling(IdentifiedObject):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -8779,7 +8653,7 @@ class MutualCoupling(IdentifiedObject):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -8790,11 +8664,11 @@ class MutualCoupling(IdentifiedObject):
         default=None,
         metadata={
         'type': 'Association',
-        'stereotypes': [],
+        'stereotypes': ['ShadowExtension'],
         'minOccurs': '1',
         'maxOccurs': '1',
         'inverse': 'Terminal.HasFirstMutualCoupling',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -8808,11 +8682,11 @@ class MutualCoupling(IdentifiedObject):
         default=None,
         metadata={
         'type': 'Association',
-        'stereotypes': [],
+        'stereotypes': ['ShadowExtension'],
         'minOccurs': '1',
         'maxOccurs': '1',
         'inverse': 'Terminal.HasSecondMutualCoupling',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -8822,7 +8696,7 @@ class MutualCoupling(IdentifiedObject):
     
     @property
     def __namespace__(self):
-        return 'http://iec.ch/TC57/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Wires'
@@ -8850,7 +8724,7 @@ class OldPerson(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'MeasurementValue.ErpPerson',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         })
     '''
@@ -8858,7 +8732,7 @@ class OldPerson(IdentifiedObject):
     
     @property
     def __namespace__(self):
-        return 'http://iec.ch/TC57/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Common'
@@ -8911,7 +8785,7 @@ class OperationalLimit(IdentifiedObject):
         'minOccurs': '1',
         'maxOccurs': '1',
         'inverse': 'OperationalLimitSet.OperationalLimitValue',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -8926,7 +8800,7 @@ class OperationalLimit(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'OperationalLimitType.OperationalLimit',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -8941,7 +8815,7 @@ class OperationalLimit(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'StepOperationalLimitTable.OperationalLimit',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -8950,7 +8824,7 @@ class OperationalLimit(IdentifiedObject):
     
     @property
     def __namespace__(self):
-        return 'http://iec.ch/TC57/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'OperationalLimits'
@@ -8974,7 +8848,7 @@ class ActivePowerLimit(OperationalLimit):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -8989,7 +8863,7 @@ class ActivePowerLimit(OperationalLimit):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -8999,7 +8873,7 @@ class ActivePowerLimit(OperationalLimit):
     
     @property
     def __namespace__(self):
-        return 'http://iec.ch/TC57/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'OperationalLimits'
@@ -9023,7 +8897,7 @@ class ApparentPowerLimit(OperationalLimit):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -9038,7 +8912,7 @@ class ApparentPowerLimit(OperationalLimit):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -9048,7 +8922,7 @@ class ApparentPowerLimit(OperationalLimit):
     
     @property
     def __namespace__(self):
-        return 'http://iec.ch/TC57/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'OperationalLimits'
@@ -9072,7 +8946,7 @@ class CurrentLimit(OperationalLimit):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -9087,7 +8961,7 @@ class CurrentLimit(OperationalLimit):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -9096,7 +8970,7 @@ class CurrentLimit(OperationalLimit):
     
     @property
     def __namespace__(self):
-        return 'http://iec.ch/TC57/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'OperationalLimits'
@@ -9122,7 +8996,7 @@ class VoltageAngleLimit(OperationalLimit):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -9138,7 +9012,7 @@ class VoltageAngleLimit(OperationalLimit):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -9155,7 +9029,7 @@ class VoltageAngleLimit(OperationalLimit):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -9169,11 +9043,11 @@ class VoltageAngleLimit(OperationalLimit):
         default=None,
         metadata={
         'type': 'Association',
-        'stereotypes': [],
+        'stereotypes': ['ShadowExtension'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'Terminal.VoltageAngleLimit',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -9182,7 +9056,7 @@ class VoltageAngleLimit(OperationalLimit):
     
     @property
     def __namespace__(self):
-        return 'http://iec.ch/TC57/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'OperationalLimits'
@@ -9208,7 +9082,7 @@ class VoltageLimit(OperationalLimit):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -9224,7 +9098,7 @@ class VoltageLimit(OperationalLimit):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -9235,7 +9109,7 @@ class VoltageLimit(OperationalLimit):
     
     @property
     def __namespace__(self):
-        return 'http://iec.ch/TC57/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'OperationalLimits'
@@ -9262,11 +9136,11 @@ class OperationalLimitSet(IdentifiedObject):
         default=None,
         metadata={
         'type': 'Association',
-        'stereotypes': ['ShadowExtension'],
+        'stereotypes': [],
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'Equipment.OperationalLimitSet',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -9277,7 +9151,7 @@ class OperationalLimitSet(IdentifiedObject):
         default=None,
         metadata={
         'type': 'Association',
-        'stereotypes': ['ShadowExtension', 'NC'],
+        'stereotypes': ['NC'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'PowerTransferCorridor.OperationalLimitSet',
@@ -9296,7 +9170,7 @@ class OperationalLimitSet(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'ACDCTerminal.OperationalLimitSet',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -9311,7 +9185,7 @@ class OperationalLimitSet(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'OperationalLimit.OperationalLimitSet',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         })
     '''
@@ -9320,7 +9194,7 @@ class OperationalLimitSet(IdentifiedObject):
     
     @property
     def __namespace__(self):
-        return 'http://iec.ch/TC57/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'OperationalLimits'
@@ -9344,7 +9218,7 @@ class OperationalLimitType(IdentifiedObject):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -9377,7 +9251,7 @@ class OperationalLimitType(IdentifiedObject):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -9396,7 +9270,7 @@ class OperationalLimitType(IdentifiedObject):
         'stereotypes': ['enumeration', 'Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -9407,7 +9281,7 @@ class OperationalLimitType(IdentifiedObject):
         default=None,
         metadata={
         'type': 'Attribute',
-        'stereotypes': ['enumeration', 'European', 'Attribute'],
+        'stereotypes': ['European', 'enumeration', 'Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://iec.ch/TC57/CIM100-European#',
@@ -9426,7 +9300,7 @@ class OperationalLimitType(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'AmbientTemperatureDependencyCurve.OperationalLimitType',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -9442,7 +9316,7 @@ class OperationalLimitType(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'SolarRadiationDependencyCurve.OperationalLimitType',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -9457,7 +9331,7 @@ class OperationalLimitType(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'RecoveryOverloadLimitCurve.OperationalLimitType',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -9473,7 +9347,7 @@ class OperationalLimitType(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'BaseOverloadLimitCurve.OperationalLimitType',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -9489,7 +9363,7 @@ class OperationalLimitType(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'DurationOverloadLimitCurve.OperationalLimitType',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -9505,7 +9379,7 @@ class OperationalLimitType(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'OperationalLimit.OperationalLimitType',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         })
     '''
@@ -9514,7 +9388,7 @@ class OperationalLimitType(IdentifiedObject):
     
     @property
     def __namespace__(self):
-        return 'http://iec.ch/TC57/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'OperationalLimits'
@@ -9553,7 +9427,7 @@ class Outage(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'ConductingEquipment.Outage',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         })
     '''
@@ -9561,7 +9435,7 @@ class Outage(IdentifiedObject):
     
     @property
     def __namespace__(self):
-        return 'http://iec.ch/TC57/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Operations'
@@ -9829,7 +9703,7 @@ class PMUConfiguration(IdentifiedObject):
         default=None,
         metadata={
         'type': 'Association',
-        'stereotypes': ['GridAPPSD', 'OfAggregate'],
+        'stereotypes': ['OfAggregate', 'GridAPPSD'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'PMUConfigurationFrame.PMUConfigurations',
@@ -9883,7 +9757,7 @@ class PSRType(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'PowerSystemResource.PSRType',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         })
     '''
@@ -9892,7 +9766,7 @@ class PSRType(IdentifiedObject):
     
     @property
     def __namespace__(self):
-        return 'http://iec.ch/TC57/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Core'
@@ -9917,7 +9791,7 @@ class PerLengthLineParameter(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'WireAssemblyInfo.PerLengthLineParameter',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -9925,7 +9799,7 @@ class PerLengthLineParameter(IdentifiedObject):
     
     @property
     def __namespace__(self):
-        return 'http://iec.ch/TC57/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Wires'
@@ -10017,7 +9891,7 @@ class PerLengthImpedance(PerLengthLineParameter):
         default=None,
         metadata={
         'type': 'Association',
-        'stereotypes': [],
+        'stereotypes': ['GridAPPSD'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'WireTemplate.PerLengthImpedance',
@@ -10035,7 +9909,7 @@ class PerLengthImpedance(PerLengthLineParameter):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'ACLineSegment.PerLengthImpedance',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         })
     '''
@@ -10044,7 +9918,7 @@ class PerLengthImpedance(PerLengthLineParameter):
     
     @property
     def __namespace__(self):
-        return 'http://iec.ch/TC57/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Wires'
@@ -10079,7 +9953,7 @@ class PerLengthPhaseImpedance(PerLengthImpedance):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -10103,7 +9977,7 @@ class PerLengthPhaseImpedance(PerLengthImpedance):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'PhaseImpedanceData.PhaseImpedance',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         })
     '''
@@ -10112,7 +9986,7 @@ class PerLengthPhaseImpedance(PerLengthImpedance):
     
     @property
     def __namespace__(self):
-        return 'http://iec.ch/TC57/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Wires'
@@ -10139,7 +10013,7 @@ class PerLengthSequenceImpedance(PerLengthImpedance):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -10153,7 +10027,7 @@ class PerLengthSequenceImpedance(PerLengthImpedance):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -10167,7 +10041,7 @@ class PerLengthSequenceImpedance(PerLengthImpedance):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -10181,7 +10055,7 @@ class PerLengthSequenceImpedance(PerLengthImpedance):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -10195,7 +10069,7 @@ class PerLengthSequenceImpedance(PerLengthImpedance):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -10209,7 +10083,7 @@ class PerLengthSequenceImpedance(PerLengthImpedance):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -10223,7 +10097,7 @@ class PerLengthSequenceImpedance(PerLengthImpedance):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -10237,7 +10111,7 @@ class PerLengthSequenceImpedance(PerLengthImpedance):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -10246,7 +10120,7 @@ class PerLengthSequenceImpedance(PerLengthImpedance):
     
     @property
     def __namespace__(self):
-        return 'http://iec.ch/TC57/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Wires'
@@ -10278,7 +10152,7 @@ class PhaseImpedanceData(IdentifiedObject):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -10296,7 +10170,7 @@ class PhaseImpedanceData(IdentifiedObject):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -10314,7 +10188,7 @@ class PhaseImpedanceData(IdentifiedObject):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -10328,7 +10202,7 @@ class PhaseImpedanceData(IdentifiedObject):
         'stereotypes': ['enumeration', 'Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -10342,7 +10216,7 @@ class PhaseImpedanceData(IdentifiedObject):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -10356,7 +10230,7 @@ class PhaseImpedanceData(IdentifiedObject):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -10370,7 +10244,7 @@ class PhaseImpedanceData(IdentifiedObject):
         'stereotypes': ['enumeration', 'Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -10384,7 +10258,7 @@ class PhaseImpedanceData(IdentifiedObject):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -10399,7 +10273,7 @@ class PhaseImpedanceData(IdentifiedObject):
         'minOccurs': '1',
         'maxOccurs': '1',
         'inverse': 'PerLengthPhaseImpedance.PhaseImpedanceData',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -10408,10 +10282,10 @@ class PhaseImpedanceData(IdentifiedObject):
     
     @property
     def __namespace__(self):
-        return 'http://iec.ch/TC57/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
-        return 'Wires'
+        return 'WiresEXT'
     @property
     def __minOccurs__(self):
         return '0'
@@ -10434,7 +10308,7 @@ class PhaseTapChangerTable(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'PhaseTapChangerTablePoint.PhaseTapChangerTable',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         })
     '''
@@ -10449,7 +10323,7 @@ class PhaseTapChangerTable(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'PhaseTapChangerTabular.PhaseTapChangerTable',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         })
     '''
@@ -10458,7 +10332,7 @@ class PhaseTapChangerTable(IdentifiedObject):
     
     @property
     def __namespace__(self):
-        return 'http://iec.ch/TC57/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Wires'
@@ -10485,7 +10359,7 @@ class ConnectionAngleTapChangerTable(PhaseTapChangerTable):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -10507,7 +10381,7 @@ class ConnectionAngleTapChangerTable(PhaseTapChangerTable):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'ConnectionAngleTapChanger.ConnectionAngleTapChangerTable',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -10517,7 +10391,7 @@ class ConnectionAngleTapChangerTable(PhaseTapChangerTable):
     
     @property
     def __namespace__(self):
-        return 'http://iec.ch/TC57/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Wires'
@@ -10546,7 +10420,7 @@ class PowerSystemResource(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'AssetInfo.PowerSystemResources',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -10561,7 +10435,7 @@ class PowerSystemResource(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'DesignElement.PowerSystemResource',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -10577,7 +10451,7 @@ class PowerSystemResource(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'Location.PowerSystemResources',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -10588,7 +10462,7 @@ class PowerSystemResource(IdentifiedObject):
         default=None,
         metadata={
         'type': 'Association',
-        'stereotypes': ['ShadowExtension'],
+        'stereotypes': ['GridAPPSD'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'Company.PowerSystemResources',
@@ -10606,7 +10480,7 @@ class PowerSystemResource(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'PSRType.PowerSystemResources',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -10617,7 +10491,7 @@ class PowerSystemResource(IdentifiedObject):
         default=None,
         metadata={
         'type': 'Association',
-        'stereotypes': [],
+        'stereotypes': ['GridAPPSD'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'ResourceContainer.ContainedResources',
@@ -10635,7 +10509,7 @@ class PowerSystemResource(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'Measurement.PowerSystemResource',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         })
     '''
@@ -10644,10 +10518,10 @@ class PowerSystemResource(IdentifiedObject):
     
     @property
     def __namespace__(self):
-        return 'http://iec.ch/TC57/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
-        return 'Core'
+        return 'CoreEXT'
     @property
     def __minOccurs__(self):
         return '0'
@@ -10674,7 +10548,7 @@ class ACLineSegmentPhase(PowerSystemResource):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -10697,7 +10571,7 @@ class ACLineSegmentPhase(PowerSystemResource):
         'stereotypes': ['enumeration', 'Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -10713,7 +10587,7 @@ class ACLineSegmentPhase(PowerSystemResource):
         'minOccurs': '1',
         'maxOccurs': '1',
         'inverse': 'ACLineSegment.ACLineSegmentPhases',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -10724,11 +10598,11 @@ class ACLineSegmentPhase(PowerSystemResource):
         default=None,
         metadata={
         'type': 'Association',
-        'stereotypes': [],
+        'stereotypes': ['ShadowExtension'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'WireInfo.ACLineSegmentPhase',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -10736,7 +10610,7 @@ class ACLineSegmentPhase(PowerSystemResource):
     
     @property
     def __namespace__(self):
-        return 'http://iec.ch/TC57/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Wires'
@@ -10799,7 +10673,7 @@ class AreaInterchangeController(PowerSystemResource):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -10815,7 +10689,7 @@ class AreaInterchangeController(PowerSystemResource):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'ControlArea.AreaInterchangeController',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -10830,7 +10704,7 @@ class AreaInterchangeController(PowerSystemResource):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'ControlArea.AreaInterchangeController',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         })
     '''
@@ -10839,7 +10713,7 @@ class AreaInterchangeController(PowerSystemResource):
     
     @property
     def __namespace__(self):
-        return 'http://iec.ch/TC57/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Control'
@@ -10926,10 +10800,10 @@ class CommunicationLink(PowerSystemResource):
         default=None,
         metadata={
         'type': 'Attribute',
-        'stereotypes': ['enumeration', 'GridAPPSD', 'Attribute'],
+        'stereotypes': ['GridAPPSD', 'enumeration', 'Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -10939,10 +10813,10 @@ class CommunicationLink(PowerSystemResource):
         default=None,
         metadata={
         'type': 'Attribute',
-        'stereotypes': ['enumeration', 'GridAPPSD', 'Attribute'],
+        'stereotypes': ['GridAPPSD', 'enumeration', 'Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -10956,7 +10830,7 @@ class CommunicationLink(PowerSystemResource):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'BilateralExchangeActor.CommunicationLink',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -10980,7 +10854,7 @@ class CommunicationLink(PowerSystemResource):
     
     @property
     def __namespace__(self):
-        return 'http://iec.ch/TC57/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'MeasEXT'
@@ -11007,7 +10881,7 @@ class ConnectivityNodeContainer(PowerSystemResource):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'ConnectivityNode.ConnectivityNodeContainer',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         })
     '''
@@ -11022,7 +10896,7 @@ class ConnectivityNodeContainer(PowerSystemResource):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'TopologicalNode.ConnectivityNodeContainer',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         })
     '''
@@ -11031,7 +10905,7 @@ class ConnectivityNodeContainer(PowerSystemResource):
     
     @property
     def __namespace__(self):
-        return 'http://iec.ch/TC57/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Core'
@@ -11056,7 +10930,7 @@ class EquipmentContainer(ConnectivityNodeContainer):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'Equipment.AdditionalEquipmentContainer',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         })
     '''
@@ -11076,7 +10950,7 @@ class EquipmentContainer(ConnectivityNodeContainer):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'Equipment.EquipmentContainer',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         })
     '''
@@ -11085,7 +10959,7 @@ class EquipmentContainer(ConnectivityNodeContainer):
     
     @property
     def __namespace__(self):
-        return 'http://iec.ch/TC57/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Core'
@@ -11112,7 +10986,7 @@ class Bay(EquipmentContainer):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -11126,7 +11000,7 @@ class Bay(EquipmentContainer):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -11140,7 +11014,7 @@ class Bay(EquipmentContainer):
         'stereotypes': ['enumeration', 'Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -11154,7 +11028,7 @@ class Bay(EquipmentContainer):
         'stereotypes': ['enumeration', 'Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -11169,7 +11043,7 @@ class Bay(EquipmentContainer):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'Substation.Bays',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -11184,7 +11058,7 @@ class Bay(EquipmentContainer):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'VoltageLevel.Bays',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -11193,7 +11067,7 @@ class Bay(EquipmentContainer):
     
     @property
     def __namespace__(self):
-        return 'http://iec.ch/TC57/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Core'
@@ -11223,7 +11097,7 @@ class ConnectivityArea(EquipmentContainer):
         default=None,
         metadata={
         'type': 'Attribute',
-        'stereotypes': ['enumeration', 'GridAPPSD', 'Attribute'],
+        'stereotypes': ['GridAPPSD', 'enumeration', 'Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://gridappsd.org/CIM/extension#',
@@ -11237,7 +11111,7 @@ class ConnectivityArea(EquipmentContainer):
         default=None,
         metadata={
         'type': 'Association',
-        'stereotypes': [],
+        'stereotypes': ['GridAPPSD'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': '',
@@ -11251,7 +11125,7 @@ class ConnectivityArea(EquipmentContainer):
         default=None,
         metadata={
         'type': 'Association',
-        'stereotypes': [],
+        'stereotypes': ['GridAPPSD'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'ConnectivityArea.ContainedAreas',
@@ -11325,7 +11199,7 @@ class DCConverterUnit(EquipmentContainer):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'ACPointOfCommonCoupling.DCConverterUnit',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         })
     '''
@@ -11334,7 +11208,7 @@ class DCConverterUnit(EquipmentContainer):
     
     @property
     def __namespace__(self):
-        return 'http://iec.ch/TC57/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'DC'
@@ -11364,7 +11238,7 @@ class Feeder(EquipmentContainer):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'Substation.NormalEnergizedFeeder',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -11395,7 +11269,7 @@ class Feeder(EquipmentContainer):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'Substation.NamingFeeder',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         })
     '''
@@ -11412,7 +11286,7 @@ class Feeder(EquipmentContainer):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'Terminal.NormalHeadFeeder',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         })
     '''
@@ -11421,7 +11295,7 @@ class Feeder(EquipmentContainer):
     
     @property
     def __namespace__(self):
-        return 'http://iec.ch/TC57/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'ContainmentEXT'
@@ -11447,7 +11321,7 @@ class Line(EquipmentContainer):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'ACTieCorridor.Line',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -11462,7 +11336,7 @@ class Line(EquipmentContainer):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'SubGeographicalRegion.Lines',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -11473,7 +11347,7 @@ class Line(EquipmentContainer):
         default=None,
         metadata={
         'type': 'Association',
-        'stereotypes': ['ShadowExtension', 'NC'],
+        'stereotypes': ['NC'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'SchedulingArea.Line',
@@ -11486,7 +11360,7 @@ class Line(EquipmentContainer):
     
     @property
     def __namespace__(self):
-        return 'http://iec.ch/TC57/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Wires'
@@ -11505,7 +11379,7 @@ class Plant(EquipmentContainer):
 
     @property
     def __namespace__(self):
-        return 'http://iec.ch/TC57/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Wires'
@@ -11529,11 +11403,11 @@ class Substation(EquipmentContainer):
         default=None,
         metadata={
         'type': 'Association',
-        'stereotypes': ['OfAggregate'],
+        'stereotypes': ['ShadowExtension', 'OfAggregate'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'Feeder.NamingSecondarySubstation',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -11551,7 +11425,7 @@ class Substation(EquipmentContainer):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'SubGeographicalRegion.Substations',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -11562,7 +11436,7 @@ class Substation(EquipmentContainer):
         default=None,
         metadata={
         'type': 'Association',
-        'stereotypes': ['ShadowExtension', 'NC'],
+        'stereotypes': ['NC'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'SchedulingArea.Substation',
@@ -11581,7 +11455,7 @@ class Substation(EquipmentContainer):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'Bay.Substation',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         })
     '''
@@ -11596,7 +11470,7 @@ class Substation(EquipmentContainer):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'Feeder.NormalEnergizingSubstation',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         })
     '''
@@ -11612,7 +11486,7 @@ class Substation(EquipmentContainer):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'VoltageLevel.Substation',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         })
     '''
@@ -11621,7 +11495,7 @@ class Substation(EquipmentContainer):
     
     @property
     def __namespace__(self):
-        return 'http://iec.ch/TC57/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Core'
@@ -11649,7 +11523,7 @@ class VoltageLevel(EquipmentContainer):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -11667,7 +11541,7 @@ class VoltageLevel(EquipmentContainer):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -11682,11 +11556,11 @@ class VoltageLevel(EquipmentContainer):
         default=None,
         metadata={
         'type': 'Association',
-        'stereotypes': [],
+        'stereotypes': ['ShadowExtension'],
         'minOccurs': '1',
         'maxOccurs': '1',
         'inverse': 'BaseVoltage.VoltageLevel',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -11701,7 +11575,7 @@ class VoltageLevel(EquipmentContainer):
         'minOccurs': '1',
         'maxOccurs': '1',
         'inverse': 'Substation.VoltageLevels',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -11716,7 +11590,7 @@ class VoltageLevel(EquipmentContainer):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'Bay.VoltageLevel',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         })
     '''
@@ -11725,7 +11599,7 @@ class VoltageLevel(EquipmentContainer):
     
     @property
     def __namespace__(self):
-        return 'http://iec.ch/TC57/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Core'
@@ -11774,7 +11648,7 @@ class ControlArea(PowerSystemResource):
         'stereotypes': ['ToBeDeleted', 'Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -11789,7 +11663,7 @@ class ControlArea(PowerSystemResource):
         'stereotypes': ['ToBeDeleted', 'Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -11801,10 +11675,10 @@ class ControlArea(PowerSystemResource):
         default=None,
         metadata={
         'type': 'Attribute',
-        'stereotypes': ['enumeration', 'ToBeDeleted', 'Attribute'],
+        'stereotypes': ['ToBeDeleted', 'enumeration', 'Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -11823,7 +11697,7 @@ class ControlArea(PowerSystemResource):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'AreaInterchangeController.ControlArea',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -11838,7 +11712,7 @@ class ControlArea(PowerSystemResource):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'EnergyArea.ControlArea',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -11868,7 +11742,7 @@ class ControlArea(PowerSystemResource):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'PowerFrequencyController.ControlArea',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -11898,7 +11772,7 @@ class ControlArea(PowerSystemResource):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'AreaInterchangeController.ControlArea',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         })
     '''
@@ -11913,7 +11787,7 @@ class ControlArea(PowerSystemResource):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'ControlAreaGeneratingUnit.ControlArea',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         })
     '''
@@ -11928,7 +11802,7 @@ class ControlArea(PowerSystemResource):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'ControlAreaPowerElectronicsUnit.ControlArea',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         })
     '''
@@ -11943,7 +11817,7 @@ class ControlArea(PowerSystemResource):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'EnergyArea.ControlArea',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         })
     '''
@@ -11958,7 +11832,7 @@ class ControlArea(PowerSystemResource):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'TieFlow.ControlArea',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         })
     '''
@@ -11967,7 +11841,7 @@ class ControlArea(PowerSystemResource):
     
     @property
     def __namespace__(self):
-        return 'http://iec.ch/TC57/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'ControlAreaEXT'
@@ -12032,7 +11906,7 @@ class EnergyConsumerPhase(PowerSystemResource):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -12049,7 +11923,7 @@ class EnergyConsumerPhase(PowerSystemResource):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -12064,7 +11938,7 @@ class EnergyConsumerPhase(PowerSystemResource):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -12079,7 +11953,7 @@ class EnergyConsumerPhase(PowerSystemResource):
         'stereotypes': ['enumeration', 'Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -12097,7 +11971,7 @@ class EnergyConsumerPhase(PowerSystemResource):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -12114,7 +11988,7 @@ class EnergyConsumerPhase(PowerSystemResource):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -12129,7 +12003,7 @@ class EnergyConsumerPhase(PowerSystemResource):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -12142,11 +12016,11 @@ class EnergyConsumerPhase(PowerSystemResource):
         default=None,
         metadata={
         'type': 'Association',
-        'stereotypes': ['NC'],
+        'stereotypes': [],
         'minOccurs': '1',
         'maxOccurs': '1',
         'inverse': 'EnergyConsumer.EnergyConsumerPhase',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -12155,7 +12029,7 @@ class EnergyConsumerPhase(PowerSystemResource):
     
     @property
     def __namespace__(self):
-        return 'http://iec.ch/TC57/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Wires'
@@ -12180,7 +12054,7 @@ class EnergySourcePhase(PowerSystemResource):
         'stereotypes': ['enumeration', 'Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -12195,11 +12069,11 @@ class EnergySourcePhase(PowerSystemResource):
         default=None,
         metadata={
         'type': 'Association',
-        'stereotypes': [],
+        'stereotypes': ['ShadowExtension'],
         'minOccurs': '1',
         'maxOccurs': '1',
         'inverse': 'EnergySource.EnergySourcePhase',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -12208,7 +12082,7 @@ class EnergySourcePhase(PowerSystemResource):
     
     @property
     def __namespace__(self):
-        return 'http://iec.ch/TC57/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Wires'
@@ -12233,7 +12107,7 @@ class Equipment(PowerSystemResource):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -12258,7 +12132,7 @@ class Equipment(PowerSystemResource):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -12275,7 +12149,7 @@ class Equipment(PowerSystemResource):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -12290,7 +12164,7 @@ class Equipment(PowerSystemResource):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -12309,7 +12183,7 @@ class Equipment(PowerSystemResource):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'EquipmentContainer.AdditionalGroupedEquipment',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -12326,7 +12200,7 @@ class Equipment(PowerSystemResource):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'EquipmentContainer.Equipments',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -12341,7 +12215,7 @@ class Equipment(PowerSystemResource):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'OperationalLimitSet.Equipment',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         })
     '''
@@ -12350,7 +12224,7 @@ class Equipment(PowerSystemResource):
     
     @property
     def __namespace__(self):
-        return 'http://iec.ch/TC57/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Core'
@@ -12383,7 +12257,7 @@ class CompositeSwitch(Equipment):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -12399,7 +12273,7 @@ class CompositeSwitch(Equipment):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'Switch.CompositeSwitch',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         })
     '''
@@ -12408,7 +12282,7 @@ class CompositeSwitch(Equipment):
     
     @property
     def __namespace__(self):
-        return 'http://iec.ch/TC57/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Wires'
@@ -12431,11 +12305,11 @@ class ConductingEquipment(Equipment):
         default=None,
         metadata={
         'type': 'Association',
-        'stereotypes': [],
+        'stereotypes': ['ShadowExtension'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'BaseVoltage.ConductingEquipment',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -12452,7 +12326,7 @@ class ConductingEquipment(Equipment):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'GroundAction.GroundedEquipment',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -12467,7 +12341,7 @@ class ConductingEquipment(Equipment):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'JumperAction.JumpedEquipments',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -12482,7 +12356,7 @@ class ConductingEquipment(Equipment):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'Outage.OutageIsolationEquipment',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -12496,7 +12370,7 @@ class ConductingEquipment(Equipment):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'SvStatus.ConductingEquipment',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         })
     '''
@@ -12511,7 +12385,7 @@ class ConductingEquipment(Equipment):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'Terminal.ConductingEquipment',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         })
     '''
@@ -12522,7 +12396,7 @@ class ConductingEquipment(Equipment):
     
     @property
     def __namespace__(self):
-        return 'http://iec.ch/TC57/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Core'
@@ -12551,7 +12425,7 @@ class Clamp(ConductingEquipment):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -12568,7 +12442,7 @@ class Clamp(ConductingEquipment):
         'minOccurs': '1',
         'maxOccurs': '1',
         'inverse': 'ACLineSegment.Clamp',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -12577,7 +12451,7 @@ class Clamp(ConductingEquipment):
     
     @property
     def __namespace__(self):
-        return 'http://iec.ch/TC57/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Wires'
@@ -12604,7 +12478,7 @@ class Conductor(ConductingEquipment):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -12619,7 +12493,7 @@ class Conductor(ConductingEquipment):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'ConductorCharacteristicCurve.Conductor',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -12628,7 +12502,7 @@ class Conductor(ConductingEquipment):
     
     @property
     def __namespace__(self):
-        return 'http://iec.ch/TC57/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Wires'
@@ -12718,7 +12592,7 @@ class ACLineSegment(Conductor):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -12733,7 +12607,7 @@ class ACLineSegment(Conductor):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -12749,7 +12623,7 @@ class ACLineSegment(Conductor):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -12764,7 +12638,7 @@ class ACLineSegment(Conductor):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -12779,7 +12653,7 @@ class ACLineSegment(Conductor):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -12793,7 +12667,7 @@ class ACLineSegment(Conductor):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -12807,7 +12681,7 @@ class ACLineSegment(Conductor):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -12823,7 +12697,7 @@ class ACLineSegment(Conductor):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -12837,7 +12711,7 @@ class ACLineSegment(Conductor):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -12848,7 +12722,7 @@ class ACLineSegment(Conductor):
         default=None,
         metadata={
         'type': 'Association',
-        'stereotypes': [],
+        'stereotypes': ['GridAPPSD'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'EarthResistivity.ACLineSegments',
@@ -12866,7 +12740,7 @@ class ACLineSegment(Conductor):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'PerLengthImpedance.ACLineSegments',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -12877,7 +12751,7 @@ class ACLineSegment(Conductor):
         default=None,
         metadata={
         'type': 'Association',
-        'stereotypes': [],
+        'stereotypes': ['GridAPPSD'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'WireSpacing.ACLineSegements',
@@ -12891,11 +12765,11 @@ class ACLineSegment(Conductor):
         default=None,
         metadata={
         'type': 'Association',
-        'stereotypes': [],
+        'stereotypes': ['deprecated'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'WireSpacingInfo.ACLineSegment',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -12909,7 +12783,7 @@ class ACLineSegment(Conductor):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'ACLineSegmentPhase.ACLineSegment',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         })
     '''
@@ -12924,7 +12798,7 @@ class ACLineSegment(Conductor):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'Clamp.ACLineSegment',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         })
     '''
@@ -12939,7 +12813,7 @@ class ACLineSegment(Conductor):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'Cut.ACLineSegment',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         })
     '''
@@ -12954,7 +12828,7 @@ class ACLineSegment(Conductor):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'LineSegmentCoupling.ACLineSegment',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         })
     '''
@@ -12964,7 +12838,7 @@ class ACLineSegment(Conductor):
     
     @property
     def __namespace__(self):
-        return 'http://iec.ch/TC57/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Wires'
@@ -12991,7 +12865,7 @@ class BusSegment(Conductor):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -13005,7 +12879,7 @@ class BusSegment(Conductor):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -13015,7 +12889,7 @@ class BusSegment(Conductor):
     
     @property
     def __namespace__(self):
-        return 'http://iec.ch/TC57/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Wires'
@@ -13042,7 +12916,7 @@ class WireSegment(Conductor):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'WireSegmentPhase.WireSegment',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         })
     '''
@@ -13051,7 +12925,7 @@ class WireSegment(Conductor):
     
     @property
     def __namespace__(self):
-        return 'http://iec.ch/TC57/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Wires'
@@ -13073,7 +12947,7 @@ class Connector(ConductingEquipment):
 
     @property
     def __namespace__(self):
-        return 'http://iec.ch/TC57/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Wires'
@@ -13103,7 +12977,7 @@ class BusbarSection(Connector):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -13117,11 +12991,11 @@ class BusbarSection(Connector):
         default=None,
         metadata={
         'type': 'Association',
-        'stereotypes': ['ShadowExtension'],
+        'stereotypes': ['deprecated'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'VoltageControlZone.BusbarSection',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -13136,7 +13010,7 @@ class BusbarSection(Connector):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'VoltageControlZone.BusbarSection',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         })
     '''
@@ -13145,7 +13019,7 @@ class BusbarSection(Connector):
     
     @property
     def __namespace__(self):
-        return 'http://iec.ch/TC57/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Wires'
@@ -13173,7 +13047,7 @@ class Junction(Connector):
 
     @property
     def __namespace__(self):
-        return 'http://iec.ch/TC57/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Wires'
@@ -13202,7 +13076,7 @@ class EarthFaultCompensator(ConductingEquipment):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -13211,7 +13085,7 @@ class EarthFaultCompensator(ConductingEquipment):
     
     @property
     def __namespace__(self):
-        return 'http://iec.ch/TC57/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Wires'
@@ -13235,7 +13109,7 @@ class GroundingImpedance(EarthFaultCompensator):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -13244,7 +13118,7 @@ class GroundingImpedance(EarthFaultCompensator):
     
     @property
     def __namespace__(self):
-        return 'http://iec.ch/TC57/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Wires'
@@ -13269,7 +13143,7 @@ class PetersenCoil(EarthFaultCompensator):
         'stereotypes': ['enumeration', 'Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -13283,7 +13157,7 @@ class PetersenCoil(EarthFaultCompensator):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -13297,7 +13171,7 @@ class PetersenCoil(EarthFaultCompensator):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -13314,7 +13188,7 @@ class PetersenCoil(EarthFaultCompensator):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -13329,7 +13203,7 @@ class PetersenCoil(EarthFaultCompensator):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -13343,7 +13217,7 @@ class PetersenCoil(EarthFaultCompensator):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -13357,7 +13231,7 @@ class PetersenCoil(EarthFaultCompensator):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -13369,7 +13243,7 @@ class PetersenCoil(EarthFaultCompensator):
     
     @property
     def __namespace__(self):
-        return 'http://iec.ch/TC57/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Wires'
@@ -13389,7 +13263,7 @@ class EnergyConnection(ConductingEquipment):
 
     @property
     def __namespace__(self):
-        return 'http://iec.ch/TC57/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Wires'
@@ -13417,7 +13291,7 @@ class EnergyConsumer(EnergyConnection):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -13431,7 +13305,7 @@ class EnergyConsumer(EnergyConnection):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -13446,7 +13320,7 @@ class EnergyConsumer(EnergyConnection):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -13463,7 +13337,7 @@ class EnergyConsumer(EnergyConnection):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -13479,7 +13353,7 @@ class EnergyConsumer(EnergyConnection):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -13495,7 +13369,7 @@ class EnergyConsumer(EnergyConnection):
         'stereotypes': ['enumeration', 'Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -13509,7 +13383,7 @@ class EnergyConsumer(EnergyConnection):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -13526,7 +13400,7 @@ class EnergyConsumer(EnergyConnection):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -13542,7 +13416,7 @@ class EnergyConsumer(EnergyConnection):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -13555,7 +13429,7 @@ class EnergyConsumer(EnergyConnection):
         default=None,
         metadata={
         'type': 'Association',
-        'stereotypes': ['ShadowExtension'],
+        'stereotypes': ['NC'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'AreaDispatchableUnit.EnergyConsumer',
@@ -13574,7 +13448,7 @@ class EnergyConsumer(EnergyConnection):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'EnergyConsumerAction.EnergyConsumer',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -13588,7 +13462,7 @@ class EnergyConsumer(EnergyConnection):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'LoadDynamics.EnergyConsumer',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -13604,7 +13478,7 @@ class EnergyConsumer(EnergyConnection):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'LoadResponseCharacteristic.EnergyConsumer',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -13616,11 +13490,11 @@ class EnergyConsumer(EnergyConnection):
         default=None,
         metadata={
         'type': 'Association',
-        'stereotypes': ['ShadowExtension', 'OfAggregate'],
+        'stereotypes': ['OfAggregate'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'PowerCutZone.EnergyConsumers',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -13635,7 +13509,7 @@ class EnergyConsumer(EnergyConnection):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'EnergyConsumerPhase.EnergyConsumer',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         })
     '''
@@ -13644,7 +13518,7 @@ class EnergyConsumer(EnergyConnection):
     
     @property
     def __namespace__(self):
-        return 'http://iec.ch/TC57/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Wires'
@@ -13670,7 +13544,7 @@ class ConformLoad(EnergyConsumer):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'ConformLoadGroup.EnergyConsumers',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -13679,7 +13553,7 @@ class ConformLoad(EnergyConsumer):
     
     @property
     def __namespace__(self):
-        return 'http://iec.ch/TC57/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'LoadModel'
@@ -13706,7 +13580,7 @@ class NonConformLoad(EnergyConsumer):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'NonConformLoadGroup.EnergyConsumers',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -13715,7 +13589,7 @@ class NonConformLoad(EnergyConsumer):
     
     @property
     def __namespace__(self):
-        return 'http://iec.ch/TC57/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'LoadModel'
@@ -13734,7 +13608,7 @@ class StationSupply(EnergyConsumer):
 
     @property
     def __namespace__(self):
-        return 'http://iec.ch/TC57/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'LoadModel'
@@ -13760,7 +13634,7 @@ class EnergySource(EnergyConnection):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -13773,7 +13647,7 @@ class EnergySource(EnergyConnection):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -13789,7 +13663,7 @@ class EnergySource(EnergyConnection):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -13803,7 +13677,7 @@ class EnergySource(EnergyConnection):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -13819,7 +13693,7 @@ class EnergySource(EnergyConnection):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -13835,7 +13709,7 @@ class EnergySource(EnergyConnection):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -13849,7 +13723,7 @@ class EnergySource(EnergyConnection):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -13863,7 +13737,7 @@ class EnergySource(EnergyConnection):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -13877,7 +13751,7 @@ class EnergySource(EnergyConnection):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -13893,7 +13767,7 @@ class EnergySource(EnergyConnection):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -13911,7 +13785,7 @@ class EnergySource(EnergyConnection):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -13929,7 +13803,7 @@ class EnergySource(EnergyConnection):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -13943,7 +13817,7 @@ class EnergySource(EnergyConnection):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -13957,7 +13831,7 @@ class EnergySource(EnergyConnection):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -13972,7 +13846,7 @@ class EnergySource(EnergyConnection):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'EnergySchedulingType.EnergySource',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -13987,7 +13861,7 @@ class EnergySource(EnergyConnection):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'EnergySourceAction.EnergySource',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -14002,7 +13876,7 @@ class EnergySource(EnergyConnection):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'EnergySourcePhase.EnergySource',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         })
     '''
@@ -14011,10 +13885,10 @@ class EnergySource(EnergyConnection):
     
     @property
     def __namespace__(self):
-        return 'http://iec.ch/TC57/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
-        return 'Wires'
+        return 'WiresEXT'
     @property
     def __minOccurs__(self):
         return '0'
@@ -14036,7 +13910,7 @@ class RegulatingCondEq(EnergyConnection):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -14052,7 +13926,7 @@ class RegulatingCondEq(EnergyConnection):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'EquipmentController.RegulatingCondEq',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -14063,11 +13937,11 @@ class RegulatingCondEq(EnergyConnection):
         default=None,
         metadata={
         'type': 'Association',
-        'stereotypes': ['ShadowExtension'],
+        'stereotypes': [],
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'RegulatingControl.RegulatingCondEq',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -14076,7 +13950,7 @@ class RegulatingCondEq(EnergyConnection):
     
     @property
     def __namespace__(self):
-        return 'http://iec.ch/TC57/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Wires'
@@ -14108,7 +13982,7 @@ class ExternalNetworkInjection(RegulatingCondEq):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -14125,7 +13999,7 @@ class ExternalNetworkInjection(RegulatingCondEq):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -14142,7 +14016,7 @@ class ExternalNetworkInjection(RegulatingCondEq):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -14159,7 +14033,7 @@ class ExternalNetworkInjection(RegulatingCondEq):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -14176,7 +14050,7 @@ class ExternalNetworkInjection(RegulatingCondEq):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -14193,7 +14067,7 @@ class ExternalNetworkInjection(RegulatingCondEq):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -14210,7 +14084,7 @@ class ExternalNetworkInjection(RegulatingCondEq):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -14227,7 +14101,7 @@ class ExternalNetworkInjection(RegulatingCondEq):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -14243,7 +14117,7 @@ class ExternalNetworkInjection(RegulatingCondEq):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -14259,7 +14133,7 @@ class ExternalNetworkInjection(RegulatingCondEq):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -14274,7 +14148,7 @@ class ExternalNetworkInjection(RegulatingCondEq):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -14288,7 +14162,7 @@ class ExternalNetworkInjection(RegulatingCondEq):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -14303,7 +14177,7 @@ class ExternalNetworkInjection(RegulatingCondEq):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -14318,7 +14192,7 @@ class ExternalNetworkInjection(RegulatingCondEq):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -14332,7 +14206,7 @@ class ExternalNetworkInjection(RegulatingCondEq):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -14347,7 +14221,7 @@ class ExternalNetworkInjection(RegulatingCondEq):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -14363,7 +14237,7 @@ class ExternalNetworkInjection(RegulatingCondEq):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -14379,7 +14253,7 @@ class ExternalNetworkInjection(RegulatingCondEq):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -14392,7 +14266,7 @@ class ExternalNetworkInjection(RegulatingCondEq):
     
     @property
     def __namespace__(self):
-        return 'http://iec.ch/TC57/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Wires'
@@ -14416,7 +14290,7 @@ class FACTSEquipment(RegulatingCondEq):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -14430,7 +14304,7 @@ class FACTSEquipment(RegulatingCondEq):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -14445,7 +14319,7 @@ class FACTSEquipment(RegulatingCondEq):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -14459,7 +14333,7 @@ class FACTSEquipment(RegulatingCondEq):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -14474,7 +14348,7 @@ class FACTSEquipment(RegulatingCondEq):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -14490,7 +14364,7 @@ class FACTSEquipment(RegulatingCondEq):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -14504,7 +14378,7 @@ class FACTSEquipment(RegulatingCondEq):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -14518,7 +14392,7 @@ class FACTSEquipment(RegulatingCondEq):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -14533,7 +14407,7 @@ class FACTSEquipment(RegulatingCondEq):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -14547,7 +14421,7 @@ class FACTSEquipment(RegulatingCondEq):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -14565,7 +14439,7 @@ class FACTSEquipment(RegulatingCondEq):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'LossCurve.FACTSEquipment',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         })
     '''
@@ -14574,7 +14448,7 @@ class FACTSEquipment(RegulatingCondEq):
     
     @property
     def __namespace__(self):
-        return 'http://iec.ch/TC57/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'FACTS'
@@ -14600,7 +14474,7 @@ class ModularStaticSynchronousSeriesCompensator(FACTSEquipment):
 
     @property
     def __namespace__(self):
-        return 'http://iec.ch/TC57/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'FACTS'
@@ -14624,7 +14498,7 @@ class StaticSynchronousCompensator(FACTSEquipment):
 
     @property
     def __namespace__(self):
-        return 'http://iec.ch/TC57/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'FACTS'
@@ -14656,7 +14530,7 @@ class StaticVarCompensator(FACTSEquipment):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -14671,7 +14545,7 @@ class StaticVarCompensator(FACTSEquipment):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -14686,7 +14560,7 @@ class StaticVarCompensator(FACTSEquipment):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -14702,7 +14576,7 @@ class StaticVarCompensator(FACTSEquipment):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -14719,7 +14593,7 @@ class StaticVarCompensator(FACTSEquipment):
         'stereotypes': ['enumeration', 'Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -14733,7 +14607,7 @@ class StaticVarCompensator(FACTSEquipment):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -14751,7 +14625,7 @@ class StaticVarCompensator(FACTSEquipment):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'StaticVarCompensatorDynamics.StaticVarCompensator',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -14761,7 +14635,7 @@ class StaticVarCompensator(FACTSEquipment):
     
     @property
     def __namespace__(self):
-        return 'http://iec.ch/TC57/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'FACTS'
@@ -14785,20 +14659,6 @@ class ThyristorControlledSeriesCompensator(FACTSEquipment):
     losses.
     '''
 
-    currentSection: Optional[int] = field(
-        default=None,
-        metadata={
-        'type': 'Attribute',
-        'stereotypes': ['Attribute'],
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
-        'serialize': True,
-        })
-    '''
-    The current section on which the TCSC is operating.
-    '''
-    
     compensationZ: Optional[ float | Impedance ] = field(
         default=None,
         metadata={
@@ -14806,7 +14666,7 @@ class ThyristorControlledSeriesCompensator(FACTSEquipment):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -14823,7 +14683,7 @@ class ThyristorControlledSeriesCompensator(FACTSEquipment):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -14838,7 +14698,7 @@ class ThyristorControlledSeriesCompensator(FACTSEquipment):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -14853,7 +14713,7 @@ class ThyristorControlledSeriesCompensator(FACTSEquipment):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -14867,7 +14727,7 @@ class ThyristorControlledSeriesCompensator(FACTSEquipment):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -14882,7 +14742,7 @@ class ThyristorControlledSeriesCompensator(FACTSEquipment):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'TCSCCompensationPoint.ThyristorControlledSeriesCompensator',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         })
     '''
@@ -14891,7 +14751,7 @@ class ThyristorControlledSeriesCompensator(FACTSEquipment):
     
     @property
     def __namespace__(self):
-        return 'http://iec.ch/TC57/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'FACTS'
@@ -14917,7 +14777,7 @@ class FrequencyConverter(RegulatingCondEq):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -14931,7 +14791,7 @@ class FrequencyConverter(RegulatingCondEq):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -14946,7 +14806,7 @@ class FrequencyConverter(RegulatingCondEq):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -14961,7 +14821,7 @@ class FrequencyConverter(RegulatingCondEq):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -14976,7 +14836,7 @@ class FrequencyConverter(RegulatingCondEq):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -14986,7 +14846,7 @@ class FrequencyConverter(RegulatingCondEq):
     
     @property
     def __namespace__(self):
-        return 'http://iec.ch/TC57/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Wires'
@@ -15012,7 +14872,7 @@ class PowerElectronicsConnection(RegulatingCondEq):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -15027,7 +14887,7 @@ class PowerElectronicsConnection(RegulatingCondEq):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -15040,7 +14900,7 @@ class PowerElectronicsConnection(RegulatingCondEq):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -15055,7 +14915,7 @@ class PowerElectronicsConnection(RegulatingCondEq):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -15070,7 +14930,7 @@ class PowerElectronicsConnection(RegulatingCondEq):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -15085,7 +14945,7 @@ class PowerElectronicsConnection(RegulatingCondEq):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -15101,7 +14961,7 @@ class PowerElectronicsConnection(RegulatingCondEq):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -15117,7 +14977,7 @@ class PowerElectronicsConnection(RegulatingCondEq):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -15132,7 +14992,7 @@ class PowerElectronicsConnection(RegulatingCondEq):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -15149,7 +15009,7 @@ class PowerElectronicsConnection(RegulatingCondEq):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'PowerElectronicsConnectionPhase.PowerElectronicsConnection',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         })
     '''
@@ -15164,7 +15024,7 @@ class PowerElectronicsConnection(RegulatingCondEq):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'PowerElectronicsUnit.PowerElectronicsConnection',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         })
     '''
@@ -15174,7 +15034,7 @@ class PowerElectronicsConnection(RegulatingCondEq):
     
     @property
     def __namespace__(self):
-        return 'http://iec.ch/TC57/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Wires'
@@ -15188,7 +15048,7 @@ class PowerElectronicsConnection(RegulatingCondEq):
 @stereotype(CIMStereotype.ShadowExtension)
 @stereotype(CIMStereotype.GridAPPSD)
 @dataclass(repr=False)
-class EVSE1(PowerElectronicsConnection):
+class EVSE(PowerElectronicsConnection):
     '''
     Equipment or a combination of equipment, providing dedicated functions
     to supply electric energy from a fixed electrical installation or supply
@@ -15206,7 +15066,7 @@ class EVSE1(PowerElectronicsConnection):
         default=None,
         metadata={
         'type': 'Attribute',
-        'stereotypes': ['enumeration', 'GridAPPSD', 'Attribute'],
+        'stereotypes': ['GridAPPSD', 'enumeration', 'Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://gridappsd.org/CIM/extension#',
@@ -15241,7 +15101,7 @@ class RotatingMachine(RegulatingCondEq):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -15257,7 +15117,7 @@ class RotatingMachine(RegulatingCondEq):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -15273,7 +15133,7 @@ class RotatingMachine(RegulatingCondEq):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -15289,7 +15149,7 @@ class RotatingMachine(RegulatingCondEq):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -15304,7 +15164,7 @@ class RotatingMachine(RegulatingCondEq):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -15317,11 +15177,11 @@ class RotatingMachine(RegulatingCondEq):
         default=None,
         metadata={
         'type': 'Association',
-        'stereotypes': ['NC'],
+        'stereotypes': [],
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'GeneratingUnit.RotatingMachine',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -15337,7 +15197,7 @@ class RotatingMachine(RegulatingCondEq):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'HydroPump.RotatingMachine',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -15350,7 +15210,7 @@ class RotatingMachine(RegulatingCondEq):
         default=None,
         metadata={
         'type': 'Association',
-        'stereotypes': ['ShadowExtension'],
+        'stereotypes': ['GridAPPSD'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'RotatingMachinePhase.RotatingMachine',
@@ -15362,7 +15222,7 @@ class RotatingMachine(RegulatingCondEq):
     
     @property
     def __namespace__(self):
-        return 'http://iec.ch/TC57/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Wires'
@@ -15388,7 +15248,7 @@ class AsynchronousMachine(RotatingMachine):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -15403,7 +15263,7 @@ class AsynchronousMachine(RotatingMachine):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -15418,7 +15278,7 @@ class AsynchronousMachine(RotatingMachine):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -15433,7 +15293,7 @@ class AsynchronousMachine(RotatingMachine):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -15448,7 +15308,7 @@ class AsynchronousMachine(RotatingMachine):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -15463,7 +15323,7 @@ class AsynchronousMachine(RotatingMachine):
         'stereotypes': ['enumeration', 'Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -15477,7 +15337,7 @@ class AsynchronousMachine(RotatingMachine):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -15493,7 +15353,7 @@ class AsynchronousMachine(RotatingMachine):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -15507,7 +15367,7 @@ class AsynchronousMachine(RotatingMachine):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -15521,7 +15381,7 @@ class AsynchronousMachine(RotatingMachine):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -15536,7 +15396,7 @@ class AsynchronousMachine(RotatingMachine):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -15550,7 +15410,7 @@ class AsynchronousMachine(RotatingMachine):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -15564,7 +15424,7 @@ class AsynchronousMachine(RotatingMachine):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -15578,7 +15438,7 @@ class AsynchronousMachine(RotatingMachine):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -15592,7 +15452,7 @@ class AsynchronousMachine(RotatingMachine):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -15606,7 +15466,7 @@ class AsynchronousMachine(RotatingMachine):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -15620,7 +15480,7 @@ class AsynchronousMachine(RotatingMachine):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -15634,7 +15494,7 @@ class AsynchronousMachine(RotatingMachine):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -15648,7 +15508,7 @@ class AsynchronousMachine(RotatingMachine):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -15662,7 +15522,7 @@ class AsynchronousMachine(RotatingMachine):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -15677,7 +15537,7 @@ class AsynchronousMachine(RotatingMachine):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'AsynchronousMachineDynamics.AsynchronousMachine',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -15687,7 +15547,7 @@ class AsynchronousMachine(RotatingMachine):
     
     @property
     def __namespace__(self):
-        return 'http://iec.ch/TC57/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Wires'
@@ -15713,7 +15573,7 @@ class SynchronousMachine(RotatingMachine):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -15727,7 +15587,7 @@ class SynchronousMachine(RotatingMachine):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -15742,7 +15602,7 @@ class SynchronousMachine(RotatingMachine):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -15758,7 +15618,7 @@ class SynchronousMachine(RotatingMachine):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -15774,7 +15634,7 @@ class SynchronousMachine(RotatingMachine):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -15789,7 +15649,7 @@ class SynchronousMachine(RotatingMachine):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -15804,7 +15664,7 @@ class SynchronousMachine(RotatingMachine):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -15819,7 +15679,7 @@ class SynchronousMachine(RotatingMachine):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -15833,7 +15693,7 @@ class SynchronousMachine(RotatingMachine):
         'stereotypes': ['enumeration', 'Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -15847,7 +15707,7 @@ class SynchronousMachine(RotatingMachine):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -15862,7 +15722,7 @@ class SynchronousMachine(RotatingMachine):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -15877,7 +15737,7 @@ class SynchronousMachine(RotatingMachine):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -15899,7 +15759,7 @@ class SynchronousMachine(RotatingMachine):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -15915,7 +15775,7 @@ class SynchronousMachine(RotatingMachine):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -15930,7 +15790,7 @@ class SynchronousMachine(RotatingMachine):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -15944,7 +15804,7 @@ class SynchronousMachine(RotatingMachine):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -15958,7 +15818,7 @@ class SynchronousMachine(RotatingMachine):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -15972,7 +15832,7 @@ class SynchronousMachine(RotatingMachine):
         'stereotypes': ['enumeration', 'Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -15986,7 +15846,7 @@ class SynchronousMachine(RotatingMachine):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -16002,7 +15862,7 @@ class SynchronousMachine(RotatingMachine):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -16018,7 +15878,7 @@ class SynchronousMachine(RotatingMachine):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -16032,7 +15892,7 @@ class SynchronousMachine(RotatingMachine):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -16046,7 +15906,7 @@ class SynchronousMachine(RotatingMachine):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -16060,7 +15920,7 @@ class SynchronousMachine(RotatingMachine):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -16076,7 +15936,7 @@ class SynchronousMachine(RotatingMachine):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -16091,7 +15951,7 @@ class SynchronousMachine(RotatingMachine):
         'stereotypes': ['enumeration', 'Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -16106,7 +15966,7 @@ class SynchronousMachine(RotatingMachine):
         'stereotypes': ['enumeration', 'Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -16120,7 +15980,7 @@ class SynchronousMachine(RotatingMachine):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -16137,7 +15997,7 @@ class SynchronousMachine(RotatingMachine):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -16151,7 +16011,7 @@ class SynchronousMachine(RotatingMachine):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -16166,7 +16026,7 @@ class SynchronousMachine(RotatingMachine):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'ReactiveCapabilityCurve.InitiallyUsedBySynchronousMachine',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -16186,7 +16046,7 @@ class SynchronousMachine(RotatingMachine):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'SynchronousMachineDynamics.SynchronousMachine',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -16202,7 +16062,7 @@ class SynchronousMachine(RotatingMachine):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'ReactiveCapabilityCurve.SynchronousMachine',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         })
     '''
@@ -16211,7 +16071,7 @@ class SynchronousMachine(RotatingMachine):
     
     @property
     def __namespace__(self):
-        return 'http://iec.ch/TC57/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Wires'
@@ -16238,7 +16098,7 @@ class ShuntCompensator(RegulatingCondEq):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -16253,7 +16113,7 @@ class ShuntCompensator(RegulatingCondEq):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -16267,7 +16127,7 @@ class ShuntCompensator(RegulatingCondEq):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -16282,7 +16142,7 @@ class ShuntCompensator(RegulatingCondEq):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -16308,7 +16168,7 @@ class ShuntCompensator(RegulatingCondEq):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -16324,7 +16184,7 @@ class ShuntCompensator(RegulatingCondEq):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -16340,7 +16200,7 @@ class ShuntCompensator(RegulatingCondEq):
         'stereotypes': ['enumeration', 'Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -16354,7 +16214,7 @@ class ShuntCompensator(RegulatingCondEq):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -16370,7 +16230,7 @@ class ShuntCompensator(RegulatingCondEq):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'ShuntCompensatorAction.ShuntCompensator',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -16384,7 +16244,7 @@ class ShuntCompensator(RegulatingCondEq):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'ShuntCompensatorDynamics.ShuntCompensator',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -16400,7 +16260,7 @@ class ShuntCompensator(RegulatingCondEq):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'StaticVarCompensatorSystemDynamics.ShuntCompensator',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -16416,7 +16276,7 @@ class ShuntCompensator(RegulatingCondEq):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'ShuntCompensatorPhase.ShuntCompensator',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         })
     '''
@@ -16431,7 +16291,7 @@ class ShuntCompensator(RegulatingCondEq):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'SvShuntCompensatorSections.ShuntCompensator',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         })
     '''
@@ -16440,7 +16300,7 @@ class ShuntCompensator(RegulatingCondEq):
     
     @property
     def __namespace__(self):
-        return 'http://iec.ch/TC57/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Wires'
@@ -16465,7 +16325,7 @@ class LinearShuntCompensator(ShuntCompensator):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -16479,7 +16339,7 @@ class LinearShuntCompensator(ShuntCompensator):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -16493,7 +16353,7 @@ class LinearShuntCompensator(ShuntCompensator):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -16507,7 +16367,7 @@ class LinearShuntCompensator(ShuntCompensator):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -16546,7 +16406,7 @@ class LinearShuntCompensator(ShuntCompensator):
     
     @property
     def __namespace__(self):
-        return 'http://iec.ch/TC57/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Wires'
@@ -16575,7 +16435,7 @@ class NonlinearShuntCompensator(ShuntCompensator):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'NonlinearShuntCompensatorPoint.NonlinearShuntCompensator',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         })
     '''
@@ -16584,7 +16444,7 @@ class NonlinearShuntCompensator(ShuntCompensator):
     
     @property
     def __namespace__(self):
-        return 'http://iec.ch/TC57/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Wires'
@@ -16609,7 +16469,7 @@ class VariableShuntCompensator(NonlinearShuntCompensator):
 
     @property
     def __namespace__(self):
-        return 'http://iec.ch/TC57/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Wires'
@@ -16635,7 +16495,7 @@ class ExtendedWardEquivalent(ConductingEquipment):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'ReactiveCapabilityCurve.ExtendedWardEquivalent',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         })
     '''
@@ -16644,7 +16504,7 @@ class ExtendedWardEquivalent(ConductingEquipment):
     
     @property
     def __namespace__(self):
-        return 'http://iec.ch/TC57/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Equivalents'
@@ -16671,7 +16531,7 @@ class Ground(ConductingEquipment):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'GroundAction.Ground',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -16680,7 +16540,7 @@ class Ground(ConductingEquipment):
     
     @property
     def __namespace__(self):
-        return 'http://iec.ch/TC57/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Wires'
@@ -16717,7 +16577,7 @@ class PowerTransformer(ConductingEquipment):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -16736,7 +16596,7 @@ class PowerTransformer(ConductingEquipment):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -16752,7 +16612,7 @@ class PowerTransformer(ConductingEquipment):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -16788,7 +16648,7 @@ class PowerTransformer(ConductingEquipment):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -16805,7 +16665,7 @@ class PowerTransformer(ConductingEquipment):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -16822,7 +16682,7 @@ class PowerTransformer(ConductingEquipment):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -16839,7 +16699,7 @@ class PowerTransformer(ConductingEquipment):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -16858,7 +16718,7 @@ class PowerTransformer(ConductingEquipment):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'PowerTransformerEnd.PowerTransformer',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         })
     '''
@@ -16873,7 +16733,7 @@ class PowerTransformer(ConductingEquipment):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'TransformerTank.PowerTransformer',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         })
     '''
@@ -16882,7 +16742,7 @@ class PowerTransformer(ConductingEquipment):
     
     @property
     def __namespace__(self):
-        return 'http://iec.ch/TC57/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Wires'
@@ -16908,7 +16768,7 @@ class SeriesCompensator(ConductingEquipment):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -16924,7 +16784,7 @@ class SeriesCompensator(ConductingEquipment):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -16938,7 +16798,7 @@ class SeriesCompensator(ConductingEquipment):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -16952,7 +16812,7 @@ class SeriesCompensator(ConductingEquipment):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -16969,7 +16829,7 @@ class SeriesCompensator(ConductingEquipment):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -16985,7 +16845,7 @@ class SeriesCompensator(ConductingEquipment):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -16999,7 +16859,7 @@ class SeriesCompensator(ConductingEquipment):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -17008,7 +16868,7 @@ class SeriesCompensator(ConductingEquipment):
     
     @property
     def __namespace__(self):
-        return 'http://iec.ch/TC57/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Wires'
@@ -17037,7 +16897,7 @@ class Switch(ConductingEquipment):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -17058,7 +16918,7 @@ class Switch(ConductingEquipment):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -17074,7 +16934,7 @@ class Switch(ConductingEquipment):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -17089,7 +16949,7 @@ class Switch(ConductingEquipment):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -17104,7 +16964,7 @@ class Switch(ConductingEquipment):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -17117,10 +16977,10 @@ class Switch(ConductingEquipment):
         default=None,
         metadata={
         'type': 'Attribute',
-        'stereotypes': ['enumeration', 'GridAPPSD', 'Attribute'],
+        'stereotypes': ['GridAPPSD', 'enumeration', 'Attribute'],
         'minOccurs': '1',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -17136,7 +16996,7 @@ class Switch(ConductingEquipment):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'CompositeSwitch.Switches',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -17151,7 +17011,7 @@ class Switch(ConductingEquipment):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'SwitchAction.OperatedSwitch',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -17166,7 +17026,7 @@ class Switch(ConductingEquipment):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'SvSwitch.Switch',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         })
     '''
@@ -17181,7 +17041,7 @@ class Switch(ConductingEquipment):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'SwitchPhase.Switch',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         })
     '''
@@ -17196,7 +17056,7 @@ class Switch(ConductingEquipment):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'SwitchSchedule.Switch',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         })
     '''
@@ -17205,10 +17065,10 @@ class Switch(ConductingEquipment):
     
     @property
     def __namespace__(self):
-        return 'http://iec.ch/TC57/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
-        return 'WiresEXT'
+        return 'Wires'
     @property
     def __minOccurs__(self):
         return '0'
@@ -17241,7 +17101,7 @@ class Cut(Switch):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -17258,7 +17118,7 @@ class Cut(Switch):
         'minOccurs': '1',
         'maxOccurs': '1',
         'inverse': 'ACLineSegment.Cut',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -17273,7 +17133,7 @@ class Cut(Switch):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'CutAction.Cut',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -17282,7 +17142,7 @@ class Cut(Switch):
     
     @property
     def __namespace__(self):
-        return 'http://iec.ch/TC57/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Wires'
@@ -17309,7 +17169,7 @@ class Disconnector(Switch):
 
     @property
     def __namespace__(self):
-        return 'http://iec.ch/TC57/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Wires'
@@ -17333,7 +17193,7 @@ class EarthingSwitch(Switch):
 
     @property
     def __namespace__(self):
-        return 'http://iec.ch/TC57/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Wires'
@@ -17361,7 +17221,7 @@ class Fuse(Switch):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'FuseCharacteristicCurve.FuseMinimumMelt',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -17377,7 +17237,7 @@ class Fuse(Switch):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'FuseCharacteristicCurve.FuseTotalClearing',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -17387,7 +17247,7 @@ class Fuse(Switch):
     
     @property
     def __namespace__(self):
-        return 'http://iec.ch/TC57/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Wires'
@@ -17409,7 +17269,7 @@ class GroundDisconnector(Switch):
 
     @property
     def __namespace__(self):
-        return 'http://iec.ch/TC57/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Wires'
@@ -17437,7 +17297,7 @@ class Jumper(Switch):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'JumperAction.Jumper',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -17446,7 +17306,7 @@ class Jumper(Switch):
     
     @property
     def __namespace__(self):
-        return 'http://iec.ch/TC57/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Wires'
@@ -17471,7 +17331,7 @@ class ProtectedSwitch(Switch):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -17497,7 +17357,7 @@ class ProtectedSwitch(Switch):
     
     @property
     def __namespace__(self):
-        return 'http://iec.ch/TC57/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Wires'
@@ -17524,7 +17384,7 @@ class Breaker(ProtectedSwitch):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -17533,7 +17393,7 @@ class Breaker(ProtectedSwitch):
     
     @property
     def __namespace__(self):
-        return 'http://iec.ch/TC57/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Wires'
@@ -17553,7 +17413,7 @@ class DisconnectingCircuitBreaker(Breaker):
 
     @property
     def __namespace__(self):
-        return 'http://iec.ch/TC57/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Wires'
@@ -17573,7 +17433,7 @@ class LoadBreakSwitch(ProtectedSwitch):
 
     @property
     def __namespace__(self):
-        return 'http://iec.ch/TC57/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Wires'
@@ -17593,7 +17453,7 @@ class Recloser(ProtectedSwitch):
 
     @property
     def __namespace__(self):
-        return 'http://iec.ch/TC57/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Wires'
@@ -17616,7 +17476,7 @@ class Sectionaliser(Switch):
 
     @property
     def __namespace__(self):
-        return 'http://iec.ch/TC57/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Wires'
@@ -17644,7 +17504,7 @@ class CurrentTransformer(Equipment):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -17658,7 +17518,7 @@ class CurrentTransformer(Equipment):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -17673,7 +17533,7 @@ class CurrentTransformer(Equipment):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -17682,7 +17542,7 @@ class CurrentTransformer(Equipment):
     
     @property
     def __namespace__(self):
-        return 'http://iec.ch/TC57/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'AuxiliaryEquipment'
@@ -17712,7 +17572,7 @@ class GeneratingUnit(Equipment):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -17726,7 +17586,7 @@ class GeneratingUnit(Equipment):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -17743,7 +17603,7 @@ class GeneratingUnit(Equipment):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -17759,7 +17619,7 @@ class GeneratingUnit(Equipment):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -17773,7 +17633,7 @@ class GeneratingUnit(Equipment):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -17787,7 +17647,7 @@ class GeneratingUnit(Equipment):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -17802,7 +17662,7 @@ class GeneratingUnit(Equipment):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -17817,7 +17677,7 @@ class GeneratingUnit(Equipment):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -17834,7 +17694,7 @@ class GeneratingUnit(Equipment):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -17850,7 +17710,7 @@ class GeneratingUnit(Equipment):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -17865,7 +17725,7 @@ class GeneratingUnit(Equipment):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -17880,7 +17740,7 @@ class GeneratingUnit(Equipment):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -17895,7 +17755,7 @@ class GeneratingUnit(Equipment):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -17910,7 +17770,7 @@ class GeneratingUnit(Equipment):
         'stereotypes': ['enumeration', 'Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -17924,7 +17784,7 @@ class GeneratingUnit(Equipment):
         'stereotypes': ['enumeration', 'Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -17939,7 +17799,7 @@ class GeneratingUnit(Equipment):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -17953,7 +17813,7 @@ class GeneratingUnit(Equipment):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -17971,7 +17831,7 @@ class GeneratingUnit(Equipment):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -17985,7 +17845,7 @@ class GeneratingUnit(Equipment):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -18000,7 +17860,7 @@ class GeneratingUnit(Equipment):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -18014,7 +17874,7 @@ class GeneratingUnit(Equipment):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -18029,7 +17889,7 @@ class GeneratingUnit(Equipment):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -18044,7 +17904,7 @@ class GeneratingUnit(Equipment):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -18060,7 +17920,7 @@ class GeneratingUnit(Equipment):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -18075,7 +17935,7 @@ class GeneratingUnit(Equipment):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -18090,7 +17950,7 @@ class GeneratingUnit(Equipment):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -18104,7 +17964,7 @@ class GeneratingUnit(Equipment):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -18119,7 +17979,7 @@ class GeneratingUnit(Equipment):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -18133,7 +17993,7 @@ class GeneratingUnit(Equipment):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -18150,7 +18010,7 @@ class GeneratingUnit(Equipment):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -18165,7 +18025,7 @@ class GeneratingUnit(Equipment):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -18180,7 +18040,7 @@ class GeneratingUnit(Equipment):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -18196,7 +18056,7 @@ class GeneratingUnit(Equipment):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -18213,7 +18073,7 @@ class GeneratingUnit(Equipment):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -18227,7 +18087,7 @@ class GeneratingUnit(Equipment):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -18242,7 +18102,7 @@ class GeneratingUnit(Equipment):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -18256,7 +18116,7 @@ class GeneratingUnit(Equipment):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -18271,7 +18131,7 @@ class GeneratingUnit(Equipment):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'ControlAreaGeneratingUnit.GeneratingUnit',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         })
     '''
@@ -18286,7 +18146,7 @@ class GeneratingUnit(Equipment):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'RotatingMachine.GeneratingUnit',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         })
     '''
@@ -18296,7 +18156,7 @@ class GeneratingUnit(Equipment):
     
     @property
     def __namespace__(self):
-        return 'http://iec.ch/TC57/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Production'
@@ -18318,7 +18178,7 @@ class SolarGeneratingUnit(GeneratingUnit):
         default=None,
         metadata={
         'type': 'Association',
-        'stereotypes': ['ShadowExtension', 'European'],
+        'stereotypes': ['European'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'SolarPowerPlant.SolarGeneratingUnits',
@@ -18331,7 +18191,7 @@ class SolarGeneratingUnit(GeneratingUnit):
     
     @property
     def __namespace__(self):
-        return 'http://iec.ch/TC57/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Production'
@@ -18357,7 +18217,7 @@ class ThermalGeneratingUnit(GeneratingUnit):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'FossilFuel.ThermalGeneratingUnit',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         })
     '''
@@ -18366,7 +18226,7 @@ class ThermalGeneratingUnit(GeneratingUnit):
     
     @property
     def __namespace__(self):
-        return 'http://iec.ch/TC57/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Production'
@@ -18391,7 +18251,7 @@ class WindGeneratingUnit(GeneratingUnit):
         'stereotypes': ['enumeration', 'Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -18402,7 +18262,7 @@ class WindGeneratingUnit(GeneratingUnit):
         default=None,
         metadata={
         'type': 'Association',
-        'stereotypes': ['ShadowExtension', 'European'],
+        'stereotypes': ['European'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'WindPowerPlant.WindGeneratingUnits',
@@ -18415,7 +18275,7 @@ class WindGeneratingUnit(GeneratingUnit):
     
     @property
     def __namespace__(self):
-        return 'http://iec.ch/TC57/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Production'
@@ -18442,7 +18302,7 @@ class HydroPump(Equipment):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'RotatingMachine.HydroPump',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         })
     '''
@@ -18453,7 +18313,7 @@ class HydroPump(Equipment):
     
     @property
     def __namespace__(self):
-        return 'http://iec.ch/TC57/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Production'
@@ -18482,7 +18342,7 @@ class PotentialTransformer(Equipment):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -18496,7 +18356,7 @@ class PotentialTransformer(Equipment):
         'stereotypes': ['enumeration', 'Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -18505,7 +18365,7 @@ class PotentialTransformer(Equipment):
     
     @property
     def __namespace__(self):
-        return 'http://iec.ch/TC57/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'AuxEqEXT'
@@ -18531,7 +18391,7 @@ class PowerElectronicsUnit(Equipment):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -18546,7 +18406,7 @@ class PowerElectronicsUnit(Equipment):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -18558,11 +18418,11 @@ class PowerElectronicsUnit(Equipment):
         default=None,
         metadata={
         'type': 'Association',
-        'stereotypes': [],
+        'stereotypes': ['ShadowExtension'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'PowerElectronicsConnection.PowerElectronicsUnit',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -18577,7 +18437,7 @@ class PowerElectronicsUnit(Equipment):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'PowerElectronicsUnitController.PowerElectronicsUnit',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -18592,7 +18452,7 @@ class PowerElectronicsUnit(Equipment):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'ControlAreaPowerElectronicsUnit.PowerElectronicsUnit',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         })
     '''
@@ -18601,7 +18461,7 @@ class PowerElectronicsUnit(Equipment):
     
     @property
     def __namespace__(self):
-        return 'http://iec.ch/TC57/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Production'
@@ -18625,7 +18485,7 @@ class BatteryUnit(PowerElectronicsUnit):
         'stereotypes': ['enumeration', 'Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -18713,7 +18573,7 @@ class BatteryUnit(PowerElectronicsUnit):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -18728,7 +18588,7 @@ class BatteryUnit(PowerElectronicsUnit):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -18738,7 +18598,7 @@ class BatteryUnit(PowerElectronicsUnit):
     
     @property
     def __namespace__(self):
-        return 'http://iec.ch/TC57/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Production'
@@ -18838,7 +18698,7 @@ class ChargingUnit(PowerElectronicsUnit):
     
     @property
     def __namespace__(self):
-        return 'http://iec.ch/TC57/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Production'
@@ -18857,7 +18717,7 @@ class PhotoVoltaicUnit(PowerElectronicsUnit):
 
     @property
     def __namespace__(self):
-        return 'http://iec.ch/TC57/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Production'
@@ -18882,7 +18742,7 @@ class PowerElectricalChemicalUnit(PowerElectronicsUnit):
         'stereotypes': ['enumeration', 'Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -18891,7 +18751,7 @@ class PowerElectricalChemicalUnit(PowerElectronicsUnit):
     
     @property
     def __namespace__(self):
-        return 'http://iec.ch/TC57/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Production'
@@ -18916,7 +18776,7 @@ class PowerElectronicsMarineUnit(PowerElectronicsUnit):
         'stereotypes': ['enumeration', 'Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -18925,7 +18785,7 @@ class PowerElectronicsMarineUnit(PowerElectronicsUnit):
     
     @property
     def __namespace__(self):
-        return 'http://iec.ch/TC57/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Production'
@@ -18964,7 +18824,7 @@ class PowerElectronicsWindUnit(PowerElectronicsUnit):
 
     @property
     def __namespace__(self):
-        return 'http://iec.ch/TC57/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Production'
@@ -18988,11 +18848,11 @@ class TransformerTank(Equipment):
         default=None,
         metadata={
         'type': 'Association',
-        'stereotypes': ['ShadowExtension'],
+        'stereotypes': [],
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'PowerTransformer.TransformerTanks',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -19021,7 +18881,7 @@ class TransformerTank(Equipment):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'TransformerTankEnd.TransformerTank',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         })
     '''
@@ -19030,7 +18890,7 @@ class TransformerTank(Equipment):
     
     @property
     def __namespace__(self):
-        return 'http://iec.ch/TC57/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Wires'
@@ -19057,7 +18917,7 @@ class EquipmentController(PowerSystemResource):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'RegulatingCondEq.EquipmentController',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         })
     '''
@@ -19067,7 +18927,7 @@ class EquipmentController(PowerSystemResource):
     
     @property
     def __namespace__(self):
-        return 'http://iec.ch/TC57/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Control'
@@ -19093,7 +18953,7 @@ class PowerElectronicsUnitController(EquipmentController):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'PowerElectronicsUnit.PowerElectronicsUnitController',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         })
     '''
@@ -19102,7 +18962,7 @@ class PowerElectronicsUnitController(EquipmentController):
     
     @property
     def __namespace__(self):
-        return 'http://iec.ch/TC57/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Control'
@@ -19126,7 +18986,7 @@ class SSSCController(EquipmentController):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -19140,7 +19000,7 @@ class SSSCController(EquipmentController):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -19155,7 +19015,7 @@ class SSSCController(EquipmentController):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -19169,7 +19029,7 @@ class SSSCController(EquipmentController):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -19184,7 +19044,7 @@ class SSSCController(EquipmentController):
         'stereotypes': ['enumeration', 'Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -19199,7 +19059,7 @@ class SSSCController(EquipmentController):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'CurrentDroopOverride.SSSCController',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -19215,7 +19075,7 @@ class SSSCController(EquipmentController):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'SSSCSimulationSettings.SSSCController',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -19230,7 +19090,7 @@ class SSSCController(EquipmentController):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'CurrentDroopOverride.SSSCController',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         })
     '''
@@ -19240,7 +19100,7 @@ class SSSCController(EquipmentController):
     
     @property
     def __namespace__(self):
-        return 'http://iec.ch/TC57/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'FACTS'
@@ -19267,7 +19127,7 @@ class TapChangerController(EquipmentController):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'TapChanger.TapChangeController',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         })
     '''
@@ -19276,7 +19136,7 @@ class TapChangerController(EquipmentController):
     
     @property
     def __namespace__(self):
-        return 'http://iec.ch/TC57/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Control'
@@ -19303,7 +19163,7 @@ class FuelStorage(PowerSystemResource):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'FossilFuel.FuelStorage',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         })
     '''
@@ -19312,7 +19172,7 @@ class FuelStorage(PowerSystemResource):
     
     @property
     def __namespace__(self):
-        return 'http://iec.ch/TC57/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Production'
@@ -19467,26 +19327,11 @@ class PhasorMeasurementUnit(MeasurementSystem):
     GPS spoofing). The PMU can only use one time source at a time.
     '''
     
-    usageType: Optional[ SynchrophaserUsageKind ] = field(
-        default=None,
-        metadata={
-        'type': 'Attribute',
-        'stereotypes': ['enumeration', 'Attribute'],
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'namespace': 'http://gridappsd.org/CIM/extension#',
-        'serialize': True,
-        })
-    '''
-    P-type units use a single electrical cycle for protection applications.
-    M-type units use 5 or more cycles for higher quality frequency measurements.
-    '''
-    
     PhasorDataConcentrator: Optional[PhasorDataConcentrator] = field(
         default=None,
         metadata={
         'type': 'Association',
-        'stereotypes': ['ShadowExtension', 'OfAggregate'],
+        'stereotypes': ['OfAggregate', 'GridAPPSD'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'PhasorDataConcentrator.PhasorMeasurementUnits',
@@ -19500,7 +19345,7 @@ class PhasorMeasurementUnit(MeasurementSystem):
         default=None,
         metadata={
         'type': 'Association',
-        'stereotypes': [],
+        'stereotypes': ['GridAPPSD'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'PMUConfiguration.PhasorMeasurementUnit',
@@ -19514,7 +19359,7 @@ class PhasorMeasurementUnit(MeasurementSystem):
         default=None,
         metadata={
         'type': 'Association',
-        'stereotypes': [],
+        'stereotypes': ['GridAPPSD'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'PMUStream.PMU',
@@ -19648,26 +19493,11 @@ class PhasorDataConcentrator(PowerSystemResource):
     '''
     '''
 
-    timeSourceType: Optional[ TimeSourceKind ] = field(
-        default=None,
-        metadata={
-        'type': 'Attribute',
-        'stereotypes': ['enumeration', 'Attribute'],
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'namespace': 'http://gridappsd.org/CIM/extension#',
-        'serialize': True,
-        })
-    '''
-    PDC may or may not have its own dedicated time source. The timestamp
-    issued by PDC will not supersede the timestamp from individual PMUs.
-    '''
-    
     CentralPDC: Optional[PhasorDataConcentrator] = field(
         default=None,
         metadata={
         'type': 'Association',
-        'stereotypes': ['ShadowExtension'],
+        'stereotypes': ['GridAPPSD'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'PhasorDataConcentrator.LocalPDC',
@@ -19733,7 +19563,7 @@ class PowerCutZone(PowerSystemResource):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -19747,7 +19577,7 @@ class PowerCutZone(PowerSystemResource):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -19763,7 +19593,7 @@ class PowerCutZone(PowerSystemResource):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'EnergyConsumer.PowerCutZone',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         })
     '''
@@ -19772,7 +19602,7 @@ class PowerCutZone(PowerSystemResource):
     
     @property
     def __namespace__(self):
-        return 'http://iec.ch/TC57/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'LoadModel'
@@ -19797,7 +19627,7 @@ class PowerElectronicsConnectionPhase(PowerSystemResource):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -19812,7 +19642,7 @@ class PowerElectronicsConnectionPhase(PowerSystemResource):
         'stereotypes': ['enumeration', 'Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -19830,7 +19660,7 @@ class PowerElectronicsConnectionPhase(PowerSystemResource):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -19842,11 +19672,11 @@ class PowerElectronicsConnectionPhase(PowerSystemResource):
         default=None,
         metadata={
         'type': 'Association',
-        'stereotypes': [],
+        'stereotypes': ['ShadowExtension'],
         'minOccurs': '1',
         'maxOccurs': '1',
         'inverse': 'PowerElectronicsConnection.PowerElectronicsConnectionPhase',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -19855,7 +19685,7 @@ class PowerElectronicsConnectionPhase(PowerSystemResource):
     
     @property
     def __namespace__(self):
-        return 'http://iec.ch/TC57/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Wires'
@@ -19887,7 +19717,7 @@ class PowerFrequencyController(PowerSystemResource):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'ControlArea.PowerFrequencyController',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         })
     '''
@@ -19896,7 +19726,7 @@ class PowerFrequencyController(PowerSystemResource):
     
     @property
     def __namespace__(self):
-        return 'http://iec.ch/TC57/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Control'
@@ -20002,7 +19832,7 @@ class RegulatingControl(PowerSystemResource):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -20019,7 +19849,7 @@ class RegulatingControl(PowerSystemResource):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -20033,7 +19863,7 @@ class RegulatingControl(PowerSystemResource):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -20047,7 +19877,7 @@ class RegulatingControl(PowerSystemResource):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -20100,7 +19930,7 @@ class RegulatingControl(PowerSystemResource):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -20123,7 +19953,7 @@ class RegulatingControl(PowerSystemResource):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -20147,7 +19977,7 @@ class RegulatingControl(PowerSystemResource):
         'stereotypes': ['enumeration', 'Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -20163,7 +19993,7 @@ class RegulatingControl(PowerSystemResource):
         'stereotypes': ['enumeration', 'Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -20177,7 +20007,7 @@ class RegulatingControl(PowerSystemResource):
         'stereotypes': ['enumeration', 'Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -20190,11 +20020,11 @@ class RegulatingControl(PowerSystemResource):
         default=None,
         metadata={
         'type': 'Association',
-        'stereotypes': [],
+        'stereotypes': ['ShadowExtension'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'Terminal.RegulatingControl',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -20212,7 +20042,7 @@ class RegulatingControl(PowerSystemResource):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'RegulatingCondEq.RegulatingControl',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         })
     '''
@@ -20227,7 +20057,7 @@ class RegulatingControl(PowerSystemResource):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'RegulationSchedule.RegulatingControl',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         })
     '''
@@ -20236,7 +20066,7 @@ class RegulatingControl(PowerSystemResource):
     
     @property
     def __namespace__(self):
-        return 'http://iec.ch/TC57/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Wires'
@@ -20266,7 +20096,7 @@ class TapChangerControl(RegulatingControl):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -20306,7 +20136,7 @@ class TapChangerControl(RegulatingControl):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -20321,7 +20151,7 @@ class TapChangerControl(RegulatingControl):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -20336,7 +20166,7 @@ class TapChangerControl(RegulatingControl):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -20354,7 +20184,7 @@ class TapChangerControl(RegulatingControl):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -20372,7 +20202,7 @@ class TapChangerControl(RegulatingControl):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -20386,7 +20216,7 @@ class TapChangerControl(RegulatingControl):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -20427,7 +20257,7 @@ class TapChangerControl(RegulatingControl):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'TapChanger.TapChangerControl',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         })
     '''
@@ -20436,7 +20266,7 @@ class TapChangerControl(RegulatingControl):
     
     @property
     def __namespace__(self):
-        return 'http://iec.ch/TC57/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Wires'
@@ -20600,7 +20430,7 @@ class ShuntCompensatorPhase(PowerSystemResource):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -20614,7 +20444,7 @@ class ShuntCompensatorPhase(PowerSystemResource):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -20629,7 +20459,7 @@ class ShuntCompensatorPhase(PowerSystemResource):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -20655,7 +20485,7 @@ class ShuntCompensatorPhase(PowerSystemResource):
         'stereotypes': ['enumeration', 'Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -20674,7 +20504,7 @@ class ShuntCompensatorPhase(PowerSystemResource):
         'minOccurs': '1',
         'maxOccurs': '1',
         'inverse': 'ShuntCompensator.ShuntCompensatorPhase',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -20683,7 +20513,7 @@ class ShuntCompensatorPhase(PowerSystemResource):
     
     @property
     def __namespace__(self):
-        return 'http://iec.ch/TC57/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Wires'
@@ -20708,7 +20538,7 @@ class LinearShuntCompensatorPhase(ShuntCompensatorPhase):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -20724,7 +20554,7 @@ class LinearShuntCompensatorPhase(ShuntCompensatorPhase):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -20779,7 +20609,7 @@ class LinearShuntCompensatorPhase(ShuntCompensatorPhase):
     
     @property
     def __namespace__(self):
-        return 'http://iec.ch/TC57/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Wires'
@@ -20809,7 +20639,7 @@ class NonlinearShuntCompensatorPhase(ShuntCompensatorPhase):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'NonlinearShuntCompensatorPhasePoint.NonlinearShuntCompensatorPhase',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         })
     '''
@@ -20818,7 +20648,7 @@ class NonlinearShuntCompensatorPhase(ShuntCompensatorPhase):
     
     @property
     def __namespace__(self):
-        return 'http://iec.ch/TC57/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Wires'
@@ -20880,7 +20710,7 @@ class SwitchPhase(PowerSystemResource):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -20895,7 +20725,7 @@ class SwitchPhase(PowerSystemResource):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -20924,7 +20754,7 @@ class SwitchPhase(PowerSystemResource):
         'stereotypes': ['enumeration', 'Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -20939,7 +20769,7 @@ class SwitchPhase(PowerSystemResource):
         'stereotypes': ['enumeration', 'Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -20955,7 +20785,7 @@ class SwitchPhase(PowerSystemResource):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -20972,7 +20802,7 @@ class SwitchPhase(PowerSystemResource):
         'minOccurs': '1',
         'maxOccurs': '1',
         'inverse': 'Switch.SwitchPhase',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -20981,7 +20811,7 @@ class SwitchPhase(PowerSystemResource):
     
     @property
     def __namespace__(self):
-        return 'http://iec.ch/TC57/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Wires'
@@ -21007,25 +20837,12 @@ class TapChanger(PowerSystemResource):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
     Specifies the regulation status of the equipment. True is regulating,
     false is not regulating.
-    '''
-    
-    ctRating: Optional[float] = field(
-        default=None,
-        metadata={
-        'type': 'Attribute',
-        'stereotypes': ['Attribute'],
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
-        'serialize': True,
-        })
-    '''
     '''
     
     ctRatio: Optional[float] = field(
@@ -21035,7 +20852,7 @@ class TapChanger(PowerSystemResource):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -21052,7 +20869,7 @@ class TapChanger(PowerSystemResource):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -21067,7 +20884,7 @@ class TapChanger(PowerSystemResource):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -21081,7 +20898,7 @@ class TapChanger(PowerSystemResource):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -21095,7 +20912,7 @@ class TapChanger(PowerSystemResource):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -21115,7 +20932,7 @@ class TapChanger(PowerSystemResource):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -21132,7 +20949,7 @@ class TapChanger(PowerSystemResource):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -21150,7 +20967,7 @@ class TapChanger(PowerSystemResource):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -21164,6 +20981,19 @@ class TapChanger(PowerSystemResource):
     or less than highStep.
     '''
     
+    ctRating: Optional[ float | CurrentFlow ] = field(
+        default=None,
+        metadata={
+        'type': 'Attribute',
+        'stereotypes': ['Attribute'],
+        'minOccurs': '0',
+        'maxOccurs': '1',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
+        'serialize': True,
+        })
+    '''
+    '''
+    
     initialDelay: Optional[ float | Seconds ] = field(
         default=None,
         metadata={
@@ -21171,7 +21001,7 @@ class TapChanger(PowerSystemResource):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -21186,7 +21016,7 @@ class TapChanger(PowerSystemResource):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -21208,7 +21038,7 @@ class TapChanger(PowerSystemResource):
         'stereotypes': ['enumeration', 'Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -21221,7 +21051,7 @@ class TapChanger(PowerSystemResource):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -21237,7 +21067,7 @@ class TapChanger(PowerSystemResource):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'SvTapStep.TapChanger',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -21252,7 +21082,7 @@ class TapChanger(PowerSystemResource):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'TapChangerController.TapChanger',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -21267,7 +21097,7 @@ class TapChanger(PowerSystemResource):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'TapChangerControl.TapChanger',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -21282,7 +21112,7 @@ class TapChanger(PowerSystemResource):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'StepOperationalLimitTable.TapChanger',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         })
     '''
@@ -21297,34 +21127,19 @@ class TapChanger(PowerSystemResource):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'SvTapStep.TapChanger',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         })
     '''
     The tap step state associated with the tap changer.
     '''
     
-    TapSchedules: list[TapSchedule] = field(
-        default_factory=list,
-        metadata={
-        'type': 'Association',
-        'stereotypes': [],
-        'minOccurs': '0',
-        'maxOccurs': 'unbounded',
-        'inverse': 'TapSchedule.TapChanger',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
-        'serialize': False,
-        })
-    '''
-    A TapChanger can have TapSchedules.
-    '''
-    
     @property
     def __namespace__(self):
-        return 'http://iec.ch/TC57/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
-        return 'Wires'
+        return 'WiresEXT'
     @property
     def __minOccurs__(self):
         return '0'
@@ -21350,7 +21165,7 @@ class ImpedanceTapChangerTabular(TapChanger):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'ImpedanceTapChangerTable.ImpedanceTapChangerTabular',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -21359,7 +21174,7 @@ class ImpedanceTapChangerTabular(TapChanger):
     
     @property
     def __namespace__(self):
-        return 'http://iec.ch/TC57/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Wires'
@@ -21389,7 +21204,7 @@ class PhaseTapChanger(TapChanger):
         'minOccurs': '1',
         'maxOccurs': '1',
         'inverse': 'TransformerEnd.PhaseTapChanger',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -21404,7 +21219,7 @@ class PhaseTapChanger(TapChanger):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'TransformerEnd.PhaseTapChanger',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         })
     '''
@@ -21413,7 +21228,7 @@ class PhaseTapChanger(TapChanger):
     
     @property
     def __namespace__(self):
-        return 'http://iec.ch/TC57/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Wires'
@@ -21441,7 +21256,7 @@ class PhaseTapChangerLinear(PhaseTapChanger):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -21460,7 +21275,7 @@ class PhaseTapChangerLinear(PhaseTapChanger):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -21472,7 +21287,7 @@ class PhaseTapChangerLinear(PhaseTapChanger):
     
     @property
     def __namespace__(self):
-        return 'http://iec.ch/TC57/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Wires'
@@ -21499,7 +21314,7 @@ class PhaseTapChangerNonLinear(PhaseTapChanger):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -21519,7 +21334,7 @@ class PhaseTapChangerNonLinear(PhaseTapChanger):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -21531,7 +21346,7 @@ class PhaseTapChangerNonLinear(PhaseTapChanger):
     
     @property
     def __namespace__(self):
-        return 'http://iec.ch/TC57/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Wires'
@@ -21579,7 +21394,7 @@ class ConnectionAngleTapChanger(PhaseTapChangerNonLinear):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -21605,7 +21420,7 @@ class ConnectionAngleTapChanger(PhaseTapChangerNonLinear):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -21627,7 +21442,7 @@ class ConnectionAngleTapChanger(PhaseTapChangerNonLinear):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -21648,7 +21463,7 @@ class ConnectionAngleTapChanger(PhaseTapChangerNonLinear):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -21669,7 +21484,7 @@ class ConnectionAngleTapChanger(PhaseTapChangerNonLinear):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -21691,7 +21506,7 @@ class ConnectionAngleTapChanger(PhaseTapChangerNonLinear):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'ConnectionAngleTapChangerTable.ConnectionAngleTapChanger',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         })
     '''
@@ -21701,7 +21516,7 @@ class ConnectionAngleTapChanger(PhaseTapChangerNonLinear):
     
     @property
     def __namespace__(self):
-        return 'http://iec.ch/TC57/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Wires'
@@ -21730,7 +21545,7 @@ class PhaseTapChangerAsymmetrical(PhaseTapChangerNonLinear):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -21744,7 +21559,7 @@ class PhaseTapChangerAsymmetrical(PhaseTapChangerNonLinear):
     
     @property
     def __namespace__(self):
-        return 'http://iec.ch/TC57/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Wires'
@@ -21768,7 +21583,7 @@ class PhaseTapChangerSymmetrical(PhaseTapChangerNonLinear):
 
     @property
     def __namespace__(self):
-        return 'http://iec.ch/TC57/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Wires'
@@ -21794,7 +21609,7 @@ class PhaseTapChangerTabular(PhaseTapChanger):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'PhaseTapChangerTable.PhaseTapChangerTabular',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -21803,7 +21618,7 @@ class PhaseTapChangerTabular(PhaseTapChanger):
     
     @property
     def __namespace__(self):
-        return 'http://iec.ch/TC57/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Wires'
@@ -21833,7 +21648,7 @@ class RatioTapChanger(TapChanger):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -21851,7 +21666,7 @@ class RatioTapChanger(TapChanger):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'RatioTapChangerTable.RatioTapChanger',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -21865,8 +21680,8 @@ class RatioTapChanger(TapChanger):
         'stereotypes': [],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'inverse': 'TransformerEnd.AdditionalRatioTapChanger',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'inverse': 'TransformerEnd.RatioTapChanger',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -21881,7 +21696,7 @@ class RatioTapChanger(TapChanger):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'TransformerEnd.AdditionalRatioTapChanger',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         })
     '''
@@ -21896,7 +21711,7 @@ class RatioTapChanger(TapChanger):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'TransformerEnd.RatioTapChanger',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         })
     '''
@@ -21905,7 +21720,7 @@ class RatioTapChanger(TapChanger):
     
     @property
     def __namespace__(self):
-        return 'http://iec.ch/TC57/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Wires'
@@ -21932,7 +21747,7 @@ class TieCorridor(PowerSystemResource):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'TieFlow.TieCorridor',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         })
     '''
@@ -21941,7 +21756,7 @@ class TieCorridor(PowerSystemResource):
     
     @property
     def __namespace__(self):
-        return 'http://iec.ch/TC57/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'DC'
@@ -21967,7 +21782,7 @@ class ACTieCorridor(TieCorridor):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'Line.ACTieCorridor',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         })
     '''
@@ -21976,7 +21791,7 @@ class ACTieCorridor(TieCorridor):
     
     @property
     def __namespace__(self):
-        return 'http://iec.ch/TC57/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'DC'
@@ -22005,7 +21820,7 @@ class VoltageControlZone(PowerSystemResource):
         'minOccurs': '1',
         'maxOccurs': '1',
         'inverse': 'BusbarSection.VoltageControlZone',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -22020,7 +21835,7 @@ class VoltageControlZone(PowerSystemResource):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'RegulationSchedule.VoltageControlZones',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -22035,7 +21850,7 @@ class VoltageControlZone(PowerSystemResource):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'BusbarSection.VoltageControlZone',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         })
     '''
@@ -22044,7 +21859,7 @@ class VoltageControlZone(PowerSystemResource):
     
     @property
     def __namespace__(self):
-        return 'http://iec.ch/TC57/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Wires'
@@ -22105,7 +21920,7 @@ class WireSegmentPhase(PowerSystemResource):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -22120,7 +21935,7 @@ class WireSegmentPhase(PowerSystemResource):
         'stereotypes': ['enumeration', 'Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -22135,7 +21950,7 @@ class WireSegmentPhase(PowerSystemResource):
         'minOccurs': '1',
         'maxOccurs': '1',
         'inverse': 'WireSegment.WireSegmentPhases',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -22144,7 +21959,7 @@ class WireSegmentPhase(PowerSystemResource):
     
     @property
     def __namespace__(self):
-        return 'http://iec.ch/TC57/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Wires'
@@ -22169,7 +21984,7 @@ class ProductAssetModel(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'AssetInfo.ProductAssetModel',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         })
     '''
@@ -22178,7 +21993,7 @@ class ProductAssetModel(IdentifiedObject):
     
     @property
     def __namespace__(self):
-        return 'http://iec.ch/TC57/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Assets'
@@ -22204,7 +22019,7 @@ class RatioTapChangerTable(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'RatioTapChanger.RatioTapChangerTable',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         })
     '''
@@ -22219,7 +22034,7 @@ class RatioTapChangerTable(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'RatioTapChangerTablePoint.RatioTapChangerTable',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         })
     '''
@@ -22228,7 +22043,7 @@ class RatioTapChangerTable(IdentifiedObject):
     
     @property
     def __namespace__(self):
-        return 'http://iec.ch/TC57/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Wires'
@@ -22254,7 +22069,7 @@ class RemoteSource(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'MeasurementValue.RemoteSource',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         })
     '''
@@ -22263,7 +22078,7 @@ class RemoteSource(IdentifiedObject):
     
     @property
     def __namespace__(self):
-        return 'http://iec.ch/TC57/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'SCADA'
@@ -22288,7 +22103,7 @@ class ReportingGroup(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'BusNameMarker.ReportingGroup',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         })
     '''
@@ -22303,7 +22118,7 @@ class ReportingGroup(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'TopologicalNode.ReportingGroup',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         })
     '''
@@ -22312,7 +22127,7 @@ class ReportingGroup(IdentifiedObject):
     
     @property
     def __namespace__(self):
-        return 'http://iec.ch/TC57/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Core'
@@ -22336,7 +22151,7 @@ class Season(IdentifiedObject):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -22350,7 +22165,7 @@ class Season(IdentifiedObject):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -22365,7 +22180,7 @@ class Season(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'SeasonDayTypeSchedule.Season',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         })
     '''
@@ -22374,7 +22189,7 @@ class Season(IdentifiedObject):
     
     @property
     def __namespace__(self):
-        return 'http://iec.ch/TC57/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'LoadModel'
@@ -22398,7 +22213,7 @@ class ShuntCompensatorAction(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'ShuntCompensator.ShuntCompensatorAction',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         })
     '''
@@ -22406,7 +22221,7 @@ class ShuntCompensatorAction(IdentifiedObject):
     
     @property
     def __namespace__(self):
-        return 'http://iec.ch/TC57/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Operations'
@@ -22432,7 +22247,7 @@ class ShuntCompensatorDynamics(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'ShuntCompensator.ShuntCompensatorDynamics',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         })
     '''
@@ -22441,7 +22256,7 @@ class ShuntCompensatorDynamics(IdentifiedObject):
     
     @property
     def __namespace__(self):
-        return 'http://iec.ch/TC57/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'ShuntCompensatorDynamics'
@@ -22461,7 +22276,7 @@ class StatcomDynamics(IdentifiedObject):
 
     @property
     def __namespace__(self):
-        return 'http://iec.ch/TC57/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'StatcomDynamics'
@@ -22537,7 +22352,7 @@ class StaticVarCompensatorDynamics(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'StaticVarCompensator.StaticVarCompensatorDynamics',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         })
     '''
@@ -22547,7 +22362,7 @@ class StaticVarCompensatorDynamics(IdentifiedObject):
     
     @property
     def __namespace__(self):
-        return 'http://iec.ch/TC57/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'StaticVarCompensatorDynamics'
@@ -22574,7 +22389,7 @@ class StaticVarCompensatorSystemDynamics(StaticVarCompensatorDynamics):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'ShuntCompensator.StaticVarCompensatorSystemDynamics',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         })
     '''
@@ -22584,7 +22399,7 @@ class StaticVarCompensatorSystemDynamics(StaticVarCompensatorDynamics):
     
     @property
     def __namespace__(self):
-        return 'http://iec.ch/TC57/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'StaticVarCompensatorDynamics'
@@ -22607,7 +22422,7 @@ class SVSMO4(StaticVarCompensatorSystemDynamics):
 
     @property
     def __namespace__(self):
-        return 'http://iec.ch/TC57/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'StaticVarCompensatorDynamics'
@@ -22629,11 +22444,11 @@ class StepOperationalLimitTable(IdentifiedObject):
         default=None,
         metadata={
         'type': 'Association',
-        'stereotypes': ['ShadowExtension'],
+        'stereotypes': ['ShadowExtension', 'gmdm'],
         'minOccurs': '1',
         'maxOccurs': '1',
         'inverse': 'TapChanger.StepOperationalLimitTable',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -22648,7 +22463,7 @@ class StepOperationalLimitTable(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'OperationalLimit.StepOperationalLimitTable',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         })
     '''
@@ -22663,7 +22478,7 @@ class StepOperationalLimitTable(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'StepLimitTablePoint.StepOperationalLimitTable',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         })
     '''
@@ -22672,7 +22487,7 @@ class StepOperationalLimitTable(IdentifiedObject):
     
     @property
     def __namespace__(self):
-        return 'http://iec.ch/TC57/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Wires'
@@ -22698,7 +22513,7 @@ class SubGeographicalRegion(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'GeographicalRegion.Regions',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -22713,7 +22528,7 @@ class SubGeographicalRegion(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'Line.Region',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         })
     '''
@@ -22728,7 +22543,7 @@ class SubGeographicalRegion(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'Substation.Region',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         })
     '''
@@ -22737,7 +22552,7 @@ class SubGeographicalRegion(IdentifiedObject):
     
     @property
     def __namespace__(self):
-        return 'http://iec.ch/TC57/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Core'
@@ -22762,7 +22577,7 @@ class SwitchAction(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'Switch.SwitchAction',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         })
     '''
@@ -22771,7 +22586,7 @@ class SwitchAction(IdentifiedObject):
     
     @property
     def __namespace__(self):
-        return 'http://iec.ch/TC57/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Operations'
@@ -22815,7 +22630,7 @@ class SynchronousMachineDynamics(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'SynchronousMachine.SynchronousMachineDynamics',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         })
     '''
@@ -22824,7 +22639,7 @@ class SynchronousMachineDynamics(IdentifiedObject):
     
     @property
     def __namespace__(self):
-        return 'http://iec.ch/TC57/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'SynchronousMachineDynamics'
@@ -23068,7 +22883,7 @@ class TieFlow(IdentifiedObject):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -23086,7 +22901,7 @@ class TieFlow(IdentifiedObject):
         'minOccurs': '1',
         'maxOccurs': '1',
         'inverse': 'ControlArea.TieFlow',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -23097,11 +22912,11 @@ class TieFlow(IdentifiedObject):
         default=None,
         metadata={
         'type': 'Association',
-        'stereotypes': [],
+        'stereotypes': ['ShadowExtension'],
         'minOccurs': '1',
         'maxOccurs': '1',
         'inverse': 'Terminal.TieFlow',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -23112,11 +22927,11 @@ class TieFlow(IdentifiedObject):
         default=None,
         metadata={
         'type': 'Association',
-        'stereotypes': ['ShadowExtension'],
+        'stereotypes': [],
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'TieCorridor.TieFlow',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -23131,7 +22946,7 @@ class TieFlow(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'AltTieMeas.TieFlow',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         })
     '''
@@ -23141,7 +22956,7 @@ class TieFlow(IdentifiedObject):
     
     @property
     def __namespace__(self):
-        return 'http://iec.ch/TC57/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'ControlArea'
@@ -23164,7 +22979,7 @@ class TopologicalArea(IdentifiedObject):
         default=None,
         metadata={
         'type': 'Attribute',
-        'stereotypes': ['enumeration', 'GridAPPSD', 'Attribute'],
+        'stereotypes': ['GridAPPSD', 'enumeration', 'Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://gridappsd.org/CIM/extension#',
@@ -23178,7 +22993,7 @@ class TopologicalArea(IdentifiedObject):
         default=None,
         metadata={
         'type': 'Association',
-        'stereotypes': ['OfAggregate'],
+        'stereotypes': ['ShadowExtension', 'OfAggregate'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'TopologicalIsland.TopologicalAreas',
@@ -23218,11 +23033,11 @@ class TopologicalIsland(IdentifiedObject):
         default=None,
         metadata={
         'type': 'Association',
-        'stereotypes': [],
+        'stereotypes': ['ShadowExtension'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'TopologicalNode.AngleRefTopologicalIsland',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -23253,7 +23068,7 @@ class TopologicalIsland(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'TopologicalNode.AngleRefTopologicalIsland',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         })
     '''
@@ -23270,7 +23085,7 @@ class TopologicalIsland(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'TopologicalNode.TopologicalIsland',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         })
     '''
@@ -23279,10 +23094,10 @@ class TopologicalIsland(IdentifiedObject):
     
     @property
     def __namespace__(self):
-        return 'http://iec.ch/TC57/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
-        return 'TopologyEXT'
+        return 'Topology'
     @property
     def __minOccurs__(self):
         return '0'
@@ -23312,7 +23127,7 @@ class TopologicalNode(IdentifiedObject):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -23325,7 +23140,7 @@ class TopologicalNode(IdentifiedObject):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -23338,7 +23153,7 @@ class TopologicalNode(IdentifiedObject):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -23355,7 +23170,7 @@ class TopologicalNode(IdentifiedObject):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -23369,11 +23184,11 @@ class TopologicalNode(IdentifiedObject):
         default=None,
         metadata={
         'type': 'Association',
-        'stereotypes': [],
+        'stereotypes': ['ShadowExtension'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'TopologicalIsland.AngleRefTopologicalNode',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -23385,11 +23200,11 @@ class TopologicalNode(IdentifiedObject):
         default=None,
         metadata={
         'type': 'Association',
-        'stereotypes': [],
+        'stereotypes': ['ShadowExtension'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'BaseVoltage.TopologicalNode',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -23400,11 +23215,11 @@ class TopologicalNode(IdentifiedObject):
         default=None,
         metadata={
         'type': 'Association',
-        'stereotypes': ['ShadowExtension'],
+        'stereotypes': [],
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'ConnectivityNodeContainer.TopologicalNode',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -23419,7 +23234,7 @@ class TopologicalNode(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'ReportingGroup.TopologicalNode',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -23445,11 +23260,11 @@ class TopologicalNode(IdentifiedObject):
         default=None,
         metadata={
         'type': 'Association',
-        'stereotypes': ['OfAggregate'],
+        'stereotypes': ['ShadowExtension', 'OfAggregate'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'TopologicalIsland.TopologicalNodes',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -23464,7 +23279,7 @@ class TopologicalNode(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'BusNameMarker.TopologicalNode',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         })
     '''
@@ -23479,7 +23294,7 @@ class TopologicalNode(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'ConnectivityNode.TopologicalNode',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         })
     '''
@@ -23495,7 +23310,7 @@ class TopologicalNode(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'SvInjection.TopologicalNode',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         })
     '''
@@ -23511,7 +23326,7 @@ class TopologicalNode(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'SvVoltage.TopologicalNode',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         })
     '''
@@ -23526,7 +23341,7 @@ class TopologicalNode(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'Terminal.TopologicalNode',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         })
     '''
@@ -23545,7 +23360,7 @@ class TopologicalNode(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'TopologicalIsland.AngleRefTopologicalNode',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         })
     '''
@@ -23555,7 +23370,7 @@ class TopologicalNode(IdentifiedObject):
     
     @property
     def __namespace__(self):
-        return 'http://iec.ch/TC57/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Topology'
@@ -23580,7 +23395,7 @@ class TransformerCoreAdmittance(IdentifiedObject):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -23595,7 +23410,7 @@ class TransformerCoreAdmittance(IdentifiedObject):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -23609,7 +23424,7 @@ class TransformerCoreAdmittance(IdentifiedObject):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -23623,7 +23438,7 @@ class TransformerCoreAdmittance(IdentifiedObject):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -23638,7 +23453,7 @@ class TransformerCoreAdmittance(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'TransformerEndInfo.CoreAdmittance',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -23653,7 +23468,7 @@ class TransformerCoreAdmittance(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'TransformerEnd.CoreAdmittance',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         })
     '''
@@ -23668,7 +23483,7 @@ class TransformerCoreAdmittance(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'TransformerEndInfo.CoreAdmittance',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         })
     '''
@@ -23677,7 +23492,7 @@ class TransformerCoreAdmittance(IdentifiedObject):
     
     @property
     def __namespace__(self):
-        return 'http://iec.ch/TC57/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Wires'
@@ -23704,7 +23519,7 @@ class TransformerEnd(IdentifiedObject):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -23722,7 +23537,7 @@ class TransformerEnd(IdentifiedObject):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -23739,7 +23554,7 @@ class TransformerEnd(IdentifiedObject):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -23753,7 +23568,7 @@ class TransformerEnd(IdentifiedObject):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -23768,11 +23583,46 @@ class TransformerEnd(IdentifiedObject):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
     Core magnetizing saturation curve knee flux level.
+    '''
+    
+    ratedS: Optional[ float | ApparentPower ] = field(
+        default=None,
+        metadata={
+        'type': 'Attribute',
+        'stereotypes': ['Attribute'],
+        'minOccurs': '0',
+        'maxOccurs': '1',
+        'namespace': 'http://gridappsd.org/CIM/extension#',
+        'serialize': True,
+        })
+    '''
+    Normal apparent power rating.
+    The attribute shall be a positive value. For a two-winding transformer
+    the values for the high and low voltage sides shall be identical.
+    '''
+    
+    ratedU: Optional[ float | Voltage ] = field(
+        default=None,
+        metadata={
+        'type': 'Attribute',
+        'stereotypes': ['Attribute'],
+        'minOccurs': '0',
+        'maxOccurs': '1',
+        'namespace': 'http://gridappsd.org/CIM/extension#',
+        'serialize': True,
+        })
+    '''
+    Rated voltage: phase-phase for three-phase windings, and either phase-phase
+    or phase-neutral for single-phase windings.
+    A high voltage side, as given by TransformerEnd.endNumber, shall have
+    a ratedU that is greater than or equal to ratedU for the lower voltage
+    sides.
+    The attribute shall be a positive value.
     '''
     
     rground: Optional[ float | Resistance ] = field(
@@ -23782,7 +23632,7 @@ class TransformerEnd(IdentifiedObject):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -23797,7 +23647,7 @@ class TransformerEnd(IdentifiedObject):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -23809,11 +23659,11 @@ class TransformerEnd(IdentifiedObject):
         default=None,
         metadata={
         'type': 'Association',
-        'stereotypes': ['gmdm', 'ShadowExtension'],
+        'stereotypes': [],
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'RatioTapChanger.TransformerEnd',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -23824,11 +23674,11 @@ class TransformerEnd(IdentifiedObject):
         default=None,
         metadata={
         'type': 'Association',
-        'stereotypes': [],
+        'stereotypes': ['ShadowExtension'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'BaseVoltage.TransformerEnds',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -23843,7 +23693,7 @@ class TransformerEnd(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'TransformerCoreAdmittance.TransformerEnd',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -23856,11 +23706,11 @@ class TransformerEnd(IdentifiedObject):
         default=None,
         metadata={
         'type': 'Association',
-        'stereotypes': ['gmdm', 'ShadowExtension'],
+        'stereotypes': [],
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'PhaseTapChanger.TransformerEnd',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -23871,11 +23721,11 @@ class TransformerEnd(IdentifiedObject):
         default=None,
         metadata={
         'type': 'Association',
-        'stereotypes': ['gmdm', 'ShadowExtension'],
+        'stereotypes': [],
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'RatioTapChanger.TransformerEnd',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -23890,7 +23740,7 @@ class TransformerEnd(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'TransformerStarImpedance.TransformerEnd',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -23904,11 +23754,11 @@ class TransformerEnd(IdentifiedObject):
         default=None,
         metadata={
         'type': 'Association',
-        'stereotypes': [],
+        'stereotypes': ['ShadowExtension'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'Terminal.TransformerEnd',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -23923,14 +23773,14 @@ class TransformerEnd(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'PhaseTapChanger.TransformerEnd',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         })
     '''
     Phase tap changer associated with this transformer end.
     '''
     
-    AdditionalRatioTapChanger: Optional[RatioTapChanger] = field(
+    RatioTapChanger: Optional[RatioTapChanger] = field(
         default=None,
         metadata={
         'type': 'Association',
@@ -23938,11 +23788,11 @@ class TransformerEnd(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'RatioTapChanger.TransformerEnd',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         })
     '''
-    An additional ratio tap changer for this transformer end.
+    Ratio tap changer associated with this transformer end.
     '''
     
     FromMeshImpedance: list[TransformerMeshImpedance] = field(
@@ -23953,7 +23803,7 @@ class TransformerEnd(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'TransformerMeshImpedance.FromTransformerEnd',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         })
     '''
@@ -23969,7 +23819,7 @@ class TransformerEnd(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'TransformerMeshImpedance.ToTransformerEnd',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         })
     '''
@@ -23979,7 +23829,7 @@ class TransformerEnd(IdentifiedObject):
     
     @property
     def __namespace__(self):
-        return 'http://iec.ch/TC57/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Wires'
@@ -24026,7 +23876,7 @@ class PowerTransformerEnd(TransformerEnd):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -24046,7 +23896,7 @@ class PowerTransformerEnd(TransformerEnd):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -24061,7 +23911,7 @@ class PowerTransformerEnd(TransformerEnd):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -24075,7 +23925,7 @@ class PowerTransformerEnd(TransformerEnd):
         'stereotypes': ['enumeration', 'Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -24089,7 +23939,7 @@ class PowerTransformerEnd(TransformerEnd):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -24103,7 +23953,7 @@ class PowerTransformerEnd(TransformerEnd):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -24117,7 +23967,7 @@ class PowerTransformerEnd(TransformerEnd):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -24133,46 +23983,11 @@ class PowerTransformerEnd(TransformerEnd):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
     Zero sequence series resistance (star-model) of the transformer end.
-    '''
-    
-    ratedS: Optional[ float | ApparentPower ] = field(
-        default=None,
-        metadata={
-        'type': 'Attribute',
-        'stereotypes': ['Attribute'],
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
-        'serialize': True,
-        })
-    '''
-    Normal apparent power rating.
-    The attribute shall be a positive value. For a two-winding transformer
-    the values for the high and low voltage sides shall be identical.
-    '''
-    
-    ratedU: Optional[ float | Voltage ] = field(
-        default=None,
-        metadata={
-        'type': 'Attribute',
-        'stereotypes': ['Attribute'],
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
-        'serialize': True,
-        })
-    '''
-    Rated voltage: phase-phase for three-phase windings, and either phase-phase
-    or phase-neutral for single-phase windings.
-    A high voltage side, as given by TransformerEnd.endNumber, shall have
-    a ratedU that is greater than or equal to ratedU for the lower voltage
-    sides.
-    The attribute shall be a positive value.
     '''
     
     x: Optional[ float | Reactance ] = field(
@@ -24182,7 +23997,7 @@ class PowerTransformerEnd(TransformerEnd):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -24197,7 +24012,7 @@ class PowerTransformerEnd(TransformerEnd):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -24208,11 +24023,11 @@ class PowerTransformerEnd(TransformerEnd):
         default=None,
         metadata={
         'type': 'Association',
-        'stereotypes': ['ShadowExtension'],
+        'stereotypes': [],
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'PowerTransformer.PowerTransformerEnd',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -24221,7 +24036,7 @@ class PowerTransformerEnd(TransformerEnd):
     
     @property
     def __namespace__(self):
-        return 'http://iec.ch/TC57/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Wires'
@@ -24244,7 +24059,7 @@ class TransformerTankEnd(TransformerEnd):
         default=None,
         metadata={
         'type': 'Attribute',
-        'stereotypes': ['enumeration', 'GridAPPSD', 'Attribute'],
+        'stereotypes': ['GridAPPSD', 'enumeration', 'Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://gridappsd.org/CIM/extension#',
@@ -24260,7 +24075,7 @@ class TransformerTankEnd(TransformerEnd):
         'stereotypes': ['enumeration', 'Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -24275,7 +24090,7 @@ class TransformerTankEnd(TransformerEnd):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'TransformerTank.TransformerTankEnds',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -24284,7 +24099,7 @@ class TransformerTankEnd(TransformerEnd):
     
     @property
     def __namespace__(self):
-        return 'http://iec.ch/TC57/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Wires'
@@ -24312,7 +24127,7 @@ class TransformerMeshImpedance(IdentifiedObject):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -24327,7 +24142,7 @@ class TransformerMeshImpedance(IdentifiedObject):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -24342,7 +24157,7 @@ class TransformerMeshImpedance(IdentifiedObject):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -24357,7 +24172,7 @@ class TransformerMeshImpedance(IdentifiedObject):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -24373,7 +24188,7 @@ class TransformerMeshImpedance(IdentifiedObject):
         'minOccurs': '1',
         'maxOccurs': '1',
         'inverse': 'TransformerEnd.FromMeshImpedance',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -24389,7 +24204,7 @@ class TransformerMeshImpedance(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'TransformerEndInfo.FromMeshImpedances',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -24405,7 +24220,7 @@ class TransformerMeshImpedance(IdentifiedObject):
         'minOccurs': '1',
         'maxOccurs': 'unbounded',
         'inverse': 'TransformerEnd.ToMeshImpedance',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -24420,7 +24235,7 @@ class TransformerMeshImpedance(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'TransformerEndInfo.ToMeshImpedances',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -24430,7 +24245,7 @@ class TransformerMeshImpedance(IdentifiedObject):
     
     @property
     def __namespace__(self):
-        return 'http://iec.ch/TC57/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Wires'
@@ -24458,7 +24273,7 @@ class TransformerStarImpedance(IdentifiedObject):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -24472,7 +24287,7 @@ class TransformerStarImpedance(IdentifiedObject):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -24486,7 +24301,7 @@ class TransformerStarImpedance(IdentifiedObject):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -24500,7 +24315,7 @@ class TransformerStarImpedance(IdentifiedObject):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -24515,7 +24330,7 @@ class TransformerStarImpedance(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'TransformerEndInfo.TransformerStarImpedance',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -24530,7 +24345,7 @@ class TransformerStarImpedance(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'TransformerEnd.StarImpedance',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         })
     '''
@@ -24545,7 +24360,7 @@ class TransformerStarImpedance(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'TransformerEndInfo.TransformerStarImpedance',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         })
     '''
@@ -24554,7 +24369,7 @@ class TransformerStarImpedance(IdentifiedObject):
     
     @property
     def __namespace__(self):
-        return 'http://iec.ch/TC57/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Wires'
@@ -24574,7 +24389,7 @@ class TransformerTest(IdentifiedObject):
 
     @property
     def __namespace__(self):
-        return 'http://iec.ch/TC57/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'AssetInfo'
@@ -24601,7 +24416,7 @@ class NoLoadTest(TransformerTest):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -24615,7 +24430,7 @@ class NoLoadTest(TransformerTest):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -24630,7 +24445,7 @@ class NoLoadTest(TransformerTest):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -24645,7 +24460,7 @@ class NoLoadTest(TransformerTest):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -24660,7 +24475,7 @@ class NoLoadTest(TransformerTest):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -24675,7 +24490,7 @@ class NoLoadTest(TransformerTest):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'TransformerEndInfo.EnergisedEndNoLoadTests',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -24684,7 +24499,7 @@ class NoLoadTest(TransformerTest):
     
     @property
     def __namespace__(self):
-        return 'http://iec.ch/TC57/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'AssetInfo'
@@ -24711,7 +24526,7 @@ class OpenCircuitTest(TransformerTest):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -24725,7 +24540,7 @@ class OpenCircuitTest(TransformerTest):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -24739,7 +24554,7 @@ class OpenCircuitTest(TransformerTest):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -24753,7 +24568,7 @@ class OpenCircuitTest(TransformerTest):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -24768,7 +24583,7 @@ class OpenCircuitTest(TransformerTest):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -24784,7 +24599,7 @@ class OpenCircuitTest(TransformerTest):
         'minOccurs': '1',
         'maxOccurs': '1',
         'inverse': 'TransformerEndInfo.EnergisedEndOpenCircuitTests',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -24799,7 +24614,7 @@ class OpenCircuitTest(TransformerTest):
         'minOccurs': '1',
         'maxOccurs': '1',
         'inverse': 'TransformerEndInfo.OpenEndOpenCircuitTests',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -24809,7 +24624,7 @@ class OpenCircuitTest(TransformerTest):
     
     @property
     def __namespace__(self):
-        return 'http://iec.ch/TC57/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'AssetInfo'
@@ -24836,7 +24651,7 @@ class ShortCircuitTest(TransformerTest):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -24850,7 +24665,7 @@ class ShortCircuitTest(TransformerTest):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -24864,7 +24679,7 @@ class ShortCircuitTest(TransformerTest):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -24878,7 +24693,7 @@ class ShortCircuitTest(TransformerTest):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -24893,7 +24708,7 @@ class ShortCircuitTest(TransformerTest):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -24907,7 +24722,7 @@ class ShortCircuitTest(TransformerTest):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -24922,7 +24737,7 @@ class ShortCircuitTest(TransformerTest):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -24936,7 +24751,7 @@ class ShortCircuitTest(TransformerTest):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -24950,7 +24765,7 @@ class ShortCircuitTest(TransformerTest):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -24965,7 +24780,7 @@ class ShortCircuitTest(TransformerTest):
         'minOccurs': '1',
         'maxOccurs': '1',
         'inverse': 'TransformerEndInfo.EnergisedEndShortCircuitTests',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -24982,7 +24797,7 @@ class ShortCircuitTest(TransformerTest):
         'minOccurs': '1',
         'maxOccurs': 'unbounded',
         'inverse': 'TransformerEndInfo.GroundedEndShortCircuitTests',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -24991,7 +24806,7 @@ class ShortCircuitTest(TransformerTest):
     
     @property
     def __namespace__(self):
-        return 'http://iec.ch/TC57/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'AssetInfo'
@@ -25019,7 +24834,7 @@ class UsagePoint(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'Terminal.UsagePoint',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         })
     '''
@@ -25027,10 +24842,10 @@ class UsagePoint(IdentifiedObject):
     
     @property
     def __namespace__(self):
-        return 'http://iec.ch/TC57/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
-        return 'MarketEXT'
+        return 'Metering'
     @property
     def __minOccurs__(self):
         return '0'
@@ -25058,7 +24873,7 @@ class ValueAliasSet(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'Discrete.ValueAliasSet',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         })
     '''
@@ -25067,7 +24882,7 @@ class ValueAliasSet(IdentifiedObject):
     
     @property
     def __namespace__(self):
-        return 'http://iec.ch/TC57/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Meas'
@@ -25093,7 +24908,7 @@ class VoltageInjectionControlFunction(IdentifiedObject):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -25103,7 +24918,7 @@ class VoltageInjectionControlFunction(IdentifiedObject):
     
     @property
     def __namespace__(self):
-        return 'http://iec.ch/TC57/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'FACTS'
@@ -25124,7 +24939,7 @@ class WeccREPCC(IdentifiedObject):
 
     @property
     def __namespace__(self):
-        return 'http://iec.ch/TC57/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'WECCDynamics'
@@ -25146,7 +24961,7 @@ class WeccWTGIBFFRA(IdentifiedObject):
 
     @property
     def __namespace__(self):
-        return 'http://iec.ch/TC57/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'WECCDynamics'
@@ -25167,7 +24982,7 @@ class WindPlantDynamics(IdentifiedObject):
 
     @property
     def __namespace__(self):
-        return 'http://iec.ch/TC57/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'WindDynamics'
@@ -25187,7 +25002,7 @@ class WindTurbineType3or4Dynamics(IdentifiedObject):
 
     @property
     def __namespace__(self):
-        return 'http://iec.ch/TC57/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'WindDynamics'
@@ -25212,7 +25027,7 @@ class WirePosition(IdentifiedObject):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -25224,10 +25039,10 @@ class WirePosition(IdentifiedObject):
         default=None,
         metadata={
         'type': 'Attribute',
-        'stereotypes': ['enumeration', 'ToBeRemoved', 'Attribute', 'add'],
+        'stereotypes': ['ToBeRemoved', 'enumeration', 'Attribute', 'add'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -25241,7 +25056,7 @@ class WirePosition(IdentifiedObject):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -25256,7 +25071,7 @@ class WirePosition(IdentifiedObject):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -25268,11 +25083,11 @@ class WirePosition(IdentifiedObject):
         default=None,
         metadata={
         'type': 'Association',
-        'stereotypes': [],
+        'stereotypes': ['deprecated'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'WireSpacingInfo.WirePositions',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -25287,7 +25102,7 @@ class WirePosition(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'WirePhaseInfo.WirePosition',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         })
     '''
@@ -25296,7 +25111,7 @@ class WirePosition(IdentifiedObject):
     
     @property
     def __namespace__(self):
-        return 'http://iec.ch/TC57/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'AssetInfo'
@@ -25320,7 +25135,7 @@ class ImpedanceTapChangerTablePoint(Identity):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -25338,7 +25153,7 @@ class ImpedanceTapChangerTablePoint(Identity):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -25352,7 +25167,7 @@ class ImpedanceTapChangerTablePoint(Identity):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -25368,7 +25183,7 @@ class ImpedanceTapChangerTablePoint(Identity):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -25387,7 +25202,7 @@ class ImpedanceTapChangerTablePoint(Identity):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -25406,7 +25221,7 @@ class ImpedanceTapChangerTablePoint(Identity):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -25425,7 +25240,7 @@ class ImpedanceTapChangerTablePoint(Identity):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -25444,7 +25259,7 @@ class ImpedanceTapChangerTablePoint(Identity):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -25463,7 +25278,7 @@ class ImpedanceTapChangerTablePoint(Identity):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -25483,7 +25298,7 @@ class ImpedanceTapChangerTablePoint(Identity):
         'minOccurs': '1',
         'maxOccurs': '1',
         'inverse': 'ImpedanceTapChangerTable.ImpedanceTapChangerTablePoint',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -25492,7 +25307,7 @@ class ImpedanceTapChangerTablePoint(Identity):
     
     @property
     def __namespace__(self):
-        return 'http://iec.ch/TC57/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Wires'
@@ -25512,7 +25327,7 @@ class InstanceSet(Identity):
 
     @property
     def __namespace__(self):
-        return 'http://iec.ch/TC57/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'GenericDataSet'
@@ -25531,7 +25346,7 @@ class InstanceSet(Identity):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'IdentifiedObject.InstanceSet',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         })
     '''
@@ -25553,7 +25368,7 @@ class InverterCapabilities(Identity):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -25568,7 +25383,7 @@ class InverterCapabilities(Identity):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -25583,7 +25398,7 @@ class InverterCapabilities(Identity):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -25598,7 +25413,7 @@ class InverterCapabilities(Identity):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -25613,7 +25428,7 @@ class InverterCapabilities(Identity):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -25628,7 +25443,7 @@ class InverterCapabilities(Identity):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -25643,7 +25458,7 @@ class InverterCapabilities(Identity):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -25658,7 +25473,7 @@ class InverterCapabilities(Identity):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -25672,7 +25487,7 @@ class InverterCapabilities(Identity):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -25687,7 +25502,7 @@ class InverterCapabilities(Identity):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -25702,7 +25517,7 @@ class InverterCapabilities(Identity):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -25712,7 +25527,7 @@ class InverterCapabilities(Identity):
     
     @property
     def __namespace__(self):
-        return 'http://iec.ch/TC57/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'AssetInfo'
@@ -25731,7 +25546,7 @@ class InverterCapabilities(Identity):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'InverterInfo.InverterCapabilites',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         })
     '''
@@ -25750,7 +25565,7 @@ class IrregularTimePoint(Identity):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -25765,7 +25580,7 @@ class IrregularTimePoint(Identity):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -25780,7 +25595,7 @@ class IrregularTimePoint(Identity):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -25795,7 +25610,7 @@ class IrregularTimePoint(Identity):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -25810,7 +25625,7 @@ class IrregularTimePoint(Identity):
         'minOccurs': '1',
         'maxOccurs': '1',
         'inverse': 'IrregularIntervalSchedule.TimePoints',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -25819,7 +25634,7 @@ class IrregularTimePoint(Identity):
     
     @property
     def __namespace__(self):
-        return 'http://iec.ch/TC57/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Core'
@@ -25847,7 +25662,7 @@ class MeasurementValueQuality(Identity):
         'minOccurs': '1',
         'maxOccurs': '1',
         'inverse': 'MeasurementValue.MeasurementValueQuality',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -25856,7 +25671,7 @@ class MeasurementValueQuality(Identity):
     
     @property
     def __namespace__(self):
-        return 'http://iec.ch/TC57/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Meas'
@@ -25875,7 +25690,7 @@ class MeasurementValueQuality(Identity):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'MeasurementValue.MeasurementValueQuality',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         })
     '''
@@ -25999,7 +25814,7 @@ class NonlinearShuntCompensatorPhasePoint(Identity):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -26013,7 +25828,7 @@ class NonlinearShuntCompensatorPhasePoint(Identity):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -26028,7 +25843,7 @@ class NonlinearShuntCompensatorPhasePoint(Identity):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -26044,7 +25859,7 @@ class NonlinearShuntCompensatorPhasePoint(Identity):
         'minOccurs': '1',
         'maxOccurs': '1',
         'inverse': 'NonlinearShuntCompensatorPhase.NonlinearShuntCompensatorPhasePoints',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -26053,7 +25868,7 @@ class NonlinearShuntCompensatorPhasePoint(Identity):
     
     @property
     def __namespace__(self):
-        return 'http://iec.ch/TC57/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Wires'
@@ -26081,7 +25896,7 @@ class NonlinearShuntCompensatorPoint(Identity):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -26095,7 +25910,7 @@ class NonlinearShuntCompensatorPoint(Identity):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -26110,7 +25925,7 @@ class NonlinearShuntCompensatorPoint(Identity):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -26125,7 +25940,7 @@ class NonlinearShuntCompensatorPoint(Identity):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -26140,7 +25955,7 @@ class NonlinearShuntCompensatorPoint(Identity):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -26156,7 +25971,7 @@ class NonlinearShuntCompensatorPoint(Identity):
         'minOccurs': '1',
         'maxOccurs': '1',
         'inverse': 'NonlinearShuntCompensator.NonlinearShuntCompensatorPoints',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -26165,7 +25980,7 @@ class NonlinearShuntCompensatorPoint(Identity):
     
     @property
     def __namespace__(self):
-        return 'http://iec.ch/TC57/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Wires'
@@ -26190,7 +26005,7 @@ class ObjectType(Identity):
 
     @property
     def __namespace__(self):
-        return 'http://iec.ch/TC57/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Core'
@@ -26299,7 +26114,7 @@ class PositionPoint(Identity):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -26313,7 +26128,7 @@ class PositionPoint(Identity):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -26327,7 +26142,7 @@ class PositionPoint(Identity):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -26356,7 +26171,7 @@ class PositionPoint(Identity):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'RelativeHeight.PositionPoint',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -26364,7 +26179,7 @@ class PositionPoint(Identity):
     
     @property
     def __namespace__(self):
-        return 'http://iec.ch/TC57/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Common'
@@ -26389,7 +26204,7 @@ class RegularTimePoint(Identity):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -26409,7 +26224,7 @@ class RegularTimePoint(Identity):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -26424,7 +26239,7 @@ class RegularTimePoint(Identity):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -26439,7 +26254,7 @@ class RegularTimePoint(Identity):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -26455,7 +26270,7 @@ class RegularTimePoint(Identity):
         'minOccurs': '1',
         'maxOccurs': '1',
         'inverse': 'RegularIntervalSchedule.TimePoints',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -26464,7 +26279,7 @@ class RegularTimePoint(Identity):
     
     @property
     def __namespace__(self):
-        return 'http://iec.ch/TC57/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Core'
@@ -26493,7 +26308,7 @@ class RelativeHeight(Identity):
 
     @property
     def __namespace__(self):
-        return 'http://iec.ch/TC57/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Common'
@@ -26512,7 +26327,7 @@ class RelativeHeight(Identity):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'PositionPoint.RelativeHeight',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         })
     '''
@@ -26578,7 +26393,7 @@ class SSSCSimulationSettings(Identity):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -26598,7 +26413,7 @@ class SSSCSimulationSettings(Identity):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -26613,7 +26428,7 @@ class SSSCSimulationSettings(Identity):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -26629,7 +26444,7 @@ class SSSCSimulationSettings(Identity):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -26646,7 +26461,7 @@ class SSSCSimulationSettings(Identity):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -26662,7 +26477,7 @@ class SSSCSimulationSettings(Identity):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -26673,7 +26488,7 @@ class SSSCSimulationSettings(Identity):
     
     @property
     def __namespace__(self):
-        return 'http://iec.ch/TC57/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'FACTS'
@@ -26692,7 +26507,7 @@ class SSSCSimulationSettings(Identity):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'SSSCController.SSSCSimulationSettings',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         })
     '''
@@ -26707,7 +26522,7 @@ class StateVariable(Identity):
 
     @property
     def __namespace__(self):
-        return 'http://iec.ch/TC57/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'StateVariables'
@@ -26732,7 +26547,7 @@ class SvDCPowerFlow(StateVariable):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -26749,7 +26564,7 @@ class SvDCPowerFlow(StateVariable):
         'minOccurs': '1',
         'maxOccurs': '1',
         'inverse': 'DCTerminal.SvDCPowerFlow',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -26758,7 +26573,7 @@ class SvDCPowerFlow(StateVariable):
     
     @property
     def __namespace__(self):
-        return 'http://iec.ch/TC57/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'StateVariables'
@@ -26782,7 +26597,7 @@ class SvDCVoltage(StateVariable):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -26797,7 +26612,7 @@ class SvDCVoltage(StateVariable):
         'minOccurs': '1',
         'maxOccurs': '1',
         'inverse': 'DCTopologicalNode.SvDCVoltage',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -26806,7 +26621,7 @@ class SvDCVoltage(StateVariable):
     
     @property
     def __namespace__(self):
-        return 'http://iec.ch/TC57/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'StateVariables'
@@ -26834,7 +26649,7 @@ class SvInjection(StateVariable):
         'stereotypes': ['enumeration', 'Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -26849,7 +26664,7 @@ class SvInjection(StateVariable):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -26864,7 +26679,7 @@ class SvInjection(StateVariable):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -26876,11 +26691,11 @@ class SvInjection(StateVariable):
         default=None,
         metadata={
         'type': 'Association',
-        'stereotypes': [],
+        'stereotypes': ['ShadowExtension'],
         'minOccurs': '1',
         'maxOccurs': '1',
         'inverse': 'TopologicalNode.SvInjection',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -26889,7 +26704,7 @@ class SvInjection(StateVariable):
     
     @property
     def __namespace__(self):
-        return 'http://iec.ch/TC57/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'StateVariables'
@@ -26914,7 +26729,7 @@ class SvPowerFlow(StateVariable):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -26930,7 +26745,7 @@ class SvPowerFlow(StateVariable):
         'stereotypes': ['enumeration', 'Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -26945,7 +26760,7 @@ class SvPowerFlow(StateVariable):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -26958,11 +26773,11 @@ class SvPowerFlow(StateVariable):
         default=None,
         metadata={
         'type': 'Association',
-        'stereotypes': [],
+        'stereotypes': ['ShadowExtension'],
         'minOccurs': '1',
         'maxOccurs': '1',
         'inverse': 'Terminal.SvPowerFlow',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -26971,7 +26786,7 @@ class SvPowerFlow(StateVariable):
     
     @property
     def __namespace__(self):
-        return 'http://iec.ch/TC57/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'StateVariables'
@@ -26995,7 +26810,7 @@ class SvShuntCompensatorSections(StateVariable):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -27011,7 +26826,7 @@ class SvShuntCompensatorSections(StateVariable):
         'stereotypes': ['enumeration', 'Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -27027,7 +26842,7 @@ class SvShuntCompensatorSections(StateVariable):
         'minOccurs': '1',
         'maxOccurs': '1',
         'inverse': 'ShuntCompensator.SvShuntCompensatorSections',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -27036,7 +26851,7 @@ class SvShuntCompensatorSections(StateVariable):
     
     @property
     def __namespace__(self):
-        return 'http://iec.ch/TC57/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'StateVariables'
@@ -27060,7 +26875,7 @@ class SvStatus(StateVariable):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -27078,7 +26893,7 @@ class SvStatus(StateVariable):
         'stereotypes': ['enumeration', 'Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -27090,11 +26905,11 @@ class SvStatus(StateVariable):
         default=None,
         metadata={
         'type': 'Association',
-        'stereotypes': [],
+        'stereotypes': ['ShadowExtension'],
         'minOccurs': '1',
         'maxOccurs': '1',
         'inverse': 'ConductingEquipment.SvStatus',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -27103,7 +26918,7 @@ class SvStatus(StateVariable):
     
     @property
     def __namespace__(self):
-        return 'http://iec.ch/TC57/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'StateVariables'
@@ -27127,7 +26942,7 @@ class SvSwitch(StateVariable):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -27142,7 +26957,7 @@ class SvSwitch(StateVariable):
         'stereotypes': ['enumeration', 'Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -27158,7 +26973,7 @@ class SvSwitch(StateVariable):
         'minOccurs': '1',
         'maxOccurs': '1',
         'inverse': 'Switch.SvSwitch',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -27167,7 +26982,7 @@ class SvSwitch(StateVariable):
     
     @property
     def __namespace__(self):
-        return 'http://iec.ch/TC57/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'StateVariables'
@@ -27191,7 +27006,7 @@ class SvTapStep(StateVariable):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -27205,11 +27020,11 @@ class SvTapStep(StateVariable):
         default=None,
         metadata={
         'type': 'Association',
-        'stereotypes': ['ShadowExtension'],
+        'stereotypes': ['ShadowExtension', 'gmdm'],
         'minOccurs': '1',
         'maxOccurs': '1',
         'inverse': 'TapChanger.SvTapStep',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -27224,7 +27039,7 @@ class SvTapStep(StateVariable):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'TapChanger.SvTapStep',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         })
     '''
@@ -27233,7 +27048,7 @@ class SvTapStep(StateVariable):
     
     @property
     def __namespace__(self):
-        return 'http://iec.ch/TC57/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'StateVariables'
@@ -27257,7 +27072,7 @@ class SvVoltage(StateVariable):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -27272,7 +27087,7 @@ class SvVoltage(StateVariable):
         'stereotypes': ['enumeration', 'Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -27287,7 +27102,7 @@ class SvVoltage(StateVariable):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -27299,11 +27114,11 @@ class SvVoltage(StateVariable):
         default=None,
         metadata={
         'type': 'Association',
-        'stereotypes': [],
+        'stereotypes': ['ShadowExtension'],
         'minOccurs': '1',
         'maxOccurs': '1',
         'inverse': 'TopologicalNode.SvVoltage',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -27312,7 +27127,7 @@ class SvVoltage(StateVariable):
     
     @property
     def __namespace__(self):
-        return 'http://iec.ch/TC57/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'StateVariables'
@@ -27336,7 +27151,7 @@ class StepLimitTablePoint(Identity):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -27351,7 +27166,7 @@ class StepLimitTablePoint(Identity):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -27366,7 +27181,7 @@ class StepLimitTablePoint(Identity):
         'minOccurs': '1',
         'maxOccurs': '1',
         'inverse': 'StepOperationalLimitTable.StepLimitTablePoint',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -27375,7 +27190,7 @@ class StepLimitTablePoint(Identity):
     
     @property
     def __namespace__(self):
-        return 'http://iec.ch/TC57/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Wires'
@@ -27434,7 +27249,7 @@ class TCSCCompensationPoint(Identity):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -27454,7 +27269,7 @@ class TCSCCompensationPoint(Identity):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -27468,7 +27283,7 @@ class TCSCCompensationPoint(Identity):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -27483,7 +27298,7 @@ class TCSCCompensationPoint(Identity):
         'minOccurs': '1',
         'maxOccurs': '1',
         'inverse': 'ThyristorControlledSeriesCompensator.TCSCCompensationPoint',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -27492,7 +27307,7 @@ class TCSCCompensationPoint(Identity):
     
     @property
     def __namespace__(self):
-        return 'http://iec.ch/TC57/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'FACTS'
@@ -27517,7 +27332,7 @@ class TapChangerTablePoint(Identity):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -27535,7 +27350,7 @@ class TapChangerTablePoint(Identity):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -27549,7 +27364,7 @@ class TapChangerTablePoint(Identity):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -27568,7 +27383,7 @@ class TapChangerTablePoint(Identity):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -27588,7 +27403,7 @@ class TapChangerTablePoint(Identity):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -27608,7 +27423,7 @@ class TapChangerTablePoint(Identity):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -27623,7 +27438,7 @@ class TapChangerTablePoint(Identity):
     
     @property
     def __namespace__(self):
-        return 'http://iec.ch/TC57/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Wires'
@@ -27647,7 +27462,7 @@ class PhaseTapChangerTablePoint(TapChangerTablePoint):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -27664,7 +27479,7 @@ class PhaseTapChangerTablePoint(TapChangerTablePoint):
         'minOccurs': '1',
         'maxOccurs': '1',
         'inverse': 'PhaseTapChangerTable.PhaseTapChangerTablePoint',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -27673,7 +27488,7 @@ class PhaseTapChangerTablePoint(TapChangerTablePoint):
     
     @property
     def __namespace__(self):
-        return 'http://iec.ch/TC57/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Wires'
@@ -27698,7 +27513,7 @@ class RatioTapChangerTablePoint(TapChangerTablePoint):
         'minOccurs': '1',
         'maxOccurs': '1',
         'inverse': 'RatioTapChangerTable.RatioTapChangerTablePoint',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -27707,7 +27522,7 @@ class RatioTapChangerTablePoint(TapChangerTablePoint):
     
     @property
     def __namespace__(self):
-        return 'http://iec.ch/TC57/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Wires'
@@ -27731,7 +27546,7 @@ class WirePhaseInfo(Identity):
         'stereotypes': ['enumeration', 'Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -27746,7 +27561,7 @@ class WirePhaseInfo(Identity):
         'minOccurs': '1',
         'maxOccurs': '1',
         'inverse': 'WireAssemblyInfo.WirePhaseInfo',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -27757,11 +27572,11 @@ class WirePhaseInfo(Identity):
         default=None,
         metadata={
         'type': 'Association',
-        'stereotypes': [],
+        'stereotypes': ['ShadowExtension'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'WireInfo.WirePhaseInfo',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -27776,7 +27591,7 @@ class WirePhaseInfo(Identity):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'WirePosition.WirePhaseInfo',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -27785,7 +27600,7 @@ class WirePhaseInfo(Identity):
     
     @property
     def __namespace__(self):
-        return 'http://iec.ch/TC57/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'AssetInfo'
@@ -28026,7 +27841,7 @@ class AssetKind(Enum):
     
     @property
     def __namespace__(self):
-        return 'http://iec.ch/TC57/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Assets'
@@ -28056,7 +27871,7 @@ class AsynchronousMachineKind(Enum):
     
     @property
     def __namespace__(self):
-        return 'http://iec.ch/TC57/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Wires'
@@ -28140,7 +27955,7 @@ class BatteryStateKind(Enum):
     
     @property
     def __namespace__(self):
-        return 'http://iec.ch/TC57/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Production'
@@ -28228,7 +28043,7 @@ class BreakerConfiguration(Enum):
     
     @property
     def __namespace__(self):
-        return 'http://iec.ch/TC57/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Core'
@@ -28268,7 +28083,7 @@ class BusbarConfiguration(Enum):
     
     @property
     def __namespace__(self):
-        return 'http://iec.ch/TC57/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Core'
@@ -28323,7 +28138,7 @@ class CableConstructionKind(Enum):
     
     @property
     def __namespace__(self):
-        return 'http://iec.ch/TC57/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'AssetInfo'
@@ -28378,7 +28193,7 @@ class CableOuterJacketKind(Enum):
     
     @property
     def __namespace__(self):
-        return 'http://iec.ch/TC57/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'AssetInfo'
@@ -28423,7 +28238,7 @@ class CableShieldMaterialKind(Enum):
     
     @property
     def __namespace__(self):
-        return 'http://iec.ch/TC57/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'AssetInfo'
@@ -28673,7 +28488,7 @@ class ControlAreaTypeKind(Enum):
     
     @property
     def __namespace__(self):
-        return 'http://iec.ch/TC57/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'ControlArea'
@@ -28708,7 +28523,7 @@ class CoolantType(Enum):
     
     @property
     def __namespace__(self):
-        return 'http://iec.ch/TC57/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Wires'
@@ -29533,7 +29348,7 @@ class Currency(Enum):
     
     @property
     def __namespace__(self):
-        return 'http://iec.ch/TC57/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Domain'
@@ -29565,7 +29380,7 @@ class CurveStyle(Enum):
     
     @property
     def __namespace__(self):
-        return 'http://iec.ch/TC57/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Core'
@@ -29600,7 +29415,7 @@ class CyberImpactLevel(Enum):
     
     @property
     def __namespace__(self):
-        return 'http://iec.ch/TC57/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'MeasEXT'
@@ -29650,7 +29465,7 @@ class EVTypeKind(Enum):
     
     @property
     def __namespace__(self):
-        return 'http://iec.ch/TC57/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'AssetEXT'
@@ -29752,7 +29567,7 @@ class FuelType(Enum):
     
     @property
     def __namespace__(self):
-        return 'http://iec.ch/TC57/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Production'
@@ -29782,7 +29597,7 @@ class GeneratorControlMode(Enum):
     
     @property
     def __namespace__(self):
-        return 'http://iec.ch/TC57/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Production'
@@ -29870,7 +29685,7 @@ class GeneratorControlSource(Enum):
     
     @property
     def __namespace__(self):
-        return 'http://iec.ch/TC57/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Production'
@@ -30039,7 +29854,7 @@ class MarineUnitKind(Enum):
     
     @property
     def __namespace__(self):
-        return 'http://iec.ch/TC57/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Production'
@@ -30151,7 +29966,7 @@ class OperationalLimitDirectionKind(Enum):
     
     @property
     def __namespace__(self):
-        return 'http://iec.ch/TC57/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'OperationalLimits'
@@ -30403,7 +30218,7 @@ class PetersenCoilModeKind(Enum):
     
     @property
     def __namespace__(self):
-        return 'http://iec.ch/TC57/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Wires'
@@ -30568,7 +30383,7 @@ class PhaseCode(Enum):
     
     @property
     def __namespace__(self):
-        return 'http://iec.ch/TC57/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Core'
@@ -30603,7 +30418,7 @@ class PhaseCountKind(Enum):
     
     @property
     def __namespace__(self):
-        return 'http://iec.ch/TC57/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Assets'
@@ -30651,7 +30466,7 @@ class PhaseShuntConnectionKind(Enum):
     
     @property
     def __namespace__(self):
-        return 'http://iec.ch/TC57/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Wires'
@@ -30683,7 +30498,7 @@ class PotentialTransformerKind(Enum):
     
     @property
     def __namespace__(self):
-        return 'http://iec.ch/TC57/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'AuxiliaryEquipment'
@@ -30722,7 +30537,7 @@ class PowerElectricalChemicalUnitKind(Enum):
     
     @property
     def __namespace__(self):
-        return 'http://iec.ch/TC57/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Production'
@@ -30784,7 +30599,7 @@ class RegulatingControlModeKind(Enum):
     
     @property
     def __namespace__(self):
-        return 'http://iec.ch/TC57/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Wires'
@@ -30834,7 +30649,7 @@ class SSSCControlModeKind(Enum):
     
     @property
     def __namespace__(self):
-        return 'http://iec.ch/TC57/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'FACTS'
@@ -30864,7 +30679,7 @@ class SVCControlMode(Enum):
     
     @property
     def __namespace__(self):
-        return 'http://iec.ch/TC57/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Wires'
@@ -30904,7 +30719,7 @@ class ShortCircuitRotorKind(Enum):
     
     @property
     def __namespace__(self):
-        return 'http://iec.ch/TC57/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Wires'
@@ -30959,7 +30774,7 @@ class SinglePhaseKind(Enum):
     
     @property
     def __namespace__(self):
-        return 'http://iec.ch/TC57/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Wires'
@@ -31056,7 +30871,7 @@ class SynchronousMachineKind(Enum):
     
     @property
     def __namespace__(self):
-        return 'http://iec.ch/TC57/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Wires'
@@ -31091,7 +30906,7 @@ class SynchronousMachineOperatingMode(Enum):
     
     @property
     def __namespace__(self):
-        return 'http://iec.ch/TC57/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Wires'
@@ -31118,7 +30933,7 @@ class SynchrophaserUsageKind(Enum):
     
     @property
     def __namespace__(self):
-        return 'http://iec.ch/TC57/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'MeasEXT'
@@ -31173,7 +30988,7 @@ class TimeSourceKind(Enum):
     
     @property
     def __namespace__(self):
-        return 'http://iec.ch/TC57/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'AuxEqEXT'
@@ -31426,7 +31241,7 @@ class UnitMultiplier(Enum):
     
     @property
     def __namespace__(self):
-        return 'http://iec.ch/TC57/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Domain'
@@ -32222,7 +32037,7 @@ class UnitSymbol(Enum):
     
     @property
     def __namespace__(self):
-        return 'http://iec.ch/TC57/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Domain'
@@ -32252,7 +32067,7 @@ class WindGenUnitKind(Enum):
     
     @property
     def __namespace__(self):
-        return 'http://iec.ch/TC57/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Production'
@@ -32307,7 +32122,7 @@ class WindingConnection(Enum):
     
     @property
     def __namespace__(self):
-        return 'http://iec.ch/TC57/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Wires'
@@ -32343,7 +32158,7 @@ class WireConstructionKind(Enum):
     
     @property
     def __namespace__(self):
-        return 'http://iec.ch/TC57/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Assets'
@@ -32453,7 +32268,7 @@ class WireInsulationKind(Enum):
     
     @property
     def __namespace__(self):
-        return 'http://iec.ch/TC57/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'AssetInfo'
@@ -32518,7 +32333,7 @@ class WireMaterialKind(Enum):
     
     @property
     def __namespace__(self):
-        return 'http://iec.ch/TC57/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'AssetInfo'
@@ -32558,7 +32373,7 @@ class WireUsageKind(Enum):
     
     @property
     def __namespace__(self):
-        return 'http://iec.ch/TC57/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'AssetInfo'
@@ -33107,34 +32922,6 @@ class Length(CIMUnit):
 
 @stereotype(CIMStereotype.CIMDatatype)
 @dataclass(repr=False)
-class MassPerLength(CIMUnit):
-    '''
-    Mass per length. It shall be a positive value or zero.
-    '''
-
-    value: float = field(default=None)
-    multiplier: UnitMultiplier = field(default=UnitMultiplier.none)
-    @property # read-only
-    def unit(self):
-        return UnitSymbol.kgPerm
-    def __init__(self, value, input_unit: str='kgPerm', input_multiplier: str=None):
-        self.__pint__(value=value, input_unit=input_unit, input_multiplier=input_multiplier)
-    @property
-    def __namespace__(self):
-        return '#'
-    @property
-    def __package__(self):
-        return 'Domain'
-    @property
-    def __minOccurs__(self):
-        return '0'
-    @property
-    def __maxOccurs__(self):
-        return '1'
-    
-
-@stereotype(CIMStereotype.CIMDatatype)
-@dataclass(repr=False)
 class Money(CIMUnit):
     '''
     Amount of money.
@@ -33626,7 +33413,7 @@ class DateInterval(Identity):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -33640,7 +33427,7 @@ class DateInterval(Identity):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -33649,7 +33436,7 @@ class DateInterval(Identity):
     
     @property
     def __namespace__(self):
-        return 'http://iec.ch/TC57/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Domain'
@@ -33664,30 +33451,8 @@ class DateInterval(Identity):
 @dataclass(repr=False)
 class DateTimeInterval(Identity):
     '''
-    rdfs:label : "Date-time interval"@en
-    rdfs:comment : "'intervalo de fecha-hora' es una subclase de 'intervalo
-    propio', definida utilizando el multi-elemento 'descripci�n de fecha-hora'."@es
-    <http://www.w3.org/2004/02/skos/core#note> : "'intervalo de fecha-hora'
-    se puede utilizar s�lo para un intervalo cuyos l�mites coinciden con un
-    elemento de fecha-hora alineados con el calendario y la zona horaria indicados.
-    Por ejemplo, aunque ambos tienen una duraci�n de un d�a, el intervalo de
-    24 horas que empieza en la media noche del comienzo del 8 mayo en Europa
-    Central se puede expresar como un 'intervalo de fecha-hora', el intervalo
-    de 24 horas que empieza a las 1:30pm no."@es
-    rdfs:label : "intervalo de fecha-hora"@es
-    <http://www.w3.org/2004/02/skos/core#definition> : "DateTimeInterval is
-    a subclass of ProperInterval, defined using the multi-element DateTimeDescription."@en
-    rdfs:comment : "DateTimeInterval is a subclass of ProperInterval, defined
-    using the multi-element DateTimeDescription."@en
-    <http://www.w3.org/2004/02/skos/core#note> : ":DateTimeInterval can only
-    be used for an interval whose limits coincide with a date-time element
-    aligned to the calendar and timezone indicated. For example, while both
-    have a duration of one day, the 24-hour interval beginning at midnight
-    at the beginning of 8 May in Central Europe can be expressed as a :DateTimeInterval,
-    but the 24-hour interval starting at 1:30pm cannot."@en
-    <http://www.w3.org/2004/02/skos/core#definition> : "'intervalo de fecha-hora'
-    es una subclase de 'intervalo propio', definida utilizando el multi-elemento
-    'descripci�n de fecha-hora'."@es
+    Interval between two date and time points, where the interval includes
+    the start time but excludes end time.
     '''
 
     end: Optional[str] = field(
@@ -33697,7 +33462,7 @@ class DateTimeInterval(Identity):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -33712,7 +33477,7 @@ class DateTimeInterval(Identity):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -33728,7 +33493,7 @@ class DateTimeInterval(Identity):
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': '',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -33736,7 +33501,7 @@ class DateTimeInterval(Identity):
     
     @property
     def __namespace__(self):
-        return 'http://iec.ch/TC57/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Domain'
@@ -33761,7 +33526,7 @@ class DecimalQuantity(Identity):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -33775,7 +33540,7 @@ class DecimalQuantity(Identity):
         'stereotypes': ['enumeration', 'Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -33789,7 +33554,7 @@ class DecimalQuantity(Identity):
         'stereotypes': ['enumeration', 'Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -33803,7 +33568,7 @@ class DecimalQuantity(Identity):
         'stereotypes': ['enumeration', 'Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -33812,7 +33577,7 @@ class DecimalQuantity(Identity):
     
     @property
     def __namespace__(self):
-        return 'http://iec.ch/TC57/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Domain'
@@ -33837,7 +33602,7 @@ class FloatQuantity(Identity):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -33851,7 +33616,7 @@ class FloatQuantity(Identity):
         'stereotypes': ['enumeration', 'Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -33865,7 +33630,7 @@ class FloatQuantity(Identity):
         'stereotypes': ['enumeration', 'Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -33874,7 +33639,7 @@ class FloatQuantity(Identity):
     
     @property
     def __namespace__(self):
-        return 'http://iec.ch/TC57/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Domain'
@@ -33899,7 +33664,7 @@ class IntegerQuantity(Identity):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -33913,7 +33678,7 @@ class IntegerQuantity(Identity):
         'stereotypes': ['enumeration', 'Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -33927,7 +33692,7 @@ class IntegerQuantity(Identity):
         'stereotypes': ['enumeration', 'Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -33936,7 +33701,7 @@ class IntegerQuantity(Identity):
     
     @property
     def __namespace__(self):
-        return 'http://iec.ch/TC57/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Domain'
@@ -33961,7 +33726,7 @@ class MonthDayInterval(Identity):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -33975,7 +33740,7 @@ class MonthDayInterval(Identity):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -33984,7 +33749,7 @@ class MonthDayInterval(Identity):
     
     @property
     def __namespace__(self):
-        return 'http://iec.ch/TC57/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Domain'
@@ -34010,7 +33775,7 @@ class StringQuantity(Identity):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -34024,7 +33789,7 @@ class StringQuantity(Identity):
         'stereotypes': ['enumeration', 'Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -34038,7 +33803,7 @@ class StringQuantity(Identity):
         'stereotypes': ['enumeration', 'Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -34047,7 +33812,7 @@ class StringQuantity(Identity):
     
     @property
     def __namespace__(self):
-        return 'http://iec.ch/TC57/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Domain'
@@ -34072,7 +33837,7 @@ class TimeInterval(Identity):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -34086,7 +33851,7 @@ class TimeInterval(Identity):
         'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
-        'namespace': 'http://iec.ch/TC57/CIM101/draft#',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
         })
     '''
@@ -34095,7 +33860,7 @@ class TimeInterval(Identity):
     
     @property
     def __namespace__(self):
-        return 'http://iec.ch/TC57/CIM101/draft#'
+        return 'http://cim.ucaiug.io/CIM101/draft#'
     @property
     def __package__(self):
         return 'Domain'
