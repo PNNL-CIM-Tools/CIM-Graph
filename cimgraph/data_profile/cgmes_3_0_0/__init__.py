@@ -18,162 +18,1440 @@ Re-run the script after adding or updating sub-profile parts.
 """
 from __future__ import annotations
 
-from cimgraph.data_profile.cgmes_3_0_0.core_equipment import (ACDCConverter,
-                                                              ACDCConverterDCTerminal,
-                                                              ACDCTerminal, ACLineSegment,
-                                                              ActivePower, ActivePowerLimit,
-                                                              ActivePowerPerCurrentFlow,
-                                                              ActivePowerPerFrequency,
-                                                              AngleDegrees, ApparentPower,
-                                                              ApparentPowerLimit,
-                                                              AsynchronousMachine,
-                                                              AuxiliaryEquipment, BaseVoltage,
-                                                              BasicIntervalSchedule, BatteryUnit,
-                                                              Bay, BoundaryPoint, Breaker,
-                                                              BusbarSection, BusNameMarker,
-                                                              CAESPlant, Capacitance, Clamp,
-                                                              CogenerationPlant,
-                                                              CombinedCyclePlant, Conductance,
-                                                              ConductingEquipment, Conductor,
-                                                              ConformLoad, ConformLoadGroup,
-                                                              ConformLoadSchedule,
-                                                              ConnectivityNode,
-                                                              ConnectivityNodeContainer, Connector,
-                                                              ControlArea,
-                                                              ControlAreaGeneratingUnit,
-                                                              ControlAreaTypeKind, CsConverter,
-                                                              Currency, CurrentFlow, CurrentLimit,
-                                                              CurrentTransformer, Curve, CurveData,
-                                                              CurveStyle, Cut, DayType,
-                                                              DCBaseTerminal, DCBreaker, DCBusbar,
-                                                              DCChopper, DCConductingEquipment,
-                                                              DCConverterOperatingModeKind,
-                                                              DCConverterUnit, DCDisconnector,
-                                                              DCEquipmentContainer, DCGround,
-                                                              DCLine, DCLineSegment, DCNode,
-                                                              DCPolarityKind, DCSeriesDevice,
-                                                              DCShunt, DCSwitch, DCTerminal,
-                                                              DisconnectingCircuitBreaker,
-                                                              Disconnector, EarthFaultCompensator,
-                                                              EnergyArea, EnergyConnection,
-                                                              EnergyConsumer, EnergySchedulingType,
-                                                              EnergySource, Equipment,
-                                                              EquipmentContainer, EquivalentBranch,
-                                                              EquivalentEquipment,
-                                                              EquivalentInjection,
-                                                              EquivalentNetwork, EquivalentShunt,
-                                                              ExternalNetworkInjection,
-                                                              FaultIndicator, FossilFuel,
-                                                              Frequency, FuelType, Fuse,
-                                                              GeneratingUnit,
-                                                              GeneratorControlSource,
-                                                              GeographicalRegion,
-                                                              GrossToNetActivePowerCurve, Ground,
-                                                              GroundDisconnector,
-                                                              GroundingImpedance,
-                                                              HydroEnergyConversionKind,
-                                                              HydroGeneratingUnit,
-                                                              HydroPlantStorageKind,
-                                                              HydroPowerPlant, HydroPump,
-                                                              HydroTurbineKind, IdentifiedObject,
-                                                              Identity, Inductance, Jumper,
-                                                              Junction, Length, LimitKind, Line,
-                                                              LinearShuntCompensator, LoadArea,
-                                                              LoadBreakSwitch, LoadGroup,
-                                                              LoadResponseCharacteristic, Money,
-                                                              NonConformLoad, NonConformLoadGroup,
-                                                              NonConformLoadSchedule,
-                                                              NonlinearShuntCompensator,
-                                                              NonlinearShuntCompensatorPoint,
-                                                              NuclearGeneratingUnit,
-                                                              OperationalLimit,
-                                                              OperationalLimitDirectionKind,
-                                                              OperationalLimitSet,
-                                                              OperationalLimitType, PerCent,
-                                                              PetersenCoil, PhaseCode,
-                                                              PhaseTapChanger,
-                                                              PhaseTapChangerAsymmetrical,
-                                                              PhaseTapChangerLinear,
-                                                              PhaseTapChangerNonLinear,
-                                                              PhaseTapChangerSymmetrical,
-                                                              PhaseTapChangerTable,
-                                                              PhaseTapChangerTablePoint,
-                                                              PhaseTapChangerTabular,
-                                                              PhotoVoltaicUnit, PostLineSensor,
-                                                              PotentialTransformer,
-                                                              PowerElectronicsConnection,
-                                                              PowerElectronicsUnit,
-                                                              PowerElectronicsWindUnit,
-                                                              PowerSystemResource,
-                                                              PowerTransformer,
-                                                              PowerTransformerEnd, ProtectedSwitch,
-                                                              RatioTapChanger,
-                                                              RatioTapChangerTable,
-                                                              RatioTapChangerTablePoint, Reactance,
-                                                              ReactiveCapabilityCurve,
-                                                              ReactivePower, RealEnergy,
-                                                              RegularIntervalSchedule,
-                                                              RegularTimePoint, RegulatingCondEq,
-                                                              RegulatingControl,
-                                                              RegulatingControlModeKind,
-                                                              RegulationSchedule, ReportingGroup,
-                                                              Resistance, RotatingMachine,
-                                                              RotationSpeed, Season,
-                                                              SeasonDayTypeSchedule, Seconds,
-                                                              Sensor, SeriesCompensator,
-                                                              ShuntCompensator,
-                                                              SolarGeneratingUnit, SolarPowerPlant,
-                                                              StaticVarCompensator, StationSupply,
-                                                              SubGeographicalRegion, SubLoadArea,
-                                                              Substation, SurgeArrester,
-                                                              Susceptance, SVCControlMode, Switch,
-                                                              SwitchSchedule, SynchronousMachine,
-                                                              SynchronousMachineKind, TapChanger,
-                                                              TapChangerControl,
-                                                              TapChangerTablePoint, TapSchedule,
-                                                              Terminal, ThermalGeneratingUnit,
-                                                              TieFlow, TransformerEnd,
-                                                              UnitMultiplier, UnitSymbol, Voltage,
-                                                              VoltageLevel, VoltageLimit,
-                                                              VoltagePerReactivePower,
-                                                              VsCapabilityCurve, VsConverter,
-                                                              WaveTrap, WindGeneratingUnit,
-                                                              WindGenUnitKind, WindingConnection,
-                                                              WindPowerPlant)
-from cimgraph.data_profile.cgmes_3_0_0.diagram import (Diagram, DiagramObject,
-                                                       DiagramObjectGluePoint, DiagramObjectPoint,
-                                                       DiagramObjectStyle, DiagramStyle,
-                                                       OrientationKind, TextDiagramObject,
-                                                       VisibilityLayer)
-from cimgraph.data_profile.cgmes_3_0_0.geographical_location import (CoordinateSystem, Location,
-                                                                     PositionPoint,
-                                                                     ServiceLocation, Status,
-                                                                     StreetAddress, StreetDetail,
-                                                                     TownDetail, WorkLocation)
-from cimgraph.data_profile.cgmes_3_0_0.operation import (Accumulator, AccumulatorLimit,
-                                                         AccumulatorLimitSet, AccumulatorReset,
-                                                         AccumulatorValue, Analog, AnalogControl,
-                                                         AnalogLimit, AnalogLimitSet, AnalogValue,
-                                                         Command, Control, Discrete, DiscreteValue,
-                                                         IOPoint, Limit, LimitSet, Measurement,
-                                                         MeasurementValue, MeasurementValueQuality,
-                                                         MeasurementValueSource, Quality61850,
-                                                         RaiseLowerCommand, SetPoint, Source,
-                                                         StringMeasurement, StringMeasurementValue,
-                                                         Validity, ValueAliasSet, ValueToAlias)
-from cimgraph.data_profile.cgmes_3_0_0.short_circuit import (PU, MutualCoupling,
-                                                             PetersenCoilModeKind,
-                                                             ShortCircuitRotorKind, Temperature)
-from cimgraph.data_profile.cgmes_3_0_0.state_variables import (DCTopologicalIsland,
-                                                               DCTopologicalNode, SvInjection,
-                                                               SvPowerFlow,
-                                                               SvShuntCompensatorSections,
-                                                               SvStatus, SvSwitch, SvTapStep,
-                                                               SvVoltage, TopologicalIsland,
-                                                               TopologicalNode)
+from dataclasses import dataclass, field
+from cimgraph.data_profile.cgmes_3_0_0.core_equipment import (
+    ActivePower, ActivePowerPerCurrentFlow, ActivePowerPerFrequency, AngleDegrees,
+    ApparentPower, Capacitance, Conductance, ControlAreaTypeKind, Currency, CurrentFlow,
+    CurveStyle, DCConverterOperatingModeKind, DCPolarityKind, Frequency, FuelType,
+    GeneratorControlSource, HydroEnergyConversionKind, HydroPlantStorageKind,
+    HydroTurbineKind, Identity, Inductance, Length, LimitKind, Money,
+    OperationalLimitDirectionKind, PerCent, PhaseCode, Reactance, ReactivePower,
+    RealEnergy, RegulatingControlModeKind, Resistance, RotationSpeed, SVCControlMode,
+    Seconds, Susceptance, SynchronousMachineKind, UnitMultiplier, UnitSymbol, Voltage,
+    VoltagePerReactivePower, WindGenUnitKind, WindingConnection)
+from cimgraph.data_profile.cgmes_3_0_0.operation import (
+    Source, Validity)
+from cimgraph.data_profile.cgmes_3_0_0.short_circuit import (
+    PU, PetersenCoilModeKind, ShortCircuitRotorKind, Temperature)
 from cimgraph.data_profile.cgmes_3_0_0.steady_state_hypothesis import (
     AngleRadians, AsynchronousMachineKind, BatteryStateKind, CsOperatingModeKind,
-    CsPpccControlKind, SynchronousMachineOperatingMode, VsPpccControlKind, VsQpccControlKind)
+    CsPpccControlKind, SynchronousMachineOperatingMode, VsPpccControlKind,
+    VsQpccControlKind)
+from cimgraph.data_profile.cgmes_3_0_0.diagram import (
+    OrientationKind)
+
+@dataclass(repr=False)
+class CurveData(Identity):
+    xvalue: Optional[float] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': ['Attribute'], 'minOccurs': '1', 'maxOccurs': '1', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+    y1value: Optional[float] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': ['Attribute'], 'minOccurs': '1', 'maxOccurs': '1', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+    y2value: Optional[float] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': ['Attribute'], 'minOccurs': '0', 'maxOccurs': '1', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+    Curve: Optional[Curve] = field(default=None, metadata={'type': 'Association', 'stereotypes': ['OfAggregate', 'ByReference'], 'minOccurs': '1', 'maxOccurs': '1', 'inverse': 'Curve.CurveDatas', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+
+@dataclass(repr=False)
+class DiagramObjectGluePoint(Identity):
+    DiagramObjectPoints: list[DiagramObjectPoint] = field(default_factory=list, metadata={'type': 'Association', 'stereotypes': [], 'minOccurs': '0', 'maxOccurs': 'unbounded', 'inverse': 'DiagramObjectPoint.DiagramObjectGluePoint', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': False})
+
+@dataclass(repr=False)
+class DiagramObjectPoint(Identity):
+    sequenceNumber: Optional[int] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': ['Attribute'], 'minOccurs': '0', 'maxOccurs': '1', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+    xPosition: Optional[float] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': ['Attribute'], 'minOccurs': '1', 'maxOccurs': '1', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+    yPosition: Optional[float] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': ['Attribute'], 'minOccurs': '1', 'maxOccurs': '1', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+    zPosition: Optional[float] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': ['Attribute'], 'minOccurs': '0', 'maxOccurs': '1', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+    DiagramObject: Optional[DiagramObject] = field(default=None, metadata={'type': 'Association', 'stereotypes': ['ByReference'], 'minOccurs': '1', 'maxOccurs': '1', 'inverse': 'DiagramObject.DiagramObjectPoints', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+    DiagramObjectGluePoint: Optional[DiagramObjectGluePoint] = field(default=None, metadata={'type': 'Association', 'stereotypes': ['ByReference'], 'minOccurs': '0', 'maxOccurs': '1', 'inverse': 'DiagramObjectGluePoint.DiagramObjectPoints', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+
+@dataclass(repr=False)
+class IdentifiedObject(Identity):
+    mRID: Optional[str] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': ['Attribute'], 'minOccurs': '1', 'maxOccurs': '1', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+    description: Optional[str] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': ['Attribute'], 'minOccurs': '0', 'maxOccurs': '1', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+    energyIdentCodeEic: Optional[str] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': ['European', 'Attribute'], 'minOccurs': '0', 'maxOccurs': '1', 'namespace': 'http://iec.ch/TC57/CIM100-European#', 'serialize': True})
+    name: Optional[str] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': ['Attribute'], 'minOccurs': '0', 'maxOccurs': '1', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+    shortName: Optional[str] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': ['European', 'Attribute'], 'minOccurs': '0', 'maxOccurs': '1', 'namespace': 'http://iec.ch/TC57/CIM100-European#', 'serialize': True})
+    DiagramObjects: list[DiagramObject] = field(default_factory=list, metadata={'type': 'Association', 'stereotypes': [], 'minOccurs': '0', 'maxOccurs': 'unbounded', 'inverse': 'DiagramObject.IdentifiedObject', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': False})
+
+@dataclass(repr=False)
+class ACDCTerminal(IdentifiedObject):
+    sequenceNumber: Optional[int] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': ['Attribute'], 'minOccurs': '1', 'maxOccurs': '1', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+    BusNameMarker: Optional[BusNameMarker] = field(default=None, metadata={'type': 'Association', 'stereotypes': [], 'minOccurs': '0', 'maxOccurs': '1', 'inverse': 'BusNameMarker.Terminal', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+    OperationalLimitSet: list[OperationalLimitSet] = field(default_factory=list, metadata={'type': 'Association', 'stereotypes': [], 'minOccurs': '0', 'maxOccurs': 'unbounded', 'inverse': 'OperationalLimitSet.Terminal', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': False})
+    Measurements: list[Measurement] = field(default_factory=list, metadata={'type': 'Association', 'stereotypes': [], 'minOccurs': '0', 'maxOccurs': 'unbounded', 'inverse': 'Measurement.Terminal', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': False})
+    connected: Optional[bool] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': ['Attribute'], 'minOccurs': '1', 'maxOccurs': '1', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+
+@dataclass(repr=False)
+class BaseVoltage(IdentifiedObject):
+    nominalVoltage: Optional[float | Voltage] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': ['Attribute'], 'minOccurs': '1', 'maxOccurs': '1', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+    ConductingEquipment: list[ConductingEquipment] = field(default_factory=list, metadata={'type': 'Association', 'stereotypes': [], 'minOccurs': '0', 'maxOccurs': 'unbounded', 'inverse': 'ConductingEquipment.BaseVoltage', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': False})
+    TransformerEnds: list[TransformerEnd] = field(default_factory=list, metadata={'type': 'Association', 'stereotypes': [], 'minOccurs': '0', 'maxOccurs': 'unbounded', 'inverse': 'TransformerEnd.BaseVoltage', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': False})
+    VoltageLevel: list[VoltageLevel] = field(default_factory=list, metadata={'type': 'Association', 'stereotypes': [], 'minOccurs': '0', 'maxOccurs': 'unbounded', 'inverse': 'VoltageLevel.BaseVoltage', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': False})
+    TopologicalNode: list[TopologicalNode] = field(default_factory=list, metadata={'type': 'Association', 'stereotypes': [], 'minOccurs': '0', 'maxOccurs': 'unbounded', 'inverse': 'TopologicalNode.BaseVoltage', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': False})
+
+@dataclass(repr=False)
+class BasicIntervalSchedule(IdentifiedObject):
+    startTime: Optional[str] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': ['Attribute'], 'minOccurs': '1', 'maxOccurs': '1', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+    value1Multiplier: Optional[UnitMultiplier] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': ['enumeration', 'Attribute'], 'minOccurs': '0', 'maxOccurs': '1', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+    value1Unit: Optional[UnitSymbol] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': ['enumeration', 'Attribute'], 'minOccurs': '1', 'maxOccurs': '1', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+    value2Multiplier: Optional[UnitMultiplier] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': ['enumeration', 'Attribute'], 'minOccurs': '0', 'maxOccurs': '1', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+    value2Unit: Optional[UnitSymbol] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': ['enumeration', 'Attribute'], 'minOccurs': '0', 'maxOccurs': '1', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+
+@dataclass(repr=False)
+class BusNameMarker(IdentifiedObject):
+    priority: Optional[int] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': ['Attribute'], 'minOccurs': '0', 'maxOccurs': '1', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+    ReportingGroup: Optional[ReportingGroup] = field(default=None, metadata={'type': 'Association', 'stereotypes': ['ByReference'], 'minOccurs': '0', 'maxOccurs': '1', 'inverse': 'ReportingGroup.BusNameMarker', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+    Terminal: list[ACDCTerminal] = field(default_factory=list, metadata={'type': 'Association', 'stereotypes': [], 'minOccurs': '0', 'maxOccurs': 'unbounded', 'inverse': 'ACDCTerminal.BusNameMarker', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': False})
+
+@dataclass(repr=False)
+class ConnectivityNode(IdentifiedObject):
+    ConnectivityNodeContainer: Optional[ConnectivityNodeContainer] = field(default=None, metadata={'type': 'Association', 'stereotypes': ['ByReference'], 'minOccurs': '1', 'maxOccurs': '1', 'inverse': 'ConnectivityNodeContainer.ConnectivityNodes', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+    BoundaryPoint: Optional[BoundaryPoint] = field(default=None, metadata={'type': 'Association', 'stereotypes': ['European'], 'minOccurs': '0', 'maxOccurs': '1', 'inverse': 'BoundaryPoint.ConnectivityNode', 'namespace': 'http://iec.ch/TC57/CIM100-European#', 'serialize': False})
+    Terminals: list[Terminal] = field(default_factory=list, metadata={'type': 'Association', 'stereotypes': [], 'minOccurs': '0', 'maxOccurs': 'unbounded', 'inverse': 'Terminal.ConnectivityNode', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': False})
+    TopologicalNode: Optional[TopologicalNode] = field(default=None, metadata={'type': 'Association', 'stereotypes': ['OfAggregate', 'ByReference'], 'minOccurs': '1', 'maxOccurs': '1', 'inverse': 'TopologicalNode.ConnectivityNodes', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+
+@dataclass(repr=False)
+class ControlAreaGeneratingUnit(IdentifiedObject):
+    ControlArea: Optional[ControlArea] = field(default=None, metadata={'type': 'Association', 'stereotypes': ['OfAggregate', 'ByReference'], 'minOccurs': '1', 'maxOccurs': '1', 'inverse': 'ControlArea.ControlAreaGeneratingUnit', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+    GeneratingUnit: Optional[GeneratingUnit] = field(default=None, metadata={'type': 'Association', 'stereotypes': ['ByReference'], 'minOccurs': '1', 'maxOccurs': '1', 'inverse': 'GeneratingUnit.ControlAreaGeneratingUnit', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+
+@dataclass(repr=False)
+class CoordinateSystem(IdentifiedObject):
+    crsUrn: Optional[str] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': ['Attribute'], 'minOccurs': '1', 'maxOccurs': '1', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+    Locations: list[Location] = field(default_factory=list, metadata={'type': 'Association', 'stereotypes': [], 'minOccurs': '0', 'maxOccurs': 'unbounded', 'inverse': 'Location.CoordinateSystem', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': False})
+
+@dataclass(repr=False)
+class Curve(IdentifiedObject):
+    curveStyle: Optional[CurveStyle] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': ['enumeration', 'Attribute'], 'minOccurs': '1', 'maxOccurs': '1', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+    xUnit: Optional[UnitSymbol] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': ['enumeration', 'Attribute'], 'minOccurs': '1', 'maxOccurs': '1', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+    y1Unit: Optional[UnitSymbol] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': ['enumeration', 'Attribute'], 'minOccurs': '1', 'maxOccurs': '1', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+    y2Unit: Optional[UnitSymbol] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': ['enumeration', 'Attribute'], 'minOccurs': '0', 'maxOccurs': '1', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+    CurveDatas: list[CurveData] = field(default_factory=list, metadata={'type': 'Association', 'stereotypes': ['AggregateOf'], 'minOccurs': '0', 'maxOccurs': 'unbounded', 'inverse': 'CurveData.Curve', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': False})
+
+@dataclass(repr=False)
+class DCBaseTerminal(ACDCTerminal):
+    DCNode: Optional[DCNode] = field(default=None, metadata={'type': 'Association', 'stereotypes': ['ByReference'], 'minOccurs': '0', 'maxOccurs': '1', 'inverse': 'DCNode.DCTerminals', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+    DCTopologicalNode: Optional[DCTopologicalNode] = field(default=None, metadata={'type': 'Association', 'stereotypes': ['ByReference'], 'minOccurs': '1', 'maxOccurs': '1', 'inverse': 'DCTopologicalNode.DCTerminals', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+
+@dataclass(repr=False)
+class ACDCConverterDCTerminal(DCBaseTerminal):
+    polarity: Optional[DCPolarityKind] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': ['enumeration', 'Attribute'], 'minOccurs': '1', 'maxOccurs': '1', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+    DCConductingEquipment: Optional[ACDCConverter] = field(default=None, metadata={'type': 'Association', 'stereotypes': ['ByReference'], 'minOccurs': '1', 'maxOccurs': '1', 'inverse': 'ACDCConverter.DCTerminals', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+
+@dataclass(repr=False)
+class DCNode(IdentifiedObject):
+    DCEquipmentContainer: Optional[DCEquipmentContainer] = field(default=None, metadata={'type': 'Association', 'stereotypes': ['ByReference'], 'minOccurs': '1', 'maxOccurs': '1', 'inverse': 'DCEquipmentContainer.DCNodes', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+    DCTerminals: list[DCBaseTerminal] = field(default_factory=list, metadata={'type': 'Association', 'stereotypes': [], 'minOccurs': '0', 'maxOccurs': 'unbounded', 'inverse': 'DCBaseTerminal.DCNode', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': False})
+    DCTopologicalNode: Optional[DCTopologicalNode] = field(default=None, metadata={'type': 'Association', 'stereotypes': ['ByReference'], 'minOccurs': '1', 'maxOccurs': '1', 'inverse': 'DCTopologicalNode.DCNodes', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+
+@dataclass(repr=False)
+class DCTerminal(DCBaseTerminal):
+    DCConductingEquipment: Optional[DCConductingEquipment] = field(default=None, metadata={'type': 'Association', 'stereotypes': ['ByReference'], 'minOccurs': '1', 'maxOccurs': '1', 'inverse': 'DCConductingEquipment.DCTerminals', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+
+@dataclass(repr=False)
+class DCTopologicalIsland(IdentifiedObject):
+    DCTopologicalNodes: list[DCTopologicalNode] = field(default_factory=list, metadata={'type': 'Association', 'stereotypes': ['ByReference', 'AggregateOf'], 'minOccurs': '1', 'maxOccurs': 'unbounded', 'inverse': 'DCTopologicalNode.DCTopologicalIsland', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+
+@dataclass(repr=False)
+class DCTopologicalNode(IdentifiedObject):
+    DCTopologicalIsland: Optional[DCTopologicalIsland] = field(default=None, metadata={'type': 'Association', 'stereotypes': ['OfAggregate'], 'minOccurs': '0', 'maxOccurs': '1', 'inverse': 'DCTopologicalIsland.DCTopologicalNodes', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': False})
+    DCEquipmentContainer: Optional[DCEquipmentContainer] = field(default=None, metadata={'type': 'Association', 'stereotypes': ['ByReference'], 'minOccurs': '1', 'maxOccurs': '1', 'inverse': 'DCEquipmentContainer.DCTopologicalNode', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+    DCTerminals: list[DCBaseTerminal] = field(default_factory=list, metadata={'type': 'Association', 'stereotypes': [], 'minOccurs': '0', 'maxOccurs': 'unbounded', 'inverse': 'DCBaseTerminal.DCTopologicalNode', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': False})
+    DCNodes: list[DCNode] = field(default_factory=list, metadata={'type': 'Association', 'stereotypes': [], 'minOccurs': '0', 'maxOccurs': 'unbounded', 'inverse': 'DCNode.DCTopologicalNode', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': False})
+
+@dataclass(repr=False)
+class DayType(IdentifiedObject):
+    SeasonDayTypeSchedules: list[SeasonDayTypeSchedule] = field(default_factory=list, metadata={'type': 'Association', 'stereotypes': [], 'minOccurs': '0', 'maxOccurs': 'unbounded', 'inverse': 'SeasonDayTypeSchedule.DayType', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': False})
+
+@dataclass(repr=False)
+class Diagram(IdentifiedObject):
+    x1InitialView: Optional[float] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': ['Attribute'], 'minOccurs': '0', 'maxOccurs': '1', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+    x2InitialView: Optional[float] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': ['Attribute'], 'minOccurs': '0', 'maxOccurs': '1', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+    y1InitialView: Optional[float] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': ['Attribute'], 'minOccurs': '0', 'maxOccurs': '1', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+    y2InitialView: Optional[float] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': ['Attribute'], 'minOccurs': '0', 'maxOccurs': '1', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+    orientation: Optional[OrientationKind] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': ['enumeration', 'Attribute'], 'minOccurs': '1', 'maxOccurs': '1', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+    DiagramStyle: Optional[DiagramStyle] = field(default=None, metadata={'type': 'Association', 'stereotypes': ['ByReference'], 'minOccurs': '0', 'maxOccurs': '1', 'inverse': 'DiagramStyle.Diagram', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+    DiagramElements: list[DiagramObject] = field(default_factory=list, metadata={'type': 'Association', 'stereotypes': [], 'minOccurs': '0', 'maxOccurs': 'unbounded', 'inverse': 'DiagramObject.Diagram', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': False})
+
+@dataclass(repr=False)
+class DiagramObject(IdentifiedObject):
+    drawingOrder: Optional[int] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': ['Attribute'], 'minOccurs': '0', 'maxOccurs': '1', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+    isPolygon: Optional[bool] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': ['Attribute'], 'minOccurs': '0', 'maxOccurs': '1', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+    offsetX: Optional[float] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': ['Attribute'], 'minOccurs': '0', 'maxOccurs': '1', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+    offsetY: Optional[float] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': ['Attribute'], 'minOccurs': '0', 'maxOccurs': '1', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+    rotation: Optional[float | AngleDegrees] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': ['Attribute'], 'minOccurs': '0', 'maxOccurs': '1', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+    Diagram: Optional[Diagram] = field(default=None, metadata={'type': 'Association', 'stereotypes': ['ByReference'], 'minOccurs': '1', 'maxOccurs': '1', 'inverse': 'Diagram.DiagramElements', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+    DiagramObjectStyle: Optional[DiagramObjectStyle] = field(default=None, metadata={'type': 'Association', 'stereotypes': ['ByReference'], 'minOccurs': '0', 'maxOccurs': '1', 'inverse': 'DiagramObjectStyle.StyledObjects', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+    IdentifiedObject: Optional[IdentifiedObject] = field(default=None, metadata={'type': 'Association', 'stereotypes': ['ByReference'], 'minOccurs': '0', 'maxOccurs': '1', 'inverse': 'IdentifiedObject.DiagramObjects', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+    DiagramObjectPoints: list[DiagramObjectPoint] = field(default_factory=list, metadata={'type': 'Association', 'stereotypes': [], 'minOccurs': '0', 'maxOccurs': 'unbounded', 'inverse': 'DiagramObjectPoint.DiagramObject', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': False})
+    VisibilityLayers: list[VisibilityLayer] = field(default_factory=list, metadata={'type': 'Association', 'stereotypes': [], 'minOccurs': '0', 'maxOccurs': 'unbounded', 'inverse': 'VisibilityLayer.VisibleObjects', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': False})
+
+@dataclass(repr=False)
+class DiagramObjectStyle(IdentifiedObject):
+    StyledObjects: list[DiagramObject] = field(default_factory=list, metadata={'type': 'Association', 'stereotypes': [], 'minOccurs': '0', 'maxOccurs': 'unbounded', 'inverse': 'DiagramObject.DiagramObjectStyle', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': False})
+
+@dataclass(repr=False)
+class DiagramStyle(IdentifiedObject):
+    Diagram: list[Diagram] = field(default_factory=list, metadata={'type': 'Association', 'stereotypes': [], 'minOccurs': '0', 'maxOccurs': 'unbounded', 'inverse': 'Diagram.DiagramStyle', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': False})
+
+@dataclass(repr=False)
+class EnergyArea(IdentifiedObject):
+    ControlArea: Optional[ControlArea] = field(default=None, metadata={'type': 'Association', 'stereotypes': [], 'minOccurs': '0', 'maxOccurs': '1', 'inverse': 'ControlArea.EnergyArea', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': False})
+
+@dataclass(repr=False)
+class EnergySchedulingType(IdentifiedObject):
+    EnergySource: list[EnergySource] = field(default_factory=list, metadata={'type': 'Association', 'stereotypes': [], 'minOccurs': '0', 'maxOccurs': 'unbounded', 'inverse': 'EnergySource.EnergySchedulingType', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': False})
+
+@dataclass(repr=False)
+class FossilFuel(IdentifiedObject):
+    fossilFuelType: Optional[FuelType] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': ['enumeration', 'Attribute'], 'minOccurs': '1', 'maxOccurs': '1', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+    ThermalGeneratingUnit: Optional[ThermalGeneratingUnit] = field(default=None, metadata={'type': 'Association', 'stereotypes': ['ByReference'], 'minOccurs': '1', 'maxOccurs': '1', 'inverse': 'ThermalGeneratingUnit.FossilFuels', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+
+@dataclass(repr=False)
+class GeographicalRegion(IdentifiedObject):
+    Regions: list[SubGeographicalRegion] = field(default_factory=list, metadata={'type': 'Association', 'stereotypes': ['AggregateOf'], 'minOccurs': '0', 'maxOccurs': 'unbounded', 'inverse': 'SubGeographicalRegion.Region', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': False})
+
+@dataclass(repr=False)
+class GrossToNetActivePowerCurve(Curve):
+    GeneratingUnit: Optional[GeneratingUnit] = field(default=None, metadata={'type': 'Association', 'stereotypes': ['OfAggregate', 'ByReference'], 'minOccurs': '1', 'maxOccurs': '1', 'inverse': 'GeneratingUnit.GrossToNetActivePowerCurves', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+
+@dataclass(repr=False)
+class IOPoint(IdentifiedObject):
+    pass
+
+@dataclass(repr=False)
+class Control(IOPoint):
+    controlType: Optional[str] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': [], 'minOccurs': '1', 'maxOccurs': '1', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+    operationInProgress: Optional[bool] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': [], 'minOccurs': '0', 'maxOccurs': '1', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+    timeStamp: Optional[str] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': [], 'minOccurs': '0', 'maxOccurs': '1', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+    unitMultiplier: Optional[UnitMultiplier] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': ['enumeration'], 'minOccurs': '0', 'maxOccurs': '1', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+    unitSymbol: Optional[UnitSymbol] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': ['enumeration'], 'minOccurs': '0', 'maxOccurs': '1', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+    PowerSystemResource: Optional[PowerSystemResource] = field(default=None, metadata={'type': 'Association', 'stereotypes': ['ByReference'], 'minOccurs': '0', 'maxOccurs': '1', 'inverse': 'PowerSystemResource.Controls', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+
+@dataclass(repr=False)
+class AccumulatorReset(Control):
+    AccumulatorValue: Optional[AccumulatorValue] = field(default=None, metadata={'type': 'Association', 'stereotypes': ['ByReference'], 'minOccurs': '1', 'maxOccurs': '1', 'inverse': 'AccumulatorValue.AccumulatorReset', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+
+@dataclass(repr=False)
+class AnalogControl(Control):
+    maxValue: Optional[float] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': [], 'minOccurs': '1', 'maxOccurs': '1', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+    minValue: Optional[float] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': [], 'minOccurs': '1', 'maxOccurs': '1', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+    AnalogValue: Optional[AnalogValue] = field(default=None, metadata={'type': 'Association', 'stereotypes': ['ByReference'], 'minOccurs': '1', 'maxOccurs': '1', 'inverse': 'AnalogValue.AnalogControl', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+
+@dataclass(repr=False)
+class Command(Control):
+    normalValue: Optional[int] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': [], 'minOccurs': '1', 'maxOccurs': '1', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+    value: Optional[int] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': [], 'minOccurs': '1', 'maxOccurs': '1', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+    DiscreteValue: Optional[DiscreteValue] = field(default=None, metadata={'type': 'Association', 'stereotypes': ['ByReference'], 'minOccurs': '1', 'maxOccurs': '1', 'inverse': 'DiscreteValue.Command', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+    ValueAliasSet: Optional[ValueAliasSet] = field(default=None, metadata={'type': 'Association', 'stereotypes': ['ByReference'], 'minOccurs': '0', 'maxOccurs': '1', 'inverse': 'ValueAliasSet.Commands', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+
+@dataclass(repr=False)
+class Limit(IdentifiedObject):
+    pass
+
+@dataclass(repr=False)
+class AccumulatorLimit(Limit):
+    value: Optional[int] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': [], 'minOccurs': '1', 'maxOccurs': '1', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+    LimitSet: Optional[AccumulatorLimitSet] = field(default=None, metadata={'type': 'Association', 'stereotypes': ['ByReference'], 'minOccurs': '1', 'maxOccurs': '1', 'inverse': 'AccumulatorLimitSet.Limits', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+
+@dataclass(repr=False)
+class AnalogLimit(Limit):
+    value: Optional[float] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': [], 'minOccurs': '1', 'maxOccurs': '1', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+    LimitSet: Optional[AnalogLimitSet] = field(default=None, metadata={'type': 'Association', 'stereotypes': ['ByReference'], 'minOccurs': '1', 'maxOccurs': '1', 'inverse': 'AnalogLimitSet.Limits', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+
+@dataclass(repr=False)
+class LimitSet(IdentifiedObject):
+    isPercentageLimits: Optional[bool] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': [], 'minOccurs': '0', 'maxOccurs': '1', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+
+@dataclass(repr=False)
+class AccumulatorLimitSet(LimitSet):
+    Measurements: list[Accumulator] = field(default_factory=list, metadata={'type': 'Association', 'stereotypes': ['ByReference'], 'minOccurs': '1', 'maxOccurs': 'unbounded', 'inverse': 'Accumulator.LimitSets', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+    Limits: list[AccumulatorLimit] = field(default_factory=list, metadata={'type': 'Association', 'stereotypes': ['AggregateOf'], 'minOccurs': '0', 'maxOccurs': 'unbounded', 'inverse': 'AccumulatorLimit.LimitSet', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': False})
+
+@dataclass(repr=False)
+class AnalogLimitSet(LimitSet):
+    Measurements: list[Analog] = field(default_factory=list, metadata={'type': 'Association', 'stereotypes': ['ByReference'], 'minOccurs': '1', 'maxOccurs': 'unbounded', 'inverse': 'Analog.LimitSets', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+    Limits: list[AnalogLimit] = field(default_factory=list, metadata={'type': 'Association', 'stereotypes': ['AggregateOf'], 'minOccurs': '0', 'maxOccurs': 'unbounded', 'inverse': 'AnalogLimit.LimitSet', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': False})
+
+@dataclass(repr=False)
+class LoadArea(EnergyArea):
+    SubLoadAreas: list[SubLoadArea] = field(default_factory=list, metadata={'type': 'Association', 'stereotypes': ['AggregateOf'], 'minOccurs': '0', 'maxOccurs': 'unbounded', 'inverse': 'SubLoadArea.LoadArea', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': False})
+
+@dataclass(repr=False)
+class LoadGroup(IdentifiedObject):
+    SubLoadArea: Optional[SubLoadArea] = field(default=None, metadata={'type': 'Association', 'stereotypes': ['OfAggregate', 'ByReference'], 'minOccurs': '1', 'maxOccurs': '1', 'inverse': 'SubLoadArea.LoadGroups', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+
+@dataclass(repr=False)
+class ConformLoadGroup(LoadGroup):
+    EnergyConsumers: list[ConformLoad] = field(default_factory=list, metadata={'type': 'Association', 'stereotypes': [], 'minOccurs': '0', 'maxOccurs': 'unbounded', 'inverse': 'ConformLoad.LoadGroup', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': False})
+    ConformLoadSchedules: list[ConformLoadSchedule] = field(default_factory=list, metadata={'type': 'Association', 'stereotypes': ['AggregateOf'], 'minOccurs': '0', 'maxOccurs': 'unbounded', 'inverse': 'ConformLoadSchedule.ConformLoadGroup', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': False})
+
+@dataclass(repr=False)
+class LoadResponseCharacteristic(IdentifiedObject):
+    exponentModel: Optional[bool] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': ['Attribute'], 'minOccurs': '1', 'maxOccurs': '1', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+    pConstantCurrent: Optional[float] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': ['Attribute'], 'minOccurs': '0', 'maxOccurs': '1', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+    pConstantImpedance: Optional[float] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': ['Attribute'], 'minOccurs': '0', 'maxOccurs': '1', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+    pConstantPower: Optional[float] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': ['Attribute'], 'minOccurs': '0', 'maxOccurs': '1', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+    pFrequencyExponent: Optional[float] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': ['Attribute'], 'minOccurs': '0', 'maxOccurs': '1', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+    pVoltageExponent: Optional[float] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': ['Attribute'], 'minOccurs': '0', 'maxOccurs': '1', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+    qConstantCurrent: Optional[float] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': ['Attribute'], 'minOccurs': '0', 'maxOccurs': '1', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+    qConstantImpedance: Optional[float] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': ['Attribute'], 'minOccurs': '0', 'maxOccurs': '1', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+    qConstantPower: Optional[float] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': ['Attribute'], 'minOccurs': '0', 'maxOccurs': '1', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+    qFrequencyExponent: Optional[float] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': ['Attribute'], 'minOccurs': '0', 'maxOccurs': '1', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+    qVoltageExponent: Optional[float] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': ['Attribute'], 'minOccurs': '0', 'maxOccurs': '1', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+    EnergyConsumer: list[EnergyConsumer] = field(default_factory=list, metadata={'type': 'Association', 'stereotypes': [], 'minOccurs': '0', 'maxOccurs': 'unbounded', 'inverse': 'EnergyConsumer.LoadResponse', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': False})
+
+@dataclass(repr=False)
+class Location(IdentifiedObject):
+    CoordinateSystem: Optional[CoordinateSystem] = field(default=None, metadata={'type': 'Association', 'stereotypes': ['ByReference'], 'minOccurs': '1', 'maxOccurs': '1', 'inverse': 'CoordinateSystem.Locations', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+    PowerSystemResources: Optional[PowerSystemResource] = field(default=None, metadata={'type': 'Association', 'stereotypes': ['ByReference'], 'minOccurs': '1', 'maxOccurs': '1', 'inverse': 'PowerSystemResource.Location', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+    PositionPoints: list[PositionPoint] = field(default_factory=list, metadata={'type': 'Association', 'stereotypes': [], 'minOccurs': '0', 'maxOccurs': 'unbounded', 'inverse': 'PositionPoint.Location', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': False})
+
+@dataclass(repr=False)
+class Measurement(IdentifiedObject):
+    measurementType: Optional[str] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': [], 'minOccurs': '1', 'maxOccurs': '1', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+    phases: Optional[PhaseCode] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': ['enumeration'], 'minOccurs': '0', 'maxOccurs': '1', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+    unitMultiplier: Optional[UnitMultiplier] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': ['enumeration'], 'minOccurs': '1', 'maxOccurs': '1', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+    unitSymbol: Optional[UnitSymbol] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': ['enumeration'], 'minOccurs': '1', 'maxOccurs': '1', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+    PowerSystemResource: Optional[PowerSystemResource] = field(default=None, metadata={'type': 'Association', 'stereotypes': ['ByReference'], 'minOccurs': '1', 'maxOccurs': '1', 'inverse': 'PowerSystemResource.Measurements', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+    Terminal: Optional[ACDCTerminal] = field(default=None, metadata={'type': 'Association', 'stereotypes': ['ByReference'], 'minOccurs': '0', 'maxOccurs': '1', 'inverse': 'ACDCTerminal.Measurements', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+
+@dataclass(repr=False)
+class Accumulator(Measurement):
+    LimitSets: list[AccumulatorLimitSet] = field(default_factory=list, metadata={'type': 'Association', 'stereotypes': [], 'minOccurs': '0', 'maxOccurs': 'unbounded', 'inverse': 'AccumulatorLimitSet.Measurements', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': False})
+    AccumulatorValues: list[AccumulatorValue] = field(default_factory=list, metadata={'type': 'Association', 'stereotypes': [], 'minOccurs': '0', 'maxOccurs': 'unbounded', 'inverse': 'AccumulatorValue.Accumulator', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': False})
+
+@dataclass(repr=False)
+class Analog(Measurement):
+    positiveFlowIn: Optional[bool] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': [], 'minOccurs': '0', 'maxOccurs': '1', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+    LimitSets: list[AnalogLimitSet] = field(default_factory=list, metadata={'type': 'Association', 'stereotypes': [], 'minOccurs': '0', 'maxOccurs': 'unbounded', 'inverse': 'AnalogLimitSet.Measurements', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': False})
+    AnalogValues: list[AnalogValue] = field(default_factory=list, metadata={'type': 'Association', 'stereotypes': [], 'minOccurs': '0', 'maxOccurs': 'unbounded', 'inverse': 'AnalogValue.Analog', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': False})
+
+@dataclass(repr=False)
+class Discrete(Measurement):
+    ValueAliasSet: Optional[ValueAliasSet] = field(default=None, metadata={'type': 'Association', 'stereotypes': [], 'minOccurs': '0', 'maxOccurs': '1', 'inverse': 'ValueAliasSet.Discretes', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+    DiscreteValues: list[DiscreteValue] = field(default_factory=list, metadata={'type': 'Association', 'stereotypes': [], 'minOccurs': '0', 'maxOccurs': 'unbounded', 'inverse': 'DiscreteValue.Discrete', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': False})
+
+@dataclass(repr=False)
+class MeasurementValue(IOPoint):
+    timeStamp: Optional[str] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': [], 'minOccurs': '0', 'maxOccurs': '1', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+    sensorAccuracy: Optional[float | PerCent] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': [], 'minOccurs': '0', 'maxOccurs': '1', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+    MeasurementValueSource: Optional[MeasurementValueSource] = field(default=None, metadata={'type': 'Association', 'stereotypes': ['ByReference'], 'minOccurs': '1', 'maxOccurs': '1', 'inverse': 'MeasurementValueSource.MeasurementValues', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+    MeasurementValueQuality: Optional[MeasurementValueQuality] = field(default=None, metadata={'type': 'Association', 'stereotypes': ['AggregateOf'], 'minOccurs': '0', 'maxOccurs': '1', 'inverse': 'MeasurementValueQuality.MeasurementValue', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': False})
+
+@dataclass(repr=False)
+class AccumulatorValue(MeasurementValue):
+    Accumulator: Optional[Accumulator] = field(default=None, metadata={'type': 'Association', 'stereotypes': ['ByReference'], 'minOccurs': '1', 'maxOccurs': '1', 'inverse': 'Accumulator.AccumulatorValues', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+    AccumulatorReset: Optional[AccumulatorReset] = field(default=None, metadata={'type': 'Association', 'stereotypes': [], 'minOccurs': '0', 'maxOccurs': '1', 'inverse': 'AccumulatorReset.AccumulatorValue', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': False})
+
+@dataclass(repr=False)
+class AnalogValue(MeasurementValue):
+    Analog: Optional[Analog] = field(default=None, metadata={'type': 'Association', 'stereotypes': ['ByReference'], 'minOccurs': '1', 'maxOccurs': '1', 'inverse': 'Analog.AnalogValues', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+    AnalogControl: Optional[AnalogControl] = field(default=None, metadata={'type': 'Association', 'stereotypes': [], 'minOccurs': '0', 'maxOccurs': '1', 'inverse': 'AnalogControl.AnalogValue', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': False})
+
+@dataclass(repr=False)
+class DiscreteValue(MeasurementValue):
+    Discrete: Optional[Discrete] = field(default=None, metadata={'type': 'Association', 'stereotypes': ['ByReference'], 'minOccurs': '1', 'maxOccurs': '1', 'inverse': 'Discrete.DiscreteValues', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+    Command: Optional[Command] = field(default=None, metadata={'type': 'Association', 'stereotypes': [], 'minOccurs': '0', 'maxOccurs': '1', 'inverse': 'Command.DiscreteValue', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': False})
+
+@dataclass(repr=False)
+class MeasurementValueSource(IdentifiedObject):
+    MeasurementValues: list[MeasurementValue] = field(default_factory=list, metadata={'type': 'Association', 'stereotypes': [], 'minOccurs': '0', 'maxOccurs': 'unbounded', 'inverse': 'MeasurementValue.MeasurementValueSource', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': False})
+
+@dataclass(repr=False)
+class MutualCoupling(IdentifiedObject):
+    b0ch: Optional[float | Susceptance] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': [], 'minOccurs': '1', 'maxOccurs': '1', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+    distance11: Optional[float | Length] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': [], 'minOccurs': '1', 'maxOccurs': '1', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+    distance12: Optional[float | Length] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': [], 'minOccurs': '1', 'maxOccurs': '1', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+    distance21: Optional[float | Length] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': [], 'minOccurs': '1', 'maxOccurs': '1', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+    distance22: Optional[float | Length] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': [], 'minOccurs': '1', 'maxOccurs': '1', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+    g0ch: Optional[float | Conductance] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': [], 'minOccurs': '1', 'maxOccurs': '1', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+    r0: Optional[float | Resistance] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': [], 'minOccurs': '1', 'maxOccurs': '1', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+    x0: Optional[float | Reactance] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': [], 'minOccurs': '1', 'maxOccurs': '1', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+    First_Terminal: Optional[Terminal] = field(default=None, metadata={'type': 'Association', 'stereotypes': ['ByReference'], 'minOccurs': '1', 'maxOccurs': '1', 'inverse': 'Terminal.HasFirstMutualCoupling', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+    Second_Terminal: Optional[Terminal] = field(default=None, metadata={'type': 'Association', 'stereotypes': ['ByReference'], 'minOccurs': '1', 'maxOccurs': '1', 'inverse': 'Terminal.HasSecondMutualCoupling', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+
+@dataclass(repr=False)
+class NonConformLoadGroup(LoadGroup):
+    EnergyConsumers: list[NonConformLoad] = field(default_factory=list, metadata={'type': 'Association', 'stereotypes': [], 'minOccurs': '0', 'maxOccurs': 'unbounded', 'inverse': 'NonConformLoad.LoadGroup', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': False})
+    NonConformLoadSchedules: list[NonConformLoadSchedule] = field(default_factory=list, metadata={'type': 'Association', 'stereotypes': ['AggregateOf'], 'minOccurs': '0', 'maxOccurs': 'unbounded', 'inverse': 'NonConformLoadSchedule.NonConformLoadGroup', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': False})
+
+@dataclass(repr=False)
+class NonlinearShuntCompensatorPoint(Identity):
+    sectionNumber: Optional[int] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': ['Attribute'], 'minOccurs': '1', 'maxOccurs': '1', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+    b: Optional[float | Susceptance] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': ['Attribute'], 'minOccurs': '1', 'maxOccurs': '1', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+    g: Optional[float | Conductance] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': ['Attribute'], 'minOccurs': '1', 'maxOccurs': '1', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+    NonlinearShuntCompensator: Optional[NonlinearShuntCompensator] = field(default=None, metadata={'type': 'Association', 'stereotypes': ['OfAggregate', 'ByReference'], 'minOccurs': '1', 'maxOccurs': '1', 'inverse': 'NonlinearShuntCompensator.NonlinearShuntCompensatorPoints', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+    b0: Optional[float | Susceptance] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': [], 'minOccurs': '1', 'maxOccurs': '1', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+    g0: Optional[float | Conductance] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': [], 'minOccurs': '1', 'maxOccurs': '1', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+
+@dataclass(repr=False)
+class OperationalLimit(IdentifiedObject):
+    OperationalLimitSet: Optional[OperationalLimitSet] = field(default=None, metadata={'type': 'Association', 'stereotypes': ['OfAggregate', 'ByReference'], 'minOccurs': '1', 'maxOccurs': '1', 'inverse': 'OperationalLimitSet.OperationalLimitValue', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+    OperationalLimitType: Optional[OperationalLimitType] = field(default=None, metadata={'type': 'Association', 'stereotypes': ['ByReference'], 'minOccurs': '1', 'maxOccurs': '1', 'inverse': 'OperationalLimitType.OperationalLimit', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+
+@dataclass(repr=False)
+class ActivePowerLimit(OperationalLimit):
+    normalValue: Optional[float | ActivePower] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': ['Attribute'], 'minOccurs': '1', 'maxOccurs': '1', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+    value: Optional[float | ActivePower] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': ['Attribute'], 'minOccurs': '1', 'maxOccurs': '1', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+
+@dataclass(repr=False)
+class ApparentPowerLimit(OperationalLimit):
+    normalValue: Optional[float | ApparentPower] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': ['Attribute'], 'minOccurs': '1', 'maxOccurs': '1', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+    value: Optional[float | ApparentPower] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': ['Attribute'], 'minOccurs': '1', 'maxOccurs': '1', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+
+@dataclass(repr=False)
+class CurrentLimit(OperationalLimit):
+    normalValue: Optional[float | CurrentFlow] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': ['Attribute'], 'minOccurs': '1', 'maxOccurs': '1', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+    value: Optional[float | CurrentFlow] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': ['Attribute'], 'minOccurs': '1', 'maxOccurs': '1', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+
+@dataclass(repr=False)
+class OperationalLimitSet(IdentifiedObject):
+    Equipment: Optional[Equipment] = field(default=None, metadata={'type': 'Association', 'stereotypes': ['ByReference'], 'minOccurs': '0', 'maxOccurs': '1', 'inverse': 'Equipment.OperationalLimitSet', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+    Terminal: Optional[ACDCTerminal] = field(default=None, metadata={'type': 'Association', 'stereotypes': ['ByReference'], 'minOccurs': '1', 'maxOccurs': '1', 'inverse': 'ACDCTerminal.OperationalLimitSet', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+    OperationalLimitValue: list[OperationalLimit] = field(default_factory=list, metadata={'type': 'Association', 'stereotypes': ['AggregateOf'], 'minOccurs': '0', 'maxOccurs': 'unbounded', 'inverse': 'OperationalLimit.OperationalLimitSet', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': False})
+
+@dataclass(repr=False)
+class OperationalLimitType(IdentifiedObject):
+    isInfiniteDuration: Optional[bool] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': ['Attribute'], 'minOccurs': '1', 'maxOccurs': '1', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+    acceptableDuration: Optional[float | Seconds] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': ['Attribute'], 'minOccurs': '0', 'maxOccurs': '1', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+    direction: Optional[OperationalLimitDirectionKind] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': ['enumeration', 'Attribute'], 'minOccurs': '1', 'maxOccurs': '1', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+    kind: Optional[LimitKind] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': ['ShadowExtension', 'European', 'enumeration', 'Attribute'], 'minOccurs': '1', 'maxOccurs': '1', 'namespace': 'http://iec.ch/TC57/CIM100-European#', 'serialize': True})
+    OperationalLimit: list[OperationalLimit] = field(default_factory=list, metadata={'type': 'Association', 'stereotypes': [], 'minOccurs': '0', 'maxOccurs': 'unbounded', 'inverse': 'OperationalLimit.OperationalLimitType', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': False})
+
+@dataclass(repr=False)
+class PhaseTapChangerTable(IdentifiedObject):
+    PhaseTapChangerTablePoint: list[PhaseTapChangerTablePoint] = field(default_factory=list, metadata={'type': 'Association', 'stereotypes': [], 'minOccurs': '0', 'maxOccurs': 'unbounded', 'inverse': 'PhaseTapChangerTablePoint.PhaseTapChangerTable', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': False})
+    PhaseTapChangerTabular: list[PhaseTapChangerTabular] = field(default_factory=list, metadata={'type': 'Association', 'stereotypes': [], 'minOccurs': '0', 'maxOccurs': 'unbounded', 'inverse': 'PhaseTapChangerTabular.PhaseTapChangerTable', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': False})
+
+@dataclass(repr=False)
+class PositionPoint(Identity):
+    sequenceNumber: Optional[int] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': ['Attribute'], 'minOccurs': '0', 'maxOccurs': '1', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+    xPosition: Optional[str] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': ['Attribute'], 'minOccurs': '1', 'maxOccurs': '1', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+    yPosition: Optional[str] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': ['Attribute'], 'minOccurs': '1', 'maxOccurs': '1', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+    zPosition: Optional[str] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': ['Attribute'], 'minOccurs': '0', 'maxOccurs': '1', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+    Location: Optional[Location] = field(default=None, metadata={'type': 'Association', 'stereotypes': ['ByReference'], 'minOccurs': '1', 'maxOccurs': '1', 'inverse': 'Location.PositionPoints', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+
+@dataclass(repr=False)
+class PowerSystemResource(IdentifiedObject):
+    Controls: list[Control] = field(default_factory=list, metadata={'type': 'Association', 'stereotypes': [], 'minOccurs': '0', 'maxOccurs': 'unbounded', 'inverse': 'Control.PowerSystemResource', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': False})
+    Measurements: list[Measurement] = field(default_factory=list, metadata={'type': 'Association', 'stereotypes': ['AggregateOf'], 'minOccurs': '0', 'maxOccurs': 'unbounded', 'inverse': 'Measurement.PowerSystemResource', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': False})
+    Location: Optional[Location] = field(default=None, metadata={'type': 'Association', 'stereotypes': [], 'minOccurs': '0', 'maxOccurs': '1', 'inverse': 'Location.PowerSystemResources', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': False})
+
+@dataclass(repr=False)
+class BoundaryPoint(PowerSystemResource):
+    fromEndIsoCode: Optional[str] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': ['European', 'Attribute'], 'minOccurs': '1', 'maxOccurs': '1', 'namespace': 'http://iec.ch/TC57/CIM100-European#', 'serialize': True})
+    fromEndName: Optional[str] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': ['European', 'Attribute'], 'minOccurs': '1', 'maxOccurs': '1', 'namespace': 'http://iec.ch/TC57/CIM100-European#', 'serialize': True})
+    fromEndNameTso: Optional[str] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': ['European', 'Attribute'], 'minOccurs': '1', 'maxOccurs': '1', 'namespace': 'http://iec.ch/TC57/CIM100-European#', 'serialize': True})
+    isDirectCurrent: Optional[bool] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': ['European', 'Attribute'], 'minOccurs': '0', 'maxOccurs': '1', 'namespace': 'http://iec.ch/TC57/CIM100-European#', 'serialize': True})
+    isExcludedFromAreaInterchange: Optional[bool] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': ['European', 'Attribute'], 'minOccurs': '0', 'maxOccurs': '1', 'namespace': 'http://iec.ch/TC57/CIM100-European#', 'serialize': True})
+    toEndIsoCode: Optional[str] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': ['European', 'Attribute'], 'minOccurs': '1', 'maxOccurs': '1', 'namespace': 'http://iec.ch/TC57/CIM100-European#', 'serialize': True})
+    toEndName: Optional[str] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': ['European', 'Attribute'], 'minOccurs': '1', 'maxOccurs': '1', 'namespace': 'http://iec.ch/TC57/CIM100-European#', 'serialize': True})
+    toEndNameTso: Optional[str] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': ['European', 'Attribute'], 'minOccurs': '1', 'maxOccurs': '1', 'namespace': 'http://iec.ch/TC57/CIM100-European#', 'serialize': True})
+    ConnectivityNode: Optional[ConnectivityNode] = field(default=None, metadata={'type': 'Association', 'stereotypes': ['European'], 'minOccurs': '1', 'maxOccurs': '1', 'inverse': 'ConnectivityNode.BoundaryPoint', 'namespace': 'http://iec.ch/TC57/CIM100-European#', 'serialize': True})
+
+@dataclass(repr=False)
+class CAESPlant(PowerSystemResource):
+    ThermalGeneratingUnit: Optional[ThermalGeneratingUnit] = field(default=None, metadata={'type': 'Association', 'stereotypes': [], 'minOccurs': '0', 'maxOccurs': '1', 'inverse': 'ThermalGeneratingUnit.CAESPlant', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': False})
+
+@dataclass(repr=False)
+class CogenerationPlant(PowerSystemResource):
+    ThermalGeneratingUnits: list[ThermalGeneratingUnit] = field(default_factory=list, metadata={'type': 'Association', 'stereotypes': [], 'minOccurs': '0', 'maxOccurs': 'unbounded', 'inverse': 'ThermalGeneratingUnit.CogenerationPlant', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': False})
+
+@dataclass(repr=False)
+class CombinedCyclePlant(PowerSystemResource):
+    ThermalGeneratingUnits: list[ThermalGeneratingUnit] = field(default_factory=list, metadata={'type': 'Association', 'stereotypes': [], 'minOccurs': '0', 'maxOccurs': 'unbounded', 'inverse': 'ThermalGeneratingUnit.CombinedCyclePlant', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': False})
+
+@dataclass(repr=False)
+class ConnectivityNodeContainer(PowerSystemResource):
+    ConnectivityNodes: list[ConnectivityNode] = field(default_factory=list, metadata={'type': 'Association', 'stereotypes': [], 'minOccurs': '0', 'maxOccurs': 'unbounded', 'inverse': 'ConnectivityNode.ConnectivityNodeContainer', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': False})
+    TopologicalNode: list[TopologicalNode] = field(default_factory=list, metadata={'type': 'Association', 'stereotypes': [], 'minOccurs': '0', 'maxOccurs': 'unbounded', 'inverse': 'TopologicalNode.ConnectivityNodeContainer', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': False})
+
+@dataclass(repr=False)
+class ControlArea(PowerSystemResource):
+    type: Optional[ControlAreaTypeKind] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': ['enumeration', 'Attribute'], 'minOccurs': '1', 'maxOccurs': '1', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+    EnergyArea: Optional[EnergyArea] = field(default=None, metadata={'type': 'Association', 'stereotypes': ['ByReference'], 'minOccurs': '1', 'maxOccurs': '1', 'inverse': 'EnergyArea.ControlArea', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+    ControlAreaGeneratingUnit: list[ControlAreaGeneratingUnit] = field(default_factory=list, metadata={'type': 'Association', 'stereotypes': ['AggregateOf'], 'minOccurs': '0', 'maxOccurs': 'unbounded', 'inverse': 'ControlAreaGeneratingUnit.ControlArea', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': False})
+    TieFlow: list[TieFlow] = field(default_factory=list, metadata={'type': 'Association', 'stereotypes': ['AggregateOf'], 'minOccurs': '0', 'maxOccurs': 'unbounded', 'inverse': 'TieFlow.ControlArea', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': False})
+    netInterchange: Optional[float | ActivePower] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': ['Attribute'], 'minOccurs': '1', 'maxOccurs': '1', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+    pTolerance: Optional[float | ActivePower] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': ['Attribute'], 'minOccurs': '0', 'maxOccurs': '1', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+
+@dataclass(repr=False)
+class Equipment(PowerSystemResource):
+    aggregate: Optional[bool] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': ['Attribute'], 'minOccurs': '0', 'maxOccurs': '1', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+    normallyInService: Optional[bool] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': ['Attribute'], 'minOccurs': '0', 'maxOccurs': '1', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+    EquipmentContainer: Optional[EquipmentContainer] = field(default=None, metadata={'type': 'Association', 'stereotypes': ['OfAggregate', 'ByReference'], 'minOccurs': '0', 'maxOccurs': '1', 'inverse': 'EquipmentContainer.Equipments', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+    OperationalLimitSet: list[OperationalLimitSet] = field(default_factory=list, metadata={'type': 'Association', 'stereotypes': [], 'minOccurs': '0', 'maxOccurs': 'unbounded', 'inverse': 'OperationalLimitSet.Equipment', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': False})
+    inService: Optional[bool] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': ['Attribute'], 'minOccurs': '1', 'maxOccurs': '1', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+
+@dataclass(repr=False)
+class AuxiliaryEquipment(Equipment):
+    Terminal: Optional[Terminal] = field(default=None, metadata={'type': 'Association', 'stereotypes': ['ByReference'], 'minOccurs': '1', 'maxOccurs': '1', 'inverse': 'Terminal.AuxiliaryEquipment', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+
+@dataclass(repr=False)
+class ConductingEquipment(Equipment):
+    BaseVoltage: Optional[BaseVoltage] = field(default=None, metadata={'type': 'Association', 'stereotypes': ['ByReference'], 'minOccurs': '0', 'maxOccurs': '1', 'inverse': 'BaseVoltage.ConductingEquipment', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+    Terminals: list[Terminal] = field(default_factory=list, metadata={'type': 'Association', 'stereotypes': [], 'minOccurs': '0', 'maxOccurs': 'unbounded', 'inverse': 'Terminal.ConductingEquipment', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': False})
+    SvStatus: list[SvStatus] = field(default_factory=list, metadata={'type': 'Association', 'stereotypes': [], 'minOccurs': '0', 'maxOccurs': 'unbounded', 'inverse': 'SvStatus.ConductingEquipment', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': False})
+
+@dataclass(repr=False)
+class ACDCConverter(ConductingEquipment):
+    numberOfValves: Optional[int] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': ['Attribute'], 'minOccurs': '0', 'maxOccurs': '1', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+    baseS: Optional[float | ApparentPower] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': ['Attribute'], 'minOccurs': '0', 'maxOccurs': '1', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+    idleLoss: Optional[float | ActivePower] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': ['Attribute'], 'minOccurs': '0', 'maxOccurs': '1', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+    maxP: Optional[float | ActivePower] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': ['Attribute'], 'minOccurs': '0', 'maxOccurs': '1', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+    maxUdc: Optional[float | Voltage] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': ['Attribute'], 'minOccurs': '0', 'maxOccurs': '1', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+    minP: Optional[float | ActivePower] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': ['Attribute'], 'minOccurs': '0', 'maxOccurs': '1', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+    minUdc: Optional[float | Voltage] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': ['Attribute'], 'minOccurs': '0', 'maxOccurs': '1', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+    ratedUdc: Optional[float | Voltage] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': ['Attribute'], 'minOccurs': '0', 'maxOccurs': '1', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+    resistiveLoss: Optional[float | Resistance] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': ['Attribute'], 'minOccurs': '0', 'maxOccurs': '1', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+    switchingLoss: Optional[float | ActivePowerPerCurrentFlow] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': ['Attribute'], 'minOccurs': '0', 'maxOccurs': '1', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+    valveU0: Optional[float | Voltage] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': ['Attribute'], 'minOccurs': '0', 'maxOccurs': '1', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+    PccTerminal: Optional[Terminal] = field(default=None, metadata={'type': 'Association', 'stereotypes': ['ByReference'], 'minOccurs': '0', 'maxOccurs': '1', 'inverse': 'Terminal.ConverterDCSides', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+    DCTerminals: list[ACDCConverterDCTerminal] = field(default_factory=list, metadata={'type': 'Association', 'stereotypes': [], 'minOccurs': '0', 'maxOccurs': 'unbounded', 'inverse': 'ACDCConverterDCTerminal.DCConductingEquipment', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': False})
+    p: Optional[float | ActivePower] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': ['Attribute'], 'minOccurs': '1', 'maxOccurs': '1', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+    q: Optional[float | ReactivePower] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': ['Attribute'], 'minOccurs': '1', 'maxOccurs': '1', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+    targetPpcc: Optional[float | ActivePower] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': ['Attribute'], 'minOccurs': '0', 'maxOccurs': '1', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+    targetUdc: Optional[float | Voltage] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': ['Attribute'], 'minOccurs': '0', 'maxOccurs': '1', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+    idc: Optional[float | CurrentFlow] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': ['Attribute'], 'minOccurs': '1', 'maxOccurs': '1', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+    poleLossP: Optional[float | ActivePower] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': ['Attribute'], 'minOccurs': '1', 'maxOccurs': '1', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+    uc: Optional[float | Voltage] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': ['Attribute'], 'minOccurs': '1', 'maxOccurs': '1', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+    udc: Optional[float | Voltage] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': ['Attribute'], 'minOccurs': '1', 'maxOccurs': '1', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+
+@dataclass(repr=False)
+class Clamp(ConductingEquipment):
+    lengthFromTerminal1: Optional[float | Length] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': ['Attribute'], 'minOccurs': '0', 'maxOccurs': '1', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+    ACLineSegment: Optional[ACLineSegment] = field(default=None, metadata={'type': 'Association', 'stereotypes': ['ByReference'], 'minOccurs': '1', 'maxOccurs': '1', 'inverse': 'ACLineSegment.Clamp', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+
+@dataclass(repr=False)
+class Conductor(ConductingEquipment):
+    length: Optional[float | Length] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': ['Attribute'], 'minOccurs': '0', 'maxOccurs': '1', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+
+@dataclass(repr=False)
+class ACLineSegment(Conductor):
+    bch: Optional[float | Susceptance] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': ['Attribute'], 'minOccurs': '1', 'maxOccurs': '1', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+    gch: Optional[float | Conductance] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': ['Attribute'], 'minOccurs': '0', 'maxOccurs': '1', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+    r: Optional[float | Resistance] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': ['Attribute'], 'minOccurs': '1', 'maxOccurs': '1', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+    x: Optional[float | Reactance] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': ['Attribute'], 'minOccurs': '1', 'maxOccurs': '1', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+    Clamp: list[Clamp] = field(default_factory=list, metadata={'type': 'Association', 'stereotypes': [], 'minOccurs': '0', 'maxOccurs': 'unbounded', 'inverse': 'Clamp.ACLineSegment', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': False})
+    Cut: list[Cut] = field(default_factory=list, metadata={'type': 'Association', 'stereotypes': [], 'minOccurs': '0', 'maxOccurs': 'unbounded', 'inverse': 'Cut.ACLineSegment', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': False})
+    b0ch: Optional[float | Susceptance] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': [], 'minOccurs': '1', 'maxOccurs': '1', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+    g0ch: Optional[float | Conductance] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': [], 'minOccurs': '1', 'maxOccurs': '1', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+    r0: Optional[float | Resistance] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': [], 'minOccurs': '1', 'maxOccurs': '1', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+    shortCircuitEndTemperature: Optional[float | Temperature] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': [], 'minOccurs': '1', 'maxOccurs': '1', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+    x0: Optional[float | Reactance] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': [], 'minOccurs': '1', 'maxOccurs': '1', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+
+@dataclass(repr=False)
+class Connector(ConductingEquipment):
+    pass
+
+@dataclass(repr=False)
+class BusbarSection(Connector):
+    ipMax: Optional[float | CurrentFlow] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': [], 'minOccurs': '0', 'maxOccurs': '1', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+
+@dataclass(repr=False)
+class CsConverter(ACDCConverter):
+    maxAlpha: Optional[float | AngleDegrees] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': ['Attribute'], 'minOccurs': '0', 'maxOccurs': '1', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+    maxGamma: Optional[float | AngleDegrees] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': ['Attribute'], 'minOccurs': '0', 'maxOccurs': '1', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+    maxIdc: Optional[float | CurrentFlow] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': ['Attribute'], 'minOccurs': '0', 'maxOccurs': '1', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+    minAlpha: Optional[float | AngleDegrees] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': ['Attribute'], 'minOccurs': '0', 'maxOccurs': '1', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+    minGamma: Optional[float | AngleDegrees] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': ['Attribute'], 'minOccurs': '0', 'maxOccurs': '1', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+    minIdc: Optional[float | CurrentFlow] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': ['Attribute'], 'minOccurs': '0', 'maxOccurs': '1', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+    ratedIdc: Optional[float | CurrentFlow] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': ['Attribute'], 'minOccurs': '0', 'maxOccurs': '1', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+    operatingMode: Optional[CsOperatingModeKind] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': ['enumeration'], 'minOccurs': '1', 'maxOccurs': '1', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+    pPccControl: Optional[CsPpccControlKind] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': ['enumeration'], 'minOccurs': '1', 'maxOccurs': '1', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+    targetAlpha: Optional[float | AngleDegrees] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': ['Attribute'], 'minOccurs': '0', 'maxOccurs': '1', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+    targetGamma: Optional[float | AngleDegrees] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': ['Attribute'], 'minOccurs': '0', 'maxOccurs': '1', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+    targetIdc: Optional[float | CurrentFlow] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': ['Attribute'], 'minOccurs': '0', 'maxOccurs': '1', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+    alpha: Optional[float | AngleDegrees] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': ['Attribute'], 'minOccurs': '1', 'maxOccurs': '1', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+    gamma: Optional[float | AngleDegrees] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': ['Attribute'], 'minOccurs': '1', 'maxOccurs': '1', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+
+@dataclass(repr=False)
+class DCConductingEquipment(Equipment):
+    ratedUdc: Optional[float | Voltage] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': ['Attribute'], 'minOccurs': '1', 'maxOccurs': '1', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+    DCTerminals: list[DCTerminal] = field(default_factory=list, metadata={'type': 'Association', 'stereotypes': [], 'minOccurs': '0', 'maxOccurs': 'unbounded', 'inverse': 'DCTerminal.DCConductingEquipment', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': False})
+
+@dataclass(repr=False)
+class DCBusbar(DCConductingEquipment):
+    pass
+
+@dataclass(repr=False)
+class DCChopper(DCConductingEquipment):
+    pass
+
+@dataclass(repr=False)
+class DCGround(DCConductingEquipment):
+    inductance: Optional[float | Inductance] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': ['Attribute'], 'minOccurs': '0', 'maxOccurs': '1', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+    r: Optional[float | Resistance] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': ['Attribute'], 'minOccurs': '0', 'maxOccurs': '1', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+
+@dataclass(repr=False)
+class DCLineSegment(DCConductingEquipment):
+    capacitance: Optional[float | Capacitance] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': ['Attribute'], 'minOccurs': '1', 'maxOccurs': '1', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+    inductance: Optional[float | Inductance] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': ['Attribute'], 'minOccurs': '1', 'maxOccurs': '1', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+    length: Optional[float | Length] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': ['Attribute'], 'minOccurs': '0', 'maxOccurs': '1', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+    resistance: Optional[float | Resistance] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': ['Attribute'], 'minOccurs': '1', 'maxOccurs': '1', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+
+@dataclass(repr=False)
+class DCSeriesDevice(DCConductingEquipment):
+    inductance: Optional[float | Inductance] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': ['Attribute'], 'minOccurs': '1', 'maxOccurs': '1', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+    resistance: Optional[float | Resistance] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': ['Attribute'], 'minOccurs': '1', 'maxOccurs': '1', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+
+@dataclass(repr=False)
+class DCShunt(DCConductingEquipment):
+    capacitance: Optional[float | Capacitance] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': ['Attribute'], 'minOccurs': '1', 'maxOccurs': '1', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+    resistance: Optional[float | Resistance] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': ['Attribute'], 'minOccurs': '1', 'maxOccurs': '1', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+
+@dataclass(repr=False)
+class DCSwitch(DCConductingEquipment):
+    pass
+
+@dataclass(repr=False)
+class DCBreaker(DCSwitch):
+    pass
+
+@dataclass(repr=False)
+class DCDisconnector(DCSwitch):
+    pass
+
+@dataclass(repr=False)
+class EarthFaultCompensator(ConductingEquipment):
+    r: Optional[float | Resistance] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': [], 'minOccurs': '0', 'maxOccurs': '1', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+
+@dataclass(repr=False)
+class EnergyConnection(ConductingEquipment):
+    pass
+
+@dataclass(repr=False)
+class EnergyConsumer(EnergyConnection):
+    pfixed: Optional[float | ActivePower] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': ['Attribute'], 'minOccurs': '0', 'maxOccurs': '1', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+    pfixedPct: Optional[float | PerCent] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': ['Attribute'], 'minOccurs': '0', 'maxOccurs': '1', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+    qfixed: Optional[float | ReactivePower] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': ['Attribute'], 'minOccurs': '0', 'maxOccurs': '1', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+    qfixedPct: Optional[float | PerCent] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': ['Attribute'], 'minOccurs': '0', 'maxOccurs': '1', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+    LoadResponse: Optional[LoadResponseCharacteristic] = field(default=None, metadata={'type': 'Association', 'stereotypes': ['ByReference'], 'minOccurs': '0', 'maxOccurs': '1', 'inverse': 'LoadResponseCharacteristic.EnergyConsumer', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+    p: Optional[float | ActivePower] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': ['Attribute'], 'minOccurs': '1', 'maxOccurs': '1', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+    q: Optional[float | ReactivePower] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': ['Attribute'], 'minOccurs': '1', 'maxOccurs': '1', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+
+@dataclass(repr=False)
+class ConformLoad(EnergyConsumer):
+    LoadGroup: Optional[ConformLoadGroup] = field(default=None, metadata={'type': 'Association', 'stereotypes': [], 'minOccurs': '1', 'maxOccurs': '1', 'inverse': 'ConformLoadGroup.EnergyConsumers', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+
+@dataclass(repr=False)
+class EnergySource(EnergyConnection):
+    nominalVoltage: Optional[float | Voltage] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': ['Attribute'], 'minOccurs': '0', 'maxOccurs': '1', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+    pMax: Optional[float | ActivePower] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': ['Attribute'], 'minOccurs': '0', 'maxOccurs': '1', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+    pMin: Optional[float | ActivePower] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': ['Attribute'], 'minOccurs': '0', 'maxOccurs': '1', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+    EnergySchedulingType: Optional[EnergySchedulingType] = field(default=None, metadata={'type': 'Association', 'stereotypes': ['ByReference'], 'minOccurs': '0', 'maxOccurs': '1', 'inverse': 'EnergySchedulingType.EnergySource', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+    r: Optional[float | Resistance] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': [], 'minOccurs': '0', 'maxOccurs': '1', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+    r0: Optional[float | Resistance] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': [], 'minOccurs': '0', 'maxOccurs': '1', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+    rn: Optional[float | Resistance] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': [], 'minOccurs': '0', 'maxOccurs': '1', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+    x: Optional[float | Reactance] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': [], 'minOccurs': '0', 'maxOccurs': '1', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+    x0: Optional[float | Reactance] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': [], 'minOccurs': '0', 'maxOccurs': '1', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+    xn: Optional[float | Reactance] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': [], 'minOccurs': '0', 'maxOccurs': '1', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+    activePower: Optional[float | ActivePower] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': ['Attribute'], 'minOccurs': '1', 'maxOccurs': '1', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+    reactivePower: Optional[float | ReactivePower] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': ['Attribute'], 'minOccurs': '1', 'maxOccurs': '1', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+    voltageAngle: Optional[float | AngleRadians] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': ['Attribute'], 'minOccurs': '0', 'maxOccurs': '1', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+    voltageMagnitude: Optional[float | Voltage] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': ['Attribute'], 'minOccurs': '0', 'maxOccurs': '1', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+
+@dataclass(repr=False)
+class EquipmentContainer(ConnectivityNodeContainer):
+    Equipments: list[Equipment] = field(default_factory=list, metadata={'type': 'Association', 'stereotypes': ['AggregateOf'], 'minOccurs': '0', 'maxOccurs': 'unbounded', 'inverse': 'Equipment.EquipmentContainer', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': False})
+
+@dataclass(repr=False)
+class Bay(EquipmentContainer):
+    VoltageLevel: Optional[VoltageLevel] = field(default=None, metadata={'type': 'Association', 'stereotypes': ['OfAggregate', 'ByReference'], 'minOccurs': '1', 'maxOccurs': '1', 'inverse': 'VoltageLevel.Bays', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+
+@dataclass(repr=False)
+class DCEquipmentContainer(EquipmentContainer):
+    DCNodes: list[DCNode] = field(default_factory=list, metadata={'type': 'Association', 'stereotypes': [], 'minOccurs': '0', 'maxOccurs': 'unbounded', 'inverse': 'DCNode.DCEquipmentContainer', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': False})
+    DCTopologicalNode: list[DCTopologicalNode] = field(default_factory=list, metadata={'type': 'Association', 'stereotypes': [], 'minOccurs': '0', 'maxOccurs': 'unbounded', 'inverse': 'DCTopologicalNode.DCEquipmentContainer', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': False})
+
+@dataclass(repr=False)
+class DCConverterUnit(DCEquipmentContainer):
+    operationMode: Optional[DCConverterOperatingModeKind] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': ['enumeration', 'Attribute'], 'minOccurs': '1', 'maxOccurs': '1', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+    Substation: Optional[Substation] = field(default=None, metadata={'type': 'Association', 'stereotypes': ['OfAggregate', 'ByReference'], 'minOccurs': '0', 'maxOccurs': '1', 'inverse': 'Substation.DCConverterUnit', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+
+@dataclass(repr=False)
+class DCLine(DCEquipmentContainer):
+    Region: Optional[SubGeographicalRegion] = field(default=None, metadata={'type': 'Association', 'stereotypes': ['ByReference'], 'minOccurs': '0', 'maxOccurs': '1', 'inverse': 'SubGeographicalRegion.DCLines', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+
+@dataclass(repr=False)
+class EquivalentEquipment(ConductingEquipment):
+    EquivalentNetwork: Optional[EquivalentNetwork] = field(default=None, metadata={'type': 'Association', 'stereotypes': ['OfAggregate', 'ByReference'], 'minOccurs': '0', 'maxOccurs': '1', 'inverse': 'EquivalentNetwork.EquivalentEquipments', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+
+@dataclass(repr=False)
+class EquivalentBranch(EquivalentEquipment):
+    r: Optional[float | Resistance] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': ['Attribute'], 'minOccurs': '1', 'maxOccurs': '1', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+    r21: Optional[float | Resistance] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': ['Attribute'], 'minOccurs': '0', 'maxOccurs': '1', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+    x: Optional[float | Reactance] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': ['Attribute'], 'minOccurs': '1', 'maxOccurs': '1', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+    x21: Optional[float | Reactance] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': ['Attribute'], 'minOccurs': '0', 'maxOccurs': '1', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+    negativeR12: Optional[float | Resistance] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': [], 'minOccurs': '1', 'maxOccurs': '1', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+    negativeR21: Optional[float | Resistance] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': [], 'minOccurs': '1', 'maxOccurs': '1', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+    negativeX12: Optional[float | Reactance] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': [], 'minOccurs': '1', 'maxOccurs': '1', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+    negativeX21: Optional[float | Reactance] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': [], 'minOccurs': '1', 'maxOccurs': '1', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+    positiveR12: Optional[float | Resistance] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': [], 'minOccurs': '1', 'maxOccurs': '1', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+    positiveR21: Optional[float | Resistance] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': [], 'minOccurs': '1', 'maxOccurs': '1', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+    positiveX12: Optional[float | Reactance] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': [], 'minOccurs': '1', 'maxOccurs': '1', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+    positiveX21: Optional[float | Reactance] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': [], 'minOccurs': '1', 'maxOccurs': '1', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+    zeroR12: Optional[float | Resistance] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': [], 'minOccurs': '1', 'maxOccurs': '1', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+    zeroR21: Optional[float | Resistance] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': [], 'minOccurs': '1', 'maxOccurs': '1', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+    zeroX12: Optional[float | Reactance] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': [], 'minOccurs': '1', 'maxOccurs': '1', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+    zeroX21: Optional[float | Reactance] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': [], 'minOccurs': '1', 'maxOccurs': '1', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+
+@dataclass(repr=False)
+class EquivalentInjection(EquivalentEquipment):
+    regulationCapability: Optional[bool] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': ['Attribute'], 'minOccurs': '1', 'maxOccurs': '1', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+    maxP: Optional[float | ActivePower] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': ['Attribute'], 'minOccurs': '0', 'maxOccurs': '1', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+    maxQ: Optional[float | ReactivePower] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': ['Attribute'], 'minOccurs': '0', 'maxOccurs': '1', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+    minP: Optional[float | ActivePower] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': ['Attribute'], 'minOccurs': '0', 'maxOccurs': '1', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+    minQ: Optional[float | ReactivePower] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': ['Attribute'], 'minOccurs': '0', 'maxOccurs': '1', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+    ReactiveCapabilityCurve: Optional[ReactiveCapabilityCurve] = field(default=None, metadata={'type': 'Association', 'stereotypes': ['ShadowExtension', 'ByReference'], 'minOccurs': '0', 'maxOccurs': '1', 'inverse': 'ReactiveCapabilityCurve.EquivalentInjection', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+    r: Optional[float | Resistance] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': [], 'minOccurs': '1', 'maxOccurs': '1', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+    r0: Optional[float | Resistance] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': [], 'minOccurs': '1', 'maxOccurs': '1', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+    r2: Optional[float | Resistance] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': [], 'minOccurs': '1', 'maxOccurs': '1', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+    x: Optional[float | Reactance] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': [], 'minOccurs': '1', 'maxOccurs': '1', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+    x0: Optional[float | Reactance] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': [], 'minOccurs': '1', 'maxOccurs': '1', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+    x2: Optional[float | Reactance] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': [], 'minOccurs': '1', 'maxOccurs': '1', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+    regulationStatus: Optional[bool] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': ['Attribute'], 'minOccurs': '0', 'maxOccurs': '1', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+    p: Optional[float | ActivePower] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': ['Attribute'], 'minOccurs': '1', 'maxOccurs': '1', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+    q: Optional[float | ReactivePower] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': ['Attribute'], 'minOccurs': '1', 'maxOccurs': '1', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+    regulationTarget: Optional[float | Voltage] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': ['Attribute'], 'minOccurs': '0', 'maxOccurs': '1', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+
+@dataclass(repr=False)
+class EquivalentNetwork(ConnectivityNodeContainer):
+    EquivalentEquipments: list[EquivalentEquipment] = field(default_factory=list, metadata={'type': 'Association', 'stereotypes': ['AggregateOf'], 'minOccurs': '0', 'maxOccurs': 'unbounded', 'inverse': 'EquivalentEquipment.EquivalentNetwork', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': False})
+
+@dataclass(repr=False)
+class EquivalentShunt(EquivalentEquipment):
+    b: Optional[float | Susceptance] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': ['Attribute'], 'minOccurs': '1', 'maxOccurs': '1', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+    g: Optional[float | Conductance] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': ['Attribute'], 'minOccurs': '1', 'maxOccurs': '1', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+
+@dataclass(repr=False)
+class FaultIndicator(AuxiliaryEquipment):
+    pass
+
+@dataclass(repr=False)
+class GeneratingUnit(Equipment):
+    longPF: Optional[float] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': ['Attribute'], 'minOccurs': '0', 'maxOccurs': '1', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+    shortPF: Optional[float] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': ['Attribute'], 'minOccurs': '0', 'maxOccurs': '1', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+    genControlSource: Optional[GeneratorControlSource] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': ['enumeration', 'Attribute'], 'minOccurs': '0', 'maxOccurs': '1', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+    governorSCD: Optional[float | PerCent] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': ['Attribute'], 'minOccurs': '0', 'maxOccurs': '1', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+    maximumAllowableSpinningReserve: Optional[float | ActivePower] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': ['Attribute'], 'minOccurs': '0', 'maxOccurs': '1', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+    maxOperatingP: Optional[float | ActivePower] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': ['Attribute'], 'minOccurs': '1', 'maxOccurs': '1', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+    minOperatingP: Optional[float | ActivePower] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': ['Attribute'], 'minOccurs': '1', 'maxOccurs': '1', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+    nominalP: Optional[float | ActivePower] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': ['Attribute'], 'minOccurs': '0', 'maxOccurs': '1', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+    ratedGrossMaxP: Optional[float | ActivePower] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': ['Attribute'], 'minOccurs': '0', 'maxOccurs': '1', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+    ratedGrossMinP: Optional[float | ActivePower] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': ['Attribute'], 'minOccurs': '0', 'maxOccurs': '1', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+    ratedNetMaxP: Optional[float | ActivePower] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': ['Attribute'], 'minOccurs': '0', 'maxOccurs': '1', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+    startupCost: Optional[Money] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': ['Attribute'], 'minOccurs': '0', 'maxOccurs': '1', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+    startupTime: Optional[float | Seconds] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': ['Attribute'], 'minOccurs': '0', 'maxOccurs': '1', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+    totalEfficiency: Optional[float | PerCent] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': ['Attribute'], 'minOccurs': '0', 'maxOccurs': '1', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+    variableCost: Optional[Money] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': ['Attribute'], 'minOccurs': '0', 'maxOccurs': '1', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+    ControlAreaGeneratingUnit: list[ControlAreaGeneratingUnit] = field(default_factory=list, metadata={'type': 'Association', 'stereotypes': [], 'minOccurs': '0', 'maxOccurs': 'unbounded', 'inverse': 'ControlAreaGeneratingUnit.GeneratingUnit', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': False})
+    GrossToNetActivePowerCurves: list[GrossToNetActivePowerCurve] = field(default_factory=list, metadata={'type': 'Association', 'stereotypes': ['AggregateOf'], 'minOccurs': '0', 'maxOccurs': 'unbounded', 'inverse': 'GrossToNetActivePowerCurve.GeneratingUnit', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': False})
+    RotatingMachine: list[RotatingMachine] = field(default_factory=list, metadata={'type': 'Association', 'stereotypes': [], 'minOccurs': '0', 'maxOccurs': 'unbounded', 'inverse': 'RotatingMachine.GeneratingUnit', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': False})
+    normalPF: Optional[float] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': ['Attribute'], 'minOccurs': '1', 'maxOccurs': '1', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+
+@dataclass(repr=False)
+class Ground(ConductingEquipment):
+    pass
+
+@dataclass(repr=False)
+class GroundingImpedance(EarthFaultCompensator):
+    x: Optional[float | Reactance] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': [], 'minOccurs': '1', 'maxOccurs': '1', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+
+@dataclass(repr=False)
+class HydroGeneratingUnit(GeneratingUnit):
+    dropHeight: Optional[float | Length] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': ['Attribute'], 'minOccurs': '0', 'maxOccurs': '1', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+    energyConversionCapability: Optional[HydroEnergyConversionKind] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': ['enumeration', 'Attribute'], 'minOccurs': '0', 'maxOccurs': '1', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+    turbineType: Optional[HydroTurbineKind] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': ['enumeration', 'Attribute'], 'minOccurs': '0', 'maxOccurs': '1', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+    HydroPowerPlant: Optional[HydroPowerPlant] = field(default=None, metadata={'type': 'Association', 'stereotypes': ['OfAggregate', 'ByReference'], 'minOccurs': '0', 'maxOccurs': '1', 'inverse': 'HydroPowerPlant.HydroGeneratingUnits', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+
+@dataclass(repr=False)
+class HydroPowerPlant(PowerSystemResource):
+    hydroPlantStorageType: Optional[HydroPlantStorageKind] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': ['enumeration', 'Attribute'], 'minOccurs': '1', 'maxOccurs': '1', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+    HydroGeneratingUnits: list[HydroGeneratingUnit] = field(default_factory=list, metadata={'type': 'Association', 'stereotypes': ['AggregateOf'], 'minOccurs': '0', 'maxOccurs': 'unbounded', 'inverse': 'HydroGeneratingUnit.HydroPowerPlant', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': False})
+    HydroPumps: list[HydroPump] = field(default_factory=list, metadata={'type': 'Association', 'stereotypes': ['AggregateOf'], 'minOccurs': '0', 'maxOccurs': 'unbounded', 'inverse': 'HydroPump.HydroPowerPlant', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': False})
+
+@dataclass(repr=False)
+class HydroPump(Equipment):
+    HydroPowerPlant: Optional[HydroPowerPlant] = field(default=None, metadata={'type': 'Association', 'stereotypes': ['OfAggregate', 'ByReference'], 'minOccurs': '0', 'maxOccurs': '1', 'inverse': 'HydroPowerPlant.HydroPumps', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+    RotatingMachine: Optional[RotatingMachine] = field(default=None, metadata={'type': 'Association', 'stereotypes': ['ByReference'], 'minOccurs': '1', 'maxOccurs': '1', 'inverse': 'RotatingMachine.HydroPump', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+
+@dataclass(repr=False)
+class Junction(Connector):
+    pass
+
+@dataclass(repr=False)
+class Line(EquipmentContainer):
+    Region: Optional[SubGeographicalRegion] = field(default=None, metadata={'type': 'Association', 'stereotypes': ['OfAggregate', 'ByReference'], 'minOccurs': '0', 'maxOccurs': '1', 'inverse': 'SubGeographicalRegion.Lines', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+
+@dataclass(repr=False)
+class NonConformLoad(EnergyConsumer):
+    LoadGroup: Optional[NonConformLoadGroup] = field(default=None, metadata={'type': 'Association', 'stereotypes': ['ByReference'], 'minOccurs': '1', 'maxOccurs': '1', 'inverse': 'NonConformLoadGroup.EnergyConsumers', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+
+@dataclass(repr=False)
+class NuclearGeneratingUnit(GeneratingUnit):
+    pass
+
+@dataclass(repr=False)
+class PetersenCoil(EarthFaultCompensator):
+    mode: Optional[PetersenCoilModeKind] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': ['enumeration', 'ByReference'], 'minOccurs': '1', 'maxOccurs': '1', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+    nominalU: Optional[float | Voltage] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': [], 'minOccurs': '1', 'maxOccurs': '1', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+    offsetCurrent: Optional[float | CurrentFlow] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': [], 'minOccurs': '0', 'maxOccurs': '1', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+    positionCurrent: Optional[float | CurrentFlow] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': [], 'minOccurs': '0', 'maxOccurs': '1', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+    xGroundMax: Optional[float | Reactance] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': [], 'minOccurs': '1', 'maxOccurs': '1', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+    xGroundMin: Optional[float | Reactance] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': [], 'minOccurs': '1', 'maxOccurs': '1', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+    xGroundNominal: Optional[float | Reactance] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': [], 'minOccurs': '1', 'maxOccurs': '1', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+
+@dataclass(repr=False)
+class PowerElectronicsUnit(Equipment):
+    maxP: Optional[float | ActivePower] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': ['Attribute'], 'minOccurs': '0', 'maxOccurs': '1', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+    minP: Optional[float | ActivePower] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': ['Attribute'], 'minOccurs': '0', 'maxOccurs': '1', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+    PowerElectronicsConnection: Optional[PowerElectronicsConnection] = field(default=None, metadata={'type': 'Association', 'stereotypes': [], 'minOccurs': '0', 'maxOccurs': '1', 'inverse': 'PowerElectronicsConnection.PowerElectronicsUnit', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': False})
+
+@dataclass(repr=False)
+class BatteryUnit(PowerElectronicsUnit):
+    ratedE: Optional[float | RealEnergy] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': ['Attribute'], 'minOccurs': '1', 'maxOccurs': '1', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+    batteryState: Optional[BatteryStateKind] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': ['enumeration'], 'minOccurs': '1', 'maxOccurs': '1', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+    storedE: Optional[float | RealEnergy] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': ['Attribute'], 'minOccurs': '1', 'maxOccurs': '1', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+
+@dataclass(repr=False)
+class PhotoVoltaicUnit(PowerElectronicsUnit):
+    pass
+
+@dataclass(repr=False)
+class PowerElectronicsWindUnit(PowerElectronicsUnit):
+    pass
+
+@dataclass(repr=False)
+class PowerTransformer(ConductingEquipment):
+    PowerTransformerEnd: list[PowerTransformerEnd] = field(default_factory=list, metadata={'type': 'Association', 'stereotypes': [], 'minOccurs': '0', 'maxOccurs': 'unbounded', 'inverse': 'PowerTransformerEnd.PowerTransformer', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': False})
+    isPartOfGeneratorUnit: Optional[bool] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': [], 'minOccurs': '1', 'maxOccurs': '1', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+    operationalValuesConsidered: Optional[bool] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': [], 'minOccurs': '0', 'maxOccurs': '1', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+    beforeShCircuitHighestOperatingCurrent: Optional[float | CurrentFlow] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': [], 'minOccurs': '0', 'maxOccurs': '1', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+    beforeShCircuitHighestOperatingVoltage: Optional[float | Voltage] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': [], 'minOccurs': '0', 'maxOccurs': '1', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+    beforeShortCircuitAnglePf: Optional[float | AngleDegrees] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': [], 'minOccurs': '0', 'maxOccurs': '1', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+    highSideMinOperatingU: Optional[float | Voltage] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': [], 'minOccurs': '0', 'maxOccurs': '1', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+
+@dataclass(repr=False)
+class Quality61850(Identity):
+    badReference: Optional[bool] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': [], 'minOccurs': '0', 'maxOccurs': '1', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+    estimatorReplaced: Optional[bool] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': [], 'minOccurs': '0', 'maxOccurs': '1', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+    failure: Optional[bool] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': [], 'minOccurs': '0', 'maxOccurs': '1', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+    oldData: Optional[bool] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': [], 'minOccurs': '0', 'maxOccurs': '1', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+    operatorBlocked: Optional[bool] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': [], 'minOccurs': '0', 'maxOccurs': '1', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+    oscillatory: Optional[bool] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': [], 'minOccurs': '0', 'maxOccurs': '1', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+    outOfRange: Optional[bool] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': [], 'minOccurs': '0', 'maxOccurs': '1', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+    overFlow: Optional[bool] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': [], 'minOccurs': '0', 'maxOccurs': '1', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+    suspect: Optional[bool] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': [], 'minOccurs': '0', 'maxOccurs': '1', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+    test: Optional[bool] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': [], 'minOccurs': '0', 'maxOccurs': '1', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+    source: Optional[Source] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': ['enumeration'], 'minOccurs': '0', 'maxOccurs': '1', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+    validity: Optional[Validity] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': ['enumeration'], 'minOccurs': '0', 'maxOccurs': '1', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+
+@dataclass(repr=False)
+class MeasurementValueQuality(Quality61850):
+    MeasurementValue: Optional[MeasurementValue] = field(default=None, metadata={'type': 'Association', 'stereotypes': ['ByReference'], 'minOccurs': '1', 'maxOccurs': '1', 'inverse': 'MeasurementValue.MeasurementValueQuality', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+
+@dataclass(repr=False)
+class RaiseLowerCommand(AnalogControl):
+    ValueAliasSet: Optional[ValueAliasSet] = field(default=None, metadata={'type': 'Association', 'stereotypes': ['ByReference'], 'minOccurs': '0', 'maxOccurs': '1', 'inverse': 'ValueAliasSet.RaiseLowerCommands', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+
+@dataclass(repr=False)
+class RatioTapChangerTable(IdentifiedObject):
+    RatioTapChanger: list[RatioTapChanger] = field(default_factory=list, metadata={'type': 'Association', 'stereotypes': [], 'minOccurs': '0', 'maxOccurs': 'unbounded', 'inverse': 'RatioTapChanger.RatioTapChangerTable', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': False})
+    RatioTapChangerTablePoint: list[RatioTapChangerTablePoint] = field(default_factory=list, metadata={'type': 'Association', 'stereotypes': [], 'minOccurs': '0', 'maxOccurs': 'unbounded', 'inverse': 'RatioTapChangerTablePoint.RatioTapChangerTable', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': False})
+
+@dataclass(repr=False)
+class ReactiveCapabilityCurve(Curve):
+    EquivalentInjection: list[EquivalentInjection] = field(default_factory=list, metadata={'type': 'Association', 'stereotypes': [], 'minOccurs': '0', 'maxOccurs': 'unbounded', 'inverse': 'EquivalentInjection.ReactiveCapabilityCurve', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': False})
+    InitiallyUsedBySynchronousMachines: list[SynchronousMachine] = field(default_factory=list, metadata={'type': 'Association', 'stereotypes': [], 'minOccurs': '0', 'maxOccurs': 'unbounded', 'inverse': 'SynchronousMachine.InitialReactiveCapabilityCurve', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': False})
+
+@dataclass(repr=False)
+class RegularIntervalSchedule(BasicIntervalSchedule):
+    endTime: Optional[str] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': ['Attribute'], 'minOccurs': '1', 'maxOccurs': '1', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+    timeStep: Optional[float | Seconds] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': ['Attribute'], 'minOccurs': '1', 'maxOccurs': '1', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+    TimePoints: list[RegularTimePoint] = field(default_factory=list, metadata={'type': 'Association', 'stereotypes': ['AggregateOf'], 'minOccurs': '0', 'maxOccurs': 'unbounded', 'inverse': 'RegularTimePoint.IntervalSchedule', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': False})
+
+@dataclass(repr=False)
+class RegularTimePoint(Identity):
+    sequenceNumber: Optional[int] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': ['Attribute'], 'minOccurs': '1', 'maxOccurs': '1', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+    value1: Optional[float] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': ['Attribute'], 'minOccurs': '1', 'maxOccurs': '1', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+    value2: Optional[float] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': ['Attribute'], 'minOccurs': '0', 'maxOccurs': '1', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+    IntervalSchedule: Optional[RegularIntervalSchedule] = field(default=None, metadata={'type': 'Association', 'stereotypes': ['OfAggregate', 'ByReference'], 'minOccurs': '1', 'maxOccurs': '1', 'inverse': 'RegularIntervalSchedule.TimePoints', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+
+@dataclass(repr=False)
+class RegulatingCondEq(EnergyConnection):
+    RegulatingControl: Optional[RegulatingControl] = field(default=None, metadata={'type': 'Association', 'stereotypes': ['ByReference'], 'minOccurs': '0', 'maxOccurs': '1', 'inverse': 'RegulatingControl.RegulatingCondEq', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+    controlEnabled: Optional[bool] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': ['Attribute'], 'minOccurs': '1', 'maxOccurs': '1', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+
+@dataclass(repr=False)
+class ExternalNetworkInjection(RegulatingCondEq):
+    governorSCD: Optional[float | ActivePowerPerFrequency] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': ['Attribute'], 'minOccurs': '1', 'maxOccurs': '1', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+    maxP: Optional[float | ActivePower] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': ['Attribute'], 'minOccurs': '1', 'maxOccurs': '1', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+    maxQ: Optional[float | ReactivePower] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': ['Attribute'], 'minOccurs': '1', 'maxOccurs': '1', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+    minP: Optional[float | ActivePower] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': ['Attribute'], 'minOccurs': '1', 'maxOccurs': '1', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+    minQ: Optional[float | ReactivePower] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': ['Attribute'], 'minOccurs': '1', 'maxOccurs': '1', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+    ikSecond: Optional[bool] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': [], 'minOccurs': '0', 'maxOccurs': '1', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+    maxR0ToX0Ratio: Optional[float] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': [], 'minOccurs': '1', 'maxOccurs': '1', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+    maxR1ToX1Ratio: Optional[float] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': [], 'minOccurs': '1', 'maxOccurs': '1', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+    maxZ0ToZ1Ratio: Optional[float] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': [], 'minOccurs': '1', 'maxOccurs': '1', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+    minR0ToX0Ratio: Optional[float] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': [], 'minOccurs': '1', 'maxOccurs': '1', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+    minR1ToX1Ratio: Optional[float] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': [], 'minOccurs': '1', 'maxOccurs': '1', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+    minZ0ToZ1Ratio: Optional[float] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': [], 'minOccurs': '1', 'maxOccurs': '1', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+    maxInitialSymShCCurrent: Optional[float | CurrentFlow] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': [], 'minOccurs': '1', 'maxOccurs': '1', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+    minInitialSymShCCurrent: Optional[float | CurrentFlow] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': [], 'minOccurs': '1', 'maxOccurs': '1', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+    voltageFactor: Optional[float | PU] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': [], 'minOccurs': '0', 'maxOccurs': '1', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+    referencePriority: Optional[int] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': ['Attribute'], 'minOccurs': '1', 'maxOccurs': '1', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+    p: Optional[float | ActivePower] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': ['Attribute'], 'minOccurs': '1', 'maxOccurs': '1', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+    q: Optional[float | ReactivePower] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': ['Attribute'], 'minOccurs': '1', 'maxOccurs': '1', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+
+@dataclass(repr=False)
+class PowerElectronicsConnection(RegulatingCondEq):
+    maxQ: Optional[float | ReactivePower] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': ['Attribute'], 'minOccurs': '0', 'maxOccurs': '1', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+    minQ: Optional[float | ReactivePower] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': ['Attribute'], 'minOccurs': '0', 'maxOccurs': '1', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+    ratedS: Optional[float | ApparentPower] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': ['Attribute'], 'minOccurs': '0', 'maxOccurs': '1', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+    ratedU: Optional[float | Voltage] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': ['Attribute'], 'minOccurs': '0', 'maxOccurs': '1', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+    PowerElectronicsUnit: list[PowerElectronicsUnit] = field(default_factory=list, metadata={'type': 'Association', 'stereotypes': ['ByReference'], 'minOccurs': '0', 'maxOccurs': 'unbounded', 'inverse': 'PowerElectronicsUnit.PowerElectronicsConnection', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+    p: Optional[float | ActivePower] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': ['Attribute'], 'minOccurs': '1', 'maxOccurs': '1', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+    q: Optional[float | ReactivePower] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': ['Attribute'], 'minOccurs': '1', 'maxOccurs': '1', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+
+@dataclass(repr=False)
+class RegulatingControl(PowerSystemResource):
+    mode: Optional[RegulatingControlModeKind] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': ['enumeration', 'Attribute'], 'minOccurs': '1', 'maxOccurs': '1', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+    Terminal: Optional[Terminal] = field(default=None, metadata={'type': 'Association', 'stereotypes': ['ByReference'], 'minOccurs': '1', 'maxOccurs': '1', 'inverse': 'Terminal.RegulatingControl', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+    RegulatingCondEq: list[RegulatingCondEq] = field(default_factory=list, metadata={'type': 'Association', 'stereotypes': [], 'minOccurs': '0', 'maxOccurs': 'unbounded', 'inverse': 'RegulatingCondEq.RegulatingControl', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': False})
+    RegulationSchedule: list[RegulationSchedule] = field(default_factory=list, metadata={'type': 'Association', 'stereotypes': [], 'minOccurs': '0', 'maxOccurs': 'unbounded', 'inverse': 'RegulationSchedule.RegulatingControl', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': False})
+    discrete: Optional[bool] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': ['Attribute'], 'minOccurs': '1', 'maxOccurs': '1', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+    enabled: Optional[bool] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': ['Attribute'], 'minOccurs': '1', 'maxOccurs': '1', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+    maxAllowedTargetValue: Optional[float] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': ['Attribute'], 'minOccurs': '0', 'maxOccurs': '1', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+    minAllowedTargetValue: Optional[float] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': ['Attribute'], 'minOccurs': '0', 'maxOccurs': '1', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+    targetDeadband: Optional[float] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': ['Attribute'], 'minOccurs': '0', 'maxOccurs': '1', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+    targetValue: Optional[float] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': ['Attribute'], 'minOccurs': '1', 'maxOccurs': '1', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+    targetValueUnitMultiplier: Optional[UnitMultiplier] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': ['enumeration'], 'minOccurs': '1', 'maxOccurs': '1', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+
+@dataclass(repr=False)
+class ReportingGroup(IdentifiedObject):
+    BusNameMarker: list[BusNameMarker] = field(default_factory=list, metadata={'type': 'Association', 'stereotypes': [], 'minOccurs': '0', 'maxOccurs': 'unbounded', 'inverse': 'BusNameMarker.ReportingGroup', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': False})
+    TopologicalNode: list[TopologicalNode] = field(default_factory=list, metadata={'type': 'Association', 'stereotypes': [], 'minOccurs': '0', 'maxOccurs': 'unbounded', 'inverse': 'TopologicalNode.ReportingGroup', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': False})
+
+@dataclass(repr=False)
+class RotatingMachine(RegulatingCondEq):
+    ratedPowerFactor: Optional[float] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': ['Attribute'], 'minOccurs': '0', 'maxOccurs': '1', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+    ratedS: Optional[float | ApparentPower] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': ['Attribute'], 'minOccurs': '0', 'maxOccurs': '1', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+    ratedU: Optional[float | Voltage] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': ['Attribute'], 'minOccurs': '0', 'maxOccurs': '1', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+    GeneratingUnit: Optional[GeneratingUnit] = field(default=None, metadata={'type': 'Association', 'stereotypes': ['ByReference'], 'minOccurs': '0', 'maxOccurs': '1', 'inverse': 'GeneratingUnit.RotatingMachine', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+    HydroPump: Optional[HydroPump] = field(default=None, metadata={'type': 'Association', 'stereotypes': [], 'minOccurs': '0', 'maxOccurs': '1', 'inverse': 'HydroPump.RotatingMachine', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': False})
+    p: Optional[float | ActivePower] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': ['Attribute'], 'minOccurs': '1', 'maxOccurs': '1', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+    q: Optional[float | ReactivePower] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': ['Attribute'], 'minOccurs': '1', 'maxOccurs': '1', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+
+@dataclass(repr=False)
+class AsynchronousMachine(RotatingMachine):
+    nominalFrequency: Optional[float | Frequency] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': ['Attribute'], 'minOccurs': '0', 'maxOccurs': '1', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+    nominalSpeed: Optional[float | RotationSpeed] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': ['Attribute'], 'minOccurs': '0', 'maxOccurs': '1', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+    converterFedDrive: Optional[bool] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': [], 'minOccurs': '1', 'maxOccurs': '1', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+    iaIrRatio: Optional[float] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': [], 'minOccurs': '1', 'maxOccurs': '1', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+    polePairNumber: Optional[int] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': [], 'minOccurs': '1', 'maxOccurs': '1', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+    reversible: Optional[bool] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': [], 'minOccurs': '1', 'maxOccurs': '1', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+    rxLockedRotorRatio: Optional[float] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': [], 'minOccurs': '0', 'maxOccurs': '1', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+    efficiency: Optional[float | PerCent] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': [], 'minOccurs': '1', 'maxOccurs': '1', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+    ratedMechanicalPower: Optional[float | ActivePower] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': [], 'minOccurs': '1', 'maxOccurs': '1', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+    asynchronousMachineType: Optional[AsynchronousMachineKind] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': ['enumeration'], 'minOccurs': '1', 'maxOccurs': '1', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+
+@dataclass(repr=False)
+class Season(IdentifiedObject):
+    endDate: Optional[str] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': ['Attribute'], 'minOccurs': '1', 'maxOccurs': '1', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+    startDate: Optional[str] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': ['Attribute'], 'minOccurs': '1', 'maxOccurs': '1', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+    SeasonDayTypeSchedules: list[SeasonDayTypeSchedule] = field(default_factory=list, metadata={'type': 'Association', 'stereotypes': [], 'minOccurs': '0', 'maxOccurs': 'unbounded', 'inverse': 'SeasonDayTypeSchedule.Season', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': False})
+
+@dataclass(repr=False)
+class SeasonDayTypeSchedule(RegularIntervalSchedule):
+    DayType: Optional[DayType] = field(default=None, metadata={'type': 'Association', 'stereotypes': ['ByReference'], 'minOccurs': '1', 'maxOccurs': '1', 'inverse': 'DayType.SeasonDayTypeSchedules', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+    Season: Optional[Season] = field(default=None, metadata={'type': 'Association', 'stereotypes': ['ByReference'], 'minOccurs': '1', 'maxOccurs': '1', 'inverse': 'Season.SeasonDayTypeSchedules', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+
+@dataclass(repr=False)
+class ConformLoadSchedule(SeasonDayTypeSchedule):
+    ConformLoadGroup: Optional[ConformLoadGroup] = field(default=None, metadata={'type': 'Association', 'stereotypes': ['OfAggregate', 'ByReference'], 'minOccurs': '1', 'maxOccurs': '1', 'inverse': 'ConformLoadGroup.ConformLoadSchedules', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+
+@dataclass(repr=False)
+class NonConformLoadSchedule(SeasonDayTypeSchedule):
+    NonConformLoadGroup: Optional[NonConformLoadGroup] = field(default=None, metadata={'type': 'Association', 'stereotypes': ['OfAggregate', 'ByReference'], 'minOccurs': '1', 'maxOccurs': '1', 'inverse': 'NonConformLoadGroup.NonConformLoadSchedules', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+
+@dataclass(repr=False)
+class RegulationSchedule(SeasonDayTypeSchedule):
+    RegulatingControl: Optional[RegulatingControl] = field(default=None, metadata={'type': 'Association', 'stereotypes': ['ByReference'], 'minOccurs': '1', 'maxOccurs': '1', 'inverse': 'RegulatingControl.RegulationSchedule', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+
+@dataclass(repr=False)
+class Sensor(AuxiliaryEquipment):
+    pass
+
+@dataclass(repr=False)
+class CurrentTransformer(Sensor):
+    pass
+
+@dataclass(repr=False)
+class PostLineSensor(Sensor):
+    pass
+
+@dataclass(repr=False)
+class PotentialTransformer(Sensor):
+    pass
+
+@dataclass(repr=False)
+class SeriesCompensator(ConductingEquipment):
+    r: Optional[float | Resistance] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': ['Attribute'], 'minOccurs': '1', 'maxOccurs': '1', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+    x: Optional[float | Reactance] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': ['Attribute'], 'minOccurs': '1', 'maxOccurs': '1', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+    varistorPresent: Optional[bool] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': [], 'minOccurs': '1', 'maxOccurs': '1', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+    r0: Optional[float | Resistance] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': [], 'minOccurs': '1', 'maxOccurs': '1', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+    varistorRatedCurrent: Optional[float | CurrentFlow] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': [], 'minOccurs': '0', 'maxOccurs': '1', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+    varistorVoltageThreshold: Optional[float | Voltage] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': [], 'minOccurs': '0', 'maxOccurs': '1', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+    x0: Optional[float | Reactance] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': [], 'minOccurs': '1', 'maxOccurs': '1', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+
+@dataclass(repr=False)
+class SetPoint(AnalogControl):
+    normalValue: Optional[float] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': [], 'minOccurs': '1', 'maxOccurs': '1', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+    value: Optional[float] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': [], 'minOccurs': '1', 'maxOccurs': '1', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+
+@dataclass(repr=False)
+class ShuntCompensator(RegulatingCondEq):
+    grounded: Optional[bool] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': ['Attribute'], 'minOccurs': '0', 'maxOccurs': '1', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+    maximumSections: Optional[int] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': ['Attribute'], 'minOccurs': '1', 'maxOccurs': '1', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+    normalSections: Optional[int] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': ['Attribute'], 'minOccurs': '1', 'maxOccurs': '1', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+    aVRDelay: Optional[float | Seconds] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': ['Attribute'], 'minOccurs': '0', 'maxOccurs': '1', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+    nomU: Optional[float | Voltage] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': ['Attribute'], 'minOccurs': '1', 'maxOccurs': '1', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+    voltageSensitivity: Optional[float | VoltagePerReactivePower] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': ['Attribute'], 'minOccurs': '0', 'maxOccurs': '1', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+    sections: Optional[float] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': ['Attribute'], 'minOccurs': '1', 'maxOccurs': '1', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+    SvShuntCompensatorSections: list[SvShuntCompensatorSections] = field(default_factory=list, metadata={'type': 'Association', 'stereotypes': [], 'minOccurs': '0', 'maxOccurs': 'unbounded', 'inverse': 'SvShuntCompensatorSections.ShuntCompensator', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': False})
+
+@dataclass(repr=False)
+class LinearShuntCompensator(ShuntCompensator):
+    bPerSection: Optional[float | Susceptance] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': ['Attribute'], 'minOccurs': '1', 'maxOccurs': '1', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+    gPerSection: Optional[float | Conductance] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': ['Attribute'], 'minOccurs': '1', 'maxOccurs': '1', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+    b0PerSection: Optional[float | Susceptance] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': [], 'minOccurs': '1', 'maxOccurs': '1', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+    g0PerSection: Optional[float | Conductance] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': [], 'minOccurs': '1', 'maxOccurs': '1', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+
+@dataclass(repr=False)
+class NonlinearShuntCompensator(ShuntCompensator):
+    NonlinearShuntCompensatorPoints: list[NonlinearShuntCompensatorPoint] = field(default_factory=list, metadata={'type': 'Association', 'stereotypes': ['AggregateOf'], 'minOccurs': '0', 'maxOccurs': 'unbounded', 'inverse': 'NonlinearShuntCompensatorPoint.NonlinearShuntCompensator', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': False})
+
+@dataclass(repr=False)
+class SolarGeneratingUnit(GeneratingUnit):
+    SolarPowerPlant: Optional[SolarPowerPlant] = field(default=None, metadata={'type': 'Association', 'stereotypes': ['European'], 'minOccurs': '0', 'maxOccurs': '1', 'inverse': 'SolarPowerPlant.SolarGeneratingUnits', 'namespace': 'http://iec.ch/TC57/CIM100-European#', 'serialize': True})
+
+@dataclass(repr=False)
+class SolarPowerPlant(PowerSystemResource):
+    SolarGeneratingUnits: list[SolarGeneratingUnit] = field(default_factory=list, metadata={'type': 'Association', 'stereotypes': ['European'], 'minOccurs': '0', 'maxOccurs': 'unbounded', 'inverse': 'SolarGeneratingUnit.SolarPowerPlant', 'namespace': 'http://iec.ch/TC57/CIM100-European#', 'serialize': False})
+
+@dataclass(repr=False)
+class StaticVarCompensator(RegulatingCondEq):
+    capacitiveRating: Optional[float | Reactance] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': ['Attribute'], 'minOccurs': '1', 'maxOccurs': '1', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+    inductiveRating: Optional[float | Reactance] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': ['Attribute'], 'minOccurs': '1', 'maxOccurs': '1', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+    slope: Optional[float | VoltagePerReactivePower] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': ['Attribute'], 'minOccurs': '1', 'maxOccurs': '1', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+    sVCControlMode: Optional[SVCControlMode] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': ['enumeration', 'deprecated', 'Attribute'], 'minOccurs': '0', 'maxOccurs': '1', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+    voltageSetPoint: Optional[float | Voltage] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': ['deprecated', 'Attribute'], 'minOccurs': '0', 'maxOccurs': '1', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+    q: Optional[float | ReactivePower] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': ['Attribute'], 'minOccurs': '1', 'maxOccurs': '1', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+
+@dataclass(repr=False)
+class StationSupply(EnergyConsumer):
+    pass
+
+@dataclass(repr=False)
+class Status(Identity):
+    dateTime: Optional[str] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': ['Attribute'], 'minOccurs': '0', 'maxOccurs': '1', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+    reason: Optional[str] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': ['Attribute'], 'minOccurs': '0', 'maxOccurs': '1', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+    remark: Optional[str] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': ['Attribute'], 'minOccurs': '0', 'maxOccurs': '1', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+    value: Optional[str] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': ['Attribute'], 'minOccurs': '0', 'maxOccurs': '1', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+
+@dataclass(repr=False)
+class StreetAddress(Identity):
+    language: Optional[str] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': ['Attribute'], 'minOccurs': '0', 'maxOccurs': '1', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+    poBox: Optional[str] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': ['Attribute'], 'minOccurs': '0', 'maxOccurs': '1', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+    postalCode: Optional[str] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': ['Attribute'], 'minOccurs': '0', 'maxOccurs': '1', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+
+@dataclass(repr=False)
+class StreetDetail(Identity):
+    addressGeneral: Optional[str] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': ['Attribute'], 'minOccurs': '0', 'maxOccurs': '1', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+    addressGeneral2: Optional[str] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': ['Attribute'], 'minOccurs': '0', 'maxOccurs': '1', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+    addressGeneral3: Optional[str] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': ['Attribute'], 'minOccurs': '0', 'maxOccurs': '1', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+    buildingName: Optional[str] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': ['Attribute'], 'minOccurs': '0', 'maxOccurs': '1', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+    code: Optional[str] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': ['Attribute'], 'minOccurs': '0', 'maxOccurs': '1', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+    floorIdentification: Optional[str] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': ['Attribute'], 'minOccurs': '0', 'maxOccurs': '1', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+    name: Optional[str] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': ['Attribute'], 'minOccurs': '0', 'maxOccurs': '1', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+    number: Optional[str] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': ['Attribute'], 'minOccurs': '0', 'maxOccurs': '1', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+    prefix: Optional[str] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': ['Attribute'], 'minOccurs': '0', 'maxOccurs': '1', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+    suffix: Optional[str] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': ['Attribute'], 'minOccurs': '0', 'maxOccurs': '1', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+    suiteNumber: Optional[str] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': ['Attribute'], 'minOccurs': '0', 'maxOccurs': '1', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+    type: Optional[str] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': ['Attribute'], 'minOccurs': '0', 'maxOccurs': '1', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+    withinTownLimits: Optional[bool] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': ['Attribute'], 'minOccurs': '0', 'maxOccurs': '1', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+
+@dataclass(repr=False)
+class StringMeasurement(Measurement):
+    StringMeasurementValues: list[StringMeasurementValue] = field(default_factory=list, metadata={'type': 'Association', 'stereotypes': [], 'minOccurs': '0', 'maxOccurs': 'unbounded', 'inverse': 'StringMeasurementValue.StringMeasurement', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': False})
+
+@dataclass(repr=False)
+class StringMeasurementValue(MeasurementValue):
+    StringMeasurement: Optional[StringMeasurement] = field(default=None, metadata={'type': 'Association', 'stereotypes': ['ByReference'], 'minOccurs': '1', 'maxOccurs': '1', 'inverse': 'StringMeasurement.StringMeasurementValues', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+
+@dataclass(repr=False)
+class SubGeographicalRegion(IdentifiedObject):
+    Region: Optional[GeographicalRegion] = field(default=None, metadata={'type': 'Association', 'stereotypes': ['OfAggregate', 'ByReference'], 'minOccurs': '1', 'maxOccurs': '1', 'inverse': 'GeographicalRegion.Regions', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+    DCLines: list[DCLine] = field(default_factory=list, metadata={'type': 'Association', 'stereotypes': [], 'minOccurs': '0', 'maxOccurs': 'unbounded', 'inverse': 'DCLine.Region', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': False})
+    Lines: list[Line] = field(default_factory=list, metadata={'type': 'Association', 'stereotypes': ['AggregateOf'], 'minOccurs': '0', 'maxOccurs': 'unbounded', 'inverse': 'Line.Region', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': False})
+    Substations: list[Substation] = field(default_factory=list, metadata={'type': 'Association', 'stereotypes': ['AggregateOf'], 'minOccurs': '0', 'maxOccurs': 'unbounded', 'inverse': 'Substation.Region', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': False})
+
+@dataclass(repr=False)
+class SubLoadArea(EnergyArea):
+    LoadArea: Optional[LoadArea] = field(default=None, metadata={'type': 'Association', 'stereotypes': ['OfAggregate', 'ByReference'], 'minOccurs': '1', 'maxOccurs': '1', 'inverse': 'LoadArea.SubLoadAreas', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+    LoadGroups: list[LoadGroup] = field(default_factory=list, metadata={'type': 'Association', 'stereotypes': ['AggregateOf'], 'minOccurs': '0', 'maxOccurs': 'unbounded', 'inverse': 'LoadGroup.SubLoadArea', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': False})
+
+@dataclass(repr=False)
+class Substation(EquipmentContainer):
+    Region: Optional[SubGeographicalRegion] = field(default=None, metadata={'type': 'Association', 'stereotypes': ['OfAggregate', 'ByReference'], 'minOccurs': '1', 'maxOccurs': '1', 'inverse': 'SubGeographicalRegion.Substations', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+    DCConverterUnit: list[DCConverterUnit] = field(default_factory=list, metadata={'type': 'Association', 'stereotypes': ['AggregateOf'], 'minOccurs': '0', 'maxOccurs': 'unbounded', 'inverse': 'DCConverterUnit.Substation', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': False})
+    VoltageLevels: list[VoltageLevel] = field(default_factory=list, metadata={'type': 'Association', 'stereotypes': ['AggregateOf'], 'minOccurs': '0', 'maxOccurs': 'unbounded', 'inverse': 'VoltageLevel.Substation', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': False})
+
+@dataclass(repr=False)
+class SurgeArrester(AuxiliaryEquipment):
+    pass
+
+@dataclass(repr=False)
+class SvInjection(Identity):
+    pInjection: Optional[float | ActivePower] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': ['Attribute'], 'minOccurs': '1', 'maxOccurs': '1', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+    qInjection: Optional[float | ReactivePower] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': ['Attribute'], 'minOccurs': '0', 'maxOccurs': '1', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+    TopologicalNode: Optional[TopologicalNode] = field(default=None, metadata={'type': 'Association', 'stereotypes': ['ByReference'], 'minOccurs': '1', 'maxOccurs': '1', 'inverse': 'TopologicalNode.SvInjection', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+
+@dataclass(repr=False)
+class SvPowerFlow(Identity):
+    p: Optional[float | ActivePower] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': ['Attribute'], 'minOccurs': '1', 'maxOccurs': '1', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+    q: Optional[float | ReactivePower] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': ['Attribute'], 'minOccurs': '1', 'maxOccurs': '1', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+    Terminal: Optional[Terminal] = field(default=None, metadata={'type': 'Association', 'stereotypes': ['ByReference'], 'minOccurs': '1', 'maxOccurs': '1', 'inverse': 'Terminal.SvPowerFlow', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+
+@dataclass(repr=False)
+class SvShuntCompensatorSections(Identity):
+    sections: Optional[float] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': ['Attribute'], 'minOccurs': '1', 'maxOccurs': '1', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+    ShuntCompensator: Optional[ShuntCompensator] = field(default=None, metadata={'type': 'Association', 'stereotypes': ['ByReference'], 'minOccurs': '1', 'maxOccurs': '1', 'inverse': 'ShuntCompensator.SvShuntCompensatorSections', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+
+@dataclass(repr=False)
+class SvStatus(Identity):
+    inService: Optional[bool] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': ['Attribute'], 'minOccurs': '1', 'maxOccurs': '1', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+    ConductingEquipment: Optional[ConductingEquipment] = field(default=None, metadata={'type': 'Association', 'stereotypes': ['ByReference'], 'minOccurs': '1', 'maxOccurs': '1', 'inverse': 'ConductingEquipment.SvStatus', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+
+@dataclass(repr=False)
+class SvSwitch(Identity):
+    open: Optional[bool] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': ['Attribute'], 'minOccurs': '1', 'maxOccurs': '1', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+    Switch: Optional[Switch] = field(default=None, metadata={'type': 'Association', 'stereotypes': ['ByReference'], 'minOccurs': '1', 'maxOccurs': '1', 'inverse': 'Switch.SvSwitch', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+
+@dataclass(repr=False)
+class SvTapStep(Identity):
+    position: Optional[float] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': ['Attribute'], 'minOccurs': '1', 'maxOccurs': '1', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+    TapChanger: Optional[TapChanger] = field(default=None, metadata={'type': 'Association', 'stereotypes': ['ByReference'], 'minOccurs': '1', 'maxOccurs': '1', 'inverse': 'TapChanger.SvTapStep', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+
+@dataclass(repr=False)
+class SvVoltage(Identity):
+    angle: Optional[float | AngleDegrees] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': ['Attribute'], 'minOccurs': '1', 'maxOccurs': '1', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+    v: Optional[float | Voltage] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': ['Attribute'], 'minOccurs': '1', 'maxOccurs': '1', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+    TopologicalNode: Optional[TopologicalNode] = field(default=None, metadata={'type': 'Association', 'stereotypes': ['ByReference'], 'minOccurs': '1', 'maxOccurs': '1', 'inverse': 'TopologicalNode.SvVoltage', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+
+@dataclass(repr=False)
+class Switch(ConductingEquipment):
+    normalOpen: Optional[bool] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': ['Attribute'], 'minOccurs': '1', 'maxOccurs': '1', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+    retained: Optional[bool] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': ['Attribute'], 'minOccurs': '1', 'maxOccurs': '1', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+    ratedCurrent: Optional[float | CurrentFlow] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': ['Attribute'], 'minOccurs': '0', 'maxOccurs': '1', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+    SwitchSchedules: list[SwitchSchedule] = field(default_factory=list, metadata={'type': 'Association', 'stereotypes': [], 'minOccurs': '0', 'maxOccurs': 'unbounded', 'inverse': 'SwitchSchedule.Switch', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': False})
+    locked: Optional[bool] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': ['Attribute'], 'minOccurs': '1', 'maxOccurs': '1', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+    open: Optional[bool] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': ['Attribute'], 'minOccurs': '1', 'maxOccurs': '1', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+    SvSwitch: list[SvSwitch] = field(default_factory=list, metadata={'type': 'Association', 'stereotypes': [], 'minOccurs': '0', 'maxOccurs': 'unbounded', 'inverse': 'SvSwitch.Switch', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': False})
+
+@dataclass(repr=False)
+class Cut(Switch):
+    lengthFromTerminal1: Optional[float | Length] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': ['Attribute'], 'minOccurs': '0', 'maxOccurs': '1', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+    ACLineSegment: Optional[ACLineSegment] = field(default=None, metadata={'type': 'Association', 'stereotypes': ['ByReference'], 'minOccurs': '1', 'maxOccurs': '1', 'inverse': 'ACLineSegment.Cut', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+
+@dataclass(repr=False)
+class Disconnector(Switch):
+    pass
+
+@dataclass(repr=False)
+class Fuse(Switch):
+    pass
+
+@dataclass(repr=False)
+class GroundDisconnector(Switch):
+    pass
+
+@dataclass(repr=False)
+class Jumper(Switch):
+    pass
+
+@dataclass(repr=False)
+class ProtectedSwitch(Switch):
+    pass
+
+@dataclass(repr=False)
+class Breaker(ProtectedSwitch):
+    pass
+
+@dataclass(repr=False)
+class DisconnectingCircuitBreaker(Breaker):
+    pass
+
+@dataclass(repr=False)
+class LoadBreakSwitch(ProtectedSwitch):
+    pass
+
+@dataclass(repr=False)
+class SwitchSchedule(SeasonDayTypeSchedule):
+    Switch: Optional[Switch] = field(default=None, metadata={'type': 'Association', 'stereotypes': ['ByReference'], 'minOccurs': '1', 'maxOccurs': '1', 'inverse': 'Switch.SwitchSchedules', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+
+@dataclass(repr=False)
+class SynchronousMachine(RotatingMachine):
+    maxQ: Optional[float | ReactivePower] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': ['Attribute'], 'minOccurs': '0', 'maxOccurs': '1', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+    minQ: Optional[float | ReactivePower] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': ['Attribute'], 'minOccurs': '0', 'maxOccurs': '1', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+    qPercent: Optional[float | PerCent] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': ['Attribute'], 'minOccurs': '0', 'maxOccurs': '1', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+    type: Optional[SynchronousMachineKind] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': ['enumeration', 'Attribute'], 'minOccurs': '1', 'maxOccurs': '1', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+    InitialReactiveCapabilityCurve: Optional[ReactiveCapabilityCurve] = field(default=None, metadata={'type': 'Association', 'stereotypes': ['ShadowExtension', 'ByReference'], 'minOccurs': '0', 'maxOccurs': '1', 'inverse': 'ReactiveCapabilityCurve.InitiallyUsedBySynchronousMachines', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+    earthing: Optional[bool] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': [], 'minOccurs': '1', 'maxOccurs': '1', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+    mu: Optional[float] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': [], 'minOccurs': '0', 'maxOccurs': '1', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+    earthingStarPointR: Optional[float | Resistance] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': [], 'minOccurs': '0', 'maxOccurs': '1', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+    earthingStarPointX: Optional[float | Reactance] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': [], 'minOccurs': '0', 'maxOccurs': '1', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+    ikk: Optional[float | CurrentFlow] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': [], 'minOccurs': '0', 'maxOccurs': '1', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+    r: Optional[float | Resistance] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': [], 'minOccurs': '1', 'maxOccurs': '1', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+    r0: Optional[float | Resistance] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': [], 'minOccurs': '1', 'maxOccurs': '1', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+    r2: Optional[float | Resistance] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': [], 'minOccurs': '1', 'maxOccurs': '1', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+    satDirectSubtransX: Optional[float | PU] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': [], 'minOccurs': '1', 'maxOccurs': '1', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+    satDirectSyncX: Optional[float | PU] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': [], 'minOccurs': '0', 'maxOccurs': '1', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+    satDirectTransX: Optional[float | PU] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': [], 'minOccurs': '0', 'maxOccurs': '1', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+    shortCircuitRotorType: Optional[ShortCircuitRotorKind] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': ['enumeration', 'ByReference'], 'minOccurs': '0', 'maxOccurs': '1', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+    voltageRegulationRange: Optional[float | PerCent] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': [], 'minOccurs': '0', 'maxOccurs': '1', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+    x0: Optional[float | Reactance] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': [], 'minOccurs': '1', 'maxOccurs': '1', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+    x2: Optional[float | Reactance] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': [], 'minOccurs': '1', 'maxOccurs': '1', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+    referencePriority: Optional[int] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': ['Attribute'], 'minOccurs': '1', 'maxOccurs': '1', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+    operatingMode: Optional[SynchronousMachineOperatingMode] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': ['enumeration'], 'minOccurs': '1', 'maxOccurs': '1', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+
+@dataclass(repr=False)
+class TapChanger(PowerSystemResource):
+    highStep: Optional[int] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': ['Attribute'], 'minOccurs': '1', 'maxOccurs': '1', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+    lowStep: Optional[int] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': ['Attribute'], 'minOccurs': '1', 'maxOccurs': '1', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+    ltcFlag: Optional[bool] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': ['Attribute'], 'minOccurs': '1', 'maxOccurs': '1', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+    neutralStep: Optional[int] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': ['Attribute'], 'minOccurs': '1', 'maxOccurs': '1', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+    normalStep: Optional[int] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': ['Attribute'], 'minOccurs': '1', 'maxOccurs': '1', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+    neutralU: Optional[float | Voltage] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': ['Attribute'], 'minOccurs': '1', 'maxOccurs': '1', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+    TapChangerControl: Optional[TapChangerControl] = field(default=None, metadata={'type': 'Association', 'stereotypes': ['ByReference'], 'minOccurs': '0', 'maxOccurs': '1', 'inverse': 'TapChangerControl.TapChanger', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+    TapSchedules: list[TapSchedule] = field(default_factory=list, metadata={'type': 'Association', 'stereotypes': [], 'minOccurs': '0', 'maxOccurs': 'unbounded', 'inverse': 'TapSchedule.TapChanger', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': False})
+    controlEnabled: Optional[bool] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': ['Attribute'], 'minOccurs': '1', 'maxOccurs': '1', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+    step: Optional[float] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': ['Attribute'], 'minOccurs': '1', 'maxOccurs': '1', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+    SvTapStep: Optional[SvTapStep] = field(default=None, metadata={'type': 'Association', 'stereotypes': [], 'minOccurs': '0', 'maxOccurs': '1', 'inverse': 'SvTapStep.TapChanger', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': False})
+
+@dataclass(repr=False)
+class PhaseTapChanger(TapChanger):
+    TransformerEnd: Optional[TransformerEnd] = field(default=None, metadata={'type': 'Association', 'stereotypes': ['ByReference'], 'minOccurs': '1', 'maxOccurs': '1', 'inverse': 'TransformerEnd.PhaseTapChanger', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+
+@dataclass(repr=False)
+class PhaseTapChangerLinear(PhaseTapChanger):
+    stepPhaseShiftIncrement: Optional[float | AngleDegrees] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': ['Attribute'], 'minOccurs': '1', 'maxOccurs': '1', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+    xMax: Optional[float | Reactance] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': ['Attribute'], 'minOccurs': '1', 'maxOccurs': '1', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+    xMin: Optional[float | Reactance] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': ['deprecated', 'Attribute'], 'minOccurs': '0', 'maxOccurs': '1', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+
+@dataclass(repr=False)
+class PhaseTapChangerNonLinear(PhaseTapChanger):
+    voltageStepIncrement: Optional[float | PerCent] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': ['Attribute'], 'minOccurs': '1', 'maxOccurs': '1', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+    xMax: Optional[float | Reactance] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': ['Attribute'], 'minOccurs': '1', 'maxOccurs': '1', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+    xMin: Optional[float | Reactance] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': ['deprecated', 'Attribute'], 'minOccurs': '0', 'maxOccurs': '1', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+
+@dataclass(repr=False)
+class PhaseTapChangerAsymmetrical(PhaseTapChangerNonLinear):
+    windingConnectionAngle: Optional[float | AngleDegrees] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': ['Attribute'], 'minOccurs': '1', 'maxOccurs': '1', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+
+@dataclass(repr=False)
+class PhaseTapChangerSymmetrical(PhaseTapChangerNonLinear):
+    pass
+
+@dataclass(repr=False)
+class PhaseTapChangerTabular(PhaseTapChanger):
+    PhaseTapChangerTable: Optional[PhaseTapChangerTable] = field(default=None, metadata={'type': 'Association', 'stereotypes': ['ByReference'], 'minOccurs': '1', 'maxOccurs': '1', 'inverse': 'PhaseTapChangerTable.PhaseTapChangerTabular', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+
+@dataclass(repr=False)
+class RatioTapChanger(TapChanger):
+    stepVoltageIncrement: Optional[float | PerCent] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': ['Attribute'], 'minOccurs': '1', 'maxOccurs': '1', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+    RatioTapChangerTable: Optional[RatioTapChangerTable] = field(default=None, metadata={'type': 'Association', 'stereotypes': ['ByReference'], 'minOccurs': '0', 'maxOccurs': '1', 'inverse': 'RatioTapChangerTable.RatioTapChanger', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+    TransformerEnd: Optional[TransformerEnd] = field(default=None, metadata={'type': 'Association', 'stereotypes': ['ByReference'], 'minOccurs': '1', 'maxOccurs': '1', 'inverse': 'TransformerEnd.RatioTapChanger', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+
+@dataclass(repr=False)
+class TapChangerControl(RegulatingControl):
+    TapChanger: list[TapChanger] = field(default_factory=list, metadata={'type': 'Association', 'stereotypes': [], 'minOccurs': '0', 'maxOccurs': 'unbounded', 'inverse': 'TapChanger.TapChangerControl', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': False})
+
+@dataclass(repr=False)
+class TapChangerTablePoint(Identity):
+    ratio: Optional[float] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': ['Attribute'], 'minOccurs': '0', 'maxOccurs': '1', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+    step: Optional[int] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': ['Attribute'], 'minOccurs': '1', 'maxOccurs': '1', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+    b: Optional[float | PerCent] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': ['Attribute'], 'minOccurs': '0', 'maxOccurs': '1', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+    g: Optional[float | PerCent] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': ['Attribute'], 'minOccurs': '0', 'maxOccurs': '1', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+    r: Optional[float | PerCent] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': ['Attribute'], 'minOccurs': '0', 'maxOccurs': '1', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+    x: Optional[float | PerCent] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': ['Attribute'], 'minOccurs': '0', 'maxOccurs': '1', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+
+@dataclass(repr=False)
+class PhaseTapChangerTablePoint(TapChangerTablePoint):
+    angle: Optional[float | AngleDegrees] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': ['Attribute'], 'minOccurs': '1', 'maxOccurs': '1', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+    PhaseTapChangerTable: Optional[PhaseTapChangerTable] = field(default=None, metadata={'type': 'Association', 'stereotypes': ['ByReference'], 'minOccurs': '1', 'maxOccurs': '1', 'inverse': 'PhaseTapChangerTable.PhaseTapChangerTablePoint', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+
+@dataclass(repr=False)
+class RatioTapChangerTablePoint(TapChangerTablePoint):
+    RatioTapChangerTable: Optional[RatioTapChangerTable] = field(default=None, metadata={'type': 'Association', 'stereotypes': ['ByReference'], 'minOccurs': '1', 'maxOccurs': '1', 'inverse': 'RatioTapChangerTable.RatioTapChangerTablePoint', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+
+@dataclass(repr=False)
+class TapSchedule(SeasonDayTypeSchedule):
+    TapChanger: Optional[TapChanger] = field(default=None, metadata={'type': 'Association', 'stereotypes': ['ByReference'], 'minOccurs': '1', 'maxOccurs': '1', 'inverse': 'TapChanger.TapSchedules', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+
+@dataclass(repr=False)
+class Terminal(ACDCTerminal):
+    phases: Optional[PhaseCode] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': ['enumeration', 'Attribute'], 'minOccurs': '0', 'maxOccurs': '1', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+    ConductingEquipment: Optional[ConductingEquipment] = field(default=None, metadata={'type': 'Association', 'stereotypes': ['ByReference'], 'minOccurs': '0', 'maxOccurs': '1', 'inverse': 'ConductingEquipment.Terminals', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+    ConnectivityNode: Optional[ConnectivityNode] = field(default=None, metadata={'type': 'Association', 'stereotypes': ['ByReference'], 'minOccurs': '0', 'maxOccurs': '1', 'inverse': 'ConnectivityNode.Terminals', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+    ConverterDCSides: list[ACDCConverter] = field(default_factory=list, metadata={'type': 'Association', 'stereotypes': [], 'minOccurs': '0', 'maxOccurs': 'unbounded', 'inverse': 'ACDCConverter.PccTerminal', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': False})
+    AuxiliaryEquipment: list[AuxiliaryEquipment] = field(default_factory=list, metadata={'type': 'Association', 'stereotypes': [], 'minOccurs': '0', 'maxOccurs': 'unbounded', 'inverse': 'AuxiliaryEquipment.Terminal', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': False})
+    RegulatingControl: list[RegulatingControl] = field(default_factory=list, metadata={'type': 'Association', 'stereotypes': [], 'minOccurs': '0', 'maxOccurs': 'unbounded', 'inverse': 'RegulatingControl.Terminal', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': False})
+    TieFlow: list[TieFlow] = field(default_factory=list, metadata={'type': 'Association', 'stereotypes': [], 'minOccurs': '0', 'maxOccurs': 'unbounded', 'inverse': 'TieFlow.Terminal', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': False})
+    TransformerEnd: list[TransformerEnd] = field(default_factory=list, metadata={'type': 'Association', 'stereotypes': [], 'minOccurs': '0', 'maxOccurs': 'unbounded', 'inverse': 'TransformerEnd.Terminal', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': False})
+    HasFirstMutualCoupling: list[MutualCoupling] = field(default_factory=list, metadata={'type': 'Association', 'stereotypes': [], 'minOccurs': '0', 'maxOccurs': 'unbounded', 'inverse': 'MutualCoupling.First_Terminal', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': False})
+    HasSecondMutualCoupling: list[MutualCoupling] = field(default_factory=list, metadata={'type': 'Association', 'stereotypes': [], 'minOccurs': '0', 'maxOccurs': 'unbounded', 'inverse': 'MutualCoupling.Second_Terminal', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': False})
+    SvPowerFlow: list[SvPowerFlow] = field(default_factory=list, metadata={'type': 'Association', 'stereotypes': [], 'minOccurs': '0', 'maxOccurs': 'unbounded', 'inverse': 'SvPowerFlow.Terminal', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': False})
+    TopologicalNode: Optional[TopologicalNode] = field(default=None, metadata={'type': 'Association', 'stereotypes': ['OfAggregate', 'ByReference'], 'minOccurs': '0', 'maxOccurs': '1', 'inverse': 'TopologicalNode.Terminal', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+
+@dataclass(repr=False)
+class TextDiagramObject(DiagramObject):
+    text: Optional[str] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': ['Attribute'], 'minOccurs': '1', 'maxOccurs': '1', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+
+@dataclass(repr=False)
+class ThermalGeneratingUnit(GeneratingUnit):
+    CAESPlant: Optional[CAESPlant] = field(default=None, metadata={'type': 'Association', 'stereotypes': ['ByReference'], 'minOccurs': '0', 'maxOccurs': '1', 'inverse': 'CAESPlant.ThermalGeneratingUnit', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+    CogenerationPlant: Optional[CogenerationPlant] = field(default=None, metadata={'type': 'Association', 'stereotypes': ['ByReference'], 'minOccurs': '0', 'maxOccurs': '1', 'inverse': 'CogenerationPlant.ThermalGeneratingUnits', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+    CombinedCyclePlant: Optional[CombinedCyclePlant] = field(default=None, metadata={'type': 'Association', 'stereotypes': ['ByReference'], 'minOccurs': '0', 'maxOccurs': '1', 'inverse': 'CombinedCyclePlant.ThermalGeneratingUnits', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+    FossilFuels: list[FossilFuel] = field(default_factory=list, metadata={'type': 'Association', 'stereotypes': [], 'minOccurs': '0', 'maxOccurs': 'unbounded', 'inverse': 'FossilFuel.ThermalGeneratingUnit', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': False})
+
+@dataclass(repr=False)
+class TieFlow(IdentifiedObject):
+    positiveFlowIn: Optional[bool] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': ['Attribute'], 'minOccurs': '1', 'maxOccurs': '1', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+    ControlArea: Optional[ControlArea] = field(default=None, metadata={'type': 'Association', 'stereotypes': ['OfAggregate', 'ByReference'], 'minOccurs': '1', 'maxOccurs': '1', 'inverse': 'ControlArea.TieFlow', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+    Terminal: Optional[Terminal] = field(default=None, metadata={'type': 'Association', 'stereotypes': ['ByReference'], 'minOccurs': '1', 'maxOccurs': '1', 'inverse': 'Terminal.TieFlow', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+
+@dataclass(repr=False)
+class TopologicalIsland(IdentifiedObject):
+    AngleRefTopologicalNode: Optional[TopologicalNode] = field(default=None, metadata={'type': 'Association', 'stereotypes': ['ByReference'], 'minOccurs': '1', 'maxOccurs': '1', 'inverse': 'TopologicalNode.AngleRefTopologicalIsland', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+    TopologicalNodes: list[TopologicalNode] = field(default_factory=list, metadata={'type': 'Association', 'stereotypes': ['ByReference', 'AggregateOf'], 'minOccurs': '1', 'maxOccurs': 'unbounded', 'inverse': 'TopologicalNode.TopologicalIsland', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+
+@dataclass(repr=False)
+class TopologicalNode(IdentifiedObject):
+    SvInjection: list[SvInjection] = field(default_factory=list, metadata={'type': 'Association', 'stereotypes': [], 'minOccurs': '0', 'maxOccurs': 'unbounded', 'inverse': 'SvInjection.TopologicalNode', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': False})
+    SvVoltage: list[SvVoltage] = field(default_factory=list, metadata={'type': 'Association', 'stereotypes': [], 'minOccurs': '0', 'maxOccurs': 'unbounded', 'inverse': 'SvVoltage.TopologicalNode', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': False})
+    AngleRefTopologicalIsland: Optional[TopologicalIsland] = field(default=None, metadata={'type': 'Association', 'stereotypes': [], 'minOccurs': '0', 'maxOccurs': '1', 'inverse': 'TopologicalIsland.AngleRefTopologicalNode', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': False})
+    TopologicalIsland: Optional[TopologicalIsland] = field(default=None, metadata={'type': 'Association', 'stereotypes': ['OfAggregate'], 'minOccurs': '0', 'maxOccurs': '1', 'inverse': 'TopologicalIsland.TopologicalNodes', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': False})
+    BaseVoltage: Optional[BaseVoltage] = field(default=None, metadata={'type': 'Association', 'stereotypes': ['ByReference'], 'minOccurs': '1', 'maxOccurs': '1', 'inverse': 'BaseVoltage.TopologicalNode', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+    ConnectivityNodeContainer: Optional[ConnectivityNodeContainer] = field(default=None, metadata={'type': 'Association', 'stereotypes': ['ByReference'], 'minOccurs': '1', 'maxOccurs': '1', 'inverse': 'ConnectivityNodeContainer.TopologicalNode', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+    ReportingGroup: Optional[ReportingGroup] = field(default=None, metadata={'type': 'Association', 'stereotypes': ['ByReference'], 'minOccurs': '0', 'maxOccurs': '1', 'inverse': 'ReportingGroup.TopologicalNode', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+    ConnectivityNodes: list[ConnectivityNode] = field(default_factory=list, metadata={'type': 'Association', 'stereotypes': ['AggregateOf'], 'minOccurs': '0', 'maxOccurs': 'unbounded', 'inverse': 'ConnectivityNode.TopologicalNode', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': False})
+    Terminal: list[Terminal] = field(default_factory=list, metadata={'type': 'Association', 'stereotypes': ['AggregateOf'], 'minOccurs': '0', 'maxOccurs': 'unbounded', 'inverse': 'Terminal.TopologicalNode', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': False})
+
+@dataclass(repr=False)
+class TownDetail(Identity):
+    code: Optional[str] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': ['Attribute'], 'minOccurs': '0', 'maxOccurs': '1', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+    country: Optional[str] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': ['Attribute'], 'minOccurs': '0', 'maxOccurs': '1', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+    name: Optional[str] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': ['Attribute'], 'minOccurs': '0', 'maxOccurs': '1', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+    section: Optional[str] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': ['Attribute'], 'minOccurs': '0', 'maxOccurs': '1', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+    stateOrProvince: Optional[str] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': ['Attribute'], 'minOccurs': '0', 'maxOccurs': '1', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+
+@dataclass(repr=False)
+class TransformerEnd(IdentifiedObject):
+    endNumber: Optional[int] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': ['Attribute'], 'minOccurs': '1', 'maxOccurs': '1', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+    BaseVoltage: Optional[BaseVoltage] = field(default=None, metadata={'type': 'Association', 'stereotypes': ['ByReference'], 'minOccurs': '1', 'maxOccurs': '1', 'inverse': 'BaseVoltage.TransformerEnds', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+    Terminal: Optional[Terminal] = field(default=None, metadata={'type': 'Association', 'stereotypes': ['ByReference'], 'minOccurs': '1', 'maxOccurs': '1', 'inverse': 'Terminal.TransformerEnd', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+    PhaseTapChanger: Optional[PhaseTapChanger] = field(default=None, metadata={'type': 'Association', 'stereotypes': [], 'minOccurs': '0', 'maxOccurs': '1', 'inverse': 'PhaseTapChanger.TransformerEnd', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': False})
+    RatioTapChanger: Optional[RatioTapChanger] = field(default=None, metadata={'type': 'Association', 'stereotypes': [], 'minOccurs': '0', 'maxOccurs': '1', 'inverse': 'RatioTapChanger.TransformerEnd', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': False})
+    grounded: Optional[bool] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': [], 'minOccurs': '1', 'maxOccurs': '1', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+    rground: Optional[float | Resistance] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': [], 'minOccurs': '0', 'maxOccurs': '1', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+    xground: Optional[float | Reactance] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': [], 'minOccurs': '0', 'maxOccurs': '1', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+
+@dataclass(repr=False)
+class PowerTransformerEnd(TransformerEnd):
+    b: Optional[float | Susceptance] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': ['Attribute'], 'minOccurs': '1', 'maxOccurs': '1', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+    connectionKind: Optional[WindingConnection] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': ['enumeration', 'Attribute'], 'minOccurs': '1', 'maxOccurs': '1', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+    g: Optional[float | Conductance] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': ['Attribute'], 'minOccurs': '1', 'maxOccurs': '1', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+    r: Optional[float | Resistance] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': ['Attribute'], 'minOccurs': '1', 'maxOccurs': '1', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+    ratedS: Optional[float | ApparentPower] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': ['Attribute'], 'minOccurs': '1', 'maxOccurs': '1', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+    ratedU: Optional[float | Voltage] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': ['Attribute'], 'minOccurs': '1', 'maxOccurs': '1', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+    x: Optional[float | Reactance] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': ['Attribute'], 'minOccurs': '1', 'maxOccurs': '1', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+    PowerTransformer: Optional[PowerTransformer] = field(default=None, metadata={'type': 'Association', 'stereotypes': ['ByReference'], 'minOccurs': '1', 'maxOccurs': '1', 'inverse': 'PowerTransformer.PowerTransformerEnd', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+    phaseAngleClock: Optional[int] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': [], 'minOccurs': '1', 'maxOccurs': '1', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+    b0: Optional[float | Susceptance] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': [], 'minOccurs': '1', 'maxOccurs': '1', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+    g0: Optional[float | Conductance] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': [], 'minOccurs': '1', 'maxOccurs': '1', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+    r0: Optional[float | Resistance] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': [], 'minOccurs': '1', 'maxOccurs': '1', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+    x0: Optional[float | Reactance] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': [], 'minOccurs': '1', 'maxOccurs': '1', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+
+@dataclass(repr=False)
+class ValueAliasSet(IdentifiedObject):
+    Commands: list[Command] = field(default_factory=list, metadata={'type': 'Association', 'stereotypes': [], 'minOccurs': '0', 'maxOccurs': 'unbounded', 'inverse': 'Command.ValueAliasSet', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': False})
+    Discretes: list[Discrete] = field(default_factory=list, metadata={'type': 'Association', 'stereotypes': [], 'minOccurs': '0', 'maxOccurs': 'unbounded', 'inverse': 'Discrete.ValueAliasSet', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': False})
+    RaiseLowerCommands: list[RaiseLowerCommand] = field(default_factory=list, metadata={'type': 'Association', 'stereotypes': [], 'minOccurs': '0', 'maxOccurs': 'unbounded', 'inverse': 'RaiseLowerCommand.ValueAliasSet', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': False})
+    Values: list[ValueToAlias] = field(default_factory=list, metadata={'type': 'Association', 'stereotypes': ['AggregateOf'], 'minOccurs': '0', 'maxOccurs': 'unbounded', 'inverse': 'ValueToAlias.ValueAliasSet', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': False})
+
+@dataclass(repr=False)
+class ValueToAlias(IdentifiedObject):
+    value: Optional[int] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': [], 'minOccurs': '1', 'maxOccurs': '1', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+    ValueAliasSet: Optional[ValueAliasSet] = field(default=None, metadata={'type': 'Association', 'stereotypes': ['ByReference'], 'minOccurs': '1', 'maxOccurs': '1', 'inverse': 'ValueAliasSet.Values', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+
+@dataclass(repr=False)
+class VisibilityLayer(IdentifiedObject):
+    drawingOrder: Optional[int] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': ['Attribute'], 'minOccurs': '0', 'maxOccurs': '1', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+    VisibleObjects: list[DiagramObject] = field(default_factory=list, metadata={'type': 'Association', 'stereotypes': ['ByReference'], 'minOccurs': '1', 'maxOccurs': 'unbounded', 'inverse': 'DiagramObject.VisibilityLayers', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+
+@dataclass(repr=False)
+class VoltageLevel(EquipmentContainer):
+    highVoltageLimit: Optional[float | Voltage] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': ['Attribute'], 'minOccurs': '0', 'maxOccurs': '1', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+    lowVoltageLimit: Optional[float | Voltage] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': ['Attribute'], 'minOccurs': '0', 'maxOccurs': '1', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+    BaseVoltage: Optional[BaseVoltage] = field(default=None, metadata={'type': 'Association', 'stereotypes': ['ByReference'], 'minOccurs': '1', 'maxOccurs': '1', 'inverse': 'BaseVoltage.VoltageLevel', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+    Substation: Optional[Substation] = field(default=None, metadata={'type': 'Association', 'stereotypes': ['OfAggregate', 'ByReference'], 'minOccurs': '1', 'maxOccurs': '1', 'inverse': 'Substation.VoltageLevels', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+    Bays: list[Bay] = field(default_factory=list, metadata={'type': 'Association', 'stereotypes': ['AggregateOf'], 'minOccurs': '0', 'maxOccurs': 'unbounded', 'inverse': 'Bay.VoltageLevel', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': False})
+
+@dataclass(repr=False)
+class VoltageLimit(OperationalLimit):
+    normalValue: Optional[float | Voltage] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': ['Attribute'], 'minOccurs': '1', 'maxOccurs': '1', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+    value: Optional[float | Voltage] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': ['Attribute'], 'minOccurs': '1', 'maxOccurs': '1', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+
+@dataclass(repr=False)
+class VsCapabilityCurve(Curve):
+    VsConverterDCSides: list[VsConverter] = field(default_factory=list, metadata={'type': 'Association', 'stereotypes': [], 'minOccurs': '0', 'maxOccurs': 'unbounded', 'inverse': 'VsConverter.CapabilityCurve', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': False})
+
+@dataclass(repr=False)
+class VsConverter(ACDCConverter):
+    maxModulationIndex: Optional[float] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': ['Attribute'], 'minOccurs': '0', 'maxOccurs': '1', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+    CapabilityCurve: Optional[VsCapabilityCurve] = field(default=None, metadata={'type': 'Association', 'stereotypes': ['ShadowExtension', 'ByReference'], 'minOccurs': '0', 'maxOccurs': '1', 'inverse': 'VsCapabilityCurve.VsConverterDCSides', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+    targetPowerFactorPcc: Optional[float] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': ['Attribute'], 'minOccurs': '0', 'maxOccurs': '1', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+    targetPWMfactor: Optional[float] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': ['Attribute'], 'minOccurs': '0', 'maxOccurs': '1', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+    droop: Optional[float | PU] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': ['Attribute'], 'minOccurs': '0', 'maxOccurs': '1', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+    droopCompensation: Optional[float | Resistance] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': ['Attribute'], 'minOccurs': '0', 'maxOccurs': '1', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+    pPccControl: Optional[VsPpccControlKind] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': ['enumeration'], 'minOccurs': '1', 'maxOccurs': '1', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+    qPccControl: Optional[VsQpccControlKind] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': ['enumeration'], 'minOccurs': '1', 'maxOccurs': '1', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+    qShare: Optional[float | PerCent] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': ['Attribute'], 'minOccurs': '0', 'maxOccurs': '1', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+    targetPhasePcc: Optional[float | AngleDegrees] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': ['Attribute'], 'minOccurs': '0', 'maxOccurs': '1', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+    targetQpcc: Optional[float | ReactivePower] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': ['Attribute'], 'minOccurs': '0', 'maxOccurs': '1', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+    targetUpcc: Optional[float | Voltage] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': ['Attribute'], 'minOccurs': '0', 'maxOccurs': '1', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+    delta: Optional[float | AngleDegrees] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': ['Attribute'], 'minOccurs': '1', 'maxOccurs': '1', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+    uv: Optional[float | Voltage] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': ['Attribute'], 'minOccurs': '1', 'maxOccurs': '1', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+
+@dataclass(repr=False)
+class WaveTrap(AuxiliaryEquipment):
+    pass
+
+@dataclass(repr=False)
+class WindGeneratingUnit(GeneratingUnit):
+    windGenUnitType: Optional[WindGenUnitKind] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': ['enumeration', 'Attribute'], 'minOccurs': '1', 'maxOccurs': '1', 'namespace': 'http://iec.ch/TC57/CIM100#', 'serialize': True})
+    WindPowerPlant: Optional[WindPowerPlant] = field(default=None, metadata={'type': 'Association', 'stereotypes': ['European'], 'minOccurs': '0', 'maxOccurs': '1', 'inverse': 'WindPowerPlant.WindGeneratingUnits', 'namespace': 'http://iec.ch/TC57/CIM100-European#', 'serialize': True})
+
+@dataclass(repr=False)
+class WindPowerPlant(PowerSystemResource):
+    WindGeneratingUnits: list[WindGeneratingUnit] = field(default_factory=list, metadata={'type': 'Association', 'stereotypes': ['European'], 'minOccurs': '0', 'maxOccurs': 'unbounded', 'inverse': 'WindGeneratingUnit.WindPowerPlant', 'namespace': 'http://iec.ch/TC57/CIM100-European#', 'serialize': False})
+
+@dataclass(repr=False)
+class WorkLocation(Location):
+    pass
+
+@dataclass(repr=False)
+class ServiceLocation(WorkLocation):
+    pass
 
 __all__ = [
     'ACDCConverter',
