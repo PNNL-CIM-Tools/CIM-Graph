@@ -16,7 +16,7 @@ DEFAULT_CIM_PROFILE = 'cimhub_2026'
 DEFAULT_URL = 'http://localhost:8889/bigdata/namespace/kb/sparql'
 DEFAULT_DATABASE = 'powergridmodel'
 DEFAULT_HOST = 'localhost'
-DEFAULT_PORT = '61613'
+DEFAULT_PORT = 61613
 DEFAULT_USERNAME = 'system'
 DEFAULT_PASSWORD = 'manager'
 DEFAULT_IEC61970_301 = 8
@@ -208,17 +208,12 @@ def get_host() -> str:
     return host
 
 @cache
-def get_port() -> str:
-    """
-    Returns the CIM profile to be used for object graph
-    Returns:
-        port: str
-    """
+def get_port() -> int:
     port = os.getenv('CIMG_PORT')
     if port is None:
         _log.warning('CIMG_PORT environment variable is not set.')
-        port = DEFAULT_PORT
-    return port
+        return DEFAULT_PORT
+    return int(port)
 
 @cache
 def get_validation_log_level() -> str:

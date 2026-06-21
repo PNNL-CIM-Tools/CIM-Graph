@@ -235,6 +235,13 @@ class ConnectionInterface(ABC):
                     cim_class: type, identifier: UUID | str, attribute: str,
                     edge_class: type, edge_mRID: str) -> object:
 
+        # Normalize identifier to UUID so it matches the key stored by create_object.
+        if isinstance(identifier, str):
+            try:
+                identifier = UUID(identifier.strip('_').lower())
+            except ValueError:
+                pass
+
         edge_object = None
         association = self.check_attribute(cim_class, attribute)
         if association is not None:

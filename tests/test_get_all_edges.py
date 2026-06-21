@@ -50,7 +50,7 @@ def network(env_setup, request) -> GraphModel:
 
     connection, mrid, distributed = request.param['connection'](), request.param['mrid'], request.param['distributed']
 
-    feeder = connection.get_object(mrid=mrid)
+    feeder = connection.get_object(mRID=mrid)
     assert feeder, 'Feeder object not found.'
     yield FeederModel(connection=connection, container=feeder, distributed=distributed)
 
