@@ -3,6 +3,7 @@ from __future__ import annotations
 import logging
 import re
 from collections import defaultdict
+from pathlib import Path
 from uuid import UUID
 
 from defusedxml.ElementTree import parse
@@ -17,24 +18,20 @@ _log = logging.getLogger(__name__)
 
 class XMLFile(ConnectionInterface):
 
-    def __init__(self, filename:str|list[str], namespaces:dict=None, cim_override=None):
-        # clear cached env variables
-        get_namespace.cache_clear()
-        get_cim_profile.cache_clear()
-        get_iec61970_301.cache_clear()
-        get_validation_log_level.cache_clear()
-        get_use_units.cache_clear()
+    def __init__(self, filename:str|list[str]=None, namespaces:dict=None,
+                 metadata:str=None):
+        super().__init__()
 
-        # retrieve env variables
-        if cim_override is not None:
-            self.cim_profile = 'merged'
-            self.cim = cim_override
-        else:
-            self.cim_profile, self.cim = get_cim_profile()
-        self.namespace = get_namespace()
-        self.iec61970_301 = get_iec61970_301()
-        self.log_level = get_validation_log_level()
-        self.use_units = get_use_units()
+        # A metadata graph (IEC 61970-552/-557) names the model's part files.
+        # Resolve it into a list of part paths to load into one graph.
+        self.metadata_graph = None
+        if metadata is not None:
+            from cimgraph.databases.fileparsers.metadata import (parse_metadata,
+                                                                 resolve_part_paths)
+            self.metadata_graph = parse_metadata(metadata)
+            base_dir = Path(metadata).resolve().parent
+            filename = [str(p) for p in resolve_part_paths(self.metadata_graph, base_dir)]
+
         self.filename = filename
         self.rdf = '''{http://www.w3.org/1999/02/22-rdf-syntax-ns#}'''
 
@@ -47,38 +44,45 @@ class XMLFile(ConnectionInterface):
     def connect(self):
         # if not graph:
         if self.filename is not None:
-            try:
-                self.tree = parse(self.filename)
-                self.root = self.tree.getroot()
-                # Extract namespaces from the XML header
-                extracted_ns = self.extract_namespaces_from_header()
-
-                # Update namespaces with extracted ones (file namespaces take precedence)
-                # Note: 'rdf' is stored with curly braces for backward compatibility
-                for prefix, uri in extracted_ns.items():
-                    if prefix == 'rdf':
-                        # Keep rdf with curly braces for direct attribute access
-                        self.rdf = '{' + uri + '}'
+            # filename may be a single path or a list of part files (e.g. from a
+            # metadata graph). Parse each into its own root; the two-pass graph
+            # build then accumulates them all into one graph.
+            filenames = [self.filename] if isinstance(self.filename, str) else list(self.filename)
+            self.trees = []
+            self.roots = []
+            for fname in filenames:
+                try:
+                    tree = parse(fname)
+                    self.trees.append(tree)
+                    self.roots.append(tree.getroot())
+                    # Extract namespaces from this file's XML header and merge.
+                    # Note: 'rdf' is stored with curly braces for backward compat.
+                    for prefix, uri in self.extract_namespaces_from_header(fname).items():
+                        if prefix == 'rdf':
+                            self.rdf = '{' + uri + '}'
                         self.namespaces[prefix] = uri
-                    else:
-                        # Other namespaces without curly braces for find/findall
-                        self.namespaces[prefix] = uri
+                except:
+                    _log.warning(f'File {fname} not found. Skipping.')
 
-            except:
-                _log.warning(f'File {self.filename} not found. Defaulting to empty network graph')
-                self.tree = None
-                self.root = None
+            # Back-compat: single-file consumers still read self.tree / self.root.
+            self.tree = self.trees[0] if self.trees else None
+            self.root = self.roots[0] if self.roots else None
+            if not self.roots:
+                _log.warning('No files could be parsed. Defaulting to empty network graph')
             self.class_index = {}
             self.graph = defaultdict(lambda: defaultdict(dict))
         else:
-            raise ValueError('filename must be specified')
+            raise ValueError('filename or metadata must be specified')
 
-    def extract_namespaces_from_header(self) -> dict:
+    def extract_namespaces_from_header(self, filename:str=None) -> dict:
         """
         Extract namespace declarations from the XML root element.
 
         This method parses the xmlns: attributes from the root RDF element by reading
         the raw XML file and using regex to extract namespace declarations.
+
+        Args:
+            filename: file to read. Defaults to self.filename (single-file case).
 
         Returns:
             dict: Dictionary mapping namespace prefixes to their URIs WITHOUT curly braces.
@@ -86,7 +90,9 @@ class XMLFile(ConnectionInterface):
                   For direct tag matching, add curly braces when needed.
                   e.g., {'cim': 'http://example.com#'}
         """
-        if self.filename is None:
+        if filename is None:
+            filename = self.filename
+        if filename is None:
             _log.warning('No filename specified, cannot extract namespaces')
             return {}
 
@@ -94,7 +100,7 @@ class XMLFile(ConnectionInterface):
 
         try:
             # Read the file to extract namespace declarations
-            with open(self.filename, 'r', encoding='utf-8') as f:
+            with open(filename, 'r', encoding='utf-8') as f:
                 # Read only the first few KB to find the root element
                 content = f.read(8192)  # Read first 8KB which should contain the root element
 
@@ -173,18 +179,21 @@ class XMLFile(ConnectionInterface):
         if graph is not None:
             self.graph = graph
 
-        if self.root is None:
+        if not self.roots:
             _log.warning('No root element found in XML file')
             self.graph = defaultdict(lambda: defaultdict(dict))
             return self.graph
 
-        # Pass 1: create all node objects
-        for element in self.root:
-            self.parse_nodes(element)
+        # Pass 1: create all node objects across every part file, so edges in
+        # later passes can resolve targets defined in any file.
+        for root in self.roots:
+            for element in root:
+                self.parse_nodes(element)
 
-        # Pass 2: wire up all edges and attribute values
-        for element in self.root:
-            self.parse_edges(element)
+        # Pass 2: wire up all edges and attribute values across every part file.
+        for root in self.roots:
+            for element in root:
+                self.parse_edges(element)
 
         return self.graph
 

@@ -102,11 +102,14 @@ class TestBlazegraphSETO(unittest.TestCase):
 
     def test_merged_profile_feeder_model(self):
         """Test FeederModel with a merged connectivity+electrical profile."""
-        from cimgraph.data_profile.cim18gmdm import connectivity, electrical
-        from cimgraph.data_profile.merge import merge_profiles
+        from cimgraph.core.env_vars import get_cim_profile
 
-        merged = merge_profiles(connectivity, electrical)
-        database = BlazegraphConnection(cim_override=merged)
+        os.environ['CIMG_CIM_PROFILE'] = (
+            'cimgraph.data_profile.cim18gmdm.connectivity,'
+            'cimgraph.data_profile.cim18gmdm.electrical'
+        )
+        database = BlazegraphConnection()
+        _, merged = get_cim_profile()
 
         feeder = merged.Feeder(identifier=self.feeder_mrid)
         network = FeederModel(connection=database, container=feeder, distributed=False)

@@ -166,6 +166,54 @@ def test_merge_three_profiles():
     assert loc_names.issubset(merged_names)
 
 
+# ── Real I/O round-trip ─────────────────────────────────────────────────
+
+# An in-repo CIM100 model (same namespace family as the cim18gmdm
+# sub-profiles), so the round-trip needs no external data or database.
+_ROUND_TRIP_MODEL = Path(__file__).parent / 'test_models' / 'ieee9500bal.xml'
+
+
+def test_merged_profile_reads_and_writes_real_xml(tmp_path, monkeypatch):
+    """End-to-end: a runtime-merged profile drives XMLFile + FeederModel.
+
+    Proves the merged module satisfies the real profile contract — it is
+    read into a graph and written back out — not just its in-memory shape.
+    """
+    from cimgraph import utils
+    from cimgraph.core.env_vars import get_cim_profile
+    from cimgraph.databases import XMLFile
+    from cimgraph.models import FeederModel
+
+    monkeypatch.setenv(
+        'CIMG_CIM_PROFILE',
+        'cimgraph.data_profile.cim18gmdm.connectivity,'
+        'cimgraph.data_profile.cim18gmdm.electrical',
+    )
+
+    file = XMLFile(filename=str(_ROUND_TRIP_MODEL))
+    network = FeederModel(container=None, connection=file)
+
+    _, merged = get_cim_profile()
+    MergedACLineSegment = getattr(merged, 'ACLineSegment')
+    assert MergedACLineSegment in network.graph
+    assert len(network.graph[MergedACLineSegment]) > 0
+
+    # Write side honours the merged profile's string field metadata.
+    # cim18gmdm fields live in the CIM101 draft namespace, so it must be
+    # mapped to a prefix (same requirement as the canonical profile).
+    out = tmp_path / 'round_trip.xml'
+    utils.write_xml(
+        network=network,
+        filename=str(out),
+        namespaces={
+            'cim': 'http://cim.ucaiug.io/CIM101/draft#',
+            'gmdm': 'http://epri.com/gmdm/2025#',
+        },
+    )
+    assert out.exists()
+    assert out.stat().st_size > 0
+
+
 # ── Type-stub generation tests ─────────────────────────────────────────
 
 

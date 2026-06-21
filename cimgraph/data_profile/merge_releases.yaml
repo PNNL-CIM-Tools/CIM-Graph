@@ -1,0 +1,19 @@
+# Stable merged profile releases.
+# Each entry produces a pre-baked __init__.py committed to the repo.
+# Run scripts/build_merged_profiles.py to regenerate after adding or changing entries.
+#
+# parts: ordered list of sub-profile module paths to merge.
+#   - Diagram is intentionally excluded (not part of the power-flow model).
+#   - canonical/ is intentionally excluded (it is what this merge replaces).
+# description: human-readable note shown in the generated file header.
+
+releases:
+  - name: cim18gmdm
+    package: cimgraph.data_profile.cim18gmdm
+    parts:
+      - cimgraph.data_profile.cim18gmdm.connectivity
+      - cimgraph.data_profile.cim18gmdm.electrical
+      - cimgraph.data_profile.cim18gmdm.location
+      - cimgraph.data_profile.cim18gmdm.asset
+      - cimgraph.data_profile.cim18gmdm.marketnode
+    description: "EPRI GMDM CIM18 merged profile (replaces canonical.py)"

@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rdf:RDF
+  xmlns:cim="http://cim.ucaiug.io/ns#"
+  xmlns:md="http://iec.ch/TC57/61970-552/ModelDescription/3#"
+  xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+  xmlns:dcat="http://www.w3.org/ns/dcat#"
+  xmlns:dcterms="http://purl.org/dc/terms/"
+  xmlns:spdx="http://spdx.org/rdf/terms#"
+>
+	<md:FullModel rdf:about="urn:uuid:D8425A0E-02C6-4D47-B75E-19B6C7197D5F" />
+	<dcat:Distribution rdf:about="urn:uuid:6D019CF0-CB92-43A2-A721-8A5EAFCCDD1B">
+		<dcat:Distribution.accessURL>\contents\MicroGridTestConfiguration_EQ_BD.xml</dcat:Distribution.accessURL>
+		<dcat:Distribution.byteSize>16,912</dcat:Distribution.byteSize>
+		<dcat:Distribution.mediaType>rdf+xml</dcat:Distribution.mediaType>
+		<spdx:Distribution.checksum>C6BF1ED92784195A84C4B3859C9C79EC23CC1ABE2CC216FC9861EB2123F7A187</spdx:Distribution.checksum>
+		<dcterms:Distribution.format>rdf+xml</dcterms:Distribution.format>
+		<dcterms:Distribution.issued>2014-06-01T11:20:39</dcterms:Distribution.issued>
+		<dcterms:Distribution.license>The model is owned by ENTSO-E and is provided by ENTSO-E “as it is”. To the fullest extent permitted by law, ENTSO-E shall not be liable for any damages of any kind arising out of the use of the model (including any of its subsequent modifications). ENTSO-E neither warrants, nor represents that the use of the model will not infringe the rights of third parties. Any use of the model shall  include a reference to ENTSO-E. ENTSO-E web site is the only official source of information related to the model.</dcterms:Distribution.license>
+		<dcat:Distribution.DataSet rdf:resource="urn:uuid:7C390692-2DB9-4FAA-8AFB-1A67CE40C846"/>
+		<dcterms:Distribution.conformsTo rdf:resource="http://entsoe.eu/CIM/EquipmentBoundary/3/1"/>
+		<dcterms:Distribution.conformsTo rdf:resource="http://entsoe.eu/CIM/EquipmentBoundaryOperation/3/1"/>
+	</dcat:Distribution>
+	<dcat:Distribution rdf:about="urn:uuid:6D019CF0-CB92-43A2-A721-8A5EAFCCDD1B">
+		<dcat:Distribution.accessURL>\contents\MicroGridTestConfiguration_TP_BD.xml</dcat:Distribution.accessURL>
+		<dcat:Distribution.byteSize>10,250</dcat:Distribution.byteSize>
+		<dcat:Distribution.mediaType>rdf+xml</dcat:Distribution.mediaType>
+		<spdx:Distribution.checksum>AB365A0CA1D2722FBC5A731573BD44090BC3D34FF993A5625AE218F3DAC5C843</spdx:Distribution.checksum>
+		<dcterms:Distribution.format>rdf+xml</dcterms:Distribution.format>
+		<dcterms:Distribution.issued>2014-06-01T11:20:39</dcterms:Distribution.issued>
+		<dcterms:Distribution.license>The model is owned by ENTSO-E and is provided by ENTSO-E “as it is”. To the fullest extent permitted by law, ENTSO-E shall not be liable for any damages of any kind arising out of the use of the model (including any of its subsequent modifications). ENTSO-E neither warrants, nor represents that the use of the model will not infringe the rights of third parties. Any use of the model shall  include a reference to ENTSO-E. ENTSO-E web site is the only official source of information related to the model.</dcterms:Distribution.license>
+		<dcat:Distribution.DataSet rdf:resource="urn:uuid:0B2384E3-9147-4200-8AD6-A6C8CC3E8720"/>
+		<dcterms:Distribution.conformsTo rdf:resource="http://entsoe.eu/CIM/TopologyBoundary/3/1"/>
+	</dcat:Distribution>
+	<cim:BoundaryModel rdf:about="urn:uuid:7C390692-2DB9-4FAA-8AFB-1A67CE40C846">
+		<dcterms:MetaThing.title>Equipment frame group</dcterms:MetaThing.title>
+		<dcterms:Distribution.issued>2014-06-01T11:20:39</dcterms:Distribution.issued>
+		<cim:BoundaryModel.Defines rdf:resource="urn:uuid:024FE2A8-D52B-4614-9EC0-1FF8FE2E6789"/>
+		<cim:GridDataset.Contains rdf:resource="urn:uuid:14124768-E93E-4B85-9811-F15753754E64"/>
+		<cim:GridDataset.Contains rdf:resource="urn:uuid:9F54CFD2-9A07-4817-8648-CB3319ECF6B5"/>
+	</cim:BoundaryModel>
+	<cim:BoundaryModel rdf:about="urn:uuid:14124768-E93E-4B85-9811-F15753754E64">
+		<dcterms:MetaThing.title>Equipment data</dcterms:MetaThing.title>
+		<dcterms:Distribution.issued>2014-06-01T11:20:39</dcterms:Distribution.issued>
+		<cim:BoundaryModel.Defines rdf:resource="urn:uuid:024FE2A8-D52B-4614-9EC0-1FF8FE2E6789"/>
+		<cim:GridDataset.profileType>EQ</cim:GridDataset.profileType>
+	</cim:BoundaryModel>
+	<cim:BoundaryModel rdf:about="urn:uuid:14124768-E93E-4B85-9811-F15753754E64">
+		<dcterms:MetaThing.title>Operations data</dcterms:MetaThing.title>
+		<dcterms:Distribution.issued>2014-06-01T11:20:39</dcterms:Distribution.issued>
+		<cim:BoundaryModel.Defines rdf:resource="urn:uuid:024FE2A8-D52B-4614-9EC0-1FF8FE2E6789"/>
+		<cim:GridDataset.profileType>OP</cim:GridDataset.profileType>
+	</cim:BoundaryModel>
+	<cim:BoundaryModel rdf:about="urn:uuid:7C390692-2DB9-4FAA-8AFB-1A67CE40C846">
+		<dcterms:MetaThing.title>Topology frame group</dcterms:MetaThing.title>
+		<dcterms:Distribution.issued>2014-06-01T11:20:39</dcterms:Distribution.issued>
+		<cim:BoundaryModel.Defines rdf:resource="urn:uuid:024FE2A8-D52B-4614-9EC0-1FF8FE2E6789"/>
+		<cim:GridDataset.Contains rdf:resource="urn:uuid:2D1A27A4-C19E-4674-A7E5-37E91F30DE4D"/>
+	</cim:BoundaryModel>
+	<cim:BoundaryModel rdf:about="urn:uuid:2D1A27A4-C19E-4674-A7E5-37E91F30DE4D">
+		<dcterms:MetaThing.title>Topology data</dcterms:MetaThing.title>
+		<dcterms:Distribution.issued>2014-06-01T11:20:39</dcterms:Distribution.issued>
+		<cim:BoundaryModel.Defines rdf:resource="urn:uuid:024FE2A8-D52B-4614-9EC0-1FF8FE2E6789"/>
+		<cim:GridDataset.profileType>TP</cim:GridDataset.profileType>
+	</cim:BoundaryModel>
+	<cim:Boundary rdf:about="_65dd04e792584b3b912374e35dec032e">
+		<dcterms:MetaThing.title>http://entsoe.eu/Boundary/CGMES/2.4.15</dcterms:MetaThing.title>
+	</cim:Boundary>
+</rdf:RDF>

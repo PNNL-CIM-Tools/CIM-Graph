@@ -21,13 +21,8 @@ _log = logging.getLogger(__name__)
 
 class MySQLJSONConnection(ConnectionInterface):
 
-    def __init__(self, cim_override=None):
-        if cim_override is not None:
-            self.cim_profile = 'merged'
-            self.cim = cim_override
-        else:
-            self.cim_profile, self.cim = get_cim_profile()
-        self.namespace = get_namespace()
+    def __init__(self):
+        super().__init__()
         self.host = get_host()
         self.port = get_port()
         self.username = get_username()

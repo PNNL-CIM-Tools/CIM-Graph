@@ -1,10 +1,14 @@
 import importlib
 import logging
 import os
+import types
 from functools import cache
 
 _log = logging.getLogger(__name__)
 
+# Memo for merged modules: spec string → ModuleType.
+# Keyed outside @cache so it survives cache_clear() calls from connection __init__.
+_merge_memo: dict[str, types.ModuleType] = {}
 
 DEFAULT_NAMESPACE = 'http://iec.ch/TC57/CIM100#'
 DEFAULT_CIM_PROFILE = 'cimhub_2023'
@@ -19,25 +23,41 @@ DEFAULT_USE_UNITS = 'false'
 DEFAULT_VALIDATION_LOG_LEVEL = 'WARNING'
 DEFAULT_ALLOW_UNDEFINED_ATTRIBUTES = 'false'
 
+
+def _qualify(path: str) -> str:
+    return path if '.' in path else 'cimgraph.data_profile.' + path
+
+
 @cache
-def get_cim_profile() -> str:
-    """
-    Returns the CIM profile to be used for object graph
-    Returns:
-        cim_profile: library
+def get_cim_profile() -> tuple[str, types.ModuleType]:
+    """Return (cim_profile_str, cim_module) for the active CIM profile.
+
+    CIMG_CIM_PROFILE may be:
+    - A single module path: 'cimhub_2023' or 'cimgraph.data_profile.cimhub_2023'
+    - A comma-separated list of sub-profile paths that are merged at runtime:
+      'cimgraph.data_profile.cim18gmdm.connectivity,cimgraph.data_profile.cim18gmdm.electrical'
+
+    Merged modules are memoised in _merge_memo (not in the @cache) so that the
+    same spec string always returns the same module object even when cache_clear()
+    is called by a connection __init__.
     """
     cim_profile = os.getenv('CIMG_CIM_PROFILE')
     if cim_profile is None:
         raise ValueError('CIMG_CIM_PROFILE environment variable is not set.')
-    else:
-        # try:
-            if '.' in cim_profile:
-                cim = importlib.import_module(cim_profile)
-            else:
-                cim = importlib.import_module('cimgraph.data_profile.'+cim_profile)
-        # except:
-        #     raise ValueError('CIMG_CIM_PROFILE environment variable must be name of a valid object module on the PATH')
-    return cim_profile, cim
+
+    parts = [p.strip() for p in cim_profile.split(',') if p.strip()]
+
+    if len(parts) == 1:
+        cim = importlib.import_module(_qualify(parts[0]))
+        return cim_profile, cim
+
+    # Comma-spec: build or retrieve a merged module.
+    spec_key = ','.join(parts)
+    if spec_key not in _merge_memo:
+        from cimgraph.data_profile.merge import merge_profiles
+        mods = [importlib.import_module(_qualify(p)) for p in parts]
+        _merge_memo[spec_key] = merge_profiles(*mods)
+    return spec_key, _merge_memo[spec_key]
 
 @cache
 def get_namespace() -> str:
