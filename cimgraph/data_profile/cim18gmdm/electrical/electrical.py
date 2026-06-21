@@ -39,16 +39,11 @@ class IdentifiedObject(Identity):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            The description is a free human readable text describing or naming the
-            object. It may be non unique and may not correlate to a naming hierarchy.
-            '''
-
         })
     '''
     The description is a free human readable text describing or naming
@@ -60,16 +55,11 @@ class IdentifiedObject(Identity):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            The name is any free human readable and possibly non unique text naming
-            the object.
-            '''
-
         })
     '''
     The name is any free human readable and possibly non unique text naming
@@ -123,16 +113,12 @@ class Terminal(ACDCTerminal):
         default_factory=list,
         metadata={
         'type': 'Association',
+        'stereotypes': [],
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'RegulatingControl.Terminal',
         'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
-        'docstring':
-            '''
-            The controls regulating this terminal.
-            '''
-
         })
     '''
     The controls regulating this terminal.
@@ -163,17 +149,13 @@ class FossilFuel(IdentifiedObject):
     ThermalGeneratingUnit: Optional[ThermalGeneratingUnit] = field(
         default=None,
         metadata={
-        'type': 'ByReference',
+        'type': 'Association',
+        'stereotypes': ['ByReference'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'ThermalGeneratingUnit.FossilFuels',
         'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            A thermal generating unit may have one or more fossil fuels.
-            '''
-
         })
     '''
     A thermal generating unit may have one or more fossil fuels.
@@ -183,15 +165,12 @@ class FossilFuel(IdentifiedObject):
         default_factory=list,
         metadata={
         'type': 'Association',
+        'stereotypes': [],
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'PowerElectronicsThermalUnit.FossilFuels',
         'namespace': 'http://epri.com/gmdm/2025#',
         'serialize': False,
-        'docstring':
-            '''
-            '''
-
         })
     '''
     '''
@@ -255,32 +234,11 @@ class LoadResponseCharacteristic(IdentifiedObject):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Indicates the exponential voltage dependency model is to be used. If false,
-            the coefficient model is to be used.
-            The exponential voltage dependency model consist of the attributes:
-            - pVoltageExponent
-            - qVoltageExponent
-            - pFrequencyExponent
-            - qFrequencyExponent.
-            The coefficient model consist of the attributes:
-            - pConstantImpedance
-            - pConstantCurrent
-            - pConstantPower
-            - qConstantImpedance
-            - qConstantCurrent
-            - qConstantPower.
-            The sum of pConstantImpedance, pConstantCurrent and pConstantPower shall
-            equal 1.
-            The sum of qConstantImpedance, qConstantCurrent and qConstantPower shall
-            equal 1.
-            '''
-
         })
     '''
     Indicates the exponential voltage dependency model is to be used. If
@@ -307,15 +265,11 @@ class LoadResponseCharacteristic(IdentifiedObject):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Portion of active power load modelled as constant current.
-            '''
-
         })
     '''
     Portion of active power load modelled as constant current.
@@ -325,15 +279,11 @@ class LoadResponseCharacteristic(IdentifiedObject):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Portion of active power load modelled as constant impedance.
-            '''
-
         })
     '''
     Portion of active power load modelled as constant impedance.
@@ -343,15 +293,11 @@ class LoadResponseCharacteristic(IdentifiedObject):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Portion of active power load modelled as constant power.
-            '''
-
         })
     '''
     Portion of active power load modelled as constant power.
@@ -361,15 +307,11 @@ class LoadResponseCharacteristic(IdentifiedObject):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Exponent of per unit frequency effecting active power.
-            '''
-
         })
     '''
     Exponent of per unit frequency effecting active power.
@@ -379,15 +321,11 @@ class LoadResponseCharacteristic(IdentifiedObject):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Exponent of per unit voltage effecting real power.
-            '''
-
         })
     '''
     Exponent of per unit voltage effecting real power.
@@ -397,15 +335,11 @@ class LoadResponseCharacteristic(IdentifiedObject):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Portion of reactive power load modelled as constant current.
-            '''
-
         })
     '''
     Portion of reactive power load modelled as constant current.
@@ -415,15 +349,11 @@ class LoadResponseCharacteristic(IdentifiedObject):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Portion of reactive power load modelled as constant impedance.
-            '''
-
         })
     '''
     Portion of reactive power load modelled as constant impedance.
@@ -433,15 +363,11 @@ class LoadResponseCharacteristic(IdentifiedObject):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Portion of reactive power load modelled as constant power.
-            '''
-
         })
     '''
     Portion of reactive power load modelled as constant power.
@@ -451,15 +377,11 @@ class LoadResponseCharacteristic(IdentifiedObject):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Exponent of per unit frequency effecting reactive power.
-            '''
-
         })
     '''
     Exponent of per unit frequency effecting reactive power.
@@ -469,15 +391,11 @@ class LoadResponseCharacteristic(IdentifiedObject):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Exponent of per unit voltage effecting reactive power.
-            '''
-
         })
     '''
     Exponent of per unit voltage effecting reactive power.
@@ -487,16 +405,12 @@ class LoadResponseCharacteristic(IdentifiedObject):
         default_factory=list,
         metadata={
         'type': 'Association',
+        'stereotypes': [],
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'EnergyConsumer.LoadResponse',
         'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
-        'docstring':
-            '''
-            The set of loads that have the response characteristics.
-            '''
-
         })
     '''
     The set of loads that have the response characteristics.
@@ -545,16 +459,12 @@ class PerLengthImpedance(PerLengthLineParameter):
         default_factory=list,
         metadata={
         'type': 'Association',
+        'stereotypes': [],
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'ACLineSegment.PerLengthImpedance',
         'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
-        'docstring':
-            '''
-            All line segments described by this per-length impedance.
-            '''
-
         })
     '''
     All line segments described by this per-length impedance.
@@ -596,23 +506,11 @@ class PerLengthPhaseImpedance(PerLengthImpedance):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '1',
         'maxOccurs': '1',
         'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Conductor count identifies the number of phase, neutral, and other wires
-            represented in the phase impedance matrix and constrains the number of
-            elements in the matrix. Typically, Kron reduction is used for incorporating
-            effects of neutral impedance in the phase conductor values (so conductor
-            count only considers phase wires), but neutrals can be included in the
-            matrix (in which case conductor count would include the neutral wire(s)).
-            For a phase impedance matrix associated with the lines of a coupled line
-            segment group, the conductor count reflects the total of the conductors
-            associated with all the coupled line segments in the group.
-            '''
-
         })
     '''
     Conductor count identifies the number of phase, neutral, and other
@@ -631,16 +529,12 @@ class PerLengthPhaseImpedance(PerLengthImpedance):
         default_factory=list,
         metadata={
         'type': 'Association',
+        'stereotypes': [],
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'PhaseImpedanceData.PhaseImpedance',
         'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
-        'docstring':
-            '''
-            All data that belong to this conductor phase impedance.
-            '''
-
         })
     '''
     All data that belong to this conductor phase impedance.
@@ -698,23 +592,11 @@ class ACLineSegmentPhase(PowerSystemResource):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '1',
         'maxOccurs': '1',
         'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Sequence number provides the numbering for this line segment phase. When
-            impedance is directly described, sequence number binds the phase to the
-            column and row for entries in the per length phase impedance matrix (PhaseImpedanceData
-            of PerLengthPhaseImpedance). When used in conjunction with a wire assembly
-            description, sequence number associates the line segment phase to a position.
-            For a line segment not a part of a parallel line segment group, sequence
-            number starts at one and increments by one through each line segment phase
-            associated with the line segment. If there is a line segment phase for
-            neutral, it is numbered last.
-            '''
-
         })
     '''
     Sequence number provides the numbering for this line segment phase.
@@ -813,15 +695,11 @@ class Conductor(ConductingEquipment):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '1',
         'maxOccurs': '1',
         'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Segment length for calculating line segment capabilities.
-            '''
-
         })
     '''
     Segment length for calculating line segment capabilities.
@@ -891,17 +769,13 @@ class ACLineSegment(Conductor):
     PerLengthImpedance: Optional[PerLengthImpedance] = field(
         default=None,
         metadata={
-        'type': 'Attribute',
+        'type': 'Association',
+        'stereotypes': [],
         'minOccurs': '1',
         'maxOccurs': '1',
         'inverse': 'PerLengthImpedance.ACLineSegments',
         'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Per-length impedance of this line segment.
-            '''
-
         })
     '''
     Per-length impedance of this line segment.
@@ -953,18 +827,13 @@ class EnergyConsumer(EnergyConnection):
     LoadResponse: Optional[LoadResponseCharacteristic] = field(
         default=None,
         metadata={
-        'type': 'Attribute',
+        'type': 'Association',
+        'stereotypes': [],
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'LoadResponseCharacteristic.EnergyConsumer',
         'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            The load response characteristic of this load. If missing, this load is
-            assumed to be constant power.
-            '''
-
         })
     '''
     The load response characteristic of this load. If missing, this load
@@ -997,15 +866,11 @@ class EnergySource(EnergyConnection):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '1',
         'maxOccurs': '1',
         'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Phase-to-phase nominal voltage.
-            '''
-
         })
     '''
     Phase-to-phase nominal voltage.
@@ -1015,15 +880,11 @@ class EnergySource(EnergyConnection):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '1',
         'maxOccurs': '1',
         'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Positive sequence Thevenin resistance.
-            '''
-
         })
     '''
     Positive sequence Thevenin resistance.
@@ -1033,15 +894,11 @@ class EnergySource(EnergyConnection):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '1',
         'maxOccurs': '1',
         'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Positive sequence Thevenin reactance.
-            '''
-
         })
     '''
     Positive sequence Thevenin reactance.
@@ -1070,17 +927,13 @@ class RegulatingCondEq(EnergyConnection):
     RegulatingControl: Optional[RegulatingControl] = field(
         default=None,
         metadata={
-        'type': 'Attribute',
+        'type': 'Association',
+        'stereotypes': [],
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'RegulatingControl.RegulatingCondEq',
         'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            The regulating control scheme in which this equipment participates.
-            '''
-
         })
     '''
     The regulating control scheme in which this equipment participates.
@@ -1111,17 +964,12 @@ class PowerElectronicsConnection(RegulatingCondEq):
     controlMode: Optional[ ConverterControlModeKind ] = field(
         default=None,
         metadata={
-        'type': 'gmdm enumeration Attribute',
+        'type': 'Attribute',
+        'stereotypes': ['gmdm', 'enumeration', 'Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://epri.com/gmdm/2025#',
         'serialize': True,
-        'docstring':
-            '''
-            Inverter control mode indicating whether reactive power output is based
-            on constant PF or constant Q
-            '''
-
         })
     '''
     Inverter control mode indicating whether reactive power output is based
@@ -1132,16 +980,11 @@ class PowerElectronicsConnection(RegulatingCondEq):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Maximum reactive power limit. This is the maximum (nameplate) limit for
-            the unit.
-            '''
-
         })
     '''
     Maximum reactive power limit. This is the maximum (nameplate) limit
@@ -1152,16 +995,11 @@ class PowerElectronicsConnection(RegulatingCondEq):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Minimum reactive power limit for the unit. This is the minimum (nameplate)
-            limit for the unit.
-            '''
-
         })
     '''
     Minimum reactive power limit for the unit. This is the minimum (nameplate)
@@ -1172,16 +1010,11 @@ class PowerElectronicsConnection(RegulatingCondEq):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Nameplate apparent power rating for the unit.
-            The attribute shall have a positive value.
-            '''
-
         })
     '''
     Nameplate apparent power rating for the unit.
@@ -1192,17 +1025,11 @@ class PowerElectronicsConnection(RegulatingCondEq):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Rated voltage (nameplate data, Ur in IEC 60909-0). It is primarily used
-            for short circuit data exchange according to IEC 60909.
-            The attribute shall be a positive value.
-            '''
-
         })
     '''
     Rated voltage (nameplate data, Ur in IEC 60909-0). It is primarily
@@ -1214,17 +1041,12 @@ class PowerElectronicsConnection(RegulatingCondEq):
         default_factory=list,
         metadata={
         'type': 'Association',
+        'stereotypes': [],
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'PowerElectronicsUnit.PowerElectronicsConnection',
         'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
-        'docstring':
-            '''
-            An AC network connection may have several power electronics units connecting
-            through it.
-            '''
-
         })
     '''
     An AC network connection may have several power electronics units connecting
@@ -1254,16 +1076,11 @@ class RotatingMachine(RegulatingCondEq):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '1',
         'maxOccurs': '1',
         'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Nameplate apparent power rating for the unit.
-            The attribute shall have a positive value.
-            '''
-
         })
     '''
     Nameplate apparent power rating for the unit.
@@ -1274,17 +1091,11 @@ class RotatingMachine(RegulatingCondEq):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '1',
         'maxOccurs': '1',
         'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Rated voltage (nameplate data, Ur in IEC 60909-0). It is primarily used
-            for short circuit data exchange according to IEC 60909.
-            The attribute shall be a positive value.
-            '''
-
         })
     '''
     Rated voltage (nameplate data, Ur in IEC 60909-0). It is primarily
@@ -1295,18 +1106,13 @@ class RotatingMachine(RegulatingCondEq):
     GeneratingUnit: Optional[GeneratingUnit] = field(
         default=None,
         metadata={
-        'type': 'Attribute',
+        'type': 'Association',
+        'stereotypes': [],
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'GeneratingUnit.RotatingMachine',
         'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            A synchronous machine may operate as a generator and as such becomes a
-            member of a generating unit.
-            '''
-
         })
     '''
     A synchronous machine may operate as a generator and as such becomes
@@ -1385,15 +1191,11 @@ class ShuntCompensator(RegulatingCondEq):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '1',
         'maxOccurs': '1',
         'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            The maximum number of sections that may be switched in.
-            '''
-
         })
     '''
     The maximum number of sections that may be switched in.
@@ -1403,16 +1205,11 @@ class ShuntCompensator(RegulatingCondEq):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '1',
         'maxOccurs': '1',
         'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            The normal number of sections switched in. The value shall be between zero
-            and ShuntCompensator.maximumSections.
-            '''
-
         })
     '''
     The normal number of sections switched in. The value shall be between
@@ -1423,17 +1220,11 @@ class ShuntCompensator(RegulatingCondEq):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            An automatic voltage regulation delay (AVRDelay) which is the time delay
-            from a change in voltage to when the capacitor is allowed to change state.
-            This filters out temporary changes in voltage.
-            '''
-
         })
     '''
     An automatic voltage regulation delay (AVRDelay) which is the time
@@ -1445,17 +1236,11 @@ class ShuntCompensator(RegulatingCondEq):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '1',
         'maxOccurs': '1',
         'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            The voltage at which the nominal reactive power may be calculated. This
-            should normally be within 10% of the voltage at which the capacitor is
-            connected to the network.
-            '''
-
         })
     '''
     The voltage at which the nominal reactive power may be calculated.
@@ -1489,15 +1274,11 @@ class LinearShuntCompensator(ShuntCompensator):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '1',
         'maxOccurs': '1',
         'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Positive sequence shunt (charging) susceptance per section.
-            '''
-
         })
     '''
     Positive sequence shunt (charging) susceptance per section.
@@ -1507,15 +1288,11 @@ class LinearShuntCompensator(ShuntCompensator):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '1',
         'maxOccurs': '1',
         'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Positive sequence shunt (charging) conductance per section.
-            '''
-
         })
     '''
     Positive sequence shunt (charging) conductance per section.
@@ -1580,15 +1357,11 @@ class SeriesCompensator(ConductingEquipment):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '1',
         'maxOccurs': '1',
         'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Positive sequence resistance.
-            '''
-
         })
     '''
     Positive sequence resistance.
@@ -1598,15 +1371,11 @@ class SeriesCompensator(ConductingEquipment):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '1',
         'maxOccurs': '1',
         'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Positive sequence reactance.
-            '''
-
         })
     '''
     Positive sequence reactance.
@@ -1639,17 +1408,11 @@ class Switch(ConductingEquipment):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '1',
         'maxOccurs': '1',
         'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            The maximum continuous current carrying capacity in amps governed by the
-            device material and construction.
-            The attribute shall be a positive value.
-            '''
-
         })
     '''
     The maximum continuous current carrying capacity in amps governed by
@@ -1731,16 +1494,11 @@ class ProtectedSwitch(Switch):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            The maximum fault current a breaking device can break safely under prescribed
-            conditions of use.
-            '''
-
         })
     '''
     The maximum fault current a breaking device can break safely under
@@ -1867,16 +1625,11 @@ class GeneratingUnit(Equipment):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            The unit's gross rated maximum capacity (book value).
-            The attribute shall be a positive value.
-            '''
-
         })
     '''
     The unit's gross rated maximum capacity (book value).
@@ -1887,17 +1640,12 @@ class GeneratingUnit(Equipment):
         default_factory=list,
         metadata={
         'type': 'Association',
+        'stereotypes': [],
         'minOccurs': '1',
         'maxOccurs': 'unbounded',
         'inverse': 'RotatingMachine.GeneratingUnit',
         'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
-        'docstring':
-            '''
-            A synchronous machine may operate as a generator and as such becomes a
-            member of a generating unit.
-            '''
-
         })
     '''
     A synchronous machine may operate as a generator and as such becomes
@@ -1929,16 +1677,12 @@ class ThermalGeneratingUnit(GeneratingUnit):
         default_factory=list,
         metadata={
         'type': 'Association',
+        'stereotypes': [],
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'FossilFuel.ThermalGeneratingUnit',
         'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
-        'docstring':
-            '''
-            A thermal generating unit may have one or more fossil fuels.
-            '''
-
         })
     '''
     A thermal generating unit may have one or more fossil fuels.
@@ -1968,16 +1712,12 @@ class WindGeneratingUnit(GeneratingUnit):
     windGenUnitType: Optional[ WindGenUnitKind ] = field(
         default=None,
         metadata={
-        'type': 'enumeration Attribute',
+        'type': 'Attribute',
+        'stereotypes': ['enumeration', 'Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            The kind of wind generating unit.
-            '''
-
         })
     '''
     The kind of wind generating unit.
@@ -2007,16 +1747,11 @@ class PowerElectronicsUnit(Equipment):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '1',
         'maxOccurs': '1',
         'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Maximum active power limit. This is the maximum (nameplate) limit for the
-            unit.
-            '''
-
         })
     '''
     Maximum active power limit. This is the maximum (nameplate) limit for
@@ -2027,16 +1762,11 @@ class PowerElectronicsUnit(Equipment):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '1',
         'maxOccurs': '1',
         'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Minimum active power limit. This is the minimum (nameplate) limit for the
-            unit.
-            '''
-
         })
     '''
     Minimum active power limit. This is the minimum (nameplate) limit for
@@ -2046,17 +1776,13 @@ class PowerElectronicsUnit(Equipment):
     PowerElectronicsConnection: Optional[PowerElectronicsConnection] = field(
         default=None,
         metadata={
-        'type': 'ByReference',
+        'type': 'Association',
+        'stereotypes': ['ByReference'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'PowerElectronicsConnection.PowerElectronicsUnit',
         'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            A power electronics unit has a connection to the AC network.
-            '''
-
         })
     '''
     A power electronics unit has a connection to the AC network.
@@ -2086,16 +1812,11 @@ class BatteryUnit(PowerElectronicsUnit):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Full energy storage capacity of the battery. The attribute shall be a positive
-            value.
-            '''
-
         })
     '''
     Full energy storage capacity of the battery. The attribute shall be
@@ -2147,16 +1868,13 @@ class PowerElectronicsThermalUnit(PowerElectronicsUnit):
     FossilFuels: Optional[FossilFuel] = field(
         default=None,
         metadata={
-        'type': 'ByReference',
+        'type': 'Association',
+        'stereotypes': ['ByReference'],
         'minOccurs': '1',
         'maxOccurs': '1',
         'inverse': 'FossilFuel.PowerElectronicsThermalUnit',
         'namespace': 'http://epri.com/gmdm/2025#',
         'serialize': True,
-        'docstring':
-            '''
-            '''
-
         })
     '''
     '''
@@ -2235,18 +1953,11 @@ class RegulatingControl(PowerSystemResource):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '1',
         'maxOccurs': '1',
         'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            If true, indicates that regulation is performed in the simulation in a
-            discrete mode. If false, indicates that non-discrete regulation is used
-            in the simulation. This applies to equipment with discrete controls, e.g.
-            tap changers and shunt compensators.
-            '''
-
         })
     '''
     If true, indicates that regulation is performed in the simulation in
@@ -2259,15 +1970,11 @@ class RegulatingControl(PowerSystemResource):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '1',
         'maxOccurs': '1',
         'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            The flag tells if regulation is enabled.
-            '''
-
         })
     '''
     The flag tells if regulation is enabled.
@@ -2277,23 +1984,11 @@ class RegulatingControl(PowerSystemResource):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            This is the deadband set on the controller. It is used with discrete control
-            to avoid excessive tap changes in tap changers and state changes in shunt
-            compensator banks while regulating. The units in which deadband is expressed
-            are based on RegulatingControl.mode. The attribute shall be a positive
-            value or zero. If RegulatingControl.discrete is set to "false", the RegulatingControl.targetDeadband
-            is to be ignored in simulations. If TapChanger.ctRatio or TapChanger.ptRatio
-            are populated, deadband shall be expressed in secondary units.
-            Note that for instance, if the targetValue is 100 kV and the targetDeadband
-            is 2 kV the range is from 99 to 101 kV.
-            '''
-
         })
     '''
     This is the deadband set on the controller. It is used with discrete
@@ -2312,23 +2007,11 @@ class RegulatingControl(PowerSystemResource):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            The target value set on the controller. It is the starting value for a
-            steady state solution. This value can be used for the target value without
-            the use of schedules. The value has the units appropriate to the mode attribute.
-            If used for a TapChangerControl and if TapChanger.ctRatio or TapChanger.ptRatio
-            are populated, the target value shall be expressed in secondary units.
-            As an example, with PT ratio of 60 on a 12.47 KV distribution system, a
-            phase to ground PT has a ratio of 7200 volts primary to 120 volts secondary.
-            If the required primary target is 7128 volts for a single phase tap changer
-            then the value of targetValue would equal 118.8 volts secondary (7128/60).
-            '''
-
         })
     '''
     The target value set on the controller. It is the starting value for
@@ -2347,18 +2030,12 @@ class RegulatingControl(PowerSystemResource):
     mode: Optional[ RegulatingControlModeKind ] = field(
         default=None,
         metadata={
-        'type': 'enumeration Attribute',
+        'type': 'Attribute',
+        'stereotypes': ['enumeration', 'Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            The regulating control mode presently available. This specification allows
-            for determining the kind of regulation without need for obtaining the units
-            from a schedule.
-            '''
-
         })
     '''
     The regulating control mode presently available. This specification
@@ -2369,16 +2046,12 @@ class RegulatingControl(PowerSystemResource):
     monitoredPhase: Optional[ PhaseCode ] = field(
         default=None,
         metadata={
-        'type': 'enumeration Attribute',
+        'type': 'Attribute',
+        'stereotypes': ['enumeration', 'Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Phase voltage controlling this regulator, measured at regulator location.
-            '''
-
         })
     '''
     Phase voltage controlling this regulator, measured at regulator location.
@@ -2387,20 +2060,13 @@ class RegulatingControl(PowerSystemResource):
     Terminal: Optional[Terminal] = field(
         default=None,
         metadata={
-        'type': 'ByReference',
+        'type': 'Association',
+        'stereotypes': ['ByReference'],
         'minOccurs': '1',
         'maxOccurs': '1',
         'inverse': 'Terminal.RegulatingControl',
         'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            The terminal associated with this regulating control. The terminal is associated
-            instead of a node, since the terminal could connect into either a topological
-            node or a connectivity node. Sometimes it is useful to model regulation
-            at a terminal of a bus bar object.
-            '''
-
         })
     '''
     The terminal associated with this regulating control. The terminal
@@ -2413,16 +2079,12 @@ class RegulatingControl(PowerSystemResource):
         default_factory=list,
         metadata={
         'type': 'Association',
+        'stereotypes': [],
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'RegulatingCondEq.RegulatingControl',
         'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
-        'docstring':
-            '''
-            The equipment that participates in this regulating control scheme.
-            '''
-
         })
     '''
     The equipment that participates in this regulating control scheme.
@@ -2458,15 +2120,11 @@ class TapChangerControl(RegulatingControl):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            If true, the line drop compensation is to be applied.
-            '''
-
         })
     '''
     If true, the line drop compensation is to be applied.
@@ -2475,15 +2133,12 @@ class TapChangerControl(RegulatingControl):
     reverseToNeutral: Optional[bool] = field(
         default=None,
         metadata={
-        'type': 'gmdm Attribute',
+        'type': 'Attribute',
+        'stereotypes': ['gmdm', 'Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://epri.com/gmdm/2025#',
         'serialize': True,
-        'docstring':
-            '''
-            '''
-
         })
     '''
     '''
@@ -2491,15 +2146,12 @@ class TapChangerControl(RegulatingControl):
     reversible: Optional[bool] = field(
         default=None,
         metadata={
-        'type': 'gmdm Attribute',
+        'type': 'Attribute',
+        'stereotypes': ['gmdm', 'Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://epri.com/gmdm/2025#',
         'serialize': True,
-        'docstring':
-            '''
-            '''
-
         })
     '''
     '''
@@ -2508,15 +2160,11 @@ class TapChangerControl(RegulatingControl):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Line drop compensator resistance setting for normal (forward) power flow.
-            '''
-
         })
     '''
     Line drop compensator resistance setting for normal (forward) power
@@ -2527,15 +2175,11 @@ class TapChangerControl(RegulatingControl):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Line drop compensator reactance setting for normal (forward) power flow.
-            '''
-
         })
     '''
     Line drop compensator reactance setting for normal (forward) power
@@ -2546,19 +2190,11 @@ class TapChangerControl(RegulatingControl):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Maximum allowed regulated voltage on the PT secondary. This is the locally
-            measured secondary voltage, including the effect of any line drop compensation.
-            Typically used for distribution circuit voltage regulator. Sometimes referred
-            to as first-house protection. If utilized, then TapChanger.ptRatio must
-            be supplied.
-            '''
-
         })
     '''
     Maximum allowed regulated voltage on the PT secondary. This is the
@@ -2572,19 +2208,11 @@ class TapChangerControl(RegulatingControl):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Minimum allowed regulated voltage on the PT secondary. This is the locally
-            measured secondary voltage, including the effect of any line drop compensation.
-            Typically used for distribution circuit voltage regulator. Sometimes referred
-            to as last-house protection. If utilized, then TapChanger.ptRatio must
-            be supplied.
-            '''
-
         })
     '''
     Minimum allowed regulated voltage on the PT secondary. This is the
@@ -2598,15 +2226,11 @@ class TapChangerControl(RegulatingControl):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Line drop compensator resistance setting for reverse power flow.
-            '''
-
         })
     '''
     Line drop compensator resistance setting for reverse power flow.
@@ -2616,15 +2240,11 @@ class TapChangerControl(RegulatingControl):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Line drop compensator reactance setting for reverse power flow.
-            '''
-
         })
     '''
     Line drop compensator reactance setting for reverse power flow.
@@ -2633,15 +2253,12 @@ class TapChangerControl(RegulatingControl):
     reverseTargetDeadband: Optional[ float | Voltage ] = field(
         default=None,
         metadata={
-        'type': 'gmdm Attribute',
+        'type': 'Attribute',
+        'stereotypes': ['gmdm', 'Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://epri.com/gmdm/2025#',
         'serialize': True,
-        'docstring':
-            '''
-            '''
-
         })
     '''
     '''
@@ -2649,15 +2266,12 @@ class TapChangerControl(RegulatingControl):
     reverseTargetValue: Optional[ float | Voltage ] = field(
         default=None,
         metadata={
-        'type': 'gmdm Attribute',
+        'type': 'Attribute',
+        'stereotypes': ['gmdm', 'Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://epri.com/gmdm/2025#',
         'serialize': True,
-        'docstring':
-            '''
-            '''
-
         })
     '''
     '''
@@ -2665,15 +2279,12 @@ class TapChangerControl(RegulatingControl):
     reversingDelay: Optional[ float | Seconds ] = field(
         default=None,
         metadata={
-        'type': 'gmdm Attribute',
+        'type': 'Attribute',
+        'stereotypes': ['gmdm', 'Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://epri.com/gmdm/2025#',
         'serialize': True,
-        'docstring':
-            '''
-            '''
-
         })
     '''
     '''
@@ -2681,15 +2292,12 @@ class TapChangerControl(RegulatingControl):
     reversingPowerThreshold: Optional[ float | ApparentPower ] = field(
         default=None,
         metadata={
-        'type': 'gmdm Attribute',
+        'type': 'Attribute',
+        'stereotypes': ['gmdm', 'Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://epri.com/gmdm/2025#',
         'serialize': True,
-        'docstring':
-            '''
-            '''
-
         })
     '''
     '''
@@ -2698,16 +2306,12 @@ class TapChangerControl(RegulatingControl):
         default_factory=list,
         metadata={
         'type': 'Association',
+        'stereotypes': [],
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'TapChanger.TapChangerControl',
         'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
-        'docstring':
-            '''
-            The tap changers that participates in this regulating tap control scheme.
-            '''
-
         })
     '''
     The tap changers that participates in this regulating tap control scheme.
@@ -2737,15 +2341,11 @@ class ShuntCompensatorPhase(PowerSystemResource):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '1',
         'maxOccurs': '1',
         'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            The maximum number of sections that may be switched in for this phase.
-            '''
-
         })
     '''
     The maximum number of sections that may be switched in for this phase.
@@ -2755,16 +2355,11 @@ class ShuntCompensatorPhase(PowerSystemResource):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '1',
         'maxOccurs': '1',
         'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            For the capacitor phase, the normal number of sections switched in. The
-            value shall be between zero and ShuntCompensatorPhase.maximumSections.
-            '''
-
         })
     '''
     For the capacitor phase, the normal number of sections switched in.
@@ -2797,16 +2392,11 @@ class LinearShuntCompensatorPhase(ShuntCompensatorPhase):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '1',
         'maxOccurs': '1',
         'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Susceptance per section of the phase if shunt compensator is wye connected.
-            Susceptance per section phase to phase if shunt compensator is delta connected.
-            '''
-
         })
     '''
     Susceptance per section of the phase if shunt compensator is wye connected.
@@ -2818,16 +2408,11 @@ class LinearShuntCompensatorPhase(ShuntCompensatorPhase):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '1',
         'maxOccurs': '1',
         'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Conductance per section for this phase if shunt compensator is wye connected.
-            Conductance per section phase to phase if shunt compensator is delta connected.
-            '''
-
         })
     '''
     Conductance per section for this phase if shunt compensator is wye
@@ -2858,16 +2443,11 @@ class TapChanger(PowerSystemResource):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Specifies the regulation status of the equipment. True is regulating, false
-            is not regulating.
-            '''
-
         })
     '''
     Specifies the regulation status of the equipment. True is regulating,
@@ -2877,15 +2457,12 @@ class TapChanger(PowerSystemResource):
     ctRating: Optional[float] = field(
         default=None,
         metadata={
-        'type': 'gmdm Attribute',
+        'type': 'Attribute',
+        'stereotypes': ['gmdm', 'Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://epri.com/gmdm/2025#',
         'serialize': True,
-        'docstring':
-            '''
-            '''
-
         })
     '''
     '''
@@ -2894,18 +2471,11 @@ class TapChanger(PowerSystemResource):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Built-in current transformer ratio. If a value is specified, then RegulatingControl.targetValue
-            (and RegulatingControl.targetDeadband, RegulatingControl.maxAllowedTargetValue
-            and RegulatingControl.minAllowedTargetValue) are expressed in secondary
-            units.
-            '''
-
         })
     '''
     Built-in current transformer ratio. If a value is specified, then RegulatingControl.targetValue
@@ -2918,16 +2488,11 @@ class TapChanger(PowerSystemResource):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '1',
         'maxOccurs': '1',
         'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Highest possible tap step position, advance from neutral.
-            The attribute shall be greater than lowStep.
-            '''
-
         })
     '''
     Highest possible tap step position, advance from neutral.
@@ -2938,15 +2503,11 @@ class TapChanger(PowerSystemResource):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '1',
         'maxOccurs': '1',
         'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Lowest possible tap step position, retard from neutral.
-            '''
-
         })
     '''
     Lowest possible tap step position, retard from neutral.
@@ -2956,15 +2517,11 @@ class TapChanger(PowerSystemResource):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '1',
         'maxOccurs': '1',
         'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Specifies whether or not a TapChanger has load tap changing capabilities.
-            '''
-
         })
     '''
     Specifies whether or not a TapChanger has load tap changing capabilities.
@@ -2974,20 +2531,11 @@ class TapChanger(PowerSystemResource):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '1',
         'maxOccurs': '1',
         'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            The neutral tap step position for this winding.
-            The attribute shall be equal to or greater than lowStep and equal or less
-            than highStep.
-            It is the step position where the voltage is neutralU when the other terminals
-            of the transformer are at the ratedU. If there are other tap changers on
-            the transformer those taps are kept constant at their neutralStep.
-            '''
-
         })
     '''
     The neutral tap step position for this winding.
@@ -3003,19 +2551,11 @@ class TapChanger(PowerSystemResource):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Built-in potential (voltage) transformer ratio. If a value is specified,
-            then RegulatingControl.targetValue (and RegulatingControl.targetDeadband,
-            RegulatingControl.maxAllowedTargetValue, RegulatingControl.minAllowedTargetValue
-            as well as TapChangerControl.maxLimitVoltage and TapChangerControl.minLimitVoltage)
-            are expressed in secondary units.
-            '''
-
         })
     '''
     Built-in potential (voltage) transformer ratio. If a value is specified,
@@ -3029,15 +2569,11 @@ class TapChanger(PowerSystemResource):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            For an LTC, the delay for initial tap changer operation (first step change).
-            '''
-
         })
     '''
     For an LTC, the delay for initial tap changer operation (first step
@@ -3048,23 +2584,11 @@ class TapChanger(PowerSystemResource):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '1',
         'maxOccurs': '1',
         'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Voltage at which the winding operates at the neutral tap setting. It is
-            the voltage at the terminal of the PowerTransformerEnd associated with
-            the tap changer when all tap changers on the transformer are at their neutralStep
-            position. Normally neutralU of the tap changer is the same as ratedU of
-            the PowerTransformerEnd, but it can differ in special cases such as when
-            the tapping mechanism is separate from the winding more common on lower
-            voltage transformers.
-            This attribute is not relevant for PhaseTapChangerAsymmetrical, PhaseTapChangerSymmetrical
-            and PhaseTapChangerLinear.
-            '''
-
         })
     '''
     Voltage at which the winding operates at the neutral tap setting. It
@@ -3082,16 +2606,11 @@ class TapChanger(PowerSystemResource):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            For an LTC, the delay for subsequent tap changer operation (second and
-            later step changes).
-            '''
-
         })
     '''
     For an LTC, the delay for subsequent tap changer operation (second
@@ -3101,17 +2620,13 @@ class TapChanger(PowerSystemResource):
     TapChangerControl: Optional[TapChangerControl] = field(
         default=None,
         metadata={
-        'type': 'Attribute',
+        'type': 'Association',
+        'stereotypes': [],
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'TapChangerControl.TapChanger',
         'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            The regulating control scheme in which this tap changer participates.
-            '''
-
         })
     '''
     The regulating control scheme in which this tap changer participates.
@@ -3145,18 +2660,11 @@ class RatioTapChanger(TapChanger):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Tap step increment, in per cent of rated voltage of the power transformer
-            end, per step position.
-            When the increment is negative, the voltage decreases when the tap step
-            increases.
-            '''
-
         })
     '''
     Tap step increment, in per cent of rated voltage of the power transformer
@@ -3168,17 +2676,13 @@ class RatioTapChanger(TapChanger):
     TransformerEnd: Optional[TransformerEnd] = field(
         default=None,
         metadata={
-        'type': 'ByReference',
+        'type': 'Association',
+        'stereotypes': ['ByReference'],
         'minOccurs': '1',
         'maxOccurs': '1',
         'inverse': 'TransformerEnd.RatioTapChanger',
         'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Transformer end to which this ratio tap changer belongs.
-            '''
-
         })
     '''
     Transformer end to which this ratio tap changer belongs.
@@ -3210,15 +2714,11 @@ class TransformerCoreAdmittance(IdentifiedObject):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '1',
         'maxOccurs': '1',
         'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Magnetizing branch susceptance (B mag). The value can be positive or negative.
-            '''
-
         })
     '''
     Magnetizing branch susceptance (B mag). The value can be positive or
@@ -3229,15 +2729,11 @@ class TransformerCoreAdmittance(IdentifiedObject):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '1',
         'maxOccurs': '1',
         'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Magnetizing branch conductance (G mag).
-            '''
-
         })
     '''
     Magnetizing branch conductance (G mag).
@@ -3247,16 +2743,12 @@ class TransformerCoreAdmittance(IdentifiedObject):
         default_factory=list,
         metadata={
         'type': 'Association',
+        'stereotypes': [],
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'TransformerEnd.CoreAdmittance',
         'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
-        'docstring':
-            '''
-            All transformer ends having this core admittance.
-            '''
-
         })
     '''
     All transformer ends having this core admittance.
@@ -3289,18 +2781,11 @@ class TransformerEnd(IdentifiedObject):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '1',
         'maxOccurs': '1',
         'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Used only for Yn and Zn connections indicated by PowerTransformerEnd.connectionKind.
-            If true, the neutral is grounded and attributes TransformerEnd.rground
-            and TransformerEnd.xground are required. If false, the attributes TransformerEnd.rground
-            and TransformerEnd.xground are not considered.
-            '''
-
         })
     '''
     Used only for Yn and Zn connections indicated by PowerTransformerEnd.connectionKind.
@@ -3313,16 +2798,11 @@ class TransformerEnd(IdentifiedObject):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Resistance part of neutral impedance. Zero indicates solidly grounded or
-            grounded through a reactor.
-            '''
-
         })
     '''
     Resistance part of neutral impedance. Zero indicates solidly grounded
@@ -3333,16 +2813,11 @@ class TransformerEnd(IdentifiedObject):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Reactance part of neutral impedance. Zero indicates solidly grounded or
-            grounded through a reactor.
-            '''
-
         })
     '''
     Reactance part of neutral impedance. Zero indicates solidly grounded
@@ -3352,19 +2827,13 @@ class TransformerEnd(IdentifiedObject):
     CoreAdmittance: Optional[TransformerCoreAdmittance] = field(
         default=None,
         metadata={
-        'type': 'Attribute',
+        'type': 'Association',
+        'stereotypes': [],
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'TransformerCoreAdmittance.TransformerEnd',
         'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Core admittance of this transformer end, representing magnetising current
-            and core losses. The full values of the transformer should be supplied
-            for one transformer end only.
-            '''
-
         })
     '''
     Core admittance of this transformer end, representing magnetising current
@@ -3376,16 +2845,12 @@ class TransformerEnd(IdentifiedObject):
         default=None,
         metadata={
         'type': 'Association',
+        'stereotypes': [],
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'RatioTapChanger.TransformerEnd',
         'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
-        'docstring':
-            '''
-            Ratio tap changer associated with this transformer end.
-            '''
-
         })
     '''
     Ratio tap changer associated with this transformer end.
@@ -3395,16 +2860,12 @@ class TransformerEnd(IdentifiedObject):
         default_factory=list,
         metadata={
         'type': 'Association',
+        'stereotypes': [],
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'TransformerMeshImpedance.FromTransformerEnd',
         'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
-        'docstring':
-            '''
-            All mesh impedances between this 'to' and other 'from' transformer ends.
-            '''
-
         })
     '''
     All mesh impedances between this 'to' and other 'from' transformer
@@ -3415,16 +2876,12 @@ class TransformerEnd(IdentifiedObject):
         default_factory=list,
         metadata={
         'type': 'Association',
+        'stereotypes': [],
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'TransformerMeshImpedance.ToTransformerEnd',
         'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
-        'docstring':
-            '''
-            All mesh impedances between this 'from' and other 'to' transformer ends.
-            '''
-
         })
     '''
     All mesh impedances between this 'from' and other 'to' transformer
@@ -3479,21 +2936,11 @@ class PowerTransformerEnd(TransformerEnd):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Terminal voltage phase angle displacement where 360 degrees are represented
-            with clock hours. The valid values are 0 to 11. For example, for the secondary
-            side end of a transformer with vector group code of 'Dyn11', specify the
-            connection kind as wye with neutral and specify the phase angle of the
-            clock as 11. The clock value of the transformer end number specified as
-            1, is assumed to be zero. Note the transformer end number is not assumed
-            to be the same as the terminal sequence number.
-            '''
-
         })
     '''
     Terminal voltage phase angle displacement where 360 degrees are represented
@@ -3509,15 +2956,11 @@ class PowerTransformerEnd(TransformerEnd):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Magnetizing branch susceptance (B mag). The value can be positive or negative.
-            '''
-
         })
     '''
     Magnetizing branch susceptance (B mag). The value can be positive or
@@ -3528,15 +2971,11 @@ class PowerTransformerEnd(TransformerEnd):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Magnetizing branch conductance.
-            '''
-
         })
     '''
     Magnetizing branch conductance.
@@ -3546,17 +2985,11 @@ class PowerTransformerEnd(TransformerEnd):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '1',
         'maxOccurs': '1',
         'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Resistance (star-model) of the transformer end.
-            The attribute shall be equal to or greater than zero for non-equivalent
-            transformers.
-            '''
-
         })
     '''
     Resistance (star-model) of the transformer end.
@@ -3568,17 +3001,11 @@ class PowerTransformerEnd(TransformerEnd):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '1',
         'maxOccurs': '1',
         'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Normal apparent power rating.
-            The attribute shall be a positive value. For a two-winding transformer
-            the values for the high and low voltage sides shall be identical.
-            '''
-
         })
     '''
     Normal apparent power rating.
@@ -3590,19 +3017,11 @@ class PowerTransformerEnd(TransformerEnd):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '1',
         'maxOccurs': '1',
         'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Rated voltage: phase-phase for three-phase windings, and either phase-phase
-            or phase-neutral for single-phase windings.
-            A high voltage side, as given by TransformerEnd.endNumber, shall have a
-            ratedU that is greater than or equal to ratedU for the lower voltage sides.
-            The attribute shall be a positive value.
-            '''
-
         })
     '''
     Rated voltage: phase-phase for three-phase windings, and either phase-phase
@@ -3617,15 +3036,11 @@ class PowerTransformerEnd(TransformerEnd):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Positive sequence series reactance (star-model) of the transformer end.
-            '''
-
         })
     '''
     Positive sequence series reactance (star-model) of the transformer
@@ -3683,15 +3098,11 @@ class TransformerMeshImpedance(IdentifiedObject):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '1',
         'maxOccurs': '1',
         'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Resistance between the 'from' and the 'to' end, seen from the 'from' end.
-            '''
-
         })
     '''
     Resistance between the 'from' and the 'to' end, seen from the 'from'
@@ -3702,15 +3113,11 @@ class TransformerMeshImpedance(IdentifiedObject):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '1',
         'maxOccurs': '1',
         'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Reactance between the 'from' and the 'to' end, seen from the 'from' end.
-            '''
-
         })
     '''
     Reactance between the 'from' and the 'to' end, seen from the 'from'
@@ -3720,18 +3127,13 @@ class TransformerMeshImpedance(IdentifiedObject):
     FromTransformerEnd: Optional[TransformerEnd] = field(
         default=None,
         metadata={
-        'type': 'Attribute',
+        'type': 'Association',
+        'stereotypes': [],
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'TransformerEnd.FromMeshImpedance',
         'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            From end this mesh impedance is connected to. It determines the voltage
-            reference.
-            '''
-
         })
     '''
     From end this mesh impedance is connected to. It determines the voltage
@@ -3741,17 +3143,13 @@ class TransformerMeshImpedance(IdentifiedObject):
     ToTransformerEnd: list[TransformerEnd] = field(
         default_factory=list,
         metadata={
-        'type': 'Attribute',
+        'type': 'Association',
+        'stereotypes': [],
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'TransformerEnd.ToMeshImpedance',
         'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            All transformer ends this mesh impedance is connected to.
-            '''
-
         })
     '''
     All transformer ends this mesh impedance is connected to.
@@ -3789,19 +3187,11 @@ class PhaseImpedanceData(Identity):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '1',
         'maxOccurs': '1',
         'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            The matrix entry's column number has a range of possible values from 1
-            to the conductor count of the matrix, but due to symmetry, only entries
-            in the lower triangle (including diagonal) of the matrix need be defined.
-            Column number binds to the sequence number in either ACLineSegmentPhase
-            or WirePosition, which then identifies the phase for this entry.
-            '''
-
         })
     '''
     The matrix entry's column number has a range of possible values from
@@ -3815,19 +3205,11 @@ class PhaseImpedanceData(Identity):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '1',
         'maxOccurs': '1',
         'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            The matrix entry's row number has a range of possible values from 1 to
-            the conductor count of the matrix, but due to symmetry, only entries in
-            the lower triangle (including diagonal) of the matrix need be defined.
-            Row number binds to the sequence number in either ACLineSegmentPhase or
-            WirePosition, which then identifies the phase for this entry.
-            '''
-
         })
     '''
     The matrix entry's row number has a range of possible values from 1
@@ -3841,15 +3223,11 @@ class PhaseImpedanceData(Identity):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '1',
         'maxOccurs': '1',
         'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Susceptance matrix entry value, per length of unit.
-            '''
-
         })
     '''
     Susceptance matrix entry value, per length of unit.
@@ -3859,15 +3237,11 @@ class PhaseImpedanceData(Identity):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '1',
         'maxOccurs': '1',
         'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Resistance matrix entry value, per length of unit.
-            '''
-
         })
     '''
     Resistance matrix entry value, per length of unit.
@@ -3877,15 +3251,11 @@ class PhaseImpedanceData(Identity):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '1',
         'maxOccurs': '1',
         'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Reactance matrix entry value, per length of unit.
-            '''
-
         })
     '''
     Reactance matrix entry value, per length of unit.
@@ -3894,17 +3264,13 @@ class PhaseImpedanceData(Identity):
     PhaseImpedance: Optional[PerLengthPhaseImpedance] = field(
         default=None,
         metadata={
-        'type': 'Attribute',
+        'type': 'Association',
+        'stereotypes': [],
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'PerLengthPhaseImpedance.PhaseImpedanceData',
         'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Conductor phase impedance to which this data belongs.
-            '''
-
         })
     '''
     Conductor phase impedance to which this data belongs.
@@ -4739,3 +4105,4 @@ class Voltage(CIMUnit):
     @property
     def __maxOccurs__(self):
         return '1'
+

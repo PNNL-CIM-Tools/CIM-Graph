@@ -10,7 +10,7 @@ from uuid import UUID
 from gridappsd import GridAPPSD
 
 import cimgraph.queries.sparql as sparql
-from cimgraph.core import (get_cim_profile, get_database, get_host, get_iec61970_301,
+from cimgraph.core import (get_cim_profile, get_database, get_host, get_iec61970_552,
                            get_namespace, get_password, get_port, get_url, get_username)
 from cimgraph.databases import ConnectionInterface, Graph, QueryResponse
 
@@ -19,26 +19,13 @@ _log = logging.getLogger(__name__)
 
 class GridappsdConnection(ConnectionInterface):
 
-    def __init__(self, cim_override=None):
-
-        # clear cached env variables
+    def __init__(self):
         get_url.cache_clear()
-        get_namespace.cache_clear()
-        get_cim_profile.cache_clear()
-        get_iec61970_301.cache_clear()
         get_host.cache_clear()
         get_port.cache_clear()
         get_username.cache_clear()
         get_password.cache_clear()
-
-        # retrieve env variables
-        if cim_override is not None:
-            self.cim_profile = 'merged'
-            self.cim = cim_override
-        else:
-            self.cim_profile, self.cim = get_cim_profile()
-        self.namespace = get_namespace()
-        self.iec61970_301 = get_iec61970_301()
+        super().__init__()
         self.host = get_host()
         self.port = get_port()
         self.username = get_username()
@@ -46,8 +33,6 @@ class GridappsdConnection(ConnectionInterface):
         self.use_units = False
         self.url = get_url()
         self.database = get_database()
-
-
         self.gapps = None
 
     # -------------------------------------------------------------------------

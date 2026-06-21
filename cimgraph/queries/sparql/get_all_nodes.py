@@ -3,7 +3,7 @@ from __future__ import annotations
 import logging
 
 import cimgraph.data_profile.cim17v40 as cim
-from cimgraph.databases import get_iec61970_301, get_namespace, get_url
+from cimgraph.databases import get_iec61970_552, get_namespace, get_url
 
 _log = logging.getLogger(__name__)
 
@@ -23,7 +23,7 @@ def get_all_nodes_from_container(container: cim.EquipmentContainer) -> str:
     except:
         container_uri = container.mRID
 
-    if get_iec61970_301() > 7:
+    if get_iec61970_552() == '552-NEW':
         split = 'urn:uuid:'
     else:
         split = f'{get_url()}#'
@@ -138,7 +138,7 @@ def get_all_nodes_from_area(area: object) -> str:
     except:
         container_uri = area.mRID
 
-    if get_iec61970_301() > 7:
+    if get_iec61970_552() == '552-NEW':
         split = 'urn:uuid:'
     else:
         split = f'{get_url()}#'

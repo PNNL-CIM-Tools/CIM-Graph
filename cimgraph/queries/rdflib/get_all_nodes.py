@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from cimgraph.databases import get_iec61970_301, get_namespace, get_url
+from cimgraph.databases import get_iec61970_552, get_namespace, get_url
 
 
 def get_all_nodes_sparql(container: object) -> str:
@@ -20,7 +20,7 @@ def get_all_nodes_sparql(container: object) -> str:
     except:
         container_uri = container.mRID
 
-    if get_iec61970_301() > 7:
+    if get_iec61970_552() == '552-NEW':
         split = 'urn:uuid:'
     else:
         split = 'rdf:id:'

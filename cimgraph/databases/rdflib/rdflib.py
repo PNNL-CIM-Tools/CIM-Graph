@@ -25,8 +25,8 @@ class RDFlibConnection(SPARQLEndpointConnection):
     - Attribute-based result access pattern
     """
 
-    def __init__(self, filename: str = None, use_oxigraph: bool = True, cim_override=None):
-        super().__init__(cim_override=cim_override)
+    def __init__(self, filename: str = None, use_oxigraph: bool = True):
+        super().__init__()
         self.filename = filename
         self.use_oxigraph = use_oxigraph
         self.connect()
@@ -162,7 +162,7 @@ class RDFlibConnection(SPARQLEndpointConnection):
                 # Check if association (edge to another object)
                 edge_class = self._parse_result_field(result, 'edge_class')
                 if edge_class is not None:
-                    if self.iec61970_301 > 7:
+                    if self.iec61970_552 == '552-NEW':
                         edge_mRID = value.split('uuid:')[1]
                     else:
                         edge_mRID = value.split('#')[1]

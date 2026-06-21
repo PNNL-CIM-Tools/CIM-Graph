@@ -11,7 +11,7 @@ import mysql.connector
 from SPARQLWrapper import JSON, POST, SPARQLWrapper
 
 import cimgraph.queries.sparql as sparql
-from cimgraph.core import (get_cim_profile, get_database, get_host, get_iec61970_301,
+from cimgraph.core import (get_cim_profile, get_database, get_host, get_iec61970_552,
                            get_namespace, get_password, get_port, get_username)
 from cimgraph.databases import ConnectionInterface, QueryResponse
 from cimgraph.models.graph_model import GraphModel
@@ -21,13 +21,8 @@ _log = logging.getLogger(__name__)
 
 class MySQLJSONConnection(ConnectionInterface):
 
-    def __init__(self, cim_override=None):
-        if cim_override is not None:
-            self.cim_profile = 'merged'
-            self.cim = cim_override
-        else:
-            self.cim_profile, self.cim = get_cim_profile()
-        self.namespace = get_namespace()
+    def __init__(self):
+        super().__init__()
         self.host = get_host()
         self.port = get_port()
         self.username = get_username()
@@ -97,7 +92,7 @@ class MySQLJSONConnection(ConnectionInterface):
 
         eq_mrids = list(graph[cim_class].keys())[0:100]
         sparql_message = sparql.get_all_edges_sparql(cim_class, eq_mrids, self.namespace,
-                                                     self.iec61970_301)
+                                                     self.iec61970_552)
 
         return sparql_message
 
@@ -109,7 +104,7 @@ class MySQLJSONConnection(ConnectionInterface):
             eq_mrids = mrid_list[index * 100:(index + 1) * 100]
             #generate SPARQL message from correct loaders>sparql python script based on class name
             sparql_message = sparql.get_all_edges_sparql(cim_class, eq_mrids, self.namespace,
-                                                         self.iec61970_301)
+                                                         self.iec61970_552)
             #execute sparql query
             query_output = self.execute(sparql_message)
             self.edge_query_parser(query_output, container, graph, cim_class)

@@ -12,7 +12,7 @@ from neo4j.exceptions import DriverError, Neo4jError
 
 import cimgraph.data_profile.cimhub_2023 as cim
 import cimgraph.queries.cypher as cypher
-from cimgraph.core import (get_cim_profile, get_database, get_iec61970_301, get_namespace,
+from cimgraph.core import (get_cim_profile, get_database, get_iec61970_552, get_namespace,
                            get_password, get_url, get_username)
 from cimgraph.databases import ConnectionInterface, Graph, QueryResponse
 
@@ -27,32 +27,17 @@ class Neo4jConnection(ConnectionInterface):
 
     """
 
-    def __init__(self, cim_override=None):
-
-        # clear cached env variables
+    def __init__(self):
         get_url.cache_clear()
-        get_namespace.cache_clear()
-        get_cim_profile.cache_clear()
-        get_iec61970_301.cache_clear()
         get_username.cache_clear()
         get_password.cache_clear()
         get_database.cache_clear()
-
-        # retrieve env variables
-        if cim_override is not None:
-            self.cim_profile = 'merged'
-            self.cim:cim = cim_override
-        else:
-            self.cim_profile, cim_module = get_cim_profile()
-            self.cim:cim = cim_module
-        self.namespace = get_namespace()
+        super().__init__()
         self.url = get_url()
         self.username = get_username()
         self.password = get_password()
         self.database = get_database()
-        self.iec61970_301 = get_iec61970_301()
         self.driver = None
-        # self.use_async = use_async
 
 
     def connect(self):

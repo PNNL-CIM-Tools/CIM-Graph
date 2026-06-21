@@ -29,6 +29,49 @@ BASE_URI = 'http://www.ucaiug.org/gmdm/asset#'
 ONTOLOGY_URI = 'http://cim.ucaiug.io/CIM101/draft#'
 
 @dataclass(repr=False)
+class Identity(Identity):
+    '''
+    This is a root class to provide common identification for all classes.
+    IdentifiedObject and any class to be exchanged with RDF XML now inherits
+    from Identity. mRID is superseded by Identity.identifier, which is typed
+    to be a UUID.
+    '''
+
+    identifier: Optional[str] = field(
+        default=None,
+        metadata={
+        'type': 'Attribute',
+        'stereotypes': ['Attribute'],
+        'minOccurs': '1',
+        'maxOccurs': '1',
+        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
+        'serialize': True,
+        'docstring':
+            '''
+            A universally unique object identifier. Used to uniquely identify persistent
+            objects between CIM messages.
+            '''
+
+        })
+    '''
+    A universally unique object identifier. Used to uniquely identify persistent
+    objects between CIM messages.
+    '''
+
+    @property
+    def __namespace__(self):
+        return 'http://cim.ucaiug.io/CIM101/draft#'
+    @property
+    def __package__(self):
+        return 'Core'
+    @property
+    def __minOccurs__(self):
+        return '0'
+    @property
+    def __maxOccurs__(self):
+        return 'unbounded'
+
+@dataclass(repr=False)
 class IdentifiedObject(Identity):
     '''
     This is a class that provides common identification for all classes needing
@@ -39,6 +82,7 @@ class IdentifiedObject(Identity):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
@@ -60,6 +104,7 @@ class IdentifiedObject(Identity):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
@@ -105,6 +150,7 @@ class AssetInfo(IdentifiedObject):
         default_factory=list,
         metadata={
         'type': 'Association',
+        'stereotypes': [],
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'PowerSystemResource.AssetDatasheet',
@@ -143,6 +189,7 @@ class ConductingAssetInfo(AssetInfo):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
@@ -161,6 +208,7 @@ class ConductingAssetInfo(AssetInfo):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
@@ -199,6 +247,7 @@ class TransformerEndInfo(ConductingAssetInfo):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '1',
         'maxOccurs': '1',
         'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
@@ -221,6 +270,7 @@ class TransformerEndInfo(ConductingAssetInfo):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
@@ -244,7 +294,8 @@ class TransformerEndInfo(ConductingAssetInfo):
     connectionKind: Optional[ WindingConnection ] = field(
         default=None,
         metadata={
-        'type': 'enumeration Attribute',
+        'type': 'Attribute',
+        'stereotypes': ['enumeration', 'Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
@@ -263,6 +314,7 @@ class TransformerEndInfo(ConductingAssetInfo):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
@@ -283,6 +335,7 @@ class TransformerEndInfo(ConductingAssetInfo):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
@@ -301,6 +354,7 @@ class TransformerEndInfo(ConductingAssetInfo):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
@@ -319,6 +373,7 @@ class TransformerEndInfo(ConductingAssetInfo):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
@@ -337,6 +392,7 @@ class TransformerEndInfo(ConductingAssetInfo):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
@@ -356,7 +412,8 @@ class TransformerEndInfo(ConductingAssetInfo):
     TransformerTankInfo: Optional[TransformerTankInfo] = field(
         default=None,
         metadata={
-        'type': 'ShadowExtension gmdm ByReference',
+        'type': 'Association',
+        'stereotypes': ['ShadowExtension', 'gmdm', 'ByReference'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'TransformerTankInfo.TransformerEndInfos',
@@ -376,6 +433,7 @@ class TransformerEndInfo(ConductingAssetInfo):
         default_factory=list,
         metadata={
         'type': 'Association',
+        'stereotypes': [],
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'NoLoadTest.EnergisedEnd',
@@ -395,6 +453,7 @@ class TransformerEndInfo(ConductingAssetInfo):
         default_factory=list,
         metadata={
         'type': 'Association',
+        'stereotypes': [],
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'ShortCircuitTest.EnergisedEnd',
@@ -415,6 +474,7 @@ class TransformerEndInfo(ConductingAssetInfo):
         default_factory=list,
         metadata={
         'type': 'Association',
+        'stereotypes': [],
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'ShortCircuitTest.GroundedEnds',
@@ -455,6 +515,7 @@ class PowerTransformerInfo(AssetInfo):
         default_factory=list,
         metadata={
         'type': 'Association',
+        'stereotypes': [],
         'minOccurs': '1',
         'maxOccurs': 'unbounded',
         'inverse': 'TransformerTankInfo.PowerTransformerInfo',
@@ -493,7 +554,8 @@ class TransformerTankInfo(AssetInfo):
     PowerTransformerInfo: Optional[PowerTransformerInfo] = field(
         default=None,
         metadata={
-        'type': 'ByReference',
+        'type': 'Association',
+        'stereotypes': ['ByReference'],
         'minOccurs': '1',
         'maxOccurs': '1',
         'inverse': 'PowerTransformerInfo.TransformerTankInfos',
@@ -513,6 +575,7 @@ class TransformerTankInfo(AssetInfo):
         default_factory=list,
         metadata={
         'type': 'Association',
+        'stereotypes': [],
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'TransformerEndInfo.TransformerTankInfo',
@@ -532,6 +595,7 @@ class TransformerTankInfo(AssetInfo):
         default_factory=list,
         metadata={
         'type': 'Association',
+        'stereotypes': [],
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'TransformerTank.TransformerTankInfo',
@@ -570,7 +634,8 @@ class PowerSystemResource(IdentifiedObject):
     AssetDatasheet: Optional[AssetInfo] = field(
         default=None,
         metadata={
-        'type': 'Attribute',
+        'type': 'Association',
+        'stereotypes': [],
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'AssetInfo.PowerSystemResources',
@@ -632,7 +697,8 @@ class TransformerTank(Equipment):
     TransformerTankInfo: Optional[TransformerTankInfo] = field(
         default=None,
         metadata={
-        'type': 'ShadowExtension gmdm ByReference',
+        'type': 'Association',
+        'stereotypes': ['ShadowExtension', 'gmdm', 'ByReference'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'TransformerTankInfo.TransformerTanks',
@@ -670,6 +736,7 @@ class TransformerTest(IdentifiedObject):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '1',
         'maxOccurs': '1',
         'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
@@ -690,6 +757,7 @@ class TransformerTest(IdentifiedObject):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '1',
         'maxOccurs': '1',
         'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
@@ -731,6 +799,7 @@ class NoLoadTest(TransformerTest):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
@@ -749,6 +818,7 @@ class NoLoadTest(TransformerTest):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
@@ -769,6 +839,7 @@ class NoLoadTest(TransformerTest):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
@@ -789,6 +860,7 @@ class NoLoadTest(TransformerTest):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
@@ -808,6 +880,7 @@ class NoLoadTest(TransformerTest):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
@@ -825,7 +898,8 @@ class NoLoadTest(TransformerTest):
     EnergisedEnd: Optional[TransformerEndInfo] = field(
         default=None,
         metadata={
-        'type': 'ByReference',
+        'type': 'Association',
+        'stereotypes': ['ByReference'],
         'minOccurs': '1',
         'maxOccurs': '1',
         'inverse': 'TransformerEndInfo.EnergisedEndNoLoadTests',
@@ -868,6 +942,7 @@ class ShortCircuitTest(TransformerTest):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
@@ -886,6 +961,7 @@ class ShortCircuitTest(TransformerTest):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
@@ -904,6 +980,7 @@ class ShortCircuitTest(TransformerTest):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
@@ -924,6 +1001,7 @@ class ShortCircuitTest(TransformerTest):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
@@ -942,6 +1020,7 @@ class ShortCircuitTest(TransformerTest):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
@@ -961,6 +1040,7 @@ class ShortCircuitTest(TransformerTest):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
@@ -978,7 +1058,8 @@ class ShortCircuitTest(TransformerTest):
     EnergisedEnd: Optional[TransformerEndInfo] = field(
         default=None,
         metadata={
-        'type': 'ByReference',
+        'type': 'Association',
+        'stereotypes': ['ByReference'],
         'minOccurs': '1',
         'maxOccurs': '1',
         'inverse': 'TransformerEndInfo.EnergisedEndShortCircuitTests',
@@ -1000,7 +1081,8 @@ class ShortCircuitTest(TransformerTest):
     GroundedEnds: list[TransformerEndInfo] = field(
         default_factory=list,
         metadata={
-        'type': 'ByReference',
+        'type': 'Association',
+        'stereotypes': ['ByReference'],
         'minOccurs': '1',
         'maxOccurs': 'unbounded',
         'inverse': 'TransformerEndInfo.GroundedEndShortCircuitTests',
@@ -1343,3 +1425,4 @@ class Voltage(CIMUnit):
     @property
     def __maxOccurs__(self):
         return '1'
+
