@@ -98,7 +98,7 @@ def get_iec61970_552() -> str:
     legacy = os.getenv('CIMG_IEC61970_301')
     if legacy is not None:
         warnings.warn(
-            "CIMG_IEC61970_301 is deprecated and will be removed in a future release. "
+            'CIMG_IEC61970_301 is deprecated and will be removed in a future release. '
             "Use CIMG_IEC61970_552='552-NEW' or '552-LEGACY' instead.",
             DeprecationWarning,
             stacklevel=2,
@@ -120,7 +120,7 @@ def get_iec61970_301() -> int:
     callers that have not yet migrated.
     """
     warnings.warn(
-        "get_iec61970_301() is deprecated. Use get_iec61970_552() instead.",
+        'get_iec61970_301() is deprecated. Use get_iec61970_552() instead.',
         DeprecationWarning,
         stacklevel=2,
     )

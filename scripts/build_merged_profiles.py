@@ -20,7 +20,7 @@ from pathlib import Path
 import yaml
 
 _REPO_ROOT = Path(__file__).parent.parent
-_CONFIG = _REPO_ROOT / "cimgraph" / "data_profile" / "merge_releases.yaml"
+_CONFIG = _REPO_ROOT / 'cimgraph' / 'data_profile' / 'merge_releases.yaml'
 
 # Ensure the repo is importable when run directly.
 if str(_REPO_ROOT) not in sys.path:
@@ -30,16 +30,16 @@ if str(_REPO_ROOT) not in sys.path:
 def _load_config() -> list[dict]:
     with open(_CONFIG) as f:
         data = yaml.safe_load(f)
-    return data["releases"]
+    return data['releases']
 
 
 def _build_init(release: dict) -> str:
     """Return the generated __init__.py content for one release entry."""
     from cimgraph.data_profile.merge import merge_profiles
 
-    parts = release["parts"]
-    description = release.get("description", "")
-    package = release["package"]
+    parts = release['parts']
+    description = release.get('description', '')
+    package = release['package']
 
     modules = [importlib.import_module(p) for p in parts]
     merged = merge_profiles(*modules)
@@ -52,7 +52,7 @@ def _build_init(release: dict) -> str:
     # the source of each class is traceable.
     name_to_part: dict[str, str] = {}
     for part_path, mod in zip(parts, modules):
-        for name in getattr(mod, "__all__", []):
+        for name in getattr(mod, '__all__', []):
             if name not in name_to_part:
                 name_to_part[name] = part_path
 
@@ -69,22 +69,22 @@ def _build_init(release: dict) -> str:
         if not part_names:
             continue
         header = f"from {part_path} import ("
-        joined = ", ".join(part_names)
+        joined = ', '.join(part_names)
         # Wrap only the names portion so long module paths don't cause
         # textwrap to break class names mid-word.
         wrapped_names = textwrap.fill(
             joined,
             width=88,
-            initial_indent="    ",
-            subsequent_indent="    ",
+            initial_indent='    ',
+            subsequent_indent='    ',
             break_long_words=False,
             break_on_hyphens=False,
         )
         import_lines.append(f"{header}\n{wrapped_names})")
 
-    all_entries = "\n".join(f"    '{n}'," for n in names)
+    all_entries = '\n'.join(f"    '{n}'," for n in names)
 
-    parts_comment = "\n".join(f"#   {p}" for p in parts)
+    parts_comment = '\n'.join(f"#   {p}" for p in parts)
 
     return f'''\
 """Merged profile: {package}
@@ -110,31 +110,31 @@ __all__ = [
 def main() -> None:
     releases = _load_config()
     for release in releases:
-        name = release["name"]
-        package = release["package"]
+        name = release['name']
+        package = release['package']
 
         print(f"Building {package} ...")
         content = _build_init(release)
 
         # Write to the package __init__.py.
-        package_dir = _REPO_ROOT / Path(*package.split("."))
+        package_dir = _REPO_ROOT / Path(*package.split('.'))
         if not package_dir.is_dir():
             raise FileNotFoundError(
                 f"Package directory not found: {package_dir}\n"
                 f"Create it and add sub-profile packages before running this script."
             )
 
-        init_path = package_dir / "__init__.py"
-        init_path.write_text(content, encoding="utf-8")
+        init_path = package_dir / '__init__.py'
+        init_path.write_text(content, encoding='utf-8')
         print(f"  wrote {init_path.relative_to(_REPO_ROOT)}")
 
         # Smoke-test: the written file must be importable and expose __all__.
         if package in sys.modules:
             del sys.modules[package]
         mod = importlib.import_module(package)
-        assert hasattr(mod, "__all__"), f"{package}.__all__ missing after write"
+        assert hasattr(mod, '__all__'), f"{package}.__all__ missing after write"
         print(f"  ok — {len(mod.__all__)} classes exported")
 
 
-if __name__ == "__main__":
+if __name__ == '__main__':
     main()

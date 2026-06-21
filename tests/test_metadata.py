@@ -6,8 +6,7 @@ from pathlib import Path
 
 import pytest
 
-from cimgraph.databases.fileparsers.metadata import (parse_metadata,
-                                                     resolve_part_paths)
+from cimgraph.databases.fileparsers.metadata import parse_metadata, resolve_part_paths
 
 _MODELS = Path(__file__).parent / 'test_models'
 _METADATA = _MODELS / 'ieee13_metadata.cimx'
@@ -53,8 +52,7 @@ def test_resolve_part_paths_missing_file_fails_fast(tmp_path):
 
 
 def test_resolve_part_paths_skips_external_urls(caplog):
-    from cimgraph.databases.fileparsers.metadata import (Distribution,
-                                                         MetadataGraph)
+    from cimgraph.databases.fileparsers.metadata import Distribution, MetadataGraph
     meta = MetadataGraph(distributions=[
         Distribution(uuid='x', access_url='https://example.com/remote_EQ.xml'),
     ])

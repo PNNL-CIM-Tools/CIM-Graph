@@ -8,8 +8,8 @@ from uuid import UUID
 
 from defusedxml.ElementTree import parse
 
-from cimgraph.core import (get_cim_profile, get_iec61970_552, get_namespace,
-                           get_use_units, get_validation_log_level)
+from cimgraph.core import (get_cim_profile, get_iec61970_552, get_namespace, get_use_units,
+                           get_validation_log_level)
 from cimgraph.data_profile.identity import Identity
 from cimgraph.databases import ConnectionInterface, Graph, QueryResponse
 
@@ -26,8 +26,7 @@ class XMLFile(ConnectionInterface):
         # Resolve it into a list of part paths to load into one graph.
         self.metadata_graph = None
         if metadata is not None:
-            from cimgraph.databases.fileparsers.metadata import (parse_metadata,
-                                                                 resolve_part_paths)
+            from cimgraph.databases.fileparsers.metadata import parse_metadata, resolve_part_paths
             self.metadata_graph = parse_metadata(metadata)
             base_dir = Path(metadata).resolve().parent
             filename = [str(p) for p in resolve_part_paths(self.metadata_graph, base_dir)]
