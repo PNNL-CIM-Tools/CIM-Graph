@@ -17,7 +17,7 @@ def env_setup():
         'CIMG_USERNAME': os.getenv('CIMG_USERNAME'),
         'CIMG_PASSWORD': os.getenv('CIMG_PASSWORD'),
         'CIMG_NAMESPACE': os.getenv('CIMG_NAMESPACE'),
-        'CIMG_IEC61970_301': os.getenv('CIMG_IEC61970_301'),
+        'CIMG_IEC61970_552': os.getenv('CIMG_IEC61970_552'),
         'CIMG_USE_UNITS': os.getenv('CIMG_USE_UNITS'),
     }
 
@@ -30,7 +30,7 @@ def env_setup():
     os.environ['CIMG_USERNAME'] = 'test_app_user'
     os.environ['CIMG_PASSWORD'] = '4Test'
     os.environ['CIMG_NAMESPACE'] = 'http://iec.ch/TC57/CIM100#'
-    os.environ['CIMG_IEC61970_301'] = '8'
+    os.environ['CIMG_IEC61970_552'] = '552-NEW'
     os.environ['CIMG_USE_UNITS'] = 'False'
 
     yield

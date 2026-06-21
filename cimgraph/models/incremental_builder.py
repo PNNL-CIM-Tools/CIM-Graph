@@ -9,7 +9,7 @@ from defusedxml.ElementTree import parse
 
 from cimgraph.data_profile.attribute_utils import validate_attr_datatype
 from cimgraph.data_profile.identity import Identity
-from cimgraph.databases import (ConnectionInterface, get_cim_profile, get_iec61970_301,
+from cimgraph.databases import (ConnectionInterface, get_cim_profile, get_iec61970_552,
                                 get_namespace)
 
 _log = logging.getLogger(__name__)
@@ -292,7 +292,7 @@ def modify_incremental(cim_object:Identity, attribute:str, old_value:any, new_va
 
 def incremantal_row(cim_class:type, uri:str, difference:dict) -> str:
 
-    iec61970_301=get_iec61970_301()
+    iec61970_552=get_iec61970_552()
     attr_fields = cim_class.__dataclass_fields__
     parent_classes = list(cim_class.__mro__)
     parent_classes.pop(len(parent_classes) - 1)
@@ -300,7 +300,7 @@ def incremantal_row(cim_class:type, uri:str, difference:dict) -> str:
     if set(difference.values()) == {None}:
         return ''
 
-    if iec61970_301>7:
+    if iec61970_552 == '552-NEW':
         row = INDENT*2 + f'<rdf:Description rdf:about="urn:uuid:{uri}">\n'
     else:
         row = INDENT*2 + f'<rdf:Description rdf:about="#{uri}"/>\n'

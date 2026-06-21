@@ -10,8 +10,9 @@ from functools import cache
 from uuid import UUID
 
 from cimgraph.core import (get_cim_profile, get_database, get_host, get_iec61970_301,
-                           get_namespace, get_password, get_port, get_undefined_handling, get_url,
-                           get_use_units, get_username, get_validation_log_level)
+                           get_iec61970_552, get_namespace, get_password, get_port,
+                           get_undefined_handling, get_url, get_use_units, get_username,
+                           get_validation_log_level)
 
 _log = logging.getLogger(__name__)
 
@@ -68,13 +69,13 @@ class ConnectionInterface(ABC):
         # clear cached env variables
         get_namespace.cache_clear()
         get_cim_profile.cache_clear()
-        get_iec61970_301.cache_clear()
+        get_iec61970_552.cache_clear()
         get_validation_log_level.cache_clear()
         get_use_units.cache_clear()
 
         self.cim_profile, self.cim = get_cim_profile()
         self.namespace = get_namespace()
-        self.iec61970_301 = get_iec61970_301()
+        self.iec61970_552 = get_iec61970_552()
         self.log_level = get_validation_log_level()
         self.use_units = get_use_units()
 

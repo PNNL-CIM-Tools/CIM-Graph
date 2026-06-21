@@ -6,7 +6,7 @@ import logging
 from collections import defaultdict
 from uuid import UUID
 
-from cimgraph.core import (get_cim_profile, get_iec61970_301, get_namespace,
+from cimgraph.core import (get_cim_profile, get_iec61970_552, get_namespace,
                            get_validation_log_level)
 from cimgraph.databases import ConnectionInterface, Graph, QueryResponse
 

@@ -17,3 +17,17 @@ releases:
       - cimgraph.data_profile.cim18gmdm.asset
       - cimgraph.data_profile.cim18gmdm.marketnode
     description: "EPRI GMDM CIM18 merged profile (replaces canonical.py)"
+
+  - name: cgmes_3_0_0
+    package: cimgraph.data_profile.cgmes_3_0_0
+    parts:
+      - cimgraph.data_profile.cgmes_3_0_0.core_equipment
+      - cimgraph.data_profile.cgmes_3_0_0.equipment_boundary
+      - cimgraph.data_profile.cgmes_3_0_0.operation
+      - cimgraph.data_profile.cgmes_3_0_0.short_circuit
+      - cimgraph.data_profile.cgmes_3_0_0.steady_state_hypothesis
+      - cimgraph.data_profile.cgmes_3_0_0.state_variables
+      - cimgraph.data_profile.cgmes_3_0_0.topology
+      - cimgraph.data_profile.cgmes_3_0_0.geographical_location
+      - cimgraph.data_profile.cgmes_3_0_0.diagram
+    description: "IEC CGMES 3.0 merged profile (EQ+EQBD+OP+SC+SSH+SV+TP+GL+DL)"

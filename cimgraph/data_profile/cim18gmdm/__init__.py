@@ -14,37 +14,40 @@ Re-run the script after adding or updating sub-profile parts.
 """
 from __future__ import annotations
 
-from cimgraph.data_profile.cim18gmdm.connectivity import (ACDCTerminal, ACLineSegment,
-    ACLineSegmentPhase, AsynchronousMachine, BaseVoltage, Breaker, BusbarSection,
-    ConductingEquipment, Conductor, ConnectivityNode, ConnectivityNodeContainer,
-    Connector, Disconnector, EnergyConnection, EnergyConsumer, EnergyConsumerPhase,
-    EnergySource, Equipment, EquipmentContainer, Feeder, Fuse, IdentifiedObject,
-    Identity, Line, LinearShuntCompensator, LinearShuntCompensatorPhase,
-    LoadBreakSwitch, OrderedPhaseCodeKind, PhaseCode, PhaseShuntConnectionKind,
-    PowerElectronicsConnection, PowerElectronicsConnectionPhase, PowerSystemResource,
-    PowerTransformer, PowerTransformerEnd, ProtectedSwitch, Recloser, RegulatingCondEq,
-    RotatingMachine, Sectionaliser, SeriesCompensator, ShuntCompensator,
-    ShuntCompensatorPhase, SinglePhaseKind, Substation, Switch, SwitchPhase,
-    SynchronousMachine, Terminal, TransformerEnd, TransformerTank, TransformerTankEnd,
-    UsagePoint, Voltage, VoltageLevel, WindingConnection)
-from cimgraph.data_profile.cim18gmdm.electrical import (ActivePower, ApparentPower,
-    BatteryUnit, Conductance, ConverterControlModeKind, CurrentFlow, FossilFuel,
-    FuelType, GeneratingUnit, Length, LoadResponseCharacteristic, PerCent,
-    PerLengthImpedance, PerLengthLineParameter, PerLengthPhaseImpedance,
-    PhaseImpedanceData, PhotoVoltaicUnit, PowerElectronicsThermalUnit,
-    PowerElectronicsUnit, PowerElectronicsWindUnit, RatioTapChanger, Reactance,
-    ReactancePerLength, ReactivePower, RealEnergy, RegulatingControl,
-    RegulatingControlModeKind, Resistance, ResistancePerLength, Seconds, Susceptance,
-    SusceptancePerLength, TapChanger, TapChangerControl, ThermalGeneratingUnit,
-    TransformerCoreAdmittance, TransformerMeshImpedance, WindGenUnitKind,
-    WindGeneratingUnit)
-from cimgraph.data_profile.cim18gmdm.location import (CoordinateSystem,
-    ElectronicAddress, Location, PositionPoint, Status, StreetAddress, TelephoneNumber)
-from cimgraph.data_profile.cim18gmdm.asset import (AssetInfo, ConductingAssetInfo,
-    Impedance, KiloActivePower, NoLoadTest, PhaseCountKind, PowerTransformerInfo,
-    ShortCircuitTest, Temperature, TransformerEndInfo, TransformerTankInfo,
-    TransformerTest)
-from cimgraph.data_profile.cim18gmdm.marketnode import (IndividualPnode, Pnode)
+from cimgraph.data_profile.cim18gmdm.connectivity import (
+    ACDCTerminal, ACLineSegment, ACLineSegmentPhase, AsynchronousMachine, BaseVoltage,
+    Breaker, BusbarSection, ConductingEquipment, Conductor, ConnectivityNode,
+    ConnectivityNodeContainer, Connector, Disconnector, EnergyConnection,
+    EnergyConsumer, EnergyConsumerPhase, EnergySource, Equipment, EquipmentContainer,
+    Feeder, Fuse, IdentifiedObject, Identity, Line, LinearShuntCompensator,
+    LinearShuntCompensatorPhase, LoadBreakSwitch, OrderedPhaseCodeKind, PhaseCode,
+    PhaseShuntConnectionKind, PowerElectronicsConnection,
+    PowerElectronicsConnectionPhase, PowerSystemResource, PowerTransformer,
+    PowerTransformerEnd, ProtectedSwitch, Recloser, RegulatingCondEq, RotatingMachine,
+    Sectionaliser, SeriesCompensator, ShuntCompensator, ShuntCompensatorPhase,
+    SinglePhaseKind, Substation, Switch, SwitchPhase, SynchronousMachine, Terminal,
+    TransformerEnd, TransformerTank, TransformerTankEnd, UsagePoint, Voltage,
+    VoltageLevel, WindingConnection)
+from cimgraph.data_profile.cim18gmdm.electrical import (
+    ActivePower, ApparentPower, BatteryUnit, Conductance, ConverterControlModeKind,
+    CurrentFlow, FossilFuel, FuelType, GeneratingUnit, Length,
+    LoadResponseCharacteristic, PerCent, PerLengthImpedance, PerLengthLineParameter,
+    PerLengthPhaseImpedance, PhaseImpedanceData, PhotoVoltaicUnit,
+    PowerElectronicsThermalUnit, PowerElectronicsUnit, PowerElectronicsWindUnit,
+    RatioTapChanger, Reactance, ReactancePerLength, ReactivePower, RealEnergy,
+    RegulatingControl, RegulatingControlModeKind, Resistance, ResistancePerLength,
+    Seconds, Susceptance, SusceptancePerLength, TapChanger, TapChangerControl,
+    ThermalGeneratingUnit, TransformerCoreAdmittance, TransformerMeshImpedance,
+    WindGenUnitKind, WindGeneratingUnit)
+from cimgraph.data_profile.cim18gmdm.location import (
+    CoordinateSystem, ElectronicAddress, Location, PositionPoint, Status, StreetAddress,
+    TelephoneNumber)
+from cimgraph.data_profile.cim18gmdm.asset import (
+    AssetInfo, ConductingAssetInfo, Impedance, KiloActivePower, NoLoadTest,
+    PhaseCountKind, PowerTransformerInfo, ShortCircuitTest, Temperature,
+    TransformerEndInfo, TransformerTankInfo, TransformerTest)
+from cimgraph.data_profile.cim18gmdm.marketnode import (
+    IndividualPnode, Pnode)
 
 __all__ = [
     'ACDCTerminal',

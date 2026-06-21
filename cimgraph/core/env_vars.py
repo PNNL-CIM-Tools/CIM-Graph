@@ -2,6 +2,7 @@ import importlib
 import logging
 import os
 import types
+import warnings
 from functools import cache
 
 _log = logging.getLogger(__name__)
@@ -11,7 +12,7 @@ _log = logging.getLogger(__name__)
 _merge_memo: dict[str, types.ModuleType] = {}
 
 DEFAULT_NAMESPACE = 'http://iec.ch/TC57/CIM100#'
-DEFAULT_CIM_PROFILE = 'cimhub_2023'
+DEFAULT_CIM_PROFILE = 'cimhub_2026'
 DEFAULT_URL = 'http://localhost:8889/bigdata/namespace/kb/sparql'
 DEFAULT_DATABASE = 'powergridmodel'
 DEFAULT_HOST = 'localhost'
@@ -19,6 +20,7 @@ DEFAULT_PORT = '61613'
 DEFAULT_USERNAME = 'system'
 DEFAULT_PASSWORD = 'manager'
 DEFAULT_IEC61970_301 = 8
+DEFAULT_IEC61970_552 = '552-NEW'
 DEFAULT_USE_UNITS = 'false'
 DEFAULT_VALIDATION_LOG_LEVEL = 'WARNING'
 DEFAULT_ALLOW_UNDEFINED_ATTRIBUTES = 'false'
@@ -74,22 +76,55 @@ def get_namespace() -> str:
     return namespace
 
 @cache
-def get_iec61970_301() -> int:
-    """
-    Returns the IEC61970_301 version for the cimgraph database
+def get_iec61970_552() -> str:
+    """Return the IEC 61970-552 serialization format for this session.
+
+    Reads ``CIMG_IEC61970_552`` (preferred) or the legacy ``CIMG_IEC61970_301``.
+
     Returns:
-        iec61970_301: the IEC61970_301 version for the cimgraph database
+        ``'552-NEW'``    — use ``rdf:about=urn:uuid:`` (IEC 61970-552 ed. 2, default)
+        ``'552-LEGACY'`` — use ``rdf:ID=_`` (IEC 61970-552 ed. 1)
     """
-    iec61970_301 = os.getenv('CIMG_IEC61970_301')
-    if iec61970_301 is None:
-        iec61970_301 = DEFAULT_IEC61970_301
-        _log.info('CIMG_IEC61970_301 environment variable not set. Defaulting to 8 for urn:uuid:mRID. Set to 7 for mRIDs with underscores')
-    else:
+    val = os.getenv('CIMG_IEC61970_552')
+    if val is not None:
+        val = val.strip()
+        if val not in ('552-NEW', '552-LEGACY'):
+            raise ValueError(
+                f"CIMG_IEC61970_552 must be '552-NEW' or '552-LEGACY', got {val!r}"
+            )
+        return val
+
+    # Fall back to the old integer env var with a deprecation warning.
+    legacy = os.getenv('CIMG_IEC61970_301')
+    if legacy is not None:
+        warnings.warn(
+            "CIMG_IEC61970_301 is deprecated and will be removed in a future release. "
+            "Use CIMG_IEC61970_552='552-NEW' or '552-LEGACY' instead.",
+            DeprecationWarning,
+            stacklevel=2,
+        )
         try:
-            iec61970_301 = int(iec61970_301)
-        except:
-            raise ValueError('CIMG_IEC61970_301 environment variable should be an integer')
-    return iec61970_301
+            return '552-NEW' if int(legacy) > 7 else '552-LEGACY'
+        except ValueError:
+            raise ValueError(
+                f"Legacy CIMG_IEC61970_301 must be an integer, got {legacy!r}"
+            )
+
+    return DEFAULT_IEC61970_552
+
+
+def get_iec61970_301() -> int:
+    """Deprecated. Use ``get_iec61970_552()`` instead.
+
+    Returns the old integer encoding (8 for 552-NEW, 7 for 552-LEGACY) for
+    callers that have not yet migrated.
+    """
+    warnings.warn(
+        "get_iec61970_301() is deprecated. Use get_iec61970_552() instead.",
+        DeprecationWarning,
+        stacklevel=2,
+    )
+    return 8 if get_iec61970_552() == '552-NEW' else 7
 
 
 @cache

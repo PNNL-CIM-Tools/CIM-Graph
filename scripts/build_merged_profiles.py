@@ -68,15 +68,19 @@ def _build_init(release: dict) -> str:
         part_names = part_to_names.get(part_path, [])
         if not part_names:
             continue
+        header = f"from {part_path} import ("
         joined = ", ".join(part_names)
-        wrapped = textwrap.fill(
+        # Wrap only the names portion so long module paths don't cause
+        # textwrap to break class names mid-word.
+        wrapped_names = textwrap.fill(
             joined,
             width=88,
-            initial_indent=f"from {part_path} import (",
+            initial_indent="    ",
             subsequent_indent="    ",
+            break_long_words=False,
+            break_on_hyphens=False,
         )
-        # textwrap puts the opening paren on the first line; close it.
-        import_lines.append(wrapped + ")")
+        import_lines.append(f"{header}\n{wrapped_names})")
 
     all_entries = "\n".join(f"    '{n}'," for n in names)
 

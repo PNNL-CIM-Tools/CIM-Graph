@@ -162,7 +162,7 @@ class RDFlibConnection(SPARQLEndpointConnection):
                 # Check if association (edge to another object)
                 edge_class = self._parse_result_field(result, 'edge_class')
                 if edge_class is not None:
-                    if self.iec61970_301 > 7:
+                    if self.iec61970_552 == '552-NEW':
                         edge_mRID = value.split('uuid:')[1]
                     else:
                         edge_mRID = value.split('#')[1]

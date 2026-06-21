@@ -12,7 +12,7 @@ from neo4j.exceptions import DriverError, Neo4jError
 
 import cimgraph.data_profile.cimhub_2023 as cim
 import cimgraph.queries.cypher as cypher
-from cimgraph.core import (get_cim_profile, get_database, get_iec61970_301, get_namespace,
+from cimgraph.core import (get_cim_profile, get_database, get_iec61970_552, get_namespace,
                            get_password, get_url, get_username)
 from cimgraph.databases import ConnectionInterface, Graph, QueryResponse
 
