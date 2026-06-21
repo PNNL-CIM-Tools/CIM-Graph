@@ -1,0 +1,16 @@
+%%{init: {"theme":"base"}}%%
+sequenceDiagram
+    actor User
+    participant ConnectionInterface
+    participant SPARQLWrapper
+    participant BlazegraphEndpoint
+    note right of User: Executes SPARQL update
+    User ->>+ ConnectionInterface: update(update_message)
+    ConnectionInterface ->> ConnectionInterface: connect()
+    ConnectionInterface ->> SPARQLWrapper: setQuery(update_message)
+    ConnectionInterface ->> SPARQLWrapper: setMethod(POST)
+    ConnectionInterface ->>+ SPARQLWrapper: query()
+    SPARQLWrapper ->>+ BlazegraphEndpoint: HTTP POST request
+    BlazegraphEndpoint -->>- SPARQLWrapper: HTTP response
+    SPARQLWrapper -->>- ConnectionInterface: response
+    ConnectionInterface -->>- User: output

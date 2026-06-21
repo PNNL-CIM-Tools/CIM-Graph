@@ -1,0 +1,35 @@
+%%{init: {"theme":"base"}}%%
+sequenceDiagram
+    actor User
+    participant GraphModel
+    participant ConnectionInterface
+    participant SPARQL Queries
+    participant Database
+
+    note right of User: Creates new GraphModel
+
+    User ->>+ GraphModel: get_all_edges(cim_class)
+    GraphModel ->>+ ConnectionInterface: get_all_edges()
+    ConnectionInterface ->>+ SPARQL Queries: get_all_edges_sparql()
+    SPARQL Queries -->>- ConnectionInterface: str[query text]
+    ConnectionInterface ->>+ Database: execute(query_text)
+    Database -->>- ConnectionInterface: json[query response]
+    %% ConnectionInterface ->>+ ConnectionInterface: parse_node_query()
+    note over ConnectionInterface: Parse Edge Query Results
+
+    loop For each result in query response
+        ConnectionInterface ->> ConnectionInterface: Parse Graph Edges JSON-LD
+
+        alt is edge to another object
+            ConnectionInterface ->>+ ConnectionInterface: create_edge(association, edge_uri)
+        else is enumeration
+
+            ConnectionInterface ->> ConnectionInterface: setattr(attribute, enum_class.enum_value)
+        else is value
+            ConnectionInterface ->> ConnectionInterface: create_value(attribute, value)
+        end
+
+    end
+
+    ConnectionInterface -->>- GraphModel: dict[type, uuid]
+    GraphModel -->>- User: network object

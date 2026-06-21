@@ -1,0 +1,2531 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Open-source library for creating, parsing, and editing CIM power system models using in-memory knowledge graphs">
+      
+      
+        <meta name="author" content="Alex Anderson & CIMantic Graphs Team">
+      
+      
+        <link rel="canonical" href="https://pnnl-cim-tools.github.io/CIM-Graph/development/PROFILE_IDENTITY_0_5_PLAN/">
+      
+      
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.6">
+    
+    
+      
+        <title>cim-graph 0.5 — Profile identity as a single source of truth - CIMantic Graphs</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.484c7ddc.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../stylesheets/extra.css">
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#cim-graph-05-profile-identity-as-a-single-source-of-truth" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+      <div data-md-color-scheme="default" data-md-component="outdated" hidden>
+        
+      </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow md-header--lifted" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="CIMantic Graphs" class="md-header__button md-logo" aria-label="CIMantic Graphs" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            CIMantic Graphs
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              cim-graph 0.5 — Profile identity as a single source of truth
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/PNNL-CIM-Tools/CIM-Graph" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    PNNL-CIM-Tools/CIM-Graph
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+    
+      
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../.." class="md-tabs__link">
+        
+  
+  
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../01_overview/1_1_overview/" class="md-tabs__link">
+          
+  
+  
+  Overview
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../02_cim_profiles/2_1_profiles_overview/" class="md-tabs__link">
+          
+  
+  
+  CIM Profiles
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../03_databases/3_1_databases_overview/" class="md-tabs__link">
+          
+  
+  
+  Databases
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../04_graph_models/4_1_graph_models/" class="md-tabs__link">
+          
+  
+  
+  Graph Models
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../05_utils/5_1_file_writers/" class="md-tabs__link">
+          
+  
+  
+  Utils & Shortcuts
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+    
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="CIMantic Graphs" class="md-nav__button md-logo" aria-label="CIMantic Graphs" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    CIMantic Graphs
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/PNNL-CIM-Tools/CIM-Graph" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    PNNL-CIM-Tools/CIM-Graph
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Overview
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Overview
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../01_overview/1_1_overview/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Overview & Quick Start
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../01_overview/1_2_installation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Installation
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../01_overview/1_3_structure/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Structure
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../01_overview/1_4_contributing/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Contributing
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    CIM Profiles
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    CIM Profiles
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../02_cim_profiles/2_1_profiles_overview/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Profiles Overview
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../02_cim_profiles/2_2_building_profiles/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Building Profiles
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../02_cim_profiles/2_3_using_objects/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Using Objects
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../02_cim_profiles/2_4_using_incrementals/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Using Incrementals
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../02_cim_profiles/2_5_using_units/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Using Units
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Databases
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Databases
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../03_databases/3_1_databases_overview/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Databases Overview
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../03_databases/3_2_env_variables/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Environment Variables
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../03_databases/3_3_blazegraph/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Blazegraph
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../03_databases/3_4_neo4j/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Neo4j
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../03_databases/3_5_graphdb/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    GraphDB
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../03_databases/3_6_mysql/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    MySQL
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../03_databases/3_7_gridappsd/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    GridAPPS-D
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../03_databases/3_8_xml_file_parser/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    XML File Parser
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../03_databases/3_9_jsonld_file_parser/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    JSON-LD File Parser
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../03_databases/3_10_rdflib_parser/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    RDFLib Parser
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Graph Models
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Graph Models
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../04_graph_models/4_1_graph_models/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Graph Models Overview
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../04_graph_models/4_2_feeder_model/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Feeder Model
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../04_graph_models/4_3_node_breaker/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Node Breaker
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../04_graph_models/4_4_bus_branch/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Bus Branch
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../04_graph_models/4_5_distributed_area/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Distributed Area
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_6" >
+        
+          
+          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Utils & Shortcuts
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Utils & Shortcuts
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../05_utils/5_1_file_writers/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    File Writers
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../05_utils/5_2_get_all_data/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Get All Data
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../05_utils/5_3_mermaid/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Mermaid Diagrams
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#1-the-problem" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. The problem
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1. The problem">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#failure-1-silent-class-identity-mismatch" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Failure 1 — silent class-identity mismatch
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#failure-2-the-env-var-cannot-name-a-merged-profile" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Failure 2 — the env var cannot name a merged profile
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#why-the-env-var-existed-the-ergonomics-we-must-not-lose" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Why the env var existed (the ergonomics we must not lose)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-the-design-layered-profile-identity-contract" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. The design: layered profile-identity contract
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2. The design: layered profile-identity contract">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#the-env-var-gains-the-ability-to-name-a-merge" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The env var gains the ability to name a merge
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-the-cache-identity-hazard-must-be-solved-with-the-syntax-not-after" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. The cache-identity hazard (must be solved with the syntax, not after)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3. The cache-identity hazard (must be solved with the syntax, not after)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#3a-the-target-state-forces-option-2-cimhub_2026-becomes-a-merge" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3a. The target state forces option 2: cimhub_2026 becomes a merge
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-blast-radius-assessment-verified-against-the-three-consumer-repos" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. Blast-radius assessment (verified against the three consumer repos)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-leaf-helper-migration-pattern" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. Leaf-helper migration pattern
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5a-static-typing-for-merged-profiles-the-leaf-builder-model" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5a. Static typing for merged profiles (the leaf-builder model)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="5a. Static typing for merged profiles (the leaf-builder model)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#runtime-vs-edit-time-are-deliberately-split" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Runtime vs. edit-time are deliberately split
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#why-scoping-by-profile-is-the-right-boundary" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Why scoping by profile is the right boundary
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#the-one-wrinkle-to-name-so-it-isnt-mistaken-for-a-type-bug" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The one wrinkle to name (so it isn't mistaken for a type bug)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#alternatives-considered-and-why-not" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Alternatives considered (and why not)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5c-static-typing-for-merged-profiles-the-exporterconverter-model" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5c. Static typing for merged profiles (the exporter/converter model)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="5c. Static typing for merged profiles (the exporter/converter model)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#a-silent-failure-guard-the-converter-needs-regardless" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        A silent-failure guard the converter needs regardless
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5b-retiring-cim_override" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5b. Retiring cim_override
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#6-phased-rollout" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6. Phased rollout
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="6. Phased rollout">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#phase-1-non-breaking-core-can-land-before-05-on-04x" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Phase 1 — non-breaking core (can land before 0.5, on 0.4.x)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#phase-2-leaf-helper-migration-consumer-repos-coordinated" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Phase 2 — leaf-helper migration (consumer repos, coordinated)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#phase-3-canonicalpy-deprecation-05-breaking" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Phase 3 — canonical.py deprecation (0.5, breaking)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#phase-4-05-cut" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Phase 4 — 0.5 cut
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#7-05-breaking-change-callouts" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7. 0.5 breaking-change callouts
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#8-open-questions-for-maintainer-review" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8. Open questions for maintainer review
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+  
+
+
+<h1 id="cim-graph-05-profile-identity-as-a-single-source-of-truth">cim-graph 0.5 — Profile identity as a single source of truth<a class="headerlink" href="#cim-graph-05-profile-identity-as-a-single-source-of-truth" title="Permanent link">&para;</a></h1>
+<p><strong>Status:</strong> proposal / plan only (no code yet)
+<strong>Target release:</strong> 0.5 (breaking change; current <code>main</code> is 0.4.3a12)
+<strong>Author of record:</strong> to be filled by maintainer</p>
+<hr />
+<h2 id="1-the-problem">1. The problem<a class="headerlink" href="#1-the-problem" title="Permanent link">&para;</a></h2>
+<p>cim-graph resolves "which CIM profile am I using" from the <code>CIMG_CIM_PROFILE</code>
+environment variable, via <code>cimgraph/core/env_vars.py::get_cim_profile()</code>:</p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="n">cim</span> <span class="o">=</span> <span class="n">importlib</span><span class="o">.</span><span class="n">import_module</span><span class="p">(</span><span class="s1">&#39;cimgraph.data_profile.&#39;</span> <span class="o">+</span> <span class="n">cim_profile</span><span class="p">)</span>
+</span></code></pre></div>
+<p>That returns <strong>one importable module</strong>, e.g.
+<code>cimgraph.data_profile.cim18gmdm.connectivity</code>. Its <code>ACLineSegment</code> is a
+specific dataclass object.</p>
+<p>Runtime profile merging (<code>data_profile/merge.py::merge_profiles</code>) was added so a
+split export (connectivity + electrical + asset + …) can be read into one graph
+without a hand-maintained <code>canonical.py</code> mega-profile. The merged profile is
+passed to a connection via <code>cim_override=</code>, and the connection correctly stores
+it (<code>databases/__init__.py:76-80</code>: <code>self.cim = cim_override</code>,
+<code>self.cim_profile = 'merged'</code>).</p>
+<blockquote>
+<p><strong>Note on <code>cim_override</code>.</strong> That kwarg was introduced in the same 0.4.3a11
+commit as <code>merge.py</code>, purely to prove the merge concept. Nothing in the
+codebase or any consumer repo passes it except two cim-graph tests
+(<code>test_merge_profiles.py:194</code>, <code>test_blazegraph_seto.py:109</code>). 0.5 <strong>removes
+it entirely</strong> (§"Retiring <code>cim_override</code>") and replaces it with the env-var
+comma-spec, which is the supported, zero-plumbing way to select a merge.</p>
+</blockquote>
+<p><strong>But the model re-derives the profile independently of the connection it was
+handed.</strong> <code>FeederModel.__post_init__</code> (and <code>NodeBreakerModel</code>,
+<code>BusBranchModel</code>) do:</p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="n">cim_profile</span><span class="p">,</span> <span class="n">cim_module</span> <span class="o">=</span> <span class="n">get_cim_profile</span><span class="p">()</span>   <span class="c1"># reads the env var</span>
+</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="bp">self</span><span class="o">.</span><span class="n">cim</span> <span class="o">=</span> <span class="n">cim_module</span>
+</span></code></pre></div>
+<p>This produces two distinct failures.</p>
+<h3 id="failure-1-silent-class-identity-mismatch">Failure 1 — silent class-identity mismatch<a class="headerlink" href="#failure-1-silent-class-identity-mismatch" title="Permanent link">&para;</a></h3>
+<p>The graph is <strong>built through <code>connection.cim</code></strong> (the merged module), so every
+object in <code>network.graph</code> is an instance of <code>merged.ACLineSegment</code>. But
+<code>network.cim</code> was set from the env var to <code>connectivity.ACLineSegment</code>. These
+are different class objects. They duck-type identically, so nothing raises — but
+every identity-based operation silently misbehaves:</p>
+<ul>
+<li><code>isinstance(self.container, self.cim.Feeder)</code> — <code>feeder_model.py:128</code>,
+  <code>sparql_endpoint.py:259</code>, <code>distributed_area.py:33/46</code>, <code>gridappsd.py:115</code>,
+  <code>neo4j.py:216</code>. Compares against the wrong <code>Feeder</code> class → wrong branch taken.</li>
+<li><code>graph[self.cim.Terminal]</code>, <code>graph[self.cim.ConnectivityNode]</code> —
+  <code>mysql.py:85-90</code> and the universal <code>graph[type, dict[UUID, object]]</code> keying.
+  The graph dict is <strong>keyed by class object</strong>; a non-identical <code>Terminal</code> class
+  is a key miss → "no terminals found" when there are thousands.</li>
+<li>Downstream <code>network.graph[network.cim.ACLineSegment]</code> lookups in consumer
+  repos return empty.</li>
+</ul>
+<p>The notebook <code>EPRI-GMDM-II/test_model/9500node_merge_metadata.ipynb</code> papers over
+this with a manual <code>network.cim = merged</code> after construction. That only works
+because the author knew the failure existed. It is not a fix; it is a landmine.</p>
+<h3 id="failure-2-the-env-var-cannot-name-a-merged-profile">Failure 2 — the env var cannot name a merged profile<a class="headerlink" href="#failure-2-the-env-var-cannot-name-a-merged-profile" title="Permanent link">&para;</a></h3>
+<p><code>get_cim_profile()</code> resolves a <strong>single module path</strong> via <code>import_module</code>. A
+runtime-merged profile has no module path, so the env var is structurally
+incapable of naming it. Consequences:</p>
+<ul>
+<li>The merge path <em>requires</em> passing <code>cim_override</code> to a connection. There is no
+  zero-plumbing way (the original point of the env var) to select a merge.</li>
+<li>If <code>canonical.py</code> is deleted — and it genuinely duplicates the sub-profile
+  parts — there is no longer any single-module profile that spans all the GMDM
+  parts to point the env var at. The env var becomes unsatisfiable for that
+  family.</li>
+</ul>
+<h3 id="why-the-env-var-existed-the-ergonomics-we-must-not-lose">Why the env var existed (the ergonomics we must not lose)<a class="headerlink" href="#why-the-env-var-existed-the-ergonomics-we-must-not-lose" title="Permanent link">&para;</a></h3>
+<p>The env var let a deeply-nested leaf helper resolve the profile with <strong>no
+plumbing</strong> — no connection or model threaded down through every call. Example
+(<code>CIM-Builder/cimbuilder/object_builder/base/new_base_voltage.py:27</code>):</p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="k">def</span><span class="w"> </span><span class="nf">new_base_voltage</span><span class="p">(</span><span class="n">network</span><span class="p">:</span> <span class="n">GraphModel</span><span class="p">,</span> <span class="n">base_voltage</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>    <span class="n">cim_profile</span><span class="p">,</span> <span class="n">cim_module</span> <span class="o">=</span> <span class="n">get_cim_profile</span><span class="p">()</span>   <span class="c1"># no connection in scope</span>
+</span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a>    <span class="n">cim</span> <span class="o">=</span> <span class="n">cim_module</span>
+</span><span id="__span-2-4"><a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a>    <span class="o">...</span>
+</span></code></pre></div>
+<p>Any redesign has to preserve that ergonomics, or it is a regression for the
+~40 leaf helpers across CIM-Builder / CIMHub.</p>
+<hr />
+<h2 id="2-the-design-layered-profile-identity-contract">2. The design: layered profile-identity contract<a class="headerlink" href="#2-the-design-layered-profile-identity-contract" title="Permanent link">&para;</a></h2>
+<p>One profile object — the one the graph is built from — is the single source of
+class identity. Every layer either <em>chooses</em> it or <em>reads</em> it; no layer
+re-derives it.</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>┌─ Connection ──────────────────────────────────────────────────────────┐
+</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>│  Chooses the profile — from ONE source after 0.5:                       │
+</span><span id="__span-3-3"><a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a>│    self.cim = get_cim_profile()   (env var; comma-spec → merged module) │
+</span><span id="__span-3-4"><a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a>│  The cim_override kwarg is removed (§&quot;Retiring cim_override&quot;). The merge │
+</span><span id="__span-3-5"><a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a>│  arrives via the comma-spec, resolved+cached in get_cim_profile().      │
+</span><span id="__span-3-6"><a id="__codelineno-3-6" name="__codelineno-3-6" href="#__codelineno-3-6"></a>└─────────────────────────────────────────────────────────────────────────┘
+</span><span id="__span-3-7"><a id="__codelineno-3-7" name="__codelineno-3-7" href="#__codelineno-3-7"></a>              │ self.cim  (the authoritative class set)
+</span><span id="__span-3-8"><a id="__codelineno-3-8" name="__codelineno-3-8" href="#__codelineno-3-8"></a>              ▼
+</span><span id="__span-3-9"><a id="__codelineno-3-9" name="__codelineno-3-9" href="#__codelineno-3-9"></a>┌─ GraphModel / FeederModel / NodeBreakerModel / BusBranchModel ─────────┐
+</span><span id="__span-3-10"><a id="__codelineno-3-10" name="__codelineno-3-10" href="#__codelineno-3-10"></a>│  Carries the profile. Sourced FROM the connection:                      │
+</span><span id="__span-3-11"><a id="__codelineno-3-11" name="__codelineno-3-11" href="#__codelineno-3-11"></a>│    self.cim = self.connection.cim   (when a connection exists)          │
+</span><span id="__span-3-12"><a id="__codelineno-3-12" name="__codelineno-3-12" href="#__codelineno-3-12"></a>│    else fall back to get_cim_profile()  (no-connection construction)    │
+</span><span id="__span-3-13"><a id="__codelineno-3-13" name="__codelineno-3-13" href="#__codelineno-3-13"></a>│  DistributedArea ALREADY does this (distributed_area.py:15-16).         │
+</span><span id="__span-3-14"><a id="__codelineno-3-14" name="__codelineno-3-14" href="#__codelineno-3-14"></a>│  The three top-level models must be made consistent with it.            │
+</span><span id="__span-3-15"><a id="__codelineno-3-15" name="__codelineno-3-15" href="#__codelineno-3-15"></a>└─────────────────────────────────────────────────────────────────────────┘
+</span><span id="__span-3-16"><a id="__codelineno-3-16" name="__codelineno-3-16" href="#__codelineno-3-16"></a>              │ network.cim  (same object — graph keys &amp; isinstance now match)
+</span><span id="__span-3-17"><a id="__codelineno-3-17" name="__codelineno-3-17" href="#__codelineno-3-17"></a>              ▼
+</span><span id="__span-3-18"><a id="__codelineno-3-18" name="__codelineno-3-18" href="#__codelineno-3-18"></a>┌─ Leaf helpers (CIM-Builder builders, CIMHub get_utils, etc.) ──────────┐
+</span><span id="__span-3-19"><a id="__codelineno-3-19" name="__codelineno-3-19" href="#__codelineno-3-19"></a>│  Read the profile off the model they already receive:                   │
+</span><span id="__span-3-20"><a id="__codelineno-3-20" name="__codelineno-3-20" href="#__codelineno-3-20"></a>│    cim = network.cim          ← NOT get_cim_profile()                    │
+</span><span id="__span-3-21"><a id="__codelineno-3-21" name="__codelineno-3-21" href="#__codelineno-3-21"></a>│  Already proven: CIMHub get_substation.py:11 does exactly this, with     │
+</span><span id="__span-3-22"><a id="__codelineno-3-22" name="__codelineno-3-22" href="#__codelineno-3-22"></a>│  the old get_cim_profile() line commented out right above it.           │
+</span><span id="__span-3-23"><a id="__codelineno-3-23" name="__codelineno-3-23" href="#__codelineno-3-23"></a>└─────────────────────────────────────────────────────────────────────────┘
+</span></code></pre></div>
+<p>The env var is the <strong>single profile source</strong> consumed inside the connection
+constructor, plus the no-model construction fallback for models. It is never a
+second, independent source a model or leaf re-derives from. With <code>cim_override</code>
+gone, <code>get_cim_profile()</code> is the <em>only</em> way a merged module enters the system —
+which makes the §3 cache-identity guarantee load-bearing, not optional.</p>
+<h3 id="the-env-var-gains-the-ability-to-name-a-merge">The env var gains the ability to name a merge<a class="headerlink" href="#the-env-var-gains-the-ability-to-name-a-merge" title="Permanent link">&para;</a></h3>
+<p>To keep zero-plumbing selection <em>and</em> let <code>canonical.py</code> go away, extend the
+<strong>syntax</strong> the env var accepts (decided: comma-separated module list):</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="nv">CIMG_CIM_PROFILE</span><span class="o">=</span><span class="s2">&quot;cimgraph.data_profile.cim18gmdm.connectivity,\</span>
+</span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a><span class="s2">cimgraph.data_profile.cim18gmdm.electrical,\</span>
+</span><span id="__span-4-3"><a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a><span class="s2">cimgraph.data_profile.cim18gmdm.asset&quot;</span>
+</span></code></pre></div>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="c1"># get_cim_profile(), conceptually:</span>
+</span><span id="__span-5-2"><a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a><span class="n">parts</span> <span class="o">=</span> <span class="p">[</span><span class="n">p</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span> <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">cim_profile</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;,&#39;</span><span class="p">)</span> <span class="k">if</span> <span class="n">p</span><span class="o">.</span><span class="n">strip</span><span class="p">()]</span>
+</span><span id="__span-5-3"><a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a><span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">parts</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+</span><span id="__span-5-4"><a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a>    <span class="n">cim</span> <span class="o">=</span> <span class="n">import_module</span><span class="p">(</span><span class="n">_qualify</span><span class="p">(</span><span class="n">parts</span><span class="p">[</span><span class="mi">0</span><span class="p">]))</span>      <span class="c1"># UNCHANGED — 0.4 behavior</span>
+</span><span id="__span-5-5"><a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a><span class="k">else</span><span class="p">:</span>
+</span><span id="__span-5-6"><a id="__codelineno-5-6" name="__codelineno-5-6" href="#__codelineno-5-6"></a>    <span class="n">mods</span> <span class="o">=</span> <span class="p">[</span><span class="n">import_module</span><span class="p">(</span><span class="n">_qualify</span><span class="p">(</span><span class="n">p</span><span class="p">))</span> <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">parts</span><span class="p">]</span>
+</span><span id="__span-5-7"><a id="__codelineno-5-7" name="__codelineno-5-7" href="#__codelineno-5-7"></a>    <span class="n">cim</span> <span class="o">=</span> <span class="n">merge_profiles</span><span class="p">(</span><span class="o">*</span><span class="n">mods</span><span class="p">)</span>                  <span class="c1"># NEW — built once, see §3</span>
+</span></code></pre></div>
+<ul>
+<li><strong>One part → today's behavior verbatim.</strong> Fully backward compatible; every
+  existing repo keeps working untouched.</li>
+<li><strong>Two+ parts → a merged module</strong>, selectable with no connection in scope.</li>
+<li><code>merge_profiles</code> is <em>not</em> currently re-exported from
+  <code>data_profile/__init__.py</code>; <code>env_vars.py</code> would import it directly from
+  <code>cimgraph.data_profile.merge</code>. (Watch for import cycles — <code>env_vars</code> is low in
+  the stack; import lazily inside the function.)</li>
+</ul>
+<hr />
+<h2 id="3-the-cache-identity-hazard-must-be-solved-with-the-syntax-not-after">3. The cache-identity hazard (must be solved with the syntax, not after)<a class="headerlink" href="#3-the-cache-identity-hazard-must-be-solved-with-the-syntax-not-after" title="Permanent link">&para;</a></h2>
+<p><code>get_cim_profile()</code> is <code>@cache</code>d on its (empty) args, and <strong><code>cache_clear()</code> is
+called in every connection <code>__init__</code></strong>: <code>xml_parser.py:25</code>, <code>graphdb.py:26</code>,
+<code>neo4j.py:35</code>, <code>databases/__init__.py:70</code>, <code>gridappsd.py:27</code>,
+<code>json_ld_parser.py:21</code>, plus <code>incremental_builder.py:92</code>.</p>
+<p>If the merge is rebuilt on every cache miss, then constructing two connections
+for the same merged env var yields <strong>two different merged modules</strong> →
+<code>connA.cim.ACLineSegment is not connB.cim.ACLineSegment</code> → Failure 1 returns,
+now <em>across connections</em> instead of across model/connection. Accumulating a
+split read across multiple <code>XMLFile</code>s (the canonical multi-file use case) is
+exactly this scenario.</p>
+<p><strong>Requirement:</strong> a given comma-spec string must always resolve to the <strong>same
+merged module object</strong> for the life of the process, surviving the <code>cache_clear()</code>
+churn. Options to evaluate (pick during implementation):</p>
+<ol>
+<li><strong>Module-level memo keyed by the normalized spec string</strong>, independent of the
+   <code>@cache</code> that <code>cache_clear()</code> wipes. <code>merge_profiles</code> results are cached in a
+   plain <code>dict[str, ModuleType]</code>; <code>cache_clear()</code> only resets the cheap env-var
+   read, not the expensive merged build. Cheapest, keeps identity stable
+   <strong>within cim-graph</strong> — but see the hard requirement below: a private memo is
+   <em>not sufficient</em> for <code>import</code>-based consumers.</li>
+<li><strong>Install the merged module in <code>sys.modules</code></strong> under its canonical name, so
+   <code>importlib.import_module(name)</code> <em>and</em> a plain <code>import …name as cim</code> statement
+   in any consumer both round-trip to the same object. Heavier and it occupies an
+   import name — but for the target state (§3a) this is <strong>mandatory, not
+   optional</strong>: it is the only mechanism that serves consumers who reach the
+   profile via <code>import</code>, not via <code>network.cim</code>.</li>
+<li><strong>Audit and reduce the <code>cache_clear()</code> calls.</strong> They exist so a test that
+   re-sets the env var mid-process is honored. Reconsider whether every
+   connection needs to clear; possibly clear only when the env var actually
+   changed. Larger blast radius; defer.</li>
+</ol>
+<p>This section is a <em>gate</em>: the comma-merge syntax is not done until same-spec →
+same-object identity is guaranteed.</p>
+<h3 id="3a-the-target-state-forces-option-2-cimhub_2026-becomes-a-merge">3a. The target state forces option 2: <code>cimhub_2026</code> <em>becomes</em> a merge<a class="headerlink" href="#3a-the-target-state-forces-option-2-cimhub_2026-becomes-a-merge" title="Permanent link">&para;</a></h3>
+<p>The decided end goal is that <strong><code>cimhub_2026</code> stops being a 953 KB generated
+<code>.py</code> file and becomes a runtime merge</strong> of its sub-profiles — that is the whole
+reason this cross-repo plan exists. The single-file profile is what makes the
+Pylance "&gt;1000 dataclasses" explosion and the canonical-maintenance burden
+unavoidable; a merge dissolves both. <strong>But it raises the identity bar.</strong></p>
+<p>Today, every CIMTool-generated converter resolves the profile by <em>importing it
+by name</em>:</p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="kn">import</span><span class="w"> </span><span class="nn">cimgraph.data_profile.cimhub_2026</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">cim</span>   <span class="c1"># in dozens of converter files</span>
+</span><span id="__span-6-2"><a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a><span class="nd">@registry</span><span class="o">.</span><span class="n">register</span><span class="p">(</span><span class="n">cim</span><span class="o">.</span><span class="n">ACLineSegment</span><span class="p">)</span>             <span class="c1"># registry key = this object</span>
+</span><span id="__span-6-3"><a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a><span class="o">...</span> <span class="n">network</span><span class="o">.</span><span class="n">graph</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">cim</span><span class="o">.</span><span class="n">ACLineSegment</span><span class="p">)</span> <span class="o">...</span>      <span class="c1"># graph key must == this object</span>
+</span></code></pre></div>
+<p>(Live example: <code>CIMHub_2_0/cimhub_opendss/.../exporter/lines/ac_line_segment.py</code>
+and <code>.../exporter/cim_to_dss.py</code>. The registry is a raw <code>dict[type, callable]</code>
+keyed on the class object — <code>cimhub_core/.../registry.py</code> — no <code>__name__</code>
+fallback, no MRO walk. Identity is the only key.)</p>
+<p>This works <strong>only because <code>cimhub_2026.py</code> is a real file</strong>: the first <code>import</code>
+caches one module object in <code>sys.modules</code>, and every later <code>import</code> — in the
+converter, in <code>EXPORT_ORDER</code>, in whatever built the graph — returns that same
+object. The single file <em>is</em> the identity guarantee, by accident of being
+importable.</p>
+<p>The moment <code>cimhub_2026</code> is a runtime merge, <strong>a private memo (option 1) cannot
+serve those <code>import</code> statements.</strong> A converter that does
+<code>import cimgraph.data_profile.cimhub_2026 as cim</code> at its own module-load time
+goes through <code>sys.modules</code>, not through <code>get_cim_profile()</code>'s dict — so it would
+capture <em>no</em> module (ImportError) or the <em>old</em> generated file, never the merge.</p>
+<p><strong>Therefore, for the target state, the canonical merge must be installed in
+<code>sys.modules['cimgraph.data_profile.cimhub_2026']</code> before any converter imports
+it</strong>, so that:</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>import …cimhub_2026 as cim   (converter, at registration)   ┐
+</span><span id="__span-7-2"><a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a>EXPORT_ORDER[(cim.ACLineSegment, …)]                         ├─ all the SAME
+</span><span id="__span-7-3"><a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a>network.graph.get(cim.ACLineSegment)  (built via the merge)  ├─ ACLineSegment
+</span><span id="__span-7-4"><a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a>network.cim.ACLineSegment             (model carries it)     ┘  object
+</span></code></pre></div>
+<p>The <code>get_cim_profile()</code> memo (option 1) and the <code>sys.modules</code> entry (option 2)
+must point at the <strong>same</strong> object — option 1 for cim-graph's own
+<code>network.cim</code> flow, option 2 for the import-based consumer flow. They are not
+alternatives; the target state needs both, with option 2 as the canonical home
+and the memo as a same-object alias.</p>
+<blockquote>
+<p><strong>Sequencing hazard — does not apply here.</strong> <code>cimhub_2026</code> is already a
+package (<code>cimhub_2026/__init__.py</code>), so <code>import cimgraph.data_profile.cimhub_2026</code>
+already runs <code>__init__.py</code> on first import. Replacing the re-export in that
+file with a <code>merge_profiles(...)</code> call means the merge is built at the moment
+the package is first imported — no converter can capture a stale flat module
+ahead of it, because no flat module is in play. The <code>cimantic-graphs-init.xsl</code>
+already generates this package layout; the only XSL change needed is in the
+body of the generated <code>__init__.py</code>.</p>
+</blockquote>
+<hr />
+<h2 id="4-blast-radius-assessment-verified-against-the-three-consumer-repos">4. Blast-radius assessment (verified against the three consumer repos)<a class="headerlink" href="#4-blast-radius-assessment-verified-against-the-three-consumer-repos" title="Permanent link">&para;</a></h2>
+<p>Searched <code>CIM-Builder</code>, <code>CIM-Loader</code>, and all ~20 <code>CIMHub_2_0/cimhub_*</code>
+packages for: <code>CIMG_CIM_PROFILE</code>, <code>get_cim_profile</code>, <code>cim_override</code>,
+<code>connection.cim</code>, model instantiation, <code>.cim =</code> assignment, and model
+subclassing.</p>
+<p><strong>Key finding: <code>cim_override</code> appears in NONE of the three repos.</strong> Every
+consumer selects its profile via <code>CIMG_CIM_PROFILE</code> and lets it flow through.
+So the "connection wins" change only has teeth in the <em>new</em> merged path that no
+downstream code uses yet — the non-merged path is behavior-identical because
+<code>connection.cim</code> already equals <code>get_cim_profile()</code> when no override is given.</p>
+<table>
+<thead>
+<tr>
+<th>Repo</th>
+<th>How it selects the profile</th>
+<th>Effect of "connection wins"</th>
+<th>Effect of comma-merge env var</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>CIM-Builder</strong></td>
+<td>Sets <code>CIMG_CIM_PROFILE</code>; leaf builders call <code>get_cim_profile()</code> directly; models built with <strong>no override</strong></td>
+<td>None — <code>connection.cim</code> == env-var module</td>
+<td>None until it opts into a comma-spec</td>
+</tr>
+<tr>
+<td><strong>CIM-Loader</strong></td>
+<td>Connection classes set <code>self.cim</code> from <code>get_cim_profile()</code> in <code>__init__</code>; models built with that connection</td>
+<td>None — model reads the same module the connection set</td>
+<td>None until opt-in</td>
+</tr>
+<tr>
+<td><strong>CIMHub_2_0</strong></td>
+<td><code>os.environ.setdefault("CIMG_CIM_PROFILE", ...)</code> per package; <code>FeederModel/NodeBreakerModel(connection=XMLFile(""), container=None)</code> everywhere</td>
+<td>None — <code>XMLFile("")</code> sets <code>connection.cim</code> from env var; model reads it. <strong><code>cimhub_core</code>/<code>cimhub_powersimulator</code> already do <code>cim = network.cim</code></strong> — change makes them <em>more</em> robust</td>
+<td>None until opt-in</td>
+</tr>
+</tbody>
+</table>
+<p>No model subclassing exists in any repo (all <code>(...Model)</code> grep hits are
+docstrings/type comments). No repo will break on the non-breaking core (§6
+Phase 1).</p>
+<hr />
+<h2 id="5-leaf-helper-migration-pattern">5. Leaf-helper migration pattern<a class="headerlink" href="#5-leaf-helper-migration-pattern" title="Permanent link">&para;</a></h2>
+<p>The fix for leaf helpers is <strong>not</strong> to thread a connection through every call —
+they already receive a <code>network: GraphModel</code>. The migration is one line:</p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a><span class="c1"># BEFORE (re-derives from env var; wrong class identity under a merge)</span>
+</span><span id="__span-8-2"><a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a><span class="n">cim_profile</span><span class="p">,</span> <span class="n">cim_module</span> <span class="o">=</span> <span class="n">get_cim_profile</span><span class="p">()</span>
+</span><span id="__span-8-3"><a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a><span class="n">cim</span> <span class="o">=</span> <span class="n">cim_module</span>
+</span><span id="__span-8-4"><a id="__codelineno-8-4" name="__codelineno-8-4" href="#__codelineno-8-4"></a>
+</span><span id="__span-8-5"><a id="__codelineno-8-5" name="__codelineno-8-5" href="#__codelineno-8-5"></a><span class="c1"># AFTER (reads the profile off the model that owns the graph)</span>
+</span><span id="__span-8-6"><a id="__codelineno-8-6" name="__codelineno-8-6" href="#__codelineno-8-6"></a><span class="n">cim</span> <span class="o">=</span> <span class="n">network</span><span class="o">.</span><span class="n">cim</span>
+</span></code></pre></div>
+<p>Precedent already in the tree:
+<code>CIMHub_2_0/cimhub_core/src/cimhub_core/get_utils/get_substation.py:11</code> does
+<code>cim = network.cim</code> with the <code>get_cim_profile()</code> line commented out above it.</p>
+<p>Helpers that genuinely have <strong>no</strong> model/connection in scope (pure
+constructors) keep using <code>get_cim_profile()</code> — now merge-capable via the comma
+syntax — so they are still served with zero plumbing.</p>
+<p>The runtime swap is only half the leaf story; the edit-time typing model that
+goes with it (per-method single-profile annotations) is <strong>§5a</strong>, and
+<code>line_builder.py</code> is the worked example for both.</p>
+<hr />
+<h2 id="5a-static-typing-for-merged-profiles-the-leaf-builder-model">5a. Static typing for merged profiles (the leaf-builder model)<a class="headerlink" href="#5a-static-typing-for-merged-profiles-the-leaf-builder-model" title="Permanent link">&para;</a></h2>
+<p>The runtime fix (<code>cim = network.cim</code>) leaves an edit-time question: a merged
+module <strong>does not exist as a file</strong>, so Pylance can only see <code>network.cim</code> as
+<code>ModuleType</code>/<code>Any</code> — no completions, no field checking. The first intended
+merge consumer, <code>CIM-Builder/.../line/line_builder.py</code>, is a hand-written sketch
+exploring how to solve this. Its <code>cim: EQ = get_cim_profile()</code> lines are <em>not</em>
+runtime code to fix — they are probing the typing contract. The recommended
+model formalizes what that sketch is reaching for.</p>
+<h3 id="runtime-vs-edit-time-are-deliberately-split">Runtime vs. edit-time are deliberately split<a class="headerlink" href="#runtime-vs-edit-time-are-deliberately-split" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>What <code>cim</code> is</th>
+<th>Why</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Runtime</strong></td>
+<td><code>network.cim</code> — the merged module. One <code>ACLineSegment</code> object carries <strong>every</strong> profile's fields.</td>
+<td>Class identity correctness (the 0.5 thesis).</td>
+</tr>
+<tr>
+<td><strong>Edit time</strong></td>
+<td>annotated as a <strong>single</strong> sub-profile per method (<code>cim: CN</code>, <code>cim: EQ</code>, …) via <code>TYPE_CHECKING</code> imports.</td>
+<td>Scopes each builder method's <strong>write access</strong> to one profile's fields.</td>
+</tr>
+</tbody>
+</table>
+<p>So the annotation is a <strong>profile-scoping contract, not a typing hack.</strong> A
+per-method single-profile annotation is <em>narrower than the runtime truth on
+purpose</em>: it tells Pylance "in this method you may only touch this profile's
+fields."</p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a><span class="k">if</span> <span class="n">TYPE_CHECKING</span><span class="p">:</span>
+</span><span id="__span-9-2"><a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a>    <span class="kn">import</span><span class="w"> </span><span class="nn">cimgraph.data_profile.cim18gmdm.connectivity</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">CN</span>
+</span><span id="__span-9-3"><a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a>    <span class="kn">import</span><span class="w"> </span><span class="nn">cimgraph.data_profile.cim18gmdm.electrical</span><span class="w">   </span><span class="k">as</span><span class="w"> </span><span class="nn">EQ</span>
+</span><span id="__span-9-4"><a id="__codelineno-9-4" name="__codelineno-9-4" href="#__codelineno-9-4"></a>
+</span><span id="__span-9-5"><a id="__codelineno-9-5" name="__codelineno-9-5" href="#__codelineno-9-5"></a><span class="k">class</span><span class="w"> </span><span class="nc">LineBuilder</span><span class="p">(</span><span class="n">ObjectBuilder</span><span class="p">):</span>
+</span><span id="__span-9-6"><a id="__codelineno-9-6" name="__codelineno-9-6" href="#__codelineno-9-6"></a>    <span class="n">network</span><span class="p">:</span> <span class="n">GraphModel</span>
+</span><span id="__span-9-7"><a id="__codelineno-9-7" name="__codelineno-9-7" href="#__codelineno-9-7"></a>    <span class="n">container</span><span class="p">:</span> <span class="s2">&quot;CN.EquipmentContainer&quot;</span>
+</span><span id="__span-9-8"><a id="__codelineno-9-8" name="__codelineno-9-8" href="#__codelineno-9-8"></a>
+</span><span id="__span-9-9"><a id="__codelineno-9-9" name="__codelineno-9-9" href="#__codelineno-9-9"></a>    <span class="k">def</span><span class="w"> </span><span class="nf">add_connectivity</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">node1</span><span class="p">,</span> <span class="n">node2</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;CN.ACLineSegment&quot;</span><span class="p">:</span>
+</span><span id="__span-9-10"><a id="__codelineno-9-10" name="__codelineno-9-10" href="#__codelineno-9-10"></a>        <span class="n">cim</span><span class="p">:</span> <span class="n">CN</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">network</span><span class="o">.</span><span class="n">cim</span>          <span class="c1"># runtime: merged module</span>
+</span><span id="__span-9-11"><a id="__codelineno-9-11" name="__codelineno-9-11" href="#__codelineno-9-11"></a>        <span class="n">line</span> <span class="o">=</span> <span class="n">cim</span><span class="o">.</span><span class="n">ACLineSegment</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="n">name</span><span class="p">)</span> <span class="c1"># edit time: only CN fields offered</span>
+</span><span id="__span-9-12"><a id="__codelineno-9-12" name="__codelineno-9-12" href="#__codelineno-9-12"></a>        <span class="o">...</span>                                 <span class="c1"># `line.r = ...` here would (correctly) flag —</span>
+</span><span id="__span-9-13"><a id="__codelineno-9-13" name="__codelineno-9-13" href="#__codelineno-9-13"></a>                                            <span class="c1">#  r is an electrical field, wrong method</span>
+</span><span id="__span-9-14"><a id="__codelineno-9-14" name="__codelineno-9-14" href="#__codelineno-9-14"></a>
+</span><span id="__span-9-15"><a id="__codelineno-9-15" name="__codelineno-9-15" href="#__codelineno-9-15"></a>    <span class="k">def</span><span class="w"> </span><span class="nf">add_electrical</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">line</span><span class="p">:</span> <span class="s2">&quot;EQ.ACLineSegment&quot;</span><span class="p">,</span> <span class="n">r</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">bch</span><span class="p">,</span> <span class="o">...</span><span class="p">):</span>
+</span><span id="__span-9-16"><a id="__codelineno-9-16" name="__codelineno-9-16" href="#__codelineno-9-16"></a>        <span class="n">cim</span><span class="p">:</span> <span class="n">EQ</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">network</span><span class="o">.</span><span class="n">cim</span>          <span class="c1"># same object, electrical slice</span>
+</span><span id="__span-9-17"><a id="__codelineno-9-17" name="__codelineno-9-17" href="#__codelineno-9-17"></a>        <span class="n">line</span><span class="o">.</span><span class="n">r</span> <span class="o">=</span> <span class="n">cim</span><span class="o">.</span><span class="n">Resistance</span><span class="p">(</span><span class="n">r</span><span class="p">,</span> <span class="n">r_unit</span> <span class="ow">or</span> <span class="s1">&#39;ohm&#39;</span><span class="p">)</span>
+</span></code></pre></div>
+<h3 id="why-scoping-by-profile-is-the-right-boundary">Why scoping by profile is the right boundary<a class="headerlink" href="#why-scoping-by-profile-is-the-right-boundary" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>Guardrail:</strong> <code>line.r</code> inside <code>add_connectivity</code> is a category error — <code>r</code> is
+  an electrical field. The narrowed <code>cim: CN</code> makes Pylance reject it, so the
+  partition is enforced at edit time, not discovered at runtime.</li>
+<li><strong>No file on disk:</strong> no <code>.pyi</code>, no <code>generate_type_stubs</code> output, no canonical
+  import. The <code>TYPE_CHECKING</code> imports of the real sub-profile modules are the
+  only machinery; they are erased at runtime.</li>
+<li><strong>It maps 1:1 to the planned UI (Phase 42 goal).</strong> A GUI ribbon "Add Line" →
+  a wizard with <strong>one page per profile</strong> (Connectivity → Electrical →
+  Short-circuit), user fills or clicks Next. Each wizard page is backed by one
+  <code>add_&lt;profile&gt;</code> method, and that method's <code>cim: &lt;PROFILE&gt;</code> annotation is
+  exactly the set of fields the page renders. The type narrowing and the UI step
+  structure are the same boundary.</li>
+</ul>
+<h3 id="the-one-wrinkle-to-name-so-it-isnt-mistaken-for-a-type-bug">The one wrinkle to name (so it isn't mistaken for a type bug)<a class="headerlink" href="#the-one-wrinkle-to-name-so-it-isnt-mistaken-for-a-type-bug" title="Permanent link">&para;</a></h3>
+<p><code>cim: CN</code> is narrower than the runtime module (which has all profiles' fields).
+That is correct for <strong>writes</strong>. If a method ever needs to <strong>read</strong> a field that
+belongs to another profile on the same object, Pylance will flag it — that flag
+is the signal to move the read into the method scoped to that profile, not to
+widen the annotation. The constraint is healthy; document it rather than
+defeating it.</p>
+<h3 id="alternatives-considered-and-why-not">Alternatives considered (and why not)<a class="headerlink" href="#alternatives-considered-and-why-not" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong><code>.pyi</code> via <code>generate_type_stubs</code></strong> — most accurate (reflects the actual
+  merged class), but reintroduces a generated file on disk and offers <em>all</em>
+  fields everywhere, losing the per-method scoping that is the point.</li>
+<li><strong>Union annotation <code>cim: CN | EQ | AST</code></strong> — no disk file, but unions <em>all</em>
+  fields into every method, again losing the write-scoping guardrail.</li>
+<li><strong><code>Any</code> at the leaf</strong> — no completions, no guardrail.</li>
+</ul>
+<p>The per-method single-profile annotation is the only option that gives
+completions <em>and</em> enforces the profile partition <em>and</em> needs no stub file.</p>
+<hr />
+<h2 id="5c-static-typing-for-merged-profiles-the-exporterconverter-model">5c. Static typing for merged profiles (the exporter/converter model)<a class="headerlink" href="#5c-static-typing-for-merged-profiles-the-exporterconverter-model" title="Permanent link">&para;</a></h2>
+<p>§5a covers the <strong>write</strong> side (builders): annotate <code>cim</code> <em>narrow</em> — one
+sub-profile per method — to scope what each method may populate. The <strong>read</strong>
+side (exporters, converters) is the mirror image and needs the opposite
+treatment.</p>
+<p>A converter reads many profiles' fields off <strong>one</strong> object in <strong>one</strong> function.
+Live example — <code>cimhub_opendss/.../exporter/lines/ac_line_segment.py</code>,
+<code>convert_ac_line_segment(segment: cim.ACLineSegment, …)</code>:</p>
+<ul>
+<li><code>segment.Terminals[0].ConnectivityNode.name</code> — <strong>connectivity</strong></li>
+<li><code>segment.r</code>, <code>segment.x</code>, <code>segment.bch</code> (as <code>cim.Resistance</code> / <code>cim.Susceptance</code>) — <strong>electrical</strong></li>
+<li><code>segment.ACLineSegmentPhases[i].WireInfo</code> (<code>cim.ConcentricNeutralCableInfo</code>, …) — <strong>asset</strong></li>
+<li><code>segment.EarthResistivity.rho</code> — <strong>location/asset</strong></li>
+</ul>
+<p>There is no per-method profile partition to enforce here — reading across
+profiles is the converter's <em>job</em>. So the annotation must be the <strong>full merged
+profile</strong>, the wide pole:</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>§5a builder (write)</th>
+<th>§5c converter (read)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Annotation</td>
+<td>per-method single sub-profile (<code>cim: CN</code>)</td>
+<td>the whole merged profile (<code>import …cimhub_2026 as cim</code>)</td>
+</tr>
+<tr>
+<td>Intent</td>
+<td><em>narrow</em> — scope writes to one profile</td>
+<td><em>widen</em> — read every profile's fields at once</td>
+</tr>
+<tr>
+<td>Cross-profile access</td>
+<td>flagged (a guardrail)</td>
+<td>required (the point)</td>
+</tr>
+</tbody>
+</table>
+<p>This is exactly why <strong>the merge must be importable by name</strong> (§3a). The
+converter already writes <code>import cimgraph.data_profile.cimhub_2026 as cim</code> and
+annotates <code>segment: cim.ACLineSegment</code>. For those annotations to type-check
+<em>today</em>, <code>cimhub_2026.py</code> exists as a file Pylance can read. Once it becomes a
+merge, the file is gone and <code>cim.ACLineSegment</code> is unresolvable to the type
+checker — <strong>this is the case <code>generate_type_stubs</code> was built for</strong>:</p>
+<ul>
+<li>emit <code>cimhub_2026.pyi</code> (the full merged class surface) next to a thin runtime
+  shim that installs the <code>sys.modules</code> merge (§3a);</li>
+<li>Pylance reads the <code>.pyi</code> → converter signatures resolve, wide reads complete;</li>
+<li>CPython imports the shim → gets the live merged object, identity intact.</li>
+</ul>
+<p>So the <code>.pyi</code> answers a <strong>typing</strong> need on the wide/read pole, while §3a answers
+the <strong>identity</strong> need on the runtime side. They are independent: the <code>.pyi</code>
+without the <code>sys.modules</code> install gives green type-checks over a registry that
+silently exports nothing; the <code>sys.modules</code> install without the <code>.pyi</code> gives a
+correct runtime with red squiggles over every converter. The target state needs
+<strong>both</strong>, and <code>generate_type_stubs</code> already produces the <code>.pyi</code> half.</p>
+<blockquote>
+<p>Contrast with §5a deliberately: a <code>.pyi</code> is <strong>wrong</strong> for the builder (it
+surfaces all fields everywhere, destroying the write-scoping), but <strong>right</strong>
+for the converter (which legitimately needs all fields). Same merge, opposite
+typing treatment, because writes are scoped and reads are not.</p>
+</blockquote>
+<h3 id="a-silent-failure-guard-the-converter-needs-regardless">A silent-failure guard the converter needs regardless<a class="headerlink" href="#a-silent-failure-guard-the-converter-needs-regardless" title="Permanent link">&para;</a></h3>
+<p><code>cim_to_dss.py</code> dispatches <code>network.graph.get(cim_class, {})</code> wrapped in
+<code>try/except (AttributeError, TypeError): return []</code>. A dict <code>.get()</code> raises
+neither, so a <strong>wrong-identity key</strong> (the exact Failure-1 symptom: graph built
+from object A, <code>EXPORT_ORDER</code> keyed on object B) yields an empty <code>.values()</code> and
+exports <strong>zero</strong> rows with no error. Under "Fail Fast," when a class is in
+<code>EXPORT_ORDER</code> <em>and</em> has a registered converter but is absent as a <code>network.graph</code>
+key, that is a profile-identity mismatch and should warn loudly — it would have
+turned the 9500 merge's silent no-op into an immediate diagnostic. (Consumer-repo
+fix, noted here because it is the same root cause this plan addresses.)</p>
+<hr />
+<h2 id="5b-retiring-cim_override">5b. Retiring <code>cim_override</code><a class="headerlink" href="#5b-retiring-cim_override" title="Permanent link">&para;</a></h2>
+<p><code>cim_override</code> was added in 0.4.3a11 alongside <code>merge.py</code> as proof-of-concept
+plumbing — a way to hand a runtime-built merged module to a connection before
+the env var could name one. The audit confirms it never graduated to real API:</p>
+<ul>
+<li><strong>No consumer repo passes it.</strong> CIM-Builder, CIM-Loader, and all ~20
+  <code>CIMHub_2_0/cimhub_*</code> packages: zero occurrences.</li>
+<li><strong>Only two callers exist</strong>, both cim-graph tests: <code>test_merge_profiles.py:194</code>
+  and <code>test_blazegraph_seto.py:109</code>. (Plus docstring examples in <code>merge.py</code>.)</li>
+<li>Where it's <em>implemented</em>, it's mostly <strong>duplicated</strong> — the same
+  <code>if cim_override is not None: self.cim = cim_override else: get_cim_profile()</code>
+  branch is copy-pasted into <code>xml_parser.py</code>, <code>neo4j.py</code>, <code>gridappsd.py</code>,
+  <code>mysql.py</code>, and <code>json_ld_parser.py</code> instead of delegating to the base
+  <code>ConnectionInterface.__init__</code> (<code>databases/__init__.py:67</code>). The forwarding
+  classes (<code>sparql_endpoint</code>, <code>graphdb</code>, <code>rdflib</code>, <code>blazegraph</code>) already just
+  call <code>super()</code>.</li>
+</ul>
+<p>The comma-spec env var subsumes its only real use (selecting a merge), <strong>and</strong>
+restores zero-plumbing selection (which <code>cim_override</code> never gave a leaf helper).
+So 0.5 removes the kwarg from all nine connection classes:</p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-10-1"><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a><span class="c1"># ConnectionInterface.__init__ after removal — one source, no branch</span>
+</span><span id="__span-10-2"><a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a><span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+</span><span id="__span-10-3"><a id="__codelineno-10-3" name="__codelineno-10-3" href="#__codelineno-10-3"></a>    <span class="n">get_cim_profile</span><span class="o">.</span><span class="n">cache_clear</span><span class="p">()</span>
+</span><span id="__span-10-4"><a id="__codelineno-10-4" name="__codelineno-10-4" href="#__codelineno-10-4"></a>    <span class="bp">self</span><span class="o">.</span><span class="n">cim_profile</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">cim</span> <span class="o">=</span> <span class="n">get_cim_profile</span><span class="p">()</span>   <span class="c1"># comma-spec → merged</span>
+</span><span id="__span-10-5"><a id="__codelineno-10-5" name="__codelineno-10-5" href="#__codelineno-10-5"></a>    <span class="o">...</span>
+</span></code></pre></div>
+<p><strong>Test migration (no capability lost).</strong> Both proof tests already set
+<code>CIMG_CIM_PROFILE</code> separately from building the merge; they collapse to the
+comma-spec and drop the kwarg:</p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-11-1"><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a><span class="c1"># test_merge_profiles.py — BEFORE</span>
+</span><span id="__span-11-2"><a id="__codelineno-11-2" name="__codelineno-11-2" href="#__codelineno-11-2"></a><span class="n">monkeypatch</span><span class="o">.</span><span class="n">setenv</span><span class="p">(</span><span class="s1">&#39;CIMG_CIM_PROFILE&#39;</span><span class="p">,</span> <span class="s1">&#39;cimgraph.data_profile.cim18gmdm.connectivity&#39;</span><span class="p">)</span>
+</span><span id="__span-11-3"><a id="__codelineno-11-3" name="__codelineno-11-3" href="#__codelineno-11-3"></a><span class="n">merged</span> <span class="o">=</span> <span class="n">merge_profiles</span><span class="p">(</span><span class="n">connectivity</span><span class="p">,</span> <span class="n">electrical</span><span class="p">)</span>
+</span><span id="__span-11-4"><a id="__codelineno-11-4" name="__codelineno-11-4" href="#__codelineno-11-4"></a><span class="n">file</span> <span class="o">=</span> <span class="n">XMLFile</span><span class="p">(</span><span class="n">filename</span><span class="o">=</span><span class="nb">str</span><span class="p">(</span><span class="n">_ROUND_TRIP_MODEL</span><span class="p">),</span> <span class="n">cim_override</span><span class="o">=</span><span class="n">merged</span><span class="p">)</span>
+</span><span id="__span-11-5"><a id="__codelineno-11-5" name="__codelineno-11-5" href="#__codelineno-11-5"></a>
+</span><span id="__span-11-6"><a id="__codelineno-11-6" name="__codelineno-11-6" href="#__codelineno-11-6"></a><span class="c1"># AFTER</span>
+</span><span id="__span-11-7"><a id="__codelineno-11-7" name="__codelineno-11-7" href="#__codelineno-11-7"></a><span class="n">monkeypatch</span><span class="o">.</span><span class="n">setenv</span><span class="p">(</span><span class="s1">&#39;CIMG_CIM_PROFILE&#39;</span><span class="p">,</span>
+</span><span id="__span-11-8"><a id="__codelineno-11-8" name="__codelineno-11-8" href="#__codelineno-11-8"></a>    <span class="s1">&#39;cimgraph.data_profile.cim18gmdm.connectivity,&#39;</span>
+</span><span id="__span-11-9"><a id="__codelineno-11-9" name="__codelineno-11-9" href="#__codelineno-11-9"></a>    <span class="s1">&#39;cimgraph.data_profile.cim18gmdm.electrical&#39;</span><span class="p">)</span>
+</span><span id="__span-11-10"><a id="__codelineno-11-10" name="__codelineno-11-10" href="#__codelineno-11-10"></a><span class="n">file</span> <span class="o">=</span> <span class="n">XMLFile</span><span class="p">(</span><span class="n">filename</span><span class="o">=</span><span class="nb">str</span><span class="p">(</span><span class="n">_ROUND_TRIP_MODEL</span><span class="p">))</span>
+</span><span id="__span-11-11"><a id="__codelineno-11-11" name="__codelineno-11-11" href="#__codelineno-11-11"></a><span class="c1"># get the merged module the resolver built, to assert against the graph key:</span>
+</span><span id="__span-11-12"><a id="__codelineno-11-12" name="__codelineno-11-12" href="#__codelineno-11-12"></a><span class="n">_</span><span class="p">,</span> <span class="n">merged</span> <span class="o">=</span> <span class="n">get_cim_profile</span><span class="p">()</span>
+</span></code></pre></div>
+<p>The two niche capabilities <code>cim_override</code> technically allowed —
+profiles <strong>built programmatically</strong> (not nameable as a string) and <strong>two
+profiles in one process</strong> — have no current users and are explicitly out of
+scope for 0.5. If a real need appears later, the resolver (not a per-connection
+kwarg) is where it should live.</p>
+<hr />
+<h2 id="6-phased-rollout">6. Phased rollout<a class="headerlink" href="#6-phased-rollout" title="Permanent link">&para;</a></h2>
+<h3 id="phase-1-non-breaking-core-can-land-before-05-on-04x">Phase 1 — non-breaking core (can land before 0.5, on 0.4.x)<a class="headerlink" href="#phase-1-non-breaking-core-can-land-before-05-on-04x" title="Permanent link">&para;</a></h3>
+<p>Backward-compatible; no consumer repo changes required.</p>
+<ol>
+<li><strong>Models prefer <code>connection.cim</code>.</strong> In <code>FeederModel</code>, <code>NodeBreakerModel</code>,
+   <code>BusBranchModel</code> <code>__post_init__</code>: set <code>self.cim = self.connection.cim</code> when a
+   connection exists, else <code>get_cim_profile()</code>. Mirror <code>DistributedArea</code>.
+   Resolves the abandoned TODO at <code>node_breaker_model.py:47</code>.</li>
+<li><strong><code>get_cim_profile()</code> comma-merge syntax</strong> with the §3 same-spec→same-object
+   guarantee. One-part path byte-for-byte unchanged.</li>
+<li><strong><code>cimantic-graphs-init.xsl</code> — emit merge-based <code>__init__.py</code>.</strong> Change the
+   generated <code>__init__.py</code> body from a flat re-export to a <code>merge_profiles(...)</code>
+   call that installs itself into <code>sys.modules</code> under its canonical name (§3a).
+   Every profile that adopts the new XSL output automatically becomes import-safe
+   for <code>import …&lt;profile&gt; as cim</code> consumers (registries, <code>EXPORT_ORDER</code>, graph
+   keys all resolve to the same merged object). The <code>cimhub_2026</code> package already
+   has the right directory structure (<code>__init__.py</code> + sub-profile packages
+   following the <code>cim18gmdm</code> pattern); no directory layout change is needed,
+   only the XSL template body.</li>
+<li><strong>Tests:</strong> (a) model built from a comma-spec connection has
+   <code>network.cim is connection.cim</code>; (b) <code>isinstance</code> / <code>graph[cim.X]</code> keying
+   works end-to-end under a merge — no manual <code>network.cim = merged</code>; &copy;
+   comma-spec env var with one part == today; with N parts == <code>merge_profiles</code>;
+   (d) two connections from the same comma-spec share the merged object identity;
+   (e) <code>import cimgraph.data_profile.cimhub_2026 as cim</code> after the XSL change
+   returns the merged module and <code>cim.ACLineSegment is network.cim.ACLineSegment</code>.</li>
+<li><strong>Update <code>9500node_merge_metadata.ipynb</code>:</strong> delete the <code>network.cim = merged</code>
+   workaround; select the merge via the env-var comma-spec.</li>
+</ol>
+<p>Note: removing <code>cim_override</code> (§5b) is the one <strong>breaking</strong> item that can't ride
+on 0.4.x — it changes nine constructor signatures. If Phase 1 lands on 0.4.x,
+keep <code>cim_override</code> working there (it's harmless once models prefer
+<code>connection.cim</code>) and remove it at the 0.5 cut. If everything goes on a 0.5
+branch, remove it in Phase 1.</p>
+<h3 id="phase-2-leaf-helper-migration-consumer-repos-coordinated">Phase 2 — leaf-helper migration (consumer repos, coordinated)<a class="headerlink" href="#phase-2-leaf-helper-migration-consumer-repos-coordinated" title="Permanent link">&para;</a></h3>
+<p>Per repo, swap <code>get_cim_profile()</code> → <code>network.cim</code> in helpers that receive a
+model. Mechanical; covered by each repo's own tests. Order: CIMHub_2_0 (most
+helpers, partly migrated) → CIM-Builder → CIM-Loader.</p>
+<h3 id="phase-3-canonicalpy-deprecation-05-breaking">Phase 3 — <code>canonical.py</code> deprecation (0.5, breaking)<a class="headerlink" href="#phase-3-canonicalpy-deprecation-05-breaking" title="Permanent link">&para;</a></h3>
+<ol>
+<li>Inventory every <code>CIMG_CIM_PROFILE=...canonical</code> / <code>import ...canonical</code>
+   across all repos (grep + the XSL builders that emit it).</li>
+<li>Provide the comma-spec (or a tiny re-export shim module, the §"merge syntax"
+   option B) as the replacement for each canonical user.</li>
+<li>Deprecation warning in <code>canonical.py</code> for one minor, then remove in 0.5.</li>
+<li>Update the CIMTool builder docs / <code>9500node_exports.ipynb</code> to show the
+   merge workflow instead of the canonical + chained-<code>FeederModel</code> trick.</li>
+</ol>
+<h3 id="phase-4-05-cut">Phase 4 — 0.5 cut<a class="headerlink" href="#phase-4-05-cut" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Drop the deprecated <code>canonical.py</code>.</li>
+<li><strong>Remove <code>cim_override</code></strong> from all nine connection classes (§5b); migrate the
+  two proof tests to the comma-spec.</li>
+<li>Document the layered contract (§2) as the supported model.</li>
+<li>Changelog: the breaking changes below.</li>
+</ul>
+<hr />
+<h2 id="7-05-breaking-change-callouts">7. 0.5 breaking-change callouts<a class="headerlink" href="#7-05-breaking-change-callouts" title="Permanent link">&para;</a></h2>
+<ul>
+<li><strong><code>cim_override</code> removed</strong> from all connection constructors. The only callers
+  were two cim-graph tests (migrated to the comma-spec); no consumer repo used
+  it. Selecting a merge is now done via <code>CIMG_CIM_PROFILE</code> (comma-spec).</li>
+<li><strong><code>canonical.py</code> removed.</strong> Anyone naming it in <code>CIMG_CIM_PROFILE</code> or importing
+  it directly must switch to a comma-spec or a re-export shim. (Phase 3 provides
+  the migration + a deprecation cycle first.)</li>
+<li><strong><code>model.cim</code> now follows the connection, not the env var.</strong> Code that built a
+  model with a connection whose profile differed from <code>CIMG_CIM_PROFILE</code> and
+  <em>relied on the model showing the env-var profile</em> will change behavior. No such
+  case found in the three audited repos; flagged for completeness.</li>
+<li><strong><code>CIMG_CIM_PROFILE</code> accepts a comma-separated list.</strong> A profile module path
+  containing a literal comma would now be mis-split — not a realistic module
+  name, but documented.</li>
+</ul>
+<hr />
+<h2 id="8-open-questions-for-maintainer-review">8. Open questions for maintainer review<a class="headerlink" href="#8-open-questions-for-maintainer-review" title="Permanent link">&para;</a></h2>
+<ol>
+<li>§3 cache strategy: option 1 (spec-keyed memo) serves <code>network.cim</code>, but §3a
+   establishes that the <strong>target state requires option 2</strong> (<code>sys.modules</code>
+   install) to serve <code>import …cimhub_2026 as cim</code> consumers. Confirm both, with
+   option 2 canonical and option 1 as a same-object alias.
+1a. <strong>§3a sequencing/replaceability — resolved, low risk.</strong> <code>cimhub_2026</code> is
+   <em>already a package</em> (<code>cimhub_2026/__init__.py</code> + <code>cimhub_2026/cimhub_2026.py</code>),
+   generated by <code>CIMTool_plugin/cimantic-graphs-init.xsl</code>. The <code>__init__.py</code>
+   currently re-exports everything from <code>cimhub_2026.py</code>; changing it to call
+   <code>merge_profiles(...)</code> instead is the entire implementation of §3a. No
+   sequencing hazard exists — <code>import cimgraph.data_profile.cimhub_2026 as cim</code>
+   already runs <code>__init__.py</code> on first import; there is no flat <code>.py</code> file that
+   can be cached in <code>sys.modules</code> ahead of the merge. <code>cim18gmdm</code> already
+   demonstrates the sub-profile package layout (<code>connectivity/</code>, <code>electrical/</code>,
+   <code>asset/</code>, …) that <code>cimhub_2026</code> will adopt. The XSL change is confined to
+   <code>cimantic-graphs-init.xsl</code>: emit <code>merge_profiles(...)</code> instead of the
+   flat re-export.</li>
+<li>Phase 3: comma-spec vs. a hand-written re-export shim module as the
+   <code>canonical.py</code> replacement — or offer both?</li>
+<li>Should <code>merge_profiles</code> be re-exported from <code>data_profile/__init__.py</code> for
+   ergonomics, given <code>env_vars.py</code> will import it (mind cycles)?</li>
+<li>Version/branch: land Phase 1 on a <code>0.4.x</code> alpha, or gate everything behind a
+   <code>0.5</code> branch from the start? (Decides when <code>cim_override</code> is removed — see
+   Phase 1 note.)</li>
+<li>Confirm the two niche <code>cim_override</code> capabilities (programmatically-built
+   profile; two profiles in one process) can stay out of scope for 0.5, with the
+   resolver as the future home if needed (§5b).</li>
+</ol>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      Copyright &copy; 2025 Battelle Memorial Institute, All rights reserved.
+    </div>
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+        
+<div class="md-social">
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://github.com/PNNL-CIM-Tools/CIM-Graph" target="_blank" rel="noopener" title="github.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+    </a>
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://pypi.org/project/cim-graph/" target="_blank" rel="noopener" title="pypi.org" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.8 200.5c-7.7-30.9-22.3-54.2-53.4-54.2h-40.1v47.4c0 36.8-31.2 67.8-66.8 67.8H172.7c-29.2 0-53.4 25-53.4 54.3v101.8c0 29 25.2 46 53.4 54.3 33.8 9.9 66.3 11.7 106.8 0 26.9-7.8 53.4-23.5 53.4-54.3v-40.7H226.2v-13.6h160.2c31.1 0 42.6-21.7 53.4-54.2 11.2-33.5 10.7-65.7 0-108.6M286.2 444.7a20.4 20.4 0 1 1 0-40.7 20.4 20.4 0 1 1 0 40.7M167.8 248.1h106.8c29.7 0 53.4-24.5 53.4-54.3V91.9c0-29-24.4-50.7-53.4-55.6-35.8-5.9-74.7-5.6-106.8.1-45.2 8-53.4 24.7-53.4 55.6v40.7h106.9v13.6h-147c-31.1 0-58.3 18.7-66.8 54.2-9.8 40.7-10.2 66.1 0 108.6 7.6 31.6 25.7 54.2 56.8 54.2H101v-48.8c0-35.3 30.5-66.4 66.8-66.4m-6.6-183.4a20.4 20.4 0 1 1 0 40.8 20.4 20.4 0 1 1 0-40.8"/></svg>
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.tabs", "navigation.tabs.sticky", "navigation.sections", "navigation.expand", "navigation.top", "navigation.footer", "search.suggest", "search.highlight", "content.code.copy", "content.code.annotate", "toc.follow"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": {"provider": "mike"}}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+    
+  </body>
+</html>

@@ -1,0 +1,26 @@
+%%{init: {"theme":"base"}}%%
+sequenceDiagram
+    actor User
+    participant GraphModel
+    participant ConnectionInterface
+    participant Queries Module
+    participant Database
+    note right of User: Populate knowledge graph without expanding
+    User ->>+ GraphModel: get_all_attributes(cim_class)
+    %% alt cim_class not in graph
+    %%     GraphModel -->>- User: None
+    %% else
+    %%     GraphModel ->> GraphModel: exit
+    %%     %% GraphModel -->>- User: None
+    %% end
+    GraphModel ->>+ ConnectionInterface: get_all_attributes(graph, cim_class)
+    ConnectionInterface ->>+ Queries Module: get_all_edges_query()
+    Queries Module -->>- ConnectionInterface: str[query text]
+    ConnectionInterface ->>+ Database: execute(query text)
+    Database -->>- ConnectionInterface: dict[query response]
+    loop
+        ConnectionInterface ->> ConnectionInterface: populate attributes
+        ConnectionInterface ->> ConnectionInterface: populates edges as string
+    end
+    ConnectionInterface -->>- GraphModel: None
+    GraphModel -->>- User: None

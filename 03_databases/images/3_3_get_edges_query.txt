@@ -1,0 +1,11 @@
+%%{init: {"theme":"base"}}%%
+sequenceDiagram
+    actor User
+    participant ConnectionInterface
+    participant SPARQL Queries
+    note right of User: Requests SPARQL query for debugging
+    User ->>+ ConnectionInterface: get_edges_query(graph, cim_class)
+    ConnectionInterface ->> ConnectionInterface: Get first 100 keys from graph[cim_class]
+    ConnectionInterface ->>+ SPARQL Queries: get_all_edges_sparql(graph, cim_class, eq_mrids)
+    SPARQL Queries -->>- ConnectionInterface: str[query text]
+    ConnectionInterface -->>- User: SPARQL query string

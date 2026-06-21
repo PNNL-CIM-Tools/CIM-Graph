@@ -1,0 +1,15 @@
+# MkDocs and Material theme
+mkdocs>=1.5.3
+mkdocs-material>=9.5.0
+
+# Jupyter notebook support
+mkdocs-jupyter>=0.24.6
+nbconvert>=7.14.0
+jupyter>=1.0.0
+
+# For mermaid diagram rendering
+pymdown-extensions>=10.7
+
+# Additional dependencies for notebook execution (if needed)
+ipykernel>=6.29.0
+matplotlib>=3.8.0

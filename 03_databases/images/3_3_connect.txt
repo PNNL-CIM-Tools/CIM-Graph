@@ -1,0 +1,14 @@
+%%{init: {"theme":"base"}}%%
+sequenceDiagram
+    actor User
+    participant ConnectionInterface
+    participant SPARQLWrapper
+
+    note right of User: Initialization
+
+    User ->>+ ConnectionInterface: BlazegraphConnection()
+    alt sparql_obj is None
+        ConnectionInterface ->> SPARQLWrapper: create SPARQLWrapper(url)
+        ConnectionInterface ->> SPARQLWrapper: setReturnFormat(JSON)
+    end
+    ConnectionInterface -->>- User: connection object

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<rdf:RDF xmlns:cim="http://iec.ch/TC57/CIM100#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:prov="http://www.w3.org/ns/prov#" xmlns:dcat="http://www.w3.org/ns/dcat#" xmlns:time="http://www.w3.org/2006/time#" xmlns:prof="http://www.w3.org/ns/dx/prof/#" xmlns:profcim="http://iec.ch/TC57/ns/CIM/prof-cim#" xmlns:md="http://iec.ch/TC57/61970-552/ModelDescription#" xmlns:dm="http://iec.ch/2002/schema/CIM_difference_model#" xmlns:nc="http://entsoe.eu/ns/nc#" xmlns:eumd="http://entsoe.eu/ns/Metadata-European#">
+<dm:DifferenceModel xmlns:dm="http://iec.ch/2002/schema/CIM_difference_model#">
+  <dm:forwardDifferences rdf:parseType="Statements">
+    <rdf:Description rdf:about="urn:uuid:_276809df-6493-4dae-a7bb-ad78a5f0da95">
+      <cim:Switch.open>True</cim:Switch.open>
+</rdf:Description>
+  </dm:forwardDifferences>
+  <dm:reverseDifferences rdf:parseType="Statements">
+    <rdf:Description rdf:about="urn:uuid:_276809df-6493-4dae-a7bb-ad78a5f0da95">
+      <cim:Switch.open>False</cim:Switch.open>
+</rdf:Description>
+  </dm:reverseDifferences>
+</dm:DifferenceModel>
+</rdf:RDF>
