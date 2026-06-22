@@ -15,6 +15,8 @@ Re-run the script after adding or updating sub-profile parts.
 from __future__ import annotations
 
 from dataclasses import dataclass, field
+from typing import Optional
+from uuid import UUID
 from cimgraph.data_profile.cim18gmdm.connectivity import (
     Identity, OrderedPhaseCodeKind, PhaseCode, PhaseShuntConnectionKind,
     SinglePhaseKind, Voltage, WindingConnection)

@@ -145,18 +145,21 @@ def object_mermaid(obj: object) -> str:
 
 
 def _class_header(cim_class: type) -> str:
-    """Emit `class Foo{` plus optional `<<stereotype>>` line.
+    """Emit `class Foo{`.
 
-    Only emits the stereotype if it is declared on the class itself — `__stereotype__`
-    set on a parent class via @stereotype would otherwise leak down through the MRO.
+    The UML stereotype annotation (`<<Concrete>>`, `<<informative>>`, etc.) is
+    intentionally omitted: the profile labels are noisy and frequently inaccurate
+    (e.g. `<<informative>>` on normative classes), so they add clutter without
+    conveying reliable information in the rendered diagrams.
     """
     mermaid = INDENT + 'class ' + cim_class.__name__ + '{\n'
-    stereotype = cim_class.__dict__.get('__stereotype__')
-    if stereotype is not None:
-        try:
-            mermaid += INDENT * 2 + f'<<{stereotype.value}>>\n'
-        except AttributeError:
-            pass
+    # Stereotype emission disabled — see docstring.
+    # stereotype = cim_class.__dict__.get('__stereotype__')
+    # if stereotype is not None:
+    #     try:
+    #         mermaid += INDENT * 2 + f'<<{stereotype.value}>>\n'
+    #     except AttributeError:
+    #         pass
     return mermaid
 
 
@@ -267,7 +270,7 @@ def get_mermaid(root: object | type | list, show_attributes: bool = True, show_i
         return object_mermaid(root)
 
     if is_dataclass(root) or isinstance(root, enum.EnumMeta):
-        mermaid = '%%{init: {"theme":"' + str(theme) + "'}}%%\n"
+        mermaid = '%%{init: {"theme":"' + str(theme) + '"}}%%\n'
         mermaid += 'classDiagram\n'
         mermaid += class_mermaid(root, show_attributes, show_inherited, serialize_only=serialize_only)
         mermaid += class_all_assc_mermaid(root, show_inherited, serialize_only=serialize_only)
@@ -276,7 +279,7 @@ def get_mermaid(root: object | type | list, show_attributes: bool = True, show_i
     if isinstance(root, list):
         types_in_root = set(map(type, root))
         if types_in_root <= {type, enum.EnumMeta}:
-            mermaid = '%%{init: {"theme":"' + str(theme) + "'}}%%\n"
+            mermaid = '%%{init: {"theme":"' + str(theme) + '"}}%%\n'
             mermaid += 'classDiagram\n'
             for value in root:
                 mermaid += class_mermaid(value, show_attributes, show_inherited,
@@ -312,8 +315,8 @@ def add_object_path_mermaid(root: object, path: str, mermaid: str) -> str:
         if isinstance(edge, Identity):
             if '[' in attr:
                 attr_list = attr.split('[')
-                next_edge = getattr(edge, attr_list[0])
-                next_edge = eval(f'next_str(edge)[{attr_list[1]}')
+                attr_value = getattr(edge, attr_list[0])
+                next_edge = eval(f'attr_value[{attr_list[1]}')
             else:
                 next_edge = getattr(edge, attr)
         elif isinstance(edge, list):
@@ -327,7 +330,7 @@ def add_object_path_mermaid(root: object, path: str, mermaid: str) -> str:
             mermaid += INDENT + f'{short_uri} -- "{attr}" --> {next_short_uri}\n'
             text = short_uri_mermaid(next_edge)
             mermaid += text.replace('(', '("').replace(')', '")')
-        elif type(next_edge) in (str, float, bool, int):
+        elif isinstance(next_edge, (str, float, bool, int, enum.Enum)):
             mermaid = mermaid[:-3]
             mermaid += short_attr_mermaid(edge, attr, num_indent=2)
             mermaid += '")\n'

@@ -1,6 +1,7 @@
 
 from __future__ import annotations
 
+import logging
 from dataclasses import dataclass, field
 from enum import Enum
 from importlib import resources as impresources
@@ -13,7 +14,15 @@ from cimgraph.data_profile.units.cim_units import UnitMultiplier, UnitSymbol
 
 units_file = impresources.files(cim_units).joinpath('units.txt')
 ureg = UnitRegistry()
+
+# units.txt intentionally overrides several pint built-in symbols (Hz, VAr, Nm,
+# bit, arcmin, ...) with CIM-specific definitions. Mute pint's "Redefining ..."
+# warnings for the duration of the load only; the prior level is restored after.
+_pint_log = logging.getLogger('pint.util')
+_prev_level = _pint_log.level
+_pint_log.setLevel(logging.ERROR)
 ureg.load_definitions(units_file)
+_pint_log.setLevel(_prev_level)
 
 
 class CIMUnit():

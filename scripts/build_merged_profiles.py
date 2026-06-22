@@ -179,8 +179,13 @@ def _build_init(release: dict) -> str:
     parts_comment = '\n'.join(f'#   {p}' for p in parts)
 
     has_inline = bool(inline_lines)
-    dataclass_import = (
-        'from dataclasses import dataclass, field\n' if has_inline else ''
+    # Inline @dataclass fields use 'Optional[...]' and 'UUID' in their type
+    # annotations.  Without these imports Pylance resolves them as Any.
+    inline_imports = (
+        'from dataclasses import dataclass, field\n'
+        'from typing import Optional\n'
+        'from uuid import UUID\n'
+        if has_inline else ''
     )
 
     return f'''\
@@ -196,7 +201,7 @@ Re-run the script after adding or updating sub-profile parts.
 """
 from __future__ import annotations
 
-{dataclass_import}{chr(10).join(import_lines)}
+{inline_imports}{chr(10).join(import_lines)}
 {''.join(line + chr(10) for line in inline_lines)}
 __all__ = [
 {all_entries}

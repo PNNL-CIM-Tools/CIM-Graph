@@ -19,6 +19,8 @@ Re-run the script after adding or updating sub-profile parts.
 from __future__ import annotations
 
 from dataclasses import dataclass, field
+from typing import Optional
+from uuid import UUID
 from cimgraph.data_profile.cgmes_3_0_0.core_equipment import (
     ActivePower, ActivePowerPerCurrentFlow, ActivePowerPerFrequency, AngleDegrees,
     ApparentPower, Capacitance, Conductance, ControlAreaTypeKind, Currency, CurrentFlow,
