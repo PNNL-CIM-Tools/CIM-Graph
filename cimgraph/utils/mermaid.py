@@ -94,20 +94,27 @@ def short_attr_mermaid(obj: object, attr: str, num_indent: int = 1) -> str:
 
 
 def short_uri_mermaid(obj: object, num_indent: int = 1) -> str:
-    """Mermaid short representation of an object's URI."""
+    """Mermaid short representation of an object's URI.
+
+    The label is emitted as a markdown string — Mermaid only renders the
+    ``**bold**`` class name when the label text is wrapped in backticks. The
+    backticks sit just inside the ``(``/``)`` delimiters so callers that rewrite
+    those delimiters (``((``/``))`` for mindmaps, ``("``/``")`` for flowcharts)
+    keep the backticks inside the label.
+    """
     obj_class = obj.__class__.__name__
     short_uri = obj.uri().split('-')[0]
     cls_lines = _wrap(obj_class)
     if len(cls_lines) == 1:
-        mermaid = INDENT * num_indent + short_uri + f'(**{obj_class}**'
+        mermaid = INDENT * num_indent + short_uri + f'(`**{obj_class}**'
     else:
-        mermaid = INDENT * num_indent + short_uri + f'(**{cls_lines[0]}**\n'
+        mermaid = INDENT * num_indent + short_uri + f'(`**{cls_lines[0]}**\n'
         mermaid += INDENT * (num_indent + 1) + f'**{cls_lines[1]}**'
     if 'name' in obj.__dataclass_fields__:
         mermaid += short_attr_mermaid(obj, 'name', num_indent + 1)
     else:
         mermaid += INDENT * (num_indent + 2) + obj.uri() + '\n'
-    mermaid += ')\n'
+    mermaid += '`)\n'
     return mermaid
 
 
