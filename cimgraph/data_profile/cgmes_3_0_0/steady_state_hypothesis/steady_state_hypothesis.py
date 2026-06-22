@@ -4110,4 +4110,3 @@ class Voltage(CIMUnit):
     @property
     def __maxOccurs__(self):
         return '1'
-

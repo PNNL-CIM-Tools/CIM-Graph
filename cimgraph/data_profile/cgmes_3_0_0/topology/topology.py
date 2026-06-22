@@ -710,4 +710,3 @@ class TopologicalNode(IdentifiedObject):
     @property
     def __maxOccurs__(self):
         return 'unbounded'
-
