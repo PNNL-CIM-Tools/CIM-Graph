@@ -4,6 +4,7 @@ import json
 import logging
 from collections import defaultdict
 from dataclasses import dataclass, field, fields, is_dataclass
+from types import ModuleType
 from typing import Iterator, TypeVar, cast
 from uuid import UUID
 
@@ -24,6 +25,7 @@ class GraphModel():
     connection: ConnectionInterface
     distributed: bool = field(default=False)
     graph: dict[type, dict[UUID, object]] = field(default_factory=dict)
+    cim: ModuleType = field(default=None)
     incrementals: defaultdict[str, dict[str, any]] = field(default_factory=defaultdict)
     __class_iter__: defaultdict[type, iter] = field(default_factory=defaultdict)
     # __queried_objects__: defaultdict[UUID] = field(default_factory=defaultdict)
