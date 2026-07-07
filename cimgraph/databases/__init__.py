@@ -285,14 +285,14 @@ class ConnectionInterface(ABC):
             identifier = uri
 
         # Check if object exists in graph
-        if identifier in graph[class_type]:
+        if class_type in graph and identifier in graph[class_type]:
             obj = graph[class_type][identifier]
 
         # If not there, create a new object and add to graph
         else:
             obj = class_type(identifier = uri)
             # obj.uuid(uri = uri)
-            graph[class_type][identifier] = obj
+            graph.setdefault(class_type, {})[identifier] = obj
 
         return obj
 
