@@ -99,7 +99,7 @@ jobs:
           git push origin develop
 
       - name: Create Release
-        uses: ncipollo/release-action@v1.15.0
+        uses: ncipollo/release-action@v1.21.0
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
