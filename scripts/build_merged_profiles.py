@@ -74,6 +74,15 @@ def _emit_inline_class(name: str, merged_cls: type, merged_base_name: str) -> li
     lines: list[str] = []
     lines.append('@dataclass(repr=False)')
     lines.append(f'class {name}({merged_base_name}):')
+
+    # Preserve the original docstring — make_dataclass overwrites __doc__ with
+    # the signature string, so we must emit it explicitly.
+    doc = merged_cls.__doc__
+    if doc and not doc.startswith(f'{name}('):
+        # Indent each line of the docstring body by 4 spaces.
+        indented = '\n'.join('    ' + l for l in doc.split('\n'))
+        lines.append(f'    """{indented.strip()}\n    """')
+
     if not direct:
         lines.append('    pass')
     else:
