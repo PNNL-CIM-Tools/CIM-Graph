@@ -81,6 +81,20 @@ def _is_list(field_obj: Field) -> bool:
     return field_obj.type.startswith('list')
 
 
+def _format_value(edge: object) -> str:
+    """String form of an attribute value, rounding CIMUnit magnitudes to fit the diagram.
+
+    CIMUnit stores full float precision (e.g. 30.479999999999997 meter); round to
+    4 decimals and strip trailing zeros so labels stay compact.
+    """
+    if isinstance(edge, CIMUnit):
+        magnitude = round(float(edge), 4)
+        number = f'{magnitude:g}'
+        unit = str(edge).split(' ', 1)[1] if ' ' in str(edge) else ''
+        return f'{number} {unit}'.rstrip()
+    return str(edge)
+
+
 def short_attr_mermaid(obj: object, attr: str, num_indent: int = 1) -> str:
     """Mermaid short representation of an attribute value."""
     edge = getattr(obj, attr)
@@ -89,33 +103,41 @@ def short_attr_mermaid(obj: object, attr: str, num_indent: int = 1) -> str:
         prefix = '\n' + INDENT * num_indent + f'{attr}: '
     else:
         prefix = f'\n{INDENT*num_indent}{lines[0]}\n{INDENT*num_indent}{lines[1]}:'
-    value_lines = _wrap(str(edge))
+    value_lines = _wrap(_format_value(edge))
     return prefix + '\n'.join(value_lines) if len(value_lines) > 1 else prefix + value_lines[0]
 
 
 def short_uri_mermaid(obj: object, num_indent: int = 1) -> str:
-    """Mermaid short representation of an object's URI.
+    """Neutral node label for an object: `uri(**Class**\\n  name: ...)`.
 
-    The label is emitted as a markdown string — Mermaid only renders the
-    ``**bold**`` class name when the label text is wrapped in backticks. The
-    backticks sit just inside the ``(``/``)`` delimiters so callers that rewrite
-    those delimiters (``((``/``))`` for mindmaps, ``("``/``")`` for flowcharts)
-    keep the backticks inside the label.
+    The delimiters are a single `(`/`)` and the label carries no markdown-string
+    backticks. Diagram-specific callers wrap this: mindmaps use `((`/`))` (bold
+    renders without backticks), flowcharts use ``("` ``/`` `")`` (backticks needed
+    for bold). Keep the formatting decisions in those callers, not here.
     """
     obj_class = obj.__class__.__name__
     short_uri = obj.uri().split('-')[0]
     cls_lines = _wrap(obj_class)
     if len(cls_lines) == 1:
-        mermaid = INDENT * num_indent + short_uri + f'(`**{obj_class}**'
+        mermaid = INDENT * num_indent + short_uri + f'(**{obj_class}**'
     else:
-        mermaid = INDENT * num_indent + short_uri + f'(`**{cls_lines[0]}**\n'
+        mermaid = INDENT * num_indent + short_uri + f'(**{cls_lines[0]}**\n'
         mermaid += INDENT * (num_indent + 1) + f'**{cls_lines[1]}**'
     if 'name' in obj.__dataclass_fields__:
         mermaid += short_attr_mermaid(obj, 'name', num_indent + 1)
     else:
         mermaid += INDENT * (num_indent + 2) + obj.uri() + '\n'
-    mermaid += '`)\n'
+    mermaid += ')\n'
     return mermaid
+
+
+def _flowchart_node(obj: object, num_indent: int = 1) -> str:
+    """Wrap short_uri_mermaid as a flowchart node: ``uri("`**Class**...`")``.
+
+    Flowcharts need markdown-string backticks for the ``**bold**`` to render, so
+    the neutral ``(``/``)`` delimiters become ``("` `` / `` `")``.
+    """
+    return short_uri_mermaid(obj, num_indent).replace('(', '("`', 1).replace(')\n', '`")\n')
 
 
 def _bracket_label(attribute: str, bracket: str = '[', close: str = ']') -> str:
@@ -129,25 +151,29 @@ def _bracket_label(attribute: str, bracket: str = '[', close: str = ']') -> str:
 def object_mermaid(obj: object) -> str:
     """Mermaid mindmap of an object."""
     mermaid = 'mindmap\n'
+    # Mindmap nodes use '((' / '))' and no backticks. short_uri_mermaid ends with
+    # ')\n'; strip those 2 chars so scalar/CIMUnit attributes below sit inside the
+    # node before we re-close it with '))'.
     mermaid += short_uri_mermaid(obj).replace('(', '((')[:-2]
     for attribute in obj.__dataclass_fields__:
         edge = getattr(obj, attribute)
-        if type(edge) in (str, bool, float, int) and attribute not in ('name', 'mRID'):
+        is_scalar = type(edge) in (str, bool, float, int) and attribute not in ('name', 'mRID')
+        if is_scalar or isinstance(edge, CIMUnit):
             mermaid += short_attr_mermaid(obj, attribute, num_indent=2)
     mermaid += '))\n'
 
     for attribute in obj.__dataclass_fields__:
         edge = getattr(obj, attribute)
         if isinstance(edge, CIMUnit):
-            mermaid += short_attr_mermaid(obj, attribute, num_indent=2)
-        elif is_dataclass(edge) and edge is not None:
+            continue  # already rendered inside the core node above
+        if is_dataclass(edge) and edge is not None:
             mermaid += _bracket_label(attribute)
-            mermaid += short_uri_mermaid(edge, num_indent=3)
+            mermaid += short_uri_mermaid(edge, num_indent=3).replace('(', '((').replace(')', '))')
         elif isinstance(edge, list) and edge:
             mermaid += _bracket_label(attribute, bracket='["', close='"]')
             for item in edge:
                 if is_dataclass(item):
-                    mermaid += short_uri_mermaid(item, num_indent=3)
+                    mermaid += short_uri_mermaid(item, num_indent=3).replace('(', '((').replace(')', '))')
     return mermaid
 
 
@@ -335,12 +361,11 @@ def add_object_path_mermaid(root: object, path: str, mermaid: str) -> str:
             short_uri = edge.uri().split('-')[0]
             next_short_uri = next_edge.uri().split('-')[0]
             mermaid += INDENT + f'{short_uri} -- "{attr}" --> {next_short_uri}\n'
-            text = short_uri_mermaid(next_edge)
-            mermaid += text.replace('(', '("').replace(')', '")')
+            mermaid += _flowchart_node(next_edge)
         elif isinstance(next_edge, (str, float, bool, int, enum.Enum)):
-            mermaid = mermaid[:-3]
+            mermaid = mermaid[:-4]  # strip trailing '`")\n' to append inside the node
             mermaid += short_attr_mermaid(edge, attr, num_indent=2)
-            mermaid += '")\n'
+            mermaid += '`")\n'
         previous_attr = attr
         previous_edge = edge
         edge = next_edge
@@ -376,7 +401,7 @@ def get_mermaid_path(root: object | type, path: str | list[str],
     if isinstance(root, Identity):
         mermaid = '%%{init: {"theme":"' + str(theme) + '"}}%%\n'
         mermaid += f'flowchart {direction}\n'
-        mermaid += short_uri_mermaid(root).replace('(', '("').replace(')', '")')
+        mermaid += _flowchart_node(root)
         return add_object_path_mermaid(root, path, mermaid)
     if isinstance(root, enum.EnumMeta):
         return ''
@@ -394,7 +419,7 @@ def add_mermaid_path(root: object | type, path: str | list[str], mermaid: str,
                      serialize_only: bool = False) -> str:
     """Add a mermaid path representation to an existing diagram."""
     if isinstance(root, Identity):
-        mermaid += short_uri_mermaid(root).replace('(', '("').replace(')', '")')
+        mermaid += _flowchart_node(root)
         return add_object_path_mermaid(root, path, mermaid)
     if isinstance(root, enum.EnumMeta):
         return ''

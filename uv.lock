@@ -215,7 +215,7 @@ wheels = [
 
 [[package]]
 name = "cim-graph"
-version = "0.4.3a10"
+version = "0.5.0a5"
 source = { editable = "." }
 dependencies = [
     { name = "defusedxml" },
@@ -243,7 +243,7 @@ dev = [
 requires-dist = [
     { name = "defusedxml", specifier = ">=0.7.1" },
     { name = "graphviz", marker = "extra == 'dev'", specifier = ">=0.19.1" },
-    { name = "gridappsd-python", specifier = ">=2025.3.2" },
+    { name = "gridappsd-python", specifier = ">=2026.2.1" },
     { name = "ipykernel", marker = "extra == 'dev'", specifier = ">=6.27.1" },
     { name = "mermaid-python", specifier = ">=0.1" },
     { name = "mysql-connector-python", specifier = ">=9.2.0" },
@@ -416,7 +416,7 @@ wheels = [
 
 [[package]]
 name = "gridappsd-python"
-version = "2026.1.1b1"
+version = "2026.2.1"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "dateutils" },
@@ -427,9 +427,9 @@ dependencies = [
     { name = "requests" },
     { name = "stomp-py" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/ec/ce/fc0b7dc41ad319e6880b74cfbda82d429eae8d925d3ba8a532ef9b25c91f/gridappsd_python-2026.1.1b1.tar.gz", hash = "sha256:2bf32adb5ab33a659b6e48b7d6d98337af3ce6c18875aaba6a048b1c5fcea878", size = 45892, upload-time = "2026-02-06T23:26:57.198Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/cd/8f/0937cc1d48ec1ac160bb8f8a976711cb06fba9615c225f2ae4a2750c193a/gridappsd_python-2026.2.1.tar.gz", hash = "sha256:8d35787045fbf7eb205ed91520fc8f0dfcee18e5b414cdf83e4b2d83f5f54afd", size = 46147, upload-time = "2026-02-26T23:01:03.691Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/5c/2c/c52608aff30dbf20f14dc0883588ad4fe592a8cd02608230f06b20f74bfa/gridappsd_python-2026.1.1b1-py3-none-any.whl", hash = "sha256:efb32ec7a5e7edbfb40ff03843de2f967edc0ad42f57f373336a925e3cceef17", size = 44297, upload-time = "2026-02-06T23:26:54.746Z" },
+    { url = "https://files.pythonhosted.org/packages/be/68/519125551b4394aaae43e97f555f4b26a3ace6990c234129ebf3393f285c/gridappsd_python-2026.2.1-py3-none-any.whl", hash = "sha256:63a485361f40bb625d3cec6cebc9b2c2c229786afdaf21b1294f783cb339f1f9", size = 44563, upload-time = "2026-02-26T23:01:01.91Z" },
 ]
 
 [[package]]
@@ -1202,15 +1202,14 @@ wheels = [
 
 [[package]]
 name = "stomp-py"
-version = "8.2.0"
+version = "6.0.0"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "docopt" },
-    { name = "websocket-client" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/bc/66/c07f01feb5fbc669c4333c76eb02fb8149c653c25ba9769477f8427d5e55/stomp_py-8.2.0.tar.gz", hash = "sha256:9908689361e263bf198e6acfb3c4386759fb7df7d141f4384d7414771c68d7fc", size = 39286, upload-time = "2024-10-31T21:59:38.465Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/8f/58/83e231c2a43754c49b4d75d10589db0ef68827ec96b5fa49a713d7cb0c09/stomp.py-6.0.0.tar.gz", hash = "sha256:4e639fee9aaa288e98b0bb981029a11eb8464276b8d19b3e61adead52bc3c01b", size = 34500, upload-time = "2020-02-15T16:37:35.695Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/7b/b6/ebfd6daef0c19a5ca3ac1fb2fc092331d67af5a30c868f106fcc2504c287/stomp_py-8.2.0-py3-none-any.whl", hash = "sha256:fad24e51b505996015a39ca1632df4e0225c1c552980955e21f2aebfc0d9d85c", size = 42751, upload-time = "2024-10-31T21:59:36.658Z" },
+    { url = "https://files.pythonhosted.org/packages/d7/a0/a67e46ec1e63f2e78497e7331092eeb2ce4b69738d80a8210122e7a000a9/stomp.py-6.0.0-py3-none-any.whl", hash = "sha256:3a9e4908ddb3a1d46481c2c25d60dcc46caaa60be3d4d6d4e39096c884051ef0", size = 37091, upload-time = "2020-02-15T16:37:32.873Z" },
 ]
 
 [[package]]
@@ -1335,15 +1334,6 @@ source = { registry = "https://pypi.org/simple" }
 sdist = { url = "https://files.pythonhosted.org/packages/35/a2/8e3becb46433538a38726c948d3399905a4c7cabd0df578ede5dc51f0ec2/wcwidth-0.6.0.tar.gz", hash = "sha256:cdc4e4262d6ef9a1a57e018384cbeb1208d8abbc64176027e2c2455c81313159", size = 159684, upload-time = "2026-02-06T19:19:40.919Z" }
 wheels = [
     { url = "https://files.pythonhosted.org/packages/68/5a/199c59e0a824a3db2b89c5d2dade7ab5f9624dbf6448dc291b46d5ec94d3/wcwidth-0.6.0-py3-none-any.whl", hash = "sha256:1a3a1e510b553315f8e146c54764f4fb6264ffad731b3d78088cdb1478ffbdad", size = 94189, upload-time = "2026-02-06T19:19:39.646Z" },
-]
-
-[[package]]
-name = "websocket-client"
-version = "1.9.0"
-source = { registry = "https://pypi.org/simple" }
-sdist = { url = "https://files.pythonhosted.org/packages/2c/41/aa4bf9664e4cda14c3b39865b12251e8e7d239f4cd0e3cc1b6c2ccde25c1/websocket_client-1.9.0.tar.gz", hash = "sha256:9e813624b6eb619999a97dc7958469217c3176312b3a16a4bd1bc7e08a46ec98", size = 70576, upload-time = "2025-10-07T21:16:36.495Z" }
-wheels = [
-    { url = "https://files.pythonhosted.org/packages/34/db/b10e48aa8fff7407e67470363eac595018441cf32d5e1001567a7aeba5d2/websocket_client-1.9.0-py3-none-any.whl", hash = "sha256:af248a825037ef591efbf6ed20cc5faa03d3b47b9e5a2230a529eeee1c1fc3ef", size = 82616, upload-time = "2025-10-07T21:16:34.951Z" },
 ]
 
 [[package]]
