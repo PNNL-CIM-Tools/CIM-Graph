@@ -97,8 +97,8 @@ def _emit_inline_class(name: str, merged_cls: type, merged_base_name: str) -> li
 
 def _build_init(release: dict) -> str:
     """Return the generated __init__.py content for one release entry."""
-    from cimgraph.data_profile.merge import merge_profiles, _get_direct_fields
     from cimgraph.data_profile.identity import Identity
+    from cimgraph.data_profile.merge import _get_direct_fields, merge_profiles
 
     parts = release['parts']
     description = release.get('description', '')

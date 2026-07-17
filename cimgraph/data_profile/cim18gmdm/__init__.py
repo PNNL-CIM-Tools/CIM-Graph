@@ -17,16 +17,22 @@ from __future__ import annotations
 from dataclasses import dataclass, field
 from typing import Optional
 from uuid import UUID
-from cimgraph.data_profile.cim18gmdm.connectivity import (
-    Identity, OrderedPhaseCodeKind, PhaseCode, PhaseShuntConnectionKind,
-    SinglePhaseKind, Voltage, WindingConnection)
-from cimgraph.data_profile.cim18gmdm.electrical import (
-    ActivePower, ApparentPower, Conductance, ConverterControlModeKind, CurrentFlow,
-    FuelType, Length, PerCent, Reactance, ReactancePerLength, ReactivePower, RealEnergy,
-    RegulatingControlModeKind, Resistance, ResistancePerLength, Seconds, Susceptance,
-    SusceptancePerLength, WindGenUnitKind)
-from cimgraph.data_profile.cim18gmdm.asset import (
-    Impedance, KiloActivePower, PhaseCountKind, Temperature)
+
+from cimgraph.data_profile.cim18gmdm.asset import (Impedance, KiloActivePower, PhaseCountKind,
+                                                   Temperature)
+from cimgraph.data_profile.cim18gmdm.connectivity import (Identity, OrderedPhaseCodeKind,
+                                                          PhaseCode, PhaseShuntConnectionKind,
+                                                          SinglePhaseKind, Voltage,
+                                                          WindingConnection)
+from cimgraph.data_profile.cim18gmdm.electrical import (ActivePower, ApparentPower, Conductance,
+                                                        ConverterControlModeKind, CurrentFlow,
+                                                        FuelType, Length, PerCent, Reactance,
+                                                        ReactancePerLength, ReactivePower,
+                                                        RealEnergy, RegulatingControlModeKind,
+                                                        Resistance, ResistancePerLength, Seconds,
+                                                        Susceptance, SusceptancePerLength,
+                                                        WindGenUnitKind)
+
 
 @dataclass(repr=False)
 class IdentifiedObject(Identity):
