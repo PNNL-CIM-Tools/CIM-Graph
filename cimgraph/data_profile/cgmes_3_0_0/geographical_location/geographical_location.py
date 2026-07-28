@@ -822,4 +822,3 @@ class TownDetail(Identity):
     @property
     def __maxOccurs__(self):
         return 'unbounded'
-
