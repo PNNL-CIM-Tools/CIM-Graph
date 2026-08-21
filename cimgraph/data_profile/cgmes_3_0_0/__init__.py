@@ -21,26 +21,39 @@ from __future__ import annotations
 from dataclasses import dataclass, field
 from typing import Optional
 from uuid import UUID
-from cimgraph.data_profile.cgmes_3_0_0.core_equipment import (
-    ActivePower, ActivePowerPerCurrentFlow, ActivePowerPerFrequency, AngleDegrees,
-    ApparentPower, Capacitance, Conductance, ControlAreaTypeKind, Currency, CurrentFlow,
-    CurveStyle, DCConverterOperatingModeKind, DCPolarityKind, Frequency, FuelType,
-    GeneratorControlSource, HydroEnergyConversionKind, HydroPlantStorageKind,
-    HydroTurbineKind, Identity, Inductance, Length, LimitKind, Money,
-    OperationalLimitDirectionKind, PerCent, PhaseCode, Reactance, ReactivePower,
-    RealEnergy, RegulatingControlModeKind, Resistance, RotationSpeed, SVCControlMode,
-    Seconds, Susceptance, SynchronousMachineKind, UnitMultiplier, UnitSymbol, Voltage,
-    VoltagePerReactivePower, WindGenUnitKind, WindingConnection)
-from cimgraph.data_profile.cgmes_3_0_0.operation import (
-    Source, Validity)
-from cimgraph.data_profile.cgmes_3_0_0.short_circuit import (
-    PU, PetersenCoilModeKind, ShortCircuitRotorKind, Temperature)
+
+from cimgraph.data_profile.cgmes_3_0_0.core_equipment import (ActivePower,
+                                                              ActivePowerPerCurrentFlow,
+                                                              ActivePowerPerFrequency,
+                                                              AngleDegrees, ApparentPower,
+                                                              Capacitance, Conductance,
+                                                              ControlAreaTypeKind, Currency,
+                                                              CurrentFlow, CurveStyle,
+                                                              DCConverterOperatingModeKind,
+                                                              DCPolarityKind, Frequency, FuelType,
+                                                              GeneratorControlSource,
+                                                              HydroEnergyConversionKind,
+                                                              HydroPlantStorageKind,
+                                                              HydroTurbineKind, Identity,
+                                                              Inductance, Length, LimitKind, Money,
+                                                              OperationalLimitDirectionKind,
+                                                              PerCent, PhaseCode, Reactance,
+                                                              ReactivePower, RealEnergy,
+                                                              RegulatingControlModeKind,
+                                                              Resistance, RotationSpeed, Seconds,
+                                                              Susceptance, SVCControlMode,
+                                                              SynchronousMachineKind,
+                                                              UnitMultiplier, UnitSymbol, Voltage,
+                                                              VoltagePerReactivePower,
+                                                              WindGenUnitKind, WindingConnection)
+from cimgraph.data_profile.cgmes_3_0_0.diagram import OrientationKind
+from cimgraph.data_profile.cgmes_3_0_0.operation import Source, Validity
+from cimgraph.data_profile.cgmes_3_0_0.short_circuit import (PU, PetersenCoilModeKind,
+                                                             ShortCircuitRotorKind, Temperature)
 from cimgraph.data_profile.cgmes_3_0_0.steady_state_hypothesis import (
     AngleRadians, AsynchronousMachineKind, BatteryStateKind, CsOperatingModeKind,
-    CsPpccControlKind, SynchronousMachineOperatingMode, VsPpccControlKind,
-    VsQpccControlKind)
-from cimgraph.data_profile.cgmes_3_0_0.diagram import (
-    OrientationKind)
+    CsPpccControlKind, SynchronousMachineOperatingMode, VsPpccControlKind, VsQpccControlKind)
+
 
 @dataclass(repr=False)
 class CurveData(Identity):
