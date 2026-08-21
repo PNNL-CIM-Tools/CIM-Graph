@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from cimgraph.databases import get_iec61970_301, get_namespace, get_url
+from cimgraph.databases import get_iec61970_552, get_namespace, get_url
 
 
 def get_triple_sparql(obj:object, attribute:str) -> str:
@@ -13,7 +13,7 @@ def get_triple_sparql(obj:object, attribute:str) -> str:
     """
     mrid = obj.uri()
 
-    if int(get_iec61970_301()) > 7:
+    if get_iec61970_552() == '552-NEW':
         split = 'urn:uuid:'
     else:
         split = f'{get_url()}#'

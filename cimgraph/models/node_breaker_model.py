@@ -39,12 +39,13 @@ class NodeBreakerModel(GraphModel):
     aggregate_lower_areas: bool = field(default=True)
 
     def __post_init__(self):
-        cim_profile, cim_module = get_cim_profile()
-        self.cim:cim = cim_module
+        if self.connection is not None:
+            self.cim = self.connection.cim
+        else:
+            _, self.cim = get_cim_profile()
         self.incrementals['forwardDifferences'] = defaultdict(dict)
         self.incrementals['reverseDifferences'] = defaultdict(dict)
         if self.connection is not None:    # Check if connection has been specified
-            # self.cim = self.connection.cim    # Set CIM data profile
             if self.distributed:    # Check if distributed flag is true
                 # Build distributed network model
                 self.initialize_distributed_model(self.container)
@@ -55,7 +56,9 @@ class NodeBreakerModel(GraphModel):
             _log.error('A ConnectionInterface must be specified')
 
     def initialize_centralized_model(self, container: object) -> None:
-        self.graph = self.connection.create_new_graph(container)
+        # Pass self.graph so objects the caller already built are preserved
+        # instead of being replaced by the query result (matches FeederModel).
+        self.graph = self.connection.create_new_graph(container, self.graph)
         if container is not None:
             self.add_to_graph(container)
 

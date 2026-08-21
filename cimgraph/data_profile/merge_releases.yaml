@@ -1,0 +1,33 @@
+# Stable merged profile releases.
+# Each entry produces a pre-baked __init__.py committed to the repo.
+# Run scripts/build_merged_profiles.py to regenerate after adding or changing entries.
+#
+# parts: ordered list of sub-profile module paths to merge.
+#   - Diagram is intentionally excluded (not part of the power-flow model).
+#   - canonical/ is intentionally excluded (it is what this merge replaces).
+# description: human-readable note shown in the generated file header.
+
+releases:
+  - name: cim18gmdm
+    package: cimgraph.data_profile.cim18gmdm
+    parts:
+      - cimgraph.data_profile.cim18gmdm.connectivity
+      - cimgraph.data_profile.cim18gmdm.electrical
+      - cimgraph.data_profile.cim18gmdm.location
+      - cimgraph.data_profile.cim18gmdm.asset
+      - cimgraph.data_profile.cim18gmdm.marketnode
+    description: "EPRI GMDM CIM18 merged profile (replaces canonical.py)"
+
+  - name: cgmes_3_0_0
+    package: cimgraph.data_profile.cgmes_3_0_0
+    parts:
+      - cimgraph.data_profile.cgmes_3_0_0.core_equipment
+      - cimgraph.data_profile.cgmes_3_0_0.equipment_boundary
+      - cimgraph.data_profile.cgmes_3_0_0.operation
+      - cimgraph.data_profile.cgmes_3_0_0.short_circuit
+      - cimgraph.data_profile.cgmes_3_0_0.steady_state_hypothesis
+      - cimgraph.data_profile.cgmes_3_0_0.state_variables
+      - cimgraph.data_profile.cgmes_3_0_0.topology
+      - cimgraph.data_profile.cgmes_3_0_0.geographical_location
+      - cimgraph.data_profile.cgmes_3_0_0.diagram
+    description: "IEC CGMES 3.0 merged profile (EQ+EQBD+OP+SC+SSH+SV+TP+GL+DL)"

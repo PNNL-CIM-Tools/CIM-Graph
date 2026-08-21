@@ -39,16 +39,11 @@ class IdentifiedObject(Identity):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            The description is a free human readable text describing or naming the
-            object. It may be non unique and may not correlate to a naming hierarchy.
-            '''
-
         })
     '''
     The description is a free human readable text describing or naming
@@ -60,16 +55,11 @@ class IdentifiedObject(Identity):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            The name is any free human readable and possibly non unique text naming
-            the object.
-            '''
-
         })
     '''
     The name is any free human readable and possibly non unique text naming
@@ -100,25 +90,11 @@ class CoordinateSystem(IdentifiedObject):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '1',
         'maxOccurs': '1',
         'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            A Uniform Resource Name (URN) for the coordinate reference system (crs)
-            used to define 'Location.PositionPoints'.
-            An example would be the European Petroleum Survey Group (EPSG) code for
-            a coordinate reference system, defined in URN under the Open Geospatial
-            Consortium (OGC) namespace as: urn:ogc:def:crs:EPSG::XXXX, where XXXX is
-            an EPSG code (a full list of codes can be found at the EPSG Registry web
-            site http://www.epsg-registry.org/). To define the coordinate system as
-            being WGS84 (latitude, longitude) using an EPSG OGC, this attribute would
-            be urn:ogc:def:crs:EPSG::4236.
-            A profile should limit this code to a set of allowed URNs agreed to by
-            all sending and receiving parties.
-            '''
-
         })
     '''
     A Uniform Resource Name (URN) for the coordinate reference system (crs)
@@ -138,16 +114,12 @@ class CoordinateSystem(IdentifiedObject):
         default_factory=list,
         metadata={
         'type': 'Association',
+        'stereotypes': [],
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'Location.CoordinateSystem',
         'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
-        'docstring':
-            '''
-            All locations described with position points in this coordinate system.
-            '''
-
         })
     '''
     All locations described with position points in this coordinate system.
@@ -198,17 +170,13 @@ class Location(IdentifiedObject):
     CoordinateSystem: Optional[CoordinateSystem] = field(
         default=None,
         metadata={
-        'type': 'ByReference',
+        'type': 'Association',
+        'stereotypes': ['ByReference'],
         'minOccurs': '1',
         'maxOccurs': '1',
         'inverse': 'CoordinateSystem.Location',
         'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Coordinate system used to describe position points of this location.
-            '''
-
         })
     '''
     Coordinate system used to describe position points of this location.
@@ -217,16 +185,13 @@ class Location(IdentifiedObject):
     PositionPoints: list[PositionPoint] = field(
         default_factory=list,
         metadata={
-        'type': 'gmdm',
+        'type': 'Association',
+        'stereotypes': ['gmdm'],
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'PositionPoint.Location',
         'namespace': 'http://epri.com/gmdm/2025#',
         'serialize': False,
-        'docstring':
-            '''
-            '''
-
         })
     '''
     '''
@@ -235,16 +200,12 @@ class Location(IdentifiedObject):
         default_factory=list,
         metadata={
         'type': 'Association',
+        'stereotypes': [],
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'PowerSystemResource.Location',
         'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
-        'docstring':
-            '''
-            All power system resources at this location.
-            '''
-
         })
     '''
     All power system resources at this location.
@@ -275,17 +236,13 @@ class PowerSystemResource(IdentifiedObject):
     Location: Optional[Location] = field(
         default=None,
         metadata={
-        'type': 'ByReference',
+        'type': 'Association',
+        'stereotypes': ['ByReference'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'Location.PowerSystemResources',
         'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Location of this power system resource.
-            '''
-
         })
     '''
     Location of this power system resource.
@@ -1026,15 +983,12 @@ class PositionPoint(Identity):
     sequenceNumber: Optional[int] = field(
         default=None,
         metadata={
-        'type': 'gmdm Attribute',
+        'type': 'Attribute',
+        'stereotypes': ['gmdm', 'Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://epri.com/gmdm/2025#',
         'serialize': True,
-        'docstring':
-            '''
-            '''
-
         })
     '''
     '''
@@ -1043,15 +997,11 @@ class PositionPoint(Identity):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '1',
         'maxOccurs': '1',
         'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            X axis position.
-            '''
-
         })
     '''
     X axis position.
@@ -1061,15 +1011,11 @@ class PositionPoint(Identity):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '1',
         'maxOccurs': '1',
         'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Y axis position.
-            '''
-
         })
     '''
     Y axis position.
@@ -1079,15 +1025,11 @@ class PositionPoint(Identity):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            (if applicable) Z axis position.
-            '''
-
         })
     '''
     (if applicable) Z axis position.
@@ -1096,16 +1038,13 @@ class PositionPoint(Identity):
     Location: Optional[Location] = field(
         default=None,
         metadata={
-        'type': 'ShadowExtension gmdm ByReference',
+        'type': 'Association',
+        'stereotypes': ['ShadowExtension', 'gmdm', 'ByReference'],
         'minOccurs': '1',
         'maxOccurs': '1',
         'inverse': 'Location.PositionPoints',
         'namespace': 'http://epri.com/gmdm/2025#',
         'serialize': True,
-        'docstring':
-            '''
-            '''
-
         })
     '''
     '''

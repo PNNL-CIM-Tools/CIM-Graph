@@ -33,8 +33,8 @@ class SPARQLEndpointConnection(ConnectionInterface):
     - _get_namespaces(): Return list of namespaces for enumeration parsing
     """
 
-    def __init__(self, cim_override=None):
-        super().__init__(cim_override=cim_override)
+    def __init__(self):
+        super().__init__()
         self.connection_obj = None
 
     # -------------------------------------------------------------------------

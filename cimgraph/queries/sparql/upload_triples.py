@@ -4,7 +4,7 @@ import enum
 import importlib
 import logging
 
-from cimgraph.core import get_cim_profile, get_iec61970_301, get_namespace, get_url
+from cimgraph.core import get_cim_profile, get_iec61970_552, get_namespace, get_url
 from cimgraph.data_profile.known_problem_classes import ClassesWithManytoMany
 
 _log = logging.getLogger(__name__)
@@ -23,7 +23,7 @@ def upload_triples_sparql(obj: object) -> str:
     many_to_many = ClassesWithManytoMany().attributes
 
     # Handling of formatting change between different 301 standard versions
-    if int(get_iec61970_301()) > 7: # Now use rdf:about
+    if get_iec61970_552() == '552-NEW': # Now use rdf:about
         rdf_resource = 'urn:uuid:'
     else: # Older versions used rdf:ID
         rdf_resource = f"""{get_url()}#"""

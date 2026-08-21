@@ -1,4 +1,7 @@
 imaginary = [] = i = reactive
+pu = [] = PerUnit = perunit
+USD = [currency] = dollar = usd
+Ohm = ohm = Ω
 A2 = amp * amp = A²
 A2h = amp * amp * hour = A²h
 A2s = amp * amp * second = A²s

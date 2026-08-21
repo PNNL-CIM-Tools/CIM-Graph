@@ -37,9 +37,9 @@ def write_xml(network: GraphModel, filename: str, namespaces: dict=None,
     # Create reverse lookup for namespace
     reverse_ns_lookup = {v: k for k, v in namespaces.items()}
 
-    iec61970_301 = network.connection.iec61970_301
+    iec61970_552 = network.connection.iec61970_552
     # Handling of formatting change between different 301 standard versions
-    if int(iec61970_301) > 7:
+    if iec61970_552 == '552-NEW':
         rdf_header = 'rdf:about="urn:uuid:'
         rdf_resource = 'urn:uuid:'
     else:

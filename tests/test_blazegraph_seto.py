@@ -22,7 +22,7 @@ class TestBlazegraphSETO(unittest.TestCase):
             'CIMG_USERNAME': os.getenv('CIMG_USERNAME'),
             'CIMG_PASSWORD': os.getenv('CIMG_PASSWORD'),
             'CIMG_NAMESPACE': os.getenv('CIMG_NAMESPACE'),
-            'CIMG_IEC61970_301': os.getenv('CIMG_IEC61970_301'),
+            'CIMG_IEC61970_552': os.getenv('CIMG_IEC61970_552'),
             'CIMG_USE_UNITS': os.getenv('CIMG_USE_UNITS'),
         }
 
@@ -30,7 +30,7 @@ class TestBlazegraphSETO(unittest.TestCase):
         os.environ['CIMG_CIM_PROFILE'] = 'cimhub_2023'
         os.environ['CIMG_URL'] = 'http://localhost:8889/bigdata/namespace/kb/sparql'
         os.environ['CIMG_NAMESPACE'] = 'http://iec.ch/TC57/CIM100#'
-        os.environ['CIMG_IEC61970_301'] = '8'
+        os.environ['CIMG_IEC61970_552'] = '552-NEW'
         os.environ['CIMG_USE_UNITS'] = 'false'
 
         self.feeder_mrid = '49AD8E07-3BF9-A4E2-CB8F-C3722F837B62'
@@ -50,7 +50,7 @@ class TestBlazegraphSETO(unittest.TestCase):
         self.assertEqual(connection.cim_profile, 'cimhub_2023', 'CIM profile mismatch')
         self.assertEqual(connection.url, 'http://localhost:8889/bigdata/namespace/kb/sparql', 'URL mismatch')
         self.assertEqual(connection.namespace, 'http://iec.ch/TC57/CIM100#', 'Namespace mismatch')
-        self.assertEqual(connection.iec61970_301, 8, 'IEC61970_301 mismatch')
+        self.assertEqual(connection.iec61970_552, '552-NEW', 'IEC61970_552 mismatch')
 
     def test_get_object_sparql(self):
         """Test get_object_sparql to retrieve object from mrid"""
@@ -102,11 +102,14 @@ class TestBlazegraphSETO(unittest.TestCase):
 
     def test_merged_profile_feeder_model(self):
         """Test FeederModel with a merged connectivity+electrical profile."""
-        from cimgraph.data_profile.cim18gmdm import connectivity, electrical
-        from cimgraph.data_profile.merge import merge_profiles
+        from cimgraph.core.env_vars import get_cim_profile
 
-        merged = merge_profiles(connectivity, electrical)
-        database = BlazegraphConnection(cim_override=merged)
+        os.environ['CIMG_CIM_PROFILE'] = (
+            'cimgraph.data_profile.cim18gmdm.connectivity,'
+            'cimgraph.data_profile.cim18gmdm.electrical'
+        )
+        database = BlazegraphConnection()
+        _, merged = get_cim_profile()
 
         feeder = merged.Feeder(identifier=self.feeder_mrid)
         network = FeederModel(connection=database, container=feeder, distributed=False)
