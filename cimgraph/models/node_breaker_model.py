@@ -56,7 +56,9 @@ class NodeBreakerModel(GraphModel):
             _log.error('A ConnectionInterface must be specified')
 
     def initialize_centralized_model(self, container: object) -> None:
-        self.graph = self.connection.create_new_graph(container)
+        # Pass self.graph so objects the caller already built are preserved
+        # instead of being replaced by the query result (matches FeederModel).
+        self.graph = self.connection.create_new_graph(container, self.graph)
         if container is not None:
             self.add_to_graph(container)
 
