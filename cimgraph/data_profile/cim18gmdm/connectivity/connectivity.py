@@ -29,7 +29,6 @@ class CIMStereotype(Enum):
 BASE_URI = 'http://www.ucaiug.org/gmdm/connectivity/unbalanced#'
 ONTOLOGY_URI = 'http://cim.ucaiug.io/CIM101/draft#'
 
-
 @dataclass(repr=False)
 class IdentifiedObject(Identity):
     '''
@@ -41,16 +40,11 @@ class IdentifiedObject(Identity):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            The description is a free human readable text describing or naming the
-            object. It may be non unique and may not correlate to a naming hierarchy.
-            '''
-
         })
     '''
     The description is a free human readable text describing or naming
@@ -62,16 +56,11 @@ class IdentifiedObject(Identity):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            The name is any free human readable and possibly non unique text naming
-            the object.
-            '''
-
         })
     '''
     The name is any free human readable and possibly non unique text naming
@@ -103,18 +92,11 @@ class ACDCTerminal(IdentifiedObject):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            The orientation of the terminal connections for a multiple terminal conducting
-            equipment. The sequence numbering starts with 1 and additional terminals
-            should follow in increasing order. The first terminal is the "starting
-            point" for a two terminal branch.
-            '''
-
         })
     '''
     The orientation of the terminal connections for a multiple terminal
@@ -147,19 +129,13 @@ class Terminal(ACDCTerminal):
     ConductingEquipment: Optional[ConductingEquipment] = field(
         default=None,
         metadata={
-        'type': 'ByReference',
+        'type': 'Association',
+        'stereotypes': ['ByReference'],
         'minOccurs': '1',
         'maxOccurs': '1',
         'inverse': 'ConductingEquipment.Terminals',
         'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            The conducting equipment of the terminal. Conducting equipment have terminals
-            that may be connected to other conducting equipment terminals via connectivity
-            nodes or topological nodes.
-            '''
-
         })
     '''
     The conducting equipment of the terminal. Conducting equipment have
@@ -170,17 +146,13 @@ class Terminal(ACDCTerminal):
     ConnectivityNode: Optional[ConnectivityNode] = field(
         default=None,
         metadata={
-        'type': 'ByReference',
+        'type': 'Association',
+        'stereotypes': ['ByReference'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'ConnectivityNode.Terminals',
         'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            The connectivity node to which this terminal connects with zero impedance.
-            '''
-
         })
     '''
     The connectivity node to which this terminal connects with zero impedance.
@@ -189,18 +161,13 @@ class Terminal(ACDCTerminal):
     NormalHeadFeeder: Optional[Feeder] = field(
         default=None,
         metadata={
-        'type': 'ByReference',
+        'type': 'Association',
+        'stereotypes': ['ByReference'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'Feeder.NormalHeadTerminal',
         'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            The feeder that this terminal normally feeds. Only specified for the terminals
-            at head of feeders.
-            '''
-
         })
     '''
     The feeder that this terminal normally feeds. Only specified for the
@@ -211,16 +178,12 @@ class Terminal(ACDCTerminal):
         default_factory=list,
         metadata={
         'type': 'Association',
+        'stereotypes': [],
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'TransformerEnd.Terminal',
         'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
-        'docstring':
-            '''
-            All transformer ends connected at this terminal.
-            '''
-
         })
     '''
     All transformer ends connected at this terminal.
@@ -230,15 +193,12 @@ class Terminal(ACDCTerminal):
         default=None,
         metadata={
         'type': 'Association',
+        'stereotypes': [],
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'UsagePoint.Terminal',
         'namespace': 'http://epri.com/gmdm/2025#',
         'serialize': False,
-        'docstring':
-            '''
-            '''
-
         })
     '''
     '''
@@ -268,16 +228,11 @@ class BaseVoltage(IdentifiedObject):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '1',
         'maxOccurs': '1',
         'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            The power system resource's base voltage, expressed on a phase-to-phase
-            (line-to-line) basis. Shall be a positive value and not zero.
-            '''
-
         })
     '''
     The power system resource's base voltage, expressed on a phase-to-phase
@@ -288,18 +243,12 @@ class BaseVoltage(IdentifiedObject):
         default_factory=list,
         metadata={
         'type': 'Association',
+        'stereotypes': [],
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'ConductingEquipment.BaseVoltage',
         'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
-        'docstring':
-            '''
-            All conducting equipment with this base voltage. Use only when there is
-            no voltage level container used and only one base voltage applies. For
-            example, not used for transformers.
-            '''
-
         })
     '''
     All conducting equipment with this base voltage. Use only when there
@@ -311,16 +260,12 @@ class BaseVoltage(IdentifiedObject):
         default_factory=list,
         metadata={
         'type': 'Association',
+        'stereotypes': [],
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'TransformerEnd.BaseVoltage',
         'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
-        'docstring':
-            '''
-            Transformer ends at the base voltage. This is essential for PU calculation.
-            '''
-
         })
     '''
     Transformer ends at the base voltage. This is essential for PU calculation.
@@ -330,16 +275,12 @@ class BaseVoltage(IdentifiedObject):
         default_factory=list,
         metadata={
         'type': 'Association',
+        'stereotypes': [],
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'VoltageLevel.BaseVoltage',
         'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
-        'docstring':
-            '''
-            The voltage levels having this base voltage.
-            '''
-
         })
     '''
     The voltage levels having this base voltage.
@@ -369,17 +310,13 @@ class ConnectivityNode(IdentifiedObject):
     ConnectivityNodeContainer: Optional[ConnectivityNodeContainer] = field(
         default=None,
         metadata={
-        'type': 'ByReference',
+        'type': 'Association',
+        'stereotypes': ['ByReference'],
         'minOccurs': '1',
         'maxOccurs': '1',
         'inverse': 'ConnectivityNodeContainer.ConnectivityNodes',
         'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Container of this connectivity node.
-            '''
-
         })
     '''
     Container of this connectivity node.
@@ -389,16 +326,12 @@ class ConnectivityNode(IdentifiedObject):
         default_factory=list,
         metadata={
         'type': 'Association',
+        'stereotypes': [],
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'Terminal.ConnectivityNode',
         'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
-        'docstring':
-            '''
-            Terminals interconnected with zero impedance at a this connectivity node.
-            '''
-
         })
     '''
     Terminals interconnected with zero impedance at a this connectivity
@@ -455,17 +388,12 @@ class ACLineSegmentPhase(PowerSystemResource):
     phase: Optional[ SinglePhaseKind ] = field(
         default=None,
         metadata={
-        'type': 'enumeration Attribute',
+        'type': 'Attribute',
+        'stereotypes': ['enumeration', 'Attribute'],
         'minOccurs': '1',
         'maxOccurs': '1',
         'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Phase identifies the phase or neutral connection of the conductor at both
-            ends.
-            '''
-
         })
     '''
     Phase identifies the phase or neutral connection of the conductor at
@@ -475,17 +403,13 @@ class ACLineSegmentPhase(PowerSystemResource):
     ACLineSegment: Optional[ACLineSegment] = field(
         default=None,
         metadata={
-        'type': 'Attribute',
+        'type': 'Association',
+        'stereotypes': [],
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'ACLineSegment.ACLineSegmentPhases',
         'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            The line segment to which the phase belongs.
-            '''
-
         })
     '''
     The line segment to which the phase belongs.
@@ -515,16 +439,12 @@ class ConnectivityNodeContainer(PowerSystemResource):
         default_factory=list,
         metadata={
         'type': 'Association',
+        'stereotypes': [],
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'ConnectivityNode.ConnectivityNodeContainer',
         'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
-        'docstring':
-            '''
-            Connectivity nodes which belong to this connectivity node container.
-            '''
-
         })
     '''
     Connectivity nodes which belong to this connectivity node container.
@@ -553,21 +473,12 @@ class EquipmentContainer(ConnectivityNodeContainer):
         default_factory=list,
         metadata={
         'type': 'Association',
+        'stereotypes': [],
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'Equipment.AdditionalEquipmentContainer',
         'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
-        'docstring':
-            '''
-            The additonal contained equipment. The equipment belong to the equipment
-            container. The equipment is contained in another equipment container, but
-            also grouped with this equipment container. Examples include when a switch
-            contained in a substation is also desired to be grouped with a line contianer
-            or when a switch is included in a secondary substation and also grouped
-            in a feeder.
-            '''
-
         })
     '''
     The additonal contained equipment. The equipment belong to the equipment
@@ -582,16 +493,12 @@ class EquipmentContainer(ConnectivityNodeContainer):
         default_factory=list,
         metadata={
         'type': 'Association',
+        'stereotypes': [],
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'Equipment.EquipmentContainer',
         'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
-        'docstring':
-            '''
-            Contained equipment.
-            '''
-
         })
     '''
     Contained equipment.
@@ -623,18 +530,13 @@ class Feeder(EquipmentContainer):
     NormalEnergizingSubstation: Optional[Substation] = field(
         default=None,
         metadata={
-        'type': 'OfAggregate ByReference',
+        'type': 'Association',
+        'stereotypes': ['OfAggregate', 'ByReference'],
         'minOccurs': '1',
         'maxOccurs': '1',
         'inverse': 'Substation.NormalEnergizedFeeder',
         'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            The substation that nominally energizes the feeder. Also used for naming
-            purposes.
-            '''
-
         })
     '''
     The substation that nominally energizes the feeder. Also used for naming
@@ -645,16 +547,12 @@ class Feeder(EquipmentContainer):
         default_factory=list,
         metadata={
         'type': 'Association',
+        'stereotypes': [],
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'Terminal.NormalHeadFeeder',
         'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
-        'docstring':
-            '''
-            The normal head terminal or terminals of the feeder.
-            '''
-
         })
     '''
     The normal head terminal or terminals of the feeder.
@@ -706,17 +604,13 @@ class Substation(EquipmentContainer):
     NormalEnergizedFeeder: list[Feeder] = field(
         default_factory=list,
         metadata={
-        'type': 'AggregateOf',
+        'type': 'Association',
+        'stereotypes': ['AggregateOf'],
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'Feeder.NormalEnergizingSubstation',
         'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
-        'docstring':
-            '''
-            The normal energized feeders of the substation. Also used for naming purposes.
-            '''
-
         })
     '''
     The normal energized feeders of the substation. Also used for naming
@@ -726,17 +620,13 @@ class Substation(EquipmentContainer):
     VoltageLevels: list[VoltageLevel] = field(
         default_factory=list,
         metadata={
-        'type': 'AggregateOf',
+        'type': 'Association',
+        'stereotypes': ['AggregateOf'],
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'VoltageLevel.Substation',
         'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
-        'docstring':
-            '''
-            The voltage levels within this substation.
-            '''
-
         })
     '''
     The voltage levels within this substation.
@@ -768,17 +658,13 @@ class VoltageLevel(EquipmentContainer):
     BaseVoltage: Optional[BaseVoltage] = field(
         default=None,
         metadata={
-        'type': 'ByReference',
+        'type': 'Association',
+        'stereotypes': ['ByReference'],
         'minOccurs': '1',
         'maxOccurs': '1',
         'inverse': 'BaseVoltage.VoltageLevel',
         'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            The base voltage used for all equipment within the voltage level.
-            '''
-
         })
     '''
     The base voltage used for all equipment within the voltage level.
@@ -787,17 +673,13 @@ class VoltageLevel(EquipmentContainer):
     Substation: Optional[Substation] = field(
         default=None,
         metadata={
-        'type': 'OfAggregate ByReference',
+        'type': 'Association',
+        'stereotypes': ['OfAggregate', 'ByReference'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'Substation.VoltageLevels',
         'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            The substation of the voltage level.
-            '''
-
         })
     '''
     The substation of the voltage level.
@@ -826,20 +708,12 @@ class EnergyConsumerPhase(PowerSystemResource):
     phase: Optional[ SinglePhaseKind ] = field(
         default=None,
         metadata={
-        'type': 'enumeration Attribute',
+        'type': 'Attribute',
+        'stereotypes': ['enumeration', 'Attribute'],
         'minOccurs': '1',
         'maxOccurs': '1',
         'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Phase of this energy consumer component. If the energy consumer is wye
-            connected, the connection is from the indicated phase to the central ground
-            or neutral point. If the energy consumer is delta connected, the phase
-            indicates an energy consumer connected from the indicated phase to the
-            next logical non-neutral phase.
-            '''
-
         })
     '''
     Phase of this energy consumer component. If the energy consumer is
@@ -852,17 +726,13 @@ class EnergyConsumerPhase(PowerSystemResource):
     EnergyConsumer: Optional[EnergyConsumer] = field(
         default=None,
         metadata={
-        'type': 'Attribute',
+        'type': 'Association',
+        'stereotypes': [],
         'minOccurs': '1',
         'maxOccurs': '1',
         'inverse': 'EnergyConsumer.EnergyConsumerPhase',
         'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            The energy consumer to which this phase belongs.
-            '''
-
         })
     '''
     The energy consumer to which this phase belongs.
@@ -891,25 +761,11 @@ class Equipment(PowerSystemResource):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            The aggregate flag provides an alternative way of representing an aggregated
-            (equivalent) element. It is applicable in cases when the dedicated classes
-            for equivalent equipment do not have all of the attributes necessary to
-            represent the required level of detail. In case the flag is set to "true"
-            the single instance of equipment represents multiple pieces of equipment
-            that have been modelled together as an aggregate equivalent obtained by
-            a network reduction procedure. Examples would be power transformers or
-            synchronous machines operating in parallel modelled as a single aggregate
-            power transformer or aggregate synchronous machine.
-            The attribute is not used for EquivalentBranch, EquivalentShunt, EquivalentInjection
-            and ExternalNetworkInjection.
-            '''
-
         })
     '''
     The aggregate flag provides an alternative way of representing an aggregated
@@ -930,18 +786,11 @@ class Equipment(PowerSystemResource):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Specifies the availability of the equipment under normal operating conditions.
-            True means the equipment is available for topology processing, which determines
-            if the equipment is energized or not. False means that the equipment is
-            treated by network applications as if it is not in the model.
-            '''
-
         })
     '''
     Specifies the availability of the equipment under normal operating
@@ -954,19 +803,13 @@ class Equipment(PowerSystemResource):
     AdditionalEquipmentContainer: Optional[EquipmentContainer] = field(
         default=None,
         metadata={
-        'type': 'Attribute',
+        'type': 'Association',
+        'stereotypes': [],
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'EquipmentContainer.AdditionalGroupedEquipment',
         'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Additional equipment container beyond the primary equipment container.
-            The equipment is contained in another equipment container, but also grouped
-            with this equipment container.
-            '''
-
         })
     '''
     Additional equipment container beyond the primary equipment container.
@@ -977,17 +820,13 @@ class Equipment(PowerSystemResource):
     EquipmentContainer: Optional[EquipmentContainer] = field(
         default=None,
         metadata={
-        'type': 'ByReference',
+        'type': 'Association',
+        'stereotypes': ['ByReference'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'EquipmentContainer.Equipments',
         'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Container of this equipment.
-            '''
-
         })
     '''
     Container of this equipment.
@@ -1016,19 +855,13 @@ class ConductingEquipment(Equipment):
     BaseVoltage: Optional[BaseVoltage] = field(
         default=None,
         metadata={
-        'type': 'ByReference',
+        'type': 'Association',
+        'stereotypes': ['ByReference'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'BaseVoltage.ConductingEquipment',
         'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Base voltage of this conducting equipment. Use only when there is no voltage
-            level container used and only one base voltage applies. For example, not
-            used for transformers.
-            '''
-
         })
     '''
     Base voltage of this conducting equipment. Use only when there is no
@@ -1040,17 +873,12 @@ class ConductingEquipment(Equipment):
         default_factory=list,
         metadata={
         'type': 'Association',
+        'stereotypes': [],
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'Terminal.ConductingEquipment',
         'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
-        'docstring':
-            '''
-            Conducting equipment have terminals that may be connected to other conducting
-            equipment terminals via connectivity nodes or topological nodes.
-            '''
-
         })
     '''
     Conducting equipment have terminals that may be connected to other
@@ -1143,16 +971,12 @@ class ACLineSegment(Conductor):
         default_factory=list,
         metadata={
         'type': 'Association',
+        'stereotypes': [],
         'minOccurs': '0',
         'maxOccurs': '4',
         'inverse': 'ACLineSegmentPhase.ACLineSegment',
         'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
-        'docstring':
-            '''
-            The line segment phases which belong to the line segment.
-            '''
-
         })
     '''
     The line segment phases which belong to the line segment.
@@ -1251,15 +1075,11 @@ class EnergyConsumer(EnergyConnection):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Number of individual customers represented by this demand.
-            '''
-
         })
     '''
     Number of individual customers represented by this demand.
@@ -1269,16 +1089,11 @@ class EnergyConsumer(EnergyConnection):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Required for Yn and I connections (as represented by EnergyConsumer.phaseConnection).
-            True if the neutral is solidly grounded.
-            '''
-
         })
     '''
     Required for Yn and I connections (as represented by EnergyConsumer.phaseConnection).
@@ -1288,16 +1103,12 @@ class EnergyConsumer(EnergyConnection):
     phaseConnection: Optional[ PhaseShuntConnectionKind ] = field(
         default=None,
         metadata={
-        'type': 'enumeration Attribute',
+        'type': 'Attribute',
+        'stereotypes': ['enumeration', 'Attribute'],
         'minOccurs': '1',
         'maxOccurs': '1',
         'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            The type of phase connection, such as wye or delta.
-            '''
-
         })
     '''
     The type of phase connection, such as wye or delta.
@@ -1307,16 +1118,12 @@ class EnergyConsumer(EnergyConnection):
         default_factory=list,
         metadata={
         'type': 'Association',
+        'stereotypes': [],
         'minOccurs': '0',
         'maxOccurs': '3',
         'inverse': 'EnergyConsumerPhase.EnergyConsumer',
         'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
-        'docstring':
-            '''
-            The individual phase models for this energy consumer.
-            '''
-
         })
     '''
     The individual phase models for this energy consumer.
@@ -1388,16 +1195,12 @@ class PowerElectronicsConnection(RegulatingCondEq):
         default_factory=list,
         metadata={
         'type': 'Association',
+        'stereotypes': [],
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'PowerElectronicsConnectionPhase.PowerElectronicsConnection',
         'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
-        'docstring':
-            '''
-            The individual phases models for the power electronics connection.
-            '''
-
         })
     '''
     The individual phases models for the power electronics connection.
@@ -1492,16 +1295,11 @@ class ShuntCompensator(RegulatingCondEq):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Required for Yn and I connections (as represented by ShuntCompensator.phaseConnection).
-            True if the neutral is solidly grounded.
-            '''
-
         })
     '''
     Required for Yn and I connections (as represented by ShuntCompensator.phaseConnection).
@@ -1511,16 +1309,12 @@ class ShuntCompensator(RegulatingCondEq):
     phaseConnection: Optional[ PhaseShuntConnectionKind ] = field(
         default=None,
         metadata={
-        'type': 'enumeration Attribute',
+        'type': 'Attribute',
+        'stereotypes': ['enumeration', 'Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            The type of phase connection, such as wye or delta.
-            '''
-
         })
     '''
     The type of phase connection, such as wye or delta.
@@ -1530,16 +1324,12 @@ class ShuntCompensator(RegulatingCondEq):
         default_factory=list,
         metadata={
         'type': 'Association',
+        'stereotypes': [],
         'minOccurs': '0',
         'maxOccurs': '3',
         'inverse': 'ShuntCompensatorPhase.ShuntCompensator',
         'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
-        'docstring':
-            '''
-            The individual phases models for the shunt compensator.
-            '''
-
         })
     '''
     The individual phases models for the shunt compensator.
@@ -1602,37 +1392,11 @@ class PowerTransformer(ConductingEquipment):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '1',
         'maxOccurs': '1',
         'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Vector group of the transformer for protective relaying, e.g., Dyn1. For
-            unbalanced transformers, this may not be simply determined from the constituent
-            winding connections and phase angle displacements.
-            The vectorGroup string consists of the following components in the order
-            listed: high voltage winding connection, mid voltage winding connection
-            (for three winding transformers), phase displacement clock number from
-            0 to 11, low voltage winding connection
-            phase displacement clock number from 0 to 11. The winding connections are
-            D (delta), Y (wye), YN (wye with neutral), Z (zigzag), ZN (zigzag with
-            neutral), A (auto transformer). Upper case means the high voltage, lower
-            case mid or low. The high voltage winding always has clock position 0 and
-            is not included in the vector group string. Some examples: YNy0 (two winding
-            wye to wye with no phase displacement), YNd11 (two winding wye to delta
-            with 330 degrees phase displacement), YNyn0d5 (three winding transformer
-            wye with neutral high voltage, wye with neutral mid voltage and no phase
-            displacement, delta low voltage with 150 degrees displacement).
-            Phase displacement is defined as the angular difference between the phasors
-            representing the voltages between the neutral point (real or imaginary)
-            and the corresponding terminals of two windings, a positive sequence voltage
-            system being applied to the high-voltage terminals, following each other
-            in alphabetical sequence if they are lettered, or in numerical sequence
-            if they are numbered: the phasors are assumed to rotate in a counter-clockwise
-            sense.
-            '''
-
         })
     '''
     Vector group of the transformer for protective relaying, e.g., Dyn1.
@@ -1664,16 +1428,12 @@ class PowerTransformer(ConductingEquipment):
         default_factory=list,
         metadata={
         'type': 'Association',
+        'stereotypes': [],
         'minOccurs': '0',
         'maxOccurs': '3',
         'inverse': 'PowerTransformerEnd.PowerTransformer',
         'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
-        'docstring':
-            '''
-            The ends of this power transformer.
-            '''
-
         })
     '''
     The ends of this power transformer.
@@ -1683,16 +1443,12 @@ class PowerTransformer(ConductingEquipment):
         default_factory=list,
         metadata={
         'type': 'Association',
+        'stereotypes': [],
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'TransformerTank.PowerTransformer',
         'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
-        'docstring':
-            '''
-            All transformers that belong to this bank.
-            '''
-
         })
     '''
     All transformers that belong to this bank.
@@ -1746,21 +1502,11 @@ class Switch(ConductingEquipment):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            If true, the switch is locked. The resulting switch state is a combination
-            of locked and Switch.open attributes as follows:
-            <ul>
-            <li>locked=true and Switch.open=true. The resulting state is open and locked;</li>
-            <li>locked=false and Switch.open=true. The resulting state is open;</li>
-            <li>locked=false and Switch.open=false. The resulting state is closed.</li>
-            </ul>
-            '''
-
         })
     '''
     If true, the switch is locked. The resulting switch state is a combination
@@ -1777,17 +1523,11 @@ class Switch(ConductingEquipment):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '1',
         'maxOccurs': '1',
         'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            The attribute is used in cases when no Measurement for the status value
-            is present. If the Switch has a status measurement the Discrete.normalValue
-            is expected to match with the Switch.normalOpen.
-            '''
-
         })
     '''
     The attribute is used in cases when no Measurement for the status value
@@ -1799,16 +1539,12 @@ class Switch(ConductingEquipment):
         default_factory=list,
         metadata={
         'type': 'Association',
+        'stereotypes': [],
         'minOccurs': '0',
         'maxOccurs': '3',
         'inverse': 'SwitchPhase.Switch',
         'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
-        'docstring':
-            '''
-            The individual switch phases for the switch.
-            '''
-
         })
     '''
     The individual switch phases for the switch.
@@ -1996,17 +1732,13 @@ class TransformerTank(Equipment):
     PowerTransformer: Optional[PowerTransformer] = field(
         default=None,
         metadata={
-        'type': 'ByReference',
+        'type': 'Association',
+        'stereotypes': ['ByReference'],
         'minOccurs': '1',
         'maxOccurs': '1',
         'inverse': 'PowerTransformer.TransformerTanks',
         'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Bank this transformer belongs to.
-            '''
-
         })
     '''
     Bank this transformer belongs to.
@@ -2016,16 +1748,12 @@ class TransformerTank(Equipment):
         default_factory=list,
         metadata={
         'type': 'Association',
+        'stereotypes': [],
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'TransformerTankEnd.TransformerTank',
         'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
-        'docstring':
-            '''
-            All windings of this transformer.
-            '''
-
         })
     '''
     All windings of this transformer.
@@ -2054,20 +1782,12 @@ class PowerElectronicsConnectionPhase(PowerSystemResource):
     phase: Optional[ SinglePhaseKind ] = field(
         default=None,
         metadata={
-        'type': 'enumeration Attribute',
+        'type': 'Attribute',
+        'stereotypes': ['enumeration', 'Attribute'],
         'minOccurs': '1',
         'maxOccurs': '1',
         'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Phase of this energy producer component. If the energy producer is wye
-            connected, the connection is from the indicated phase to the central ground
-            or neutral point. If the energy producer is delta connected, the phase
-            indicates an energy producer connected from the indicated phase to the
-            next logical non-neutral phase.
-            '''
-
         })
     '''
     Phase of this energy producer component. If the energy producer is
@@ -2080,17 +1800,13 @@ class PowerElectronicsConnectionPhase(PowerSystemResource):
     PowerElectronicsConnection: Optional[PowerElectronicsConnection] = field(
         default=None,
         metadata={
-        'type': 'ByReference',
+        'type': 'Association',
+        'stereotypes': ['ByReference'],
         'minOccurs': '1',
         'maxOccurs': '1',
         'inverse': 'PowerElectronicsConnection.PowerElectronicsConnectionPhase',
         'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Power electronics connection of this power electronics connection phase.
-            '''
-
         })
     '''
     Power electronics connection of this power electronics connection phase.
@@ -2119,20 +1835,12 @@ class ShuntCompensatorPhase(PowerSystemResource):
     phase: Optional[ SinglePhaseKind ] = field(
         default=None,
         metadata={
-        'type': 'enumeration Attribute',
+        'type': 'Attribute',
+        'stereotypes': ['enumeration', 'Attribute'],
         'minOccurs': '1',
         'maxOccurs': '1',
         'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Phase of this shunt compensator component. If the shunt compensator is
-            wye connected, the connection is from the indicated phase to the central
-            ground or neutral point. If the shunt compensator is delta connected, the
-            phase indicates a shunt compensator connected from the indicated phase
-            to the next logical non-neutral phase.
-            '''
-
         })
     '''
     Phase of this shunt compensator component. If the shunt compensator
@@ -2145,17 +1853,13 @@ class ShuntCompensatorPhase(PowerSystemResource):
     ShuntCompensator: Optional[ShuntCompensator] = field(
         default=None,
         metadata={
-        'type': 'Attribute',
+        'type': 'Association',
+        'stereotypes': [],
         'minOccurs': '1',
         'maxOccurs': '1',
         'inverse': 'ShuntCompensator.ShuntCompensatorPhase',
         'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Shunt compensator of this shunt compensator phase.
-            '''
-
         })
     '''
     Shunt compensator of this shunt compensator phase.
@@ -2207,17 +1911,11 @@ class SwitchPhase(PowerSystemResource):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Used in cases when no Measurement for the status value is present. If the
-            SwitchPhase has a status measurement the Discrete.normalValue is expected
-            to match with this value.
-            '''
-
         })
     '''
     Used in cases when no Measurement for the status value is present.
@@ -2228,17 +1926,12 @@ class SwitchPhase(PowerSystemResource):
     phaseSide1: Optional[ SinglePhaseKind ] = field(
         default=None,
         metadata={
-        'type': 'enumeration Attribute',
+        'type': 'Attribute',
+        'stereotypes': ['enumeration', 'Attribute'],
         'minOccurs': '1',
         'maxOccurs': '1',
         'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Phase of this SwitchPhase on the side with terminal sequence number equal
-            to 1. Should be a phase contained in that terminal's phases attribute.
-            '''
-
         })
     '''
     Phase of this SwitchPhase on the side with terminal sequence number
@@ -2248,17 +1941,12 @@ class SwitchPhase(PowerSystemResource):
     phaseSide2: Optional[ SinglePhaseKind ] = field(
         default=None,
         metadata={
-        'type': 'enumeration Attribute',
+        'type': 'Attribute',
+        'stereotypes': ['enumeration', 'Attribute'],
         'minOccurs': '1',
         'maxOccurs': '1',
         'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Phase of this SwitchPhase on the side with terminal sequence number equal
-            to 2. Should be a phase contained in that terminal's Terminal.phases attribute.
-            '''
-
         })
     '''
     Phase of this SwitchPhase on the side with terminal sequence number
@@ -2269,17 +1957,13 @@ class SwitchPhase(PowerSystemResource):
     Switch: Optional[Switch] = field(
         default=None,
         metadata={
-        'type': 'Attribute',
+        'type': 'Association',
+        'stereotypes': [],
         'minOccurs': '1',
         'maxOccurs': '1',
         'inverse': 'Switch.SwitchPhase',
         'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            The switch of the switch phase.
-            '''
-
         })
     '''
     The switch of the switch phase.
@@ -2311,19 +1995,11 @@ class TransformerEnd(IdentifiedObject):
         default=None,
         metadata={
         'type': 'Attribute',
+        'stereotypes': ['Attribute'],
         'minOccurs': '1',
         'maxOccurs': '1',
         'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Number for this transformer end, corresponding to the end's order in the
-            power transformer vector group or phase angle clock number. Highest voltage
-            winding should be 1. Each end within a power transformer should have a
-            unique subsequent end number. Note the transformer end number need not
-            match the terminal sequence number.
-            '''
-
         })
     '''
     Number for this transformer end, corresponding to the end's order in
@@ -2336,17 +2012,13 @@ class TransformerEnd(IdentifiedObject):
     BaseVoltage: Optional[BaseVoltage] = field(
         default=None,
         metadata={
-        'type': 'Attribute',
+        'type': 'Association',
+        'stereotypes': [],
         'minOccurs': '0',
         'maxOccurs': '1',
         'inverse': 'BaseVoltage.TransformerEnds',
         'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Base voltage of the transformer end. This is essential for PU calculation.
-            '''
-
         })
     '''
     Base voltage of the transformer end. This is essential for PU calculation.
@@ -2355,17 +2027,13 @@ class TransformerEnd(IdentifiedObject):
     Terminal: Optional[Terminal] = field(
         default=None,
         metadata={
-        'type': 'ByReference',
+        'type': 'Association',
+        'stereotypes': ['ByReference'],
         'minOccurs': '1',
         'maxOccurs': '1',
         'inverse': 'Terminal.TransformerEnd',
         'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Terminal of the power transformer to which this transformer end belongs.
-            '''
-
         })
     '''
     Terminal of the power transformer to which this transformer end belongs.
@@ -2417,16 +2085,12 @@ class PowerTransformerEnd(TransformerEnd):
     connectionKind: Optional[ WindingConnection ] = field(
         default=None,
         metadata={
-        'type': 'enumeration Attribute',
+        'type': 'Attribute',
+        'stereotypes': ['enumeration', 'Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Kind of connection.
-            '''
-
         })
     '''
     Kind of connection.
@@ -2435,17 +2099,13 @@ class PowerTransformerEnd(TransformerEnd):
     PowerTransformer: Optional[PowerTransformer] = field(
         default=None,
         metadata={
-        'type': 'Attribute',
+        'type': 'Association',
+        'stereotypes': [],
         'minOccurs': '1',
         'maxOccurs': '1',
         'inverse': 'PowerTransformer.PowerTransformerEnd',
         'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            The power transformer of this power transformer end.
-            '''
-
         })
     '''
     The power transformer of this power transformer end.
@@ -2476,15 +2136,12 @@ class TransformerTankEnd(TransformerEnd):
     orderedPhases: Optional[ OrderedPhaseCodeKind ] = field(
         default=None,
         metadata={
-        'type': 'gmdm enumeration Attribute',
+        'type': 'Attribute',
+        'stereotypes': ['gmdm', 'enumeration', 'Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://epri.com/gmdm/2025#',
         'serialize': True,
-        'docstring':
-            '''
-            '''
-
         })
     '''
     '''
@@ -2492,17 +2149,13 @@ class TransformerTankEnd(TransformerEnd):
     TransformerTank: Optional[TransformerTank] = field(
         default=None,
         metadata={
-        'type': 'ByReference',
+        'type': 'Association',
+        'stereotypes': ['ByReference'],
         'minOccurs': '1',
         'maxOccurs': '1',
         'inverse': 'TransformerTank.TransformerTankEnds',
         'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Transformer this winding belongs to.
-            '''
-
         })
     '''
     Transformer this winding belongs to.
@@ -2533,19 +2186,12 @@ class UsagePoint(IdentifiedObject):
     phaseCode: Optional[ PhaseCode ] = field(
         default=None,
         metadata={
-        'type': 'enumeration Attribute',
+        'type': 'Attribute',
+        'stereotypes': ['enumeration', 'Attribute'],
         'minOccurs': '0',
         'maxOccurs': '1',
         'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Phase code. Number of wires and specific nominal phases can be deduced
-            from enumeration literal values. For example, ABCN is three-phase, four-wire,
-            s12n (splitSecondary12N) is single-phase, three-wire, and s1n and s2n are
-            single-phase, two-wire.
-            '''
-
         })
     '''
     Phase code. Number of wires and specific nominal phases can be deduced
@@ -2557,16 +2203,13 @@ class UsagePoint(IdentifiedObject):
     Terminal: Optional[Terminal] = field(
         default=None,
         metadata={
-        'type': 'ShadowExtension gmdm ByReference',
+        'type': 'Association',
+        'stereotypes': ['ShadowExtension', 'gmdm', 'ByReference'],
         'minOccurs': '1',
         'maxOccurs': '1',
         'inverse': 'Terminal.UsagePoint',
         'namespace': 'http://epri.com/gmdm/2025#',
         'serialize': True,
-        'docstring':
-            '''
-            '''
-
         })
     '''
     '''

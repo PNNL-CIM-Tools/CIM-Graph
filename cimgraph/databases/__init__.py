@@ -10,8 +10,9 @@ from functools import cache
 from uuid import UUID
 
 from cimgraph.core import (get_cim_profile, get_database, get_host, get_iec61970_301,
-                           get_namespace, get_password, get_port, get_undefined_handling, get_url,
-                           get_use_units, get_username, get_validation_log_level)
+                           get_iec61970_552, get_namespace, get_password, get_port,
+                           get_undefined_handling, get_url, get_use_units, get_username,
+                           get_validation_log_level)
 
 _log = logging.getLogger(__name__)
 
@@ -64,22 +65,17 @@ class ConnectionInterface(ABC):
     def create_distributed_graph(self, area: object, graph: Graph = None) -> Graph:
         raise RuntimeError('Must have implemented query in the inherited class')
 
-    def __init__(self, cim_override=None):
+    def __init__(self):
         # clear cached env variables
         get_namespace.cache_clear()
         get_cim_profile.cache_clear()
-        get_iec61970_301.cache_clear()
+        get_iec61970_552.cache_clear()
         get_validation_log_level.cache_clear()
         get_use_units.cache_clear()
 
-        # retrieve env variables
-        if cim_override is not None:
-            self.cim_profile = 'merged'
-            self.cim = cim_override
-        else:
-            self.cim_profile, self.cim = get_cim_profile()
+        self.cim_profile, self.cim = get_cim_profile()
         self.namespace = get_namespace()
-        self.iec61970_301 = get_iec61970_301()
+        self.iec61970_552 = get_iec61970_552()
         self.log_level = get_validation_log_level()
         self.use_units = get_use_units()
 
@@ -239,6 +235,13 @@ class ConnectionInterface(ABC):
                     cim_class: type, identifier: UUID | str, attribute: str,
                     edge_class: type, edge_mRID: str) -> object:
 
+        # Normalize identifier to UUID so it matches the key stored by create_object.
+        if isinstance(identifier, str):
+            try:
+                identifier = UUID(identifier.strip('_').lower())
+            except ValueError:
+                pass
+
         edge_object = None
         association = self.check_attribute(cim_class, attribute)
         if association is not None:
@@ -282,14 +285,14 @@ class ConnectionInterface(ABC):
             identifier = uri
 
         # Check if object exists in graph
-        if identifier in graph[class_type]:
+        if class_type in graph and identifier in graph[class_type]:
             obj = graph[class_type][identifier]
 
         # If not there, create a new object and add to graph
         else:
             obj = class_type(identifier = uri)
             # obj.uuid(uri = uri)
-            graph[class_type][identifier] = obj
+            graph.setdefault(class_type, {})[identifier] = obj
 
         return obj
 

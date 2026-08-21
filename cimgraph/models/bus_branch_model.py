@@ -18,8 +18,10 @@ class BusBranchModel(GraphModel):
     def __post_init__(self):
         self.incrementals['forwardDifferences'] = defaultdict(dict)
         self.incrementals['reverseDifferences'] = defaultdict(dict)
-        cim_profile, cim_module = get_cim_profile()
-        self.cim:cim = cim_module
+        if self.connection is not None:
+            self.cim = self.connection.cim
+        else:
+            _, self.cim = get_cim_profile()
         self.__class_iter__ = defaultdict(dict)
         if not self.graph:
             self.graph = defaultdict(lambda: defaultdict(dict))
@@ -33,7 +35,9 @@ class BusBranchModel(GraphModel):
             _log.error('A ConnectionInterface must be specified')
 
     def initialize_centralized_model(self, container) -> None:
-        self.graph = self.connection.create_new_graph(container)
+        # Pass self.graph so objects the caller already built are preserved
+        # instead of being replaced by the query result (matches FeederModel).
+        self.graph = self.connection.create_new_graph(container, self.graph)
 
     def initialize_distributed_model(self, container) -> None:
         pass

@@ -2,7 +2,7 @@ from __future__ import annotations
 
 from uuid import UUID
 
-from cimgraph.databases import get_iec61970_301, get_namespace, get_url
+from cimgraph.databases import get_iec61970_552, get_namespace, get_url
 
 
 def get_all_edges_cypher(graph:dict[type, dict[UUID, object]], cim_class: type, uuid_list: list[UUID]) -> str:
@@ -19,7 +19,7 @@ def get_all_edges_cypher(graph:dict[type, dict[UUID, object]], cim_class: type, 
     """
     class_name = cim_class.__name__
 
-    if int(get_iec61970_301()) > 7:
+    if get_iec61970_552() == '552-NEW':
         split = 'urn:uuid:'
     else:
         split = f'{get_url()}#'
@@ -55,7 +55,7 @@ def get_all_properties_cypher(graph:dict[type, dict[UUID, object]], cim_class: t
     """
     class_name = cim_class.__name__
 
-    if int(get_iec61970_301()) > 7:
+    if get_iec61970_552() == '552-NEW':
         split = 'urn:uuid:'
     else:
         split = f'{get_url()}#'

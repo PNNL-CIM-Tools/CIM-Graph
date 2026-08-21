@@ -4,6 +4,7 @@ import json
 import logging
 from collections import defaultdict
 from dataclasses import dataclass, field, fields, is_dataclass
+from types import ModuleType
 from typing import Iterator, TypeVar, cast
 from uuid import UUID
 
@@ -24,6 +25,7 @@ class GraphModel():
     connection: ConnectionInterface
     distributed: bool = field(default=False)
     graph: dict[type, dict[UUID, object]] = field(default_factory=dict)
+    cim: ModuleType = field(default=None)
     incrementals: defaultdict[str, dict[str, any]] = field(default_factory=defaultdict)
     __class_iter__: defaultdict[type, iter] = field(default_factory=defaultdict)
     # __queried_objects__: defaultdict[UUID] = field(default_factory=defaultdict)
@@ -274,7 +276,7 @@ class GraphModel():
         # First, iterate over fields of the object to find inverse references
         for field in fields(obj):
             # Check if this field has metadata about inverse relationships
-            if 'inverse' in field.metadata and field.metadata['type'] != 'enumeration':
+            if field.metadata.get('type') == 'Association' and 'inverse' in field.metadata:
                 # Get the value of this field
                 value = getattr(obj, field.name)
 
@@ -355,6 +357,13 @@ class GraphModel():
         print(json_dump)
 
     def upload(self) -> None:
+        # Lazy imports: utils.write_xml imports GraphModel, and XMLFile lives
+        # under databases.fileparsers — keeping these local avoids the cycle.
+        from cimgraph.databases.fileparsers import XMLFile
+        if isinstance(self.connection, XMLFile):
+            from cimgraph.utils.write_xml import write_xml
+            write_xml(self, self.connection.filename)
+            return
         self.connection.upload(self.graph)
 
     def __dumps__(self, cim_class: type, show_empty: bool = False,

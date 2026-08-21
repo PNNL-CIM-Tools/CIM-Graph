@@ -22,7 +22,7 @@ class TestNeo4J(unittest.TestCase):
             'CIMG_USERNAME': os.getenv('CIMG_USERNAME'),
             'CIMG_PASSWORD': os.getenv('CIMG_PASSWORD'),
             'CIMG_NAMESPACE': os.getenv('CIMG_NAMESPACE'),
-            'CIMG_IEC61970_301': os.getenv('CIMG_IEC61970_301'),
+            'CIMG_IEC61970_552': os.getenv('CIMG_IEC61970_552'),
             'CIMG_USE_UNITS': os.getenv('CIMG_USE_UNITS'),
         }
 
@@ -35,7 +35,7 @@ class TestNeo4J(unittest.TestCase):
         os.environ['CIMG_USERNAME'] = 'neo4j'
         os.environ['CIMG_PASSWORD'] = 'test1234'
         os.environ['CIMG_NAMESPACE'] = 'http://iec.ch/TC57/CIM100#'
-        os.environ['CIMG_IEC61970_301'] = '8'
+        os.environ['CIMG_IEC61970_552'] = '552-NEW'
         os.environ['CIMG_USE_UNITS'] = 'False'
         self.feeder_mrid = '49AD8E07-3BF9-A4E2-CB8F-C3722F837B62'
 
@@ -54,7 +54,7 @@ class TestNeo4J(unittest.TestCase):
         self.assertEqual(connection.cim_profile, 'cimhub_2023', 'CIM profile mismatch')
         self.assertEqual(connection.url, 'neo4j://localhost:7687', 'URL mismatch')
         self.assertEqual(connection.namespace, 'http://iec.ch/TC57/CIM100#', 'Namespace mismatch')
-        self.assertEqual(connection.iec61970_301, 8, 'IEC61970_301 mismatch')
+        self.assertEqual(connection.iec61970_552, '552-NEW', 'IEC61970_552 mismatch')
 
     def test_get_object_cypher(self):
         """Test get_object_sparql to retrieve object from mrid"""

@@ -17,7 +17,7 @@ class TestGridappsdDatasource(unittest.TestCase):
             'CIMG_USERNAME': os.getenv('CIMG_USERNAME'),
             'CIMG_PASSWORD': os.getenv('CIMG_PASSWORD'),
             'CIMG_NAMESPACE': os.getenv('CIMG_NAMESPACE'),
-            'CIMG_IEC61970_301': os.getenv('CIMG_IEC61970_301'),
+            'CIMG_IEC61970_552': os.getenv('CIMG_IEC61970_552'),
             'CIMG_USE_UNITS': os.getenv('CIMG_USE_UNITS'),
         }
 
@@ -30,7 +30,7 @@ class TestGridappsdDatasource(unittest.TestCase):
         os.environ['CIMG_USERNAME'] = 'test_app_user'
         os.environ['CIMG_PASSWORD'] = '4Test'
         os.environ['CIMG_NAMESPACE'] = 'http://iec.ch/TC57/CIM100#'
-        os.environ['CIMG_IEC61970_301'] = '8'
+        os.environ['CIMG_IEC61970_552'] = '552-NEW'
         os.environ['CIMG_USE_UNITS'] = 'False'
 
     def tearDown(self):
@@ -53,7 +53,7 @@ class TestGridappsdDatasource(unittest.TestCase):
         self.assertEqual(connection.username, 'test_app_user', 'Username mismatch')
         self.assertEqual(connection.password, '4Test', 'Password mismatch')
         self.assertEqual(connection.namespace, 'http://iec.ch/TC57/CIM100#', 'Namespace mismatch')
-        self.assertEqual(connection.iec61970_301, 8, 'IEC61970_301 mismatch')
+        self.assertEqual(connection.iec61970_552, '552-NEW', 'IEC61970_552 mismatch')
         self.assertFalse(connection.use_units, 'USE_UNITS mismatch')
 
     def test_connection_established(self):

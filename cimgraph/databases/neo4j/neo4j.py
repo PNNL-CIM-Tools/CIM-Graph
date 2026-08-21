@@ -12,7 +12,7 @@ from neo4j.exceptions import DriverError, Neo4jError
 
 import cimgraph.data_profile.cimhub_2023 as cim
 import cimgraph.queries.cypher as cypher
-from cimgraph.core import (get_cim_profile, get_database, get_iec61970_301, get_namespace,
+from cimgraph.core import (get_cim_profile, get_database, get_iec61970_552, get_namespace,
                            get_password, get_url, get_username)
 from cimgraph.databases import ConnectionInterface, Graph, QueryResponse
 
@@ -27,32 +27,17 @@ class Neo4jConnection(ConnectionInterface):
 
     """
 
-    def __init__(self, cim_override=None):
-
-        # clear cached env variables
+    def __init__(self):
         get_url.cache_clear()
-        get_namespace.cache_clear()
-        get_cim_profile.cache_clear()
-        get_iec61970_301.cache_clear()
         get_username.cache_clear()
         get_password.cache_clear()
         get_database.cache_clear()
-
-        # retrieve env variables
-        if cim_override is not None:
-            self.cim_profile = 'merged'
-            self.cim:cim = cim_override
-        else:
-            self.cim_profile, cim_module = get_cim_profile()
-            self.cim:cim = cim_module
-        self.namespace = get_namespace()
+        super().__init__()
         self.url = get_url()
         self.username = get_username()
         self.password = get_password()
         self.database = get_database()
-        self.iec61970_301 = get_iec61970_301()
         self.driver = None
-        # self.use_async = use_async
 
 
     def connect(self):
@@ -109,6 +94,42 @@ class Neo4jConnection(ConnectionInterface):
             result = await session.execute_read(lambda tx: self.query_tx(tx, query_message))
 
         return result
+
+    def execute_with_params(self, query_message: str, **params) -> QueryResponse:
+        """
+        Execute a cypher query with bound parameters.
+
+        Required for payloads that contain quotes or newlines (e.g. RDF sent to
+        n10s.rdf.import.inline), where string interpolation would corrupt the
+        query or allow injection.
+
+        Args:
+            query_message (str): cypher query using $param placeholders.
+            **params: values bound to those placeholders.
+
+        Returns:
+            query_output (QueryResponse): The response from the query execution.
+        """
+        return asyncio.run(self.async_execute_with_params(query_message, **params))
+
+    async def async_execute_with_params(self, query_message: str, **params) -> QueryResponse:
+        """
+        Async form of execute_with_params(). Uses execute_write since the
+        parameterized queries we send (n10s imports) mutate the graph.
+        """
+        self.connect()
+
+        async with self.driver.session(database=self.database) as session:
+            return await session.execute_write(
+                lambda tx: self.query_tx_with_params(tx, query_message, **params)
+            )
+
+    async def query_tx_with_params(self, tx, query_message, **params):
+        """
+        Lambda transform for parameterized async query execution
+        """
+        result = await tx.run(query_message, **params)
+        return await result.data()
 
     async def query_tx(self, tx, query_message):
         """
@@ -366,5 +387,65 @@ class Neo4jConnection(ConnectionInterface):
         ]):
             await f
 
-    def upload(self, graph):
-        pass
+    def upload(self, graph: Graph, batch_size: int = 100) -> None:
+        """
+        Upload a graph of CIM objects to Neo4j via the n10s RDF plugin.
+
+        Objects are serialized to RDF/XML with the same writer used for file
+        exports, then ingested with n10s.rdf.import.inline() so no file has to
+        be reachable from the Neo4j server. Requires n10s to be initialized
+        (see the n10s.graphconfig.init() docs); uploading without it raises.
+
+        Args:
+            graph (Graph): dict of {cim_class: {identifier: object}}, e.g.
+                GraphModel.graph. Works for any GraphModel subclass.
+            batch_size (int): objects per inline() call. Defaults to 100,
+                matching the query batching used elsewhere in this class.
+        """
+        for cim_class, objects in graph.items():
+            instances = list(objects.values())
+            for index in range(0, len(instances), batch_size):
+                batch = instances[index:index + batch_size]
+                rdf_xml = self._serialize_to_rdf_xml(batch)
+                self.execute_with_params(
+                    "CALL n10s.rdf.import.inline($payload, 'RDF/XML')",
+                    payload=rdf_xml,
+                )
+
+    def _serialize_to_rdf_xml(self, objects: list) -> str:
+        """
+        Serialize CIM objects to an RDF/XML string.
+
+        Reuses cimgraph.utils.write_xml so uploaded RDF matches exported files
+        exactly. write_xml writes to a path and only touches .graph,
+        .connection, and .list_by_class(), so it is given a shim and a temp
+        file. The lazy import avoids a circular dependency: write_xml imports
+        GraphModel, which imports ConnectionInterface from this package.
+        """
+        import os
+        import tempfile
+        from types import SimpleNamespace
+
+        from cimgraph.utils.write_xml import write_xml
+
+        by_class = defaultdict(dict)
+        for obj in objects:
+            by_class[type(obj)][obj.identifier] = obj
+
+        shim = SimpleNamespace(
+            graph=by_class,
+            connection=self,
+            list_by_class=lambda cls: list(by_class.get(cls, {}).values()),
+        )
+
+        handle, path = tempfile.mkstemp(prefix='cimgraph-upload-', suffix='.xml')
+        os.close(handle)
+        try:
+            write_xml(shim, path)
+            with open(path, encoding='utf-8') as f:
+                return f.read()
+        finally:
+            try:
+                os.unlink(path)
+            except OSError:
+                pass

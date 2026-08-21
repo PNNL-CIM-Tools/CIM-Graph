@@ -1,4 +1,5 @@
 import os
+import tempfile
 import unittest
 from uuid import UUID
 
@@ -20,7 +21,7 @@ class TestXMLFile(unittest.TestCase):
             'CIMG_USERNAME': os.getenv('CIMG_USERNAME'),
             'CIMG_PASSWORD': os.getenv('CIMG_PASSWORD'),
             'CIMG_NAMESPACE': os.getenv('CIMG_NAMESPACE'),
-            'CIMG_IEC61970_301': os.getenv('CIMG_IEC61970_301'),
+            'CIMG_IEC61970_552': os.getenv('CIMG_IEC61970_552'),
             'CIMG_USE_UNITS': os.getenv('CIMG_USE_UNITS'),
         }
 
@@ -28,7 +29,7 @@ class TestXMLFile(unittest.TestCase):
         os.environ['CIMG_CIM_PROFILE'] = 'cimhub_2023'
         os.environ['CIMG_URL'] = 'http://localhost:8889/bigdata/namespace/kb/sparql'
         os.environ['CIMG_NAMESPACE'] = 'http://iec.ch/TC57/CIM100#'
-        os.environ['CIMG_IEC61970_301'] = '8'
+        os.environ['CIMG_IEC61970_552'] = '552-NEW'
         os.environ['CIMG_USE_UNITS'] = 'false'
 
         self.feeder_mrid = '49AD8E07-3BF9-A4E2-CB8F-C3722F837B62'
@@ -47,7 +48,7 @@ class TestXMLFile(unittest.TestCase):
         self.assertIsInstance(connection, XMLFile, 'Connection should be an instance of XMLFile')
         self.assertEqual(connection.cim_profile, 'cimhub_2023', 'CIM profile mismatch')
         self.assertEqual(connection.namespace, 'http://iec.ch/TC57/CIM100#', 'Namespace mismatch')
-        self.assertEqual(connection.iec61970_301, 8, 'IEC61970_301 mismatch')
+        self.assertEqual(connection.iec61970_552, '552-NEW', 'IEC61970_552 mismatch')
 
 
     def test_get_feeder_model(self):
@@ -73,6 +74,51 @@ class TestXMLFile(unittest.TestCase):
                break
         self.assertEqual(phase.name, '645646_C')
         self.assertEqual(phase.ACLineSegment, line)
+
+    def test_units_disabled_raw_float(self):
+        os.environ['CIMG_USE_UNITS'] = 'false'
+        database = XMLFile(filename='tests/test_models/ieee13.xml')
+        feeder = cim.Feeder(mRID=self.feeder_mrid)
+        network = FeederModel(connection=database, container=feeder, distributed=False)
+        line = network.graph[cim.ACLineSegment][UUID('0bbd0ea3-f665-465b-86fd-fc8b8466ad53')]
+        self.assertIs(type(line.length), float)
+        self.assertEqual(line.length, 91.44)
+
+    def test_units_enabled_si_fallback(self):
+        os.environ['CIMG_USE_UNITS'] = 'true'
+        database = XMLFile(filename='tests/test_models/ieee13.xml')
+        feeder = cim.Feeder(mRID=self.feeder_mrid)
+        network = FeederModel(connection=database, container=feeder, distributed=False)
+        line = network.graph[cim.ACLineSegment][UUID('0bbd0ea3-f665-465b-86fd-fc8b8466ad53')]
+        self.assertIsInstance(line.length, cim.Length)
+        self.assertEqual(float(line.length), 91.44)
+        self.assertAlmostEqual(line.length.to('km'), 0.09144)
+
+    def test_upload_round_trip_via_write_xml(self):
+        database = XMLFile(filename='tests/test_models/ieee13.xml')
+        feeder = cim.Feeder(mRID=self.feeder_mrid)
+        network = FeederModel(connection=database, container=feeder, distributed=False)
+        line_uuid = UUID('0bbd0ea3-f665-465b-86fd-fc8b8466ad53')
+        line = network.graph[cim.ACLineSegment][line_uuid]
+        original_name = line.name
+        original_length = line.length
+
+        tmp = tempfile.NamedTemporaryFile(suffix='.xml', delete=False)
+        tmp.close()
+        tmp_path = tmp.name
+        try:
+            network.connection.filename = tmp_path
+            network.upload()
+
+            database2 = XMLFile(filename=tmp_path)
+            feeder2 = cim.Feeder(mRID=self.feeder_mrid)
+            network2 = FeederModel(connection=database2, container=feeder2, distributed=False)
+            line2 = network2.graph[cim.ACLineSegment][line_uuid]
+
+            self.assertEqual(line2.name, original_name)
+            self.assertEqual(line2.length, original_length)
+        finally:
+            os.unlink(tmp_path)
 
 
 if __name__ == '__main__':

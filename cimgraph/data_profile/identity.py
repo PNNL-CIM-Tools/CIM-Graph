@@ -196,27 +196,34 @@ class Identity:
         dump.pop('__uuid__', None)
         dump.pop('__json_ld__', None)
 
-        # Process each attribute
-        for attribute in self.__dataclass_fields__:
+        # Process each attribute present in the dump (dataclass fields plus any
+        # extra instance attributes) so stray values still serialize cleanly.
+        # Iterate over a snapshot of the keys because empty attributes get deleted.
+        for attribute in list(dump):
+            # Skip internal/dunder attributes leaked in via __dict__
+            if attribute.startswith('_'):
+                del dump[attribute]
+                continue
+
             # Delete attributes that are empty when show_empty is False
-            if attribute in dump and (dump[attribute] is None or dump[attribute] == []):
+            if dump[attribute] is None or dump[attribute] == []:
                 if not show_empty:
                     del dump[attribute]
                 continue
 
             # Handle CIM Unit attributes
-            elif attribute in dump and isinstance(dump[attribute], CIMUnit):
+            elif isinstance(dump[attribute], CIMUnit):
                 dump[attribute] = dump[attribute].value
 
             # Handle dataclass attributes
-            if attribute in dump and is_dataclass(dump[attribute]):
+            if is_dataclass(dump[attribute]):
                 if use_names and hasattr(dump[attribute], 'name'):
                     dump[attribute] = dump[attribute].name
                 else:
                     dump[attribute] = dump[attribute].__repr__()
 
             # Convert non-string attributes to strings for JSON compatibility
-            elif attribute in dump and not isinstance(dump[attribute], str):
+            elif not isinstance(dump[attribute], str):
                 dump[attribute] = str(dump[attribute])
 
         # Remove identifier and mRID if not showing them
@@ -406,9 +413,13 @@ class Identity:
         dump.pop('__uuid__', None)
         dump.pop('__json_ld__', None)
 
-        # Process each dataclass field
-        for attribute in self.__dataclass_fields__:
-            if attribute not in dump:
+        # Process each attribute present in the dump (dataclass fields plus any
+        # extra instance attributes) so stray values still expand cleanly.
+        # Iterate over a snapshot of the keys because empty attributes get deleted.
+        for attribute in list(dump):
+            # Skip internal/dunder attributes leaked in via __dict__
+            if attribute.startswith('_'):
+                del dump[attribute]
                 continue
 
             value = dump[attribute]
@@ -417,6 +428,10 @@ class Identity:
             if value is None or value == []:
                 dump.pop(attribute, None)
                 continue
+
+            # Handle CIM Unit attributes
+            elif isinstance(value, CIMUnit):
+                dump[attribute] = value.value
 
             # Handle dataclass values
             elif is_dataclass(value):
