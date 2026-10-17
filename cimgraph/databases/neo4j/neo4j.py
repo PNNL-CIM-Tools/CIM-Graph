@@ -441,7 +441,8 @@ class Neo4jConnection(ConnectionInterface):
         handle, path = tempfile.mkstemp(prefix='cimgraph-upload-', suffix='.xml')
         os.close(handle)
         try:
-            write_xml(shim, path)
+            # Skip the FullModel header so each upload batch doesn't add a new FullModel node
+            write_xml(shim, path, write_model_header=False)
             with open(path, encoding='utf-8') as f:
                 return f.read()
         finally:

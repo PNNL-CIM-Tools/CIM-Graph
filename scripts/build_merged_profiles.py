@@ -2,6 +2,11 @@
 
 Run from the repo root:
     python scripts/build_merged_profiles.py
+    python scripts/build_merged_profiles.py --config path/to/releases.yaml
+
+``--config`` builds releases for a profile package outside this repo (e.g.
+cim-vfm-profiles). Each release's ``package`` must be importable; its
+``__init__.py`` is written wherever that package lives.
 
 Each entry in merge_releases.yaml produces a committed __init__.py that
 re-exports the merged class surface. The file is a normal Python module —
@@ -18,8 +23,10 @@ Add this to the PyPI release process for any profile listed in the config.
 """
 from __future__ import annotations
 
+import argparse
 import dataclasses
 import importlib
+import importlib.util
 import sys
 import textwrap
 from collections import defaultdict
@@ -35,10 +42,21 @@ if str(_REPO_ROOT) not in sys.path:
     sys.path.insert(0, str(_REPO_ROOT))
 
 
-def _load_config() -> list[dict]:
-    with open(_CONFIG) as f:
+def _load_config(config: Path) -> list[dict]:
+    with open(config) as f:
         data = yaml.safe_load(f)
     return data['releases']
+
+
+def _package_dir(package: str) -> Path:
+    """Where *package* lives — resolved by import, so external packages work too."""
+    spec = importlib.util.find_spec(package)
+    if spec is None or not spec.submodule_search_locations:
+        raise FileNotFoundError(
+            f'Package not importable: {package}\n'
+            f'Create it and add sub-profile packages before running this script.'
+        )
+    return Path(next(iter(spec.submodule_search_locations)))
 
 
 def _sanitize_metadata(meta: dict) -> dict:
@@ -219,7 +237,12 @@ __all__ = [
 
 
 def main() -> None:
-    releases = _load_config()
+    parser = argparse.ArgumentParser(description='Build pre-baked merged profile packages.')
+    parser.add_argument('--config', type=Path, default=_CONFIG,
+                        help=f'releases yaml (default: {_CONFIG.relative_to(_REPO_ROOT)})')
+    args = parser.parse_args()
+
+    releases = _load_config(args.config)
     for release in releases:
         package = release['package']
 
@@ -227,16 +250,9 @@ def main() -> None:
         content = _build_init(release)
 
         # Write to the package __init__.py.
-        package_dir = _REPO_ROOT / Path(*package.split('.'))
-        if not package_dir.is_dir():
-            raise FileNotFoundError(
-                f'Package directory not found: {package_dir}\n'
-                f'Create it and add sub-profile packages before running this script.'
-            )
-
-        init_path = package_dir / '__init__.py'
+        init_path = _package_dir(package) / '__init__.py'
         init_path.write_text(content, encoding='utf-8')
-        print(f'  wrote {init_path.relative_to(_REPO_ROOT)}')
+        print(f'  wrote {init_path}')
 
         # Smoke-test: the written file must be importable and expose __all__.
         if package in sys.modules:

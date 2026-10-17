@@ -132,6 +132,8 @@ __Optional__ (defaults are in [example.env](https://github.com/PNNL-CIM-Tools/CI
 |---|---|---|
 | `CIMG_NAMESPACE` | `http://iec.ch/TC57/CIM100#` | RDF namespace prefix for CIM classes |
 | `CIMG_IEC61970_552` | `552-NEW` | Serialization format: `552-NEW` → `rdf:about=urn:uuid:`, `552-LEGACY` → `rdf:ID=` |
+| `CIMG_MODEL_AUTHORITY` | `user@hostname` | Model authority (e.g. utility) mixed into deterministic UUIDs seeded from names or non-UUID mRIDs. Set explicitly for UUIDs reproducible across machines |
+| `CIMG_MODEL_NAME` | `''` | Stable model identifier within the authority (e.g. a feeder) mixed into seeded UUIDs |
 | `CIMG_VALIDATION_LOG_LEVEL` | `WARNING` | Log level for schema-mismatch warnings during XML parse |
 | `CIMG_URL` | Blazegraph default | Full database URL |
 | `CIMG_HOST` | `localhost` | Database host |

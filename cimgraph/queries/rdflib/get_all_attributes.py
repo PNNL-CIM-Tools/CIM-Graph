@@ -3,7 +3,6 @@ from __future__ import annotations
 from uuid import UUID
 
 from cimgraph.core import get_cim_profile, get_iec61970_552, get_namespace, get_url
-from cimgraph.data_profile.known_problem_classes import ClassesWithoutMRID
 
 
 def get_all_attributes_sparql(graph:dict[type, dict[UUID, object]], cim_class: str, uuid_list: list[UUID]) -> str:
@@ -19,7 +18,6 @@ def get_all_attributes_sparql(graph:dict[type, dict[UUID, object]], cim_class: s
     namespace = get_namespace()
     iec61970_552 = get_iec61970_552()
     class_name = cim_class.__name__
-    classes_without_mrid = ClassesWithoutMRID()
 
     if iec61970_552 == '552-NEW':
         split = 'urn:uuid:'

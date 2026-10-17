@@ -7,8 +7,28 @@ from dataclasses import dataclass, field, is_dataclass
 
 from cimgraph.data_profile.known_problem_classes import ClassesWithManytoMany
 from cimgraph.models.graph_model import GraphModel
+from cimgraph.utils.model_header import MD_NAMESPACE, model_header
 
 _log = logging.getLogger(__name__)
+
+
+def _model_header_json_ld() -> list[dict]:
+    """Build the md:FullModel and cim:ModelAuthority header nodes."""
+    header = model_header()
+    full_model = {
+        '@id': 'urn:uuid:' + header['full_model_uuid'],
+        '@type': 'md:FullModel',
+        'md:Model.created': header['created'],
+    }
+    if header['model_name']:
+        full_model['md:Model.description'] = header['model_name']
+    full_model['md:Model.modelingAuthoritySet'] = header['authority']
+    model_authority = {
+        '@id': 'urn:uuid:' + header['authority_uuid'],
+        '@type': 'cim:ModelAuthority',
+        'cim:IdentifiedObject.name': header['authority'],
+    }
+    return [full_model, model_authority]
 
 
 def write_json_ld(network: GraphModel, filename: str, namespaces: dict=None, indent:int=4) -> None:
@@ -41,6 +61,7 @@ def write_json_ld(network: GraphModel, filename: str, namespaces: dict=None, ind
         'rdf': 'http://www.w3.org/1999/02/22-rdf-syntax-ns#',
         'cim': 'http://ucaiug.org/ns/CIM#',
         'eu': 'http://iec.ch/TC57/CIM100-European#',
+        'md': MD_NAMESPACE,
         'dcterms': 'http://purl.org/dc/terms/',
         'dcat': 'http://www.w3.org/ns/dcat#',
         'prov': 'http://www.w3.org/ns/prov#',
@@ -52,6 +73,9 @@ def write_json_ld(network: GraphModel, filename: str, namespaces: dict=None, ind
     # TODO: Add support for PROV, DCAT, and timestamping of model data
 
     f.write(' '*indent + '"@graph": [\n')
+
+    for node in _model_header_json_ld():
+        f.write(' '*indent*2 + json.dumps(node, indent=indent).replace('\n', '\n' + ' '*indent*2)+',\n')
 
     # Write each object in the network graph to the XML file
     for root_class in list(network.graph.keys()):

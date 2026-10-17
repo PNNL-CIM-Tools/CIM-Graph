@@ -1,9 +1,11 @@
 import json
+import os
 import re
 import unittest
 from uuid import UUID
 
 import cimgraph.data_profile.cimhub_2023 as cim
+from cimgraph.core import get_model_authority, get_model_name
 
 
 class TestIdentityUUID(unittest.TestCase):
@@ -135,6 +137,51 @@ class TestIdentityUUID(unittest.TestCase):
 
         # Compare dictionaries
         self.assertEqual(actual_dict, expected_dict)
+
+
+class TestModelAuthorityUUID(unittest.TestCase):
+
+    def setUp(self):
+        self._saved_env = {key: os.environ.get(key)
+                           for key in ('CIMG_MODEL_AUTHORITY', 'CIMG_MODEL_NAME')}
+
+    def tearDown(self):
+        for key, value in self._saved_env.items():
+            if value is None:
+                os.environ.pop(key, None)
+            else:
+                os.environ[key] = value
+        get_model_authority.cache_clear()
+        get_model_name.cache_clear()
+
+    def _feeder_uuid(self, authority, model_name, **kwargs):
+        os.environ['CIMG_MODEL_AUTHORITY'] = authority
+        os.environ['CIMG_MODEL_NAME'] = model_name
+        get_model_authority.cache_clear()
+        get_model_name.cache_clear()
+        return cim.Feeder(**kwargs).identifier
+
+    def test_same_scope_is_deterministic(self):
+        first = self._feeder_uuid('pnnl', 'feeder_1', name='f1')
+        second = self._feeder_uuid('pnnl', 'feeder_1', name='f1')
+        self.assertEqual(first, second)
+
+    def test_different_authority_changes_uuid(self):
+        first = self._feeder_uuid('pnnl', 'feeder_1', name='f1')
+        second = self._feeder_uuid('ieee', 'feeder_1', name='f1')
+        self.assertNotEqual(first, second)
+
+    def test_different_model_name_changes_uuid(self):
+        first = self._feeder_uuid('pnnl', 'feeder_1', name='f1')
+        second = self._feeder_uuid('pnnl', 'feeder_2', name='f1')
+        self.assertNotEqual(first, second)
+
+    def test_valid_uuid_mrid_is_unaffected(self):
+        mrid = '49ad8e07-3bf9-a4e2-cb8f-c3722f837b62'
+        first = self._feeder_uuid('pnnl', 'feeder_1', mRID=mrid)
+        second = self._feeder_uuid('ieee', 'feeder_2', mRID=mrid)
+        self.assertEqual(first, UUID(mrid))
+        self.assertEqual(second, UUID(mrid))
 
 
 if __name__ == '__main__':

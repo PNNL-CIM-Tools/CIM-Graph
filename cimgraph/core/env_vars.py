@@ -1,6 +1,8 @@
+import getpass
 import importlib
 import logging
 import os
+import socket
 import types
 import warnings
 from functools import cache
@@ -24,6 +26,7 @@ DEFAULT_IEC61970_552 = '552-NEW'
 DEFAULT_USE_UNITS = 'false'
 DEFAULT_VALIDATION_LOG_LEVEL = 'WARNING'
 DEFAULT_ALLOW_UNDEFINED_ATTRIBUTES = 'false'
+DEFAULT_MODEL_NAME = ''
 
 
 def _qualify(path: str) -> str:
@@ -236,3 +239,24 @@ def get_undefined_handling() -> str:
     handling = os.environ.get('CIMG_ALLOW_UNDEFINED_ATTRIBUTES',
                         DEFAULT_ALLOW_UNDEFINED_ATTRIBUTES)
     return handling.lower() == 'true'
+
+@cache
+def get_model_authority() -> str:
+    """
+    Returns the model authority (e.g. a utility) mixed into seeded UUIDs so that
+    identical names under different authorities get different deterministic UUIDs.
+    Defaults to user@hostname if CIMG_MODEL_AUTHORITY is not set.
+    """
+    authority = os.getenv('CIMG_MODEL_AUTHORITY')
+    if authority is None:
+        authority = f'{getpass.getuser()}@{socket.gethostname()}'
+        _log.debug(f'CIMG_MODEL_AUTHORITY environment variable is not set. Using {authority}')
+    return authority
+
+@cache
+def get_model_name() -> str:
+    """
+    Returns the stable model identifier (e.g. a feeder) within the model authority
+    that is mixed into seeded UUIDs. Defaults to an empty string.
+    """
+    return os.getenv('CIMG_MODEL_NAME', DEFAULT_MODEL_NAME)

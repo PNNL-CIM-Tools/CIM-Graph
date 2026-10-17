@@ -6,18 +6,36 @@ import logging
 from cimgraph.data_profile.known_problem_classes import ClassesWithManytoMany
 from cimgraph.data_profile.units import CIMUnit
 from cimgraph.models.graph_model import GraphModel
+from cimgraph.utils.model_header import MD_NAMESPACE, model_header
 
 _log = logging.getLogger(__name__)
 
 
+def _model_header_xml(rdf_header: str) -> str:
+    """Render the md:FullModel and cim:ModelAuthority header elements."""
+    header = model_header()
+    xml = f'<md:FullModel {rdf_header}{header["full_model_uuid"]}">\n'
+    xml += f'  <md:Model.created>{header["created"]}</md:Model.created>\n'
+    if header['model_name']:
+        xml += f'  <md:Model.description>{header["model_name"]}</md:Model.description>\n'
+    xml += f'  <md:Model.modelingAuthoritySet>{header["authority"]}</md:Model.modelingAuthoritySet>\n'
+    xml += '</md:FullModel>\n'
+    xml += f'<cim:ModelAuthority {rdf_header}{header["authority_uuid"]}">\n'
+    xml += f'  <cim:IdentifiedObject.name>{header["authority"]}</cim:IdentifiedObject.name>\n'
+    xml += '</cim:ModelAuthority>\n'
+    return xml
+
+
 def write_xml(network: GraphModel, filename: str, namespaces: dict=None,
-              write_identifier:bool=True, enforce_rdf_direction:bool=False) -> None:
+              write_identifier:bool=True, enforce_rdf_direction:bool=False,
+              write_model_header:bool=True) -> None:
     """
     Write the network graph to an XML file.
 
     Args:
         network (GraphModel): The network graph to be written to an XML file.
         namespaces (dict): A dictionary of namespaces to be used in the XML file. The key is the namespace prefix and the value is the namespace URI. Defaults to CIM100.
+        write_model_header (bool): Write md:FullModel and cim:ModelAuthority elements at the top of the file.
 
     Returns:
         None
@@ -27,6 +45,7 @@ def write_xml(network: GraphModel, filename: str, namespaces: dict=None,
                         'eu': 'http://iec.ch/TC57/CIM100-European#',
                         'nc': 'http://entsoe.eu/ns/nc#',
                         'gb': 'http://GB/placeholder/ext#',
+                        'md': MD_NAMESPACE,
                         'rdf': 'http://www.w3.org/1999/02/22-rdf-syntax-ns#'}
     if namespaces is not None:
             default_namespaces.update(namespaces)
@@ -58,6 +77,9 @@ def write_xml(network: GraphModel, filename: str, namespaces: dict=None,
     header += '<!--\n'
     header += '-->\n'
     f.write(header)
+
+    if write_model_header:
+        f.write(_model_header_xml(rdf_header))
 
     # Write each object in the network graph to the XML file
     classes = list(network.graph.keys())

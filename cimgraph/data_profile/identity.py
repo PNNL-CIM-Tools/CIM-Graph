@@ -6,7 +6,7 @@ from random import Random
 from typing import Any, Dict, List, Optional, Union
 from uuid import UUID, uuid4
 
-from cimgraph.core import get_validation_log_level
+from cimgraph.core import get_model_authority, get_model_name, get_validation_log_level
 from cimgraph.data_profile.units.units import CIMUnit
 
 # Global configuration
@@ -116,8 +116,9 @@ class UUID_Meta:
         # If we couldn't create a UUID from inputs, generate a new one
         if invalid_mrid:
             if seed:
-                # Generate a deterministic UUID from the seed
-                random_generator = Random(seed)
+                # Generate a deterministic UUID from the seed, scoped to the model authority and model
+                scoped_seed = f'{get_model_authority()}:{get_model_name()}:{seed}'
+                random_generator = Random(scoped_seed)
                 self.uuid = UUID(int=random_generator.getrandbits(128), version=4)
             else:
                 # Generate a completely random UUID

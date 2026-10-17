@@ -1,11 +1,14 @@
+import json
 import os
 import tempfile
 import unittest
 from uuid import UUID
 
 import cimgraph.data_profile.cimhub_2023 as cim
+from cimgraph.core import get_model_authority, get_model_name
 from cimgraph.databases import XMLFile
 from cimgraph.models import FeederModel
+from cimgraph.utils import write_json_ld, write_xml
 
 
 class TestXMLFile(unittest.TestCase):
@@ -23,6 +26,8 @@ class TestXMLFile(unittest.TestCase):
             'CIMG_NAMESPACE': os.getenv('CIMG_NAMESPACE'),
             'CIMG_IEC61970_552': os.getenv('CIMG_IEC61970_552'),
             'CIMG_USE_UNITS': os.getenv('CIMG_USE_UNITS'),
+            'CIMG_MODEL_AUTHORITY': os.getenv('CIMG_MODEL_AUTHORITY'),
+            'CIMG_MODEL_NAME': os.getenv('CIMG_MODEL_NAME'),
         }
 
         # Set environment variables for testing
@@ -119,6 +124,36 @@ class TestXMLFile(unittest.TestCase):
             self.assertEqual(line2.length, original_length)
         finally:
             os.unlink(tmp_path)
+
+    def test_writers_include_model_header(self):
+        os.environ['CIMG_MODEL_AUTHORITY'] = 'pnnl'
+        os.environ['CIMG_MODEL_NAME'] = 'ieee13'
+        get_model_authority.cache_clear()
+        get_model_name.cache_clear()
+        self.addCleanup(get_model_name.cache_clear)
+        self.addCleanup(get_model_authority.cache_clear)
+        database = XMLFile(filename='tests/test_models/ieee13.xml')
+        feeder = cim.Feeder(mRID=self.feeder_mrid)
+        network = FeederModel(connection=database, container=feeder, distributed=False)
+
+        with tempfile.TemporaryDirectory() as tmp_dir:
+            xml_path = os.path.join(tmp_dir, 'out.xml')
+            json_path = os.path.join(tmp_dir, 'out.jsonld')
+            write_xml(network, xml_path)
+            write_json_ld(network, json_path)
+
+            with open(xml_path, encoding='utf-8') as f:
+                xml_text = f.read()
+            self.assertIn('<md:FullModel rdf:about="urn:uuid:', xml_text)
+            self.assertIn('<md:Model.modelingAuthoritySet>pnnl</md:Model.modelingAuthoritySet>', xml_text)
+            self.assertIn('<md:Model.description>ieee13</md:Model.description>', xml_text)
+            self.assertIn('<cim:ModelAuthority rdf:about="urn:uuid:', xml_text)
+
+            with open(json_path, encoding='utf-8') as f:
+                graph = json.load(f)['@graph']
+            types = [node['@type'] for node in graph]
+            self.assertIn('md:FullModel', types)
+            self.assertIn('cim:ModelAuthority', types)
 
 
 if __name__ == '__main__':
