@@ -11,7 +11,7 @@ from rdflib import Namespace, URIRef
 from rdflib.collection import Collection
 from rdflib.namespace import RDF, SH
 
-from cimgraph.data_profile.attribute_utils import (get_attr_datatype, get_attr_field_type,
+from cimgraph.core.attribute_utils import (get_attr_datatype, get_attr_field_type,
                                                    get_attr_inverse, get_attr_uml_type)
 
 _log = logging.getLogger(__name__)

@@ -7,7 +7,8 @@ from uuid import UUID
 
 from defusedxml.ElementTree import parse
 
-from cimgraph.data_profile.attribute_utils import validate_attr_datatype
+from cimgraph.core.attribute_utils import field_properties, validate_attr_datatype
+from cimgraph.core.serialization import property_to_xml, rdf_xml_identifiers
 from cimgraph.data_profile.identity import Identity
 from cimgraph.databases import (ConnectionInterface, get_cim_profile, get_iec61970_552,
                                 get_namespace)
@@ -292,43 +293,18 @@ def modify_incremental(cim_object:Identity, attribute:str, old_value:any, new_va
 
 def incremantal_row(cim_class:type, uri:str, difference:dict) -> str:
 
-    iec61970_552=get_iec61970_552()
-    attr_fields = cim_class.__dataclass_fields__
-    parent_classes = list(cim_class.__mro__)
-    parent_classes.pop(len(parent_classes) - 1)
-
     if set(difference.values()) == {None}:
         return ''
 
-    if iec61970_552 == '552-NEW':
-        row = INDENT*2 + f'<rdf:Description rdf:about="urn:uuid:{uri}">\n'
-    else:
-        row = INDENT*2 + f'<rdf:Description rdf:about="#{uri}"/>\n'
-    for attribute in difference:
-        value = difference[attribute]
-
-        if attribute in attr_fields and value is not None:
-
-
-            for parent in parent_classes:
-                if attribute in parent.__annotations__:
-
-                    attr_meta = attr_fields[attribute].metadata
-                    attr_type = attr_meta['type']
-                    stereotypes = attr_meta.get('stereotypes', [])
-                    is_enum = 'enumeration' in stereotypes or 'enumeration' in attr_type.lower()
-                    ns_prefix = REVERSE_NS[attr_meta['namespace']]
-                    row += INDENT*3 + f'<{ns_prefix}:{parent.__name__}.{attribute}'
-                    if is_enum:
-                        row += f' rdf:resouce={ns_prefix}{str(value)}>\n'
-                    elif 'attribute' in attr_type.lower():
-                        row += f'>{str(value)}</{ns_prefix}:{parent.__name__}.{attribute}>\n'
-                    else:
-                        if isinstance(value, Identity):
-                            row += f' rdf:resouce={ns_prefix}{value}>\n'
-                        else:
-                            row += f' rdf:resouce={ns_prefix}{str(value)}>\n'
-    row += '</rdf:Description>\n'
+    # Difference models refer to existing objects, so always use rdf:about
+    _, rdf_resource = rdf_xml_identifiers()
+    row = INDENT*2 + f'<rdf:Description rdf:about="{rdf_resource}{uri}">\n'
+    for attribute, value in difference.items():
+        if attribute not in cim_class.__dataclass_fields__:
+            continue
+        for prop in field_properties(cim_class, attribute, value):
+            row += INDENT*2 + property_to_xml(prop, NAMESPACES, rdf_resource)
+    row += INDENT*2 + '</rdf:Description>\n'
     return row
 
 def write_incremental(reverse:dict, forward:dict, filename:str):

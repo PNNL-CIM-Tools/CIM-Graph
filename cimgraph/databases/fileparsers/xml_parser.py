@@ -337,19 +337,8 @@ class XMLFile(ConnectionInterface):
 
 
     def upload(self, graph):
-        # Delegate to the canonical writer in cimgraph.utils.write_xml. Lazy
-        # import avoids a circular dependency: write_xml imports GraphModel,
-        # which imports ConnectionInterface from this package.
-        from types import SimpleNamespace
+        # Lazy import avoids a circular dependency: cimgraph.utils imports
+        # GraphModel, which imports ConnectionInterface from this package.
+        from cimgraph.utils.write_xml import write_graph_xml
 
-        from cimgraph.utils.write_xml import write_xml
-
-        # write_xml only needs network.graph, network.connection, and
-        # network.list_by_class(cls) — shim those here for direct callers that
-        # invoke connection.upload(graph) without going through GraphModel.
-        shim = SimpleNamespace(
-            graph=graph,
-            connection=self,
-            list_by_class=lambda cls: list(graph.get(cls, {}).values()),
-        )
-        write_xml(shim, self.filename)
+        write_graph_xml(graph, self.filename)

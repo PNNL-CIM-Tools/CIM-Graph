@@ -14,6 +14,7 @@ import cimgraph.data_profile.cimhub_2023 as cim
 import cimgraph.queries.cypher as cypher
 from cimgraph.core import (get_cim_profile, get_database, get_iec61970_552, get_namespace,
                            get_password, get_url, get_username)
+from cimgraph.core.serialization import RDF_XML_CLOSE, object_to_xml, rdf_xml_open
 from cimgraph.databases import ConnectionInterface, Graph, QueryResponse
 
 nest_asyncio.apply()
@@ -391,8 +392,8 @@ class Neo4jConnection(ConnectionInterface):
         """
         Upload a graph of CIM objects to Neo4j via the n10s RDF plugin.
 
-        Objects are serialized to RDF/XML with the same writer used for file
-        exports, then ingested with n10s.rdf.import.inline() so no file has to
+        Objects are serialized to RDF/XML with the same per-object serializer
+        used for file exports, then ingested with n10s.rdf.import.inline() so no file has to
         be reachable from the Neo4j server. Requires n10s to be initialized
         (see the n10s.graphconfig.init() docs); uploading without it raises.
 
@@ -413,40 +414,6 @@ class Neo4jConnection(ConnectionInterface):
                 )
 
     def _serialize_to_rdf_xml(self, objects: list) -> str:
-        """
-        Serialize CIM objects to an RDF/XML string.
-
-        Reuses cimgraph.utils.write_xml so uploaded RDF matches exported files
-        exactly. write_xml writes to a path and only touches .graph,
-        .connection, and .list_by_class(), so it is given a shim and a temp
-        file. The lazy import avoids a circular dependency: write_xml imports
-        GraphModel, which imports ConnectionInterface from this package.
-        """
-        import os
-        import tempfile
-        from types import SimpleNamespace
-
-        from cimgraph.utils.write_xml import write_xml
-
-        by_class = defaultdict(dict)
-        for obj in objects:
-            by_class[type(obj)][obj.identifier] = obj
-
-        shim = SimpleNamespace(
-            graph=by_class,
-            connection=self,
-            list_by_class=lambda cls: list(by_class.get(cls, {}).values()),
-        )
-
-        handle, path = tempfile.mkstemp(prefix='cimgraph-upload-', suffix='.xml')
-        os.close(handle)
-        try:
-            # Skip the FullModel header so each upload batch doesn't add a new FullModel node
-            write_xml(shim, path, write_model_header=False)
-            with open(path, encoding='utf-8') as f:
-                return f.read()
-        finally:
-            try:
-                os.unlink(path)
-            except OSError:
-                pass
+        """Serialize CIM objects to an RDF/XML document string, without a model header."""
+        body = ''.join(object_to_xml(obj) for obj in objects)
+        return rdf_xml_open() + body + RDF_XML_CLOSE

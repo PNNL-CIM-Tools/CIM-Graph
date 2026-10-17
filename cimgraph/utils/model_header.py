@@ -5,8 +5,6 @@ from uuid import NAMESPACE_URL, uuid4, uuid5
 
 from cimgraph.core import get_model_authority, get_model_name
 
-MD_NAMESPACE = 'http://iec.ch/TC57/61970-552/ModelDescription/1#'
-
 
 def model_header() -> dict:
     """

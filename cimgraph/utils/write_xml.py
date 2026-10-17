@@ -1,168 +1,64 @@
 from __future__ import annotations
 
-import enum
 import logging
+from typing import TYPE_CHECKING
+from xml.sax.saxutils import escape
 
-from cimgraph.data_profile.known_problem_classes import ClassesWithManytoMany
-from cimgraph.data_profile.units import CIMUnit
-from cimgraph.models.graph_model import GraphModel
-from cimgraph.utils.model_header import MD_NAMESPACE, model_header
+from cimgraph.core.serialization import (DEFAULT_NAMESPACES, RDF_XML_CLOSE, object_to_xml,
+                                         rdf_xml_identifiers, rdf_xml_open)
+from cimgraph.utils.model_header import model_header
+
+if TYPE_CHECKING:
+    from cimgraph.models.graph_model import GraphModel
 
 _log = logging.getLogger(__name__)
 
 
-def _model_header_xml(rdf_header: str) -> str:
+def _model_header_xml() -> str:
     """Render the md:FullModel and cim:ModelAuthority header elements."""
+    rdf_about, _ = rdf_xml_identifiers()
     header = model_header()
-    xml = f'<md:FullModel {rdf_header}{header["full_model_uuid"]}">\n'
+    authority = escape(header['authority'])
+    xml = f'<md:FullModel {rdf_about}{header["full_model_uuid"]}">\n'
     xml += f'  <md:Model.created>{header["created"]}</md:Model.created>\n'
     if header['model_name']:
-        xml += f'  <md:Model.description>{header["model_name"]}</md:Model.description>\n'
-    xml += f'  <md:Model.modelingAuthoritySet>{header["authority"]}</md:Model.modelingAuthoritySet>\n'
+        xml += f'  <md:Model.description>{escape(header["model_name"])}</md:Model.description>\n'
+    xml += f'  <md:Model.modelingAuthoritySet>{authority}</md:Model.modelingAuthoritySet>\n'
     xml += '</md:FullModel>\n'
-    xml += f'<cim:ModelAuthority {rdf_header}{header["authority_uuid"]}">\n'
-    xml += f'  <cim:IdentifiedObject.name>{header["authority"]}</cim:IdentifiedObject.name>\n'
+    xml += f'<cim:ModelAuthority {rdf_about}{header["authority_uuid"]}">\n'
+    xml += f'  <cim:IdentifiedObject.name>{authority}</cim:IdentifiedObject.name>\n'
     xml += '</cim:ModelAuthority>\n'
     return xml
 
 
-def write_xml(network: GraphModel, filename: str, namespaces: dict=None,
-              write_identifier:bool=True, enforce_rdf_direction:bool=False,
-              write_model_header:bool=True) -> None:
+def write_graph_xml(graph: dict, filename: str, namespaces: dict = None,
+                    write_identifier: bool = True, write_model_header: bool = True) -> None:
     """
-    Write the network graph to an XML file.
+    Write a graph dict ({cim_class: {identifier: obj}}) to an RDF/XML file.
+    Classes are written in alphabetical order and objects sorted by URI, so
+    output is stable between runs.
 
     Args:
-        network (GraphModel): The network graph to be written to an XML file.
-        namespaces (dict): A dictionary of namespaces to be used in the XML file. The key is the namespace prefix and the value is the namespace URI. Defaults to CIM100.
-        write_model_header (bool): Write md:FullModel and cim:ModelAuthority elements at the top of the file.
-
-    Returns:
-        None
-
+        graph: The graph of CIM objects to write.
+        filename: Output file path.
+        namespaces: Extra or overriding prefix -> namespace URI entries, merged
+            over DEFAULT_NAMESPACES.
+        write_identifier: Write the cim:Identity.identifier property.
+        write_model_header: Write md:FullModel and cim:ModelAuthority elements at the top of the file.
     """
-    default_namespaces = {'cim': 'http://iec.ch/TC57/CIM100#',
-                        'eu': 'http://iec.ch/TC57/CIM100-European#',
-                        'nc': 'http://entsoe.eu/ns/nc#',
-                        'gb': 'http://GB/placeholder/ext#',
-                        'md': MD_NAMESPACE,
-                        'rdf': 'http://www.w3.org/1999/02/22-rdf-syntax-ns#'}
-    if namespaces is not None:
-            default_namespaces.update(namespaces)
-    namespaces = default_namespaces
+    all_namespaces = DEFAULT_NAMESPACES | (namespaces or {})
+    with open(filename, 'w', encoding='utf-8') as f:
+        f.write(rdf_xml_open(all_namespaces))
+        if write_model_header:
+            f.write(_model_header_xml())
+        for cim_class in sorted(graph, key=lambda cls: cls.__name__):
+            for obj in sorted(graph[cim_class].values(), key=lambda obj: obj.uri()):
+                f.write(object_to_xml(obj, all_namespaces, write_identifier))
+            _log.info(f'wrote {len(graph[cim_class])} {cim_class.__name__} objects')
+        f.write(RDF_XML_CLOSE)
 
 
-
-    # Create reverse lookup for namespace
-    reverse_ns_lookup = {v: k for k, v in namespaces.items()}
-
-    iec61970_552 = network.connection.iec61970_552
-    # Handling of formatting change between different 301 standard versions
-    if iec61970_552 == '552-NEW':
-        rdf_header = 'rdf:about="urn:uuid:'
-        rdf_resource = 'urn:uuid:'
-    else:
-        rdf_header = 'rdf:ID="'
-        rdf_resource = '#'
-
-   # Write XML header and namespace declarations
-    f = open(filename, 'w', encoding='utf-8')
-    header = '<?xml version="1.0" encoding="utf-8"?>\n'
-    header += '<!-- un-comment this line to enable validation\n'
-    header += '-->\n'
-    header += f'<rdf:RDF'
-    for ns in namespaces:
-        header += f' xmlns:{ns}="{namespaces[ns]}"'
-    header += '>\n'
-    header += '<!--\n'
-    header += '-->\n'
-    f.write(header)
-
-    if write_model_header:
-        f.write(_model_header_xml(rdf_header))
-
-    # Write each object in the network graph to the XML file
-    classes = list(network.graph.keys())
-    sorted_classes = sorted(classes, key=lambda x: x.__name__)
-    for root_class in sorted_classes:
-        counter = 0
-        for obj in network.list_by_class(root_class):
-            cim_class = obj.__class__
-            header = f'<cim:{cim_class.__name__} {rdf_header}{obj.uri()}">\n'
-            f.write(header)
-            parent_classes = list(cim_class.__mro__)
-            parent_classes.pop(len(parent_classes) - 1)
-            for parent in parent_classes:
-                for attribute in parent.__annotations__.keys():
-                    try:
-                        serialize = cim_class.__dataclass_fields__[attribute].metadata['serialize']
-                        if not serialize and enforce_rdf_direction:
-                            continue
-                    except:
-                        _log.warning(f'{attribute} missing serialize')
-                        serialize = True
-                    # Skip over Identity.identifier attribute
-                    if attribute == 'identifier' and write_identifier:
-                        row = f'  <cim:Identity.identifier>{obj.uri()}</cim:Identity.identifier>\n'
-                        f.write(row)
-                        continue
-                    attribute_type = cim_class.__dataclass_fields__[attribute].type
-                    rdf = f'{parent.__name__}.{attribute}'
-                    attr_ns = cim_class.__dataclass_fields__[attribute].metadata['namespace']
-                    ns_prefix = reverse_ns_lookup[attr_ns]
-                    # Upload attributes that are many-to-one or are known problem classes
-                    if 'list' not in attribute_type or serialize:
-                        edge_class = attribute_type.split('[')[1].split(']')[0]
-                        edge = getattr(obj, attribute)
-                        # Check if attribute is association to a class object
-                        if edge_class in network.connection.cim.__all__:
-                            if edge is not None and edge != []:
-                                if type(edge.__class__) is enum.EnumMeta:
-                                    resource = f'rdf:resource="{attr_ns}{str(edge)}"'
-                                    row = f'  <{ns_prefix}:{parent.__name__}.{attribute} {resource}/>\n'
-                                    f.write(row)
-                                elif isinstance(edge, CIMUnit):
-                                    row = f'  <{ns_prefix}:{parent.__name__}.{attribute}>{str(edge.quantity.magnitude)}</{ns_prefix}:{parent.__name__}.{attribute}>\n'
-                                    f.write(row)
-                                elif type(edge) is str or type(edge) is bool or type(edge) is float:
-                                    row = f'  <{ns_prefix}:{parent.__name__}.{attribute}>{str(edge)}</{ns_prefix}:{parent.__name__}.{attribute}>\n'
-                                    f.write(row)
-                                elif type(edge) is list:
-                                    for value in edge:
-                                        #TODO: lookup how to handle multiple rows of same value
-                                        if type(value.__class__) is enum.EnumMeta:
-                                            resource = f'rdf:resource="{attr_ns}{str(edge)}"'
-                                            row = f'  <{ns_prefix}:{parent.__name__}.{attribute} {resource}/>\n'
-                                            f.write(row)
-                                        elif type(value) is str or type(value) is bool or type(value) is float:
-                                            row = f'  <{ns_prefix}:{parent.__name__}.{attribute}>{str(value)}</{ns_prefix}:{parent.__name__}.{attribute}>\n'
-                                            f.write(row)
-                                        else:
-                                            resource = f'rdf:resource="{rdf_resource}{value.uri()}"'
-                                            row = f'  <{ns_prefix}:{parent.__name__}.{attribute} {resource}/>\n'
-                                            f.write(row)
-                                else:
-                                    # try:
-                                        resource = f'rdf:resource="{rdf_resource}{edge.uri()}"'
-                                        row = f'  <{ns_prefix}:{parent.__name__}.{attribute} {resource}/>\n'
-                                        f.write(row)
-                                    # except:
-                                    #     _log.warning(obj.__dict__)
-                        else:
-                            if isinstance(edge, CIMUnit):
-                                unit_str = str(edge.quantity.units)
-                                datatype = f'{attr_ns}UnitSymbol.{unit_str}'
-                                row = f'  <cim:{parent.__name__}.{attribute} rdf:datatype="{datatype}">'
-                                row += f'{str(edge.value)}</cim:{parent.__name__}.{attribute}>\n'
-                                f.write(row)
-                                    # row = f'  <{ns_prefix}:{parent.__name__}.{attribute}>{str(edge.quantity.magnitude)}</{ns_prefix}:{parent.__name__}.{attribute}>\n'
-                                    # f.write(row)
-                            elif edge is not None and edge != []:
-                                row = f'  <{ns_prefix}:{parent.__name__}.{attribute}>{str(edge)}</{ns_prefix}:{parent.__name__}.{attribute}>\n'
-                                f.write(row)
-            tail = f'</cim:{cim_class.__name__}>\n'
-            f.write(tail)
-            counter = counter + 1
-        _log.info(f'wrote {counter} {cim_class.__name__} objects')
-    f.write('</rdf:RDF>')
-    f.close()
+def write_xml(network: GraphModel, filename: str, namespaces: dict = None,
+              write_identifier: bool = True, write_model_header: bool = True) -> None:
+    """Write the network graph to an RDF/XML file. See write_graph_xml for arguments."""
+    write_graph_xml(network.graph, filename, namespaces, write_identifier, write_model_header)
