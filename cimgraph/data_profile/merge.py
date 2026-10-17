@@ -221,7 +221,7 @@ def _build_class(name: str, definitions: list[type],
 
     # ── 5. Create the class ────────────────────────────────────────────
     new_cls = type(name, (merged_base,), namespace)
-    new_cls = dataclass(repr=False)(new_cls)
+    new_cls = dataclass(repr=False, eq=False)(new_cls)
 
     # ── 6. Carry over __stereotype__ ───────────────────────────────────
     for cls in definitions:

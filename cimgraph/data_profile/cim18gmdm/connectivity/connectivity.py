@@ -29,7 +29,7 @@ class CIMStereotype(Enum):
 BASE_URI = 'http://www.ucaiug.org/gmdm/connectivity/unbalanced#'
 ONTOLOGY_URI = 'http://cim.ucaiug.io/CIM101/draft#'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class IdentifiedObject(Identity):
     '''
     This is a class that provides common identification for all classes needing
@@ -80,7 +80,7 @@ class IdentifiedObject(Identity):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class ACDCTerminal(IdentifiedObject):
     '''
     An electrical connection point (AC or DC) to a piece of conducting equipment.
@@ -119,7 +119,7 @@ class ACDCTerminal(IdentifiedObject):
         return 'unbounded'
 
 @stereotype(CIMStereotype.Concrete)
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class Terminal(ACDCTerminal):
     '''
     An AC electrical connection point to a piece of conducting equipment. Terminals
@@ -217,7 +217,7 @@ class Terminal(ACDCTerminal):
         return 'unbounded'
 
 @stereotype(CIMStereotype.Concrete)
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class BaseVoltage(IdentifiedObject):
     '''
     Defines a system base voltage which is referenced. This may be different
@@ -300,7 +300,7 @@ class BaseVoltage(IdentifiedObject):
         return 'unbounded'
 
 @stereotype(CIMStereotype.Concrete)
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class ConnectivityNode(IdentifiedObject):
     '''
     Connectivity nodes are points where terminals of AC conducting equipment
@@ -351,7 +351,7 @@ class ConnectivityNode(IdentifiedObject):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class PowerSystemResource(IdentifiedObject):
     '''
     A power system resource (PSR) can be an item of equipment such as a switch,
@@ -374,7 +374,7 @@ class PowerSystemResource(IdentifiedObject):
         return 'unbounded'
 
 @stereotype(CIMStereotype.Concrete)
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class ACLineSegmentPhase(PowerSystemResource):
     '''
     A line segment phase represents one phase (or optionally the neutral) of
@@ -428,7 +428,7 @@ class ACLineSegmentPhase(PowerSystemResource):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class ConnectivityNodeContainer(PowerSystemResource):
     '''
     A base class for all objects that may contain connectivity nodes or topological
@@ -463,7 +463,7 @@ class ConnectivityNodeContainer(PowerSystemResource):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class EquipmentContainer(ConnectivityNodeContainer):
     '''
     A modelling construct to provide a root class for containing equipment.
@@ -518,7 +518,7 @@ class EquipmentContainer(ConnectivityNodeContainer):
         return 'unbounded'
 
 @stereotype(CIMStereotype.Concrete)
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class Feeder(EquipmentContainer):
     '''
     A collection of equipment for organizational purposes, used for grouping
@@ -572,7 +572,7 @@ class Feeder(EquipmentContainer):
         return 'unbounded'
 
 @stereotype(CIMStereotype.Concrete)
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class Line(EquipmentContainer):
     '''
     Contains equipment beyond a substation belonging to a power transmission
@@ -593,7 +593,7 @@ class Line(EquipmentContainer):
         return 'unbounded'
 
 @stereotype(CIMStereotype.Concrete)
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class Substation(EquipmentContainer):
     '''
     A collection of equipment for purposes other than generation or utilization,
@@ -646,7 +646,7 @@ class Substation(EquipmentContainer):
         return 'unbounded'
 
 @stereotype(CIMStereotype.Concrete)
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class VoltageLevel(EquipmentContainer):
     '''
     A collection of equipment at one common system voltage forming a switchgear.
@@ -699,7 +699,7 @@ class VoltageLevel(EquipmentContainer):
         return 'unbounded'
 
 @stereotype(CIMStereotype.Concrete)
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class EnergyConsumerPhase(PowerSystemResource):
     '''
     A single phase of an energy consumer.
@@ -751,7 +751,7 @@ class EnergyConsumerPhase(PowerSystemResource):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class Equipment(PowerSystemResource):
     '''
     The parts of a power system that are physical devices, electronic or mechanical.
@@ -845,7 +845,7 @@ class Equipment(PowerSystemResource):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class ConductingEquipment(Equipment):
     '''
     The parts of the AC power system that are designed to carry current or
@@ -899,7 +899,7 @@ class ConductingEquipment(Equipment):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class Conductor(ConductingEquipment):
     '''
     Combination of conducting material with consistent electrical characteristics,
@@ -921,7 +921,7 @@ class Conductor(ConductingEquipment):
         return 'unbounded'
 
 @stereotype(CIMStereotype.Concrete)
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class ACLineSegment(Conductor):
     '''
     A line segment is a conductor or combination of conductors, with consistent
@@ -995,7 +995,7 @@ class ACLineSegment(Conductor):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class Connector(ConductingEquipment):
     '''
     A conductor, or group of conductors, with negligible impedance, that serve
@@ -1017,7 +1017,7 @@ class Connector(ConductingEquipment):
         return 'unbounded'
 
 @stereotype(CIMStereotype.Concrete)
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class BusbarSection(Connector):
     '''
     A conductor, or group of conductors, with negligible impedance, that serve
@@ -1042,7 +1042,7 @@ class BusbarSection(Connector):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class EnergyConnection(ConductingEquipment):
     '''
     A connection of energy generation or consumption on the power system model.
@@ -1062,7 +1062,7 @@ class EnergyConnection(ConductingEquipment):
         return 'unbounded'
 
 @stereotype(CIMStereotype.Concrete)
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class EnergyConsumer(EnergyConnection):
     '''
     Generic user of energy - a point of consumption on the power system model.
@@ -1143,7 +1143,7 @@ class EnergyConsumer(EnergyConnection):
         return 'unbounded'
 
 @stereotype(CIMStereotype.Concrete)
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class EnergySource(EnergyConnection):
     '''
     A generic equivalent for an energy supplier on a transmission or distribution
@@ -1163,7 +1163,7 @@ class EnergySource(EnergyConnection):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class RegulatingCondEq(EnergyConnection):
     '''
     A type of conducting equipment that can regulate a quantity (i.e. voltage
@@ -1184,7 +1184,7 @@ class RegulatingCondEq(EnergyConnection):
         return 'unbounded'
 
 @stereotype(CIMStereotype.Concrete)
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class PowerElectronicsConnection(RegulatingCondEq):
     '''
     A connection to the AC network for energy production or consumption that
@@ -1219,7 +1219,7 @@ class PowerElectronicsConnection(RegulatingCondEq):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class RotatingMachine(RegulatingCondEq):
     '''
     A rotating machine which may be used as a generator or motor.
@@ -1239,7 +1239,7 @@ class RotatingMachine(RegulatingCondEq):
         return 'unbounded'
 
 @stereotype(CIMStereotype.Concrete)
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class AsynchronousMachine(RotatingMachine):
     '''
     A rotating machine whose shaft rotates asynchronously with the electrical
@@ -1261,7 +1261,7 @@ class AsynchronousMachine(RotatingMachine):
         return 'unbounded'
 
 @stereotype(CIMStereotype.Concrete)
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class SynchronousMachine(RotatingMachine):
     '''
     An electromechanical device that operates with shaft rotating synchronously
@@ -1282,7 +1282,7 @@ class SynchronousMachine(RotatingMachine):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class ShuntCompensator(RegulatingCondEq):
     '''
     A shunt capacitor or reactor or switchable bank of shunt capacitors or
@@ -1349,7 +1349,7 @@ class ShuntCompensator(RegulatingCondEq):
         return 'unbounded'
 
 @stereotype(CIMStereotype.Concrete)
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class LinearShuntCompensator(ShuntCompensator):
     '''
     A linear shunt compensator has banks or sections with equal admittance
@@ -1370,7 +1370,7 @@ class LinearShuntCompensator(ShuntCompensator):
         return 'unbounded'
 
 @stereotype(CIMStereotype.Concrete)
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class PowerTransformer(ConductingEquipment):
     '''
     An electrical device consisting of two or more coupled windings, with or
@@ -1468,7 +1468,7 @@ class PowerTransformer(ConductingEquipment):
         return 'unbounded'
 
 @stereotype(CIMStereotype.Concrete)
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class SeriesCompensator(ConductingEquipment):
     '''
     A Series Compensator is a series capacitor or reactor or an AC transmission
@@ -1488,7 +1488,7 @@ class SeriesCompensator(ConductingEquipment):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class Switch(ConductingEquipment):
     '''
     A generic device designed to close, or open, or both, one or more electric
@@ -1564,7 +1564,7 @@ class Switch(ConductingEquipment):
         return 'unbounded'
 
 @stereotype(CIMStereotype.Concrete)
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class Disconnector(Switch):
     '''
     A mechanical switching device which provides, in the open position, an
@@ -1591,7 +1591,7 @@ class Disconnector(Switch):
         return 'unbounded'
 
 @stereotype(CIMStereotype.Concrete)
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class Fuse(Switch):
     '''
     An overcurrent protective device with a circuit opening fusible part that
@@ -1612,7 +1612,7 @@ class Fuse(Switch):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class ProtectedSwitch(Switch):
     '''
     A ProtectedSwitch is a switching device that can be operated by ProtectionEquipment.
@@ -1632,7 +1632,7 @@ class ProtectedSwitch(Switch):
         return 'unbounded'
 
 @stereotype(CIMStereotype.Concrete)
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class Breaker(ProtectedSwitch):
     '''
     A mechanical switching device capable of making, carrying, and breaking
@@ -1655,7 +1655,7 @@ class Breaker(ProtectedSwitch):
         return 'unbounded'
 
 @stereotype(CIMStereotype.Concrete)
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class LoadBreakSwitch(ProtectedSwitch):
     '''
     A mechanical switching device capable of making, carrying, and breaking
@@ -1676,7 +1676,7 @@ class LoadBreakSwitch(ProtectedSwitch):
         return 'unbounded'
 
 @stereotype(CIMStereotype.Concrete)
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class Recloser(ProtectedSwitch):
     '''
     Pole-mounted fault interrupter with built-in phase and ground relays, current
@@ -1697,7 +1697,7 @@ class Recloser(ProtectedSwitch):
         return 'unbounded'
 
 @stereotype(CIMStereotype.Concrete)
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class Sectionaliser(Switch):
     '''
     Automatic switch that will lock open to isolate a faulted section. It may,
@@ -1720,7 +1720,7 @@ class Sectionaliser(Switch):
         return 'unbounded'
 
 @stereotype(CIMStereotype.Concrete)
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class TransformerTank(Equipment):
     '''
     An assembly of two or more coupled windings that transform electrical power
@@ -1773,7 +1773,7 @@ class TransformerTank(Equipment):
         return 'unbounded'
 
 @stereotype(CIMStereotype.Concrete)
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class PowerElectronicsConnectionPhase(PowerSystemResource):
     '''
     A single phase of a power electronics connection.
@@ -1825,7 +1825,7 @@ class PowerElectronicsConnectionPhase(PowerSystemResource):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class ShuntCompensatorPhase(PowerSystemResource):
     '''
     Single phase of a multi-phase shunt compensator when its attributes might
@@ -1879,7 +1879,7 @@ class ShuntCompensatorPhase(PowerSystemResource):
         return 'unbounded'
 
 @stereotype(CIMStereotype.Concrete)
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class LinearShuntCompensatorPhase(ShuntCompensatorPhase):
     '''
     A per phase linear shunt compensator has banks or sections with equal admittance
@@ -1900,7 +1900,7 @@ class LinearShuntCompensatorPhase(ShuntCompensatorPhase):
         return 'unbounded'
 
 @stereotype(CIMStereotype.Concrete)
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class SwitchPhase(PowerSystemResource):
     '''
     Single phase of a multi-phase switch when its attributes might be different
@@ -1982,7 +1982,7 @@ class SwitchPhase(PowerSystemResource):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class TransformerEnd(IdentifiedObject):
     '''
     A conducting connection point of a power transformer. It corresponds to
@@ -2053,7 +2053,7 @@ class TransformerEnd(IdentifiedObject):
         return 'unbounded'
 
 @stereotype(CIMStereotype.Concrete)
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class PowerTransformerEnd(TransformerEnd):
     '''
     A PowerTransformerEnd is associated with each Terminal of a PowerTransformer.
@@ -2125,7 +2125,7 @@ class PowerTransformerEnd(TransformerEnd):
         return 'unbounded'
 
 @stereotype(CIMStereotype.Concrete)
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class TransformerTankEnd(TransformerEnd):
     '''
     Transformer tank end represents an individual winding for unbalanced models
@@ -2175,7 +2175,7 @@ class TransformerTankEnd(TransformerEnd):
         return 'unbounded'
 
 @stereotype(CIMStereotype.Concrete)
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class UsagePoint(IdentifiedObject):
     '''
     Logical or physical point in the network to which readings or events may

@@ -28,7 +28,7 @@ class CIMStereotype(Enum):
 BASE_URI = 'http://ucaiug.org/ns/CGMES/EquipmentBoundary-EU/3.0#'
 ONTOLOGY_URI = 'http://iec.ch/TC57/CIM100#'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class IdentifiedObject(Identity):
     '''
     This is a root class to provide common identification for all classes needing
@@ -130,7 +130,7 @@ class IdentifiedObject(Identity):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class ACDCTerminal(IdentifiedObject):
     '''
     An electrical connection point (AC or DC) to a piece of conducting equipment.
@@ -152,7 +152,7 @@ class ACDCTerminal(IdentifiedObject):
         return 'unbounded'
 
 @stereotype(CIMStereotype.Concrete)
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class Terminal(ACDCTerminal):
     '''
     An AC electrical connection point to a piece of conducting equipment. Terminals
@@ -205,7 +205,7 @@ class Terminal(ACDCTerminal):
         return 'unbounded'
 
 @stereotype(CIMStereotype.Concrete)
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class BaseVoltage(IdentifiedObject):
     '''
     Defines a system base voltage which is referenced.
@@ -255,7 +255,7 @@ class BaseVoltage(IdentifiedObject):
         return 'unbounded'
 
 @stereotype(CIMStereotype.Concrete)
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class ConnectivityNode(IdentifiedObject):
     '''
     Connectivity nodes are points where terminals of AC conducting equipment
@@ -322,7 +322,7 @@ class ConnectivityNode(IdentifiedObject):
         return 'unbounded'
 
 @stereotype(CIMStereotype.Concrete)
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class EnergySchedulingType(IdentifiedObject):
     '''
     Used to define the type of generation for scheduling purposes.
@@ -342,7 +342,7 @@ class EnergySchedulingType(IdentifiedObject):
         return 'unbounded'
 
 @stereotype(CIMStereotype.Concrete)
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class GeographicalRegion(IdentifiedObject):
     '''
     A geographical region of a power system network model.
@@ -376,7 +376,7 @@ class GeographicalRegion(IdentifiedObject):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class PowerSystemResource(IdentifiedObject):
     '''
     A power system resource (PSR) can be an item of equipment such as a switch,
@@ -400,7 +400,7 @@ class PowerSystemResource(IdentifiedObject):
 
 @stereotype(CIMStereotype.Concrete)
 @stereotype(CIMStereotype.European)
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class BoundaryPoint(PowerSystemResource):
     '''
     Designates a connection point at which one or more model authority sets
@@ -583,7 +583,7 @@ class BoundaryPoint(PowerSystemResource):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class ConnectivityNodeContainer(PowerSystemResource):
     '''
     A base class for all objects that may contain connectivity nodes or topological
@@ -618,7 +618,7 @@ class ConnectivityNodeContainer(PowerSystemResource):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class EquipmentContainer(ConnectivityNodeContainer):
     '''
     A modelling construct to provide a root class for containing equipment.
@@ -653,7 +653,7 @@ class EquipmentContainer(ConnectivityNodeContainer):
         return 'unbounded'
 
 @stereotype(CIMStereotype.Concrete)
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class Bay(EquipmentContainer):
     '''
     A collection of power system resources (within a given substation) including
@@ -691,7 +691,7 @@ class Bay(EquipmentContainer):
         return 'unbounded'
 
 @stereotype(CIMStereotype.Concrete)
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class Line(EquipmentContainer):
     '''
     Contains equipment beyond a substation belonging to a power transmission
@@ -727,7 +727,7 @@ class Line(EquipmentContainer):
         return 'unbounded'
 
 @stereotype(CIMStereotype.Concrete)
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class Substation(EquipmentContainer):
     '''
     A collection of equipment for purposes other than generation or utilization,
@@ -779,7 +779,7 @@ class Substation(EquipmentContainer):
         return 'unbounded'
 
 @stereotype(CIMStereotype.Concrete)
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class VoltageLevel(EquipmentContainer):
     '''
     A collection of equipment at one common system voltage forming a switchgear.
@@ -882,7 +882,7 @@ class VoltageLevel(EquipmentContainer):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class Equipment(PowerSystemResource):
     '''
     The parts of a power system that are physical devices, electronic or mechanical.
@@ -916,7 +916,7 @@ class Equipment(PowerSystemResource):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class ConductingEquipment(Equipment):
     '''
     The parts of the AC power system that are designed to carry current or
@@ -953,7 +953,7 @@ class ConductingEquipment(Equipment):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class Connector(ConductingEquipment):
     '''
     A conductor, or group of conductors, with negligible impedance, that serve
@@ -975,7 +975,7 @@ class Connector(ConductingEquipment):
         return 'unbounded'
 
 @stereotype(CIMStereotype.Concrete)
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class Junction(Connector):
     '''
     A point where one or more conducting equipments are connected with zero
@@ -996,7 +996,7 @@ class Junction(Connector):
         return 'unbounded'
 
 @stereotype(CIMStereotype.Concrete)
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class SubGeographicalRegion(IdentifiedObject):
     '''
     A subset of a geographical region of a power system network model.

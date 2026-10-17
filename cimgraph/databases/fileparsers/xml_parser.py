@@ -9,9 +9,10 @@ from uuid import UUID
 from defusedxml.ElementTree import parse
 
 from cimgraph.core import (get_cim_profile, get_iec61970_552, get_namespace, get_use_units,
-                           get_validation_log_level)
+                           get_validation_log_level, set_model_scope)
 from cimgraph.data_profile.identity import Identity
 from cimgraph.databases import ConnectionInterface, Graph, QueryResponse
+from cimgraph.databases.fileparsers.metadata import HEADER_CLASSES, parse_model_header
 
 _log = logging.getLogger(__name__)
 
@@ -49,6 +50,7 @@ class XMLFile(ConnectionInterface):
             filenames = [self.filename] if isinstance(self.filename, str) else list(self.filename)
             self.trees = []
             self.roots = []
+            self.model_headers = []
             for fname in filenames:
                 try:
                     tree = parse(fname)
@@ -184,8 +186,15 @@ class XMLFile(ConnectionInterface):
             return self.graph
 
         # Pass 1: create all node objects across every part file, so edges in
-        # later passes can resolve targets defined in any file.
+        # later passes can resolve targets defined in any file. Each part's header
+        # sets the model scope first, so UUIDs seeded from its non-UUID mRIDs use
+        # the authority that issued them.
+        self.model_headers = []
         for root in self.roots:
+            header = parse_model_header(root)
+            self.model_headers.append(header)
+            if header.authority is not None:
+                set_model_scope(header.authority, header.description or '')
             for element in root:
                 self.parse_nodes(element)
 
@@ -211,6 +220,8 @@ class XMLFile(ConnectionInterface):
         if class_name is None:
             _log.error(f'Unable to parse {element}. This may be caused by an invalid namespace')
             return None
+        if class_name in HEADER_CLASSES:
+            return None  # file header, read by parse_model_header
 
         if class_name in self.cim.__all__:
             # print(class_name)
@@ -246,7 +257,8 @@ class XMLFile(ConnectionInterface):
 
         # class_name = element.tag.split('{'+self.namespace+'}')[1]
         class_name = element.tag.split('}')[1]
-
+        if class_name in HEADER_CLASSES:
+            return  # file header, read by parse_model_header
 
         if class_name in self.cim.__all__:
             cim_class = getattr(self.cim, class_name)

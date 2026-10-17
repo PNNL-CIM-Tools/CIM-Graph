@@ -1,8 +1,6 @@
-import getpass
 import importlib
 import logging
 import os
-import socket
 import types
 import warnings
 from functools import cache
@@ -26,6 +24,7 @@ DEFAULT_IEC61970_552 = '552-NEW'
 DEFAULT_USE_UNITS = 'false'
 DEFAULT_VALIDATION_LOG_LEVEL = 'WARNING'
 DEFAULT_ALLOW_UNDEFINED_ATTRIBUTES = 'false'
+DEFAULT_MODEL_AUTHORITY = 'CIManticGraphs'
 DEFAULT_MODEL_NAME = ''
 
 
@@ -245,13 +244,10 @@ def get_model_authority() -> str:
     """
     Returns the model authority (e.g. a utility) mixed into seeded UUIDs so that
     identical names under different authorities get different deterministic UUIDs.
-    Defaults to user@hostname if CIMG_MODEL_AUTHORITY is not set.
+    Defaults to CIManticGraphs if CIMG_MODEL_AUTHORITY is not set, so seeded UUIDs
+    are the same on every machine.
     """
-    authority = os.getenv('CIMG_MODEL_AUTHORITY')
-    if authority is None:
-        authority = f'{getpass.getuser()}@{socket.gethostname()}'
-        _log.debug(f'CIMG_MODEL_AUTHORITY environment variable is not set. Using {authority}')
-    return authority
+    return os.getenv('CIMG_MODEL_AUTHORITY', DEFAULT_MODEL_AUTHORITY)
 
 @cache
 def get_model_name() -> str:
@@ -260,3 +256,15 @@ def get_model_name() -> str:
     that is mixed into seeded UUIDs. Defaults to an empty string.
     """
     return os.getenv('CIMG_MODEL_NAME', DEFAULT_MODEL_NAME)
+
+def set_model_scope(authority: str, model_name: str) -> None:
+    """
+    Sets CIMG_MODEL_AUTHORITY and CIMG_MODEL_NAME so that UUIDs seeded from now on,
+    and the header of the next export, use this model authority and model name.
+    """
+    if (authority, model_name) != (get_model_authority(), get_model_name()):
+        _log.info(f'Setting model scope to authority {authority!r}, model name {model_name!r}')
+    os.environ['CIMG_MODEL_AUTHORITY'] = authority
+    os.environ['CIMG_MODEL_NAME'] = model_name
+    get_model_authority.cache_clear()
+    get_model_name.cache_clear()

@@ -34,7 +34,7 @@ from cimgraph.data_profile.cim18gmdm.electrical import (ActivePower, ApparentPow
                                                         WindGenUnitKind)
 
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class IdentifiedObject(Identity):
     """This is a class that provides common identification for all classes needing
         identification and naming attributes.
@@ -43,7 +43,7 @@ class IdentifiedObject(Identity):
     name: Optional[str] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': ['Attribute'], 'minOccurs': '0', 'maxOccurs': '1', 'namespace': 'http://cim.ucaiug.io/CIM101/draft#', 'serialize': True})
     mRID: Optional[str] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': ['Attribute'], 'minOccurs': '0', 'maxOccurs': '1', 'namespace': 'http://cim.ucaiug.io/CIM101/draft#', 'serialize': True})
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class ACDCTerminal(IdentifiedObject):
     """An electrical connection point (AC or DC) to a piece of conducting equipment.
         Terminals are connected at physical connection points called connectivity
@@ -51,7 +51,7 @@ class ACDCTerminal(IdentifiedObject):
     """
     sequenceNumber: Optional[int] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': ['Attribute'], 'minOccurs': '0', 'maxOccurs': '1', 'namespace': 'http://cim.ucaiug.io/CIM101/draft#', 'serialize': True})
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class AssetInfo(IdentifiedObject):
     """Set of attributes of an asset, representing typical datasheet information
         of a physical device that can be instantiated and shared in different data
@@ -63,7 +63,7 @@ class AssetInfo(IdentifiedObject):
     """
     PowerSystemResources: list[PowerSystemResource] = field(default_factory=list, metadata={'type': 'Association', 'stereotypes': [], 'minOccurs': '0', 'maxOccurs': 'unbounded', 'inverse': 'PowerSystemResource.AssetDatasheet', 'namespace': 'http://cim.ucaiug.io/CIM101/draft#', 'serialize': False, 'docstring': 'All power system resources with this datasheet information.'})
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class BaseVoltage(IdentifiedObject):
     """Defines a system base voltage which is referenced. This may be different
         than the rated voltage.
@@ -73,14 +73,14 @@ class BaseVoltage(IdentifiedObject):
     TransformerEnds: list[TransformerEnd] = field(default_factory=list, metadata={'type': 'Association', 'stereotypes': [], 'minOccurs': '0', 'maxOccurs': 'unbounded', 'inverse': 'TransformerEnd.BaseVoltage', 'namespace': 'http://cim.ucaiug.io/CIM101/draft#', 'serialize': False})
     VoltageLevel: list[VoltageLevel] = field(default_factory=list, metadata={'type': 'Association', 'stereotypes': [], 'minOccurs': '0', 'maxOccurs': 'unbounded', 'inverse': 'VoltageLevel.BaseVoltage', 'namespace': 'http://cim.ucaiug.io/CIM101/draft#', 'serialize': False})
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class ConductingAssetInfo(AssetInfo):
     """Generic information for conducting asset
     """
     ratedCurrent: Optional[float | CurrentFlow] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': ['Attribute'], 'minOccurs': '0', 'maxOccurs': '1', 'namespace': 'http://cim.ucaiug.io/CIM101/draft#', 'serialize': True, 'docstring': 'Rated current.'})
     ratedVoltage: Optional[float | Voltage] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': ['Attribute'], 'minOccurs': '0', 'maxOccurs': '1', 'namespace': 'http://cim.ucaiug.io/CIM101/draft#', 'serialize': True, 'docstring': 'Rated voltage.'})
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class ConnectivityNode(IdentifiedObject):
     """Connectivity nodes are points where terminals of AC conducting equipment
         are connected together with zero impedance.
@@ -89,20 +89,20 @@ class ConnectivityNode(IdentifiedObject):
     Terminals: list[Terminal] = field(default_factory=list, metadata={'type': 'Association', 'stereotypes': [], 'minOccurs': '0', 'maxOccurs': 'unbounded', 'inverse': 'Terminal.ConnectivityNode', 'namespace': 'http://cim.ucaiug.io/CIM101/draft#', 'serialize': False})
     IndividualPnode: Optional[IndividualPnode] = field(default=None, metadata={'type': 'Association', 'minOccurs': '0', 'maxOccurs': '1', 'inverse': 'IndividualPnode.ConnectivityNode', 'namespace': 'http://cim.ucaiug.io/CIM101/draft#', 'serialize': False, 'docstring': ''})
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class CoordinateSystem(IdentifiedObject):
     """Coordinate reference system.
     """
     crsUrn: Optional[str] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': ['Attribute'], 'minOccurs': '1', 'maxOccurs': '1', 'namespace': 'http://cim.ucaiug.io/CIM101/draft#', 'serialize': True})
     Location: list[Location] = field(default_factory=list, metadata={'type': 'Association', 'stereotypes': [], 'minOccurs': '0', 'maxOccurs': 'unbounded', 'inverse': 'Location.CoordinateSystem', 'namespace': 'http://cim.ucaiug.io/CIM101/draft#', 'serialize': False})
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class ElectronicAddress(IdentifiedObject):
     """Electronic address information.
     """
     pass
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class FossilFuel(IdentifiedObject):
     """The fossil fuel consumed by the non-nuclear thermal generating unit. For
         example, coal, oil, gas, etc. These are the specific fuels that the generating
@@ -111,7 +111,7 @@ class FossilFuel(IdentifiedObject):
     ThermalGeneratingUnit: Optional[ThermalGeneratingUnit] = field(default=None, metadata={'type': 'Association', 'stereotypes': ['ByReference'], 'minOccurs': '0', 'maxOccurs': '1', 'inverse': 'ThermalGeneratingUnit.FossilFuels', 'namespace': 'http://cim.ucaiug.io/CIM101/draft#', 'serialize': True})
     PowerElectronicsThermalUnit: list[PowerElectronicsThermalUnit] = field(default_factory=list, metadata={'type': 'Association', 'stereotypes': [], 'minOccurs': '0', 'maxOccurs': 'unbounded', 'inverse': 'PowerElectronicsThermalUnit.FossilFuels', 'namespace': 'http://epri.com/gmdm/2025#', 'serialize': False})
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class LoadResponseCharacteristic(IdentifiedObject):
     """Models the characteristic response of the load demand due to changes in
         system conditions such as voltage and frequency. It is not related to demand
@@ -162,7 +162,7 @@ class LoadResponseCharacteristic(IdentifiedObject):
     qVoltageExponent: Optional[float] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': ['Attribute'], 'minOccurs': '0', 'maxOccurs': '1', 'namespace': 'http://cim.ucaiug.io/CIM101/draft#', 'serialize': True})
     EnergyConsumer: list[EnergyConsumer] = field(default_factory=list, metadata={'type': 'Association', 'stereotypes': [], 'minOccurs': '0', 'maxOccurs': 'unbounded', 'inverse': 'EnergyConsumer.LoadResponse', 'namespace': 'http://cim.ucaiug.io/CIM101/draft#', 'serialize': False})
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class Location(IdentifiedObject):
     """The place, scene, or point of something where someone or something has
         been, is, and/or will be at a given moment in time. It can be defined with
@@ -172,19 +172,19 @@ class Location(IdentifiedObject):
     PositionPoints: list[PositionPoint] = field(default_factory=list, metadata={'type': 'Association', 'stereotypes': ['gmdm'], 'minOccurs': '0', 'maxOccurs': 'unbounded', 'inverse': 'PositionPoint.Location', 'namespace': 'http://epri.com/gmdm/2025#', 'serialize': False})
     PowerSystemResources: list[PowerSystemResource] = field(default_factory=list, metadata={'type': 'Association', 'stereotypes': [], 'minOccurs': '0', 'maxOccurs': 'unbounded', 'inverse': 'PowerSystemResource.Location', 'namespace': 'http://cim.ucaiug.io/CIM101/draft#', 'serialize': False})
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class PerLengthLineParameter(IdentifiedObject):
     """Common type for per-length electrical line parameters.
     """
     pass
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class PerLengthImpedance(PerLengthLineParameter):
     """Common type for per-length electrical impedances.
     """
     ACLineSegments: list[ACLineSegment] = field(default_factory=list, metadata={'type': 'Association', 'stereotypes': [], 'minOccurs': '0', 'maxOccurs': 'unbounded', 'inverse': 'ACLineSegment.PerLengthImpedance', 'namespace': 'http://cim.ucaiug.io/CIM101/draft#', 'serialize': False})
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class PerLengthPhaseImpedance(PerLengthImpedance):
     """The per length phase impedance matrix expresses impedance and admittance
         parameters per unit length for n-conductor unbalanced line segments. A
@@ -202,7 +202,7 @@ class PerLengthPhaseImpedance(PerLengthImpedance):
     conductorCount: Optional[int] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': ['Attribute'], 'minOccurs': '1', 'maxOccurs': '1', 'namespace': 'http://cim.ucaiug.io/CIM101/draft#', 'serialize': True})
     PhaseImpedanceData: list[PhaseImpedanceData] = field(default_factory=list, metadata={'type': 'Association', 'stereotypes': [], 'minOccurs': '0', 'maxOccurs': 'unbounded', 'inverse': 'PhaseImpedanceData.PhaseImpedance', 'namespace': 'http://cim.ucaiug.io/CIM101/draft#', 'serialize': False})
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class PhaseImpedanceData(Identity):
     """Per length phase impedance matrix entry describes impedance and conductance
         matrix element values for a specific row and column of the matrix.
@@ -220,7 +220,7 @@ class PhaseImpedanceData(Identity):
     x: Optional[float | ReactancePerLength] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': ['Attribute'], 'minOccurs': '1', 'maxOccurs': '1', 'namespace': 'http://cim.ucaiug.io/CIM101/draft#', 'serialize': True})
     PhaseImpedance: Optional[PerLengthPhaseImpedance] = field(default=None, metadata={'type': 'Association', 'stereotypes': [], 'minOccurs': '0', 'maxOccurs': '1', 'inverse': 'PerLengthPhaseImpedance.PhaseImpedanceData', 'namespace': 'http://cim.ucaiug.io/CIM101/draft#', 'serialize': True})
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class Pnode(IdentifiedObject):
     """A pricing node is directly associated with a connectivity node. It is a
         pricing location for which market participants submit their bids, offers,
@@ -228,13 +228,13 @@ class Pnode(IdentifiedObject):
     """
     pass
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class IndividualPnode(Pnode):
     """Individual pricing node based on Pnode.
     """
     ConnectivityNode: Optional[ConnectivityNode] = field(default=None, metadata={'type': 'ByReference', 'minOccurs': '1', 'maxOccurs': '1', 'inverse': 'ConnectivityNode.IndividualPnode', 'namespace': 'http://cim.ucaiug.io/CIM101/draft#', 'serialize': True, 'docstring': ''})
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class PositionPoint(Identity):
     """Set of spatial coordinates that determine a point, defined in the coordinate
         system specified in 'Location.CoordinateSystem'. Use a single position
@@ -250,7 +250,7 @@ class PositionPoint(Identity):
     zPosition: Optional[str] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': ['Attribute'], 'minOccurs': '0', 'maxOccurs': '1', 'namespace': 'http://cim.ucaiug.io/CIM101/draft#', 'serialize': True})
     Location: Optional[Location] = field(default=None, metadata={'type': 'Association', 'stereotypes': ['ShadowExtension', 'gmdm', 'ByReference'], 'minOccurs': '1', 'maxOccurs': '1', 'inverse': 'Location.PositionPoints', 'namespace': 'http://epri.com/gmdm/2025#', 'serialize': True})
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class PowerSystemResource(IdentifiedObject):
     """A power system resource (PSR) can be an item of equipment such as a switch,
         an equipment container containing many individual items of equipment such
@@ -260,7 +260,7 @@ class PowerSystemResource(IdentifiedObject):
     Location: Optional[Location] = field(default=None, metadata={'type': 'Association', 'stereotypes': ['ByReference'], 'minOccurs': '0', 'maxOccurs': '1', 'inverse': 'Location.PowerSystemResources', 'namespace': 'http://cim.ucaiug.io/CIM101/draft#', 'serialize': True})
     AssetDatasheet: Optional[AssetInfo] = field(default=None, metadata={'type': 'Association', 'stereotypes': [], 'minOccurs': '0', 'maxOccurs': '1', 'inverse': 'AssetInfo.PowerSystemResources', 'namespace': 'http://cim.ucaiug.io/CIM101/draft#', 'serialize': True, 'docstring': 'Datasheet information for this power system resource.'})
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class ACLineSegmentPhase(PowerSystemResource):
     """A line segment phase represents one phase (or optionally the neutral) of
         an alternating current line segment.
@@ -273,21 +273,21 @@ class ACLineSegmentPhase(PowerSystemResource):
     ACLineSegment: Optional[ACLineSegment] = field(default=None, metadata={'type': 'Association', 'stereotypes': [], 'minOccurs': '0', 'maxOccurs': '1', 'inverse': 'ACLineSegment.ACLineSegmentPhases', 'namespace': 'http://cim.ucaiug.io/CIM101/draft#', 'serialize': True})
     sequenceNumber: Optional[int] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': ['Attribute'], 'minOccurs': '1', 'maxOccurs': '1', 'namespace': 'http://cim.ucaiug.io/CIM101/draft#', 'serialize': True})
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class ConnectivityNodeContainer(PowerSystemResource):
     """A base class for all objects that may contain connectivity nodes or topological
         nodes.
     """
     ConnectivityNodes: list[ConnectivityNode] = field(default_factory=list, metadata={'type': 'Association', 'stereotypes': [], 'minOccurs': '0', 'maxOccurs': 'unbounded', 'inverse': 'ConnectivityNode.ConnectivityNodeContainer', 'namespace': 'http://cim.ucaiug.io/CIM101/draft#', 'serialize': False})
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class EnergyConsumerPhase(PowerSystemResource):
     """A single phase of an energy consumer.
     """
     phase: Optional[SinglePhaseKind] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': ['enumeration', 'Attribute'], 'minOccurs': '1', 'maxOccurs': '1', 'namespace': 'http://cim.ucaiug.io/CIM101/draft#', 'serialize': True})
     EnergyConsumer: Optional[EnergyConsumer] = field(default=None, metadata={'type': 'Association', 'stereotypes': [], 'minOccurs': '1', 'maxOccurs': '1', 'inverse': 'EnergyConsumer.EnergyConsumerPhase', 'namespace': 'http://cim.ucaiug.io/CIM101/draft#', 'serialize': True})
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class Equipment(PowerSystemResource):
     """The parts of a power system that are physical devices, electronic or mechanical.
     """
@@ -296,7 +296,7 @@ class Equipment(PowerSystemResource):
     AdditionalEquipmentContainer: Optional[EquipmentContainer] = field(default=None, metadata={'type': 'Association', 'stereotypes': [], 'minOccurs': '0', 'maxOccurs': '1', 'inverse': 'EquipmentContainer.AdditionalGroupedEquipment', 'namespace': 'http://cim.ucaiug.io/CIM101/draft#', 'serialize': True})
     EquipmentContainer: Optional[EquipmentContainer] = field(default=None, metadata={'type': 'Association', 'stereotypes': ['ByReference'], 'minOccurs': '0', 'maxOccurs': '1', 'inverse': 'EquipmentContainer.Equipments', 'namespace': 'http://cim.ucaiug.io/CIM101/draft#', 'serialize': True})
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class ConductingEquipment(Equipment):
     """The parts of the AC power system that are designed to carry current or
         that are conductively connected through terminals.
@@ -304,7 +304,7 @@ class ConductingEquipment(Equipment):
     BaseVoltage: Optional[BaseVoltage] = field(default=None, metadata={'type': 'Association', 'stereotypes': ['ByReference'], 'minOccurs': '0', 'maxOccurs': '1', 'inverse': 'BaseVoltage.ConductingEquipment', 'namespace': 'http://cim.ucaiug.io/CIM101/draft#', 'serialize': True})
     Terminals: list[Terminal] = field(default_factory=list, metadata={'type': 'Association', 'stereotypes': [], 'minOccurs': '0', 'maxOccurs': 'unbounded', 'inverse': 'Terminal.ConductingEquipment', 'namespace': 'http://cim.ucaiug.io/CIM101/draft#', 'serialize': False})
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class Conductor(ConductingEquipment):
     """Combination of conducting material with consistent electrical characteristics,
         building a single electrical system, used to carry current between points
@@ -312,7 +312,7 @@ class Conductor(ConductingEquipment):
     """
     length: Optional[float | Length] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': ['Attribute'], 'minOccurs': '1', 'maxOccurs': '1', 'namespace': 'http://cim.ucaiug.io/CIM101/draft#', 'serialize': True})
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class ACLineSegment(Conductor):
     """A line segment is a conductor or combination of conductors, with consistent
         electrical characteristics along its length, building a single electrical
@@ -359,7 +359,7 @@ class ACLineSegment(Conductor):
     ACLineSegmentPhases: list[ACLineSegmentPhase] = field(default_factory=list, metadata={'type': 'Association', 'stereotypes': [], 'minOccurs': '0', 'maxOccurs': '4', 'inverse': 'ACLineSegmentPhase.ACLineSegment', 'namespace': 'http://cim.ucaiug.io/CIM101/draft#', 'serialize': False})
     PerLengthImpedance: Optional[PerLengthImpedance] = field(default=None, metadata={'type': 'Association', 'stereotypes': [], 'minOccurs': '1', 'maxOccurs': '1', 'inverse': 'PerLengthImpedance.ACLineSegments', 'namespace': 'http://cim.ucaiug.io/CIM101/draft#', 'serialize': True})
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class Connector(ConductingEquipment):
     """A conductor, or group of conductors, with negligible impedance, that serve
         to connect other conducting equipment within a single substation and are
@@ -367,7 +367,7 @@ class Connector(ConductingEquipment):
     """
     pass
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class BusbarSection(Connector):
     """A conductor, or group of conductors, with negligible impedance, that serve
         to connect other conducting equipment within a single substation. The BusbarSection
@@ -379,13 +379,13 @@ class BusbarSection(Connector):
     """
     pass
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class EnergyConnection(ConductingEquipment):
     """A connection of energy generation or consumption on the power system model.
     """
     pass
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class EnergyConsumer(EnergyConnection):
     """Generic user of energy - a point of consumption on the power system model.
         EnergyConsumer.pfixed, .qfixed, .pfixedPct and .qfixedPct have meaning
@@ -398,7 +398,7 @@ class EnergyConsumer(EnergyConnection):
     EnergyConsumerPhase: list[EnergyConsumerPhase] = field(default_factory=list, metadata={'type': 'Association', 'stereotypes': [], 'minOccurs': '0', 'maxOccurs': '3', 'inverse': 'EnergyConsumerPhase.EnergyConsumer', 'namespace': 'http://cim.ucaiug.io/CIM101/draft#', 'serialize': False})
     LoadResponse: Optional[LoadResponseCharacteristic] = field(default=None, metadata={'type': 'Association', 'stereotypes': [], 'minOccurs': '0', 'maxOccurs': '1', 'inverse': 'LoadResponseCharacteristic.EnergyConsumer', 'namespace': 'http://cim.ucaiug.io/CIM101/draft#', 'serialize': True})
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class EnergySource(EnergyConnection):
     """A generic equivalent for an energy supplier on a transmission or distribution
         voltage level.
@@ -407,14 +407,14 @@ class EnergySource(EnergyConnection):
     r: Optional[float | Resistance] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': ['Attribute'], 'minOccurs': '1', 'maxOccurs': '1', 'namespace': 'http://cim.ucaiug.io/CIM101/draft#', 'serialize': True})
     x: Optional[float | Reactance] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': ['Attribute'], 'minOccurs': '1', 'maxOccurs': '1', 'namespace': 'http://cim.ucaiug.io/CIM101/draft#', 'serialize': True})
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class EquipmentContainer(ConnectivityNodeContainer):
     """A modelling construct to provide a root class for containing equipment.
     """
     AdditionalGroupedEquipment: list[Equipment] = field(default_factory=list, metadata={'type': 'Association', 'stereotypes': [], 'minOccurs': '0', 'maxOccurs': 'unbounded', 'inverse': 'Equipment.AdditionalEquipmentContainer', 'namespace': 'http://cim.ucaiug.io/CIM101/draft#', 'serialize': False})
     Equipments: list[Equipment] = field(default_factory=list, metadata={'type': 'Association', 'stereotypes': [], 'minOccurs': '0', 'maxOccurs': 'unbounded', 'inverse': 'Equipment.EquipmentContainer', 'namespace': 'http://cim.ucaiug.io/CIM101/draft#', 'serialize': False})
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class Feeder(EquipmentContainer):
     """A collection of equipment for organizational purposes, used for grouping
         distribution resources.
@@ -424,7 +424,7 @@ class Feeder(EquipmentContainer):
     NormalEnergizingSubstation: Optional[Substation] = field(default=None, metadata={'type': 'Association', 'stereotypes': ['OfAggregate', 'ByReference'], 'minOccurs': '1', 'maxOccurs': '1', 'inverse': 'Substation.NormalEnergizedFeeder', 'namespace': 'http://cim.ucaiug.io/CIM101/draft#', 'serialize': True})
     NormalHeadTerminal: list[Terminal] = field(default_factory=list, metadata={'type': 'Association', 'stereotypes': [], 'minOccurs': '0', 'maxOccurs': 'unbounded', 'inverse': 'Terminal.NormalHeadFeeder', 'namespace': 'http://cim.ucaiug.io/CIM101/draft#', 'serialize': False})
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class GeneratingUnit(Equipment):
     """A single or set of synchronous machines for converting mechanical power
         into alternating-current power. For example, individual machines within
@@ -436,21 +436,21 @@ class GeneratingUnit(Equipment):
     ratedGrossMaxP: Optional[float | ActivePower] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': ['Attribute'], 'minOccurs': '0', 'maxOccurs': '1', 'namespace': 'http://cim.ucaiug.io/CIM101/draft#', 'serialize': True})
     RotatingMachine: list[RotatingMachine] = field(default_factory=list, metadata={'type': 'Association', 'stereotypes': [], 'minOccurs': '1', 'maxOccurs': 'unbounded', 'inverse': 'RotatingMachine.GeneratingUnit', 'namespace': 'http://cim.ucaiug.io/CIM101/draft#', 'serialize': False})
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class Line(EquipmentContainer):
     """Contains equipment beyond a substation belonging to a power transmission
         line.
     """
     pass
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class PowerElectronicsConnectionPhase(PowerSystemResource):
     """A single phase of a power electronics connection.
     """
     phase: Optional[SinglePhaseKind] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': ['enumeration', 'Attribute'], 'minOccurs': '1', 'maxOccurs': '1', 'namespace': 'http://cim.ucaiug.io/CIM101/draft#', 'serialize': True})
     PowerElectronicsConnection: Optional[PowerElectronicsConnection] = field(default=None, metadata={'type': 'Association', 'stereotypes': ['ByReference'], 'minOccurs': '1', 'maxOccurs': '1', 'inverse': 'PowerElectronicsConnection.PowerElectronicsConnectionPhase', 'namespace': 'http://cim.ucaiug.io/CIM101/draft#', 'serialize': True})
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class PowerElectronicsUnit(Equipment):
     """A generating unit or battery or aggregation that connects to the AC network
         using power electronics rather than rotating machines.
@@ -459,33 +459,33 @@ class PowerElectronicsUnit(Equipment):
     minP: Optional[float | ActivePower] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': ['Attribute'], 'minOccurs': '1', 'maxOccurs': '1', 'namespace': 'http://cim.ucaiug.io/CIM101/draft#', 'serialize': True})
     PowerElectronicsConnection: Optional[PowerElectronicsConnection] = field(default=None, metadata={'type': 'Association', 'stereotypes': ['ByReference'], 'minOccurs': '0', 'maxOccurs': '1', 'inverse': 'PowerElectronicsConnection.PowerElectronicsUnit', 'namespace': 'http://cim.ucaiug.io/CIM101/draft#', 'serialize': True})
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class BatteryUnit(PowerElectronicsUnit):
     """An electrochemical energy storage device.
     """
     ratedE: Optional[float | RealEnergy] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': ['Attribute'], 'minOccurs': '0', 'maxOccurs': '1', 'namespace': 'http://cim.ucaiug.io/CIM101/draft#', 'serialize': True})
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class PhotoVoltaicUnit(PowerElectronicsUnit):
     """A photovoltaic device or an aggregation of such devices.
     """
     pass
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class PowerElectronicsThermalUnit(PowerElectronicsUnit):
     """A thermal unit that is connected via an inverter such as through a back-to-back
         converter
     """
     FossilFuels: Optional[FossilFuel] = field(default=None, metadata={'type': 'Association', 'stereotypes': ['ByReference'], 'minOccurs': '1', 'maxOccurs': '1', 'inverse': 'FossilFuel.PowerElectronicsThermalUnit', 'namespace': 'http://epri.com/gmdm/2025#', 'serialize': True})
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class PowerElectronicsWindUnit(PowerElectronicsUnit):
     """A wind generating unit that connects to the AC network with power electronics
         rather than rotating machines or an aggregation of such units.
     """
     pass
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class PowerTransformer(ConductingEquipment):
     """An electrical device consisting of two or more coupled windings, with or
         without a magnetic core, for introducing mutual coupling between electric
@@ -505,20 +505,20 @@ class PowerTransformer(ConductingEquipment):
     PowerTransformerEnd: list[PowerTransformerEnd] = field(default_factory=list, metadata={'type': 'Association', 'stereotypes': [], 'minOccurs': '0', 'maxOccurs': '3', 'inverse': 'PowerTransformerEnd.PowerTransformer', 'namespace': 'http://cim.ucaiug.io/CIM101/draft#', 'serialize': False})
     TransformerTanks: list[TransformerTank] = field(default_factory=list, metadata={'type': 'Association', 'stereotypes': [], 'minOccurs': '0', 'maxOccurs': 'unbounded', 'inverse': 'TransformerTank.PowerTransformer', 'namespace': 'http://cim.ucaiug.io/CIM101/draft#', 'serialize': False})
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class PowerTransformerInfo(AssetInfo):
     """Set of power transformer data, from an equipment library.
     """
     TransformerTankInfos: list[TransformerTankInfo] = field(default_factory=list, metadata={'type': 'Association', 'stereotypes': [], 'minOccurs': '1', 'maxOccurs': 'unbounded', 'inverse': 'TransformerTankInfo.PowerTransformerInfo', 'namespace': 'http://cim.ucaiug.io/CIM101/draft#', 'serialize': False, 'docstring': 'Data for all the tanks described by this power transformer data.'})
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class RegulatingCondEq(EnergyConnection):
     """A type of conducting equipment that can regulate a quantity (i.e. voltage
         or flow) at a specific point in the network.
     """
     RegulatingControl: Optional[RegulatingControl] = field(default=None, metadata={'type': 'Association', 'stereotypes': [], 'minOccurs': '0', 'maxOccurs': '1', 'inverse': 'RegulatingControl.RegulatingCondEq', 'namespace': 'http://cim.ucaiug.io/CIM101/draft#', 'serialize': True})
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class PowerElectronicsConnection(RegulatingCondEq):
     """A connection to the AC network for energy production or consumption that
         uses power electronics rather than rotating machines.
@@ -531,7 +531,7 @@ class PowerElectronicsConnection(RegulatingCondEq):
     ratedU: Optional[float | Voltage] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': ['Attribute'], 'minOccurs': '0', 'maxOccurs': '1', 'namespace': 'http://cim.ucaiug.io/CIM101/draft#', 'serialize': True})
     PowerElectronicsUnit: list[PowerElectronicsUnit] = field(default_factory=list, metadata={'type': 'Association', 'stereotypes': [], 'minOccurs': '0', 'maxOccurs': 'unbounded', 'inverse': 'PowerElectronicsUnit.PowerElectronicsConnection', 'namespace': 'http://cim.ucaiug.io/CIM101/draft#', 'serialize': False})
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class RegulatingControl(PowerSystemResource):
     """Specifies a set of equipment that works together to control a power system
         quantity such as voltage or flow.
@@ -573,7 +573,7 @@ class RegulatingControl(PowerSystemResource):
     Terminal: Optional[Terminal] = field(default=None, metadata={'type': 'Association', 'stereotypes': ['ByReference'], 'minOccurs': '1', 'maxOccurs': '1', 'inverse': 'Terminal.RegulatingControl', 'namespace': 'http://cim.ucaiug.io/CIM101/draft#', 'serialize': True})
     RegulatingCondEq: list[RegulatingCondEq] = field(default_factory=list, metadata={'type': 'Association', 'stereotypes': [], 'minOccurs': '0', 'maxOccurs': 'unbounded', 'inverse': 'RegulatingCondEq.RegulatingControl', 'namespace': 'http://cim.ucaiug.io/CIM101/draft#', 'serialize': False})
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class RotatingMachine(RegulatingCondEq):
     """A rotating machine which may be used as a generator or motor.
     """
@@ -581,7 +581,7 @@ class RotatingMachine(RegulatingCondEq):
     ratedU: Optional[float | Voltage] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': ['Attribute'], 'minOccurs': '1', 'maxOccurs': '1', 'namespace': 'http://cim.ucaiug.io/CIM101/draft#', 'serialize': True})
     GeneratingUnit: Optional[GeneratingUnit] = field(default=None, metadata={'type': 'Association', 'stereotypes': [], 'minOccurs': '0', 'maxOccurs': '1', 'inverse': 'GeneratingUnit.RotatingMachine', 'namespace': 'http://cim.ucaiug.io/CIM101/draft#', 'serialize': True})
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class AsynchronousMachine(RotatingMachine):
     """A rotating machine whose shaft rotates asynchronously with the electrical
         field. Also known as an induction machine with no external connection to
@@ -589,7 +589,7 @@ class AsynchronousMachine(RotatingMachine):
     """
     pass
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class SeriesCompensator(ConductingEquipment):
     """A Series Compensator is a series capacitor or reactor or an AC transmission
         line without charging susceptance. It is a two terminal device.
@@ -597,7 +597,7 @@ class SeriesCompensator(ConductingEquipment):
     r: Optional[float | Resistance] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': ['Attribute'], 'minOccurs': '1', 'maxOccurs': '1', 'namespace': 'http://cim.ucaiug.io/CIM101/draft#', 'serialize': True})
     x: Optional[float | Reactance] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': ['Attribute'], 'minOccurs': '1', 'maxOccurs': '1', 'namespace': 'http://cim.ucaiug.io/CIM101/draft#', 'serialize': True})
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class ShuntCompensator(RegulatingCondEq):
     """A shunt capacitor or reactor or switchable bank of shunt capacitors or
         reactors. A section of a shunt compensator is an individual capacitor or
@@ -612,7 +612,7 @@ class ShuntCompensator(RegulatingCondEq):
     aVRDelay: Optional[float | Seconds] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': ['Attribute'], 'minOccurs': '0', 'maxOccurs': '1', 'namespace': 'http://cim.ucaiug.io/CIM101/draft#', 'serialize': True})
     nomU: Optional[float | Voltage] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': ['Attribute'], 'minOccurs': '1', 'maxOccurs': '1', 'namespace': 'http://cim.ucaiug.io/CIM101/draft#', 'serialize': True})
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class LinearShuntCompensator(ShuntCompensator):
     """A linear shunt compensator has banks or sections with equal admittance
         values.
@@ -620,7 +620,7 @@ class LinearShuntCompensator(ShuntCompensator):
     bPerSection: Optional[float | Susceptance] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': ['Attribute'], 'minOccurs': '1', 'maxOccurs': '1', 'namespace': 'http://cim.ucaiug.io/CIM101/draft#', 'serialize': True})
     gPerSection: Optional[float | Conductance] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': ['Attribute'], 'minOccurs': '1', 'maxOccurs': '1', 'namespace': 'http://cim.ucaiug.io/CIM101/draft#', 'serialize': True})
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class ShuntCompensatorPhase(PowerSystemResource):
     """Single phase of a multi-phase shunt compensator when its attributes might
         be different per phase.
@@ -630,7 +630,7 @@ class ShuntCompensatorPhase(PowerSystemResource):
     maximumSections: Optional[int] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': ['Attribute'], 'minOccurs': '1', 'maxOccurs': '1', 'namespace': 'http://cim.ucaiug.io/CIM101/draft#', 'serialize': True})
     normalSections: Optional[int] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': ['Attribute'], 'minOccurs': '1', 'maxOccurs': '1', 'namespace': 'http://cim.ucaiug.io/CIM101/draft#', 'serialize': True})
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class LinearShuntCompensatorPhase(ShuntCompensatorPhase):
     """A per phase linear shunt compensator has banks or sections with equal admittance
         values.
@@ -638,19 +638,19 @@ class LinearShuntCompensatorPhase(ShuntCompensatorPhase):
     bPerSection: Optional[float | Susceptance] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': ['Attribute'], 'minOccurs': '1', 'maxOccurs': '1', 'namespace': 'http://cim.ucaiug.io/CIM101/draft#', 'serialize': True})
     gPerSection: Optional[float | Conductance] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': ['Attribute'], 'minOccurs': '1', 'maxOccurs': '1', 'namespace': 'http://cim.ucaiug.io/CIM101/draft#', 'serialize': True})
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class Status(Identity):
     """Current status information relevant to an entity.
     """
     pass
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class StreetAddress(Identity):
     """General purpose street and postal address information.
     """
     pass
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class Substation(EquipmentContainer):
     """A collection of equipment for purposes other than generation or utilization,
         through which electric energy in bulk is passed for the purposes of switching
@@ -659,7 +659,7 @@ class Substation(EquipmentContainer):
     NormalEnergizedFeeder: list[Feeder] = field(default_factory=list, metadata={'type': 'Association', 'stereotypes': ['AggregateOf'], 'minOccurs': '0', 'maxOccurs': 'unbounded', 'inverse': 'Feeder.NormalEnergizingSubstation', 'namespace': 'http://cim.ucaiug.io/CIM101/draft#', 'serialize': False})
     VoltageLevels: list[VoltageLevel] = field(default_factory=list, metadata={'type': 'Association', 'stereotypes': ['AggregateOf'], 'minOccurs': '0', 'maxOccurs': 'unbounded', 'inverse': 'VoltageLevel.Substation', 'namespace': 'http://cim.ucaiug.io/CIM101/draft#', 'serialize': False})
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class Switch(ConductingEquipment):
     """A generic device designed to close, or open, or both, one or more electric
         circuits. All switches are two terminal devices including grounding switches.
@@ -672,7 +672,7 @@ class Switch(ConductingEquipment):
     SwitchPhase: list[SwitchPhase] = field(default_factory=list, metadata={'type': 'Association', 'stereotypes': [], 'minOccurs': '0', 'maxOccurs': '3', 'inverse': 'SwitchPhase.Switch', 'namespace': 'http://cim.ucaiug.io/CIM101/draft#', 'serialize': False})
     ratedCurrent: Optional[float | CurrentFlow] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': ['Attribute'], 'minOccurs': '1', 'maxOccurs': '1', 'namespace': 'http://cim.ucaiug.io/CIM101/draft#', 'serialize': True})
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class Disconnector(Switch):
     """A mechanical switching device which provides, in the open position, an
         isolating distance in accordance with specified requirements.
@@ -685,7 +685,7 @@ class Disconnector(Switch):
     """
     pass
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class Fuse(Switch):
     """An overcurrent protective device with a circuit opening fusible part that
         is heated and severed by the passage of overcurrent through it. A fuse
@@ -693,13 +693,13 @@ class Fuse(Switch):
     """
     pass
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class ProtectedSwitch(Switch):
     """A ProtectedSwitch is a switching device that can be operated by ProtectionEquipment.
     """
     breakingCapacity: Optional[float | CurrentFlow] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': ['Attribute'], 'minOccurs': '0', 'maxOccurs': '1', 'namespace': 'http://cim.ucaiug.io/CIM101/draft#', 'serialize': True})
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class Breaker(ProtectedSwitch):
     """A mechanical switching device capable of making, carrying, and breaking
         currents under normal circuit conditions and also making, carrying for
@@ -708,21 +708,21 @@ class Breaker(ProtectedSwitch):
     """
     pass
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class LoadBreakSwitch(ProtectedSwitch):
     """A mechanical switching device capable of making, carrying, and breaking
         currents under normal operating conditions.
     """
     pass
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class Recloser(ProtectedSwitch):
     """Pole-mounted fault interrupter with built-in phase and ground relays, current
         transformer (CT), and supplemental controls.
     """
     pass
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class Sectionaliser(Switch):
     """Automatic switch that will lock open to isolate a faulted section. It may,
         or may not, have load breaking capability. Its primary purpose is to provide
@@ -731,7 +731,7 @@ class Sectionaliser(Switch):
     """
     pass
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class SwitchPhase(PowerSystemResource):
     """Single phase of a multi-phase switch when its attributes might be different
         per phase.
@@ -741,7 +741,7 @@ class SwitchPhase(PowerSystemResource):
     phaseSide2: Optional[SinglePhaseKind] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': ['enumeration', 'Attribute'], 'minOccurs': '1', 'maxOccurs': '1', 'namespace': 'http://cim.ucaiug.io/CIM101/draft#', 'serialize': True})
     Switch: Optional[Switch] = field(default=None, metadata={'type': 'Association', 'stereotypes': [], 'minOccurs': '1', 'maxOccurs': '1', 'inverse': 'Switch.SwitchPhase', 'namespace': 'http://cim.ucaiug.io/CIM101/draft#', 'serialize': True})
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class SynchronousMachine(RotatingMachine):
     """An electromechanical device that operates with shaft rotating synchronously
         with the network. It is a single machine operating either as a generator
@@ -749,7 +749,7 @@ class SynchronousMachine(RotatingMachine):
     """
     pass
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class TapChanger(PowerSystemResource):
     """Mechanism for changing transformer winding tap positions.
     """
@@ -766,7 +766,7 @@ class TapChanger(PowerSystemResource):
     subsequentDelay: Optional[float | Seconds] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': ['Attribute'], 'minOccurs': '0', 'maxOccurs': '1', 'namespace': 'http://cim.ucaiug.io/CIM101/draft#', 'serialize': True})
     TapChangerControl: Optional[TapChangerControl] = field(default=None, metadata={'type': 'Association', 'stereotypes': [], 'minOccurs': '0', 'maxOccurs': '1', 'inverse': 'TapChangerControl.TapChanger', 'namespace': 'http://cim.ucaiug.io/CIM101/draft#', 'serialize': True})
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class RatioTapChanger(TapChanger):
     """A tap changer that changes the voltage ratio impacting the voltage magnitude
         but not the phase angle across the transformer.
@@ -777,7 +777,7 @@ class RatioTapChanger(TapChanger):
     stepVoltageIncrement: Optional[float | PerCent] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': ['Attribute'], 'minOccurs': '0', 'maxOccurs': '1', 'namespace': 'http://cim.ucaiug.io/CIM101/draft#', 'serialize': True})
     TransformerEnd: Optional[TransformerEnd] = field(default=None, metadata={'type': 'Association', 'stereotypes': ['ByReference'], 'minOccurs': '1', 'maxOccurs': '1', 'inverse': 'TransformerEnd.RatioTapChanger', 'namespace': 'http://cim.ucaiug.io/CIM101/draft#', 'serialize': True})
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class TapChangerControl(RegulatingControl):
     """Describes behaviour specific to tap changers, e.g. how the voltage at the
         end of a line varies with the load level and compensation of the voltage
@@ -802,13 +802,13 @@ class TapChangerControl(RegulatingControl):
     reversingPowerThreshold: Optional[float | ApparentPower] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': ['gmdm', 'Attribute'], 'minOccurs': '0', 'maxOccurs': '1', 'namespace': 'http://epri.com/gmdm/2025#', 'serialize': True})
     TapChanger: list[TapChanger] = field(default_factory=list, metadata={'type': 'Association', 'stereotypes': [], 'minOccurs': '0', 'maxOccurs': 'unbounded', 'inverse': 'TapChanger.TapChangerControl', 'namespace': 'http://cim.ucaiug.io/CIM101/draft#', 'serialize': False})
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class TelephoneNumber(IdentifiedObject):
     """Telephone number information.
     """
     pass
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class Terminal(ACDCTerminal):
     """An AC electrical connection point to a piece of conducting equipment. Terminals
         are connected at physical connection points called connectivity nodes.
@@ -820,14 +820,14 @@ class Terminal(ACDCTerminal):
     UsagePoint: Optional[UsagePoint] = field(default=None, metadata={'type': 'Association', 'stereotypes': [], 'minOccurs': '0', 'maxOccurs': '1', 'inverse': 'UsagePoint.Terminal', 'namespace': 'http://epri.com/gmdm/2025#', 'serialize': False})
     RegulatingControl: list[RegulatingControl] = field(default_factory=list, metadata={'type': 'Association', 'stereotypes': [], 'minOccurs': '0', 'maxOccurs': 'unbounded', 'inverse': 'RegulatingControl.Terminal', 'namespace': 'http://cim.ucaiug.io/CIM101/draft#', 'serialize': False})
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class ThermalGeneratingUnit(GeneratingUnit):
     """A generating unit whose prime mover could be a steam turbine, combustion
         turbine, or diesel engine.
     """
     FossilFuels: list[FossilFuel] = field(default_factory=list, metadata={'type': 'Association', 'stereotypes': [], 'minOccurs': '0', 'maxOccurs': 'unbounded', 'inverse': 'FossilFuel.ThermalGeneratingUnit', 'namespace': 'http://cim.ucaiug.io/CIM101/draft#', 'serialize': False})
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class TransformerCoreAdmittance(IdentifiedObject):
     """The transformer core admittance. Used to specify the core admittance of
         a transformer in a manner that can be shared among power transformers.
@@ -836,7 +836,7 @@ class TransformerCoreAdmittance(IdentifiedObject):
     g: Optional[float | Conductance] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': ['Attribute'], 'minOccurs': '1', 'maxOccurs': '1', 'namespace': 'http://cim.ucaiug.io/CIM101/draft#', 'serialize': True})
     TransformerEnd: list[TransformerEnd] = field(default_factory=list, metadata={'type': 'Association', 'stereotypes': [], 'minOccurs': '0', 'maxOccurs': 'unbounded', 'inverse': 'TransformerEnd.CoreAdmittance', 'namespace': 'http://cim.ucaiug.io/CIM101/draft#', 'serialize': False})
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class TransformerEnd(IdentifiedObject):
     """A conducting connection point of a power transformer. It corresponds to
         a physical transformer winding terminal. In earlier CIM versions, the TransformerWinding
@@ -854,7 +854,7 @@ class TransformerEnd(IdentifiedObject):
     FromMeshImpedance: list[TransformerMeshImpedance] = field(default_factory=list, metadata={'type': 'Association', 'stereotypes': [], 'minOccurs': '0', 'maxOccurs': 'unbounded', 'inverse': 'TransformerMeshImpedance.FromTransformerEnd', 'namespace': 'http://cim.ucaiug.io/CIM101/draft#', 'serialize': False})
     ToMeshImpedance: list[TransformerMeshImpedance] = field(default_factory=list, metadata={'type': 'Association', 'stereotypes': [], 'minOccurs': '0', 'maxOccurs': 'unbounded', 'inverse': 'TransformerMeshImpedance.ToTransformerEnd', 'namespace': 'http://cim.ucaiug.io/CIM101/draft#', 'serialize': False})
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class PowerTransformerEnd(TransformerEnd):
     """A PowerTransformerEnd is associated with each Terminal of a PowerTransformer.
         The impedance values r, r0, x, and x0 of a PowerTransformerEnd represents
@@ -891,7 +891,7 @@ class PowerTransformerEnd(TransformerEnd):
     ratedU: Optional[float | Voltage] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': ['Attribute'], 'minOccurs': '1', 'maxOccurs': '1', 'namespace': 'http://cim.ucaiug.io/CIM101/draft#', 'serialize': True})
     x: Optional[float | Reactance] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': ['Attribute'], 'minOccurs': '0', 'maxOccurs': '1', 'namespace': 'http://cim.ucaiug.io/CIM101/draft#', 'serialize': True})
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class TransformerEndInfo(ConductingAssetInfo):
     """Transformer end data.
     """
@@ -908,7 +908,7 @@ class TransformerEndInfo(ConductingAssetInfo):
     EnergisedEndShortCircuitTests: list[ShortCircuitTest] = field(default_factory=list, metadata={'type': 'Association', 'stereotypes': [], 'minOccurs': '0', 'maxOccurs': 'unbounded', 'inverse': 'ShortCircuitTest.EnergisedEnd', 'namespace': 'http://cim.ucaiug.io/CIM101/draft#', 'serialize': False, 'docstring': 'All short-circuit test measurements in which this transformer end was energised.'})
     GroundedEndShortCircuitTests: list[ShortCircuitTest] = field(default_factory=list, metadata={'type': 'Association', 'stereotypes': [], 'minOccurs': '0', 'maxOccurs': 'unbounded', 'inverse': 'ShortCircuitTest.GroundedEnds', 'namespace': 'http://cim.ucaiug.io/CIM101/draft#', 'serialize': False, 'docstring': 'All short-circuit test measurements in which this transformer end was short-circuited.'})
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class TransformerMeshImpedance(IdentifiedObject):
     """Transformer mesh impedance (Delta-model) between transformer ends.
         The typical case is that this class describes the impedance between two
@@ -921,7 +921,7 @@ class TransformerMeshImpedance(IdentifiedObject):
     FromTransformerEnd: Optional[TransformerEnd] = field(default=None, metadata={'type': 'Association', 'stereotypes': [], 'minOccurs': '0', 'maxOccurs': '1', 'inverse': 'TransformerEnd.FromMeshImpedance', 'namespace': 'http://cim.ucaiug.io/CIM101/draft#', 'serialize': True})
     ToTransformerEnd: list[TransformerEnd] = field(default_factory=list, metadata={'type': 'Association', 'stereotypes': [], 'minOccurs': '0', 'maxOccurs': 'unbounded', 'inverse': 'TransformerEnd.ToMeshImpedance', 'namespace': 'http://cim.ucaiug.io/CIM101/draft#', 'serialize': True})
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class TransformerTank(Equipment):
     """An assembly of two or more coupled windings that transform electrical power
         between voltage levels. These windings are bound on a common core and placed
@@ -932,7 +932,7 @@ class TransformerTank(Equipment):
     TransformerTankEnds: list[TransformerTankEnd] = field(default_factory=list, metadata={'type': 'Association', 'stereotypes': [], 'minOccurs': '0', 'maxOccurs': 'unbounded', 'inverse': 'TransformerTankEnd.TransformerTank', 'namespace': 'http://cim.ucaiug.io/CIM101/draft#', 'serialize': False})
     TransformerTankInfo: Optional[TransformerTankInfo] = field(default=None, metadata={'type': 'Association', 'stereotypes': ['ShadowExtension', 'gmdm', 'ByReference'], 'minOccurs': '0', 'maxOccurs': '1', 'inverse': 'TransformerTankInfo.TransformerTanks', 'namespace': 'http://epri.com/gmdm/2025#', 'serialize': True, 'docstring': ''})
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class TransformerTankEnd(TransformerEnd):
     """Transformer tank end represents an individual winding for unbalanced models
         or for transformer tanks connected into a bank (and bank is modelled with
@@ -941,7 +941,7 @@ class TransformerTankEnd(TransformerEnd):
     orderedPhases: Optional[OrderedPhaseCodeKind] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': ['gmdm', 'enumeration', 'Attribute'], 'minOccurs': '0', 'maxOccurs': '1', 'namespace': 'http://epri.com/gmdm/2025#', 'serialize': True})
     TransformerTank: Optional[TransformerTank] = field(default=None, metadata={'type': 'Association', 'stereotypes': ['ByReference'], 'minOccurs': '1', 'maxOccurs': '1', 'inverse': 'TransformerTank.TransformerTankEnds', 'namespace': 'http://cim.ucaiug.io/CIM101/draft#', 'serialize': True})
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class TransformerTankInfo(AssetInfo):
     """Set of transformer tank data, from an equipment library.
     """
@@ -949,7 +949,7 @@ class TransformerTankInfo(AssetInfo):
     TransformerEndInfos: list[TransformerEndInfo] = field(default_factory=list, metadata={'type': 'Association', 'stereotypes': [], 'minOccurs': '0', 'maxOccurs': 'unbounded', 'inverse': 'TransformerEndInfo.TransformerTankInfo', 'namespace': 'http://cim.ucaiug.io/CIM101/draft#', 'serialize': False, 'docstring': 'Data for all the ends described by this transformer tank data.'})
     TransformerTanks: list[TransformerTank] = field(default_factory=list, metadata={'type': 'Association', 'stereotypes': [], 'minOccurs': '0', 'maxOccurs': 'unbounded', 'inverse': 'TransformerTank.TransformerTankInfo', 'namespace': 'http://epri.com/gmdm/2025#', 'serialize': False, 'docstring': ''})
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class TransformerTest(IdentifiedObject):
     """Test result for transformer ends, such as short-circuit, open-circuit (excitation)
         or no-load test.
@@ -957,7 +957,7 @@ class TransformerTest(IdentifiedObject):
     basePower: Optional[float | ApparentPower] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': ['Attribute'], 'minOccurs': '1', 'maxOccurs': '1', 'namespace': 'http://cim.ucaiug.io/CIM101/draft#', 'serialize': True, 'docstring': 'Base power at which the tests are conducted, usually equal to the rateds             of one of the involved transformer ends.'})
     temperature: Optional[float | Temperature] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': ['Attribute'], 'minOccurs': '1', 'maxOccurs': '1', 'namespace': 'http://cim.ucaiug.io/CIM101/draft#', 'serialize': True, 'docstring': 'Temperature at which the test is conducted.'})
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class NoLoadTest(TransformerTest):
     """No-load test results determine core admittance parameters. They include
         exciting current and core loss measurements from applying voltage to one
@@ -971,7 +971,7 @@ class NoLoadTest(TransformerTest):
     lossZero: Optional[float | KiloActivePower] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': ['Attribute'], 'minOccurs': '0', 'maxOccurs': '1', 'namespace': 'http://cim.ucaiug.io/CIM101/draft#', 'serialize': True, 'docstring': 'Losses measured from a zero-sequence excitation test.'})
     EnergisedEnd: Optional[TransformerEndInfo] = field(default=None, metadata={'type': 'Association', 'stereotypes': ['ByReference'], 'minOccurs': '1', 'maxOccurs': '1', 'inverse': 'TransformerEndInfo.EnergisedEndNoLoadTests', 'namespace': 'http://cim.ucaiug.io/CIM101/draft#', 'serialize': True, 'docstring': 'Transformer end that current is applied to in this no-load test.'})
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class ShortCircuitTest(TransformerTest):
     """Short-circuit test results determine mesh impedance parameters. They include
         load losses and leakage impedances. For three-phase windings, the excitation
@@ -987,7 +987,7 @@ class ShortCircuitTest(TransformerTest):
     EnergisedEnd: Optional[TransformerEndInfo] = field(default=None, metadata={'type': 'Association', 'stereotypes': ['ByReference'], 'minOccurs': '1', 'maxOccurs': '1', 'inverse': 'TransformerEndInfo.EnergisedEndShortCircuitTests', 'namespace': 'http://cim.ucaiug.io/CIM101/draft#', 'serialize': True, 'docstring': 'Transformer end that voltage is applied to in this short-circuit test.             The test voltage is chosen to induce rated current in the energised end.'})
     GroundedEnds: list[TransformerEndInfo] = field(default_factory=list, metadata={'type': 'Association', 'stereotypes': ['ByReference'], 'minOccurs': '1', 'maxOccurs': 'unbounded', 'inverse': 'TransformerEndInfo.GroundedEndShortCircuitTests', 'namespace': 'http://cim.ucaiug.io/CIM101/draft#', 'serialize': True, 'docstring': 'All ends short-circuited in this short-circuit test.'})
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class UsagePoint(IdentifiedObject):
     """Logical or physical point in the network to which readings or events may
         be attributed. Used at the place where a physical or virtual meter may
@@ -996,7 +996,7 @@ class UsagePoint(IdentifiedObject):
     phaseCode: Optional[PhaseCode] = field(default=None, metadata={'type': 'Attribute', 'stereotypes': ['enumeration', 'Attribute'], 'minOccurs': '0', 'maxOccurs': '1', 'namespace': 'http://cim.ucaiug.io/CIM101/draft#', 'serialize': True})
     Terminal: Optional[Terminal] = field(default=None, metadata={'type': 'Association', 'stereotypes': ['ShadowExtension', 'gmdm', 'ByReference'], 'minOccurs': '1', 'maxOccurs': '1', 'inverse': 'Terminal.UsagePoint', 'namespace': 'http://epri.com/gmdm/2025#', 'serialize': True})
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class VoltageLevel(EquipmentContainer):
     """A collection of equipment at one common system voltage forming a switchgear.
         The equipment typically consists of breakers, busbars, instrumentation,
@@ -1006,7 +1006,7 @@ class VoltageLevel(EquipmentContainer):
     BaseVoltage: Optional[BaseVoltage] = field(default=None, metadata={'type': 'Association', 'stereotypes': ['ByReference'], 'minOccurs': '1', 'maxOccurs': '1', 'inverse': 'BaseVoltage.VoltageLevel', 'namespace': 'http://cim.ucaiug.io/CIM101/draft#', 'serialize': True})
     Substation: Optional[Substation] = field(default=None, metadata={'type': 'Association', 'stereotypes': ['OfAggregate', 'ByReference'], 'minOccurs': '0', 'maxOccurs': '1', 'inverse': 'Substation.VoltageLevels', 'namespace': 'http://cim.ucaiug.io/CIM101/draft#', 'serialize': True})
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class WindGeneratingUnit(GeneratingUnit):
     """A wind driven generating unit, connected to the grid by means of a rotating
         machine. May be used to represent a single turbine or an aggregation.

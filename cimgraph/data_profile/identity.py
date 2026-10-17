@@ -129,7 +129,7 @@ class UUID_Meta:
         return self.uuid
 
 
-@dataclass
+@dataclass(eq=False)
 class Identity:
     """
     Base class for CIM 18 identity management.
@@ -138,6 +138,13 @@ class Identity:
     for all classes needing identification and naming attributes.
     IdentifiedObject is now a child class of Identity.
     mRID is superseded by Identity.identifier, which is typed to be a UUID.
+
+    Equality and hashing use only the identifier: two objects are equal when
+    they are the same CIM object, regardless of their other attribute values
+    (CIM Joint Issue #7540). Use attribute_utils.diff_attributes to compare
+    attribute values. The identifier must not be reassigned after creation,
+    otherwise sets and dicts holding the object become inconsistent.
+    Generated subclasses must use @dataclass(eq=False) to inherit this.
     """
 
     identifier: Optional[UUID] = field(
@@ -148,6 +155,14 @@ class Identity:
             'maxOccurs': '1',
             'serialize': True
         })
+
+    def __eq__(self, other: object) -> bool:
+        if not isinstance(other, Identity):
+            return NotImplemented
+        return self.identifier == other.identifier
+
+    def __hash__(self) -> int:
+        return hash(self.identifier)
 
     def __post_init__(self) -> None:
         """
@@ -293,13 +308,15 @@ class Identity:
         # Initialize UUID metadata
         self.__uuid__ = UUID_Meta()
 
-        # Prepare seed if needed
+        # Scope seeds to the class, so the same non-UUID mRID or name in two
+        # classes gives two different UUIDs. With no identifying input the seed
+        # stays empty and a random UUID is generated.
         if seed is None:
             seed = ''
-
-        # Add class and name information to seed if available
         if name is not None:
-            seed = seed + f'{self.__class__.__name__}:{name}'
+            seed = seed + name
+        if seed or mRID is not None or uri is not None:
+            seed = f'{self.__class__.__name__}:{seed}'
 
         # Generate UUID using UUID_Meta helper
         self.identifier = self.__uuid__.generate_uuid(

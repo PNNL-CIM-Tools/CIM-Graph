@@ -27,7 +27,7 @@ class CIMStereotype(Enum):
 BASE_URI = 'http://ucaiug.org/ns/CGMES/Topology-EU/3.0#'
 ONTOLOGY_URI = 'http://iec.ch/TC57/CIM100#'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class IdentifiedObject(Identity):
     '''
     This is a root class to provide common identification for all classes needing
@@ -129,7 +129,7 @@ class IdentifiedObject(Identity):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class ACDCTerminal(IdentifiedObject):
     '''
     An electrical connection point (AC or DC) to a piece of conducting equipment.
@@ -150,7 +150,7 @@ class ACDCTerminal(IdentifiedObject):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class DCBaseTerminal(ACDCTerminal):
     '''
     An electrical connection point at a piece of DC conducting equipment. DC
@@ -189,7 +189,7 @@ class DCBaseTerminal(ACDCTerminal):
 
 @stereotype(CIMStereotype.Description)
 @stereotype(CIMStereotype.Concrete)
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class ACDCConverterDCTerminal(DCBaseTerminal):
     '''
     A DC electrical connection point at the AC/DC converter. The AC/DC converter
@@ -215,7 +215,7 @@ class ACDCConverterDCTerminal(DCBaseTerminal):
 
 @stereotype(CIMStereotype.Description)
 @stereotype(CIMStereotype.Concrete)
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class DCTerminal(DCBaseTerminal):
     '''
     An electrical connection point to generic DC conducting equipment.
@@ -236,7 +236,7 @@ class DCTerminal(DCBaseTerminal):
 
 @stereotype(CIMStereotype.Description)
 @stereotype(CIMStereotype.Concrete)
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class Terminal(ACDCTerminal):
     '''
     An AC electrical connection point to a piece of conducting equipment. Terminals
@@ -276,7 +276,7 @@ class Terminal(ACDCTerminal):
         return 'unbounded'
 
 @stereotype(CIMStereotype.ByReference)
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class BaseVoltage(IdentifiedObject):
     '''
     Defines a system base voltage which is referenced.
@@ -312,7 +312,7 @@ class BaseVoltage(IdentifiedObject):
 
 @stereotype(CIMStereotype.Description)
 @stereotype(CIMStereotype.Concrete)
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class ConnectivityNode(IdentifiedObject):
     '''
     Connectivity nodes are points where terminals of AC conducting equipment
@@ -350,7 +350,7 @@ class ConnectivityNode(IdentifiedObject):
 
 @stereotype(CIMStereotype.Description)
 @stereotype(CIMStereotype.Concrete)
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class DCNode(IdentifiedObject):
     '''
     DC nodes are points where terminals of DC conducting equipment are connected
@@ -388,7 +388,7 @@ class DCNode(IdentifiedObject):
 
 @stereotype(CIMStereotype.Concrete)
 @stereotype(CIMStereotype.ByReference)
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class DCTopologicalNode(IdentifiedObject):
     '''
     DC bus.
@@ -453,7 +453,7 @@ class DCTopologicalNode(IdentifiedObject):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class PowerSystemResource(IdentifiedObject):
     '''
     A power system resource (PSR) can be an item of equipment such as a switch,
@@ -476,7 +476,7 @@ class PowerSystemResource(IdentifiedObject):
         return 'unbounded'
 
 @stereotype(CIMStereotype.ByReference)
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class ConnectivityNodeContainer(PowerSystemResource):
     '''
     A base class for all objects that may contain connectivity nodes or topological
@@ -511,7 +511,7 @@ class ConnectivityNodeContainer(PowerSystemResource):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class EquipmentContainer(ConnectivityNodeContainer):
     '''
     A modelling construct to provide a root class for containing equipment.
@@ -531,7 +531,7 @@ class EquipmentContainer(ConnectivityNodeContainer):
         return 'unbounded'
 
 @stereotype(CIMStereotype.ByReference)
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class DCEquipmentContainer(EquipmentContainer):
     '''
     A modelling construct to provide a root class for containment of DC as
@@ -569,7 +569,7 @@ class DCEquipmentContainer(EquipmentContainer):
         return 'unbounded'
 
 @stereotype(CIMStereotype.ByReference)
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class ReportingGroup(IdentifiedObject):
     '''
     A reporting group is used for various ad-hoc groupings used for reporting.
@@ -605,7 +605,7 @@ class ReportingGroup(IdentifiedObject):
 
 @stereotype(CIMStereotype.Concrete)
 @stereotype(CIMStereotype.ByReference)
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class TopologicalNode(IdentifiedObject):
     '''
     For a detailed substation model a topological node is a set of connectivity

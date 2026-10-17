@@ -28,7 +28,7 @@ class CIMStereotype(Enum):
 BASE_URI = 'http://www.ucaiug.org/gmdm/asset#'
 ONTOLOGY_URI = 'http://cim.ucaiug.io/CIM101/draft#'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class Identity(Identity):
     '''
     This is a root class to provide common identification for all classes.
@@ -71,7 +71,7 @@ class Identity(Identity):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class IdentifiedObject(Identity):
     '''
     This is a class that provides common identification for all classes needing
@@ -134,7 +134,7 @@ class IdentifiedObject(Identity):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class AssetInfo(IdentifiedObject):
     '''
     Set of attributes of an asset, representing typical datasheet information
@@ -179,7 +179,7 @@ class AssetInfo(IdentifiedObject):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class ConductingAssetInfo(AssetInfo):
     '''
     Generic information for conducting asset
@@ -237,7 +237,7 @@ class ConductingAssetInfo(AssetInfo):
         return 'unbounded'
 
 @stereotype(CIMStereotype.Concrete)
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class TransformerEndInfo(ConductingAssetInfo):
     '''
     Transformer end data.
@@ -505,7 +505,7 @@ class TransformerEndInfo(ConductingAssetInfo):
         return 'unbounded'
 
 @stereotype(CIMStereotype.Concrete)
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class PowerTransformerInfo(AssetInfo):
     '''
     Set of power transformer data, from an equipment library.
@@ -545,7 +545,7 @@ class PowerTransformerInfo(AssetInfo):
         return 'unbounded'
 
 @stereotype(CIMStereotype.Concrete)
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class TransformerTankInfo(AssetInfo):
     '''
     Set of transformer tank data, from an equipment library.
@@ -622,7 +622,7 @@ class TransformerTankInfo(AssetInfo):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class PowerSystemResource(IdentifiedObject):
     '''
     A power system resource (PSR) can be an item of equipment such as a switch,
@@ -664,7 +664,7 @@ class PowerSystemResource(IdentifiedObject):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class Equipment(PowerSystemResource):
     '''
     The parts of a power system that are physical devices, electronic or mechanical.
@@ -685,7 +685,7 @@ class Equipment(PowerSystemResource):
 
 @stereotype(CIMStereotype.Description)
 @stereotype(CIMStereotype.Concrete)
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class TransformerTank(Equipment):
     '''
     An assembly of two or more coupled windings that transform electrical power
@@ -725,7 +725,7 @@ class TransformerTank(Equipment):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class TransformerTest(IdentifiedObject):
     '''
     Test result for transformer ends, such as short-circuit, open-circuit (excitation)
@@ -786,7 +786,7 @@ class TransformerTest(IdentifiedObject):
         return 'unbounded'
 
 @stereotype(CIMStereotype.Concrete)
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class NoLoadTest(TransformerTest):
     '''
     No-load test results determine core admittance parameters. They include
@@ -929,7 +929,7 @@ class NoLoadTest(TransformerTest):
         return 'unbounded'
 
 @stereotype(CIMStereotype.Concrete)
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class ShortCircuitTest(TransformerTest):
     '''
     Short-circuit test results determine mesh impedance parameters. They include

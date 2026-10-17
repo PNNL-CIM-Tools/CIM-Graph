@@ -9,7 +9,7 @@ from typing import Iterator, TypeVar, cast
 from uuid import UUID
 
 from cimgraph.data_profile.identity import Identity
-from cimgraph.databases import ConnectionInterface
+from cimgraph.databases import ConnectionInterface, add_object_to_graph
 from cimgraph.models.incremental_builder import *
 from cimgraph.shacl import SHACLCatalogProcessor, SHACLExportFilter
 
@@ -53,10 +53,7 @@ class GraphModel():
     def add_to_graph(self, obj: object, graph: dict[type, dict[UUID, object]] = None) -> None:
         if graph is None:
             graph = self.graph
-        if type(obj) not in graph:
-            graph[type(obj)] = {}
-        if obj.identifier not in graph[type(obj)]:
-            graph[type(obj)][obj.identifier] = obj
+        add_object_to_graph(graph, obj)
 
     def add_jsonld_to_graph(self, json_ld: jsonld, graph = None) -> object:
         if type(json_ld) == str:

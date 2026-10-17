@@ -90,7 +90,7 @@ def _emit_inline_class(name: str, merged_cls: type, merged_base_name: str) -> li
     from cimgraph.data_profile.merge import _get_direct_fields
     direct = _get_direct_fields(merged_cls)
     lines: list[str] = []
-    lines.append('@dataclass(repr=False)')
+    lines.append('@dataclass(repr=False, eq=False)')
     lines.append(f'class {name}({merged_base_name}):')
 
     # Preserve the original docstring — make_dataclass overwrites __doc__ with

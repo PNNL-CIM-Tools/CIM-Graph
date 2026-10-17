@@ -183,3 +183,64 @@ def resolve_part_paths(meta: MetadataGraph, base_dir: str | Path) -> list[Path]:
         paths.append(part_path)
 
     return paths
+
+
+# Local names of the 552 header elements at the top of a CIMXML part file.
+# Matched by local name so ModelDescription/1# (CGMES 2.4, cimgraph) and /3# both work.
+HEADER_CLASSES = ('FullModel', 'ModelAuthority')
+
+
+@dataclass
+class ModelHeader:
+    """The ``md:FullModel`` and ``cim:ModelAuthority`` header of one CIMXML part file."""
+
+    full_model_uuid: str | None = None
+    created: str | None = None
+    description: str | None = None
+    authority: str | None = None
+    authority_uuid: str | None = None
+
+
+def _local_name(tag: str) -> str:
+    return tag.split('}')[-1]
+
+
+def _header_uuid(el) -> str | None:
+    """UUID of a header element written as rdf:about="urn:uuid:..." (552-NEW) or rdf:ID (552-OLD)."""
+    uri = el.attrib.get(_tag('rdf', 'about')) or el.attrib.get(_tag('rdf', 'ID'), '')
+    return uri.split(':')[-1].lstrip('#_') or None
+
+
+def _child_texts(el) -> dict[str, str]:
+    """Map each child's local tag name to its stripped text."""
+    return {_local_name(child.tag): (child.text or '').strip() for child in el}
+
+
+def parse_model_header(root) -> ModelHeader:
+    """Read the FullModel and ModelAuthority header elements of a parsed part file.
+
+    The authority comes from ``md:Model.modelingAuthoritySet``, falling back to the
+    ``cim:ModelAuthority`` name. The model name written by cimgraph is ``md:Model.description``.
+    """
+    header = ModelHeader()
+    authority_name = None
+    for el in root:
+        name = _local_name(el.tag)
+        if name == 'FullModel':
+            texts = _child_texts(el)
+            header.full_model_uuid = _header_uuid(el)
+            header.created = texts.get('Model.created')
+            header.description = texts.get('Model.description')
+            header.authority = texts.get('Model.modelingAuthoritySet')
+        elif name == 'ModelAuthority':
+            header.authority_uuid = _header_uuid(el)
+            authority_name = _child_texts(el).get('IdentifiedObject.name')
+
+    if header.authority is None:
+        header.authority = authority_name
+    elif authority_name is not None and authority_name != header.authority:
+        _log.warning(
+            'FullModel modelingAuthoritySet %r differs from ModelAuthority name %r; using %r',
+            header.authority, authority_name, header.authority,
+        )
+    return header

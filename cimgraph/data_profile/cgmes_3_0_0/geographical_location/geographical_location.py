@@ -24,7 +24,7 @@ class CIMStereotype(Enum):
 BASE_URI = 'http://ucaiug.org/ns/CGMES/GeographicalLocation-EU/3.0#'
 ONTOLOGY_URI = 'http://iec.ch/TC57/CIM100#'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class IdentifiedObject(Identity):
     '''
     This is a root class to provide common identification for all classes needing
@@ -80,7 +80,7 @@ class IdentifiedObject(Identity):
         return 'unbounded'
 
 @stereotype(CIMStereotype.Concrete)
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class CoordinateSystem(IdentifiedObject):
     '''
     Coordinate reference system.
@@ -139,7 +139,7 @@ class CoordinateSystem(IdentifiedObject):
         return 'unbounded'
 
 @stereotype(CIMStereotype.Concrete)
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class Location(IdentifiedObject):
     '''
     The place, scene, or point of something where someone or something has
@@ -206,7 +206,7 @@ class Location(IdentifiedObject):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class WorkLocation(Location):
     '''
     Information about a particular location for various forms of work.
@@ -226,7 +226,7 @@ class WorkLocation(Location):
         return 'unbounded'
 
 @stereotype(CIMStereotype.Concrete)
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class ServiceLocation(WorkLocation):
     '''
     A real estate location, commonly referred to as premises.
@@ -245,7 +245,7 @@ class ServiceLocation(WorkLocation):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class PowerSystemResource(IdentifiedObject):
     '''
     A power system resource (PSR) can be an item of equipment such as a switch,
@@ -283,7 +283,7 @@ class PowerSystemResource(IdentifiedObject):
         return 'unbounded'
 
 @stereotype(CIMStereotype.Concrete)
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class PositionPoint(Identity):
     '''
     Set of spatial coordinates that determine a point, defined in the coordinate
@@ -380,7 +380,7 @@ class PositionPoint(Identity):
         return 'unbounded'
 
 @stereotype(CIMStereotype.Compound)
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class Status(Identity):
     '''
     Current status information relevant to an entity.
@@ -459,7 +459,7 @@ class Status(Identity):
         return 'unbounded'
 
 @stereotype(CIMStereotype.Compound)
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class StreetAddress(Identity):
     '''
     General purpose street and postal address information.
@@ -522,7 +522,7 @@ class StreetAddress(Identity):
         return 'unbounded'
 
 @stereotype(CIMStereotype.Compound)
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class StreetDetail(Identity):
     '''
     Street details, in the context of address.
@@ -733,7 +733,7 @@ class StreetDetail(Identity):
         return 'unbounded'
 
 @stereotype(CIMStereotype.Compound)
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class TownDetail(Identity):
     '''
     Town details, in the context of address.

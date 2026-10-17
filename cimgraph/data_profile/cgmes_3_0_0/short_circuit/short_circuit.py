@@ -26,7 +26,7 @@ class CIMStereotype(Enum):
 BASE_URI = 'http://ucaiug.org/ns/CGMES/ShortCircuit-EU/3.0#'
 ONTOLOGY_URI = 'http://iec.ch/TC57/CIM100#'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class IdentifiedObject(Identity):
     '''
     This is a root class to provide common identification for all classes needing
@@ -66,7 +66,7 @@ class IdentifiedObject(Identity):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class ACDCTerminal(IdentifiedObject):
     '''
     An electrical connection point (AC or DC) to a piece of conducting equipment.
@@ -87,7 +87,7 @@ class ACDCTerminal(IdentifiedObject):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class Terminal(ACDCTerminal):
     '''
     An AC electrical connection point to a piece of conducting equipment. Terminals
@@ -138,7 +138,7 @@ class Terminal(ACDCTerminal):
         return 'unbounded'
 
 @stereotype(CIMStereotype.Concrete)
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class MutualCoupling(IdentifiedObject):
     '''
     This class represents the zero sequence line mutual coupling.
@@ -309,7 +309,7 @@ class MutualCoupling(IdentifiedObject):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class PowerSystemResource(IdentifiedObject):
     '''
     A power system resource (PSR) can be an item of equipment such as a switch,
@@ -331,7 +331,7 @@ class PowerSystemResource(IdentifiedObject):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class Equipment(PowerSystemResource):
     '''
     The parts of a power system that are physical devices, electronic or mechanical.
@@ -350,7 +350,7 @@ class Equipment(PowerSystemResource):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class ConductingEquipment(Equipment):
     '''
     The parts of the AC power system that are designed to carry current or
@@ -370,7 +370,7 @@ class ConductingEquipment(Equipment):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class Conductor(ConductingEquipment):
     '''
     Combination of conducting material with consistent electrical characteristics,
@@ -393,7 +393,7 @@ class Conductor(ConductingEquipment):
 
 @stereotype(CIMStereotype.Description)
 @stereotype(CIMStereotype.Concrete)
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class ACLineSegment(Conductor):
     '''
     A wire or combination of wires, with consistent electrical characteristics,
@@ -496,7 +496,7 @@ class ACLineSegment(Conductor):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class Connector(ConductingEquipment):
     '''
     A conductor, or group of conductors, with negligible impedance, that serve
@@ -519,7 +519,7 @@ class Connector(ConductingEquipment):
 
 @stereotype(CIMStereotype.Description)
 @stereotype(CIMStereotype.Concrete)
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class BusbarSection(Connector):
     '''
     A conductor, or group of conductors, with negligible impedance, that serve
@@ -559,7 +559,7 @@ class BusbarSection(Connector):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class EarthFaultCompensator(ConductingEquipment):
     '''
     A conducting equipment used to represent a connection to ground which is
@@ -598,7 +598,7 @@ class EarthFaultCompensator(ConductingEquipment):
 
 @stereotype(CIMStereotype.Description)
 @stereotype(CIMStereotype.Concrete)
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class GroundingImpedance(EarthFaultCompensator):
     '''
     A fixed impedance device used for grounding.
@@ -633,7 +633,7 @@ class GroundingImpedance(EarthFaultCompensator):
 
 @stereotype(CIMStereotype.Concrete)
 @stereotype(CIMStereotype.Description)
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class PetersenCoil(EarthFaultCompensator):
     '''
     A variable impedance device normally used to offset line charging during
@@ -758,7 +758,7 @@ class PetersenCoil(EarthFaultCompensator):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class EnergyConnection(ConductingEquipment):
     '''
     A connection of energy generation or consumption on the power system model.
@@ -779,7 +779,7 @@ class EnergyConnection(ConductingEquipment):
 
 @stereotype(CIMStereotype.Concrete)
 @stereotype(CIMStereotype.Description)
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class EnergySource(EnergyConnection):
     '''
     A generic equivalent for an energy supplier on a transmission or distribution
@@ -883,7 +883,7 @@ class EnergySource(EnergyConnection):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class RegulatingCondEq(EnergyConnection):
     '''
     A type of conducting equipment that can regulate a quantity (i.e. voltage
@@ -905,7 +905,7 @@ class RegulatingCondEq(EnergyConnection):
 
 @stereotype(CIMStereotype.Description)
 @stereotype(CIMStereotype.Concrete)
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class ExternalNetworkInjection(RegulatingCondEq):
     '''
     This class represents the external network and it is used for IEC 60909
@@ -1085,7 +1085,7 @@ class ExternalNetworkInjection(RegulatingCondEq):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class RotatingMachine(RegulatingCondEq):
     '''
     A rotating machine which may be used as a generator or motor.
@@ -1106,7 +1106,7 @@ class RotatingMachine(RegulatingCondEq):
 
 @stereotype(CIMStereotype.Description)
 @stereotype(CIMStereotype.Concrete)
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class AsynchronousMachine(RotatingMachine):
     '''
     A rotating machine whose shaft rotates asynchronously with the electrical
@@ -1236,7 +1236,7 @@ class AsynchronousMachine(RotatingMachine):
 @stereotype(CIMStereotype.Concrete)
 @stereotype(CIMStereotype.ByReference)
 @stereotype(CIMStereotype.Description)
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class SynchronousMachine(RotatingMachine):
     '''
     An electromechanical device that operates with shaft rotating synchronously
@@ -1489,7 +1489,7 @@ class SynchronousMachine(RotatingMachine):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class ShuntCompensator(RegulatingCondEq):
     '''
     A shunt capacitor or reactor or switchable bank of shunt capacitors or
@@ -1513,7 +1513,7 @@ class ShuntCompensator(RegulatingCondEq):
 
 @stereotype(CIMStereotype.Description)
 @stereotype(CIMStereotype.Concrete)
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class LinearShuntCompensator(ShuntCompensator):
     '''
     A linear shunt compensator has banks or sections with equal admittance
@@ -1561,7 +1561,7 @@ class LinearShuntCompensator(ShuntCompensator):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class EquivalentEquipment(ConductingEquipment):
     '''
     The class represents equivalent objects that are the result of a network
@@ -1583,7 +1583,7 @@ class EquivalentEquipment(ConductingEquipment):
 
 @stereotype(CIMStereotype.Description)
 @stereotype(CIMStereotype.Concrete)
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class EquivalentBranch(EquivalentEquipment):
     '''
     The class represents equivalent branches. In cases where a transformer
@@ -1812,7 +1812,7 @@ class EquivalentBranch(EquivalentEquipment):
 
 @stereotype(CIMStereotype.Concrete)
 @stereotype(CIMStereotype.Description)
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class EquivalentInjection(EquivalentEquipment):
     '''
     This class represents equivalent injections (generation or load). Voltage
@@ -1933,7 +1933,7 @@ class EquivalentInjection(EquivalentEquipment):
 @stereotype(CIMStereotype.Concrete)
 @stereotype(CIMStereotype.ByReference)
 @stereotype(CIMStereotype.Description)
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class PowerTransformer(ConductingEquipment):
     '''
     An electrical device consisting of two or more coupled windings, with or
@@ -2070,7 +2070,7 @@ class PowerTransformer(ConductingEquipment):
 
 @stereotype(CIMStereotype.Description)
 @stereotype(CIMStereotype.Concrete)
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class SeriesCompensator(ConductingEquipment):
     '''
     A Series Compensator is a series capacitor or reactor or an AC transmission
@@ -2167,7 +2167,7 @@ class SeriesCompensator(ConductingEquipment):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class TransformerEnd(IdentifiedObject):
     '''
     A conducting connection point of a power transformer. It corresponds to
@@ -2235,7 +2235,7 @@ class TransformerEnd(IdentifiedObject):
 
 @stereotype(CIMStereotype.Concrete)
 @stereotype(CIMStereotype.Description)
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class PowerTransformerEnd(TransformerEnd):
     '''
     A PowerTransformerEnd is associated with each Terminal of a PowerTransformer.
@@ -2356,7 +2356,7 @@ class PowerTransformerEnd(TransformerEnd):
 
 @stereotype(CIMStereotype.Description)
 @stereotype(CIMStereotype.Concrete)
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class NonlinearShuntCompensatorPoint(Identity):
     '''
     A non linear shunt compensator bank or section admittance value. The number

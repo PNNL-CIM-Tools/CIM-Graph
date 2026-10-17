@@ -47,7 +47,7 @@ class CIMStereotype(Enum):
 BASE_URI = 'http://www.gridappsd.org/CIM101#'
 ONTOLOGY_URI = 'http://cim.ucaiug.io/CIM101/draft#'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class AutomationBlockGroup(Identity):
     '''
     Grouping of function block that are operated with the same priority as
@@ -126,7 +126,7 @@ class AutomationBlockGroup(Identity):
     '''
 
 @stereotype(CIMStereotype.informative)
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class BlockingFunction(Identity):
     '''
     '''
@@ -178,7 +178,7 @@ class BlockingFunction(Identity):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class BranchGroupTerminal(Identity):
     '''
     A specific directed terminal flow for a branch group.
@@ -255,7 +255,7 @@ class BranchGroupTerminal(Identity):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class CCAinverter(Identity):
     '''
     '''
@@ -273,7 +273,7 @@ class CCAinverter(Identity):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class CCArectifierControl(Identity):
     '''
     '''
@@ -291,7 +291,7 @@ class CCArectifierControl(Identity):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class CableArmorInfo(Identity):
     '''
     '''
@@ -485,7 +485,7 @@ class CableArmorInfo(Identity):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class CapacitorBankPhaseInfo(Identity):
     '''
     '''
@@ -503,7 +503,7 @@ class CapacitorBankPhaseInfo(Identity):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class ChangeSetMember(Identity):
     '''
     A CRUD-style data object.
@@ -545,7 +545,7 @@ class ChangeSetMember(Identity):
     object is required.
     '''
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class ComModuleInfo(Identity):
     '''
     Communication module asset informtion
@@ -600,7 +600,7 @@ class ComModuleInfo(Identity):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class CurrentDroopOverride(Identity):
     '''
     Current droop override uses the following logic:
@@ -803,7 +803,7 @@ class CurrentDroopOverride(Identity):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class CurveData(Identity):
     '''
     Multi-purpose data points for defining a curve. The use of this generic
@@ -921,7 +921,7 @@ class CurveData(Identity):
         return 'unbounded'
 
 @stereotype(CIMStereotype.informative)
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class DCvoltageControl(Identity):
     '''
     DC voltage control used for voltage regulation.
@@ -1047,7 +1047,7 @@ class DCvoltageControl(Identity):
         return 'unbounded'
 
 @stereotype(CIMStereotype.informative)
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class Delay(Identity):
     '''
     All the measurements are filtered by a first lag element with a time constant
@@ -1221,7 +1221,7 @@ class Delay(Identity):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class DiagramObjectGluePoint(Identity):
     '''
     This is used for grouping diagram object points from different diagram
@@ -1263,7 +1263,7 @@ class DiagramObjectGluePoint(Identity):
     that are considered to be 'glued' together.
     '''
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class DiagramObjectPoint(Identity):
     '''
     A point in a given space defined by 3 coordinates and associated to a diagram
@@ -1398,7 +1398,7 @@ class DiagramObjectPoint(Identity):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class FrequencyMonitoringTerminal(Identity):
     '''
     Frequency monitoring terminal provides location in the model where the
@@ -1505,7 +1505,7 @@ class FrequencyMonitoringTerminal(Identity):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class FunctionFunctionLink(Identity):
     '''
     Class to represent links between the inputs and outputs of generic FunctionBlock
@@ -1606,7 +1606,7 @@ class FunctionFunctionLink(Identity):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class FunctionLogicDescription(Identity):
     '''
     Class providing a logic description for a FunctionBlockType instance.
@@ -1706,7 +1706,7 @@ class FunctionLogicDescription(Identity):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class FunctionTypeInput(Identity):
     '''
     Class to define the inputs to a FunctionBlockType instance. Its parameterType
@@ -1807,7 +1807,7 @@ class FunctionTypeInput(Identity):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class FunctionTypeOutput(Identity):
     '''
     Class to define the outputs from a FunctionBlockType instance. Its parameterType
@@ -1888,7 +1888,7 @@ class FunctionTypeOutput(Identity):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class FuseInfo(Identity):
     '''
     Fuse datasheet information.
@@ -1948,7 +1948,7 @@ class FuseInfo(Identity):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class GenDistributionFactor(Identity):
     '''
     This class models the generation distribution factors. This class needs
@@ -1986,7 +1986,7 @@ class GenDistributionFactor(Identity):
     '''
     '''
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class GeneralDateTimeDescription(Identity):
     '''
     rdfs:label : "descripci�n de fecha-hora generalizada"@es
@@ -2027,7 +2027,7 @@ class GeneralDateTimeDescription(Identity):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class HVDCLookUpTable(Identity):
     '''
     '''
@@ -2126,7 +2126,7 @@ class HVDCLookUpTable(Identity):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class IdcInverterControl(Identity):
     '''
     '''
@@ -2144,7 +2144,7 @@ class IdcInverterControl(Identity):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class IdentifiedObject(Identity):
     '''
     This is a class that provides common identification for all classes needing
@@ -2360,7 +2360,7 @@ class IdentifiedObject(Identity):
     dynamics model or signal.
     '''
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class ACDCTerminal(IdentifiedObject):
     '''
     An electrical connection point (AC or DC) to a piece of conducting equipment.
@@ -2560,7 +2560,7 @@ class ACDCTerminal(IdentifiedObject):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class DCBaseTerminal(ACDCTerminal):
     '''
     An electrical connection point at a piece of DC conducting equipment. DC
@@ -2622,7 +2622,7 @@ class DCBaseTerminal(ACDCTerminal):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class ACDCConverterDCTerminal(DCBaseTerminal):
     '''
     A DC electrical connection point at the AC/DC converter. The AC/DC converter
@@ -2693,7 +2693,7 @@ class ACDCConverterDCTerminal(DCBaseTerminal):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class DCTerminal(DCBaseTerminal):
     '''
     An electrical connection point to generic DC conducting equipment.
@@ -2792,7 +2792,7 @@ class DCTerminal(DCBaseTerminal):
         return 'unbounded'
 
 @stereotype(CIMStereotype.ShadowExtension)
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class Terminal(ACDCTerminal):
     '''
     An AC electrical connection point to a piece of conducting equipment. Terminals
@@ -3419,7 +3419,7 @@ class Terminal(ACDCTerminal):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class AltGeneratingUnitMeas(IdentifiedObject):
     '''
     A prioritized measurement to be used for the generating unit in the control
@@ -3497,7 +3497,7 @@ class AltGeneratingUnitMeas(IdentifiedObject):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class AltTieMeas(IdentifiedObject):
     '''
     A prioritized measurement to be used for the tie flow as part of the control
@@ -3573,7 +3573,7 @@ class AltTieMeas(IdentifiedObject):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class Asset(IdentifiedObject):
     '''
     Tangible resource of the utility, including power system equipment, various
@@ -3616,7 +3616,7 @@ class Asset(IdentifiedObject):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class BatterySystem(Asset):
     '''
     '''
@@ -3668,7 +3668,7 @@ class BatterySystem(Asset):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class Bushing(Asset):
     '''
     Bushing asset.
@@ -3706,7 +3706,7 @@ class Bushing(Asset):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class ChargingStation(Asset):
     '''
     Physical equipment consisting of one or more EV supply equipment managing
@@ -3823,7 +3823,7 @@ class ChargingStation(Asset):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class Crossarm(Asset):
     '''
     Cross arm
@@ -3878,7 +3878,7 @@ class Crossarm(Asset):
         return 'unbounded'
 
 @stereotype(CIMStereotype.informative)
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class DuctBank(Asset):
     '''
     A duct contains individual wires in the layout as specified with associated
@@ -3916,7 +3916,7 @@ class DuctBank(Asset):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class ElectricVehicle(Asset):
     '''
     An electric vehicle (EV) represents a mobile energy storage and load resource
@@ -3977,7 +3977,7 @@ class ElectricVehicle(Asset):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class OverheadStructure(Asset):
     '''
     A structure is an element of an electric transmission or distribution system
@@ -4032,7 +4032,7 @@ class OverheadStructure(Asset):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class Pole(Asset):
     '''
     Pole asset.
@@ -4295,7 +4295,7 @@ class Pole(Asset):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class AssetInfo(IdentifiedObject):
     '''
     Set of attributes of an asset, representing typical datasheet information
@@ -4428,7 +4428,7 @@ class AssetInfo(IdentifiedObject):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class CapacitorBankInfo(AssetInfo):
     '''
     Capacitor bank asset information
@@ -4447,7 +4447,7 @@ class CapacitorBankInfo(AssetInfo):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class ChargingConnectorInfo(AssetInfo):
     '''
     Datasheet for charging connectors used within a charging station and electric
@@ -4522,7 +4522,7 @@ class ChargingConnectorInfo(AssetInfo):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class ConductingAssetInfo(AssetInfo):
     '''
     Generic information for conducting asset
@@ -4630,7 +4630,7 @@ class ConductingAssetInfo(AssetInfo):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class BundledCableInfo(ConductingAssetInfo):
     '''
     Bundling two or more conductors, at most one bare wire.
@@ -4758,7 +4758,7 @@ class BundledCableInfo(ConductingAssetInfo):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class BusbarSectionInfo(ConductingAssetInfo):
     '''
     Busbar section data.
@@ -4777,7 +4777,7 @@ class BusbarSectionInfo(ConductingAssetInfo):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class BushingInfo(ConductingAssetInfo):
     '''
     Bushing datasheet information.
@@ -4930,7 +4930,7 @@ class BushingInfo(ConductingAssetInfo):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class CapacitorCanInfo(ConductingAssetInfo):
     '''
     A CapacitorCan info class is used to store asset info data for the small
@@ -5109,7 +5109,7 @@ class CapacitorCanInfo(ConductingAssetInfo):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class CompensatorInfo(ConductingAssetInfo):
     '''
     Data sheet for compensation devices which can be used in a shunt or series
@@ -5166,7 +5166,7 @@ class CompensatorInfo(ConductingAssetInfo):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class CapacitorInfo(CompensatorInfo):
     '''
     Common properties of capacitor asset which can be used in a shunt or series
@@ -5319,7 +5319,7 @@ class CapacitorInfo(CompensatorInfo):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class SeriesCapacitorInfo(CapacitorInfo):
     '''
     Class for specializing CapacitorInfo when used as in a series application.
@@ -5339,7 +5339,7 @@ class SeriesCapacitorInfo(CapacitorInfo):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class ShuntCapacitorInfo(CapacitorInfo):
     '''
     Class for specializing CapacitorInfo when used as in a shunt application
@@ -5377,7 +5377,7 @@ class ShuntCapacitorInfo(CapacitorInfo):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class FACTSInfo(CompensatorInfo):
     '''
     Flexible alternating current transmission system
@@ -5580,7 +5580,7 @@ class FACTSInfo(CompensatorInfo):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class SVCInfo(FACTSInfo):
     '''
     Static Var Compensator - High speed switched reactor and capacitor.
@@ -5659,7 +5659,7 @@ class SVCInfo(FACTSInfo):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class SelfSaturatedReactorInfo(SVCInfo):
     '''
     Inductor made up of a transformer like core. The secondary winding is driven
@@ -5722,7 +5722,7 @@ class SelfSaturatedReactorInfo(SVCInfo):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class StatComInfo(FACTSInfo):
     '''
     StatCom - Static Synchronous Compensator High speed continuous reactor
@@ -5838,7 +5838,7 @@ class StatComInfo(FACTSInfo):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class ReactorInfo(CompensatorInfo):
     '''
     Common properties of reactor asset which can be used in a shunt or series
@@ -6136,7 +6136,7 @@ class ReactorInfo(CompensatorInfo):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class SeriesReactorInfo(ReactorInfo):
     '''
     Class for specializing ReactorInfo when used as in a series application.
@@ -6156,7 +6156,7 @@ class SeriesReactorInfo(ReactorInfo):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class ShuntReactorInfo(ReactorInfo):
     '''
     Class for specializing ReactorInfo when used as in a shunt application
@@ -6193,7 +6193,7 @@ class ShuntReactorInfo(ReactorInfo):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class CompositeSwitchInfo(ConductingAssetInfo):
     '''
     Properties of a composite switch.
@@ -6376,7 +6376,7 @@ class CompositeSwitchInfo(ConductingAssetInfo):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class ConductorInfo(ConductingAssetInfo):
     '''
     Common class for rigid and flexible conductors.
@@ -6541,7 +6541,7 @@ class ConductorInfo(ConductingAssetInfo):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class RigidBusbarInfo(ConductorInfo):
     '''
     Rigid busbar information.
@@ -6564,7 +6564,7 @@ class RigidBusbarInfo(ConductorInfo):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class AngleBusbarInfo(RigidBusbarInfo):
     '''
     L-shape bar with both legs of uniform thickness and same width
@@ -6619,7 +6619,7 @@ class AngleBusbarInfo(RigidBusbarInfo):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class BarBusbarInfo(RigidBusbarInfo):
     '''
     One rectangular slab with uniform thickness and width
@@ -6674,7 +6674,7 @@ class BarBusbarInfo(RigidBusbarInfo):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class IntegralWebBusbarInfo(RigidBusbarInfo):
     '''
     I-beam type of conductor with the outer edges, turned into each other.
@@ -6747,7 +6747,7 @@ class IntegralWebBusbarInfo(RigidBusbarInfo):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class TubeBusbarInfo(RigidBusbarInfo):
     '''
     Tube busbar information
@@ -6802,7 +6802,7 @@ class TubeBusbarInfo(RigidBusbarInfo):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class PipeBusbarInfo(TubeBusbarInfo):
     '''
     Pipe busbar information
@@ -6848,7 +6848,7 @@ class PipeBusbarInfo(TubeBusbarInfo):
         return 'unbounded'
 
 @stereotype(CIMStereotype.ShadowExtension)
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class WireInfo(ConductorInfo):
     '''
     Wire data that can be specified per line segment phase, or for the line
@@ -7152,7 +7152,7 @@ class WireInfo(ConductorInfo):
         return 'unbounded'
 
 @stereotype(CIMStereotype.ShadowExtension)
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class BareWireInfo(WireInfo):
     '''
     Bare wire data.
@@ -7190,7 +7190,7 @@ class BareWireInfo(WireInfo):
         return 'unbounded'
 
 @stereotype(CIMStereotype.ShadowExtension)
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class CableInfo(WireInfo):
     '''
     Cable data.
@@ -7409,7 +7409,7 @@ class CableInfo(WireInfo):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class ConcentricNeutralCableInfo(CableInfo):
     '''
     Concentric neutral cable data.
@@ -7518,7 +7518,7 @@ class ConcentricNeutralCableInfo(CableInfo):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class MultiCoreCableInfo(CableInfo):
     '''
     Multi core cable information
@@ -7628,7 +7628,7 @@ class MultiCoreCableInfo(CableInfo):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class TapeShieldCableInfo(CableInfo):
     '''
     Tape shield cable data.
@@ -7686,7 +7686,7 @@ class TapeShieldCableInfo(CableInfo):
         return 'unbounded'
 
 @stereotype(CIMStereotype.ShadowExtension)
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class OverheadWireInfo(WireInfo):
     '''
     Overhead wire data.
@@ -7721,7 +7721,7 @@ class OverheadWireInfo(WireInfo):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class GridEdgeDeviceInfo(ConductingAssetInfo):
     '''
     A Grid Edge Device is any device that is connected to the power grid with
@@ -7813,7 +7813,7 @@ class GridEdgeDeviceInfo(ConductingAssetInfo):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class BatteryInfo(GridEdgeDeviceInfo):
     '''
     '''
@@ -7912,7 +7912,7 @@ class BatteryInfo(GridEdgeDeviceInfo):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class InverterInfo(GridEdgeDeviceInfo):
     '''
     Inverter-based devices are a type of Grid Edge Device which convert DC
@@ -8175,7 +8175,7 @@ class InverterInfo(GridEdgeDeviceInfo):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class GenerationInverterInfo(InverterInfo):
     '''
     A Generation Inverter is an inverter backed by a source that is capable
@@ -8228,7 +8228,7 @@ class GenerationInverterInfo(InverterInfo):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class StorageInverterInfo(InverterInfo):
     '''
     A Storage Inverter is an inverter backed by a device that is capable of
@@ -8352,7 +8352,7 @@ class StorageInverterInfo(InverterInfo):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class SwitchInfo(ConductingAssetInfo):
     '''
     Switch datasheet information.
@@ -8555,7 +8555,7 @@ class SwitchInfo(ConductingAssetInfo):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class TapChangerInfo(ConductingAssetInfo):
     '''
     Tap changer data.
@@ -8847,7 +8847,7 @@ class TapChangerInfo(ConductingAssetInfo):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class TransformerEndInfo(ConductingAssetInfo):
     '''
     Transformer end data.
@@ -9225,7 +9225,7 @@ class TransformerEndInfo(ConductingAssetInfo):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class CoolingInfo(AssetInfo):
     '''
     Cooling information
@@ -9279,7 +9279,7 @@ class CoolingInfo(AssetInfo):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class CrossarmInfo(AssetInfo):
     '''
     Cross arm information
@@ -9298,7 +9298,7 @@ class CrossarmInfo(AssetInfo):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class DamperInfo(AssetInfo):
     '''
     Damper asset information
@@ -9317,7 +9317,7 @@ class DamperInfo(AssetInfo):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class InsulationInfo(AssetInfo):
     '''
     Wire data that can be specified per line segment phase, or for the line
@@ -9408,7 +9408,7 @@ class InsulationInfo(AssetInfo):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class InsulatorInfo(AssetInfo):
     '''
     Insulator information
@@ -9427,7 +9427,7 @@ class InsulatorInfo(AssetInfo):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class InterrupterUnitInfo(AssetInfo):
     '''
     Interrupter datasheet information.
@@ -9464,7 +9464,7 @@ class InterrupterUnitInfo(AssetInfo):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class OperatingMechanismInfo(AssetInfo):
     '''
     Breaker operating mechanism datasheet information.
@@ -9627,7 +9627,7 @@ class OperatingMechanismInfo(AssetInfo):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class PhaseToPhaseSpacing(AssetInfo):
     '''
     Distance from
@@ -9711,7 +9711,7 @@ class PhaseToPhaseSpacing(AssetInfo):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class PoleAssetInfo(AssetInfo):
     '''
     Pole asset data sheet.
@@ -9730,7 +9730,7 @@ class PoleAssetInfo(AssetInfo):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class PowerTransformerInfo(AssetInfo):
     '''
     Set of power transformer data, from an equipment library.
@@ -9768,7 +9768,7 @@ class PowerTransformerInfo(AssetInfo):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class ShuntCompensatorInfo(AssetInfo):
     '''
     Properties of shunt capacitor, shunt reactor or switchable bank of shunt
@@ -9877,7 +9877,7 @@ class ShuntCompensatorInfo(AssetInfo):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class SoundInfo(AssetInfo):
     '''
     Sound information
@@ -9931,7 +9931,7 @@ class SoundInfo(AssetInfo):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class StructureInfo(AssetInfo):
     '''
     Structure information
@@ -10076,7 +10076,7 @@ class StructureInfo(AssetInfo):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class MarineStructureInfo(StructureInfo):
     '''
     Marine structure information.
@@ -10113,7 +10113,7 @@ class MarineStructureInfo(StructureInfo):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class OverheadStructureInfo(StructureInfo):
     '''
     Overhead structure information
@@ -10132,7 +10132,7 @@ class OverheadStructureInfo(StructureInfo):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class UndergroundStructureInfo(StructureInfo):
     '''
     Underground structure information
@@ -10169,7 +10169,7 @@ class UndergroundStructureInfo(StructureInfo):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class SurfaceTreatmentInfo(AssetInfo):
     '''
     Surface treatment information
@@ -10241,7 +10241,7 @@ class SurfaceTreatmentInfo(AssetInfo):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class ToolInfo(AssetInfo):
     '''
     Type of tool needed to perform a certain type of work.
@@ -10278,7 +10278,7 @@ class ToolInfo(AssetInfo):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class TransformerTankInfo(AssetInfo):
     '''
     Set of transformer tank data, from an equipment library.
@@ -10352,7 +10352,7 @@ class TransformerTankInfo(AssetInfo):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class VehicleInfo(AssetInfo):
     '''
     Type of vehicle needed to perform certain type of work.
@@ -10444,7 +10444,7 @@ class VehicleInfo(AssetInfo):
         return 'unbounded'
 
 @stereotype(CIMStereotype.ShadowExtension)
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class ElectricVehicleInfo(VehicleInfo):
     '''
     The ElectricVehicleInfo class associates the vehicle with its physical
@@ -10548,7 +10548,7 @@ class ElectricVehicleInfo(VehicleInfo):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class WireAssemblyInfo(AssetInfo):
     '''
     Describes the construction of a multi-conductor wire.<-NOTE: period missing.
@@ -10605,7 +10605,7 @@ class WireAssemblyInfo(AssetInfo):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class WireBundleInfo(AssetInfo):
     '''
     '''
@@ -10730,7 +10730,7 @@ class WireBundleInfo(AssetInfo):
         return 'unbounded'
 
 @stereotype(CIMStereotype.deprecated)
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class WireSpacingInfo(AssetInfo):
     '''
     Wire spacing data that associates multiple wire positions with the line
@@ -10860,7 +10860,7 @@ class WireSpacingInfo(AssetInfo):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class AssetInfoComponent(IdentifiedObject):
     '''
     Components of an asset info
@@ -10931,7 +10931,7 @@ class AssetInfoComponent(IdentifiedObject):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class AssetRequirement(IdentifiedObject):
     '''
     This is an asset requirement information defined by designed (product procurer).
@@ -10968,7 +10968,7 @@ class AssetRequirement(IdentifiedObject):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class BaseFrequency(IdentifiedObject):
     '''
     The BaseFrequency class describes a base frequency for a power system network.
@@ -11010,7 +11010,7 @@ class BaseFrequency(IdentifiedObject):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class BasePower(IdentifiedObject):
     '''
     The BasePower class defines the base power used in the per unit calculations.
@@ -11047,7 +11047,7 @@ class BasePower(IdentifiedObject):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class BaseVoltage(IdentifiedObject):
     '''
     Defines a system base voltage which is referenced. This may be different
@@ -11167,7 +11167,7 @@ class BaseVoltage(IdentifiedObject):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class BasicIntervalSchedule(IdentifiedObject):
     '''
     Schedule of values at points in time.
@@ -11369,7 +11369,7 @@ class BasicIntervalSchedule(IdentifiedObject):
         return 'unbounded'
 
 @stereotype(CIMStereotype.OfAggregate)
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class IrregularIntervalSchedule(BasicIntervalSchedule):
     '''
     The schedule has time points where the time between them varies.
@@ -11408,7 +11408,7 @@ class IrregularIntervalSchedule(BasicIntervalSchedule):
         return 'unbounded'
 
 @stereotype(CIMStereotype.OfAggregate)
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class RegularIntervalSchedule(BasicIntervalSchedule):
     '''
     The schedule has time points where the time between them is constant.
@@ -11487,7 +11487,7 @@ class RegularIntervalSchedule(BasicIntervalSchedule):
         return 'unbounded'
 
 @stereotype(CIMStereotype.AggregateOf)
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class GenUnitOpSchedule(RegularIntervalSchedule):
     '''
     The generating unit's Operator-approved current operating schedule (or
@@ -11533,7 +11533,7 @@ class GenUnitOpSchedule(RegularIntervalSchedule):
         return 'unbounded'
 
 @stereotype(CIMStereotype.AggregateOf)
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class HydroPumpOpSchedule(RegularIntervalSchedule):
     '''
     The hydro pump's Operator-approved current operating schedule (or plan),
@@ -11576,7 +11576,7 @@ class HydroPumpOpSchedule(RegularIntervalSchedule):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class InflowForecast(RegularIntervalSchedule):
     '''
     Natural water inflow to a reservoir, usually forecasted from predicted
@@ -11617,7 +11617,7 @@ class InflowForecast(RegularIntervalSchedule):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class SeasonDayTypeSchedule(RegularIntervalSchedule):
     '''
     A time schedule covering a 24 hour period, with curve data for a specific
@@ -11675,7 +11675,7 @@ class SeasonDayTypeSchedule(RegularIntervalSchedule):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class ConformLoadSchedule(SeasonDayTypeSchedule):
     '''
     A curve of load versus time (X-axis) showing the active power values (Y1-axis)
@@ -11716,7 +11716,7 @@ class ConformLoadSchedule(SeasonDayTypeSchedule):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class NonConformLoadSchedule(SeasonDayTypeSchedule):
     '''
     An active power (Y1-axis) and reactive power (Y2-axis) schedule (curves)
@@ -11756,7 +11756,7 @@ class NonConformLoadSchedule(SeasonDayTypeSchedule):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class RegulationSchedule(SeasonDayTypeSchedule):
     '''
     A pre-established pattern over time for a controlled variable, e.g., busbar
@@ -11814,7 +11814,7 @@ class RegulationSchedule(SeasonDayTypeSchedule):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class SwitchSchedule(SeasonDayTypeSchedule):
     '''
     A schedule of switch positions. If RegularTimePoint.value1 is 0, the switch
@@ -11854,7 +11854,7 @@ class SwitchSchedule(SeasonDayTypeSchedule):
         return 'unbounded'
 
 @stereotype(CIMStereotype.AggregateOf)
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class SteamSendoutSchedule(RegularIntervalSchedule):
     '''
     The cogeneration plant's steam sendout schedule in volume per time unit.
@@ -11892,7 +11892,7 @@ class SteamSendoutSchedule(RegularIntervalSchedule):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class BilateralExchangeActor(IdentifiedObject):
     '''
     BilateralExchangeActor describes an actor that provides ICCP data, consumes
@@ -11997,7 +11997,7 @@ class BilateralExchangeActor(IdentifiedObject):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class ICCPVCC(BilateralExchangeActor):
     '''
     Indicates that the ICCP information is global in nature and normally is
@@ -12017,7 +12017,7 @@ class ICCPVCC(BilateralExchangeActor):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class ICCPVirtualControlCentre(BilateralExchangeActor):
     '''
     This contains the information that a particular actor exposes for a particular
@@ -12282,7 +12282,7 @@ class ICCPVirtualControlCentre(BilateralExchangeActor):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class BilateralExchangeAgreement(IdentifiedObject):
     '''
     This is the representation of the information exchange agreement between
@@ -12340,7 +12340,7 @@ class BilateralExchangeAgreement(IdentifiedObject):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class TASE2BilateralTable(BilateralExchangeAgreement):
     '''
     This class describe the sending (providing) side in a bilateral ICCP data
@@ -12427,7 +12427,7 @@ class TASE2BilateralTable(BilateralExchangeAgreement):
         return 'unbounded'
 
 @stereotype(CIMStereotype.OfAggregate)
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class BranchGroup(IdentifiedObject):
     '''
     A group of branch terminals whose directed flow summation is to be monitored.
@@ -12574,7 +12574,7 @@ class BranchGroup(IdentifiedObject):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class BusNameMarker(IdentifiedObject):
     '''
     Used to apply user standard names to TopologicalNodes. Associated with
@@ -12686,7 +12686,7 @@ class BusNameMarker(IdentifiedObject):
         return 'unbounded'
 
 @stereotype(CIMStereotype.harmonization)
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class CalculationMethodHierarchy(IdentifiedObject):
     '''
     The hierarchy of calculation methods used to derive this measurement.
@@ -12743,7 +12743,7 @@ class CalculationMethodHierarchy(IdentifiedObject):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class CatalogAssetType(IdentifiedObject):
     '''
     a Assets that may be used for planning, work or design purposes.
@@ -12781,7 +12781,7 @@ class CatalogAssetType(IdentifiedObject):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class ChargingZone(IdentifiedObject):
     '''
     Power management concept representing a group of one or more charging stations
@@ -12803,7 +12803,7 @@ class ChargingZone(IdentifiedObject):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class ClampAction(IdentifiedObject):
     '''
     Action on Clamp as a switching step
@@ -12839,7 +12839,7 @@ class ClampAction(IdentifiedObject):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class ClearSimulationEvent(IdentifiedObject):
     '''
     Defines an event which clears another event such as ParemeterEvent or Fault.
@@ -12934,7 +12934,7 @@ class ClearSimulationEvent(IdentifiedObject):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class CommunicationIEC(IdentifiedObject):
     '''
     Communication module part of the communication model.
@@ -13016,7 +13016,7 @@ class CommunicationIEC(IdentifiedObject):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class CommunicationDelayIEC(CommunicationIEC):
     '''
     Communication delay module.
@@ -13074,7 +13074,7 @@ class CommunicationDelayIEC(CommunicationIEC):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class LinearCommunicationIEC(CommunicationIEC):
     '''
     Linear communication module.
@@ -13153,7 +13153,7 @@ class LinearCommunicationIEC(CommunicationIEC):
         return 'unbounded'
 
 @stereotype(CIMStereotype.European)
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class ConnectivityNode(IdentifiedObject):
     '''
     Connectivity nodes are points where terminals of AC conducting equipment
@@ -13326,7 +13326,7 @@ class ConnectivityNode(IdentifiedObject):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class ConstantPowerFactorSettings(IdentifiedObject):
     '''
     Constant Power Factor Settings.
@@ -13423,7 +13423,7 @@ class ConstantPowerFactorSettings(IdentifiedObject):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class ConstantReactivePowerSettings(IdentifiedObject):
     '''
     Constant Reactive Power Settings.
@@ -13508,7 +13508,7 @@ class ConstantReactivePowerSettings(IdentifiedObject):
 
 @stereotype(CIMStereotype.OfAggregate)
 @stereotype(CIMStereotype.NC)
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class Contingency(IdentifiedObject):
     '''
     An event threatening system reliability, consisting of one or more contingency
@@ -13605,7 +13605,7 @@ class Contingency(IdentifiedObject):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class ContingencyElement(IdentifiedObject):
     '''
     An element of a system event to be studied by contingency analysis, representing
@@ -13644,7 +13644,7 @@ class ContingencyElement(IdentifiedObject):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class ContingencyEquipment(ContingencyElement):
     '''
     Equipment whose in service status is to change, such as a power transformer
@@ -13706,7 +13706,7 @@ class ContingencyEquipment(ContingencyElement):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class ControlAction(IdentifiedObject):
     '''
     Control executed as a switching step.
@@ -13743,7 +13743,7 @@ class ControlAction(IdentifiedObject):
         return 'unbounded'
 
 @stereotype(CIMStereotype.OfAggregate)
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class ControlAreaGeneratingUnit(IdentifiedObject):
     '''
     A control area generating unit. This class is needed so that alternate
@@ -13824,7 +13824,7 @@ class ControlAreaGeneratingUnit(IdentifiedObject):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class ControlAreaPowerElectronicsUnit(IdentifiedObject):
     '''
     A control area power electronics unit. This class is needed so that alternate
@@ -13886,7 +13886,7 @@ class ControlAreaPowerElectronicsUnit(IdentifiedObject):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class CoupledLineSegmentGroup(IdentifiedObject):
     '''
     Aggregates a set of line segments that are on the same tower, or in the
@@ -13927,7 +13927,7 @@ class CoupledLineSegmentGroup(IdentifiedObject):
         return 'unbounded'
 
 @stereotype(CIMStereotype.OfAggregate)
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class Curve(IdentifiedObject):
     '''
     A multi-purpose curve or functional relationship between an independent
@@ -14129,7 +14129,7 @@ class Curve(IdentifiedObject):
         return 'unbounded'
 
 @stereotype(CIMStereotype.AggregateOf)
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class CTTempActivePowerCurve(Curve):
     '''
     Relationship between the combustion turbine's power output rating in gross
@@ -14170,7 +14170,7 @@ class CTTempActivePowerCurve(Curve):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class EmissionAccount(Curve):
     '''
     Accounts for tracking emissions usage and credits for thermal generating
@@ -14250,7 +14250,7 @@ class EmissionAccount(Curve):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class EmissionCurve(Curve):
     '''
     Relationship between the unit's emission rate in units of mass per hour
@@ -14348,7 +14348,7 @@ class EmissionCurve(Curve):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class FuelAllocationSchedule(Curve):
     '''
     The amount of fuel of a given type which is allocated for consumption over
@@ -14501,7 +14501,7 @@ class FuelAllocationSchedule(Curve):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class GenUnitOpCostCurve(Curve):
     '''
     Relationship between unit operating cost (Y-axis) and unit output active
@@ -14562,7 +14562,7 @@ class GenUnitOpCostCurve(Curve):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class GrossToNetActivePowerCurve(Curve):
     '''
     Relationship between the generating unit's gross active power output on
@@ -14609,7 +14609,7 @@ class GrossToNetActivePowerCurve(Curve):
         return 'unbounded'
 
 @stereotype(CIMStereotype.AggregateOf)
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class HeatInputCurve(Curve):
     '''
     Relationship between unit heat input in energy per time for main fuel (Y1-axis)
@@ -14742,7 +14742,7 @@ class HeatInputCurve(Curve):
         return 'unbounded'
 
 @stereotype(CIMStereotype.AggregateOf)
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class HeatRateCurve(Curve):
     '''
     Relationship between unit heat rate per active power (Y-axis) and unit
@@ -14799,7 +14799,7 @@ class HeatRateCurve(Curve):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class HydroGeneratingEfficiencyCurve(Curve):
     '''
     Relationship between unit efficiency as percentage and unit output active
@@ -14845,7 +14845,7 @@ class HydroGeneratingEfficiencyCurve(Curve):
         return 'unbounded'
 
 @stereotype(CIMStereotype.AggregateOf)
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class IncrementalHeatRateCurve(Curve):
     '''
     Relationship between unit incremental heat rate in (delta energy/time)
@@ -14904,7 +14904,7 @@ class IncrementalHeatRateCurve(Curve):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class LevelVsVolumeCurve(Curve):
     '''
     Relationship between reservoir volume and reservoir level. The volume is
@@ -14943,7 +14943,7 @@ class LevelVsVolumeCurve(Curve):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class LimitDependencyCurve(Curve):
     '''
     A curve or functional relationship between an independent variable (X-axis)
@@ -14963,7 +14963,7 @@ class LimitDependencyCurve(Curve):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class AmbientTemperatureDependencyCurve(LimitDependencyCurve):
     '''
     A curve or functional relationship between the ambient temperature independent
@@ -15004,7 +15004,7 @@ class AmbientTemperatureDependencyCurve(LimitDependencyCurve):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class BaseOverloadLimitCurve(LimitDependencyCurve):
     '''
     A curve or functional relationship between
@@ -15047,7 +15047,7 @@ class BaseOverloadLimitCurve(LimitDependencyCurve):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class DurationOverloadLimitCurve(LimitDependencyCurve):
     '''
     A curve or functional relationship between
@@ -15089,7 +15089,7 @@ class DurationOverloadLimitCurve(LimitDependencyCurve):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class RecoveryOverloadLimitCurve(LimitDependencyCurve):
     '''
     The relation between the recovery time and an overload limit.
@@ -15127,7 +15127,7 @@ class RecoveryOverloadLimitCurve(LimitDependencyCurve):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class SolarRadiationDependencyCurve(LimitDependencyCurve):
     '''
     A curve or functional relationship between
@@ -15168,7 +15168,7 @@ class SolarRadiationDependencyCurve(LimitDependencyCurve):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class LossCurve(Curve):
     '''
     Represents the losses in the equipment due to operation position.
@@ -15207,7 +15207,7 @@ class LossCurve(Curve):
         return 'unbounded'
 
 @stereotype(CIMStereotype.AggregateOf)
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class PenstockLossCurve(Curve):
     '''
     Relationship between penstock head loss (in meters) and total discharge
@@ -15247,7 +15247,7 @@ class PenstockLossCurve(Curve):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class ReactiveCapabilityCurve(Curve):
     '''
     Reactive power rating envelope versus the synchronous machine's active
@@ -15385,7 +15385,7 @@ class ReactiveCapabilityCurve(Curve):
         return 'unbounded'
 
 @stereotype(CIMStereotype.AggregateOf)
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class ShutdownCurve(Curve):
     '''
     Relationship between the rate in gross active power/minute (Y-axis) at
@@ -15460,7 +15460,7 @@ class ShutdownCurve(Curve):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class SimulationResultCharacteristic(Curve):
     '''
     Result characteristic. The xvalue of the curve is time.
@@ -15578,7 +15578,7 @@ class SimulationResultCharacteristic(Curve):
         return 'unbounded'
 
 @stereotype(CIMStereotype.AggregateOf)
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class StartIgnFuelCurve(Curve):
     '''
     The quantity of ignition fuel (Y-axis) used to restart and repay the auxiliary
@@ -15636,7 +15636,7 @@ class StartIgnFuelCurve(Curve):
         return 'unbounded'
 
 @stereotype(CIMStereotype.AggregateOf)
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class StartMainFuelCurve(Curve):
     '''
     The quantity of main fuel (Y-axis) used to restart and repay the auxiliary
@@ -15694,7 +15694,7 @@ class StartMainFuelCurve(Curve):
         return 'unbounded'
 
 @stereotype(CIMStereotype.AggregateOf)
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class StartRampCurve(Curve):
     '''
     Rate in gross active power per minute (Y-axis) at which a unit can be loaded
@@ -15751,7 +15751,7 @@ class StartRampCurve(Curve):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class TailbayLossCurve(Curve):
     '''
     Relationship between tailbay head loss height (Y-axis) and the total discharge
@@ -15793,7 +15793,7 @@ class TailbayLossCurve(Curve):
         return 'unbounded'
 
 @stereotype(CIMStereotype.AggregateOf)
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class TargetLevelSchedule(Curve):
     '''
     Reservoir water level targets from advanced studies or "rule curves". Typically
@@ -15870,7 +15870,7 @@ class TargetLevelSchedule(Curve):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class TimeCurrentCurve(Curve):
     '''
     Specialization of Curve class to restrict the usage to Time in the y-axis
@@ -15891,7 +15891,7 @@ class TimeCurrentCurve(Curve):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class ConductorCharacteristicCurve(TimeCurrentCurve):
     '''
     Class to associate damage curves to conductors or to their datasheets.
@@ -15929,7 +15929,7 @@ class ConductorCharacteristicCurve(TimeCurrentCurve):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class FuseCharacteristicCurve(TimeCurrentCurve):
     '''
     This class represents the characteristic curve of fuse.
@@ -16024,7 +16024,7 @@ class FuseCharacteristicCurve(TimeCurrentCurve):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class ProtectionOperationCharacteristicCurve(TimeCurrentCurve):
     '''
     This class expthe base class of characteristic curve of protection relay
@@ -16084,7 +16084,7 @@ class ProtectionOperationCharacteristicCurve(TimeCurrentCurve):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class TransformerCharacteristicCurve(TimeCurrentCurve):
     '''
     Class to associate damage or inrush curves (or points) to transformers
@@ -16121,7 +16121,7 @@ class TransformerCharacteristicCurve(TimeCurrentCurve):
         return 'unbounded'
 
 @stereotype(CIMStereotype.CIMExtension)
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class TransformerSaturation(Curve):
     '''
     Represents a piecewise linear transformer saturation characteristic. It's
@@ -16175,7 +16175,7 @@ class TransformerSaturation(Curve):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class VsCapabilityCurve(Curve):
     '''
     The P-Q capability curve for a voltage source converter, with P on X-axis
@@ -16232,7 +16232,7 @@ class VsCapabilityCurve(Curve):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class CustomerAgreement(IdentifiedObject):
     '''
     Agreement between the customer and the service supplier to pay for service
@@ -16273,7 +16273,7 @@ class CustomerAgreement(IdentifiedObject):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class CutAction(IdentifiedObject):
     '''
     Action on cut as a switching step.
@@ -16311,7 +16311,7 @@ class CutAction(IdentifiedObject):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class DCNode(IdentifiedObject):
     '''
     DC nodes are points where terminals of DC conducting equipment are connected
@@ -16412,7 +16412,7 @@ class DCNode(IdentifiedObject):
         return 'unbounded'
 
 @stereotype(CIMStereotype.OfAggregate)
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class DCTopologicalIsland(IdentifiedObject):
     '''
     An electrically connected subset of the network. DC topological islands
@@ -16455,7 +16455,7 @@ class DCTopologicalIsland(IdentifiedObject):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class DCTopologicalNode(IdentifiedObject):
     '''
     DC bus.
@@ -16571,7 +16571,7 @@ class DCTopologicalNode(IdentifiedObject):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class DERNameplateData(IdentifiedObject):
     '''
     DER nameplate data.
@@ -16901,7 +16901,7 @@ class DERNameplateData(IdentifiedObject):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class DERNameplateDataApplied(IdentifiedObject):
     '''
     Capability related settings that may be changed (applied) at the time of
@@ -17148,7 +17148,7 @@ class DERNameplateDataApplied(IdentifiedObject):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class DayType(IdentifiedObject):
     '''
     Group of similar days. For example it could be used to represent weekdays,
@@ -17187,7 +17187,7 @@ class DayType(IdentifiedObject):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class DesignElement(IdentifiedObject):
     '''
     An element of a design that places a compatible unit or an asset at a specific
@@ -17226,7 +17226,7 @@ class DesignElement(IdentifiedObject):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class DetailedModelDescriptor(IdentifiedObject):
     '''
     Describes different components of a detailed model.
@@ -17264,7 +17264,7 @@ class DetailedModelDescriptor(IdentifiedObject):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class DetailedModelDescriptorArtifact(DetailedModelDescriptor):
     '''
     An artifact (e.g. file) describing the model. In can be used when reusing
@@ -17344,7 +17344,7 @@ class DetailedModelDescriptorArtifact(DetailedModelDescriptor):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class DetailedModelDocumentationArtifact(DetailedModelDescriptor):
     '''
     An artifact describing the model. For instance documentation containing
@@ -17364,7 +17364,7 @@ class DetailedModelDocumentationArtifact(DetailedModelDescriptor):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class FunctionDescriptor(DetailedModelDescriptor):
     '''
     Describes a function part of the detailed model.
@@ -17540,7 +17540,7 @@ class FunctionDescriptor(DetailedModelDescriptor):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class InputOutputDescriptor(DetailedModelDescriptor):
     '''
     Describes the inputs and outputs of the functions that describe an detailed
@@ -17617,7 +17617,7 @@ class InputOutputDescriptor(DetailedModelDescriptor):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class LimiterDescriptor(DetailedModelDescriptor):
     '''
     Describes a limiter part of the detailed model.
@@ -17693,7 +17693,7 @@ class LimiterDescriptor(DetailedModelDescriptor):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class OperatorDescriptor(DetailedModelDescriptor):
     '''
     Describes the operator that connects different signals.
@@ -17767,7 +17767,7 @@ class OperatorDescriptor(DetailedModelDescriptor):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class ParameterDescriptor(DetailedModelDescriptor):
     '''
     Supports definition of one or more parameters of several different datatypes
@@ -18003,7 +18003,7 @@ class ParameterDescriptor(DetailedModelDescriptor):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class SignalDescriptor(DetailedModelDescriptor):
     '''
     Describes the signals both internal signals that connect different functions
@@ -18081,7 +18081,7 @@ class SignalDescriptor(DetailedModelDescriptor):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class DetailedModelTypeDynamics(IdentifiedObject):
     '''
     The main class that packages all related to this type of a detailed model.
@@ -18140,7 +18140,7 @@ class DetailedModelTypeDynamics(IdentifiedObject):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class Diagram(IdentifiedObject):
     '''
     The diagram being exchanged. The coordinate system is a standard Cartesian
@@ -18302,7 +18302,7 @@ class Diagram(IdentifiedObject):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class DiagramObject(IdentifiedObject):
     '''
     An object that defines one or more points in a given space. This object
@@ -18544,7 +18544,7 @@ class DiagramObject(IdentifiedObject):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class TextDiagramObject(DiagramObject):
     '''
     A diagram object for placing free-text or text derived from an associated
@@ -18582,7 +18582,7 @@ class TextDiagramObject(DiagramObject):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class DiagramObjectStyle(IdentifiedObject):
     '''
     A reference to a style used by the originating system for a diagram object.
@@ -18622,7 +18622,7 @@ class DiagramObjectStyle(IdentifiedObject):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class DiagramStyle(IdentifiedObject):
     '''
     The diagram style refers to a style used by the originating system for
@@ -18662,7 +18662,7 @@ class DiagramStyle(IdentifiedObject):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class Dimension(IdentifiedObject):
     '''
     As applicable, the basic linear, area, or volume dimensions of an asset,
@@ -18700,7 +18700,7 @@ class Dimension(IdentifiedObject):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class DimensionsInfo(IdentifiedObject):
     '''
     As applicable, the basic linear, area, or volume dimensions of an asset,
@@ -18738,7 +18738,7 @@ class DimensionsInfo(IdentifiedObject):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class DynamicsFunctionBlock(IdentifiedObject):
     '''
     Abstract parent class for all Dynamics function blocks.
@@ -18836,7 +18836,7 @@ class DynamicsFunctionBlock(IdentifiedObject):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class CrossCompoundTurbineGovernorDynamics(DynamicsFunctionBlock):
     '''
     Turbine-governor cross-compound function block whose behaviour is described
@@ -18901,7 +18901,7 @@ class CrossCompoundTurbineGovernorDynamics(DynamicsFunctionBlock):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class GovSteam1(CrossCompoundTurbineGovernorDynamics):
     '''
     Steam turbine governor, based on the GovSteamIEEE1 (with optional deadband
@@ -19713,7 +19713,7 @@ class GovSteam1(CrossCompoundTurbineGovernorDynamics):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class GovSteamCC(CrossCompoundTurbineGovernorDynamics):
     '''
     Cross compound turbine governor. Unlike tandem compound units, cross compound
@@ -20073,7 +20073,7 @@ class GovSteamCC(CrossCompoundTurbineGovernorDynamics):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class GovSteamIEEE1(CrossCompoundTurbineGovernorDynamics):
     '''
     IEEE steam turbine governor model.
@@ -20540,7 +20540,7 @@ class GovSteamIEEE1(CrossCompoundTurbineGovernorDynamics):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class GovSteamIEEETGOV5(CrossCompoundTurbineGovernorDynamics):
     '''
     Detailed steam turbine-governor model with boiler system, IEEE TGOV5.
@@ -21471,7 +21471,7 @@ class GovSteamIEEETGOV5(CrossCompoundTurbineGovernorDynamics):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class DERDynamics(DynamicsFunctionBlock):
     '''
     Parent class supporting relationships to DER dynamics models.
@@ -21548,7 +21548,7 @@ class DERDynamics(DynamicsFunctionBlock):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class DERIEEEType1(DERDynamics):
     '''
     DER model with behavior defined in IEEE 1547-2018. If DERDynamics.RemoteInputSignal
@@ -21865,7 +21865,7 @@ class DERIEEEType1(DERDynamics):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class DetailedModelDynamics(DynamicsFunctionBlock):
     '''
     The main class that packages all related to this detailed model. This includes
@@ -21963,7 +21963,7 @@ class DetailedModelDynamics(DynamicsFunctionBlock):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class DiscontinuousExcitationControlDynamics(DynamicsFunctionBlock):
     '''
     Discontinuous excitation control function block whose behaviour is described
@@ -22026,7 +22026,7 @@ class DiscontinuousExcitationControlDynamics(DynamicsFunctionBlock):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class DiscExcContIEEEDEC1A(DiscontinuousExcitationControlDynamics):
     '''
     IEEE type DEC1A discontinuous excitation control model that boosts generator
@@ -22401,7 +22401,7 @@ class DiscExcContIEEEDEC1A(DiscontinuousExcitationControlDynamics):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class DiscExcContIEEEDEC2A(DiscontinuousExcitationControlDynamics):
     '''
     IEEE type DEC2A model for discontinuous excitation control. This system
@@ -22537,7 +22537,7 @@ class DiscExcContIEEEDEC2A(DiscontinuousExcitationControlDynamics):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class DiscExcContIEEEDEC3A(DiscontinuousExcitationControlDynamics):
     '''
     IEEE type DEC3A model. In some systems, the stabilizer output is disconnected
@@ -22596,7 +22596,7 @@ class DiscExcContIEEEDEC3A(DiscontinuousExcitationControlDynamics):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class DiscontinuousExcitationControlUserDefined(DiscontinuousExcitationControlDynamics):
     '''
     Discontinuous excitation control function block whose dynamic behaviour
@@ -22664,7 +22664,7 @@ class DiscontinuousExcitationControlUserDefined(DiscontinuousExcitationControlDy
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class ExcitationSystemDynamics(DynamicsFunctionBlock):
     '''
     Excitation system function block whose behaviour is described by reference
@@ -22847,7 +22847,7 @@ class ExcitationSystemDynamics(DynamicsFunctionBlock):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class ExcAC1A(ExcitationSystemDynamics):
     '''
     Modified IEEE AC1A alternator-supplied rectifier excitation system with
@@ -23314,7 +23314,7 @@ class ExcAC1A(ExcitationSystemDynamics):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class ExcAC2A(ExcitationSystemDynamics):
     '''
     Modified IEEE AC2A alternator-supplied rectifier excitation system with
@@ -23906,7 +23906,7 @@ class ExcAC2A(ExcitationSystemDynamics):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class ExcAC3A(ExcitationSystemDynamics):
     '''
     Modified IEEE AC3A alternator-supplied rectifier excitation system with
@@ -24451,7 +24451,7 @@ class ExcAC3A(ExcitationSystemDynamics):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class ExcAC4A(ExcitationSystemDynamics):
     '''
     Modified IEEE AC4A alternator-supplied rectifier excitation system with
@@ -24648,7 +24648,7 @@ class ExcAC4A(ExcitationSystemDynamics):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class ExcAC5A(ExcitationSystemDynamics):
     '''
     Modified IEEE AC5A alternator-supplied rectifier excitation system with
@@ -25029,7 +25029,7 @@ class ExcAC5A(ExcitationSystemDynamics):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class ExcAC6A(ExcitationSystemDynamics):
     '''
     Modified IEEE AC6A alternator-supplied rectifier excitation system with
@@ -25515,7 +25515,7 @@ class ExcAC6A(ExcitationSystemDynamics):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class ExcAC8B(ExcitationSystemDynamics):
     '''
     Modified IEEE AC8B alternator-supplied rectifier excitation system with
@@ -26099,7 +26099,7 @@ class ExcAC8B(ExcitationSystemDynamics):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class ExcANS(ExcitationSystemDynamics):
     '''
     Italian excitation system. It represents static field voltage or excitation
@@ -26403,7 +26403,7 @@ class ExcANS(ExcitationSystemDynamics):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class ExcAVR1(ExcitationSystemDynamics):
     '''
     Italian excitation system corresponding to IEEE (1968) type 1 model. It
@@ -26655,7 +26655,7 @@ class ExcAVR1(ExcitationSystemDynamics):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class ExcAVR2(ExcitationSystemDynamics):
     '''
     Italian excitation system corresponding to IEEE (1968) type 2 model. It
@@ -26928,7 +26928,7 @@ class ExcAVR2(ExcitationSystemDynamics):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class ExcAVR3(ExcitationSystemDynamics):
     '''
     Italian excitation system. It represents an exciter dynamo and electric
@@ -27182,7 +27182,7 @@ class ExcAVR3(ExcitationSystemDynamics):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class ExcAVR4(ExcitationSystemDynamics):
     '''
     Italian excitation system. It represents a static exciter and electric
@@ -27481,7 +27481,7 @@ class ExcAVR4(ExcitationSystemDynamics):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class ExcAVR5(ExcitationSystemDynamics):
     '''
     Manual excitation control with field circuit resistance. This model can
@@ -27557,7 +27557,7 @@ class ExcAVR5(ExcitationSystemDynamics):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class ExcAVR7(ExcitationSystemDynamics):
     '''
     IVO excitation system.
@@ -27978,7 +27978,7 @@ class ExcAVR7(ExcitationSystemDynamics):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class ExcBBC(ExcitationSystemDynamics):
     '''
     Transformer fed static excitation system (static with ABB regulator). This
@@ -28220,7 +28220,7 @@ class ExcBBC(ExcitationSystemDynamics):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class ExcCZ(ExcitationSystemDynamics):
     '''
     Czech proportion/integral exciter.
@@ -28421,7 +28421,7 @@ class ExcCZ(ExcitationSystemDynamics):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class ExcDC1A(ExcitationSystemDynamics):
     '''
     Modified IEEE DC1A direct current commutator exciter with speed input and
@@ -28808,7 +28808,7 @@ class ExcDC1A(ExcitationSystemDynamics):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class ExcDC2A(ExcitationSystemDynamics):
     '''
     Modified IEEE DC2A direct current commutator exciter with speed input,
@@ -29209,7 +29209,7 @@ class ExcDC2A(ExcitationSystemDynamics):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class ExcDC3A(ExcitationSystemDynamics):
     '''
     Modified IEEE DC3A direct current commutator exciter with speed input,
@@ -29559,7 +29559,7 @@ class ExcDC3A(ExcitationSystemDynamics):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class ExcDC3A1(ExcitationSystemDynamics):
     '''
     Modified old IEEE type 3 excitation system.
@@ -29863,7 +29863,7 @@ class ExcDC3A1(ExcitationSystemDynamics):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class ExcELIN1(ExcitationSystemDynamics):
     '''
     Static PI transformer fed excitation system ELIN (VATECH) - simplified
@@ -30174,7 +30174,7 @@ class ExcELIN1(ExcitationSystemDynamics):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class ExcELIN2(ExcitationSystemDynamics):
     '''
     Detailed excitation system ELIN (VATECH). This model represents an all-static
@@ -30718,7 +30718,7 @@ class ExcELIN2(ExcitationSystemDynamics):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class ExcHU(ExcitationSystemDynamics):
     '''
     Hungarian excitation system, with built-in voltage transducer.
@@ -30969,7 +30969,7 @@ class ExcHU(ExcitationSystemDynamics):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class ExcIEEEAC10C(ExcitationSystemDynamics):
     '''
     IEEE 421.5-2016 AC10C excitation system model. It represents an excitation
@@ -31954,7 +31954,7 @@ class ExcIEEEAC10C(ExcitationSystemDynamics):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class ExcIEEEAC11C(ExcitationSystemDynamics):
     '''
     IEEE 421.5-2016 AC11C excitation system model. It is used to represent
@@ -32727,7 +32727,7 @@ class ExcIEEEAC11C(ExcitationSystemDynamics):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class ExcIEEEAC1A(ExcitationSystemDynamics):
     '''
     IEEE 421.5-2005 type AC1A model. The model represents the field-controlled
@@ -33119,7 +33119,7 @@ class ExcIEEEAC1A(ExcitationSystemDynamics):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class ExcIEEEAC1C(ExcitationSystemDynamics):
     '''
     IEEE 421.5-2016 AC1C excitation system model. It consists of an alternator
@@ -33579,7 +33579,7 @@ class ExcIEEEAC1C(ExcitationSystemDynamics):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class ExcIEEEAC2A(ExcitationSystemDynamics):
     '''
     IEEE 421.5-2005 type AC2A model. The model represents a high initial response
@@ -34033,7 +34033,7 @@ class ExcIEEEAC2A(ExcitationSystemDynamics):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class ExcIEEEAC2C(ExcitationSystemDynamics):
     '''
     IEEE 421.5-2016 AC2C excitation system model. It represents a high initial
@@ -34529,7 +34529,7 @@ class ExcIEEEAC2C(ExcitationSystemDynamics):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class ExcIEEEAC3A(ExcitationSystemDynamics):
     '''
     IEEE 421.5-2005 type AC3A model. The model represents the field-controlled
@@ -34987,7 +34987,7 @@ class ExcIEEEAC3A(ExcitationSystemDynamics):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class ExcIEEEAC3C(ExcitationSystemDynamics):
     '''
     IEEE 421.5-2016 AC3C excitation system model. It represents represents
@@ -35580,7 +35580,7 @@ class ExcIEEEAC3C(ExcitationSystemDynamics):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class ExcIEEEAC4A(ExcitationSystemDynamics):
     '''
     IEEE 421.5-2005 type AC4A model. The model represents type AC4A alternator-supplied
@@ -35789,7 +35789,7 @@ class ExcIEEEAC4A(ExcitationSystemDynamics):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class ExcIEEEAC4C(ExcitationSystemDynamics):
     '''
     IEEE 421.5-2016 AC4C excitation system model. It is alternator supplied
@@ -36041,7 +36041,7 @@ class ExcIEEEAC4C(ExcitationSystemDynamics):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class ExcIEEEAC5A(ExcitationSystemDynamics):
     '''
     IEEE 421.5-2005 type AC5A model. The model represents a simplified model
@@ -36354,7 +36354,7 @@ class ExcIEEEAC5A(ExcitationSystemDynamics):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class ExcIEEEAC5C(ExcitationSystemDynamics):
     '''
     IEEE 421.5-2016 AC5C excitation system model. It is a simplified model
@@ -36781,7 +36781,7 @@ class ExcIEEEAC5C(ExcitationSystemDynamics):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class ExcIEEEAC6A(ExcitationSystemDynamics):
     '''
     IEEE 421.5-2005 type AC6A model. The model represents field-controlled
@@ -37256,7 +37256,7 @@ class ExcIEEEAC6A(ExcitationSystemDynamics):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class ExcIEEEAC6C(ExcitationSystemDynamics):
     '''
     IEEE 421.5-2016 AC6C excitation system model. It represents field-controlled
@@ -37792,7 +37792,7 @@ class ExcIEEEAC6C(ExcitationSystemDynamics):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class ExcIEEEAC7B(ExcitationSystemDynamics):
     '''
     IEEE 421.5-2005 type AC7B model. The model represents excitation systems
@@ -38348,7 +38348,7 @@ class ExcIEEEAC7B(ExcitationSystemDynamics):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class ExcIEEEAC7C(ExcitationSystemDynamics):
     '''
     IEEE 421.5-2016 AC7C excitation system model. It consists of an AC alternator
@@ -39082,7 +39082,7 @@ class ExcIEEEAC7C(ExcitationSystemDynamics):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class ExcIEEEAC8B(ExcitationSystemDynamics):
     '''
     IEEE 421.5-2005 type AC8B model. This model represents a PID voltage regulator
@@ -39488,7 +39488,7 @@ class ExcIEEEAC8B(ExcitationSystemDynamics):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class ExcIEEEAC8C(ExcitationSystemDynamics):
     '''
     IEEE 421.5-2016 AC8C excitation system model. It consists of PID control,
@@ -40094,7 +40094,7 @@ class ExcIEEEAC8C(ExcitationSystemDynamics):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class ExcIEEEAC9C(ExcitationSystemDynamics):
     '''
     IEEE 421.5-2016 AC9C excitation system model. It may be applied to excitation
@@ -40928,7 +40928,7 @@ class ExcIEEEAC9C(ExcitationSystemDynamics):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class ExcIEEEDC1A(ExcitationSystemDynamics):
     '''
     IEEE 421.5-2005 type DC1A model. This model represents field-controlled
@@ -41289,7 +41289,7 @@ class ExcIEEEDC1A(ExcitationSystemDynamics):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class ExcIEEEDC1C(ExcitationSystemDynamics):
     '''
     IEEE 421.5-2016 DC1C excitation system model. It is used to represent field
@@ -41652,7 +41652,7 @@ class ExcIEEEDC1C(ExcitationSystemDynamics):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class ExcIEEEDC2A(ExcitationSystemDynamics):
     '''
     IEEE 421.5-2005 type DC2A model. This model represents field-controlled
@@ -42011,7 +42011,7 @@ class ExcIEEEDC2A(ExcitationSystemDynamics):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class ExcIEEEDC2C(ExcitationSystemDynamics):
     '''
     IEEE 421.5-2016 DC2C excitation system model. It is used to represent field-controlled
@@ -42375,7 +42375,7 @@ class ExcIEEEDC2C(ExcitationSystemDynamics):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class ExcIEEEDC3A(ExcitationSystemDynamics):
     '''
     IEEE type DC3A model. This model represents older systems, in particular
@@ -42633,7 +42633,7 @@ class ExcIEEEDC3A(ExcitationSystemDynamics):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class ExcIEEEDC4B(ExcitationSystemDynamics):
     '''
     IEEE 421.5-2005 type DC4B model. These excitation systems utilize a field-controlled
@@ -43054,7 +43054,7 @@ class ExcIEEEDC4B(ExcitationSystemDynamics):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class ExcIEEEDC4C(ExcitationSystemDynamics):
     '''
     IEEE 421.5-2016 DC4C excitation system model. It utilizes a field-controlled
@@ -43601,7 +43601,7 @@ class ExcIEEEDC4C(ExcitationSystemDynamics):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class ExcIEEEST10C(ExcitationSystemDynamics):
     '''
     IEEE 421.5-2016 ST10C excitation system model. It is a variation of the
@@ -44186,7 +44186,7 @@ class ExcIEEEST10C(ExcitationSystemDynamics):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class ExcIEEEST1A(ExcitationSystemDynamics):
     '''
     IEEE 421.5-2005 type ST1A model. This model represents systems in which
@@ -44596,7 +44596,7 @@ class ExcIEEEST1A(ExcitationSystemDynamics):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class ExcIEEEST1C(ExcitationSystemDynamics):
     '''
     IEEE 421.5-2016 ST1C excitation system model. It is a potential-source�controlled
@@ -45009,7 +45009,7 @@ class ExcIEEEST1C(ExcitationSystemDynamics):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class ExcIEEEST2A(ExcitationSystemDynamics):
     '''
     IEEE 421.5-2005 type ST2A model. Some static systems use both current and
@@ -45299,7 +45299,7 @@ class ExcIEEEST2A(ExcitationSystemDynamics):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class ExcIEEEST2C(ExcitationSystemDynamics):
     '''
     IEEE 421.5-2016 ST2C excitation system model. It represents compound-source
@@ -45726,7 +45726,7 @@ class ExcIEEEST2C(ExcitationSystemDynamics):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class ExcIEEEST3A(ExcitationSystemDynamics):
     '''
     IEEE 421.5-2005 type ST3A model. Some static systems utilize a field voltage
@@ -46156,7 +46156,7 @@ class ExcIEEEST3A(ExcitationSystemDynamics):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class ExcIEEEST3C(ExcitationSystemDynamics):
     '''
     IEEE 421.5-2016 ST3C excitation system model. It utilizes a variety of
@@ -46686,7 +46686,7 @@ class ExcIEEEST3C(ExcitationSystemDynamics):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class ExcIEEEST4B(ExcitationSystemDynamics):
     '''
     IEEE 421.5-2005 type ST4B model. This model is a variation of the type
@@ -47031,7 +47031,7 @@ class ExcIEEEST4B(ExcitationSystemDynamics):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class ExcIEEEST4C(ExcitationSystemDynamics):
     '''
     IEEE 421.5-2016 ST4C excitation system model. This model is a variation
@@ -47526,7 +47526,7 @@ class ExcIEEEST4C(ExcitationSystemDynamics):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class ExcIEEEST5B(ExcitationSystemDynamics):
     '''
     IEEE 421.5-2005 type ST5B model. The type ST5B excitation system is a variation
@@ -47892,7 +47892,7 @@ class ExcIEEEST5B(ExcitationSystemDynamics):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class ExcIEEEST5C(ExcitationSystemDynamics):
     '''
     IEEE 421.5-2016 ST5C excitation system model. This model is is a variation
@@ -48308,7 +48308,7 @@ class ExcIEEEST5C(ExcitationSystemDynamics):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class ExcIEEEST6B(ExcitationSystemDynamics):
     '''
     IEEE 421.5-2005 type ST6B model. This model consists of a PI voltage regulator
@@ -48618,7 +48618,7 @@ class ExcIEEEST6B(ExcitationSystemDynamics):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class ExcIEEEST6C(ExcitationSystemDynamics):
     '''
     IEEE 421.5-2016 ST6C excitation system model. It consists of a PI voltage
@@ -49124,7 +49124,7 @@ class ExcIEEEST6C(ExcitationSystemDynamics):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class ExcIEEEST7B(ExcitationSystemDynamics):
     '''
     IEEE 421.5-2005 type ST7B model. This model is representative of static
@@ -49454,7 +49454,7 @@ class ExcIEEEST7B(ExcitationSystemDynamics):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class ExcIEEEST7C(ExcitationSystemDynamics):
     '''
     IEEE 421.5-2016 ST7C excitation system model. It is representative of static
@@ -49792,7 +49792,7 @@ class ExcIEEEST7C(ExcitationSystemDynamics):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class ExcIEEEST8C(ExcitationSystemDynamics):
     '''
     IEEE 421.5-2016 ST8C excitation system model. It has a PI Type voltage
@@ -50318,7 +50318,7 @@ class ExcIEEEST8C(ExcitationSystemDynamics):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class ExcIEEEST9C(ExcitationSystemDynamics):
     '''
     IEEE 421.5-2016 ST9C excitation system model. It implements a proportional
@@ -50750,7 +50750,7 @@ class ExcIEEEST9C(ExcitationSystemDynamics):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class ExcNI(ExcitationSystemDynamics):
     '''
     Bus or solid fed SCR (silicon-controlled rectifier) bridge excitation system
@@ -50975,7 +50975,7 @@ class ExcNI(ExcitationSystemDynamics):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class ExcOEX3T(ExcitationSystemDynamics):
     '''
     Modified IEEE type ST1 excitation system with semi-continuous and acting
@@ -51337,7 +51337,7 @@ class ExcOEX3T(ExcitationSystemDynamics):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class ExcPIC(ExcitationSystemDynamics):
     '''
     Proportional/integral regulator excitation system. This model can be used
@@ -51804,7 +51804,7 @@ class ExcPIC(ExcitationSystemDynamics):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class ExcREXS(ExcitationSystemDynamics):
     '''
     General purpose rotating excitation system. This model can be used to represent
@@ -52507,7 +52507,7 @@ class ExcREXS(ExcitationSystemDynamics):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class ExcRQB(ExcitationSystemDynamics):
     '''
     Excitation system type RQB (four-loop regulator, regulateur quatre boucles,
@@ -52768,7 +52768,7 @@ class ExcRQB(ExcitationSystemDynamics):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class ExcSCRX(ExcitationSystemDynamics):
     '''
     Simple excitation system with generic characteristics typical of many excitation
@@ -52951,7 +52951,7 @@ class ExcSCRX(ExcitationSystemDynamics):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class ExcSEXS(ExcitationSystemDynamics):
     '''
     Simplified excitation system.
@@ -53166,7 +53166,7 @@ class ExcSEXS(ExcitationSystemDynamics):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class ExcSK(ExcitationSystemDynamics):
     '''
     Slovakian excitation system. UEL and secondary voltage control are included
@@ -53767,7 +53767,7 @@ class ExcSK(ExcitationSystemDynamics):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class ExcST1A(ExcitationSystemDynamics):
     '''
     Modification of an old IEEE ST1A static excitation system without overexcitation
@@ -54140,7 +54140,7 @@ class ExcST1A(ExcitationSystemDynamics):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class ExcST2A(ExcitationSystemDynamics):
     '''
     Modified IEEE ST2A static excitation system with another lead-lag block
@@ -54459,7 +54459,7 @@ class ExcST2A(ExcitationSystemDynamics):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class ExcST3A(ExcitationSystemDynamics):
     '''
     Modified IEEE ST3A static excitation system with added speed multiplier.
@@ -54873,7 +54873,7 @@ class ExcST3A(ExcitationSystemDynamics):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class ExcST4B(ExcitationSystemDynamics):
     '''
     Modified IEEE ST4B static excitation system with maximum inner loop feedback
@@ -55275,7 +55275,7 @@ class ExcST4B(ExcitationSystemDynamics):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class ExcST6B(ExcitationSystemDynamics):
     '''
     Modified IEEE ST6B static excitation system with PID controller and optional
@@ -55762,7 +55762,7 @@ class ExcST6B(ExcitationSystemDynamics):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class ExcST7B(ExcitationSystemDynamics):
     '''
     Modified IEEE ST7B static excitation system without stator current limiter
@@ -56091,7 +56091,7 @@ class ExcST7B(ExcitationSystemDynamics):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class ExcitationSystemUserDefined(ExcitationSystemDynamics):
     '''
     Excitation system function block whose dynamic behaviour is described by
@@ -56159,7 +56159,7 @@ class ExcitationSystemUserDefined(ExcitationSystemDynamics):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class HVDCDynamics(DynamicsFunctionBlock):
     '''
     HVDC whose behaviour is described by reference to a standard model <font
@@ -56179,7 +56179,7 @@ class HVDCDynamics(DynamicsFunctionBlock):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class CSCDynamics(HVDCDynamics):
     '''
     CSC function block whose behaviour is described by reference to a standard
@@ -56220,7 +56220,7 @@ class CSCDynamics(HVDCDynamics):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class CSCUserDefined(CSCDynamics):
     '''
     Current source converter (CSC) function block whose dynamic behaviour is
@@ -56288,7 +56288,7 @@ class CSCUserDefined(CSCDynamics):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class CSCtype1(CSCDynamics):
     '''
     '''
@@ -56306,7 +56306,7 @@ class CSCtype1(CSCDynamics):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class HVDCInterconnectionDynamics(HVDCDynamics):
     '''
     HVDC interconnection function block whose behaviour is described by reference
@@ -56347,7 +56347,7 @@ class HVDCInterconnectionDynamics(HVDCDynamics):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class HVDCInterconnectionUserDefined(HVDCInterconnectionDynamics):
     '''
     HVDC interconnection function block whose dynamic behaviour is described
@@ -56415,7 +56415,7 @@ class HVDCInterconnectionUserDefined(HVDCInterconnectionDynamics):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class VSCDynamics(HVDCDynamics):
     '''
     VSC function block whose behaviour is described by reference to a standard
@@ -56456,7 +56456,7 @@ class VSCDynamics(HVDCDynamics):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class VSCUserDefined(VSCDynamics):
     '''
     Voltage source converter (VSC) function block whose dynamic behaviour is
@@ -56525,7 +56525,7 @@ class VSCUserDefined(VSCDynamics):
         return 'unbounded'
 
 @stereotype(CIMStereotype.informative)
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class VSCtype1(VSCDynamics):
     '''
     '''
@@ -56679,7 +56679,7 @@ class VSCtype1(VSCDynamics):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class LoadDynamics(DynamicsFunctionBlock):
     '''
     Load whose behaviour is described by reference to a standard model <font
@@ -56722,7 +56722,7 @@ class LoadDynamics(DynamicsFunctionBlock):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class LoadAggregate(LoadDynamics):
     '''
     Aggregate loads are used to represent all or part of the real and reactive
@@ -56788,7 +56788,7 @@ class LoadAggregate(LoadDynamics):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class LoadComposite(LoadDynamics):
     '''
     Combined static load and induction motor load effects.
@@ -57028,7 +57028,7 @@ class LoadComposite(LoadDynamics):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class LoadCompositeWECC(LoadDynamics):
     '''
     WECC Dynamic Composite Load Model (CMPLDW).
@@ -57643,7 +57643,7 @@ class LoadCompositeWECC(LoadDynamics):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class LoadGenericNonLinear(LoadDynamics):
     '''
     Generic non-linear dynamic (GNLD) load. This model can be used in mid-term
@@ -57795,7 +57795,7 @@ class LoadGenericNonLinear(LoadDynamics):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class LoadUserDefined(LoadDynamics):
     '''
     Load whose dynamic behaviour is described by a user-defined model.
@@ -57862,7 +57862,7 @@ class LoadUserDefined(LoadDynamics):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class MechanicalLoadDynamics(DynamicsFunctionBlock):
     '''
     Mechanical load function block whose behaviour is described by reference
@@ -57929,7 +57929,7 @@ class MechanicalLoadDynamics(DynamicsFunctionBlock):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class MechLoad1(MechanicalLoadDynamics):
     '''
     Mechanical load model type 1.
@@ -58020,7 +58020,7 @@ class MechLoad1(MechanicalLoadDynamics):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class MechanicalLoadUserDefined(MechanicalLoadDynamics):
     '''
     Mechanical load function block whose dynamic behaviour is described by
@@ -58088,7 +58088,7 @@ class MechanicalLoadUserDefined(MechanicalLoadDynamics):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class OverexcitationLimiterDynamics(DynamicsFunctionBlock):
     '''
     Overexcitation limiter function block whose behaviour is described by reference
@@ -58130,7 +58130,7 @@ class OverexcitationLimiterDynamics(DynamicsFunctionBlock):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class OverexcLim2(OverexcitationLimiterDynamics):
     '''
     Overexcitation limiter with a fixed pickup threshold. It reduces the excitation
@@ -58233,7 +58233,7 @@ class OverexcLim2(OverexcitationLimiterDynamics):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class OverexcLimIEEE(OverexcitationLimiterDynamics):
     '''
     The over excitation limiter model is intended to represent the significant
@@ -58395,7 +58395,7 @@ class OverexcLimIEEE(OverexcitationLimiterDynamics):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class OverexcLimIEEEOEL2C(OverexcitationLimiterDynamics):
     '''
     IEEE 421.5-2016 OEL2C overexcitation limiter model. This model is an extension
@@ -59189,7 +59189,7 @@ class OverexcLimIEEEOEL2C(OverexcitationLimiterDynamics):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class OverexcLimIEEEOEL3C(OverexcitationLimiterDynamics):
     '''
     IEEE 421.5-2016 OEL3C overexcitation limiter model. This model reduces
@@ -59445,7 +59445,7 @@ class OverexcLimIEEEOEL3C(OverexcitationLimiterDynamics):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class OverexcLimIEEEOEL4C(OverexcitationLimiterDynamics):
     '''
     IEEE 421.5-2016 OEL4C overexcitation limiter model. This model acts to
@@ -59565,7 +59565,7 @@ class OverexcLimIEEEOEL4C(OverexcitationLimiterDynamics):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class OverexcLimIEEEOEL5C(OverexcitationLimiterDynamics):
     '''
     IEEE 421.5-2016 OEL5C overexcitation limiter model. This model represents
@@ -60106,7 +60106,7 @@ class OverexcLimIEEEOEL5C(OverexcitationLimiterDynamics):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class OverexcLimX1(OverexcitationLimiterDynamics):
     '''
     Field voltage over excitation limiter.
@@ -60365,7 +60365,7 @@ class OverexcLimX1(OverexcitationLimiterDynamics):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class OverexcLimX2(OverexcitationLimiterDynamics):
     '''
     Field voltage or current overexcitation limiter designed to protect the
@@ -60651,7 +60651,7 @@ class OverexcLimX2(OverexcitationLimiterDynamics):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class OverexcitationLimiterUserDefined(OverexcitationLimiterDynamics):
     '''
     Overexcitation limiter system function block whose dynamic behaviour is
@@ -60719,7 +60719,7 @@ class OverexcitationLimiterUserDefined(OverexcitationLimiterDynamics):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class PFVArControllerType1Dynamics(DynamicsFunctionBlock):
     '''
     Power factor or VAr controller type 1 function block whose behaviour is
@@ -60803,7 +60803,7 @@ class PFVArControllerType1Dynamics(DynamicsFunctionBlock):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class PFVArControllerType1UserDefined(PFVArControllerType1Dynamics):
     '''
     Power factor or VAr controller type 1 function block whose dynamic behaviour
@@ -60871,7 +60871,7 @@ class PFVArControllerType1UserDefined(PFVArControllerType1Dynamics):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class PFVArType1CIEEEPFController(PFVArControllerType1Dynamics):
     '''
     IEEE 421.5-2016 power factor controller Type 1 model. This power factor
@@ -60991,7 +60991,7 @@ class PFVArType1CIEEEPFController(PFVArControllerType1Dynamics):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class PFVArType1CIEEEVArController(PFVArControllerType1Dynamics):
     '''
     IEEE 421.5-2016 Var controller Type 1 model. It operates by moving the
@@ -61110,7 +61110,7 @@ class PFVArType1CIEEEVArController(PFVArControllerType1Dynamics):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class PFVArType1IEEEPFController(PFVArControllerType1Dynamics):
     '''
     IEEE PF controller type 1 which operates by moving the voltage reference
@@ -61230,7 +61230,7 @@ class PFVArType1IEEEPFController(PFVArControllerType1Dynamics):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class PFVArType1IEEEVArController(PFVArControllerType1Dynamics):
     '''
     IEEE VAR controller type 1 which operates by moving the voltage reference
@@ -61331,7 +61331,7 @@ class PFVArType1IEEEVArController(PFVArControllerType1Dynamics):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class PFVArControllerType2Dynamics(DynamicsFunctionBlock):
     '''
     Power factor or VAr controller type 2 function block whose behaviour is
@@ -61373,7 +61373,7 @@ class PFVArControllerType2Dynamics(DynamicsFunctionBlock):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class PFVArControllerType2UserDefined(PFVArControllerType2Dynamics):
     '''
     Power factor or VAr controller type 2 function block whose dynamic behaviour
@@ -61441,7 +61441,7 @@ class PFVArControllerType2UserDefined(PFVArControllerType2Dynamics):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class PFVArType2CIEEEPFController(PFVArControllerType2Dynamics):
     '''
     IEEE 421.5-2016 power factor controller Type 2 model. It is a summing point
@@ -61579,7 +61579,7 @@ class PFVArType2CIEEEPFController(PFVArControllerType2Dynamics):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class PFVArType2CIEEEVArController(PFVArControllerType2Dynamics):
     '''
     IEEE 421.5-2016 Var controller Type 2 model. It is a summing point type
@@ -61716,7 +61716,7 @@ class PFVArType2CIEEEVArController(PFVArControllerType2Dynamics):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class PFVArType2Common1(PFVArControllerType2Dynamics):
     '''
     Power factor / reactive power regulator. This model represents the power
@@ -61844,7 +61844,7 @@ class PFVArType2Common1(PFVArControllerType2Dynamics):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class PFVArType2IEEEPFController(PFVArControllerType2Dynamics):
     '''
     IEEE PF controller type 2 which is a summing point type controller making
@@ -61945,7 +61945,7 @@ class PFVArType2IEEEPFController(PFVArControllerType2Dynamics):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class PFVArType2IEEEVArController(PFVArControllerType2Dynamics):
     '''
     IEEE VAR controller type 2 which is a summing point type controller. It
@@ -62040,7 +62040,7 @@ class PFVArType2IEEEVArController(PFVArControllerType2Dynamics):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class PowerSystemStabilizerDynamics(DynamicsFunctionBlock):
     '''
     Power system stabilizer function block whose behaviour is described by
@@ -62101,7 +62101,7 @@ class PowerSystemStabilizerDynamics(DynamicsFunctionBlock):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class PowerSystemStabilizerUserDefined(PowerSystemStabilizerDynamics):
     '''
     <font color="#0f0f0f">Power system stabilizer</font> function block whose
@@ -62170,7 +62170,7 @@ class PowerSystemStabilizerUserDefined(PowerSystemStabilizerDynamics):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class Pss1(PowerSystemStabilizerDynamics):
     '''
     Italian PSS with three inputs (speed, frequency, power).
@@ -62463,7 +62463,7 @@ class Pss1(PowerSystemStabilizerDynamics):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class Pss1A(PowerSystemStabilizerDynamics):
     '''
     Single input power system stabilizer. It is a modified version in order
@@ -62887,7 +62887,7 @@ class Pss1A(PowerSystemStabilizerDynamics):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class Pss2B(PowerSystemStabilizerDynamics):
     '''
     Modified IEEE PSS2B. Extra lead/lag (or rate) block added at end (up to
@@ -63517,7 +63517,7 @@ class Pss2B(PowerSystemStabilizerDynamics):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class Pss2ST(PowerSystemStabilizerDynamics):
     '''
     PTI microprocessor-based stabilizer type 1.
@@ -63870,7 +63870,7 @@ class Pss2ST(PowerSystemStabilizerDynamics):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class Pss5(PowerSystemStabilizerDynamics):
     '''
     Detailed Italian PSS.
@@ -64211,7 +64211,7 @@ class Pss5(PowerSystemStabilizerDynamics):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class PssELIN2(PowerSystemStabilizerDynamics):
     '''
     Power system stabilizer typically associated with ExcELIN2 (though PssIEEE2B
@@ -64429,7 +64429,7 @@ class PssELIN2(PowerSystemStabilizerDynamics):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class PssIEEE1A(PowerSystemStabilizerDynamics):
     '''
     IEEE type PSS1A power system stabilizer model. PSS1A is the generalized
@@ -64681,7 +64681,7 @@ class PssIEEE1A(PowerSystemStabilizerDynamics):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class PssIEEE2B(PowerSystemStabilizerDynamics):
     '''
     IEEE 421.5-2005 type PSS2B power system stabilizer model. This stabilizer
@@ -65216,7 +65216,7 @@ class PssIEEE2B(PowerSystemStabilizerDynamics):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class PssIEEE2C(PowerSystemStabilizerDynamics):
     '''
     IEEE 421.5-2016 PSS2C power system stabilizer model. It is is designed
@@ -65822,7 +65822,7 @@ class PssIEEE2C(PowerSystemStabilizerDynamics):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class PssIEEE3B(PowerSystemStabilizerDynamics):
     '''
     IEEE 421.5-2005 type PSS3B power system stabilizer model. The PSS model
@@ -66159,7 +66159,7 @@ class PssIEEE3B(PowerSystemStabilizerDynamics):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class PssIEEE3C(PowerSystemStabilizerDynamics):
     '''
     IEEE 421.5-2016 PSS3C power system stabilizer model. It has dual inputs,
@@ -66577,7 +66577,7 @@ class PssIEEE3C(PowerSystemStabilizerDynamics):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class PssIEEE4B(PowerSystemStabilizerDynamics):
     '''
     IEEE 421.5-2005 type PSS4B power system stabilizer. The PSS4B model represents
@@ -67930,7 +67930,7 @@ class PssIEEE4B(PowerSystemStabilizerDynamics):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class PssIEEE4C(PowerSystemStabilizerDynamics):
     '''
     IEEE 421.5-2016 PSS4C power system stabilizer model. It is based on multiple
@@ -69610,7 +69610,7 @@ class PssIEEE4C(PowerSystemStabilizerDynamics):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class PssIEEE5C(PowerSystemStabilizerDynamics):
     '''
     IEEE 421.5-2016 PSS5C power system stabilizer model. It represents a simplifying
@@ -69979,7 +69979,7 @@ class PssIEEE5C(PowerSystemStabilizerDynamics):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class PssIEEE6C(PowerSystemStabilizerDynamics):
     '''
     IEEE 421.5-2016 PSS6C power system stabilizer model. This model has 2 input
@@ -70516,7 +70516,7 @@ class PssIEEE6C(PowerSystemStabilizerDynamics):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class PssIEEE7C(PowerSystemStabilizerDynamics):
     '''
     IEEE 421.5-2016 PSS7C power system stabilizer model. This model has has
@@ -71164,7 +71164,7 @@ class PssIEEE7C(PowerSystemStabilizerDynamics):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class PssPTIST1(PowerSystemStabilizerDynamics):
     '''
     PTI microprocessor-based stabilizer type 1.
@@ -71372,7 +71372,7 @@ class PssPTIST1(PowerSystemStabilizerDynamics):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class PssPTIST3(PowerSystemStabilizerDynamics):
     '''
     PTI microprocessor-based stabilizer type 3.
@@ -72023,7 +72023,7 @@ class PssPTIST3(PowerSystemStabilizerDynamics):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class PssRQB(PowerSystemStabilizerDynamics):
     '''
     Power system stabilizer type RQB. This power system stabilizer is intended
@@ -72224,7 +72224,7 @@ class PssRQB(PowerSystemStabilizerDynamics):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class PssSB4(PowerSystemStabilizerDynamics):
     '''
     Power sensitive stabilizer model.
@@ -72441,7 +72441,7 @@ class PssSB4(PowerSystemStabilizerDynamics):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class PssSH(PowerSystemStabilizerDynamics):
     '''
     Siemens<sup>TM</sup> �H infinity� power system stabilizer with generator
@@ -72705,7 +72705,7 @@ class PssSH(PowerSystemStabilizerDynamics):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class PssSK(PowerSystemStabilizerDynamics):
     '''
     Slovakian PSS with three inputs.
@@ -72942,7 +72942,7 @@ class PssSK(PowerSystemStabilizerDynamics):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class PssSTAB2A(PowerSystemStabilizerDynamics):
     '''
     Power system stabilizer part of an ABB excitation system.
@@ -73110,7 +73110,7 @@ class PssSTAB2A(PowerSystemStabilizerDynamics):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class PssWECC(PowerSystemStabilizerDynamics):
     '''
     Dual input power system stabilizer, based on IEEE type 2, with modified
@@ -73495,7 +73495,7 @@ class PssWECC(PowerSystemStabilizerDynamics):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class RelayDynamics(DynamicsFunctionBlock):
     '''
     Relay whose behaviour is described by reference to a standard model <font
@@ -73574,7 +73574,7 @@ class RelayDynamics(DynamicsFunctionBlock):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class RateOfChangeOfPowerRelay(RelayDynamics):
     '''
     Rate of change of power relay.
@@ -73701,7 +73701,7 @@ class RateOfChangeOfPowerRelay(RelayDynamics):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class RelayUserDefined(RelayDynamics):
     '''
     Relay function block whose dynamic behaviour is described by <font color="#0f0f0f">a
@@ -73769,7 +73769,7 @@ class RelayUserDefined(RelayDynamics):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class WeccTIOCRS(RelayDynamics):
     '''
     Time Inverse Overcurrent Relay Standard (TIOCRS) model by WECC. The details
@@ -74032,7 +74032,7 @@ class WeccTIOCRS(RelayDynamics):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class RotatingMachineDynamics(DynamicsFunctionBlock):
     '''
     Abstract parent class for all synchronous and asynchronous machine standard
@@ -74177,7 +74177,7 @@ class RotatingMachineDynamics(DynamicsFunctionBlock):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class AsynchronousMachineDynamics(RotatingMachineDynamics):
     '''
     Asynchronous machine whose behaviour is described by reference to a standard
@@ -74285,7 +74285,7 @@ class AsynchronousMachineDynamics(RotatingMachineDynamics):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class AsynchronousMachineEquivalentCircuit(AsynchronousMachineDynamics):
     '''
     The electrical equations of all variations of the asynchronous model are
@@ -74418,7 +74418,7 @@ class AsynchronousMachineEquivalentCircuit(AsynchronousMachineDynamics):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class AsynchronousMachineTimeConstantReactance(AsynchronousMachineDynamics):
     '''
     Parameter details:
@@ -74557,7 +74557,7 @@ class AsynchronousMachineTimeConstantReactance(AsynchronousMachineDynamics):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class AsynchronousMachineUserDefined(AsynchronousMachineDynamics):
     '''
     Asynchronous machine whose dynamic behaviour is described by a user-defined
@@ -74625,7 +74625,7 @@ class AsynchronousMachineUserDefined(AsynchronousMachineDynamics):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class SynchronousMachineDynamics(RotatingMachineDynamics):
     '''
     Synchronous machine whose behaviour is described by reference to a standard
@@ -74806,7 +74806,7 @@ class SynchronousMachineDynamics(RotatingMachineDynamics):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class SynchronousMachineDetailed(SynchronousMachineDynamics):
     '''
     All synchronous machine detailed types use a subset of the same data parameters
@@ -74968,7 +74968,7 @@ class SynchronousMachineDetailed(SynchronousMachineDynamics):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class SynchronousMachineEquivalentCircuit(SynchronousMachineDetailed):
     '''
     The electrical equations for all variations of the synchronous models are
@@ -75228,7 +75228,7 @@ class SynchronousMachineEquivalentCircuit(SynchronousMachineDetailed):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class SynchronousMachineTimeConstantReactance(SynchronousMachineDetailed):
     '''
     Synchronous machine detailed modelling types are defined by the combination
@@ -75541,7 +75541,7 @@ class SynchronousMachineTimeConstantReactance(SynchronousMachineDetailed):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class SynchronousMachineSimplified(SynchronousMachineDynamics):
     '''
     The simplified model represents a synchronous generator as a constant internal
@@ -75573,7 +75573,7 @@ class SynchronousMachineSimplified(SynchronousMachineDynamics):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class SynchronousMachineUserDefined(SynchronousMachineDynamics):
     '''
     Synchronous machine whose dynamic behaviour is described by a user-defined
@@ -75641,7 +75641,7 @@ class SynchronousMachineUserDefined(SynchronousMachineDynamics):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class ShuntCompensatorDynamics(DynamicsFunctionBlock):
     '''
     Shunt compensator whose behaviour is described by reference to a standard
@@ -75680,7 +75680,7 @@ class ShuntCompensatorDynamics(DynamicsFunctionBlock):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class ShuntCompensatorUserDefined(ShuntCompensatorDynamics):
     '''
     Shunt compensator whose dynamic behaviour is described by <font color="#0f0f0f">a
@@ -75748,7 +75748,7 @@ class ShuntCompensatorUserDefined(ShuntCompensatorDynamics):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class StatcomDynamics(DynamicsFunctionBlock):
     '''
     STATCOM whose behaviour is described by reference to a standard model <font
@@ -75789,7 +75789,7 @@ class StatcomDynamics(DynamicsFunctionBlock):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class StatcomIEC(StatcomDynamics):
     '''
     STATCOM standard model.
@@ -75962,7 +75962,7 @@ class StatcomIEC(StatcomDynamics):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class StatcomUserDefined(StatcomDynamics):
     '''
     STATCOM function block whose dynamic behaviour is described by <font color="#0f0f0f">a
@@ -76030,7 +76030,7 @@ class StatcomUserDefined(StatcomDynamics):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class StaticVarCompensatorDynamics(DynamicsFunctionBlock):
     '''
     Static var compensator whose behaviour is described by reference to a standard
@@ -76070,7 +76070,7 @@ class StaticVarCompensatorDynamics(DynamicsFunctionBlock):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class SVCUserDefined(StaticVarCompensatorDynamics):
     '''
     Static var compensator (SVC) function block whose dynamic behaviour is
@@ -76138,7 +76138,7 @@ class SVCUserDefined(StaticVarCompensatorDynamics):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class StaticVarCompensatorSystemDynamics(StaticVarCompensatorDynamics):
     '''
     Static var compensator system whose behaviour is described by reference
@@ -76180,7 +76180,7 @@ class StaticVarCompensatorSystemDynamics(StaticVarCompensatorDynamics):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class SVSMO1(StaticVarCompensatorSystemDynamics):
     '''
     Dynamic (time domain) generic model type SYSMO1 for a static var system
@@ -77161,7 +77161,7 @@ class SVSMO1(StaticVarCompensatorSystemDynamics):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class SVSMO2(StaticVarCompensatorSystemDynamics):
     '''
     Static var system type SVSMO2. The SVC component of the SVSMO2 consists
@@ -78140,7 +78140,7 @@ class SVSMO2(StaticVarCompensatorSystemDynamics):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class SVSMO3(StaticVarCompensatorSystemDynamics):
     '''
     Static var system type SVSMO3 model. The SVSMO3 assumes a voltage source
@@ -79054,7 +79054,7 @@ class SVSMO3(StaticVarCompensatorSystemDynamics):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class SVSMO4(StaticVarCompensatorSystemDynamics):
     '''
     Hybrid STATCOM type SVSMO4 static var system, which has at most only one
@@ -79819,7 +79819,7 @@ class SVSMO4(StaticVarCompensatorSystemDynamics):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class StatorCurrentLimiterDynamics(DynamicsFunctionBlock):
     '''
     Stator current limiter whose behaviour is described by reference to a standard
@@ -79858,7 +79858,7 @@ class StatorCurrentLimiterDynamics(DynamicsFunctionBlock):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class StatorCurrentLimIEEESCL1C(StatorCurrentLimiterDynamics):
     '''
     IEEE 421.5-2016 SCL1C stator current limiter model. When the magnitude
@@ -80180,7 +80180,7 @@ class StatorCurrentLimIEEESCL1C(StatorCurrentLimiterDynamics):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class StatorCurrentLimIEEESCL2C(StatorCurrentLimiterDynamics):
     '''
     IEEE 421.5-2016 SCL2C stator current limiter model. This model can consequently
@@ -81501,7 +81501,7 @@ class StatorCurrentLimIEEESCL2C(StatorCurrentLimiterDynamics):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class StatorCurrentLimiterUserDefined(StatorCurrentLimiterDynamics):
     '''
     Stator current limiter system function block whose dynamic behaviour is
@@ -81569,7 +81569,7 @@ class StatorCurrentLimiterUserDefined(StatorCurrentLimiterDynamics):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class TurbineGovernorDynamics(DynamicsFunctionBlock):
     '''
     Turbine-governor function block whose behaviour is described by reference
@@ -81655,7 +81655,7 @@ class TurbineGovernorDynamics(DynamicsFunctionBlock):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class CombinedCycleGasTurbineDynamics(TurbineGovernorDynamics):
     '''
     Gas turbines used for combined cycle power plants.
@@ -81695,7 +81695,7 @@ class CombinedCycleGasTurbineDynamics(TurbineGovernorDynamics):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class GovCIGREGT(CombinedCycleGasTurbineDynamics):
     '''
     CIGRE gas turbine model. The major difference between this model and GovCT1
@@ -82583,7 +82583,7 @@ class GovCIGREGT(CombinedCycleGasTurbineDynamics):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class GovIEEEGT1(CombinedCycleGasTurbineDynamics):
     '''
     Simplified gas turbine model.
@@ -83394,7 +83394,7 @@ class GovIEEEGT1(CombinedCycleGasTurbineDynamics):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class GovCT1(TurbineGovernorDynamics):
     '''
     General model for any prime mover with a PID governor, used primarily for
@@ -84157,7 +84157,7 @@ class GovCT1(TurbineGovernorDynamics):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class GovCT2(TurbineGovernorDynamics):
     '''
     General governor with frequency-dependent fuel flow limit. This model is
@@ -85284,7 +85284,7 @@ class GovCT2(TurbineGovernorDynamics):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class GovGAST(TurbineGovernorDynamics):
     '''
     Single shaft gas turbine.
@@ -85505,7 +85505,7 @@ class GovGAST(TurbineGovernorDynamics):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class GovGAST1(TurbineGovernorDynamics):
     '''
     Modified single shaft gas turbine.
@@ -86180,7 +86180,7 @@ class GovGAST1(TurbineGovernorDynamics):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class GovGAST2(TurbineGovernorDynamics):
     '''
     Gas turbine.
@@ -86795,7 +86795,7 @@ class GovGAST2(TurbineGovernorDynamics):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class GovGAST3(TurbineGovernorDynamics):
     '''
     Generic turbogas with acceleration and temperature controller.
@@ -87236,7 +87236,7 @@ class GovGAST3(TurbineGovernorDynamics):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class GovGAST4(TurbineGovernorDynamics):
     '''
     Generic turbogas.
@@ -87480,7 +87480,7 @@ class GovGAST4(TurbineGovernorDynamics):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class GovGASTWD(TurbineGovernorDynamics):
     '''
     Woodward� gas turbine governor.
@@ -88105,7 +88105,7 @@ class GovGASTWD(TurbineGovernorDynamics):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class GovHydro1(TurbineGovernorDynamics):
     '''
     Basic hydro turbine governor.
@@ -88384,7 +88384,7 @@ class GovHydro1(TurbineGovernorDynamics):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class GovHydro2(TurbineGovernorDynamics):
     '''
     IEEE hydro turbine governor with straightforward penstock configuration
@@ -88941,7 +88941,7 @@ class GovHydro2(TurbineGovernorDynamics):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class GovHydro3(TurbineGovernorDynamics):
     '''
     Modified IEEE hydro governor-turbine. This model differs from that defined
@@ -89636,7 +89636,7 @@ class GovHydro3(TurbineGovernorDynamics):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class GovHydro4(TurbineGovernorDynamics):
     '''
     Hydro turbine and governor. Represents plants with straight-forward penstock
@@ -90420,7 +90420,7 @@ class GovHydro4(TurbineGovernorDynamics):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class GovHydroDD(TurbineGovernorDynamics):
     '''
     Double derivative hydro governor and turbine.
@@ -91106,7 +91106,7 @@ class GovHydroDD(TurbineGovernorDynamics):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class GovHydroFrancis(TurbineGovernorDynamics):
     '''
     Detailed hydro unit - Francis model. This model can be used to represent
@@ -91673,7 +91673,7 @@ class GovHydroFrancis(TurbineGovernorDynamics):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class GovHydroIEEE0(TurbineGovernorDynamics):
     '''
     IEEE simplified hydro governor-turbine model. Used for mechanical-hydraulic
@@ -91844,7 +91844,7 @@ class GovHydroIEEE0(TurbineGovernorDynamics):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class GovHydroIEEE2(TurbineGovernorDynamics):
     '''
     IEEE hydro turbine governor model represents plants with straightforward
@@ -92348,7 +92348,7 @@ class GovHydroIEEE2(TurbineGovernorDynamics):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class GovHydroPID(TurbineGovernorDynamics):
     '''
     PID governor and turbine.
@@ -92994,7 +92994,7 @@ class GovHydroPID(TurbineGovernorDynamics):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class GovHydroPID2(TurbineGovernorDynamics):
     '''
     Hydro turbine and governor. Represents plants with straightforward penstock
@@ -93467,7 +93467,7 @@ class GovHydroPID2(TurbineGovernorDynamics):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class GovHydroPelton(TurbineGovernorDynamics):
     '''
     Detailed hydro unit - Pelton model. This model can be used to represent
@@ -94076,7 +94076,7 @@ class GovHydroPelton(TurbineGovernorDynamics):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class GovHydroR(TurbineGovernorDynamics):
     '''
     Fourth order lead-lag governor and hydro turbine.
@@ -94878,7 +94878,7 @@ class GovHydroR(TurbineGovernorDynamics):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class GovHydroWEH(TurbineGovernorDynamics):
     '''
     Woodward<sup>TM </sup>electric hydro governor.
@@ -95945,7 +95945,7 @@ class GovHydroWEH(TurbineGovernorDynamics):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class GovHydroWPID(TurbineGovernorDynamics):
     '''
     Woodward<sup>TM</sup> PID hydro governor.
@@ -96369,7 +96369,7 @@ class GovHydroWPID(TurbineGovernorDynamics):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class GovSteam0(TurbineGovernorDynamics):
     '''
     A simplified steam turbine governor.
@@ -96540,7 +96540,7 @@ class GovSteam0(TurbineGovernorDynamics):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class GovSteam2(TurbineGovernorDynamics):
     '''
     Simplified governor.
@@ -96733,7 +96733,7 @@ class GovSteam2(TurbineGovernorDynamics):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class GovSteamBB(TurbineGovernorDynamics):
     '''
     Brown Boveri (BB) steam turbine governor model.
@@ -97087,7 +97087,7 @@ class GovSteamBB(TurbineGovernorDynamics):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class GovSteamEU(TurbineGovernorDynamics):
     '''
     Simplified boiler and steam turbine with PID governor.
@@ -97776,7 +97776,7 @@ class GovSteamEU(TurbineGovernorDynamics):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class GovSteamFV2(TurbineGovernorDynamics):
     '''
     Steam turbine governor with reheat time constants and modelling of the
@@ -98021,7 +98021,7 @@ class GovSteamFV2(TurbineGovernorDynamics):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class GovSteamFV3(TurbineGovernorDynamics):
     '''
     Simplified GovSteamIEEE1 steam turbine governor with Prmax limit and fast
@@ -98631,7 +98631,7 @@ class GovSteamFV3(TurbineGovernorDynamics):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class GovSteamFV4(TurbineGovernorDynamics):
     '''
     Detailed electro-hydraulic governor for steam unit.
@@ -99673,7 +99673,7 @@ class GovSteamFV4(TurbineGovernorDynamics):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class GovSteamIEEEG1Aug(TurbineGovernorDynamics):
     '''
     Augmented IEEEG1 steam turbine-governor model with simplified boiler dynamics
@@ -100366,7 +100366,7 @@ class GovSteamIEEEG1Aug(TurbineGovernorDynamics):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class GovSteamSGO(TurbineGovernorDynamics):
     '''
     Simplified steam turbine governor.
@@ -100605,7 +100605,7 @@ class GovSteamSGO(TurbineGovernorDynamics):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class HydroGovernorDynamics(TurbineGovernorDynamics):
     '''
     Hydro governor function block whose behaviour is described by reference
@@ -100645,7 +100645,7 @@ class HydroGovernorDynamics(TurbineGovernorDynamics):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class GovIEEEHydroDD(HydroGovernorDynamics):
     '''
     Double-derivative hydro governor.
@@ -100993,7 +100993,7 @@ class GovIEEEHydroDD(HydroGovernorDynamics):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class GovIEEEHydroLL(HydroGovernorDynamics):
     '''
     Lead-lag hydro governor.
@@ -101413,7 +101413,7 @@ class GovIEEEHydroLL(HydroGovernorDynamics):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class GovIEEEHydroMech(HydroGovernorDynamics):
     '''
     Mechanical hydraulic governor model.
@@ -101649,7 +101649,7 @@ class GovIEEEHydroMech(HydroGovernorDynamics):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class GovIEEEHydroPID(HydroGovernorDynamics):
     '''
     Hydro PID governor.
@@ -102015,7 +102015,7 @@ class GovIEEEHydroPID(HydroGovernorDynamics):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class GovIEEEHydroPIDspt(HydroGovernorDynamics):
     '''
     Hydro PID governor with set-point control and nonlinear compensation.
@@ -102453,7 +102453,7 @@ class GovIEEEHydroPIDspt(HydroGovernorDynamics):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class HydroWaterColumnDynamics(TurbineGovernorDynamics):
     '''
     Hydro water column function block whose behaviour is described by reference
@@ -102493,7 +102493,7 @@ class HydroWaterColumnDynamics(TurbineGovernorDynamics):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class TurbIEEEHydroWCNonLinear(HydroWaterColumnDynamics):
     '''
     Nonlinear turbine-water column model (inelastic) with gate vs. power gain.
@@ -102839,7 +102839,7 @@ class TurbIEEEHydroWCNonLinear(HydroWaterColumnDynamics):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class TurbIEEEHydroWCNonLinearA(HydroWaterColumnDynamics):
     '''
     Conventional nonlinear turbine-water column model (inelastic).
@@ -102969,7 +102969,7 @@ class TurbIEEEHydroWCNonLinearA(HydroWaterColumnDynamics):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class TurbIEEEHydroWCNonLinearB(HydroWaterColumnDynamics):
     '''
     Modified nonlinear turbine-water column model (inelastic).
@@ -103117,7 +103117,7 @@ class TurbIEEEHydroWCNonLinearB(HydroWaterColumnDynamics):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class TurbIEEEHydroWCgen(HydroWaterColumnDynamics):
     '''
     General form of idealized linear turbine-water column model.
@@ -103247,7 +103247,7 @@ class TurbIEEEHydroWCgen(HydroWaterColumnDynamics):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class TurbIEEEHydroWClinear(HydroWaterColumnDynamics):
     '''
     Linear turbine-water column model.
@@ -103305,7 +103305,7 @@ class TurbIEEEHydroWClinear(HydroWaterColumnDynamics):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class SteamTurbineGeneratorDynamics(TurbineGovernorDynamics):
     '''
     Steam turbine (ST) and a heat-recovery steam generator (HRSG) function
@@ -103344,7 +103344,7 @@ class SteamTurbineGeneratorDynamics(TurbineGovernorDynamics):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class TurbCIGREHRSGST(SteamTurbineGeneratorDynamics):
     '''
     CIGRE heat-recovery steam generator (HRSG) and a steam turbine model.
@@ -104078,7 +104078,7 @@ class TurbCIGREHRSGST(SteamTurbineGeneratorDynamics):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class TurbIEEEGenericHRSGST(SteamTurbineGeneratorDynamics):
     '''
     Generic heat-recovery steam generator (HRSG) and a steam turbine model.
@@ -104740,7 +104740,7 @@ class TurbIEEEGenericHRSGST(SteamTurbineGeneratorDynamics):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class TurbineGovernorUserDefined(TurbineGovernorDynamics):
     '''
     Turbine-governor function block whose dynamic behaviour is described by
@@ -104808,7 +104808,7 @@ class TurbineGovernorUserDefined(TurbineGovernorDynamics):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class TurbineLoadControllerDynamics(DynamicsFunctionBlock):
     '''
     Turbine load controller function block whose behaviour is described by
@@ -104848,7 +104848,7 @@ class TurbineLoadControllerDynamics(DynamicsFunctionBlock):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class TurbLCFB1(TurbineLoadControllerDynamics):
     '''
     Turbine load controller model developed by WECC. This model represents
@@ -105113,7 +105113,7 @@ class TurbLCFB1(TurbineLoadControllerDynamics):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class TurbineLoadControllerUserDefined(TurbineLoadControllerDynamics):
     '''
     Turbine load controller function block whose dynamic behaviour is described
@@ -105181,7 +105181,7 @@ class TurbineLoadControllerUserDefined(TurbineLoadControllerDynamics):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class UnderexcitationLimiterDynamics(DynamicsFunctionBlock):
     '''
     Underexcitation limiter function block whose behaviour is described by
@@ -105221,7 +105221,7 @@ class UnderexcitationLimiterDynamics(DynamicsFunctionBlock):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class UnderexcLim2Simplified(UnderexcitationLimiterDynamics):
     '''
     Simplified type UEL2 underexcitation limiter. This model can be derived
@@ -105381,7 +105381,7 @@ class UnderexcLim2Simplified(UnderexcitationLimiterDynamics):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class UnderexcLimIEEE1(UnderexcitationLimiterDynamics):
     '''
     Type UEL1 model which has a circular limit boundary when plotted in terms
@@ -105702,7 +105702,7 @@ class UnderexcLimIEEE1(UnderexcitationLimiterDynamics):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class UnderexcLimIEEE2(UnderexcitationLimiterDynamics):
     '''
     Type UEL2 underexcitation limiter which has either a straight-line or multi-segment
@@ -106505,7 +106505,7 @@ class UnderexcLimIEEE2(UnderexcitationLimiterDynamics):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class UnderexcLimIEEEUEL2C(UnderexcitationLimiterDynamics):
     '''
     IEEE 421.5-2016 UEL2C underexcitation limiter model. For this model, the
@@ -107260,7 +107260,7 @@ class UnderexcLimIEEEUEL2C(UnderexcitationLimiterDynamics):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class UnderexcLimX1(UnderexcitationLimiterDynamics):
     '''
     <font color="#0f0f0f">Allis-Chalmers minimum excitation limiter.</font>
@@ -107389,7 +107389,7 @@ class UnderexcLimX1(UnderexcitationLimiterDynamics):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class UnderexcLimX2(UnderexcitationLimiterDynamics):
     '''
     <font color="#0f0f0f">Westinghouse minimum excitation limiter.</font>
@@ -107536,7 +107536,7 @@ class UnderexcLimX2(UnderexcitationLimiterDynamics):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class UnderexcitationLimiterUserDefined(UnderexcitationLimiterDynamics):
     '''
     Underexcitation limiter function block whose dynamic behaviour is described
@@ -107604,7 +107604,7 @@ class UnderexcitationLimiterUserDefined(UnderexcitationLimiterDynamics):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class VoltageAdjusterDynamics(DynamicsFunctionBlock):
     '''
     Voltage adjuster function block whose behaviour is described by reference
@@ -107646,7 +107646,7 @@ class VoltageAdjusterDynamics(DynamicsFunctionBlock):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class VAdjIEEE(VoltageAdjusterDynamics):
     '''
     IEEE voltage adjuster which is used to represent the voltage adjuster in
@@ -107785,7 +107785,7 @@ class VAdjIEEE(VoltageAdjusterDynamics):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class VAdjIEEE2(VoltageAdjusterDynamics):
     '''
     IEEE 421.5-2016 Voltage reference adjuster model. It is is used to represent
@@ -107919,7 +107919,7 @@ class VAdjIEEE2(VoltageAdjusterDynamics):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class VoltageAdjusterUserDefined(VoltageAdjusterDynamics):
     '''
     <font color="#0f0f0f">Voltage adjuster</font> function block whose dynamic
@@ -107987,7 +107987,7 @@ class VoltageAdjusterUserDefined(VoltageAdjusterDynamics):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class VoltageCompensatorDynamics(DynamicsFunctionBlock):
     '''
     Voltage compensator function block whose behaviour is described by reference
@@ -108046,7 +108046,7 @@ class VoltageCompensatorDynamics(DynamicsFunctionBlock):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class VCompIEEEType1(VoltageCompensatorDynamics):
     '''
     <font color="#0f0f0f">Terminal voltage transducer and load compensator
@@ -108134,7 +108134,7 @@ class VCompIEEEType1(VoltageCompensatorDynamics):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class VCompIEEEType2(VoltageCompensatorDynamics):
     '''
     <font color="#0f0f0f">Terminal voltage transducer and load compensator
@@ -108204,7 +108204,7 @@ class VCompIEEEType2(VoltageCompensatorDynamics):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class VoltageCompensatorUserDefined(VoltageCompensatorDynamics):
     '''
     Voltage compensator function block whose dynamic behaviour is described
@@ -108272,7 +108272,7 @@ class VoltageCompensatorUserDefined(VoltageCompensatorDynamics):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class WeccDynamics(DynamicsFunctionBlock):
     '''
     Parent class supporting relationships to WECC standard models.
@@ -108331,7 +108331,7 @@ class WeccDynamics(DynamicsFunctionBlock):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class WeccBESS(WeccDynamics):
     '''
     WECC dynamics models related to battery energy storage systems (BESS).
@@ -108517,7 +108517,7 @@ class WeccBESS(WeccDynamics):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class WeccDERA(WeccDynamics):
     '''
     WECC Distributed Energy Resources Model.
@@ -109460,7 +109460,7 @@ class WeccDERA(WeccDynamics):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class WeccDERApvmod(WeccDynamics):
     '''
     Modified WECC Distributed Energy Resources Model.
@@ -109539,7 +109539,7 @@ class WeccDERApvmod(WeccDynamics):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class WeccPVD1(WeccDynamics):
     '''
     WECC Distributed and Small PV Plants Model. It is no longer recommended
@@ -109950,7 +109950,7 @@ class WeccPVD1(WeccDynamics):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class WeccREEC(WeccDynamics):
     '''
     WECC PQ Controller and Current Limit Logic.
@@ -109992,7 +109992,7 @@ class WeccREEC(WeccDynamics):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class WeccREECA(WeccREEC):
     '''
     WECC PQ Controller and Current Limit Logic.
@@ -111005,7 +111005,7 @@ class WeccREECA(WeccREEC):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class WeccREECB(WeccREEC):
     '''
     WECC PQ Controller and Current Limit Logic.
@@ -111571,7 +111571,7 @@ class WeccREECB(WeccREEC):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class WeccREECC(WeccREEC):
     '''
     WECC PQ Controller and Current Limit Logic.
@@ -112577,7 +112577,7 @@ class WeccREECC(WeccREEC):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class WeccREECD(WeccDynamics):
     '''
     WECC PQ Controller and Current Limit Logic (REEC_D).
@@ -114346,7 +114346,7 @@ class WeccREECD(WeccDynamics):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class WeccREGCA(WeccDynamics):
     '''
     WECC Generator-Converter Model.
@@ -114648,7 +114648,7 @@ class WeccREGCA(WeccDynamics):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class WeccREGCB(WeccDynamics):
     '''
     WECC Generator/Converter model (REGC_B) which is an extension of the REGC_A
@@ -114890,7 +114890,7 @@ class WeccREGCB(WeccDynamics):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class WeccREGCC(WeccDynamics):
     '''
     WECC Generator/Converter model (REGC_C) which is an alternative of the
@@ -115224,7 +115224,7 @@ class WeccREGCC(WeccDynamics):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class WeccREPCA(WeccDynamics):
     '''
     WECC Plant Controller.
@@ -115803,7 +115803,7 @@ class WeccREPCA(WeccDynamics):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class WeccREPCC(WeccDynamics):
     '''
     WECC Plant controller model (REPC_C).
@@ -116944,7 +116944,7 @@ class WeccREPCC(WeccDynamics):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class WeccWT12T(WeccDynamics):
     '''
     WECC Two-mass Drive Train Model.
@@ -117021,7 +117021,7 @@ class WeccWT12T(WeccDynamics):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class WeccWT1PB(WeccDynamics):
     '''
     WECC Pitch Controller (Type 1).
@@ -117187,7 +117187,7 @@ class WeccWT1PB(WeccDynamics):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class WeccWT2E(WeccDynamics):
     '''
     WECC External Resistance Controller.
@@ -117338,7 +117338,7 @@ class WeccWT2E(WeccDynamics):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class WeccWTGARA(WeccDynamics):
     '''
     WECC Aero-Dynamic Model.
@@ -117395,7 +117395,7 @@ class WeccWTGARA(WeccDynamics):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class WeccWTGIBFFRA(WeccDynamics):
     '''
     WECC WTGIBFFR_A model. Auxiliary control model representing the so-called
@@ -118253,7 +118253,7 @@ class WeccWTGIBFFRA(WeccDynamics):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class WeccWTGPB(WeccDynamics):
     '''
     WECC Mechanical side model (WTGP_B).
@@ -118534,7 +118534,7 @@ class WeccWTGPB(WeccDynamics):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class WeccWTGPTA(WeccDynamics):
     '''
     WECC Pitch Controller (Type 3).
@@ -118737,7 +118737,7 @@ class WeccWTGPTA(WeccDynamics):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class WeccWTGTA(WeccDynamics):
     '''
     WECC Drive-Train Model.
@@ -118830,7 +118830,7 @@ class WeccWTGTA(WeccDynamics):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class WeccWTGTB(WeccDynamics):
     '''
     WECC WTGT_B model. A drive-train �emulation� model where the only input
@@ -118943,7 +118943,7 @@ class WeccWTGTB(WeccDynamics):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class WeccWTGTRQA(WeccDynamics):
     '''
     WECC Torque Controller.
@@ -119131,7 +119131,7 @@ class WeccWTGTRQA(WeccDynamics):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class WeccWTGWGOA(WeccDynamics):
     '''
     WECC WTGWGO_A model. A simple generic model, as an auxiliary control which
@@ -119294,7 +119294,7 @@ class WeccWTGWGOA(WeccDynamics):
         return 'unbounded'
 
 @stereotype(CIMStereotype.OfAggregate)
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class WindPlantDynamics(DynamicsFunctionBlock):
     '''
     Parent class supporting relationships to wind turbines type 3 and type
@@ -119391,7 +119391,7 @@ class WindPlantDynamics(DynamicsFunctionBlock):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class WindPlantDynamics2(WindPlantDynamics):
     '''
     Parent class supporting relationships to wind turbines type 3 and type
@@ -119433,7 +119433,7 @@ class WindPlantDynamics2(WindPlantDynamics):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class WindPlantBasicIEC(WindPlantDynamics2):
     '''
     Basic wind power plant.
@@ -119453,7 +119453,7 @@ class WindPlantBasicIEC(WindPlantDynamics2):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class WindPlantQCompensationIEC(WindPlantDynamics2):
     '''
     Wind power plant with reactive power compensation.
@@ -119473,7 +119473,7 @@ class WindPlantQCompensationIEC(WindPlantDynamics2):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class WindPlantIEC(WindPlantDynamics):
     '''
     Simplified IEC type plant level model.
@@ -119533,7 +119533,7 @@ class WindPlantIEC(WindPlantDynamics):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class WindPlantUserDefined(WindPlantDynamics):
     '''
     Wind plant function block whose dynamic behaviour is described by <font
@@ -119601,7 +119601,7 @@ class WindPlantUserDefined(WindPlantDynamics):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class WindTurbineType1or2Dynamics(DynamicsFunctionBlock):
     '''
     Parent class supporting relationships to wind turbines type 1 and type
@@ -119681,7 +119681,7 @@ class WindTurbineType1or2Dynamics(DynamicsFunctionBlock):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class WindTurbineType1or2IEC(WindTurbineType1or2Dynamics):
     '''
     Parent class supporting relationships to IEC wind turbines type 1 and type
@@ -119746,7 +119746,7 @@ class WindTurbineType1or2IEC(WindTurbineType1or2Dynamics):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class WindGenTurbineType1aIEC(WindTurbineType1or2IEC):
     '''
     Wind turbine IEC type 1A.
@@ -119785,7 +119785,7 @@ class WindGenTurbineType1aIEC(WindTurbineType1or2IEC):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class WindGenTurbineType1bIEC(WindTurbineType1or2IEC):
     '''
     Wind turbine IEC type 1B.
@@ -119825,7 +119825,7 @@ class WindGenTurbineType1bIEC(WindTurbineType1or2IEC):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class WindGenTurbineType2IEC(WindTurbineType1or2IEC):
     '''
     Wind turbine IEC type 2.
@@ -119886,7 +119886,7 @@ class WindGenTurbineType2IEC(WindTurbineType1or2IEC):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class WindTurbineType1or2IEC2(WindTurbineType1or2Dynamics):
     '''
     Parent class supporting relationships to IEC wind turbines type 1 and type
@@ -119993,7 +119993,7 @@ class WindTurbineType1or2IEC2(WindTurbineType1or2Dynamics):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class WindGenTurbineType1aIEC2(WindTurbineType1or2IEC2):
     '''
     Wind turbine IEC type 1A.
@@ -120032,7 +120032,7 @@ class WindGenTurbineType1aIEC2(WindTurbineType1or2IEC2):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class WindGenTurbineType1bIEC2(WindTurbineType1or2IEC2):
     '''
     Wind turbine IEC type 1B.
@@ -120093,7 +120093,7 @@ class WindGenTurbineType1bIEC2(WindTurbineType1or2IEC2):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class WindGenTurbineType2IEC2(WindTurbineType1or2IEC2):
     '''
     Wind turbine IEC type 2.
@@ -120175,7 +120175,7 @@ class WindGenTurbineType2IEC2(WindTurbineType1or2IEC2):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class WindType1or2UserDefined(WindTurbineType1or2Dynamics):
     '''
     Wind type 1 or type 2 function block whose dynamic behaviour is described
@@ -120243,7 +120243,7 @@ class WindType1or2UserDefined(WindTurbineType1or2Dynamics):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class WindTurbineType3or4Dynamics(DynamicsFunctionBlock):
     '''
     Parent class supporting relationships to wind turbines type 3 and type
@@ -120322,7 +120322,7 @@ class WindTurbineType3or4Dynamics(DynamicsFunctionBlock):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class WindTurbineType3or4IEC(WindTurbineType3or4Dynamics):
     '''
     Parent class supporting relationships to IEC wind turbines type 3 and type
@@ -120468,7 +120468,7 @@ class WindTurbineType3or4IEC(WindTurbineType3or4Dynamics):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class WindTurbineType3IEC(WindTurbineType3or4IEC):
     '''
     Parent class supporting relationships to IEC wind turbines type 3 including
@@ -120605,7 +120605,7 @@ class WindTurbineType3IEC(WindTurbineType3or4IEC):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class WindTurbineType4IEC(WindTurbineType3or4IEC):
     '''
     Parent class supporting relationships to IEC wind turbines type 4 including
@@ -120645,7 +120645,7 @@ class WindTurbineType4IEC(WindTurbineType3or4IEC):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class WindTurbineType4aIEC(WindTurbineType4IEC):
     '''
     Wind turbine IEC type 4A.
@@ -120706,7 +120706,7 @@ class WindTurbineType4aIEC(WindTurbineType4IEC):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class WindTurbineType4bIEC(WindTurbineType4IEC):
     '''
     Wind turbine IEC type 4B.
@@ -120786,7 +120786,7 @@ class WindTurbineType4bIEC(WindTurbineType4IEC):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class WindTurbineType3or4IEC2(WindTurbineType3or4Dynamics):
     '''
     Parent class supporting relationships to IEC wind turbines type 3 and type
@@ -120995,7 +120995,7 @@ class WindTurbineType3or4IEC2(WindTurbineType3or4Dynamics):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class WindTurbineType3IEC2(WindTurbineType3or4IEC2):
     '''
     Parent class supporting relationships to IEC wind turbines type 3 including
@@ -121139,7 +121139,7 @@ class WindTurbineType3IEC2(WindTurbineType3or4IEC2):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class WindTurbineType4IEC2(WindTurbineType3or4IEC2):
     '''
     Parent class supporting relationships to IEC wind turbines type 4 including
@@ -121180,7 +121180,7 @@ class WindTurbineType4IEC2(WindTurbineType3or4IEC2):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class WindTurbineType4aIEC2(WindTurbineType4IEC2):
     '''
     Wind turbine IEC type 4A.
@@ -121242,7 +121242,7 @@ class WindTurbineType4aIEC2(WindTurbineType4IEC2):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class WindTurbineType4bIEC2(WindTurbineType4IEC2):
     '''
     Wind turbine IEC type 4B.
@@ -121323,7 +121323,7 @@ class WindTurbineType4bIEC2(WindTurbineType4IEC2):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class WindType3or4UserDefined(WindTurbineType3or4Dynamics):
     '''
     Wind type 3 or type 4 function block whose dynamic behaviour is described
@@ -121391,7 +121391,7 @@ class WindType3or4UserDefined(WindTurbineType3or4Dynamics):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class EarthResistivity(IdentifiedObject):
     '''
     Resistance of earth (soil)
@@ -121479,7 +121479,7 @@ class EarthResistivity(IdentifiedObject):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class EnergyArea(IdentifiedObject):
     '''
     Describes an area having energy production or consumption. Specializations
@@ -121522,7 +121522,7 @@ class EnergyArea(IdentifiedObject):
         return 'unbounded'
 
 @stereotype(CIMStereotype.OfAggregate)
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class LoadArea(EnergyArea):
     '''
     The class is the root or first level in a hierarchical structure for grouping
@@ -121562,7 +121562,7 @@ class LoadArea(EnergyArea):
         return 'unbounded'
 
 @stereotype(CIMStereotype.OfAggregate)
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class SubLoadArea(EnergyArea):
     '''
     The class is the second level in a hierarchical structure for grouping
@@ -121620,7 +121620,7 @@ class SubLoadArea(EnergyArea):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class EnergyConsumerAction(IdentifiedObject):
     '''
     Action to connect or disconnect the Energy Consumer from its Terminal
@@ -121656,7 +121656,7 @@ class EnergyConsumerAction(IdentifiedObject):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class EnergySchedulingType(IdentifiedObject):
     '''
     Used to define the type of generation for scheduling purposes.
@@ -121694,7 +121694,7 @@ class EnergySchedulingType(IdentifiedObject):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class EnergySourceAction(IdentifiedObject):
     '''
     Action on energy source as a switching step.
@@ -121732,7 +121732,7 @@ class EnergySourceAction(IdentifiedObject):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class EnvironmentalMonitoringStation(IdentifiedObject):
     '''
     An environmental monitoring station, examples of which could be a weather
@@ -121770,7 +121770,7 @@ class EnvironmentalMonitoringStation(IdentifiedObject):
         return 'unbounded'
 
 @stereotype(CIMStereotype.NC)
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class Fault(IdentifiedObject):
     '''
     Abnormal condition causing current flow through conducting equipment, such
@@ -121979,7 +121979,7 @@ class Fault(IdentifiedObject):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class EquipmentFault(Fault):
     '''
     A fault applied at the terminal, external to the equipment. This class
@@ -122018,7 +122018,7 @@ class EquipmentFault(Fault):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class LineFault(Fault):
     '''
     A fault that occurs on an AC line segment at some point along the length.
@@ -122076,7 +122076,7 @@ class LineFault(Fault):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class FaultCauseType(IdentifiedObject):
     '''
     Type of cause of the fault.
@@ -122095,7 +122095,7 @@ class FaultCauseType(IdentifiedObject):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class FossilFuel(IdentifiedObject):
     '''
     The fossil fuel consumed by the non-nuclear thermal generating unit. For
@@ -122367,7 +122367,7 @@ class FossilFuel(IdentifiedObject):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class FrequencyDroopSettings(IdentifiedObject):
     '''
     Frequency Droop Settings.
@@ -122513,7 +122513,7 @@ class FrequencyDroopSettings(IdentifiedObject):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class FrequencyTripSettings(IdentifiedObject):
     '''
     Frequency Trip Settings.
@@ -122706,7 +122706,7 @@ class FrequencyTripSettings(IdentifiedObject):
         return 'unbounded'
 
 @stereotype(CIMStereotype.OfAggregate)
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class FunctionBlock(IdentifiedObject):
     '''
     Function block is a function described as a set of elementary blocks. The
@@ -122907,7 +122907,7 @@ class FunctionBlock(IdentifiedObject):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class BooleanLogic(FunctionBlock):
     '''
     Specialization of FunctionBlock class intended to define a boolean logic
@@ -122970,7 +122970,7 @@ class BooleanLogic(FunctionBlock):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class ConstantFunctionBlock(FunctionBlock):
     '''
     Class to define a function block containing a constant value. A FunctionBlockType
@@ -123048,7 +123048,7 @@ class ConstantFunctionBlock(FunctionBlock):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class ControlFunctionBlock(FunctionBlock):
     '''
     Control function block is a function block that contains an algorithm for
@@ -123198,7 +123198,7 @@ class ControlFunctionBlock(FunctionBlock):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class ACEmulationControlFunction(ControlFunctionBlock):
     '''
     The AC emulation control function is used when AC emulation model is activated
@@ -123300,7 +123300,7 @@ class ACEmulationControlFunction(ControlFunctionBlock):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class ActivePowerControlFunction(ControlFunctionBlock):
     '''
     Active power control function is a function block that calculates operating
@@ -123340,7 +123340,7 @@ class ActivePowerControlFunction(ControlFunctionBlock):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class CurrentControlFunction(ControlFunctionBlock):
     '''
     Current control function is a function block that calculates the operating
@@ -123380,7 +123380,7 @@ class CurrentControlFunction(ControlFunctionBlock):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class CurrentDroopControlFunction(ControlFunctionBlock):
     '''
     Current droop control function is a function block that calculates the
@@ -123508,7 +123508,7 @@ class CurrentDroopControlFunction(ControlFunctionBlock):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class DCCurrentControlFunction(ControlFunctionBlock):
     '''
     DC current control function is a function block that calculates the operating
@@ -123588,7 +123588,7 @@ class DCCurrentControlFunction(ControlFunctionBlock):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class DCVoltageControlFunction(ControlFunctionBlock):
     '''
     DC voltage control function is a function block that calculate the operating
@@ -123628,7 +123628,7 @@ class DCVoltageControlFunction(ControlFunctionBlock):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class FrequencyControlFunction(ControlFunctionBlock):
     '''
     Frequency control function is a function block that calculate the operating
@@ -123688,7 +123688,7 @@ class FrequencyControlFunction(ControlFunctionBlock):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class ImpedanceControlFunction(ControlFunctionBlock):
     '''
     Impedance control function is a function block that calculates the operating
@@ -123728,7 +123728,7 @@ class ImpedanceControlFunction(ControlFunctionBlock):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class PhaseControlFunction(ControlFunctionBlock):
     '''
     Phase control function is a function block that calculate the operating
@@ -123768,7 +123768,7 @@ class PhaseControlFunction(ControlFunctionBlock):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class PowerFactorControlFunction(ControlFunctionBlock):
     '''
     Power factor control function is a function block that calculates the operating
@@ -123808,7 +123808,7 @@ class PowerFactorControlFunction(ControlFunctionBlock):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class ReactivePowerControlFunction(ControlFunctionBlock):
     '''
     Reactive power control function is a function block that calculate the
@@ -123849,7 +123849,7 @@ class ReactivePowerControlFunction(ControlFunctionBlock):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class VoltageControlFunction(ControlFunctionBlock):
     '''
     Voltage control function is a function block that calculate the operating
@@ -123889,7 +123889,7 @@ class VoltageControlFunction(ControlFunctionBlock):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class VoltageInjectionControlFunction(ControlFunctionBlock):
     '''
     Voltage injection control function is a function block that calculates
@@ -123930,7 +123930,7 @@ class VoltageInjectionControlFunction(ControlFunctionBlock):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class DelayTimer(FunctionBlock):
     '''
     Class to define a DelayTimer. Behavior matches that of the On Delay Timer
@@ -123988,7 +123988,7 @@ class DelayTimer(FunctionBlock):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class EdgeDetector(FunctionBlock):
     '''
     Class to define an Edge detector. Similar to the R_TRIG and F_TRIG standard
@@ -124028,7 +124028,7 @@ class EdgeDetector(FunctionBlock):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class FlipFlop(FunctionBlock):
     '''
     Class to define a Flipflop. Behavior matches that of the SR or RS Bistable
@@ -124068,7 +124068,7 @@ class FlipFlop(FunctionBlock):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class LogicalOperation(FunctionBlock):
     '''
     Specialization of FunctionBlock class intended to define a logical operation.
@@ -124131,7 +124131,7 @@ class LogicalOperation(FunctionBlock):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class NumericOperation(FunctionBlock):
     '''
     Class to represent a numerical operation.
@@ -124167,7 +124167,7 @@ class NumericOperation(FunctionBlock):
         return 'unbounded'
 
 @stereotype(CIMStereotype.OfAggregate)
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class ProtectionFunctionBlock(FunctionBlock):
     '''
     Protection function block is a function block that contains an algorithm
@@ -124512,7 +124512,7 @@ class ProtectionFunctionBlock(FunctionBlock):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class FaultClearanceProtectionFunctionBlock(ProtectionFunctionBlock):
     '''
     This class is the base class of protection function blocks for fault clearance.
@@ -124531,7 +124531,7 @@ class FaultClearanceProtectionFunctionBlock(ProtectionFunctionBlock):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class CurrentProtectionFunctionBlock(FaultClearanceProtectionFunctionBlock):
     '''
     This class is the base class of current relay function.
@@ -124566,7 +124566,7 @@ class CurrentProtectionFunctionBlock(FaultClearanceProtectionFunctionBlock):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class OverCurrentProtectionFunctionBlock(CurrentProtectionFunctionBlock):
     '''
     This class represents a function for over current protection.
@@ -124696,7 +124696,7 @@ class OverCurrentProtectionFunctionBlock(CurrentProtectionFunctionBlock):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class UnderCurrentProtectionFunctionBlock(CurrentProtectionFunctionBlock):
     '''
     This class represents a function for under current protection.
@@ -124715,7 +124715,7 @@ class UnderCurrentProtectionFunctionBlock(CurrentProtectionFunctionBlock):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class DifferentialProtectionFuntionBlock(FaultClearanceProtectionFunctionBlock):
     '''
     This class represents a function for differential protection and has some
@@ -124869,7 +124869,7 @@ class DifferentialProtectionFuntionBlock(FaultClearanceProtectionFunctionBlock):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class DirectionalProtectionFunctionBlock(FaultClearanceProtectionFunctionBlock):
     '''
     This class is the base class of directional relay function.
@@ -124904,7 +124904,7 @@ class DirectionalProtectionFunctionBlock(FaultClearanceProtectionFunctionBlock):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class OverPowerDirectionProtectionFunctionBlock(DirectionalProtectionFunctionBlock):
     '''
     This class represents a function for over power direction protection.
@@ -124923,7 +124923,7 @@ class OverPowerDirectionProtectionFunctionBlock(DirectionalProtectionFunctionBlo
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class UnderPowerDirectionProtectionFunctionBlock(DirectionalProtectionFunctionBlock):
     '''
     This class represents a function for under power direction protection.
@@ -124942,7 +124942,7 @@ class UnderPowerDirectionProtectionFunctionBlock(DirectionalProtectionFunctionBl
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class DistanceProtectionFunctionBlock(FaultClearanceProtectionFunctionBlock):
     '''
     This class represents a function for distance protection.
@@ -125190,7 +125190,7 @@ class DistanceProtectionFunctionBlock(FaultClearanceProtectionFunctionBlock):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class GroundDistanceProtectionFunctionBlock(DistanceProtectionFunctionBlock):
     '''
     This class represents a function for ground distance protection.
@@ -125252,7 +125252,7 @@ class GroundDistanceProtectionFunctionBlock(DistanceProtectionFunctionBlock):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class VoltageProtectionFunctionBlock(FaultClearanceProtectionFunctionBlock):
     '''
     This class is the base class of voltage relay function.
@@ -125287,7 +125287,7 @@ class VoltageProtectionFunctionBlock(FaultClearanceProtectionFunctionBlock):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class OverVoltageProtectionFunctionBlock(VoltageProtectionFunctionBlock):
     '''
     This class represents a function for over voltage protection.
@@ -125306,7 +125306,7 @@ class OverVoltageProtectionFunctionBlock(VoltageProtectionFunctionBlock):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class UnderVoltageProtectionFunctionBlock(VoltageProtectionFunctionBlock):
     '''
     This class represents a function for under voltage protection.
@@ -125325,7 +125325,7 @@ class UnderVoltageProtectionFunctionBlock(VoltageProtectionFunctionBlock):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class ProtectionTripConditioningFunctionBlock(ProtectionFunctionBlock):
     '''
     A protection function block concept borrowed from 61850-7-4. The intention
@@ -125348,7 +125348,7 @@ class ProtectionTripConditioningFunctionBlock(ProtectionFunctionBlock):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class WideAreaProtectionFunctionBlock(ProtectionFunctionBlock):
     '''
     This class is the base class of protection blocks for wide area protection.
@@ -125367,7 +125367,7 @@ class WideAreaProtectionFunctionBlock(ProtectionFunctionBlock):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class FrequencyProtectionFunctionBlock(WideAreaProtectionFunctionBlock):
     '''
     This class is the base class of frequency protections.
@@ -125404,7 +125404,7 @@ class FrequencyProtectionFunctionBlock(WideAreaProtectionFunctionBlock):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class OverFrequencyProtectionFunctionBlock(FrequencyProtectionFunctionBlock):
     '''
     This class represents a function for over frequency protection.
@@ -125443,7 +125443,7 @@ class OverFrequencyProtectionFunctionBlock(FrequencyProtectionFunctionBlock):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class RateOfChangeOfFrequencyProtectionFunction(FrequencyProtectionFunctionBlock):
     '''
     This class represents a function for rate-of-change of frequency protection.
@@ -125500,7 +125500,7 @@ class RateOfChangeOfFrequencyProtectionFunction(FrequencyProtectionFunctionBlock
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class UnderFrequencyProtectionFunctionBlock(FrequencyProtectionFunctionBlock):
     '''
     This class represents a function for under frequency protection.
@@ -125539,7 +125539,7 @@ class UnderFrequencyProtectionFunctionBlock(FrequencyProtectionFunctionBlock):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class OutOfStepProtectionFunctionBlock(WideAreaProtectionFunctionBlock):
     '''
     This class is the base class for out-of-step protection function.
@@ -125558,7 +125558,7 @@ class OutOfStepProtectionFunctionBlock(WideAreaProtectionFunctionBlock):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class ImpedanceLocusTypeFunctionBlock(OutOfStepProtectionFunctionBlock):
     '''
     This class represents impedance locus type for out-of-step protection function.
@@ -125598,7 +125598,7 @@ class ImpedanceLocusTypeFunctionBlock(OutOfStepProtectionFunctionBlock):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class VoltagePhaseComparisontypeFunctionBlock(OutOfStepProtectionFunctionBlock):
     '''
     This class represents voltage phase comparison type for out-of-step protection
@@ -125618,7 +125618,7 @@ class VoltagePhaseComparisontypeFunctionBlock(OutOfStepProtectionFunctionBlock):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class OverLoadProtectionFunctionBlock(WideAreaProtectionFunctionBlock):
     '''
     This class is the base class for over load protection function.
@@ -125637,7 +125637,7 @@ class OverLoadProtectionFunctionBlock(WideAreaProtectionFunctionBlock):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class OverCurrentTypeFunctionBlock(OverLoadProtectionFunctionBlock):
     '''
     This class represents over current type for over load protection function.
@@ -125677,7 +125677,7 @@ class OverCurrentTypeFunctionBlock(OverLoadProtectionFunctionBlock):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class TemperatureCalculationTypeFunctionBlock(OverLoadProtectionFunctionBlock):
     '''
     This class represents temperature calculation type for over load protection
@@ -125698,7 +125698,7 @@ class TemperatureCalculationTypeFunctionBlock(OverLoadProtectionFunctionBlock):
         return 'unbounded'
 
 @stereotype(CIMStereotype.OfAggregate)
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class ProtectionRelatedFunctionBlock(FunctionBlock):
     '''
     Protection related functions that do not have an operate output but can
@@ -125817,7 +125817,7 @@ class ProtectionRelatedFunctionBlock(FunctionBlock):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class AutoreclosingFunctionBlock(ProtectionRelatedFunctionBlock):
     '''
     This class represents a function for auto-reclosing.
@@ -125873,7 +125873,7 @@ class AutoreclosingFunctionBlock(ProtectionRelatedFunctionBlock):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class BreakerFailureFunctionBlock(ProtectionRelatedFunctionBlock):
     '''
     This class represents a breaker failure function.
@@ -126016,7 +126016,7 @@ class BreakerFailureFunctionBlock(ProtectionRelatedFunctionBlock):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class SynchrocheckFunctionBlock(ProtectionRelatedFunctionBlock):
     '''
     This class represents a function for check of synchronism.
@@ -126089,7 +126089,7 @@ class SynchrocheckFunctionBlock(ProtectionRelatedFunctionBlock):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class UpDownCounter(FunctionBlock):
     '''
     Class to define a rising or falling edge counter. Similar to the CTU and
@@ -126150,7 +126150,7 @@ class UpDownCounter(FunctionBlock):
         return 'unbounded'
 
 @stereotype(CIMStereotype.OfAggregate)
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class FunctionBlockType(IdentifiedObject):
     '''
     Class used to specify the behavior of one or many instances of the FunctionBlock
@@ -126247,7 +126247,7 @@ class FunctionBlockType(IdentifiedObject):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class FunctionInputVariable(IdentifiedObject):
     '''
     Functional input variable defines the domain of the function.
@@ -126287,7 +126287,7 @@ class FunctionInputVariable(IdentifiedObject):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class GateInputPin(FunctionInputVariable):
     '''
     Input pin for a logical gate. The condition described in the input pin
@@ -126468,7 +126468,7 @@ class GateInputPin(FunctionInputVariable):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class PinContingency(GateInputPin):
     '''
     Input pin associated with a Contingency. It is used for comparison.
@@ -126506,7 +126506,7 @@ class PinContingency(GateInputPin):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class PinDCTerminal(GateInputPin):
     '''
     Input pin associated with a DCTerminal. It is used for comparison.
@@ -126562,7 +126562,7 @@ class PinDCTerminal(GateInputPin):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class PinEquipment(GateInputPin):
     '''
     Input pin associated with an Equipment. It is used for the comparison.
@@ -126619,7 +126619,7 @@ class PinEquipment(GateInputPin):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class PinEquipmentTripping(GateInputPin):
     '''
     Input pin associated with an Equipment. It is used to determine if the
@@ -126660,7 +126660,7 @@ class PinEquipmentTripping(GateInputPin):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class PinGate(GateInputPin):
     '''
     An output from one gate represents an input to another gate.
@@ -126698,7 +126698,7 @@ class PinGate(GateInputPin):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class PinMeasurement(GateInputPin):
     '''
     Input pin associated with a Measurement. It is used for comparison.
@@ -126755,7 +126755,7 @@ class PinMeasurement(GateInputPin):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class PinOperationalLimit(GateInputPin):
     '''
     Input pin associated with the limits of a Terminal. It is used for comparison.
@@ -126793,7 +126793,7 @@ class PinOperationalLimit(GateInputPin):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class PinPowerTransferCorridor(GateInputPin):
     '''
     Input pin associated with a PowerTransferCorridor. It is used for comparison.
@@ -126849,7 +126849,7 @@ class PinPowerTransferCorridor(GateInputPin):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class PinTerminal(GateInputPin):
     '''
     Input pin associated with a Terminal. It is used for comparison.
@@ -126905,7 +126905,7 @@ class PinTerminal(GateInputPin):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class FunctionOutputVariable(IdentifiedObject):
     '''
     Functional output variable defines the codomain of the function.
@@ -126967,7 +126967,7 @@ class FunctionOutputVariable(IdentifiedObject):
         return 'unbounded'
 
 @stereotype(CIMStereotype.OfAggregate)
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class Gate(IdentifiedObject):
     '''
     Logical gate that supports a logical operation based on the input.
@@ -127137,7 +127137,7 @@ class Gate(IdentifiedObject):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class GenICompensationForGenJ(IdentifiedObject):
     '''
     Resistive and reactive components of compensation for generator associated
@@ -127243,7 +127243,7 @@ class GenICompensationForGenJ(IdentifiedObject):
         return 'unbounded'
 
 @stereotype(CIMStereotype.OfAggregate)
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class GeographicalRegion(IdentifiedObject):
     '''
     A geographical region of a power system network model.
@@ -127282,7 +127282,7 @@ class GeographicalRegion(IdentifiedObject):
         return 'unbounded'
 
 @stereotype(CIMStereotype.NC)
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class GridDisturbance(IdentifiedObject):
     '''
     Automatic, unintended, or manual undeferrable switching of breakers as
@@ -127321,7 +127321,7 @@ class GridDisturbance(IdentifiedObject):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class GridStateAlterationCollection(IdentifiedObject):
     '''
     A collection of grid state alterations.
@@ -127359,7 +127359,7 @@ class GridStateAlterationCollection(IdentifiedObject):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class GroundAction(IdentifiedObject):
     '''
     Action on ground as a switching step.
@@ -127448,7 +127448,7 @@ class GroundAction(IdentifiedObject):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class ICCPInformationMessage(IdentifiedObject):
     '''
     This class represents the TASE.2 Information Message Object. The IdentifiedObject.name
@@ -127511,7 +127511,7 @@ class ICCPInformationMessage(IdentifiedObject):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class IOPoint(IdentifiedObject):
     '''
     The class describe a measurement or control value. The purpose is to enable
@@ -127569,7 +127569,7 @@ class IOPoint(IdentifiedObject):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class Control(IOPoint):
     '''
     Control is used for supervisory/device control. It represents control outputs
@@ -127741,7 +127741,7 @@ class Control(IOPoint):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class AccumulatorReset(Control):
     '''
     This command resets the counter value to zero.
@@ -127779,7 +127779,7 @@ class AccumulatorReset(Control):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class AnalogControl(Control):
     '''
     An analog control used for supervisory control.
@@ -127857,7 +127857,7 @@ class AnalogControl(Control):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class RaiseLowerCommand(AnalogControl):
     '''
     An analog control that increases or decreases a set point value with pulses.
@@ -127896,7 +127896,7 @@ class RaiseLowerCommand(AnalogControl):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class SetPoint(AnalogControl):
     '''
     An analog control that issues a set point value.
@@ -127951,7 +127951,7 @@ class SetPoint(AnalogControl):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class Command(Control):
     '''
     A Command is a discrete control used for supervisory control.
@@ -128045,7 +128045,7 @@ class Command(Control):
         return 'unbounded'
 
 @stereotype(CIMStereotype.OfAggregate)
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class MeasurementValue(IOPoint):
     '''
     The current state for a measurement. A state value is an instance of a
@@ -128199,7 +128199,7 @@ class MeasurementValue(IOPoint):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class AccumulatorValue(MeasurementValue):
     '''
     AccumulatorValue represents an accumulated (counted) MeasurementValue.
@@ -128275,7 +128275,7 @@ class AccumulatorValue(MeasurementValue):
         return 'unbounded'
 
 @stereotype(CIMStereotype.Concrete)
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class AnalogValue(MeasurementValue):
     '''
     AnalogValue represents an analog MeasurementValue.
@@ -128388,7 +128388,7 @@ class AnalogValue(MeasurementValue):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class DiscreteValue(MeasurementValue):
     '''
     DiscreteValue represents a discrete MeasurementValue.
@@ -128463,7 +128463,7 @@ class DiscreteValue(MeasurementValue):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class MeasurementVector(MeasurementValue):
     '''
     '''
@@ -128514,7 +128514,7 @@ class MeasurementVector(MeasurementValue):
         return 'unbounded'
 
 @stereotype(CIMStereotype.GridAPPSD)
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class PhasorMeasurementValue(MeasurementVector):
     '''
     '''
@@ -128532,7 +128532,7 @@ class PhasorMeasurementValue(MeasurementVector):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class StringMeasurementValue(MeasurementValue):
     '''
     StringMeasurementValue represents a measurement value of type string.
@@ -128588,7 +128588,7 @@ class StringMeasurementValue(MeasurementValue):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class ImpedanceTapChangerTable(IdentifiedObject):
     '''
     Describes a curve for how the power transformer end impedance varies with
@@ -128646,7 +128646,7 @@ class ImpedanceTapChangerTable(IdentifiedObject):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class IndividualPnode(IdentifiedObject):
     '''
     Individual pricing node based on Pnode.
@@ -128699,7 +128699,7 @@ class IndividualPnode(IdentifiedObject):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class IntraphaseSpacing(IdentifiedObject):
     '''
     Wire spacing data that associates multiple wire positions with the line
@@ -128738,7 +128738,7 @@ class IntraphaseSpacing(IdentifiedObject):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class JumperAction(IdentifiedObject):
     '''
     Action on jumper as a switching step.
@@ -128847,7 +128847,7 @@ class JumperAction(IdentifiedObject):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class Limit(IdentifiedObject):
     '''
     Specifies one limit value for a Measurement. A Measurement typically has
@@ -128870,7 +128870,7 @@ class Limit(IdentifiedObject):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class AccumulatorLimit(Limit):
     '''
     Limit values for Accumulator measurements.
@@ -128926,7 +128926,7 @@ class AccumulatorLimit(Limit):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class AnalogLimit(Limit):
     '''
     Limit values for Analog measurements.
@@ -128982,7 +128982,7 @@ class AnalogLimit(Limit):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class LimitSet(IdentifiedObject):
     '''
     Specifies a set of Limits that are associated with a Measurement. A Measurement
@@ -129026,7 +129026,7 @@ class LimitSet(IdentifiedObject):
         return 'unbounded'
 
 @stereotype(CIMStereotype.OfAggregate)
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class AccumulatorLimitSet(LimitSet):
     '''
     An AccumulatorLimitSet specifies a set of Limits that are associated with
@@ -129066,7 +129066,7 @@ class AccumulatorLimitSet(LimitSet):
         return 'unbounded'
 
 @stereotype(CIMStereotype.OfAggregate)
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class AnalogLimitSet(LimitSet):
     '''
     An AnalogLimitSet specifies a set of Limits that are associated with an
@@ -129105,7 +129105,7 @@ class AnalogLimitSet(LimitSet):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class LineSegmentCoupling(IdentifiedObject):
     '''
     Describes the relationship of a line in a coupled group to the reference
@@ -129248,7 +129248,7 @@ class LineSegmentCoupling(IdentifiedObject):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class LoadAirCoWECC(IdentifiedObject):
     '''
     Single-phase Air Conditioner used in the WECC Dynamic Composite Load Model
@@ -129685,7 +129685,7 @@ class LoadAirCoWECC(IdentifiedObject):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class LoadElectronicWECC(IdentifiedObject):
     '''
     Electronic Load used in the WECC Dynamic Composite Load Model (CMPLDW).
@@ -129832,7 +129832,7 @@ class LoadElectronicWECC(IdentifiedObject):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class LoadGroup(IdentifiedObject):
     '''
     The class is the third level in a hierarchical structure for grouping of
@@ -129872,7 +129872,7 @@ class LoadGroup(IdentifiedObject):
         return 'unbounded'
 
 @stereotype(CIMStereotype.OfAggregate)
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class ConformLoadGroup(LoadGroup):
     '''
     A group of loads conforming to an allocation pattern.
@@ -129930,7 +129930,7 @@ class ConformLoadGroup(LoadGroup):
         return 'unbounded'
 
 @stereotype(CIMStereotype.OfAggregate)
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class NonConformLoadGroup(LoadGroup):
     '''
     Loads that do not follow a daily and seasonal load variation pattern.
@@ -129987,7 +129987,7 @@ class NonConformLoadGroup(LoadGroup):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class LoadMotor(IdentifiedObject):
     '''
     Aggregate induction motor load. This model is used to represent a fraction
@@ -130294,7 +130294,7 @@ class LoadMotor(IdentifiedObject):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class LoadMotorWECC(IdentifiedObject):
     '''
     Three-phase Motor used in the WECC Dynamic Composite Load Model (CMPLDW).
@@ -130675,7 +130675,7 @@ class LoadMotorWECC(IdentifiedObject):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class LoadResponseCharacteristic(IdentifiedObject):
     '''
     Models the characteristic response of the load demand due to changes in
@@ -130979,7 +130979,7 @@ class LoadResponseCharacteristic(IdentifiedObject):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class LoadStatic(IdentifiedObject):
     '''
     General static load. This model represents the sensitivity of the real
@@ -131361,7 +131361,7 @@ class LoadStatic(IdentifiedObject):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class LoadStaticWECC(IdentifiedObject):
     '''
     Static Load Model used in the WECC Dynamic Composite Load Model (CMPLDW).
@@ -131598,7 +131598,7 @@ class LoadStaticWECC(IdentifiedObject):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class Location(IdentifiedObject):
     '''
     The place, scene, or point of something where someone or something has
@@ -131655,7 +131655,7 @@ class Location(IdentifiedObject):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class ServiceLocation(Location):
     '''
     A real estate location, commonly referred to as premises.
@@ -131695,7 +131695,7 @@ class ServiceLocation(Location):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class ChargingPark(ServiceLocation):
     '''
     geographical area that encloses one or more charging stations with one
@@ -131716,7 +131716,7 @@ class ChargingPark(ServiceLocation):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class UsagePointLocation(Location):
     '''
     Location of an individual usage point.
@@ -131754,7 +131754,7 @@ class UsagePointLocation(Location):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class Measurement(IdentifiedObject):
     '''
     A Measurement represents any measured, calculated or non-measured non-calculated
@@ -132050,7 +132050,7 @@ class Measurement(IdentifiedObject):
         return 'unbounded'
 
 @stereotype(CIMStereotype.ShadowExtension)
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class Accumulator(Measurement):
     '''
     Accumulator represents an accumulated (counted) Measurement, e.g. an energy
@@ -132111,7 +132111,7 @@ class Accumulator(Measurement):
 
 @stereotype(CIMStereotype.Concrete)
 @stereotype(CIMStereotype.ShadowExtension)
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class Analog(Measurement):
     '''
     Analog represents an analog Measurement.
@@ -132242,7 +132242,7 @@ class Analog(Measurement):
         return 'unbounded'
 
 @stereotype(CIMStereotype.ShadowExtension)
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class Discrete(Measurement):
     '''
     Discrete represents a discrete Measurement, i.e. a Measurement representing
@@ -132361,7 +132361,7 @@ class Discrete(Measurement):
         return 'unbounded'
 
 @stereotype(CIMStereotype.ShadowExtension)
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class StringMeasurement(Measurement):
     '''
     StringMeasurement represents a measurement with values of type string.
@@ -132399,7 +132399,7 @@ class StringMeasurement(Measurement):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class MeasurementAction(IdentifiedObject):
     '''
     Measurement taken as a switching step.
@@ -132436,7 +132436,7 @@ class MeasurementAction(IdentifiedObject):
         return 'unbounded'
 
 @stereotype(CIMStereotype.OfAggregate)
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class MeasurementCalculator(IdentifiedObject):
     '''
     Result of a calculation of one or more measurement.
@@ -132511,7 +132511,7 @@ class MeasurementCalculator(IdentifiedObject):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class MeasurementCalculatorInput(IdentifiedObject):
     '''
     Input to measurement calculation. It supports Analog, Discrete and Accumulator
@@ -132609,7 +132609,7 @@ class MeasurementCalculatorInput(IdentifiedObject):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class MeasurementValueSource(IdentifiedObject):
     '''
     MeasurementValueSource describes the alternative sources updating a MeasurementValue.
@@ -132649,7 +132649,7 @@ class MeasurementValueSource(IdentifiedObject):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class IOPointSource(MeasurementValueSource):
     '''
     Indicates the point source for an IO Point.
@@ -132687,7 +132687,7 @@ class IOPointSource(MeasurementValueSource):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class MomentaryCessationSettings(IdentifiedObject):
     '''
     Momentary Cessation Settings.
@@ -132888,7 +132888,7 @@ class MomentaryCessationSettings(IdentifiedObject):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class MutualCoupling(IdentifiedObject):
     '''
     This class represents the zero sequence line mutual coupling.
@@ -133111,7 +133111,7 @@ class MutualCoupling(IdentifiedObject):
 
 @stereotype(CIMStereotype.informative)
 @stereotype(CIMStereotype.deprecated)
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class OldPerson(IdentifiedObject):
     '''
     General purpose information for name and other information to contact people.
@@ -133147,7 +133147,7 @@ class OldPerson(IdentifiedObject):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class OperatingParticipant(IdentifiedObject):
     '''
     An operator of multiple power system resource objects. Note multiple operating
@@ -133190,7 +133190,7 @@ class OperatingParticipant(IdentifiedObject):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class OperationalLimit(IdentifiedObject):
     '''
     A value and normal value associated with a specific kind of limit.
@@ -133294,7 +133294,7 @@ class OperationalLimit(IdentifiedObject):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class ActivePowerLimit(OperationalLimit):
     '''
     Limit on active power flow.
@@ -133353,7 +133353,7 @@ class ActivePowerLimit(OperationalLimit):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class ApparentPowerLimit(OperationalLimit):
     '''
     Apparent power limit.
@@ -133411,7 +133411,7 @@ class ApparentPowerLimit(OperationalLimit):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class CurrentLimit(OperationalLimit):
     '''
     Operational limit on current.
@@ -133468,7 +133468,7 @@ class CurrentLimit(OperationalLimit):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class InfeedLimit(OperationalLimit):
     '''
     Infeed limit set constraints fed in to the network by two or more terminals.
@@ -133584,7 +133584,7 @@ class InfeedLimit(OperationalLimit):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class VoltageAngleLimit(OperationalLimit):
     '''
     Voltage angle limit between two terminals. The association end OperationalLimitSet.Terminal
@@ -133694,7 +133694,7 @@ class VoltageAngleLimit(OperationalLimit):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class VoltageLimit(OperationalLimit):
     '''
     Operational limit applied to voltage.
@@ -133760,7 +133760,7 @@ class VoltageLimit(OperationalLimit):
         return 'unbounded'
 
 @stereotype(CIMStereotype.OfAggregate)
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class OperationalLimitSet(IdentifiedObject):
     '''
     A set of limits associated with equipment. Sets of limits might apply to
@@ -133860,7 +133860,7 @@ class OperationalLimitSet(IdentifiedObject):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class OperationalLimitType(IdentifiedObject):
     '''
     The operational meaning of a category of limits.
@@ -134111,7 +134111,7 @@ class OperationalLimitType(IdentifiedObject):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class Outage(IdentifiedObject):
     '''
     Document describing details of an active or planned outage in a part of
@@ -134181,7 +134181,7 @@ class Outage(IdentifiedObject):
         return 'unbounded'
 
 @stereotype(CIMStereotype.GridAPPSD)
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class PMUConfiguration(IdentifiedObject):
     '''
     PMU Configuration Frame data from IEEE Std. C37.118
@@ -134537,7 +134537,7 @@ class PMUConfiguration(IdentifiedObject):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class PSRType(IdentifiedObject):
     '''
     Classifying instances of the same class, e.g. overhead and underground
@@ -134578,7 +134578,7 @@ class PSRType(IdentifiedObject):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class ParameterEvent(IdentifiedObject):
     '''
     Used to apply changes to particular parameter or signal. The parameter
@@ -134820,7 +134820,7 @@ class ParameterEvent(IdentifiedObject):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class PerLengthLineParameter(IdentifiedObject):
     '''
     Common type for per-length electrical line parameters.
@@ -134856,7 +134856,7 @@ class PerLengthLineParameter(IdentifiedObject):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class PerLengthDCLineParameter(PerLengthLineParameter):
     '''
     Common type for per-length electrical catalogues describing DC line parameters.
@@ -134950,7 +134950,7 @@ class PerLengthDCLineParameter(PerLengthLineParameter):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class PerLengthImpedance(PerLengthLineParameter):
     '''
     Common type for per-length electrical impedances.
@@ -135097,7 +135097,7 @@ class PerLengthImpedance(PerLengthLineParameter):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class PerLengthPhaseImpedance(PerLengthImpedance):
     '''
     The per length phase impedance matrix expresses impedance and admittance
@@ -135181,7 +135181,7 @@ class PerLengthPhaseImpedance(PerLengthImpedance):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class PerLengthSequenceImpedance(PerLengthImpedance):
     '''
     Sequence impedance and admittance parameters per unit length, for transposed
@@ -135347,7 +135347,7 @@ class PerLengthSequenceImpedance(PerLengthImpedance):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class PhaseImpedanceData(IdentifiedObject):
     '''
     Per length phase impedance matrix entry describes impedance and conductance
@@ -135552,7 +135552,7 @@ class PhaseImpedanceData(IdentifiedObject):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class PhaseTapChangerTable(IdentifiedObject):
     '''
     Describes a tabular curve for how the phase angle difference and impedance
@@ -135610,7 +135610,7 @@ class PhaseTapChangerTable(IdentifiedObject):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class ConnectionAngleTapChangerTable(PhaseTapChangerTable):
     '''
     Describes a tabular curve for how the connection angle varies with the
@@ -135684,7 +135684,7 @@ class ConnectionAngleTapChangerTable(PhaseTapChangerTable):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class PointOfCommonCoupling(IdentifiedObject):
     '''
     Point of Common Coupling (PCC) refers to the location where multiple electrical
@@ -135710,7 +135710,7 @@ class PointOfCommonCoupling(IdentifiedObject):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class ACPointOfCommonCoupling(PointOfCommonCoupling):
     '''
     Point of interconnection of the DC converter station to the adjacent AC
@@ -135768,7 +135768,7 @@ class ACPointOfCommonCoupling(PointOfCommonCoupling):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class DCPointOfCommonCoupling(PointOfCommonCoupling):
     '''
     Point of interconnection of the DC converter station to the DC transmission
@@ -135826,7 +135826,7 @@ class DCPointOfCommonCoupling(PointOfCommonCoupling):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class PowerFlowSettings(IdentifiedObject):
     '''
     Provides information on power flow settings valid for the model they are
@@ -136315,7 +136315,7 @@ class PowerFlowSettings(IdentifiedObject):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class PowerLimitSettings(IdentifiedObject):
     '''
     Power limit settings.
@@ -136393,7 +136393,7 @@ class PowerLimitSettings(IdentifiedObject):
         return 'unbounded'
 
 @stereotype(CIMStereotype.NC)
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class PowerShiftKeyDistribution(IdentifiedObject):
     '''
     Distribution of the bid action on the power shift keys.
@@ -136432,7 +136432,7 @@ class PowerShiftKeyDistribution(IdentifiedObject):
         return 'unbounded'
 
 @stereotype(CIMStereotype.NC)
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class PowerShiftKeyStrategy(IdentifiedObject):
     '''
     Strategy of the power shift key.
@@ -136471,7 +136471,7 @@ class PowerShiftKeyStrategy(IdentifiedObject):
         return 'unbounded'
 
 @stereotype(CIMStereotype.ShadowExtension)
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class PowerSystemResource(IdentifiedObject):
     '''
     A power system resource (PSR) can be an item of equipment such as a switch,
@@ -136633,7 +136633,7 @@ class PowerSystemResource(IdentifiedObject):
 
 @stereotype(CIMStereotype.Concrete)
 @stereotype(CIMStereotype.ShadowExtension)
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class ACLineSegmentPhase(PowerSystemResource):
     '''
     A line segment phase represents one phase (or optionally the neutral) of
@@ -136767,7 +136767,7 @@ class ACLineSegmentPhase(PowerSystemResource):
 
 @stereotype(CIMStereotype.AggregateOf)
 @stereotype(CIMStereotype.ShadowExtension)
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class AirCompressor(PowerSystemResource):
     '''
     Combustion turbine air compressor which is an integral part of a compressed
@@ -136847,7 +136847,7 @@ class AirCompressor(PowerSystemResource):
 @stereotype(CIMStereotype.ShadowExtension)
 @stereotype(CIMStereotype.NC)
 @stereotype(CIMStereotype.AggregateOf)
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class AreaDispatchableUnit(PowerSystemResource):
     '''
     Allocates a given producing or consuming unit, including direct current
@@ -136947,7 +136947,7 @@ class AreaDispatchableUnit(PowerSystemResource):
 
 @stereotype(CIMStereotype.OfAggregate)
 @stereotype(CIMStereotype.ShadowExtension)
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class AutomationFunction(PowerSystemResource):
     '''
     Automation function is a collection of functional block or other automation
@@ -137100,7 +137100,7 @@ class AutomationFunction(PowerSystemResource):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class EquipmentController(AutomationFunction):
     '''
     Equipment controller is an automation function that can control one or
@@ -137160,7 +137160,7 @@ class EquipmentController(AutomationFunction):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class CompensatorController(EquipmentController):
     '''
     Compensator controller is controlling the equipment to optimize the use
@@ -137198,7 +137198,7 @@ class CompensatorController(EquipmentController):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class DirectCurrentEquipmentController(EquipmentController):
     '''
     Direct current equipment controller used to control different parts of
@@ -137236,7 +137236,7 @@ class DirectCurrentEquipmentController(EquipmentController):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class ACDCConverterController(DirectCurrentEquipmentController):
     '''
     ACDC converter unit control. According to IEC 60633, it is the control
@@ -137295,7 +137295,7 @@ class ACDCConverterController(DirectCurrentEquipmentController):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class DirectCurrentBipoleController(DirectCurrentEquipmentController):
     '''
     DC system bipole control that is the control system of a bipole in accordance
@@ -137353,7 +137353,7 @@ class DirectCurrentBipoleController(DirectCurrentEquipmentController):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class DirectCurrentMasterController(DirectCurrentEquipmentController):
     '''
     Direct current system control is a control system which governs the operation
@@ -137462,7 +137462,7 @@ class DirectCurrentMasterController(DirectCurrentEquipmentController):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class DirectCurrentPoleController(DirectCurrentEquipmentController):
     '''
     DC system pole control, which is the control system of a pole in accordance
@@ -137558,7 +137558,7 @@ class DirectCurrentPoleController(DirectCurrentEquipmentController):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class DirectCurrentSubstationController(DirectCurrentEquipmentController):
     '''
     Control system used for the controlling, monitoring and protection within
@@ -137598,7 +137598,7 @@ class DirectCurrentSubstationController(DirectCurrentEquipmentController):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class DirectCurrentSubstationBipoleController(DirectCurrentSubstationController):
     '''
     Control system of a substation bipole (IEC 60633).
@@ -137636,7 +137636,7 @@ class DirectCurrentSubstationBipoleController(DirectCurrentSubstationController)
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class DirectCurrentSubstationPoleController(DirectCurrentSubstationController):
     '''
     Control system of a substation pole (IEC 60633).
@@ -137674,7 +137674,7 @@ class DirectCurrentSubstationPoleController(DirectCurrentSubstationController):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class InjectionController(EquipmentController):
     '''
     Injection controller is controlling the equipment which represents an injection
@@ -137731,7 +137731,7 @@ class InjectionController(EquipmentController):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class PowerElectronicsConnectionController(EquipmentController):
     '''
     Power electronics connection controller is controlling the equipment to
@@ -137772,7 +137772,7 @@ class PowerElectronicsConnectionController(EquipmentController):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class PowerElectronicsUnitController(EquipmentController):
     '''
     Power electronics unit controller is controlling the equipment to optimize
@@ -137832,7 +137832,7 @@ class PowerElectronicsUnitController(EquipmentController):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class BatteryUnitContoller(PowerElectronicsUnitController):
     '''
     '''
@@ -137882,7 +137882,7 @@ class BatteryUnitContoller(PowerElectronicsUnitController):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class PowerPlantController(EquipmentController):
     '''
     Power plant controller is controlling the equipment of a power plant.
@@ -137901,7 +137901,7 @@ class PowerPlantController(EquipmentController):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class RotatingMachineController(EquipmentController):
     '''
     Rotating machine controller is controlling the equipment which may be used
@@ -137939,7 +137939,7 @@ class RotatingMachineController(EquipmentController):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class SSSCController(EquipmentController):
     '''
     The controller of a Static synchronous series compensator (SSSC).
@@ -138092,7 +138092,7 @@ class SSSCController(EquipmentController):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class ScheduleResourceController(EquipmentController):
     '''
     Schedule resource controller is controlling the equipment to optimize the
@@ -138131,7 +138131,7 @@ class ScheduleResourceController(EquipmentController):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class SubstationController(EquipmentController):
     '''
     Substation controller is controlling the equipment to optimize the use
@@ -138169,7 +138169,7 @@ class SubstationController(EquipmentController):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class TCSCController(EquipmentController):
     '''
     TCSC controller is controlling the equipment to optimize the performance
@@ -138207,7 +138207,7 @@ class TCSCController(EquipmentController):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class TapChangerController(EquipmentController):
     '''
     Tap changer controller is an equipment controller that controls a tap changer,
@@ -138247,7 +138247,7 @@ class TapChangerController(EquipmentController):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class UnifiedPowerFlowController(EquipmentController):
     '''
     Unified power flow controller (UPFC) is providing fast-acting reactive
@@ -138267,7 +138267,7 @@ class UnifiedPowerFlowController(EquipmentController):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class ProtectionFunction(AutomationFunction):
     '''
     Protection function is an automation function that can protect one or multiple
@@ -138383,7 +138383,7 @@ class ProtectionFunction(AutomationFunction):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class SystemControl(AutomationFunction):
     '''
     System control is the management and regulation of various parameters within
@@ -138429,7 +138429,7 @@ class SystemControl(AutomationFunction):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class AreaInterchangeController(SystemControl):
     '''
     Area interchange control is set to control active power of an area.
@@ -138525,7 +138525,7 @@ class AreaInterchangeController(SystemControl):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class PowerFrequencyController(SystemControl):
     '''
     Power frequency controller is controlling the active power balance as typically
@@ -138647,7 +138647,7 @@ class PowerFrequencyController(SystemControl):
 
 @stereotype(CIMStereotype.ShadowExtension)
 @stereotype(CIMStereotype.NC)
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class BiddingZone(PowerSystemResource):
     '''
     A bidding zone is a market-based method for handling power transmission
@@ -138690,7 +138690,7 @@ class BiddingZone(PowerSystemResource):
 
 @stereotype(CIMStereotype.ShadowExtension)
 @stereotype(CIMStereotype.NC)
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class BiddingZoneBorder(PowerSystemResource):
     '''
     Defines the aggregated connection capacity between two Bidding Zones.
@@ -138749,7 +138749,7 @@ class BiddingZoneBorder(PowerSystemResource):
 
 @stereotype(CIMStereotype.ShadowExtension)
 @stereotype(CIMStereotype.European)
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class BoundaryPoint(PowerSystemResource):
     '''
     Designates a connection point at which one or more model authority sets
@@ -138997,7 +138997,7 @@ class BoundaryPoint(PowerSystemResource):
 
 @stereotype(CIMStereotype.ShadowExtension)
 @stereotype(CIMStereotype.OfAggregate)
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class CAESPlant(PowerSystemResource):
     '''
     Compressed air energy storage plant.
@@ -139098,7 +139098,7 @@ class CAESPlant(PowerSystemResource):
 
 @stereotype(CIMStereotype.OfAggregate)
 @stereotype(CIMStereotype.ShadowExtension)
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class CogenerationPlant(PowerSystemResource):
     '''
     A set of thermal generating units for the production of electrical energy
@@ -139251,7 +139251,7 @@ class CogenerationPlant(PowerSystemResource):
         return 'unbounded'
 
 @stereotype(CIMStereotype.ShadowExtension)
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class CombinedCyclePlant(PowerSystemResource):
     '''
     A set of combustion turbines and steam turbines where the exhaust heat
@@ -139310,7 +139310,7 @@ class CombinedCyclePlant(PowerSystemResource):
         return 'unbounded'
 
 @stereotype(CIMStereotype.ShadowExtension)
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class CommunicationLink(PowerSystemResource):
     '''
     The connection to remote units is through one or more communication links.
@@ -139404,7 +139404,7 @@ class CommunicationLink(PowerSystemResource):
         return 'unbounded'
 
 @stereotype(CIMStereotype.ShadowExtension)
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class IPAccessPoint(CommunicationLink):
     '''
     Internet Protocol Access Point � used to represent an addressing structure
@@ -139500,7 +139500,7 @@ class IPAccessPoint(CommunicationLink):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class TCPAccessPoint(IPAccessPoint):
     '''
     Allows addressing and behavioural information regarding the use of TCP
@@ -139591,7 +139591,7 @@ class TCPAccessPoint(IPAccessPoint):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class ISOUpperLayer(TCPAccessPoint):
     '''
     Is a set of configure addressing information that is required since ICCP
@@ -139767,7 +139767,7 @@ class ISOUpperLayer(TCPAccessPoint):
         return 'unbounded'
 
 @stereotype(CIMStereotype.ShadowExtension)
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class ConnectivityNodeContainer(PowerSystemResource):
     '''
     A base class for all objects that may contain connectivity nodes or topological
@@ -139825,7 +139825,7 @@ class ConnectivityNodeContainer(PowerSystemResource):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class EquipmentContainer(ConnectivityNodeContainer):
     '''
     A modelling construct to provide a root class for containing equipment.
@@ -139892,7 +139892,7 @@ class EquipmentContainer(ConnectivityNodeContainer):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class Bay(EquipmentContainer):
     '''
     A collection of power system resources (within a given substation) including
@@ -140043,7 +140043,7 @@ class Bay(EquipmentContainer):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class DCEquipmentContainer(EquipmentContainer):
     '''
     A modelling construct to provide a root class for containment of DC as
@@ -140124,7 +140124,7 @@ class DCEquipmentContainer(EquipmentContainer):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class DCConverterUnit(DCEquipmentContainer):
     '''
     Indivisible operative unit comprising all equipment between the point of
@@ -140281,7 +140281,7 @@ class DCConverterUnit(DCEquipmentContainer):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class DCLine(DCEquipmentContainer):
     '''
     Overhead lines and/or cables connecting two or more DC substations.
@@ -140338,7 +140338,7 @@ class DCLine(DCEquipmentContainer):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class DCSubstation(DCEquipmentContainer):
     '''
     DC substation or DC converter station (IEC 60633) is part of an DC system
@@ -140460,7 +140460,7 @@ class DCSubstation(DCEquipmentContainer):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class DCSubstationBipole(DCEquipmentContainer):
     '''
     Part of a bipolar DC system (IEC 60633) contained within a DC substation.
@@ -140517,7 +140517,7 @@ class DCSubstationBipole(DCEquipmentContainer):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class DCSubstationPole(DCEquipmentContainer):
     '''
     Part of an DC system pole (IEC 60633) which is contained within a DC substation.
@@ -140575,7 +140575,7 @@ class DCSubstationPole(DCEquipmentContainer):
         return 'unbounded'
 
 @stereotype(CIMStereotype.OfAggregate)
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class Feeder(EquipmentContainer):
     '''
     A collection of equipment for organizational purposes, used for grouping
@@ -140679,7 +140679,7 @@ class Feeder(EquipmentContainer):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class Line(EquipmentContainer):
     '''
     Contains equipment beyond a substation belonging to a power transmission
@@ -140759,7 +140759,7 @@ class Line(EquipmentContainer):
 @stereotype(CIMStereotype.ShadowExtension)
 @stereotype(CIMStereotype.NC)
 @stereotype(CIMStereotype.informative)
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class Circuit(Line):
     '''
     '''
@@ -140811,7 +140811,7 @@ class Circuit(Line):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class Plant(EquipmentContainer):
     '''
     A Plant is a collection of equipment for purposes of generation.
@@ -140831,7 +140831,7 @@ class Plant(EquipmentContainer):
         return 'unbounded'
 
 @stereotype(CIMStereotype.OfAggregate)
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class Substation(EquipmentContainer):
     '''
     A collection of equipment for purposes other than generation or utilization,
@@ -141011,7 +141011,7 @@ class Substation(EquipmentContainer):
         return 'unbounded'
 
 @stereotype(CIMStereotype.OfAggregate)
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class VoltageLevel(EquipmentContainer):
     '''
     A collection of equipment at one common system voltage forming a switchgear.
@@ -141141,7 +141141,7 @@ class VoltageLevel(EquipmentContainer):
         return 'unbounded'
 
 @stereotype(CIMStereotype.OfAggregate)
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class EquivalentNetwork(ConnectivityNodeContainer):
     '''
     A class that groups electrical equivalents, including internal nodes, of
@@ -141185,7 +141185,7 @@ class EquivalentNetwork(ConnectivityNodeContainer):
 
 @stereotype(CIMStereotype.OfAggregate)
 @stereotype(CIMStereotype.ShadowExtension)
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class ControlArea(PowerSystemResource):
     '''
     A control area is a grouping of generating units and/or loads and a cutset
@@ -141446,7 +141446,7 @@ class ControlArea(PowerSystemResource):
         return 'unbounded'
 
 @stereotype(CIMStereotype.ShadowExtension)
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class DCBiPole(PowerSystemResource):
     '''
     DC system bipole (IEC 60633), which is part of an DC system consisting
@@ -141506,7 +141506,7 @@ class DCBiPole(PowerSystemResource):
         return 'unbounded'
 
 @stereotype(CIMStereotype.ShadowExtension)
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class DCPole(PowerSystemResource):
     '''
     The direct current (DC) system pole (IEC 60633) is part of a DC system
@@ -141771,7 +141771,7 @@ class DCPole(PowerSystemResource):
         return 'unbounded'
 
 @stereotype(CIMStereotype.ShadowExtension)
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class DCSystem(PowerSystemResource):
     '''
     Electrical power system which transfers energy in the form of direct current
@@ -141827,7 +141827,7 @@ class DCSystem(PowerSystemResource):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class BipolarDCSystem(DCSystem):
     '''
     Bipolar DC system (IEC 60633) consists of two poles of opposite polarity
@@ -141897,7 +141897,7 @@ class BipolarDCSystem(DCSystem):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class MonopolarDCSystem(DCSystem):
     '''
     Monopolar DC system (IEC 60633) is a DC system with only one pole.
@@ -141972,7 +141972,7 @@ class MonopolarDCSystem(DCSystem):
         return 'unbounded'
 
 @stereotype(CIMStereotype.ShadowExtension)
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class EnergyConsumerPhase(PowerSystemResource):
     '''
     A single phase of an energy consumer.
@@ -142166,7 +142166,7 @@ class EnergyConsumerPhase(PowerSystemResource):
         return 'unbounded'
 
 @stereotype(CIMStereotype.ShadowExtension)
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class EnergySourcePhase(PowerSystemResource):
     '''
     Represents the single phase information of an unbalanced energy source.
@@ -142231,7 +142231,7 @@ class EnergySourcePhase(PowerSystemResource):
         return 'unbounded'
 
 @stereotype(CIMStereotype.ShadowExtension)
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class Equipment(PowerSystemResource):
     '''
     The parts of a power system that are physical devices, electronic or mechanical.
@@ -142514,7 +142514,7 @@ class Equipment(PowerSystemResource):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class AuxiliaryEquipment(Equipment):
     '''
     AuxiliaryEquipment describe equipment that is not performing any primary
@@ -142556,7 +142556,7 @@ class AuxiliaryEquipment(Equipment):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class FaultIndicator(AuxiliaryEquipment):
     '''
     A FaultIndicator is typically only an indicator (which may or may not be
@@ -142580,7 +142580,7 @@ class FaultIndicator(AuxiliaryEquipment):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class Sensor(AuxiliaryEquipment):
     '''
     This class describe devices that transform a measured quantity into signals
@@ -142617,7 +142617,7 @@ class Sensor(AuxiliaryEquipment):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class CurrentTransformer(Sensor):
     '''
     Instrument transformer used to measure electrical qualities of the circuit
@@ -142695,7 +142695,7 @@ class CurrentTransformer(Sensor):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class PostLineSensor(Sensor):
     '''
     A sensor used mainly in overhead distribution networks as the source of
@@ -142715,7 +142715,7 @@ class PostLineSensor(Sensor):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class PotentialTransformer(Sensor):
     '''
     Instrument transformer (also known as Voltage Transformer) used to measure
@@ -142774,7 +142774,7 @@ class PotentialTransformer(Sensor):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class SurgeArrester(AuxiliaryEquipment):
     '''
     Shunt device, installed on the network, usually in the proximity of electrical
@@ -142795,7 +142795,7 @@ class SurgeArrester(AuxiliaryEquipment):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class WaveTrap(AuxiliaryEquipment):
     '''
     Wave traps are devices that impede high frequency power line carrier signals
@@ -142816,7 +142816,7 @@ class WaveTrap(AuxiliaryEquipment):
         return 'unbounded'
 
 @stereotype(CIMStereotype.OfAggregate)
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class CompositeSwitch(Equipment):
     '''
     A model of a set of individual Switches normally enclosed within the same
@@ -142882,7 +142882,7 @@ class CompositeSwitch(Equipment):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class ConductingEquipment(Equipment):
     '''
     The parts of the AC power system that are designed to carry current or
@@ -143105,7 +143105,7 @@ class ConductingEquipment(Equipment):
 
 @stereotype(CIMStereotype.CIMExtension)
 @stereotype(CIMStereotype.ShadowExtension)
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class ACDCConverter(ConductingEquipment):
     '''
     A unit with valves for three phases, together with unit control equipment,
@@ -143599,7 +143599,7 @@ class ACDCConverter(ConductingEquipment):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class CsConverter(ACDCConverter):
     '''
     DC side of the current source converter (CSC).
@@ -143962,7 +143962,7 @@ class CsConverter(ACDCConverter):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class VsConverter(ACDCConverter):
     '''
     DC side of the voltage source converter (VSC).
@@ -144306,7 +144306,7 @@ class VsConverter(ACDCConverter):
 
 @stereotype(CIMStereotype.CIMExtension)
 @stereotype(CIMStereotype.ShadowExtension)
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class Clamp(ConductingEquipment):
     '''
     A Clamp is a galvanic connection at a line segment where other equipment
@@ -144406,7 +144406,7 @@ class Clamp(ConductingEquipment):
 
 @stereotype(CIMStereotype.ShadowExtension)
 @stereotype(CIMStereotype.CIMExtension)
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class Conductor(ConductingEquipment):
     '''
     Combination of conducting material with consistent electrical characteristics,
@@ -144466,7 +144466,7 @@ class Conductor(ConductingEquipment):
 
 @stereotype(CIMStereotype.Concrete)
 @stereotype(CIMStereotype.OfAggregate)
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class ACLineSegment(Conductor):
     '''
     A line segment is a conductor or combination of conductors, with consistent
@@ -144942,7 +144942,7 @@ class ACLineSegment(Conductor):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class BusSegment(Conductor):
     '''
     A two terminal and power conducting device of negligible impedance and
@@ -145002,7 +145002,7 @@ class BusSegment(Conductor):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class WireSegment(Conductor):
     '''
     A two terminal and power conducting device of negligible impedance and
@@ -145044,7 +145044,7 @@ class WireSegment(Conductor):
 
 @stereotype(CIMStereotype.ShadowExtension)
 @stereotype(CIMStereotype.CIMExtension)
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class Connector(ConductingEquipment):
     '''
     A conductor, or group of conductors, with negligible impedance, that serve
@@ -145065,7 +145065,7 @@ class Connector(ConductingEquipment):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class BusbarSection(Connector):
     '''
     A conductor, or group of conductors, with negligible impedance, that serve
@@ -145132,7 +145132,7 @@ class BusbarSection(Connector):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class Junction(Connector):
     '''
     A point where one or more conducting equipments are connected with zero
@@ -145162,7 +145162,7 @@ class Junction(Connector):
 
 @stereotype(CIMStereotype.ShadowExtension)
 @stereotype(CIMStereotype.CIMExtension)
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class EarthFaultCompensator(ConductingEquipment):
     '''
     A conducting equipment used to represent a connection to ground which is
@@ -145203,7 +145203,7 @@ class EarthFaultCompensator(ConductingEquipment):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class GroundingImpedance(EarthFaultCompensator):
     '''
     A fixed impedance device used for grounding.
@@ -145240,7 +145240,7 @@ class GroundingImpedance(EarthFaultCompensator):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class PetersenCoil(EarthFaultCompensator):
     '''
     A variable impedance device normally used to offset line charging during
@@ -145402,7 +145402,7 @@ class PetersenCoil(EarthFaultCompensator):
 
 @stereotype(CIMStereotype.ShadowExtension)
 @stereotype(CIMStereotype.CIMExtension)
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class EnergyConnection(ConductingEquipment):
     '''
     A connection of energy generation or consumption on the power system model.
@@ -145422,7 +145422,7 @@ class EnergyConnection(ConductingEquipment):
         return 'unbounded'
 
 @stereotype(CIMStereotype.NC)
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class EnergyConsumer(EnergyConnection):
     '''
     Generic user of energy - a point of consumption on the power system model.
@@ -145751,7 +145751,7 @@ class EnergyConsumer(EnergyConnection):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class ConformLoad(EnergyConsumer):
     '''
     ConformLoad represents loads that follow a daily load change pattern where
@@ -145790,7 +145790,7 @@ class ConformLoad(EnergyConsumer):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class NonConformLoad(EnergyConsumer):
     '''
     NonConformLoad represents loads that do not follow a daily load change
@@ -145830,7 +145830,7 @@ class NonConformLoad(EnergyConsumer):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class StationSupply(EnergyConsumer):
     '''
     Station supply with load derived from the station output.
@@ -145849,7 +145849,7 @@ class StationSupply(EnergyConsumer):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class EnergySource(EnergyConnection):
     '''
     A generic equivalent for an energy supplier on a transmission or distribution
@@ -146208,7 +146208,7 @@ class EnergySource(EnergyConnection):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class RegulatingCondEq(EnergyConnection):
     '''
     A type of conducting equipment that can regulate a quantity (i.e. voltage
@@ -146286,7 +146286,7 @@ class RegulatingCondEq(EnergyConnection):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class ExternalNetworkInjection(RegulatingCondEq):
     '''
     This class represents the external network for use in power flow and short-circuit
@@ -146706,7 +146706,7 @@ class ExternalNetworkInjection(RegulatingCondEq):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class FACTSEquipment(RegulatingCondEq):
     '''
     Flexible Alternating Current Transmission System regulating equipment.
@@ -146937,7 +146937,7 @@ class FACTSEquipment(RegulatingCondEq):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class ModularStaticSynchronousSeriesCompensator(FACTSEquipment):
     '''
     Modular static synchronous series compensator (MSSSC) is a type of flexible
@@ -146963,7 +146963,7 @@ class ModularStaticSynchronousSeriesCompensator(FACTSEquipment):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class StaticSynchronousCompensator(FACTSEquipment):
     '''
     Static synchronous compensator (STATCOM), also known as a static synchronous
@@ -146987,7 +146987,7 @@ class StaticSynchronousCompensator(FACTSEquipment):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class StaticSynchronousSeriesCompensator(FACTSEquipment):
     '''
     Static synchronous series compensator (SSSC) is a type of flexible AC transmission
@@ -147017,7 +147017,7 @@ class StaticSynchronousSeriesCompensator(FACTSEquipment):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class StaticVarCompensator(FACTSEquipment):
     '''
     A facility for providing variable and controllable shunt reactive power.
@@ -147193,7 +147193,7 @@ class StaticVarCompensator(FACTSEquipment):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class ThyristorControlledSeriesCompensator(FACTSEquipment):
     '''
     Thyristor-controlled series capacitors (TCSC) is a type of flexible AC
@@ -147355,7 +147355,7 @@ class ThyristorControlledSeriesCompensator(FACTSEquipment):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class FrequencyConverter(RegulatingCondEq):
     '''
     A device to convert from one frequency to another (e.g., frequency F1 to
@@ -147475,7 +147475,7 @@ class FrequencyConverter(RegulatingCondEq):
         return 'unbounded'
 
 @stereotype(CIMStereotype.ShadowExtension)
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class PowerElectronicsConnection(RegulatingCondEq):
     '''
     A connection to the AC network for energy production or consumption that
@@ -147798,7 +147798,7 @@ class PowerElectronicsConnection(RegulatingCondEq):
         return 'unbounded'
 
 @stereotype(CIMStereotype.ShadowExtension)
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class EVSE(PowerElectronicsConnection):
     '''
     Equipment or a combination of equipment, providing dedicated functions
@@ -147842,7 +147842,7 @@ class EVSE(PowerElectronicsConnection):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class RotatingMachine(RegulatingCondEq):
     '''
     A rotating machine which may be used as a generator or motor.
@@ -148030,7 +148030,7 @@ class RotatingMachine(RegulatingCondEq):
         return 'unbounded'
 
 @stereotype(CIMStereotype.Concrete)
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class AsynchronousMachine(RotatingMachine):
     '''
     A rotating machine whose shaft rotates asynchronously with the electrical
@@ -148486,7 +148486,7 @@ class AsynchronousMachine(RotatingMachine):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class SynchronousMachine(RotatingMachine):
     '''
     An electromechanical device that operates with shaft rotating synchronously
@@ -149198,7 +149198,7 @@ class SynchronousMachine(RotatingMachine):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class ShuntCompensator(RegulatingCondEq):
     '''
     A shunt capacitor or reactor or switchable bank of shunt capacitors or
@@ -149498,7 +149498,7 @@ class ShuntCompensator(RegulatingCondEq):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class LinearShuntCompensator(ShuntCompensator):
     '''
     A linear shunt compensator has banks or sections with equal admittance
@@ -149591,7 +149591,7 @@ class LinearShuntCompensator(ShuntCompensator):
         return 'unbounded'
 
 @stereotype(CIMStereotype.OfAggregate)
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class NonlinearShuntCompensator(ShuntCompensator):
     '''
     A non linear shunt compensator has bank or section admittance values that
@@ -149632,7 +149632,7 @@ class NonlinearShuntCompensator(ShuntCompensator):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class VariableShuntCompensator(NonlinearShuntCompensator):
     '''
     A variable shunt compensator (VSR) is an oil-filled reactor with discrete
@@ -149659,7 +149659,7 @@ class VariableShuntCompensator(NonlinearShuntCompensator):
 
 @stereotype(CIMStereotype.ShadowExtension)
 @stereotype(CIMStereotype.CIMExtension)
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class EquivalentEquipment(ConductingEquipment):
     '''
     The class represents equivalent objects that are the result of a network
@@ -149698,7 +149698,7 @@ class EquivalentEquipment(ConductingEquipment):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class EquivalentBranch(EquivalentEquipment):
     '''
     The class represents equivalent branches. In cases where a transformer
@@ -150096,7 +150096,7 @@ class EquivalentBranch(EquivalentEquipment):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class EquivalentInjection(EquivalentEquipment):
     '''
     This class represents networks that have been equivalized using either
@@ -150262,7 +150262,7 @@ class EquivalentInjection(EquivalentEquipment):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class ExtendedWardEquivalent(EquivalentInjection):
     '''
     An extended ward equivalent is a combination of an impedance load, a PQ
@@ -150449,7 +150449,7 @@ class ExtendedWardEquivalent(EquivalentInjection):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class WardEquivalent(EquivalentInjection):
     '''
     A ward equivalent is a combination of an impedance load and a PQ load.
@@ -150468,7 +150468,7 @@ class WardEquivalent(EquivalentInjection):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class EquivalentShunt(EquivalentEquipment):
     '''
     The class represents equivalent shunts.
@@ -150525,7 +150525,7 @@ class EquivalentShunt(EquivalentEquipment):
 
 @stereotype(CIMStereotype.ShadowExtension)
 @stereotype(CIMStereotype.CIMExtension)
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class Ground(ConductingEquipment):
     '''
     A point where the system is grounded used for connecting conducting equipment
@@ -150566,7 +150566,7 @@ class Ground(ConductingEquipment):
 
 @stereotype(CIMStereotype.CIMExtension)
 @stereotype(CIMStereotype.ShadowExtension)
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class PowerTransformer(ConductingEquipment):
     '''
     An electrical device consisting of two or more coupled windings, with or
@@ -150847,7 +150847,7 @@ class PowerTransformer(ConductingEquipment):
 
 @stereotype(CIMStereotype.ShadowExtension)
 @stereotype(CIMStereotype.CIMExtension)
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class SeriesCompensator(ConductingEquipment):
     '''
     A Series Compensator is a series capacitor or reactor or an AC transmission
@@ -151009,7 +151009,7 @@ class SeriesCompensator(ConductingEquipment):
 
 @stereotype(CIMStereotype.CIMExtension)
 @stereotype(CIMStereotype.ShadowExtension)
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class Switch(ConductingEquipment):
     '''
     A generic device designed to close, or open, or both, one or more electric
@@ -151242,7 +151242,7 @@ class Switch(ConductingEquipment):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class Cut(Switch):
     '''
     A cut separates a line segment into two parts. The cut appears as a switch
@@ -151332,7 +151332,7 @@ class Cut(Switch):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class Disconnector(Switch):
     '''
     A mechanical switching device which provides, in the open position, an
@@ -151358,7 +151358,7 @@ class Disconnector(Switch):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class EarthingSwitch(Switch):
     '''
     A mechanical switching device for earthing parts of a circuit, capable
@@ -151381,7 +151381,7 @@ class EarthingSwitch(Switch):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class Fuse(Switch):
     '''
     An overcurrent protective device with a circuit opening fusible part that
@@ -151443,7 +151443,7 @@ class Fuse(Switch):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class GroundDisconnector(Switch):
     '''
     A manually operated or motor operated mechanical switching device used
@@ -151463,7 +151463,7 @@ class GroundDisconnector(Switch):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class Jumper(Switch):
     '''
     A short section of conductor with negligible impedance which can be manually
@@ -151504,7 +151504,7 @@ class Jumper(Switch):
         return 'unbounded'
 
 @stereotype(CIMStereotype.OfAggregate)
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class ProtectedSwitch(Switch):
     '''
     A ProtectedSwitch is a switching device that can be operated by ProtectionEquipment.
@@ -151584,7 +151584,7 @@ class ProtectedSwitch(Switch):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class Breaker(ProtectedSwitch):
     '''
     A mechanical switching device capable of making, carrying, and breaking
@@ -151624,7 +151624,7 @@ class Breaker(ProtectedSwitch):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class DisconnectingCircuitBreaker(Breaker):
     '''
     A circuit breaking device including disconnecting function, eliminating
@@ -151644,7 +151644,7 @@ class DisconnectingCircuitBreaker(Breaker):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class LoadBreakSwitch(ProtectedSwitch):
     '''
     A mechanical switching device capable of making, carrying, and breaking
@@ -151664,7 +151664,7 @@ class LoadBreakSwitch(ProtectedSwitch):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class Recloser(ProtectedSwitch):
     '''
     Pole-mounted fault interrupter with built-in phase and ground relays, current
@@ -151684,7 +151684,7 @@ class Recloser(ProtectedSwitch):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class Sectionaliser(Switch):
     '''
     Automatic switch that will lock open to isolate a faulted section. It may,
@@ -151706,7 +151706,7 @@ class Sectionaliser(Switch):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class DCConductingEquipment(Equipment):
     '''
     The parts of the DC power system that are designed to carry current or
@@ -151787,7 +151787,7 @@ class DCConductingEquipment(Equipment):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class DCBusbar(DCConductingEquipment):
     '''
     A busbar within a DC system.
@@ -151806,7 +151806,7 @@ class DCBusbar(DCConductingEquipment):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class DCChopper(DCConductingEquipment):
     '''
     Low resistance equipment used in the internal DC circuit to balance voltages.
@@ -151826,7 +151826,7 @@ class DCChopper(DCConductingEquipment):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class DCGround(DCConductingEquipment):
     '''
     A ground within a DC system.
@@ -151881,7 +151881,7 @@ class DCGround(DCConductingEquipment):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class DCLineSegment(DCConductingEquipment):
     '''
     A wire or combination of wires not insulated from one another, with consistent
@@ -151995,7 +151995,7 @@ class DCLineSegment(DCConductingEquipment):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class DCSeriesDevice(DCConductingEquipment):
     '''
     A series device within the DC system, typically a reactor used for filtering
@@ -152051,7 +152051,7 @@ class DCSeriesDevice(DCConductingEquipment):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class DCHarmonicFilter(DCSeriesDevice):
     '''
     DC harmonic filter (IEC 60633) is a filter which, in conjunction with the
@@ -152073,7 +152073,7 @@ class DCHarmonicFilter(DCSeriesDevice):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class DCSmoothingReactor(DCSeriesDevice):
     '''
     Reactor (IEC 60633) connected in series with a converter unit or converter
@@ -152094,7 +152094,7 @@ class DCSmoothingReactor(DCSeriesDevice):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class DCSmoothingReactorArrester(DCSeriesDevice):
     '''
     Arrester (IEC 60633) connected between the terminals of a smoothing reactor.
@@ -152113,7 +152113,7 @@ class DCSmoothingReactorArrester(DCSeriesDevice):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class DCShunt(DCConductingEquipment):
     '''
     A shunt device within the DC system, typically used for filtering. Needed
@@ -152169,7 +152169,7 @@ class DCShunt(DCConductingEquipment):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class DCSwitch(DCConductingEquipment):
     '''
     A switch within the DC system.
@@ -152282,7 +152282,7 @@ class DCSwitch(DCConductingEquipment):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class DCBreaker(DCSwitch):
     '''
     A breaker within a DC system.
@@ -152301,7 +152301,7 @@ class DCBreaker(DCSwitch):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class DCDisconnector(DCSwitch):
     '''
     A disconnector within a DC system.
@@ -152320,7 +152320,7 @@ class DCDisconnector(DCSwitch):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class DCHighSpeedSwitch(DCSwitch):
     '''
     High-speed DC switch (IEC 60633) is a type of switchgear used on a DC scheme,
@@ -152346,7 +152346,7 @@ class DCHighSpeedSwitch(DCSwitch):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class DCBypassSwitch(DCHighSpeedSwitch):
     '''
     By-pass switch (IEC 60633) is a high-speed DC switch connected across each
@@ -152370,7 +152370,7 @@ class DCBypassSwitch(DCHighSpeedSwitch):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class DCCommutationSwitch(DCHighSpeedSwitch):
     '''
     DC commutation switch (IEC 60633) is a type of high-speed DC switch specifically
@@ -152391,7 +152391,7 @@ class DCCommutationSwitch(DCHighSpeedSwitch):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class DCEarthReturnTransferSwitch(DCCommutationSwitch):
     '''
     Earth return transfer switch (IEC 60633) DC commutation switch used to
@@ -152415,7 +152415,7 @@ class DCEarthReturnTransferSwitch(DCCommutationSwitch):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class DCLineParallelingSwitch(DCCommutationSwitch):
     '''
     Line paralleling switch (IEC 60633) DC commutation switch placed in series
@@ -152437,7 +152437,7 @@ class DCLineParallelingSwitch(DCCommutationSwitch):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class DCMetalicReturnSwitch(DCCommutationSwitch):
     '''
     Metallic return transfer switch (IEC 60633) is a DC commutation switch
@@ -152460,7 +152460,7 @@ class DCMetalicReturnSwitch(DCCommutationSwitch):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class DCNeutralBusGroundingSwitch(DCCommutationSwitch):
     '''
     Neutral bus grounding switch (IEC 60633) or a neutral bus earthing switch
@@ -152484,7 +152484,7 @@ class DCNeutralBusGroundingSwitch(DCCommutationSwitch):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class DCNeutralBusSwitch(DCCommutationSwitch):
     '''
     Neutral bus switch (IEC 60633) is a DC commutation switch connected in
@@ -152507,7 +152507,7 @@ class DCNeutralBusSwitch(DCCommutationSwitch):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class DCConverterParallelingSwitch(DCHighSpeedSwitch):
     '''
     Converter paralleling switch (IEC 60633) is a high-speed DC switch connected
@@ -152532,7 +152532,7 @@ class DCConverterParallelingSwitch(DCHighSpeedSwitch):
 
 @stereotype(CIMStereotype.OfAggregate)
 @stereotype(CIMStereotype.NC)
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class GeneratingUnit(Equipment):
     '''
     A single or set of synchronous machines for converting mechanical power
@@ -153443,7 +153443,7 @@ class GeneratingUnit(Equipment):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class GeothermalGeneratingUnit(GeneratingUnit):
     '''
     Generating unit that is generating electrical power from geothermal energy.
@@ -153481,7 +153481,7 @@ class GeothermalGeneratingUnit(GeneratingUnit):
         return 'unbounded'
 
 @stereotype(CIMStereotype.OfAggregate)
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class HydroGeneratingUnit(GeneratingUnit):
     '''
     A generating unit whose prime mover is a hydraulic turbine (e.g. Francis,
@@ -153649,7 +153649,7 @@ class HydroGeneratingUnit(GeneratingUnit):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class NuclearGeneratingUnit(GeneratingUnit):
     '''
     A nuclear generating unit.
@@ -153686,7 +153686,7 @@ class NuclearGeneratingUnit(GeneratingUnit):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class SolarGeneratingUnit(GeneratingUnit):
     '''
     A solar thermal generating unit, connected to the grid by means of a rotating
@@ -153726,7 +153726,7 @@ class SolarGeneratingUnit(GeneratingUnit):
         return 'unbounded'
 
 @stereotype(CIMStereotype.OfAggregate)
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class ThermalGeneratingUnit(GeneratingUnit):
     '''
     A generating unit whose prime mover could be a steam turbine, combustion
@@ -153994,7 +153994,7 @@ class ThermalGeneratingUnit(GeneratingUnit):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class WindGeneratingUnit(GeneratingUnit):
     '''
     A wind driven generating unit, connected to the grid by means of a rotating
@@ -154053,7 +154053,7 @@ class WindGeneratingUnit(GeneratingUnit):
 
 @stereotype(CIMStereotype.NC)
 @stereotype(CIMStereotype.OfAggregate)
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class HydroPump(Equipment):
     '''
     A synchronous motor-driven pump, typically associated with a pumped storage
@@ -154251,7 +154251,7 @@ class HydroPump(Equipment):
         return 'unbounded'
 
 @stereotype(CIMStereotype.NC)
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class PowerElectronicsUnit(Equipment):
     '''
     A generating unit or battery or aggregation that connects to the AC network
@@ -154425,7 +154425,7 @@ class PowerElectronicsUnit(Equipment):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class BatteryUnit(PowerElectronicsUnit):
     '''
     An electrochemical energy storage device.
@@ -154600,7 +154600,7 @@ class BatteryUnit(PowerElectronicsUnit):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class MobileElectricalUnit(BatteryUnit):
     '''
     '''
@@ -154636,7 +154636,7 @@ class MobileElectricalUnit(BatteryUnit):
         return 'unbounded'
 
 @stereotype(CIMStereotype.GridAPPSD)
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class ElectricalVehicleUnit(MobileElectricalUnit):
     '''
     '''
@@ -154670,7 +154670,7 @@ class ElectricalVehicleUnit(MobileElectricalUnit):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class ChargingUnit(PowerElectronicsUnit):
     '''
     A unit that supplies electrical power for charging electrical non-stationary
@@ -154708,7 +154708,7 @@ class ChargingUnit(PowerElectronicsUnit):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class FlexibleEnergyUnit(PowerElectronicsUnit):
     '''
     Flexible consumer or embedded producer of energy. The unit cannot be a
@@ -154826,7 +154826,7 @@ class FlexibleEnergyUnit(PowerElectronicsUnit):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class PhotoVoltaicUnit(PowerElectronicsUnit):
     '''
     A photovoltaic device or an aggregation of such devices.
@@ -154845,7 +154845,7 @@ class PhotoVoltaicUnit(PowerElectronicsUnit):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class PowerElectricalChemicalUnit(PowerElectronicsUnit):
     '''
     A unit capable of either generating electrical energy from chemical reactions
@@ -154883,7 +154883,7 @@ class PowerElectricalChemicalUnit(PowerElectronicsUnit):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class PowerElectronicsMarineUnit(PowerElectronicsUnit):
     '''
     A unit that capture energy from marine sources, e.g. waves, for generating
@@ -154921,7 +154921,7 @@ class PowerElectronicsMarineUnit(PowerElectronicsUnit):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class PowerElectronicsThermalUnit(PowerElectronicsUnit):
     '''
     '''
@@ -154939,7 +154939,7 @@ class PowerElectronicsThermalUnit(PowerElectronicsUnit):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class PowerElectronicsWindUnit(PowerElectronicsUnit):
     '''
     A wind generating unit that connects to the AC network with power electronics
@@ -154960,7 +154960,7 @@ class PowerElectronicsWindUnit(PowerElectronicsUnit):
         return 'unbounded'
 
 @stereotype(CIMStereotype.OfAggregate)
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class ProtectionEquipment(Equipment):
     '''
     An electrical device designed to respond to input conditions in a prescribed
@@ -155182,7 +155182,7 @@ class ProtectionEquipment(Equipment):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class CurrentRelay(ProtectionEquipment):
     '''
     A device that checks current flow values in any direction or designated
@@ -155328,7 +155328,7 @@ class CurrentRelay(ProtectionEquipment):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class SynchrocheckRelay(ProtectionEquipment):
     '''
     A device that operates when two AC circuits are within the desired limits
@@ -155406,7 +155406,7 @@ class SynchrocheckRelay(ProtectionEquipment):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class TransformerTank(Equipment):
     '''
     An assembly of two or more coupled windings that transform electrical power
@@ -155484,7 +155484,7 @@ class TransformerTank(Equipment):
         return 'unbounded'
 
 @stereotype(CIMStereotype.ShadowExtension)
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class FuelStorage(PowerSystemResource):
     '''
     Fuel storage. e.g. pile of coal that can be shared between multiple thermal
@@ -155543,7 +155543,7 @@ class FuelStorage(PowerSystemResource):
 
 @stereotype(CIMStereotype.OfAggregate)
 @stereotype(CIMStereotype.ShadowExtension)
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class HydroPowerPlant(PowerSystemResource):
     '''
     A hydro power station which can generate or pump. When generating, the
@@ -155818,7 +155818,7 @@ class HydroPowerPlant(PowerSystemResource):
 
 @stereotype(CIMStereotype.ShadowExtension)
 @stereotype(CIMStereotype.NC)
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class LoadFrequencyControlArea(PowerSystemResource):
     '''
     A part of a synchronous area or an entire synchronous area, physically
@@ -155861,7 +155861,7 @@ class LoadFrequencyControlArea(PowerSystemResource):
 
 @stereotype(CIMStereotype.ShadowExtension)
 @stereotype(CIMStereotype.GridAPPSD)
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class MeasurementSystem(PowerSystemResource):
     '''
     '''
@@ -155931,7 +155931,7 @@ class MeasurementSystem(PowerSystemResource):
         return 'unbounded'
 
 @stereotype(CIMStereotype.GridAPPSD)
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class ConductingMeter(MeasurementSystem):
     '''
     '''
@@ -155950,7 +155950,7 @@ class ConductingMeter(MeasurementSystem):
         return 'unbounded'
 
 @stereotype(CIMStereotype.GridAPPSD)
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class DigitalFaultRecorder(MeasurementSystem):
     '''
     '''
@@ -155986,7 +155986,7 @@ class DigitalFaultRecorder(MeasurementSystem):
         return 'unbounded'
 
 @stereotype(CIMStereotype.GridAPPSD)
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class MergingUnit(MeasurementSystem):
     '''
     '''
@@ -156005,7 +156005,7 @@ class MergingUnit(MeasurementSystem):
         return 'unbounded'
 
 @stereotype(CIMStereotype.GridAPPSD)
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class PhasorMeasurementUnit(MeasurementSystem):
     '''
     '''
@@ -156134,7 +156134,7 @@ class PhasorMeasurementUnit(MeasurementSystem):
         return 'unbounded'
 
 @stereotype(CIMStereotype.GridAPPSD)
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class DisturbanceRecorder(PhasorMeasurementUnit):
     '''
     PMU that is also capable of collecting point-on-wave data
@@ -156154,7 +156154,7 @@ class DisturbanceRecorder(PhasorMeasurementUnit):
         return 'unbounded'
 
 @stereotype(CIMStereotype.GridAPPSD)
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class PointOnWaveSensor(MeasurementSystem):
     '''
     '''
@@ -156174,7 +156174,7 @@ class PointOnWaveSensor(MeasurementSystem):
 
 @stereotype(CIMStereotype.ShadowExtension)
 @stereotype(CIMStereotype.NC)
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class MonitoringArea(PowerSystemResource):
     '''
     A coherent part of the interconnected electrical power system, that includes
@@ -156216,7 +156216,7 @@ class MonitoringArea(PowerSystemResource):
         return 'unbounded'
 
 @stereotype(CIMStereotype.NC)
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class OutageCoordinationRegion(PowerSystemResource):
     '''
     A region that has a common organisation or service responsible for outage
@@ -156257,7 +156257,7 @@ class OutageCoordinationRegion(PowerSystemResource):
 
 @stereotype(CIMStereotype.ShadowExtension)
 @stereotype(CIMStereotype.OfAggregate)
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class PhasorDataConcentrator(PowerSystemResource):
     '''
     '''
@@ -156348,7 +156348,7 @@ class PhasorDataConcentrator(PowerSystemResource):
 
 @stereotype(CIMStereotype.ShadowExtension)
 @stereotype(CIMStereotype.OfAggregate)
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class PowerCutZone(PowerSystemResource):
     '''
     An area or zone of the power system which is used for load shedding purposes.
@@ -156424,7 +156424,7 @@ class PowerCutZone(PowerSystemResource):
         return 'unbounded'
 
 @stereotype(CIMStereotype.ShadowExtension)
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class PowerElectronicsConnectionPhase(PowerSystemResource):
     '''
     A single phase of a power electronics connection.
@@ -156530,7 +156530,7 @@ class PowerElectronicsConnectionPhase(PowerSystemResource):
 
 @stereotype(CIMStereotype.ShadowExtension)
 @stereotype(CIMStereotype.NC)
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class PowerTransferCorridor(PowerSystemResource):
     '''
     A power transfer corridor is defined as a set of circuits (transmission
@@ -156610,7 +156610,7 @@ class PowerTransferCorridor(PowerSystemResource):
         return 'unbounded'
 
 @stereotype(CIMStereotype.ShadowExtension)
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class PrimeMover(PowerSystemResource):
     '''
     The machine used to develop mechanical energy used to drive a generator.
@@ -156648,7 +156648,7 @@ class PrimeMover(PowerSystemResource):
         return 'unbounded'
 
 @stereotype(CIMStereotype.OfAggregate)
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class CombustionTurbine(PrimeMover):
     '''
     A prime mover that is typically fuelled by gas or light oil.
@@ -156884,7 +156884,7 @@ class CombustionTurbine(PrimeMover):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class HydroTurbine(PrimeMover):
     '''
     A water driven prime mover. Typical turbine types are: Francis, Kaplan,
@@ -157104,7 +157104,7 @@ class HydroTurbine(PrimeMover):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class SteamTurbine(PrimeMover):
     '''
     Steam turbine.
@@ -157340,7 +157340,7 @@ class SteamTurbine(PrimeMover):
         return 'unbounded'
 
 @stereotype(CIMStereotype.ShadowExtension)
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class RegulatingControl(PowerSystemResource):
     '''
     Specifies a set of equipment that works together to control a power system
@@ -157663,7 +157663,7 @@ class RegulatingControl(PowerSystemResource):
         return 'unbounded'
 
 @stereotype(CIMStereotype.informative)
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class ShuntCompensatorControl(RegulatingControl):
     '''
     Distribution capacitor bank control settings.
@@ -157701,7 +157701,7 @@ class ShuntCompensatorControl(RegulatingControl):
 
 @stereotype(CIMStereotype.gmdm)
 @stereotype(CIMStereotype.ShadowExtension)
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class TapChangerControl(RegulatingControl):
     '''
     denotes whether tap changer control can operate for reverse power flows
@@ -157982,7 +157982,7 @@ class TapChangerControl(RegulatingControl):
 
 @stereotype(CIMStereotype.ShadowExtension)
 @stereotype(CIMStereotype.OfAggregate)
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class RemedialActionScheme(PowerSystemResource):
     '''
     Remedial Action Scheme (RAS), Special Protection Schemes (SPS), System
@@ -158182,7 +158182,7 @@ class RemedialActionScheme(PowerSystemResource):
 
 @stereotype(CIMStereotype.ShadowExtension)
 @stereotype(CIMStereotype.OfAggregate)
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class RemoteUnit(PowerSystemResource):
     '''
     A remote unit can be an RTU, IED, substation control system, control centre,
@@ -158247,7 +158247,7 @@ class RemoteUnit(PowerSystemResource):
 
 @stereotype(CIMStereotype.ShadowExtension)
 @stereotype(CIMStereotype.OfAggregate)
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class Reservoir(PowerSystemResource):
     '''
     A water storage facility within a hydro system, including: ponds, lakes,
@@ -158626,7 +158626,7 @@ class Reservoir(PowerSystemResource):
         return 'unbounded'
 
 @stereotype(CIMStereotype.ShadowExtension)
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class RotatingMachinePhase(PowerSystemResource):
     '''
     Represents a single-phase motor or generator. The specifics of the RotatingMachinePhase
@@ -158727,7 +158727,7 @@ class RotatingMachinePhase(PowerSystemResource):
 
 @stereotype(CIMStereotype.ShadowExtension)
 @stereotype(CIMStereotype.NC)
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class ScheduleResource(PowerSystemResource):
     '''
     A schedule resource is a market-based method for handling participation
@@ -158828,7 +158828,7 @@ class ScheduleResource(PowerSystemResource):
 
 @stereotype(CIMStereotype.ShadowExtension)
 @stereotype(CIMStereotype.NC)
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class SchedulingArea(PowerSystemResource):
     '''
     An area where production and/or consumption of energy can be forecasted,
@@ -158914,7 +158914,7 @@ class SchedulingArea(PowerSystemResource):
         return 'unbounded'
 
 @stereotype(CIMStereotype.NC)
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class SubSchedulingArea(SchedulingArea):
     '''
     An area that is a part of another scheduling area. Typically part of a
@@ -158958,7 +158958,7 @@ class SubSchedulingArea(SchedulingArea):
         return 'unbounded'
 
 @stereotype(CIMStereotype.ShadowExtension)
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class ShuntCompensatorPhase(PowerSystemResource):
     '''
     Single phase of a multi-phase shunt compensator when its attributes might
@@ -159102,7 +159102,7 @@ class ShuntCompensatorPhase(PowerSystemResource):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class LinearShuntCompensatorPhase(ShuntCompensatorPhase):
     '''
     A per phase linear shunt compensator has banks or sections with equal admittance
@@ -159165,7 +159165,7 @@ class LinearShuntCompensatorPhase(ShuntCompensatorPhase):
         return 'unbounded'
 
 @stereotype(CIMStereotype.OfAggregate)
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class NonlinearShuntCompensatorPhase(ShuntCompensatorPhase):
     '''
     A per phase non linear shunt compensator has bank or section admittance
@@ -159209,7 +159209,7 @@ class NonlinearShuntCompensatorPhase(ShuntCompensatorPhase):
 
 @stereotype(CIMStereotype.ShadowExtension)
 @stereotype(CIMStereotype.European)
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class SolarPowerPlant(PowerSystemResource):
     '''
     Solar power plant.
@@ -159248,7 +159248,7 @@ class SolarPowerPlant(PowerSystemResource):
         return 'unbounded'
 
 @stereotype(CIMStereotype.ShadowExtension)
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class StageTrigger(PowerSystemResource):
     '''
     Stage that is triggered either by TriggerCondition or by gate condition
@@ -159423,7 +159423,7 @@ class StageTrigger(PowerSystemResource):
         return 'unbounded'
 
 @stereotype(CIMStereotype.ShadowExtension)
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class SteamSupply(PowerSystemResource):
     '''
     Steam supply for steam turbine.
@@ -159460,7 +159460,7 @@ class SteamSupply(PowerSystemResource):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class BWRSteamSupply(SteamSupply):
     '''
     Boiling water reactor used as a steam supply to a steam turbine.
@@ -159873,7 +159873,7 @@ class BWRSteamSupply(SteamSupply):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class FossilSteamSupply(SteamSupply):
     '''
     Fossil fuelled boiler (e.g., coal, oil, gas).
@@ -160364,7 +160364,7 @@ class FossilSteamSupply(SteamSupply):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class DrumBoiler(FossilSteamSupply):
     '''
     Drum boiler.
@@ -160401,7 +160401,7 @@ class DrumBoiler(FossilSteamSupply):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class HeatRecoveryBoiler(FossilSteamSupply):
     '''
     The heat recovery system associated with combustion turbines in order to
@@ -160458,7 +160458,7 @@ class HeatRecoveryBoiler(FossilSteamSupply):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class Subcritical(FossilSteamSupply):
     '''
     Once-through subcritical boiler.
@@ -160477,7 +160477,7 @@ class Subcritical(FossilSteamSupply):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class Supercritical(FossilSteamSupply):
     '''
     Once-through supercritical boiler.
@@ -160496,7 +160496,7 @@ class Supercritical(FossilSteamSupply):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class PWRSteamSupply(SteamSupply):
     '''
     Pressurized water reactor used as a steam supply to a steam turbine.
@@ -160876,7 +160876,7 @@ class PWRSteamSupply(SteamSupply):
         return 'unbounded'
 
 @stereotype(CIMStereotype.ShadowExtension)
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class SwitchPhase(PowerSystemResource):
     '''
     Single phase of a multi-phase switch when its attributes might be different
@@ -161039,7 +161039,7 @@ class SwitchPhase(PowerSystemResource):
 @stereotype(CIMStereotype.ShadowExtension)
 @stereotype(CIMStereotype.NC)
 @stereotype(CIMStereotype.gmdm)
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class TapChanger(PowerSystemResource):
     '''
     Mechanism for changing transformer winding tap positions.
@@ -161455,7 +161455,7 @@ class TapChanger(PowerSystemResource):
 
 @stereotype(CIMStereotype.ShadowExtension)
 @stereotype(CIMStereotype.gmdm)
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class ImpedanceTapChangerTabular(TapChanger):
     '''
     Describes a tap changer with a table defining the relation between the
@@ -161497,7 +161497,7 @@ class ImpedanceTapChangerTabular(TapChanger):
 
 @stereotype(CIMStereotype.ShadowExtension)
 @stereotype(CIMStereotype.gmdm)
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class PhaseTapChanger(TapChanger):
     '''
     A transformer phase shifting tap model that controls the phase angle difference
@@ -161538,7 +161538,7 @@ class PhaseTapChanger(TapChanger):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class PhaseTapChangerLinear(PhaseTapChanger):
     '''
     Describes a tap changer with a linear relation between the tap step and
@@ -161613,7 +161613,7 @@ class PhaseTapChangerLinear(PhaseTapChanger):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class PhaseTapChangerNonLinear(PhaseTapChanger):
     '''
     The non-linear phase tap changer describes the non-linear behaviour of
@@ -161689,7 +161689,7 @@ class PhaseTapChangerNonLinear(PhaseTapChanger):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class ConnectionAngleTapChanger(PhaseTapChangerNonLinear):
     '''
     Describes the tap model for an asymmetrical phase shifting transformer
@@ -161922,7 +161922,7 @@ class ConnectionAngleTapChanger(PhaseTapChangerNonLinear):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class PhaseTapChangerAsymmetrical(PhaseTapChangerNonLinear):
     '''
     Describes the tap model for an asymmetrical phase shifting transformer
@@ -161974,7 +161974,7 @@ class PhaseTapChangerAsymmetrical(PhaseTapChangerNonLinear):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class PhaseTapChangerSymmetrical(PhaseTapChangerNonLinear):
     '''
     Describes a symmetrical phase shifting transformer tap model in which the
@@ -161998,7 +161998,7 @@ class PhaseTapChangerSymmetrical(PhaseTapChangerNonLinear):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class PhaseTapChangerTabular(PhaseTapChanger):
     '''
     Describes a tap changer with a table defining the relation between the
@@ -162039,7 +162039,7 @@ class PhaseTapChangerTabular(PhaseTapChanger):
 
 @stereotype(CIMStereotype.ShadowExtension)
 @stereotype(CIMStereotype.gmdm)
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class RatioTapChanger(TapChanger):
     '''
     A tap changer that changes the voltage ratio impacting the voltage magnitude
@@ -162125,7 +162125,7 @@ class RatioTapChanger(TapChanger):
         return 'unbounded'
 
 @stereotype(CIMStereotype.ShadowExtension)
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class TieCorridor(PowerSystemResource):
     '''
     A collection of one or more tie-lines or direct current poles that connect
@@ -162259,7 +162259,7 @@ class TieCorridor(PowerSystemResource):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class ACTieCorridor(TieCorridor):
     '''
     A collection of one or more AC tie lines that connect two different control
@@ -162298,7 +162298,7 @@ class ACTieCorridor(TieCorridor):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class DCTieCorridor(TieCorridor):
     '''
     A collection of one or more direct current poles that connect two different
@@ -162481,7 +162481,7 @@ class DCTieCorridor(TieCorridor):
 
 @stereotype(CIMStereotype.deprecated)
 @stereotype(CIMStereotype.ShadowExtension)
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class VoltageControlZone(PowerSystemResource):
     '''
     An area of the power system network which is defined for secondary voltage
@@ -162542,7 +162542,7 @@ class VoltageControlZone(PowerSystemResource):
 
 @stereotype(CIMStereotype.ShadowExtension)
 @stereotype(CIMStereotype.European)
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class WindPowerPlant(PowerSystemResource):
     '''
     Wind power plant.
@@ -162581,7 +162581,7 @@ class WindPowerPlant(PowerSystemResource):
         return 'unbounded'
 
 @stereotype(CIMStereotype.ShadowExtension)
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class WireSegmentPhase(PowerSystemResource):
     '''
     Represents a single wire of an alternating current wire segment.
@@ -162657,7 +162657,7 @@ class WireSegmentPhase(PowerSystemResource):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class ProductAssetModel(IdentifiedObject):
     '''
     Asset model by a specific manufacturer.
@@ -162695,7 +162695,7 @@ class ProductAssetModel(IdentifiedObject):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class ProprietarySettingValue(IdentifiedObject):
     '''
     This class is the base class to represet a setting value of various applications.
@@ -162837,7 +162837,7 @@ class ProprietarySettingValue(IdentifiedObject):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class ProprietaryThresholdvalue(ProprietarySettingValue):
     '''
     This class represents a setting value about threshold.
@@ -162856,7 +162856,7 @@ class ProprietaryThresholdvalue(ProprietarySettingValue):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class ProprietaryTimerValue(ProprietarySettingValue):
     '''
     This class represents a setting value about time.
@@ -162875,7 +162875,7 @@ class ProprietaryTimerValue(ProprietarySettingValue):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class ProtectionSettingsGroup(IdentifiedObject):
     '''
     This class represents a group of standardized setting values which are
@@ -163035,7 +163035,7 @@ class ProtectionSettingsGroup(IdentifiedObject):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class ProvidedBilateralPoint(IdentifiedObject):
     '''
     Allows declaration of ICCP points to be provided through a Bilateral Table
@@ -163093,7 +163093,7 @@ class ProvidedBilateralPoint(IdentifiedObject):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class ICCPProvidedPoint(ProvidedBilateralPoint):
     '''
     The IdentifiedObject.name attribute must have a value. The name attribute
@@ -163201,7 +163201,7 @@ class ICCPProvidedPoint(ProvidedBilateralPoint):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class RatioTapChangerTable(IdentifiedObject):
     '''
     Describes a curve for how the voltage magnitude and impedance varies with
@@ -163259,7 +163259,7 @@ class RatioTapChangerTable(IdentifiedObject):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class RecloseSequence(IdentifiedObject):
     '''
     A reclose sequence (open and close) is defined for each possible reclosure
@@ -163355,7 +163355,7 @@ class RecloseSequence(IdentifiedObject):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class RemoteInputSignal(IdentifiedObject):
     '''
     Supports connection to a terminal associated with a remote bus from which
@@ -163589,7 +163589,7 @@ class RemoteInputSignal(IdentifiedObject):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class RemotePoint(IdentifiedObject):
     '''
     For an RTU, remote points correspond to telemetered values or control outputs.
@@ -163628,7 +163628,7 @@ class RemotePoint(IdentifiedObject):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class RemoteControl(RemotePoint):
     '''
     Remote controls are outputs that are sent by the remote unit to actuators
@@ -163721,7 +163721,7 @@ class RemoteControl(RemotePoint):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class RemoteSource(RemotePoint):
     '''
     Remote sources are state variables that are telemetered or calculated within
@@ -163832,7 +163832,7 @@ class RemoteSource(RemotePoint):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class ReportingGroup(IdentifiedObject):
     '''
     A reporting group is used for various ad-hoc groupings used for reporting.
@@ -163909,7 +163909,7 @@ class ReportingGroup(IdentifiedObject):
         return 'unbounded'
 
 @stereotype(CIMStereotype.OfAggregate)
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class ReportingSuperGroup(IdentifiedObject):
     '''
     A reporting super group, groups reporting groups for a higher level report.
@@ -163948,7 +163948,7 @@ class ReportingSuperGroup(IdentifiedObject):
         return 'unbounded'
 
 @stereotype(CIMStereotype.NC)
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class SchemeRemedialAction(IdentifiedObject):
     '''
     Scheme remedial action is remedial action that involves a scheme that can
@@ -163990,7 +163990,7 @@ class SchemeRemedialAction(IdentifiedObject):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class Season(IdentifiedObject):
     '''
     A specified time period of the year.
@@ -164064,7 +164064,7 @@ class Season(IdentifiedObject):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class ServiceCategory(IdentifiedObject):
     '''
     Category of service provided to the customer.
@@ -164102,7 +164102,7 @@ class ServiceCategory(IdentifiedObject):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class ServiceSettings(IdentifiedObject):
     '''
     Service settings.
@@ -164306,7 +164306,7 @@ class ServiceSettings(IdentifiedObject):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class ServiceSupplier(IdentifiedObject):
     '''
     Organisation that provides services to customers.
@@ -164344,7 +164344,7 @@ class ServiceSupplier(IdentifiedObject):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class ShuntCompensatorAction(IdentifiedObject):
     '''
     '''
@@ -164379,7 +164379,7 @@ class ShuntCompensatorAction(IdentifiedObject):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class SignalConfiguration(IdentifiedObject):
     '''
     A configuration or a set of signals selected for recording during a simulation.
@@ -164437,7 +164437,7 @@ class SignalConfiguration(IdentifiedObject):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class SignalRecorder(IdentifiedObject):
     '''
     A recorder for a given signal.
@@ -164589,7 +164589,7 @@ class SignalRecorder(IdentifiedObject):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class SimulationEvents(IdentifiedObject):
     '''
     A configuration or a set of events executed during a simulation.
@@ -164684,7 +164684,7 @@ class SimulationEvents(IdentifiedObject):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class SimulationResult(IdentifiedObject):
     '''
     Represents the simulation result.
@@ -164780,7 +164780,7 @@ class SimulationResult(IdentifiedObject):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class SimulationSettings(IdentifiedObject):
     '''
     Describes simulation settings necessary for a simulation.
@@ -164957,7 +164957,7 @@ class SimulationSettings(IdentifiedObject):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class Specification(IdentifiedObject):
     '''
     Specification can be used for various purposes relative to an asset, a
@@ -165031,7 +165031,7 @@ class Specification(IdentifiedObject):
         return 'unbounded'
 
 @stereotype(CIMStereotype.OfAggregate)
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class Stage(IdentifiedObject):
     '''
     Stage of a remedial action scheme.
@@ -165131,7 +165131,7 @@ class Stage(IdentifiedObject):
 
 @stereotype(CIMStereotype.AggregateOf)
 @stereotype(CIMStereotype.OfAggregate)
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class StartupModel(IdentifiedObject):
     '''
     Unit start up characteristics depending on how long the unit has been off
@@ -165417,7 +165417,7 @@ class StartupModel(IdentifiedObject):
         return 'unbounded'
 
 @stereotype(CIMStereotype.GB)
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class StateShortCircuitResult(IdentifiedObject):
     '''
     Short-circuit result calculated on a power system state.
@@ -165474,7 +165474,7 @@ class StateShortCircuitResult(IdentifiedObject):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class StepOperationalLimitTable(IdentifiedObject):
     '''
     Describes a tabular curve for how the operational limit varies with the
@@ -165552,7 +165552,7 @@ class StepOperationalLimitTable(IdentifiedObject):
         return 'unbounded'
 
 @stereotype(CIMStereotype.OfAggregate)
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class SubGeographicalRegion(IdentifiedObject):
     '''
     A subset of a geographical region of a power system network model.
@@ -165647,7 +165647,7 @@ class SubGeographicalRegion(IdentifiedObject):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class SwitchAction(IdentifiedObject):
     '''
     Action on switch as a switching step.
@@ -165685,7 +165685,7 @@ class SwitchAction(IdentifiedObject):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class SynchrophaserFrame(IdentifiedObject):
     '''
     Two-byte frame synchronization word following series of bits defined in
@@ -165848,7 +165848,7 @@ class SynchrophaserFrame(IdentifiedObject):
 
 @stereotype(CIMStereotype.GridAPPSD)
 @stereotype(CIMStereotype.OfAggregate)
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class PMUConfigurationFrame(SynchrophaserFrame):
     '''
     '''
@@ -165956,7 +165956,7 @@ class PMUConfigurationFrame(SynchrophaserFrame):
         return 'unbounded'
 
 @stereotype(CIMStereotype.OfAggregate)
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class TieFlow(IdentifiedObject):
     '''
     Defines the structure (in terms of location and direction) of the net interchange
@@ -166080,7 +166080,7 @@ class TieFlow(IdentifiedObject):
         return 'unbounded'
 
 @stereotype(CIMStereotype.OfAggregate)
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class TopologicalIsland(IdentifiedObject):
     '''
     An electrically connected subset of the network. Topological islands can
@@ -166147,7 +166147,7 @@ class TopologicalIsland(IdentifiedObject):
         return 'unbounded'
 
 @stereotype(CIMStereotype.OfAggregate)
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class TopologicalNode(IdentifiedObject):
     '''
     For a detailed substation model a topological node is a set of connectivity
@@ -166443,7 +166443,7 @@ class TopologicalNode(IdentifiedObject):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class TransformerCoreAdmittance(IdentifiedObject):
     '''
     The transformer core admittance. Used to specify the core admittance of
@@ -166592,7 +166592,7 @@ class TransformerCoreAdmittance(IdentifiedObject):
         return 'unbounded'
 
 @stereotype(CIMStereotype.CIMExtension)
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class TransformerEnd(IdentifiedObject):
     '''
     Allows for a direct connection between TransformerEnd and ConnectivityNode
@@ -166961,7 +166961,7 @@ class TransformerEnd(IdentifiedObject):
         return 'unbounded'
 
 @stereotype(CIMStereotype.CIMExtension)
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class PowerTransformerEnd(TransformerEnd):
     '''
     A PowerTransformerEnd is associated with each Terminal of a PowerTransformer.
@@ -167270,7 +167270,7 @@ class PowerTransformerEnd(TransformerEnd):
         return 'unbounded'
 
 @stereotype(CIMStereotype.CIMExtension)
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class TransformerTankEnd(TransformerEnd):
     '''
     Transformer tank end represents an individual winding for unbalanced models
@@ -167328,7 +167328,7 @@ class TransformerTankEnd(TransformerEnd):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class TransformerMeshImpedance(IdentifiedObject):
     '''
     Transformer mesh impedance (Delta-model) between transformer ends.
@@ -167511,7 +167511,7 @@ class TransformerMeshImpedance(IdentifiedObject):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class TransformerStarImpedance(IdentifiedObject):
     '''
     Transformer star impedance (Pi-model) that accurately reflects impedance
@@ -167644,7 +167644,7 @@ class TransformerStarImpedance(IdentifiedObject):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class TransformerTest(IdentifiedObject):
     '''
     Test result for transformer ends, such as short-circuit, open-circuit (excitation)
@@ -167702,7 +167702,7 @@ class TransformerTest(IdentifiedObject):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class NoLoadTest(TransformerTest):
     '''
     No-load test results determine core admittance parameters. They include
@@ -167838,7 +167838,7 @@ class NoLoadTest(TransformerTest):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class OpenCircuitTest(TransformerTest):
     '''
     Open-circuit test results verify winding turn ratios and phase shifts.
@@ -167994,7 +167994,7 @@ class OpenCircuitTest(TransformerTest):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class ShortCircuitTest(TransformerTest):
     '''
     Short-circuit test results determine mesh impedance parameters. They include
@@ -168222,7 +168222,7 @@ class ShortCircuitTest(TransformerTest):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class TriggerCondition(IdentifiedObject):
     '''
     The condition that triggers a remedial action scheme.
@@ -168280,7 +168280,7 @@ class TriggerCondition(IdentifiedObject):
         return 'unbounded'
 
 @stereotype(CIMStereotype.ShadowExtension)
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class UsagePoint(IdentifiedObject):
     '''
     Logical or physical point in the network to which readings or events may
@@ -168858,7 +168858,7 @@ class UsagePoint(IdentifiedObject):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class ValueAliasSet(IdentifiedObject):
     '''
     Describes the translation of a set of values into a name and is intendend
@@ -168959,7 +168959,7 @@ class ValueAliasSet(IdentifiedObject):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class ValueToAlias(IdentifiedObject):
     '''
     Describes the translation of one particular value into a name, e.g. 1 as
@@ -169016,7 +169016,7 @@ class ValueToAlias(IdentifiedObject):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class VisibilityLayer(IdentifiedObject):
     '''
     Layers are typically used for grouping diagram objects according to themes
@@ -169063,7 +169063,7 @@ class VisibilityLayer(IdentifiedObject):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class VoltVarSettings(IdentifiedObject):
     '''
     Volt Var Settings.
@@ -169372,7 +169372,7 @@ class VoltVarSettings(IdentifiedObject):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class VoltWattSettings(IdentifiedObject):
     '''
     Volt Watt Settings.
@@ -169555,7 +169555,7 @@ class VoltWattSettings(IdentifiedObject):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class VoltageTripSettings(IdentifiedObject):
     '''
     Voltage Trip Settings.
@@ -169746,7 +169746,7 @@ class VoltageTripSettings(IdentifiedObject):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class WattVarSettings(IdentifiedObject):
     '''
     Watt Var Settings.
@@ -170063,7 +170063,7 @@ class WattVarSettings(IdentifiedObject):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class WindAeroConstIEC(IdentifiedObject):
     '''
     Constant aerodynamic torque model which assumes that the aerodynamic torque
@@ -170104,7 +170104,7 @@ class WindAeroConstIEC(IdentifiedObject):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class WindAeroConstIEC2(IdentifiedObject):
     '''
     Constant aerodynamic torque module which assumes that the aerodynamic torque
@@ -170145,7 +170145,7 @@ class WindAeroConstIEC2(IdentifiedObject):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class WindAeroOneDimIEC(IdentifiedObject):
     '''
     One-dimensional aerodynamic model.
@@ -170225,7 +170225,7 @@ class WindAeroOneDimIEC(IdentifiedObject):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class WindAeroOneDimIEC2(IdentifiedObject):
     '''
     One-dimensional aerodynamic module.
@@ -170305,7 +170305,7 @@ class WindAeroOneDimIEC2(IdentifiedObject):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class WindAeroTwoDimIEC(IdentifiedObject):
     '''
     Two-dimensional aerodynamic model.
@@ -170487,7 +170487,7 @@ class WindAeroTwoDimIEC(IdentifiedObject):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class WindAeroTwoDimIEC2(IdentifiedObject):
     '''
     Two-dimensional aerodynamic module.
@@ -170653,7 +170653,7 @@ class WindAeroTwoDimIEC2(IdentifiedObject):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class WindContCurrLimIEC(IdentifiedObject):
     '''
     Current limitation model. The current limitation model combines the physical
@@ -170868,7 +170868,7 @@ class WindContCurrLimIEC(IdentifiedObject):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class WindContCurrLimIEC2(IdentifiedObject):
     '''
     Current limitation module. The current limitation module combines the physical
@@ -171082,7 +171082,7 @@ class WindContCurrLimIEC2(IdentifiedObject):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class WindContPType3IEC(IdentifiedObject):
     '''
     P control model type 3.
@@ -171613,7 +171613,7 @@ class WindContPType3IEC(IdentifiedObject):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class WindContPType3IEC2(IdentifiedObject):
     '''
     P control module type 3.
@@ -172176,7 +172176,7 @@ class WindContPType3IEC2(IdentifiedObject):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class WindContPType4aIEC(IdentifiedObject):
     '''
     P control model type 4A.
@@ -172277,7 +172277,7 @@ class WindContPType4aIEC(IdentifiedObject):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class WindContPType4aIEC2(IdentifiedObject):
     '''
     P control module type 4A.
@@ -172464,7 +172464,7 @@ class WindContPType4aIEC2(IdentifiedObject):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class WindContPType4bIEC(IdentifiedObject):
     '''
     P control model type 4B.
@@ -172585,7 +172585,7 @@ class WindContPType4bIEC(IdentifiedObject):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class WindContPType4bIEC2(IdentifiedObject):
     '''
     P control module type 4B.
@@ -172772,7 +172772,7 @@ class WindContPType4bIEC2(IdentifiedObject):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class WindContPitchAngleIEC(IdentifiedObject):
     '''
     Pitch angle control model.
@@ -173014,7 +173014,7 @@ class WindContPitchAngleIEC(IdentifiedObject):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class WindContPitchAngleIEC2(IdentifiedObject):
     '''
     Pitch angle control module.
@@ -173418,7 +173418,7 @@ class WindContPitchAngleIEC2(IdentifiedObject):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class WindContQIEC(IdentifiedObject):
     '''
     Q control model.
@@ -173919,7 +173919,7 @@ class WindContQIEC(IdentifiedObject):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class WindContQIEC2(IdentifiedObject):
     '''
     Q control module.
@@ -174461,7 +174461,7 @@ class WindContQIEC2(IdentifiedObject):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class WindContQLimIEC(IdentifiedObject):
     '''
     Constant Q limitation model.
@@ -174542,7 +174542,7 @@ class WindContQLimIEC(IdentifiedObject):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class WindContQLimIEC2(IdentifiedObject):
     '''
     Constant Q limitation module.
@@ -174642,7 +174642,7 @@ class WindContQLimIEC2(IdentifiedObject):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class WindContQPQULimIEC(IdentifiedObject):
     '''
     QP and QU limitation model.
@@ -174744,7 +174744,7 @@ class WindContQPQULimIEC(IdentifiedObject):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class WindContQPQULimIEC2(IdentifiedObject):
     '''
     QP and QU limitation module.
@@ -174806,7 +174806,7 @@ class WindContQPQULimIEC2(IdentifiedObject):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class WindContRotorRIEC(IdentifiedObject):
     '''
     Rotor resistance control model.
@@ -175028,7 +175028,7 @@ class WindContRotorRIEC(IdentifiedObject):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class WindContRotorRIEC2(IdentifiedObject):
     '''
     Rotor resistance control model.
@@ -175190,7 +175190,7 @@ class WindContRotorRIEC2(IdentifiedObject):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class WindDynamicsLookupTable(IdentifiedObject):
     '''
     Look up table for the purpose of wind standard models.
@@ -175472,7 +175472,7 @@ class WindDynamicsLookupTable(IdentifiedObject):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class WindDynamicsLookupTable2(IdentifiedObject):
     '''
     Look up table for the purpose of wind standard models.
@@ -175754,7 +175754,7 @@ class WindDynamicsLookupTable2(IdentifiedObject):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class WindElectricalSystemGamma(IdentifiedObject):
     '''
     Electrical systems gamma module.
@@ -175916,7 +175916,7 @@ class WindElectricalSystemGamma(IdentifiedObject):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class WindGenType3IEC(IdentifiedObject):
     '''
     Parent class supporting relationships to IEC wind turbines type 3 generator
@@ -176016,7 +176016,7 @@ class WindGenType3IEC(IdentifiedObject):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class WindGenType3aIEC(WindGenType3IEC):
     '''
     IEC type 3A generator set model.
@@ -176097,7 +176097,7 @@ class WindGenType3aIEC(WindGenType3IEC):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class WindGenType3bIEC(WindGenType3IEC):
     '''
     IEC type 3B generator set model.
@@ -176201,7 +176201,7 @@ class WindGenType3bIEC(WindGenType3IEC):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class WindGenType3IEC2(IdentifiedObject):
     '''
     Parent class supporting relationships to IEC wind turbines type 3 generator
@@ -176302,7 +176302,7 @@ class WindGenType3IEC2(IdentifiedObject):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class WindGenType3aIEC2(WindGenType3IEC2):
     '''
     IEC type 3A generator system module.
@@ -176383,7 +176383,7 @@ class WindGenType3aIEC2(WindGenType3IEC2):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class WindGenType3bIEC2(WindGenType3IEC2):
     '''
     IEC type 3B generator system module.
@@ -176488,7 +176488,7 @@ class WindGenType3bIEC2(WindGenType3IEC2):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class WindGenType4IEC(IdentifiedObject):
     '''
     IEC type 4 generator set model.
@@ -176630,7 +176630,7 @@ class WindGenType4IEC(IdentifiedObject):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class WindGenType4IEC2(IdentifiedObject):
     '''
     IEC type 4 generator system module.
@@ -176791,7 +176791,7 @@ class WindGenType4IEC2(IdentifiedObject):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class WindGridMeasurement(IdentifiedObject):
     '''
     Grid measurement module.
@@ -177099,7 +177099,7 @@ class WindGridMeasurement(IdentifiedObject):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class WindMechIEC(IdentifiedObject):
     '''
     Two mass model.
@@ -177260,7 +177260,7 @@ class WindMechIEC(IdentifiedObject):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class WindMechIEC2(IdentifiedObject):
     '''
     Two mass module.
@@ -177422,7 +177422,7 @@ class WindMechIEC2(IdentifiedObject):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class WindPitchContPowerIEC(IdentifiedObject):
     '''
     Pitch control power model.
@@ -177649,7 +177649,7 @@ class WindPitchContPowerIEC(IdentifiedObject):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class WindPitchContPowerIEC2(IdentifiedObject):
     '''
     Pitch control power module.
@@ -177856,7 +177856,7 @@ class WindPitchContPowerIEC2(IdentifiedObject):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class WindPlantControlCommIEC(IdentifiedObject):
     '''
     Wind power plant control and communication.
@@ -178023,7 +178023,7 @@ class WindPlantControlCommIEC(IdentifiedObject):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class WindPlantFreqPcontrolIEC(IdentifiedObject):
     '''
     Frequency and active power controller model.
@@ -178396,7 +178396,7 @@ class WindPlantFreqPcontrolIEC(IdentifiedObject):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class WindPlantPControlIEC(IdentifiedObject):
     '''
     Wind plant active power control module.
@@ -178718,7 +178718,7 @@ class WindPlantPControlIEC(IdentifiedObject):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class WindPlantQControlIEC(IdentifiedObject):
     '''
     Wind plant reactive power control module.
@@ -179148,7 +179148,7 @@ class WindPlantQControlIEC(IdentifiedObject):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class WindPlantReactiveControlIEC(IdentifiedObject):
     '''
     Simplified plant voltage and reactive power control model for use with
@@ -179584,7 +179584,7 @@ class WindPlantReactiveControlIEC(IdentifiedObject):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class WindProtectionIEC(IdentifiedObject):
     '''
     The grid protection model includes protection against over- and under-voltage,
@@ -179814,7 +179814,7 @@ class WindProtectionIEC(IdentifiedObject):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class WindProtectionIEC2(IdentifiedObject):
     '''
     The grid protection module includes protection against over- and under-voltage,
@@ -179996,7 +179996,7 @@ class WindProtectionIEC2(IdentifiedObject):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class WindRefFrameRotIEC(IdentifiedObject):
     '''
     Reference frame rotation model.
@@ -180101,7 +180101,7 @@ class WindRefFrameRotIEC(IdentifiedObject):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class WindRefFrameRotIEC2(IdentifiedObject):
     '''
     Reference frame rotation module.
@@ -180206,7 +180206,7 @@ class WindRefFrameRotIEC2(IdentifiedObject):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class WirePosition(IdentifiedObject):
     '''
     Identification, spacing and configuration of the wires of a conductor with
@@ -180341,7 +180341,7 @@ class WirePosition(IdentifiedObject):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class IgnAngleContInverter(Identity):
     '''
     '''
@@ -180359,7 +180359,7 @@ class IgnAngleContInverter(Identity):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class ImpedanceTapChangerTablePoint(Identity):
     '''
     Describes each tap step in the impedance tap changer tabular curve.
@@ -180625,7 +180625,7 @@ class ImpedanceTapChangerTablePoint(Identity):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class InfeedTerminal(Identity):
     '''
     Infeed terminal defines the terminals that are linked to an infeed limit.
@@ -180711,7 +180711,7 @@ class InfeedTerminal(Identity):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class InstanceSet(Identity):
     '''
     Instance of a version of a model part. This corresponds to a payload of
@@ -180750,7 +180750,7 @@ class InstanceSet(Identity):
     Data objects contained in the dataset.
     '''
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class InverterCapabilities(Identity):
     '''
     Based on IEEE 1547-2018 Table 28:
@@ -181005,7 +181005,7 @@ class InverterCapabilities(Identity):
     '''
     '''
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class IrregularTimePoint(Identity):
     '''
     TimePoints for a schedule where the time between the points varies.
@@ -181122,7 +181122,7 @@ class IrregularTimePoint(Identity):
         return 'unbounded'
 
 @stereotype(CIMStereotype.AggregateOf)
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class MeasurementValueQuality(Identity):
     '''
     Measurement quality flags. Bits 0-10 are defined for substation automation
@@ -181162,7 +181162,7 @@ class MeasurementValueQuality(Identity):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class PMUValueQuality(MeasurementValueQuality):
     '''
     '''
@@ -181292,7 +181292,7 @@ class PMUValueQuality(MeasurementValueQuality):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class Quality61850(MeasurementValueQuality):
     '''
     Quality flags in this class are as defined in IEC 61850, except for estimatorReplaced,
@@ -181569,7 +181569,7 @@ class Quality61850(MeasurementValueQuality):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class MeterEquipment(Identity):
     '''
     '''
@@ -181587,7 +181587,7 @@ class MeterEquipment(Identity):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class MeterInfo(Identity):
     '''
     Datasheet of a smart meter, possibly integrating other metering functions
@@ -181910,7 +181910,7 @@ class MeterInfo(Identity):
 
 @stereotype(CIMStereotype.Attribute)
 @stereotype(CIMStereotype.NC)
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class Name(Identity):
     '''
     The Name class, in possible combination with a name type and a naming authority
@@ -182046,7 +182046,7 @@ class Name(Identity):
         return 'unbounded'
 
 @stereotype(CIMStereotype.NC)
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class NameType(Identity):
     '''
     Type of name. Possible values for attribute 'name' are implementation dependent
@@ -182181,7 +182181,7 @@ class NameType(Identity):
     '''
 
 @stereotype(CIMStereotype.NC)
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class NamingAuthority(Identity):
     '''
     Authority responsible for creation and management of names of a given name
@@ -182239,7 +182239,7 @@ class NamingAuthority(Identity):
     All name types managed by this authority.
     '''
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class NamingAuthority1(Identity):
     '''
     Authority responsible for creation and management of names of a given name
@@ -182325,7 +182325,7 @@ class NamingAuthority1(Identity):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class NonlinearShuntCompensatorPhasePoint(Identity):
     '''
     A per phase non linear shunt compensator bank or section admittance value.
@@ -182425,7 +182425,7 @@ class NonlinearShuntCompensatorPhasePoint(Identity):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class NonlinearShuntCompensatorPoint(Identity):
     '''
     A non linear shunt compensator bank or section admittance value. The number
@@ -182564,7 +182564,7 @@ class NonlinearShuntCompensatorPoint(Identity):
         return 'unbounded'
 
 @stereotype(CIMStereotype.NC)
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class ObjectType(Identity):
     '''
     Identifies the specialised type of an object when the instance object is
@@ -182631,7 +182631,7 @@ class ObjectType(Identity):
     The IdentifiedObject whose type is identified by ObjectType.
     '''
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class ObjectType1(Identity):
     '''
     Identifies the specialised type of an object when the instance object is
@@ -182679,7 +182679,7 @@ class ObjectType1(Identity):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class OperatingShare(Identity):
     '''
     Specifies the operations contract relationship between a power system resource
@@ -182762,7 +182762,7 @@ class OperatingShare(Identity):
         return 'unbounded'
 
 @stereotype(CIMStereotype.informative)
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class PFmode(Identity):
     '''
     '''
@@ -182815,7 +182815,7 @@ class PFmode(Identity):
         return 'unbounded'
 
 @stereotype(CIMStereotype.GridAPPSD)
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class PMUStream(Identity):
     '''
     '''
@@ -182850,7 +182850,7 @@ class PMUStream(Identity):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class PMUValueConcentration(Identity):
     '''
     '''
@@ -182868,7 +182868,7 @@ class PMUValueConcentration(Identity):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class PTCActivePowerSupport(Identity):
     '''
     Defines the active power capability (support) of the scheme in relation
@@ -182988,7 +182988,7 @@ class PTCActivePowerSupport(Identity):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class ParameterValue(Identity):
     '''
     Provides the value of a given parameter of a detailed model dynamics.
@@ -183064,7 +183064,7 @@ class ParameterValue(Identity):
         return 'unbounded'
 
 @stereotype(CIMStereotype.informative)
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class Pcontrol(Identity):
     '''
     '''
@@ -183117,7 +183117,7 @@ class Pcontrol(Identity):
         return 'unbounded'
 
 @stereotype(CIMStereotype.NC)
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class PropertyReference(Identity):
     '''
     The reference to a class and one of its properties.
@@ -183176,7 +183176,7 @@ class PropertyReference(Identity):
     The pin equipment that has this property reference.
     '''
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class ProprietaryParameterDynamics(Identity):
     '''
     Supports definition of one or more parameters of several different datatypes
@@ -183773,7 +183773,7 @@ class ProprietaryParameterDynamics(Identity):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class PublicX509Certificate(Identity):
     '''
     Used to convey information that will allow matching in order to determine
@@ -183869,7 +183869,7 @@ class PublicX509Certificate(Identity):
         return 'unbounded'
 
 @stereotype(CIMStereotype.informative)
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class Qlimiter(Identity):
     '''
     '''
@@ -183922,7 +183922,7 @@ class Qlimiter(Identity):
         return 'unbounded'
 
 @stereotype(CIMStereotype.informative)
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class Qmode(Identity):
     '''
     '''
@@ -183975,7 +183975,7 @@ class Qmode(Identity):
         return 'unbounded'
 
 @stereotype(CIMStereotype.informative)
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class Qregulator(Identity):
     '''
     '''
@@ -184044,7 +184044,7 @@ class Qregulator(Identity):
     '''
     '''
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class RegularTimePoint(Identity):
     '''
     Time point for a schedule where the time between the consecutive points
@@ -184173,7 +184173,7 @@ class RegularTimePoint(Identity):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class ResourceContainer(Identity):
     '''
     '''
@@ -184225,7 +184225,7 @@ class ResourceContainer(Identity):
     '''
     '''
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class SSSCSimulationSettings(Identity):
     '''
     SSSC control simulation settings used by the algorithm for power flow calculations.
@@ -184402,7 +184402,7 @@ class SSSCSimulationSettings(Identity):
     The controller that uses these simulation settings.
     '''
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class ShortCircuitResponse(Identity):
     '''
     In a short circuit circumstance, the device may be modeled as current source.
@@ -184516,7 +184516,7 @@ class ShortCircuitResponse(Identity):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class StateVariable(Identity):
     '''
     An abstract class for state variables.
@@ -184535,7 +184535,7 @@ class StateVariable(Identity):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class SvDCPowerFlow(StateVariable):
     '''
     State variable for power flow. Load convention is used for flow direction.
@@ -184595,7 +184595,7 @@ class SvDCPowerFlow(StateVariable):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class SvDCVoltage(StateVariable):
     '''
     State variable for direct current voltage.
@@ -184651,7 +184651,7 @@ class SvDCVoltage(StateVariable):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class SvInjection(StateVariable):
     '''
     The SvInjection reports the calculated bus injection minus the sum of the
@@ -184753,7 +184753,7 @@ class SvInjection(StateVariable):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class SvPowerFlow(StateVariable):
     '''
     State variable for power flow. Load convention is used for flow direction.
@@ -184854,7 +184854,7 @@ class SvPowerFlow(StateVariable):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class SvShuntCompensatorSections(StateVariable):
     '''
     State variable for the number of sections in service for a shunt compensator.
@@ -184933,7 +184933,7 @@ class SvShuntCompensatorSections(StateVariable):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class SvStatus(StateVariable):
     '''
     State variable for status.
@@ -185016,7 +185016,7 @@ class SvStatus(StateVariable):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class SvSwitch(StateVariable):
     '''
     State variable for switch.
@@ -185093,7 +185093,7 @@ class SvSwitch(StateVariable):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class SvTapStep(StateVariable):
     '''
     State variable for transformer tap step.
@@ -185154,7 +185154,7 @@ class SvTapStep(StateVariable):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class SvVoltage(StateVariable):
     '''
     State variable for voltage.
@@ -185252,7 +185252,7 @@ class SvVoltage(StateVariable):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class StepLimitTablePoint(Identity):
     '''
     Describes each limit per step in the operational limit curve.
@@ -185329,7 +185329,7 @@ class StepLimitTablePoint(Identity):
         return 'unbounded'
 
 @stereotype(CIMStereotype.NC)
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class SystemOperator(Identity):
     '''
     System operator.
@@ -185406,7 +185406,7 @@ class SystemOperator(Identity):
     '''
 
 @stereotype(CIMStereotype.NC)
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class DirectCurrentSystemOperator(SystemOperator):
     '''
     System operator of the direct current pole. There are typically one or
@@ -185447,7 +185447,7 @@ class DirectCurrentSystemOperator(SystemOperator):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class TCSCCompensationPoint(Identity):
     '''
     Compensation point of a TCSC compensator.
@@ -185550,7 +185550,7 @@ class TCSCCompensationPoint(Identity):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class TapChangerTablePoint(Identity):
     '''
     Describes each tap step in the tabular curve. Note that the upper boundary
@@ -185730,7 +185730,7 @@ class TapChangerTablePoint(Identity):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class PhaseTapChangerTablePoint(TapChangerTablePoint):
     '''
     Describes each tap step in the phase tap changer tabular curve.
@@ -185790,7 +185790,7 @@ class PhaseTapChangerTablePoint(TapChangerTablePoint):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class RatioTapChangerTablePoint(TapChangerTablePoint):
     '''
     Describes each tap step in the ratio tap changer tabular curve.
@@ -185829,7 +185829,7 @@ class RatioTapChangerTablePoint(TapChangerTablePoint):
         return 'unbounded'
 
 @stereotype(CIMStereotype.NC)
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class TapSchedule(Identity):
     '''
     Schedule for tap.
@@ -185868,7 +185868,7 @@ class TapSchedule(Identity):
         return 'unbounded'
 
 @stereotype(CIMStereotype.informative)
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class Umode(Identity):
     '''
     '''
@@ -185920,7 +185920,7 @@ class Umode(Identity):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class VDCOL(Identity):
     '''
     '''
@@ -185938,7 +185938,7 @@ class VDCOL(Identity):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class WeccDynamicsLookupTable(Identity):
     '''
     Look up table for the purpose of WECC standard models.
@@ -186091,7 +186091,7 @@ class WeccDynamicsLookupTable(Identity):
         return 'unbounded'
 
 @stereotype(CIMStereotype.GridAPPSD)
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class WireAssembly(Identity):
     '''
     '''
@@ -186143,7 +186143,7 @@ class WireAssembly(Identity):
     '''
     '''
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class WirePhaseInfo(Identity):
     '''
     Information on a wire carrying a single phase.
@@ -186286,7 +186286,7 @@ class WirePhaseInfo(Identity):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class WireSpacing(Identity):
     '''
     '''
@@ -197941,7 +197941,7 @@ class WaterLevel(CIMUnit):
         return '1'
 
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class DateInterval(Identity):
     '''
     Interval between two dates.
@@ -197996,7 +197996,7 @@ class DateInterval(Identity):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class DateTimeInterval(Identity):
     '''
     Interval between two date and time points, where the interval includes
@@ -198075,7 +198075,7 @@ class DateTimeInterval(Identity):
 
 @stereotype(CIMStereotype.Compound)
 @stereotype(CIMStereotype.Attribute)
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class DecimalQuantity(Identity):
     '''
     Quantity with decimal value and associated unit or currency information.
@@ -198168,7 +198168,7 @@ class DecimalQuantity(Identity):
 
 @stereotype(CIMStereotype.Compound)
 @stereotype(CIMStereotype.Attribute)
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class FaultImpedance(Identity):
     '''
     Impedance description for the fault.
@@ -198259,7 +198259,7 @@ class FaultImpedance(Identity):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class FloatQuantity(Identity):
     '''
     Quantity with float value and associated unit information.
@@ -198332,7 +198332,7 @@ class FloatQuantity(Identity):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class IntegerQuantity(Identity):
     '''
     Quantity with integer value and associated unit information.
@@ -198405,7 +198405,7 @@ class IntegerQuantity(Identity):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class MonthDayInterval(Identity):
     '''
     Interval between two times specified as month and day.
@@ -198460,7 +198460,7 @@ class MonthDayInterval(Identity):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class StringQuantity(Identity):
     '''
     Quantity with string value (when it is not important whether it is an integral
@@ -198536,7 +198536,7 @@ class StringQuantity(Identity):
 
 @stereotype(CIMStereotype.Compound)
 @stereotype(CIMStereotype.Attribute)
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class TimeInterval(Identity):
     '''
     Interval between two times.

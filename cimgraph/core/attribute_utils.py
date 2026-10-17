@@ -147,6 +147,34 @@ def field_properties(cim_class:dataclass, attribute:str, value:Any) -> list[Prop
         properties.append(Property(name, namespace, kind, item))
     return properties
 
+def _same_value(a_value:Any, b_value:Any) -> bool:
+    """Lists compare without order (CIM associations are unordered); all else uses ==."""
+    if isinstance(a_value, list) and isinstance(b_value, list):
+        return (len(a_value) == len(b_value)
+                and all(item in b_value for item in a_value)
+                and all(item in a_value for item in b_value))
+    return a_value == b_value
+
+def diff_attributes(a:object, b:object) -> dict[str, tuple[Any, Any]]:
+    """
+    Compare the attribute values of two objects of the same class, one level deep.
+
+    References compare by identifier (Identity equality) and are never recursed
+    into, units compare by value (1 kV == 1000 V), and lists ignore order.
+
+    Returns:
+        {attribute: (a_value, b_value)} for every attribute that differs.
+    """
+    if type(a) is not type(b):
+        raise TypeError(f'Cannot compare {type(a).__name__} with {type(b).__name__}')
+    differences = {}
+    for attribute in a.__dataclass_fields__:
+        a_value = getattr(a, attribute)
+        b_value = getattr(b, attribute)
+        if not _same_value(a_value, b_value):
+            differences[attribute] = (a_value, b_value)
+    return differences
+
 def iter_properties(obj:object) -> Iterator[Property]:
     """Yield every serializable Property of a CIM object."""
     cim_class = obj.__class__

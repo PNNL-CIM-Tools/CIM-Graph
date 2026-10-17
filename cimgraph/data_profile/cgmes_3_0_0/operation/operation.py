@@ -26,7 +26,7 @@ class CIMStereotype(Enum):
 BASE_URI = 'http://ucaiug.org/ns/CGMES/Operation-EU/3.0#'
 ONTOLOGY_URI = 'http://iec.ch/TC57/CIM100#'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class IdentifiedObject(Identity):
     '''
     This is a root class to provide common identification for all classes needing
@@ -97,7 +97,7 @@ class IdentifiedObject(Identity):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class ACDCTerminal(IdentifiedObject):
     '''
     An electrical connection point (AC or DC) to a piece of conducting equipment.
@@ -137,7 +137,7 @@ class ACDCTerminal(IdentifiedObject):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class Terminal(ACDCTerminal):
     '''
     An AC electrical connection point to a piece of conducting equipment. Terminals
@@ -157,7 +157,7 @@ class Terminal(ACDCTerminal):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class IOPoint(IdentifiedObject):
     '''
     The class describe a measurement or control value. The purpose is to enable
@@ -177,7 +177,7 @@ class IOPoint(IdentifiedObject):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class Control(IOPoint):
     '''
     Control is used for supervisory/device control. It represents control outputs
@@ -287,7 +287,7 @@ class Control(IOPoint):
         return 'unbounded'
 
 @stereotype(CIMStereotype.Concrete)
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class AccumulatorReset(Control):
     '''
     This command resets the counter value to zero.
@@ -321,7 +321,7 @@ class AccumulatorReset(Control):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class AnalogControl(Control):
     '''
     An analog control used for supervisory control.
@@ -386,7 +386,7 @@ class AnalogControl(Control):
         return 'unbounded'
 
 @stereotype(CIMStereotype.Concrete)
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class RaiseLowerCommand(AnalogControl):
     '''
     An analog control that increases or decreases a set point value with pulses.
@@ -422,7 +422,7 @@ class RaiseLowerCommand(AnalogControl):
         return 'unbounded'
 
 @stereotype(CIMStereotype.Concrete)
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class SetPoint(AnalogControl):
     '''
     An analog control that issues a set point value.
@@ -470,7 +470,7 @@ class SetPoint(AnalogControl):
         return 'unbounded'
 
 @stereotype(CIMStereotype.Concrete)
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class Command(Control):
     '''
     A Command is a discrete control used for supervisory control.
@@ -547,7 +547,7 @@ class Command(Control):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class MeasurementValue(IOPoint):
     '''
     The current state for a measurement. A state value is an instance of a
@@ -630,7 +630,7 @@ class MeasurementValue(IOPoint):
         return 'unbounded'
 
 @stereotype(CIMStereotype.Concrete)
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class AccumulatorValue(MeasurementValue):
     '''
     AccumulatorValue represents an accumulated (counted) MeasurementValue.
@@ -680,7 +680,7 @@ class AccumulatorValue(MeasurementValue):
         return 'unbounded'
 
 @stereotype(CIMStereotype.Concrete)
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class AnalogValue(MeasurementValue):
     '''
     AnalogValue represents an analog MeasurementValue.
@@ -730,7 +730,7 @@ class AnalogValue(MeasurementValue):
         return 'unbounded'
 
 @stereotype(CIMStereotype.Concrete)
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class DiscreteValue(MeasurementValue):
     '''
     DiscreteValue represents a discrete MeasurementValue.
@@ -780,7 +780,7 @@ class DiscreteValue(MeasurementValue):
         return 'unbounded'
 
 @stereotype(CIMStereotype.Concrete)
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class StringMeasurementValue(MeasurementValue):
     '''
     StringMeasurementValue represents a measurement value of type string.
@@ -814,7 +814,7 @@ class StringMeasurementValue(MeasurementValue):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class Limit(IdentifiedObject):
     '''
     Specifies one limit value for a Measurement. A Measurement typically has
@@ -838,7 +838,7 @@ class Limit(IdentifiedObject):
         return 'unbounded'
 
 @stereotype(CIMStereotype.Concrete)
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class AccumulatorLimit(Limit):
     '''
     Limit values for Accumulator measurements.
@@ -887,7 +887,7 @@ class AccumulatorLimit(Limit):
         return 'unbounded'
 
 @stereotype(CIMStereotype.Concrete)
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class AnalogLimit(Limit):
     '''
     Limit values for Analog measurements.
@@ -935,7 +935,7 @@ class AnalogLimit(Limit):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class LimitSet(IdentifiedObject):
     '''
     Specifies a set of Limits that are associated with a Measurement. A Measurement
@@ -974,7 +974,7 @@ class LimitSet(IdentifiedObject):
         return 'unbounded'
 
 @stereotype(CIMStereotype.Concrete)
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class AccumulatorLimitSet(LimitSet):
     '''
     An AccumulatorLimitSet specifies a set of Limits that are associated with
@@ -1025,7 +1025,7 @@ class AccumulatorLimitSet(LimitSet):
         return 'unbounded'
 
 @stereotype(CIMStereotype.Concrete)
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class AnalogLimitSet(LimitSet):
     '''
     An AnalogLimitSet specifies a set of Limits that are associated with an
@@ -1075,7 +1075,7 @@ class AnalogLimitSet(LimitSet):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class Measurement(IdentifiedObject):
     '''
     A Measurement represents any measured, calculated or non-measured non-calculated
@@ -1212,7 +1212,7 @@ class Measurement(IdentifiedObject):
         return 'unbounded'
 
 @stereotype(CIMStereotype.Concrete)
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class Accumulator(Measurement):
     '''
     Accumulator represents an accumulated (counted) Measurement, e.g. an energy
@@ -1263,7 +1263,7 @@ class Accumulator(Measurement):
         return 'unbounded'
 
 @stereotype(CIMStereotype.Concrete)
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class Analog(Measurement):
     '''
     Analog represents an analog Measurement.
@@ -1329,7 +1329,7 @@ class Analog(Measurement):
         return 'unbounded'
 
 @stereotype(CIMStereotype.Concrete)
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class Discrete(Measurement):
     '''
     Discrete represents a discrete Measurement, i.e. a Measurement representing
@@ -1381,7 +1381,7 @@ class Discrete(Measurement):
         return 'unbounded'
 
 @stereotype(CIMStereotype.Concrete)
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class StringMeasurement(Measurement):
     '''
     StringMeasurement represents a measurement with values of type string.
@@ -1416,7 +1416,7 @@ class StringMeasurement(Measurement):
         return 'unbounded'
 
 @stereotype(CIMStereotype.Concrete)
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class MeasurementValueSource(IdentifiedObject):
     '''
     MeasurementValueSource describes the alternative sources updating a MeasurementValue.
@@ -1452,7 +1452,7 @@ class MeasurementValueSource(IdentifiedObject):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class PowerSystemResource(IdentifiedObject):
     '''
     A power system resource (PSR) can be an item of equipment such as a switch,
@@ -1507,7 +1507,7 @@ class PowerSystemResource(IdentifiedObject):
         return 'unbounded'
 
 @stereotype(CIMStereotype.Concrete)
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class ValueAliasSet(IdentifiedObject):
     '''
     Describes the translation of a set of values into a name and is intendend
@@ -1593,7 +1593,7 @@ class ValueAliasSet(IdentifiedObject):
         return 'unbounded'
 
 @stereotype(CIMStereotype.Concrete)
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class ValueToAlias(IdentifiedObject):
     '''
     Describes the translation of one particular value into a name, e.g. 1 as
@@ -1642,7 +1642,7 @@ class ValueToAlias(IdentifiedObject):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class Quality61850(Identity):
     '''
     Quality flags in this class are as defined in IEC 61850, except for estimatorReplaced,
@@ -1853,7 +1853,7 @@ class Quality61850(Identity):
         return 'unbounded'
 
 @stereotype(CIMStereotype.Concrete)
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class MeasurementValueQuality(Quality61850):
     '''
     Measurement quality flags. Bits 0-10 are defined for substation automation

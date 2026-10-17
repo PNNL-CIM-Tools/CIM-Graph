@@ -28,7 +28,7 @@ class CIMStereotype(Enum):
 BASE_URI = 'http://ucaiug.org/ns/CGMES/StateVariables-EU/3.0#'
 ONTOLOGY_URI = 'http://iec.ch/TC57/CIM100#'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class IdentifiedObject(Identity):
     '''
     This is a root class to provide common identification for all classes needing
@@ -68,7 +68,7 @@ class IdentifiedObject(Identity):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class ACDCTerminal(IdentifiedObject):
     '''
     An electrical connection point (AC or DC) to a piece of conducting equipment.
@@ -89,7 +89,7 @@ class ACDCTerminal(IdentifiedObject):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class Terminal(ACDCTerminal):
     '''
     An AC electrical connection point to a piece of conducting equipment. Terminals
@@ -125,7 +125,7 @@ class Terminal(ACDCTerminal):
         return 'unbounded'
 
 @stereotype(CIMStereotype.Concrete)
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class DCTopologicalIsland(IdentifiedObject):
     '''
     An electrically connected subset of the network. DC topological islands
@@ -164,7 +164,7 @@ class DCTopologicalIsland(IdentifiedObject):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class DCTopologicalNode(IdentifiedObject):
     '''
     DC bus.
@@ -198,7 +198,7 @@ class DCTopologicalNode(IdentifiedObject):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class PowerSystemResource(IdentifiedObject):
     '''
     A power system resource (PSR) can be an item of equipment such as a switch,
@@ -220,7 +220,7 @@ class PowerSystemResource(IdentifiedObject):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class Equipment(PowerSystemResource):
     '''
     The parts of a power system that are physical devices, electronic or mechanical.
@@ -239,7 +239,7 @@ class Equipment(PowerSystemResource):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class ConductingEquipment(Equipment):
     '''
     The parts of the AC power system that are designed to carry current or
@@ -274,7 +274,7 @@ class ConductingEquipment(Equipment):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class ACDCConverter(ConductingEquipment):
     '''
     A unit with valves for three phases, together with unit control equipment,
@@ -364,7 +364,7 @@ class ACDCConverter(ConductingEquipment):
 
 @stereotype(CIMStereotype.Concrete)
 @stereotype(CIMStereotype.Description)
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class CsConverter(ACDCConverter):
     '''
     DC side of the current source converter (CSC).
@@ -441,7 +441,7 @@ class CsConverter(ACDCConverter):
 
 @stereotype(CIMStereotype.Concrete)
 @stereotype(CIMStereotype.Description)
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class VsConverter(ACDCConverter):
     '''
     DC side of the voltage source converter (VSC).
@@ -492,7 +492,7 @@ class VsConverter(ACDCConverter):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class EnergyConnection(ConductingEquipment):
     '''
     A connection of energy generation or consumption on the power system model.
@@ -511,7 +511,7 @@ class EnergyConnection(ConductingEquipment):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class RegulatingCondEq(EnergyConnection):
     '''
     A type of conducting equipment that can regulate a quantity (i.e. voltage
@@ -531,7 +531,7 @@ class RegulatingCondEq(EnergyConnection):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class ShuntCompensator(RegulatingCondEq):
     '''
     A shunt capacitor or reactor or switchable bank of shunt capacitors or
@@ -568,7 +568,7 @@ class ShuntCompensator(RegulatingCondEq):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class Switch(ConductingEquipment):
     '''
     A generic device designed to close, or open, or both, one or more electric
@@ -606,7 +606,7 @@ class Switch(ConductingEquipment):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class TapChanger(PowerSystemResource):
     '''
     Mechanism for changing transformer winding tap positions.
@@ -641,7 +641,7 @@ class TapChanger(PowerSystemResource):
         return 'unbounded'
 
 @stereotype(CIMStereotype.Concrete)
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class TopologicalIsland(IdentifiedObject):
     '''
     An electrically connected subset of the network. Topological islands can
@@ -699,7 +699,7 @@ class TopologicalIsland(IdentifiedObject):
 
 @stereotype(CIMStereotype.Description)
 @stereotype(CIMStereotype.Concrete)
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class TopologicalNode(IdentifiedObject):
     '''
     For a detailed substation model a topological node is a set of connectivity
@@ -788,7 +788,7 @@ class TopologicalNode(IdentifiedObject):
         return 'unbounded'
 
 @stereotype(CIMStereotype.Concrete)
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class SvInjection(Identity):
     '''
     The SvInjection reports the calculated bus injection minus the sum of the
@@ -857,7 +857,7 @@ class SvInjection(Identity):
         return 'unbounded'
 
 @stereotype(CIMStereotype.Concrete)
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class SvPowerFlow(Identity):
     '''
     State variable for power flow. Load convention is used for flow direction.
@@ -925,7 +925,7 @@ class SvPowerFlow(Identity):
         return 'unbounded'
 
 @stereotype(CIMStereotype.Concrete)
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class SvShuntCompensatorSections(Identity):
     '''
     State variable for the number of sections in service for a shunt compensator.
@@ -976,7 +976,7 @@ class SvShuntCompensatorSections(Identity):
         return 'unbounded'
 
 @stereotype(CIMStereotype.Concrete)
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class SvStatus(Identity):
     '''
     State variable for status.
@@ -1029,7 +1029,7 @@ class SvStatus(Identity):
         return 'unbounded'
 
 @stereotype(CIMStereotype.Concrete)
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class SvSwitch(Identity):
     '''
     State variable for switch.
@@ -1079,7 +1079,7 @@ class SvSwitch(Identity):
         return 'unbounded'
 
 @stereotype(CIMStereotype.Concrete)
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class SvTapStep(Identity):
     '''
     State variable for transformer tap step.
@@ -1131,7 +1131,7 @@ class SvTapStep(Identity):
         return 'unbounded'
 
 @stereotype(CIMStereotype.Concrete)
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class SvVoltage(Identity):
     '''
     State variable for voltage.

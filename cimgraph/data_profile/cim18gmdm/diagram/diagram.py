@@ -27,7 +27,7 @@ ONTOLOGY_URI = 'http://cim.ucaiug.io/ns#'
 
 
 @stereotype(CIMStereotype.Concrete)
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class DiagramObjectGluePoint(Identity):
     '''
     This is used for grouping diagram object points from different diagram
@@ -57,7 +57,7 @@ class DiagramObjectGluePoint(Identity):
 
 @stereotype(CIMStereotype.ByReference)
 @stereotype(CIMStereotype.Concrete)
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class DiagramObjectPoint(Identity):
     '''
     A point in a given space defined by 3 coordinates and associated to a diagram
@@ -173,7 +173,7 @@ class DiagramObjectPoint(Identity):
     The diagram object with which the points are associated.
     '''
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class IdentifiedObject(Identity):
     '''
     This is a class that provides common identification for all classes needing
@@ -221,7 +221,7 @@ class IdentifiedObject(Identity):
 
 @stereotype(CIMStereotype.Concrete)
 @stereotype(CIMStereotype.ByReference)
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class Diagram(IdentifiedObject):
     '''
     The diagram being exchanged. The coordinate system is a standard Cartesian
@@ -366,7 +366,7 @@ class Diagram(IdentifiedObject):
 
 @stereotype(CIMStereotype.ByReference)
 @stereotype(CIMStereotype.Concrete)
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class DiagramObject(IdentifiedObject):
     '''
     An object that defines one or more points in a given space. This object
@@ -587,7 +587,7 @@ class DiagramObject(IdentifiedObject):
     '''
 
 @stereotype(CIMStereotype.Concrete)
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class TextDiagramObject(DiagramObject):
     '''
     A diagram object for placing free-text or text derived from an associated
@@ -613,7 +613,7 @@ class TextDiagramObject(DiagramObject):
 
 @stereotype(CIMStereotype.Concrete)
 @stereotype(CIMStereotype.ByReference)
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class DiagramObjectStyle(IdentifiedObject):
     '''
     A reference to a style used by the originating system for a diagram object.
@@ -641,7 +641,7 @@ class DiagramObjectStyle(IdentifiedObject):
 
 @stereotype(CIMStereotype.Concrete)
 @stereotype(CIMStereotype.ByReference)
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class DiagramStyle(IdentifiedObject):
     '''
     The diagram style refers to a style used by the originating system for
@@ -668,7 +668,7 @@ class DiagramStyle(IdentifiedObject):
     '''
 
 @stereotype(CIMStereotype.Concrete)
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class VisibilityLayer(IdentifiedObject):
     '''
     Layers are typically used for grouping diagram objects according to themes

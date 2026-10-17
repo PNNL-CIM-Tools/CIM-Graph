@@ -176,6 +176,22 @@ class TestModelAuthorityUUID(unittest.TestCase):
         second = self._feeder_uuid('pnnl', 'feeder_2', name='f1')
         self.assertNotEqual(first, second)
 
+    def test_default_authority_is_machine_independent(self):
+        os.environ.pop('CIMG_MODEL_AUTHORITY', None)
+        get_model_authority.cache_clear()
+        self.assertEqual(get_model_authority(), 'CIManticGraphs')
+
+    def test_class_scopes_seeded_uuid(self):
+        line = cim.ACLineSegment(mRID='LINE_1').identifier
+        terminal = cim.Terminal(mRID='LINE_1').identifier
+        self.assertNotEqual(line, terminal)
+        self.assertEqual(line, cim.ACLineSegment(mRID='LINE_1').identifier)
+        self.assertNotEqual(cim.ACLineSegment(name='1').identifier,
+                            cim.Terminal(name='1').identifier)
+
+    def test_no_identifying_input_is_random(self):
+        self.assertNotEqual(cim.ACLineSegment().identifier, cim.ACLineSegment().identifier)
+
     def test_valid_uuid_mrid_is_unaffected(self):
         mrid = '49ad8e07-3bf9-a4e2-cb8f-c3722f837b62'
         first = self._feeder_uuid('pnnl', 'feeder_1', mRID=mrid)

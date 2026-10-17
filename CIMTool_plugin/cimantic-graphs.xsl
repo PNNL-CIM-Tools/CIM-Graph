@@ -89,7 +89,7 @@
 
         <xsl:variable name="class_name" select="local:sanitize_name(@name, @name)"/>
 
-        <item>@dataclass(repr=False)</item>
+        <item>@dataclass(repr=False, eq=False)</item>
         <item>class <xsl:value-of select="$class_name"/>(Identity):</item>
 
         <xsl:call-template name="generate_class_docstring"/>
@@ -115,7 +115,7 @@
             <xsl:for-each select="key('classes_by_super', a:SuperType/@name)">
                 <xsl:call-template name="generate_stereotype"/>
 
-                <item>@dataclass(repr=False)</item>
+                <item>@dataclass(repr=False, eq=False)</item>
 
                 <xsl:variable name="class_name" select="local:sanitize_name(@name, @name)"/>
                 <item>class <xsl:value-of select="$class_name"/>(<xsl:value-of select="a:SuperType/@name"/>):</item>

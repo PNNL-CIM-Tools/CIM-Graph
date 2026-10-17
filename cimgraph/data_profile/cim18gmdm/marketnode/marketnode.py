@@ -23,7 +23,7 @@ BASE_URI = 'http://www.ucaiug.org/gmdm/marketnode#'
 ONTOLOGY_URI = 'http://cim.ucaiug.io/CIM101/draft#'
 
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class IdentifiedObject(Identity):
     '''
     This is a class that provides common identification for all classes needing
@@ -85,7 +85,7 @@ class IdentifiedObject(Identity):
         return 'unbounded'
 
 @stereotype(CIMStereotype.ByReference)
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class ConnectivityNode(IdentifiedObject):
     '''
     Connectivity nodes are points where terminals of AC conducting equipment
@@ -122,7 +122,7 @@ class ConnectivityNode(IdentifiedObject):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class Pnode(IdentifiedObject):
     '''
     A pricing node is directly associated with a connectivity node. It is a
@@ -143,7 +143,7 @@ class Pnode(IdentifiedObject):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class IndividualPnode(Pnode):
     '''
     Individual pricing node based on Pnode.

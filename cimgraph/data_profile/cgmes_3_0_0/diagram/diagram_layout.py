@@ -26,7 +26,7 @@ BASE_URI = 'http://ucaiug.org/ns/CGMES/DiagramLayout-EU/3.0#'
 ONTOLOGY_URI = 'http://iec.ch/TC57/CIM100#'
 
 @stereotype(CIMStereotype.Concrete)
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class DiagramObjectGluePoint(Identity):
     '''
     This is used for grouping diagram object points from different diagram
@@ -64,7 +64,7 @@ class DiagramObjectGluePoint(Identity):
     '''
 
 @stereotype(CIMStereotype.Concrete)
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class DiagramObjectPoint(Identity):
     '''
     A point in a given space defined by 3 coordinates and associated to a diagram
@@ -173,7 +173,7 @@ class DiagramObjectPoint(Identity):
     def __maxOccurs__(self):
         return 'unbounded'
 
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class IdentifiedObject(Identity):
     '''
     This is a root class to provide common identification for all classes needing
@@ -260,7 +260,7 @@ class IdentifiedObject(Identity):
     '''
 
 @stereotype(CIMStereotype.Concrete)
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class Diagram(IdentifiedObject):
     '''
     The diagram being exchanged. The coordinate system is a standard Cartesian
@@ -389,7 +389,7 @@ class Diagram(IdentifiedObject):
         return 'unbounded'
 
 @stereotype(CIMStereotype.Concrete)
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class DiagramObject(IdentifiedObject):
     '''
     An object that defines one or more points in a given space. This object
@@ -585,7 +585,7 @@ class DiagramObject(IdentifiedObject):
         return 'unbounded'
 
 @stereotype(CIMStereotype.Concrete)
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class TextDiagramObject(DiagramObject):
     '''
     A diagram object for placing free-text or text derived from an associated
@@ -620,7 +620,7 @@ class TextDiagramObject(DiagramObject):
         return 'unbounded'
 
 @stereotype(CIMStereotype.Concrete)
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class DiagramObjectStyle(IdentifiedObject):
     '''
     A reference to a style used by the originating system for a diagram object.
@@ -657,7 +657,7 @@ class DiagramObjectStyle(IdentifiedObject):
         return 'unbounded'
 
 @stereotype(CIMStereotype.Concrete)
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class DiagramStyle(IdentifiedObject):
     '''
     The diagram style refers to a style used by the originating system for
@@ -694,7 +694,7 @@ class DiagramStyle(IdentifiedObject):
         return 'unbounded'
 
 @stereotype(CIMStereotype.Concrete)
-@dataclass(repr=False)
+@dataclass(repr=False, eq=False)
 class VisibilityLayer(IdentifiedObject):
     '''
     Layers are typically used for grouping diagram objects according to themes

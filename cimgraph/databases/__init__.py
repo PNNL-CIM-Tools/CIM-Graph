@@ -18,6 +18,26 @@ _log = logging.getLogger(__name__)
 
 Graph = dict[type, dict[UUID, object]]
 
+
+def add_object_to_graph(graph: Graph, obj: object) -> None:
+    """
+    Add an object to the graph under its identifier. Re-adding the same
+    instance is a no-op. A different instance with the same identifier is a
+    collision (e.g. two objects seeded from the same mRID or name) and raises
+    instead of silently dropping one of them.
+    """
+    objects = graph.setdefault(type(obj), {})
+    existing = objects.get(obj.identifier)
+    if existing is None:
+        objects[obj.identifier] = obj
+    elif existing is not obj:
+        raise ValueError(
+            f'{type(obj).__name__} identifier {obj.identifier} is already used by another '
+            f'object in the graph (existing name={getattr(existing, "name", None)!r}, '
+            f'mRID={getattr(existing, "mRID", None)!r}; new name={getattr(obj, "name", None)!r}, '
+            f'mRID={getattr(obj, "mRID", None)!r})')
+
+
 @dataclass
 class QueryResponse:
     response: str
@@ -304,13 +324,7 @@ class ConnectionInterface(ABC):
         Returns:
             none
         """
-        # Add class type to graph if not there
-        if type(obj) not in graph:
-            graph[type(obj)] = {}
-
-        # Add instance to graph keys if not there
-        if obj.identifier not in graph[type(obj)]:
-            graph[type(obj)][obj.identifier] = obj
+        add_object_to_graph(graph, obj)
 
 
 from cimgraph.databases.blazegraph import BlazegraphConnection
