@@ -313,23 +313,6 @@ class AgentCapability(Identity):
     def __maxOccurs__(self):
         return 'unbounded'
 
-    CertificationOrganisation: Optional[Organisation] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'Organisation.AgentCapability',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
-        'docstring':
-            '''
-            '''
-
-        })
-    '''
-    '''
-
 @dataclass(repr=False)
 class AgentRoleQualification(Identity):
     '''
@@ -1373,25 +1356,6 @@ class CurrentDroopOverride(Identity):
     def __maxOccurs__(self):
         return 'unbounded'
 
-    SSSCController: Optional[SSSCController] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'SSSCController.CurrentDroopOverride',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
-        'docstring':
-            '''
-            The SSSC controller to which this CurrentDroopOverride applies to.
-            '''
-
-        })
-    '''
-    The SSSC controller to which this CurrentDroopOverride applies to.
-    '''
-
 @dataclass(repr=False)
 class CurveData(Identity):
     '''
@@ -1529,27 +1493,6 @@ class DiagramObjectGluePoint(Identity):
     @property
     def __maxOccurs__(self):
         return 'unbounded'
-
-    DiagramObjectPoints: list[DiagramObjectPoint] = field(
-        default_factory=list,
-        metadata={
-        'type': 'Association',
-        'minOccurs': '0',
-        'maxOccurs': 'unbounded',
-        'inverse': 'DiagramObjectPoint.DiagramObjectGluePoint',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
-        'docstring':
-            '''
-            A diagram object glue point is associated with 2 or more object points
-            that are considered to be 'glued' together.
-            '''
-
-        })
-    '''
-    A diagram object glue point is associated with 2 or more object points
-    that are considered to be 'glued' together.
-    '''
 
     DiagramObjectPoints: list[DiagramObjectPoint] = field(
         default_factory=list,
@@ -4452,40 +4395,6 @@ class PhysicalAddress(Address):
     '''
     '''
 
-    Building: Optional[Building] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'Building.PhysicalAddress',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
-        'docstring':
-            '''
-            '''
-
-        })
-    '''
-    '''
-
-    Site: Optional[Site] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'Site.PhysicalAddress',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
-        'docstring':
-            '''
-            '''
-
-        })
-    '''
-    '''
-
     @property
     def __namespace__(self):
         return 'http://cim.ucaiug.io/CIM101/draft#'
@@ -4921,23 +4830,6 @@ class Organisation(Agent):
         })
     '''
     Parent organisation of this organisation.
-    '''
-
-    AgentCapability: Optional[AgentCapability] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'AgentCapability.CertificationOrganisation',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
-        'docstring':
-            '''
-            '''
-
-        })
-    '''
     '''
 
     @property
@@ -6563,23 +6455,6 @@ class DuctBank(Asset):
         'type': 'informative',
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
-        'inverse': 'IntraphaseSpacing.DuctBank',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
-        'docstring':
-            '''
-            '''
-
-        })
-    '''
-    '''
-
-    WireSpacingInfos: list[WireSpacingInfo] = field(
-        default_factory=list,
-        metadata={
-        'type': 'informative',
-        'minOccurs': '0',
-        'maxOccurs': 'unbounded',
         'inverse': 'WireSpacingInfo.DuctBank',
         'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
@@ -6703,40 +6578,6 @@ class AssetInfo(IdentifiedObject):
         })
     '''
     Product asset model which conforms to this catalog asset type.
-    '''
-
-    ParentAssetInfoComponent: Optional[AssetInfoComponent] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'AssetInfoComponent.ChildAssetInfo',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
-        'docstring':
-            '''
-            '''
-
-        })
-    '''
-    '''
-
-    ChildAssetInfoComponent: Optional[AssetInfoComponent] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'AssetInfoComponent.ParentAssetInfo',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
-        'docstring':
-            '''
-            '''
-
-        })
-    '''
     '''
 
     PowerSystemResources: list[PowerSystemResource] = field(
@@ -9574,23 +9415,6 @@ class CableInfo(WireInfo):
     '''
     '''
 
-    InsulationInfo: Optional[InsulationInfo] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'InsulationInfo.CableInfo',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
-        'docstring':
-            '''
-            '''
-
-        })
-    '''
-    '''
-
     @property
     def __namespace__(self):
         return 'http://cim.ucaiug.io/CIM101/draft#'
@@ -11271,29 +11095,6 @@ class TransformerEndInfo(ConductingAssetInfo):
     short-circuited.
     '''
 
-    CoreAdmittance: Optional[TransformerCoreAdmittance] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'TransformerCoreAdmittance.TransformerEndInfo',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
-        'docstring':
-            '''
-            Core admittance calculated from this transformer end datasheet, representing
-            magnetising current and core losses. The full values of the transformer
-            should be supplied for one transformer end info only.
-            '''
-
-        })
-    '''
-    Core admittance calculated from this transformer end datasheet, representing
-    magnetising current and core losses. The full values of the transformer
-    should be supplied for one transformer end info only.
-    '''
-
     FromMeshImpedances: list[TransformerMeshImpedance] = field(
         default_factory=list,
         metadata={
@@ -11312,25 +11113,6 @@ class TransformerEndInfo(ConductingAssetInfo):
     '''
     All mesh impedances between this 'to' and other 'from' transformer
     ends.
-    '''
-
-    TransformerStarImpedance: Optional[TransformerStarImpedance] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'TransformerStarImpedance.TransformerEndInfo',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
-        'docstring':
-            '''
-            Transformer star impedance calculated from this transformer end datasheet.
-            '''
-
-        })
-    '''
-    Transformer star impedance calculated from this transformer end datasheet.
     '''
 
     @property
@@ -11509,23 +11291,6 @@ class InsulationInfo(AssetInfo):
         'inverse': 'CableInfo.InsulationInfo',
         'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            '''
-
-        })
-    '''
-    '''
-
-    CableInfo: Optional[CableInfo] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'CableInfo.InsulationInfo',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
         'docstring':
             '''
             '''
@@ -12681,40 +12446,6 @@ class AssetInfoComponent(IdentifiedObject):
     '''
     '''
 
-    ParentAssetInfo: Optional[AssetInfo] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'AssetInfo.ChildAssetInfoComponent',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
-        'docstring':
-            '''
-            '''
-
-        })
-    '''
-    '''
-
-    ChildAssetInfo: Optional[AssetInfo] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'AssetInfo.ParentAssetInfoComponent',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
-        'docstring':
-            '''
-            '''
-
-        })
-    '''
-    '''
-
     @property
     def __namespace__(self):
         return 'http://cim.ucaiug.io/CIM101/draft#'
@@ -13411,27 +13142,6 @@ class GenUnitOpSchedule(RegularIntervalSchedule):
     operation of the unit.
     '''
 
-    GeneratingUnit: Optional[GeneratingUnit] = field(
-        default=None,
-        metadata={
-        'type': 'OfAggregate',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'GeneratingUnit.GenUnitOpSchedule',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
-        'docstring':
-            '''
-            A generating unit may have an operating schedule, indicating the planned
-            operation of the unit.
-            '''
-
-        })
-    '''
-    A generating unit may have an operating schedule, indicating the planned
-    operation of the unit.
-    '''
-
     @property
     def __namespace__(self):
         return 'http://cim.ucaiug.io/CIM101/draft#'
@@ -13464,27 +13174,6 @@ class HydroPumpOpSchedule(RegularIntervalSchedule):
         'inverse': 'HydroPump.HydroPumpOpSchedule',
         'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            The hydro pump has a pumping schedule over time, indicating when pumping
-            is to occur.
-            '''
-
-        })
-    '''
-    The hydro pump has a pumping schedule over time, indicating when pumping
-    is to occur.
-    '''
-
-    HydroPump: Optional[HydroPump] = field(
-        default=None,
-        metadata={
-        'type': 'OfAggregate',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'HydroPump.HydroPumpOpSchedule',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
         'docstring':
             '''
             The hydro pump has a pumping schedule over time, indicating when pumping
@@ -13851,25 +13540,6 @@ class SteamSendoutSchedule(RegularIntervalSchedule):
     A cogeneration plant has a steam sendout schedule.
     '''
 
-    CogenerationPlant: Optional[CogenerationPlant] = field(
-        default=None,
-        metadata={
-        'type': 'OfAggregate',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'CogenerationPlant.SteamSendoutSchedule',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
-        'docstring':
-            '''
-            A cogeneration plant has a steam sendout schedule.
-            '''
-
-        })
-    '''
-    A cogeneration plant has a steam sendout schedule.
-    '''
-
     @property
     def __namespace__(self):
         return 'http://cim.ucaiug.io/CIM101/draft#'
@@ -14132,23 +13802,6 @@ class Building(IdentifiedObject):
     '''
     '''
 
-    PhysicalAddress: Optional[PhysicalAddress] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'PhysicalAddress.Building',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
-        'docstring':
-            '''
-            '''
-
-        })
-    '''
-    '''
-
     @property
     def __namespace__(self):
         return 'http://cim.ucaiug.io/CIM101/draft#'
@@ -14266,23 +13919,6 @@ class BuildingSpace(IdentifiedObject):
         'inverse': 'LocationAccess.BuildingSpace',
         'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            '''
-
-        })
-    '''
-    '''
-
-    LocationAccess: Optional[LocationAccess] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'LocationAccess.BuildingSpace',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
         'docstring':
             '''
             '''
@@ -15006,44 +14642,6 @@ class ConnectivityNode(IdentifiedObject):
     '''
     The topological node to which this connectivity node is assigned. May
     depend on the current state of switches in the network.
-    '''
-
-    ACPointOfCommonCoupling: Optional[ACPointOfCommonCoupling] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'ACPointOfCommonCoupling.ConnectivityNode',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
-        'docstring':
-            '''
-            Identifies this ConnectivityNode as a point of common coupling AC.
-            '''
-
-        })
-    '''
-    Identifies this ConnectivityNode as a point of common coupling AC.
-    '''
-
-    BoundaryPoint: Optional[BoundaryPoint] = field(
-        default=None,
-        metadata={
-        'type': 'European',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'BoundaryPoint.ConnectivityNode',
-        'namespace': 'http://iec.ch/TC57/CIM100-European#',
-        'serialize': False,
-        'docstring':
-            '''
-            The boundary point associated with the connectivity node.
-            '''
-
-        })
-    '''
-    The boundary point associated with the connectivity node.
     '''
 
     IndividualPnode: Optional[IndividualPnode] = field(
@@ -16607,25 +16205,6 @@ class HeatInputCurve(Curve):
     A thermal generating unit may have a heat input curve.
     '''
 
-    ThermalGeneratingUnit: Optional[ThermalGeneratingUnit] = field(
-        default=None,
-        metadata={
-        'type': 'OfAggregate',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'ThermalGeneratingUnit.HeatInputCurve',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
-        'docstring':
-            '''
-            A thermal generating unit may have a heat input curve.
-            '''
-
-        })
-    '''
-    A thermal generating unit may have a heat input curve.
-    '''
-
     @property
     def __namespace__(self):
         return 'http://cim.ucaiug.io/CIM101/draft#'
@@ -16674,25 +16253,6 @@ class HeatRateCurve(Curve):
         'inverse': 'ThermalGeneratingUnit.HeatRateCurve',
         'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            A thermal generating unit may have a heat rate curve.
-            '''
-
-        })
-    '''
-    A thermal generating unit may have a heat rate curve.
-    '''
-
-    ThermalGeneratingUnit: Optional[ThermalGeneratingUnit] = field(
-        default=None,
-        metadata={
-        'type': 'OfAggregate',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'ThermalGeneratingUnit.HeatRateCurve',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
         'docstring':
             '''
             A thermal generating unit may have a heat rate curve.
@@ -16798,25 +16358,6 @@ class IncrementalHeatRateCurve(Curve):
         'inverse': 'ThermalGeneratingUnit.IncrementalHeatRateCurve',
         'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            A thermal generating unit may have an incremental heat rate curve.
-            '''
-
-        })
-    '''
-    A thermal generating unit may have an incremental heat rate curve.
-    '''
-
-    ThermalGeneratingUnit: Optional[ThermalGeneratingUnit] = field(
-        default=None,
-        metadata={
-        'type': 'OfAggregate',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'ThermalGeneratingUnit.IncrementalHeatRateCurve',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
         'docstring':
             '''
             A thermal generating unit may have an incremental heat rate curve.
@@ -16935,25 +16476,6 @@ class PenstockLossCurve(Curve):
         'inverse': 'HydroGeneratingUnit.PenstockLossCurve',
         'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            A hydro generating unit has a penstock loss curve.
-            '''
-
-        })
-    '''
-    A hydro generating unit has a penstock loss curve.
-    '''
-
-    HydroGeneratingUnit: Optional[HydroGeneratingUnit] = field(
-        default=None,
-        metadata={
-        'type': 'OfAggregate',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'HydroGeneratingUnit.PenstockLossCurve',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
         'docstring':
             '''
             A hydro generating unit has a penstock loss curve.
@@ -17215,25 +16737,6 @@ class ShutdownCurve(Curve):
     A thermal generating unit may have a shutdown curve.
     '''
 
-    ThermalGeneratingUnit: Optional[ThermalGeneratingUnit] = field(
-        default=None,
-        metadata={
-        'type': 'OfAggregate',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'ThermalGeneratingUnit.ShutdownCurve',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
-        'docstring':
-            '''
-            A thermal generating unit may have a shutdown curve.
-            '''
-
-        })
-    '''
-    A thermal generating unit may have a shutdown curve.
-    '''
-
     @property
     def __namespace__(self):
         return 'http://cim.ucaiug.io/CIM101/draft#'
@@ -17334,25 +16837,6 @@ class StartIgnFuelCurve(Curve):
     The unit's startup model may have a startup ignition fuel curve.
     '''
 
-    StartupModel: Optional[StartupModel] = field(
-        default=None,
-        metadata={
-        'type': 'OfAggregate',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'StartupModel.StartIgnFuelCurve',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
-        'docstring':
-            '''
-            The unit's startup model may have a startup ignition fuel curve.
-            '''
-
-        })
-    '''
-    The unit's startup model may have a startup ignition fuel curve.
-    '''
-
     @property
     def __namespace__(self):
         return 'http://cim.ucaiug.io/CIM101/draft#'
@@ -17412,25 +16896,6 @@ class StartMainFuelCurve(Curve):
     The unit's startup model may have a startup main fuel curve.
     '''
 
-    StartupModel: Optional[StartupModel] = field(
-        default=None,
-        metadata={
-        'type': 'OfAggregate',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'StartupModel.StartMainFuelCurve',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
-        'docstring':
-            '''
-            The unit's startup model may have a startup main fuel curve.
-            '''
-
-        })
-    '''
-    The unit's startup model may have a startup main fuel curve.
-    '''
-
     @property
     def __namespace__(self):
         return 'http://cim.ucaiug.io/CIM101/draft#'
@@ -17479,25 +16944,6 @@ class StartRampCurve(Curve):
         'inverse': 'StartupModel.StartRampCurve',
         'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            The unit's startup model may have a startup ramp curve.
-            '''
-
-        })
-    '''
-    The unit's startup model may have a startup ramp curve.
-    '''
-
-    StartupModel: Optional[StartupModel] = field(
-        default=None,
-        metadata={
-        'type': 'OfAggregate',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'StartupModel.StartRampCurve',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
         'docstring':
             '''
             The unit's startup model may have a startup ramp curve.
@@ -17617,25 +17063,6 @@ class TargetLevelSchedule(Curve):
         'inverse': 'Reservoir.TargetLevelSchedule',
         'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            A reservoir may have a water level target schedule.
-            '''
-
-        })
-    '''
-    A reservoir may have a water level target schedule.
-    '''
-
-    Reservoir: Optional[Reservoir] = field(
-        default=None,
-        metadata={
-        'type': 'OfAggregate',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'Reservoir.TargetLevelSchedule',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
         'docstring':
             '''
             A reservoir may have a water level target schedule.
@@ -17801,25 +17228,6 @@ class DCNode(IdentifiedObject):
     '''
     DC base terminals interconnected with zero impedance at a this DC connectivity
     node.
-    '''
-
-    DCPointOfCommonCoupling: Optional[DCPointOfCommonCoupling] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'DCPointOfCommonCoupling.DCNode',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
-        'docstring':
-            '''
-            Identifies that this DC node is a point of common coupling DC.
-            '''
-
-        })
-    '''
-    Identifies that this DC node is a point of common coupling DC.
     '''
 
     @property
@@ -18519,27 +17927,6 @@ class DiagramObject(IdentifiedObject):
         })
     '''
     The domain object to which this diagram object is associated.
-    '''
-
-    DiagramObjectPoints: list[DiagramObjectPoint] = field(
-        default_factory=list,
-        metadata={
-        'type': 'Association',
-        'minOccurs': '0',
-        'maxOccurs': 'unbounded',
-        'inverse': 'DiagramObjectPoint.DiagramObject',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
-        'docstring':
-            '''
-            A diagram object can have 0 or more points to reflect its layout position,
-            routing (for polylines) or boundary (for polygons).
-            '''
-
-        })
-    '''
-    A diagram object can have 0 or more points to reflect its layout position,
-    routing (for polylines) or boundary (for polygons).
     '''
 
     DiagramObjectPoints: list[DiagramObjectPoint] = field(
@@ -20524,25 +19911,6 @@ class EnergyArea(IdentifiedObject):
     The control area specification that is used for the load forecast.
     '''
 
-    ControlArea: Optional[ControlArea] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'ControlArea.EnergyArea',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
-        'docstring':
-            '''
-            The control area specification that is used for the load forecast.
-            '''
-
-        })
-    '''
-    The control area specification that is used for the load forecast.
-    '''
-
     @property
     def __namespace__(self):
         return 'http://cim.ucaiug.io/CIM101/draft#'
@@ -21416,23 +20784,6 @@ class Geometry(IdentifiedObject):
     '''
     '''
 
-    GeometricElement: list[GeometricElement] = field(
-        default_factory=list,
-        metadata={
-        'type': 'Association',
-        'minOccurs': '0',
-        'maxOccurs': 'unbounded',
-        'inverse': 'GeometricElement.Geometry',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
-        'docstring':
-            '''
-            '''
-
-        })
-    '''
-    '''
-
     @property
     def __namespace__(self):
         return 'http://cim.ucaiug.io/CIM101/draft#'
@@ -21782,25 +21133,6 @@ class AccumulatorReset(Control):
     The accumulator value that is reset by the command.
     '''
 
-    AccumulatorValue: Optional[AccumulatorValue] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'AccumulatorValue.AccumulatorReset',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
-        'docstring':
-            '''
-            The accumulator value that is reset by the command.
-            '''
-
-        })
-    '''
-    The accumulator value that is reset by the command.
-    '''
-
     @property
     def __namespace__(self):
         return 'http://cim.ucaiug.io/CIM101/draft#'
@@ -21869,25 +21201,6 @@ class AnalogControl(Control):
         'inverse': 'AnalogValue.AnalogControl',
         'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            The MeasurementValue that is controlled.
-            '''
-
-        })
-    '''
-    The MeasurementValue that is controlled.
-    '''
-
-    AnalogValue: Optional[AnalogValue] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'AnalogValue.AnalogControl',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
         'docstring':
             '''
             The MeasurementValue that is controlled.
@@ -22085,25 +21398,6 @@ class Command(Control):
     The ValueAliasSet used for translation of a Control value to a name.
     '''
 
-    DiscreteValue: Optional[DiscreteValue] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'DiscreteValue.Command',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
-        'docstring':
-            '''
-            The MeasurementValue that is controlled.
-            '''
-
-        })
-    '''
-    The MeasurementValue that is controlled.
-    '''
-
     @property
     def __namespace__(self):
         return 'http://cim.ucaiug.io/CIM101/draft#'
@@ -22259,25 +21553,6 @@ class MeasurementValue(IOPoint):
     Link to the physical telemetered point associated with this measurement.
     '''
 
-    MeasurementValueQuality: Optional[MeasurementValueQuality] = field(
-        default=None,
-        metadata={
-        'type': 'AggregateOf',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'MeasurementValueQuality.MeasurementValue',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
-        'docstring':
-            '''
-            A MeasurementValue has a MeasurementValueQuality associated with it.
-            '''
-
-        })
-    '''
-    A MeasurementValue has a MeasurementValueQuality associated with it.
-    '''
-
     @property
     def __namespace__(self):
         return 'http://cim.ucaiug.io/CIM101/draft#'
@@ -22343,25 +21618,6 @@ class AccumulatorValue(MeasurementValue):
         'inverse': 'AccumulatorReset.AccumulatorValue',
         'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            The command that resets the accumulator value.
-            '''
-
-        })
-    '''
-    The command that resets the accumulator value.
-    '''
-
-    AccumulatorReset: Optional[AccumulatorReset] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'AccumulatorReset.AccumulatorValue',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
         'docstring':
             '''
             The command that resets the accumulator value.
@@ -22485,25 +21741,6 @@ class AnalogValue(MeasurementValue):
     The usage of the measurement within the control area specification.
     '''
 
-    AnalogControl: Optional[AnalogControl] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'AnalogControl.AnalogValue',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
-        'docstring':
-            '''
-            The Control variable associated with the MeasurementValue.
-            '''
-
-        })
-    '''
-    The Control variable associated with the MeasurementValue.
-    '''
-
     @property
     def __namespace__(self):
         return 'http://cim.ucaiug.io/CIM101/draft#'
@@ -22577,25 +21814,6 @@ class DiscreteValue(MeasurementValue):
         })
     '''
     Measurement to which this value is connected.
-    '''
-
-    Command: Optional[Command] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'Command.DiscreteValue',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
-        'docstring':
-            '''
-            The Control variable associated with the MeasurementValue.
-            '''
-
-        })
-    '''
-    The Control variable associated with the MeasurementValue.
     '''
 
     @property
@@ -23367,25 +22585,6 @@ class LineSegmentCoupling(IdentifiedObject):
         })
     '''
     The coupled group of lines with which this coupled line has relationships.
-    '''
-
-    ACLineSegment: Optional[ACLineSegment] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'ACLineSegment.LineSegmentCoupling',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
-        'docstring':
-            '''
-            The line whose relationship in a coupled group is described.
-            '''
-
-        })
-    '''
-    The line whose relationship in a coupled group is described.
     '''
 
     @property
@@ -24363,23 +23562,6 @@ class Location(IdentifiedObject):
     '''
     '''
 
-    LocationAccess: Optional[LocationAccess] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'LocationAccess.Location',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
-        'docstring':
-            '''
-            '''
-
-        })
-    '''
-    '''
-
     PositionPoints: list[PositionPoint] = field(
         default_factory=list,
         metadata={
@@ -24414,23 +23596,6 @@ class Location(IdentifiedObject):
         })
     '''
     All power system resources at this location.
-    '''
-
-    Site: Optional[Site] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'Site.Location',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
-        'docstring':
-            '''
-            '''
-
-        })
-    '''
     '''
 
     @property
@@ -26797,25 +25962,6 @@ class PerLengthPhaseImpedance(PerLengthImpedance):
     All data that belong to this conductor phase impedance.
     '''
 
-    PhaseImpedanceData: list[PhaseImpedanceData] = field(
-        default_factory=list,
-        metadata={
-        'type': 'Association',
-        'minOccurs': '0',
-        'maxOccurs': 'unbounded',
-        'inverse': 'PhaseImpedanceData.PhaseImpedance',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
-        'docstring':
-            '''
-            All data that belong to this conductor phase impedance.
-            '''
-
-        })
-    '''
-    All data that belong to this conductor phase impedance.
-    '''
-
     @property
     def __namespace__(self):
         return 'http://cim.ucaiug.io/CIM101/draft#'
@@ -27368,44 +26514,6 @@ class ACPointOfCommonCoupling(PointOfCommonCoupling):
     DC converter unit that has AC point of common coupling.
     '''
 
-    ConnectivityNode: Optional[ConnectivityNode] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'ConnectivityNode.ACPointOfCommonCoupling',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
-        'docstring':
-            '''
-            Connectivity node which is a point of common coupling AC.
-            '''
-
-        })
-    '''
-    Connectivity node which is a point of common coupling AC.
-    '''
-
-    DCConverterUnit: Optional[DCConverterUnit] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'DCConverterUnit.ACPointOfCommonCoupling',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
-        'docstring':
-            '''
-            DC converter unit that has AC point of common coupling.
-            '''
-
-        })
-    '''
-    DC converter unit that has AC point of common coupling.
-    '''
-
     @property
     def __namespace__(self):
         return 'http://cim.ucaiug.io/CIM101/draft#'
@@ -27454,44 +26562,6 @@ class DCPointOfCommonCoupling(PointOfCommonCoupling):
         'inverse': 'DCNode.DCPointOfCommonCoupling',
         'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            The DCNode that is a point of common coupling DC.
-            '''
-
-        })
-    '''
-    The DCNode that is a point of common coupling DC.
-    '''
-
-    DCConverterUnit: Optional[DCConverterUnit] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'DCConverterUnit.DCPointOfCommonCoupling',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
-        'docstring':
-            '''
-            DC converter unit that has DC point of common coupling.
-            '''
-
-        })
-    '''
-    DC converter unit that has DC point of common coupling.
-    '''
-
-    DCNode: Optional[DCNode] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'DCNode.DCPointOfCommonCoupling',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
         'docstring':
             '''
             The DCNode that is a point of common coupling DC.
@@ -27892,26 +26962,6 @@ class AirCompressor(PowerSystemResource):
     A CAES air compressor is driven by combustion turbine.
     '''
 
-    CAESPlant: Optional[CAESPlant] = field(
-        default=None,
-        metadata={
-        'type': 'OfAggregate',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'CAESPlant.AirCompressor',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
-        'docstring':
-            '''
-            An air compressor may be a member of a compressed air energy storage plant.
-            '''
-
-        })
-    '''
-    An air compressor may be a member of a compressed air energy storage
-    plant.
-    '''
-
     @property
     def __namespace__(self):
         return 'http://cim.ucaiug.io/CIM101/draft#'
@@ -28197,25 +27247,6 @@ class BoundaryPoint(PowerSystemResource):
     The connectivity node that is designated as a boundary point.
     '''
 
-    ConnectivityNode: Optional[ConnectivityNode] = field(
-        default=None,
-        metadata={
-        'type': 'European',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'ConnectivityNode.BoundaryPoint',
-        'namespace': 'http://iec.ch/TC57/CIM100-European#',
-        'serialize': False,
-        'docstring':
-            '''
-            The connectivity node that is designated as a boundary point.
-            '''
-
-        })
-    '''
-    The connectivity node that is designated as a boundary point.
-    '''
-
     @property
     def __namespace__(self):
         return 'http://iec.ch/TC57/CIM100-European#'
@@ -28304,47 +27335,6 @@ class CAESPlant(PowerSystemResource):
         'inverse': 'ThermalGeneratingUnit.CAESPlant',
         'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            A thermal generating unit may be a member of a compressed air energy storage
-            plant.
-            '''
-
-        })
-    '''
-    A thermal generating unit may be a member of a compressed air energy
-    storage plant.
-    '''
-
-    AirCompressor: Optional[AirCompressor] = field(
-        default=None,
-        metadata={
-        'type': 'AggregateOf',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'AirCompressor.CAESPlant',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
-        'docstring':
-            '''
-            An air compressor may be a member of a compressed air energy storage plant.
-            '''
-
-        })
-    '''
-    An air compressor may be a member of a compressed air energy storage
-    plant.
-    '''
-
-    ThermalGeneratingUnit: Optional[ThermalGeneratingUnit] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'ThermalGeneratingUnit.CAESPlant',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
         'docstring':
             '''
             A thermal generating unit may be a member of a compressed air energy storage
@@ -28481,25 +27471,6 @@ class CogenerationPlant(PowerSystemResource):
         'inverse': 'SteamSendoutSchedule.CogenerationPlant',
         'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            A cogeneration plant has a steam sendout schedule.
-            '''
-
-        })
-    '''
-    A cogeneration plant has a steam sendout schedule.
-    '''
-
-    SteamSendoutSchedule: Optional[SteamSendoutSchedule] = field(
-        default=None,
-        metadata={
-        'type': 'AggregateOf',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'SteamSendoutSchedule.CogenerationPlant',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
         'docstring':
             '''
             A cogeneration plant has a steam sendout schedule.
@@ -29105,44 +28076,6 @@ class DCConverterUnit(DCEquipmentContainer):
     The containing substation of the DC converter unit.
     '''
 
-    ACPointOfCommonCoupling: Optional[ACPointOfCommonCoupling] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'ACPointOfCommonCoupling.DCConverterUnit',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
-        'docstring':
-            '''
-            AC point of common coupling for this DC converter unit.
-            '''
-
-        })
-    '''
-    AC point of common coupling for this DC converter unit.
-    '''
-
-    DCPointOfCommonCoupling: Optional[DCPointOfCommonCoupling] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'DCPointOfCommonCoupling.DCConverterUnit',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
-        'docstring':
-            '''
-            DCNode that is the point of common coupling at DC side of this DCConverterUnit.
-            '''
-
-        })
-    '''
-    DCNode that is the point of common coupling at DC side of this DCConverterUnit.
-    '''
-
     @property
     def __namespace__(self):
         return 'http://cim.ucaiug.io/CIM101/draft#'
@@ -29198,25 +28131,6 @@ class DCLine(DCEquipmentContainer):
         })
     '''
     The SubGeographicalRegion containing the DC line.
-    '''
-
-    DCPole: Optional[DCPole] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'DCPole.DCLine',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
-        'docstring':
-            '''
-            The DC pole that has this DC line.
-            '''
-
-        })
-    '''
-    The DC pole that has this DC line.
     '''
 
     @property
@@ -30151,25 +29065,6 @@ class ControlArea(PowerSystemResource):
     The parent control area for the power electronics unit specifications.
     '''
 
-    EnergyArea: Optional[EnergyArea] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'EnergyArea.ControlArea',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
-        'docstring':
-            '''
-            The energy area that is forecast from this control area specification.
-            '''
-
-        })
-    '''
-    The energy area that is forecast from this control area specification.
-    '''
-
     TieFlow: list[TieFlow] = field(
         default_factory=list,
         metadata={
@@ -30219,25 +29114,6 @@ class DCBiPole(PowerSystemResource):
         'inverse': 'BipolarDCSystem.DCBiPole',
         'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Bipolar DC system that has this DC bipole.
-            '''
-
-        })
-    '''
-    Bipolar DC system that has this DC bipole.
-    '''
-
-    BipolarDCSystem: Optional[BipolarDCSystem] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'BipolarDCSystem.DCBiPole',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
         'docstring':
             '''
             Bipolar DC system that has this DC bipole.
@@ -30531,44 +29407,6 @@ class DCPole(PowerSystemResource):
     The DC converter unit that relates to this DC pole.
     '''
 
-    DCLine: Optional[DCLine] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'DCLine.DCPole',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
-        'docstring':
-            '''
-            The DC line that is related to this DC pole.
-            '''
-
-        })
-    '''
-    The DC line that is related to this DC pole.
-    '''
-
-    AsymmetricMonopolarDCSystem: Optional[MonopolarDCSystem] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'MonopolarDCSystem.DCPole',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
-        'docstring':
-            '''
-            Asymmetric monopolar DC system that has this DC pole.
-            '''
-
-        })
-    '''
-    Asymmetric monopolar DC system that has this DC pole.
-    '''
-
     @property
     def __namespace__(self):
         return 'http://cim.ucaiug.io/CIM101/draft#'
@@ -30697,25 +29535,6 @@ class BipolarDCSystem(DCSystem):
     DC bipole that belongs to a bipolar DC system.
     '''
 
-    DCBiPole: Optional[DCBiPole] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'DCBiPole.BipolarDCSystem',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
-        'docstring':
-            '''
-            DC bipole that belongs to a bipolar DC system.
-            '''
-
-        })
-    '''
-    DC bipole that belongs to a bipolar DC system.
-    '''
-
     @property
     def __namespace__(self):
         return 'http://cim.ucaiug.io/CIM101/draft#'
@@ -30780,25 +29599,6 @@ class MonopolarDCSystem(DCSystem):
         'inverse': 'DCPole.AsymmetricMonopolarDCSystem',
         'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            DC pole part of the asymmetric DC system.
-            '''
-
-        })
-    '''
-    DC pole part of the asymmetric DC system.
-    '''
-
-    DCPole: Optional[DCPole] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'DCPole.AsymmetricMonopolarDCSystem',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
         'docstring':
             '''
             DC pole part of the asymmetric DC system.
@@ -33500,26 +32300,6 @@ class ACLineSegment(Conductor):
     Cuts applied to the line segment.
     '''
 
-    LineSegmentCoupling: Optional[LineSegmentCoupling] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'LineSegmentCoupling.ACLineSegment',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
-        'docstring':
-            '''
-            The description of this line's coupling with other lines in a coupled group.
-            '''
-
-        })
-    '''
-    The description of this line's coupling with other lines in a coupled
-    group.
-    '''
-
     @property
     def __namespace__(self):
         return 'http://cim.ucaiug.io/CIM101/draft#'
@@ -33698,25 +32478,6 @@ class BusbarSection(Connector):
         'inverse': 'VoltageControlZone.BusbarSection',
         'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            A VoltageControlZone is controlled by a designated BusbarSection.
-            '''
-
-        })
-    '''
-    A VoltageControlZone is controlled by a designated BusbarSection.
-    '''
-
-    VoltageControlZone: Optional[VoltageControlZone] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'VoltageControlZone.BusbarSection',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
         'docstring':
             '''
             A VoltageControlZone is controlled by a designated BusbarSection.
@@ -36450,29 +35211,6 @@ class RotatingMachine(RegulatingCondEq):
         'inverse': 'HydroPump.RotatingMachine',
         'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            The synchronous machine drives the turbine which moves the water from a
-            low elevation to a higher elevation. The direction of machine rotation
-            for pumping may or may not be the same as for generating.
-            '''
-
-        })
-    '''
-    The synchronous machine drives the turbine which moves the water from
-    a low elevation to a higher elevation. The direction of machine rotation
-    for pumping may or may not be the same as for generating.
-    '''
-
-    HydroPump: Optional[HydroPump] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'HydroPump.RotatingMachine',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
         'docstring':
             '''
             The synchronous machine drives the turbine which moves the water from a
@@ -40994,27 +39732,6 @@ class GeneratingUnit(Equipment):
     fuel mixture and fuel cost.
     '''
 
-    GenUnitOpSchedule: Optional[GenUnitOpSchedule] = field(
-        default=None,
-        metadata={
-        'type': 'AggregateOf',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'GenUnitOpSchedule.GeneratingUnit',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
-        'docstring':
-            '''
-            A generating unit may have an operating schedule, indicating the planned
-            operation of the unit.
-            '''
-
-        })
-    '''
-    A generating unit may have an operating schedule, indicating the planned
-    operation of the unit.
-    '''
-
     GrossToNetActivePowerCurves: list[GrossToNetActivePowerCurve] = field(
         default_factory=list,
         metadata={
@@ -41246,25 +39963,6 @@ class HydroGeneratingUnit(GeneratingUnit):
         })
     '''
     A hydro generating unit has an efficiency curve.
-    '''
-
-    PenstockLossCurve: Optional[PenstockLossCurve] = field(
-        default=None,
-        metadata={
-        'type': 'AggregateOf',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'PenstockLossCurve.HydroGeneratingUnit',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
-        'docstring':
-            '''
-            A hydro generating unit has a penstock loss curve.
-            '''
-
-        })
-    '''
-    A hydro generating unit has a penstock loss curve.
     '''
 
     TailbayLossCurve: list[TailbayLossCurve] = field(
@@ -41575,27 +40273,6 @@ class ThermalGeneratingUnit(GeneratingUnit):
     A thermal generating unit may have a startup model.
     '''
 
-    CAESPlant: Optional[CAESPlant] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'CAESPlant.ThermalGeneratingUnit',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
-        'docstring':
-            '''
-            A thermal generating unit may be a member of a compressed air energy storage
-            plant.
-            '''
-
-        })
-    '''
-    A thermal generating unit may be a member of a compressed air energy
-    storage plant.
-    '''
-
     EmmissionAccounts: list[EmissionAccount] = field(
         default_factory=list,
         metadata={
@@ -41670,101 +40347,6 @@ class ThermalGeneratingUnit(GeneratingUnit):
         })
     '''
     A thermal generating unit may have one or more fuel allocation schedules.
-    '''
-
-    HeatInputCurve: Optional[HeatInputCurve] = field(
-        default=None,
-        metadata={
-        'type': 'AggregateOf',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'HeatInputCurve.ThermalGeneratingUnit',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
-        'docstring':
-            '''
-            A thermal generating unit may have a heat input curve.
-            '''
-
-        })
-    '''
-    A thermal generating unit may have a heat input curve.
-    '''
-
-    HeatRateCurve: Optional[HeatRateCurve] = field(
-        default=None,
-        metadata={
-        'type': 'AggregateOf',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'HeatRateCurve.ThermalGeneratingUnit',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
-        'docstring':
-            '''
-            A thermal generating unit may have a heat rate curve.
-            '''
-
-        })
-    '''
-    A thermal generating unit may have a heat rate curve.
-    '''
-
-    IncrementalHeatRateCurve: Optional[IncrementalHeatRateCurve] = field(
-        default=None,
-        metadata={
-        'type': 'AggregateOf',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'IncrementalHeatRateCurve.ThermalGeneratingUnit',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
-        'docstring':
-            '''
-            A thermal generating unit may have an incremental heat rate curve.
-            '''
-
-        })
-    '''
-    A thermal generating unit may have an incremental heat rate curve.
-    '''
-
-    ShutdownCurve: Optional[ShutdownCurve] = field(
-        default=None,
-        metadata={
-        'type': 'AggregateOf',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'ShutdownCurve.ThermalGeneratingUnit',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
-        'docstring':
-            '''
-            A thermal generating unit may have a shutdown curve.
-            '''
-
-        })
-    '''
-    A thermal generating unit may have a shutdown curve.
-    '''
-
-    StartupModel: Optional[StartupModel] = field(
-        default=None,
-        metadata={
-        'type': 'AggregateOf',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'StartupModel.ThermalGeneratingUnit',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
-        'docstring':
-            '''
-            A thermal generating unit may have a startup model.
-            '''
-
-        })
-    '''
-    A thermal generating unit may have a startup model.
     '''
 
     @property
@@ -41971,50 +40553,6 @@ class HydroPump(Equipment):
         'inverse': 'RotatingMachine.HydroPump',
         'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            The synchronous machine drives the turbine which moves the water from a
-            low elevation to a higher elevation. The direction of machine rotation
-            for pumping may or may not be the same as for generating.
-            '''
-
-        })
-    '''
-    The synchronous machine drives the turbine which moves the water from
-    a low elevation to a higher elevation. The direction of machine rotation
-    for pumping may or may not be the same as for generating.
-    '''
-
-    HydroPumpOpSchedule: Optional[HydroPumpOpSchedule] = field(
-        default=None,
-        metadata={
-        'type': 'AggregateOf',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'HydroPumpOpSchedule.HydroPump',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
-        'docstring':
-            '''
-            The hydro pump has a pumping schedule over time, indicating when pumping
-            is to occur.
-            '''
-
-        })
-    '''
-    The hydro pump has a pumping schedule over time, indicating when pumping
-    is to occur.
-    '''
-
-    RotatingMachine: Optional[RotatingMachine] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'RotatingMachine.HydroPump',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
         'docstring':
             '''
             The synchronous machine drives the turbine which moves the water from a
@@ -43035,27 +41573,6 @@ class SSSCController(EquipmentController):
         })
     '''
     The simulation setings that apply for this controller.
-    '''
-
-    CurrentDroopOverride: Optional[CurrentDroopOverride] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'CurrentDroopOverride.SSSCController',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
-        'docstring':
-            '''
-            The current droop override for this SSSC controller. It is not used when
-            the SSSC controller is in mode currentDroop.
-            '''
-
-        })
-    '''
-    The current droop override for this SSSC controller. It is not used
-    when the SSSC controller is in mode currentDroop.
     '''
 
     @property
@@ -45435,25 +43952,6 @@ class Reservoir(PowerSystemResource):
     A reservoir may spill into a downstream reservoir.
     '''
 
-    TargetLevelSchedule: Optional[TargetLevelSchedule] = field(
-        default=None,
-        metadata={
-        'type': 'AggregateOf',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'TargetLevelSchedule.Reservoir',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
-        'docstring':
-            '''
-            A reservoir may have a water level target schedule.
-            '''
-
-        })
-    '''
-    A reservoir may have a water level target schedule.
-    '''
-
     @property
     def __namespace__(self):
         return 'http://cim.ucaiug.io/CIM101/draft#'
@@ -46286,25 +44784,6 @@ class TapChanger(PowerSystemResource):
     The step operational limit table for this tap changer.
     '''
 
-    SvTapStep: Optional[SvTapStep] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'SvTapStep.TapChanger',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
-        'docstring':
-            '''
-            The tap step state associated with the tap changer.
-            '''
-
-        })
-    '''
-    The tap step state associated with the tap changer.
-    '''
-
     TapSchedules: list[TapSchedule] = field(
         default_factory=list,
         metadata={
@@ -46395,25 +44874,6 @@ class PhaseTapChanger(TapChanger):
         'inverse': 'TransformerEnd.PhaseTapChanger',
         'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Transformer end to which this phase tap changer belongs.
-            '''
-
-        })
-    '''
-    Transformer end to which this phase tap changer belongs.
-    '''
-
-    TransformerEnd: Optional[TransformerEnd] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'TransformerEnd.PhaseTapChanger',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
         'docstring':
             '''
             Transformer end to which this phase tap changer belongs.
@@ -47404,25 +45864,6 @@ class VoltageControlZone(PowerSystemResource):
     A VoltageControlZone may have a voltage regulation schedule.
     '''
 
-    BusbarSection: Optional[BusbarSection] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'BusbarSection.VoltageControlZone',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
-        'docstring':
-            '''
-            A VoltageControlZone is controlled by a designated BusbarSection.
-            '''
-
-        })
-    '''
-    A VoltageControlZone is controlled by a designated BusbarSection.
-    '''
-
     @property
     def __namespace__(self):
         return 'http://cim.ucaiug.io/CIM101/draft#'
@@ -48353,82 +46794,6 @@ class StartupModel(IdentifiedObject):
         'inverse': 'ThermalGeneratingUnit.StartupModel',
         'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            A thermal generating unit may have a startup model.
-            '''
-
-        })
-    '''
-    A thermal generating unit may have a startup model.
-    '''
-
-    StartIgnFuelCurve: Optional[StartIgnFuelCurve] = field(
-        default=None,
-        metadata={
-        'type': 'AggregateOf',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'StartIgnFuelCurve.StartupModel',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
-        'docstring':
-            '''
-            The unit's startup model may have a startup ignition fuel curve.
-            '''
-
-        })
-    '''
-    The unit's startup model may have a startup ignition fuel curve.
-    '''
-
-    StartMainFuelCurve: Optional[StartMainFuelCurve] = field(
-        default=None,
-        metadata={
-        'type': 'AggregateOf',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'StartMainFuelCurve.StartupModel',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
-        'docstring':
-            '''
-            The unit's startup model may have a startup main fuel curve.
-            '''
-
-        })
-    '''
-    The unit's startup model may have a startup main fuel curve.
-    '''
-
-    StartRampCurve: Optional[StartRampCurve] = field(
-        default=None,
-        metadata={
-        'type': 'AggregateOf',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'StartRampCurve.StartupModel',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
-        'docstring':
-            '''
-            The unit's startup model may have a startup ramp curve.
-            '''
-
-        })
-    '''
-    The unit's startup model may have a startup ramp curve.
-    '''
-
-    ThermalGeneratingUnit: Optional[ThermalGeneratingUnit] = field(
-        default=None,
-        metadata={
-        'type': 'OfAggregate',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'ThermalGeneratingUnit.StartupModel',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
         'docstring':
             '''
             A thermal generating unit may have a startup model.
@@ -49989,29 +48354,6 @@ class TopologicalIsland(IdentifiedObject):
     schemes exist, so the association is typically optional.
     '''
 
-    AngleRefTopologicalNode: Optional[TopologicalNode] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'TopologicalNode.AngleRefTopologicalIsland',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
-        'docstring':
-            '''
-            The angle reference for the island. Normally there is one TopologicalNode
-            that is selected as the angle reference for each island. Other reference
-            schemes exist, so the association is typically optional.
-            '''
-
-        })
-    '''
-    The angle reference for the island. Normally there is one TopologicalNode
-    that is selected as the angle reference for each island. Other reference
-    schemes exist, so the association is typically optional.
-    '''
-
     TopologicalNodes: list[TopologicalNode] = field(
         default_factory=list,
         metadata={
@@ -50309,27 +48651,6 @@ class TopologicalNode(IdentifiedObject):
     not be used as an input specification.
     '''
 
-    AngleRefTopologicalIsland: Optional[TopologicalIsland] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'TopologicalIsland.AngleRefTopologicalNode',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
-        'docstring':
-            '''
-            The island for which the node is an angle reference. Normally there is
-            one angle reference node for each island.
-            '''
-
-        })
-    '''
-    The island for which the node is an angle reference. Normally there
-    is one angle reference node for each island.
-    '''
-
     @property
     def __namespace__(self):
         return 'http://cim.ucaiug.io/CIM101/draft#'
@@ -50501,25 +48822,6 @@ class TransformerCoreAdmittance(IdentifiedObject):
         })
     '''
     All transformer ends having this core admittance.
-    '''
-
-    TransformerEndInfo: Optional[TransformerEndInfo] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'TransformerEndInfo.CoreAdmittance',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
-        'docstring':
-            '''
-            Transformer end datasheet used to calculate this core admittance.
-            '''
-
-        })
-    '''
-    Transformer end datasheet used to calculate this core admittance.
     '''
 
     @property
@@ -50831,44 +49133,6 @@ class TransformerEnd(IdentifiedObject):
         })
     '''
     Terminal of the power transformer to which this transformer end belongs.
-    '''
-
-    PhaseTapChanger: Optional[PhaseTapChanger] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'PhaseTapChanger.TransformerEnd',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
-        'docstring':
-            '''
-            Phase tap changer associated with this transformer end.
-            '''
-
-        })
-    '''
-    Phase tap changer associated with this transformer end.
-    '''
-
-    RatioTapChanger: Optional[RatioTapChanger] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'RatioTapChanger.TransformerEnd',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
-        'docstring':
-            '''
-            Ratio tap changer associated with this transformer end.
-            '''
-
-        })
-    '''
-    Ratio tap changer associated with this transformer end.
     '''
 
     FromMeshImpedance: list[TransformerMeshImpedance] = field(
@@ -51593,25 +49857,6 @@ class TransformerStarImpedance(IdentifiedObject):
         })
     '''
     All transformer ends having this star impedance.
-    '''
-
-    TransformerEndInfo: Optional[TransformerEndInfo] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'TransformerEndInfo.TransformerStarImpedance',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
-        'docstring':
-            '''
-            Transformer end datasheet used to calculate this transformer star impedance.
-            '''
-
-        })
-    '''
-    Transformer end datasheet used to calculate this transformer star impedance.
     '''
 
     @property
@@ -53765,40 +52010,6 @@ class LocationAccess(Identity):
     @property
     def __maxOccurs__(self):
         return 'unbounded'
-
-    BuildingSpace: Optional[BuildingSpace] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'BuildingSpace.LocationAccess',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
-        'docstring':
-            '''
-            '''
-
-        })
-    '''
-    '''
-
-    Location: Optional[Location] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'Location.LocationAccess',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
-        'docstring':
-            '''
-            '''
-
-        })
-    '''
-    '''
 
 @dataclass(repr=False)
 class MarketInvoice(Identity):
@@ -56702,25 +54913,6 @@ class MeasurementValueQuality(Quality61850):
     A MeasurementValue has a MeasurementValueQuality associated with it.
     '''
 
-    MeasurementValue: Optional[MeasurementValue] = field(
-        default=None,
-        metadata={
-        'type': 'OfAggregate',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'MeasurementValue.MeasurementValueQuality',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
-        'docstring':
-            '''
-            A MeasurementValue has a MeasurementValueQuality associated with it.
-            '''
-
-        })
-    '''
-    A MeasurementValue has a MeasurementValueQuality associated with it.
-    '''
-
     @property
     def __namespace__(self):
         return 'http://cim.ucaiug.io/CIM101/draft#'
@@ -57609,40 +55801,6 @@ class Site(Identity):
     '''
     '''
 
-    Location: Optional[Location] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'Location.Site',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
-        'docstring':
-            '''
-            '''
-
-        })
-    '''
-    '''
-
-    PhysicalAddress: Optional[PhysicalAddress] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'PhysicalAddress.Site',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
-        'docstring':
-            '''
-            '''
-
-        })
-    '''
-    '''
-
 @dataclass(repr=False)
 class StateVariable(Identity):
     '''
@@ -58263,25 +56421,6 @@ class SvTapStep(StateVariable):
         'inverse': 'TapChanger.SvTapStep',
         'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            The tap changer associated with the tap step state.
-            '''
-
-        })
-    '''
-    The tap changer associated with the tap step state.
-    '''
-
-    TapChanger: Optional[TapChanger] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'TapChanger.SvTapStep',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
         'docstring':
             '''
             The tap changer associated with the tap step state.

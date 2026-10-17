@@ -2467,36 +2467,6 @@ class OperationalLimitSet(IdentifiedObject):
     Values of equipment limits.
     '''
 
-    OperationalLimitValue: list[OperationalLimit] = field(
-        default_factory=list,
-        metadata={
-        'type': 'Association',
-        'stereotypes': ['AggregateOf'],
-        'minOccurs': '0',
-        'maxOccurs': 'unbounded',
-        'inverse': 'OperationalLimit.OperationalLimitSet',
-        'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': False,
-        })
-    '''
-    Values of equipment limits.
-    '''
-
-    OperationalLimitValue: list[OperationalLimit] = field(
-        default_factory=list,
-        metadata={
-        'type': 'Association',
-        'stereotypes': ['AggregateOf'],
-        'minOccurs': '0',
-        'maxOccurs': 'unbounded',
-        'inverse': 'OperationalLimit.OperationalLimitSet',
-        'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': False,
-        })
-    '''
-    Values of equipment limits.
-    '''
-
     @property
     def __namespace__(self):
         return 'http://iec.ch/TC57/CIM100#'
@@ -2579,36 +2549,6 @@ class OperationalLimitType(IdentifiedObject):
     '''
     Types of limits defined in the ENTSO-E Operational Handbook Policy
     3.
-    '''
-
-    OperationalLimit: list[OperationalLimit] = field(
-        default_factory=list,
-        metadata={
-        'type': 'Association',
-        'stereotypes': [],
-        'minOccurs': '0',
-        'maxOccurs': 'unbounded',
-        'inverse': 'OperationalLimit.OperationalLimitType',
-        'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': False,
-        })
-    '''
-    The operational limits associated with this type of limit.
-    '''
-
-    OperationalLimit: list[OperationalLimit] = field(
-        default_factory=list,
-        metadata={
-        'type': 'Association',
-        'stereotypes': [],
-        'minOccurs': '0',
-        'maxOccurs': 'unbounded',
-        'inverse': 'OperationalLimit.OperationalLimitType',
-        'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': False,
-        })
-    '''
-    The operational limits associated with this type of limit.
     '''
 
     OperationalLimit: list[OperationalLimit] = field(

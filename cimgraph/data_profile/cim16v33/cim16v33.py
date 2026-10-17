@@ -94,37 +94,6 @@ class AltGeneratingUnitMeas(Identity):
     def __maxOccurs__(self):
         return 'unbounded'
 
-    AnalogValue: Optional[AnalogValue] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'stereotypes': [],
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'AnalogValue.AltGeneratingUnit',
-        'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
-        'serialize': False,
-        })
-    '''
-    The specific analog value used as a source.
-    '''
-
-    ControlAreaGeneratingUnit: Optional[ControlAreaGeneratingUnit] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'stereotypes': ['OfAggregate'],
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'ControlAreaGeneratingUnit.AltGeneratingUnitMeas',
-        'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
-        'serialize': False,
-        })
-    '''
-    The control aread generating unit to which the prioritized measurement
-    assignment is applied.
-    '''
-
 @dataclass(repr=False)
 class AltTieMeas(Identity):
     '''
@@ -189,21 +158,6 @@ class AltTieMeas(Identity):
     def __maxOccurs__(self):
         return 'unbounded'
 
-    AnalogValue: Optional[AnalogValue] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'stereotypes': [],
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'AnalogValue.AltTieMeas',
-        'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
-        'serialize': False,
-        })
-    '''
-    The specific analog value used as a source.
-    '''
-
 @dataclass(repr=False)
 class BranchGroupTerminal(Identity):
     '''
@@ -267,21 +221,6 @@ class BranchGroupTerminal(Identity):
     @property
     def __maxOccurs__(self):
         return 'unbounded'
-
-    BranchGroup: Optional[BranchGroup] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'stereotypes': ['OfAggregate'],
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'BranchGroup.BranchGroupTerminal',
-        'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
-        'serialize': False,
-        })
-    '''
-    The branch group to which the directed branch group terminals belong.
-    '''
 
 @dataclass(repr=False)
 class ConnectDisconnectFunction(Identity):
@@ -427,20 +366,6 @@ class ConnectDisconnectFunction(Identity):
     def __maxOccurs__(self):
         return 'unbounded'
 
-    Switches: list[Switch] = field(
-        default_factory=list,
-        metadata={
-        'type': 'Association',
-        'stereotypes': ['informative'],
-        'minOccurs': '0',
-        'maxOccurs': 'unbounded',
-        'inverse': 'Switch.ConnectDisconnectFunctions',
-        'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
-        'serialize': False,
-        })
-    '''
-    '''
-
 @dataclass(repr=False)
 class CurveData(Identity):
     '''
@@ -536,21 +461,6 @@ class CurveData(Identity):
     def __maxOccurs__(self):
         return 'unbounded'
 
-    Curve: Optional[Curve] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'stereotypes': ['OfAggregate'],
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'Curve.CurveDatas',
-        'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
-        'serialize': False,
-        })
-    '''
-    The curve of this curve data point.
-    '''
-
 @dataclass(repr=False)
 class DiagramObjectGluePoint(Identity):
     '''
@@ -587,22 +497,6 @@ class DiagramObjectGluePoint(Identity):
     @property
     def __maxOccurs__(self):
         return 'unbounded'
-
-    DiagramObjectPoints: list[DiagramObjectPoint] = field(
-        default_factory=list,
-        metadata={
-        'type': 'Association',
-        'stereotypes': [],
-        'minOccurs': '0',
-        'maxOccurs': 'unbounded',
-        'inverse': 'DiagramObjectPoint.DiagramObjectGluePoint',
-        'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
-        'serialize': False,
-        })
-    '''
-    A diagram object glue point is associated with 2 or more object points
-    that are considered to be 'glued' together.
-    '''
 
 @dataclass(repr=False)
 class DiagramObjectPoint(Identity):
@@ -712,36 +606,6 @@ class DiagramObjectPoint(Identity):
     @property
     def __maxOccurs__(self):
         return 'unbounded'
-
-    DiagramObject: Optional[DiagramObject] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'stereotypes': [],
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'DiagramObject.DiagramObjectPoints',
-        'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
-        'serialize': False,
-        })
-    '''
-    The diagram object with which the points are associated.
-    '''
-
-    DiagramObjectGluePoint: Optional[DiagramObjectGluePoint] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'stereotypes': [],
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'DiagramObjectGluePoint.DiagramObjectPoints',
-        'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
-        'serialize': False,
-        })
-    '''
-    The 'glue' point to which this point is associated.
-    '''
 
 @dataclass(repr=False)
 class IdentifiedObject(Identity):
@@ -864,36 +728,6 @@ class IdentifiedObject(Identity):
     def __maxOccurs__(self):
         return 'unbounded'
 
-    DiagramObjects: list[DiagramObject] = field(
-        default_factory=list,
-        metadata={
-        'type': 'Association',
-        'stereotypes': [],
-        'minOccurs': '0',
-        'maxOccurs': 'unbounded',
-        'inverse': 'DiagramObject.IdentifiedObject',
-        'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
-        'serialize': False,
-        })
-    '''
-    The diagram objects that are associated with the domain object.
-    '''
-
-    Names: list[Name] = field(
-        default_factory=list,
-        metadata={
-        'type': 'Association',
-        'stereotypes': [],
-        'minOccurs': '0',
-        'maxOccurs': 'unbounded',
-        'inverse': 'Name.IdentifiedObject',
-        'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
-        'serialize': False,
-        })
-    '''
-    All names of this identified object.
-    '''
-
 @dataclass(repr=False)
 class ACDCTerminal(IdentifiedObject):
     '''
@@ -990,55 +824,6 @@ class ACDCTerminal(IdentifiedObject):
     The operational limit sets at the terminal.
     '''
 
-    BusNameMarker: Optional[BusNameMarker] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'stereotypes': [],
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'BusNameMarker.Terminal',
-        'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
-        'serialize': False,
-        })
-    '''
-    The bus name marker used to name the bus (topological node).
-    '''
-
-    Measurements: list[Measurement] = field(
-        default_factory=list,
-        metadata={
-        'type': 'Association',
-        'stereotypes': [],
-        'minOccurs': '0',
-        'maxOccurs': 'unbounded',
-        'inverse': 'Measurement.Terminal',
-        'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
-        'serialize': False,
-        })
-    '''
-    Measurements associated with this terminal defining where the measurement
-    is placed in the network topology. It may be used, for instance, to
-    capture the sensor position, such as a voltage transformer (PT) at
-    a busbar or a current transformer (CT) at the bar between a breaker
-    and an isolator.
-    '''
-
-    OperationalLimitSet: list[OperationalLimitSet] = field(
-        default_factory=list,
-        metadata={
-        'type': 'Association',
-        'stereotypes': [],
-        'minOccurs': '0',
-        'maxOccurs': 'unbounded',
-        'inverse': 'OperationalLimitSet.Terminal',
-        'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
-        'serialize': False,
-        })
-    '''
-    The operational limit sets at the terminal.
-    '''
-
     @property
     def __namespace__(self):
         return 'http://iec.ch/TC57/2012/CIM-schema-cim16#'
@@ -1087,37 +872,6 @@ class DCBaseTerminal(ACDCTerminal):
         'inverse': 'DCTopologicalNode.DCTerminals',
         'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
         'serialize': True,
-        })
-    '''
-    The DC topological node associated with the DC base terminal.
-    '''
-
-    DCNode: Optional[DCNode] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'stereotypes': [],
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'DCNode.DCTerminals',
-        'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
-        'serialize': False,
-        })
-    '''
-    The DC connectivity node to which this DC base terminal connects with
-    zero impedance.
-    '''
-
-    DCTopologicalNode: Optional[DCTopologicalNode] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'stereotypes': [],
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'DCTopologicalNode.DCTerminals',
-        'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
-        'serialize': False,
         })
     '''
     The DC topological node associated with the DC base terminal.
@@ -1178,21 +932,6 @@ class ACDCConverterDCTerminal(DCBaseTerminal):
     A DC converter terminal belong to an DC converter.
     '''
 
-    DCConductingEquipment: Optional[ACDCConverter] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'stereotypes': [],
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'ACDCConverter.DCTerminals',
-        'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
-        'serialize': False,
-        })
-    '''
-    A DC converter terminal belong to an DC converter.
-    '''
-
     @property
     def __namespace__(self):
         return 'http://iec.ch/TC57/2012/CIM-schema-cim16#'
@@ -1222,21 +961,6 @@ class DCTerminal(DCBaseTerminal):
         'inverse': 'DCConductingEquipment.DCTerminals',
         'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
         'serialize': True,
-        })
-    '''
-    An DC terminal belong to a DC conducting equipment.
-    '''
-
-    DCConductingEquipment: Optional[DCConductingEquipment] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'stereotypes': [],
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'DCConductingEquipment.DCTerminals',
-        'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
-        'serialize': False,
         })
     '''
     An DC terminal belong to a DC conducting equipment.
@@ -1449,21 +1173,6 @@ class Terminal(ACDCTerminal):
     All converters' DC sides linked to this point of common coupling terminal.
     '''
 
-    AuxiliaryEquipment: list[AuxiliaryEquipment] = field(
-        default_factory=list,
-        metadata={
-        'type': 'Association',
-        'stereotypes': [],
-        'minOccurs': '0',
-        'maxOccurs': 'unbounded',
-        'inverse': 'AuxiliaryEquipment.Terminal',
-        'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
-        'serialize': False,
-        })
-    '''
-    The auxiliary equipment connected to the terminal.
-    '''
-
     BranchGroupTerminal: list[BranchGroupTerminal] = field(
         default_factory=list,
         metadata={
@@ -1477,52 +1186,6 @@ class Terminal(ACDCTerminal):
         })
     '''
     The directed branch group terminals for which this terminal is monitored.
-    '''
-
-    Bushing: Optional[Bushing] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'stereotypes': ['informative'],
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'Bushing.Terminal',
-        'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
-        'serialize': False,
-        })
-    '''
-    '''
-
-    ConductingEquipment: Optional[ConductingEquipment] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'stereotypes': [],
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'ConductingEquipment.Terminals',
-        'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
-        'serialize': False,
-        })
-    '''
-    The conducting equipment of the terminal. Conducting equipment have
-    terminals that may be connected to other conducting equipment terminals
-    via connectivity nodes or topological nodes.
-    '''
-
-    ConnectivityNode: Optional[ConnectivityNode] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'stereotypes': [],
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'ConnectivityNode.Terminals',
-        'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
-        'serialize': False,
-        })
-    '''
-    The connectivity node to which this terminal connects with zero impedance.
     '''
 
     EquipmentFaults: list[EquipmentFault] = field(
@@ -1540,66 +1203,6 @@ class Terminal(ACDCTerminal):
     The equipment faults at this terminal.
     '''
 
-    HasFirstMutualCoupling: list[MutualCoupling] = field(
-        default_factory=list,
-        metadata={
-        'type': 'Association',
-        'stereotypes': [],
-        'minOccurs': '0',
-        'maxOccurs': 'unbounded',
-        'inverse': 'MutualCoupling.First_Terminal',
-        'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
-        'serialize': False,
-        })
-    '''
-    Mutual couplings associated with the branch as the first branch.
-    '''
-
-    HasSecondMutualCoupling: list[MutualCoupling] = field(
-        default_factory=list,
-        metadata={
-        'type': 'Association',
-        'stereotypes': [],
-        'minOccurs': '0',
-        'maxOccurs': 'unbounded',
-        'inverse': 'MutualCoupling.Second_Terminal',
-        'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
-        'serialize': False,
-        })
-    '''
-    Mutual couplings with the branch associated as the first branch.
-    '''
-
-    RegulatingControl: list[RegulatingControl] = field(
-        default_factory=list,
-        metadata={
-        'type': 'Association',
-        'stereotypes': [],
-        'minOccurs': '0',
-        'maxOccurs': 'unbounded',
-        'inverse': 'RegulatingControl.Terminal',
-        'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
-        'serialize': False,
-        })
-    '''
-    The controls regulating this terminal.
-    '''
-
-    SvPowerFlow: Optional[SvPowerFlow] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'stereotypes': [],
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'SvPowerFlow.Terminal',
-        'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
-        'serialize': False,
-        })
-    '''
-    The power flow state variable associated with the terminal.
-    '''
-
     TieFlow: list[TieFlow] = field(
         default_factory=list,
         metadata={
@@ -1613,40 +1216,6 @@ class Terminal(ACDCTerminal):
         })
     '''
     The control area tie flows to which this terminal associates.
-    '''
-
-    TopologicalNode: Optional[TopologicalNode] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'stereotypes': ['OfAggregate'],
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'TopologicalNode.Terminal',
-        'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
-        'serialize': False,
-        })
-    '''
-    The topological node associated with the terminal. This can be used
-    as an alternative to the connectivity node path to topological node,
-    thus making it unneccesary to model connectivity nodes in some cases.
-    Note that the if connectivity nodes are in the model, this association
-    would probably not be used as an input specification.
-    '''
-
-    TransformerEnd: list[TransformerEnd] = field(
-        default_factory=list,
-        metadata={
-        'type': 'Association',
-        'stereotypes': [],
-        'minOccurs': '0',
-        'maxOccurs': 'unbounded',
-        'inverse': 'TransformerEnd.Terminal',
-        'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
-        'serialize': False,
-        })
-    '''
-    All transformer ends connected at this terminal.
     '''
 
     @property
@@ -1922,36 +1491,6 @@ class ConfigurationEvent(ActivityRecord):
         })
     '''
     Usage point whose change resulted in this configuration event.
-    '''
-
-    ChangedDocument: Optional[Document] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'stereotypes': [],
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'Document.ConfigurationEvents',
-        'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
-        'serialize': False,
-        })
-    '''
-    Document whose change resulted in this configuration event.
-    '''
-
-    ChangedLocation: Optional[Location] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'stereotypes': [],
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'Location.ConfigurationEvents',
-        'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
-        'serialize': False,
-        })
-    '''
-    Location whose change resulted in this configuration event.
     '''
 
     @property
@@ -2294,36 +1833,6 @@ class Asset(IdentifiedObject):
     All activity records created for this asset.
     '''
 
-    AssetContainer: Optional[AssetContainer] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'stereotypes': [],
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'AssetContainer.Assets',
-        'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
-        'serialize': False,
-        })
-    '''
-    Container of this asset.
-    '''
-
-    AssetInfo: Optional[AssetInfo] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'stereotypes': [],
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'AssetInfo.Assets',
-        'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
-        'serialize': False,
-        })
-    '''
-    Data applicable to this asset.
-    '''
-
     OrganisationRoles: list[AssetOrganisationRole] = field(
         default_factory=list,
         metadata={
@@ -2354,63 +1863,6 @@ class Asset(IdentifiedObject):
     All configuration events created for this asset.
     '''
 
-    ErpInventory: Optional[ErpInventory] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'stereotypes': ['informative'],
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'ErpInventory.Asset',
-        'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
-        'serialize': False,
-        })
-    '''
-    '''
-
-    ErpItemMaster: Optional[ErpItemMaster] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'stereotypes': ['informative'],
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'ErpItemMaster.Asset',
-        'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
-        'serialize': False,
-        })
-    '''
-    '''
-
-    Location: Optional[Location] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'stereotypes': [],
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'Location.Assets',
-        'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
-        'serialize': False,
-        })
-    '''
-    Location of this asset.
-    '''
-
-    Measurements: list[Measurement] = field(
-        default_factory=list,
-        metadata={
-        'type': 'Association',
-        'stereotypes': [],
-        'minOccurs': '0',
-        'maxOccurs': 'unbounded',
-        'inverse': 'Measurement.Asset',
-        'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
-        'serialize': False,
-        })
-    '''
-    '''
-
     Ownerships: list[Ownership] = field(
         default_factory=list,
         metadata={
@@ -2424,23 +1876,6 @@ class Asset(IdentifiedObject):
         })
     '''
     All ownerships of this asset.
-    '''
-
-    PowerSystemResources: list[PowerSystemResource] = field(
-        default_factory=list,
-        metadata={
-        'type': 'Association',
-        'stereotypes': [],
-        'minOccurs': '0',
-        'maxOccurs': 'unbounded',
-        'inverse': 'PowerSystemResource.Assets',
-        'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
-        'serialize': False,
-        })
-    '''
-    All power system resources used to electrically model this asset. For
-    example, transformer asset is electrically modelled with a transformer
-    and its windings and tap changer.
     '''
 
     Procedures: list[Procedure] = field(
@@ -2488,21 +1923,6 @@ class AssetContainer(Asset):
         'inverse': 'Asset.AssetContainer',
         'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
         'serialize': True,
-        })
-    '''
-    All assets within this container asset.
-    '''
-
-    Assets: list[Asset] = field(
-        default_factory=list,
-        metadata={
-        'type': 'Association',
-        'stereotypes': [],
-        'minOccurs': '0',
-        'maxOccurs': 'unbounded',
-        'inverse': 'Asset.AssetContainer',
-        'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
-        'serialize': False,
         })
     '''
     All assets within this container asset.
@@ -2571,20 +1991,6 @@ class DuctBank(AssetContainer):
         'inverse': 'WireSpacingInfo.DuctBank',
         'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
         'serialize': True,
-        })
-    '''
-    '''
-
-    WireSpacingInfos: list[WireSpacingInfo] = field(
-        default_factory=list,
-        metadata={
-        'type': 'Association',
-        'stereotypes': ['informative'],
-        'minOccurs': '0',
-        'maxOccurs': 'unbounded',
-        'inverse': 'WireSpacingInfo.DuctBank',
-        'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
-        'serialize': False,
         })
     '''
     '''
@@ -2777,34 +2183,6 @@ class Bushing(Asset):
     '''
     '''
 
-    BushingInsulationPFs: list[BushingInsulationPF] = field(
-        default_factory=list,
-        metadata={
-        'type': 'Association',
-        'stereotypes': ['informative'],
-        'minOccurs': '0',
-        'maxOccurs': 'unbounded',
-        'inverse': 'BushingInsulationPF.Bushing',
-        'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
-        'serialize': False,
-        })
-    '''
-    '''
-
-    Terminal: Optional[Terminal] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'stereotypes': ['informative'],
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'Terminal.Bushing',
-        'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
-        'serialize': False,
-        })
-    '''
-    '''
-
     @property
     def __namespace__(self):
         return 'http://iec.ch/TC57/2012/CIM-schema-cim16#'
@@ -2983,51 +2361,6 @@ class AssetInfo(IdentifiedObject):
     All power system resources with this datasheet information.
     '''
 
-    Assets: list[Asset] = field(
-        default_factory=list,
-        metadata={
-        'type': 'Association',
-        'stereotypes': [],
-        'minOccurs': '0',
-        'maxOccurs': 'unbounded',
-        'inverse': 'Asset.AssetInfo',
-        'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
-        'serialize': False,
-        })
-    '''
-    All assets described by this data.
-    '''
-
-    AssetModel: Optional[AssetModel] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'stereotypes': [],
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'AssetModel.AssetInfo',
-        'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
-        'serialize': False,
-        })
-    '''
-    Asset model described by this data.
-    '''
-
-    PowerSystemResources: list[PowerSystemResource] = field(
-        default_factory=list,
-        metadata={
-        'type': 'Association',
-        'stereotypes': [],
-        'minOccurs': '0',
-        'maxOccurs': 'unbounded',
-        'inverse': 'PowerSystemResource.AssetDatasheet',
-        'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
-        'serialize': False,
-        })
-    '''
-    All power system resources with this datasheet information.
-    '''
-
     @property
     def __namespace__(self):
         return 'http://iec.ch/TC57/2012/CIM-schema-cim16#'
@@ -3104,21 +2437,6 @@ class PowerTransformerInfo(AssetInfo):
         'inverse': 'TransformerTankInfo.PowerTransformerInfo',
         'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
         'serialize': True,
-        })
-    '''
-    Data for all the tanks described by this power transformer data.
-    '''
-
-    TransformerTankInfos: list[TransformerTankInfo] = field(
-        default_factory=list,
-        metadata={
-        'type': 'Association',
-        'stereotypes': [],
-        'minOccurs': '0',
-        'maxOccurs': 'unbounded',
-        'inverse': 'TransformerTankInfo.PowerTransformerInfo',
-        'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
-        'serialize': False,
         })
     '''
     Data for all the tanks described by this power transformer data.
@@ -3210,20 +2528,6 @@ class ShuntCompensatorInfo(AssetInfo):
         'inverse': 'ShuntCompensatorControl.ShuntCompensatorInfo',
         'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
         'serialize': True,
-        })
-    '''
-    '''
-
-    ShuntCompensatorControl: Optional[ShuntCompensatorControl] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'stereotypes': ['informative'],
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'ShuntCompensatorControl.ShuntCompensatorInfo',
-        'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
-        'serialize': False,
         })
     '''
     '''
@@ -3865,164 +3169,6 @@ class TransformerEndInfo(AssetInfo):
     Transformer tank data that this end description is part of.
     '''
 
-    EnergisedEndNoLoadTests: list[NoLoadTest] = field(
-        default_factory=list,
-        metadata={
-        'type': 'Association',
-        'stereotypes': [],
-        'minOccurs': '0',
-        'maxOccurs': 'unbounded',
-        'inverse': 'NoLoadTest.EnergisedEnd',
-        'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
-        'serialize': False,
-        })
-    '''
-    All no-load test measurements in which this transformer end was energised.
-    '''
-
-    EnergisedEndOpenCircuitTests: list[OpenCircuitTest] = field(
-        default_factory=list,
-        metadata={
-        'type': 'Association',
-        'stereotypes': [],
-        'minOccurs': '0',
-        'maxOccurs': 'unbounded',
-        'inverse': 'OpenCircuitTest.EnergisedEnd',
-        'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
-        'serialize': False,
-        })
-    '''
-    All open-circuit test measurements in which this transformer end was
-    excited.
-    '''
-
-    OpenEndOpenCircuitTests: list[OpenCircuitTest] = field(
-        default_factory=list,
-        metadata={
-        'type': 'Association',
-        'stereotypes': [],
-        'minOccurs': '0',
-        'maxOccurs': 'unbounded',
-        'inverse': 'OpenCircuitTest.OpenEnd',
-        'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
-        'serialize': False,
-        })
-    '''
-    All open-circuit test measurements in which this transformer end was
-    not excited.
-    '''
-
-    EnergisedEndShortCircuitTests: list[ShortCircuitTest] = field(
-        default_factory=list,
-        metadata={
-        'type': 'Association',
-        'stereotypes': [],
-        'minOccurs': '0',
-        'maxOccurs': 'unbounded',
-        'inverse': 'ShortCircuitTest.EnergisedEnd',
-        'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
-        'serialize': False,
-        })
-    '''
-    All short-circuit test measurements in which this transformer end was
-    energised.
-    '''
-
-    GroundedEndShortCircuitTests: list[ShortCircuitTest] = field(
-        default_factory=list,
-        metadata={
-        'type': 'Association',
-        'stereotypes': [],
-        'minOccurs': '0',
-        'maxOccurs': 'unbounded',
-        'inverse': 'ShortCircuitTest.GroundedEnds',
-        'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
-        'serialize': False,
-        })
-    '''
-    All short-circuit test measurements in which this transformer end was
-    short-circuited.
-    '''
-
-    CoreAdmittance: Optional[TransformerCoreAdmittance] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'stereotypes': [],
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'TransformerCoreAdmittance.TransformerEndInfo',
-        'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
-        'serialize': False,
-        })
-    '''
-    Core admittance calculated from this transformer end datasheet, representing
-    magnetising current and core losses. The full values of the transformer
-    should be supplied for one transformer end info only.
-    '''
-
-    FromMeshImpedances: list[TransformerMeshImpedance] = field(
-        default_factory=list,
-        metadata={
-        'type': 'Association',
-        'stereotypes': [],
-        'minOccurs': '0',
-        'maxOccurs': 'unbounded',
-        'inverse': 'TransformerMeshImpedance.FromTransformerEndInfo',
-        'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
-        'serialize': False,
-        })
-    '''
-    All mesh impedances between this 'to' and other 'from' transformer
-    ends.
-    '''
-
-    ToMeshImpedances: list[TransformerMeshImpedance] = field(
-        default_factory=list,
-        metadata={
-        'type': 'Association',
-        'stereotypes': [],
-        'minOccurs': '0',
-        'maxOccurs': 'unbounded',
-        'inverse': 'TransformerMeshImpedance.ToTransformerEndInfos',
-        'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
-        'serialize': False,
-        })
-    '''
-    All mesh impedances between this 'from' and other 'to' transformer
-    ends.
-    '''
-
-    TransformerStarImpedance: Optional[TransformerStarImpedance] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'stereotypes': [],
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'TransformerStarImpedance.TransformerEndInfo',
-        'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
-        'serialize': False,
-        })
-    '''
-    Transformer star impedance calculated from this transformer end datasheet.
-    '''
-
-    TransformerTankInfo: Optional[TransformerTankInfo] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'stereotypes': [],
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'TransformerTankInfo.TransformerEndInfos',
-        'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
-        'serialize': False,
-        })
-    '''
-    Transformer tank data that this end description is part of.
-    '''
-
     @property
     def __namespace__(self):
         return 'http://iec.ch/TC57/2012/CIM-schema-cim16#'
@@ -4069,36 +3215,6 @@ class TransformerTankInfo(AssetInfo):
         'inverse': 'TransformerEndInfo.TransformerTankInfo',
         'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
         'serialize': True,
-        })
-    '''
-    Data for all the ends described by this transformer tank data.
-    '''
-
-    PowerTransformerInfo: Optional[PowerTransformerInfo] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'stereotypes': [],
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'PowerTransformerInfo.TransformerTankInfos',
-        'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
-        'serialize': False,
-        })
-    '''
-    Power transformer data that this tank description is part of.
-    '''
-
-    TransformerEndInfos: list[TransformerEndInfo] = field(
-        default_factory=list,
-        metadata={
-        'type': 'Association',
-        'stereotypes': [],
-        'minOccurs': '0',
-        'maxOccurs': 'unbounded',
-        'inverse': 'TransformerEndInfo.TransformerTankInfo',
-        'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
-        'serialize': False,
         })
     '''
     Data for all the ends described by this transformer tank data.
@@ -4346,21 +3462,6 @@ class WireInfo(AssetInfo):
         'inverse': 'PerLengthLineParameter.WireInfos',
         'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
         'serialize': True,
-        })
-    '''
-    All per-length parameters calculated from this wire datasheet.
-    '''
-
-    PerLengthParameters: list[PerLengthLineParameter] = field(
-        default_factory=list,
-        metadata={
-        'type': 'Association',
-        'stereotypes': [],
-        'minOccurs': '0',
-        'maxOccurs': 'unbounded',
-        'inverse': 'PerLengthLineParameter.WireInfos',
-        'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
-        'serialize': False,
         })
     '''
     All per-length parameters calculated from this wire datasheet.
@@ -4822,50 +3923,6 @@ class WireSpacingInfo(AssetInfo):
     All positions of single wires (phase or neutral) making the conductor.
     '''
 
-    DuctBank: Optional[DuctBank] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'stereotypes': ['informative'],
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'DuctBank.WireSpacingInfos',
-        'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
-        'serialize': False,
-        })
-    '''
-    '''
-
-    PerLengthParameters: list[PerLengthLineParameter] = field(
-        default_factory=list,
-        metadata={
-        'type': 'Association',
-        'stereotypes': [],
-        'minOccurs': '0',
-        'maxOccurs': 'unbounded',
-        'inverse': 'PerLengthLineParameter.WireSpacingInfo',
-        'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
-        'serialize': False,
-        })
-    '''
-    All per-length parameters calculated from this wire spacing datasheet.
-    '''
-
-    WirePositions: list[WirePosition] = field(
-        default_factory=list,
-        metadata={
-        'type': 'Association',
-        'stereotypes': [],
-        'minOccurs': '0',
-        'maxOccurs': 'unbounded',
-        'inverse': 'WirePosition.WireSpacingInfo',
-        'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
-        'serialize': False,
-        })
-    '''
-    All positions of single wires (phase or neutral) making the conductor.
-    '''
-
     @property
     def __namespace__(self):
         return 'http://iec.ch/TC57/2012/CIM-schema-cim16#'
@@ -4898,21 +3955,6 @@ class AssetModel(IdentifiedObject):
         'inverse': 'AssetInfo.AssetModel',
         'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
         'serialize': True,
-        })
-    '''
-    Data applicable to this asset model.
-    '''
-
-    AssetInfo: Optional[AssetInfo] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'stereotypes': [],
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'AssetInfo.AssetModel',
-        'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
-        'serialize': False,
         })
     '''
     Data applicable to this asset model.
@@ -5087,21 +4129,6 @@ class ProductAssetModel(AssetModel):
     Manufacturer of this asset model.
     '''
 
-    Manufacturer: Optional[Manufacturer] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'stereotypes': [],
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'Manufacturer.ProductAssetModels',
-        'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
-        'serialize': False,
-        })
-    '''
-    Manufacturer of this asset model.
-    '''
-
     OperationalRestrictions: list[OperationalRestriction] = field(
         default_factory=list,
         metadata={
@@ -5155,22 +4182,6 @@ class AsynchronousMachineDynamics(IdentifiedObject):
         'inverse': 'AsynchronousMachine.AsynchronousMachineDynamics',
         'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
         'serialize': True,
-        })
-    '''
-    Asynchronous machine to which this asynchronous machine dynamics model
-    applies.
-    '''
-
-    AsynchronousMachine: Optional[AsynchronousMachine] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'stereotypes': [],
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'AsynchronousMachine.AsynchronousMachineDynamics',
-        'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
-        'serialize': False,
         })
     '''
     Asynchronous machine to which this asynchronous machine dynamics model
@@ -5345,68 +4356,6 @@ class BaseVoltage(IdentifiedObject):
     The voltage levels having this base voltage.
     '''
 
-    ConductingEquipment: list[ConductingEquipment] = field(
-        default_factory=list,
-        metadata={
-        'type': 'Association',
-        'stereotypes': [],
-        'minOccurs': '0',
-        'maxOccurs': 'unbounded',
-        'inverse': 'ConductingEquipment.BaseVoltage',
-        'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
-        'serialize': False,
-        })
-    '''
-    All conducting equipment with this base voltage. Use only when there
-    is no voltage level container used and only one base voltage applies.
-    For example, not used for transformers.
-    '''
-
-    TopologicalNode: list[TopologicalNode] = field(
-        default_factory=list,
-        metadata={
-        'type': 'Association',
-        'stereotypes': [],
-        'minOccurs': '0',
-        'maxOccurs': 'unbounded',
-        'inverse': 'TopologicalNode.BaseVoltage',
-        'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
-        'serialize': False,
-        })
-    '''
-    The topological nodes at the base voltage.
-    '''
-
-    TransformerEnds: list[TransformerEnd] = field(
-        default_factory=list,
-        metadata={
-        'type': 'Association',
-        'stereotypes': [],
-        'minOccurs': '0',
-        'maxOccurs': 'unbounded',
-        'inverse': 'TransformerEnd.BaseVoltage',
-        'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
-        'serialize': False,
-        })
-    '''
-    Transformer ends at the base voltage. This is essential for PU calculation.
-    '''
-
-    VoltageLevel: list[VoltageLevel] = field(
-        default_factory=list,
-        metadata={
-        'type': 'Association',
-        'stereotypes': [],
-        'minOccurs': '0',
-        'maxOccurs': 'unbounded',
-        'inverse': 'VoltageLevel.BaseVoltage',
-        'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
-        'serialize': False,
-        })
-    '''
-    The voltage levels having this base voltage.
-    '''
-
     @property
     def __namespace__(self):
         return 'http://iec.ch/TC57/2012/CIM-schema-cim16#'
@@ -5531,21 +4480,6 @@ class IrregularIntervalSchedule(BasicIntervalSchedule):
     The point data values that define a curve.
     '''
 
-    TimePoints: list[IrregularTimePoint] = field(
-        default_factory=list,
-        metadata={
-        'type': 'Association',
-        'stereotypes': ['AggregateOf'],
-        'minOccurs': '0',
-        'maxOccurs': 'unbounded',
-        'inverse': 'IrregularTimePoint.IntervalSchedule',
-        'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
-        'serialize': False,
-        })
-    '''
-    The point data values that define a curve.
-    '''
-
     @property
     def __namespace__(self):
         return 'http://iec.ch/TC57/2012/CIM-schema-cim16#'
@@ -5610,21 +4544,6 @@ class RegularIntervalSchedule(BasicIntervalSchedule):
     The regular interval time point data values that define this schedule.
     '''
 
-    TimePoints: list[RegularTimePoint] = field(
-        default_factory=list,
-        metadata={
-        'type': 'Association',
-        'stereotypes': ['AggregateOf'],
-        'minOccurs': '0',
-        'maxOccurs': 'unbounded',
-        'inverse': 'RegularTimePoint.IntervalSchedule',
-        'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
-        'serialize': False,
-        })
-    '''
-    The regular interval time point data values that define this schedule.
-    '''
-
     @property
     def __namespace__(self):
         return 'http://iec.ch/TC57/2012/CIM-schema-cim16#'
@@ -5666,22 +4585,6 @@ class GenUnitOpSchedule(RegularIntervalSchedule):
     operation of the unit.
     '''
 
-    GeneratingUnit: Optional[GeneratingUnit] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'stereotypes': ['OfAggregate'],
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'GeneratingUnit.GenUnitOpSchedule',
-        'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
-        'serialize': False,
-        })
-    '''
-    A generating unit may have an operating schedule, indicating the planned
-    operation of the unit.
-    '''
-
     @property
     def __namespace__(self):
         return 'http://iec.ch/TC57/2012/CIM-schema-cim16#'
@@ -5715,22 +4618,6 @@ class HydroPumpOpSchedule(RegularIntervalSchedule):
         'inverse': 'HydroPump.HydroPumpOpSchedule',
         'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
         'serialize': True,
-        })
-    '''
-    The hydro pump has a pumping schedule over time, indicating when pumping
-    is to occur.
-    '''
-
-    HydroPump: Optional[HydroPump] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'stereotypes': ['OfAggregate'],
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'HydroPump.HydroPumpOpSchedule',
-        'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
-        'serialize': False,
         })
     '''
     The hydro pump has a pumping schedule over time, indicating when pumping
@@ -5824,21 +4711,6 @@ class SeasonDayTypeSchedule(RegularIntervalSchedule):
     Season for the Schedule.
     '''
 
-    DayType: Optional[DayType] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'stereotypes': [],
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'DayType.SeasonDayTypeSchedules',
-        'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
-        'serialize': False,
-        })
-    '''
-    DayType for the Schedule.
-    '''
-
     @property
     def __namespace__(self):
         return 'http://iec.ch/TC57/2012/CIM-schema-cim16#'
@@ -5876,21 +4748,6 @@ class ConformLoadSchedule(SeasonDayTypeSchedule):
     The ConformLoadGroup where the ConformLoadSchedule belongs.
     '''
 
-    ConformLoadGroup: Optional[ConformLoadGroup] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'stereotypes': ['OfAggregate'],
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'ConformLoadGroup.ConformLoadSchedules',
-        'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
-        'serialize': False,
-        })
-    '''
-    The ConformLoadGroup where the ConformLoadSchedule belongs.
-    '''
-
     @property
     def __namespace__(self):
         return 'http://iec.ch/TC57/2012/CIM-schema-cim16#'
@@ -5922,21 +4779,6 @@ class NonConformLoadSchedule(SeasonDayTypeSchedule):
         'inverse': 'NonConformLoadGroup.NonConformLoadSchedules',
         'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
         'serialize': True,
-        })
-    '''
-    The NonConformLoadGroup where the NonConformLoadSchedule belongs.
-    '''
-
-    NonConformLoadGroup: Optional[NonConformLoadGroup] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'stereotypes': ['OfAggregate'],
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'NonConformLoadGroup.NonConformLoadSchedules',
-        'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
-        'serialize': False,
         })
     '''
     The NonConformLoadGroup where the NonConformLoadSchedule belongs.
@@ -5992,36 +4834,6 @@ class RegulationSchedule(SeasonDayTypeSchedule):
     A VoltageControlZone may have a voltage regulation schedule.
     '''
 
-    RegulatingControl: Optional[RegulatingControl] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'stereotypes': [],
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'RegulatingControl.RegulationSchedule',
-        'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
-        'serialize': False,
-        })
-    '''
-    Regulating controls that have this Schedule.
-    '''
-
-    VoltageControlZones: list[VoltageControlZone] = field(
-        default_factory=list,
-        metadata={
-        'type': 'Association',
-        'stereotypes': [],
-        'minOccurs': '0',
-        'maxOccurs': 'unbounded',
-        'inverse': 'VoltageControlZone.RegulationSchedule',
-        'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
-        'serialize': False,
-        })
-    '''
-    A VoltageControlZone may have a voltage regulation schedule.
-    '''
-
     @property
     def __namespace__(self):
         return 'http://iec.ch/TC57/2012/CIM-schema-cim16#'
@@ -6052,21 +4864,6 @@ class SwitchSchedule(SeasonDayTypeSchedule):
         'inverse': 'Switch.SwitchSchedules',
         'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
         'serialize': True,
-        })
-    '''
-    A SwitchSchedule is associated with a Switch.
-    '''
-
-    Switch: Optional[Switch] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'stereotypes': [],
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'Switch.SwitchSchedules',
-        'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
-        'serialize': False,
         })
     '''
     A SwitchSchedule is associated with a Switch.
@@ -6106,21 +4903,6 @@ class TapSchedule(SeasonDayTypeSchedule):
     A TapSchedule is associated with a TapChanger.
     '''
 
-    TapChanger: Optional[TapChanger] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'stereotypes': [],
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'TapChanger.TapSchedules',
-        'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
-        'serialize': False,
-        })
-    '''
-    A TapSchedule is associated with a TapChanger.
-    '''
-
     @property
     def __namespace__(self):
         return 'http://iec.ch/TC57/2012/CIM-schema-cim16#'
@@ -6151,21 +4933,6 @@ class SteamSendoutSchedule(RegularIntervalSchedule):
         'inverse': 'CogenerationPlant.SteamSendoutSchedule',
         'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
         'serialize': True,
-        })
-    '''
-    A cogeneration plant has a steam sendout schedule.
-    '''
-
-    CogenerationPlant: Optional[CogenerationPlant] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'stereotypes': ['OfAggregate'],
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'CogenerationPlant.SteamSendoutSchedule',
-        'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
-        'serialize': False,
         })
     '''
     A cogeneration plant has a steam sendout schedule.
@@ -6291,21 +5058,6 @@ class BranchGroup(IdentifiedObject):
     The directed branch group terminals to be summed.
     '''
 
-    BranchGroupTerminal: list[BranchGroupTerminal] = field(
-        default_factory=list,
-        metadata={
-        'type': 'Association',
-        'stereotypes': ['AggregateOf'],
-        'minOccurs': '0',
-        'maxOccurs': 'unbounded',
-        'inverse': 'BranchGroupTerminal.BranchGroup',
-        'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
-        'serialize': False,
-        })
-    '''
-    The directed branch group terminals to be summed.
-    '''
-
     @property
     def __namespace__(self):
         return 'http://iec.ch/TC57/2012/CIM-schema-cim16#'
@@ -6378,36 +5130,6 @@ class BusNameMarker(IdentifiedObject):
     The terminals associated with this bus name marker.
     '''
 
-    Terminal: list[ACDCTerminal] = field(
-        default_factory=list,
-        metadata={
-        'type': 'Association',
-        'stereotypes': [],
-        'minOccurs': '0',
-        'maxOccurs': 'unbounded',
-        'inverse': 'ACDCTerminal.BusNameMarker',
-        'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
-        'serialize': False,
-        })
-    '''
-    The terminals associated with this bus name marker.
-    '''
-
-    ReportingGroup: Optional[ReportingGroup] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'stereotypes': [],
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'ReportingGroup.BusNameMarker',
-        'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
-        'serialize': False,
-        })
-    '''
-    The reporting group to which this bus name marker belongs.
-    '''
-
     @property
     def __namespace__(self):
         return 'http://iec.ch/TC57/2012/CIM-schema-cim16#'
@@ -6471,20 +5193,6 @@ class BushingInsulationPF(IdentifiedObject):
     '''
     '''
 
-    Bushing: Optional[Bushing] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'stereotypes': ['informative'],
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'Bushing.BushingInsulationPFs',
-        'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
-        'serialize': False,
-        })
-    '''
-    '''
-
     @property
     def __namespace__(self):
         return 'http://iec.ch/TC57/2012/CIM-schema-cim16#'
@@ -6515,22 +5223,6 @@ class CSCDynamics(IdentifiedObject):
         'inverse': 'CsConverter.CSCDynamics',
         'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
         'serialize': True,
-        })
-    '''
-    Current source converter to which current source converter dynamics
-    model applies.
-    '''
-
-    CSConverter: Optional[CsConverter] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'stereotypes': [],
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'CsConverter.CSCDynamics',
-        'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
-        'serialize': False,
         })
     '''
     Current source converter to which current source converter dynamics
@@ -6604,53 +5296,6 @@ class ConnectivityNode(IdentifiedObject):
     depend on the current state of switches in the network.
     '''
 
-    ConnectivityNodeContainer: Optional[ConnectivityNodeContainer] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'stereotypes': [],
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'ConnectivityNodeContainer.ConnectivityNodes',
-        'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
-        'serialize': False,
-        })
-    '''
-    Container of this connectivity node.
-    '''
-
-    Terminals: list[Terminal] = field(
-        default_factory=list,
-        metadata={
-        'type': 'Association',
-        'stereotypes': [],
-        'minOccurs': '0',
-        'maxOccurs': 'unbounded',
-        'inverse': 'Terminal.ConnectivityNode',
-        'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
-        'serialize': False,
-        })
-    '''
-    Terminals interconnected with zero impedance at a this connectivity
-    node.
-    '''
-
-    TopologicalNode: Optional[TopologicalNode] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'stereotypes': ['OfAggregate'],
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'TopologicalNode.ConnectivityNodes',
-        'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
-        'serialize': False,
-        })
-    '''
-    The topological node to which this connectivity node is assigned. May
-    depend on the current state of switches in the network.
-    '''
-
     @property
     def __namespace__(self):
         return 'http://iec.ch/TC57/2012/CIM-schema-cim16#'
@@ -6701,21 +5346,6 @@ class Contingency(IdentifiedObject):
     A contingency can have any number of contingency elements.
     '''
 
-    ContingencyElement: list[ContingencyElement] = field(
-        default_factory=list,
-        metadata={
-        'type': 'Association',
-        'stereotypes': ['AggregateOf'],
-        'minOccurs': '0',
-        'maxOccurs': 'unbounded',
-        'inverse': 'ContingencyElement.Contingency',
-        'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
-        'serialize': False,
-        })
-    '''
-    A contingency can have any number of contingency elements.
-    '''
-
     @property
     def __namespace__(self):
         return 'http://iec.ch/TC57/2012/CIM-schema-cim16#'
@@ -6746,21 +5376,6 @@ class ContingencyElement(IdentifiedObject):
         'inverse': 'Contingency.ContingencyElement',
         'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
         'serialize': True,
-        })
-    '''
-    A contingency element belongs to one contingency.
-    '''
-
-    Contingency: Optional[Contingency] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'stereotypes': ['OfAggregate'],
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'Contingency.ContingencyElement',
-        'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
-        'serialize': False,
         })
     '''
     A contingency element belongs to one contingency.
@@ -6813,21 +5428,6 @@ class ContingencyEquipment(ContingencyElement):
         'inverse': 'Equipment.ContingencyEquipment',
         'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
         'serialize': True,
-        })
-    '''
-    The single piece of equipment to which to apply the contingency.
-    '''
-
-    Equipment: Optional[Equipment] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'stereotypes': [],
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'Equipment.ContingencyEquipment',
-        'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
-        'serialize': False,
         })
     '''
     The single piece of equipment to which to apply the contingency.
@@ -6957,36 +5557,6 @@ class Control(IdentifiedObject):
     The remote point controlling the physical actuator.
     '''
 
-    PowerSystemResource: Optional[PowerSystemResource] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'stereotypes': [],
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'PowerSystemResource.Controls',
-        'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
-        'serialize': False,
-        })
-    '''
-    Regulating device governed by this control output.
-    '''
-
-    RemoteControl: Optional[RemoteControl] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'stereotypes': [],
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'RemoteControl.Control',
-        'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
-        'serialize': False,
-        })
-    '''
-    The remote point controlling the physical actuator.
-    '''
-
     @property
     def __namespace__(self):
         return 'http://iec.ch/TC57/2012/CIM-schema-cim16#'
@@ -7017,21 +5587,6 @@ class AccumulatorReset(Control):
         'inverse': 'AccumulatorValue.AccumulatorReset',
         'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
         'serialize': True,
-        })
-    '''
-    The accumulator value that is reset by the command.
-    '''
-
-    AccumulatorValue: Optional[AccumulatorValue] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'stereotypes': [],
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'AccumulatorValue.AccumulatorReset',
-        'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
-        'serialize': False,
         })
     '''
     The accumulator value that is reset by the command.
@@ -7097,21 +5652,6 @@ class AnalogControl(Control):
         'inverse': 'AnalogValue.AnalogControl',
         'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
         'serialize': True,
-        })
-    '''
-    The MeasurementValue that is controlled.
-    '''
-
-    AnalogValue: Optional[AnalogValue] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'stereotypes': [],
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'AnalogValue.AnalogControl',
-        'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
-        'serialize': False,
         })
     '''
     The MeasurementValue that is controlled.
@@ -7275,21 +5815,6 @@ class Command(Control):
     The ValueAliasSet used for translation of a Control value to a name.
     '''
 
-    DiscreteValue: Optional[DiscreteValue] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'stereotypes': [],
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'DiscreteValue.Command',
-        'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
-        'serialize': False,
-        })
-    '''
-    The MeasurementValue that is controlled.
-    '''
-
     @property
     def __namespace__(self):
         return 'http://iec.ch/TC57/2012/CIM-schema-cim16#'
@@ -7377,37 +5902,6 @@ class ControlAreaGeneratingUnit(IdentifiedObject):
     area should include a GeneratingUnit only once.
     '''
 
-    AltGeneratingUnitMeas: list[AltGeneratingUnitMeas] = field(
-        default_factory=list,
-        metadata={
-        'type': 'Association',
-        'stereotypes': ['AggregateOf'],
-        'minOccurs': '0',
-        'maxOccurs': 'unbounded',
-        'inverse': 'AltGeneratingUnitMeas.ControlAreaGeneratingUnit',
-        'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
-        'serialize': False,
-        })
-    '''
-    The link to prioritized measurements for this GeneratingUnit.
-    '''
-
-    GeneratingUnit: Optional[GeneratingUnit] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'stereotypes': [],
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'GeneratingUnit.ControlAreaGeneratingUnit',
-        'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
-        'serialize': False,
-        })
-    '''
-    The generating unit specified for this control area. Note that a control
-    area should include a GeneratingUnit only once.
-    '''
-
     @property
     def __namespace__(self):
         return 'http://iec.ch/TC57/2012/CIM-schema-cim16#'
@@ -7466,21 +5960,6 @@ class CoordinateSystem(IdentifiedObject):
     All locations described with position points in this coordinate system.
     '''
 
-    Locations: list[Location] = field(
-        default_factory=list,
-        metadata={
-        'type': 'Association',
-        'stereotypes': [],
-        'minOccurs': '0',
-        'maxOccurs': 'unbounded',
-        'inverse': 'Location.CoordinateSystem',
-        'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
-        'serialize': False,
-        })
-    '''
-    All locations described with position points in this coordinate system.
-    '''
-
     @property
     def __namespace__(self):
         return 'http://iec.ch/TC57/2012/CIM-schema-cim16#'
@@ -7530,36 +6009,6 @@ class Crew(IdentifiedObject):
     Type of this crew.
     '''
 
-    CrewMembers: list[CrewMember] = field(
-        default_factory=list,
-        metadata={
-        'type': 'Association',
-        'stereotypes': [],
-        'minOccurs': '0',
-        'maxOccurs': 'unbounded',
-        'inverse': 'CrewMember.Crew',
-        'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
-        'serialize': False,
-        })
-    '''
-    All members of this crew.
-    '''
-
-    CrewType: Optional[CrewType] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'stereotypes': [],
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'CrewType.Crews',
-        'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
-        'serialize': False,
-        })
-    '''
-    Type of this crew.
-    '''
-
     @property
     def __namespace__(self):
         return 'http://iec.ch/TC57/2012/CIM-schema-cim16#'
@@ -7591,21 +6040,6 @@ class CrewType(IdentifiedObject):
         'inverse': 'Crew.CrewType',
         'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
         'serialize': True,
-        })
-    '''
-    All crews of this type.
-    '''
-
-    Crews: list[Crew] = field(
-        default_factory=list,
-        metadata={
-        'type': 'Association',
-        'stereotypes': [],
-        'minOccurs': '0',
-        'maxOccurs': 'unbounded',
-        'inverse': 'Crew.CrewType',
-        'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
-        'serialize': False,
         })
     '''
     All crews of this type.
@@ -7773,21 +6207,6 @@ class Curve(IdentifiedObject):
     The point data values that define this curve.
     '''
 
-    CurveDatas: list[CurveData] = field(
-        default_factory=list,
-        metadata={
-        'type': 'Association',
-        'stereotypes': ['AggregateOf'],
-        'minOccurs': '0',
-        'maxOccurs': 'unbounded',
-        'inverse': 'CurveData.Curve',
-        'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
-        'serialize': False,
-        })
-    '''
-    The point data values that define this curve.
-    '''
-
     @property
     def __namespace__(self):
         return 'http://iec.ch/TC57/2012/CIM-schema-cim16#'
@@ -7819,22 +6238,6 @@ class CTTempActivePowerCurve(Curve):
         'inverse': 'CombustionTurbine.CTTempActivePowerCurve',
         'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
         'serialize': True,
-        })
-    '''
-    A combustion turbine may have an active power versus ambient temperature
-    relationship.
-    '''
-
-    CombustionTurbine: Optional[CombustionTurbine] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'stereotypes': ['OfAggregate'],
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'CombustionTurbine.CTTempActivePowerCurve',
-        'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
-        'serialize': False,
         })
     '''
     A combustion turbine may have an active power versus ambient temperature
@@ -8110,21 +6513,6 @@ class FuelAllocationSchedule(Curve):
     A thermal generating unit may have one or more fuel allocation schedules.
     '''
 
-    FossilFuel: Optional[FossilFuel] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'stereotypes': [],
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'FossilFuel.FuelAllocationSchedules',
-        'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
-        'serialize': False,
-        })
-    '''
-    A fuel allocation schedule must have a fossil fuel.
-    '''
-
     @property
     def __namespace__(self):
         return 'http://iec.ch/TC57/2012/CIM-schema-cim16#'
@@ -8177,22 +6565,6 @@ class GenUnitOpCostCurve(Curve):
     fuel mixture and fuel cost.
     '''
 
-    GeneratingUnit: Optional[GeneratingUnit] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'stereotypes': ['OfAggregate'],
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'GeneratingUnit.GenUnitOpCostCurves',
-        'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
-        'serialize': False,
-        })
-    '''
-    A generating unit may have one or more cost curves, depending upon
-    fuel mixture and fuel cost.
-    '''
-
     @property
     def __namespace__(self):
         return 'http://iec.ch/TC57/2012/CIM-schema-cim16#'
@@ -8227,23 +6599,6 @@ class GrossToNetActivePowerCurve(Curve):
         'inverse': 'GeneratingUnit.GrossToNetActivePowerCurves',
         'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
         'serialize': True,
-        })
-    '''
-    A generating unit may have a gross active power to net active power
-    curve, describing the losses and auxiliary power requirements of the
-    unit.
-    '''
-
-    GeneratingUnit: Optional[GeneratingUnit] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'stereotypes': ['OfAggregate'],
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'GeneratingUnit.GrossToNetActivePowerCurves',
-        'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
-        'serialize': False,
         })
     '''
     A generating unit may have a gross active power to net active power
@@ -8360,21 +6715,6 @@ class HeatInputCurve(Curve):
     A thermal generating unit may have a heat input curve.
     '''
 
-    ThermalGeneratingUnit: Optional[ThermalGeneratingUnit] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'stereotypes': ['OfAggregate'],
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'ThermalGeneratingUnit.HeatInputCurve',
-        'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
-        'serialize': False,
-        })
-    '''
-    A thermal generating unit may have a heat input curve.
-    '''
-
     @property
     def __namespace__(self):
         return 'http://iec.ch/TC57/2012/CIM-schema-cim16#'
@@ -8420,21 +6760,6 @@ class HeatRateCurve(Curve):
         'inverse': 'ThermalGeneratingUnit.HeatRateCurve',
         'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
         'serialize': True,
-        })
-    '''
-    A thermal generating unit may have a heat rate curve.
-    '''
-
-    ThermalGeneratingUnit: Optional[ThermalGeneratingUnit] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'stereotypes': ['OfAggregate'],
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'ThermalGeneratingUnit.HeatRateCurve',
-        'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
-        'serialize': False,
         })
     '''
     A thermal generating unit may have a heat rate curve.
@@ -8533,21 +6858,6 @@ class IncrementalHeatRateCurve(Curve):
     A thermal generating unit may have an incremental heat rate curve.
     '''
 
-    ThermalGeneratingUnit: Optional[ThermalGeneratingUnit] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'stereotypes': ['OfAggregate'],
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'ThermalGeneratingUnit.IncrementalHeatRateCurve',
-        'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
-        'serialize': False,
-        })
-    '''
-    A thermal generating unit may have an incremental heat rate curve.
-    '''
-
     @property
     def __namespace__(self):
         return 'http://iec.ch/TC57/2012/CIM-schema-cim16#'
@@ -8615,21 +6925,6 @@ class PenstockLossCurve(Curve):
         'inverse': 'HydroGeneratingUnit.PenstockLossCurve',
         'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
         'serialize': True,
-        })
-    '''
-    A hydro generating unit has a penstock loss curve.
-    '''
-
-    HydroGeneratingUnit: Optional[HydroGeneratingUnit] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'stereotypes': ['OfAggregate'],
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'HydroGeneratingUnit.PenstockLossCurve',
-        'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
-        'serialize': False,
         })
     '''
     A hydro generating unit has a penstock loss curve.
@@ -8718,21 +7013,6 @@ class ReactiveCapabilityCurve(Curve):
     Synchronous machines using this curve.
     '''
 
-    EquivalentInjection: list[EquivalentInjection] = field(
-        default_factory=list,
-        metadata={
-        'type': 'Association',
-        'stereotypes': [],
-        'minOccurs': '0',
-        'maxOccurs': 'unbounded',
-        'inverse': 'EquivalentInjection.ReactiveCapabilityCurve',
-        'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
-        'serialize': False,
-        })
-    '''
-    The equivalent injection using this reactive capability curve.
-    '''
-
     InitiallyUsedBySynchronousMachines: list[SynchronousMachine] = field(
         default_factory=list,
         metadata={
@@ -8746,21 +7026,6 @@ class ReactiveCapabilityCurve(Curve):
         })
     '''
     Synchronous machines using this curve as default.
-    '''
-
-    SynchronousMachines: list[SynchronousMachine] = field(
-        default_factory=list,
-        metadata={
-        'type': 'Association',
-        'stereotypes': [],
-        'minOccurs': '0',
-        'maxOccurs': 'unbounded',
-        'inverse': 'SynchronousMachine.ReactiveCapabilityCurves',
-        'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
-        'serialize': False,
-        })
-    '''
-    Synchronous machines using this curve.
     '''
 
     @property
@@ -8827,21 +7092,6 @@ class ShutdownCurve(Curve):
     A thermal generating unit may have a shutdown curve.
     '''
 
-    ThermalGeneratingUnit: Optional[ThermalGeneratingUnit] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'stereotypes': ['OfAggregate'],
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'ThermalGeneratingUnit.ShutdownCurve',
-        'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
-        'serialize': False,
-        })
-    '''
-    A thermal generating unit may have a shutdown curve.
-    '''
-
     @property
     def __namespace__(self):
         return 'http://iec.ch/TC57/2012/CIM-schema-cim16#'
@@ -8887,21 +7137,6 @@ class StartIgnFuelCurve(Curve):
         'inverse': 'StartupModel.StartIgnFuelCurve',
         'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
         'serialize': True,
-        })
-    '''
-    The unit's startup model may have a startup ignition fuel curve.
-    '''
-
-    StartupModel: Optional[StartupModel] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'stereotypes': ['OfAggregate'],
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'StartupModel.StartIgnFuelCurve',
-        'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
-        'serialize': False,
         })
     '''
     The unit's startup model may have a startup ignition fuel curve.
@@ -8957,21 +7192,6 @@ class StartMainFuelCurve(Curve):
     The unit's startup model may have a startup main fuel curve.
     '''
 
-    StartupModel: Optional[StartupModel] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'stereotypes': ['OfAggregate'],
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'StartupModel.StartMainFuelCurve',
-        'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
-        'serialize': False,
-        })
-    '''
-    The unit's startup model may have a startup main fuel curve.
-    '''
-
     @property
     def __namespace__(self):
         return 'http://iec.ch/TC57/2012/CIM-schema-cim16#'
@@ -9017,21 +7237,6 @@ class StartRampCurve(Curve):
         'inverse': 'StartupModel.StartRampCurve',
         'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
         'serialize': True,
-        })
-    '''
-    The unit's startup model may have a startup ramp curve.
-    '''
-
-    StartupModel: Optional[StartupModel] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'stereotypes': ['OfAggregate'],
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'StartupModel.StartRampCurve',
-        'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
-        'serialize': False,
         })
     '''
     The unit's startup model may have a startup ramp curve.
@@ -9140,21 +7345,6 @@ class TargetLevelSchedule(Curve):
     A reservoir may have a water level target schedule.
     '''
 
-    Reservoir: Optional[Reservoir] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'stereotypes': ['OfAggregate'],
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'Reservoir.TargetLevelSchedule',
-        'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
-        'serialize': False,
-        })
-    '''
-    A reservoir may have a water level target schedule.
-    '''
-
     @property
     def __namespace__(self):
         return 'http://iec.ch/TC57/2012/CIM-schema-cim16#'
@@ -9257,53 +7447,6 @@ class DCNode(IdentifiedObject):
     May depend on the current state of switches in the network.
     '''
 
-    DCTerminals: list[DCBaseTerminal] = field(
-        default_factory=list,
-        metadata={
-        'type': 'Association',
-        'stereotypes': [],
-        'minOccurs': '0',
-        'maxOccurs': 'unbounded',
-        'inverse': 'DCBaseTerminal.DCNode',
-        'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
-        'serialize': False,
-        })
-    '''
-    DC base terminals interconnected with zero impedance at a this DC connectivity
-    node.
-    '''
-
-    DCEquipmentContainer: Optional[DCEquipmentContainer] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'stereotypes': [],
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'DCEquipmentContainer.DCNodes',
-        'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
-        'serialize': False,
-        })
-    '''
-    The DC container for the DC nodes.
-    '''
-
-    DCTopologicalNode: Optional[DCTopologicalNode] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'stereotypes': [],
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'DCTopologicalNode.DCNodes',
-        'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
-        'serialize': False,
-        })
-    '''
-    The DC topological node to which this DC connectivity node is assigned.
-    May depend on the current state of switches in the network.
-    '''
-
     @property
     def __namespace__(self):
         return 'http://iec.ch/TC57/2012/CIM-schema-cim16#'
@@ -9338,21 +7481,6 @@ class DCTopologicalIsland(IdentifiedObject):
         'inverse': 'DCTopologicalNode.DCTopologicalIsland',
         'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
         'serialize': True,
-        })
-    '''
-    The DC topological nodes in a DC topological island.
-    '''
-
-    DCTopologicalNodes: list[DCTopologicalNode] = field(
-        default_factory=list,
-        metadata={
-        'type': 'Association',
-        'stereotypes': ['AggregateOf'],
-        'minOccurs': '0',
-        'maxOccurs': 'unbounded',
-        'inverse': 'DCTopologicalNode.DCTopologicalIsland',
-        'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
-        'serialize': False,
         })
     '''
     The DC topological nodes in a DC topological island.
@@ -9438,67 +7566,6 @@ class DCTopologicalNode(IdentifiedObject):
     A DC topological node belongs to a DC topological island.
     '''
 
-    DCTerminals: list[DCBaseTerminal] = field(
-        default_factory=list,
-        metadata={
-        'type': 'Association',
-        'stereotypes': [],
-        'minOccurs': '0',
-        'maxOccurs': 'unbounded',
-        'inverse': 'DCBaseTerminal.DCTopologicalNode',
-        'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
-        'serialize': False,
-        })
-    '''
-    The DC base terminals associated with the DC topological node.
-    '''
-
-    DCEquipmentContainer: Optional[DCEquipmentContainer] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'stereotypes': [],
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'DCEquipmentContainer.DCTopologicalNode',
-        'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
-        'serialize': False,
-        })
-    '''
-    The connectivity node container to which the toplogical node belongs.
-    '''
-
-    DCNodes: list[DCNode] = field(
-        default_factory=list,
-        metadata={
-        'type': 'Association',
-        'stereotypes': [],
-        'minOccurs': '0',
-        'maxOccurs': 'unbounded',
-        'inverse': 'DCNode.DCTopologicalNode',
-        'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
-        'serialize': False,
-        })
-    '''
-    The DC connectivity nodes combined together to form this DC topological
-    node. May depend on the current state of switches in the network.
-    '''
-
-    DCTopologicalIsland: Optional[DCTopologicalIsland] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'stereotypes': ['OfAggregate'],
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'DCTopologicalIsland.DCTopologicalNodes',
-        'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
-        'serialize': False,
-        })
-    '''
-    A DC topological node belongs to a DC topological island.
-    '''
-
     @property
     def __namespace__(self):
         return 'http://iec.ch/TC57/2012/CIM-schema-cim16#'
@@ -9529,21 +7596,6 @@ class DayType(IdentifiedObject):
         'inverse': 'SeasonDayTypeSchedule.DayType',
         'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
         'serialize': True,
-        })
-    '''
-    Schedules that use this DayType.
-    '''
-
-    SeasonDayTypeSchedules: list[SeasonDayTypeSchedule] = field(
-        default_factory=list,
-        metadata={
-        'type': 'Association',
-        'stereotypes': [],
-        'minOccurs': '0',
-        'maxOccurs': 'unbounded',
-        'inverse': 'SeasonDayTypeSchedule.DayType',
-        'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
-        'serialize': False,
         })
     '''
     Schedules that use this DayType.
@@ -9664,36 +7716,6 @@ class Diagram(IdentifiedObject):
         'inverse': 'DiagramStyle.Diagram',
         'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
         'serialize': True,
-        })
-    '''
-    A Diagram may have a DiagramStyle.
-    '''
-
-    DiagramElements: list[DiagramObject] = field(
-        default_factory=list,
-        metadata={
-        'type': 'Association',
-        'stereotypes': [],
-        'minOccurs': '0',
-        'maxOccurs': 'unbounded',
-        'inverse': 'DiagramObject.Diagram',
-        'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
-        'serialize': False,
-        })
-    '''
-    A diagram is made up of multiple diagram objects.
-    '''
-
-    DiagramStyle: Optional[DiagramStyle] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'stereotypes': [],
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'DiagramStyle.Diagram',
-        'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
-        'serialize': False,
         })
     '''
     A Diagram may have a DiagramStyle.
@@ -9885,83 +7907,6 @@ class DiagramObject(IdentifiedObject):
     A diagram object can be part of multiple visibility layers.
     '''
 
-    Diagram: Optional[Diagram] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'stereotypes': [],
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'Diagram.DiagramElements',
-        'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
-        'serialize': False,
-        })
-    '''
-    A diagram object is part of a diagram.
-    '''
-
-    DiagramObjectPoints: list[DiagramObjectPoint] = field(
-        default_factory=list,
-        metadata={
-        'type': 'Association',
-        'stereotypes': [],
-        'minOccurs': '0',
-        'maxOccurs': 'unbounded',
-        'inverse': 'DiagramObjectPoint.DiagramObject',
-        'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
-        'serialize': False,
-        })
-    '''
-    A diagram object can have 0 or more points to reflect its layout position,
-    routing (for polylines) or boundary (for polygons).
-    '''
-
-    DiagramObjectStyle: Optional[DiagramObjectStyle] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'stereotypes': [],
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'DiagramObjectStyle.StyledObjects',
-        'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
-        'serialize': False,
-        })
-    '''
-    A diagram object has a style associated that provides a reference for
-    the style used in the originating system.
-    '''
-
-    IdentifiedObject: Optional[IdentifiedObject] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'stereotypes': [],
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'IdentifiedObject.DiagramObjects',
-        'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
-        'serialize': False,
-        })
-    '''
-    The domain object to which this diagram object is associated.
-    '''
-
-    VisibilityLayers: list[VisibilityLayer] = field(
-        default_factory=list,
-        metadata={
-        'type': 'Association',
-        'stereotypes': [],
-        'minOccurs': '0',
-        'maxOccurs': 'unbounded',
-        'inverse': 'VisibilityLayer.VisibleObjects',
-        'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
-        'serialize': False,
-        })
-    '''
-    A diagram object can be part of multiple visibility layers.
-    '''
-
     @property
     def __namespace__(self):
         return 'http://iec.ch/TC57/2012/CIM-schema-cim16#'
@@ -10032,21 +7977,6 @@ class DiagramObjectStyle(IdentifiedObject):
     A style can be assigned to multiple diagram objects.
     '''
 
-    StyledObjects: list[DiagramObject] = field(
-        default_factory=list,
-        metadata={
-        'type': 'Association',
-        'stereotypes': [],
-        'minOccurs': '0',
-        'maxOccurs': 'unbounded',
-        'inverse': 'DiagramObject.DiagramObjectStyle',
-        'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
-        'serialize': False,
-        })
-    '''
-    A style can be assigned to multiple diagram objects.
-    '''
-
     @property
     def __namespace__(self):
         return 'http://iec.ch/TC57/2012/CIM-schema-cim16#'
@@ -10078,21 +8008,6 @@ class DiagramStyle(IdentifiedObject):
         'inverse': 'Diagram.DiagramStyle',
         'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
         'serialize': True,
-        })
-    '''
-    A DiagramStyle can be used by many Diagrams.
-    '''
-
-    Diagram: list[Diagram] = field(
-        default_factory=list,
-        metadata={
-        'type': 'Association',
-        'stereotypes': [],
-        'minOccurs': '0',
-        'maxOccurs': 'unbounded',
-        'inverse': 'Diagram.DiagramStyle',
-        'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
-        'serialize': False,
         })
     '''
     A DiagramStyle can be used by many Diagrams.
@@ -10249,21 +8164,6 @@ class Document(IdentifiedObject):
     All configuration events created for this document.
     '''
 
-    ConfigurationEvents: list[ConfigurationEvent] = field(
-        default_factory=list,
-        metadata={
-        'type': 'Association',
-        'stereotypes': [],
-        'minOccurs': '0',
-        'maxOccurs': 'unbounded',
-        'inverse': 'ConfigurationEvent.ChangedDocument',
-        'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
-        'serialize': False,
-        })
-    '''
-    All configuration events created for this document.
-    '''
-
     @property
     def __namespace__(self):
         return 'http://iec.ch/TC57/2012/CIM-schema-cim16#'
@@ -10395,21 +8295,6 @@ class OperationalRestriction(Document):
     Asset model to which this restriction applies.
     '''
 
-    Equipments: list[Equipment] = field(
-        default_factory=list,
-        metadata={
-        'type': 'Association',
-        'stereotypes': [],
-        'minOccurs': '0',
-        'maxOccurs': 'unbounded',
-        'inverse': 'Equipment.OperationalRestrictions',
-        'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
-        'serialize': False,
-        })
-    '''
-    All equipments to which this restriction applies.
-    '''
-
     @property
     def __namespace__(self):
         return 'http://iec.ch/TC57/2012/CIM-schema-cim16#'
@@ -10521,21 +8406,6 @@ class Outage(Document):
     relationship should be used.
     '''
 
-    Equipments: list[Equipment] = field(
-        default_factory=list,
-        metadata={
-        'type': 'Association',
-        'stereotypes': [],
-        'minOccurs': '0',
-        'maxOccurs': 'unbounded',
-        'inverse': 'Equipment.Outages',
-        'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
-        'serialize': False,
-        })
-    '''
-    All equipments associated with this outage.
-    '''
-
     Faults: list[Fault] = field(
         default_factory=list,
         metadata={
@@ -10549,24 +8419,6 @@ class Outage(Document):
         })
     '''
     All faults involved in this outage.
-    '''
-
-    OpenedSwitches: list[Switch] = field(
-        default_factory=list,
-        metadata={
-        'type': 'Association',
-        'stereotypes': [],
-        'minOccurs': '0',
-        'maxOccurs': 'unbounded',
-        'inverse': 'Switch.Outage',
-        'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
-        'serialize': False,
-        })
-    '''
-    All potentially open switches causing this outage. This realationship
-    is meant to be used as "indication" for initiation of outage-related
-    business processes, whereas for actual actions of switches, SwitchAction-Switch
-    relationship should be used.
     '''
 
     @property
@@ -10689,35 +8541,6 @@ class Procedure(Document):
     All data sets captured by this procedure.
     '''
 
-    Limits: list[Limit] = field(
-        default_factory=list,
-        metadata={
-        'type': 'Association',
-        'stereotypes': ['informative'],
-        'minOccurs': '0',
-        'maxOccurs': 'unbounded',
-        'inverse': 'Limit.Procedures',
-        'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
-        'serialize': False,
-        })
-    '''
-    '''
-
-    ProcedureDataSets: list[ProcedureDataSet] = field(
-        default_factory=list,
-        metadata={
-        'type': 'Association',
-        'stereotypes': [],
-        'minOccurs': '0',
-        'maxOccurs': 'unbounded',
-        'inverse': 'ProcedureDataSet.Procedure',
-        'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
-        'serialize': False,
-        })
-    '''
-    All data sets captured by this procedure.
-    '''
-
     @property
     def __namespace__(self):
         return 'http://iec.ch/TC57/2012/CIM-schema-cim16#'
@@ -10813,21 +8636,6 @@ class ProcedureDataSet(Document):
     '''
     '''
 
-    Procedure: Optional[Procedure] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'stereotypes': [],
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'Procedure.ProcedureDataSets',
-        'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
-        'serialize': False,
-        })
-    '''
-    Procedure capturing this data set.
-    '''
-
     @property
     def __namespace__(self):
         return 'http://iec.ch/TC57/2012/CIM-schema-cim16#'
@@ -10872,20 +8680,6 @@ class InspectionDataSet(ProcedureDataSet):
         'inverse': 'ScheduledEventData.InspectionDataSet',
         'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
         'serialize': True,
-        })
-    '''
-    '''
-
-    AccordingToSchedules: list[ScheduledEventData] = field(
-        default_factory=list,
-        metadata={
-        'type': 'Association',
-        'stereotypes': ['informative'],
-        'minOccurs': '0',
-        'maxOccurs': 'unbounded',
-        'inverse': 'ScheduledEventData.InspectionDataSet',
-        'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
-        'serialize': False,
         })
     '''
     '''
@@ -11132,21 +8926,6 @@ class TimeSchedule(Document):
     Sequence of time points belonging to this time schedule.
     '''
 
-    TimePoints: list[TimePoint] = field(
-        default_factory=list,
-        metadata={
-        'type': 'Association',
-        'stereotypes': [],
-        'minOccurs': '0',
-        'maxOccurs': 'unbounded',
-        'inverse': 'TimePoint.TimeSchedule',
-        'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
-        'serialize': False,
-        })
-    '''
-    Sequence of time points belonging to this time schedule.
-    '''
-
     @property
     def __namespace__(self):
         return 'http://iec.ch/TC57/2012/CIM-schema-cim16#'
@@ -11185,21 +8964,6 @@ class EnergyArea(IdentifiedObject):
     The control area specification that is used for the load forecast.
     '''
 
-    ControlArea: Optional[ControlArea] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'stereotypes': [],
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'ControlArea.EnergyArea',
-        'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
-        'serialize': False,
-        })
-    '''
-    The control area specification that is used for the load forecast.
-    '''
-
     @property
     def __namespace__(self):
         return 'http://iec.ch/TC57/2012/CIM-schema-cim16#'
@@ -11231,21 +8995,6 @@ class LoadArea(EnergyArea):
         'inverse': 'SubLoadArea.LoadArea',
         'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
         'serialize': True,
-        })
-    '''
-    The SubLoadAreas in the LoadArea.
-    '''
-
-    SubLoadAreas: list[SubLoadArea] = field(
-        default_factory=list,
-        metadata={
-        'type': 'Association',
-        'stereotypes': ['AggregateOf'],
-        'minOccurs': '0',
-        'maxOccurs': 'unbounded',
-        'inverse': 'SubLoadArea.LoadArea',
-        'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
-        'serialize': False,
         })
     '''
     The SubLoadAreas in the LoadArea.
@@ -11302,36 +9051,6 @@ class SubLoadArea(EnergyArea):
     The Loadgroups in the SubLoadArea.
     '''
 
-    LoadArea: Optional[LoadArea] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'stereotypes': ['OfAggregate'],
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'LoadArea.SubLoadAreas',
-        'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
-        'serialize': False,
-        })
-    '''
-    The LoadArea where the SubLoadArea belongs.
-    '''
-
-    LoadGroups: list[LoadGroup] = field(
-        default_factory=list,
-        metadata={
-        'type': 'Association',
-        'stereotypes': ['AggregateOf'],
-        'minOccurs': '0',
-        'maxOccurs': 'unbounded',
-        'inverse': 'LoadGroup.SubLoadArea',
-        'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
-        'serialize': False,
-        })
-    '''
-    The Loadgroups in the SubLoadArea.
-    '''
-
     @property
     def __namespace__(self):
         return 'http://iec.ch/TC57/2012/CIM-schema-cim16#'
@@ -11361,21 +9080,6 @@ class EnergySchedulingType(IdentifiedObject):
         'inverse': 'EnergySource.EnergySchedulingType',
         'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
         'serialize': True,
-        })
-    '''
-    Energy Source of a particular Energy Scheduling Type
-    '''
-
-    EnergySource: list[EnergySource] = field(
-        default_factory=list,
-        metadata={
-        'type': 'Association',
-        'stereotypes': [],
-        'minOccurs': '0',
-        'maxOccurs': 'unbounded',
-        'inverse': 'EnergySource.EnergySchedulingType',
-        'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
-        'serialize': False,
         })
     '''
     Energy Source of a particular Energy Scheduling Type
@@ -11434,39 +9138,6 @@ class EquipmentLimitSeriesComponent(IdentifiedObject):
     Calculation in which the refernce to equipment applies.
     '''
 
-    Equipment: Optional[Equipment] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'stereotypes': [],
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'Equipment.EqiupmentLimitSeriesComponent',
-        'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
-        'serialize': False,
-        })
-    '''
-    Equipment contributing toward the series limit. The reference here
-    is to Equipment rather than a specific limit on the equipment so the
-    grouiping can be reused for multiple limits of different types on the
-    same instance of equipment.
-    '''
-
-    SeriesEquipmentDependentLimit: Optional[SeriesEquipmentDependentLimit] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'stereotypes': ['OfAggregate'],
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'SeriesEquipmentDependentLimit.EquipmentLimitSeriesComponent',
-        'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
-        'serialize': False,
-        })
-    '''
-    Calculation in which the refernce to equipment applies.
-    '''
-
     @property
     def __namespace__(self):
         return 'http://iec.ch/TC57/2012/CIM-schema-cim16#'
@@ -11506,20 +9177,6 @@ class ErpInventory(IdentifiedObject):
     '''
     '''
 
-    Asset: Optional[Asset] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'stereotypes': ['informative'],
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'Asset.ErpInventory',
-        'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
-        'serialize': False,
-        })
-    '''
-    '''
-
     @property
     def __namespace__(self):
         return 'http://iec.ch/TC57/2012/CIM-schema-cim16#'
@@ -11555,20 +9212,6 @@ class ErpItemMaster(IdentifiedObject):
         'inverse': 'Asset.ErpItemMaster',
         'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
         'serialize': True,
-        })
-    '''
-    '''
-
-    Asset: Optional[Asset] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'stereotypes': ['informative'],
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'Asset.ErpItemMaster',
-        'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
-        'serialize': False,
         })
     '''
     '''
@@ -11668,36 +9311,6 @@ class Fault(IdentifiedObject):
     Outage associated with this fault.
     '''
 
-    FaultyEquipment: Optional[Equipment] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'stereotypes': [],
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'Equipment.Faults',
-        'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
-        'serialize': False,
-        })
-    '''
-    Equipment carrying this fault.
-    '''
-
-    FaultCauseTypes: list[FaultCauseType] = field(
-        default_factory=list,
-        metadata={
-        'type': 'Association',
-        'stereotypes': [],
-        'minOccurs': '0',
-        'maxOccurs': 'unbounded',
-        'inverse': 'FaultCauseType.Faults',
-        'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
-        'serialize': False,
-        })
-    '''
-    All types of fault cause.
-    '''
-
     @property
     def __namespace__(self):
         return 'http://iec.ch/TC57/2012/CIM-schema-cim16#'
@@ -11782,21 +9395,6 @@ class LineFault(Fault):
     The line segment of this line fault.
     '''
 
-    ACLineSegment: Optional[ACLineSegment] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'stereotypes': [],
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'ACLineSegment.LineFaults',
-        'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
-        'serialize': False,
-        })
-    '''
-    The line segment of this line fault.
-    '''
-
     @property
     def __namespace__(self):
         return 'http://iec.ch/TC57/2012/CIM-schema-cim16#'
@@ -11826,21 +9424,6 @@ class FaultCauseType(IdentifiedObject):
         'inverse': 'Fault.FaultCauseTypes',
         'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
         'serialize': True,
-        })
-    '''
-    All faults with this cause type.
-    '''
-
-    Faults: list[Fault] = field(
-        default_factory=list,
-        metadata={
-        'type': 'Association',
-        'stereotypes': [],
-        'minOccurs': '0',
-        'maxOccurs': 'unbounded',
-        'inverse': 'Fault.FaultCauseTypes',
-        'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
-        'serialize': False,
         })
     '''
     All faults with this cause type.
@@ -12080,21 +9663,6 @@ class FossilFuel(IdentifiedObject):
     A thermal generating unit may have one or more fossil fuels.
     '''
 
-    FuelAllocationSchedules: list[FuelAllocationSchedule] = field(
-        default_factory=list,
-        metadata={
-        'type': 'Association',
-        'stereotypes': [],
-        'minOccurs': '0',
-        'maxOccurs': 'unbounded',
-        'inverse': 'FuelAllocationSchedule.FossilFuel',
-        'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
-        'serialize': False,
-        })
-    '''
-    A fuel allocation schedule must have a fossil fuel.
-    '''
-
     @property
     def __namespace__(self):
         return 'http://iec.ch/TC57/2012/CIM-schema-cim16#'
@@ -12125,21 +9693,6 @@ class GeographicalRegion(IdentifiedObject):
         'inverse': 'SubGeographicalRegion.Region',
         'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
         'serialize': True,
-        })
-    '''
-    All sub-geograhpical regions within this geographical region.
-    '''
-
-    Regions: list[SubGeographicalRegion] = field(
-        default_factory=list,
-        metadata={
-        'type': 'Association',
-        'stereotypes': ['AggregateOf'],
-        'minOccurs': '0',
-        'maxOccurs': 'unbounded',
-        'inverse': 'SubGeographicalRegion.Region',
-        'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
-        'serialize': False,
         })
     '''
     All sub-geograhpical regions within this geographical region.
@@ -12217,21 +9770,6 @@ class AssetLocationHazard(Hazard):
     The location of this hazard.
     '''
 
-    Locations: list[Location] = field(
-        default_factory=list,
-        metadata={
-        'type': 'Association',
-        'stereotypes': [],
-        'minOccurs': '0',
-        'maxOccurs': 'unbounded',
-        'inverse': 'Location.Hazards',
-        'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
-        'serialize': False,
-        })
-    '''
-    The location of this hazard.
-    '''
-
     @property
     def __namespace__(self):
         return 'http://iec.ch/TC57/2012/CIM-schema-cim16#'
@@ -12265,20 +9803,6 @@ class Limit(IdentifiedObject):
         'inverse': 'Procedure.Limits',
         'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
         'serialize': True,
-        })
-    '''
-    '''
-
-    Procedures: list[Procedure] = field(
-        default_factory=list,
-        metadata={
-        'type': 'Association',
-        'stereotypes': ['informative'],
-        'minOccurs': '0',
-        'maxOccurs': 'unbounded',
-        'inverse': 'Procedure.Limits',
-        'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
-        'serialize': False,
         })
     '''
     '''
@@ -12333,21 +9857,6 @@ class AccumulatorLimit(Limit):
     The set of limits.
     '''
 
-    LimitSet: Optional[AccumulatorLimitSet] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'stereotypes': ['OfAggregate'],
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'AccumulatorLimitSet.Limits',
-        'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
-        'serialize': False,
-        })
-    '''
-    The set of limits.
-    '''
-
     @property
     def __namespace__(self):
         return 'http://iec.ch/TC57/2012/CIM-schema-cim16#'
@@ -12391,21 +9900,6 @@ class AnalogLimit(Limit):
         'inverse': 'AnalogLimitSet.Limits',
         'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
         'serialize': True,
-        })
-    '''
-    The set of limits.
-    '''
-
-    LimitSet: Optional[AnalogLimitSet] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'stereotypes': ['OfAggregate'],
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'AnalogLimitSet.Limits',
-        'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
-        'serialize': False,
         })
     '''
     The set of limits.
@@ -12458,36 +9952,6 @@ class LimitDependency(IdentifiedObject):
         'inverse': 'OperationalLimit.LimitDependencyModel',
         'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
         'serialize': True,
-        })
-    '''
-    The operational limits to which this limit dependency model applies.
-    '''
-
-    Equipment: Optional[Equipment] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'stereotypes': ['OfAggregate'],
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'Equipment.LimitDependencyModel',
-        'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
-        'serialize': False,
-        })
-    '''
-    The equipment for which this limit dependency model is organized under.
-    '''
-
-    OperationalLimit: list[OperationalLimit] = field(
-        default_factory=list,
-        metadata={
-        'type': 'Association',
-        'stereotypes': [],
-        'minOccurs': '0',
-        'maxOccurs': 'unbounded',
-        'inverse': 'OperationalLimit.LimitDependencyModel',
-        'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
-        'serialize': False,
         })
     '''
     The operational limits to which this limit dependency model applies.
@@ -12567,21 +10031,6 @@ class SeriesEquipmentDependentLimit(LimitDependency):
         'inverse': 'EquipmentLimitSeriesComponent.SeriesEquipmentDependentLimit',
         'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
         'serialize': True,
-        })
-    '''
-    Equipment linkages that participates in the limit calculation.
-    '''
-
-    EquipmentLimitSeriesComponent: list[EquipmentLimitSeriesComponent] = field(
-        default_factory=list,
-        metadata={
-        'type': 'Association',
-        'stereotypes': ['AggregateOf'],
-        'minOccurs': '0',
-        'maxOccurs': 'unbounded',
-        'inverse': 'EquipmentLimitSeriesComponent.SeriesEquipmentDependentLimit',
-        'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
-        'serialize': False,
         })
     '''
     Equipment linkages that participates in the limit calculation.
@@ -12677,36 +10126,6 @@ class AccumulatorLimitSet(LimitSet):
     The Measurements using the LimitSet.
     '''
 
-    Measurements: list[Accumulator] = field(
-        default_factory=list,
-        metadata={
-        'type': 'Association',
-        'stereotypes': [],
-        'minOccurs': '0',
-        'maxOccurs': 'unbounded',
-        'inverse': 'Accumulator.LimitSets',
-        'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
-        'serialize': False,
-        })
-    '''
-    The Measurements using the LimitSet.
-    '''
-
-    Limits: list[AccumulatorLimit] = field(
-        default_factory=list,
-        metadata={
-        'type': 'Association',
-        'stereotypes': ['AggregateOf'],
-        'minOccurs': '0',
-        'maxOccurs': 'unbounded',
-        'inverse': 'AccumulatorLimit.LimitSet',
-        'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
-        'serialize': False,
-        })
-    '''
-    The limit values used for supervision of Measurements.
-    '''
-
     @property
     def __namespace__(self):
         return 'http://iec.ch/TC57/2012/CIM-schema-cim16#'
@@ -12758,36 +10177,6 @@ class AnalogLimitSet(LimitSet):
     The Measurements using the LimitSet.
     '''
 
-    Measurements: list[Analog] = field(
-        default_factory=list,
-        metadata={
-        'type': 'Association',
-        'stereotypes': [],
-        'minOccurs': '0',
-        'maxOccurs': 'unbounded',
-        'inverse': 'Analog.LimitSets',
-        'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
-        'serialize': False,
-        })
-    '''
-    The Measurements using the LimitSet.
-    '''
-
-    Limits: list[AnalogLimit] = field(
-        default_factory=list,
-        metadata={
-        'type': 'Association',
-        'stereotypes': ['AggregateOf'],
-        'minOccurs': '0',
-        'maxOccurs': 'unbounded',
-        'inverse': 'AnalogLimit.LimitSet',
-        'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
-        'serialize': False,
-        })
-    '''
-    The limit values used for supervision of Measurements.
-    '''
-
     @property
     def __namespace__(self):
         return 'http://iec.ch/TC57/2012/CIM-schema-cim16#'
@@ -12827,21 +10216,6 @@ class LoadDynamics(IdentifiedObject):
     Energy consumer to which this dynamics load model applies.
     '''
 
-    EnergyConsumer: list[EnergyConsumer] = field(
-        default_factory=list,
-        metadata={
-        'type': 'Association',
-        'stereotypes': [],
-        'minOccurs': '0',
-        'maxOccurs': 'unbounded',
-        'inverse': 'EnergyConsumer.LoadDynamics',
-        'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
-        'serialize': False,
-        })
-    '''
-    Energy consumer to which this dynamics load model applies.
-    '''
-
     @property
     def __namespace__(self):
         return 'http://iec.ch/TC57/2012/CIM-schema-cim16#'
@@ -12872,21 +10246,6 @@ class LoadGroup(IdentifiedObject):
         'inverse': 'SubLoadArea.LoadGroups',
         'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
         'serialize': True,
-        })
-    '''
-    The SubLoadArea where the Loadgroup belongs.
-    '''
-
-    SubLoadArea: Optional[SubLoadArea] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'stereotypes': ['OfAggregate'],
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'SubLoadArea.LoadGroups',
-        'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
-        'serialize': False,
         })
     '''
     The SubLoadArea where the Loadgroup belongs.
@@ -12942,36 +10301,6 @@ class ConformLoadGroup(LoadGroup):
     Conform loads assigned to this ConformLoadGroup.
     '''
 
-    EnergyConsumers: list[ConformLoad] = field(
-        default_factory=list,
-        metadata={
-        'type': 'Association',
-        'stereotypes': [],
-        'minOccurs': '0',
-        'maxOccurs': 'unbounded',
-        'inverse': 'ConformLoad.LoadGroup',
-        'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
-        'serialize': False,
-        })
-    '''
-    Conform loads assigned to this ConformLoadGroup.
-    '''
-
-    ConformLoadSchedules: list[ConformLoadSchedule] = field(
-        default_factory=list,
-        metadata={
-        'type': 'Association',
-        'stereotypes': ['AggregateOf'],
-        'minOccurs': '0',
-        'maxOccurs': 'unbounded',
-        'inverse': 'ConformLoadSchedule.ConformLoadGroup',
-        'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
-        'serialize': False,
-        })
-    '''
-    The ConformLoadSchedules in the ConformLoadGroup.
-    '''
-
     @property
     def __namespace__(self):
         return 'http://iec.ch/TC57/2012/CIM-schema-cim16#'
@@ -13017,36 +10346,6 @@ class NonConformLoadGroup(LoadGroup):
         'inverse': 'NonConformLoadSchedule.NonConformLoadGroup',
         'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
         'serialize': True,
-        })
-    '''
-    The NonConformLoadSchedules in the NonConformLoadGroup.
-    '''
-
-    EnergyConsumers: list[NonConformLoad] = field(
-        default_factory=list,
-        metadata={
-        'type': 'Association',
-        'stereotypes': [],
-        'minOccurs': '0',
-        'maxOccurs': 'unbounded',
-        'inverse': 'NonConformLoad.LoadGroup',
-        'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
-        'serialize': False,
-        })
-    '''
-    Conform loads assigned to this ConformLoadGroup.
-    '''
-
-    NonConformLoadSchedules: list[NonConformLoadSchedule] = field(
-        default_factory=list,
-        metadata={
-        'type': 'Association',
-        'stereotypes': ['AggregateOf'],
-        'minOccurs': '0',
-        'maxOccurs': 'unbounded',
-        'inverse': 'NonConformLoadSchedule.NonConformLoadGroup',
-        'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
-        'serialize': False,
         })
     '''
     The NonConformLoadSchedules in the NonConformLoadGroup.
@@ -13264,21 +10563,6 @@ class LoadResponseCharacteristic(IdentifiedObject):
     The set of loads that have the response characteristics.
     '''
 
-    EnergyConsumer: list[EnergyConsumer] = field(
-        default_factory=list,
-        metadata={
-        'type': 'Association',
-        'stereotypes': [],
-        'minOccurs': '0',
-        'maxOccurs': 'unbounded',
-        'inverse': 'EnergyConsumer.LoadResponse',
-        'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
-        'serialize': False,
-        })
-    '''
-    The set of loads that have the response characteristics.
-    '''
-
     @property
     def __namespace__(self):
         return 'http://iec.ch/TC57/2012/CIM-schema-cim16#'
@@ -13450,111 +10734,6 @@ class Location(IdentifiedObject):
         'inverse': 'PowerSystemResource.Location',
         'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
         'serialize': True,
-        })
-    '''
-    All power system resources at this location.
-    '''
-
-    Assets: list[Asset] = field(
-        default_factory=list,
-        metadata={
-        'type': 'Association',
-        'stereotypes': [],
-        'minOccurs': '0',
-        'maxOccurs': 'unbounded',
-        'inverse': 'Asset.Location',
-        'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
-        'serialize': False,
-        })
-    '''
-    All assets at this location.
-    '''
-
-    Hazards: list[AssetLocationHazard] = field(
-        default_factory=list,
-        metadata={
-        'type': 'Association',
-        'stereotypes': [],
-        'minOccurs': '0',
-        'maxOccurs': 'unbounded',
-        'inverse': 'AssetLocationHazard.Locations',
-        'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
-        'serialize': False,
-        })
-    '''
-    All asset hazards at this location.
-    '''
-
-    ConfigurationEvents: list[ConfigurationEvent] = field(
-        default_factory=list,
-        metadata={
-        'type': 'Association',
-        'stereotypes': [],
-        'minOccurs': '0',
-        'maxOccurs': 'unbounded',
-        'inverse': 'ConfigurationEvent.ChangedLocation',
-        'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
-        'serialize': False,
-        })
-    '''
-    All configuration events created for this location.
-    '''
-
-    CoordinateSystem: Optional[CoordinateSystem] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'stereotypes': [],
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'CoordinateSystem.Locations',
-        'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
-        'serialize': False,
-        })
-    '''
-    Coordinate system used to describe position points of this location.
-    '''
-
-    Measurements: list[Measurement] = field(
-        default_factory=list,
-        metadata={
-        'type': 'Association',
-        'stereotypes': [],
-        'minOccurs': '0',
-        'maxOccurs': 'unbounded',
-        'inverse': 'Measurement.Locations',
-        'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
-        'serialize': False,
-        })
-    '''
-    '''
-
-    PositionPoints: list[PositionPoint] = field(
-        default_factory=list,
-        metadata={
-        'type': 'Association',
-        'stereotypes': [],
-        'minOccurs': '0',
-        'maxOccurs': 'unbounded',
-        'inverse': 'PositionPoint.Location',
-        'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
-        'serialize': False,
-        })
-    '''
-    Sequence of position points describing this location, expressed in
-    coordinate system 'Location.CoordinateSystem'.
-    '''
-
-    PowerSystemResources: list[PowerSystemResource] = field(
-        default_factory=list,
-        metadata={
-        'type': 'Association',
-        'stereotypes': [],
-        'minOccurs': '0',
-        'maxOccurs': 'unbounded',
-        'inverse': 'PowerSystemResource.Location',
-        'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
-        'serialize': False,
         })
     '''
     All power system resources at this location.
@@ -13749,78 +10928,6 @@ class Measurement(IdentifiedObject):
     One or more measurements may be associated with a terminal in the network.
     '''
 
-    Terminal: Optional[ACDCTerminal] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'stereotypes': [],
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'ACDCTerminal.Measurements',
-        'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
-        'serialize': False,
-        })
-    '''
-    One or more measurements may be associated with a terminal in the network.
-    '''
-
-    Asset: Optional[Asset] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'stereotypes': [],
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'Asset.Measurements',
-        'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
-        'serialize': False,
-        })
-    '''
-    '''
-
-    Locations: list[Location] = field(
-        default_factory=list,
-        metadata={
-        'type': 'Association',
-        'stereotypes': [],
-        'minOccurs': '0',
-        'maxOccurs': 'unbounded',
-        'inverse': 'Location.Measurements',
-        'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
-        'serialize': False,
-        })
-    '''
-    '''
-
-    MeasurementCalculatorInput: list[MeasurementCalculatorInput] = field(
-        default_factory=list,
-        metadata={
-        'type': 'Association',
-        'stereotypes': [],
-        'minOccurs': '0',
-        'maxOccurs': 'unbounded',
-        'inverse': 'MeasurementCalculatorInput.Measurement',
-        'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
-        'serialize': False,
-        })
-    '''
-    '''
-
-    PowerSystemResource: Optional[PowerSystemResource] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'stereotypes': ['OfAggregate'],
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'PowerSystemResource.Measurements',
-        'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
-        'serialize': False,
-        })
-    '''
-    The power system resource that contains the measurement.
-    '''
-
     Procedures: list[Procedure] = field(
         default_factory=list,
         metadata={
@@ -13834,20 +10941,6 @@ class Measurement(IdentifiedObject):
         })
     '''
     Measurements are specified in types of documents, such as procedures.
-    '''
-
-    ProtectiveActionAdjustment: list[ProtectiveActionAdjustment] = field(
-        default_factory=list,
-        metadata={
-        'type': 'Association',
-        'stereotypes': [],
-        'minOccurs': '0',
-        'maxOccurs': 'unbounded',
-        'inverse': 'ProtectiveActionAdjustment.Measurement',
-        'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
-        'serialize': False,
-        })
-    '''
     '''
 
     @property
@@ -13915,36 +11008,6 @@ class Accumulator(Measurement):
         })
     '''
     A measurement may have zero or more limit ranges defined for it.
-    '''
-
-    LimitSets: list[AccumulatorLimitSet] = field(
-        default_factory=list,
-        metadata={
-        'type': 'Association',
-        'stereotypes': [],
-        'minOccurs': '0',
-        'maxOccurs': 'unbounded',
-        'inverse': 'AccumulatorLimitSet.Measurements',
-        'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
-        'serialize': False,
-        })
-    '''
-    A measurement may have zero or more limit ranges defined for it.
-    '''
-
-    AccumulatorValues: list[AccumulatorValue] = field(
-        default_factory=list,
-        metadata={
-        'type': 'Association',
-        'stereotypes': [],
-        'minOccurs': '0',
-        'maxOccurs': 'unbounded',
-        'inverse': 'AccumulatorValue.Accumulator',
-        'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
-        'serialize': False,
-        })
-    '''
-    The values connected to this measurement.
     '''
 
     @property
@@ -14058,36 +11121,6 @@ class Analog(Measurement):
     A measurement may have zero or more limit ranges defined for it.
     '''
 
-    LimitSets: list[AnalogLimitSet] = field(
-        default_factory=list,
-        metadata={
-        'type': 'Association',
-        'stereotypes': [],
-        'minOccurs': '0',
-        'maxOccurs': 'unbounded',
-        'inverse': 'AnalogLimitSet.Measurements',
-        'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
-        'serialize': False,
-        })
-    '''
-    A measurement may have zero or more limit ranges defined for it.
-    '''
-
-    AnalogValues: list[AnalogValue] = field(
-        default_factory=list,
-        metadata={
-        'type': 'Association',
-        'stereotypes': [],
-        'minOccurs': '0',
-        'maxOccurs': 'unbounded',
-        'inverse': 'AnalogValue.Analog',
-        'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
-        'serialize': False,
-        })
-    '''
-    The values connected to this measurement.
-    '''
-
     @property
     def __namespace__(self):
         return 'http://iec.ch/TC57/2012/CIM-schema-cim16#'
@@ -14183,21 +11216,6 @@ class Discrete(Measurement):
     to a name.
     '''
 
-    DiscreteValues: list[DiscreteValue] = field(
-        default_factory=list,
-        metadata={
-        'type': 'Association',
-        'stereotypes': [],
-        'minOccurs': '0',
-        'maxOccurs': 'unbounded',
-        'inverse': 'DiscreteValue.Discrete',
-        'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
-        'serialize': False,
-        })
-    '''
-    The values connected to this measurement.
-    '''
-
     @property
     def __namespace__(self):
         return 'http://iec.ch/TC57/2012/CIM-schema-cim16#'
@@ -14227,21 +11245,6 @@ class StringMeasurement(Measurement):
         'inverse': 'StringMeasurementValue.StringMeasurement',
         'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
         'serialize': True,
-        })
-    '''
-    The values connected to this measurement.
-    '''
-
-    StringMeasurementValues: list[StringMeasurementValue] = field(
-        default_factory=list,
-        metadata={
-        'type': 'Association',
-        'stereotypes': [],
-        'minOccurs': '0',
-        'maxOccurs': 'unbounded',
-        'inverse': 'StringMeasurementValue.StringMeasurement',
-        'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
-        'serialize': False,
         })
     '''
     The values connected to this measurement.
@@ -14356,20 +11359,6 @@ class MeasurementCalculatorInput(IdentifiedObject):
     '''
     '''
 
-    Measurement: Optional[Measurement] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'stereotypes': [],
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'Measurement.MeasurementCalculatorInput',
-        'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
-        'serialize': False,
-        })
-    '''
-    '''
-
     @property
     def __namespace__(self):
         return 'http://iec.ch/TC57/2012/CIM-schema-cim16#'
@@ -14468,38 +11457,6 @@ class MeasurementValue(IdentifiedObject):
     Link to the physical telemetered point associated with this measurement.
     '''
 
-    MeasurementValueQuality: Optional[MeasurementValueQuality] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'stereotypes': ['AggregateOf'],
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'MeasurementValueQuality.MeasurementValue',
-        'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
-        'serialize': False,
-        })
-    '''
-    A MeasurementValue has a MeasurementValueQuality associated with it.
-    '''
-
-    MeasurementValueSource: Optional[MeasurementValueSource] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'stereotypes': [],
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'MeasurementValueSource.MeasurementValues',
-        'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
-        'serialize': False,
-        })
-    '''
-    A reference to the type of source that updates the MeasurementValue,
-    e.g. SCADA, CCLink, manual, etc. User conventions for the names of
-    sources are contained in the introduction to IEC 61970-301.
-    '''
-
     ProcedureDataSets: list[ProcedureDataSet] = field(
         default_factory=list,
         metadata={
@@ -14512,21 +11469,6 @@ class MeasurementValue(IdentifiedObject):
         'serialize': False,
         })
     '''
-    '''
-
-    RemoteSource: Optional[RemoteSource] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'stereotypes': [],
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'RemoteSource.MeasurementValue',
-        'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
-        'serialize': False,
-        })
-    '''
-    Link to the physical telemetered point associated with this measurement.
     '''
 
     @property
@@ -14587,36 +11529,6 @@ class AccumulatorValue(MeasurementValue):
         'inverse': 'AccumulatorReset.AccumulatorValue',
         'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
         'serialize': True,
-        })
-    '''
-    The command that reset the accumulator value.
-    '''
-
-    Accumulator: Optional[Accumulator] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'stereotypes': [],
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'Accumulator.AccumulatorValues',
-        'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
-        'serialize': False,
-        })
-    '''
-    Measurement to which this value is connected.
-    '''
-
-    AccumulatorReset: Optional[AccumulatorReset] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'stereotypes': [],
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'AccumulatorReset.AccumulatorValue',
-        'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
-        'serialize': False,
         })
     '''
     The command that reset the accumulator value.
@@ -14715,66 +11627,6 @@ class AnalogValue(MeasurementValue):
     The Control variable associated with the MeasurementValue.
     '''
 
-    AltGeneratingUnit: list[AltGeneratingUnitMeas] = field(
-        default_factory=list,
-        metadata={
-        'type': 'Association',
-        'stereotypes': [],
-        'minOccurs': '0',
-        'maxOccurs': 'unbounded',
-        'inverse': 'AltGeneratingUnitMeas.AnalogValue',
-        'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
-        'serialize': False,
-        })
-    '''
-    The alternate generating unit for which this measurement value applies.
-    '''
-
-    AltTieMeas: list[AltTieMeas] = field(
-        default_factory=list,
-        metadata={
-        'type': 'Association',
-        'stereotypes': [],
-        'minOccurs': '0',
-        'maxOccurs': 'unbounded',
-        'inverse': 'AltTieMeas.AnalogValue',
-        'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
-        'serialize': False,
-        })
-    '''
-    The usage of the measurement within the control area specification.
-    '''
-
-    Analog: Optional[Analog] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'stereotypes': [],
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'Analog.AnalogValues',
-        'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
-        'serialize': False,
-        })
-    '''
-    Measurement to which this value is connected.
-    '''
-
-    AnalogControl: Optional[AnalogControl] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'stereotypes': [],
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'AnalogControl.AnalogValue',
-        'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
-        'serialize': False,
-        })
-    '''
-    The Control variable associated with the MeasurementValue.
-    '''
-
     @property
     def __namespace__(self):
         return 'http://iec.ch/TC57/2012/CIM-schema-cim16#'
@@ -14838,36 +11690,6 @@ class DiscreteValue(MeasurementValue):
     Measurement to which this value is connected.
     '''
 
-    Command: Optional[Command] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'stereotypes': [],
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'Command.DiscreteValue',
-        'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
-        'serialize': False,
-        })
-    '''
-    The Control variable associated with the MeasurementValue.
-    '''
-
-    Discrete: Optional[Discrete] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'stereotypes': [],
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'Discrete.DiscreteValues',
-        'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
-        'serialize': False,
-        })
-    '''
-    Measurement to which this value is connected.
-    '''
-
     @property
     def __namespace__(self):
         return 'http://iec.ch/TC57/2012/CIM-schema-cim16#'
@@ -14916,21 +11738,6 @@ class StringMeasurementValue(MeasurementValue):
     Measurement to which this value is connected.
     '''
 
-    StringMeasurement: Optional[StringMeasurement] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'stereotypes': [],
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'StringMeasurement.StringMeasurementValues',
-        'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
-        'serialize': False,
-        })
-    '''
-    Measurement to which this value is connected.
-    '''
-
     @property
     def __namespace__(self):
         return 'http://iec.ch/TC57/2012/CIM-schema-cim16#'
@@ -14962,21 +11769,6 @@ class MeasurementValueSource(IdentifiedObject):
         'inverse': 'MeasurementValue.MeasurementValueSource',
         'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
         'serialize': True,
-        })
-    '''
-    The MeasurementValues updated by the source.
-    '''
-
-    MeasurementValues: list[MeasurementValue] = field(
-        default_factory=list,
-        metadata={
-        'type': 'Association',
-        'stereotypes': [],
-        'minOccurs': '0',
-        'maxOccurs': 'unbounded',
-        'inverse': 'MeasurementValue.MeasurementValueSource',
-        'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
-        'serialize': False,
         })
     '''
     The MeasurementValues updated by the source.
@@ -15153,40 +11945,6 @@ class MutualCoupling(IdentifiedObject):
     branch of the mutual coupling.
     '''
 
-    First_Terminal: Optional[Terminal] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'stereotypes': [],
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'Terminal.HasFirstMutualCoupling',
-        'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
-        'serialize': False,
-        })
-    '''
-    The starting terminal for the calculation of distances along the first
-    branch of the mutual coupling. Normally MutualCoupling would only be
-    used for terminals of AC line segments. The first and second terminals
-    of a mutual coupling should point to different AC line segments.
-    '''
-
-    Second_Terminal: Optional[Terminal] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'stereotypes': [],
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'Terminal.HasSecondMutualCoupling',
-        'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
-        'serialize': False,
-        })
-    '''
-    The starting terminal for the calculation of distances along the second
-    branch of the mutual coupling.
-    '''
-
     @property
     def __namespace__(self):
         return 'http://iec.ch/TC57/2012/CIM-schema-cim16#'
@@ -15219,22 +11977,6 @@ class OperatingParticipant(IdentifiedObject):
         'inverse': 'OperatingShare.OperatingParticipant',
         'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
         'serialize': True,
-        })
-    '''
-    The operating shares of this operating participant. An operating participant
-    can be resused for any number of power system resources.
-    '''
-
-    OperatingShare: list[OperatingShare] = field(
-        default_factory=list,
-        metadata={
-        'type': 'Association',
-        'stereotypes': [],
-        'minOccurs': '0',
-        'maxOccurs': 'unbounded',
-        'inverse': 'OperatingShare.OperatingParticipant',
-        'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
-        'serialize': False,
         })
     '''
     The operating shares of this operating participant. An operating participant
@@ -15324,53 +12066,6 @@ class OperationalLimit(IdentifiedObject):
         'inverse': 'OperationalLimitType.OperationalLimit',
         'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
         'serialize': True,
-        })
-    '''
-    The limit type associated with this limit.
-    '''
-
-    LimitDependencyModel: list[LimitDependency] = field(
-        default_factory=list,
-        metadata={
-        'type': 'Association',
-        'stereotypes': [],
-        'minOccurs': '0',
-        'maxOccurs': 'unbounded',
-        'inverse': 'LimitDependency.OperationalLimit',
-        'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
-        'serialize': False,
-        })
-    '''
-    The limit dependency models which are used to calculate this limit.
-    If no limit dependencies are specified then the native limit value
-    is used.
-    '''
-
-    OperationalLimitSet: Optional[OperationalLimitSet] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'stereotypes': ['OfAggregate'],
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'OperationalLimitSet.OperationalLimitValue',
-        'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
-        'serialize': False,
-        })
-    '''
-    The limit set to which the limit values belong.
-    '''
-
-    OperationalLimitType: Optional[OperationalLimitType] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'stereotypes': [],
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'OperationalLimitType.OperationalLimit',
-        'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
-        'serialize': False,
         })
     '''
     The limit type associated with this limit.
@@ -15579,51 +12274,6 @@ class OperationalLimitSet(IdentifiedObject):
     The terminal where the operational limit set apply.
     '''
 
-    Terminal: Optional[ACDCTerminal] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'stereotypes': [],
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'ACDCTerminal.OperationalLimitSet',
-        'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
-        'serialize': False,
-        })
-    '''
-    The terminal where the operational limit set apply.
-    '''
-
-    Equipment: Optional[Equipment] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'stereotypes': [],
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'Equipment.OperationalLimitSet',
-        'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
-        'serialize': False,
-        })
-    '''
-    The equipment to which the limit set applies.
-    '''
-
-    OperationalLimitValue: list[OperationalLimit] = field(
-        default_factory=list,
-        metadata={
-        'type': 'Association',
-        'stereotypes': ['AggregateOf'],
-        'minOccurs': '0',
-        'maxOccurs': 'unbounded',
-        'inverse': 'OperationalLimit.OperationalLimitSet',
-        'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
-        'serialize': False,
-        })
-    '''
-    Values of equipment limits.
-    '''
-
     @property
     def __namespace__(self):
         return 'http://iec.ch/TC57/2012/CIM-schema-cim16#'
@@ -15713,49 +12363,6 @@ class OperationalLimitType(IdentifiedObject):
         'inverse': 'OperatonalLimitTypeScaling.TargetOperationalLimit',
         'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
         'serialize': True,
-        })
-    '''
-    '''
-
-    OperationalLimit: list[OperationalLimit] = field(
-        default_factory=list,
-        metadata={
-        'type': 'Association',
-        'stereotypes': [],
-        'minOccurs': '0',
-        'maxOccurs': 'unbounded',
-        'inverse': 'OperationalLimit.OperationalLimitType',
-        'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
-        'serialize': False,
-        })
-    '''
-    The operational limits associated with this type of limit.
-    '''
-
-    SourceOperationalLimitTypeScaling: list[OperatonalLimitTypeScaling] = field(
-        default_factory=list,
-        metadata={
-        'type': 'Association',
-        'stereotypes': [],
-        'minOccurs': '0',
-        'maxOccurs': 'unbounded',
-        'inverse': 'OperatonalLimitTypeScaling.SourceOperationalLimitType',
-        'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
-        'serialize': False,
-        })
-    '''
-    '''
-
-    TargetOperationalLimitmTypeScaling: Optional[OperatonalLimitTypeScaling] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'stereotypes': [],
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'OperatonalLimitTypeScaling.TargetOperationalLimit',
-        'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
-        'serialize': False,
         })
     '''
     '''
@@ -15927,21 +12534,6 @@ class AssetOwner(AssetOrganisationRole):
     All ownerships of this owner.
     '''
 
-    Ownerships: list[Ownership] = field(
-        default_factory=list,
-        metadata={
-        'type': 'Association',
-        'stereotypes': [],
-        'minOccurs': '0',
-        'maxOccurs': 'unbounded',
-        'inverse': 'Ownership.AssetOwner',
-        'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
-        'serialize': False,
-        })
-    '''
-    All ownerships of this owner.
-    '''
-
     @property
     def __namespace__(self):
         return 'http://iec.ch/TC57/2012/CIM-schema-cim16#'
@@ -16014,21 +12606,6 @@ class Manufacturer(OrganisationRole):
     All asset models by this manufacturer.
     '''
 
-    ProductAssetModels: list[ProductAssetModel] = field(
-        default_factory=list,
-        metadata={
-        'type': 'Association',
-        'stereotypes': [],
-        'minOccurs': '0',
-        'maxOccurs': 'unbounded',
-        'inverse': 'ProductAssetModel.Manufacturer',
-        'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
-        'serialize': False,
-        })
-    '''
-    All asset models by this manufacturer.
-    '''
-
     @property
     def __namespace__(self):
         return 'http://iec.ch/TC57/2012/CIM-schema-cim16#'
@@ -16092,21 +12669,6 @@ class Ownership(IdentifiedObject):
     Asset owner that is subject in this ownership.
     '''
 
-    AssetOwner: Optional[AssetOwner] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'stereotypes': [],
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'AssetOwner.Ownerships',
-        'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
-        'serialize': False,
-        })
-    '''
-    Asset owner that is subject in this ownership.
-    '''
-
     @property
     def __namespace__(self):
         return 'http://iec.ch/TC57/2012/CIM-schema-cim16#'
@@ -16139,21 +12701,6 @@ class PSRType(IdentifiedObject):
         'inverse': 'PowerSystemResource.PSRType',
         'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
         'serialize': True,
-        })
-    '''
-    Power system resources classified with this power system resource type.
-    '''
-
-    PowerSystemResources: list[PowerSystemResource] = field(
-        default_factory=list,
-        metadata={
-        'type': 'Association',
-        'stereotypes': [],
-        'minOccurs': '0',
-        'maxOccurs': 'unbounded',
-        'inverse': 'PowerSystemResource.PSRType',
-        'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
-        'serialize': False,
         })
     '''
     Power system resources classified with this power system resource type.
@@ -16203,36 +12750,6 @@ class PerLengthLineParameter(IdentifiedObject):
         'inverse': 'WireSpacingInfo.PerLengthParameters',
         'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
         'serialize': True,
-        })
-    '''
-    Wire spacing datasheet used to calculate this per-length parameter.
-    '''
-
-    WireInfos: list[WireInfo] = field(
-        default_factory=list,
-        metadata={
-        'type': 'Association',
-        'stereotypes': [],
-        'minOccurs': '0',
-        'maxOccurs': 'unbounded',
-        'inverse': 'WireInfo.PerLengthParameters',
-        'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
-        'serialize': False,
-        })
-    '''
-    All wire datasheets used to calculate this per-length parameter.
-    '''
-
-    WireSpacingInfo: Optional[WireSpacingInfo] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'stereotypes': [],
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'WireSpacingInfo.PerLengthParameters',
-        'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
-        'serialize': False,
         })
     '''
     Wire spacing datasheet used to calculate this per-length parameter.
@@ -16314,21 +12831,6 @@ class PerLengthDCLineParameter(PerLengthLineParameter):
     All line segments described by this set of per-length parameters.
     '''
 
-    DCLineSegments: list[DCLineSegment] = field(
-        default_factory=list,
-        metadata={
-        'type': 'Association',
-        'stereotypes': [],
-        'minOccurs': '0',
-        'maxOccurs': 'unbounded',
-        'inverse': 'DCLineSegment.PerLengthParameter',
-        'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
-        'serialize': False,
-        })
-    '''
-    All line segments described by this set of per-length parameters.
-    '''
-
     @property
     def __namespace__(self):
         return 'http://iec.ch/TC57/2012/CIM-schema-cim16#'
@@ -16358,21 +12860,6 @@ class PerLengthImpedance(PerLengthLineParameter):
         'inverse': 'ACLineSegment.PerLengthImpedance',
         'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
         'serialize': True,
-        })
-    '''
-    All line segments described by this per-length impedance.
-    '''
-
-    ACLineSegments: list[ACLineSegment] = field(
-        default_factory=list,
-        metadata={
-        'type': 'Association',
-        'stereotypes': [],
-        'minOccurs': '0',
-        'maxOccurs': 'unbounded',
-        'inverse': 'ACLineSegment.PerLengthImpedance',
-        'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
-        'serialize': False,
         })
     '''
     All line segments described by this per-length impedance.
@@ -16424,21 +12911,6 @@ class PerLengthPhaseImpedance(PerLengthImpedance):
         'inverse': 'PhaseImpedanceData.PhaseImpedance',
         'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
         'serialize': True,
-        })
-    '''
-    All data that belong to this conductor phase impedance.
-    '''
-
-    PhaseImpedanceData: list[PhaseImpedanceData] = field(
-        default_factory=list,
-        metadata={
-        'type': 'Association',
-        'stereotypes': [],
-        'minOccurs': '0',
-        'maxOccurs': 'unbounded',
-        'inverse': 'PhaseImpedanceData.PhaseImpedance',
-        'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
-        'serialize': False,
         })
     '''
     All data that belong to this conductor phase impedance.
@@ -16697,21 +13169,6 @@ class Person(IdentifiedObject):
     All roles of this person.
     '''
 
-    Roles: list[PersonRole] = field(
-        default_factory=list,
-        metadata={
-        'type': 'Association',
-        'stereotypes': [],
-        'minOccurs': '0',
-        'maxOccurs': 'unbounded',
-        'inverse': 'PersonRole.Person',
-        'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
-        'serialize': False,
-        })
-    '''
-    All roles of this person.
-    '''
-
     @property
     def __namespace__(self):
         return 'http://iec.ch/TC57/2012/CIM-schema-cim16#'
@@ -16775,21 +13232,6 @@ class PersonRole(IdentifiedObject):
     All configuration events created for this person role.
     '''
 
-    Person: Optional[Person] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'stereotypes': [],
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'Person.Roles',
-        'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
-        'serialize': False,
-        })
-    '''
-    Person having this role.
-    '''
-
     @property
     def __namespace__(self):
         return 'http://iec.ch/TC57/2012/CIM-schema-cim16#'
@@ -16838,21 +13280,6 @@ class CrewMember(OperationPersonRole):
         'inverse': 'Crew.CrewMembers',
         'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
         'serialize': True,
-        })
-    '''
-    Crew to which this crew member belongs.
-    '''
-
-    Crew: Optional[Crew] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'stereotypes': [],
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'Crew.CrewMembers',
-        'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
-        'serialize': False,
         })
     '''
     Crew to which this crew member belongs.
@@ -16937,36 +13364,6 @@ class PhaseTapChangerTable(IdentifiedObject):
         'inverse': 'PhaseTapChangerTabular.PhaseTapChangerTable',
         'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
         'serialize': True,
-        })
-    '''
-    The phase tap changers to which this phase tap table applies.
-    '''
-
-    PhaseTapChangerTablePoint: list[PhaseTapChangerTablePoint] = field(
-        default_factory=list,
-        metadata={
-        'type': 'Association',
-        'stereotypes': [],
-        'minOccurs': '0',
-        'maxOccurs': 'unbounded',
-        'inverse': 'PhaseTapChangerTablePoint.PhaseTapChangerTable',
-        'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
-        'serialize': False,
-        })
-    '''
-    The points of this table.
-    '''
-
-    PhaseTapChangerTabular: list[PhaseTapChangerTabular] = field(
-        default_factory=list,
-        metadata={
-        'type': 'Association',
-        'stereotypes': [],
-        'minOccurs': '0',
-        'maxOccurs': 'unbounded',
-        'inverse': 'PhaseTapChangerTabular.PhaseTapChangerTable',
-        'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
-        'serialize': False,
         })
     '''
     The phase tap changers to which this phase tap table applies.
@@ -17104,85 +13501,6 @@ class PowerSystemResource(IdentifiedObject):
     Reporting groups to which this power system resource belongs.
     '''
 
-    Assets: list[Asset] = field(
-        default_factory=list,
-        metadata={
-        'type': 'Association',
-        'stereotypes': [],
-        'minOccurs': '0',
-        'maxOccurs': 'unbounded',
-        'inverse': 'Asset.PowerSystemResources',
-        'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
-        'serialize': False,
-        })
-    '''
-    All assets represented by this power system resource. For example,
-    multiple conductor assets are electrically modelled as a single AC
-    line segment.
-    '''
-
-    AssetDatasheet: Optional[AssetInfo] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'stereotypes': [],
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'AssetInfo.PowerSystemResources',
-        'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
-        'serialize': False,
-        })
-    '''
-    Datasheet information for this power system resource.
-    '''
-
-    Controls: list[Control] = field(
-        default_factory=list,
-        metadata={
-        'type': 'Association',
-        'stereotypes': [],
-        'minOccurs': '0',
-        'maxOccurs': 'unbounded',
-        'inverse': 'Control.PowerSystemResource',
-        'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
-        'serialize': False,
-        })
-    '''
-    The controller outputs used to actually govern a regulating device,
-    e.g. the magnetization of a synchronous machine or capacitor bank breaker
-    actuator.
-    '''
-
-    Location: Optional[Location] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'stereotypes': [],
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'Location.PowerSystemResources',
-        'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
-        'serialize': False,
-        })
-    '''
-    Location of this power system resource.
-    '''
-
-    Measurements: list[Measurement] = field(
-        default_factory=list,
-        metadata={
-        'type': 'Association',
-        'stereotypes': ['AggregateOf'],
-        'minOccurs': '0',
-        'maxOccurs': 'unbounded',
-        'inverse': 'Measurement.PowerSystemResource',
-        'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
-        'serialize': False,
-        })
-    '''
-    The measurements associated with this power system resource.
-    '''
-
     OperatingShare: list[OperatingShare] = field(
         default_factory=list,
         metadata={
@@ -17196,36 +13514,6 @@ class PowerSystemResource(IdentifiedObject):
         })
     '''
     The operating shares of this power system resource.
-    '''
-
-    PSRType: Optional[PSRType] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'stereotypes': [],
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'PSRType.PowerSystemResources',
-        'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
-        'serialize': False,
-        })
-    '''
-    Custom classification for this power system resource.
-    '''
-
-    ReportingGroup: list[ReportingGroup] = field(
-        default_factory=list,
-        metadata={
-        'type': 'Association',
-        'stereotypes': [],
-        'minOccurs': '0',
-        'maxOccurs': 'unbounded',
-        'inverse': 'ReportingGroup.PowerSystemResource',
-        'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
-        'serialize': False,
-        })
-    '''
-    Reporting groups to which this power system resource belongs.
     '''
 
     @property
@@ -17273,21 +13561,6 @@ class ACLineSegmentPhase(PowerSystemResource):
         'inverse': 'ACLineSegment.ACLineSegmentPhases',
         'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
         'serialize': True,
-        })
-    '''
-    The line segment to which the phase belongs.
-    '''
-
-    ACLineSegment: Optional[ACLineSegment] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'stereotypes': [],
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'ACLineSegment.ACLineSegmentPhases',
-        'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
-        'serialize': False,
         })
     '''
     The line segment to which the phase belongs.
@@ -17355,37 +13628,6 @@ class AirCompressor(PowerSystemResource):
         'inverse': 'CombustionTurbine.AirCompressor',
         'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
         'serialize': True,
-        })
-    '''
-    A CAES air compressor is driven by combustion turbine.
-    '''
-
-    CAESPlant: Optional[CAESPlant] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'stereotypes': ['OfAggregate'],
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'CAESPlant.AirCompressor',
-        'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
-        'serialize': False,
-        })
-    '''
-    An air compressor may be a member of a compressed air energy storage
-    plant.
-    '''
-
-    CombustionTurbine: Optional[CombustionTurbine] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'stereotypes': [],
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'CombustionTurbine.AirCompressor',
-        'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
-        'serialize': False,
         })
     '''
     A CAES air compressor is driven by combustion turbine.
@@ -17465,38 +13707,6 @@ class CAESPlant(PowerSystemResource):
         'inverse': 'ThermalGeneratingUnit.CAESPlant',
         'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
         'serialize': True,
-        })
-    '''
-    A thermal generating unit may be a member of a compressed air energy
-    storage plant.
-    '''
-
-    AirCompressor: Optional[AirCompressor] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'stereotypes': ['AggregateOf'],
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'AirCompressor.CAESPlant',
-        'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
-        'serialize': False,
-        })
-    '''
-    An air compressor may be a member of a compressed air energy storage
-    plant.
-    '''
-
-    ThermalGeneratingUnit: Optional[ThermalGeneratingUnit] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'stereotypes': [],
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'ThermalGeneratingUnit.CAESPlant',
-        'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
-        'serialize': False,
         })
     '''
     A thermal generating unit may be a member of a compressed air energy
@@ -17626,36 +13836,6 @@ class CogenerationPlant(PowerSystemResource):
     A thermal generating unit may be a member of a cogeneration plant.
     '''
 
-    SteamSendoutSchedule: Optional[SteamSendoutSchedule] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'stereotypes': ['AggregateOf'],
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'SteamSendoutSchedule.CogenerationPlant',
-        'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
-        'serialize': False,
-        })
-    '''
-    A cogeneration plant has a steam sendout schedule.
-    '''
-
-    ThermalGeneratingUnits: list[ThermalGeneratingUnit] = field(
-        default_factory=list,
-        metadata={
-        'type': 'Association',
-        'stereotypes': [],
-        'minOccurs': '0',
-        'maxOccurs': 'unbounded',
-        'inverse': 'ThermalGeneratingUnit.CogenerationPlant',
-        'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
-        'serialize': False,
-        })
-    '''
-    A thermal generating unit may be a member of a cogeneration plant.
-    '''
-
     @property
     def __namespace__(self):
         return 'http://iec.ch/TC57/2012/CIM-schema-cim16#'
@@ -17706,21 +13886,6 @@ class CombinedCyclePlant(PowerSystemResource):
     A thermal generating unit may be a member of a combined cycle plant.
     '''
 
-    ThermalGeneratingUnits: list[ThermalGeneratingUnit] = field(
-        default_factory=list,
-        metadata={
-        'type': 'Association',
-        'stereotypes': [],
-        'minOccurs': '0',
-        'maxOccurs': 'unbounded',
-        'inverse': 'ThermalGeneratingUnit.CombinedCyclePlant',
-        'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
-        'serialize': False,
-        })
-    '''
-    A thermal generating unit may be a member of a combined cycle plant.
-    '''
-
     @property
     def __namespace__(self):
         return 'http://iec.ch/TC57/2012/CIM-schema-cim16#'
@@ -17754,21 +13919,6 @@ class CommunicationLink(PowerSystemResource):
         'inverse': 'RemoteUnit.CommunicationLinks',
         'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
         'serialize': True,
-        })
-    '''
-    RTUs may be attached to communication links.
-    '''
-
-    RemoteUnits: list[RemoteUnit] = field(
-        default_factory=list,
-        metadata={
-        'type': 'Association',
-        'stereotypes': [],
-        'minOccurs': '0',
-        'maxOccurs': 'unbounded',
-        'inverse': 'RemoteUnit.CommunicationLinks',
-        'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
-        'serialize': False,
         })
     '''
     RTUs may be attached to communication links.
@@ -17824,36 +13974,6 @@ class ConnectivityNodeContainer(PowerSystemResource):
     The topological nodes which belong to this connectivity node container.
     '''
 
-    ConnectivityNodes: list[ConnectivityNode] = field(
-        default_factory=list,
-        metadata={
-        'type': 'Association',
-        'stereotypes': [],
-        'minOccurs': '0',
-        'maxOccurs': 'unbounded',
-        'inverse': 'ConnectivityNode.ConnectivityNodeContainer',
-        'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
-        'serialize': False,
-        })
-    '''
-    Connectivity nodes which belong to this connectivity node container.
-    '''
-
-    TopologicalNode: list[TopologicalNode] = field(
-        default_factory=list,
-        metadata={
-        'type': 'Association',
-        'stereotypes': [],
-        'minOccurs': '0',
-        'maxOccurs': 'unbounded',
-        'inverse': 'TopologicalNode.ConnectivityNodeContainer',
-        'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
-        'serialize': False,
-        })
-    '''
-    The topological nodes which belong to this connectivity node container.
-    '''
-
     @property
     def __namespace__(self):
         return 'http://iec.ch/TC57/2012/CIM-schema-cim16#'
@@ -17884,21 +14004,6 @@ class EquipmentContainer(ConnectivityNodeContainer):
         'inverse': 'Equipment.EquipmentContainer',
         'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
         'serialize': True,
-        })
-    '''
-    Contained equipment.
-    '''
-
-    Equipments: list[Equipment] = field(
-        default_factory=list,
-        metadata={
-        'type': 'Association',
-        'stereotypes': ['AggregateOf'],
-        'minOccurs': '0',
-        'maxOccurs': 'unbounded',
-        'inverse': 'Equipment.EquipmentContainer',
-        'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
-        'serialize': False,
         })
     '''
     Contained equipment.
@@ -18012,21 +14117,6 @@ class Bay(EquipmentContainer):
     The voltage level containing this bay.
     '''
 
-    Substation: Optional[Substation] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'stereotypes': ['OfAggregate'],
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'Substation.Bays',
-        'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
-        'serialize': False,
-        })
-    '''
-    Substation containing the bay.
-    '''
-
     @property
     def __namespace__(self):
         return 'http://iec.ch/TC57/2012/CIM-schema-cim16#'
@@ -18073,36 +14163,6 @@ class DCEquipmentContainer(EquipmentContainer):
         'inverse': 'DCTopologicalNode.DCEquipmentContainer',
         'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
         'serialize': True,
-        })
-    '''
-    The topological nodes which belong to this connectivity node container.
-    '''
-
-    DCNodes: list[DCNode] = field(
-        default_factory=list,
-        metadata={
-        'type': 'Association',
-        'stereotypes': [],
-        'minOccurs': '0',
-        'maxOccurs': 'unbounded',
-        'inverse': 'DCNode.DCEquipmentContainer',
-        'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
-        'serialize': False,
-        })
-    '''
-    The DC nodes contained in the DC equipment container.
-    '''
-
-    DCTopologicalNode: list[DCTopologicalNode] = field(
-        default_factory=list,
-        metadata={
-        'type': 'Association',
-        'stereotypes': [],
-        'minOccurs': '0',
-        'maxOccurs': 'unbounded',
-        'inverse': 'DCTopologicalNode.DCEquipmentContainer',
-        'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
-        'serialize': False,
         })
     '''
     The topological nodes which belong to this connectivity node container.
@@ -18159,21 +14219,6 @@ class DCConverterUnit(DCEquipmentContainer):
     The containing substation of the DC converter unit.
     '''
 
-    Substation: Optional[Substation] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'stereotypes': ['OfAggregate'],
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'Substation.DCConverterUnit',
-        'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
-        'serialize': False,
-        })
-    '''
-    The containing substation of the DC converter unit.
-    '''
-
     @property
     def __namespace__(self):
         return 'http://iec.ch/TC57/2012/CIM-schema-cim16#'
@@ -18203,21 +14248,6 @@ class DCLine(DCEquipmentContainer):
         'inverse': 'SubGeographicalRegion.DCLines',
         'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
         'serialize': True,
-        })
-    '''
-    The SubGeographicalRegion containing the DC line.
-    '''
-
-    Region: Optional[SubGeographicalRegion] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'stereotypes': [],
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'SubGeographicalRegion.DCLines',
-        'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
-        'serialize': False,
         })
     '''
     The SubGeographicalRegion containing the DC line.
@@ -18253,21 +14283,6 @@ class Line(EquipmentContainer):
         'inverse': 'SubGeographicalRegion.Lines',
         'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
         'serialize': True,
-        })
-    '''
-    The sub-geographical region of the line.
-    '''
-
-    Region: Optional[SubGeographicalRegion] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'stereotypes': ['OfAggregate'],
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'SubGeographicalRegion.Lines',
-        'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
-        'serialize': False,
         })
     '''
     The sub-geographical region of the line.
@@ -18376,66 +14391,6 @@ class Substation(EquipmentContainer):
     The voltage levels within this substation.
     '''
 
-    Bays: list[Bay] = field(
-        default_factory=list,
-        metadata={
-        'type': 'Association',
-        'stereotypes': ['AggregateOf'],
-        'minOccurs': '0',
-        'maxOccurs': 'unbounded',
-        'inverse': 'Bay.Substation',
-        'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
-        'serialize': False,
-        })
-    '''
-    Bays contained in the substation.
-    '''
-
-    DCConverterUnit: list[DCConverterUnit] = field(
-        default_factory=list,
-        metadata={
-        'type': 'Association',
-        'stereotypes': ['AggregateOf'],
-        'minOccurs': '0',
-        'maxOccurs': 'unbounded',
-        'inverse': 'DCConverterUnit.Substation',
-        'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
-        'serialize': False,
-        })
-    '''
-    The DC converter unit belonging of the substation.
-    '''
-
-    Region: Optional[SubGeographicalRegion] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'stereotypes': ['OfAggregate'],
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'SubGeographicalRegion.Substations',
-        'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
-        'serialize': False,
-        })
-    '''
-    The SubGeographicalRegion containing the substation.
-    '''
-
-    VoltageLevels: list[VoltageLevel] = field(
-        default_factory=list,
-        metadata={
-        'type': 'Association',
-        'stereotypes': ['AggregateOf'],
-        'minOccurs': '0',
-        'maxOccurs': 'unbounded',
-        'inverse': 'VoltageLevel.Substation',
-        'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
-        'serialize': False,
-        })
-    '''
-    The voltage levels within this substation.
-    '''
-
     @property
     def __namespace__(self):
         return 'http://iec.ch/TC57/2012/CIM-schema-cim16#'
@@ -18519,21 +14474,6 @@ class VoltageLevel(EquipmentContainer):
     The substation of the voltage level.
     '''
 
-    BaseVoltage: Optional[BaseVoltage] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'stereotypes': [],
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'BaseVoltage.VoltageLevel',
-        'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
-        'serialize': False,
-        })
-    '''
-    The base voltage used for all equipment within the voltage level.
-    '''
-
     Bays: list[Bay] = field(
         default_factory=list,
         metadata={
@@ -18547,21 +14487,6 @@ class VoltageLevel(EquipmentContainer):
         })
     '''
     The bays within this voltage level.
-    '''
-
-    Substation: Optional[Substation] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'stereotypes': ['OfAggregate'],
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'Substation.VoltageLevels',
-        'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
-        'serialize': False,
-        })
-    '''
-    The substation of the voltage level.
     '''
 
     @property
@@ -18598,21 +14523,6 @@ class EquivalentNetwork(ConnectivityNodeContainer):
         'inverse': 'EquivalentEquipment.EquivalentNetwork',
         'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
         'serialize': True,
-        })
-    '''
-    The associated reduced equivalents.
-    '''
-
-    EquivalentEquipments: list[EquivalentEquipment] = field(
-        default_factory=list,
-        metadata={
-        'type': 'Association',
-        'stereotypes': ['AggregateOf'],
-        'minOccurs': '0',
-        'maxOccurs': 'unbounded',
-        'inverse': 'EquivalentEquipment.EquivalentNetwork',
-        'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
-        'serialize': False,
         })
     '''
     The associated reduced equivalents.
@@ -18718,21 +14628,6 @@ class ControlArea(PowerSystemResource):
         })
     '''
     The generating unit specificaitons for the control area.
-    '''
-
-    EnergyArea: Optional[EnergyArea] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'stereotypes': [],
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'EnergyArea.ControlArea',
-        'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
-        'serialize': False,
-        })
-    '''
-    The energy area that is forecast from this control area specification.
     '''
 
     TieFlow: list[TieFlow] = field(
@@ -18858,21 +14753,6 @@ class EnergyConsumerPhase(PowerSystemResource):
         'inverse': 'EnergyConsumer.EnergyConsumerPhase',
         'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
         'serialize': True,
-        })
-    '''
-    The energy consumer to which this phase belongs.
-    '''
-
-    EnergyConsumer: Optional[EnergyConsumer] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'stereotypes': [],
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'EnergyConsumer.EnergyConsumerPhase',
-        'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
-        'serialize': False,
         })
     '''
     The energy consumer to which this phase belongs.
@@ -19095,171 +14975,6 @@ class Equipment(PowerSystemResource):
     '''
     '''
 
-    ContingencyEquipment: list[ContingencyEquipment] = field(
-        default_factory=list,
-        metadata={
-        'type': 'Association',
-        'stereotypes': [],
-        'minOccurs': '0',
-        'maxOccurs': 'unbounded',
-        'inverse': 'ContingencyEquipment.Equipment',
-        'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
-        'serialize': False,
-        })
-    '''
-    The contingency equipments in which this equipment participates.
-    '''
-
-    EquipmentContainer: Optional[EquipmentContainer] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'stereotypes': ['OfAggregate'],
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'EquipmentContainer.Equipments',
-        'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
-        'serialize': False,
-        })
-    '''
-    Container of this equipment.
-    '''
-
-    EqiupmentLimitSeriesComponent: list[EquipmentLimitSeriesComponent] = field(
-        default_factory=list,
-        metadata={
-        'type': 'Association',
-        'stereotypes': [],
-        'minOccurs': '0',
-        'maxOccurs': 'unbounded',
-        'inverse': 'EquipmentLimitSeriesComponent.Equipment',
-        'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
-        'serialize': False,
-        })
-    '''
-    Equipment limit series calculation component to which this equipment
-    contributes.
-    '''
-
-    Faults: list[Fault] = field(
-        default_factory=list,
-        metadata={
-        'type': 'Association',
-        'stereotypes': [],
-        'minOccurs': '0',
-        'maxOccurs': 'unbounded',
-        'inverse': 'Fault.FaultyEquipment',
-        'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
-        'serialize': False,
-        })
-    '''
-    All faults on this equipment.
-    '''
-
-    LimitDependencyModel: list[LimitDependency] = field(
-        default_factory=list,
-        metadata={
-        'type': 'Association',
-        'stereotypes': ['AggregateOf'],
-        'minOccurs': '0',
-        'maxOccurs': 'unbounded',
-        'inverse': 'LimitDependency.Equipment',
-        'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
-        'serialize': False,
-        })
-    '''
-    Limit dependencymodels organized under this equipment as a means for
-    organizing the model in a tree view.
-    '''
-
-    OperationalLimitSet: list[OperationalLimitSet] = field(
-        default_factory=list,
-        metadata={
-        'type': 'Association',
-        'stereotypes': [],
-        'minOccurs': '0',
-        'maxOccurs': 'unbounded',
-        'inverse': 'OperationalLimitSet.Equipment',
-        'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
-        'serialize': False,
-        })
-    '''
-    The operational limit sets associated with this equipment.
-    '''
-
-    OperationalRestrictions: list[OperationalRestriction] = field(
-        default_factory=list,
-        metadata={
-        'type': 'Association',
-        'stereotypes': [],
-        'minOccurs': '0',
-        'maxOccurs': 'unbounded',
-        'inverse': 'OperationalRestriction.Equipments',
-        'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
-        'serialize': False,
-        })
-    '''
-    All operational restrictions for this equipment.
-    '''
-
-    Outages: list[Outage] = field(
-        default_factory=list,
-        metadata={
-        'type': 'Association',
-        'stereotypes': [],
-        'minOccurs': '0',
-        'maxOccurs': 'unbounded',
-        'inverse': 'Outage.Equipments',
-        'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
-        'serialize': False,
-        })
-    '''
-    All outages in which this equipment is involved.
-    '''
-
-    ProtectiveActionEquipment: list[ProtectiveActionEquipment] = field(
-        default_factory=list,
-        metadata={
-        'type': 'Association',
-        'stereotypes': [],
-        'minOccurs': '0',
-        'maxOccurs': 'unbounded',
-        'inverse': 'ProtectiveActionEquipment.Equipment',
-        'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
-        'serialize': False,
-        })
-    '''
-    '''
-
-    UsagePoints: list[UsagePoint] = field(
-        default_factory=list,
-        metadata={
-        'type': 'Association',
-        'stereotypes': [],
-        'minOccurs': '0',
-        'maxOccurs': 'unbounded',
-        'inverse': 'UsagePoint.Equipments',
-        'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
-        'serialize': False,
-        })
-    '''
-    All usage points connected to the electrical grid through this equipment.
-    '''
-
-    WeatherStation: list[WeatherStation] = field(
-        default_factory=list,
-        metadata={
-        'type': 'Association',
-        'stereotypes': [],
-        'minOccurs': '0',
-        'maxOccurs': 'unbounded',
-        'inverse': 'WeatherStation.Equipment',
-        'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
-        'serialize': False,
-        })
-    '''
-    '''
-
     @property
     def __namespace__(self):
         return 'http://iec.ch/TC57/2012/CIM-schema-cim16#'
@@ -19292,21 +15007,6 @@ class AuxiliaryEquipment(Equipment):
         'inverse': 'Terminal.AuxiliaryEquipment',
         'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
         'serialize': True,
-        })
-    '''
-    The Terminal at the equipment where the AuxiliaryEquipment is attached.
-    '''
-
-    Terminal: Optional[Terminal] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'stereotypes': [],
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'Terminal.AuxiliaryEquipment',
-        'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
-        'serialize': False,
         })
     '''
     The Terminal at the equipment where the AuxiliaryEquipment is attached.
@@ -19648,21 +15348,6 @@ class CompositeSwitch(Equipment):
     Switches contained in this Composite switch.
     '''
 
-    Switches: list[Switch] = field(
-        default_factory=list,
-        metadata={
-        'type': 'Association',
-        'stereotypes': ['AggregateOf'],
-        'minOccurs': '0',
-        'maxOccurs': 'unbounded',
-        'inverse': 'Switch.CompositeSwitch',
-        'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
-        'serialize': False,
-        })
-    '''
-    Switches contained in this Composite switch.
-    '''
-
     @property
     def __namespace__(self):
         return 'http://iec.ch/TC57/2012/CIM-schema-cim16#'
@@ -19784,114 +15469,6 @@ class ConductingEquipment(Equipment):
         'inverse': 'Terminal.ConductingEquipment',
         'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
         'serialize': True,
-        })
-    '''
-    Conducting equipment have terminals that may be connected to other
-    conducting equipment terminals via connectivity nodes or topological
-    nodes.
-    '''
-
-    BaseVoltage: Optional[BaseVoltage] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'stereotypes': [],
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'BaseVoltage.ConductingEquipment',
-        'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
-        'serialize': False,
-        })
-    '''
-    Base voltage of this conducting equipment. Use only when there is no
-    voltage level container used and only one base voltage applies. For
-    example, not used for transformers.
-    '''
-
-    GroundingAction: Optional[GroundAction] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'stereotypes': [],
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'GroundAction.GroundedEquipment',
-        'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
-        'serialize': False,
-        })
-    '''
-    Action involving grounding operation on this conducting equipment.
-    '''
-
-    JumpingAction: Optional[JumperAction] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'stereotypes': [],
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'JumperAction.JumpedEquipments',
-        'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
-        'serialize': False,
-        })
-    '''
-    Jumper action involving jumping operation on this conducting equipment.
-    '''
-
-    ProtectionEquipments: list[ProtectionEquipment] = field(
-        default_factory=list,
-        metadata={
-        'type': 'Association',
-        'stereotypes': [],
-        'minOccurs': '0',
-        'maxOccurs': 'unbounded',
-        'inverse': 'ProtectionEquipment.ConductingEquipments',
-        'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
-        'serialize': False,
-        })
-    '''
-    Protection equipment used to protect specific conducting equipment.
-    '''
-
-    ProtectiveActionAdjustment: list[ProtectiveActionAdjustment] = field(
-        default_factory=list,
-        metadata={
-        'type': 'Association',
-        'stereotypes': [],
-        'minOccurs': '0',
-        'maxOccurs': 'unbounded',
-        'inverse': 'ProtectiveActionAdjustment.ConductingEquipment',
-        'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
-        'serialize': False,
-        })
-    '''
-    '''
-
-    SvStatus: Optional[SvStatus] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'stereotypes': [],
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'SvStatus.ConductingEquipment',
-        'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
-        'serialize': False,
-        })
-    '''
-    The status state variable associated with this conducting equipment.
-    '''
-
-    Terminals: list[Terminal] = field(
-        default_factory=list,
-        metadata={
-        'type': 'Association',
-        'stereotypes': [],
-        'minOccurs': '0',
-        'maxOccurs': 'unbounded',
-        'inverse': 'Terminal.ConductingEquipment',
-        'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
-        'serialize': False,
         })
     '''
     Conducting equipment have terminals that may be connected to other
@@ -20213,22 +15790,6 @@ class ACDCConverter(ConductingEquipment):
     flows into the transformer.
     '''
 
-    DCTerminals: list[ACDCConverterDCTerminal] = field(
-        default_factory=list,
-        metadata={
-        'type': 'Association',
-        'stereotypes': [],
-        'minOccurs': '0',
-        'maxOccurs': 'unbounded',
-        'inverse': 'ACDCConverterDCTerminal.DCConductingEquipment',
-        'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
-        'serialize': False,
-        })
-    '''
-    A DC converter have DC converter terminals. A converter has two DC
-    converter terminals.
-    '''
-
     @property
     def __namespace__(self):
         return 'http://iec.ch/TC57/2012/CIM-schema-cim16#'
@@ -20459,22 +16020,6 @@ class CsConverter(ACDCConverter):
         'inverse': 'CSCDynamics.CSConverter',
         'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
         'serialize': True,
-        })
-    '''
-    Current source converter dynamics model used to describe dynamic behavior
-    of this converter.
-    '''
-
-    CSCDynamics: Optional[CSCDynamics] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'stereotypes': [],
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'CSCDynamics.CSConverter',
-        'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
-        'serialize': False,
         })
     '''
     Current source converter dynamics model used to describe dynamic behavior
@@ -20739,21 +16284,6 @@ class Clamp(ConductingEquipment):
         'inverse': 'ACLineSegment.Clamp',
         'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
         'serialize': True,
-        })
-    '''
-    The line segment to which the clamp is connected.
-    '''
-
-    ACLineSegment: Optional[ACLineSegment] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'stereotypes': [],
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'ACLineSegment.Clamp',
-        'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
-        'serialize': False,
         })
     '''
     The line segment to which the clamp is connected.
@@ -21065,113 +16595,6 @@ class ACLineSegment(Conductor):
     Per-length impedance of this line segment.
     '''
 
-    ACLineSegmentPhases: list[ACLineSegmentPhase] = field(
-        default_factory=list,
-        metadata={
-        'type': 'Association',
-        'stereotypes': [],
-        'minOccurs': '0',
-        'maxOccurs': 'unbounded',
-        'inverse': 'ACLineSegmentPhase.ACLineSegment',
-        'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
-        'serialize': False,
-        })
-    '''
-    The line segment phases which belong to the line segment.
-    '''
-
-    Clamp: list[Clamp] = field(
-        default_factory=list,
-        metadata={
-        'type': 'Association',
-        'stereotypes': [],
-        'minOccurs': '0',
-        'maxOccurs': 'unbounded',
-        'inverse': 'Clamp.ACLineSegment',
-        'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
-        'serialize': False,
-        })
-    '''
-    The clamps connected to the line segment.
-    '''
-
-    Cut: list[Cut] = field(
-        default_factory=list,
-        metadata={
-        'type': 'Association',
-        'stereotypes': [],
-        'minOccurs': '0',
-        'maxOccurs': 'unbounded',
-        'inverse': 'Cut.ACLineSegment',
-        'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
-        'serialize': False,
-        })
-    '''
-    Cuts applied to the line segment.
-    '''
-
-    LineGroundingAction: Optional[GroundAction] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'stereotypes': [],
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'GroundAction.AlongACLineSegment',
-        'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
-        'serialize': False,
-        })
-    '''
-    Ground action involving clamp usage (for the case when the ground is
-    applied along the line segment instead of at its terminals).
-    '''
-
-    LineJumpingAction: Optional[JumperAction] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'stereotypes': [],
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'JumperAction.AlongACLineSegments',
-        'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
-        'serialize': False,
-        })
-    '''
-    Jumper action involving clamp usage (for the case when the jumper is
-    applied along the line segment instead of at its terminals).
-    '''
-
-    LineFaults: list[LineFault] = field(
-        default_factory=list,
-        metadata={
-        'type': 'Association',
-        'stereotypes': [],
-        'minOccurs': '0',
-        'maxOccurs': 'unbounded',
-        'inverse': 'LineFault.ACLineSegment',
-        'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
-        'serialize': False,
-        })
-    '''
-    The line faults of the line segment.
-    '''
-
-    PerLengthImpedance: Optional[PerLengthImpedance] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'stereotypes': [],
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'PerLengthImpedance.ACLineSegments',
-        'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
-        'serialize': False,
-        })
-    '''
-    Per-length impedance of this line segment.
-    '''
-
     @property
     def __namespace__(self):
         return 'http://iec.ch/TC57/2012/CIM-schema-cim16#'
@@ -21245,21 +16668,6 @@ class BusbarSection(Connector):
         'inverse': 'VoltageControlZone.BusbarSection',
         'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
         'serialize': True,
-        })
-    '''
-    A VoltageControlZone is controlled by a designated BusbarSection.
-    '''
-
-    VoltageControlZone: Optional[VoltageControlZone] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'stereotypes': [],
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'VoltageControlZone.BusbarSection',
-        'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
-        'serialize': False,
         })
     '''
     A VoltageControlZone is controlled by a designated BusbarSection.
@@ -21698,68 +17106,6 @@ class EnergyConsumer(ConductingEquipment):
     The energy consumer is assigned to this power cut zone.
     '''
 
-    EnergyConsumerPhase: list[EnergyConsumerPhase] = field(
-        default_factory=list,
-        metadata={
-        'type': 'Association',
-        'stereotypes': [],
-        'minOccurs': '0',
-        'maxOccurs': 'unbounded',
-        'inverse': 'EnergyConsumerPhase.EnergyConsumer',
-        'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
-        'serialize': False,
-        })
-    '''
-    The individual phase models for this energy consumer.
-    '''
-
-    LoadDynamics: Optional[LoadDynamics] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'stereotypes': [],
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'LoadDynamics.EnergyConsumer',
-        'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
-        'serialize': False,
-        })
-    '''
-    Load dynamics model used to describe dynamic behavior of this energy
-    consumer.
-    '''
-
-    LoadResponse: Optional[LoadResponseCharacteristic] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'stereotypes': [],
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'LoadResponseCharacteristic.EnergyConsumer',
-        'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
-        'serialize': False,
-        })
-    '''
-    The load response characteristic of this load. If missing, this load
-    is assumed to be constant power.
-    '''
-
-    PowerCutZone: Optional[PowerCutZone] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'stereotypes': ['OfAggregate'],
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'PowerCutZone.EnergyConsumers',
-        'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
-        'serialize': False,
-        })
-    '''
-    The energy consumer is assigned to this power cut zone.
-    '''
-
     @property
     def __namespace__(self):
         return 'http://iec.ch/TC57/2012/CIM-schema-cim16#'
@@ -21795,21 +17141,6 @@ class ConformLoad(EnergyConsumer):
     Group of this ConformLoad.
     '''
 
-    LoadGroup: Optional[ConformLoadGroup] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'stereotypes': [],
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'ConformLoadGroup.EnergyConsumers',
-        'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
-        'serialize': False,
-        })
-    '''
-    Group of this ConformLoad.
-    '''
-
     @property
     def __namespace__(self):
         return 'http://iec.ch/TC57/2012/CIM-schema-cim16#'
@@ -21840,21 +17171,6 @@ class NonConformLoad(EnergyConsumer):
         'inverse': 'NonConformLoadGroup.EnergyConsumers',
         'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
         'serialize': True,
-        })
-    '''
-    Group of this ConformLoad.
-    '''
-
-    LoadGroup: Optional[NonConformLoadGroup] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'stereotypes': [],
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'NonConformLoadGroup.EnergyConsumers',
-        'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
-        'serialize': False,
         })
     '''
     Group of this ConformLoad.
@@ -22087,36 +17403,6 @@ class EnergySource(ConductingEquipment):
     Action taken with this energy source.
     '''
 
-    EnergySchedulingType: Optional[EnergySchedulingType] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'stereotypes': [],
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'EnergySchedulingType.EnergySource',
-        'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
-        'serialize': False,
-        })
-    '''
-    Energy Scheduling Type of an Energy Source
-    '''
-
-    EnergySourceAction: Optional[EnergySourceAction] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'stereotypes': [],
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'EnergySourceAction.EnergySource',
-        'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
-        'serialize': False,
-        })
-    '''
-    Action taken with this energy source.
-    '''
-
     @property
     def __namespace__(self):
         return 'http://iec.ch/TC57/2012/CIM-schema-cim16#'
@@ -22147,21 +17433,6 @@ class EquivalentEquipment(ConductingEquipment):
         'inverse': 'EquivalentNetwork.EquivalentEquipments',
         'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
         'serialize': True,
-        })
-    '''
-    The equivalent where the reduced model belongs.
-    '''
-
-    EquivalentNetwork: Optional[EquivalentNetwork] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'stereotypes': ['OfAggregate'],
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'EquivalentNetwork.EquivalentEquipments',
-        'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
-        'serialize': False,
         })
     '''
     The equivalent where the reduced model belongs.
@@ -22726,21 +17997,6 @@ class EquivalentInjection(EquivalentEquipment):
     The reactive capability curve used by this equivalent injection.
     '''
 
-    ReactiveCapabilityCurve: Optional[ReactiveCapabilityCurve] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'stereotypes': [],
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'ReactiveCapabilityCurve.EquivalentInjection',
-        'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
-        'serialize': False,
-        })
-    '''
-    The reactive capability curve used by this equivalent injection.
-    '''
-
     @property
     def __namespace__(self):
         return 'http://iec.ch/TC57/2012/CIM-schema-cim16#'
@@ -22818,21 +18074,6 @@ class Ground(ConductingEquipment):
         'inverse': 'GroundAction.Ground',
         'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
         'serialize': True,
-        })
-    '''
-    Action taken with this ground.
-    '''
-
-    GroundAction: Optional[GroundAction] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'stereotypes': [],
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'GroundAction.Ground',
-        'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
-        'serialize': False,
         })
     '''
     Action taken with this ground.
@@ -23035,36 +18276,6 @@ class PowerTransformer(ConductingEquipment):
     All transformers that belong to this bank.
     '''
 
-    PowerTransformerEnd: list[PowerTransformerEnd] = field(
-        default_factory=list,
-        metadata={
-        'type': 'Association',
-        'stereotypes': [],
-        'minOccurs': '0',
-        'maxOccurs': 'unbounded',
-        'inverse': 'PowerTransformerEnd.PowerTransformer',
-        'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
-        'serialize': False,
-        })
-    '''
-    The ends of this power transformer.
-    '''
-
-    TransformerTanks: list[TransformerTank] = field(
-        default_factory=list,
-        metadata={
-        'type': 'Association',
-        'stereotypes': [],
-        'minOccurs': '0',
-        'maxOccurs': 'unbounded',
-        'inverse': 'TransformerTank.PowerTransformer',
-        'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
-        'serialize': False,
-        })
-    '''
-    All transformers that belong to this bank.
-    '''
-
     @property
     def __namespace__(self):
         return 'http://iec.ch/TC57/2012/CIM-schema-cim16#'
@@ -23110,21 +18321,6 @@ class RegulatingCondEq(ConductingEquipment):
         'inverse': 'RegulatingControl.RegulatingCondEq',
         'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
         'serialize': True,
-        })
-    '''
-    The regulating control scheme in which this equipment participates.
-    '''
-
-    RegulatingControl: Optional[RegulatingControl] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'stereotypes': [],
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'RegulatingControl.RegulatingCondEq',
-        'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
-        'serialize': False,
         })
     '''
     The regulating control scheme in which this equipment participates.
@@ -23756,38 +18952,6 @@ class PowerElectronicsConnection(RegulatingCondEq):
     power electronics connection.
     '''
 
-    PowerElectronicsUnit: list[PowerElectronicsUnit] = field(
-        default_factory=list,
-        metadata={
-        'type': 'Association',
-        'stereotypes': [],
-        'minOccurs': '0',
-        'maxOccurs': 'unbounded',
-        'inverse': 'PowerElectronicsUnit.PowerElectronicsConnection',
-        'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
-        'serialize': False,
-        })
-    '''
-    An AC network connection may have several power electronics units connecting
-    through it.
-    '''
-
-    WindTurbineType3or4Dynamics: Optional[WindTurbineType3or4Dynamics] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'stereotypes': [],
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'WindTurbineType3or4Dynamics.PowerElectronicsConnection',
-        'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
-        'serialize': False,
-        })
-    '''
-    The wind turbine type 3 or type 4 dynamics model associated with this
-    power electronics connection.
-    '''
-
     @property
     def __namespace__(self):
         return 'http://iec.ch/TC57/2012/CIM-schema-cim16#'
@@ -23910,39 +19074,6 @@ class RotatingMachine(RegulatingCondEq):
         'inverse': 'HydroPump.RotatingMachine',
         'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
         'serialize': True,
-        })
-    '''
-    The synchronous machine drives the turbine which moves the water from
-    a low elevation to a higher elevation. The direction of machine rotation
-    for pumping may or may not be the same as for generating.
-    '''
-
-    GeneratingUnit: Optional[GeneratingUnit] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'stereotypes': [],
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'GeneratingUnit.RotatingMachine',
-        'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
-        'serialize': False,
-        })
-    '''
-    A synchronous machine may operate as a generator and as such becomes
-    a member of a generating unit.
-    '''
-
-    HydroPump: Optional[HydroPump] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'stereotypes': [],
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'HydroPump.RotatingMachine',
-        'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
-        'serialize': False,
         })
     '''
     The synchronous machine drives the turbine which moves the water from
@@ -24271,22 +19402,6 @@ class AsynchronousMachine(RotatingMachine):
         'inverse': 'AsynchronousMachineDynamics.AsynchronousMachine',
         'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
         'serialize': True,
-        })
-    '''
-    Asynchronous machine dynamics model used to describe dynamic behavior
-    of this asynchronous machine.
-    '''
-
-    AsynchronousMachineDynamics: Optional[AsynchronousMachineDynamics] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'stereotypes': [],
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'AsynchronousMachineDynamics.AsynchronousMachine',
-        'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
-        'serialize': False,
         })
     '''
     Asynchronous machine dynamics model used to describe dynamic behavior
@@ -24832,36 +19947,6 @@ class SynchronousMachine(RotatingMachine):
     of this synchronous machine.
     '''
 
-    PrimeMovers: list[PrimeMover] = field(
-        default_factory=list,
-        metadata={
-        'type': 'Association',
-        'stereotypes': [],
-        'minOccurs': '0',
-        'maxOccurs': 'unbounded',
-        'inverse': 'PrimeMover.SynchronousMachines',
-        'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
-        'serialize': False,
-        })
-    '''
-    Prime movers that drive this SynchronousMachine.
-    '''
-
-    ReactiveCapabilityCurves: list[ReactiveCapabilityCurve] = field(
-        default_factory=list,
-        metadata={
-        'type': 'Association',
-        'stereotypes': [],
-        'minOccurs': '0',
-        'maxOccurs': 'unbounded',
-        'inverse': 'ReactiveCapabilityCurve.SynchronousMachines',
-        'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
-        'serialize': False,
-        })
-    '''
-    All available reactive capability curves for this synchronous machine.
-    '''
-
     @property
     def __namespace__(self):
         return 'http://iec.ch/TC57/2012/CIM-schema-cim16#'
@@ -25063,36 +20148,6 @@ class ShuntCompensator(RegulatingCondEq):
     The state for the number of shunt compensator sections in service.
     '''
 
-    ShuntCompensatorPhase: list[ShuntCompensatorPhase] = field(
-        default_factory=list,
-        metadata={
-        'type': 'Association',
-        'stereotypes': [],
-        'minOccurs': '0',
-        'maxOccurs': 'unbounded',
-        'inverse': 'ShuntCompensatorPhase.ShuntCompensator',
-        'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
-        'serialize': False,
-        })
-    '''
-    The individual phases models for the shunt compensator.
-    '''
-
-    SvShuntCompensatorSections: Optional[SvShuntCompensatorSections] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'stereotypes': [],
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'SvShuntCompensatorSections.ShuntCompensator',
-        'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
-        'serialize': False,
-        })
-    '''
-    The state for the number of shunt compensator sections in service.
-    '''
-
     @property
     def __namespace__(self):
         return 'http://iec.ch/TC57/2012/CIM-schema-cim16#'
@@ -25200,21 +20255,6 @@ class NonlinearShuntCompensator(ShuntCompensator):
         'inverse': 'NonlinearShuntCompensatorPoint.NonlinearShuntCompensator',
         'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
         'serialize': True,
-        })
-    '''
-    All points of the non-linear shunt compensator.
-    '''
-
-    NonlinearShuntCompensatorPoints: list[NonlinearShuntCompensatorPoint] = field(
-        default_factory=list,
-        metadata={
-        'type': 'Association',
-        'stereotypes': ['AggregateOf'],
-        'minOccurs': '0',
-        'maxOccurs': 'unbounded',
-        'inverse': 'NonlinearShuntCompensatorPoint.NonlinearShuntCompensator',
-        'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
-        'serialize': False,
         })
     '''
     All points of the non-linear shunt compensator.
@@ -25348,22 +20388,6 @@ class StaticVarCompensator(RegulatingCondEq):
         'inverse': 'StaticVarCompensatorDynamics.StaticVarCompensator',
         'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
         'serialize': True,
-        })
-    '''
-    Static Var Compensator dynamics model used to describe dynamic behavior
-    of this Static Var Compensator.
-    '''
-
-    StaticVarCompensatorDynamics: Optional[StaticVarCompensatorDynamics] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'stereotypes': [],
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'StaticVarCompensatorDynamics.StaticVarCompensator',
-        'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
-        'serialize': False,
         })
     '''
     Static Var Compensator dynamics model used to describe dynamic behavior
@@ -25690,95 +20714,6 @@ class Switch(ConductingEquipment):
     A Switch can be associated with SwitchSchedules.
     '''
 
-    CompositeSwitch: Optional[CompositeSwitch] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'stereotypes': ['OfAggregate'],
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'CompositeSwitch.Switches',
-        'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
-        'serialize': False,
-        })
-    '''
-    Composite switch to which this Switch belongs.
-    '''
-
-    ConnectDisconnectFunctions: list[ConnectDisconnectFunction] = field(
-        default_factory=list,
-        metadata={
-        'type': 'Association',
-        'stereotypes': ['informative'],
-        'minOccurs': '0',
-        'maxOccurs': 'unbounded',
-        'inverse': 'ConnectDisconnectFunction.Switches',
-        'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
-        'serialize': False,
-        })
-    '''
-    '''
-
-    Outage: Optional[Outage] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'stereotypes': [],
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'Outage.OpenedSwitches',
-        'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
-        'serialize': False,
-        })
-    '''
-    Current outage of this protective device.
-    '''
-
-    SwitchAction: Optional[SwitchAction] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'stereotypes': [],
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'SwitchAction.OperatedSwitch',
-        'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
-        'serialize': False,
-        })
-    '''
-    Action changing status of this switch.
-    '''
-
-    SwitchPhase: list[SwitchPhase] = field(
-        default_factory=list,
-        metadata={
-        'type': 'Association',
-        'stereotypes': [],
-        'minOccurs': '0',
-        'maxOccurs': 'unbounded',
-        'inverse': 'SwitchPhase.Switch',
-        'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
-        'serialize': False,
-        })
-    '''
-    The individual switch phases for the switch.
-    '''
-
-    SwitchSchedules: list[SwitchSchedule] = field(
-        default_factory=list,
-        metadata={
-        'type': 'Association',
-        'stereotypes': [],
-        'minOccurs': '0',
-        'maxOccurs': 'unbounded',
-        'inverse': 'SwitchSchedule.Switch',
-        'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
-        'serialize': False,
-        })
-    '''
-    A Switch can be associated with SwitchSchedules.
-    '''
-
     @property
     def __namespace__(self):
         return 'http://iec.ch/TC57/2012/CIM-schema-cim16#'
@@ -25850,36 +20785,6 @@ class Cut(Switch):
         'inverse': 'CutAction.Cut',
         'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
         'serialize': True,
-        })
-    '''
-    Action taken with this cut.
-    '''
-
-    ACLineSegment: Optional[ACLineSegment] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'stereotypes': [],
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'ACLineSegment.Cut',
-        'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
-        'serialize': False,
-        })
-    '''
-    The line segment to which the cut is applied.
-    '''
-
-    CutAction: Optional[CutAction] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'stereotypes': [],
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'CutAction.Cut',
-        'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
-        'serialize': False,
         })
     '''
     Action taken with this cut.
@@ -25984,21 +20889,6 @@ class Jumper(Switch):
     Action taken with this jumper.
     '''
 
-    JumperAction: Optional[JumperAction] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'stereotypes': [],
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'JumperAction.Jumper',
-        'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
-        'serialize': False,
-        })
-    '''
-    Action taken with this jumper.
-    '''
-
     @property
     def __namespace__(self):
         return 'http://iec.ch/TC57/2012/CIM-schema-cim16#'
@@ -26059,36 +20949,6 @@ class ProtectedSwitch(Switch):
         'inverse': 'RecloseSequence.ProtectedSwitch',
         'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
         'serialize': True,
-        })
-    '''
-    A breaker may have zero or more automatic reclosures after a trip occurs.
-    '''
-
-    OperatedByProtectionEquipment: list[ProtectionEquipment] = field(
-        default_factory=list,
-        metadata={
-        'type': 'Association',
-        'stereotypes': [],
-        'minOccurs': '0',
-        'maxOccurs': 'unbounded',
-        'inverse': 'ProtectionEquipment.ProtectedSwitches',
-        'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
-        'serialize': False,
-        })
-    '''
-    Protection equipments that operate this ProtectedSwitch.
-    '''
-
-    RecloseSequences: list[RecloseSequence] = field(
-        default_factory=list,
-        metadata={
-        'type': 'Association',
-        'stereotypes': ['AggregateOf'],
-        'minOccurs': '0',
-        'maxOccurs': 'unbounded',
-        'inverse': 'RecloseSequence.ProtectedSwitch',
-        'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
-        'serialize': False,
         })
     '''
     A breaker may have zero or more automatic reclosures after a trip occurs.
@@ -26242,35 +21102,6 @@ class DCConductingEquipment(Equipment):
         'inverse': 'ProtectiveActionAdjustment.DCConductingEquipment',
         'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
         'serialize': True,
-        })
-    '''
-    '''
-
-    DCTerminals: list[DCTerminal] = field(
-        default_factory=list,
-        metadata={
-        'type': 'Association',
-        'stereotypes': [],
-        'minOccurs': '0',
-        'maxOccurs': 'unbounded',
-        'inverse': 'DCTerminal.DCConductingEquipment',
-        'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
-        'serialize': False,
-        })
-    '''
-    A DC conducting equipment has DC terminals.
-    '''
-
-    ProtectiveActionAdjustment: list[ProtectiveActionAdjustment] = field(
-        default_factory=list,
-        metadata={
-        'type': 'Association',
-        'stereotypes': [],
-        'minOccurs': '0',
-        'maxOccurs': 'unbounded',
-        'inverse': 'ProtectiveActionAdjustment.DCConductingEquipment',
-        'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
-        'serialize': False,
         })
     '''
     '''
@@ -26449,21 +21280,6 @@ class DCLineSegment(DCConductingEquipment):
         'inverse': 'PerLengthDCLineParameter.DCLineSegments',
         'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
         'serialize': True,
-        })
-    '''
-    Set of per-length parameters for this line segment.
-    '''
-
-    PerLengthParameter: Optional[PerLengthDCLineParameter] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'stereotypes': [],
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'PerLengthDCLineParameter.DCLineSegments',
-        'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
-        'serialize': False,
         })
     '''
     Set of per-length parameters for this line segment.
@@ -27308,86 +22124,6 @@ class GeneratingUnit(Equipment):
     a member of a generating unit.
     '''
 
-    ControlAreaGeneratingUnit: list[ControlAreaGeneratingUnit] = field(
-        default_factory=list,
-        metadata={
-        'type': 'Association',
-        'stereotypes': [],
-        'minOccurs': '0',
-        'maxOccurs': 'unbounded',
-        'inverse': 'ControlAreaGeneratingUnit.GeneratingUnit',
-        'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
-        'serialize': False,
-        })
-    '''
-    ControlArea specifications for this generating unit.
-    '''
-
-    GenUnitOpCostCurves: list[GenUnitOpCostCurve] = field(
-        default_factory=list,
-        metadata={
-        'type': 'Association',
-        'stereotypes': ['AggregateOf'],
-        'minOccurs': '0',
-        'maxOccurs': 'unbounded',
-        'inverse': 'GenUnitOpCostCurve.GeneratingUnit',
-        'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
-        'serialize': False,
-        })
-    '''
-    A generating unit may have one or more cost curves, depending upon
-    fuel mixture and fuel cost.
-    '''
-
-    GenUnitOpSchedule: Optional[GenUnitOpSchedule] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'stereotypes': ['AggregateOf'],
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'GenUnitOpSchedule.GeneratingUnit',
-        'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
-        'serialize': False,
-        })
-    '''
-    A generating unit may have an operating schedule, indicating the planned
-    operation of the unit.
-    '''
-
-    GrossToNetActivePowerCurves: list[GrossToNetActivePowerCurve] = field(
-        default_factory=list,
-        metadata={
-        'type': 'Association',
-        'stereotypes': ['AggregateOf'],
-        'minOccurs': '0',
-        'maxOccurs': 'unbounded',
-        'inverse': 'GrossToNetActivePowerCurve.GeneratingUnit',
-        'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
-        'serialize': False,
-        })
-    '''
-    A generating unit may have a gross active power to net active power
-    curve, describing the losses and auxiliary power requirements of the
-    unit.
-    '''
-
-    RotatingMachine: list[RotatingMachine] = field(
-        default_factory=list,
-        metadata={
-        'type': 'Association',
-        'stereotypes': [],
-        'minOccurs': '0',
-        'maxOccurs': 'unbounded',
-        'inverse': 'RotatingMachine.GeneratingUnit',
-        'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
-        'serialize': False,
-        })
-    '''
-    A synchronous machine may operate as a generator and as such becomes
-    a member of a generating unit.
-    '''
-
     @property
     def __namespace__(self):
         return 'http://iec.ch/TC57/2012/CIM-schema-cim16#'
@@ -27480,36 +22216,6 @@ class HydroGeneratingUnit(GeneratingUnit):
         })
     '''
     A hydro generating unit has an efficiency curve.
-    '''
-
-    HydroPowerPlant: Optional[HydroPowerPlant] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'stereotypes': ['OfAggregate'],
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'HydroPowerPlant.HydroGeneratingUnits',
-        'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
-        'serialize': False,
-        })
-    '''
-    The hydro generating unit belongs to a hydro power plant.
-    '''
-
-    PenstockLossCurve: Optional[PenstockLossCurve] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'stereotypes': ['AggregateOf'],
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'PenstockLossCurve.HydroGeneratingUnit',
-        'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
-        'serialize': False,
-        })
-    '''
-    A hydro generating unit has a penstock loss curve.
     '''
 
     TailbayLossCurve: list[TailbayLossCurve] = field(
@@ -27723,52 +22429,6 @@ class ThermalGeneratingUnit(GeneratingUnit):
     A thermal generating unit may have a startup model.
     '''
 
-    CAESPlant: Optional[CAESPlant] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'stereotypes': [],
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'CAESPlant.ThermalGeneratingUnit',
-        'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
-        'serialize': False,
-        })
-    '''
-    A thermal generating unit may be a member of a compressed air energy
-    storage plant.
-    '''
-
-    CogenerationPlant: Optional[CogenerationPlant] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'stereotypes': [],
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'CogenerationPlant.ThermalGeneratingUnits',
-        'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
-        'serialize': False,
-        })
-    '''
-    A thermal generating unit may be a member of a cogeneration plant.
-    '''
-
-    CombinedCyclePlant: Optional[CombinedCyclePlant] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'stereotypes': [],
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'CombinedCyclePlant.ThermalGeneratingUnits',
-        'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
-        'serialize': False,
-        })
-    '''
-    A thermal generating unit may be a member of a combined cycle plant.
-    '''
-
     EmmissionAccounts: list[EmissionAccount] = field(
         default_factory=list,
         metadata={
@@ -27827,81 +22487,6 @@ class ThermalGeneratingUnit(GeneratingUnit):
         })
     '''
     A thermal generating unit may have one or more fuel allocation schedules.
-    '''
-
-    HeatInputCurve: Optional[HeatInputCurve] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'stereotypes': ['AggregateOf'],
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'HeatInputCurve.ThermalGeneratingUnit',
-        'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
-        'serialize': False,
-        })
-    '''
-    A thermal generating unit may have a heat input curve.
-    '''
-
-    HeatRateCurve: Optional[HeatRateCurve] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'stereotypes': ['AggregateOf'],
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'HeatRateCurve.ThermalGeneratingUnit',
-        'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
-        'serialize': False,
-        })
-    '''
-    A thermal generating unit may have a heat rate curve.
-    '''
-
-    IncrementalHeatRateCurve: Optional[IncrementalHeatRateCurve] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'stereotypes': ['AggregateOf'],
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'IncrementalHeatRateCurve.ThermalGeneratingUnit',
-        'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
-        'serialize': False,
-        })
-    '''
-    A thermal generating unit may have an incremental heat rate curve.
-    '''
-
-    ShutdownCurve: Optional[ShutdownCurve] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'stereotypes': ['AggregateOf'],
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'ShutdownCurve.ThermalGeneratingUnit',
-        'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
-        'serialize': False,
-        })
-    '''
-    A thermal generating unit may have a shutdown curve.
-    '''
-
-    StartupModel: Optional[StartupModel] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'stereotypes': ['AggregateOf'],
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'StartupModel.ThermalGeneratingUnit',
-        'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
-        'serialize': False,
-        })
-    '''
-    A thermal generating unit may have a startup model.
     '''
 
     @property
@@ -28068,55 +22653,6 @@ class HydroPump(Equipment):
     for pumping may or may not be the same as for generating.
     '''
 
-    HydroPowerPlant: Optional[HydroPowerPlant] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'stereotypes': ['OfAggregate'],
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'HydroPowerPlant.HydroPumps',
-        'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
-        'serialize': False,
-        })
-    '''
-    The hydro pump may be a member of a pumped storage plant or a pump
-    for distributing water.
-    '''
-
-    HydroPumpOpSchedule: Optional[HydroPumpOpSchedule] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'stereotypes': ['AggregateOf'],
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'HydroPumpOpSchedule.HydroPump',
-        'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
-        'serialize': False,
-        })
-    '''
-    The hydro pump has a pumping schedule over time, indicating when pumping
-    is to occur.
-    '''
-
-    RotatingMachine: Optional[RotatingMachine] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'stereotypes': [],
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'RotatingMachine.HydroPump',
-        'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
-        'serialize': False,
-        })
-    '''
-    The synchronous machine drives the turbine which moves the water from
-    a low elevation to a higher elevation. The direction of machine rotation
-    for pumping may or may not be the same as for generating.
-    '''
-
     @property
     def __namespace__(self):
         return 'http://iec.ch/TC57/2012/CIM-schema-cim16#'
@@ -28177,21 +22713,6 @@ class PowerElectronicsUnit(Equipment):
         'inverse': 'PowerElectronicsConnection.PowerElectronicsUnit',
         'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
         'serialize': True,
-        })
-    '''
-    A power electronics unit have a connection to the AC network.
-    '''
-
-    PowerElectronicsConnection: Optional[PowerElectronicsConnection] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'stereotypes': [],
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'PowerElectronicsConnection.PowerElectronicsUnit',
-        'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
-        'serialize': False,
         })
     '''
     A power electronics unit have a connection to the AC network.
@@ -28366,36 +22887,6 @@ class ProtectionEquipment(Equipment):
         'serialize': True,
         })
     '''
-    '''
-
-    ConductingEquipments: list[ConductingEquipment] = field(
-        default_factory=list,
-        metadata={
-        'type': 'Association',
-        'stereotypes': [],
-        'minOccurs': '0',
-        'maxOccurs': 'unbounded',
-        'inverse': 'ConductingEquipment.ProtectionEquipments',
-        'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
-        'serialize': False,
-        })
-    '''
-    Protection equipment may be used to protect specific conducting equipment.
-    '''
-
-    ProtectedSwitches: list[ProtectedSwitch] = field(
-        default_factory=list,
-        metadata={
-        'type': 'Association',
-        'stereotypes': [],
-        'minOccurs': '0',
-        'maxOccurs': 'unbounded',
-        'inverse': 'ProtectedSwitch.OperatedByProtectionEquipment',
-        'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
-        'serialize': False,
-        })
-    '''
-    Protected switches operated by this ProtectionEquipment.
     '''
 
     @property
@@ -28649,50 +23140,6 @@ class TransformerTank(Equipment):
     All windings of this transformer.
     '''
 
-    PowerTransformer: Optional[PowerTransformer] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'stereotypes': [],
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'PowerTransformer.TransformerTanks',
-        'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
-        'serialize': False,
-        })
-    '''
-    Bank this transformer belongs to.
-    '''
-
-    TransformerObservations: list[TransformerObservation] = field(
-        default_factory=list,
-        metadata={
-        'type': 'Association',
-        'stereotypes': ['informative'],
-        'minOccurs': '0',
-        'maxOccurs': 'unbounded',
-        'inverse': 'TransformerObservation.Transformer',
-        'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
-        'serialize': False,
-        })
-    '''
-    '''
-
-    TransformerTankEnds: list[TransformerTankEnd] = field(
-        default_factory=list,
-        metadata={
-        'type': 'Association',
-        'stereotypes': [],
-        'minOccurs': '0',
-        'maxOccurs': 'unbounded',
-        'inverse': 'TransformerTankEnd.TransformerTank',
-        'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
-        'serialize': False,
-        })
-    '''
-    All windings of this transformer.
-    '''
-
     @property
     def __namespace__(self):
         return 'http://iec.ch/TC57/2012/CIM-schema-cim16#'
@@ -28905,53 +23352,6 @@ class HydroPowerPlant(PowerSystemResource):
     reservoir.
     '''
 
-    HydroGeneratingUnits: list[HydroGeneratingUnit] = field(
-        default_factory=list,
-        metadata={
-        'type': 'Association',
-        'stereotypes': ['AggregateOf'],
-        'minOccurs': '0',
-        'maxOccurs': 'unbounded',
-        'inverse': 'HydroGeneratingUnit.HydroPowerPlant',
-        'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
-        'serialize': False,
-        })
-    '''
-    The hydro generating unit belongs to a hydro power plant.
-    '''
-
-    HydroPumps: list[HydroPump] = field(
-        default_factory=list,
-        metadata={
-        'type': 'Association',
-        'stereotypes': ['AggregateOf'],
-        'minOccurs': '0',
-        'maxOccurs': 'unbounded',
-        'inverse': 'HydroPump.HydroPowerPlant',
-        'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
-        'serialize': False,
-        })
-    '''
-    The hydro pump may be a member of a pumped storage plant or a pump
-    for distributing water.
-    '''
-
-    Reservoir: Optional[Reservoir] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'stereotypes': [],
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'Reservoir.HydroPowerPlants',
-        'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
-        'serialize': False,
-        })
-    '''
-    Generators discharge water to or pumps are supplied water from a downstream
-    reservoir.
-    '''
-
     @property
     def __namespace__(self):
         return 'http://iec.ch/TC57/2012/CIM-schema-cim16#'
@@ -29016,21 +23416,6 @@ class PowerCutZone(PowerSystemResource):
     Energy consumer is assigned to the power cut zone.
     '''
 
-    EnergyConsumers: list[EnergyConsumer] = field(
-        default_factory=list,
-        metadata={
-        'type': 'Association',
-        'stereotypes': ['AggregateOf'],
-        'minOccurs': '0',
-        'maxOccurs': 'unbounded',
-        'inverse': 'EnergyConsumer.PowerCutZone',
-        'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
-        'serialize': False,
-        })
-    '''
-    Energy consumer is assigned to the power cut zone.
-    '''
-
     @property
     def __namespace__(self):
         return 'http://iec.ch/TC57/2012/CIM-schema-cim16#'
@@ -29074,21 +23459,6 @@ class PrimeMover(PowerSystemResource):
         'inverse': 'SynchronousMachine.PrimeMovers',
         'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
         'serialize': True,
-        })
-    '''
-    Synchronous machines this Prime mover drives.
-    '''
-
-    SynchronousMachines: list[SynchronousMachine] = field(
-        default_factory=list,
-        metadata={
-        'type': 'Association',
-        'stereotypes': [],
-        'minOccurs': '0',
-        'maxOccurs': 'unbounded',
-        'inverse': 'SynchronousMachine.PrimeMovers',
-        'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
-        'serialize': False,
         })
     '''
     Synchronous machines this Prime mover drives.
@@ -29274,52 +23644,6 @@ class CombustionTurbine(PrimeMover):
         'inverse': 'HeatRecoveryBoiler.CombustionTurbines',
         'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
         'serialize': True,
-        })
-    '''
-    A combustion turbine may have a heat recovery boiler for making steam.
-    '''
-
-    AirCompressor: Optional[AirCompressor] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'stereotypes': [],
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'AirCompressor.CombustionTurbine',
-        'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
-        'serialize': False,
-        })
-    '''
-    A CAES air compressor is driven by combustion turbine.
-    '''
-
-    CTTempActivePowerCurve: Optional[CTTempActivePowerCurve] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'stereotypes': ['AggregateOf'],
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'CTTempActivePowerCurve.CombustionTurbine',
-        'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
-        'serialize': False,
-        })
-    '''
-    A combustion turbine may have an active power versus ambient temperature
-    relationship.
-    '''
-
-    HeatRecoveryBoiler: Optional[HeatRecoveryBoiler] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'stereotypes': [],
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'HeatRecoveryBoiler.CombustionTurbines',
-        'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
-        'serialize': False,
         })
     '''
     A combustion turbine may have a heat recovery boiler for making steam.
@@ -29701,21 +24025,6 @@ class SteamTurbine(PrimeMover):
     Steam turbines may have steam supplied by a steam supply.
     '''
 
-    SteamSupplys: list[SteamSupply] = field(
-        default_factory=list,
-        metadata={
-        'type': 'Association',
-        'stereotypes': [],
-        'minOccurs': '0',
-        'maxOccurs': 'unbounded',
-        'inverse': 'SteamSupply.SteamTurbines',
-        'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
-        'serialize': False,
-        })
-    '''
-    Steam turbines may have steam supplied by a steam supply.
-    '''
-
     @property
     def __namespace__(self):
         return 'http://iec.ch/TC57/2012/CIM-schema-cim16#'
@@ -29903,70 +24212,6 @@ class RegulatingControl(PowerSystemResource):
         'inverse': 'Terminal.RegulatingControl',
         'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
         'serialize': True,
-        })
-    '''
-    The terminal associated with this regulating control. The terminal
-    is associated instead of a node, since the terminal could connect into
-    either a topological node (bus in bus-branch model) or a connectivity
-    node (detailed switch model). Sometimes it is useful to model regulation
-    at a terminal of a bus bar object since the bus bar can be present
-    in both a bus-branch model or a model with switch detail.
-    '''
-
-    ProtectiveActionRegulation: list[ProtectiveActionRegulation] = field(
-        default_factory=list,
-        metadata={
-        'type': 'Association',
-        'stereotypes': [],
-        'minOccurs': '0',
-        'maxOccurs': 'unbounded',
-        'inverse': 'ProtectiveActionRegulation.RegulatingControl',
-        'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
-        'serialize': False,
-        })
-    '''
-    '''
-
-    RegulatingCondEq: list[RegulatingCondEq] = field(
-        default_factory=list,
-        metadata={
-        'type': 'Association',
-        'stereotypes': [],
-        'minOccurs': '0',
-        'maxOccurs': 'unbounded',
-        'inverse': 'RegulatingCondEq.RegulatingControl',
-        'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
-        'serialize': False,
-        })
-    '''
-    The equipment that participates in this regulating control scheme.
-    '''
-
-    RegulationSchedule: list[RegulationSchedule] = field(
-        default_factory=list,
-        metadata={
-        'type': 'Association',
-        'stereotypes': [],
-        'minOccurs': '0',
-        'maxOccurs': 'unbounded',
-        'inverse': 'RegulationSchedule.RegulatingControl',
-        'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
-        'serialize': False,
-        })
-    '''
-    Schedule for this Regulating regulating control.
-    '''
-
-    Terminal: Optional[Terminal] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'stereotypes': [],
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'Terminal.RegulatingControl',
-        'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
-        'serialize': False,
         })
     '''
     The terminal associated with this regulating control. The terminal
@@ -30262,20 +24507,6 @@ class ShuntCompensatorControl(RegulatingControl):
     '''
     '''
 
-    ShuntCompensatorInfo: Optional[ShuntCompensatorInfo] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'stereotypes': ['informative'],
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'ShuntCompensatorInfo.ShuntCompensatorControl',
-        'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
-        'serialize': False,
-        })
-    '''
-    '''
-
     @property
     def __namespace__(self):
         return 'http://iec.ch/TC57/2012/CIM-schema-cim16#'
@@ -30401,21 +24632,6 @@ class TapChangerControl(RegulatingControl):
     The tap changers that participates in this regulating tap control scheme.
     '''
 
-    TapChanger: list[TapChanger] = field(
-        default_factory=list,
-        metadata={
-        'type': 'Association',
-        'stereotypes': [],
-        'minOccurs': '0',
-        'maxOccurs': 'unbounded',
-        'inverse': 'TapChanger.TapChangerControl',
-        'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
-        'serialize': False,
-        })
-    '''
-    The tap changers that participates in this regulating tap control scheme.
-    '''
-
     @property
     def __namespace__(self):
         return 'http://iec.ch/TC57/2012/CIM-schema-cim16#'
@@ -30482,36 +24698,6 @@ class RemoteUnit(PowerSystemResource):
         'inverse': 'RemotePoint.RemoteUnit',
         'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
         'serialize': True,
-        })
-    '''
-    Remote points this Remote unit contains.
-    '''
-
-    CommunicationLinks: list[CommunicationLink] = field(
-        default_factory=list,
-        metadata={
-        'type': 'Association',
-        'stereotypes': [],
-        'minOccurs': '0',
-        'maxOccurs': 'unbounded',
-        'inverse': 'CommunicationLink.RemoteUnits',
-        'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
-        'serialize': False,
-        })
-    '''
-    RTUs may be attached to communication links.
-    '''
-
-    RemotePoints: list[RemotePoint] = field(
-        default_factory=list,
-        metadata={
-        'type': 'Association',
-        'stereotypes': ['AggregateOf'],
-        'minOccurs': '0',
-        'maxOccurs': 'unbounded',
-        'inverse': 'RemotePoint.RemoteUnit',
-        'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
-        'serialize': False,
         })
     '''
     Remote points this Remote unit contains.
@@ -30757,22 +24943,6 @@ class Reservoir(PowerSystemResource):
     reservoir.
     '''
 
-    HydroPowerPlants: list[HydroPowerPlant] = field(
-        default_factory=list,
-        metadata={
-        'type': 'Association',
-        'stereotypes': [],
-        'minOccurs': '0',
-        'maxOccurs': 'unbounded',
-        'inverse': 'HydroPowerPlant.Reservoir',
-        'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
-        'serialize': False,
-        })
-    '''
-    Generators discharge water to or pumps are supplied water from a downstream
-    reservoir.
-    '''
-
     InflowForecasts: list[InflowForecast] = field(
         default_factory=list,
         metadata={
@@ -30816,21 +24986,6 @@ class Reservoir(PowerSystemResource):
         })
     '''
     A reservoir may spill into a downstream reservoir.
-    '''
-
-    TargetLevelSchedule: Optional[TargetLevelSchedule] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'stereotypes': ['AggregateOf'],
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'TargetLevelSchedule.Reservoir',
-        'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
-        'serialize': False,
-        })
-    '''
-    A reservoir may have a water level target schedule.
     '''
 
     @property
@@ -30909,21 +25064,6 @@ class ShuntCompensatorPhase(PowerSystemResource):
         'inverse': 'ShuntCompensator.ShuntCompensatorPhase',
         'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
         'serialize': True,
-        })
-    '''
-    Shunt compensator of this shunt compensator phase.
-    '''
-
-    ShuntCompensator: Optional[ShuntCompensator] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'stereotypes': [],
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'ShuntCompensator.ShuntCompensatorPhase',
-        'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
-        'serialize': False,
         })
     '''
     Shunt compensator of this shunt compensator phase.
@@ -31017,21 +25157,6 @@ class NonlinearShuntCompensatorPhase(ShuntCompensatorPhase):
     All points of the non-linear shunt compensator phase.
     '''
 
-    NonlinearShuntCompensatorPhasePoints: list[NonlinearShuntCompensatorPhasePoint] = field(
-        default_factory=list,
-        metadata={
-        'type': 'Association',
-        'stereotypes': ['AggregateOf'],
-        'minOccurs': '0',
-        'maxOccurs': 'unbounded',
-        'inverse': 'NonlinearShuntCompensatorPhasePoint.NonlinearShuntCompensatorPhase',
-        'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
-        'serialize': False,
-        })
-    '''
-    All points of the non-linear shunt compensator phase.
-    '''
-
     @property
     def __namespace__(self):
         return 'http://iec.ch/TC57/2012/CIM-schema-cim16#'
@@ -31075,21 +25200,6 @@ class SteamSupply(PowerSystemResource):
         'inverse': 'SteamTurbine.SteamSupplys',
         'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
         'serialize': True,
-        })
-    '''
-    Steam turbines may have steam supplied by a steam supply.
-    '''
-
-    SteamTurbines: list[SteamTurbine] = field(
-        default_factory=list,
-        metadata={
-        'type': 'Association',
-        'stereotypes': [],
-        'minOccurs': '0',
-        'maxOccurs': 'unbounded',
-        'inverse': 'SteamTurbine.SteamSupplys',
-        'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
-        'serialize': False,
         })
     '''
     Steam turbines may have steam supplied by a steam supply.
@@ -31883,21 +25993,6 @@ class HeatRecoveryBoiler(FossilSteamSupply):
     A combustion turbine may have a heat recovery boiler for making steam.
     '''
 
-    CombustionTurbines: list[CombustionTurbine] = field(
-        default_factory=list,
-        metadata={
-        'type': 'Association',
-        'stereotypes': [],
-        'minOccurs': '0',
-        'maxOccurs': 'unbounded',
-        'inverse': 'CombustionTurbine.HeatRecoveryBoiler',
-        'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
-        'serialize': False,
-        })
-    '''
-    A combustion turbine may have a heat recovery boiler for making steam.
-    '''
-
     @property
     def __namespace__(self):
         return 'http://iec.ch/TC57/2012/CIM-schema-cim16#'
@@ -32335,21 +26430,6 @@ class SwitchPhase(PowerSystemResource):
     The switch of the switch phase.
     '''
 
-    Switch: Optional[Switch] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'stereotypes': [],
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'Switch.SwitchPhase',
-        'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
-        'serialize': False,
-        })
-    '''
-    The switch of the switch phase.
-    '''
-
     @property
     def __namespace__(self):
         return 'http://iec.ch/TC57/2012/CIM-schema-cim16#'
@@ -32570,51 +26650,6 @@ class TapChanger(PowerSystemResource):
     A TapChanger can have TapSchedules.
     '''
 
-    SvTapStep: Optional[SvTapStep] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'stereotypes': [],
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'SvTapStep.TapChanger',
-        'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
-        'serialize': False,
-        })
-    '''
-    The tap step state associated with the tap changer.
-    '''
-
-    TapChangerControl: Optional[TapChangerControl] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'stereotypes': [],
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'TapChangerControl.TapChanger',
-        'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
-        'serialize': False,
-        })
-    '''
-    The regulating control scheme in which this tap changer participates.
-    '''
-
-    TapSchedules: list[TapSchedule] = field(
-        default_factory=list,
-        metadata={
-        'type': 'Association',
-        'stereotypes': [],
-        'minOccurs': '0',
-        'maxOccurs': 'unbounded',
-        'inverse': 'TapSchedule.TapChanger',
-        'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
-        'serialize': False,
-        })
-    '''
-    A TapChanger can have TapSchedules.
-    '''
-
     @property
     def __namespace__(self):
         return 'http://iec.ch/TC57/2012/CIM-schema-cim16#'
@@ -32647,21 +26682,6 @@ class PhaseTapChanger(TapChanger):
         'inverse': 'TransformerEnd.PhaseTapChanger',
         'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
         'serialize': True,
-        })
-    '''
-    Transformer end to which this phase tap changer belongs.
-    '''
-
-    TransformerEnd: Optional[TransformerEnd] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'stereotypes': [],
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'TransformerEnd.PhaseTapChanger',
-        'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
-        'serialize': False,
         })
     '''
     Transformer end to which this phase tap changer belongs.
@@ -32905,21 +26925,6 @@ class PhaseTapChangerTabular(PhaseTapChanger):
     The phase tap changer table for this phase tap changer.
     '''
 
-    PhaseTapChangerTable: Optional[PhaseTapChangerTable] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'stereotypes': [],
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'PhaseTapChangerTable.PhaseTapChangerTabular',
-        'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
-        'serialize': False,
-        })
-    '''
-    The phase tap changer table for this phase tap changer.
-    '''
-
     @property
     def __namespace__(self):
         return 'http://iec.ch/TC57/2012/CIM-schema-cim16#'
@@ -32999,36 +27004,6 @@ class RatioTapChanger(TapChanger):
     Transformer end to which this ratio tap changer belongs.
     '''
 
-    RatioTapChangerTable: Optional[RatioTapChangerTable] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'stereotypes': [],
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'RatioTapChangerTable.RatioTapChanger',
-        'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
-        'serialize': False,
-        })
-    '''
-    The tap ratio table for this ratio tap changer.
-    '''
-
-    TransformerEnd: Optional[TransformerEnd] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'stereotypes': [],
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'TransformerEnd.RatioTapChanger',
-        'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
-        'serialize': False,
-        })
-    '''
-    Transformer end to which this ratio tap changer belongs.
-    '''
-
     @property
     def __namespace__(self):
         return 'http://iec.ch/TC57/2012/CIM-schema-cim16#'
@@ -33080,36 +27055,6 @@ class VoltageControlZone(PowerSystemResource):
     A VoltageControlZone may have a voltage regulation schedule.
     '''
 
-    BusbarSection: Optional[BusbarSection] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'stereotypes': [],
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'BusbarSection.VoltageControlZone',
-        'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
-        'serialize': False,
-        })
-    '''
-    A VoltageControlZone is controlled by a designated BusbarSection.
-    '''
-
-    RegulationSchedule: Optional[RegulationSchedule] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'stereotypes': [],
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'RegulationSchedule.VoltageControlZones',
-        'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
-        'serialize': False,
-        })
-    '''
-    A VoltageControlZone may have a voltage regulation schedule.
-    '''
-
     @property
     def __namespace__(self):
         return 'http://iec.ch/TC57/2012/CIM-schema-cim16#'
@@ -33139,20 +27084,6 @@ class WeatherStation(PowerSystemResource):
         'inverse': 'Equipment.WeatherStation',
         'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
         'serialize': True,
-        })
-    '''
-    '''
-
-    Equipment: list[Equipment] = field(
-        default_factory=list,
-        metadata={
-        'type': 'Association',
-        'stereotypes': [],
-        'minOccurs': '0',
-        'maxOccurs': 'unbounded',
-        'inverse': 'Equipment.WeatherStation',
-        'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
-        'serialize': False,
         })
     '''
     '''
@@ -33324,48 +27255,6 @@ class ProtectiveActionAdjustment(ProtectiveAction):
     '''
     '''
 
-    ConductingEquipment: Optional[ConductingEquipment] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'stereotypes': [],
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'ConductingEquipment.ProtectiveActionAdjustment',
-        'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
-        'serialize': False,
-        })
-    '''
-    '''
-
-    DCConductingEquipment: Optional[DCConductingEquipment] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'stereotypes': [],
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'DCConductingEquipment.ProtectiveActionAdjustment',
-        'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
-        'serialize': False,
-        })
-    '''
-    '''
-
-    Measurement: Optional[Measurement] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'stereotypes': [],
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'Measurement.ProtectiveActionAdjustment',
-        'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
-        'serialize': False,
-        })
-    '''
-    '''
-
     @property
     def __namespace__(self):
         return 'http://iec.ch/TC57/2012/CIM-schema-cim16#'
@@ -33409,20 +27298,6 @@ class ProtectiveActionEquipment(ProtectiveAction):
         'inverse': 'Equipment.ProtectiveActionEquipment',
         'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
         'serialize': True,
-        })
-    '''
-    '''
-
-    Equipment: Optional[Equipment] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'stereotypes': [],
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'Equipment.ProtectiveActionEquipment',
-        'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
-        'serialize': False,
         })
     '''
     '''
@@ -33491,20 +27366,6 @@ class ProtectiveActionRegulation(ProtectiveAction):
     '''
     '''
 
-    RegulatingControl: Optional[RegulatingControl] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'stereotypes': [],
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'RegulatingControl.ProtectiveActionRegulation',
-        'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
-        'serialize': False,
-        })
-    '''
-    '''
-
     @property
     def __namespace__(self):
         return 'http://iec.ch/TC57/2012/CIM-schema-cim16#'
@@ -33550,36 +27411,6 @@ class RatioTapChangerTable(IdentifiedObject):
         'inverse': 'RatioTapChangerTablePoint.RatioTapChangerTable',
         'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
         'serialize': True,
-        })
-    '''
-    Points of this table.
-    '''
-
-    RatioTapChanger: list[RatioTapChanger] = field(
-        default_factory=list,
-        metadata={
-        'type': 'Association',
-        'stereotypes': [],
-        'minOccurs': '0',
-        'maxOccurs': 'unbounded',
-        'inverse': 'RatioTapChanger.RatioTapChangerTable',
-        'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
-        'serialize': False,
-        })
-    '''
-    The ratio tap changer of this tap ratio table.
-    '''
-
-    RatioTapChangerTablePoint: list[RatioTapChangerTablePoint] = field(
-        default_factory=list,
-        metadata={
-        'type': 'Association',
-        'stereotypes': [],
-        'minOccurs': '0',
-        'maxOccurs': 'unbounded',
-        'inverse': 'RatioTapChangerTablePoint.RatioTapChangerTable',
-        'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
-        'serialize': False,
         })
     '''
     Points of this table.
@@ -33649,21 +27480,6 @@ class RecloseSequence(IdentifiedObject):
     A breaker may have zero or more automatic reclosures after a trip occurs.
     '''
 
-    ProtectedSwitch: Optional[ProtectedSwitch] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'stereotypes': ['OfAggregate'],
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'ProtectedSwitch.RecloseSequences',
-        'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
-        'serialize': False,
-        })
-    '''
-    A breaker may have zero or more automatic reclosures after a trip occurs.
-    '''
-
     @property
     def __namespace__(self):
         return 'http://iec.ch/TC57/2012/CIM-schema-cim16#'
@@ -33694,21 +27510,6 @@ class RemotePoint(IdentifiedObject):
         'inverse': 'RemoteUnit.RemotePoints',
         'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
         'serialize': True,
-        })
-    '''
-    Remote unit this point belongs to.
-    '''
-
-    RemoteUnit: Optional[RemoteUnit] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'stereotypes': ['OfAggregate'],
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'RemoteUnit.RemotePoints',
-        'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
-        'serialize': False,
         })
     '''
     Remote unit this point belongs to.
@@ -33786,21 +27587,6 @@ class RemoteControl(RemotePoint):
         'inverse': 'Control.RemoteControl',
         'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
         'serialize': True,
-        })
-    '''
-    The Control for the RemoteControl point.
-    '''
-
-    Control: Optional[Control] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'stereotypes': [],
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'Control.RemoteControl',
-        'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
-        'serialize': False,
         })
     '''
     The Control for the RemoteControl point.
@@ -33897,21 +27683,6 @@ class RemoteSource(RemotePoint):
     Link to the physical telemetered point associated with this measurement.
     '''
 
-    MeasurementValue: Optional[MeasurementValue] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'stereotypes': [],
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'MeasurementValue.RemoteSource',
-        'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
-        'serialize': False,
-        })
-    '''
-    Link to the physical telemetered point associated with this measurement.
-    '''
-
     @property
     def __namespace__(self):
         return 'http://iec.ch/TC57/2012/CIM-schema-cim16#'
@@ -33991,66 +27762,6 @@ class ReportingGroup(IdentifiedObject):
     The topological nodes that belong to the reporting group.
     '''
 
-    BusNameMarker: list[BusNameMarker] = field(
-        default_factory=list,
-        metadata={
-        'type': 'Association',
-        'stereotypes': [],
-        'minOccurs': '0',
-        'maxOccurs': 'unbounded',
-        'inverse': 'BusNameMarker.ReportingGroup',
-        'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
-        'serialize': False,
-        })
-    '''
-    The bus name markers that belong to this reporting group.
-    '''
-
-    PowerSystemResource: list[PowerSystemResource] = field(
-        default_factory=list,
-        metadata={
-        'type': 'Association',
-        'stereotypes': [],
-        'minOccurs': '0',
-        'maxOccurs': 'unbounded',
-        'inverse': 'PowerSystemResource.ReportingGroup',
-        'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
-        'serialize': False,
-        })
-    '''
-    Power system resources which belong to this reporting group.
-    '''
-
-    ReportingSuperGroup: Optional[ReportingSuperGroup] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'stereotypes': ['OfAggregate'],
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'ReportingSuperGroup.ReportingGroup',
-        'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
-        'serialize': False,
-        })
-    '''
-    Reporting super group to which this reporting group belongs.
-    '''
-
-    TopologicalNode: list[TopologicalNode] = field(
-        default_factory=list,
-        metadata={
-        'type': 'Association',
-        'stereotypes': [],
-        'minOccurs': '0',
-        'maxOccurs': 'unbounded',
-        'inverse': 'TopologicalNode.ReportingGroup',
-        'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
-        'serialize': False,
-        })
-    '''
-    The topological nodes that belong to the reporting group.
-    '''
-
     @property
     def __namespace__(self):
         return 'http://iec.ch/TC57/2012/CIM-schema-cim16#'
@@ -34081,21 +27792,6 @@ class ReportingSuperGroup(IdentifiedObject):
         'inverse': 'ReportingGroup.ReportingSuperGroup',
         'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
         'serialize': True,
-        })
-    '''
-    Reporting groups that are grouped under this super group.
-    '''
-
-    ReportingGroup: list[ReportingGroup] = field(
-        default_factory=list,
-        metadata={
-        'type': 'Association',
-        'stereotypes': ['AggregateOf'],
-        'minOccurs': '0',
-        'maxOccurs': 'unbounded',
-        'inverse': 'ReportingGroup.ReportingSuperGroup',
-        'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
-        'serialize': False,
         })
     '''
     Reporting groups that are grouped under this super group.
@@ -34161,21 +27857,6 @@ class ScheduledEvent(IdentifiedObject):
         'inverse': 'ScheduledEventData.ScheduledEvents',
         'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
         'serialize': True,
-        })
-    '''
-    Specification for this scheduled event.
-    '''
-
-    ScheduledEventData: Optional[ScheduledEventData] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'stereotypes': [],
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'ScheduledEventData.ScheduledEvents',
-        'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
-        'serialize': False,
         })
     '''
     Specification for this scheduled event.
@@ -34608,66 +28289,6 @@ class StartupModel(IdentifiedObject):
     A thermal generating unit may have a startup model.
     '''
 
-    StartIgnFuelCurve: Optional[StartIgnFuelCurve] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'stereotypes': ['AggregateOf'],
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'StartIgnFuelCurve.StartupModel',
-        'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
-        'serialize': False,
-        })
-    '''
-    The unit's startup model may have a startup ignition fuel curve.
-    '''
-
-    StartMainFuelCurve: Optional[StartMainFuelCurve] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'stereotypes': ['AggregateOf'],
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'StartMainFuelCurve.StartupModel',
-        'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
-        'serialize': False,
-        })
-    '''
-    The unit's startup model may have a startup main fuel curve.
-    '''
-
-    StartRampCurve: Optional[StartRampCurve] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'stereotypes': ['AggregateOf'],
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'StartRampCurve.StartupModel',
-        'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
-        'serialize': False,
-        })
-    '''
-    The unit's startup model may have a startup ramp curve.
-    '''
-
-    ThermalGeneratingUnit: Optional[ThermalGeneratingUnit] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'stereotypes': ['OfAggregate'],
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'ThermalGeneratingUnit.StartupModel',
-        'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
-        'serialize': False,
-        })
-    '''
-    A thermal generating unit may have a startup model.
-    '''
-
     @property
     def __namespace__(self):
         return 'http://iec.ch/TC57/2012/CIM-schema-cim16#'
@@ -34698,22 +28319,6 @@ class StaticVarCompensatorDynamics(IdentifiedObject):
         'inverse': 'StaticVarCompensator.StaticVarCompensatorDynamics',
         'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
         'serialize': True,
-        })
-    '''
-    Static Var Compensator to which Static Var Compensator dynamics model
-    applies.
-    '''
-
-    StaticVarCompensator: Optional[StaticVarCompensator] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'stereotypes': [],
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'StaticVarCompensator.StaticVarCompensatorDynamics',
-        'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
-        'serialize': False,
         })
     '''
     Static Var Compensator to which Static Var Compensator dynamics model
@@ -34797,66 +28402,6 @@ class SubGeographicalRegion(IdentifiedObject):
         'inverse': 'Substation.Region',
         'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
         'serialize': True,
-        })
-    '''
-    The substations in this sub-geographical region.
-    '''
-
-    DCLines: list[DCLine] = field(
-        default_factory=list,
-        metadata={
-        'type': 'Association',
-        'stereotypes': [],
-        'minOccurs': '0',
-        'maxOccurs': 'unbounded',
-        'inverse': 'DCLine.Region',
-        'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
-        'serialize': False,
-        })
-    '''
-    The DC lines in this sub-geographical region.
-    '''
-
-    Region: Optional[GeographicalRegion] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'stereotypes': ['OfAggregate'],
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'GeographicalRegion.Regions',
-        'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
-        'serialize': False,
-        })
-    '''
-    The geographical region to which this sub-geographical region is within.
-    '''
-
-    Lines: list[Line] = field(
-        default_factory=list,
-        metadata={
-        'type': 'Association',
-        'stereotypes': ['AggregateOf'],
-        'minOccurs': '0',
-        'maxOccurs': 'unbounded',
-        'inverse': 'Line.Region',
-        'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
-        'serialize': False,
-        })
-    '''
-    The lines within the sub-geographical region.
-    '''
-
-    Substations: list[Substation] = field(
-        default_factory=list,
-        metadata={
-        'type': 'Association',
-        'stereotypes': ['AggregateOf'],
-        'minOccurs': '0',
-        'maxOccurs': 'unbounded',
-        'inverse': 'Substation.Region',
-        'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
-        'serialize': False,
         })
     '''
     The substations in this sub-geographical region.
@@ -34995,21 +28540,6 @@ class TimePoint(IdentifiedObject):
     Time schedule owning this time point.
     '''
 
-    TimeSchedule: Optional[TimeSchedule] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'stereotypes': [],
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'TimeSchedule.TimePoints',
-        'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
-        'serialize': False,
-        })
-    '''
-    Time schedule owning this time point.
-    '''
-
     @property
     def __namespace__(self):
         return 'http://iec.ch/TC57/2012/CIM-schema-cim16#'
@@ -35063,38 +28593,6 @@ class TopologicalIsland(IdentifiedObject):
         'inverse': 'TopologicalNode.TopologicalIsland',
         'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
         'serialize': True,
-        })
-    '''
-    A topological node belongs to a topological island.
-    '''
-
-    AngleRefTopologicalNode: Optional[TopologicalNode] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'stereotypes': [],
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'TopologicalNode.AngleRefTopologicalIsland',
-        'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
-        'serialize': False,
-        })
-    '''
-    The angle reference for the island. Normally there is one TopologicalNode
-    that is selected as the angle reference for each island. Other reference
-    schemes exist, so the association is typically optional.
-    '''
-
-    TopologicalNodes: list[TopologicalNode] = field(
-        default_factory=list,
-        metadata={
-        'type': 'Association',
-        'stereotypes': ['AggregateOf'],
-        'minOccurs': '0',
-        'maxOccurs': 'unbounded',
-        'inverse': 'TopologicalNode.TopologicalIsland',
-        'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
-        'serialize': False,
         })
     '''
     A topological node belongs to a topological island.
@@ -35305,148 +28803,6 @@ class TopologicalNode(IdentifiedObject):
     A topological node belongs to a topological island.
     '''
 
-    BaseVoltage: Optional[BaseVoltage] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'stereotypes': [],
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'BaseVoltage.TopologicalNode',
-        'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
-        'serialize': False,
-        })
-    '''
-    The base voltage of the topologocial node.
-    '''
-
-    ConnectivityNodes: list[ConnectivityNode] = field(
-        default_factory=list,
-        metadata={
-        'type': 'Association',
-        'stereotypes': ['AggregateOf'],
-        'minOccurs': '0',
-        'maxOccurs': 'unbounded',
-        'inverse': 'ConnectivityNode.TopologicalNode',
-        'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
-        'serialize': False,
-        })
-    '''
-    The connectivity nodes combined together to form this topological node.
-    May depend on the current state of switches in the network.
-    '''
-
-    ConnectivityNodeContainer: Optional[ConnectivityNodeContainer] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'stereotypes': [],
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'ConnectivityNodeContainer.TopologicalNode',
-        'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
-        'serialize': False,
-        })
-    '''
-    The connectivity node container to which the toplogical node belongs.
-    '''
-
-    ReportingGroup: Optional[ReportingGroup] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'stereotypes': [],
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'ReportingGroup.TopologicalNode',
-        'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
-        'serialize': False,
-        })
-    '''
-    The reporting group to which the topological node belongs.
-    '''
-
-    SvInjection: Optional[SvInjection] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'stereotypes': [],
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'SvInjection.TopologicalNode',
-        'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
-        'serialize': False,
-        })
-    '''
-    The injection flows state variables associated with the topological
-    node.
-    '''
-
-    SvVoltage: Optional[SvVoltage] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'stereotypes': [],
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'SvVoltage.TopologicalNode',
-        'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
-        'serialize': False,
-        })
-    '''
-    The state voltage associated with the topological node.
-    '''
-
-    Terminal: list[Terminal] = field(
-        default_factory=list,
-        metadata={
-        'type': 'Association',
-        'stereotypes': ['AggregateOf'],
-        'minOccurs': '0',
-        'maxOccurs': 'unbounded',
-        'inverse': 'Terminal.TopologicalNode',
-        'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
-        'serialize': False,
-        })
-    '''
-    The terminals associated with the topological node. This can be used
-    as an alternative to the connectivity node path to terminal, thus making
-    it unneccesary to model connectivity nodes in some cases. Note that
-    if connectivity nodes are in the model, this association would probably
-    not be used as an input specification.
-    '''
-
-    AngleRefTopologicalIsland: Optional[TopologicalIsland] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'stereotypes': [],
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'TopologicalIsland.AngleRefTopologicalNode',
-        'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
-        'serialize': False,
-        })
-    '''
-    The island for which the node is an angle reference. Normally there
-    is one angle reference node for each island.
-    '''
-
-    TopologicalIsland: Optional[TopologicalIsland] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'stereotypes': ['OfAggregate'],
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'TopologicalIsland.TopologicalNodes',
-        'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
-        'serialize': False,
-        })
-    '''
-    A topological node belongs to a topological island.
-    '''
-
     @property
     def __namespace__(self):
         return 'http://iec.ch/TC57/2012/CIM-schema-cim16#'
@@ -35587,36 +28943,6 @@ class TransformerCoreAdmittance(IdentifiedObject):
         'inverse': 'TransformerEndInfo.CoreAdmittance',
         'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
         'serialize': True,
-        })
-    '''
-    Transformer end datasheet used to calculate this core admittance.
-    '''
-
-    TransformerEnd: list[TransformerEnd] = field(
-        default_factory=list,
-        metadata={
-        'type': 'Association',
-        'stereotypes': [],
-        'minOccurs': '0',
-        'maxOccurs': 'unbounded',
-        'inverse': 'TransformerEnd.CoreAdmittance',
-        'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
-        'serialize': False,
-        })
-    '''
-    All transformer ends having this core admittance.
-    '''
-
-    TransformerEndInfo: Optional[TransformerEndInfo] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'stereotypes': [],
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'TransformerEndInfo.CoreAdmittance',
-        'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
-        'serialize': False,
         })
     '''
     Transformer end datasheet used to calculate this core admittance.
@@ -35904,133 +29230,6 @@ class TransformerEnd(IdentifiedObject):
     '''
     '''
 
-    BaseVoltage: Optional[BaseVoltage] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'stereotypes': [],
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'BaseVoltage.TransformerEnds',
-        'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
-        'serialize': False,
-        })
-    '''
-    Base voltage of the transformer end. This is essential for PU calculation.
-    '''
-
-    PhaseTapChanger: Optional[PhaseTapChanger] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'stereotypes': [],
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'PhaseTapChanger.TransformerEnd',
-        'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
-        'serialize': False,
-        })
-    '''
-    Phase tap changer associated with this transformer end.
-    '''
-
-    RatioTapChanger: Optional[RatioTapChanger] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'stereotypes': [],
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'RatioTapChanger.TransformerEnd',
-        'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
-        'serialize': False,
-        })
-    '''
-    Ratio tap changer associated with this transformer end.
-    '''
-
-    Terminal: Optional[Terminal] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'stereotypes': [],
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'Terminal.TransformerEnd',
-        'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
-        'serialize': False,
-        })
-    '''
-    Terminal of the power transformer to which this transformer end belongs.
-    '''
-
-    CoreAdmittance: Optional[TransformerCoreAdmittance] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'stereotypes': [],
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'TransformerCoreAdmittance.TransformerEnd',
-        'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
-        'serialize': False,
-        })
-    '''
-    Core admittance of this transformer end, representing magnetising current
-    and core losses. The full values of the transformer should be supplied
-    for one transformer end only.
-    '''
-
-    FromMeshImpedance: list[TransformerMeshImpedance] = field(
-        default_factory=list,
-        metadata={
-        'type': 'Association',
-        'stereotypes': [],
-        'minOccurs': '0',
-        'maxOccurs': 'unbounded',
-        'inverse': 'TransformerMeshImpedance.FromTransformerEnd',
-        'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
-        'serialize': False,
-        })
-    '''
-    All mesh impedances between this 'to' and other 'from' transformer
-    ends.
-    '''
-
-    ToMeshImpedance: list[TransformerMeshImpedance] = field(
-        default_factory=list,
-        metadata={
-        'type': 'Association',
-        'stereotypes': [],
-        'minOccurs': '0',
-        'maxOccurs': 'unbounded',
-        'inverse': 'TransformerMeshImpedance.ToTransformerEnd',
-        'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
-        'serialize': False,
-        })
-    '''
-    All mesh impedances between this 'from' and other 'to' transformer
-    ends.
-    '''
-
-    StarImpedance: Optional[TransformerStarImpedance] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'stereotypes': [],
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'TransformerStarImpedance.TransformerEnd',
-        'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
-        'serialize': False,
-        })
-    '''
-    (accurate for 2- or 3-winding transformers only) Pi-model impedances
-    of this transformer end. By convention, for a two winding transformer,
-    the full values of the transformer should be entered on the high voltage
-    end (endNumber=1).
-    '''
-
     @property
     def __namespace__(self):
         return 'http://iec.ch/TC57/2012/CIM-schema-cim16#'
@@ -36266,21 +29465,6 @@ class PowerTransformerEnd(TransformerEnd):
     The power transformer of this power transformer end.
     '''
 
-    PowerTransformer: Optional[PowerTransformer] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'stereotypes': [],
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'PowerTransformer.PowerTransformerEnd',
-        'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
-        'serialize': False,
-        })
-    '''
-    The power transformer of this power transformer end.
-    '''
-
     @property
     def __namespace__(self):
         return 'http://iec.ch/TC57/2012/CIM-schema-cim16#'
@@ -36328,21 +29512,6 @@ class TransformerTankEnd(TransformerEnd):
         'inverse': 'TransformerTank.TransformerTankEnds',
         'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
         'serialize': True,
-        })
-    '''
-    Transformer this winding belongs to.
-    '''
-
-    TransformerTank: Optional[TransformerTank] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'stereotypes': [],
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'TransformerTank.TransformerTankEnds',
-        'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
-        'serialize': False,
         })
     '''
     Transformer this winding belongs to.
@@ -36490,69 +29659,6 @@ class TransformerMeshImpedance(IdentifiedObject):
         'inverse': 'TransformerEndInfo.ToMeshImpedances',
         'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
         'serialize': True,
-        })
-    '''
-    All 'to' transformer end datasheets this mesh impedance for 'from'
-    transformer end is calculated from.
-    '''
-
-    FromTransformerEnd: Optional[TransformerEnd] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'stereotypes': [],
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'TransformerEnd.FromMeshImpedance',
-        'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
-        'serialize': False,
-        })
-    '''
-    From end this mesh impedance is connected to. It determines the voltage
-    reference.
-    '''
-
-    ToTransformerEnd: list[TransformerEnd] = field(
-        default_factory=list,
-        metadata={
-        'type': 'Association',
-        'stereotypes': [],
-        'minOccurs': '0',
-        'maxOccurs': 'unbounded',
-        'inverse': 'TransformerEnd.ToMeshImpedance',
-        'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
-        'serialize': False,
-        })
-    '''
-    All transformer ends this mesh impedance is connected to.
-    '''
-
-    FromTransformerEndInfo: Optional[TransformerEndInfo] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'stereotypes': [],
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'TransformerEndInfo.FromMeshImpedances',
-        'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
-        'serialize': False,
-        })
-    '''
-    'from' transformer end datasheet this mesh impedance is calculated
-    from. It determines the voltage reference.
-    '''
-
-    ToTransformerEndInfos: list[TransformerEndInfo] = field(
-        default_factory=list,
-        metadata={
-        'type': 'Association',
-        'stereotypes': [],
-        'minOccurs': '0',
-        'maxOccurs': 'unbounded',
-        'inverse': 'TransformerEndInfo.ToMeshImpedances',
-        'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
-        'serialize': False,
         })
     '''
     All 'to' transformer end datasheets this mesh impedance for 'from'
@@ -36811,20 +29917,6 @@ class TransformerObservation(IdentifiedObject):
     '''
     '''
 
-    Transformer: Optional[TransformerTank] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'stereotypes': ['informative'],
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'TransformerTank.TransformerObservations',
-        'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
-        'serialize': False,
-        })
-    '''
-    '''
-
     @property
     def __namespace__(self):
         return 'http://iec.ch/TC57/2012/CIM-schema-cim16#'
@@ -36931,36 +30023,6 @@ class TransformerStarImpedance(IdentifiedObject):
         'inverse': 'TransformerEndInfo.TransformerStarImpedance',
         'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
         'serialize': True,
-        })
-    '''
-    Transformer end datasheet used to calculate this transformer star impedance.
-    '''
-
-    TransformerEnd: list[TransformerEnd] = field(
-        default_factory=list,
-        metadata={
-        'type': 'Association',
-        'stereotypes': [],
-        'minOccurs': '0',
-        'maxOccurs': 'unbounded',
-        'inverse': 'TransformerEnd.StarImpedance',
-        'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
-        'serialize': False,
-        })
-    '''
-    All transformer ends having this star impedance.
-    '''
-
-    TransformerEndInfo: Optional[TransformerEndInfo] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'stereotypes': [],
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'TransformerEndInfo.TransformerStarImpedance',
-        'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
-        'serialize': False,
         })
     '''
     Transformer end datasheet used to calculate this transformer star impedance.
@@ -37125,21 +30187,6 @@ class NoLoadTest(TransformerTest):
     Transformer end that current is applied to in this no-load test.
     '''
 
-    EnergisedEnd: Optional[TransformerEndInfo] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'stereotypes': [],
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'TransformerEndInfo.EnergisedEndNoLoadTests',
-        'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
-        'serialize': False,
-        })
-    '''
-    Transformer end that current is applied to in this no-load test.
-    '''
-
     @property
     def __namespace__(self):
         return 'http://iec.ch/TC57/2012/CIM-schema-cim16#'
@@ -37259,37 +30306,6 @@ class OpenCircuitTest(TransformerTest):
         'inverse': 'TransformerEndInfo.OpenEndOpenCircuitTests',
         'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
         'serialize': True,
-        })
-    '''
-    Transformer end measured for induced voltage and angle in this open-circuit
-    test.
-    '''
-
-    EnergisedEnd: Optional[TransformerEndInfo] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'stereotypes': [],
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'TransformerEndInfo.EnergisedEndOpenCircuitTests',
-        'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
-        'serialize': False,
-        })
-    '''
-    Transformer end that current is applied to in this open-circuit test.
-    '''
-
-    OpenEnd: Optional[TransformerEndInfo] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'stereotypes': [],
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'TransformerEndInfo.OpenEndOpenCircuitTests',
-        'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
-        'serialize': False,
         })
     '''
     Transformer end measured for induced voltage and angle in this open-circuit
@@ -37432,38 +30448,6 @@ class ShortCircuitTest(TransformerTest):
         'inverse': 'TransformerEndInfo.GroundedEndShortCircuitTests',
         'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
         'serialize': True,
-        })
-    '''
-    All ends short-circuited in this short-circuit test.
-    '''
-
-    EnergisedEnd: Optional[TransformerEndInfo] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'stereotypes': [],
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'TransformerEndInfo.EnergisedEndShortCircuitTests',
-        'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
-        'serialize': False,
-        })
-    '''
-    Transformer end that voltage is applied to in this short-circuit test.
-    The test voltage is chosen to induce rated current in the energised
-    end.
-    '''
-
-    GroundedEnds: list[TransformerEndInfo] = field(
-        default_factory=list,
-        metadata={
-        'type': 'Association',
-        'stereotypes': [],
-        'minOccurs': '0',
-        'maxOccurs': 'unbounded',
-        'inverse': 'TransformerEndInfo.GroundedEndShortCircuitTests',
-        'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
-        'serialize': False,
         })
     '''
     All ends short-circuited in this short-circuit test.
@@ -37780,21 +30764,6 @@ class UsagePoint(IdentifiedObject):
     All configuration events created for this usage point.
     '''
 
-    Equipments: list[Equipment] = field(
-        default_factory=list,
-        metadata={
-        'type': 'Association',
-        'stereotypes': [],
-        'minOccurs': '0',
-        'maxOccurs': 'unbounded',
-        'inverse': 'Equipment.UsagePoints',
-        'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
-        'serialize': False,
-        })
-    '''
-    All equipment connecting this usage point to the electrical grid.
-    '''
-
     @property
     def __namespace__(self):
         return 'http://iec.ch/TC57/2012/CIM-schema-cim16#'
@@ -38023,21 +30992,6 @@ class VisibilityLayer(IdentifiedObject):
     A visibility layer can contain one or more diagram objects.
     '''
 
-    VisibleObjects: list[DiagramObject] = field(
-        default_factory=list,
-        metadata={
-        'type': 'Association',
-        'stereotypes': [],
-        'minOccurs': '0',
-        'maxOccurs': 'unbounded',
-        'inverse': 'DiagramObject.VisibilityLayers',
-        'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
-        'serialize': False,
-        })
-    '''
-    A visibility layer can contain one or more diagram objects.
-    '''
-
     @property
     def __namespace__(self):
         return 'http://iec.ch/TC57/2012/CIM-schema-cim16#'
@@ -38070,22 +31024,6 @@ class WindTurbineType3or4Dynamics(IdentifiedObject):
         'inverse': 'PowerElectronicsConnection.WindTurbineType3or4Dynamics',
         'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
         'serialize': True,
-        })
-    '''
-    The power electronics connection associated with this wind turbine
-    type 3 or type 4 dynamics model.
-    '''
-
-    PowerElectronicsConnection: Optional[PowerElectronicsConnection] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'stereotypes': [],
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'PowerElectronicsConnection.WindTurbineType3or4Dynamics',
-        'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
-        'serialize': False,
         })
     '''
     The power electronics connection associated with this wind turbine
@@ -38220,21 +31158,6 @@ class WirePosition(IdentifiedObject):
     Wire spacing data this wire position belongs to.
     '''
 
-    WireSpacingInfo: Optional[WireSpacingInfo] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'stereotypes': [],
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'WireSpacingInfo.WirePositions',
-        'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
-        'serialize': False,
-        })
-    '''
-    Wire spacing data this wire position belongs to.
-    '''
-
     @property
     def __namespace__(self):
         return 'http://iec.ch/TC57/2012/CIM-schema-cim16#'
@@ -38326,21 +31249,6 @@ class IrregularTimePoint(Identity):
     def __maxOccurs__(self):
         return 'unbounded'
 
-    IntervalSchedule: Optional[IrregularIntervalSchedule] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'stereotypes': ['OfAggregate'],
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'IrregularIntervalSchedule.TimePoints',
-        'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
-        'serialize': False,
-        })
-    '''
-    An IrregularTimePoint belongs to an IrregularIntervalSchedule.
-    '''
-
 @dataclass(repr=False)
 class Name(Identity):
     '''
@@ -38406,36 +31314,6 @@ class Name(Identity):
     @property
     def __maxOccurs__(self):
         return 'unbounded'
-
-    IdentifiedObject: Optional[IdentifiedObject] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'stereotypes': [],
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'IdentifiedObject.Names',
-        'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
-        'serialize': False,
-        })
-    '''
-    Identified object that this name designates.
-    '''
-
-    NameType: Optional[NameType] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'stereotypes': [],
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'NameType.Names',
-        'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
-        'serialize': False,
-        })
-    '''
-    Type of this name.
-    '''
 
 @dataclass(repr=False)
 class NameType(Identity):
@@ -38524,36 +31402,6 @@ class NameType(Identity):
     def __maxOccurs__(self):
         return 'unbounded'
 
-    Names: list[Name] = field(
-        default_factory=list,
-        metadata={
-        'type': 'Association',
-        'stereotypes': [],
-        'minOccurs': '0',
-        'maxOccurs': 'unbounded',
-        'inverse': 'Name.NameType',
-        'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
-        'serialize': False,
-        })
-    '''
-    All names of this type.
-    '''
-
-    NameTypeAuthority: Optional[NameTypeAuthority] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'stereotypes': [],
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'NameTypeAuthority.NameTypes',
-        'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
-        'serialize': False,
-        })
-    '''
-    Authority responsible for managing names of this type.
-    '''
-
 @dataclass(repr=False)
 class NameTypeAuthority(Identity):
     '''
@@ -38616,21 +31464,6 @@ class NameTypeAuthority(Identity):
     @property
     def __maxOccurs__(self):
         return 'unbounded'
-
-    NameTypes: list[NameType] = field(
-        default_factory=list,
-        metadata={
-        'type': 'Association',
-        'stereotypes': [],
-        'minOccurs': '0',
-        'maxOccurs': 'unbounded',
-        'inverse': 'NameType.NameTypeAuthority',
-        'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
-        'serialize': False,
-        })
-    '''
-    All name types managed by this authority.
-    '''
 
 @dataclass(repr=False)
 class NonlinearShuntCompensatorPhasePoint(Identity):
@@ -38707,21 +31540,6 @@ class NonlinearShuntCompensatorPhasePoint(Identity):
     @property
     def __maxOccurs__(self):
         return 'unbounded'
-
-    NonlinearShuntCompensatorPhase: Optional[NonlinearShuntCompensatorPhase] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'stereotypes': ['OfAggregate'],
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'NonlinearShuntCompensatorPhase.NonlinearShuntCompensatorPhasePoints',
-        'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
-        'serialize': False,
-        })
-    '''
-    Non-linear shunt compensator phase owning this point.
-    '''
 
 @dataclass(repr=False)
 class NonlinearShuntCompensatorPoint(Identity):
@@ -38827,21 +31645,6 @@ class NonlinearShuntCompensatorPoint(Identity):
     def __maxOccurs__(self):
         return 'unbounded'
 
-    NonlinearShuntCompensator: Optional[NonlinearShuntCompensator] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'stereotypes': ['OfAggregate'],
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'NonlinearShuntCompensator.NonlinearShuntCompensatorPoints',
-        'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
-        'serialize': False,
-        })
-    '''
-    Non-linear shunt compensator owning this point.
-    '''
-
 @dataclass(repr=False)
 class OperatingShare(Identity):
     '''
@@ -38909,22 +31712,6 @@ class OperatingShare(Identity):
     def __maxOccurs__(self):
         return 'unbounded'
 
-    OperatingParticipant: Optional[OperatingParticipant] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'stereotypes': [],
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'OperatingParticipant.OperatingShare',
-        'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
-        'serialize': False,
-        })
-    '''
-    The operating participant having this share with the associated power
-    system resource.
-    '''
-
 @dataclass(repr=False)
 class OperatonalLimitTypeScaling(Identity):
     '''
@@ -38990,34 +31777,6 @@ class OperatonalLimitTypeScaling(Identity):
     @property
     def __maxOccurs__(self):
         return 'unbounded'
-
-    SourceOperationalLimitType: Optional[OperationalLimitType] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'stereotypes': [],
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'OperationalLimitType.SourceOperationalLimitTypeScaling',
-        'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
-        'serialize': False,
-        })
-    '''
-    '''
-
-    TargetOperationalLimit: Optional[OperationalLimitType] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'stereotypes': [],
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'OperationalLimitType.TargetOperationalLimitmTypeScaling',
-        'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
-        'serialize': False,
-        })
-    '''
-    '''
 
 @dataclass(repr=False)
 class PhaseImpedanceData(Identity):
@@ -39109,21 +31868,6 @@ class PhaseImpedanceData(Identity):
     @property
     def __maxOccurs__(self):
         return 'unbounded'
-
-    PhaseImpedance: Optional[PerLengthPhaseImpedance] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'stereotypes': [],
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'PerLengthPhaseImpedance.PhaseImpedanceData',
-        'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
-        'serialize': False,
-        })
-    '''
-    Conductor phase impedance to which this data belongs.
-    '''
 
 @dataclass(repr=False)
 class PositionPoint(Identity):
@@ -39220,21 +31964,6 @@ class PositionPoint(Identity):
     @property
     def __maxOccurs__(self):
         return 'unbounded'
-
-    Location: Optional[Location] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'stereotypes': [],
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'Location.PositionPoints',
-        'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
-        'serialize': False,
-        })
-    '''
-    Location described by this position point.
-    '''
 
 @dataclass(repr=False)
 class Quality61850(Identity):
@@ -39470,21 +32199,6 @@ class MeasurementValueQuality(Quality61850):
     A MeasurementValue has a MeasurementValueQuality associated with it.
     '''
 
-    MeasurementValue: Optional[MeasurementValue] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'stereotypes': ['OfAggregate'],
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'MeasurementValue.MeasurementValueQuality',
-        'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
-        'serialize': False,
-        })
-    '''
-    A MeasurementValue has a MeasurementValueQuality associated with it.
-    '''
-
     @property
     def __namespace__(self):
         return 'http://iec.ch/TC57/2012/CIM-schema-cim16#'
@@ -39581,21 +32295,6 @@ class RegularTimePoint(Identity):
     def __maxOccurs__(self):
         return 'unbounded'
 
-    IntervalSchedule: Optional[RegularIntervalSchedule] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'stereotypes': ['OfAggregate'],
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'RegularIntervalSchedule.TimePoints',
-        'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
-        'serialize': False,
-        })
-    '''
-    Regular interval schedule containing this time point.
-    '''
-
 @dataclass(repr=False)
 class ScheduledEventData(Identity):
     '''
@@ -39644,35 +32343,6 @@ class ScheduledEventData(Identity):
     @property
     def __maxOccurs__(self):
         return 'unbounded'
-
-    InspectionDataSet: Optional[InspectionDataSet] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'stereotypes': ['informative'],
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'InspectionDataSet.AccordingToSchedules',
-        'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
-        'serialize': False,
-        })
-    '''
-    '''
-
-    ScheduledEvents: list[ScheduledEvent] = field(
-        default_factory=list,
-        metadata={
-        'type': 'Association',
-        'stereotypes': [],
-        'minOccurs': '0',
-        'maxOccurs': 'unbounded',
-        'inverse': 'ScheduledEvent.ScheduledEventData',
-        'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
-        'serialize': False,
-        })
-    '''
-    All scheduled events with this specification.
-    '''
 
 @dataclass(repr=False)
 class StateVariable(Identity):
@@ -39749,21 +32419,6 @@ class SvInjection(StateVariable):
     The topological node associated with the flow injection state variable.
     '''
 
-    TopologicalNode: Optional[TopologicalNode] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'stereotypes': [],
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'TopologicalNode.SvInjection',
-        'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
-        'serialize': False,
-        })
-    '''
-    The topological node associated with the flow injection state variable.
-    '''
-
     @property
     def __namespace__(self):
         return 'http://iec.ch/TC57/2012/CIM-schema-cim16#'
@@ -39832,21 +32487,6 @@ class SvPowerFlow(StateVariable):
     The terminal associated with the power flow state variable.
     '''
 
-    Terminal: Optional[Terminal] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'stereotypes': [],
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'Terminal.SvPowerFlow',
-        'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
-        'serialize': False,
-        })
-    '''
-    The terminal associated with the power flow state variable.
-    '''
-
     @property
     def __namespace__(self):
         return 'http://iec.ch/TC57/2012/CIM-schema-cim16#'
@@ -39892,21 +32532,6 @@ class SvShuntCompensatorSections(StateVariable):
         'inverse': 'ShuntCompensator.SvShuntCompensatorSections',
         'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
         'serialize': True,
-        })
-    '''
-    The shunt compensator for which the state applies.
-    '''
-
-    ShuntCompensator: Optional[ShuntCompensator] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'stereotypes': [],
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'ShuntCompensator.SvShuntCompensatorSections',
-        'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
-        'serialize': False,
         })
     '''
     The shunt compensator for which the state applies.
@@ -39961,21 +32586,6 @@ class SvStatus(StateVariable):
     The conducting equipment associated with the status state variable.
     '''
 
-    ConductingEquipment: Optional[ConductingEquipment] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'stereotypes': [],
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'ConductingEquipment.SvStatus',
-        'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
-        'serialize': False,
-        })
-    '''
-    The conducting equipment associated with the status state variable.
-    '''
-
     @property
     def __namespace__(self):
         return 'http://iec.ch/TC57/2012/CIM-schema-cim16#'
@@ -40023,21 +32633,6 @@ class SvTapStep(StateVariable):
         'inverse': 'TapChanger.SvTapStep',
         'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
         'serialize': True,
-        })
-    '''
-    The tap changer associated with the tap step state.
-    '''
-
-    TapChanger: Optional[TapChanger] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'stereotypes': [],
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'TapChanger.SvTapStep',
-        'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
-        'serialize': False,
         })
     '''
     The tap changer associated with the tap step state.
@@ -40102,21 +32697,6 @@ class SvVoltage(StateVariable):
         'inverse': 'TopologicalNode.SvVoltage',
         'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
         'serialize': True,
-        })
-    '''
-    The topological node associated with the voltage state.
-    '''
-
-    TopologicalNode: Optional[TopologicalNode] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'stereotypes': [],
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'TopologicalNode.SvVoltage',
-        'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
-        'serialize': False,
         })
     '''
     The topological node associated with the voltage state.
@@ -40220,21 +32800,6 @@ class CutAction(SwitchingStep):
     Group to which this step belongs.
     '''
 
-    Cut: Optional[Cut] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'stereotypes': [],
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'Cut.CutAction',
-        'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
-        'serialize': False,
-        })
-    '''
-    Cut on which this action is taken.
-    '''
-
     @property
     def __namespace__(self):
         return 'http://iec.ch/TC57/2012/CIM-schema-cim16#'
@@ -40296,21 +32861,6 @@ class EnergySourceAction(SwitchingStep):
         })
     '''
     Group to which this step belongs.
-    '''
-
-    EnergySource: Optional[EnergySource] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'stereotypes': [],
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'EnergySource.EnergySourceAction',
-        'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
-        'serialize': False,
-        })
-    '''
-    Energy source on which this action is taken.
     '''
 
     @property
@@ -40413,58 +32963,6 @@ class GroundAction(SwitchingStep):
     Group to which this step belongs.
     '''
 
-    AlongACLineSegment: Optional[ACLineSegment] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'stereotypes': [],
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'ACLineSegment.LineGroundingAction',
-        'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
-        'serialize': False,
-        })
-    '''
-    The line segment that this ground action will affect. This is the only
-    way to access relationship to clamp in case the ground needs to be
-    placed along the line segment.
-    '''
-
-    GroundedEquipment: Optional[ConductingEquipment] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'stereotypes': [],
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'ConductingEquipment.GroundingAction',
-        'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
-        'serialize': False,
-        })
-    '''
-    Equipment being grounded with this operation. In case of placing a
-    ground anywhere along a line segment, you must use the clamp (to get
-    the distance from one terminal), so use the explicit relation with
-    line segment. In all other cases (including placing the ground at a
-    line segment terminal), reference to one or more conducting equipment
-    is sufficient.
-    '''
-
-    Ground: Optional[Ground] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'stereotypes': [],
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'Ground.GroundAction',
-        'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
-        'serialize': False,
-        })
-    '''
-    Ground on which this action is taken.
-    '''
-
     @property
     def __namespace__(self):
         return 'http://iec.ch/TC57/2012/CIM-schema-cim16#'
@@ -40565,58 +33063,6 @@ class JumperAction(SwitchingStep):
     Group to which this step belongs.
     '''
 
-    AlongACLineSegments: list[ACLineSegment] = field(
-        default_factory=list,
-        metadata={
-        'type': 'Association',
-        'stereotypes': [],
-        'minOccurs': '0',
-        'maxOccurs': 'unbounded',
-        'inverse': 'ACLineSegment.LineJumpingAction',
-        'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
-        'serialize': False,
-        })
-    '''
-    The line segment that this jumper action will affect. This is the only
-    way to access relationship to clamp in case the jumper needs to connect
-    along the line segment.
-    '''
-
-    JumpedEquipments: list[ConductingEquipment] = field(
-        default_factory=list,
-        metadata={
-        'type': 'Association',
-        'stereotypes': [],
-        'minOccurs': '0',
-        'maxOccurs': 'unbounded',
-        'inverse': 'ConductingEquipment.JumpingAction',
-        'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
-        'serialize': False,
-        })
-    '''
-    The conducting equipment that this jumper action will affect. In case
-    of placing a jumper anywhere along a line segment, you must use the
-    clamp (to get the distance from one terminal), so use the explicit
-    relation with line segment. In all other cases (including placing the
-    jumper at a line segment terminal), reference to one or more conducting
-    equipment is sufficient.
-    '''
-
-    Jumper: Optional[Jumper] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'stereotypes': [],
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'Jumper.JumperAction',
-        'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
-        'serialize': False,
-        })
-    '''
-    Jumper on which this action is taken.
-    '''
-
     @property
     def __namespace__(self):
         return 'http://iec.ch/TC57/2012/CIM-schema-cim16#'
@@ -40660,21 +33106,6 @@ class SwitchAction(SwitchingStep):
         'inverse': 'Switch.SwitchAction',
         'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
         'serialize': True,
-        })
-    '''
-    Switch that is the object of this switch action.
-    '''
-
-    OperatedSwitch: Optional[Switch] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'stereotypes': [],
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'Switch.SwitchAction',
-        'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
-        'serialize': False,
         })
     '''
     Switch that is the object of this switch action.
@@ -40853,21 +33284,6 @@ class PhaseTapChangerTablePoint(TapChangerTablePoint):
     The table of this point.
     '''
 
-    PhaseTapChangerTable: Optional[PhaseTapChangerTable] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'stereotypes': [],
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'PhaseTapChangerTable.PhaseTapChangerTablePoint',
-        'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
-        'serialize': False,
-        })
-    '''
-    The table of this point.
-    '''
-
     @property
     def __namespace__(self):
         return 'http://iec.ch/TC57/2012/CIM-schema-cim16#'
@@ -40897,21 +33313,6 @@ class RatioTapChangerTablePoint(TapChangerTablePoint):
         'inverse': 'RatioTapChangerTable.RatioTapChangerTablePoint',
         'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
         'serialize': True,
-        })
-    '''
-    Table of this point.
-    '''
-
-    RatioTapChangerTable: Optional[RatioTapChangerTable] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'stereotypes': [],
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'RatioTapChangerTable.RatioTapChangerTablePoint',
-        'namespace': 'http://iec.ch/TC57/2012/CIM-schema-cim16#',
-        'serialize': False,
         })
     '''
     Table of this point.

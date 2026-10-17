@@ -397,21 +397,6 @@ class CurrentDroopOverride(Identity):
     def __maxOccurs__(self):
         return 'unbounded'
 
-    SSSCController: Optional[SSSCController] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'stereotypes': [],
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'SSSCController.CurrentDroopOverride',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
-        })
-    '''
-    The SSSC controller to which this CurrentDroopOverride applies to.
-    '''
-
 @dataclass(repr=False)
 class CurveData(Identity):
     '''
@@ -1134,21 +1119,6 @@ class ACPointOfCommonCoupling(IdentifiedObject):
         })
     '''
     DC converter unit that has AC point of common coupling.
-    '''
-
-    ConnectivityNode: Optional[ConnectivityNode] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'stereotypes': [],
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'ConnectivityNode.ACPointOfCommonCoupling',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
-        })
-    '''
-    Connectivity node which is a point of common coupling AC.
     '''
 
     @property
@@ -2394,20 +2364,6 @@ class CableInfo(WireInfo):
     '''
     '''
 
-    InsulationInfo: Optional[InsulationInfo] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'stereotypes': [],
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'InsulationInfo.CableInfo',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
-        })
-    '''
-    '''
-
     @property
     def __namespace__(self):
         return 'http://cim.ucaiug.io/CIM101/draft#'
@@ -3296,23 +3252,6 @@ class TransformerEndInfo(ConductingAssetInfo):
     short-circuited.
     '''
 
-    CoreAdmittance: Optional[TransformerCoreAdmittance] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'stereotypes': [],
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'TransformerCoreAdmittance.TransformerEndInfo',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
-        })
-    '''
-    Core admittance calculated from this transformer end datasheet, representing
-    magnetising current and core losses. The full values of the transformer
-    should be supplied for one transformer end info only.
-    '''
-
     FromMeshImpedances: list[TransformerMeshImpedance] = field(
         default_factory=list,
         metadata={
@@ -3343,21 +3282,6 @@ class TransformerEndInfo(ConductingAssetInfo):
     '''
     All mesh impedances between this 'from' and other 'to' transformer
     ends.
-    '''
-
-    TransformerStarImpedance: Optional[TransformerStarImpedance] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'stereotypes': [],
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'TransformerStarImpedance.TransformerEndInfo',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
-        })
-    '''
-    Transformer star impedance calculated from this transformer end datasheet.
     '''
 
     @property
@@ -3648,20 +3572,6 @@ class InsulationInfo(AssetInfo):
         'inverse': 'CableInfo.InsulationInfo',
         'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
-        })
-    '''
-    '''
-
-    CableInfo: Optional[CableInfo] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'stereotypes': [],
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'CableInfo.InsulationInfo',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
         })
     '''
     '''
@@ -5386,35 +5296,6 @@ class ConnectivityNode(IdentifiedObject):
     depend on the current state of switches in the network.
     '''
 
-    ACPointOfCommonCoupling: Optional[ACPointOfCommonCoupling] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'stereotypes': [],
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'ACPointOfCommonCoupling.ConnectivityNode',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
-        })
-    '''
-    Identifies this ConnectivityNode as a point of common coupling AC.
-    '''
-
-    IndividualPnode: Optional[IndividualPnode] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'stereotypes': [],
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'IndividualPnode.ConnectivityNode',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
-        })
-    '''
-    '''
-
     Terminals: list[Terminal] = field(
         default_factory=list,
         metadata={
@@ -6517,21 +6398,6 @@ class EnergyArea(IdentifiedObject):
     The control area specification that is used for the load forecast.
     '''
 
-    ControlArea: Optional[ControlArea] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'stereotypes': [],
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'ControlArea.EnergyArea',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
-        })
-    '''
-    The control area specification that is used for the load forecast.
-    '''
-
     @property
     def __namespace__(self):
         return 'http://cim.ucaiug.io/CIM101/draft#'
@@ -7182,21 +7048,6 @@ class MeasurementValue(IOPoint):
     Link to the physical telemetered point associated with this measurement.
     '''
 
-    MeasurementValueQuality: Optional[MeasurementValueQuality] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'stereotypes': ['AggregateOf'],
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'MeasurementValueQuality.MeasurementValue',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
-        })
-    '''
-    A MeasurementValue has a MeasurementValueQuality associated with it.
-    '''
-
     @property
     def __namespace__(self):
         return 'http://cim.ucaiug.io/CIM101/draft#'
@@ -7418,20 +7269,6 @@ class IndividualPnode(IdentifiedObject):
         'inverse': 'ConnectivityNode.IndividualPnode',
         'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
-        })
-    '''
-    '''
-
-    ConnectivityNode: Optional[ConnectivityNode] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'stereotypes': [],
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'ConnectivityNode.IndividualPnode',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
         })
     '''
     '''
@@ -9716,20 +9553,6 @@ class PMUConfiguration(IdentifiedObject):
     '''
     '''
 
-    PhasorMeasurementUnit: Optional[PhasorMeasurementUnit] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'stereotypes': [],
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'PhasorMeasurementUnit.PMUConfiguration',
-        'namespace': 'http://gridappsd.org/CIM/extension#',
-        'serialize': False,
-        })
-    '''
-    '''
-
     @property
     def __namespace__(self):
         return 'http://gridappsd.org/CIM/extension#'
@@ -10694,21 +10517,6 @@ class AreaInterchangeController(PowerSystemResource):
         'inverse': 'ControlArea.AreaInterchangeController',
         'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
-        })
-    '''
-    Control area that has a area interchange controller.
-    '''
-
-    ControlArea: Optional[ControlArea] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'stereotypes': [],
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'ControlArea.AreaInterchangeController',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
         })
     '''
     Control area that has a area interchange controller.
@@ -11767,21 +11575,6 @@ class ControlArea(PowerSystemResource):
     The system operator that operates this control area.
     '''
 
-    AreaInterchangeController: Optional[AreaInterchangeController] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'stereotypes': [],
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'AreaInterchangeController.ControlArea',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
-        })
-    '''
-    Area interchange controller for this control area.
-    '''
-
     ControlAreaGeneratingUnit: list[ControlAreaGeneratingUnit] = field(
         default_factory=list,
         metadata={
@@ -11810,21 +11603,6 @@ class ControlArea(PowerSystemResource):
         })
     '''
     The parent control area for the power electronics unit specifications.
-    '''
-
-    EnergyArea: Optional[EnergyArea] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'stereotypes': [],
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'EnergyArea.ControlArea',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
-        })
-    '''
-    The energy area that is forecast from this control area specification.
     '''
 
     TieFlow: list[TieFlow] = field(
@@ -13000,21 +12778,6 @@ class BusbarSection(Connector):
         'inverse': 'VoltageControlZone.BusbarSection',
         'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
-        })
-    '''
-    A VoltageControlZone is controlled by a designated BusbarSection.
-    '''
-
-    VoltageControlZone: Optional[VoltageControlZone] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'stereotypes': [],
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'VoltageControlZone.BusbarSection',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
         })
     '''
     A VoltageControlZone is controlled by a designated BusbarSection.
@@ -19085,22 +18848,6 @@ class SSSCController(EquipmentController):
     The simulation setings that apply for this controller.
     '''
 
-    CurrentDroopOverride: Optional[CurrentDroopOverride] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'stereotypes': [],
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'CurrentDroopOverride.SSSCController',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
-        })
-    '''
-    The current droop override for this SSSC controller. It is not used
-    when the SSSC controller is in mode currentDroop.
-    '''
-
     @property
     def __namespace__(self):
         return 'http://cim.ucaiug.io/CIM101/draft#'
@@ -19368,34 +19115,6 @@ class PhasorMeasurementUnit(MeasurementSystem):
         'inverse': 'PMUStream.PMU',
         'namespace': 'http://gridappsd.org/CIM/extension#',
         'serialize': True,
-        })
-    '''
-    '''
-
-    PMUConfiguration: Optional[PMUConfiguration] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'stereotypes': [],
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'PMUConfiguration.PhasorMeasurementUnit',
-        'namespace': 'http://gridappsd.org/CIM/extension#',
-        'serialize': False,
-        })
-    '''
-    '''
-
-    PMUStream: Optional[PMUStream] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'stereotypes': [],
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'PMUStream.PMU',
-        'namespace': 'http://gridappsd.org/CIM/extension#',
-        'serialize': False,
         })
     '''
     '''
@@ -21122,21 +20841,6 @@ class TapChanger(PowerSystemResource):
     The step operational limit table for this tap changer.
     '''
 
-    SvTapStep: Optional[SvTapStep] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'stereotypes': [],
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'SvTapStep.TapChanger',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
-        })
-    '''
-    The tap step state associated with the tap changer.
-    '''
-
     @property
     def __namespace__(self):
         return 'http://cim.ucaiug.io/CIM101/draft#'
@@ -21209,21 +20913,6 @@ class PhaseTapChanger(TapChanger):
         'inverse': 'TransformerEnd.PhaseTapChanger',
         'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
-        })
-    '''
-    Transformer end to which this phase tap changer belongs.
-    '''
-
-    TransformerEnd: Optional[TransformerEnd] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'stereotypes': [],
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'TransformerEnd.PhaseTapChanger',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
         })
     '''
     Transformer end to which this phase tap changer belongs.
@@ -21691,36 +21380,6 @@ class RatioTapChanger(TapChanger):
     Transformer end to which this ratio tap changer belongs.
     '''
 
-    TransformerEnd: Optional[TransformerEnd] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'stereotypes': [],
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'TransformerEnd.AdditionalRatioTapChanger',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
-        })
-    '''
-    Transformer end to which this ratio tap changer belongs.
-    '''
-
-    TransformerEnd: Optional[TransformerEnd] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'stereotypes': [],
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'TransformerEnd.RatioTapChanger',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
-        })
-    '''
-    Transformer end to which this ratio tap changer belongs.
-    '''
-
     @property
     def __namespace__(self):
         return 'http://cim.ucaiug.io/CIM101/draft#'
@@ -21843,21 +21502,6 @@ class VoltageControlZone(PowerSystemResource):
         })
     '''
     A VoltageControlZone may have a voltage regulation schedule.
-    '''
-
-    BusbarSection: Optional[BusbarSection] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'stereotypes': [],
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'BusbarSection.VoltageControlZone',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
-        })
-    '''
-    A VoltageControlZone is controlled by a designated BusbarSection.
     '''
 
     @property
@@ -23063,23 +22707,6 @@ class TopologicalIsland(IdentifiedObject):
     '''
     '''
 
-    AngleRefTopologicalNode: Optional[TopologicalNode] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'stereotypes': [],
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'TopologicalNode.AngleRefTopologicalIsland',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
-        })
-    '''
-    The angle reference for the island. Normally there is one TopologicalNode
-    that is selected as the angle reference for each island. Other reference
-    schemes exist, so the association is typically optional.
-    '''
-
     TopologicalNodes: list[TopologicalNode] = field(
         default_factory=list,
         metadata={
@@ -23355,22 +22982,6 @@ class TopologicalNode(IdentifiedObject):
     not be used as an input specification.
     '''
 
-    AngleRefTopologicalIsland: Optional[TopologicalIsland] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'stereotypes': [],
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'TopologicalIsland.AngleRefTopologicalNode',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
-        })
-    '''
-    The island for which the node is an angle reference. Normally there
-    is one angle reference node for each island.
-    '''
-
     @property
     def __namespace__(self):
         return 'http://cim.ucaiug.io/CIM101/draft#'
@@ -23476,21 +23087,6 @@ class TransformerCoreAdmittance(IdentifiedObject):
         })
     '''
     All transformer ends having this core admittance.
-    '''
-
-    TransformerEndInfo: Optional[TransformerEndInfo] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'stereotypes': [],
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'TransformerEndInfo.CoreAdmittance',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
-        })
-    '''
-    Transformer end datasheet used to calculate this core admittance.
     '''
 
     @property
@@ -23766,36 +23362,6 @@ class TransformerEnd(IdentifiedObject):
         })
     '''
     Terminal of the power transformer to which this transformer end belongs.
-    '''
-
-    PhaseTapChanger: Optional[PhaseTapChanger] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'stereotypes': [],
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'PhaseTapChanger.TransformerEnd',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
-        })
-    '''
-    Phase tap changer associated with this transformer end.
-    '''
-
-    RatioTapChanger: Optional[RatioTapChanger] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'stereotypes': [],
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'RatioTapChanger.TransformerEnd',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
-        })
-    '''
-    Ratio tap changer associated with this transformer end.
     '''
 
     FromMeshImpedance: list[TransformerMeshImpedance] = field(
@@ -24353,21 +23919,6 @@ class TransformerStarImpedance(IdentifiedObject):
         })
     '''
     All transformer ends having this star impedance.
-    '''
-
-    TransformerEndInfo: Optional[TransformerEndInfo] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'stereotypes': [],
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'TransformerEndInfo.TransformerStarImpedance',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
-        })
-    '''
-    Transformer end datasheet used to calculate this transformer star impedance.
     '''
 
     @property
@@ -25685,21 +25236,6 @@ class MeasurementValueQuality(Identity):
     def __maxOccurs__(self):
         return 'unbounded'
 
-    MeasurementValue: Optional[MeasurementValue] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'stereotypes': ['OfAggregate'],
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'MeasurementValue.MeasurementValueQuality',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
-        })
-    '''
-    A MeasurementValue has a MeasurementValueQuality associated with it.
-    '''
-
 @stereotype(CIMStereotype.GridAPPSD)
 @dataclass(repr=False)
 class PMUValueQuality(MeasurementValueQuality):
@@ -26051,20 +25587,6 @@ class PMUStream(Identity):
     @property
     def __maxOccurs__(self):
         return 'unbounded'
-
-    PMU: Optional[PhasorMeasurementUnit] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'stereotypes': [],
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'PhasorMeasurementUnit.PMUStream',
-        'namespace': 'http://gridappsd.org/CIM/extension#',
-        'serialize': False,
-        })
-    '''
-    '''
 
 @stereotype(CIMStereotype.GridAPPSD)
 @dataclass(repr=False)
@@ -27029,21 +26551,6 @@ class SvTapStep(StateVariable):
         'inverse': 'TapChanger.SvTapStep',
         'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
-        })
-    '''
-    The tap changer associated with the tap step state.
-    '''
-
-    TapChanger: Optional[TapChanger] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'stereotypes': [],
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'TapChanger.SvTapStep',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
         })
     '''
     The tap changer associated with the tap step state.

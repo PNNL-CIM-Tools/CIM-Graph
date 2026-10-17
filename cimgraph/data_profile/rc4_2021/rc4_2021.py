@@ -586,23 +586,6 @@ class DERCurveData(Identity):
     def __maxOccurs__(self):
         return 'unbounded'
 
-    DERMonitorableParameter: Optional[DERMonitorableParameter] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'DERMonitorableParameter.DERCurveData',
-        'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': False,
-        'docstring':
-            '''
-            '''
-
-        })
-    '''
-    '''
-
 @dataclass(repr=False)
 class DERFunction(Identity):
     '''
@@ -864,23 +847,6 @@ class DERMonitorableParameter(Identity):
     @property
     def __maxOccurs__(self):
         return 'unbounded'
-
-    DERCurveData: Optional[DERCurveData] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'DERCurveData.DERMonitorableParameter',
-        'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': False,
-        'docstring':
-            '''
-            '''
-
-        })
-    '''
-    '''
 
     DispatchSchedule: list[DispatchSchedule] = field(
         default_factory=list,
@@ -1269,23 +1235,6 @@ class DispatchablePowerCapability(Identity):
     def __maxOccurs__(self):
         return 'unbounded'
 
-    EndDeviceGroup: Optional[EndDeviceGroup] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'EndDeviceGroup.DispatchablePowerCapability',
-        'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': False,
-        'docstring':
-            '''
-            '''
-
-        })
-    '''
-    '''
-
 @dataclass(repr=False)
 class EndDeviceAction(Identity):
     '''
@@ -1396,25 +1345,6 @@ class EndDeviceAction(Identity):
     @property
     def __maxOccurs__(self):
         return 'unbounded'
-
-    EndDeviceControl: Optional[EndDeviceControl] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'EndDeviceControl.EndDeviceAction',
-        'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': False,
-        'docstring':
-            '''
-            End device control issuing this end device action.
-            '''
-
-        })
-    '''
-    End device control issuing this end device action.
-    '''
 
 @dataclass(repr=False)
 class PanDemandResponse(EndDeviceAction):
@@ -3877,23 +3807,6 @@ class Terminal(ACDCTerminal):
     The directed branch group terminals for which this terminal is monitored.
     '''
 
-    Bushing: Optional[Bushing] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'Bushing.Terminal',
-        'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': False,
-        'docstring':
-            '''
-            '''
-
-        })
-    '''
-    '''
-
     EquipmentFaults: list[EquipmentFault] = field(
         default_factory=list,
         metadata={
@@ -5438,25 +5351,6 @@ class Asset(IdentifiedObject):
     '''
     '''
 
-    AssetDeployment: Optional[AssetDeployment] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'AssetDeployment.Asset',
-        'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': False,
-        'docstring':
-            '''
-            This asset's deployment.
-            '''
-
-        })
-    '''
-    This asset's deployment.
-    '''
-
     AssetFunction: list[AssetFunction] = field(
         default_factory=list,
         metadata={
@@ -5491,23 +5385,6 @@ class Asset(IdentifiedObject):
         })
     '''
     All configuration events created for this asset.
-    '''
-
-    FinancialInfo: Optional[FinancialInfo] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'FinancialInfo.Asset',
-        'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': False,
-        'docstring':
-            '''
-            '''
-
-        })
-    '''
     '''
 
     Measurements: list[Measurement] = field(
@@ -5563,25 +5440,6 @@ class Asset(IdentifiedObject):
         })
     '''
     Procedure data set that applies to this asset.
-    '''
-
-    BreakerOperation: Optional[SwitchOperationSummary] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'SwitchOperationSummary.Breaker',
-        'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': False,
-        'docstring':
-            '''
-            Breaker operation information for this breaker.
-            '''
-
-        })
-    '''
-    Breaker operation information for this breaker.
     '''
 
     @property
@@ -6397,23 +6255,6 @@ class Bushing(Asset):
     '''
     '''
 
-    Terminal: Optional[Terminal] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'Terminal.Bushing',
-        'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': False,
-        'docstring':
-            '''
-            '''
-
-        })
-    '''
-    '''
-
     @property
     def __namespace__(self):
         return 'http://iec.ch/TC57/CIM100#'
@@ -6590,33 +6431,6 @@ class InterrupterUnit(Asset):
         })
     '''
     Breaker mechanism controlling this interrupter.
-    '''
-
-    Bushing: list[Bushing] = field(
-        default_factory=list,
-        metadata={
-        'type': 'Association',
-        'minOccurs': '0',
-        'maxOccurs': 'unbounded',
-        'inverse': 'Bushing.FixedContact',
-        'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': False,
-        'docstring':
-            '''
-            Bushing(s) to which the fixed contact(s) of this interrupter is(are) attached.
-            Some interrupters have one fixed and one moving contact, some have 2 fixed
-            contacts, some 2 moving contacts. An interrupter will have relationships
-            with 2 bushings and those relationships may be any combination of the FixedContact
-            and MovingContact associations.
-            '''
-
-        })
-    '''
-    Bushing(s) to which the fixed contact(s) of this interrupter is(are)
-    attached. Some interrupters have one fixed and one moving contact,
-    some have 2 fixed contacts, some 2 moving contacts. An interrupter
-    will have relationships with 2 bushings and those relationships may
-    be any combination of the FixedContact and MovingContact associations.
     '''
 
     Bushing: list[Bushing] = field(
@@ -6978,25 +6792,6 @@ class AssetDeployment(IdentifiedObject):
         })
     '''
     Base voltage of this network asset deployment.
-    '''
-
-    Asset: Optional[Asset] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'Asset.AssetDeployment',
-        'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': False,
-        'docstring':
-            '''
-            Asset in this deployment.
-            '''
-
-        })
-    '''
-    Asset in this deployment.
     '''
 
     @property
@@ -7378,23 +7173,6 @@ class AssetInfo(IdentifiedObject):
     All assets described by this data.
     '''
 
-    CatalogAssetType: Optional[CatalogAssetType] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'CatalogAssetType.AssetInfo',
-        'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': False,
-        'docstring':
-            '''
-            '''
-
-        })
-    '''
-    '''
-
     PowerSystemResources: list[PowerSystemResource] = field(
         default_factory=list,
         metadata={
@@ -7412,23 +7190,6 @@ class AssetInfo(IdentifiedObject):
         })
     '''
     All power system resources with this datasheet information.
-    '''
-
-    ProductAssetModel: Optional[ProductAssetModel] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'ProductAssetModel.AssetInfo',
-        'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': False,
-        'docstring':
-            '''
-            '''
-
-        })
-    '''
     '''
 
     @property
@@ -9204,29 +8965,6 @@ class TransformerEndInfo(AssetInfo):
     short-circuited.
     '''
 
-    CoreAdmittance: Optional[TransformerCoreAdmittance] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'TransformerCoreAdmittance.TransformerEndInfo',
-        'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': False,
-        'docstring':
-            '''
-            Core admittance calculated from this transformer end datasheet, representing
-            magnetising current and core losses. The full values of the transformer
-            should be supplied for one transformer end info only.
-            '''
-
-        })
-    '''
-    Core admittance calculated from this transformer end datasheet, representing
-    magnetising current and core losses. The full values of the transformer
-    should be supplied for one transformer end info only.
-    '''
-
     FromMeshImpedances: list[TransformerMeshImpedance] = field(
         default_factory=list,
         metadata={
@@ -9265,25 +9003,6 @@ class TransformerEndInfo(AssetInfo):
     '''
     All mesh impedances between this 'from' and other 'to' transformer
     ends.
-    '''
-
-    TransformerStarImpedance: Optional[TransformerStarImpedance] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'TransformerStarImpedance.TransformerEndInfo',
-        'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': False,
-        'docstring':
-            '''
-            Transformer star impedance calculated from this transformer end datasheet.
-            '''
-
-        })
-    '''
-    Transformer star impedance calculated from this transformer end datasheet.
     '''
 
     @property
@@ -10675,27 +10394,6 @@ class GenUnitOpSchedule(RegularIntervalSchedule):
     operation of the unit.
     '''
 
-    GeneratingUnit: Optional[GeneratingUnit] = field(
-        default=None,
-        metadata={
-        'type': 'OfAggregate',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'GeneratingUnit.GenUnitOpSchedule',
-        'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': False,
-        'docstring':
-            '''
-            A generating unit may have an operating schedule, indicating the planned
-            operation of the unit.
-            '''
-
-        })
-    '''
-    A generating unit may have an operating schedule, indicating the planned
-    operation of the unit.
-    '''
-
     @property
     def __namespace__(self):
         return 'http://iec.ch/TC57/CIM100#'
@@ -10728,27 +10426,6 @@ class HydroPumpOpSchedule(RegularIntervalSchedule):
         'inverse': 'HydroPump.HydroPumpOpSchedule',
         'namespace': 'http://iec.ch/TC57/CIM100#',
         'serialize': True,
-        'docstring':
-            '''
-            The hydro pump has a pumping schedule over time, indicating when pumping
-            is to occur.
-            '''
-
-        })
-    '''
-    The hydro pump has a pumping schedule over time, indicating when pumping
-    is to occur.
-    '''
-
-    HydroPump: Optional[HydroPump] = field(
-        default=None,
-        metadata={
-        'type': 'OfAggregate',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'HydroPump.HydroPumpOpSchedule',
-        'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': False,
         'docstring':
             '''
             The hydro pump has a pumping schedule over time, indicating when pumping
@@ -11115,25 +10792,6 @@ class SteamSendoutSchedule(RegularIntervalSchedule):
     A cogeneration plant has a steam sendout schedule.
     '''
 
-    CogenerationPlant: Optional[CogenerationPlant] = field(
-        default=None,
-        metadata={
-        'type': 'OfAggregate',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'CogenerationPlant.SteamSendoutSchedule',
-        'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': False,
-        'docstring':
-            '''
-            A cogeneration plant has a steam sendout schedule.
-            '''
-
-        })
-    '''
-    A cogeneration plant has a steam sendout schedule.
-    '''
-
     @property
     def __namespace__(self):
         return 'http://iec.ch/TC57/CIM100#'
@@ -11482,23 +11140,6 @@ class CatalogAssetType(IdentifiedObject):
     '''
     '''
 
-    AssetInfo: Optional[AssetInfo] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'AssetInfo.CatalogAssetType',
-        'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': False,
-        'docstring':
-            '''
-            '''
-
-        })
-    '''
-    '''
-
     ProductAssetModel: list[ProductAssetModel] = field(
         default_factory=list,
         metadata={
@@ -11594,25 +11235,6 @@ class Channel(IdentifiedObject):
         })
     '''
     Register whose values are collected/reported by this channel.
-    '''
-
-    ReadingType: Optional[ReadingType] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'ReadingType.Channel',
-        'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': False,
-        'docstring':
-            '''
-            Reading type for register values reported/collected by this channel.
-            '''
-
-        })
-    '''
-    Reading type for register values reported/collected by this channel.
     '''
 
     @property
@@ -11813,23 +11435,6 @@ class ConnectivityNode(IdentifiedObject):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'SvInjection.ConnectivityNode',
-        'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': False,
-        'docstring':
-            '''
-            '''
-
-        })
-    '''
-    '''
-
-    SvVoltage: Optional[SvVoltage] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'SvVoltage.ConnectivityNode',
         'namespace': 'http://iec.ch/TC57/CIM100#',
         'serialize': False,
         'docstring':
@@ -12840,25 +12445,6 @@ class HeatInputCurve(Curve):
     A thermal generating unit may have a heat input curve.
     '''
 
-    ThermalGeneratingUnit: Optional[ThermalGeneratingUnit] = field(
-        default=None,
-        metadata={
-        'type': 'OfAggregate',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'ThermalGeneratingUnit.HeatInputCurve',
-        'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': False,
-        'docstring':
-            '''
-            A thermal generating unit may have a heat input curve.
-            '''
-
-        })
-    '''
-    A thermal generating unit may have a heat input curve.
-    '''
-
     @property
     def __namespace__(self):
         return 'http://iec.ch/TC57/CIM100#'
@@ -12907,25 +12493,6 @@ class HeatRateCurve(Curve):
         'inverse': 'ThermalGeneratingUnit.HeatRateCurve',
         'namespace': 'http://iec.ch/TC57/CIM100#',
         'serialize': True,
-        'docstring':
-            '''
-            A thermal generating unit may have a heat rate curve.
-            '''
-
-        })
-    '''
-    A thermal generating unit may have a heat rate curve.
-    '''
-
-    ThermalGeneratingUnit: Optional[ThermalGeneratingUnit] = field(
-        default=None,
-        metadata={
-        'type': 'OfAggregate',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'ThermalGeneratingUnit.HeatRateCurve',
-        'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': False,
         'docstring':
             '''
             A thermal generating unit may have a heat rate curve.
@@ -13031,25 +12598,6 @@ class IncrementalHeatRateCurve(Curve):
         'inverse': 'ThermalGeneratingUnit.IncrementalHeatRateCurve',
         'namespace': 'http://iec.ch/TC57/CIM100#',
         'serialize': True,
-        'docstring':
-            '''
-            A thermal generating unit may have an incremental heat rate curve.
-            '''
-
-        })
-    '''
-    A thermal generating unit may have an incremental heat rate curve.
-    '''
-
-    ThermalGeneratingUnit: Optional[ThermalGeneratingUnit] = field(
-        default=None,
-        metadata={
-        'type': 'OfAggregate',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'ThermalGeneratingUnit.IncrementalHeatRateCurve',
-        'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': False,
         'docstring':
             '''
             A thermal generating unit may have an incremental heat rate curve.
@@ -13166,25 +12714,6 @@ class PenstockLossCurve(Curve):
         'inverse': 'HydroGeneratingUnit.PenstockLossCurve',
         'namespace': 'http://iec.ch/TC57/CIM100#',
         'serialize': True,
-        'docstring':
-            '''
-            A hydro generating unit has a penstock loss curve.
-            '''
-
-        })
-    '''
-    A hydro generating unit has a penstock loss curve.
-    '''
-
-    HydroGeneratingUnit: Optional[HydroGeneratingUnit] = field(
-        default=None,
-        metadata={
-        'type': 'OfAggregate',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'HydroGeneratingUnit.PenstockLossCurve',
-        'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': False,
         'docstring':
             '''
             A hydro generating unit has a penstock loss curve.
@@ -13352,25 +12881,6 @@ class ShutdownCurve(Curve):
     A thermal generating unit may have a shutdown curve.
     '''
 
-    ThermalGeneratingUnit: Optional[ThermalGeneratingUnit] = field(
-        default=None,
-        metadata={
-        'type': 'OfAggregate',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'ThermalGeneratingUnit.ShutdownCurve',
-        'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': False,
-        'docstring':
-            '''
-            A thermal generating unit may have a shutdown curve.
-            '''
-
-        })
-    '''
-    A thermal generating unit may have a shutdown curve.
-    '''
-
     @property
     def __namespace__(self):
         return 'http://iec.ch/TC57/CIM100#'
@@ -13419,25 +12929,6 @@ class StartIgnFuelCurve(Curve):
         'inverse': 'StartupModel.StartIgnFuelCurve',
         'namespace': 'http://iec.ch/TC57/CIM100#',
         'serialize': True,
-        'docstring':
-            '''
-            The unit's startup model may have a startup ignition fuel curve.
-            '''
-
-        })
-    '''
-    The unit's startup model may have a startup ignition fuel curve.
-    '''
-
-    StartupModel: Optional[StartupModel] = field(
-        default=None,
-        metadata={
-        'type': 'OfAggregate',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'StartupModel.StartIgnFuelCurve',
-        'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': False,
         'docstring':
             '''
             The unit's startup model may have a startup ignition fuel curve.
@@ -13506,25 +12997,6 @@ class StartMainFuelCurve(Curve):
     The unit's startup model may have a startup main fuel curve.
     '''
 
-    StartupModel: Optional[StartupModel] = field(
-        default=None,
-        metadata={
-        'type': 'OfAggregate',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'StartupModel.StartMainFuelCurve',
-        'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': False,
-        'docstring':
-            '''
-            The unit's startup model may have a startup main fuel curve.
-            '''
-
-        })
-    '''
-    The unit's startup model may have a startup main fuel curve.
-    '''
-
     @property
     def __namespace__(self):
         return 'http://iec.ch/TC57/CIM100#'
@@ -13573,25 +13045,6 @@ class StartRampCurve(Curve):
         'inverse': 'StartupModel.StartRampCurve',
         'namespace': 'http://iec.ch/TC57/CIM100#',
         'serialize': True,
-        'docstring':
-            '''
-            The unit's startup model may have a startup ramp curve.
-            '''
-
-        })
-    '''
-    The unit's startup model may have a startup ramp curve.
-    '''
-
-    StartupModel: Optional[StartupModel] = field(
-        default=None,
-        metadata={
-        'type': 'OfAggregate',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'StartupModel.StartRampCurve',
-        'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': False,
         'docstring':
             '''
             The unit's startup model may have a startup ramp curve.
@@ -13711,25 +13164,6 @@ class TargetLevelSchedule(Curve):
         'inverse': 'Reservoir.TargetLevelSchedule',
         'namespace': 'http://iec.ch/TC57/CIM100#',
         'serialize': True,
-        'docstring':
-            '''
-            A reservoir may have a water level target schedule.
-            '''
-
-        })
-    '''
-    A reservoir may have a water level target schedule.
-    '''
-
-    Reservoir: Optional[Reservoir] = field(
-        default=None,
-        metadata={
-        'type': 'OfAggregate',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'Reservoir.TargetLevelSchedule',
-        'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': False,
         'docstring':
             '''
             A reservoir may have a water level target schedule.
@@ -16140,25 +15574,6 @@ class EndDeviceControl(IdentifiedObject):
     Type of this end device control.
     '''
 
-    EndDeviceAction: Optional[EndDeviceAction] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'EndDeviceAction.EndDeviceControl',
-        'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': False,
-        'docstring':
-            '''
-            End device action issued by this end device control.
-            '''
-
-        })
-    '''
-    End device action issued by this end device control.
-    '''
-
     @property
     def __namespace__(self):
         return 'http://iec.ch/TC57/CIM100#'
@@ -16465,23 +15880,6 @@ class EndDeviceGroup(IdentifiedObject):
         'inverse': 'DispatchablePowerCapability.EndDeviceGroup',
         'namespace': 'http://iec.ch/TC57/CIM100#',
         'serialize': True,
-        'docstring':
-            '''
-            '''
-
-        })
-    '''
-    '''
-
-    DispatchablePowerCapability: Optional[DispatchablePowerCapability] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'DispatchablePowerCapability.EndDeviceGroup',
-        'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': False,
         'docstring':
             '''
             '''
@@ -18185,23 +17583,6 @@ class FinancialInfo(IdentifiedObject):
     '''
     '''
 
-    Asset: Optional[Asset] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'Asset.FinancialInfo',
-        'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': False,
-        'docstring':
-            '''
-            '''
-
-        })
-    '''
-    '''
-
     @property
     def __namespace__(self):
         return 'http://iec.ch/TC57/CIM100#'
@@ -18700,40 +18081,6 @@ class House(IdentifiedObject):
     '''
     '''
 
-    ServicePanel: Optional[EnergyConsumer] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'EnergyConsumer.House',
-        'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': False,
-        'docstring':
-            '''
-            '''
-
-        })
-    '''
-    '''
-
-    ThermostatController: Optional[ThermostatController] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'ThermostatController.House',
-        'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': False,
-        'docstring':
-            '''
-            '''
-
-        })
-    '''
-    '''
-
     @property
     def __namespace__(self):
         return 'http://iec.ch/TC57/CIM100#'
@@ -18928,25 +18275,6 @@ class AccumulatorReset(Control):
     The accumulator value that is reset by the command.
     '''
 
-    AccumulatorValue: Optional[AccumulatorValue] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'AccumulatorValue.AccumulatorReset',
-        'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': False,
-        'docstring':
-            '''
-            The accumulator value that is reset by the command.
-            '''
-
-        })
-    '''
-    The accumulator value that is reset by the command.
-    '''
-
     @property
     def __namespace__(self):
         return 'http://iec.ch/TC57/CIM100#'
@@ -19015,25 +18343,6 @@ class AnalogControl(Control):
         'inverse': 'AnalogValue.AnalogControl',
         'namespace': 'http://iec.ch/TC57/CIM100#',
         'serialize': True,
-        'docstring':
-            '''
-            The MeasurementValue that is controlled.
-            '''
-
-        })
-    '''
-    The MeasurementValue that is controlled.
-    '''
-
-    AnalogValue: Optional[AnalogValue] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'AnalogValue.AnalogControl',
-        'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': False,
         'docstring':
             '''
             The MeasurementValue that is controlled.
@@ -19231,25 +18540,6 @@ class Command(Control):
     The ValueAliasSet used for translation of a Control value to a name.
     '''
 
-    DiscreteValue: Optional[DiscreteValue] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'DiscreteValue.Command',
-        'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': False,
-        'docstring':
-            '''
-            The MeasurementValue that is controlled.
-            '''
-
-        })
-    '''
-    The MeasurementValue that is controlled.
-    '''
-
     @property
     def __namespace__(self):
         return 'http://iec.ch/TC57/CIM100#'
@@ -19370,25 +18660,6 @@ class MeasurementValue(IOPoint):
     sources are contained in the introduction to IEC 61970-301.
     '''
 
-    MeasurementValueQuality: Optional[MeasurementValueQuality] = field(
-        default=None,
-        metadata={
-        'type': 'AggregateOf',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'MeasurementValueQuality.MeasurementValue',
-        'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': False,
-        'docstring':
-            '''
-            A MeasurementValue has a MeasurementValueQuality associated with it.
-            '''
-
-        })
-    '''
-    A MeasurementValue has a MeasurementValueQuality associated with it.
-    '''
-
     @property
     def __namespace__(self):
         return 'http://iec.ch/TC57/CIM100#'
@@ -19464,25 +18735,6 @@ class AccumulatorValue(MeasurementValue):
     The command that reset the accumulator value.
     '''
 
-    AccumulatorReset: Optional[AccumulatorReset] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'AccumulatorReset.AccumulatorValue',
-        'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': False,
-        'docstring':
-            '''
-            The command that reset the accumulator value.
-            '''
-
-        })
-    '''
-    The command that reset the accumulator value.
-    '''
-
     @property
     def __namespace__(self):
         return 'http://iec.ch/TC57/CIM100#'
@@ -19548,25 +18800,6 @@ class AnalogValue(MeasurementValue):
         'inverse': 'AnalogControl.AnalogValue',
         'namespace': 'http://iec.ch/TC57/CIM100#',
         'serialize': True,
-        'docstring':
-            '''
-            The Control variable associated with the MeasurementValue.
-            '''
-
-        })
-    '''
-    The Control variable associated with the MeasurementValue.
-    '''
-
-    AnalogControl: Optional[AnalogControl] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'AnalogControl.AnalogValue',
-        'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': False,
         'docstring':
             '''
             The Control variable associated with the MeasurementValue.
@@ -19810,25 +19043,6 @@ class DiscreteValue(MeasurementValue):
         })
     '''
     Measurement to which this value is connected.
-    '''
-
-    Command: Optional[Command] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'Command.DiscreteValue',
-        'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': False,
-        'docstring':
-            '''
-            The Control variable associated with the MeasurementValue.
-            '''
-
-        })
-    '''
-    The Control variable associated with the MeasurementValue.
     '''
 
     @property
@@ -23537,23 +22751,6 @@ class ParallelLineSegment(IdentifiedObject):
     '''
     '''
 
-    ACLineSegment: Optional[ACLineSegment] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'ACLineSegment.ParallelLineSegment',
-        'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': False,
-        'docstring':
-            '''
-            '''
-
-        })
-    '''
-    '''
-
     @property
     def __namespace__(self):
         return 'http://iec.ch/TC57/CIM100#'
@@ -24779,26 +23976,6 @@ class AirCompressor(PowerSystemResource):
     plant.
     '''
 
-    CAESPlant: Optional[CAESPlant] = field(
-        default=None,
-        metadata={
-        'type': 'OfAggregate',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'CAESPlant.AirCompressor',
-        'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': False,
-        'docstring':
-            '''
-            An air compressor may be a member of a compressed air energy storage plant.
-            '''
-
-        })
-    '''
-    An air compressor may be a member of a compressed air energy storage
-    plant.
-    '''
-
     @property
     def __namespace__(self):
         return 'http://iec.ch/TC57/CIM100#'
@@ -24884,47 +24061,6 @@ class CAESPlant(PowerSystemResource):
         'inverse': 'ThermalGeneratingUnit.CAESPlant',
         'namespace': 'http://iec.ch/TC57/CIM100#',
         'serialize': True,
-        'docstring':
-            '''
-            A thermal generating unit may be a member of a compressed air energy storage
-            plant.
-            '''
-
-        })
-    '''
-    A thermal generating unit may be a member of a compressed air energy
-    storage plant.
-    '''
-
-    AirCompressor: Optional[AirCompressor] = field(
-        default=None,
-        metadata={
-        'type': 'AggregateOf',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'AirCompressor.CAESPlant',
-        'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': False,
-        'docstring':
-            '''
-            An air compressor may be a member of a compressed air energy storage plant.
-            '''
-
-        })
-    '''
-    An air compressor may be a member of a compressed air energy storage
-    plant.
-    '''
-
-    ThermalGeneratingUnit: Optional[ThermalGeneratingUnit] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'ThermalGeneratingUnit.CAESPlant',
-        'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': False,
         'docstring':
             '''
             A thermal generating unit may be a member of a compressed air energy storage
@@ -25059,25 +24195,6 @@ class CogenerationPlant(PowerSystemResource):
         'inverse': 'SteamSendoutSchedule.CogenerationPlant',
         'namespace': 'http://iec.ch/TC57/CIM100#',
         'serialize': True,
-        'docstring':
-            '''
-            A cogeneration plant has a steam sendout schedule.
-            '''
-
-        })
-    '''
-    A cogeneration plant has a steam sendout schedule.
-    '''
-
-    SteamSendoutSchedule: Optional[SteamSendoutSchedule] = field(
-        default=None,
-        metadata={
-        'type': 'AggregateOf',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'SteamSendoutSchedule.CogenerationPlant',
-        'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': False,
         'docstring':
             '''
             A cogeneration plant has a steam sendout schedule.
@@ -25509,29 +24626,6 @@ class Feeder(EquipmentContainer):
     purposes.
     '''
 
-    NamingSecondarySubstation: list[Substation] = field(
-        default_factory=list,
-        metadata={
-        'type': 'AggregateOf',
-        'minOccurs': '0',
-        'maxOccurs': 'unbounded',
-        'inverse': 'Substation.NamingFeeder',
-        'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': False,
-        'docstring':
-            '''
-            The secondary substations that are normally energized from the feeder.
-            Used for naming purposes. Should be consistent with the other associations
-            for energizing terminal specification and the feeder energization specification.
-            '''
-
-        })
-    '''
-    The secondary substations that are normally energized from the feeder.
-    Used for naming purposes. Should be consistent with the other associations
-    for energizing terminal specification and the feeder energization specification.
-    '''
-
     NormalHeadTerminal: list[Terminal] = field(
         default_factory=list,
         metadata={
@@ -25691,30 +24785,6 @@ class Substation(EquipmentContainer):
         })
     '''
     Bays contained in the substation.
-    '''
-
-    NamingFeeder: Optional[Feeder] = field(
-        default=None,
-        metadata={
-        'type': 'OfAggregate',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'Feeder.NamingSecondarySubstation',
-        'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': False,
-        'docstring':
-            '''
-            The primary feeder that normally energizes the secondary substation. Used
-            for naming purposes. Either this association or the substation to subgeographical
-            region should be used for hiearchical containment specification.
-            '''
-
-        })
-    '''
-    The primary feeder that normally energizes the secondary substation.
-    Used for naming purposes. Either this association or the substation
-    to subgeographical region should be used for hiearchical containment
-    specification.
     '''
 
     NormalEnergizingFeeder: list[Feeder] = field(
@@ -26859,23 +25929,6 @@ class ACLineSegment(Conductor):
     The line faults of the line segment.
     '''
 
-    ParallelLineSegment: Optional[ParallelLineSegment] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'ParallelLineSegment.ACLineSegment',
-        'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': False,
-        'docstring':
-            '''
-            '''
-
-        })
-    '''
-    '''
-
     @property
     def __namespace__(self):
         return 'http://iec.ch/TC57/CIM100#'
@@ -26953,25 +26006,6 @@ class BusbarSection(Connector):
         'inverse': 'VoltageControlZone.BusbarSection',
         'namespace': 'http://iec.ch/TC57/CIM100#',
         'serialize': True,
-        'docstring':
-            '''
-            A VoltageControlZone is controlled by a designated BusbarSection.
-            '''
-
-        })
-    '''
-    A VoltageControlZone is controlled by a designated BusbarSection.
-    '''
-
-    VoltageControlZone: Optional[VoltageControlZone] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'VoltageControlZone.BusbarSection',
-        'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': False,
         'docstring':
             '''
             A VoltageControlZone is controlled by a designated BusbarSection.
@@ -27453,23 +26487,6 @@ class EnergyConsumer(EnergyConnection):
         })
     '''
     The individual phase models for this energy consumer.
-    '''
-
-    House: Optional[House] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'House.ServicePanel',
-        'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': False,
-        'docstring':
-            '''
-            '''
-
-        })
-    '''
     '''
 
     @property
@@ -28816,29 +27833,6 @@ class RotatingMachine(RegulatingCondEq):
     '''
     '''
 
-    HydroPump: Optional[HydroPump] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'HydroPump.RotatingMachine',
-        'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': False,
-        'docstring':
-            '''
-            The synchronous machine drives the turbine which moves the water from a
-            low elevation to a higher elevation. The direction of machine rotation
-            for pumping may or may not be the same as for generating.
-            '''
-
-        })
-    '''
-    The synchronous machine drives the turbine which moves the water from
-    a low elevation to a higher elevation. The direction of machine rotation
-    for pumping may or may not be the same as for generating.
-    '''
-
     @property
     def __namespace__(self):
         return 'http://iec.ch/TC57/CIM100#'
@@ -29404,25 +28398,6 @@ class ShuntCompensator(RegulatingCondEq):
         })
     '''
     The individual phases models for the shunt compensator.
-    '''
-
-    SvShuntCompensatorSections: Optional[SvShuntCompensatorSections] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'SvShuntCompensatorSections.ShuntCompensator',
-        'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': False,
-        'docstring':
-            '''
-            The state for the number of shunt compensator sections in service.
-            '''
-
-        })
-    '''
-    The state for the number of shunt compensator sections in service.
     '''
 
     @property
@@ -30587,27 +29562,6 @@ class GeneratingUnit(Equipment):
     fuel mixture and fuel cost.
     '''
 
-    GenUnitOpSchedule: Optional[GenUnitOpSchedule] = field(
-        default=None,
-        metadata={
-        'type': 'AggregateOf',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'GenUnitOpSchedule.GeneratingUnit',
-        'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': False,
-        'docstring':
-            '''
-            A generating unit may have an operating schedule, indicating the planned
-            operation of the unit.
-            '''
-
-        })
-    '''
-    A generating unit may have an operating schedule, indicating the planned
-    operation of the unit.
-    '''
-
     GrossToNetActivePowerCurves: list[GrossToNetActivePowerCurve] = field(
         default_factory=list,
         metadata={
@@ -30763,25 +29717,6 @@ class HydroGeneratingUnit(GeneratingUnit):
         })
     '''
     A hydro generating unit has an efficiency curve.
-    '''
-
-    PenstockLossCurve: Optional[PenstockLossCurve] = field(
-        default=None,
-        metadata={
-        'type': 'AggregateOf',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'PenstockLossCurve.HydroGeneratingUnit',
-        'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': False,
-        'docstring':
-            '''
-            A hydro generating unit has a penstock loss curve.
-            '''
-
-        })
-    '''
-    A hydro generating unit has a penstock loss curve.
     '''
 
     TailbayLossCurve: list[TailbayLossCurve] = field(
@@ -31035,27 +29970,6 @@ class ThermalGeneratingUnit(GeneratingUnit):
     A thermal generating unit may have a startup model.
     '''
 
-    CAESPlant: Optional[CAESPlant] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'CAESPlant.ThermalGeneratingUnit',
-        'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': False,
-        'docstring':
-            '''
-            A thermal generating unit may be a member of a compressed air energy storage
-            plant.
-            '''
-
-        })
-    '''
-    A thermal generating unit may be a member of a compressed air energy
-    storage plant.
-    '''
-
     EmmissionAccounts: list[EmissionAccount] = field(
         default_factory=list,
         metadata={
@@ -31130,101 +30044,6 @@ class ThermalGeneratingUnit(GeneratingUnit):
         })
     '''
     A thermal generating unit may have one or more fuel allocation schedules.
-    '''
-
-    HeatInputCurve: Optional[HeatInputCurve] = field(
-        default=None,
-        metadata={
-        'type': 'AggregateOf',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'HeatInputCurve.ThermalGeneratingUnit',
-        'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': False,
-        'docstring':
-            '''
-            A thermal generating unit may have a heat input curve.
-            '''
-
-        })
-    '''
-    A thermal generating unit may have a heat input curve.
-    '''
-
-    HeatRateCurve: Optional[HeatRateCurve] = field(
-        default=None,
-        metadata={
-        'type': 'AggregateOf',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'HeatRateCurve.ThermalGeneratingUnit',
-        'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': False,
-        'docstring':
-            '''
-            A thermal generating unit may have a heat rate curve.
-            '''
-
-        })
-    '''
-    A thermal generating unit may have a heat rate curve.
-    '''
-
-    IncrementalHeatRateCurve: Optional[IncrementalHeatRateCurve] = field(
-        default=None,
-        metadata={
-        'type': 'AggregateOf',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'IncrementalHeatRateCurve.ThermalGeneratingUnit',
-        'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': False,
-        'docstring':
-            '''
-            A thermal generating unit may have an incremental heat rate curve.
-            '''
-
-        })
-    '''
-    A thermal generating unit may have an incremental heat rate curve.
-    '''
-
-    ShutdownCurve: Optional[ShutdownCurve] = field(
-        default=None,
-        metadata={
-        'type': 'AggregateOf',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'ShutdownCurve.ThermalGeneratingUnit',
-        'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': False,
-        'docstring':
-            '''
-            A thermal generating unit may have a shutdown curve.
-            '''
-
-        })
-    '''
-    A thermal generating unit may have a shutdown curve.
-    '''
-
-    StartupModel: Optional[StartupModel] = field(
-        default=None,
-        metadata={
-        'type': 'AggregateOf',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'StartupModel.ThermalGeneratingUnit',
-        'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': False,
-        'docstring':
-            '''
-            A thermal generating unit may have a startup model.
-            '''
-
-        })
-    '''
-    A thermal generating unit may have a startup model.
     '''
 
     @property
@@ -31411,50 +30230,6 @@ class HydroPump(Equipment):
         'inverse': 'RotatingMachine.HydroPump',
         'namespace': 'http://iec.ch/TC57/CIM100#',
         'serialize': True,
-        'docstring':
-            '''
-            The synchronous machine drives the turbine which moves the water from a
-            low elevation to a higher elevation. The direction of machine rotation
-            for pumping may or may not be the same as for generating.
-            '''
-
-        })
-    '''
-    The synchronous machine drives the turbine which moves the water from
-    a low elevation to a higher elevation. The direction of machine rotation
-    for pumping may or may not be the same as for generating.
-    '''
-
-    HydroPumpOpSchedule: Optional[HydroPumpOpSchedule] = field(
-        default=None,
-        metadata={
-        'type': 'AggregateOf',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'HydroPumpOpSchedule.HydroPump',
-        'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': False,
-        'docstring':
-            '''
-            The hydro pump has a pumping schedule over time, indicating when pumping
-            is to occur.
-            '''
-
-        })
-    '''
-    The hydro pump has a pumping schedule over time, indicating when pumping
-    is to occur.
-    '''
-
-    RotatingMachine: Optional[RotatingMachine] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'RotatingMachine.HydroPump',
-        'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': False,
         'docstring':
             '''
             The synchronous machine drives the turbine which moves the water from a
@@ -32875,25 +31650,6 @@ class Reservoir(PowerSystemResource):
     A reservoir may spill into a downstream reservoir.
     '''
 
-    TargetLevelSchedule: Optional[TargetLevelSchedule] = field(
-        default=None,
-        metadata={
-        'type': 'AggregateOf',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'TargetLevelSchedule.Reservoir',
-        'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': False,
-        'docstring':
-            '''
-            A reservoir may have a water level target schedule.
-            '''
-
-        })
-    '''
-    A reservoir may have a water level target schedule.
-    '''
-
     @property
     def __namespace__(self):
         return 'http://iec.ch/TC57/CIM100#'
@@ -33529,25 +32285,6 @@ class TapChanger(PowerSystemResource):
     The regulating control scheme in which this tap changer participates.
     '''
 
-    SvTapStep: Optional[SvTapStep] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'SvTapStep.TapChanger',
-        'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': False,
-        'docstring':
-            '''
-            The tap step state associated with the tap changer.
-            '''
-
-        })
-    '''
-    The tap step state associated with the tap changer.
-    '''
-
     TapSchedules: list[TapSchedule] = field(
         default_factory=list,
         metadata={
@@ -33598,25 +32335,6 @@ class PhaseTapChanger(TapChanger):
         'inverse': 'TransformerEnd.PhaseTapChanger',
         'namespace': 'http://iec.ch/TC57/CIM100#',
         'serialize': True,
-        'docstring':
-            '''
-            Transformer end to which this phase tap changer belongs.
-            '''
-
-        })
-    '''
-    Transformer end to which this phase tap changer belongs.
-    '''
-
-    TransformerEnd: Optional[TransformerEnd] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'TransformerEnd.PhaseTapChanger',
-        'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': False,
         'docstring':
             '''
             Transformer end to which this phase tap changer belongs.
@@ -33994,25 +32712,6 @@ class RatioTapChanger(TapChanger):
     Transformer end to which this ratio tap changer belongs.
     '''
 
-    TransformerEnd: Optional[TransformerEnd] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'TransformerEnd.RatioTapChanger',
-        'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': False,
-        'docstring':
-            '''
-            Transformer end to which this ratio tap changer belongs.
-            '''
-
-        })
-    '''
-    Transformer end to which this ratio tap changer belongs.
-    '''
-
     @property
     def __namespace__(self):
         return 'http://iec.ch/TC57/CIM100#'
@@ -34070,25 +32769,6 @@ class VoltageControlZone(PowerSystemResource):
         })
     '''
     A VoltageControlZone may have a voltage regulation schedule.
-    '''
-
-    BusbarSection: Optional[BusbarSection] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'BusbarSection.VoltageControlZone',
-        'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': False,
-        'docstring':
-            '''
-            A VoltageControlZone is controlled by a designated BusbarSection.
-            '''
-
-        })
-    '''
-    A VoltageControlZone is controlled by a designated BusbarSection.
     '''
 
     @property
@@ -34306,23 +32986,6 @@ class ProductAssetModel(IdentifiedObject):
         })
     '''
     An asset of this model.
-    '''
-
-    AssetInfo: Optional[AssetInfo] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'AssetInfo.ProductAssetModel',
-        'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': False,
-        'docstring':
-            '''
-            '''
-
-        })
-    '''
     '''
 
     @property
@@ -34698,25 +33361,6 @@ class ReadingType(IdentifiedObject):
     Pending calculation that produced this reading type.
     '''
 
-    Channel: Optional[Channel] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'Channel.ReadingType',
-        'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': False,
-        'docstring':
-            '''
-            Channel reporting/collecting register values with this type information.
-            '''
-
-        })
-    '''
-    Channel reporting/collecting register values with this type information.
-    '''
-
     IntervalBlocks: list[IntervalBlock] = field(
         default_factory=list,
         metadata={
@@ -34734,25 +33378,6 @@ class ReadingType(IdentifiedObject):
         })
     '''
     All blocks containing interval reading values with this type information.
-    '''
-
-    PendingCalculation: Optional[PendingCalculation] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'PendingCalculation.ReadingType',
-        'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': False,
-        'docstring':
-            '''
-            Pending calculation that produced this reading type.
-            '''
-
-        })
-    '''
-    Pending calculation that produced this reading type.
     '''
 
     Readings: list[Reading] = field(
@@ -35909,82 +34534,6 @@ class StartupModel(IdentifiedObject):
     A thermal generating unit may have a startup model.
     '''
 
-    StartIgnFuelCurve: Optional[StartIgnFuelCurve] = field(
-        default=None,
-        metadata={
-        'type': 'AggregateOf',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'StartIgnFuelCurve.StartupModel',
-        'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': False,
-        'docstring':
-            '''
-            The unit's startup model may have a startup ignition fuel curve.
-            '''
-
-        })
-    '''
-    The unit's startup model may have a startup ignition fuel curve.
-    '''
-
-    StartMainFuelCurve: Optional[StartMainFuelCurve] = field(
-        default=None,
-        metadata={
-        'type': 'AggregateOf',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'StartMainFuelCurve.StartupModel',
-        'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': False,
-        'docstring':
-            '''
-            The unit's startup model may have a startup main fuel curve.
-            '''
-
-        })
-    '''
-    The unit's startup model may have a startup main fuel curve.
-    '''
-
-    StartRampCurve: Optional[StartRampCurve] = field(
-        default=None,
-        metadata={
-        'type': 'AggregateOf',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'StartRampCurve.StartupModel',
-        'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': False,
-        'docstring':
-            '''
-            The unit's startup model may have a startup ramp curve.
-            '''
-
-        })
-    '''
-    The unit's startup model may have a startup ramp curve.
-    '''
-
-    ThermalGeneratingUnit: Optional[ThermalGeneratingUnit] = field(
-        default=None,
-        metadata={
-        'type': 'OfAggregate',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'ThermalGeneratingUnit.StartupModel',
-        'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': False,
-        'docstring':
-            '''
-            A thermal generating unit may have a startup model.
-            '''
-
-        })
-    '''
-    A thermal generating unit may have a startup model.
-    '''
-
     @property
     def __namespace__(self):
         return 'http://iec.ch/TC57/CIM100#'
@@ -36210,25 +34759,6 @@ class SwitchOperationSummary(IdentifiedObject):
     Breaker asset to which this operation information applies.
     '''
 
-    Breaker: Optional[Asset] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'Asset.BreakerOperation',
-        'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': False,
-        'docstring':
-            '''
-            Breaker asset to which this operation information applies.
-            '''
-
-        })
-    '''
-    Breaker asset to which this operation information applies.
-    '''
-
     @property
     def __namespace__(self):
         return 'http://iec.ch/TC57/CIM100#'
@@ -36353,23 +34883,6 @@ class ThermostatController(IdentifiedObject):
         'inverse': 'House.ThermostatController',
         'namespace': 'http://iec.ch/TC57/CIM100#',
         'serialize': True,
-        'docstring':
-            '''
-            '''
-
-        })
-    '''
-    '''
-
-    House: Optional[House] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'House.ThermostatController',
-        'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': False,
         'docstring':
             '''
             '''
@@ -36510,29 +35023,6 @@ class TopologicalIsland(IdentifiedObject):
         'inverse': 'TopologicalNode.AngleRefTopologicalIsland',
         'namespace': 'http://iec.ch/TC57/CIM100#',
         'serialize': True,
-        'docstring':
-            '''
-            The angle reference for the island. Normally there is one TopologicalNode
-            that is selected as the angle reference for each island. Other reference
-            schemes exist, so the association is typically optional.
-            '''
-
-        })
-    '''
-    The angle reference for the island. Normally there is one TopologicalNode
-    that is selected as the angle reference for each island. Other reference
-    schemes exist, so the association is typically optional.
-    '''
-
-    AngleRefTopologicalNode: Optional[TopologicalNode] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'TopologicalNode.AngleRefTopologicalIsland',
-        'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': False,
         'docstring':
             '''
             The angle reference for the island. Normally there is one TopologicalNode
@@ -36844,27 +35334,6 @@ class TopologicalNode(IdentifiedObject):
     not be used as an input specification.
     '''
 
-    AngleRefTopologicalIsland: Optional[TopologicalIsland] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'TopologicalIsland.AngleRefTopologicalNode',
-        'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': False,
-        'docstring':
-            '''
-            The island for which the node is an angle reference. Normally there is
-            one angle reference node for each island.
-            '''
-
-        })
-    '''
-    The island for which the node is an angle reference. Normally there
-    is one angle reference node for each island.
-    '''
-
     @property
     def __namespace__(self):
         return 'http://iec.ch/TC57/CIM100#'
@@ -36994,25 +35463,6 @@ class TransformerCoreAdmittance(IdentifiedObject):
         })
     '''
     All transformer ends having this core admittance.
-    '''
-
-    TransformerEndInfo: Optional[TransformerEndInfo] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'TransformerEndInfo.CoreAdmittance',
-        'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': False,
-        'docstring':
-            '''
-            Transformer end datasheet used to calculate this core admittance.
-            '''
-
-        })
-    '''
-    Transformer end datasheet used to calculate this core admittance.
     '''
 
     @property
@@ -37243,44 +35693,6 @@ class TransformerEnd(IdentifiedObject):
         })
     '''
     Terminal of the power transformer to which this transformer end belongs.
-    '''
-
-    PhaseTapChanger: Optional[PhaseTapChanger] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'PhaseTapChanger.TransformerEnd',
-        'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': False,
-        'docstring':
-            '''
-            Phase tap changer associated with this transformer end.
-            '''
-
-        })
-    '''
-    Phase tap changer associated with this transformer end.
-    '''
-
-    RatioTapChanger: Optional[RatioTapChanger] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'RatioTapChanger.TransformerEnd',
-        'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': False,
-        'docstring':
-            '''
-            Ratio tap changer associated with this transformer end.
-            '''
-
-        })
-    '''
-    Ratio tap changer associated with this transformer end.
     '''
 
     FromMeshImpedance: list[TransformerMeshImpedance] = field(
@@ -37866,25 +36278,6 @@ class TransformerStarImpedance(IdentifiedObject):
         })
     '''
     All transformer ends having this star impedance.
-    '''
-
-    TransformerEndInfo: Optional[TransformerEndInfo] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'TransformerEndInfo.TransformerStarImpedance',
-        'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': False,
-        'docstring':
-            '''
-            Transformer end datasheet used to calculate this transformer star impedance.
-            '''
-
-        })
-    '''
-    Transformer end datasheet used to calculate this transformer star impedance.
     '''
 
     @property
@@ -40641,25 +39034,6 @@ class PendingCalculation(Identity):
     applies.
     '''
 
-    ReadingType: Optional[ReadingType] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'ReadingType.PendingCalculation',
-        'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': False,
-        'docstring':
-            '''
-            Reading type resulting from this pending conversion.
-            '''
-
-        })
-    '''
-    Reading type resulting from this pending conversion.
-    '''
-
 @dataclass(repr=False)
 class PhaseImpedanceData(Identity):
     '''
@@ -41244,25 +39618,6 @@ class MeasurementValueQuality(Quality61850):
         'inverse': 'MeasurementValue.MeasurementValueQuality',
         'namespace': 'http://iec.ch/TC57/CIM100#',
         'serialize': True,
-        'docstring':
-            '''
-            A MeasurementValue has a MeasurementValueQuality associated with it.
-            '''
-
-        })
-    '''
-    A MeasurementValue has a MeasurementValueQuality associated with it.
-    '''
-
-    MeasurementValue: Optional[MeasurementValue] = field(
-        default=None,
-        metadata={
-        'type': 'OfAggregate',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'MeasurementValue.MeasurementValueQuality',
-        'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': False,
         'docstring':
             '''
             A MeasurementValue has a MeasurementValueQuality associated with it.
@@ -42073,25 +40428,6 @@ class SvShuntCompensatorSections(StateVariable):
     The shunt compensator for which the state applies.
     '''
 
-    ShuntCompensator: Optional[ShuntCompensator] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'ShuntCompensator.SvShuntCompensatorSections',
-        'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': False,
-        'docstring':
-            '''
-            The shunt compensator for which the state applies.
-            '''
-
-        })
-    '''
-    The shunt compensator for which the state applies.
-    '''
-
     @property
     def __namespace__(self):
         return 'http://iec.ch/TC57/CIM100#'
@@ -42287,25 +40623,6 @@ class SvTapStep(StateVariable):
     The tap changer associated with the tap step state.
     '''
 
-    TapChanger: Optional[TapChanger] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'TapChanger.SvTapStep',
-        'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': False,
-        'docstring':
-            '''
-            The tap changer associated with the tap step state.
-            '''
-
-        })
-    '''
-    The tap changer associated with the tap step state.
-    '''
-
     @property
     def __namespace__(self):
         return 'http://iec.ch/TC57/CIM100#'
@@ -42417,23 +40734,6 @@ class SvVoltage(StateVariable):
         })
     '''
     The topological node associated with the voltage state.
-    '''
-
-    ConnectivityNode: Optional[ConnectivityNode] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'ConnectivityNode.SvVoltage',
-        'namespace': 'http://iec.ch/TC57/CIM100#',
-        'serialize': False,
-        'docstring':
-            '''
-            '''
-
-        })
-    '''
     '''
 
     @property

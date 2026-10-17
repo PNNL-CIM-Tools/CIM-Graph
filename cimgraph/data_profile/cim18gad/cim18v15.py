@@ -178,40 +178,6 @@ class BlockingFunction(Identity):
     def __maxOccurs__(self):
         return 'unbounded'
 
-    Delay: Optional[Delay] = field(
-        default=None,
-        metadata={
-        'type': 'informative',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'Delay.BlockingFunction',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
-        'docstring':
-            '''
-            '''
-
-        })
-    '''
-    '''
-
-    VSCtype1: Optional[VSCtype1] = field(
-        default=None,
-        metadata={
-        'type': 'informative',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'VSCtype1.BlockingFunction',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
-        'docstring':
-            '''
-            '''
-
-        })
-    '''
-    '''
-
 @dataclass(repr=False)
 class BranchGroupTerminal(Identity):
     '''
@@ -837,25 +803,6 @@ class CurrentDroopOverride(Identity):
     def __maxOccurs__(self):
         return 'unbounded'
 
-    SSSCController: Optional[SSSCController] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'SSSCController.CurrentDroopOverride',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
-        'docstring':
-            '''
-            The SSSC controller to which this CurrentDroopOverride applies to.
-            '''
-
-        })
-    '''
-    The SSSC controller to which this CurrentDroopOverride applies to.
-    '''
-
 @dataclass(repr=False)
 class CurveData(Identity):
     '''
@@ -1099,40 +1046,6 @@ class DCvoltageControl(Identity):
     def __maxOccurs__(self):
         return 'unbounded'
 
-    Delay: Optional[Delay] = field(
-        default=None,
-        metadata={
-        'type': 'informative',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'Delay.DCvoltageControl',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
-        'docstring':
-            '''
-            '''
-
-        })
-    '''
-    '''
-
-    VSCtype1: Optional[VSCtype1] = field(
-        default=None,
-        metadata={
-        'type': 'informative',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'VSCtype1.DCvoltageControl',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
-        'docstring':
-            '''
-            '''
-
-        })
-    '''
-    '''
-
 @stereotype(CIMStereotype.informative)
 @dataclass(repr=False)
 class Delay(Identity):
@@ -1307,142 +1220,6 @@ class Delay(Identity):
     @property
     def __maxOccurs__(self):
         return 'unbounded'
-
-    BlockingFunction: Optional[BlockingFunction] = field(
-        default=None,
-        metadata={
-        'type': 'informative',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'BlockingFunction.Delay',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
-        'docstring':
-            '''
-            '''
-
-        })
-    '''
-    '''
-
-    DCvoltageControl: Optional[DCvoltageControl] = field(
-        default=None,
-        metadata={
-        'type': 'informative',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'DCvoltageControl.Delay',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
-        'docstring':
-            '''
-            '''
-
-        })
-    '''
-    '''
-
-    PFmode: Optional[PFmode] = field(
-        default=None,
-        metadata={
-        'type': 'informative',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'PFmode.Delay',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
-        'docstring':
-            '''
-            '''
-
-        })
-    '''
-    '''
-
-    Pcontrol: Optional[Pcontrol] = field(
-        default=None,
-        metadata={
-        'type': 'informative',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'Pcontrol.Delay',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
-        'docstring':
-            '''
-            '''
-
-        })
-    '''
-    '''
-
-    Qlimiter: Optional[Qlimiter] = field(
-        default=None,
-        metadata={
-        'type': 'informative',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'Qlimiter.Delay',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
-        'docstring':
-            '''
-            '''
-
-        })
-    '''
-    '''
-
-    Qmode: Optional[Qmode] = field(
-        default=None,
-        metadata={
-        'type': 'informative',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'Qmode.Delay',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
-        'docstring':
-            '''
-            '''
-
-        })
-    '''
-    '''
-
-    Qregulator: Optional[Qregulator] = field(
-        default=None,
-        metadata={
-        'type': 'informative',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'Qregulator.Delay',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
-        'docstring':
-            '''
-            '''
-
-        })
-    '''
-    '''
-
-    Umode: Optional[Umode] = field(
-        default=None,
-        metadata={
-        'type': 'informative',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'Umode.Delay',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
-        'docstring':
-            '''
-            '''
-
-        })
-    '''
-    '''
 
 @dataclass(repr=False)
 class DiagramObjectGluePoint(Identity):
@@ -2171,47 +1948,6 @@ class FuseInfo(Identity):
     def __maxOccurs__(self):
         return 'unbounded'
 
-    MinimumMeltCurve: Optional[FuseCharacteristicCurve] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'FuseCharacteristicCurve.FuseInfoMinimumMelt',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
-        'docstring':
-            '''
-            Curves that define the time-current operation of this fuse (Minimum Melt)
-            '''
-
-        })
-    '''
-    Curves that define the time-current operation of this fuse (Minimum
-    Melt)
-    '''
-
-    TotalClearingTimeCurve: Optional[FuseCharacteristicCurve] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'FuseCharacteristicCurve.FusInfoTotalClearing',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
-        'docstring':
-            '''
-            Curves that define the time-current operation of this fuse (Total Clearing
-            Time Curves)
-            '''
-
-        })
-    '''
-    Curves that define the time-current operation of this fuse (Total Clearing
-    Time Curves)
-    '''
-
 @dataclass(repr=False)
 class GenDistributionFactor(Identity):
     '''
@@ -2531,25 +2267,6 @@ class IdentifiedObject(Identity):
         })
     '''
     Dataset containing the data objects.
-    '''
-
-    ObjectType: Optional[ObjectType] = field(
-        default=None,
-        metadata={
-        'type': 'NC',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'ObjectType.IdentifiedObject',
-        'namespace': 'http://entsoe.eu/ns/nc#',
-        'serialize': True,
-        'docstring':
-            '''
-            The object type of the IdentifiedObject.
-            '''
-
-        })
-    '''
-    The object type of the IdentifiedObject.
     '''
 
     ObjectType: Optional[ObjectType1] = field(
@@ -3613,44 +3330,6 @@ class Terminal(ACDCTerminal):
     Input signal coming from this terminal.
     '''
 
-    HasFromTerminalSVSMO4: Optional[SVSMO4] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'SVSMO4.FromTerminal',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
-        'docstring':
-            '''
-            The SVSMO4 model that has this FromTerminal.
-            '''
-
-        })
-    '''
-    The SVSMO4 model that has this FromTerminal.
-    '''
-
-    HasToTerminalSVSMO4: Optional[SVSMO4] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'SVSMO4.ToTerminal',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
-        'docstring':
-            '''
-            The SVSMO4 model that has this ToTerminal.
-            '''
-
-        })
-    '''
-    The SVSMO4 model that has this ToTerminal.
-    '''
-
     SvPowerFlow: list[SvPowerFlow] = field(
         default_factory=list,
         metadata={
@@ -3708,23 +3387,6 @@ class Terminal(ACDCTerminal):
     All transformer ends connected at this terminal.
     '''
 
-    UsagePoint: Optional[UsagePoint] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'UsagePoint.Terminal',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
-        'docstring':
-            '''
-            '''
-
-        })
-    '''
-    '''
-
     VoltageAngleLimit: list[VoltageAngleLimit] = field(
         default_factory=list,
         metadata={
@@ -3742,63 +3404,6 @@ class Terminal(ACDCTerminal):
         })
     '''
     The voltage angle limit which has this reference angle terminal.
-    '''
-
-    WeccREPCC: Optional[WeccREPCC] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'WeccREPCC.Terminal',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
-        'docstring':
-            '''
-            The WECC REPCC model that has frequency measured at this Terminal.
-            '''
-
-        })
-    '''
-    The WECC REPCC model that has frequency measured at this Terminal.
-    '''
-
-    WeccWTGIBFFRA: Optional[WeccWTGIBFFRA] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'WeccWTGIBFFRA.Terminal',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
-        'docstring':
-            '''
-            The WECC WTGIBFFRA model that has frequency measured at this Terminal.
-            '''
-
-        })
-    '''
-    The WECC WTGIBFFRA model that has frequency measured at this Terminal.
-    '''
-
-    WindPlantDynamics: Optional[WindPlantDynamics] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'WindPlantDynamics.PointOfConnection',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
-        'docstring':
-            '''
-            The wind plant that has point of connection.
-            '''
-
-        })
-    '''
-    The wind plant that has point of connection.
     '''
 
     @property
@@ -4789,40 +4394,6 @@ class AssetInfo(IdentifiedObject):
         })
     '''
     Product asset model which conforms to this catalog asset type.
-    '''
-
-    ParentAssetInfoComponent: Optional[AssetInfoComponent] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'AssetInfoComponent.ChildAssetInfo',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
-        'docstring':
-            '''
-            '''
-
-        })
-    '''
-    '''
-
-    ChildAssetInfoComponent: Optional[AssetInfoComponent] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'AssetInfoComponent.ParentAssetInfo',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
-        'docstring':
-            '''
-            '''
-
-        })
-    '''
     '''
 
     PowerSystemResources: list[PowerSystemResource] = field(
@@ -7825,23 +7396,6 @@ class CableInfo(WireInfo):
     '''
     '''
 
-    InsulationInfo: Optional[InsulationInfo] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'InsulationInfo.CableInfo',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
-        'docstring':
-            '''
-            '''
-
-        })
-    '''
-    '''
-
     @property
     def __namespace__(self):
         return 'http://cim.ucaiug.io/CIM101/draft#'
@@ -9618,29 +9172,6 @@ class TransformerEndInfo(ConductingAssetInfo):
     short-circuited.
     '''
 
-    CoreAdmittance: Optional[TransformerCoreAdmittance] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'TransformerCoreAdmittance.TransformerEndInfo',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
-        'docstring':
-            '''
-            Core admittance calculated from this transformer end datasheet, representing
-            magnetising current and core losses. The full values of the transformer
-            should be supplied for one transformer end info only.
-            '''
-
-        })
-    '''
-    Core admittance calculated from this transformer end datasheet, representing
-    magnetising current and core losses. The full values of the transformer
-    should be supplied for one transformer end info only.
-    '''
-
     FromMeshImpedances: list[TransformerMeshImpedance] = field(
         default_factory=list,
         metadata={
@@ -9679,25 +9210,6 @@ class TransformerEndInfo(ConductingAssetInfo):
     '''
     All mesh impedances between this 'from' and other 'to' transformer
     ends.
-    '''
-
-    TransformerStarImpedance: Optional[TransformerStarImpedance] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'TransformerStarImpedance.TransformerEndInfo',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
-        'docstring':
-            '''
-            Transformer star impedance calculated from this transformer end datasheet.
-            '''
-
-        })
-    '''
-    Transformer star impedance calculated from this transformer end datasheet.
     '''
 
     @property
@@ -9875,23 +9387,6 @@ class InsulationInfo(AssetInfo):
         'inverse': 'CableInfo.InsulationInfo',
         'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            '''
-
-        })
-    '''
-    '''
-
-    CableInfo: Optional[CableInfo] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'CableInfo.InsulationInfo',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
         'docstring':
             '''
             '''
@@ -11423,40 +10918,6 @@ class AssetInfoComponent(IdentifiedObject):
     '''
     '''
 
-    ParentAssetInfo: Optional[AssetInfo] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'AssetInfo.ChildAssetInfoComponent',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
-        'docstring':
-            '''
-            '''
-
-        })
-    '''
-    '''
-
-    ChildAssetInfo: Optional[AssetInfo] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'AssetInfo.ParentAssetInfoComponent',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
-        'docstring':
-            '''
-            '''
-
-        })
-    '''
-    '''
-
     @property
     def __namespace__(self):
         return 'http://cim.ucaiug.io/CIM101/draft#'
@@ -12058,27 +11519,6 @@ class GenUnitOpSchedule(RegularIntervalSchedule):
     operation of the unit.
     '''
 
-    GeneratingUnit: Optional[GeneratingUnit] = field(
-        default=None,
-        metadata={
-        'type': 'OfAggregate',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'GeneratingUnit.GenUnitOpSchedule',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
-        'docstring':
-            '''
-            A generating unit may have an operating schedule, indicating the planned
-            operation of the unit.
-            '''
-
-        })
-    '''
-    A generating unit may have an operating schedule, indicating the planned
-    operation of the unit.
-    '''
-
     @property
     def __namespace__(self):
         return 'http://cim.ucaiug.io/CIM101/draft#'
@@ -12111,27 +11551,6 @@ class HydroPumpOpSchedule(RegularIntervalSchedule):
         'inverse': 'HydroPump.HydroPumpOpSchedule',
         'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            The hydro pump has a pumping schedule over time, indicating when pumping
-            is to occur.
-            '''
-
-        })
-    '''
-    The hydro pump has a pumping schedule over time, indicating when pumping
-    is to occur.
-    '''
-
-    HydroPump: Optional[HydroPump] = field(
-        default=None,
-        metadata={
-        'type': 'OfAggregate',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'HydroPump.HydroPumpOpSchedule',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
         'docstring':
             '''
             The hydro pump has a pumping schedule over time, indicating when pumping
@@ -12450,25 +11869,6 @@ class SteamSendoutSchedule(RegularIntervalSchedule):
         'inverse': 'CogenerationPlant.SteamSendoutSchedule',
         'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            A cogeneration plant has a steam sendout schedule.
-            '''
-
-        })
-    '''
-    A cogeneration plant has a steam sendout schedule.
-    '''
-
-    CogenerationPlant: Optional[CogenerationPlant] = field(
-        default=None,
-        metadata={
-        'type': 'OfAggregate',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'CogenerationPlant.SteamSendoutSchedule',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
         'docstring':
             '''
             A cogeneration plant has a steam sendout schedule.
@@ -13603,69 +13003,6 @@ class CommunicationIEC(IdentifiedObject):
     module is associated.
     '''
 
-    WindPlantControlCommIECpdr: Optional[WindPlantControlCommIEC] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'WindPlantControlCommIEC.PowerDeviceReference',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
-        'docstring':
-            '''
-            Wind plant control and comminication model with which this communication
-            module is associated.
-            '''
-
-        })
-    '''
-    Wind plant control and comminication model with which this communication
-    module is associated.
-    '''
-
-    WindPlantControlCommIECwpm: Optional[WindPlantControlCommIEC] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'WindPlantControlCommIEC.WindPlantMeasurement',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
-        'docstring':
-            '''
-            Wind plant control and comminication model with which this communication
-            module is associated.
-            '''
-
-        })
-    '''
-    Wind plant control and comminication model with which this communication
-    module is associated.
-    '''
-
-    WindPlantControlCommIECwpr: Optional[WindPlantControlCommIEC] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'WindPlantControlCommIEC.WindPlantReference',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
-        'docstring':
-            '''
-            Wind plant control and comminication model with which this communication
-            module is associated.
-            '''
-
-        })
-    '''
-    Wind plant control and comminication model with which this communication
-    module is associated.
-    '''
-
     @property
     def __namespace__(self):
         return 'http://cim.ucaiug.io/CIM101/draft#'
@@ -13918,63 +13255,6 @@ class ConnectivityNode(IdentifiedObject):
     depend on the current state of switches in the network.
     '''
 
-    ACPointOfCommonCoupling: Optional[ACPointOfCommonCoupling] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'ACPointOfCommonCoupling.ConnectivityNode',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
-        'docstring':
-            '''
-            Identifies this ConnectivityNode as a point of common coupling AC.
-            '''
-
-        })
-    '''
-    Identifies this ConnectivityNode as a point of common coupling AC.
-    '''
-
-    BoundaryPoint: Optional[BoundaryPoint] = field(
-        default=None,
-        metadata={
-        'type': 'European',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'BoundaryPoint.ConnectivityNode',
-        'namespace': 'http://iec.ch/TC57/CIM100-European#',
-        'serialize': False,
-        'docstring':
-            '''
-            The boundary point associated with the connectivity node.
-            '''
-
-        })
-    '''
-    The boundary point associated with the connectivity node.
-    '''
-
-    ConductingEquipment: list[ConductingEquipment] = field(
-        default_factory=list,
-        metadata={
-        'type': 'Association',
-        'minOccurs': '0',
-        'maxOccurs': 'unbounded',
-        'inverse': 'ConductingEquipment.FromConnectivityNode',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
-        'docstring':
-            '''
-            All ConductingEquipments for which this "bus" is the FromConnectivityNode.
-            '''
-
-        })
-    '''
-    All ConductingEquipments for which this "bus" is the FromConnectivityNode.
-    '''
-
     ConductingEquipment: list[ConductingEquipment] = field(
         default_factory=list,
         metadata={
@@ -13992,23 +13272,6 @@ class ConnectivityNode(IdentifiedObject):
         })
     '''
     All ConductingEquipments for which this "bus" is the FromConnectivityNode.
-    '''
-
-    IndividualPnode: Optional[IndividualPnode] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'IndividualPnode.ConnectivityNode',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
-        'docstring':
-            '''
-            '''
-
-        })
-    '''
     '''
 
     Terminals: list[Terminal] = field(
@@ -14147,27 +13410,6 @@ class ConstantPowerFactorSettings(IdentifiedObject):
     model.
     '''
 
-    DERIEEEType1: Optional[DERIEEEType1] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'DERIEEEType1.ConstantPowerFactorSettings',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
-        'docstring':
-            '''
-            DER IEEE type 1 model associated with this constant power factor settings
-            model.
-            '''
-
-        })
-    '''
-    DER IEEE type 1 model associated with this constant power factor settings
-    model.
-    '''
-
     @property
     def __namespace__(self):
         return 'http://cim.ucaiug.io/CIM101/draft#'
@@ -14239,27 +13481,6 @@ class ConstantReactivePowerSettings(IdentifiedObject):
         'inverse': 'DERIEEEType1.ConstantReactivePowerSettings',
         'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            DER IEEE type 1 model associated with this constant reactive power settings
-            model.
-            '''
-
-        })
-    '''
-    DER IEEE type 1 model associated with this constant reactive power
-    settings model.
-    '''
-
-    DERIEEEType1: Optional[DERIEEEType1] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'DERIEEEType1.ConstantReactivePowerSettings',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
         'docstring':
             '''
             DER IEEE type 1 model associated with this constant reactive power settings
@@ -14936,27 +14157,6 @@ class CTTempActivePowerCurve(Curve):
     relationship.
     '''
 
-    CombustionTurbine: Optional[CombustionTurbine] = field(
-        default=None,
-        metadata={
-        'type': 'OfAggregate',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'CombustionTurbine.CTTempActivePowerCurve',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
-        'docstring':
-            '''
-            A combustion turbine may have an active power versus ambient temperature
-            relationship.
-            '''
-
-        })
-    '''
-    A combustion turbine may have an active power versus ambient temperature
-    relationship.
-    '''
-
     @property
     def __namespace__(self):
         return 'http://cim.ucaiug.io/CIM101/draft#'
@@ -15528,25 +14728,6 @@ class HeatInputCurve(Curve):
     A thermal generating unit may have a heat input curve.
     '''
 
-    ThermalGeneratingUnit: Optional[ThermalGeneratingUnit] = field(
-        default=None,
-        metadata={
-        'type': 'OfAggregate',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'ThermalGeneratingUnit.HeatInputCurve',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
-        'docstring':
-            '''
-            A thermal generating unit may have a heat input curve.
-            '''
-
-        })
-    '''
-    A thermal generating unit may have a heat input curve.
-    '''
-
     @property
     def __namespace__(self):
         return 'http://cim.ucaiug.io/CIM101/draft#'
@@ -15595,25 +14776,6 @@ class HeatRateCurve(Curve):
         'inverse': 'ThermalGeneratingUnit.HeatRateCurve',
         'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            A thermal generating unit may have a heat rate curve.
-            '''
-
-        })
-    '''
-    A thermal generating unit may have a heat rate curve.
-    '''
-
-    ThermalGeneratingUnit: Optional[ThermalGeneratingUnit] = field(
-        default=None,
-        metadata={
-        'type': 'OfAggregate',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'ThermalGeneratingUnit.HeatRateCurve',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
         'docstring':
             '''
             A thermal generating unit may have a heat rate curve.
@@ -15719,25 +14881,6 @@ class IncrementalHeatRateCurve(Curve):
         'inverse': 'ThermalGeneratingUnit.IncrementalHeatRateCurve',
         'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            A thermal generating unit may have an incremental heat rate curve.
-            '''
-
-        })
-    '''
-    A thermal generating unit may have an incremental heat rate curve.
-    '''
-
-    ThermalGeneratingUnit: Optional[ThermalGeneratingUnit] = field(
-        default=None,
-        metadata={
-        'type': 'OfAggregate',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'ThermalGeneratingUnit.IncrementalHeatRateCurve',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
         'docstring':
             '''
             A thermal generating unit may have an incremental heat rate curve.
@@ -16091,25 +15234,6 @@ class PenstockLossCurve(Curve):
     A hydro generating unit has a penstock loss curve.
     '''
 
-    HydroGeneratingUnit: Optional[HydroGeneratingUnit] = field(
-        default=None,
-        metadata={
-        'type': 'OfAggregate',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'HydroGeneratingUnit.PenstockLossCurve',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
-        'docstring':
-            '''
-            A hydro generating unit has a penstock loss curve.
-            '''
-
-        })
-    '''
-    A hydro generating unit has a penstock loss curve.
-    '''
-
     @property
     def __namespace__(self):
         return 'http://cim.ucaiug.io/CIM101/draft#'
@@ -16323,25 +15447,6 @@ class ShutdownCurve(Curve):
     A thermal generating unit may have a shutdown curve.
     '''
 
-    ThermalGeneratingUnit: Optional[ThermalGeneratingUnit] = field(
-        default=None,
-        metadata={
-        'type': 'OfAggregate',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'ThermalGeneratingUnit.ShutdownCurve',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
-        'docstring':
-            '''
-            A thermal generating unit may have a shutdown curve.
-            '''
-
-        })
-    '''
-    A thermal generating unit may have a shutdown curve.
-    '''
-
     @property
     def __namespace__(self):
         return 'http://cim.ucaiug.io/CIM101/draft#'
@@ -16459,63 +15564,6 @@ class SimulationResultCharacteristic(Curve):
     The signal for y3value of the characteristic.
     '''
 
-    Y2valueSignal: Optional[SignalRecorder] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'SignalRecorder.SimulationChacteristic2',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
-        'docstring':
-            '''
-            The signal for y2value of the characteristic.
-            '''
-
-        })
-    '''
-    The signal for y2value of the characteristic.
-    '''
-
-    Y1valueSignal: Optional[SignalRecorder] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'SignalRecorder.SimulationCharacteristic1',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
-        'docstring':
-            '''
-            The signal for y1value of the characteristic.
-            '''
-
-        })
-    '''
-    The signal for y1value of the characteristic.
-    '''
-
-    Y3valueSignal: Optional[SignalRecorder] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'SignalRecorder.SimulationCharacteristic3',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
-        'docstring':
-            '''
-            The signal for y3value of the characteristic.
-            '''
-
-        })
-    '''
-    The signal for y3value of the characteristic.
-    '''
-
     @property
     def __namespace__(self):
         return 'http://cim.ucaiug.io/CIM101/draft#'
@@ -16564,25 +15612,6 @@ class StartIgnFuelCurve(Curve):
         'inverse': 'StartupModel.StartIgnFuelCurve',
         'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            The unit's startup model may have a startup ignition fuel curve.
-            '''
-
-        })
-    '''
-    The unit's startup model may have a startup ignition fuel curve.
-    '''
-
-    StartupModel: Optional[StartupModel] = field(
-        default=None,
-        metadata={
-        'type': 'OfAggregate',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'StartupModel.StartIgnFuelCurve',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
         'docstring':
             '''
             The unit's startup model may have a startup ignition fuel curve.
@@ -16651,25 +15680,6 @@ class StartMainFuelCurve(Curve):
     The unit's startup model may have a startup main fuel curve.
     '''
 
-    StartupModel: Optional[StartupModel] = field(
-        default=None,
-        metadata={
-        'type': 'OfAggregate',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'StartupModel.StartMainFuelCurve',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
-        'docstring':
-            '''
-            The unit's startup model may have a startup main fuel curve.
-            '''
-
-        })
-    '''
-    The unit's startup model may have a startup main fuel curve.
-    '''
-
     @property
     def __namespace__(self):
         return 'http://cim.ucaiug.io/CIM101/draft#'
@@ -16718,25 +15728,6 @@ class StartRampCurve(Curve):
         'inverse': 'StartupModel.StartRampCurve',
         'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            The unit's startup model may have a startup ramp curve.
-            '''
-
-        })
-    '''
-    The unit's startup model may have a startup ramp curve.
-    '''
-
-    StartupModel: Optional[StartupModel] = field(
-        default=None,
-        metadata={
-        'type': 'OfAggregate',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'StartupModel.StartRampCurve',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
         'docstring':
             '''
             The unit's startup model may have a startup ramp curve.
@@ -16856,25 +15847,6 @@ class TargetLevelSchedule(Curve):
         'inverse': 'Reservoir.TargetLevelSchedule',
         'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            A reservoir may have a water level target schedule.
-            '''
-
-        })
-    '''
-    A reservoir may have a water level target schedule.
-    '''
-
-    Reservoir: Optional[Reservoir] = field(
-        default=None,
-        metadata={
-        'type': 'OfAggregate',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'Reservoir.TargetLevelSchedule',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
         'docstring':
             '''
             A reservoir may have a water level target schedule.
@@ -17029,82 +16001,6 @@ class FuseCharacteristicCurve(TimeCurrentCurve):
         'inverse': 'FuseInfo.TotalClearingTimeCurve',
         'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            FuseInfo this curve is associated to.
-            '''
-
-        })
-    '''
-    FuseInfo this curve is associated to.
-    '''
-
-    FuseMinimumMelt: Optional[Fuse] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'Fuse.MiinimumMeltCurve',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
-        'docstring':
-            '''
-            Fuse this curve is associated to.
-            '''
-
-        })
-    '''
-    Fuse this curve is associated to.
-    '''
-
-    FuseTotalClearing: Optional[Fuse] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'Fuse.TotalClearingTimeCurve',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
-        'docstring':
-            '''
-            Fuse this curve is associated to.
-            '''
-
-        })
-    '''
-    Fuse this curve is associated to.
-    '''
-
-    FuseInfoMinimumMelt: Optional[FuseInfo] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'FuseInfo.MinimumMeltCurve',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
-        'docstring':
-            '''
-            FuseInfo this curve is associated to.
-            '''
-
-        })
-    '''
-    FuseInfo this curve is associated to.
-    '''
-
-    FusInfoTotalClearing: Optional[FuseInfo] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'FuseInfo.TotalClearingTimeCurve',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
         'docstring':
             '''
             FuseInfo this curve is associated to.
@@ -17500,25 +16396,6 @@ class DCNode(IdentifiedObject):
     '''
     DC base terminals interconnected with zero impedance at a this DC connectivity
     node.
-    '''
-
-    DCPointOfCommonCoupling: Optional[DCPointOfCommonCoupling] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'DCPointOfCommonCoupling.DCNode',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
-        'docstring':
-            '''
-            Identifies that this DC node is a point of common coupling DC.
-            '''
-
-        })
-    '''
-    Identifies that this DC node is a point of common coupling DC.
     '''
 
     @property
@@ -17982,25 +16859,6 @@ class DERNameplateData(IdentifiedObject):
         'inverse': 'DERIEEEType1.DerNameplateData',
         'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            DER IEEE type 1 model associated with this DER nameplate data model.
-            '''
-
-        })
-    '''
-    DER IEEE type 1 model associated with this DER nameplate data model.
-    '''
-
-    DERIEEEType1: Optional[DERIEEEType1] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'DERIEEEType1.DerNameplateData',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
         'docstring':
             '''
             DER IEEE type 1 model associated with this DER nameplate data model.
@@ -18669,44 +17527,6 @@ class FunctionDescriptor(DetailedModelDescriptor):
     The upper limit of the limiter descriptor.
     '''
 
-    LowerLimit: Optional[LimiterDescriptor] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'LimiterDescriptor.LowerLimitFunction',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
-        'docstring':
-            '''
-            The lower limit of the limiter descriptor.
-            '''
-
-        })
-    '''
-    The lower limit of the limiter descriptor.
-    '''
-
-    UpperLimit: Optional[LimiterDescriptor] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'LimiterDescriptor.UpperLimitFunction',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
-        'docstring':
-            '''
-            The upper limit of the limiter descriptor.
-            '''
-
-        })
-    '''
-    The upper limit of the limiter descriptor.
-    '''
-
     @property
     def __namespace__(self):
         return 'http://cim.ucaiug.io/CIM101/draft#'
@@ -18850,44 +17670,6 @@ class LimiterDescriptor(DetailedModelDescriptor):
         'inverse': 'FunctionDescriptor.UpperLimit',
         'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            The function for the upper limit.
-            '''
-
-        })
-    '''
-    The function for the upper limit.
-    '''
-
-    LowerLimitFunction: Optional[FunctionDescriptor] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'FunctionDescriptor.LowerLimit',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
-        'docstring':
-            '''
-            The function fo the lower limit.
-            '''
-
-        })
-    '''
-    The function fo the lower limit.
-    '''
-
-    UpperLimitFunction: Optional[FunctionDescriptor] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'FunctionDescriptor.UpperLimit',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
         'docstring':
             '''
             The function for the upper limit.
@@ -20094,48 +18876,6 @@ class CrossCompoundTurbineGovernorDynamics(DynamicsFunctionBlock):
         'inverse': 'SynchronousMachineDynamics.CrossCompoundTurbineGovernorDynamicsLow',
         'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Low-pressure synchronous machine with which this cross-compound turbine
-            governor is associated.
-            '''
-
-        })
-    '''
-    Low-pressure synchronous machine with which this cross-compound turbine
-    governor is associated.
-    '''
-
-    HighPressureSynchronousMachineDynamics: Optional[SynchronousMachineDynamics] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'SynchronousMachineDynamics.CrossCompoundTurbineGovernorDynamicsHigh',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
-        'docstring':
-            '''
-            High-pressure synchronous machine with which this cross-compound turbine
-            governor is associated.
-            '''
-
-        })
-    '''
-    High-pressure synchronous machine with which this cross-compound turbine
-    governor is associated.
-    '''
-
-    LowPressureSynchronousMachineDynamics: Optional[SynchronousMachineDynamics] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'SynchronousMachineDynamics.CrossCompoundTurbineGovernorDynamicsLow',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
         'docstring':
             '''
             Low-pressure synchronous machine with which this cross-compound turbine
@@ -23112,239 +21852,6 @@ class DERIEEEType1(DERDynamics):
     Watt var settings with which this DER IEEE type 1 model is associated.
     '''
 
-    ConstantPowerFactorSettings: Optional[ConstantPowerFactorSettings] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'ConstantPowerFactorSettings.DERIEEEType1',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
-        'docstring':
-            '''
-            Constant power factor settings with which this DER IEEE type 1 model is
-            associated.
-            '''
-
-        })
-    '''
-    Constant power factor settings with which this DER IEEE type 1 model
-    is associated.
-    '''
-
-    ConstantReactivePowerSettings: Optional[ConstantReactivePowerSettings] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'ConstantReactivePowerSettings.DERIEEEType1',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
-        'docstring':
-            '''
-            Constant reactive power settings with which this DER IEEE type 1 model
-            is associated.
-            '''
-
-        })
-    '''
-    Constant reactive power settings with which this DER IEEE type 1 model
-    is associated.
-    '''
-
-    DerNameplateData: Optional[DERNameplateData] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'DERNameplateData.DERIEEEType1',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
-        'docstring':
-            '''
-            DER nameplate data with which this DER IEEE type 1 model is associated.
-            '''
-
-        })
-    '''
-    DER nameplate data with which this DER IEEE type 1 model is associated.
-    '''
-
-    FrequencyDroopSettings: Optional[FrequencyDroopSettings] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'FrequencyDroopSettings.DERIEEEType1',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
-        'docstring':
-            '''
-            Frequency droop dettings with which this DER IEEE type 1 model is associated.
-            '''
-
-        })
-    '''
-    Frequency droop dettings with which this DER IEEE type 1 model is associated.
-    '''
-
-    FrequencyTripSettings: Optional[FrequencyTripSettings] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'FrequencyTripSettings.DERIEEEType1',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
-        'docstring':
-            '''
-            Frequency trip settings with which this DER IEEE type 1 model is associated.
-            '''
-
-        })
-    '''
-    Frequency trip settings with which this DER IEEE type 1 model is associated.
-    '''
-
-    MomentaryCessationSettings: Optional[MomentaryCessationSettings] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'MomentaryCessationSettings.DERIEEEType1',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
-        'docstring':
-            '''
-            Momentary cessation settings with which this DER IEEE type 1 model is associated.
-            '''
-
-        })
-    '''
-    Momentary cessation settings with which this DER IEEE type 1 model
-    is associated.
-    '''
-
-    PowerLimitSettings: Optional[PowerLimitSettings] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'PowerLimitSettings.DERIEEEType1',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
-        'docstring':
-            '''
-            Power limit settings with which this DER IEEE type 1 model is associated.
-            '''
-
-        })
-    '''
-    Power limit settings with which this DER IEEE type 1 model is associated.
-    '''
-
-    ServiceSettings: Optional[ServiceSettings] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'ServiceSettings.DERIEEEType1',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
-        'docstring':
-            '''
-            Service settings with which this DER IEEE type 1 model is associated.
-            '''
-
-        })
-    '''
-    Service settings with which this DER IEEE type 1 model is associated.
-    '''
-
-    VoltVarSettings: Optional[VoltVarSettings] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'VoltVarSettings.DERIEEEType1',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
-        'docstring':
-            '''
-            Volt var settings with which this DER IEEE type 1 model is associated.
-            '''
-
-        })
-    '''
-    Volt var settings with which this DER IEEE type 1 model is associated.
-    '''
-
-    VoltWattSettings: Optional[VoltWattSettings] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'VoltWattSettings.DERIEEEType1',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
-        'docstring':
-            '''
-            Volt watt settings with which this DER IEEE type 1 model is associated.
-            '''
-
-        })
-    '''
-    Volt watt settings with which this DER IEEE type 1 model is associated.
-    '''
-
-    VoltageTripSettings: Optional[VoltageTripSettings] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'VoltageTripSettings.DERIEEEType1',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
-        'docstring':
-            '''
-            Voltage trip settings with which this DER IEEE type 1 model is associated.
-            '''
-
-        })
-    '''
-    Voltage trip settings with which this DER IEEE type 1 model is associated.
-    '''
-
-    WattVarSettings: Optional[WattVarSettings] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'WattVarSettings.DERIEEEType1',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
-        'docstring':
-            '''
-            Watt var settings with which this DER IEEE type 1 model is associated.
-            '''
-
-        })
-    '''
-    Watt var settings with which this DER IEEE type 1 model is associated.
-    '''
-
     @property
     def __namespace__(self):
         return 'http://cim.ucaiug.io/CIM101/draft#'
@@ -23494,48 +22001,6 @@ class DiscontinuousExcitationControlDynamics(DynamicsFunctionBlock):
         'inverse': 'RemoteInputSignal.DiscontinuousExcitationControlDynamics',
         'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Remote input signal used by this discontinuous excitation control system
-            model.
-            '''
-
-        })
-    '''
-    Remote input signal used by this discontinuous excitation control system
-    model.
-    '''
-
-    ExcitationSystemDynamics: Optional[ExcitationSystemDynamics] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'ExcitationSystemDynamics.DiscontinuousExcitationControlDynamics',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
-        'docstring':
-            '''
-            Excitation system model with which this discontinuous excitation control
-            model is associated.
-            '''
-
-        })
-    '''
-    Excitation system model with which this discontinuous excitation control
-    model is associated.
-    '''
-
-    RemoteInputSignal: Optional[RemoteInputSignal] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'RemoteInputSignal.DiscontinuousExcitationControlDynamics',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
         'docstring':
             '''
             Remote input signal used by this discontinuous excitation control system
@@ -24359,168 +22824,6 @@ class ExcitationSystemDynamics(DynamicsFunctionBlock):
         'inverse': 'VoltageCompensatorDynamics.ExcitationSystemDynamics',
         'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Voltage compensator model associated with this excitation system model.
-            '''
-
-        })
-    '''
-    Voltage compensator model associated with this excitation system model.
-    '''
-
-    DiscontinuousExcitationControlDynamics: Optional[DiscontinuousExcitationControlDynamics] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'DiscontinuousExcitationControlDynamics.ExcitationSystemDynamics',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
-        'docstring':
-            '''
-            Discontinuous excitation control model associated with this excitation
-            system model.
-            '''
-
-        })
-    '''
-    Discontinuous excitation control model associated with this excitation
-    system model.
-    '''
-
-    OverexcitationLimiterDynamics: Optional[OverexcitationLimiterDynamics] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'OverexcitationLimiterDynamics.ExcitationSystemDynamics',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
-        'docstring':
-            '''
-            Overexcitation limiter model associated with this excitation system model.
-            '''
-
-        })
-    '''
-    Overexcitation limiter model associated with this excitation system
-    model.
-    '''
-
-    PFVArControllerType1Dynamics: Optional[PFVArControllerType1Dynamics] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'PFVArControllerType1Dynamics.ExcitationSystemDynamics',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
-        'docstring':
-            '''
-            Power factor or VAr controller type 1 model associated with this excitation
-            system model.
-            '''
-
-        })
-    '''
-    Power factor or VAr controller type 1 model associated with this excitation
-    system model.
-    '''
-
-    PFVArControllerType2Dynamics: Optional[PFVArControllerType2Dynamics] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'PFVArControllerType2Dynamics.ExcitationSystemDynamics',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
-        'docstring':
-            '''
-            Power factor or VAr controller type 2 model associated with this excitation
-            system model.
-            '''
-
-        })
-    '''
-    Power factor or VAr controller type 2 model associated with this excitation
-    system model.
-    '''
-
-    PowerSystemStabilizerDynamics: Optional[PowerSystemStabilizerDynamics] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'PowerSystemStabilizerDynamics.ExcitationSystemDynamics',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
-        'docstring':
-            '''
-            Power system stabilizer model associated with this excitation system model.
-            '''
-
-        })
-    '''
-    Power system stabilizer model associated with this excitation system
-    model.
-    '''
-
-    StatorCurrentLimiterDynamics: Optional[StatorCurrentLimiterDynamics] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'StatorCurrentLimiterDynamics.ExcitationSystemDynamics',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
-        'docstring':
-            '''
-            Stator current limiter model associated with this excitation system model.
-            '''
-
-        })
-    '''
-    Stator current limiter model associated with this excitation system
-    model.
-    '''
-
-    SynchronousMachineDynamics: Optional[SynchronousMachineDynamics] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'SynchronousMachineDynamics.ExcitationSystemDynamics',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
-        'docstring':
-            '''
-            Synchronous machine model with which this excitation system model is associated.
-            '''
-
-        })
-    '''
-    Synchronous machine model with which this excitation system model is
-    associated.
-    '''
-
-    VoltageCompensatorDynamics: Optional[VoltageCompensatorDynamics] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'VoltageCompensatorDynamics.ExcitationSystemDynamics',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
         'docstring':
             '''
             Voltage compensator model associated with this excitation system model.
@@ -57904,27 +56207,6 @@ class CSCDynamics(HVDCDynamics):
     model applies.
     '''
 
-    CSConverter: Optional[CsConverter] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'CsConverter.CSCDynamics',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
-        'docstring':
-            '''
-            Current source converter to which current source converter dynamics model
-            applies.
-            '''
-
-        })
-    '''
-    Current source converter to which current source converter dynamics
-    model applies.
-    '''
-
     @property
     def __namespace__(self):
         return 'http://cim.ucaiug.io/CIM101/draft#'
@@ -58161,27 +56443,6 @@ class VSCDynamics(HVDCDynamics):
     model applies.
     '''
 
-    VsConverter: Optional[VsConverter] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'VsConverter.VSCDynamics',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
-        'docstring':
-            '''
-            Voltage source converter to which voltage source converter dynamics model
-            applies.
-            '''
-
-        })
-    '''
-    Voltage source converter to which voltage source converter dynamics
-    model applies.
-    '''
-
     @property
     def __namespace__(self):
         return 'http://cim.ucaiug.io/CIM101/draft#'
@@ -58405,142 +56666,6 @@ class VSCtype1(VSCDynamics):
     '''
     '''
 
-    BlockingFunction: Optional[BlockingFunction] = field(
-        default=None,
-        metadata={
-        'type': 'informative',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'BlockingFunction.VSCtype1',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
-        'docstring':
-            '''
-            '''
-
-        })
-    '''
-    '''
-
-    DCvoltageControl: Optional[DCvoltageControl] = field(
-        default=None,
-        metadata={
-        'type': 'informative',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'DCvoltageControl.VSCtype1',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
-        'docstring':
-            '''
-            '''
-
-        })
-    '''
-    '''
-
-    PFmodel: Optional[PFmode] = field(
-        default=None,
-        metadata={
-        'type': 'informative',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'PFmode.VSCtype1',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
-        'docstring':
-            '''
-            '''
-
-        })
-    '''
-    '''
-
-    Pcontrol: Optional[Pcontrol] = field(
-        default=None,
-        metadata={
-        'type': 'informative',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'Pcontrol.VSCtype1',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
-        'docstring':
-            '''
-            '''
-
-        })
-    '''
-    '''
-
-    Qlimiter: Optional[Qlimiter] = field(
-        default=None,
-        metadata={
-        'type': 'informative',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'Qlimiter.VSCtype1',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
-        'docstring':
-            '''
-            '''
-
-        })
-    '''
-    '''
-
-    Qmode: Optional[Qmode] = field(
-        default=None,
-        metadata={
-        'type': 'informative',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'Qmode.VSCtype1',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
-        'docstring':
-            '''
-            '''
-
-        })
-    '''
-    '''
-
-    Qregulator: Optional[Qregulator] = field(
-        default=None,
-        metadata={
-        'type': 'informative',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'Qregulator.VSCtype1',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
-        'docstring':
-            '''
-            '''
-
-        })
-    '''
-    '''
-
-    Umode: Optional[Umode] = field(
-        default=None,
-        metadata={
-        'type': 'informative',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'Umode.VSCtype1',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
-        'docstring':
-            '''
-            '''
-
-        })
-    '''
-    '''
-
     @property
     def __namespace__(self):
         return 'http://cim.ucaiug.io/CIM101/draft#'
@@ -58640,44 +56765,6 @@ class LoadAggregate(LoadDynamics):
         'inverse': 'LoadStatic.LoadAggregate',
         'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Aggregate static load associated with this aggregate load.
-            '''
-
-        })
-    '''
-    Aggregate static load associated with this aggregate load.
-    '''
-
-    LoadMotor: Optional[LoadMotor] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'LoadMotor.LoadAggregate',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
-        'docstring':
-            '''
-            Aggregate motor (dynamic) load associated with this aggregate load.
-            '''
-
-        })
-    '''
-    Aggregate motor (dynamic) load associated with this aggregate load.
-    '''
-
-    LoadStatic: Optional[LoadStatic] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'LoadStatic.LoadAggregate',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
         'docstring':
             '''
             Aggregate static load associated with this aggregate load.
@@ -59524,25 +57611,6 @@ class LoadCompositeWECC(LoadDynamics):
     associated.
     '''
 
-    LoadElectronicWECC: Optional[LoadElectronicWECC] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'LoadElectronicWECC.LoadCompositeWECC',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
-        'docstring':
-            '''
-            Load electronic module with which this load composite model is associated.
-            '''
-
-        })
-    '''
-    Load electronic module with which this load composite model is associated.
-    '''
-
     LoadMotorWECC: list[LoadMotorWECC] = field(
         default_factory=list,
         metadata={
@@ -59560,25 +57628,6 @@ class LoadCompositeWECC(LoadDynamics):
         })
     '''
     Load motor module with which this load composite model is associated.
-    '''
-
-    LoadStaticWECC: Optional[LoadStaticWECC] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'LoadStaticWECC.LoadCompositeWECC',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
-        'docstring':
-            '''
-            Load static module with which this load composite model is associated.
-            '''
-
-        })
-    '''
-    Load static module with which this load composite model is associated.
     '''
 
     @property
@@ -59867,52 +57916,6 @@ class MechanicalLoadDynamics(DynamicsFunctionBlock):
     to SynchronousMachineDynamics or AsynchronousMachineDynamics.
     '''
 
-    AsynchronousMachineDynamics: Optional[AsynchronousMachineDynamics] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'AsynchronousMachineDynamics.MechanicalLoadDynamics',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
-        'docstring':
-            '''
-            Asynchronous machine model with which this mechanical load model is associated.
-            MechanicalLoadDynamics shall have either an association to SynchronousMachineDynamics
-            or to AsynchronousMachineDynamics.
-            '''
-
-        })
-    '''
-    Asynchronous machine model with which this mechanical load model is
-    associated. MechanicalLoadDynamics shall have either an association
-    to SynchronousMachineDynamics or to AsynchronousMachineDynamics.
-    '''
-
-    SynchronousMachineDynamics: Optional[SynchronousMachineDynamics] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'SynchronousMachineDynamics.MechanicalLoadDynamics',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
-        'docstring':
-            '''
-            Synchronous machine model with which this mechanical load model is associated.
-            MechanicalLoadDynamics shall have either an association to SynchronousMachineDynamics
-            or AsynchronousMachineDynamics.
-            '''
-
-        })
-    '''
-    Synchronous machine model with which this mechanical load model is
-    associated. MechanicalLoadDynamics shall have either an association
-    to SynchronousMachineDynamics or AsynchronousMachineDynamics.
-    '''
-
     @property
     def __namespace__(self):
         return 'http://cim.ucaiug.io/CIM101/draft#'
@@ -60102,27 +58105,6 @@ class OverexcitationLimiterDynamics(DynamicsFunctionBlock):
         'inverse': 'ExcitationSystemDynamics.OverexcitationLimiterDynamics',
         'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Excitation system model with which this overexcitation limiter model is
-            associated.
-            '''
-
-        })
-    '''
-    Excitation system model with which this overexcitation limiter model
-    is associated.
-    '''
-
-    ExcitationSystemDynamics: Optional[ExcitationSystemDynamics] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'ExcitationSystemDynamics.OverexcitationLimiterDynamics',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
         'docstring':
             '''
             Excitation system model with which this overexcitation limiter model is
@@ -62808,69 +60790,6 @@ class PFVArControllerType1Dynamics(DynamicsFunctionBlock):
     type 1 model.
     '''
 
-    ExcitationSystemDynamics: Optional[ExcitationSystemDynamics] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'ExcitationSystemDynamics.PFVArControllerType1Dynamics',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
-        'docstring':
-            '''
-            Excitation system model with which this power actor or VAr controller type
-            1 model is associated.
-            '''
-
-        })
-    '''
-    Excitation system model with which this power actor or VAr controller
-    type 1 model is associated.
-    '''
-
-    RemoteInputSignal: Optional[RemoteInputSignal] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'RemoteInputSignal.PFVArControllerType1Dynamics',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
-        'docstring':
-            '''
-            Remote input signal used by this power factor or VAr controller type 1
-            model.
-            '''
-
-        })
-    '''
-    Remote input signal used by this power factor or VAr controller type
-    1 model.
-    '''
-
-    VoltageAdjusterDynamics: Optional[VoltageAdjusterDynamics] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'VoltageAdjusterDynamics.PFVArControllerType1Dynamics',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
-        'docstring':
-            '''
-            Voltage adjuster model associated with this power factor or VAr controller
-            type 1 model.
-            '''
-
-        })
-    '''
-    Voltage adjuster model associated with this power factor or VAr controller
-    type 1 model.
-    '''
-
     @property
     def __namespace__(self):
         return 'http://cim.ucaiug.io/CIM101/draft#'
@@ -63429,27 +61348,6 @@ class PFVArControllerType2Dynamics(DynamicsFunctionBlock):
         'inverse': 'ExcitationSystemDynamics.PFVArControllerType2Dynamics',
         'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Excitation system model with which this power factor or VAr controller
-            type 2 is associated.
-            '''
-
-        })
-    '''
-    Excitation system model with which this power factor or VAr controller
-    type 2 is associated.
-    '''
-
-    ExcitationSystemDynamics: Optional[ExcitationSystemDynamics] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'ExcitationSystemDynamics.PFVArControllerType2Dynamics',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
         'docstring':
             '''
             Excitation system model with which this power factor or VAr controller
@@ -64159,27 +62057,6 @@ class PowerSystemStabilizerDynamics(DynamicsFunctionBlock):
         'inverse': 'ExcitationSystemDynamics.PowerSystemStabilizerDynamics',
         'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Excitation system model with which this power system stabilizer model is
-            associated.
-            '''
-
-        })
-    '''
-    Excitation system model with which this power system stabilizer model
-    is associated.
-    '''
-
-    ExcitationSystemDynamics: Optional[ExcitationSystemDynamics] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'ExcitationSystemDynamics.PowerSystemStabilizerDynamics',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
         'docstring':
             '''
             Excitation system model with which this power system stabilizer model is
@@ -75684,27 +73561,6 @@ class RelayDynamics(DynamicsFunctionBlock):
     by the RelayDynamics.
     '''
 
-    ProtectionFunction: Optional[ProtectionFunction] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'ProtectionFunction.RelayDynamics',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
-        'docstring':
-            '''
-            The protection function is associated to its detail logic represented by
-            the RelayDynamics.
-            '''
-
-        })
-    '''
-    The protection function is associated to its detail logic represented
-    by the RelayDynamics.
-    '''
-
     @property
     def __namespace__(self):
         return 'http://cim.ucaiug.io/CIM101/draft#'
@@ -76416,86 +74272,6 @@ class AsynchronousMachineDynamics(RotatingMachineDynamics):
     machine model.
     '''
 
-    AsynchronousMachine: Optional[AsynchronousMachine] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'AsynchronousMachine.AsynchronousMachineDynamics',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
-        'docstring':
-            '''
-            Asynchronous machine to which this asynchronous machine dynamics model
-            applies.
-            '''
-
-        })
-    '''
-    Asynchronous machine to which this asynchronous machine dynamics model
-    applies.
-    '''
-
-    MechanicalLoadDynamics: Optional[MechanicalLoadDynamics] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'MechanicalLoadDynamics.AsynchronousMachineDynamics',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
-        'docstring':
-            '''
-            Mechanical load model associated with this asynchronous machine model.
-            '''
-
-        })
-    '''
-    Mechanical load model associated with this asynchronous machine model.
-    '''
-
-    TurbineGovernorDynamics: Optional[TurbineGovernorDynamics] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'TurbineGovernorDynamics.AsynchronousMachineDynamics',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
-        'docstring':
-            '''
-            Turbine-governor model associated with this asynchronous machine model.
-            '''
-
-        })
-    '''
-    Turbine-governor model associated with this asynchronous machine model.
-    '''
-
-    WindTurbineType1or2Dynamics: Optional[WindTurbineType1or2Dynamics] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'WindTurbineType1or2Dynamics.AsynchronousMachineDynamics',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
-        'docstring':
-            '''
-            Wind generator type 1 or type 2 model associated with this asynchronous
-            machine model.
-            '''
-
-        })
-    '''
-    Wind generator type 1 or type 2 model associated with this asynchronous
-    machine model.
-    '''
-
     @property
     def __namespace__(self):
         return 'http://cim.ucaiug.io/CIM101/draft#'
@@ -76973,67 +74749,6 @@ class SynchronousMachineDynamics(RotatingMachineDynamics):
     Synchronous machine to which synchronous machine dynamics model applies.
     '''
 
-    CrossCompoundTurbineGovernorDynamicsHigh: Optional[CrossCompoundTurbineGovernorDynamics] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'CrossCompoundTurbineGovernorDynamics.HighPressureSynchronousMachineDynamics',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
-        'docstring':
-            '''
-            The cross-compound turbine governor with which this high-pressure synchronous
-            machine is associated.
-            '''
-
-        })
-    '''
-    The cross-compound turbine governor with which this high-pressure synchronous
-    machine is associated.
-    '''
-
-    CrossCompoundTurbineGovernorDynamicsLow: Optional[CrossCompoundTurbineGovernorDynamics] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'CrossCompoundTurbineGovernorDynamics.LowPressureSynchronousMachineDynamics',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
-        'docstring':
-            '''
-            The cross-compound turbine governor with which this low-pressure synchronous
-            machine is associated.
-            '''
-
-        })
-    '''
-    The cross-compound turbine governor with which this low-pressure synchronous
-    machine is associated.
-    '''
-
-    ExcitationSystemDynamics: Optional[ExcitationSystemDynamics] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'ExcitationSystemDynamics.SynchronousMachineDynamics',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
-        'docstring':
-            '''
-            Excitation system model associated with this synchronous machine model.
-            '''
-
-        })
-    '''
-    Excitation system model associated with this synchronous machine model.
-    '''
-
     GenICompensationForGenJ: list[GenICompensationForGenJ] = field(
         default_factory=list,
         metadata={
@@ -77053,44 +74768,6 @@ class SynchronousMachineDynamics(RotatingMachineDynamics):
     '''
     Compensation of voltage compensator's generator for current flow out
     of this generator.
-    '''
-
-    MechanicalLoadDynamics: Optional[MechanicalLoadDynamics] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'MechanicalLoadDynamics.SynchronousMachineDynamics',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
-        'docstring':
-            '''
-            Mechanical load model associated with this synchronous machine model.
-            '''
-
-        })
-    '''
-    Mechanical load model associated with this synchronous machine model.
-    '''
-
-    SynchronousMachine: Optional[SynchronousMachine] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'SynchronousMachine.SynchronousMachineDynamics',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
-        'docstring':
-            '''
-            Synchronous machine to which synchronous machine dynamics model applies.
-            '''
-
-        })
-    '''
-    Synchronous machine to which synchronous machine dynamics model applies.
     '''
 
     TurbineGovernorDynamics: list[TurbineGovernorDynamics] = field(
@@ -77990,25 +75667,6 @@ class ShuntCompensatorDynamics(DynamicsFunctionBlock):
     Shunt compensator to which shunt compensator dynamics model applies.
     '''
 
-    ShuntCompensator: Optional[ShuntCompensator] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'ShuntCompensator.ShuntCompensatorDynamics',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
-        'docstring':
-            '''
-            Shunt compensator to which shunt compensator dynamics model applies.
-            '''
-
-        })
-    '''
-    Shunt compensator to which shunt compensator dynamics model applies.
-    '''
-
     @property
     def __namespace__(self):
         return 'http://cim.ucaiug.io/CIM101/draft#'
@@ -78106,27 +75764,6 @@ class StatcomDynamics(DynamicsFunctionBlock):
         'inverse': 'PowerElectronicsConnection.StatcomDynamics',
         'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            The power electronics connection associated with this statcom dynamics
-            model.
-            '''
-
-        })
-    '''
-    The power electronics connection associated with this statcom dynamics
-    model.
-    '''
-
-    PowerElectronicsConnection: Optional[PowerElectronicsConnection] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'PowerElectronicsConnection.StatcomDynamics',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
         'docstring':
             '''
             The power electronics connection associated with this statcom dynamics
@@ -78312,159 +75949,6 @@ class StatcomIEC(StatcomDynamics):
     The wind protection module part of the statcom model.
     '''
 
-    WindContCurrLimIEC2: Optional[WindContCurrLimIEC2] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'WindContCurrLimIEC2.StatcomIEC',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
-        'docstring':
-            '''
-            The wind current limitation module part of the statcom model.
-            '''
-
-        })
-    '''
-    The wind current limitation module part of the statcom model.
-    '''
-
-    WindContQIEC2: Optional[WindContQIEC2] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'WindContQIEC2.StatcomIEC',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
-        'docstring':
-            '''
-            The wind Q control module part of the statcom model.
-            '''
-
-        })
-    '''
-    The wind Q control module part of the statcom model.
-    '''
-
-    WindContQLimIEC2: Optional[WindContQLimIEC2] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'WindContQLimIEC2.StatcomIEC',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
-        'docstring':
-            '''
-            The constant Q limitation module part of the statcom model.
-            '''
-
-        })
-    '''
-    The constant Q limitation module part of the statcom model.
-    '''
-
-    WindElectricalSystemGamma: Optional[WindElectricalSystemGamma] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'WindElectricalSystemGamma.StatcomIEC',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
-        'docstring':
-            '''
-            The wind electrical system gamma module part of the statcom model.
-            '''
-
-        })
-    '''
-    The wind electrical system gamma module part of the statcom model.
-    '''
-
-    WindGenType4IEC2: Optional[WindGenType4IEC2] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'WindGenType4IEC2.StatcomIEC',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
-        'docstring':
-            '''
-            The wind generator type 4 module part of the statcom model.
-            '''
-
-        })
-    '''
-    The wind generator type 4 module part of the statcom model.
-    '''
-
-    WindGridMeasForControl: Optional[WindGridMeasurement] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'WindGridMeasurement.StatcomIECcontrol',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
-        'docstring':
-            '''
-            The wind grid measurement for control module part of the statcom model.
-            '''
-
-        })
-    '''
-    The wind grid measurement for control module part of the statcom model.
-    '''
-
-    WindGridMeasForProtection: Optional[WindGridMeasurement] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'WindGridMeasurement.StatcomIECprotection',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
-        'docstring':
-            '''
-            This wind grid measurement for protection module part of the statcom model.
-            '''
-
-        })
-    '''
-    This wind grid measurement for protection module part of the statcom
-    model.
-    '''
-
-    WindProtectionIEC2: Optional[WindProtectionIEC2] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'WindProtectionIEC2.StatcomIEC',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
-        'docstring':
-            '''
-            The wind protection module part of the statcom model.
-            '''
-
-        })
-    '''
-    The wind protection module part of the statcom model.
-    '''
-
     @property
     def __namespace__(self):
         return 'http://cim.ucaiug.io/CIM101/draft#'
@@ -78562,26 +76046,6 @@ class StaticVarCompensatorDynamics(DynamicsFunctionBlock):
         'inverse': 'StaticVarCompensator.StaticVarCompensatorDynamics',
         'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Static Var Compensator to which Static Var Compensator dynamics model applies.
-            '''
-
-        })
-    '''
-    Static Var Compensator to which Static Var Compensator dynamics model
-    applies.
-    '''
-
-    StaticVarCompensator: Optional[StaticVarCompensator] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'StaticVarCompensator.StaticVarCompensatorDynamics',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
         'docstring':
             '''
             Static Var Compensator to which Static Var Compensator dynamics model applies.
@@ -82342,63 +79806,6 @@ class SVSMO4(StaticVarCompensatorSystemDynamics):
     The REEC model controlled by this SVSMO4 model.
     '''
 
-    FromTerminal: Optional[Terminal] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'Terminal.HasFromTerminalSVSMO4',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
-        'docstring':
-            '''
-            The FromTerminal for this SVSMO4 model.
-            '''
-
-        })
-    '''
-    The FromTerminal for this SVSMO4 model.
-    '''
-
-    ToTerminal: Optional[Terminal] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'Terminal.HasToTerminalSVSMO4',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
-        'docstring':
-            '''
-            The ToTerminal for this SVSMO4 model.
-            '''
-
-        })
-    '''
-    The ToTerminal for this SVSMO4 model.
-    '''
-
-    WeccREEC: Optional[WeccREEC] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'WeccREEC.SVSMO4',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
-        'docstring':
-            '''
-            The REEC model controlled by this SVSMO4 model.
-            '''
-
-        })
-    '''
-    The REEC model controlled by this SVSMO4 model.
-    '''
-
     @property
     def __namespace__(self):
         return 'http://cim.ucaiug.io/CIM101/draft#'
@@ -82428,25 +79835,6 @@ class StatorCurrentLimiterDynamics(DynamicsFunctionBlock):
         'inverse': 'ExcitationSystemDynamics.StatorCurrentLimiterDynamics',
         'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Excitation system model with which this stator current limiter is associated.
-            '''
-
-        })
-    '''
-    Excitation system model with which this stator current limiter is associated.
-    '''
-
-    ExcitationSystemDynamics: Optional[ExcitationSystemDynamics] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'ExcitationSystemDynamics.StatorCurrentLimiterDynamics',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
         'docstring':
             '''
             Excitation system model with which this stator current limiter is associated.
@@ -84244,48 +81632,6 @@ class TurbineGovernorDynamics(DynamicsFunctionBlock):
         'inverse': 'TurbineLoadControllerDynamics.TurbineGovernorDynamics',
         'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Turbine load controller providing input to this turbine-governor.
-            '''
-
-        })
-    '''
-    Turbine load controller providing input to this turbine-governor.
-    '''
-
-    AsynchronousMachineDynamics: Optional[AsynchronousMachineDynamics] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'AsynchronousMachineDynamics.TurbineGovernorDynamics',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
-        'docstring':
-            '''
-            Asynchronous machine model with which this turbine-governor model is associated.
-            TurbineGovernorDynamics shall have either an association to SynchronousMachineDynamics
-            or to AsynchronousMachineDynamics.
-            '''
-
-        })
-    '''
-    Asynchronous machine model with which this turbine-governor model is
-    associated. TurbineGovernorDynamics shall have either an association
-    to SynchronousMachineDynamics or to AsynchronousMachineDynamics.
-    '''
-
-    TurbineLoadControllerDynamics: Optional[TurbineLoadControllerDynamics] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'TurbineLoadControllerDynamics.TurbineGovernorDynamics',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
         'docstring':
             '''
             Turbine load controller providing input to this turbine-governor.
@@ -103286,25 +100632,6 @@ class HydroGovernorDynamics(TurbineGovernorDynamics):
     The hydro water model of this hydro governor model.
     '''
 
-    HydroWaterColumnDynamics: Optional[HydroWaterColumnDynamics] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'HydroWaterColumnDynamics.HydroGovernorDynamics',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
-        'docstring':
-            '''
-            The hydro water model of this hydro governor model.
-            '''
-
-        })
-    '''
-    The hydro water model of this hydro governor model.
-    '''
-
     @property
     def __namespace__(self):
         return 'http://cim.ucaiug.io/CIM101/draft#'
@@ -105143,25 +102470,6 @@ class HydroWaterColumnDynamics(TurbineGovernorDynamics):
         'inverse': 'HydroGovernorDynamics.HydroWaterColumnDynamics',
         'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            The hydro governor that has a hydro water column model.
-            '''
-
-        })
-    '''
-    The hydro governor that has a hydro water column model.
-    '''
-
-    HydroGovernorDynamics: Optional[HydroGovernorDynamics] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'HydroGovernorDynamics.HydroWaterColumnDynamics',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
         'docstring':
             '''
             The hydro governor that has a hydro water column model.
@@ -107527,25 +104835,6 @@ class TurbineLoadControllerDynamics(DynamicsFunctionBlock):
     Turbine-governor controlled by this turbine load controller.
     '''
 
-    TurbineGovernorDynamics: Optional[TurbineGovernorDynamics] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'TurbineGovernorDynamics.TurbineLoadControllerDynamics',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
-        'docstring':
-            '''
-            Turbine-governor controlled by this turbine load controller.
-            '''
-
-        })
-    '''
-    Turbine-governor controlled by this turbine load controller.
-    '''
-
     @property
     def __namespace__(self):
         return 'http://cim.ucaiug.io/CIM101/draft#'
@@ -107909,25 +105198,6 @@ class UnderexcitationLimiterDynamics(DynamicsFunctionBlock):
         'inverse': 'RemoteInputSignal.UnderexcitationLimiterDynamics',
         'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Remote input signal used by this underexcitation limiter model.
-            '''
-
-        })
-    '''
-    Remote input signal used by this underexcitation limiter model.
-    '''
-
-    RemoteInputSignal: Optional[RemoteInputSignal] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'RemoteInputSignal.UnderexcitationLimiterDynamics',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
         'docstring':
             '''
             Remote input signal used by this underexcitation limiter model.
@@ -110363,27 +107633,6 @@ class VoltageAdjusterDynamics(DynamicsFunctionBlock):
     adjuster is associated.
     '''
 
-    PFVArControllerType1Dynamics: Optional[PFVArControllerType1Dynamics] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'PFVArControllerType1Dynamics.VoltageAdjusterDynamics',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
-        'docstring':
-            '''
-            Power factor or VAr controller type 1 model with which this voltage adjuster
-            is associated.
-            '''
-
-        })
-    '''
-    Power factor or VAr controller type 1 model with which this voltage
-    adjuster is associated.
-    '''
-
     @property
     def __namespace__(self):
         return 'http://cim.ucaiug.io/CIM101/draft#'
@@ -110774,44 +108023,6 @@ class VoltageCompensatorDynamics(DynamicsFunctionBlock):
         'inverse': 'RemoteInputSignal.VoltageCompensatorDynamics',
         'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Remote input signal used by this voltage compensator model.
-            '''
-
-        })
-    '''
-    Remote input signal used by this voltage compensator model.
-    '''
-
-    ExcitationSystemDynamics: Optional[ExcitationSystemDynamics] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'ExcitationSystemDynamics.VoltageCompensatorDynamics',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
-        'docstring':
-            '''
-            Excitation system model with which this voltage compensator is associated.
-            '''
-
-        })
-    '''
-    Excitation system model with which this voltage compensator is associated.
-    '''
-
-    RemoteInputSignal: Optional[RemoteInputSignal] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'RemoteInputSignal.VoltageCompensatorDynamics',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
         'docstring':
             '''
             Remote input signal used by this voltage compensator model.
@@ -111283,63 +108494,6 @@ class WeccBESS(WeccDynamics):
         'inverse': 'WeccREPCA.WeccBESS',
         'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            The model that is associated with the batery storage system.
-            '''
-
-        })
-    '''
-    The model that is associated with the batery storage system.
-    '''
-
-    WeccREECC: Optional[WeccREECC] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'WeccREECC.WeccBESS',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
-        'docstring':
-            '''
-            The model that is associated with the batery storage system.
-            '''
-
-        })
-    '''
-    The model that is associated with the batery storage system.
-    '''
-
-    WeccREGCA: Optional[WeccREGCA] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'WeccREGCA.WeccBESS',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
-        'docstring':
-            '''
-            The model that is associated with the batery storage system.
-            '''
-
-        })
-    '''
-    The model that is associated with the batery storage system.
-    '''
-
-    WeccREPCA: Optional[WeccREPCA] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'WeccREPCA.WeccBESS',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
         'docstring':
             '''
             The model that is associated with the batery storage system.
@@ -112811,29 +109965,6 @@ class WeccREEC(WeccDynamics):
         'inverse': 'SVSMO4.WeccREEC',
         'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Hybrid STATCOM model which acts as the master control for this renewable
-            power plant by sending reactive current commands to the inverters in the
-            plant.
-            '''
-
-        })
-    '''
-    Hybrid STATCOM model which acts as the master control for this renewable
-    power plant by sending reactive current commands to the inverters in
-    the plant.
-    '''
-
-    SVSMO4: Optional[SVSMO4] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'SVSMO4.WeccREEC',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
         'docstring':
             '''
             Hybrid STATCOM model which acts as the master control for this renewable
@@ -115433,25 +112564,6 @@ class WeccREECC(WeccREEC):
     The baterry storage system that has this WeccREECC model.
     '''
 
-    WeccBESS: Optional[WeccBESS] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'WeccBESS.WeccREECC',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
-        'docstring':
-            '''
-            The baterry storage system that has this WeccREECC model.
-            '''
-
-        })
-    '''
-    The baterry storage system that has this WeccREECC model.
-    '''
-
     @property
     def __namespace__(self):
         return 'http://cim.ucaiug.io/CIM101/draft#'
@@ -117523,25 +114635,6 @@ class WeccREGCA(WeccDynamics):
     The baterry storage system that has this WeccREGCA model.
     '''
 
-    WeccBESS: Optional[WeccBESS] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'WeccBESS.WeccREGCA',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
-        'docstring':
-            '''
-            The baterry storage system that has this WeccREGCA model.
-            '''
-
-        })
-    '''
-    The baterry storage system that has this WeccREGCA model.
-    '''
-
     @property
     def __namespace__(self):
         return 'http://cim.ucaiug.io/CIM101/draft#'
@@ -118697,25 +115790,6 @@ class WeccREPCA(WeccDynamics):
     The baterry storage system that has this WeccREPCA model.
     '''
 
-    WeccBESS: Optional[WeccBESS] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'WeccBESS.WeccREPCA',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
-        'docstring':
-            '''
-            The baterry storage system that has this WeccREPCA model.
-            '''
-
-        })
-    '''
-    The baterry storage system that has this WeccREPCA model.
-    '''
-
     @property
     def __namespace__(self):
         return 'http://cim.ucaiug.io/CIM101/draft#'
@@ -119847,25 +116921,6 @@ class WeccREPCC(WeccDynamics):
         'inverse': 'Terminal.WeccREPCC',
         'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            The Terminal where the frequency is measured.
-            '''
-
-        })
-    '''
-    The Terminal where the frequency is measured.
-    '''
-
-    Terminal: Optional[Terminal] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'Terminal.WeccREPCC',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
         'docstring':
             '''
             The Terminal where the frequency is measured.
@@ -121185,25 +118240,6 @@ class WeccWTGIBFFRA(WeccDynamics):
     The Terminal where the frequency is measured.
     '''
 
-    Terminal: Optional[Terminal] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'Terminal.WeccWTGIBFFRA',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
-        'docstring':
-            '''
-            The Terminal where the frequency is measured.
-            '''
-
-        })
-    '''
-    The Terminal where the frequency is measured.
-    '''
-
     @property
     def __namespace__(self):
         return 'http://cim.ucaiug.io/CIM101/draft#'
@@ -122304,44 +119340,6 @@ class WindPlantDynamics(DynamicsFunctionBlock):
     The remote signal with which this power plant is associated.
     '''
 
-    RemoteInputSignal: Optional[RemoteInputSignal] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'RemoteInputSignal.WindPlantDynamics',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
-        'docstring':
-            '''
-            The remote signal with which this power plant is associated.
-            '''
-
-        })
-    '''
-    The remote signal with which this power plant is associated.
-    '''
-
-    PointOfConnection: Optional[Terminal] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'Terminal.WindPlantDynamics',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
-        'docstring':
-            '''
-            Point of connection for this wind plant.
-            '''
-
-        })
-    '''
-    Point of connection for this wind plant.
-    '''
-
     WindTurbineType1or2Dynamics: list[WindTurbineType1or2Dynamics] = field(
         default_factory=list,
         metadata={
@@ -122410,27 +119408,6 @@ class WindPlantDynamics2(WindPlantDynamics):
         'inverse': 'WindPlantControlCommIEC.WindPlantDynamics',
         'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            The wind plant control and comminication module which is associated with
-            the wind plant..
-            '''
-
-        })
-    '''
-    The wind plant control and comminication module which is associated
-    with the wind plant..
-    '''
-
-    WindPlantControlCommIEC: Optional[WindPlantControlCommIEC] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'WindPlantControlCommIEC.WindPlantDynamics',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
         'docstring':
             '''
             The wind plant control and comminication module which is associated with
@@ -122533,46 +119510,6 @@ class WindPlantIEC(WindPlantDynamics):
         'inverse': 'WindPlantReactiveControlIEC.WindPlantIEC',
         'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Wind plant model with which this wind reactive control is associated.
-            '''
-
-        })
-    '''
-    Wind plant model with which this wind reactive control is associated.
-    '''
-
-    WindPlantFreqPcontrolIEC: Optional[WindPlantFreqPcontrolIEC] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'WindPlantFreqPcontrolIEC.WindPlantIEC',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
-        'docstring':
-            '''
-            Wind plant frequency and active power control model associated with this
-            wind plant.
-            '''
-
-        })
-    '''
-    Wind plant frequency and active power control model associated with
-    this wind plant.
-    '''
-
-    WindPlantReactiveControlIEC: Optional[WindPlantReactiveControlIEC] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'WindPlantReactiveControlIEC.WindPlantIEC',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
         'docstring':
             '''
             Wind plant model with which this wind reactive control is associated.
@@ -122731,46 +119668,6 @@ class WindTurbineType1or2Dynamics(DynamicsFunctionBlock):
     The wind plant with which the wind turbines type 1 or type 2 are associated.
     '''
 
-    AsynchronousMachineDynamics: Optional[AsynchronousMachineDynamics] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'AsynchronousMachineDynamics.WindTurbineType1or2Dynamics',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
-        'docstring':
-            '''
-            Asynchronous machine model with which this wind generator type 1 or type
-            2 model is associated.
-            '''
-
-        })
-    '''
-    Asynchronous machine model with which this wind generator type 1 or
-    type 2 model is associated.
-    '''
-
-    RemoteInputSignal: Optional[RemoteInputSignal] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'RemoteInputSignal.WindTurbineType1or2Dynamics',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
-        'docstring':
-            '''
-            Remote input signal used by this wind generator type 1 or type 2 model.
-            '''
-
-        })
-    '''
-    Remote input signal used by this wind generator type 1 or type 2 model.
-    '''
-
     @property
     def __namespace__(self):
         return 'http://cim.ucaiug.io/CIM101/draft#'
@@ -122836,48 +119733,6 @@ class WindTurbineType1or2IEC(WindTurbineType1or2Dynamics):
     1 or type 2 model.
     '''
 
-    WindMechIEC: Optional[WindMechIEC] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'WindMechIEC.WindTurbineType1or2IEC',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
-        'docstring':
-            '''
-            Wind mechanical model associated with this wind generator type 1 or type
-            2 model.
-            '''
-
-        })
-    '''
-    Wind mechanical model associated with this wind generator type 1 or
-    type 2 model.
-    '''
-
-    WindProtectionIEC: Optional[WindProtectionIEC] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'WindProtectionIEC.WindTurbineType1or2IEC',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
-        'docstring':
-            '''
-            Wind turbune protection model associated with this wind generator type
-            1 or type 2 model.
-            '''
-
-        })
-    '''
-    Wind turbune protection model associated with this wind generator type
-    1 or type 2 model.
-    '''
-
     @property
     def __namespace__(self):
         return 'http://cim.ucaiug.io/CIM101/draft#'
@@ -122917,25 +119772,6 @@ class WindGenTurbineType1aIEC(WindTurbineType1or2IEC):
     Wind aerodynamic model associated with this wind turbine type 1A model.
     '''
 
-    WindAeroConstIEC: Optional[WindAeroConstIEC] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'WindAeroConstIEC.WindGenTurbineType1aIEC',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
-        'docstring':
-            '''
-            Wind aerodynamic model associated with this wind turbine type 1A model.
-            '''
-
-        })
-    '''
-    Wind aerodynamic model associated with this wind turbine type 1A model.
-    '''
-
     @property
     def __namespace__(self):
         return 'http://cim.ucaiug.io/CIM101/draft#'
@@ -122965,26 +119801,6 @@ class WindGenTurbineType1bIEC(WindTurbineType1or2IEC):
         'inverse': 'WindPitchContPowerIEC.WindGenTurbineType1bIEC',
         'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Pitch control power model associated with this wind turbine type 1B model.
-            '''
-
-        })
-    '''
-    Pitch control power model associated with this wind turbine type 1B
-    model.
-    '''
-
-    WindPitchContPowerIEC: Optional[WindPitchContPowerIEC] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'WindPitchContPowerIEC.WindGenTurbineType1bIEC',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
         'docstring':
             '''
             Pitch control power model associated with this wind turbine type 1B model.
@@ -123046,47 +119862,6 @@ class WindGenTurbineType2IEC(WindTurbineType1or2IEC):
         'inverse': 'WindPitchContPowerIEC.WindGenTurbineType2IEC',
         'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Pitch control power model associated with this wind turbine type 2 model.
-            '''
-
-        })
-    '''
-    Pitch control power model associated with this wind turbine type 2
-    model.
-    '''
-
-    WindContRotorRIEC: Optional[WindContRotorRIEC] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'WindContRotorRIEC.WindGenTurbineType2IEC',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
-        'docstring':
-            '''
-            Wind control rotor resistance model associated with wind turbine type 2
-            model.
-            '''
-
-        })
-    '''
-    Wind control rotor resistance model associated with wind turbine type
-    2 model.
-    '''
-
-    WindPitchContPowerIEC: Optional[WindPitchContPowerIEC] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'WindPitchContPowerIEC.WindGenTurbineType2IEC',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
         'docstring':
             '''
             Pitch control power model associated with this wind turbine type 2 model.
@@ -123205,90 +119980,6 @@ class WindTurbineType1or2IEC2(WindTurbineType1or2Dynamics):
     type 1 or type 2 model.
     '''
 
-    WindElectricalSystemGamma: Optional[WindElectricalSystemGamma] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'WindElectricalSystemGamma.WindTurbineType1or2IEC2',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
-        'docstring':
-            '''
-            Wind turbune electrical system gamma module associated with this wind generator
-            type 1 or type 2 model.
-            '''
-
-        })
-    '''
-    Wind turbune electrical system gamma module associated with this wind
-    generator type 1 or type 2 model.
-    '''
-
-    WindGridMeasForProtection: Optional[WindGridMeasurement] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'WindGridMeasurement.WindTurbineType1or2IEC2',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
-        'docstring':
-            '''
-            Wind turbune grid measurement (for protection) module associated with this
-            wind generator type 1 or type 2 model.
-            '''
-
-        })
-    '''
-    Wind turbune grid measurement (for protection) module associated with
-    this wind generator type 1 or type 2 model.
-    '''
-
-    WindMechIEC2: Optional[WindMechIEC2] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'WindMechIEC2.WindTurbineType1or2IEC2',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
-        'docstring':
-            '''
-            Wind mechanical two mass module associated with this wind generator type
-            1 or type 2 model.
-            '''
-
-        })
-    '''
-    Wind mechanical two mass module associated with this wind generator
-    type 1 or type 2 model.
-    '''
-
-    WindProtectionIEC2: Optional[WindProtectionIEC2] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'WindProtectionIEC2.WindTurbineType1or2IEC2',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
-        'docstring':
-            '''
-            Wind turbune protection module associated with this wind generator type
-            1 or type 2 model.
-            '''
-
-        })
-    '''
-    Wind turbune protection module associated with this wind generator
-    type 1 or type 2 model.
-    '''
-
     @property
     def __namespace__(self):
         return 'http://cim.ucaiug.io/CIM101/draft#'
@@ -123318,25 +120009,6 @@ class WindGenTurbineType1aIEC2(WindTurbineType1or2IEC2):
         'inverse': 'WindAeroConstIEC2.WindGenTurbineType1aIEC2',
         'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Wind aerodynamic module associated with this wind turbine type 1A model.
-            '''
-
-        })
-    '''
-    Wind aerodynamic module associated with this wind turbine type 1A model.
-    '''
-
-    WindAeroConstIEC2: Optional[WindAeroConstIEC2] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'WindAeroConstIEC2.WindGenTurbineType1aIEC2',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
         'docstring':
             '''
             Wind aerodynamic module associated with this wind turbine type 1A model.
@@ -123397,47 +120069,6 @@ class WindGenTurbineType1bIEC2(WindTurbineType1or2IEC2):
         'inverse': 'WindPitchContPowerIEC2.WindGenTurbineType1bIEC2',
         'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Pitch control power module associated with this wind turbine type 1B model.
-            '''
-
-        })
-    '''
-    Pitch control power module associated with this wind turbine type 1B
-    model.
-    '''
-
-    WindGridMeasForControl: Optional[WindGridMeasurement] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'WindGridMeasurement.WindGenTurbineType1bIEC2',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
-        'docstring':
-            '''
-            Grid measurement (for control) module associated with this wind turbine
-            type 2 model.
-            '''
-
-        })
-    '''
-    Grid measurement (for control) module associated with this wind turbine
-    type 2 model.
-    '''
-
-    WindPitchContPowerIEC2: Optional[WindPitchContPowerIEC2] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'WindPitchContPowerIEC2.WindGenTurbineType1bIEC2',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
         'docstring':
             '''
             Pitch control power module associated with this wind turbine type 1B model.
@@ -123520,68 +120151,6 @@ class WindGenTurbineType2IEC2(WindTurbineType1or2IEC2):
         'inverse': 'WindPitchContPowerIEC2.WindGenTurbineType2IEC2',
         'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Pitch control power module associated with this wind turbine type 2 model.
-            '''
-
-        })
-    '''
-    Pitch control power module associated with this wind turbine type 2
-    model.
-    '''
-
-    WindContRotorRIEC2: Optional[WindContRotorRIEC2] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'WindContRotorRIEC2.WindGenTurbineType2IEC2',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
-        'docstring':
-            '''
-            Wind control rotor resistance module associated with wind turbine type
-            2 model.
-            '''
-
-        })
-    '''
-    Wind control rotor resistance module associated with wind turbine type
-    2 model.
-    '''
-
-    WindGridMeasForControl: Optional[WindGridMeasurement] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'WindGridMeasurement.WindGenTurbineType2IEC2',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
-        'docstring':
-            '''
-            Grid measurement (for control) module associated with this wind turbine
-            type 2 model.
-            '''
-
-        })
-    '''
-    Grid measurement (for control) module associated with this wind turbine
-    type 2 model.
-    '''
-
-    WindPitchContPowerIEC2: Optional[WindPitchContPowerIEC2] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'WindPitchContPowerIEC2.WindGenTurbineType2IEC2',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
         'docstring':
             '''
             Pitch control power module associated with this wind turbine type 2 model.
@@ -123740,46 +120309,6 @@ class WindTurbineType3or4Dynamics(DynamicsFunctionBlock):
     The wind plant with which the wind turbines type 3 or type 4 are associated.
     '''
 
-    PowerElectronicsConnection: Optional[PowerElectronicsConnection] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'PowerElectronicsConnection.WindTurbineType3or4Dynamics',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
-        'docstring':
-            '''
-            The power electronics connection associated with this wind turbine type
-            3 or type 4 dynamics model.
-            '''
-
-        })
-    '''
-    The power electronics connection associated with this wind turbine
-    type 3 or type 4 dynamics model.
-    '''
-
-    RemoteInputSignal: Optional[RemoteInputSignal] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'RemoteInputSignal.WindTurbineType3or4Dynamics',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
-        'docstring':
-            '''
-            Remote input signal used by these wind turbine type 3 or type 4 models.
-            '''
-
-        })
-    '''
-    Remote input signal used by these wind turbine type 3 or type 4 models.
-    '''
-
     @property
     def __namespace__(self):
         return 'http://cim.ucaiug.io/CIM101/draft#'
@@ -123914,132 +120443,6 @@ class WindTurbineType3or4IEC(WindTurbineType3or4Dynamics):
         'inverse': 'WindRefFrameRotIEC.WindTurbineType3or4IEC',
         'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Reference frame rotation model associated with this wind turbine type 3
-            or type 4 model.
-            '''
-
-        })
-    '''
-    Reference frame rotation model associated with this wind turbine type
-    3 or type 4 model.
-    '''
-
-    WindContCurrLimIEC: Optional[WindContCurrLimIEC] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'WindContCurrLimIEC.WindTurbineType3or4IEC',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
-        'docstring':
-            '''
-            Wind control current limitation model associated with this wind turbine
-            type 3 or type 4 model.
-            '''
-
-        })
-    '''
-    Wind control current limitation model associated with this wind turbine
-    type 3 or type 4 model.
-    '''
-
-    WIndContQIEC: Optional[WindContQIEC] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'WindContQIEC.WindTurbineType3or4IEC',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
-        'docstring':
-            '''
-            Wind control Q model associated with this wind turbine type 3 or type 4
-            model.
-            '''
-
-        })
-    '''
-    Wind control Q model associated with this wind turbine type 3 or type
-    4 model.
-    '''
-
-    WindContQLimIEC: Optional[WindContQLimIEC] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'WindContQLimIEC.WindTurbineType3or4IEC',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
-        'docstring':
-            '''
-            Constant Q limitation model associated with this wind generator type 3
-            or type 4 model.
-            '''
-
-        })
-    '''
-    Constant Q limitation model associated with this wind generator type
-    3 or type 4 model.
-    '''
-
-    WindContQPQULimIEC: Optional[WindContQPQULimIEC] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'WindContQPQULimIEC.WindTurbineType3or4IEC',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
-        'docstring':
-            '''
-            QP and QU limitation model associated with this wind generator type 3 or
-            type 4 model.
-            '''
-
-        })
-    '''
-    QP and QU limitation model associated with this wind generator type
-    3 or type 4 model.
-    '''
-
-    WindProtectionIEC: Optional[WindProtectionIEC] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'WindProtectionIEC.WindTurbineType3or4IEC',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
-        'docstring':
-            '''
-            Wind turbune protection model associated with this wind generator type
-            3 or type 4 model.
-            '''
-
-        })
-    '''
-    Wind turbune protection model associated with this wind generator type
-    3 or type 4 model.
-    '''
-
-    WindRefFrameRotIEC: Optional[WindRefFrameRotIEC] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'WindRefFrameRotIEC.WindTurbineType3or4IEC',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
         'docstring':
             '''
             Reference frame rotation model associated with this wind turbine type 3
@@ -124189,123 +120592,6 @@ class WindTurbineType3IEC(WindTurbineType3or4IEC):
     Wind mechanical model associated with this wind turbine type 3 model.
     '''
 
-    WindAeroOneDimIEC: Optional[WindAeroOneDimIEC] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'WindAeroOneDimIEC.WindTurbineType3IEC',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
-        'docstring':
-            '''
-            Wind aerodynamic model associated with this wind generator type 3 model.
-            '''
-
-        })
-    '''
-    Wind aerodynamic model associated with this wind generator type 3 model.
-    '''
-
-    WindAeroTwoDimIEC: Optional[WindAeroTwoDimIEC] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'WindAeroTwoDimIEC.WindTurbineType3IEC',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
-        'docstring':
-            '''
-            Wind aerodynamic model associated with this wind turbine type 3 model.
-            '''
-
-        })
-    '''
-    Wind aerodynamic model associated with this wind turbine type 3 model.
-    '''
-
-    WindContPType3IEC: Optional[WindContPType3IEC] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'WindContPType3IEC.WindTurbineType3IEC',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
-        'docstring':
-            '''
-            Wind control P type 3 model associated with this wind turbine type 3 model.
-            '''
-
-        })
-    '''
-    Wind control P type 3 model associated with this wind turbine type
-    3 model.
-    '''
-
-    WindContPitchAngleIEC: Optional[WindContPitchAngleIEC] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'WindContPitchAngleIEC.WindTurbineType3IEC',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
-        'docstring':
-            '''
-            Wind control pitch angle model associated with this wind turbine type 3.
-            '''
-
-        })
-    '''
-    Wind control pitch angle model associated with this wind turbine type
-    3.
-    '''
-
-    WindGenType3IEC: Optional[WindGenType3IEC] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'WindGenType3IEC.WindTurbineType3IEC',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
-        'docstring':
-            '''
-            Wind generator type 3 model associated with this wind turbine type 3 model.
-            '''
-
-        })
-    '''
-    Wind generator type 3 model associated with this wind turbine type
-    3 model.
-    '''
-
-    WindMechIEC: Optional[WindMechIEC] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'WindMechIEC.WindTurbineType3IEC',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
-        'docstring':
-            '''
-            Wind mechanical model associated with this wind turbine type 3 model.
-            '''
-
-        })
-    '''
-    Wind mechanical model associated with this wind turbine type 3 model.
-    '''
-
     @property
     def __namespace__(self):
         return 'http://cim.ucaiug.io/CIM101/draft#'
@@ -124335,26 +120621,6 @@ class WindTurbineType4IEC(WindTurbineType3or4IEC):
         'inverse': 'WindGenType3aIEC.WindTurbineType4IEC',
         'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Wind generator type 3A model associated with this wind turbine type 4 model.
-            '''
-
-        })
-    '''
-    Wind generator type 3A model associated with this wind turbine type
-    4 model.
-    '''
-
-    WindGenType3aIEC: Optional[WindGenType3aIEC] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'WindGenType3aIEC.WindTurbineType4IEC',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
         'docstring':
             '''
             Wind generator type 3A model associated with this wind turbine type 4 model.
@@ -124416,47 +120682,6 @@ class WindTurbineType4aIEC(WindTurbineType4IEC):
         'inverse': 'WindGenType4IEC.WindTurbineType4aIEC',
         'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Wind generator type 4 model associated with this wind turbine type 4A model.
-            '''
-
-        })
-    '''
-    Wind generator type 4 model associated with this wind turbine type
-    4A model.
-    '''
-
-    WindContPType4aIEC: Optional[WindContPType4aIEC] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'WindContPType4aIEC.WindTurbineType4aIEC',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
-        'docstring':
-            '''
-            Wind control P type 4A model associated with this wind turbine type 4A
-            model.
-            '''
-
-        })
-    '''
-    Wind control P type 4A model associated with this wind turbine type
-    4A model.
-    '''
-
-    WindGenType4IEC: Optional[WindGenType4IEC] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'WindGenType4IEC.WindTurbineType4aIEC',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
         'docstring':
             '''
             Wind generator type 4 model associated with this wind turbine type 4A model.
@@ -124538,66 +120763,6 @@ class WindTurbineType4bIEC(WindTurbineType4IEC):
         'inverse': 'WindMechIEC.WindTurbineType4bIEC',
         'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Wind mechanical model associated with this wind turbine type 4B model.
-            '''
-
-        })
-    '''
-    Wind mechanical model associated with this wind turbine type 4B model.
-    '''
-
-    WindContPType4bIEC: Optional[WindContPType4bIEC] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'WindContPType4bIEC.WindTurbineType4bIEC',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
-        'docstring':
-            '''
-            Wind control P type 4B model associated with this wind turbine type 4B
-            model.
-            '''
-
-        })
-    '''
-    Wind control P type 4B model associated with this wind turbine type
-    4B model.
-    '''
-
-    WindGenType4IEC: Optional[WindGenType4IEC] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'WindGenType4IEC.WindTurbineType4bIEC',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
-        'docstring':
-            '''
-            Wind generator type 4 model associated with this wind turbine type 4B model.
-            '''
-
-        })
-    '''
-    Wind generator type 4 model associated with this wind turbine type
-    4B model.
-    '''
-
-    WindMechIEC: Optional[WindMechIEC] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'WindMechIEC.WindTurbineType4bIEC',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
         'docstring':
             '''
             Wind mechanical model associated with this wind turbine type 4B model.
@@ -124817,195 +120982,6 @@ class WindTurbineType3or4IEC2(WindTurbineType3or4Dynamics):
     3 or type 4 model.
     '''
 
-    WindContCurrLimIEC2: Optional[WindContCurrLimIEC2] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'WindContCurrLimIEC2.WindTurbineType3or4IEC2',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
-        'docstring':
-            '''
-            Wind control current limitation module associated with this wind turbine
-            type 3 or type 4 model.
-            '''
-
-        })
-    '''
-    Wind control current limitation module associated with this wind turbine
-    type 3 or type 4 model.
-    '''
-
-    WindContQIEC2: Optional[WindContQIEC2] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'WindContQIEC2.WindTurbineType3or4IEC2',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
-        'docstring':
-            '''
-            Wind reactive control module associated with this wind turbine type 3 or
-            type 4 model.
-            '''
-
-        })
-    '''
-    Wind reactive control module associated with this wind turbine type
-    3 or type 4 model.
-    '''
-
-    WindContQLimIEC2: Optional[WindContQLimIEC2] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'WindContQLimIEC2.WindTurbineType3or4IEC2',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
-        'docstring':
-            '''
-            Constant Q limitation module associated with this wind generator type 3
-            or type 4 model.
-            '''
-
-        })
-    '''
-    Constant Q limitation module associated with this wind generator type
-    3 or type 4 model.
-    '''
-
-    WindContQPQULimIEC2: Optional[WindContQPQULimIEC2] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'WindContQPQULimIEC2.WindTurbineType3or4IEC2',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
-        'docstring':
-            '''
-            QP and QU limitation module associated with this wind generator type 3
-            or type 4 model.
-            '''
-
-        })
-    '''
-    QP and QU limitation module associated with this wind generator type
-    3 or type 4 model.
-    '''
-
-    WindElectricalSystemGamma: Optional[WindElectricalSystemGamma] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'WindElectricalSystemGamma.WindTurbinaType2or4IEC2',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
-        'docstring':
-            '''
-            Wind turbune electrical system gamma module associated with this wind generator
-            type 3 or type 4 model.
-            '''
-
-        })
-    '''
-    Wind turbune electrical system gamma module associated with this wind
-    generator type 3 or type 4 model.
-    '''
-
-    WindGridMeasForControl: Optional[WindGridMeasurement] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'WindGridMeasurement.WindTurbineType3or4IEC2control',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
-        'docstring':
-            '''
-            Wind turbune grid measurement (for control) module associated with this
-            wind generator type 3 or type 4 model.
-            '''
-
-        })
-    '''
-    Wind turbune grid measurement (for control) module associated with
-    this wind generator type 3 or type 4 model.
-    '''
-
-    WindGridMeasForProtection: Optional[WindGridMeasurement] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'WindGridMeasurement.WindTurbineType3or4IEC2protection',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
-        'docstring':
-            '''
-            Wind turbune grid measurement (for protection) module associated with this
-            wind generator type 3 or type 4 model.
-            '''
-
-        })
-    '''
-    Wind turbune grid measurement (for protection) module associated with
-    this wind generator type 3 or type 4 model.
-    '''
-
-    WindProtectionIEC2: Optional[WindProtectionIEC2] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'WindProtectionIEC2.WindTurbineType3or4IEC2',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
-        'docstring':
-            '''
-            Wind turbune protection module associated with this wind generator type
-            3 or type 4 model.
-            '''
-
-        })
-    '''
-    Wind turbune protection module associated with this wind generator
-    type 3 or type 4 model.
-    '''
-
-    WindRefFrameRotIEC2: Optional[WindRefFrameRotIEC2] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'WindRefFrameRotIEC2.WindTurbineType3or4IEC2',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
-        'docstring':
-            '''
-            Reference frame rotation module associated with this wind turbine type
-            3 or type 4 model.
-            '''
-
-        })
-    '''
-    Reference frame rotation module associated with this wind turbine type
-    3 or type 4 model.
-    '''
-
     @property
     def __namespace__(self):
         return 'http://cim.ucaiug.io/CIM101/draft#'
@@ -125150,130 +121126,6 @@ class WindTurbineType3IEC2(WindTurbineType3or4IEC2):
     3 model.
     '''
 
-    WindAeroOneDimIEC2: Optional[WindAeroOneDimIEC2] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'WindAeroOneDimIEC2.WindTurbineType3IEC2',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
-        'docstring':
-            '''
-            Wind aerodynamic module associated with this wind generator type 3 model.
-            '''
-
-        })
-    '''
-    Wind aerodynamic module associated with this wind generator type 3
-    model.
-    '''
-
-    WindAeroTwoDimIEC2: Optional[WindAeroTwoDimIEC2] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'WindAeroTwoDimIEC2.WindTurbineType3IEC2',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
-        'docstring':
-            '''
-            Wind two dimensional aerodynamic module associated with this wind turbine
-            type 3 model.
-            '''
-
-        })
-    '''
-    Wind two dimensional aerodynamic module associated with this wind turbine
-    type 3 model.
-    '''
-
-    WindContPType3IEC2: Optional[WindContPType3IEC2] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'WindContPType3IEC2.WindTurbineType3IEC2',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
-        'docstring':
-            '''
-            Wind control P type 3 module associated with this wind turbine type 3 model.
-            '''
-
-        })
-    '''
-    Wind control P type 3 module associated with this wind turbine type
-    3 model.
-    '''
-
-    WindContPitchAngleIEC2: Optional[WindContPitchAngleIEC2] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'WindContPitchAngleIEC2.WindTurbineType3IEC2',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
-        'docstring':
-            '''
-            Wind control pitch angle module associated with this wind turbine type
-            3.
-            '''
-
-        })
-    '''
-    Wind control pitch angle module associated with this wind turbine type
-    3.
-    '''
-
-    WindGenType3IEC2: Optional[WindGenType3IEC2] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'WindGenType3IEC2.WindTurbineType3IEC2',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
-        'docstring':
-            '''
-            Wind generator type 3 system module associated with this wind turbine type
-            3 model.
-            '''
-
-        })
-    '''
-    Wind generator type 3 system module associated with this wind turbine
-    type 3 model.
-    '''
-
-    WindMechIEC2: Optional[WindMechIEC2] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'WindMechIEC2.WindTurbineType3IEC2',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
-        'docstring':
-            '''
-            Wind mechanical two mass module associated with this wind turbine type
-            3 model.
-            '''
-
-        })
-    '''
-    Wind mechanical two mass module associated with this wind turbine type
-    3 model.
-    '''
-
     @property
     def __namespace__(self):
         return 'http://cim.ucaiug.io/CIM101/draft#'
@@ -125303,27 +121155,6 @@ class WindTurbineType4IEC2(WindTurbineType3or4IEC2):
         'inverse': 'WindGenType3aIEC2.WindTurbineType4IEC2',
         'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Wind generator system type 3A module associated with this wind turbine
-            type 4 model.
-            '''
-
-        })
-    '''
-    Wind generator system type 3A module associated with this wind turbine
-    type 4 model.
-    '''
-
-    WindGenType3aIEC2: Optional[WindGenType3aIEC2] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'WindGenType3aIEC2.WindTurbineType4IEC2',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
         'docstring':
             '''
             Wind generator system type 3A module associated with this wind turbine
@@ -125386,48 +121217,6 @@ class WindTurbineType4aIEC2(WindTurbineType4IEC2):
         'inverse': 'WindGenType4IEC2.WindTurbineType4aIEC2',
         'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Wind generator system type 4 module associated with this wind turbine type
-            4A model.
-            '''
-
-        })
-    '''
-    Wind generator system type 4 module associated with this wind turbine
-    type 4A model.
-    '''
-
-    WindContPType4aIEC2: Optional[WindContPType4aIEC2] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'WindContPType4aIEC2.WindTurbineType4aIEC2',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
-        'docstring':
-            '''
-            Wind control P type 4A module associated with this wind turbine type 4A
-            model.
-            '''
-
-        })
-    '''
-    Wind control P type 4A module associated with this wind turbine type
-    4A model.
-    '''
-
-    WindGenType4IEC2: Optional[WindGenType4IEC2] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'WindGenType4IEC2.WindTurbineType4aIEC2',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
         'docstring':
             '''
             Wind generator system type 4 module associated with this wind turbine type
@@ -125511,67 +121300,6 @@ class WindTurbineType4bIEC2(WindTurbineType4IEC2):
         'inverse': 'WindMechIEC2.WindTurbineType4bIEC2',
         'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Wind mechanical module associated with this wind turbine type 4B model.
-            '''
-
-        })
-    '''
-    Wind mechanical module associated with this wind turbine type 4B model.
-    '''
-
-    WindContPType4bIEC2: Optional[WindContPType4bIEC2] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'WindContPType4bIEC2.WindTurbineType4bIEC2',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
-        'docstring':
-            '''
-            Wind control P type 4B module associated with this wind turbine type 4B
-            model.
-            '''
-
-        })
-    '''
-    Wind control P type 4B module associated with this wind turbine type
-    4B model.
-    '''
-
-    WindGenType4IEC2: Optional[WindGenType4IEC2] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'WindGenType4IEC2.WindTurbineType4bIEC2',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
-        'docstring':
-            '''
-            Wind generator system type 4 module associated with this wind turbine type
-            4B model.
-            '''
-
-        })
-    '''
-    Wind generator system type 4 module associated with this wind turbine
-    type 4B model.
-    '''
-
-    WindMechIEC2: Optional[WindMechIEC2] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'WindMechIEC2.WindTurbineType4bIEC2',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
         'docstring':
             '''
             Wind mechanical module associated with this wind turbine type 4B model.
@@ -125770,25 +121498,6 @@ class EnergyArea(IdentifiedObject):
         'inverse': 'ControlArea.EnergyArea',
         'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            The control area specification that is used for the load forecast.
-            '''
-
-        })
-    '''
-    The control area specification that is used for the load forecast.
-    '''
-
-    ControlArea: Optional[ControlArea] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'ControlArea.EnergyArea',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
         'docstring':
             '''
             The control area specification that is used for the load forecast.
@@ -126791,26 +122500,6 @@ class FrequencyDroopSettings(IdentifiedObject):
     model.
     '''
 
-    DERIEEEType1: Optional[DERIEEEType1] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'DERIEEEType1.FrequencyDroopSettings',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
-        'docstring':
-            '''
-            DER IEEE type 1 model associated with this frequency droop settings model.
-            '''
-
-        })
-    '''
-    DER IEEE type 1 model associated with this frequency droop settings
-    model.
-    '''
-
     @property
     def __namespace__(self):
         return 'http://cim.ucaiug.io/CIM101/draft#'
@@ -126992,26 +122681,6 @@ class FrequencyTripSettings(IdentifiedObject):
         'inverse': 'DERIEEEType1.FrequencyTripSettings',
         'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            DER IEEE type 1 model associated with this frequency trip settings model.
-            '''
-
-        })
-    '''
-    DER IEEE type 1 model associated with this frequency trip settings
-    model.
-    '''
-
-    DERIEEEType1: Optional[DERIEEEType1] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'DERIEEEType1.FrequencyTripSettings',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
         'docstring':
             '''
             DER IEEE type 1 model associated with this frequency trip settings model.
@@ -132059,25 +127728,6 @@ class Control(IOPoint):
     The remote point controlling the physical actuator.
     '''
 
-    RemoteControl: Optional[RemoteControl] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'RemoteControl.Control',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
-        'docstring':
-            '''
-            The remote point controlling the physical actuator.
-            '''
-
-        })
-    '''
-    The remote point controlling the physical actuator.
-    '''
-
     @property
     def __namespace__(self):
         return 'http://cim.ucaiug.io/CIM101/draft#'
@@ -132106,25 +127756,6 @@ class AccumulatorReset(Control):
         'inverse': 'AccumulatorValue.AccumulatorReset',
         'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            The accumulator value that is reset by the command.
-            '''
-
-        })
-    '''
-    The accumulator value that is reset by the command.
-    '''
-
-    AccumulatorValue: Optional[AccumulatorValue] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'AccumulatorValue.AccumulatorReset',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
         'docstring':
             '''
             The accumulator value that is reset by the command.
@@ -132203,25 +127834,6 @@ class AnalogControl(Control):
         'inverse': 'AnalogValue.AnalogControl',
         'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            The MeasurementValue that is controlled.
-            '''
-
-        })
-    '''
-    The MeasurementValue that is controlled.
-    '''
-
-    AnalogValue: Optional[AnalogValue] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'AnalogValue.AnalogControl',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
         'docstring':
             '''
             The MeasurementValue that is controlled.
@@ -132419,25 +128031,6 @@ class Command(Control):
     The ValueAliasSet used for translation of a Control value to a name.
     '''
 
-    DiscreteValue: Optional[DiscreteValue] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'DiscreteValue.Command',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
-        'docstring':
-            '''
-            The MeasurementValue that is controlled.
-            '''
-
-        })
-    '''
-    The MeasurementValue that is controlled.
-    '''
-
     @property
     def __namespace__(self):
         return 'http://cim.ucaiug.io/CIM101/draft#'
@@ -132593,44 +128186,6 @@ class MeasurementValue(IOPoint):
     Link to the physical telemetered point associated with this measurement.
     '''
 
-    MeasurementValueQuality: Optional[MeasurementValueQuality] = field(
-        default=None,
-        metadata={
-        'type': 'AggregateOf',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'MeasurementValueQuality.MeasurementValue',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
-        'docstring':
-            '''
-            A MeasurementValue has a MeasurementValueQuality associated with it.
-            '''
-
-        })
-    '''
-    A MeasurementValue has a MeasurementValueQuality associated with it.
-    '''
-
-    RemoteSource: Optional[RemoteSource] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'RemoteSource.MeasurementValue',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
-        'docstring':
-            '''
-            Link to the physical telemetered point associated with this measurement.
-            '''
-
-        })
-    '''
-    Link to the physical telemetered point associated with this measurement.
-    '''
-
     @property
     def __namespace__(self):
         return 'http://cim.ucaiug.io/CIM101/draft#'
@@ -132696,25 +128251,6 @@ class AccumulatorValue(MeasurementValue):
         'inverse': 'AccumulatorReset.AccumulatorValue',
         'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            The command that resets the accumulator value.
-            '''
-
-        })
-    '''
-    The command that resets the accumulator value.
-    '''
-
-    AccumulatorReset: Optional[AccumulatorReset] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'AccumulatorReset.AccumulatorValue',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
         'docstring':
             '''
             The command that resets the accumulator value.
@@ -132839,25 +128375,6 @@ class AnalogValue(MeasurementValue):
     The usage of the measurement within the control area specification.
     '''
 
-    AnalogControl: Optional[AnalogControl] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'AnalogControl.AnalogValue',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
-        'docstring':
-            '''
-            The Control variable associated with the MeasurementValue.
-            '''
-
-        })
-    '''
-    The Control variable associated with the MeasurementValue.
-    '''
-
     @property
     def __namespace__(self):
         return 'http://cim.ucaiug.io/CIM101/draft#'
@@ -132931,25 +128448,6 @@ class DiscreteValue(MeasurementValue):
         })
     '''
     Measurement to which this value is connected.
-    '''
-
-    Command: Optional[Command] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'Command.DiscreteValue',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
-        'docstring':
-            '''
-            The Control variable associated with the MeasurementValue.
-            '''
-
-        })
-    '''
-    The Control variable associated with the MeasurementValue.
     '''
 
     @property
@@ -133180,23 +128678,6 @@ class IndividualPnode(IdentifiedObject):
         'inverse': 'GenDistributionFactor.IndividualPnode',
         'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            '''
-
-        })
-    '''
-    '''
-
-    ConnectivityNode: Optional[ConnectivityNode] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'ConnectivityNode.IndividualPnode',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
         'docstring':
             '''
             '''
@@ -133752,25 +129233,6 @@ class LineSegmentCoupling(IdentifiedObject):
         })
     '''
     The coupled group of lines with which this coupled line has relationships.
-    '''
-
-    ACLineSegment: Optional[ACLineSegment] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'ACLineSegment.LineSegmentCoupling',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
-        'docstring':
-            '''
-            The line whose relationship in a coupled group is described.
-            '''
-
-        })
-    '''
-    The line whose relationship in a coupled group is described.
     '''
 
     @property
@@ -134357,25 +129819,6 @@ class LoadElectronicWECC(IdentifiedObject):
     WECC load composite model associated with this load electronic module.
     '''
 
-    LoadCompositeWECC: Optional[LoadCompositeWECC] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'LoadCompositeWECC.LoadElectronicWECC',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
-        'docstring':
-            '''
-            WECC load composite model associated with this load electronic module.
-            '''
-
-        })
-    '''
-    WECC load composite model associated with this load electronic module.
-    '''
-
     @property
     def __namespace__(self):
         return 'http://cim.ucaiug.io/CIM101/draft#'
@@ -134828,25 +130271,6 @@ class LoadMotor(IdentifiedObject):
         'inverse': 'LoadAggregate.LoadMotor',
         'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Aggregate load to which this aggregate motor (dynamic) load belongs.
-            '''
-
-        })
-    '''
-    Aggregate load to which this aggregate motor (dynamic) load belongs.
-    '''
-
-    LoadAggregate: Optional[LoadAggregate] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'LoadAggregate.LoadMotor',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
         'docstring':
             '''
             Aggregate load to which this aggregate motor (dynamic) load belongs.
@@ -135924,25 +131348,6 @@ class LoadStatic(IdentifiedObject):
     Aggregate load to which this aggregate static load belongs.
     '''
 
-    LoadAggregate: Optional[LoadAggregate] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'LoadAggregate.LoadStatic',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
-        'docstring':
-            '''
-            Aggregate load to which this aggregate static load belongs.
-            '''
-
-        })
-    '''
-    Aggregate load to which this aggregate static load belongs.
-    '''
-
     @property
     def __namespace__(self):
         return 'http://cim.ucaiug.io/CIM101/draft#'
@@ -136170,25 +131575,6 @@ class LoadStaticWECC(IdentifiedObject):
         'inverse': 'LoadCompositeWECC.LoadStaticWECC',
         'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            WECC load composite model associated with this load static module.
-            '''
-
-        })
-    '''
-    WECC load composite model associated with this load static module.
-    '''
-
-    LoadCompositeWECC: Optional[LoadCompositeWECC] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'LoadCompositeWECC.LoadStaticWECC',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
         'docstring':
             '''
             WECC load composite model associated with this load static module.
@@ -137477,27 +132863,6 @@ class MomentaryCessationSettings(IdentifiedObject):
         'inverse': 'DERIEEEType1.MomentaryCessationSettings',
         'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            DER IEEE type 1 model associated with this momentary cessation settings
-            model.
-            '''
-
-        })
-    '''
-    DER IEEE type 1 model associated with this momentary cessation settings
-    model.
-    '''
-
-    DERIEEEType1: Optional[DERIEEEType1] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'DERIEEEType1.MomentaryCessationSettings',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
         'docstring':
             '''
             DER IEEE type 1 model associated with this momentary cessation settings
@@ -139159,23 +134524,6 @@ class PMUConfiguration(IdentifiedObject):
     '''
     '''
 
-    PhasorMeasurementUnit: Optional[PhasorMeasurementUnit] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'PhasorMeasurementUnit.PMUConfiguration',
-        'namespace': 'http://gridappsd.org/CIM/extension#',
-        'serialize': False,
-        'docstring':
-            '''
-            '''
-
-        })
-    '''
-    '''
-
     @property
     def __namespace__(self):
         return 'http://gridappsd.org/CIM/extension#'
@@ -140407,44 +135755,6 @@ class ACPointOfCommonCoupling(PointOfCommonCoupling):
     DC converter unit that has AC point of common coupling.
     '''
 
-    ConnectivityNode: Optional[ConnectivityNode] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'ConnectivityNode.ACPointOfCommonCoupling',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
-        'docstring':
-            '''
-            Connectivity node which is a point of common coupling AC.
-            '''
-
-        })
-    '''
-    Connectivity node which is a point of common coupling AC.
-    '''
-
-    DCConverterUnit: Optional[DCConverterUnit] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'DCConverterUnit.ACPointOfCommonCoupling',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
-        'docstring':
-            '''
-            DC converter unit that has AC point of common coupling.
-            '''
-
-        })
-    '''
-    DC converter unit that has AC point of common coupling.
-    '''
-
     @property
     def __namespace__(self):
         return 'http://cim.ucaiug.io/CIM101/draft#'
@@ -140493,44 +135803,6 @@ class DCPointOfCommonCoupling(PointOfCommonCoupling):
         'inverse': 'DCNode.DCPointOfCommonCoupling',
         'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            The DCNode that is a point of common coupling DC.
-            '''
-
-        })
-    '''
-    The DCNode that is a point of common coupling DC.
-    '''
-
-    DCConverterUnit: Optional[DCConverterUnit] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'DCConverterUnit.DCPointOfCommonCoupling',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
-        'docstring':
-            '''
-            DC converter unit that has DC point of common coupling.
-            '''
-
-        })
-    '''
-    DC converter unit that has DC point of common coupling.
-    '''
-
-    DCNode: Optional[DCNode] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'DCNode.DCPointOfCommonCoupling',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
         'docstring':
             '''
             The DCNode that is a point of common coupling DC.
@@ -141107,25 +136379,6 @@ class PowerLimitSettings(IdentifiedObject):
     DER IEEE type 1 model associated with this power limit settings model.
     '''
 
-    DERIEEEType1: Optional[DERIEEEType1] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'DERIEEEType1.PowerLimitSettings',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
-        'docstring':
-            '''
-            DER IEEE type 1 model associated with this power limit settings model.
-            '''
-
-        })
-    '''
-    DER IEEE type 1 model associated with this power limit settings model.
-    '''
-
     @property
     def __namespace__(self):
         return 'http://cim.ucaiug.io/CIM101/draft#'
@@ -141568,45 +136821,6 @@ class AirCompressor(PowerSystemResource):
         'inverse': 'CombustionTurbine.AirCompressor',
         'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            A CAES air compressor is driven by combustion turbine.
-            '''
-
-        })
-    '''
-    A CAES air compressor is driven by combustion turbine.
-    '''
-
-    CAESPlant: Optional[CAESPlant] = field(
-        default=None,
-        metadata={
-        'type': 'OfAggregate',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'CAESPlant.AirCompressor',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
-        'docstring':
-            '''
-            An air compressor may be a member of a compressed air energy storage plant.
-            '''
-
-        })
-    '''
-    An air compressor may be a member of a compressed air energy storage
-    plant.
-    '''
-
-    CombustionTurbine: Optional[CombustionTurbine] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'CombustionTurbine.AirCompressor',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
         'docstring':
             '''
             A CAES air compressor is driven by combustion turbine.
@@ -142068,25 +137282,6 @@ class ACDCConverterController(DirectCurrentEquipmentController):
     DC pole controller that controls this ACDC controller.
     '''
 
-    ACDCConverter: Optional[ACDCConverter] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'ACDCConverter.ACDCConverterController',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
-        'docstring':
-            '''
-            ACDC converter controlled by the direct current controller.
-            '''
-
-        })
-    '''
-    ACDC converter controlled by the direct current controller.
-    '''
-
     @property
     def __namespace__(self):
         return 'http://cim.ucaiug.io/CIM101/draft#'
@@ -142185,25 +137380,6 @@ class DirectCurrentMasterController(DirectCurrentEquipmentController):
         'inverse': 'DCTieCorridor.DirectCurrentMasterController',
         'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            DCTieCorridor controlled by this direct current master controller.
-            '''
-
-        })
-    '''
-    DCTieCorridor controlled by this direct current master controller.
-    '''
-
-    DCTieCorridor: Optional[DCTieCorridor] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'DCTieCorridor.DirectCurrentMasterController',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
         'docstring':
             '''
             DCTieCorridor controlled by this direct current master controller.
@@ -142369,25 +137545,6 @@ class DirectCurrentPoleController(DirectCurrentEquipmentController):
     ACDC converter controller that is controlled by a DC pole controller.
     '''
 
-    DCPole: Optional[DCPole] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'DCPole.DirectCurrentPoleController',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
-        'docstring':
-            '''
-            DC pole that is controlled by a DC pole controller.
-            '''
-
-        })
-    '''
-    DC pole that is controlled by a DC pole controller.
-    '''
-
     @property
     def __namespace__(self):
         return 'http://cim.ucaiug.io/CIM101/draft#'
@@ -142466,25 +137623,6 @@ class DirectCurrentSubstationBipoleController(DirectCurrentSubstationController)
     DC substation bipole that is controlled by a DC substation bipole controller.
     '''
 
-    DCSubstationBipole: Optional[DCSubstationBipole] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'DCSubstationBipole.DirectCurrentSubstationBipoleController',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
-        'docstring':
-            '''
-            DC substation bipole that is controlled by a DC substation bipole controller.
-            '''
-
-        })
-    '''
-    DC substation bipole that is controlled by a DC substation bipole controller.
-    '''
-
     @property
     def __namespace__(self):
         return 'http://cim.ucaiug.io/CIM101/draft#'
@@ -142513,25 +137651,6 @@ class DirectCurrentSubstationPoleController(DirectCurrentSubstationController):
         'inverse': 'DCSubstationPole.DirectCurrentSubstationPoleController',
         'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            DC substation pole that is controlled by a DC substation pole controller.
-            '''
-
-        })
-    '''
-    DC substation pole that is controlled by a DC substation pole controller.
-    '''
-
-    DCSubstationPole: Optional[DCSubstationPole] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'DCSubstationPole.DirectCurrentSubstationPoleController',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
         'docstring':
             '''
             DC substation pole that is controlled by a DC substation pole controller.
@@ -142960,27 +138079,6 @@ class SSSCController(EquipmentController):
     The simulation setings that apply for this controller.
     '''
 
-    CurrentDroopOverride: Optional[CurrentDroopOverride] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'CurrentDroopOverride.SSSCController',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
-        'docstring':
-            '''
-            The current droop override for this SSSC controller. It is not used when
-            the SSSC controller is in mode currentDroop.
-            '''
-
-        })
-    '''
-    The current droop override for this SSSC controller. It is not used
-    when the SSSC controller is in mode currentDroop.
-    '''
-
     @property
     def __namespace__(self):
         return 'http://cim.ucaiug.io/CIM101/draft#'
@@ -143272,25 +138370,6 @@ class ProtectionFunction(AutomationFunction):
     function.
     '''
 
-    RelayDynamics: Optional[RelayDynamics] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'RelayDynamics.ProtectionFunction',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
-        'docstring':
-            '''
-            The relay dynamics may represent the detail logic of the ProtectionFunction.
-            '''
-
-        })
-    '''
-    The relay dynamics may represent the detail logic of the ProtectionFunction.
-    '''
-
     @property
     def __namespace__(self):
         return 'http://cim.ucaiug.io/CIM101/draft#'
@@ -143433,25 +138512,6 @@ class AreaInterchangeController(SystemControl):
     Control area that has a area interchange controller.
     '''
 
-    ControlArea: Optional[ControlArea] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'ControlArea.AreaInterchangeController',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
-        'docstring':
-            '''
-            Control area that has a area interchange controller.
-            '''
-
-        })
-    '''
-    Control area that has a area interchange controller.
-    '''
-
     @property
     def __namespace__(self):
         return 'http://cim.ucaiug.io/CIM101/draft#'
@@ -143551,25 +138611,6 @@ class PowerFrequencyController(SystemControl):
         })
     '''
     Power shift key strategy for this power frequency controller.
-    '''
-
-    ControlArea: Optional[ControlArea] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'ControlArea.PowerFrequencyController',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
-        'docstring':
-            '''
-            Control area which has a power frequency controller.
-            '''
-
-        })
-    '''
-    Control area which has a power frequency controller.
     '''
 
     FrequencyMonitoringTerminal: list[FrequencyMonitoringTerminal] = field(
@@ -143941,25 +138982,6 @@ class BoundaryPoint(PowerSystemResource):
     The connectivity node that is designated as a boundary point.
     '''
 
-    ConnectivityNode: Optional[ConnectivityNode] = field(
-        default=None,
-        metadata={
-        'type': 'European',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'ConnectivityNode.BoundaryPoint',
-        'namespace': 'http://iec.ch/TC57/CIM100-European#',
-        'serialize': False,
-        'docstring':
-            '''
-            The connectivity node that is designated as a boundary point.
-            '''
-
-        })
-    '''
-    The connectivity node that is designated as a boundary point.
-    '''
-
     @property
     def __namespace__(self):
         return 'http://iec.ch/TC57/CIM100-European#'
@@ -144049,47 +139071,6 @@ class CAESPlant(PowerSystemResource):
         'inverse': 'ThermalGeneratingUnit.CAESPlant',
         'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            A thermal generating unit may be a member of a compressed air energy storage
-            plant.
-            '''
-
-        })
-    '''
-    A thermal generating unit may be a member of a compressed air energy
-    storage plant.
-    '''
-
-    AirCompressor: Optional[AirCompressor] = field(
-        default=None,
-        metadata={
-        'type': 'AggregateOf',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'AirCompressor.CAESPlant',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
-        'docstring':
-            '''
-            An air compressor may be a member of a compressed air energy storage plant.
-            '''
-
-        })
-    '''
-    An air compressor may be a member of a compressed air energy storage
-    plant.
-    '''
-
-    ThermalGeneratingUnit: Optional[ThermalGeneratingUnit] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'ThermalGeneratingUnit.CAESPlant',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
         'docstring':
             '''
             A thermal generating unit may be a member of a compressed air energy storage
@@ -144227,25 +139208,6 @@ class CogenerationPlant(PowerSystemResource):
         'inverse': 'SteamSendoutSchedule.CogenerationPlant',
         'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            A cogeneration plant has a steam sendout schedule.
-            '''
-
-        })
-    '''
-    A cogeneration plant has a steam sendout schedule.
-    '''
-
-    SteamSendoutSchedule: Optional[SteamSendoutSchedule] = field(
-        default=None,
-        metadata={
-        'type': 'AggregateOf',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'SteamSendoutSchedule.CogenerationPlant',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
         'docstring':
             '''
             A cogeneration plant has a steam sendout schedule.
@@ -145306,44 +140268,6 @@ class DCConverterUnit(DCEquipmentContainer):
     The containing substation of the DC converter unit.
     '''
 
-    ACPointOfCommonCoupling: Optional[ACPointOfCommonCoupling] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'ACPointOfCommonCoupling.DCConverterUnit',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
-        'docstring':
-            '''
-            AC point of common coupling for this DC converter unit.
-            '''
-
-        })
-    '''
-    AC point of common coupling for this DC converter unit.
-    '''
-
-    DCPointOfCommonCoupling: Optional[DCPointOfCommonCoupling] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'DCPointOfCommonCoupling.DCConverterUnit',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
-        'docstring':
-            '''
-            DCNode that is the point of common coupling at DC side of this DCConverterUnit.
-            '''
-
-        })
-    '''
-    DCNode that is the point of common coupling at DC side of this DCConverterUnit.
-    '''
-
     @property
     def __namespace__(self):
         return 'http://cim.ucaiug.io/CIM101/draft#'
@@ -145399,25 +140323,6 @@ class DCLine(DCEquipmentContainer):
         })
     '''
     The SubGeographicalRegion containing the DC line.
-    '''
-
-    DCPole: Optional[DCPole] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'DCPole.DCLine',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
-        'docstring':
-            '''
-            The DC pole that has this DC line.
-            '''
-
-        })
-    '''
-    The DC pole that has this DC line.
     '''
 
     @property
@@ -145599,25 +140504,6 @@ class DCSubstationBipole(DCEquipmentContainer):
     DC substation bipole controller controlling this DC substation bipole.
     '''
 
-    DirectCurrentSubstationBipoleController: Optional[DirectCurrentSubstationBipoleController] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'DirectCurrentSubstationBipoleController.DCSubstationBipole',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
-        'docstring':
-            '''
-            DC substation bipole controller controlling this DC substation bipole.
-            '''
-
-        })
-    '''
-    DC substation bipole controller controlling this DC substation bipole.
-    '''
-
     @property
     def __namespace__(self):
         return 'http://cim.ucaiug.io/CIM101/draft#'
@@ -145665,25 +140551,6 @@ class DCSubstationPole(DCEquipmentContainer):
         'inverse': 'DirectCurrentSubstationPoleController.DCSubstationPole',
         'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            DC substation pole controller controlling this DC substation pole.
-            '''
-
-        })
-    '''
-    DC substation pole controller controlling this DC substation pole.
-    '''
-
-    DirectCurrentSubstationPoleController: Optional[DirectCurrentSubstationPoleController] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'DirectCurrentSubstationPoleController.DCSubstationPole',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
         'docstring':
             '''
             DC substation pole controller controlling this DC substation pole.
@@ -146508,25 +141375,6 @@ class ControlArea(PowerSystemResource):
     The system operator that operates this control area.
     '''
 
-    AreaInterchangeController: Optional[AreaInterchangeController] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'AreaInterchangeController.ControlArea',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
-        'docstring':
-            '''
-            Area interchange controller for this control area.
-            '''
-
-        })
-    '''
-    Area interchange controller for this control area.
-    '''
-
     ControlAreaGeneratingUnit: list[ControlAreaGeneratingUnit] = field(
         default_factory=list,
         metadata={
@@ -146563,44 +141411,6 @@ class ControlArea(PowerSystemResource):
         })
     '''
     The parent control area for the power electronics unit specifications.
-    '''
-
-    EnergyArea: Optional[EnergyArea] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'EnergyArea.ControlArea',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
-        'docstring':
-            '''
-            The energy area that is forecast from this control area specification.
-            '''
-
-        })
-    '''
-    The energy area that is forecast from this control area specification.
-    '''
-
-    PowerFrequencyController: Optional[PowerFrequencyController] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'PowerFrequencyController.ControlArea',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
-        'docstring':
-            '''
-            Power frequency controller for this control area.
-            '''
-
-        })
-    '''
-    Power frequency controller for this control area.
     '''
 
     TieFlow: list[TieFlow] = field(
@@ -146653,25 +141463,6 @@ class DCBiPole(PowerSystemResource):
         'inverse': 'BipolarDCSystem.DCBiPole',
         'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Bipolar DC system that has this DC bipole.
-            '''
-
-        })
-    '''
-    Bipolar DC system that has this DC bipole.
-    '''
-
-    BipolarDCSystem: Optional[BipolarDCSystem] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'BipolarDCSystem.DCBiPole',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
         'docstring':
             '''
             Bipolar DC system that has this DC bipole.
@@ -146966,63 +141757,6 @@ class DCPole(PowerSystemResource):
     The DC converter unit that relates to this DC pole.
     '''
 
-    DCLine: Optional[DCLine] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'DCLine.DCPole',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
-        'docstring':
-            '''
-            The DC line that is related to this DC pole.
-            '''
-
-        })
-    '''
-    The DC line that is related to this DC pole.
-    '''
-
-    DirectCurrentPoleController: Optional[DirectCurrentPoleController] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'DirectCurrentPoleController.DCPole',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
-        'docstring':
-            '''
-            DC pole controller that controls this DC pole.
-            '''
-
-        })
-    '''
-    DC pole controller that controls this DC pole.
-    '''
-
-    AsymmetricMonopolarDCSystem: Optional[MonopolarDCSystem] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'MonopolarDCSystem.DCPole',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
-        'docstring':
-            '''
-            Asymmetric monopolar DC system that has this DC pole.
-            '''
-
-        })
-    '''
-    Asymmetric monopolar DC system that has this DC pole.
-    '''
-
     @property
     def __namespace__(self):
         return 'http://cim.ucaiug.io/CIM101/draft#'
@@ -147150,25 +141884,6 @@ class BipolarDCSystem(DCSystem):
     DC bipole that belongs to a bipolar DC system.
     '''
 
-    DCBiPole: Optional[DCBiPole] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'DCBiPole.BipolarDCSystem',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
-        'docstring':
-            '''
-            DC bipole that belongs to a bipolar DC system.
-            '''
-
-        })
-    '''
-    DC bipole that belongs to a bipolar DC system.
-    '''
-
     @property
     def __namespace__(self):
         return 'http://cim.ucaiug.io/CIM101/draft#'
@@ -147233,25 +141948,6 @@ class MonopolarDCSystem(DCSystem):
         'inverse': 'DCPole.AsymmetricMonopolarDCSystem',
         'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            DC pole part of the asymmetric DC system.
-            '''
-
-        })
-    '''
-    DC pole part of the asymmetric DC system.
-    '''
-
-    DCPole: Optional[DCPole] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'DCPole.AsymmetricMonopolarDCSystem',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
         'docstring':
             '''
             DC pole part of the asymmetric DC system.
@@ -148869,25 +143565,6 @@ class ACDCConverter(ConductingEquipment):
     to the AC network.
     '''
 
-    ACDCConverterController: Optional[ACDCConverterController] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'ACDCConverterController.ACDCConverter',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
-        'docstring':
-            '''
-            Direct current controller which controls the ACDC converter.
-            '''
-
-        })
-    '''
-    Direct current controller which controls the ACDC converter.
-    '''
-
     DCTerminals: list[ACDCConverterDCTerminal] = field(
         default_factory=list,
         metadata={
@@ -149272,27 +143949,6 @@ class CsConverter(ACDCConverter):
     of this converter.
     '''
 
-    CSCDynamics: Optional[CSCDynamics] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'CSCDynamics.CSConverter',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
-        'docstring':
-            '''
-            Current source converter dynamics model used to describe dynamic behaviour
-            of this converter.
-            '''
-
-        })
-    '''
-    Current source converter dynamics model used to describe dynamic behaviour
-    of this converter.
-    '''
-
     @property
     def __namespace__(self):
         return 'http://cim.ucaiug.io/CIM101/draft#'
@@ -149604,27 +144260,6 @@ class VsConverter(ACDCConverter):
         'inverse': 'VSCDynamics.VsConverter',
         'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Voltage source converter dynamics model used to describe dynamic behaviour
-            of this converter.
-            '''
-
-        })
-    '''
-    Voltage source converter dynamics model used to describe dynamic behaviour
-    of this converter.
-    '''
-
-    VSCDynamics: Optional[VSCDynamics] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'VSCDynamics.VsConverter',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
         'docstring':
             '''
             Voltage source converter dynamics model used to describe dynamic behaviour
@@ -150277,26 +144912,6 @@ class ACLineSegment(Conductor):
     The line faults of the line segment.
     '''
 
-    LineSegmentCoupling: Optional[LineSegmentCoupling] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'LineSegmentCoupling.ACLineSegment',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
-        'docstring':
-            '''
-            The description of this line's coupling with other lines in a coupled group.
-            '''
-
-        })
-    '''
-    The description of this line's coupling with other lines in a coupled
-    group.
-    '''
-
     Poles: list[Pole] = field(
         default_factory=list,
         metadata={
@@ -150494,25 +145109,6 @@ class BusbarSection(Connector):
         'inverse': 'VoltageControlZone.BusbarSection',
         'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            A VoltageControlZone is controlled by a designated BusbarSection.
-            '''
-
-        })
-    '''
-    A VoltageControlZone is controlled by a designated BusbarSection.
-    '''
-
-    VoltageControlZone: Optional[VoltageControlZone] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'VoltageControlZone.BusbarSection',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
         'docstring':
             '''
             A VoltageControlZone is controlled by a designated BusbarSection.
@@ -152584,27 +147180,6 @@ class StaticVarCompensator(FACTSEquipment):
     of this Static Var Compensator.
     '''
 
-    StaticVarCompensatorDynamics: Optional[StaticVarCompensatorDynamics] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'StaticVarCompensatorDynamics.StaticVarCompensator',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
-        'docstring':
-            '''
-            Static Var Compensator dynamics model used to describe dynamic behaviour
-            of this Static Var Compensator.
-            '''
-
-        })
-    '''
-    Static Var Compensator dynamics model used to describe dynamic behaviour
-    of this Static Var Compensator.
-    '''
-
     @property
     def __namespace__(self):
         return 'http://cim.ucaiug.io/CIM101/draft#'
@@ -153189,25 +147764,6 @@ class PowerElectronicsConnection(RegulatingCondEq):
     through it.
     '''
 
-    StatcomDynamics: Optional[StatcomDynamics] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'StatcomDynamics.PowerElectronicsConnection',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
-        'docstring':
-            '''
-            The statcom dynamics model associated with this power electronics connection.
-            '''
-
-        })
-    '''
-    The statcom dynamics model associated with this power electronics connection.
-    '''
-
     WeccDynamics: list[WeccDynamics] = field(
         default_factory=list,
         metadata={
@@ -153226,27 +147782,6 @@ class PowerElectronicsConnection(RegulatingCondEq):
     '''
     WECC dynamics model associated with this Power electronics connection
     model.
-    '''
-
-    WindTurbineType3or4Dynamics: Optional[WindTurbineType3or4Dynamics] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'WindTurbineType3or4Dynamics.PowerElectronicsConnection',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
-        'docstring':
-            '''
-            The wind turbine type 3 or type 4 dynamics model associated with this power
-            electronics connection.
-            '''
-
-        })
-    '''
-    The wind turbine type 3 or type 4 dynamics model associated with this
-    power electronics connection.
     '''
 
     @property
@@ -153473,46 +148008,6 @@ class RotatingMachine(RegulatingCondEq):
         'inverse': 'RotatingMachinePhase.RotatingMachine',
         'namespace': 'http://gridappsd.org/CIM/extension#',
         'serialize': True,
-        'docstring':
-            '''
-            '''
-
-        })
-    '''
-    '''
-
-    HydroPump: Optional[HydroPump] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'HydroPump.RotatingMachine',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
-        'docstring':
-            '''
-            The synchronous machine drives the turbine which moves the water from a
-            low elevation to a higher elevation. The direction of machine rotation
-            for pumping may or may not be the same as for generating.
-            '''
-
-        })
-    '''
-    The synchronous machine drives the turbine which moves the water from
-    a low elevation to a higher elevation. The direction of machine rotation
-    for pumping may or may not be the same as for generating.
-    '''
-
-    RotatingMachinePhase: Optional[RotatingMachinePhase] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'RotatingMachinePhase.RotatingMachine',
-        'namespace': 'http://gridappsd.org/CIM/extension#',
-        'serialize': False,
         'docstring':
             '''
             '''
@@ -153957,27 +148452,6 @@ class AsynchronousMachine(RotatingMachine):
         })
     '''
     DER dynamics model associated with this asynchronous machine model.
-    '''
-
-    AsynchronousMachineDynamics: Optional[AsynchronousMachineDynamics] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'AsynchronousMachineDynamics.AsynchronousMachine',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
-        'docstring':
-            '''
-            Asynchronous machine dynamics model used to describe dynamic behaviour
-            of this asynchronous machine.
-            '''
-
-        })
-    '''
-    Asynchronous machine dynamics model used to describe dynamic behaviour
-    of this asynchronous machine.
     '''
 
     WeccDynamics: list[WeccDynamics] = field(
@@ -154711,27 +149185,6 @@ class SynchronousMachine(RotatingMachine):
     The reactive capability curve for this synchronous machine.
     '''
 
-    SynchronousMachineDynamics: Optional[SynchronousMachineDynamics] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'SynchronousMachineDynamics.SynchronousMachine',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
-        'docstring':
-            '''
-            Synchronous machine dynamics model used to describe dynamic behaviour of
-            this synchronous machine.
-            '''
-
-        })
-    '''
-    Synchronous machine dynamics model used to describe dynamic behaviour
-    of this synchronous machine.
-    '''
-
     @property
     def __namespace__(self):
         return 'http://cim.ucaiug.io/CIM101/draft#'
@@ -154992,27 +149445,6 @@ class ShuntCompensator(RegulatingCondEq):
     '''
     Static Var Compensator system dynamics model used to describe dynamic
     behaviour of this Static Var Compensator system.
-    '''
-
-    ShuntCompensatorDynamics: Optional[ShuntCompensatorDynamics] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'ShuntCompensatorDynamics.ShuntCompensator',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
-        'docstring':
-            '''
-            Shunt compensator dynamics model used to describe dynamic behaviour of
-            this shunt compensator.
-            '''
-
-        })
-    '''
-    Shunt compensator dynamics model used to describe dynamic behaviour
-    of this shunt compensator.
     '''
 
     ShuntCompensatorPhase: list[ShuntCompensatorPhase] = field(
@@ -156998,47 +151430,6 @@ class Fuse(Switch):
     Time Curves)
     '''
 
-    MiinimumMeltCurve: Optional[FuseCharacteristicCurve] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'FuseCharacteristicCurve.FuseMinimumMelt',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
-        'docstring':
-            '''
-            Curves that define the time-current operation of this fuse (Minimum Melt)
-            '''
-
-        })
-    '''
-    Curves that define the time-current operation of this fuse (Minimum
-    Melt)
-    '''
-
-    TotalClearingTimeCurve: Optional[FuseCharacteristicCurve] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'FuseCharacteristicCurve.FuseTotalClearing',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
-        'docstring':
-            '''
-            Curves that define the time-current operation of this fuse (Total Clearing
-            Time Curves)
-            '''
-
-        })
-    '''
-    Curves that define the time-current operation of this fuse (Total Clearing
-    Time Curves)
-    '''
-
     @property
     def __namespace__(self):
         return 'http://cim.ucaiug.io/CIM101/draft#'
@@ -158996,27 +153387,6 @@ class GeneratingUnit(Equipment):
     fuel mixture and fuel cost.
     '''
 
-    GenUnitOpSchedule: Optional[GenUnitOpSchedule] = field(
-        default=None,
-        metadata={
-        'type': 'AggregateOf',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'GenUnitOpSchedule.GeneratingUnit',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
-        'docstring':
-            '''
-            A generating unit may have an operating schedule, indicating the planned
-            operation of the unit.
-            '''
-
-        })
-    '''
-    A generating unit may have an operating schedule, indicating the planned
-    operation of the unit.
-    '''
-
     GrossToNetActivePowerCurves: list[GrossToNetActivePowerCurve] = field(
         default_factory=list,
         metadata={
@@ -159245,25 +153615,6 @@ class HydroGeneratingUnit(GeneratingUnit):
         })
     '''
     A hydro generating unit has an efficiency curve.
-    '''
-
-    PenstockLossCurve: Optional[PenstockLossCurve] = field(
-        default=None,
-        metadata={
-        'type': 'AggregateOf',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'PenstockLossCurve.HydroGeneratingUnit',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
-        'docstring':
-            '''
-            A hydro generating unit has a penstock loss curve.
-            '''
-
-        })
-    '''
-    A hydro generating unit has a penstock loss curve.
     '''
 
     TailbayLossCurve: list[TailbayLossCurve] = field(
@@ -159554,27 +153905,6 @@ class ThermalGeneratingUnit(GeneratingUnit):
     A thermal generating unit may have a startup model.
     '''
 
-    CAESPlant: Optional[CAESPlant] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'CAESPlant.ThermalGeneratingUnit',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
-        'docstring':
-            '''
-            A thermal generating unit may be a member of a compressed air energy storage
-            plant.
-            '''
-
-        })
-    '''
-    A thermal generating unit may be a member of a compressed air energy
-    storage plant.
-    '''
-
     EmmissionAccounts: list[EmissionAccount] = field(
         default_factory=list,
         metadata={
@@ -159649,101 +153979,6 @@ class ThermalGeneratingUnit(GeneratingUnit):
         })
     '''
     A thermal generating unit may have one or more fuel allocation schedules.
-    '''
-
-    HeatInputCurve: Optional[HeatInputCurve] = field(
-        default=None,
-        metadata={
-        'type': 'AggregateOf',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'HeatInputCurve.ThermalGeneratingUnit',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
-        'docstring':
-            '''
-            A thermal generating unit may have a heat input curve.
-            '''
-
-        })
-    '''
-    A thermal generating unit may have a heat input curve.
-    '''
-
-    HeatRateCurve: Optional[HeatRateCurve] = field(
-        default=None,
-        metadata={
-        'type': 'AggregateOf',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'HeatRateCurve.ThermalGeneratingUnit',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
-        'docstring':
-            '''
-            A thermal generating unit may have a heat rate curve.
-            '''
-
-        })
-    '''
-    A thermal generating unit may have a heat rate curve.
-    '''
-
-    IncrementalHeatRateCurve: Optional[IncrementalHeatRateCurve] = field(
-        default=None,
-        metadata={
-        'type': 'AggregateOf',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'IncrementalHeatRateCurve.ThermalGeneratingUnit',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
-        'docstring':
-            '''
-            A thermal generating unit may have an incremental heat rate curve.
-            '''
-
-        })
-    '''
-    A thermal generating unit may have an incremental heat rate curve.
-    '''
-
-    ShutdownCurve: Optional[ShutdownCurve] = field(
-        default=None,
-        metadata={
-        'type': 'AggregateOf',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'ShutdownCurve.ThermalGeneratingUnit',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
-        'docstring':
-            '''
-            A thermal generating unit may have a shutdown curve.
-            '''
-
-        })
-    '''
-    A thermal generating unit may have a shutdown curve.
-    '''
-
-    StartupModel: Optional[StartupModel] = field(
-        default=None,
-        metadata={
-        'type': 'AggregateOf',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'StartupModel.ThermalGeneratingUnit',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
-        'docstring':
-            '''
-            A thermal generating unit may have a startup model.
-            '''
-
-        })
-    '''
-    A thermal generating unit may have a startup model.
     '''
 
     @property
@@ -160000,50 +154235,6 @@ class HydroPump(Equipment):
         })
     '''
     The schedule resource that has this hydro pump.
-    '''
-
-    HydroPumpOpSchedule: Optional[HydroPumpOpSchedule] = field(
-        default=None,
-        metadata={
-        'type': 'AggregateOf',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'HydroPumpOpSchedule.HydroPump',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
-        'docstring':
-            '''
-            The hydro pump has a pumping schedule over time, indicating when pumping
-            is to occur.
-            '''
-
-        })
-    '''
-    The hydro pump has a pumping schedule over time, indicating when pumping
-    is to occur.
-    '''
-
-    RotatingMachine: Optional[RotatingMachine] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'RotatingMachine.HydroPump',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
-        'docstring':
-            '''
-            The synchronous machine drives the turbine which moves the water from a
-            low elevation to a higher elevation. The direction of machine rotation
-            for pumping may or may not be the same as for generating.
-            '''
-
-        })
-    '''
-    The synchronous machine drives the turbine which moves the water from
-    a low elevation to a higher elevation. The direction of machine rotation
-    for pumping may or may not be the same as for generating.
     '''
 
     @property
@@ -161912,40 +156103,6 @@ class PhasorMeasurementUnit(MeasurementSystem):
     '''
     '''
 
-    PMUConfiguration: Optional[PMUConfiguration] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'PMUConfiguration.PhasorMeasurementUnit',
-        'namespace': 'http://gridappsd.org/CIM/extension#',
-        'serialize': False,
-        'docstring':
-            '''
-            '''
-
-        })
-    '''
-    '''
-
-    PMUStream: Optional[PMUStream] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'PMUStream.PMU',
-        'namespace': 'http://gridappsd.org/CIM/extension#',
-        'serialize': False,
-        'docstring':
-            '''
-            '''
-
-        })
-    '''
-    '''
-
     ProtectionEquipment: list[ProtectionEquipment] = field(
         default_factory=list,
         metadata={
@@ -162712,46 +156869,6 @@ class CombustionTurbine(PrimeMover):
         })
     '''
     A combustion turbine may have a heat recovery boiler for making steam.
-    '''
-
-    AirCompressor: Optional[AirCompressor] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'AirCompressor.CombustionTurbine',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
-        'docstring':
-            '''
-            A CAES air compressor is driven by combustion turbine.
-            '''
-
-        })
-    '''
-    A CAES air compressor is driven by combustion turbine.
-    '''
-
-    CTTempActivePowerCurve: Optional[CTTempActivePowerCurve] = field(
-        default=None,
-        metadata={
-        'type': 'AggregateOf',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'CTTempActivePowerCurve.CombustionTurbine',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
-        'docstring':
-            '''
-            A combustion turbine may have an active power versus ambient temperature
-            relationship.
-            '''
-
-        })
-    '''
-    A combustion turbine may have an active power versus ambient temperature
-    relationship.
     '''
 
     @property
@@ -164495,25 +158612,6 @@ class Reservoir(PowerSystemResource):
     A reservoir may spill into a downstream reservoir.
     '''
 
-    TargetLevelSchedule: Optional[TargetLevelSchedule] = field(
-        default=None,
-        metadata={
-        'type': 'AggregateOf',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'TargetLevelSchedule.Reservoir',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
-        'docstring':
-            '''
-            A reservoir may have a water level target schedule.
-            '''
-
-        })
-    '''
-    A reservoir may have a water level target schedule.
-    '''
-
     @property
     def __namespace__(self):
         return 'http://cim.ucaiug.io/CIM101/draft#'
@@ -164606,23 +158704,6 @@ class RotatingMachinePhase(PowerSystemResource):
         'inverse': 'RotatingMachine.RotatingMachinePhase',
         'namespace': 'http://gridappsd.org/CIM/extension#',
         'serialize': True,
-        'docstring':
-            '''
-            '''
-
-        })
-    '''
-    '''
-
-    RotatingMachine: Optional[RotatingMachine] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'RotatingMachine.RotatingMachinePhase',
-        'namespace': 'http://gridappsd.org/CIM/extension#',
-        'serialize': False,
         'docstring':
             '''
             '''
@@ -167340,25 +161421,6 @@ class TapChanger(PowerSystemResource):
     The step operational limit table for this tap changer.
     '''
 
-    SvTapStep: Optional[SvTapStep] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'SvTapStep.TapChanger',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
-        'docstring':
-            '''
-            The tap step state associated with the tap changer.
-            '''
-
-        })
-    '''
-    The tap step state associated with the tap changer.
-    '''
-
     TapSchedule: list[TapSchedule] = field(
         default_factory=list,
         metadata={
@@ -167453,25 +161515,6 @@ class PhaseTapChanger(TapChanger):
         'inverse': 'TransformerEnd.PhaseTapChanger',
         'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Transformer end to which this phase tap changer belongs.
-            '''
-
-        })
-    '''
-    Transformer end to which this phase tap changer belongs.
-    '''
-
-    TransformerEnd: Optional[TransformerEnd] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'TransformerEnd.PhaseTapChanger',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
         'docstring':
             '''
             Transformer end to which this phase tap changer belongs.
@@ -168068,44 +162111,6 @@ class RatioTapChanger(TapChanger):
     Transformer end to which this ratio tap changer belongs.
     '''
 
-    TransformerEnd: Optional[TransformerEnd] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'TransformerEnd.AdditionalRatioTapChanger',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
-        'docstring':
-            '''
-            Transformer end to which this ratio tap changer belongs.
-            '''
-
-        })
-    '''
-    Transformer end to which this ratio tap changer belongs.
-    '''
-
-    TransformerEnd: Optional[TransformerEnd] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'TransformerEnd.RatioTapChanger',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
-        'docstring':
-            '''
-            Transformer end to which this ratio tap changer belongs.
-            '''
-
-        })
-    '''
-    Transformer end to which this ratio tap changer belongs.
-    '''
-
     @property
     def __namespace__(self):
         return 'http://cim.ucaiug.io/CIM101/draft#'
@@ -168461,25 +162466,6 @@ class DCTieCorridor(TieCorridor):
     The DCPole which is part of the DC corridor.
     '''
 
-    DirectCurrentMasterController: Optional[DirectCurrentMasterController] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'DirectCurrentMasterController.DCTieCorridor',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
-        'docstring':
-            '''
-            Direct current master controller for this DCTieCorridor.
-            '''
-
-        })
-    '''
-    Direct current master controller for this DCTieCorridor.
-    '''
-
     @property
     def __namespace__(self):
         return 'http://cim.ucaiug.io/CIM101/draft#'
@@ -168539,25 +162525,6 @@ class VoltageControlZone(PowerSystemResource):
         })
     '''
     A VoltageControlZone may have a voltage regulation schedule.
-    '''
-
-    BusbarSection: Optional[BusbarSection] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'BusbarSection.VoltageControlZone',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
-        'docstring':
-            '''
-            A VoltageControlZone is controlled by a designated BusbarSection.
-            '''
-
-        })
-    '''
-    A VoltageControlZone is controlled by a designated BusbarSection.
     '''
 
     @property
@@ -169609,140 +163576,6 @@ class RemoteInputSignal(IdentifiedObject):
     Wind turbine type 3 or type 4 models using this remote input signal.
     '''
 
-    DiscontinuousExcitationControlDynamics: Optional[DiscontinuousExcitationControlDynamics] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'DiscontinuousExcitationControlDynamics.RemoteInputSignal',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
-        'docstring':
-            '''
-            Discontinuous excitation control model using this remote input signal.
-            '''
-
-        })
-    '''
-    Discontinuous excitation control model using this remote input signal.
-    '''
-
-    PFVArControllerType1Dynamics: Optional[PFVArControllerType1Dynamics] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'PFVArControllerType1Dynamics.RemoteInputSignal',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
-        'docstring':
-            '''
-            Power factor or VAr controller type 1 model using this remote input signal.
-            '''
-
-        })
-    '''
-    Power factor or VAr controller type 1 model using this remote input
-    signal.
-    '''
-
-    UnderexcitationLimiterDynamics: Optional[UnderexcitationLimiterDynamics] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'UnderexcitationLimiterDynamics.RemoteInputSignal',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
-        'docstring':
-            '''
-            Underexcitation limiter model using this remote input signal.
-            '''
-
-        })
-    '''
-    Underexcitation limiter model using this remote input signal.
-    '''
-
-    VoltageCompensatorDynamics: Optional[VoltageCompensatorDynamics] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'VoltageCompensatorDynamics.RemoteInputSignal',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
-        'docstring':
-            '''
-            Voltage compensator model using this remote input signal.
-            '''
-
-        })
-    '''
-    Voltage compensator model using this remote input signal.
-    '''
-
-    WindPlantDynamics: Optional[WindPlantDynamics] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'WindPlantDynamics.RemoteInputSignal',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
-        'docstring':
-            '''
-            The wind plant using the remote signal.
-            '''
-
-        })
-    '''
-    The wind plant using the remote signal.
-    '''
-
-    WindTurbineType1or2Dynamics: Optional[WindTurbineType1or2Dynamics] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'WindTurbineType1or2Dynamics.RemoteInputSignal',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
-        'docstring':
-            '''
-            Wind generator type 1 or type 2 model using this remote input signal.
-            '''
-
-        })
-    '''
-    Wind generator type 1 or type 2 model using this remote input signal.
-    '''
-
-    WindTurbineType3or4Dynamics: Optional[WindTurbineType3or4Dynamics] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'WindTurbineType3or4Dynamics.RemoteInputSignal',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
-        'docstring':
-            '''
-            Wind turbine type 3 or type 4 models using this remote input signal.
-            '''
-
-        })
-    '''
-    Wind turbine type 3 or type 4 models using this remote input signal.
-    '''
-
     @property
     def __namespace__(self):
         return 'http://cim.ucaiug.io/CIM101/draft#'
@@ -169875,25 +163708,6 @@ class RemoteControl(RemotePoint):
     The Control for the RemoteControl point.
     '''
 
-    Control: Optional[Control] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'Control.RemoteControl',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
-        'docstring':
-            '''
-            The Control for the RemoteControl point.
-            '''
-
-        })
-    '''
-    The Control for the RemoteControl point.
-    '''
-
     @property
     def __namespace__(self):
         return 'http://cim.ucaiug.io/CIM101/draft#'
@@ -169995,25 +163809,6 @@ class RemoteSource(RemotePoint):
         'inverse': 'MeasurementValue.RemoteSource',
         'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Link to the physical telemetered point associated with this measurement.
-            '''
-
-        })
-    '''
-    Link to the physical telemetered point associated with this measurement.
-    '''
-
-    MeasurementValue: Optional[MeasurementValue] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'MeasurementValue.RemoteSource',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
         'docstring':
             '''
             Link to the physical telemetered point associated with this measurement.
@@ -170498,25 +164293,6 @@ class ServiceSettings(IdentifiedObject):
     DER IEEE type 1 model associated with this service settings model.
     '''
 
-    DERIEEEType1: Optional[DERIEEEType1] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'DERIEEEType1.ServiceSettings',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
-        'docstring':
-            '''
-            DER IEEE type 1 model associated with this service settings model.
-            '''
-
-        })
-    '''
-    DER IEEE type 1 model associated with this service settings model.
-    '''
-
     @property
     def __namespace__(self):
         return 'http://cim.ucaiug.io/CIM101/draft#'
@@ -170798,63 +164574,6 @@ class SignalRecorder(IdentifiedObject):
     '''
     The simulation configuration set for which this signal recorder is
     recording.
-    '''
-
-    SimulationCharacteristic1: Optional[SimulationResultCharacteristic] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'SimulationResultCharacteristic.Y1valueSignal',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
-        'docstring':
-            '''
-            The characteristic where this signal is plotted.
-            '''
-
-        })
-    '''
-    The characteristic where this signal is plotted.
-    '''
-
-    SimulationChacteristic2: Optional[SimulationResultCharacteristic] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'SimulationResultCharacteristic.Y2valueSignal',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
-        'docstring':
-            '''
-            The characteristic where this signal is plotted.
-            '''
-
-        })
-    '''
-    The characteristic where this signal is plotted.
-    '''
-
-    SimulationCharacteristic3: Optional[SimulationResultCharacteristic] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'SimulationResultCharacteristic.Y3valueSignal',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
-        'docstring':
-            '''
-            The characteristic where this signal is plotted.
-            '''
-
-        })
-    '''
-    The characteristic where this signal is plotted.
     '''
 
     @property
@@ -171684,82 +165403,6 @@ class StartupModel(IdentifiedObject):
     A thermal generating unit may have a startup model.
     '''
 
-    StartIgnFuelCurve: Optional[StartIgnFuelCurve] = field(
-        default=None,
-        metadata={
-        'type': 'AggregateOf',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'StartIgnFuelCurve.StartupModel',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
-        'docstring':
-            '''
-            The unit's startup model may have a startup ignition fuel curve.
-            '''
-
-        })
-    '''
-    The unit's startup model may have a startup ignition fuel curve.
-    '''
-
-    StartMainFuelCurve: Optional[StartMainFuelCurve] = field(
-        default=None,
-        metadata={
-        'type': 'AggregateOf',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'StartMainFuelCurve.StartupModel',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
-        'docstring':
-            '''
-            The unit's startup model may have a startup main fuel curve.
-            '''
-
-        })
-    '''
-    The unit's startup model may have a startup main fuel curve.
-    '''
-
-    StartRampCurve: Optional[StartRampCurve] = field(
-        default=None,
-        metadata={
-        'type': 'AggregateOf',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'StartRampCurve.StartupModel',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
-        'docstring':
-            '''
-            The unit's startup model may have a startup ramp curve.
-            '''
-
-        })
-    '''
-    The unit's startup model may have a startup ramp curve.
-    '''
-
-    ThermalGeneratingUnit: Optional[ThermalGeneratingUnit] = field(
-        default=None,
-        metadata={
-        'type': 'OfAggregate',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'ThermalGeneratingUnit.StartupModel',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
-        'docstring':
-            '''
-            A thermal generating unit may have a startup model.
-            '''
-
-        })
-    '''
-    A thermal generating unit may have a startup model.
-    '''
-
     @property
     def __namespace__(self):
         return 'http://cim.ucaiug.io/CIM101/draft#'
@@ -172471,29 +166114,6 @@ class TopologicalIsland(IdentifiedObject):
     schemes exist, so the association is typically optional.
     '''
 
-    AngleRefTopologicalNode: Optional[TopologicalNode] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'TopologicalNode.AngleRefTopologicalIsland',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
-        'docstring':
-            '''
-            The angle reference for the island. Normally there is one TopologicalNode
-            that is selected as the angle reference for each island. Other reference
-            schemes exist, so the association is typically optional.
-            '''
-
-        })
-    '''
-    The angle reference for the island. Normally there is one TopologicalNode
-    that is selected as the angle reference for each island. Other reference
-    schemes exist, so the association is typically optional.
-    '''
-
     TopologicalNodes: list[TopologicalNode] = field(
         default_factory=list,
         metadata={
@@ -172810,27 +166430,6 @@ class TopologicalNode(IdentifiedObject):
     not be used as an input specification.
     '''
 
-    AngleRefTopologicalIsland: Optional[TopologicalIsland] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'TopologicalIsland.AngleRefTopologicalNode',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
-        'docstring':
-            '''
-            The island for which the node is an angle reference. Normally there is
-            one angle reference node for each island.
-            '''
-
-        })
-    '''
-    The island for which the node is an angle reference. Normally there
-    is one angle reference node for each island.
-    '''
-
     @property
     def __namespace__(self):
         return 'http://cim.ucaiug.io/CIM101/draft#'
@@ -172977,25 +166576,6 @@ class TransformerCoreAdmittance(IdentifiedObject):
         })
     '''
     All transformer ends having this core admittance.
-    '''
-
-    TransformerEndInfo: Optional[TransformerEndInfo] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'TransformerEndInfo.CoreAdmittance',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
-        'docstring':
-            '''
-            Transformer end datasheet used to calculate this core admittance.
-            '''
-
-        })
-    '''
-    Transformer end datasheet used to calculate this core admittance.
     '''
 
     @property
@@ -173325,44 +166905,6 @@ class TransformerEnd(IdentifiedObject):
         })
     '''
     Terminal of the power transformer to which this transformer end belongs.
-    '''
-
-    PhaseTapChanger: Optional[PhaseTapChanger] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'PhaseTapChanger.TransformerEnd',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
-        'docstring':
-            '''
-            Phase tap changer associated with this transformer end.
-            '''
-
-        })
-    '''
-    Phase tap changer associated with this transformer end.
-    '''
-
-    RatioTapChanger: Optional[RatioTapChanger] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'RatioTapChanger.TransformerEnd',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
-        'docstring':
-            '''
-            Ratio tap changer associated with this transformer end.
-            '''
-
-        })
-    '''
-    Ratio tap changer associated with this transformer end.
     '''
 
     FromMeshImpedance: list[TransformerMeshImpedance] = field(
@@ -174087,25 +167629,6 @@ class TransformerStarImpedance(IdentifiedObject):
         })
     '''
     All transformer ends having this star impedance.
-    '''
-
-    TransformerEndInfo: Optional[TransformerEndInfo] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'TransformerEndInfo.TransformerStarImpedance',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
-        'docstring':
-            '''
-            Transformer end datasheet used to calculate this transformer star impedance.
-            '''
-
-        })
-    '''
-    Transformer end datasheet used to calculate this transformer star impedance.
     '''
 
     @property
@@ -175322,23 +168845,6 @@ class UsagePoint(IdentifiedObject):
     Location of this usage point.
     '''
 
-    Terminal: Optional[Terminal] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'Terminal.UsagePoint',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
-        'docstring':
-            '''
-            '''
-
-        })
-    '''
-    '''
-
     @property
     def __namespace__(self):
         return 'http://cim.ucaiug.io/CIM101/draft#'
@@ -175853,25 +169359,6 @@ class VoltVarSettings(IdentifiedObject):
     DER IEEE type 1 model associated with this volt var settings model.
     '''
 
-    DERIEEEType1: Optional[DERIEEEType1] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'DERIEEEType1.VoltVarSettings',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
-        'docstring':
-            '''
-            DER IEEE type 1 model associated with this volt var settings model.
-            '''
-
-        })
-    '''
-    DER IEEE type 1 model associated with this volt var settings model.
-    '''
-
     @property
     def __namespace__(self):
         return 'http://cim.ucaiug.io/CIM101/draft#'
@@ -176045,25 +169532,6 @@ class VoltWattSettings(IdentifiedObject):
         'inverse': 'DERIEEEType1.VoltWattSettings',
         'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            DER IEEE type 1 model associated with this volt watt settings model.
-            '''
-
-        })
-    '''
-    DER IEEE type 1 model associated with this volt watt settings model.
-    '''
-
-    DERIEEEType1: Optional[DERIEEEType1] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'DERIEEEType1.VoltWattSettings',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
         'docstring':
             '''
             DER IEEE type 1 model associated with this volt watt settings model.
@@ -176255,25 +169723,6 @@ class VoltageTripSettings(IdentifiedObject):
         'inverse': 'DERIEEEType1.VoltageTripSettings',
         'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            DER IEEE type 1 model associated with this voltage trip settings model.
-            '''
-
-        })
-    '''
-    DER IEEE type 1 model associated with this voltage trip settings model.
-    '''
-
-    DERIEEEType1: Optional[DERIEEEType1] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'DERIEEEType1.VoltageTripSettings',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
         'docstring':
             '''
             DER IEEE type 1 model associated with this voltage trip settings model.
@@ -176601,25 +170050,6 @@ class WattVarSettings(IdentifiedObject):
     DER IEEE type 1 model associated with this watt var settings model.
     '''
 
-    DERIEEEType1: Optional[DERIEEEType1] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'DERIEEEType1.WattVarSettings',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
-        'docstring':
-            '''
-            DER IEEE type 1 model associated with this watt var settings model.
-            '''
-
-        })
-    '''
-    DER IEEE type 1 model associated with this watt var settings model.
-    '''
-
     @property
     def __namespace__(self):
         return 'http://cim.ucaiug.io/CIM101/draft#'
@@ -176661,26 +170091,6 @@ class WindAeroConstIEC(IdentifiedObject):
     associated.
     '''
 
-    WindGenTurbineType1aIEC: Optional[WindGenTurbineType1aIEC] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'WindGenTurbineType1aIEC.WindAeroConstIEC',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
-        'docstring':
-            '''
-            Wind turbine type 1A model with which this wind aerodynamic model is associated.
-            '''
-
-        })
-    '''
-    Wind turbine type 1A model with which this wind aerodynamic model is
-    associated.
-    '''
-
     @property
     def __namespace__(self):
         return 'http://cim.ucaiug.io/CIM101/draft#'
@@ -176711,26 +170121,6 @@ class WindAeroConstIEC2(IdentifiedObject):
         'inverse': 'WindGenTurbineType1aIEC2.WindAeroConstIEC2',
         'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Wind turbine type 1A model with which this wind aerodynamic module is associated.
-            '''
-
-        })
-    '''
-    Wind turbine type 1A model with which this wind aerodynamic module
-    is associated.
-    '''
-
-    WindGenTurbineType1aIEC2: Optional[WindGenTurbineType1aIEC2] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'WindGenTurbineType1aIEC2.WindAeroConstIEC2',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
         'docstring':
             '''
             Wind turbine type 1A model with which this wind aerodynamic module is associated.
@@ -176822,26 +170212,6 @@ class WindAeroOneDimIEC(IdentifiedObject):
     associated.
     '''
 
-    WindTurbineType3IEC: Optional[WindTurbineType3IEC] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'WindTurbineType3IEC.WindAeroOneDimIEC',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
-        'docstring':
-            '''
-            Wind turbine type 3 model with which this wind aerodynamic model is associated.
-            '''
-
-        })
-    '''
-    Wind turbine type 3 model with which this wind aerodynamic model is
-    associated.
-    '''
-
     @property
     def __namespace__(self):
         return 'http://cim.ucaiug.io/CIM101/draft#'
@@ -176911,26 +170281,6 @@ class WindAeroOneDimIEC2(IdentifiedObject):
         'inverse': 'WindTurbineType3IEC2.WindAeroOneDimIEC2',
         'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Wind turbine type 3 model with which this wind aerodynamic module is associated.
-            '''
-
-        })
-    '''
-    Wind turbine type 3 model with which this wind aerodynamic module is
-    associated.
-    '''
-
-    WindTurbineType3IEC2: Optional[WindTurbineType3IEC2] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'WindTurbineType3IEC2.WindAeroOneDimIEC2',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
         'docstring':
             '''
             Wind turbine type 3 model with which this wind aerodynamic module is associated.
@@ -177124,26 +170474,6 @@ class WindAeroTwoDimIEC(IdentifiedObject):
     associated.
     '''
 
-    WindTurbineType3IEC: Optional[WindTurbineType3IEC] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'WindTurbineType3IEC.WindAeroTwoDimIEC',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
-        'docstring':
-            '''
-            Wind turbine type 3 model with which this wind aerodynamic model is associated.
-            '''
-
-        })
-    '''
-    Wind turbine type 3 model with which this wind aerodynamic model is
-    associated.
-    '''
-
     @property
     def __namespace__(self):
         return 'http://cim.ucaiug.io/CIM101/draft#'
@@ -177298,27 +170628,6 @@ class WindAeroTwoDimIEC2(IdentifiedObject):
         'inverse': 'WindTurbineType3IEC2.WindAeroTwoDimIEC2',
         'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Wind turbine type 3 model with which this wind two dimensional aerodynamic
-            module is associated.
-            '''
-
-        })
-    '''
-    Wind turbine type 3 model with which this wind two dimensional aerodynamic
-    module is associated.
-    '''
-
-    WindTurbineType3IEC2: Optional[WindTurbineType3IEC2] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'WindTurbineType3IEC2.WindAeroTwoDimIEC2',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
         'docstring':
             '''
             Wind turbine type 3 model with which this wind two dimensional aerodynamic
@@ -177546,27 +170855,6 @@ class WindContCurrLimIEC(IdentifiedObject):
     limitation model.
     '''
 
-    WindTurbineType3or4IEC: Optional[WindTurbineType3or4IEC] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'WindTurbineType3or4IEC.WindContCurrLimIEC',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
-        'docstring':
-            '''
-            Wind turbine type 3 or type 4 model with which this wind control current
-            limitation model is associated.
-            '''
-
-        })
-    '''
-    Wind turbine type 3 or type 4 model with which this wind control current
-    limitation model is associated.
-    '''
-
     @property
     def __namespace__(self):
         return 'http://cim.ucaiug.io/CIM101/draft#'
@@ -177760,25 +171048,6 @@ class WindContCurrLimIEC2(IdentifiedObject):
     limitation module is associated.
     '''
 
-    StatcomIEC: Optional[StatcomIEC] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'StatcomIEC.WindContCurrLimIEC2',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
-        'docstring':
-            '''
-            The statcom model associated with this wind current limitation module.
-            '''
-
-        })
-    '''
-    The statcom model associated with this wind current limitation module.
-    '''
-
     WindDynamicsLookupTable2: list[WindDynamicsLookupTable2] = field(
         default_factory=list,
         metadata={
@@ -177798,27 +171067,6 @@ class WindContCurrLimIEC2(IdentifiedObject):
     '''
     All wind dynamics lookup tables associated with this current control
     limitation module.
-    '''
-
-    WindTurbineType3or4IEC2: Optional[WindTurbineType3or4IEC2] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'WindTurbineType3or4IEC2.WindContCurrLimIEC2',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
-        'docstring':
-            '''
-            Wind turbine type 3 or type 4 model with which this wind control current
-            limitation module is associated.
-            '''
-
-        })
-    '''
-    Wind turbine type 3 or type 4 model with which this wind control current
-    limitation module is associated.
     '''
 
     @property
@@ -178350,27 +171598,6 @@ class WindContPType3IEC(IdentifiedObject):
     '''
     The wind dynamics lookup table associated with this P control type
     3 model.
-    '''
-
-    WindTurbineType3IEC: Optional[WindTurbineType3IEC] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'WindTurbineType3IEC.WindContPType3IEC',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
-        'docstring':
-            '''
-            Wind turbine type 3 model with which this wind control P type 3 model is
-            associated.
-            '''
-
-        })
-    '''
-    Wind turbine type 3 model with which this wind control P type 3 model
-    is associated.
     '''
 
     @property
@@ -178936,27 +172163,6 @@ class WindContPType3IEC2(IdentifiedObject):
     3 module.
     '''
 
-    WindTurbineType3IEC2: Optional[WindTurbineType3IEC2] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'WindTurbineType3IEC2.WindContPType3IEC2',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
-        'docstring':
-            '''
-            Wind turbine type 3 model with which this wind control P type 3 module
-            is associated.
-            '''
-
-        })
-    '''
-    Wind turbine type 3 model with which this wind control P type 3 module
-    is associated.
-    '''
-
     @property
     def __namespace__(self):
         return 'http://cim.ucaiug.io/CIM101/draft#'
@@ -179046,27 +172252,6 @@ class WindContPType4aIEC(IdentifiedObject):
         'inverse': 'WindTurbineType4aIEC.WindContPType4aIEC',
         'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Wind turbine type 4A model with which this wind control P type 4A model
-            is associated.
-            '''
-
-        })
-    '''
-    Wind turbine type 4A model with which this wind control P type 4A model
-    is associated.
-    '''
-
-    WindTurbineType4aIEC: Optional[WindTurbineType4aIEC] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'WindTurbineType4aIEC.WindContPType4aIEC',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
         'docstring':
             '''
             Wind turbine type 4A model with which this wind control P type 4A model
@@ -179266,27 +172451,6 @@ class WindContPType4aIEC2(IdentifiedObject):
     is associated.
     '''
 
-    WindTurbineType4aIEC2: Optional[WindTurbineType4aIEC2] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'WindTurbineType4aIEC2.WindContPType4aIEC2',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
-        'docstring':
-            '''
-            Wind turbine type 4A model with which this wind control P type 4A module
-            is associated.
-            '''
-
-        })
-    '''
-    Wind turbine type 4A model with which this wind control P type 4A module
-    is associated.
-    '''
-
     @property
     def __namespace__(self):
         return 'http://cim.ucaiug.io/CIM101/draft#'
@@ -179396,27 +172560,6 @@ class WindContPType4bIEC(IdentifiedObject):
         'inverse': 'WindTurbineType4bIEC.WindContPType4bIEC',
         'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Wind turbine type 4B model with which this wind control P type 4B model
-            is associated.
-            '''
-
-        })
-    '''
-    Wind turbine type 4B model with which this wind control P type 4B model
-    is associated.
-    '''
-
-    WindTurbineType4bIEC: Optional[WindTurbineType4bIEC] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'WindTurbineType4bIEC.WindContPType4bIEC',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
         'docstring':
             '''
             Wind turbine type 4B model with which this wind control P type 4B model
@@ -179604,27 +172747,6 @@ class WindContPType4bIEC2(IdentifiedObject):
         'inverse': 'WindTurbineType4bIEC2.WindContPType4bIEC2',
         'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Wind turbine type 4B model with which this wind control P type 4B module
-            is associated.
-            '''
-
-        })
-    '''
-    Wind turbine type 4B model with which this wind control P type 4B module
-    is associated.
-    '''
-
-    WindTurbineType4bIEC2: Optional[WindTurbineType4bIEC2] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'WindTurbineType4bIEC2.WindContPType4bIEC2',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
         'docstring':
             '''
             Wind turbine type 4B model with which this wind control P type 4B module
@@ -179869,25 +172991,6 @@ class WindContPitchAngleIEC(IdentifiedObject):
         'inverse': 'WindTurbineType3IEC.WindContPitchAngleIEC',
         'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Wind turbine type 3 model with which this pitch control model is associated.
-            '''
-
-        })
-    '''
-    Wind turbine type 3 model with which this pitch control model is associated.
-    '''
-
-    WindTurbineType3IEC: Optional[WindTurbineType3IEC] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'WindTurbineType3IEC.WindContPitchAngleIEC',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
         'docstring':
             '''
             Wind turbine type 3 model with which this pitch control model is associated.
@@ -180292,25 +173395,6 @@ class WindContPitchAngleIEC2(IdentifiedObject):
         'inverse': 'WindTurbineType3IEC2.WindContPitchAngleIEC2',
         'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Wind turbine type 3 model with which this pitch control module is associated.
-            '''
-
-        })
-    '''
-    Wind turbine type 3 model with which this pitch control module is associated.
-    '''
-
-    WindTurbineType3IEC2: Optional[WindTurbineType3IEC2] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'WindTurbineType3IEC2.WindContPitchAngleIEC2',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
         'docstring':
             '''
             Wind turbine type 3 model with which this pitch control module is associated.
@@ -180810,27 +173894,6 @@ class WindContQIEC(IdentifiedObject):
         'inverse': 'WindTurbineType3or4IEC.WIndContQIEC',
         'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Wind turbine type 3 or type 4 model with which this reactive control model
-            is associated.
-            '''
-
-        })
-    '''
-    Wind turbine type 3 or type 4 model with which this reactive control
-    model is associated.
-    '''
-
-    WindTurbineType3or4IEC: Optional[WindTurbineType3or4IEC] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'WindTurbineType3or4IEC.WIndContQIEC',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
         'docstring':
             '''
             Wind turbine type 3 or type 4 model with which this reactive control model
@@ -181385,46 +174448,6 @@ class WindContQIEC2(IdentifiedObject):
     module is associated.
     '''
 
-    StatcomIEC: Optional[StatcomIEC] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'StatcomIEC.WindContQIEC2',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
-        'docstring':
-            '''
-            The statcom model associated with this wind Q control module.
-            '''
-
-        })
-    '''
-    The statcom model associated with this wind Q control module.
-    '''
-
-    WindTurbineType3or4IEC2: Optional[WindTurbineType3or4IEC2] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'WindTurbineType3or4IEC2.WindContQIEC2',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
-        'docstring':
-            '''
-            Wind turbine type 3 or type 4 model with which this reactive control module
-            is associated.
-            '''
-
-        })
-    '''
-    Wind turbine type 3 or type 4 model with which this reactive control
-    module is associated.
-    '''
-
     @property
     def __namespace__(self):
         return 'http://cim.ucaiug.io/CIM101/draft#'
@@ -181494,27 +174517,6 @@ class WindContQLimIEC(IdentifiedObject):
         'inverse': 'WindTurbineType3or4IEC.WindContQLimIEC',
         'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Wind generator type 3 or type 4 model with which this constant Q limitation
-            model is associated.
-            '''
-
-        })
-    '''
-    Wind generator type 3 or type 4 model with which this constant Q limitation
-    model is associated.
-    '''
-
-    WindTurbineType3or4IEC: Optional[WindTurbineType3or4IEC] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'WindTurbineType3or4IEC.WindContQLimIEC',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
         'docstring':
             '''
             Wind generator type 3 or type 4 model with which this constant Q limitation
@@ -181615,46 +174617,6 @@ class WindContQLimIEC2(IdentifiedObject):
         'inverse': 'WindTurbineType3or4IEC2.WindContQLimIEC2',
         'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Wind generator type 3 or type 4 model with which this constant Q limitation
-            module is associated.
-            '''
-
-        })
-    '''
-    Wind generator type 3 or type 4 model with which this constant Q limitation
-    module is associated.
-    '''
-
-    StatcomIEC: Optional[StatcomIEC] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'StatcomIEC.WindContQLimIEC2',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
-        'docstring':
-            '''
-            The statcom model associated with this costant Q limitation module.
-            '''
-
-        })
-    '''
-    The statcom model associated with this costant Q limitation module.
-    '''
-
-    WindTurbineType3or4IEC2: Optional[WindTurbineType3or4IEC2] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'WindTurbineType3or4IEC2.WindContQLimIEC2',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
         'docstring':
             '''
             Wind generator type 3 or type 4 model with which this constant Q limitation
@@ -181769,27 +174731,6 @@ class WindContQPQULimIEC(IdentifiedObject):
     model.
     '''
 
-    WindTurbineType3or4IEC: Optional[WindTurbineType3or4IEC] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'WindTurbineType3or4IEC.WindContQPQULimIEC',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
-        'docstring':
-            '''
-            Wind generator type 3 or type 4 model with which this QP and QU limitation
-            model is associated.
-            '''
-
-        })
-    '''
-    Wind generator type 3 or type 4 model with which this QP and QU limitation
-    model is associated.
-    '''
-
     @property
     def __namespace__(self):
         return 'http://cim.ucaiug.io/CIM101/draft#'
@@ -181850,27 +174791,6 @@ class WindContQPQULimIEC2(IdentifiedObject):
     '''
     All wind dynamics lookup tables associated with this QP and QU limitation
     module.
-    '''
-
-    WindTurbineType3or4IEC2: Optional[WindTurbineType3or4IEC2] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'WindTurbineType3or4IEC2.WindContQPQULimIEC2',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
-        'docstring':
-            '''
-            Wind generator type 3 or type 4 model with which this QP and QU limitation
-            module is associated.
-            '''
-
-        })
-    '''
-    Wind generator type 3 or type 4 model with which this QP and QU limitation
-    module is associated.
     '''
 
     @property
@@ -182095,27 +175015,6 @@ class WindContRotorRIEC(IdentifiedObject):
     control model.
     '''
 
-    WindGenTurbineType2IEC: Optional[WindGenTurbineType2IEC] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'WindGenTurbineType2IEC.WindContRotorRIEC',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
-        'docstring':
-            '''
-            Wind turbine type 2 model with whitch this wind control rotor resistance
-            model is associated.
-            '''
-
-        })
-    '''
-    Wind turbine type 2 model with whitch this wind control rotor resistance
-    model is associated.
-    '''
-
     @property
     def __namespace__(self):
         return 'http://cim.ucaiug.io/CIM101/draft#'
@@ -182276,27 +175175,6 @@ class WindContRotorRIEC2(IdentifiedObject):
     '''
     All wind dynamics lookup tables associated with this rotor resistance
     control module.
-    '''
-
-    WindGenTurbineType2IEC2: Optional[WindGenTurbineType2IEC2] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'WindGenTurbineType2IEC2.WindContRotorRIEC2',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
-        'docstring':
-            '''
-            Wind turbine type 2 model with whitch this wind control rotor resistance
-            module is associated.
-            '''
-
-        })
-    '''
-    Wind turbine type 2 model with whitch this wind control rotor resistance
-    module is associated.
     '''
 
     @property
@@ -183025,68 +175903,6 @@ class WindElectricalSystemGamma(IdentifiedObject):
     electrical system gamma module is associated.
     '''
 
-    StatcomIEC: Optional[StatcomIEC] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'StatcomIEC.WindElectricalSystemGamma',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
-        'docstring':
-            '''
-            The statcom model associated with this wind electrical system gamma module.
-            '''
-
-        })
-    '''
-    The statcom model associated with this wind electrical system gamma
-    module.
-    '''
-
-    WindTurbineType1or2IEC2: Optional[WindTurbineType1or2IEC2] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'WindTurbineType1or2IEC2.WindElectricalSystemGamma',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
-        'docstring':
-            '''
-            Wind generator type 1 or type 2 model with which this wind turbine electrical
-            system gamma module is associated.
-            '''
-
-        })
-    '''
-    Wind generator type 1 or type 2 model with which this wind turbine
-    electrical system gamma module is associated.
-    '''
-
-    WindTurbinaType2or4IEC2: Optional[WindTurbineType3or4IEC2] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'WindTurbineType3or4IEC2.WindElectricalSystemGamma',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
-        'docstring':
-            '''
-            Wind generator type 3 or type 4 model with which this wind turbine electrical
-            system gamma module is associated.
-            '''
-
-        })
-    '''
-    Wind generator type 3 or type 4 model with which this wind turbine
-    electrical system gamma module is associated.
-    '''
-
     @property
     def __namespace__(self):
         return 'http://cim.ucaiug.io/CIM101/draft#'
@@ -183187,26 +176003,6 @@ class WindGenType3IEC(IdentifiedObject):
     associated.
     '''
 
-    WindTurbineType3IEC: Optional[WindTurbineType3IEC] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'WindTurbineType3IEC.WindGenType3IEC',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
-        'docstring':
-            '''
-            Wind turbine type 3 model with which this wind generator type 3 is associated.
-            '''
-
-        })
-    '''
-    Wind turbine type 3 model with which this wind generator type 3 is
-    associated.
-    '''
-
     @property
     def __namespace__(self):
         return 'http://cim.ucaiug.io/CIM101/draft#'
@@ -183276,27 +176072,6 @@ class WindGenType3aIEC(WindGenType3IEC):
         'inverse': 'WindTurbineType4IEC.WindGenType3aIEC',
         'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Wind turbine type 4 model with which this wind generator type 3A model
-            is associated.
-            '''
-
-        })
-    '''
-    Wind turbine type 4 model with which this wind generator type 3A model
-    is associated.
-    '''
-
-    WindTurbineType4IEC: Optional[WindTurbineType4IEC] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'WindTurbineType4IEC.WindGenType3aIEC',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
         'docstring':
             '''
             Wind turbine type 4 model with which this wind generator type 3A model
@@ -183514,27 +176289,6 @@ class WindGenType3IEC2(IdentifiedObject):
     type 3 is associated.
     '''
 
-    WindTurbineType3IEC2: Optional[WindTurbineType3IEC2] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'WindTurbineType3IEC2.WindGenType3IEC2',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
-        'docstring':
-            '''
-            Wind turbine type 3 model with which this wind generator system module
-            type 3 is associated.
-            '''
-
-        })
-    '''
-    Wind turbine type 3 model with which this wind generator system module
-    type 3 is associated.
-    '''
-
     @property
     def __namespace__(self):
         return 'http://cim.ucaiug.io/CIM101/draft#'
@@ -183604,27 +176358,6 @@ class WindGenType3aIEC2(WindGenType3IEC2):
         'inverse': 'WindTurbineType4IEC2.WindGenType3aIEC2',
         'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Wind turbine type 4 model with which this wind generator system type 3A
-            module is associated.
-            '''
-
-        })
-    '''
-    Wind turbine type 4 model with which this wind generator system type
-    3A module is associated.
-    '''
-
-    WindTurbineType4IEC2: Optional[WindTurbineType4IEC2] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'WindTurbineType4IEC2.WindGenType3aIEC2',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
         'docstring':
             '''
             Wind turbine type 4 model with which this wind generator system type 3A
@@ -183884,48 +176617,6 @@ class WindGenType4IEC(IdentifiedObject):
     is associated.
     '''
 
-    WindTurbineType4aIEC: Optional[WindTurbineType4aIEC] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'WindTurbineType4aIEC.WindGenType4IEC',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
-        'docstring':
-            '''
-            Wind turbine type 4A model with which this wind generator type 4 model
-            is associated.
-            '''
-
-        })
-    '''
-    Wind turbine type 4A model with which this wind generator type 4 model
-    is associated.
-    '''
-
-    WindTurbineType4bIEC: Optional[WindTurbineType4bIEC] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'WindTurbineType4bIEC.WindGenType4IEC',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
-        'docstring':
-            '''
-            Wind turbine type 4B model with which this wind generator type 4 model
-            is associated.
-            '''
-
-        })
-    '''
-    Wind turbine type 4B model with which this wind generator type 4 model
-    is associated.
-    '''
-
     @property
     def __namespace__(self):
         return 'http://cim.ucaiug.io/CIM101/draft#'
@@ -184075,67 +176766,6 @@ class WindGenType4IEC2(IdentifiedObject):
         'inverse': 'WindTurbineType4bIEC2.WindGenType4IEC2',
         'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Wind turbine type 4B model with which this wind generator system type 4
-            module is associated.
-            '''
-
-        })
-    '''
-    Wind turbine type 4B model with which this wind generator system type
-    4 module is associated.
-    '''
-
-    StatcomIEC: Optional[StatcomIEC] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'StatcomIEC.WindGenType4IEC2',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
-        'docstring':
-            '''
-            The statcom model associated with this wind generator type 4 module.
-            '''
-
-        })
-    '''
-    The statcom model associated with this wind generator type 4 module.
-    '''
-
-    WindTurbineType4aIEC2: Optional[WindTurbineType4aIEC2] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'WindTurbineType4aIEC2.WindGenType4IEC2',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
-        'docstring':
-            '''
-            Wind turbine type 4A model with which this wind generator system type 4
-            module is associated.
-            '''
-
-        })
-    '''
-    Wind turbine type 4A model with which this wind generator system type
-    4 module is associated.
-    '''
-
-    WindTurbineType4bIEC2: Optional[WindTurbineType4bIEC2] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'WindTurbineType4bIEC2.WindGenType4IEC2',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
         'docstring':
             '''
             Wind turbine type 4B model with which this wind generator system type 4
@@ -184456,174 +177086,6 @@ class WindGridMeasurement(IdentifiedObject):
     grid measurement (for protection) module is associated.
     '''
 
-    StatcomIECcontrol: Optional[StatcomIEC] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'StatcomIEC.WindGridMeasForControl',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
-        'docstring':
-            '''
-            The statcom model associated with this wind grid measurement for control
-            module.
-            '''
-
-        })
-    '''
-    The statcom model associated with this wind grid measurement for control
-    module.
-    '''
-
-    StatcomIECprotection: Optional[StatcomIEC] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'StatcomIEC.WindGridMeasForProtection',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
-        'docstring':
-            '''
-            The statcom model associated with this wind grid measurement for protection
-            module.
-            '''
-
-        })
-    '''
-    The statcom model associated with this wind grid measurement for protection
-    module.
-    '''
-
-    WindGenTurbineType1bIEC2: Optional[WindGenTurbineType1bIEC2] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'WindGenTurbineType1bIEC2.WindGridMeasForControl',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
-        'docstring':
-            '''
-            Wind turbine type 2 model with which this grid measurement (for control)
-            module is associated.
-            '''
-
-        })
-    '''
-    Wind turbine type 2 model with which this grid measurement (for control)
-    module is associated.
-    '''
-
-    WindGenTurbineType2IEC2: Optional[WindGenTurbineType2IEC2] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'WindGenTurbineType2IEC2.WindGridMeasForControl',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
-        'docstring':
-            '''
-            Wind turbine type 2 model with which this grid measurement (for control)
-            module is associated.
-            '''
-
-        })
-    '''
-    Wind turbine type 2 model with which this grid measurement (for control)
-    module is associated.
-    '''
-
-    WindPlantControlCommIEC: Optional[WindPlantControlCommIEC] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'WindPlantControlCommIEC.WindGridMeasForControl',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
-        'docstring':
-            '''
-            Wind plant control and comminication module with which this grid measurement
-            module is associated.
-            '''
-
-        })
-    '''
-    Wind plant control and comminication module with which this grid measurement
-    module is associated.
-    '''
-
-    WindTurbineType1or2IEC2: Optional[WindTurbineType1or2IEC2] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'WindTurbineType1or2IEC2.WindGridMeasForProtection',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
-        'docstring':
-            '''
-            Wind generator type 1 or type 2 model with which this wind turbine grid
-            measurement (for protection) module is associated.
-            '''
-
-        })
-    '''
-    Wind generator type 1 or type 2 model with which this wind turbine
-    grid measurement (for protection) module is associated.
-    '''
-
-    WindTurbineType3or4IEC2control: Optional[WindTurbineType3or4IEC2] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'WindTurbineType3or4IEC2.WindGridMeasForControl',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
-        'docstring':
-            '''
-            Wind generator type 3 or type 4 model with which this wind turbine grid
-            measurement (for control) module is associated.
-            '''
-
-        })
-    '''
-    Wind generator type 3 or type 4 model with which this wind turbine
-    grid measurement (for control) module is associated.
-    '''
-
-    WindTurbineType3or4IEC2protection: Optional[WindTurbineType3or4IEC2] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'WindTurbineType3or4IEC2.WindGridMeasForProtection',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
-        'docstring':
-            '''
-            Wind generator type 3 or type 4 model with which this wind turbine grid
-            measurement (for protection) module is associated.
-            '''
-
-        })
-    '''
-    Wind generator type 3 or type 4 model with which this wind turbine
-    grid measurement (for protection) module is associated.
-    '''
-
     @property
     def __namespace__(self):
         return 'http://cim.ucaiug.io/CIM101/draft#'
@@ -184774,67 +177236,6 @@ class WindMechIEC(IdentifiedObject):
         'inverse': 'WindTurbineType4bIEC.WindMechIEC',
         'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Wind turbine type 4B model with which this wind mechanical model is associated.
-            '''
-
-        })
-    '''
-    Wind turbine type 4B model with which this wind mechanical model is
-    associated.
-    '''
-
-    WindTurbineType1or2IEC: Optional[WindTurbineType1or2IEC] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'WindTurbineType1or2IEC.WindMechIEC',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
-        'docstring':
-            '''
-            Wind generator type 1 or type 2 model with which this wind mechanical model
-            is associated.
-            '''
-
-        })
-    '''
-    Wind generator type 1 or type 2 model with which this wind mechanical
-    model is associated.
-    '''
-
-    WindTurbineType3IEC: Optional[WindTurbineType3IEC] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'WindTurbineType3IEC.WindMechIEC',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
-        'docstring':
-            '''
-            Wind turbine type 3 model with which this wind mechanical model is associated.
-            '''
-
-        })
-    '''
-    Wind turbine type 3 model with which this wind mechanical model is
-    associated.
-    '''
-
-    WindTurbineType4bIEC: Optional[WindTurbineType4bIEC] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'WindTurbineType4bIEC.WindMechIEC',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
         'docstring':
             '''
             Wind turbine type 4B model with which this wind mechanical model is associated.
@@ -184997,68 +177398,6 @@ class WindMechIEC2(IdentifiedObject):
         'inverse': 'WindTurbineType4bIEC2.WindMechIEC2',
         'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Wind turbine type 4B model with which this wind mechanical module is associated.
-            '''
-
-        })
-    '''
-    Wind turbine type 4B model with which this wind mechanical module is
-    associated.
-    '''
-
-    WindTurbineType1or2IEC2: Optional[WindTurbineType1or2IEC2] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'WindTurbineType1or2IEC2.WindMechIEC2',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
-        'docstring':
-            '''
-            Wind generator type 1 or type 2 model with which this wind mechanical two
-            mass module is associated.
-            '''
-
-        })
-    '''
-    Wind generator type 1 or type 2 model with which this wind mechanical
-    two mass module is associated.
-    '''
-
-    WindTurbineType3IEC2: Optional[WindTurbineType3IEC2] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'WindTurbineType3IEC2.WindMechIEC2',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
-        'docstring':
-            '''
-            Wind turbine type 3 model with which this wind mechanical two mass module
-            is associated.
-            '''
-
-        })
-    '''
-    Wind turbine type 3 model with which this wind mechanical two mass
-    module is associated.
-    '''
-
-    WindTurbineType4bIEC2: Optional[WindTurbineType4bIEC2] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'WindTurbineType4bIEC2.WindMechIEC2',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
         'docstring':
             '''
             Wind turbine type 4B model with which this wind mechanical module is associated.
@@ -185297,48 +177636,6 @@ class WindPitchContPowerIEC(IdentifiedObject):
     model.
     '''
 
-    WindGenTurbineType1bIEC: Optional[WindGenTurbineType1bIEC] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'WindGenTurbineType1bIEC.WindPitchContPowerIEC',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
-        'docstring':
-            '''
-            Wind turbine type 1B model with which this pitch control power model is
-            associated.
-            '''
-
-        })
-    '''
-    Wind turbine type 1B model with which this pitch control power model
-    is associated.
-    '''
-
-    WindGenTurbineType2IEC: Optional[WindGenTurbineType2IEC] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'WindGenTurbineType2IEC.WindPitchContPowerIEC',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
-        'docstring':
-            '''
-            Wind turbine type 2 model with which this pitch control power model is
-            associated.
-            '''
-
-        })
-    '''
-    Wind turbine type 2 model with which this pitch control power model
-    is associated.
-    '''
-
     @property
     def __namespace__(self):
         return 'http://cim.ucaiug.io/CIM101/draft#'
@@ -185546,48 +177843,6 @@ class WindPitchContPowerIEC2(IdentifiedObject):
     power module.
     '''
 
-    WindGenTurbineType1bIEC2: Optional[WindGenTurbineType1bIEC2] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'WindGenTurbineType1bIEC2.WindPitchContPowerIEC2',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
-        'docstring':
-            '''
-            Wind turbine type 1B model with which this pitch control power module is
-            associated.
-            '''
-
-        })
-    '''
-    Wind turbine type 1B model with which this pitch control power module
-    is associated.
-    '''
-
-    WindGenTurbineType2IEC2: Optional[WindGenTurbineType2IEC2] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'WindGenTurbineType2IEC2.WindPitchContPowerIEC2',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
-        'docstring':
-            '''
-            Wind turbine type 2 model with which this pitch control power module is
-            associated.
-            '''
-
-        })
-    '''
-    Wind turbine type 2 model with which this pitch control power module
-    is associated.
-    '''
-
     @property
     def __namespace__(self):
         return 'http://cim.ucaiug.io/CIM101/draft#'
@@ -185753,153 +178008,6 @@ class WindPlantControlCommIEC(IdentifiedObject):
     '''
     Wind plant communication modules for wind plant references associated
     with the wind plant control and comminication model.
-    '''
-
-    PowerDeviceReference: Optional[CommunicationIEC] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'CommunicationIEC.WindPlantControlCommIECpdr',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
-        'docstring':
-            '''
-            Wind plant communication modules for power device references associated
-            with the wind plant control and comminication model.
-            '''
-
-        })
-    '''
-    Wind plant communication modules for power device references associated
-    with the wind plant control and comminication model.
-    '''
-
-    WindPlantMeasurement: Optional[CommunicationIEC] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'CommunicationIEC.WindPlantControlCommIECwpm',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
-        'docstring':
-            '''
-            Wind plant communication modules for wind plant measurements associated
-            with the wind plant control and comminication model.
-            '''
-
-        })
-    '''
-    Wind plant communication modules for wind plant measurements associated
-    with the wind plant control and comminication model.
-    '''
-
-    WindPlantReference: Optional[CommunicationIEC] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'CommunicationIEC.WindPlantControlCommIECwpr',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
-        'docstring':
-            '''
-            Wind plant communication modules for wind plant references associated with
-            the wind plant control and comminication model.
-            '''
-
-        })
-    '''
-    Wind plant communication modules for wind plant references associated
-    with the wind plant control and comminication model.
-    '''
-
-    WindGridMeasForControl: Optional[WindGridMeasurement] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'WindGridMeasurement.WindPlantControlCommIEC',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
-        'docstring':
-            '''
-            Wind plant grid measurement module associated with the wind plant control
-            and comminication module.
-            '''
-
-        })
-    '''
-    Wind plant grid measurement module associated with the wind plant control
-    and comminication module.
-    '''
-
-    WindPlantDynamics: Optional[WindPlantDynamics2] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'WindPlantDynamics2.WindPlantControlCommIEC',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
-        'docstring':
-            '''
-            The wind plant with which the wind plant control and communication module
-            is associated.
-            '''
-
-        })
-    '''
-    The wind plant with which the wind plant control and communication
-    module is associated.
-    '''
-
-    WindPlantPControlIEC: Optional[WindPlantPControlIEC] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'WindPlantPControlIEC.WindPlantControlCommIEC',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
-        'docstring':
-            '''
-            Wind plant active power control module associated with the wind plant control
-            and communication module.
-            '''
-
-        })
-    '''
-    Wind plant active power control module associated with the wind plant
-    control and communication module.
-    '''
-
-    WindPlantQControlIEC: Optional[WindPlantQControlIEC] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'WindPlantQControlIEC.WindPlantControlCommIEC',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
-        'docstring':
-            '''
-            Wind plant reactive control module associated with the wind plant control
-            and comminication module.
-            '''
-
-        })
-    '''
-    Wind plant reactive control module associated with the wind plant control
-    and comminication module.
     '''
 
     @property
@@ -186275,27 +178383,6 @@ class WindPlantFreqPcontrolIEC(IdentifiedObject):
     power wind plant model.
     '''
 
-    WindPlantIEC: Optional[WindPlantIEC] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'WindPlantIEC.WindPlantFreqPcontrolIEC',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
-        'docstring':
-            '''
-            Wind plant model with which this wind plant frequency and active power
-            control is associated.
-            '''
-
-        })
-    '''
-    Wind plant model with which this wind plant frequency and active power
-    control is associated.
-    '''
-
     @property
     def __namespace__(self):
         return 'http://cim.ucaiug.io/CIM101/draft#'
@@ -186616,27 +178703,6 @@ class WindPlantPControlIEC(IdentifiedObject):
     '''
     All wind dynamics lookup tables associated with this wind plant active
     power control module.
-    '''
-
-    WindPlantControlCommIEC: Optional[WindPlantControlCommIEC] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'WindPlantControlCommIEC.WindPlantPControlIEC',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
-        'docstring':
-            '''
-            Wind plant control and communication module model with which this wind
-            plant active power control module is associated.
-            '''
-
-        })
-    '''
-    Wind plant control and communication module model with which this wind
-    plant active power control module is associated.
     '''
 
     @property
@@ -187067,27 +179133,6 @@ class WindPlantQControlIEC(IdentifiedObject):
     '''
     All wind dynamics lookup tables associated with this wind plant reactive
     power control module.
-    '''
-
-    WindPlantControlCommIEC: Optional[WindPlantControlCommIEC] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'WindPlantControlCommIEC.WindPlantQControlIEC',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
-        'docstring':
-            '''
-            Wind plant control and comminication module with which this wind reactive
-            control module is associated.
-            '''
-
-        })
-    '''
-    Wind plant control and comminication module with which this wind reactive
-    control module is associated.
     '''
 
     @property
@@ -187526,25 +179571,6 @@ class WindPlantReactiveControlIEC(IdentifiedObject):
     power wind plant model.
     '''
 
-    WindPlantIEC: Optional[WindPlantIEC] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'WindPlantIEC.WindPlantReactiveControlIEC',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
-        'docstring':
-            '''
-            Wind plant reactive control model associated with this wind plant.
-            '''
-
-        })
-    '''
-    Wind plant reactive control model associated with this wind plant.
-    '''
-
     @property
     def __namespace__(self):
         return 'http://cim.ucaiug.io/CIM101/draft#'
@@ -187775,48 +179801,6 @@ class WindProtectionIEC(IdentifiedObject):
     model.
     '''
 
-    WindTurbineType1or2IEC: Optional[WindTurbineType1or2IEC] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'WindTurbineType1or2IEC.WindProtectionIEC',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
-        'docstring':
-            '''
-            Wind generator type 1 or type 2 model with which this wind turbine protection
-            model is associated.
-            '''
-
-        })
-    '''
-    Wind generator type 1 or type 2 model with which this wind turbine
-    protection model is associated.
-    '''
-
-    WindTurbineType3or4IEC: Optional[WindTurbineType3or4IEC] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'WindTurbineType3or4IEC.WindProtectionIEC',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
-        'docstring':
-            '''
-            Wind generator type 3 or type 4 model with which this wind turbine protection
-            model is associated.
-            '''
-
-        })
-    '''
-    Wind generator type 3 or type 4 model with which this wind turbine
-    protection model is associated.
-    '''
-
     @property
     def __namespace__(self):
         return 'http://cim.ucaiug.io/CIM101/draft#'
@@ -187979,25 +179963,6 @@ class WindProtectionIEC2(IdentifiedObject):
     protection module is associated.
     '''
 
-    StatcomIEC: Optional[StatcomIEC] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'StatcomIEC.WindProtectionIEC2',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
-        'docstring':
-            '''
-            The statcom model associated with this wind protection module.
-            '''
-
-        })
-    '''
-    The statcom model associated with this wind protection module.
-    '''
-
     WindDynamicsLookupTable2: list[WindDynamicsLookupTable2] = field(
         default_factory=list,
         metadata={
@@ -188016,48 +179981,6 @@ class WindProtectionIEC2(IdentifiedObject):
     '''
     All wind dynamics lookup tables associated with this grid protection
     module.
-    '''
-
-    WindTurbineType1or2IEC2: Optional[WindTurbineType1or2IEC2] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'WindTurbineType1or2IEC2.WindProtectionIEC2',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
-        'docstring':
-            '''
-            Wind generator type 1 or type 2 model with which this wind turbine protection
-            module is associated.
-            '''
-
-        })
-    '''
-    Wind generator type 1 or type 2 model with which this wind turbine
-    protection module is associated.
-    '''
-
-    WindTurbineType3or4IEC2: Optional[WindTurbineType3or4IEC2] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'WindTurbineType3or4IEC2.WindProtectionIEC2',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
-        'docstring':
-            '''
-            Wind generator type 3 or type 4 model with which this wind turbine protection
-            module is associated.
-            '''
-
-        })
-    '''
-    Wind generator type 3 or type 4 model with which this wind turbine
-    protection module is associated.
     '''
 
     @property
@@ -188165,27 +180088,6 @@ class WindRefFrameRotIEC(IdentifiedObject):
     rotation model is associated.
     '''
 
-    WindTurbineType3or4IEC: Optional[WindTurbineType3or4IEC] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'WindTurbineType3or4IEC.WindRefFrameRotIEC',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
-        'docstring':
-            '''
-            Wind turbine type 3 or type 4 model with which this reference frame rotation
-            model is associated.
-            '''
-
-        })
-    '''
-    Wind turbine type 3 or type 4 model with which this reference frame
-    rotation model is associated.
-    '''
-
     @property
     def __namespace__(self):
         return 'http://cim.ucaiug.io/CIM101/draft#'
@@ -188279,27 +180181,6 @@ class WindRefFrameRotIEC2(IdentifiedObject):
         'inverse': 'WindTurbineType3or4IEC2.WindRefFrameRotIEC2',
         'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': True,
-        'docstring':
-            '''
-            Wind turbine type 3 or type 4 model with which this reference frame rotation
-            module is associated.
-            '''
-
-        })
-    '''
-    Wind turbine type 3 or type 4 model with which this reference frame
-    rotation module is associated.
-    '''
-
-    WindTurbineType3or4IEC2: Optional[WindTurbineType3or4IEC2] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'WindTurbineType3or4IEC2.WindRefFrameRotIEC2',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
         'docstring':
             '''
             Wind turbine type 3 or type 4 model with which this reference frame rotation
@@ -189281,25 +181162,6 @@ class MeasurementValueQuality(Identity):
     def __maxOccurs__(self):
         return 'unbounded'
 
-    MeasurementValue: Optional[MeasurementValue] = field(
-        default=None,
-        metadata={
-        'type': 'OfAggregate',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'MeasurementValue.MeasurementValueQuality',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
-        'docstring':
-            '''
-            A MeasurementValue has a MeasurementValueQuality associated with it.
-            '''
-
-        })
-    '''
-    A MeasurementValue has a MeasurementValueQuality associated with it.
-    '''
-
 @dataclass(repr=False)
 class PMUValueQuality(MeasurementValueQuality):
     '''
@@ -190151,25 +182013,6 @@ class Name(Identity):
     Type of this name.
     '''
 
-    NamingAuthority: Optional[NamingAuthority] = field(
-        default=None,
-        metadata={
-        'type': 'NC',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'NamingAuthority.Name',
-        'namespace': 'http://entsoe.eu/ns/nc#',
-        'serialize': True,
-        'docstring':
-            '''
-            Authority responsible for managing this name.
-            '''
-
-        })
-    '''
-    Authority responsible for managing this name.
-    '''
-
     NamingAuthority: Optional[NamingAuthority1] = field(
         default=None,
         metadata={
@@ -190201,44 +182044,6 @@ class Name(Identity):
     @property
     def __maxOccurs__(self):
         return 'unbounded'
-
-    NameType: Optional[NameType] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'NameType.Name',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
-        'docstring':
-            '''
-            Type of this name.
-            '''
-
-        })
-    '''
-    Type of this name.
-    '''
-
-    NamingAuthority: Optional[NamingAuthority] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'NamingAuthority.Name',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
-        'docstring':
-            '''
-            Authority responsible for managing this name.
-            '''
-
-        })
-    '''
-    Authority responsible for managing this name.
-    '''
 
 @stereotype(CIMStereotype.NC)
 @dataclass(repr=False)
@@ -190399,25 +182204,6 @@ class NamingAuthority(Identity):
     Name: list[Name] = field(
         default_factory=list,
         metadata={
-        'type': 'NC',
-        'minOccurs': '0',
-        'maxOccurs': 'unbounded',
-        'inverse': 'Name.NamingAuthority',
-        'namespace': 'http://entsoe.eu/ns/nc#',
-        'serialize': False,
-        'docstring':
-            '''
-            All names managed by this authority.
-            '''
-
-        })
-    '''
-    All names managed by this authority.
-    '''
-
-    Name: list[Name] = field(
-        default_factory=list,
-        metadata={
         'type': 'Association',
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
@@ -190432,25 +182218,6 @@ class NamingAuthority(Identity):
         })
     '''
     All names managed by this authority.
-    '''
-
-    NameType: list[NameType] = field(
-        default_factory=list,
-        metadata={
-        'type': 'Association',
-        'minOccurs': '0',
-        'maxOccurs': 'unbounded',
-        'inverse': 'NameType.NamingAuthority',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
-        'docstring':
-            '''
-            All name types managed by this authority.
-            '''
-
-        })
-    '''
-    All name types managed by this authority.
     '''
 
     NameType: list[NameType] = field(
@@ -190848,25 +182615,6 @@ class ObjectType(Identity):
     IdentifiedObject: list[IdentifiedObject] = field(
         default_factory=list,
         metadata={
-        'type': 'NC',
-        'minOccurs': '0',
-        'maxOccurs': 'unbounded',
-        'inverse': 'IdentifiedObject.ObjectType',
-        'namespace': 'http://entsoe.eu/ns/nc#',
-        'serialize': False,
-        'docstring':
-            '''
-            The IdentifiedObject whose type is identified by ObjectType.
-            '''
-
-        })
-    '''
-    The IdentifiedObject whose type is identified by ObjectType.
-    '''
-
-    IdentifiedObject: list[IdentifiedObject] = field(
-        default_factory=list,
-        metadata={
         'type': 'Association',
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
@@ -191066,40 +182814,6 @@ class PFmode(Identity):
     def __maxOccurs__(self):
         return 'unbounded'
 
-    Delay: Optional[Delay] = field(
-        default=None,
-        metadata={
-        'type': 'informative',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'Delay.PFmode',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
-        'docstring':
-            '''
-            '''
-
-        })
-    '''
-    '''
-
-    VSCtype1: Optional[VSCtype1] = field(
-        default=None,
-        metadata={
-        'type': 'informative',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'VSCtype1.PFmodel',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
-        'docstring':
-            '''
-            '''
-
-        })
-    '''
-    '''
-
 @stereotype(CIMStereotype.GridAPPSD)
 @dataclass(repr=False)
 class PMUStream(Identity):
@@ -191135,23 +182849,6 @@ class PMUStream(Identity):
     @property
     def __maxOccurs__(self):
         return 'unbounded'
-
-    PMU: Optional[PhasorMeasurementUnit] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'PhasorMeasurementUnit.PMUStream',
-        'namespace': 'http://gridappsd.org/CIM/extension#',
-        'serialize': False,
-        'docstring':
-            '''
-            '''
-
-        })
-    '''
-    '''
 
 @dataclass(repr=False)
 class PMUValueConcentration(Identity):
@@ -191418,40 +183115,6 @@ class Pcontrol(Identity):
     @property
     def __maxOccurs__(self):
         return 'unbounded'
-
-    Delay: Optional[Delay] = field(
-        default=None,
-        metadata={
-        'type': 'informative',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'Delay.Pcontrol',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
-        'docstring':
-            '''
-            '''
-
-        })
-    '''
-    '''
-
-    VSCtype1: Optional[VSCtype1] = field(
-        default=None,
-        metadata={
-        'type': 'informative',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'VSCtype1.Pcontrol',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
-        'docstring':
-            '''
-            '''
-
-        })
-    '''
-    '''
 
 @stereotype(CIMStereotype.NC)
 @dataclass(repr=False)
@@ -192258,40 +183921,6 @@ class Qlimiter(Identity):
     def __maxOccurs__(self):
         return 'unbounded'
 
-    Delay: Optional[Delay] = field(
-        default=None,
-        metadata={
-        'type': 'informative',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'Delay.Qlimiter',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
-        'docstring':
-            '''
-            '''
-
-        })
-    '''
-    '''
-
-    VSCtype1: Optional[VSCtype1] = field(
-        default=None,
-        metadata={
-        'type': 'informative',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'VSCtype1.Qlimiter',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
-        'docstring':
-            '''
-            '''
-
-        })
-    '''
-    '''
-
 @stereotype(CIMStereotype.informative)
 @dataclass(repr=False)
 class Qmode(Identity):
@@ -192344,40 +183973,6 @@ class Qmode(Identity):
     @property
     def __maxOccurs__(self):
         return 'unbounded'
-
-    Delay: Optional[Delay] = field(
-        default=None,
-        metadata={
-        'type': 'informative',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'Delay.Qmode',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
-        'docstring':
-            '''
-            '''
-
-        })
-    '''
-    '''
-
-    VSCtype1: Optional[VSCtype1] = field(
-        default=None,
-        metadata={
-        'type': 'informative',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'VSCtype1.Qmode',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
-        'docstring':
-            '''
-            '''
-
-        })
-    '''
-    '''
 
 @stereotype(CIMStereotype.informative)
 @dataclass(repr=False)
@@ -192432,23 +184027,6 @@ class Qregulator(Identity):
     def __maxOccurs__(self):
         return 'unbounded'
 
-    Delay: Optional[Delay] = field(
-        default=None,
-        metadata={
-        'type': 'informative',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'Delay.Qregulator',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
-        'docstring':
-            '''
-            '''
-
-        })
-    '''
-    '''
-
     HVDClookUpTable: list[HVDCLookUpTable] = field(
         default_factory=list,
         metadata={
@@ -192456,23 +184034,6 @@ class Qregulator(Identity):
         'minOccurs': '0',
         'maxOccurs': 'unbounded',
         'inverse': 'HVDCLookUpTable.Qregulator',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
-        'docstring':
-            '''
-            '''
-
-        })
-    '''
-    '''
-
-    VSCtype1: Optional[VSCtype1] = field(
-        default=None,
-        metadata={
-        'type': 'informative',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'VSCtype1.Qregulator',
         'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
         'serialize': False,
         'docstring':
@@ -193580,25 +185141,6 @@ class SvTapStep(StateVariable):
     The tap changer associated with the tap step state.
     '''
 
-    TapChanger: Optional[TapChanger] = field(
-        default=None,
-        metadata={
-        'type': 'Association',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'TapChanger.SvTapStep',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
-        'docstring':
-            '''
-            The tap changer associated with the tap step state.
-            '''
-
-        })
-    '''
-    The tap changer associated with the tap step state.
-    '''
-
     @property
     def __namespace__(self):
         return 'http://cim.ucaiug.io/CIM101/draft#'
@@ -194377,40 +185919,6 @@ class Umode(Identity):
     @property
     def __maxOccurs__(self):
         return 'unbounded'
-
-    Delay: Optional[Delay] = field(
-        default=None,
-        metadata={
-        'type': 'informative',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'Delay.Umode',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
-        'docstring':
-            '''
-            '''
-
-        })
-    '''
-    '''
-
-    VSCtype1: Optional[VSCtype1] = field(
-        default=None,
-        metadata={
-        'type': 'informative',
-        'minOccurs': '0',
-        'maxOccurs': '1',
-        'inverse': 'VSCtype1.Umode',
-        'namespace': 'http://cim.ucaiug.io/CIM101/draft#',
-        'serialize': False,
-        'docstring':
-            '''
-            '''
-
-        })
-    '''
-    '''
 
 @dataclass(repr=False)
 class VDCOL(Identity):
