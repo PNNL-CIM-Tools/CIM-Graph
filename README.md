@@ -45,7 +45,7 @@ CIM-Graph requires a python version >=3.10 and <4. No testing has been done with
 
 Support is currently offered for opening XML, JSON-LD, and CSV files
 
-Support is currently offered for GridAPPS-D, Blazegraph, Neo4J, GraphDB, and json-formatted MySQL databases. More databases will be added in the future.
+Support is currently offered for GridAPPS-D, Blazegraph, Neo4J, GraphDB, and MySQL databases using the CIMTool SQL schema. More databases will be added in the future.
 
 ## Installation
 

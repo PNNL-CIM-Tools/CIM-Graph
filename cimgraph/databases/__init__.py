@@ -317,6 +317,7 @@ from cimgraph.databases.blazegraph import BlazegraphConnection
 from cimgraph.databases.fileparsers import JSONLDFile, XMLFile
 from cimgraph.databases.graphdb import GraphDBConnection
 from cimgraph.databases.gridappsd import GridappsdConnection
+from cimgraph.databases.mysql import MySQLConnection
 from cimgraph.databases.neo4j import Neo4jConnection
 from cimgraph.databases.rdflib import RDFlibConnection
 from cimgraph.databases.sparql_endpoint import SPARQLEndpointConnection
