@@ -321,7 +321,8 @@ Owns: `databases/*` adapters, `queries/*` (after WS1 lands its validation).
   - remove the `cache_clear` calls from constructors;
   - models take the profile from `connection.cim` only.
 
-  See `PROFILE_IDENTITY_0_5_PLAN.md`.
+  See `PROFILE_IDENTITY_0_5_PLAN.md`. The profiles and `Identity` move to the separate
+  `cimprofiles` package in 0.6.0; see `CIMPROFILES_0_6_PLAN.md`.
 - **UUID policy (remaining).** Name-only seeding contradicts CIM #7540: names are freeform, not
   identification. Decide whether `name=` alone should give `uuid4()`.
 - **Public surface.**
