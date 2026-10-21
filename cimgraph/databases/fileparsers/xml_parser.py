@@ -10,7 +10,7 @@ from defusedxml.ElementTree import parse
 
 from cimgraph.core import (get_cim_profile, get_iec61970_552, get_namespace, get_use_units,
                            get_validation_log_level, set_model_scope)
-from cimgraph.data_profile.identity import Identity
+from cimprofiles.identity import Identity, as_uuid
 from cimgraph.databases import ConnectionInterface, Graph, QueryResponse
 from cimgraph.databases.fileparsers.metadata import HEADER_CLASSES, parse_model_header
 
@@ -162,7 +162,7 @@ class XMLFile(ConnectionInterface):
                 uri = element.get(f'{self.rdf}about')
             elif 'ID' in str(element.attrib.keys()):
                 uri = element.get(f'{self.rdf}ID')
-            if subject.uri() in uri:
+            if as_uuid(uri) == subject.identifier:
                 value = element.find(f'.//cim:{predicate}', self.namespaces)
                 results.append(self.parse_value(value, class_type, subject.identifier))
         return results

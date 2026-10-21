@@ -3,6 +3,7 @@ from __future__ import annotations
 from uuid import UUID
 
 from cimgraph.databases import get_iec61970_552, get_namespace, get_url
+from cimgraph.core.serialization import rdf_identifier
 
 
 def get_all_edges_cypher(graph:dict[type, dict[UUID, object]], cim_class: type, uuid_list: list[UUID]) -> str:
@@ -29,7 +30,7 @@ MATCH (n:{class_name})
 WHERE n.uri IN ["""
 
     for uuid in uuid_list:
-        query_message += f'"{split+graph[cim_class][uuid].uri()}", \n'
+        query_message += f'"{split+rdf_identifier(graph[cim_class][uuid])}", \n'
 
     query_message = query_message.rstrip(', \n')
     query_message += f''']
@@ -66,7 +67,7 @@ def get_all_properties_cypher(graph:dict[type, dict[UUID, object]], cim_class: t
     """
 
     for uuid in uuid_list:
-        query_message += f'"{split+graph[cim_class][uuid].uri()}", \n'
+        query_message += f'"{split+rdf_identifier(graph[cim_class][uuid])}", \n'
 
     query_message = query_message.rstrip(', \n')
     query_message += ''']

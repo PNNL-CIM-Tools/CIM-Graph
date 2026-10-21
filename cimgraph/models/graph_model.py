@@ -8,10 +8,9 @@ from types import ModuleType
 from typing import Iterator, TypeVar, cast
 from uuid import UUID
 
-from cimgraph.data_profile.identity import Identity
+from cimprofiles.identity import Identity
 from cimgraph.databases import ConnectionInterface, add_object_to_graph
 from cimgraph.models.incremental_builder import *
-from cimgraph.shacl import SHACLCatalogProcessor, SHACLExportFilter
 
 _log = logging.getLogger(__name__)
 
@@ -382,6 +381,8 @@ class GraphModel():
 
     def export_with_shacl(self, shacl_file: str) -> 'GraphModel':
         """Export a filtered graph based on SHACL permissions"""
+        # Imported here: cimgraph.shacl needs rdflib, the optional `rdflib` extra
+        from cimgraph.shacl import SHACLExportFilter
         export_filter = SHACLExportFilter(shacl_file, self.cim)
         return export_filter.create_filtered_graph(self)
 

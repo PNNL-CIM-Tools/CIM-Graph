@@ -2,8 +2,9 @@ from __future__ import annotations
 
 import logging
 
-import cimgraph.data_profile.cim17v40 as cim
+import cimprofiles.cim17v40 as cim
 from cimgraph.databases import get_iec61970_552, get_namespace, get_url
+from cimgraph.core.serialization import rdf_identifier
 
 _log = logging.getLogger(__name__)
 
@@ -19,7 +20,7 @@ def get_all_nodes_from_container(container: cim.EquipmentContainer) -> str:
     """
 
     try:
-        container_uri = container.uri()
+        container_uri = rdf_identifier(container)
     except:
         container_uri = container.mRID
 
@@ -134,7 +135,7 @@ def get_all_nodes_from_area(area: object) -> str:
 
     area_class = area.__class__.__name__
     try:
-        container_uri = area.uri()
+        container_uri = rdf_identifier(area)
     except:
         container_uri = area.mRID
 

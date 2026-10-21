@@ -8,8 +8,8 @@ from uuid import UUID
 from defusedxml.ElementTree import parse
 
 from cimgraph.core.attribute_utils import field_properties, validate_attr_datatype
-from cimgraph.core.serialization import property_to_xml, rdf_xml_identifiers
-from cimgraph.data_profile.identity import Identity
+from cimgraph.core.serialization import property_to_xml, rdf_id_text, rdf_xml_identifiers
+from cimprofiles.identity import Identity
 from cimgraph.databases import (ConnectionInterface, get_cim_profile, get_iec61970_552,
                                 get_namespace)
 
@@ -298,7 +298,7 @@ def incremantal_row(cim_class:type, uri:str, difference:dict) -> str:
 
     # Difference models refer to existing objects, so always use rdf:about
     _, rdf_resource = rdf_xml_identifiers()
-    row = INDENT*2 + f'<rdf:Description rdf:about="{rdf_resource}{uri}">\n'
+    row = INDENT*2 + f'<rdf:Description rdf:about="{rdf_resource}{rdf_id_text(uri)}">\n'
     for attribute, value in difference.items():
         if attribute not in cim_class.__dataclass_fields__:
             continue

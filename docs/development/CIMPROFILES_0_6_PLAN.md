@@ -1,6 +1,7 @@
 # cimprofiles — splitting the CIM object model out of cim-graph (0.6.0)
 
-**Status:** plan, written 2026-10-19 against `profile_writer` @ d403662. Nothing implemented yet.
+**Status:** steps 1–2 of §8 implemented 2026-10-19 (uncommitted): `CIM-Profiles` `rc1` and
+CIM-Graph `cimprofiles-0.6`. Written against `profile_writer` @ d403662.
 **Goal:** ship the CIM profiles and the I/O-free object model they depend on as a separate PyPI
 package, `cimprofiles`. Profile updates (Sparx EA bug tickets, new profiles) then release on their
 own cycle, separate from cim-graph fixes (XML writer, UUIDs, NMMS API).
@@ -205,13 +206,12 @@ versions are now separate from cim-graph versions.
 
 ## 7. Open decisions
 
-- **Database drivers as extras.** If `cimprofiles` owns the object model, then `cimgraph`
-  without neo4j, mysql-connector, gridappsd-python and SPARQLWrapper is about what CIMGraph-Lite
-  is. We could make them extras (`cimgraph[neo4j]`, `cimgraph[blazegraph]`, ...) and retire
-  Lite instead of syncing it. This is cheapest to do in the same breaking release.
+- **Database drivers as extras: decided, in 0.6.0.** Extras `sparql`, `neo4j`, `mysql`,
+  `gridappsd`, `rdflib` and `all`. `cimgraph.databases` imports each connection on first use
+  and names the extra when its driver is missing. Retiring CIMGraph-Lite is still open.
 - **Stubs or per-package split** for Pylance (§5).
-- **Versioning.** `cimprofiles` follows its own semver, starting at 0.1.0. Until 1.0:
-  - cim-graph pins `cimprofiles>=0.1,<0.2`;
+- **Versioning.** `cimprofiles` follows its own semver, starting at 0.1.0a1. Until 1.0:
+  - cim-graph pins `cimprofiles>=0.1.0a1,<0.2`;
   - changes to the `Identity`/metadata contract ship in lockstep.
 
   At 1.0, loosen the pin to `>=1.0,<2`. From then on, the contract is `cimprofiles` semver:
@@ -221,9 +221,16 @@ versions are now separate from cim-graph versions.
   - `CIMUnit`.
 
   Breaking any of these means a new `cimprofiles` major version.
-- **Do the WS5 UUID policy before or after the move?** Whether `name=` alone should give
-  `uuid4()` (`RELEASE_1_0_PLAN.md`, WS5) is decided in `Identity.uuid()`. If it lands after
-  0.6, it ships as a lockstep release.
+- **Seeded UUIDs: decided, `uuid5` in 0.6.0.** `Random(seed)` labeled as version 4 is replaced
+  by `uuid5(uuid5(NAMESPACE_URL, authority), '<model>+<ClassName>+<mRID>+<name>+<seed>')`
+  (RFC 9562 §5.5; §6.9 says v4 SHOULD come from a CSPRNG). Any language can reproduce it. The
+  namespace is derived from the model authority URI (default
+  `https://github.com/PNNL-CIM-Tools/CIM-Graph`) and equals the `cim:ModelAuthority` identifier.
+  Components are `+`-separated with `%`/`+` escaped, and identifiers are normalized across
+  serializations (rules in the cimprofiles README). This ships in the same 0.6.0 break
+  as the class-in-seed change, so users see one UUID change, not two. Still open: whether
+  `name=` alone should give `uuid4()` (`RELEASE_1_0_PLAN.md`, WS5). If that lands after 0.6,
+  it ships as a lockstep release.
 
 ## 8. Order of work
 

@@ -327,11 +327,32 @@ class ConnectionInterface(ABC):
         add_object_to_graph(graph, obj)
 
 
-from cimgraph.databases.blazegraph import BlazegraphConnection
 from cimgraph.databases.fileparsers import JSONLDFile, XMLFile
-from cimgraph.databases.graphdb import GraphDBConnection
-from cimgraph.databases.gridappsd import GridappsdConnection
-from cimgraph.databases.mysql import MySQLConnection
-from cimgraph.databases.neo4j import Neo4jConnection
-from cimgraph.databases.rdflib import RDFlibConnection
 from cimgraph.databases.sparql_endpoint import SPARQLEndpointConnection
+
+# Connections whose drivers are optional extras, imported on first use:
+# name -> (module, extra that installs its driver)
+_OPTIONAL_CONNECTIONS = {
+    'BlazegraphConnection': ('cimgraph.databases.blazegraph', 'sparql'),
+    'GraphDBConnection': ('cimgraph.databases.graphdb', 'sparql'),
+    'GridappsdConnection': ('cimgraph.databases.gridappsd', 'gridappsd'),
+    'MySQLConnection': ('cimgraph.databases.mysql', 'mysql'),
+    'Neo4jConnection': ('cimgraph.databases.neo4j', 'neo4j'),
+    'RDFlibConnection': ('cimgraph.databases.rdflib', 'rdflib'),
+}
+
+
+def __getattr__(name: str):
+    if name not in _OPTIONAL_CONNECTIONS:
+        raise AttributeError(f'module {__name__!r} has no attribute {name!r}')
+    module_name, extra = _OPTIONAL_CONNECTIONS[name]
+    try:
+        module = importlib.import_module(module_name)
+    except ModuleNotFoundError as error:
+        # Only a missing third-party driver means "install the extra"; a missing
+        # cimgraph or cimprofiles module is a real bug and propagates unchanged.
+        if error.name is None or error.name.split('.')[0] in ('cimgraph', 'cimprofiles'):
+            raise
+        raise ImportError(f'{name} needs {error.name!r}, from the {extra!r} extra: '
+                          f'pip install "cim-graph[{extra}]"') from error
+    return getattr(module, name)

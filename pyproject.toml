@@ -1,6 +1,6 @@
 [project]
 name = "cim-graph"
-version = "0.5.0a12"
+version = "0.6.0a1"
 description = "CIM Graph"
 authors = [
     {name = "A. Anderson", email = "19935503+AAndersn@users.noreply.github.com"},
@@ -21,20 +21,24 @@ classifiers = [
 ]
 
 dependencies = [
+    # CIM profiles, Identity and units; versioned separately (pins loosen at 1.0)
+    "cimprofiles>=0.1.0a1,<0.2",
     "defusedxml>=0.7.1",
-    "SPARQLWrapper>=2.0.0",
-    "neo4j>=5.10.0",
-    "rdflib>=7.0.0",
-    "oxrdflib>=0.3.6",
-    "mysql-connector-python>=9.2.0",
-    "gridappsd-python>=2026.2.1",
-    "nest-asyncio>=1.5.8",
-    "mermaid-python>=0.1",
-    "pint>=0.24.4",
+    # utils.mermaid renders diagrams through mermaid.ink
+    "requests>=2.31",
 ]
 
+# Database drivers, one extra per connection family. XMLFile, JSONLDFile and
+# SPARQLEndpointConnection need none of them.
 [project.optional-dependencies]
+sparql = ["SPARQLWrapper>=2.0.0"]                    # BlazegraphConnection, GraphDBConnection
+neo4j = ["neo4j>=5.10.0", "nest-asyncio>=1.5.8"]     # Neo4jConnection
+mysql = ["mysql-connector-python>=9.2.0"]            # MySQLConnection
+gridappsd = ["gridappsd-python>=2026.2.1"]           # GridappsdConnection
+rdflib = ["rdflib>=7.0.0", "oxrdflib>=0.3.6"]        # RDFlibConnection, cimgraph.shacl
+all = ["cim-graph[sparql,neo4j,mysql,gridappsd,rdflib]"]
 dev = [
+    "cim-graph[all]",
     "pytest>=8.3.5",
     "pre-commit>=2.17.0",
     "graphviz>=0.19.1",
@@ -53,6 +57,11 @@ build-backend = "hatchling.build"
 
 [tool.hatch.build.targets.wheel]
 packages = ["cimgraph"]
+
+# Local development against a CIM-Profiles checkout next to this repo.
+# REMOVE before publishing cim-graph: it must resolve cimprofiles from PyPI.
+[tool.uv.sources]
+cimprofiles = { path = "../CIM-Profiles", editable = true }
 
 [tool.hatch.build.targets.sdist]
 include = [

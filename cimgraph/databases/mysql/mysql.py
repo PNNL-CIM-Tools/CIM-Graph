@@ -7,10 +7,16 @@ from enum import Enum
 import mysql.connector
 
 from cimgraph.core import get_database, get_host, get_password, get_port, get_username
+from cimgraph.core.serialization import mrid_text
 from cimgraph.databases import ConnectionInterface, Graph
 from cimgraph.databases.mysql.schema import SqlSchema, build_schema
 
 _log = logging.getLogger(__name__)
+
+
+def _database_mrid(obj) -> str:
+    """The object's key in the database's "mRID" column, in the CIMG_IEC61970_552 style."""
+    return mrid_text(obj, getattr(obj, 'mRID', None) or obj.uri())
 
 BATCH_SIZE = 100
 
@@ -161,7 +167,7 @@ class MySQLConnection(ConnectionInterface):
         association = self.check_attribute(subject.__class__, predicate)
         if association is None:
             return []
-        return self._load(graph, subject.__class__, {subject.uri(): subject.identifier},
+        return self._load(graph, subject.__class__, {_database_mrid(subject): subject.identifier},
                           expand_graph=True, only_field=association)
 
     # -------------------------------------------------------------------------
@@ -176,7 +182,7 @@ class MySQLConnection(ConnectionInterface):
         if graph is None:
             graph = defaultdict(lambda: defaultdict(dict))
         self.add_to_graph(graph=graph, obj=container)
-        self._add_equipment_and_nodes(graph, 'EquipmentContainer', container.uri())
+        self._add_equipment_and_nodes(graph, 'EquipmentContainer', _database_mrid(container))
         return graph
 
     def create_distributed_graph(self, area: object, graph: Graph = None) -> Graph:
@@ -189,7 +195,7 @@ class MySQLConnection(ConnectionInterface):
         if not isinstance(area, self.cim.SubSchedulingArea):
             raise TypeError('Area object is not a SubSchedulingArea')
         self.add_to_graph(graph=graph, obj=area)
-        self._add_equipment_and_nodes(graph, 'SubSchedulingArea', area.uri())
+        self._add_equipment_and_nodes(graph, 'SubSchedulingArea', _database_mrid(area))
         return graph
 
     def _add_equipment_and_nodes(self, graph: Graph, column: str, mrid: str) -> None:
@@ -244,7 +250,7 @@ class MySQLConnection(ConnectionInterface):
 
     def _identifiers(self, graph: Graph, cim_class: type) -> dict:
         """Map the database mRID of each object of cim_class to its graph identifier."""
-        return {obj.uri(): identifier for identifier, obj in graph[cim_class].items()}
+        return {_database_mrid(obj): identifier for identifier, obj in graph[cim_class].items()}
 
     def _forward_query(self, table: str, batch: list[str]) -> str:
         return f'SELECT * FROM "{table}" WHERE "mRID" IN ({_placeholders(batch)})'

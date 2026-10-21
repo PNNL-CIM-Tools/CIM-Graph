@@ -317,48 +317,93 @@ wheels = [
 
 [[package]]
 name = "cim-graph"
-version = "0.5.0a12"
+version = "0.6.0a1"
 source = { editable = "." }
 dependencies = [
+    { name = "cimprofiles" },
     { name = "defusedxml" },
+    { name = "requests" },
+]
+
+[package.optional-dependencies]
+all = [
     { name = "gridappsd-python" },
-    { name = "mermaid-python" },
     { name = "mysql-connector-python" },
     { name = "neo4j" },
     { name = "nest-asyncio" },
     { name = "oxrdflib" },
-    { name = "pint", version = "0.24.4", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version < '3.11'" },
-    { name = "pint", version = "0.25.3", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version >= '3.11'" },
     { name = "rdflib" },
     { name = "sparqlwrapper" },
 ]
-
-[package.optional-dependencies]
 dev = [
     { name = "graphviz" },
+    { name = "gridappsd-python" },
     { name = "ipykernel" },
+    { name = "mysql-connector-python" },
+    { name = "neo4j" },
+    { name = "nest-asyncio" },
+    { name = "oxrdflib" },
     { name = "pre-commit" },
     { name = "pytest" },
+    { name = "rdflib" },
+    { name = "sparqlwrapper" },
+]
+gridappsd = [
+    { name = "gridappsd-python" },
+]
+mysql = [
+    { name = "mysql-connector-python" },
+]
+neo4j = [
+    { name = "neo4j" },
+    { name = "nest-asyncio" },
+]
+rdflib = [
+    { name = "oxrdflib" },
+    { name = "rdflib" },
+]
+sparql = [
+    { name = "sparqlwrapper" },
 ]
 
 [package.metadata]
 requires-dist = [
+    { name = "cim-graph", extras = ["all"], marker = "extra == 'dev'" },
+    { name = "cim-graph", extras = ["sparql", "neo4j", "mysql", "gridappsd", "rdflib"], marker = "extra == 'all'" },
+    { name = "cimprofiles", editable = "../CIM-Profiles" },
     { name = "defusedxml", specifier = ">=0.7.1" },
     { name = "graphviz", marker = "extra == 'dev'", specifier = ">=0.19.1" },
-    { name = "gridappsd-python", specifier = ">=2026.2.1" },
+    { name = "gridappsd-python", marker = "extra == 'gridappsd'", specifier = ">=2026.2.1" },
     { name = "ipykernel", marker = "extra == 'dev'", specifier = ">=6.27.1" },
-    { name = "mermaid-python", specifier = ">=0.1" },
-    { name = "mysql-connector-python", specifier = ">=9.2.0" },
-    { name = "neo4j", specifier = ">=5.10.0" },
-    { name = "nest-asyncio", specifier = ">=1.5.8" },
-    { name = "oxrdflib", specifier = ">=0.3.6" },
-    { name = "pint", specifier = ">=0.24.4" },
+    { name = "mysql-connector-python", marker = "extra == 'mysql'", specifier = ">=9.2.0" },
+    { name = "neo4j", marker = "extra == 'neo4j'", specifier = ">=5.10.0" },
+    { name = "nest-asyncio", marker = "extra == 'neo4j'", specifier = ">=1.5.8" },
+    { name = "oxrdflib", marker = "extra == 'rdflib'", specifier = ">=0.3.6" },
     { name = "pre-commit", marker = "extra == 'dev'", specifier = ">=2.17.0" },
     { name = "pytest", marker = "extra == 'dev'", specifier = ">=8.3.5" },
-    { name = "rdflib", specifier = ">=7.0.0" },
-    { name = "sparqlwrapper", specifier = ">=2.0.0" },
+    { name = "rdflib", marker = "extra == 'rdflib'", specifier = ">=7.0.0" },
+    { name = "requests", specifier = ">=2.31" },
+    { name = "sparqlwrapper", marker = "extra == 'sparql'", specifier = ">=2.0.0" },
 ]
-provides-extras = ["dev"]
+provides-extras = ["sparql", "neo4j", "mysql", "gridappsd", "rdflib", "all", "dev"]
+
+[[package]]
+name = "cimprofiles"
+version = "0.1.0a1"
+source = { editable = "../CIM-Profiles" }
+dependencies = [
+    { name = "pint", version = "0.24.4", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version < '3.11'" },
+    { name = "pint", version = "0.25.3", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version >= '3.11'" },
+]
+
+[package.metadata]
+requires-dist = [{ name = "pint", specifier = ">=0.24.4" }]
+
+[package.metadata.requires-dev]
+dev = [
+    { name = "pytest", specifier = ">=8.3.5" },
+    { name = "pyyaml", specifier = ">=6.0" },
+]
 
 [[package]]
 name = "colorama"
@@ -725,19 +770,6 @@ dependencies = [
 sdist = { url = "https://files.pythonhosted.org/packages/bd/c0/9f7c9a46090390368a4d7bcb76bb87a4a36c421e4c0792cdb53486ffac7a/matplotlib_inline-0.2.2.tar.gz", hash = "sha256:72f3fe8fce36b70d4a5b612f899090cd0401deddc4ea90e1572b9f4bfb058c79", size = 8150, upload-time = "2026-05-08T17:33:33.49Z" }
 wheels = [
     { url = "https://files.pythonhosted.org/packages/41/09/5b161152e2d90f7b87f781c2e1267494aef9c32498df793f73ad0a0a494a/matplotlib_inline-0.2.2-py3-none-any.whl", hash = "sha256:3c821cf1c209f59fb2d2d64abbf5b23b67bcb2210d663f9918dd851c6da1fcf6", size = 9534, upload-time = "2026-05-08T17:33:32.055Z" },
-]
-
-[[package]]
-name = "mermaid-python"
-version = "0.1"
-source = { registry = "https://pypi.org/simple" }
-dependencies = [
-    { name = "ipython", version = "8.39.0", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version < '3.11'" },
-    { name = "ipython", version = "9.16.1", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version >= '3.11'" },
-]
-sdist = { url = "https://files.pythonhosted.org/packages/c4/db/2ec1a0ce2a8d7a1b5be13ce8f8daec54a9866529151b5a904c5e2c634a12/mermaid-python-0.1.tar.gz", hash = "sha256:0d9e4d90d7487453760bdb09b7722a6c5a333c6b76479171df3abc6311d53830", size = 2831, upload-time = "2023-04-28T06:02:24.261Z" }
-wheels = [
-    { url = "https://files.pythonhosted.org/packages/46/0b/dc6f1d684ab5d9c9061777afa5f428d4d7b8d91f660f7da50395fecc2b5b/mermaid_python-0.1-py3-none-any.whl", hash = "sha256:8c92ae677a44d4e1cf4e6abbdde29046c56da647dfcb4e910eb3f9230847c16d", size = 3209, upload-time = "2023-04-28T06:02:16.575Z" },
 ]
 
 [[package]]

@@ -2,7 +2,7 @@ import os
 import unittest
 from uuid import UUID
 
-import cimgraph.data_profile.cimhub_2023 as cim
+import cimprofiles.cimhub_2023 as cim
 from cimgraph import utils
 from cimgraph.databases import BlazegraphConnection
 from cimgraph.models import FeederModel
@@ -105,8 +105,8 @@ class TestBlazegraphSETO(unittest.TestCase):
         from cimgraph.core.env_vars import get_cim_profile
 
         os.environ['CIMG_CIM_PROFILE'] = (
-            'cimgraph.data_profile.cim18gmdm.connectivity,'
-            'cimgraph.data_profile.cim18gmdm.electrical'
+            'cimprofiles.cim18gmdm.connectivity,'
+            'cimprofiles.cim18gmdm.electrical'
         )
         database = BlazegraphConnection()
         _, merged = get_cim_profile()

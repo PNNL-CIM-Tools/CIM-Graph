@@ -3,6 +3,7 @@ from __future__ import annotations
 from uuid import UUID
 
 from cimgraph.databases import get_iec61970_552, get_url
+from cimgraph.core.serialization import rdf_identifier
 
 
 def get_triple_cypher(subject:object, attribute:str) -> str:
@@ -22,7 +23,7 @@ def get_triple_cypher(subject:object, attribute:str) -> str:
         split = f'{get_url()}#'
 
     query_message = f'''MATCH (n:{subject.__class__.__name__})
-WHERE n.uri = "{split+subject.uri()}"
+WHERE n.uri = "{split+rdf_identifier(subject)}"
 OPTIONAL MATCH (n) - [:`{attribute}`] - (m)
 RETURN DISTINCT
 n.uri as identifier,

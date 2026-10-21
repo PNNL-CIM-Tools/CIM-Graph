@@ -25,12 +25,14 @@ To install CIMantic Graphs, clone the github repository or use pip install:
 
 ```bash
 pip install cim-graph
+# database drivers are extras, e.g.:
+pip install "cim-graph[sparql]"
 ```
 
 ## Quick Start
 
 ```python
-import cimgraph.data_profile.cim17v40 as cim
+import cimprofiles.cim17v40 as cim
 from cimgraph.databases.blazegraph import BlazegraphConnection
 from cimgraph.models import FeederModel
 

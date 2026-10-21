@@ -5,7 +5,7 @@ from typing import TYPE_CHECKING
 from xml.sax.saxutils import escape
 
 from cimgraph.core.serialization import (DEFAULT_NAMESPACES, RDF_XML_CLOSE, object_to_xml,
-                                         rdf_xml_identifiers, rdf_xml_open)
+                                         rdf_id_text, rdf_xml_identifiers, rdf_xml_open)
 from cimgraph.utils.model_header import model_header
 
 if TYPE_CHECKING:
@@ -19,13 +19,13 @@ def _model_header_xml() -> str:
     rdf_about, _ = rdf_xml_identifiers()
     header = model_header()
     authority = escape(header['authority'])
-    xml = f'<md:FullModel {rdf_about}{header["full_model_uuid"]}">\n'
+    xml = f'<md:FullModel {rdf_about}{rdf_id_text(header["full_model_uuid"])}">\n'
     xml += f'  <md:Model.created>{header["created"]}</md:Model.created>\n'
     if header['model_name']:
         xml += f'  <md:Model.description>{escape(header["model_name"])}</md:Model.description>\n'
     xml += f'  <md:Model.modelingAuthoritySet>{authority}</md:Model.modelingAuthoritySet>\n'
     xml += '</md:FullModel>\n'
-    xml += f'<cim:ModelAuthority {rdf_about}{header["authority_uuid"]}">\n'
+    xml += f'<cim:ModelAuthority {rdf_about}{rdf_id_text(header["authority_uuid"])}">\n'
     xml += f'  <cim:IdentifiedObject.name>{authority}</cim:IdentifiedObject.name>\n'
     xml += '</cim:ModelAuthority>\n'
     return xml

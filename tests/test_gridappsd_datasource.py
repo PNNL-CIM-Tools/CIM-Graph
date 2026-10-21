@@ -58,7 +58,7 @@ class TestGridappsdDatasource(unittest.TestCase):
 
     def test_connection_established(self):
         # Overwrite for this test the profile.
-        import cimgraph.data_profile.cim17v40 as cim
+        import cimprofiles.cim17v40 as cim
         from cimgraph.models import FeederModel
         os.environ['CIMG_CIM_PROFILE'] = 'cim17v40'
 

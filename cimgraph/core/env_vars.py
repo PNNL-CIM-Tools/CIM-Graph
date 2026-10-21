@@ -5,6 +5,12 @@ import types
 import warnings
 from functools import cache
 
+# The model-scope getters live in cimprofiles because Identity reads them. Import, never copy:
+# set_model_scope() must clear the same @cache that Identity uses.
+from cimprofiles.env_vars import (DEFAULT_MODEL_AUTHORITY, DEFAULT_MODEL_NAME,
+                                  DEFAULT_VALIDATION_LOG_LEVEL, get_model_authority,
+                                  get_model_name, get_validation_log_level)
+
 _log = logging.getLogger(__name__)
 
 # Memo for merged modules: spec string → ModuleType.
@@ -21,15 +27,26 @@ DEFAULT_USERNAME = 'system'
 DEFAULT_PASSWORD = 'manager'
 DEFAULT_IEC61970_301 = 8
 DEFAULT_IEC61970_552 = '552-NEW'
+IEC61970_552_STYLES = ('552-NEW', '552-LEGACY', 'CGMES')
 DEFAULT_USE_UNITS = 'false'
-DEFAULT_VALIDATION_LOG_LEVEL = 'WARNING'
 DEFAULT_ALLOW_UNDEFINED_ATTRIBUTES = 'false'
-DEFAULT_MODEL_AUTHORITY = 'CIManticGraphs'
-DEFAULT_MODEL_NAME = ''
+
+_LEGACY_PROFILE_PREFIX = 'cimgraph.data_profile.'
 
 
 def _qualify(path: str) -> str:
-    return path if '.' in path else 'cimgraph.data_profile.' + path
+    """
+    Returns the full module path of a profile. A bare name gets the cimprofiles
+    prefix. The pre-0.6 prefix is rewritten, so both spellings give the same
+    module and the same merge-memo key (otherwise the two spellings would build
+    two sets of merged classes whose objects miss each other's graph keys).
+    """
+    if path.startswith(_LEGACY_PROFILE_PREFIX):
+        warnings.warn(f'CIMG_CIM_PROFILE path {path!r} is deprecated; '
+                      f'use {"cimprofiles." + path[len(_LEGACY_PROFILE_PREFIX):]!r}',
+                      DeprecationWarning, stacklevel=3)
+        return 'cimprofiles.' + path[len(_LEGACY_PROFILE_PREFIX):]
+    return path if '.' in path else 'cimprofiles.' + path
 
 
 @cache
@@ -37,9 +54,12 @@ def get_cim_profile() -> tuple[str, types.ModuleType]:
     """Return (cim_profile_str, cim_module) for the active CIM profile.
 
     CIMG_CIM_PROFILE may be:
-    - A single module path: 'cimhub_2023' or 'cimgraph.data_profile.cimhub_2023'
+    - A single module path: 'cimhub_2023' or 'cimprofiles.cimhub_2023'
     - A comma-separated list of sub-profile paths that are merged at runtime:
-      'cimgraph.data_profile.cim18gmdm.connectivity,cimgraph.data_profile.cim18gmdm.electrical'
+      'cimprofiles.cim18gmdm.connectivity,cimprofiles.cim18gmdm.electrical'
+
+    The pre-0.6 'cimgraph.data_profile.' prefix is still accepted and rewritten
+    to 'cimprofiles.'.
 
     Merged modules are memoised in _merge_memo (not in the @cache) so that the
     same spec string always returns the same module object even when cache_clear()
@@ -49,17 +69,17 @@ def get_cim_profile() -> tuple[str, types.ModuleType]:
     if cim_profile is None:
         raise ValueError('CIMG_CIM_PROFILE environment variable is not set.')
 
-    parts = [p.strip() for p in cim_profile.split(',') if p.strip()]
+    parts = [_qualify(p.strip()) for p in cim_profile.split(',') if p.strip()]
 
     if len(parts) == 1:
-        cim = importlib.import_module(_qualify(parts[0]))
+        cim = importlib.import_module(parts[0])
         return cim_profile, cim
 
     # Comma-spec: build or retrieve a merged module.
     spec_key = ','.join(parts)
     if spec_key not in _merge_memo:
-        from cimgraph.data_profile.merge import merge_profiles
-        mods = [importlib.import_module(_qualify(p)) for p in parts]
+        from cimprofiles.merge import merge_profiles
+        mods = [importlib.import_module(p) for p in parts]
         _merge_memo[spec_key] = merge_profiles(*mods)
     return spec_key, _merge_memo[spec_key]
 
@@ -84,15 +104,18 @@ def get_iec61970_552() -> str:
     Reads ``CIMG_IEC61970_552`` (preferred) or the legacy ``CIMG_IEC61970_301``.
 
     Returns:
-        ``'552-NEW'``    — use ``rdf:about=urn:uuid:`` (IEC 61970-552 ed. 2, default)
-        ``'552-LEGACY'`` — use ``rdf:ID=_`` (IEC 61970-552 ed. 1)
+        ``'552-NEW'``    — ``rdf:about="urn:uuid:<uuid>"``, mRID ``<uuid>`` (IEC 61970-552 ed. 2,
+        default)
+        ``'552-LEGACY'`` — ``rdf:ID="_<uuid>"``, references ``#_<uuid>``, mRID ``_<uuid>``
+        (IEC 61970-552 ed. 1)
+        ``'CGMES'``      — ``rdf:ID="_<uuid>"``, references ``#_<uuid>``, mRID ``<uuid>``
     """
     val = os.getenv('CIMG_IEC61970_552')
     if val is not None:
         val = val.strip()
-        if val not in ('552-NEW', '552-LEGACY'):
+        if val not in IEC61970_552_STYLES:
             raise ValueError(
-                f"CIMG_IEC61970_552 must be '552-NEW' or '552-LEGACY', got {val!r}"
+                f'CIMG_IEC61970_552 must be one of {IEC61970_552_STYLES}, got {val!r}'
             )
         return val
 
@@ -218,17 +241,6 @@ def get_port() -> int:
     return int(port)
 
 @cache
-def get_validation_log_level() -> str:
-    '''
-    Returns the log level used for validation warnings
-    Returns:
-        log_level: str
-    '''
-    log_level = getattr(logging, os.environ.get('CIMG_VALIDATION_LOG_LEVEL',
-                        DEFAULT_VALIDATION_LOG_LEVEL).upper(), logging.WARNING)
-    return log_level
-
-@cache
 def get_undefined_handling() -> str:
     '''
     Returns the log level used for validation warnings
@@ -238,24 +250,6 @@ def get_undefined_handling() -> str:
     handling = os.environ.get('CIMG_ALLOW_UNDEFINED_ATTRIBUTES',
                         DEFAULT_ALLOW_UNDEFINED_ATTRIBUTES)
     return handling.lower() == 'true'
-
-@cache
-def get_model_authority() -> str:
-    """
-    Returns the model authority (e.g. a utility) mixed into seeded UUIDs so that
-    identical names under different authorities get different deterministic UUIDs.
-    Defaults to CIManticGraphs if CIMG_MODEL_AUTHORITY is not set, so seeded UUIDs
-    are the same on every machine.
-    """
-    return os.getenv('CIMG_MODEL_AUTHORITY', DEFAULT_MODEL_AUTHORITY)
-
-@cache
-def get_model_name() -> str:
-    """
-    Returns the stable model identifier (e.g. a feeder) within the model authority
-    that is mixed into seeded UUIDs. Defaults to an empty string.
-    """
-    return os.getenv('CIMG_MODEL_NAME', DEFAULT_MODEL_NAME)
 
 def set_model_scope(authority: str, model_name: str) -> None:
     """

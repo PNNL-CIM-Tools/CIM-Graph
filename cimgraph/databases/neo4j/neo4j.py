@@ -10,7 +10,7 @@ import nest_asyncio
 from neo4j import AsyncGraphDatabase, GraphDatabase
 from neo4j.exceptions import DriverError, Neo4jError
 
-import cimgraph.data_profile.cimhub_2023 as cim
+import cimprofiles.cimhub_2023 as cim
 import cimgraph.queries.cypher as cypher
 from cimgraph.core import (get_cim_profile, get_database, get_iec61970_552, get_namespace,
                            get_password, get_url, get_username)

@@ -1,13 +1,13 @@
 import base64
 import enum
 import logging
+import sys
 from dataclasses import Field, fields, is_dataclass
 
 import requests
 
-import cimgraph
-from cimgraph.data_profile.identity import Identity
-from cimgraph.data_profile.units import CIMUnit
+from cimprofiles.identity import Identity
+from cimprofiles.units import CIMUnit
 
 _log = logging.getLogger(__name__)
 
@@ -320,7 +320,7 @@ def get_mermaid(root: object | type | list, show_attributes: bool = True, show_i
                 for attr in value.__annotations__:
                     try:
                         next_class_name = _inner_type(value.__annotations__[attr])
-                        next_class = eval(f'{value.__module__}.{next_class_name}')
+                        next_class = getattr(sys.modules[value.__module__], next_class_name)
                         if next_class in root:
                             mermaid += class_assc_mermaid(value, attr, serialize_only=serialize_only)
                     except Exception:
@@ -386,7 +386,7 @@ def add_class_path_mermaid(root: type, path: str | list[str], mermaid: str,
         else:
             mermaid += class_assc_mermaid(edge, attr, serialize_only=serialize_only)
             next_class_name = _inner_type(edge.__dataclass_fields__[attr].type)
-            next_class = eval(f'{edge.__module__}.{next_class_name}')
+            next_class = getattr(sys.modules[edge.__module__], next_class_name)
         mermaid += class_mermaid(next_class, show_attributes, show_inherited,
                                  serialize_only=serialize_only)
         edge = next_class

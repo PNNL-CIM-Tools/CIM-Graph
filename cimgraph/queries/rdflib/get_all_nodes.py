@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 from cimgraph.databases import get_iec61970_552, get_namespace, get_url
+from cimgraph.core.serialization import rdf_identifier
 
 
 def get_all_nodes_sparql(container: object) -> str:
@@ -16,7 +17,7 @@ def get_all_nodes_sparql(container: object) -> str:
     namespace = get_namespace()
 
     try:
-        container_uri = container.uri()
+        container_uri = rdf_identifier(container)
     except:
         container_uri = container.mRID
 

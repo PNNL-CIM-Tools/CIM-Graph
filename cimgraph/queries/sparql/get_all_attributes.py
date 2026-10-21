@@ -3,6 +3,7 @@ from __future__ import annotations
 from uuid import UUID
 
 from cimgraph.databases import get_iec61970_552, get_namespace, get_url
+from cimgraph.core.serialization import rdf_identifier
 
 
 def get_all_attributes_sparql(graph:dict[type, dict[UUID, object]], cim_class: str, uuid_list: list[UUID]) -> str:
@@ -35,7 +36,7 @@ def get_all_attributes_sparql(graph:dict[type, dict[UUID, object]], cim_class: s
     VALUES ?identifier {"""
     # add all equipment mRID
     for uuid in uuid_list:
-        query_message += ' "%s" \n' % graph[cim_class][uuid].uri()
+        query_message += ' "%s" \n' % rdf_identifier(graph[cim_class][uuid])
     query_message += '               }'
     query_message += f'''
         bind(iri(concat("{split}", ?identifier)) as ?eq)'''

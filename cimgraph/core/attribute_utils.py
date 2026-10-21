@@ -7,7 +7,7 @@ from enum import Enum
 from functools import cache
 from typing import Any, Iterator, NamedTuple
 
-from cimgraph.data_profile.units import CIMUnit
+from cimprofiles.units import CIMUnit
 
 _log = logging.getLogger(__name__)
 
