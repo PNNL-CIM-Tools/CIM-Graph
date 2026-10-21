@@ -2,7 +2,7 @@ import os
 import unittest
 from uuid import UUID
 
-import cimprofiles.cimhub_2023 as cim
+import cimprofiles.cim17.cimhub_2023 as cim
 from cimgraph import utils
 from cimgraph.databases import JSONLDFile
 from cimgraph.models import FeederModel

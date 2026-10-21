@@ -83,7 +83,7 @@ Point to a module under `cimprofiles`:
 ```bash
 export CIMG_CIM_PROFILE="cimhub_2023"
 # or fully-qualified:
-export CIMG_CIM_PROFILE="cimprofiles.cimhub_2023"
+export CIMG_CIM_PROFILE="cimprofiles.cim17.cimhub_2023"
 ```
 
 The pre-0.6 prefix (`cimgraph.data_profile.cimhub_2023`) still works, with a `DeprecationWarning`.
@@ -95,9 +95,9 @@ module that contains the **union of all classes and fields** across every listed
 hand-maintained canonical file is required.
 
 ```bash
-export CIMG_CIM_PROFILE="cimprofiles.cim18gmdm.connectivity,\
-cimprofiles.cim18gmdm.electrical,\
-cimprofiles.cim18gmdm.asset"
+export CIMG_CIM_PROFILE="cimprofiles.cim18.cim18gmdm.connectivity,\
+cimprofiles.cim18.cim18gmdm.electrical,\
+cimprofiles.cim18.cim18gmdm.asset"
 ```
 
 After setting the variable, the rest of your code is unchanged:

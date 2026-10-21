@@ -1,7 +1,7 @@
 import unittest
 from uuid import uuid4
 
-import cimprofiles.cimhub_2023 as cim
+import cimprofiles.cim17.cimhub_2023 as cim
 from cimgraph.core.attribute_utils import diff_attributes
 from cimgraph.databases import add_object_to_graph
 
@@ -50,7 +50,7 @@ class TestIdentityEquality(unittest.TestCase):
         self.assertNotEqual(cim.Voltage(1, 'kV'), cim.Voltage(1, 'V'))
 
     def test_merged_profile_classes_use_identity_equality(self):
-        from cimprofiles.cim18gmdm import connectivity, electrical
+        from cimprofiles.cim18.cim18gmdm import connectivity, electrical
         from cimprofiles.merge import merge_profiles
         merged = merge_profiles(connectivity, electrical)
         identifier = uuid4()

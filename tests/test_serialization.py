@@ -1,7 +1,7 @@
 import unittest
 import xml.etree.ElementTree as ElementTree
 
-import cimprofiles.cimhub_2023 as cim
+import cimprofiles.cim17.cimhub_2023 as cim
 from cimgraph.core import object_to_json_ld, object_to_sparql_triples, object_to_xml
 from cimgraph.core.serialization import RDF_XML_CLOSE, rdf_xml_open
 from cimgraph.queries.sparql import upload_triples_sparql

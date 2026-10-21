@@ -8,16 +8,21 @@ The CIM profiles and the object model they are built on (`Identity`, `CIMUnit`, 
 now ship as the separate [`cimprofiles`](https://github.com/PNNL-CIM-Tools/CIM-Profiles) package,
 released on its own cycle. cim-graph depends on it, so nothing extra needs installing.
 
-- New imports: `import cimprofiles.cimhub_2026 as cim`, `from cimprofiles.identity import Identity`.
+- New imports: `import cimprofiles.cim18.cimhub_2026 as cim`, `from cimprofiles.identity import Identity`.
+- Profiles are grouped by CIM version: `cimprofiles.cim16.cim16v33`, `cimprofiles.cim17.cim17v40`,
+  `cimprofiles.cim17.cimhub_2023`, `cimprofiles.cim18.cimhub_2026`, ... The GridAPPS-D
+  `rc4_2021` profile is `cimprofiles.cim17.gridappsd_rc4_2021`.
 - **The old `cimgraph.data_profile.*` imports still work, with a `DeprecationWarning`:**
   - `cimgraph.data_profile.identity`, `.units` and `.merge` are aliases of the `cimprofiles`
     modules (the same module objects), and stay for all of 1.x.
   - The profile packages (`cimgraph.data_profile.cim17v40` etc.) re-export `cimprofiles` and are
     removed in 1.0.
 - `CIMG_CIM_PROFILE`:
-  - A bare name (`cimhub_2026`) now resolves to `cimprofiles.cimhub_2026`.
-  - The old `cimgraph.data_profile.` prefix is rewritten to `cimprofiles.`, with a
-    `DeprecationWarning`. Both spellings give the same module and the same merged classes.
+  - A short name (`cimhub_2026`, `cim18gmdm.connectivity`) resolves through
+    `cimprofiles.PROFILE_PACKAGES`, so `cimhub_2026` is `cimprofiles.cim18.cimhub_2026`. An
+    unknown name raises a `ValueError` listing the known ones.
+  - The old `cimgraph.data_profile.<name>` paths resolve the same way, with a
+    `DeprecationWarning`. Every spelling gives the same module and the same merged classes.
 - `get_model_authority`, `get_model_name` and `get_validation_log_level` are defined in
   `cimprofiles.env_vars`; `cimgraph.core` re-exports them.
 - The profile build tools moved with the profiles: `python -m cimprofiles.build_merged_profiles`
@@ -58,6 +63,12 @@ All of these change UUIDs or comparisons that existing code may rely on:
     `rdf:ID`/`rdf:about` stands in for the mRID when none is given (it used to be appended
     twice). The mRID is normalized, so `rdf:ID="_LINE1"`, `rdf:about="#_LINE1"` and
     `mRID="LINE1"` give the same UUID.
+  - Read from a file, the `rdf:ID`/`rdf:about` is the UUID and the name is not used. One that is
+    not a UUID is replaced, with a warning, by the UUID seeded from it, so reading the file again
+    gives the same UUIDs, and is kept as the mRID. Built objects are seeded from their mRID and
+    name, so renaming an object (bus 300 to bus 301) makes it a new object with a new UUID.
+  - Readers key the graph by that identifier (`cimprofiles.identity.read_identifier`) also for
+    non-UUID IDs. They used the raw string, so `graph[cls][obj.identifier]` missed such objects.
   - An empty mRID or blank name no longer seeds with the class alone, which gave every such
     object of a class the same UUID; those objects now get random UUIDs.
   - A UUID is recognized in every serialization (`urn:uuid:…`, `#_…`, `_…`); `#_<uuid>`

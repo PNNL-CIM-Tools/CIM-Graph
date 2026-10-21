@@ -5,6 +5,7 @@ import types
 import warnings
 from functools import cache
 
+from cimprofiles import profile_module
 # The model-scope getters live in cimprofiles because Identity reads them. Import, never copy:
 # set_model_scope() must clear the same @cache that Identity uses.
 from cimprofiles.env_vars import (DEFAULT_MODEL_AUTHORITY, DEFAULT_MODEL_NAME,
@@ -36,17 +37,21 @@ _LEGACY_PROFILE_PREFIX = 'cimgraph.data_profile.'
 
 def _qualify(path: str) -> str:
     """
-    Returns the full module path of a profile. A bare name gets the cimprofiles
-    prefix. The pre-0.6 prefix is rewritten, so both spellings give the same
-    module and the same merge-memo key (otherwise the two spellings would build
-    two sets of merged classes whose objects miss each other's graph keys).
+    Returns the full module path of a profile. A short name, optionally with a
+    sub-profile ('cimhub_2023', 'cim18gmdm.connectivity'), is looked up in
+    cimprofiles.PROFILE_PACKAGES, and so is a pre-0.6 'cimgraph.data_profile.' path,
+    so every spelling gives the same module and the same merge-memo key (otherwise
+    two spellings would build two sets of merged classes whose objects miss each
+    other's graph keys).
     """
+    if path.startswith('cimprofiles.'):
+        return path
     if path.startswith(_LEGACY_PROFILE_PREFIX):
-        warnings.warn(f'CIMG_CIM_PROFILE path {path!r} is deprecated; '
-                      f'use {"cimprofiles." + path[len(_LEGACY_PROFILE_PREFIX):]!r}',
+        qualified = profile_module(path[len(_LEGACY_PROFILE_PREFIX):])
+        warnings.warn(f'CIMG_CIM_PROFILE path {path!r} is deprecated; use {qualified!r}',
                       DeprecationWarning, stacklevel=3)
-        return 'cimprofiles.' + path[len(_LEGACY_PROFILE_PREFIX):]
-    return path if '.' in path else 'cimprofiles.' + path
+        return qualified
+    return profile_module(path)
 
 
 @cache
@@ -54,12 +59,11 @@ def get_cim_profile() -> tuple[str, types.ModuleType]:
     """Return (cim_profile_str, cim_module) for the active CIM profile.
 
     CIMG_CIM_PROFILE may be:
-    - A single module path: 'cimhub_2023' or 'cimprofiles.cimhub_2023'
-    - A comma-separated list of sub-profile paths that are merged at runtime:
-      'cimprofiles.cim18gmdm.connectivity,cimprofiles.cim18gmdm.electrical'
+    - A single profile: 'cimhub_2023' or 'cimprofiles.cim17.cimhub_2023'
+    - A comma-separated list of sub-profiles that are merged at runtime:
+      'cim18gmdm.connectivity,cim18gmdm.electrical'
 
-    The pre-0.6 'cimgraph.data_profile.' prefix is still accepted and rewritten
-    to 'cimprofiles.'.
+    The pre-0.6 'cimgraph.data_profile.' paths are still accepted.
 
     Merged modules are memoised in _merge_memo (not in the @cache) so that the
     same spec string always returns the same module object even when cache_clear()

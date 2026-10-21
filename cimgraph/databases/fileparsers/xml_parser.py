@@ -4,13 +4,12 @@ import logging
 import re
 from collections import defaultdict
 from pathlib import Path
-from uuid import UUID
 
 from defusedxml.ElementTree import parse
 
 from cimgraph.core import (get_cim_profile, get_iec61970_552, get_namespace, get_use_units,
                            get_validation_log_level, set_model_scope)
-from cimprofiles.identity import Identity, as_uuid
+from cimprofiles.identity import Identity, read_identifier
 from cimgraph.databases import ConnectionInterface, Graph, QueryResponse
 from cimgraph.databases.fileparsers.metadata import HEADER_CLASSES, parse_model_header
 
@@ -70,7 +69,9 @@ class XMLFile(ConnectionInterface):
             self.root = self.roots[0] if self.roots else None
             if not self.roots:
                 _log.warning('No files could be parsed. Defaulting to empty network graph')
-            self.class_index = {}
+            # rdf:ID/rdf:about text -> object read with it, so edges in a later pass
+            # get the identifier each object got under its own part's model scope
+            self.object_index = {}
             self.graph = defaultdict(lambda: defaultdict(dict))
         else:
             raise ValueError('filename or metadata must be specified')
@@ -162,7 +163,7 @@ class XMLFile(ConnectionInterface):
                 uri = element.get(f'{self.rdf}about')
             elif 'ID' in str(element.attrib.keys()):
                 uri = element.get(f'{self.rdf}ID')
-            if as_uuid(uri) == subject.identifier:
+            if read_identifier(class_type.__name__, uri) == subject.identifier:
                 value = element.find(f'.//cim:{predicate}', self.namespaces)
                 results.append(self.parse_value(value, class_type, subject.identifier))
         return results
@@ -244,9 +245,8 @@ class XMLFile(ConnectionInterface):
 
             # _log.warning(f'{cim_class.__name__}, {uri}')
             obj = self.create_object(self.graph, cim_class, uri)
-            self.class_index[obj.uri()] = cim_class
-            if uri != obj.uri():
-                self.class_index[uri]=cim_class
+            self.object_index[obj.uri()] = obj
+            self.object_index[uri] = obj
 
         else:
             _log.log(self.log_level, f'{class_name} not in data profile')
@@ -266,12 +266,8 @@ class XMLFile(ConnectionInterface):
                 uri = element.get(f'{self.rdf}about')
             elif 'ID' in str(element.attrib.keys()):
                 uri = element.get(f'{self.rdf}ID')
-            try:
-                uri = uri.split(':')[-1]  # Extract UUID from the full URI
-                identifier = UUID(uri.strip('#').strip('_').lower())
-            except:
-                identifier = uri
-            obj = self.graph[cim_class][identifier]
+            uri = uri.split(':')[-1]  # Extract UUID from the full URI
+            identifier = self.object_index[uri].identifier
             for sub_element in element:
                 if 'Identity.identifier' not in sub_element.tag:
                     self.parse_value(sub_element, cim_class, identifier)
@@ -296,16 +292,13 @@ class XMLFile(ConnectionInterface):
             # ... existing edge handling code ...
             # (keep all your existing edge handling logic here)
             if (edge_uri.split('#')[0] + '#') not in self.namespaces.values():
-                try:
-                    edge_uuid = UUID(edge_uri.strip('#').strip('_').lower())
-                except:
-                    edge_uuid = edge_uri
-                try:
-                    edge_class = self.class_index[edge_uri]
-                except:
+                edge_object = self.object_index.get(edge_uri)
+                if edge_object is None:
                     _log.log(self.log_level, f'Object with ID {edge_uri} not found for {sub_tag}')
                     return None
-                value = self.create_edge(self.graph, cim_class, identifier, sub_tag, edge_class, edge_uri)
+                edge_class = type(edge_object)
+                edge_uuid = edge_object.identifier
+                value = self.create_edge(self.graph, cim_class, identifier, sub_tag, edge_class, edge_uuid)
                 try:
                     reverse = cim_class.__dataclass_fields__[association].metadata['inverse']
                     self.create_edge(self.graph, edge_class, edge_uuid, reverse,

@@ -18,15 +18,15 @@ _NS = {
 
 # Comma-spec for the two-profile connectivity+electrical merge.
 _CONN_ELEC_SPEC = (
-    'cimprofiles.cim18gmdm.connectivity,'
-    'cimprofiles.cim18gmdm.electrical'
+    'cimprofiles.cim18.cim18gmdm.connectivity,'
+    'cimprofiles.cim18.cim18gmdm.electrical'
 )
 
 # Comma-spec for connectivity+electrical+asset (needed to load the assets part file).
 _CONN_ELEC_ASSET_SPEC = (
-    'cimprofiles.cim18gmdm.connectivity,'
-    'cimprofiles.cim18gmdm.electrical,'
-    'cimprofiles.cim18gmdm.asset'
+    'cimprofiles.cim18.cim18gmdm.connectivity,'
+    'cimprofiles.cim18.cim18gmdm.electrical,'
+    'cimprofiles.cim18.cim18gmdm.asset'
 )
 
 

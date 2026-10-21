@@ -4,7 +4,7 @@ Deprecated home of the CIM profiles, kept for code written before cim-graph 0.6.
 The profiles and the object model they are built on (Identity, CIMUnit, profile
 merging) now ship in the separate ``cimprofiles`` package. Import from there:
 
-    import cimprofiles.cimhub_2026 as cim
+    import cimprofiles.cim18.cimhub_2026 as cim
     from cimprofiles.identity import Identity
 
 The object-model modules below are aliased, not copied: the old and new names are

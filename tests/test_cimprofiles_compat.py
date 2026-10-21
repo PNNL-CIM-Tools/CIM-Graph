@@ -26,7 +26,7 @@ def test_identity_and_units_are_aliased_not_copied():
 
 def test_module_state_is_shared_through_the_alias(monkeypatch):
     import cimgraph.data_profile.identity as old_identity
-    import cimprofiles.cimhub_2026 as cim
+    import cimprofiles.cim18.cimhub_2026 as cim
 
     monkeypatch.setattr(old_identity, 'ARCHIVE_JSON_LD', False)
     assert cimprofiles.identity.ARCHIVE_JSON_LD is False
@@ -34,7 +34,7 @@ def test_module_state_is_shared_through_the_alias(monkeypatch):
 
 
 def test_profile_shim_reexports_the_same_classes_with_a_warning():
-    import cimprofiles.cim18gmdm.connectivity as new
+    import cimprofiles.cim18.cim18gmdm.connectivity as new
 
     for name in [n for n in sys.modules if n.startswith('cimgraph.data_profile.cim18gmdm')]:
         del sys.modules[name]
@@ -42,7 +42,7 @@ def test_profile_shim_reexports_the_same_classes_with_a_warning():
     with pytest.warns(DeprecationWarning) as records:
         old = importlib.import_module('cimgraph.data_profile.cim18gmdm.connectivity')
 
-    assert any('import cimprofiles.cim18gmdm.connectivity' in str(r.message) for r in records)
+    assert any('import cimprofiles.cim18.cim18gmdm.connectivity' in str(r.message) for r in records)
     assert old.__all__ == new.__all__
     assert old.ACLineSegment is new.ACLineSegment
     assert issubclass(old.ACLineSegment, cimprofiles.identity.Identity)
@@ -51,7 +51,7 @@ def test_profile_shim_reexports_the_same_classes_with_a_warning():
 def test_legacy_profile_prefix_gives_the_same_merged_module(monkeypatch):
     parts = ('cim18gmdm.connectivity', 'cim18gmdm.electrical')
 
-    monkeypatch.setenv('CIMG_CIM_PROFILE', ','.join('cimprofiles.' + p for p in parts))
+    monkeypatch.setenv('CIMG_CIM_PROFILE', ','.join('cimprofiles.cim18.' + p for p in parts))
     get_cim_profile.cache_clear()
     _, new_merged = get_cim_profile()
 
@@ -65,7 +65,7 @@ def test_legacy_profile_prefix_gives_the_same_merged_module(monkeypatch):
 
 
 def test_bare_profile_name_resolves_to_cimprofiles(monkeypatch):
-    import cimprofiles.cimhub_2026
+    import cimprofiles.cim18.cimhub_2026
 
     monkeypatch.setenv('CIMG_CIM_PROFILE', 'cimhub_2026')
     get_cim_profile.cache_clear()
@@ -74,11 +74,11 @@ def test_bare_profile_name_resolves_to_cimprofiles(monkeypatch):
         _, cim = get_cim_profile()
     get_cim_profile.cache_clear()
 
-    assert cim is cimprofiles.cimhub_2026
+    assert cim is cimprofiles.cim18.cimhub_2026
 
 
 def test_set_model_scope_reaches_identity(monkeypatch):
-    import cimprofiles.cimhub_2026 as cim
+    import cimprofiles.cim18.cimhub_2026 as cim
 
     monkeypatch.delenv('CIMG_MODEL_AUTHORITY', raising=False)
     monkeypatch.delenv('CIMG_MODEL_NAME', raising=False)

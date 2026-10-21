@@ -3,6 +3,7 @@
 Every rdf:ID/rdf:about, rdf:resource and mRID written must be a string that was in the
 source file: downstream tools and databases compare these as exact strings.
 """
+import logging
 import re
 from pathlib import Path
 
@@ -12,6 +13,7 @@ from cimgraph.core import get_cim_profile, get_iec61970_552
 from cimgraph.databases import XMLFile
 from cimgraph.models import FeederModel
 from cimgraph.utils import write_xml
+from cimprofiles.cim17 import cimhub_2023 as cim
 
 TEST_MODELS = Path(__file__).parent / 'test_models'
 
@@ -49,6 +51,16 @@ CGMES = _rdf(f'''<cim:ACLineSegment rdf:ID="_{LINE.lower()}">
 <cim:Terminal rdf:ID="_{TERMINAL}">
   <cim:IdentifiedObject.mRID>{TERMINAL}</cim:IdentifiedObject.mRID>
   <cim:Terminal.ConductingEquipment rdf:resource="#_{LINE.lower()}"/>
+</cim:Terminal>
+''')
+
+# rdf:IDs that are not UUIDs: replaced by UUIDs seeded from them, with a warning
+NON_UUID_IDS = _rdf('''<cim:ACLineSegment rdf:ID="LINE_650_632">
+  <cim:IdentifiedObject.name>650632</cim:IdentifiedObject.name>
+</cim:ACLineSegment>
+<cim:Terminal rdf:ID="T1">
+  <cim:IdentifiedObject.name>t1</cim:IdentifiedObject.name>
+  <cim:Terminal.ConductingEquipment rdf:resource="#LINE_650_632"/>
 </cim:Terminal>
 ''')
 
@@ -132,3 +144,34 @@ def test_unknown_style_is_rejected(monkeypatch):
     with pytest.raises(ValueError, match="'552-NEW', '552-LEGACY', 'CGMES'"):
         get_iec61970_552()
     get_iec61970_552.cache_clear()
+
+
+def test_non_uuid_rdf_ids_are_replaced_deterministically(use_style, tmp_path, caplog):
+    use_style('552-LEGACY')
+    source = tmp_path / 'source.xml'
+    source.write_text(NON_UUID_IDS, encoding='utf-8')
+
+    def read() -> FeederModel:
+        return FeederModel(container=None, connection=XMLFile(filename=str(source)))
+
+    with caplog.at_level(logging.WARNING, logger='cimprofiles.identity'):
+        network = read()
+    assert "'LINE_650_632' is not a UUID" in caplog.text
+
+    line = next(iter(network.graph[cim.ACLineSegment].values()))
+    terminal = next(iter(network.graph[cim.Terminal].values()))
+    assert network.graph[cim.ACLineSegment][line.identifier] is line
+    assert terminal.ConductingEquipment is line
+    assert line.mRID == 'LINE_650_632'
+
+    # Reading the same file again gives the same UUIDs
+    again = read()
+    assert set(again.graph[cim.ACLineSegment]) == {line.identifier}
+    assert set(again.graph[cim.Terminal]) == {terminal.identifier}
+
+    out = tmp_path / 'round_trip.xml'
+    write_xml(network, str(out), write_model_header=False)
+    written = out.read_text(encoding='utf-8')
+    assert f'rdf:ID="_{line.uri()}"' in written
+    assert f'rdf:resource="#_{line.uri()}"' in written
+    assert '<cim:IdentifiedObject.mRID>LINE_650_632<' in written

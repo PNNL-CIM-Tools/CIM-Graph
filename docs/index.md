@@ -32,7 +32,7 @@ pip install "cim-graph[sparql]"
 ## Quick Start
 
 ```python
-import cimprofiles.cim17v40 as cim
+import cimprofiles.cim17.cim17v40 as cim
 from cimgraph.databases.blazegraph import BlazegraphConnection
 from cimgraph.models import FeederModel
 

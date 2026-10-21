@@ -13,6 +13,7 @@ from cimgraph.core import (get_cim_profile, get_database, get_host, get_iec61970
                            get_iec61970_552, get_namespace, get_password, get_port,
                            get_undefined_handling, get_url, get_use_units, get_username,
                            get_validation_log_level)
+from cimprofiles.identity import read_identifier
 
 _log = logging.getLogger(__name__)
 
@@ -253,14 +254,11 @@ class ConnectionInterface(ABC):
 
     def create_edge(self, graph: dict[type, dict[str, object]],
                     cim_class: type, identifier: UUID | str, attribute: str,
-                    edge_class: type, edge_mRID: str) -> object:
+                    edge_class: type, edge_mRID: str | UUID) -> object:
 
         # Normalize identifier to UUID so it matches the key stored by create_object.
         if isinstance(identifier, str):
-            try:
-                identifier = UUID(identifier.strip('_').lower())
-            except ValueError:
-                pass
+            identifier = read_identifier(cim_class.__name__, identifier)
 
         edge_object = None
         association = self.check_attribute(cim_class, attribute)
@@ -288,21 +286,21 @@ class ConnectionInterface(ABC):
         return edge_object
 
     def create_object(self, graph:Graph,
-                      class_type:type, uri:str) -> object:
+                      class_type:type, uri:str | UUID) -> object:
         """
         Method for creating new objects and adding them to the graph
         Required Args:
             graph: an LPG graph from a GraphModel object
             class_type: a dataclass type, such as cim.ACLineSegment
-            uri: the RDF ID or mRID of the object
+            uri: the RDF ID or mRID of the object, or its identifier
         Returns:
             obj: a dataclass instance with the correct identifier
         """
-        # Convert uri string to a UUID object for use as dictionary key
-        try:
-            identifier = UUID(uri.strip('_').lower())
-        except:
+        # The graph is keyed by the identifier the object gets, also for non-UUID IDs
+        if isinstance(uri, UUID):
             identifier = uri
+        else:
+            identifier = read_identifier(class_type.__name__, uri)
 
         # Check if object exists in graph
         if class_type in graph and identifier in graph[class_type]:
