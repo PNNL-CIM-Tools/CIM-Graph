@@ -22,7 +22,7 @@ classifiers = [
 
 dependencies = [
     # CIM profiles, Identity and units; versioned separately (pins loosen at 1.0)
-    "cimprofiles>=0.1.0a1,<0.2",
+    "cimprofiles>=0.1.0a2,<0.2",
     "defusedxml>=0.7.1",
     # utils.mermaid renders diagrams through mermaid.ink
     "requests>=2.31",
