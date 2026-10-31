@@ -27,6 +27,8 @@ class GraphModel():
     cim: ModuleType = field(default=None)
     incrementals: defaultdict[str, dict[str, any]] = field(default_factory=defaultdict)
     __class_iter__: defaultdict[type, iter] = field(default_factory=defaultdict)
+    __mrid_index__: dict[str, Identity] = field(default_factory=dict)
+    __mrid_count__: int = field(default=-1)  # objects in graph when the index was built
     # __queried_objects__: defaultdict[UUID] = field(default_factory=defaultdict)
     """
     Underlying root class for all knowledge graph models, inlcuding
@@ -43,6 +45,8 @@ class GraphModel():
         graph[cim.ClassName]: access to graph dictionary sorted by class and mRID
         pprint(cim.ClassName): pretty-print method for showing graph of a class type
         get_edges_query(cim.ClassName): returns query text for debugging
+        find_by_mRID(mRID): the object in the graph with that mRID
+        list_identities(): identifier, mRID, name and class of every object
     """
 
     # -------------------------------------------------------------------------
@@ -50,9 +54,15 @@ class GraphModel():
     # -------------------------------------------------------------------------
 
     def add_to_graph(self, obj: object, graph: dict[type, dict[UUID, object]] = None) -> None:
-        if graph is None:
-            graph = self.graph
-        add_object_to_graph(graph, obj)
+        if graph is None or graph is self.graph:
+            # Kept current here so building a model never rescans the graph
+            index = self.mrid_index()
+            _check_mrid_unique(index, obj)
+            add_object_to_graph(self.graph, obj)
+            _index_mrid(index, obj)
+            self.__mrid_count__ = _object_count(self.graph)
+        else:
+            add_object_to_graph(graph, obj)
 
     def add_jsonld_to_graph(self, json_ld: jsonld, graph = None) -> object:
         if type(json_ld) == str:
@@ -168,6 +178,43 @@ class GraphModel():
     # -------------------------------------------------------------------------
     # Methods to search GraphModel.graph
     # -------------------------------------------------------------------------
+
+    def mrid_index(self) -> dict[str, Identity]:
+        '''
+        mRID -> object for every object in the graph that has an mRID. CIM 18 makes
+        the mRID a freeform string unique within the model, so two different objects
+        with the same mRID raise ValueError.
+
+        add_to_graph keeps the index current. Objects that readers and queries put
+        in the graph directly are picked up by a rebuild whenever the number of
+        objects has changed, so an object's mRID must not be reassigned once it is
+        in the graph (the same rule as for its identifier).
+        '''
+        count = _object_count(self.graph)
+        if count != self.__mrid_count__:
+            index = {}
+            for objects in self.graph.values():
+                for obj in objects.values():
+                    _check_mrid_unique(index, obj)
+                    _index_mrid(index, obj)
+            self.__mrid_index__ = index
+            self.__mrid_count__ = count
+        return self.__mrid_index__
+
+    def find_by_mRID(self, mRID: str) -> Identity | None:
+        '''The object in the graph with this mRID, or None. Unlike get_object, this
+        never queries the database.'''
+        return self.mrid_index().get(mRID)
+
+    def list_identities(self) -> list[dict[str, str | None]]:
+        '''identifier, mRID, name and class of every object in the graph, e.g. to
+        search a model. The mRID is listed separately because it need not be a UUID.'''
+        return [
+            {'identifier': str(obj.identifier), 'mRID': getattr(obj, 'mRID', None),
+             'name': getattr(obj, 'name', None), 'class': cim_class.__name__}
+            for cim_class, objects in self.graph.items()
+            for obj in objects.values()
+        ]
 
     def find_by_attribute(self, cim_class:type[T], attribute:str, value:any) -> list[T]:
         '''Searches the graph to find all object instances with matching value'''
@@ -399,3 +446,23 @@ class GraphModel():
             write_json_ld(filtered_graph, output_file)
         else:
             raise ValueError(f"Unsupported format: {format}")
+
+
+def _object_count(graph: Graph) -> int:
+    return sum(len(objects) for objects in graph.values())
+
+
+def _check_mrid_unique(index: dict[str, Identity], obj: object) -> None:
+    mRID = getattr(obj, 'mRID', None)
+    existing = index.get(mRID) if mRID is not None else None
+    if existing is not None and existing is not obj:
+        raise ValueError(
+            f'mRID {mRID!r} of {type(obj).__name__} {getattr(obj, "name", None)!r} is already '
+            f'used by {type(existing).__name__} {getattr(existing, "name", None)!r} '
+            f'(an mRID must be unique within the model)')
+
+
+def _index_mrid(index: dict[str, Identity], obj: object) -> None:
+    mRID = getattr(obj, 'mRID', None)
+    if mRID is not None:
+        index[mRID] = obj
