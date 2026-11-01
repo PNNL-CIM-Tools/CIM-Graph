@@ -4,7 +4,7 @@ import logging
 from typing import TYPE_CHECKING
 from xml.sax.saxutils import escape
 
-from cimgraph.core.serialization import (DEFAULT_NAMESPACES, RDF_XML_CLOSE, object_to_xml,
+from cimgraph.core.serialization import (RDF_XML_CLOSE, object_to_xml, profile_namespaces,
                                          rdf_id_text, rdf_xml_identifiers, rdf_xml_open)
 from cimgraph.utils.model_header import model_header
 
@@ -31,22 +31,21 @@ def _model_header_xml() -> str:
     return xml
 
 
-def write_graph_xml(graph: dict, filename: str, namespaces: dict = None,
+def write_graph_xml(graph: dict, filename: str,
                     write_identifier: bool = True, write_model_header: bool = True) -> None:
     """
     Write a graph dict ({cim_class: {identifier: obj}}) to an RDF/XML file.
     Classes are written in alphabetical order and objects sorted by URI, so
-    output is stable between runs.
+    output is stable between runs. The header declares the profile's namespaces
+    (profile_namespaces).
 
     Args:
         graph: The graph of CIM objects to write.
         filename: Output file path.
-        namespaces: Extra or overriding prefix -> namespace URI entries, merged
-            over DEFAULT_NAMESPACES.
         write_identifier: Write the cim:Identity.identifier property.
         write_model_header: Write md:FullModel and cim:ModelAuthority elements at the top of the file.
     """
-    all_namespaces = DEFAULT_NAMESPACES | (namespaces or {})
+    all_namespaces = profile_namespaces(graph)
     with open(filename, 'w', encoding='utf-8') as f:
         f.write(rdf_xml_open(all_namespaces))
         if write_model_header:
@@ -58,7 +57,7 @@ def write_graph_xml(graph: dict, filename: str, namespaces: dict = None,
         f.write(RDF_XML_CLOSE)
 
 
-def write_xml(network: GraphModel, filename: str, namespaces: dict = None,
+def write_xml(network: GraphModel, filename: str,
               write_identifier: bool = True, write_model_header: bool = True) -> None:
     """Write the network graph to an RDF/XML file. See write_graph_xml for arguments."""
-    write_graph_xml(network.graph, filename, namespaces, write_identifier, write_model_header)
+    write_graph_xml(network.graph, filename, write_identifier, write_model_header)

@@ -3,7 +3,7 @@ import xml.etree.ElementTree as ElementTree
 
 import cimprofiles.cim17.cimhub_2023 as cim
 from cimgraph.core import object_to_json_ld, object_to_sparql_triples, object_to_xml
-from cimgraph.core.serialization import RDF_XML_CLOSE, rdf_xml_open
+from cimgraph.core.serialization import RDF_XML_CLOSE, profile_namespaces, rdf_xml_open
 from cimgraph.queries.sparql import upload_triples_sparql
 
 CIM_NS = 'http://iec.ch/TC57/CIM100#'
@@ -49,7 +49,7 @@ class TestSerialization(unittest.TestCase):
 
     def test_literals_are_escaped(self):
         line = cim.ACLineSegment(name='A & B <"x">')
-        document = rdf_xml_open() + object_to_xml(line) + RDF_XML_CLOSE
+        document = rdf_xml_open(profile_namespaces([type(line)])) + object_to_xml(line) + RDF_XML_CLOSE
         root = ElementTree.fromstring(document)
         names = [element.text for element in root.iter(f'{{{CIM_NS}}}IdentifiedObject.name')]
         self.assertEqual(names, ['A & B <"x">'])

@@ -6,9 +6,12 @@ module only renders those properties in each output format.
 """
 from __future__ import annotations
 
+import sys
+from typing import Iterable
 from xml.sax.saxutils import escape
 
 from cimprofiles.identity import as_uuid, normalize_identifier
+from cimprofiles.merge import merge_namespaces
 
 from cimgraph.core.attribute_utils import Property, iter_properties
 from cimgraph.core.env_vars import get_iec61970_552, get_namespace, get_url
@@ -16,14 +19,26 @@ from cimgraph.core.env_vars import get_iec61970_552, get_namespace, get_url
 RDF_NAMESPACE = 'http://www.w3.org/1999/02/22-rdf-syntax-ns#'
 MD_NAMESPACE = 'http://iec.ch/TC57/61970-552/ModelDescription/1#'
 
-DEFAULT_NAMESPACES = {'cim': 'http://iec.ch/TC57/CIM100#',
-                      'eu': 'http://iec.ch/TC57/CIM100-European#',
-                      'nc': 'http://entsoe.eu/ns/nc#',
-                      'gb': 'http://GB/placeholder/ext#',
-                      'md': MD_NAMESPACE,
-                      'rdf': RDF_NAMESPACE}
+# The file format's own namespaces. CIM and extension prefixes come from the profile
+# (profile_namespaces).
+SERIALIZATION_NAMESPACES = {'md': MD_NAMESPACE, 'rdf': RDF_NAMESPACE}
 
 RDF_XML_CLOSE = '</rdf:RDF>\n'
+
+
+def profile_namespaces(classes: Iterable[type]) -> dict[str, str]:
+    """
+    Return the {prefix: namespace URI} map for serializing objects of these CIM classes:
+    the NAMESPACES declared by each profile module that defines one (cimantic-graphs.xsl
+    output; a merged profile's classes live in the merged module), then
+    SERIALIZATION_NAMESPACES. A graph dict passes as its classes.
+    """
+    modules = sorted({sys.modules[cls.__module__] for cls in classes}, key=lambda module: module.__name__)
+    for module in modules:
+        if not hasattr(module, 'NAMESPACES'):
+            raise ValueError(f'Profile module {module.__name__} declares no NAMESPACES; '
+                             f'regenerate the profile (or its parts) with the cimantic-graphs CIMTool builder')
+    return merge_namespaces(*(module.NAMESPACES for module in modules), SERIALIZATION_NAMESPACES)
 
 
 def _prefix(namespaces: dict, namespace: str) -> str:
@@ -31,7 +46,7 @@ def _prefix(namespaces: dict, namespace: str) -> str:
     for prefix, uri in namespaces.items():
         if uri == namespace:
             return prefix
-    raise KeyError(f'Namespace {namespace} has no prefix. Add it to the namespaces argument.')
+    raise KeyError(f'Namespace {namespace} has no prefix in the profile NAMESPACES')
 
 
 def _literal_text(value) -> str:
@@ -95,8 +110,8 @@ def rdf_xml_identifiers() -> tuple[str, str]:
     return 'rdf:ID="', '#'
 
 
-def rdf_xml_open(namespaces: dict = DEFAULT_NAMESPACES) -> str:
-    """Return the XML declaration and opening rdf:RDF element."""
+def rdf_xml_open(namespaces: dict) -> str:
+    """Return the XML declaration and opening rdf:RDF element declaring the namespaces."""
     header = '<?xml version="1.0" encoding="utf-8"?>\n<rdf:RDF'
     for prefix, uri in namespaces.items():
         header += f' xmlns:{prefix}="{uri}"'
@@ -116,22 +131,28 @@ def property_to_xml(prop: Property, namespaces: dict, rdf_resource: str) -> str:
     return f'  <{tag}>{escape(_literal_text(prop.value))}</{tag}>\n'
 
 
-def object_to_xml(obj, namespaces: dict = DEFAULT_NAMESPACES, write_identifier: bool = True) -> str:
-    """Render a CIM object as an RDF/XML element."""
+def object_to_xml(obj, namespaces: dict | None = None, write_identifier: bool = True) -> str:
+    """Render a CIM object as an RDF/XML element. namespaces defaults to the object's
+    profile_namespaces."""
+    namespaces = namespaces or profile_namespaces([type(obj)])
     rdf_about, rdf_resource = rdf_xml_identifiers()
-    class_name = obj.__class__.__name__
-    xml = f'<cim:{class_name} {rdf_about}{rdf_identifier(obj)}">\n'
+    # The class's own namespace: extension classes (e.g. gad:BatteryInfo) are not cim:
+    tag = f'{_prefix(namespaces, obj.__namespace__)}:{obj.__class__.__name__}'
+    xml = f'<{tag} {rdf_about}{rdf_identifier(obj)}">\n'
     if write_identifier:
         xml += f'  <cim:Identity.identifier>{obj.uri()}</cim:Identity.identifier>\n'
     for prop in iter_properties(obj):
         xml += property_to_xml(_with_style_mrid(obj, prop), namespaces, rdf_resource)
-    return xml + f'</cim:{class_name}>\n'
+    return xml + f'</{tag}>\n'
 
 
-def object_to_json_ld(obj, namespaces: dict = DEFAULT_NAMESPACES) -> dict:
-    """Render a CIM object as a JSON-LD node. Repeated properties become lists."""
+def object_to_json_ld(obj, namespaces: dict | None = None) -> dict:
+    """Render a CIM object as a JSON-LD node. Repeated properties become lists.
+    namespaces defaults to the object's profile_namespaces."""
+    namespaces = namespaces or profile_namespaces([type(obj)])
     # JSON-LD always identifies objects with urn:uuid: IRIs, as 552-NEW does
-    node = {'@id': f'urn:uuid:{obj.uri()}', '@type': f'cim:{obj.__class__.__name__}'}
+    node = {'@id': f'urn:uuid:{obj.uri()}',
+            '@type': f'{_prefix(namespaces, obj.__namespace__)}:{obj.__class__.__name__}'}
     for prop in iter_properties(obj):
         prop = _with_style_mrid(obj, prop, '552-NEW')
         prefix = _prefix(namespaces, prop.namespace)

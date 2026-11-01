@@ -52,7 +52,7 @@ def test_merged_profile_reads_and_writes_real_xml(tmp_path, monkeypatch):
     assert len(network.graph[MergedACLineSegment]) > 0
 
     out = tmp_path / 'round_trip.xml'
-    utils.write_xml(network=network, filename=str(out), namespaces=_NS)
+    utils.write_xml(network=network, filename=str(out))
     assert out.exists()
     assert out.stat().st_size > 0
 
@@ -138,7 +138,7 @@ def test_metadata_cimx_multi_part_merge(tmp_path, monkeypatch):
     print(f'\n  ACLineSegment: {acls_count}, TransformerEndInfo: {tei_count}')
 
     out = tmp_path / 'multi_part_round_trip.xml'
-    utils.write_xml(network=network, filename=str(out), namespaces=_NS)
+    utils.write_xml(network=network, filename=str(out))
     assert out.exists()
     assert out.stat().st_size > 0
 

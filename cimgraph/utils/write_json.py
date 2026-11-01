@@ -4,7 +4,7 @@ import json
 import logging
 from typing import TYPE_CHECKING
 
-from cimgraph.core.serialization import DEFAULT_NAMESPACES, object_to_json_ld
+from cimgraph.core.serialization import object_to_json_ld, profile_namespaces
 from cimgraph.utils.model_header import model_header
 
 if TYPE_CHECKING:
@@ -32,18 +32,17 @@ def _model_header_json_ld() -> list[dict]:
     return [full_model, model_authority]
 
 
-def write_json_ld(network: GraphModel, filename: str, namespaces: dict = None, indent: int = 4) -> None:
+def write_json_ld(network: GraphModel, filename: str, indent: int = 4) -> None:
     """
-    Write the network graph to a JSON-LD file.
+    Write the network graph to a JSON-LD file. The @context is the profile's namespaces
+    (profile_namespaces).
 
     Args:
         network (GraphModel): The network graph to be written.
         filename: Output file path.
-        namespaces: Extra or overriding prefix -> namespace URI entries, merged
-            over DEFAULT_NAMESPACES. Also written as the @context.
         indent: JSON indentation.
     """
-    all_namespaces = DEFAULT_NAMESPACES | (namespaces or {})
+    all_namespaces = profile_namespaces(network.graph)
     nodes = _model_header_json_ld()
     for cim_class in sorted(network.graph, key=lambda cls: cls.__name__):
         for obj in sorted(network.graph[cim_class].values(), key=lambda obj: obj.uri()):

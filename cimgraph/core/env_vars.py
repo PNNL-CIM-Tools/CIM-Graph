@@ -19,7 +19,7 @@ _log = logging.getLogger(__name__)
 _merge_memo: dict[str, types.ModuleType] = {}
 
 DEFAULT_NAMESPACE = 'http://iec.ch/TC57/CIM100#'
-DEFAULT_CIM_PROFILE = 'cimhub_2026'
+DEFAULT_CIM_PROFILE = 'cim18v17'
 DEFAULT_URL = 'http://localhost:8889/bigdata/namespace/kb/sparql'
 DEFAULT_DATABASE = 'powergridmodel'
 DEFAULT_HOST = 'localhost'
@@ -29,8 +29,9 @@ DEFAULT_PASSWORD = 'manager'
 DEFAULT_IEC61970_301 = 8
 DEFAULT_IEC61970_552 = '552-NEW'
 IEC61970_552_STYLES = ('552-NEW', '552-LEGACY', 'CGMES')
-DEFAULT_USE_UNITS = 'false'
+DEFAULT_USE_UNITS = 'true'
 DEFAULT_ALLOW_UNDEFINED_ATTRIBUTES = 'false'
+DEFAULT_MVA_BASE = 100
 
 _LEGACY_PROFILE_PREFIX = 'cimgraph.data_profile.'
 
@@ -266,3 +267,14 @@ def set_model_scope(authority: str, model_name: str) -> None:
     os.environ['CIMG_MODEL_NAME'] = model_name
     get_model_authority.cache_clear()
     get_model_name.cache_clear()
+
+
+@cache
+def get_system_mva_base() -> float:
+    """Sets sytem-wide MVA base needed for per-unit <--> ohm conversion
+    """
+    value = float(os.getenv('CIMG_SYSTEM_MVA_BASE'))
+    if value is None:
+        _log.warning('CIMG_SYSTEM_MVA_BASE environment variable is not set. Using 100 MVA default')
+        value = DEFAULT_MVA_BASE
+    return value

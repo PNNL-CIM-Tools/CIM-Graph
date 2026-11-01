@@ -14,7 +14,7 @@ import cimprofiles.cim17.cimhub_2023 as cim
 import cimgraph.queries.cypher as cypher
 from cimgraph.core import (get_cim_profile, get_database, get_iec61970_552, get_namespace,
                            get_password, get_url, get_username)
-from cimgraph.core.serialization import RDF_XML_CLOSE, object_to_xml, rdf_xml_open
+from cimgraph.core.serialization import RDF_XML_CLOSE, object_to_xml, profile_namespaces, rdf_xml_open
 from cimgraph.databases import ConnectionInterface, Graph, QueryResponse
 
 nest_asyncio.apply()
@@ -415,5 +415,6 @@ class Neo4jConnection(ConnectionInterface):
 
     def _serialize_to_rdf_xml(self, objects: list) -> str:
         """Serialize CIM objects to an RDF/XML document string, without a model header."""
-        body = ''.join(object_to_xml(obj) for obj in objects)
-        return rdf_xml_open() + body + RDF_XML_CLOSE
+        namespaces = profile_namespaces({type(obj) for obj in objects})
+        body = ''.join(object_to_xml(obj, namespaces) for obj in objects)
+        return rdf_xml_open(namespaces) + body + RDF_XML_CLOSE
