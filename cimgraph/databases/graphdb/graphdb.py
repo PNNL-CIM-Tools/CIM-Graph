@@ -49,6 +49,7 @@ class GraphDBConnection(SPARQLEndpointConnection):
 
     def _update_raw(self, update_message: str) -> str:
         """Execute SPARQL update using SPARQLWrapper."""
-        self.connection_obj.setQuery(update_message)
-        self.connection_obj.setMethod(POST)
+        updater = SPARQLWrapper(self.url.rstrip('/') + '/statements')
+        updater.setQuery(update_message)
+        updater.setMethod(POST)
         return self.connection_obj.query()
