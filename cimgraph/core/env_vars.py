@@ -32,6 +32,7 @@ IEC61970_552_STYLES = ('552-NEW', '552-LEGACY', 'CGMES')
 DEFAULT_USE_UNITS = 'true'
 DEFAULT_ALLOW_UNDEFINED_ATTRIBUTES = 'false'
 DEFAULT_MVA_BASE = 100
+DEFAULT_FREQUENCY_HZ = 60
 
 _LEGACY_PROFILE_PREFIX = 'cimgraph.data_profile.'
 
@@ -271,10 +272,11 @@ def set_model_scope(authority: str, model_name: str) -> None:
 
 @cache
 def get_system_mva_base() -> float:
-    """Sets sytem-wide MVA base needed for per-unit <--> ohm conversion
+    """System-wide MVA base for per-unit <--> ohm conversion, from
+    CIMG_SYSTEM_MVA_BASE, else DEFAULT_MVA_BASE (100 MVA).
     """
-    value = float(os.getenv('CIMG_SYSTEM_MVA_BASE'))
+    value = os.getenv('CIMG_SYSTEM_MVA_BASE')
     if value is None:
-        _log.warning('CIMG_SYSTEM_MVA_BASE environment variable is not set. Using 100 MVA default')
-        value = DEFAULT_MVA_BASE
-    return value
+        _log.info(f'CIMG_SYSTEM_MVA_BASE is not set. Using {DEFAULT_MVA_BASE} MVA default')
+        return float(DEFAULT_MVA_BASE)
+    return float(value)

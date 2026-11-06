@@ -22,6 +22,7 @@ class BusBranchModel(GraphModel):
             self.cim = self.connection.cim
         else:
             _, self.cim = get_cim_profile()
+        self.set_default_bases()
         self.__class_iter__ = defaultdict(dict)
         if not self.graph:
             self.graph = defaultdict(lambda: defaultdict(dict))
@@ -32,7 +33,7 @@ class BusBranchModel(GraphModel):
             else:
                 self.initialize_centralized_model(self.container)
         else:
-            _log.error('A ConnectionInterface must be specified')
+            _log.debug('No ConnectionInterface: in-memory model, built with add_to_graph')
 
     def initialize_centralized_model(self, container) -> None:
         # Pass self.graph so objects the caller already built are preserved

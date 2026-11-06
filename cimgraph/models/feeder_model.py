@@ -43,6 +43,7 @@ class FeederModel(GraphModel):
             self.cim = self.connection.cim
         else:
             _, self.cim = get_cim_profile()
+        self.set_default_bases()
         self.__class_iter__ = defaultdict(dict)
         if not self.graph:
             self.graph = defaultdict(lambda: defaultdict(dict))
@@ -55,7 +56,7 @@ class FeederModel(GraphModel):
                 # Otherwise build centralized network model
                 self.__initialize_centralized_model()
         else:    # Log error thant no connection was specified
-            _log.error('A ConnectionInterface must be specified')
+            _log.debug('No ConnectionInterface: in-memory model, built with add_to_graph')
 
 
 

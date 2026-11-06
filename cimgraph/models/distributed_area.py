@@ -14,6 +14,7 @@ class DistributedArea(GraphModel):
     def __post_init__(self):
         self.cim_profile = self.connection.cim_profile
         self.cim = self.connection.cim
+        self.set_default_bases()
         self.graph = {}
         self.add_to_graph(self.container)
         self.distributed_areas = []

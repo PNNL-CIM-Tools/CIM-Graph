@@ -9,6 +9,9 @@ from typing import Iterator, TypeVar, cast
 from uuid import UUID
 
 from cimprofiles.identity import Identity
+from cimprofiles.units import CIMUnit
+
+from cimgraph.core.env_vars import DEFAULT_FREQUENCY_HZ, get_system_mva_base
 from cimgraph.databases import ConnectionInterface, add_object_to_graph
 from cimgraph.models.incremental_builder import *
 
@@ -29,6 +32,9 @@ class GraphModel():
     __class_iter__: defaultdict[type, iter] = field(default_factory=defaultdict)
     __mrid_index__: dict[str, Identity] = field(default_factory=dict)
     __mrid_count__: int = field(default=-1)  # objects in graph when the index was built
+    # System bases for per-unit conversion, filled by set_default_bases once self.cim is known
+    base_power: CIMUnit = field(default=None)       # cim.ApparentPower
+    base_frequency: CIMUnit = field(default=None)   # cim.Frequency
     # __queried_objects__: defaultdict[UUID] = field(default_factory=defaultdict)
     """
     Underlying root class for all knowledge graph models, inlcuding
@@ -37,6 +43,9 @@ class GraphModel():
         container: a CIM container object inheriting from ConnectivityNodeContainer
         connection: a ConnectionInterface object, such as BlazegraphConnection
         distributed: a boolean to indicate if the graph is distributed
+    Optional Args:
+        base_power: system power base (cim.ApparentPower), default CIMG_SYSTEM_MVA_BASE or 100 MVA
+        base_frequency: system frequency (cim.Frequency), default 60 Hz
     Returns:
         none
     Methods:
@@ -48,6 +57,15 @@ class GraphModel():
         find_by_mRID(mRID): the object in the graph with that mRID
         list_identities(): identifier, mRID, name and class of every object
     """
+
+    def set_default_bases(self) -> None:
+        """Fill unset base_power/base_frequency from self.cim. The CIMUnit
+        classes are per profile, and a profile part may lack one (cim18gmdm
+        has no Frequency); that base then stays None."""
+        if self.base_power is None and hasattr(self.cim, 'ApparentPower'):
+            self.base_power = self.cim.ApparentPower(get_system_mva_base(), 'MVA')
+        if self.base_frequency is None and hasattr(self.cim, 'Frequency'):
+            self.base_frequency = self.cim.Frequency(DEFAULT_FREQUENCY_HZ, 'Hz')
 
     # -------------------------------------------------------------------------
     # Methods to add objects to GraphModel.graph
