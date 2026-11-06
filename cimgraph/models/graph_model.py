@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import json
 import logging
+import math
 from collections import defaultdict
 from dataclasses import dataclass, field, fields, is_dataclass
 from types import ModuleType
@@ -32,7 +33,7 @@ class GraphModel():
     __class_iter__: defaultdict[type, iter] = field(default_factory=defaultdict)
     __mrid_index__: dict[str, Identity] = field(default_factory=dict)
     __mrid_count__: int = field(default=-1)  # objects in graph when the index was built
-    # System bases for per-unit conversion, filled by set_default_bases once self.cim is known
+    # System bases for per-unit conversion, filled by set_default_bases once self.cim and the graph are known
     base_power: CIMUnit = field(default=None)       # cim.ApparentPower
     base_frequency: CIMUnit = field(default=None)   # cim.Frequency
     # __queried_objects__: defaultdict[UUID] = field(default_factory=defaultdict)
@@ -44,7 +45,7 @@ class GraphModel():
         connection: a ConnectionInterface object, such as BlazegraphConnection
         distributed: a boolean to indicate if the graph is distributed
     Optional Args:
-        base_power: system power base (cim.ApparentPower), default CIMG_SYSTEM_MVA_BASE or 100 MVA
+        base_power: system power base (cim.ApparentPower), default the graph's BasePower, else CIMG_SYSTEM_MVA_BASE or 100 MVA
         base_frequency: system frequency (cim.Frequency), default 60 Hz
     Returns:
         none
@@ -59,9 +60,26 @@ class GraphModel():
     """
 
     def set_default_bases(self) -> None:
-        """Fill unset base_power/base_frequency from self.cim. The CIMUnit
-        classes are per profile, and a profile part may lack one (cim18gmdm
-        has no Frequency); that base then stays None."""
+        """Fill unset base_power/base_frequency once self.cim and self.graph
+        are known (call it after the graph is loaded). base_power is the
+        graph's BasePower.basePower (PSS/E SBASE, MATPOWER baseMVA), else
+        CIMG_SYSTEM_MVA_BASE or 100 MVA. A model has one system base: several
+        BasePower objects that disagree, or one that disagrees with an
+        explicit base_power, raise rather than leave pu values on the wrong
+        base. The CIMUnit classes are per profile, and a profile part may
+        lack one (cim18gmdm has no Frequency); that base then stays None."""
+        base_power_cls = getattr(self.cim, 'BasePower', None)
+        graph_bases = []
+        if base_power_cls is not None:
+            graph_bases = [bp for bp in self.graph.get(base_power_cls, {}).values() if bp.basePower is not None]
+        if self.base_power is None and graph_bases:
+            self.base_power = graph_bases[0].basePower
+        for base in graph_bases:
+            if not math.isclose(base.basePower.to('VA'), self.base_power.to('VA')):
+                raise ValueError(
+                    f"BasePower {base.mRID!r} ({base.basePower.to('MVA')} MVA) disagrees with the "
+                    f"model's system base ({self.base_power.to('MVA')} MVA): a model has one system base"
+                )
         if self.base_power is None and hasattr(self.cim, 'ApparentPower'):
             self.base_power = self.cim.ApparentPower(get_system_mva_base(), 'MVA')
         if self.base_frequency is None and hasattr(self.cim, 'Frequency'):

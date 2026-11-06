@@ -33,3 +33,44 @@ class TestSystemBases(unittest.TestCase):
                               base_power=cim.ApparentPower(1, 'MVA'), base_frequency=cim.Frequency(50, 'Hz'))
         self.assertEqual(network.base_power.to('VA'), 1e6)
         self.assertEqual(network.base_frequency.to('Hz'), 50)
+
+
+class TestBasePowerFromGraph(unittest.TestCase):
+    """A model's BasePower (PSS/E SBASE, MATPOWER baseMVA) is its system base:
+    reading a CIM XML file with one must not leave base_power at 100 MVA."""
+
+    def _write_model(self, *base_powers):
+        import tempfile
+        from cimgraph.utils import write_xml
+        network = NodeBreakerModel(container=None, connection=None, distributed=False,
+                                   base_power=base_powers[0].basePower)
+        for base_power in base_powers:
+            network.add_to_graph(base_power)
+        path = os.path.join(tempfile.mkdtemp(), 'model.xml')
+        write_xml(network, path)
+        return path
+
+    def test_xml_base_power_sets_the_system_base(self):
+        from cimgraph.databases import XMLFile
+        path = self._write_model(cim.BasePower(mRID='sbase', basePower=cim.ApparentPower(50, 'MVA')))
+        for model_class in (FeederModel, BusBranchModel, NodeBreakerModel):
+            network = model_class(container=None, connection=XMLFile(path), distributed=False)
+            self.assertAlmostEqual(network.base_power.to('MVA'), 50)
+
+    def test_in_memory_graph_base_power_sets_the_system_base(self):
+        graph = {cim.BasePower: {}}
+        base_power = cim.BasePower(mRID='sbase', basePower=cim.ApparentPower(50, 'MVA'))
+        graph[cim.BasePower][base_power.identifier] = base_power
+        network = FeederModel(container=None, connection=None, graph=graph)
+        self.assertAlmostEqual(network.base_power.to('MVA'), 50)
+
+    def test_disagreeing_base_powers_raise(self):
+        from cimgraph.databases import XMLFile
+        path = self._write_model(cim.BasePower(mRID='sbase', basePower=cim.ApparentPower(50, 'MVA')),
+                                 cim.BasePower(mRID='sbase_100', basePower=cim.ApparentPower(100, 'MVA')))
+        with self.assertRaisesRegex(ValueError, 'disagrees with the model'):
+            FeederModel(container=None, connection=XMLFile(path), distributed=False)
+        with self.assertRaisesRegex(ValueError, 'disagrees with the model'):
+            FeederModel(container=None, connection=XMLFile(self._write_model(
+                cim.BasePower(mRID='sbase', basePower=cim.ApparentPower(50, 'MVA')))),
+                distributed=False, base_power=cim.ApparentPower(100, 'MVA'))
