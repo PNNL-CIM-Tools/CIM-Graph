@@ -1,5 +1,6 @@
 """Unit tests for cimgraph.utils.mermaid class-diagram generation."""
 import cimprofiles.cim17.cim17v40 as cim
+
 from cimgraph import utils
 
 

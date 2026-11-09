@@ -11,11 +11,12 @@ from functools import cache
 from types import ModuleType
 from uuid import UUID
 
+from cimprofiles.identity import as_uuid, normalize_identifier, read_identifier
+
 from cimgraph.core import (get_cim_profile, get_database, get_host, get_iec61970_301,
                            get_iec61970_552, get_namespace, get_password, get_port,
                            get_undefined_handling, get_url, get_use_units, get_username,
                            get_validation_log_level)
-from cimprofiles.identity import as_uuid, normalize_identifier, read_identifier
 
 _log = logging.getLogger(__name__)
 

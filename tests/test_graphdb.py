@@ -2,9 +2,9 @@ import os
 import unittest
 from uuid import UUID
 
+import cimprofiles.cim17.cimhub_2023 as cim
 import pytest
 
-import cimprofiles.cim17.cimhub_2023 as cim
 from cimgraph import utils
 from cimgraph.databases import GraphDBConnection
 from cimgraph.models import FeederModel

@@ -11,8 +11,10 @@ from neo4j import AsyncGraphDatabase
 
 import cimgraph.queries.cypher as cypher
 from cimgraph.core import get_database, get_password, get_url, get_username
-from cimgraph.core.serialization import RDF_XML_CLOSE, object_to_xml, profile_namespaces, rdf_xml_open
-from cimgraph.databases import BATCH_SIZE, MAX_PARALLEL_QUERIES, ConnectionInterface, Graph, QueryResponse
+from cimgraph.core.serialization import (RDF_XML_CLOSE, object_to_xml, profile_namespaces,
+                                         rdf_xml_open)
+from cimgraph.databases import (BATCH_SIZE, MAX_PARALLEL_QUERIES, ConnectionInterface, Graph,
+                                QueryResponse)
 
 _log = logging.getLogger(__name__)
 

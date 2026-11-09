@@ -5,6 +5,7 @@ import unittest
 from uuid import NAMESPACE_URL, UUID, uuid4, uuid5
 
 import cimprofiles.cim17.cimhub_2023 as cim
+
 from cimgraph.core import get_model_authority, get_model_name, set_model_scope
 from cimgraph.databases import XMLFile
 from cimgraph.models import FeederModel

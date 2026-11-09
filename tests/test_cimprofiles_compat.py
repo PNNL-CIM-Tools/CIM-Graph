@@ -8,10 +8,10 @@ import importlib
 import sys
 import warnings
 
-import pytest
-
 import cimprofiles.identity
 import cimprofiles.units.units
+import pytest
+
 from cimgraph.core import get_cim_profile, set_model_scope
 
 
@@ -25,8 +25,9 @@ def test_identity_and_units_are_aliased_not_copied():
 
 
 def test_module_state_is_shared_through_the_alias(monkeypatch):
-    import cimgraph.data_profile.identity as old_identity
     import cimprofiles.cim18.cimhub_2026 as cim
+
+    import cimgraph.data_profile.identity as old_identity
 
     monkeypatch.setattr(old_identity, 'ARCHIVE_JSON_LD', False)
     assert cimprofiles.identity.ARCHIVE_JSON_LD is False

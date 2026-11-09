@@ -62,8 +62,9 @@ _CIM18V17_NAMESPACES = {'cim': 'http://cim.ucaiug.io/cim101/draft#',
 
 def test_extension_class_is_tagged_with_its_own_namespace():
     """BatteryInfo is a GridAPPS-D extension class: gad:BatteryInfo, not cim:BatteryInfo."""
-    from cimgraph.core import object_to_json_ld, object_to_xml
     from cimprofiles.cim18.cim18v17 import ACLineSegment, BatteryInfo
+
+    from cimgraph.core import object_to_json_ld, object_to_xml
 
     battery = BatteryInfo(mRID='bat_1')
     xml = object_to_xml(battery, _CIM18V17_NAMESPACES)

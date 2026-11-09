@@ -1,8 +1,11 @@
 from __future__ import annotations
+
 import logging
 from dataclasses import dataclass, field
 from typing import Optional
+
 from cimgraph.core import get_namespace
+
 _log = logging.getLogger(__name__)
 '''
 Annotated CIMantic Graphs data profile for model_authority
@@ -35,7 +38,7 @@ class IdentifiedObject():
     mRID is mapped to rdf:ID or rdf:about attributes that identify CIM
     object elements.
     '''
-    
+
     description: Optional[str] = field(
         default=None,
         metadata={
@@ -51,7 +54,7 @@ class IdentifiedObject():
     the object. It may be non unique and may not correlate to a naming
     hierarchy.
     '''
-    
+
     name: Optional[str] = field(
         default=None,
         metadata={
@@ -66,7 +69,7 @@ class IdentifiedObject():
     The name is any free human readable and possibly non unique text naming
     the object.
     '''
-    
+
     @property
     def __namespace__(self):
         return get_namespace()
@@ -79,7 +82,7 @@ class IdentifiedObject():
     @property
     def __maxOccurs__(self):
         return 'unbounded'
-    
+
 @dataclass(repr=False)
 class ModelAuthority(IdentifiedObject):
     '''
@@ -100,4 +103,4 @@ class ModelAuthority(IdentifiedObject):
     @property
     def __maxOccurs__(self):
         return 'unbounded'
-    
+

@@ -1,7 +1,7 @@
 """Regression tests for the WS1 security fixes (docs/development/RELEASE_1_0_PLAN.md)."""
+import cimprofiles.cim17.cimhub_2023 as cim
 import pytest
 
-import cimprofiles.cim17.cimhub_2023 as cim
 from cimgraph.core.validation import validate_attribute, validate_identifier
 from cimgraph.queries import cypher, sparql
 
@@ -168,7 +168,7 @@ def test_mermaid_class_path_follows_subclasses():
 
 
 @pytest.mark.parametrize('path', [
-    "Terminals[0].__class__.__init__.__globals__",
+    'Terminals[0].__class__.__init__.__globals__',
     "Terminals[__import__('os').system('echo pwned')]",
     ['Terminals', "[0];__import__('os')"],
     'notAField',
@@ -183,7 +183,7 @@ def test_mermaid_object_path_rejects_code(path):
 def test_mermaid_class_path_rejects_code():
     from cimgraph.utils import get_mermaid_path
     with pytest.raises(ValueError):
-        get_mermaid_path(cim.ConductingEquipment, "__subclasses__()[0].__init__.__globals__")
+        get_mermaid_path(cim.ConductingEquipment, '__subclasses__()[0].__init__.__globals__')
 
 
 # 1.5 Serializer escaping

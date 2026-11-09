@@ -3,9 +3,10 @@ from __future__ import annotations
 import logging
 
 import cimprofiles.cim17.cim17v40 as cim
-from cimgraph.databases import get_iec61970_552, get_namespace, get_url
+
 from cimgraph.core.serialization import rdf_identifier
 from cimgraph.core.validation import validate_identifier
+from cimgraph.databases import get_iec61970_552, get_namespace, get_url
 
 _log = logging.getLogger(__name__)
 

@@ -6,7 +6,6 @@ import sys
 from dataclasses import Field, fields, is_dataclass
 
 import requests
-
 from cimprofiles.identity import Identity
 from cimprofiles.units import CIMUnit
 

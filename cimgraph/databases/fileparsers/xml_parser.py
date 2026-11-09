@@ -5,11 +5,11 @@ import re
 from collections import defaultdict
 from pathlib import Path
 
+from cimprofiles.identity import Identity, read_identifier
 from defusedxml.ElementTree import parse
 
 from cimgraph.core import (get_cim_profile, get_iec61970_552, get_namespace, get_use_units,
                            get_validation_log_level, set_model_scope)
-from cimprofiles.identity import Identity, read_identifier
 from cimgraph.databases import ConnectionInterface, Graph, QueryResponse, reference_key
 from cimgraph.databases.fileparsers.metadata import HEADER_CLASSES, parse_model_header
 
@@ -324,4 +324,3 @@ class XMLFile(ConnectionInterface):
         from cimgraph.utils.write_xml import write_graph_xml
 
         write_graph_xml(graph, self.filename)
-

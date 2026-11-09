@@ -2,9 +2,9 @@ from __future__ import annotations
 
 from uuid import UUID
 
-from cimgraph.databases import get_iec61970_552, get_url
 from cimgraph.core.serialization import rdf_identifier
 from cimgraph.core.validation import validate_attribute
+from cimgraph.databases import get_iec61970_552, get_url
 
 
 def get_triple_cypher(subject:object, attribute:str) -> str:

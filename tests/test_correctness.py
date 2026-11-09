@@ -3,9 +3,9 @@ import json
 from uuid import UUID
 from xml.etree.ElementTree import ParseError
 
+import cimprofiles.cim17.cimhub_2023 as cim
 import pytest
 
-import cimprofiles.cim17.cimhub_2023 as cim
 from cimgraph.core import get_cim_profile
 from cimgraph.databases import JSONLDFile, XMLFile
 from cimgraph.databases.sparql_endpoint import SPARQLEndpointConnection
@@ -330,8 +330,9 @@ def _edge_binding(identifier, attribute, edge_id, edge_class, value=None):
 
 
 def test_get_all_attributes_sets_references_without_adding_objects():
-    from cimgraph.core.serialization import object_to_xml
     from cimprofiles.identity import read_identifier
+
+    from cimgraph.core.serialization import object_to_xml
     connection = _RecordingEndpoint()
     location = cim.Location(name='loc')
     line = cim.ACLineSegment(name='line')

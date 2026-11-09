@@ -6,35 +6,18 @@ from enum import Enum
 from types import ModuleType
 from uuid import UUID, uuid4
 
-from cimprofiles.identity import (
-    Identity,
-    as_uuid,
-    normalize_identifier,
-    read_identifier,
-)
+from cimprofiles.identity import Identity, as_uuid, normalize_identifier, read_identifier
 from cimprofiles.merge import merge_namespaces
 from cimprofiles.units import CIMUnit
 from defusedxml.ElementTree import parse
 
-from cimgraph.core.attribute_utils import (
-    _same_value,
-    field_properties,
-    get_attr_datatype,
-    get_attr_serialize,
-    get_serialized_attributes,
-    validate_attr_datatype,
-)
+from cimgraph.core.attribute_utils import (_same_value, field_properties, get_attr_datatype,
+                                           get_attr_serialize, get_serialized_attributes,
+                                           validate_attr_datatype)
 from cimgraph.core.env_vars import get_namespace, get_use_units
-from cimgraph.core.serialization import (
-    RDF_NAMESPACE,
-    RDF_XML_CLOSE,
-    _prefix,
-    profile_namespaces,
-    property_to_xml,
-    rdf_id_text,
-    rdf_xml_identifiers,
-    rdf_xml_open,
-)
+from cimgraph.core.serialization import (RDF_NAMESPACE, RDF_XML_CLOSE, _prefix, profile_namespaces,
+                                         property_to_xml, rdf_id_text, rdf_xml_identifiers,
+                                         rdf_xml_open)
 from cimgraph.databases import enum_from_iri
 
 _log = logging.getLogger(__name__)

@@ -2,6 +2,7 @@ import unittest
 from uuid import uuid4
 
 import cimprofiles.cim17.cimhub_2023 as cim
+
 from cimgraph.core.attribute_utils import diff_attributes
 from cimgraph.databases import add_object_to_graph
 

@@ -8,12 +8,12 @@ import re
 from pathlib import Path
 
 import pytest
+from cimprofiles.cim17 import cimhub_2023 as cim
 
 from cimgraph.core import get_cim_profile, get_iec61970_552
 from cimgraph.databases import XMLFile
 from cimgraph.models import FeederModel
 from cimgraph.utils import write_xml
-from cimprofiles.cim17 import cimhub_2023 as cim
 
 TEST_MODELS = Path(__file__).parent / 'test_models'
 

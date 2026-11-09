@@ -3,6 +3,7 @@ import unittest
 from uuid import UUID
 
 import cimprofiles.cim17.cimhub_2023 as cim
+
 from cimgraph import utils
 from cimgraph.databases import RDFlibConnection
 from cimgraph.models import FeederModel

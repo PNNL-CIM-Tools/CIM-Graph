@@ -4,6 +4,7 @@ import unittest
 os.environ['CIMG_CIM_PROFILE'] = 'cim18v17'
 
 import cimprofiles.cim18.cim18v17 as cim
+
 from cimgraph.core import get_system_mva_base
 from cimgraph.models import BusBranchModel, FeederModel, NodeBreakerModel
 
@@ -41,6 +42,7 @@ class TestBasePowerFromGraph(unittest.TestCase):
 
     def _write_model(self, *base_powers):
         import tempfile
+
         from cimgraph.utils import write_xml
         network = NodeBreakerModel(container=None, connection=None, distributed=False,
                                    base_power=base_powers[0].basePower)
@@ -92,6 +94,7 @@ class TestBaseFrequencyFromGraph(unittest.TestCase):
 
     def test_xml_base_frequency_sets_the_system_frequency(self):
         import tempfile
+
         from cimgraph.databases import XMLFile
         from cimgraph.utils import write_xml
         source = NodeBreakerModel(container=None, connection=None, distributed=False, graph=self._graph(50))

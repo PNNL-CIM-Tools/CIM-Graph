@@ -4,6 +4,7 @@ import unittest
 os.environ['CIMG_CIM_PROFILE'] = 'cimhub_2026'
 
 import cimprofiles.cim18.cimhub_2026 as cim
+
 from cimgraph.databases import add_object_to_graph
 from cimgraph.models import BusBranchModel
 
