@@ -14,7 +14,7 @@ from cimgraph.core import (get_cim_profile, get_database, get_host, get_iec61970
                            get_iec61970_552, get_namespace, get_password, get_port,
                            get_undefined_handling, get_url, get_use_units, get_username,
                            get_validation_log_level)
-from cimprofiles.identity import read_identifier
+from cimprofiles.identity import as_uuid, normalize_identifier, read_identifier
 
 _log = logging.getLogger(__name__)
 
@@ -38,6 +38,18 @@ def add_object_to_graph(graph: Graph, obj: object) -> None:
             f'object in the graph (existing name={getattr(existing, "name", None)!r}, '
             f'mRID={getattr(existing, "mRID", None)!r}; new name={getattr(obj, "name", None)!r}, '
             f'mRID={getattr(obj, "mRID", None)!r})')
+
+
+def reference_key(uri: str) -> UUID | str:
+    """
+    Key for looking up an object read from a file by its rdf:ID, rdf:about, @id or a
+    reference to it, whichever form each is written in ('_x', '#_x', 'urn:uuid:x'): the
+    UUID it contains, in any case, else its normalize_identifier text.
+    """
+    identifier = as_uuid(uri)
+    if identifier is not None:
+        return identifier
+    return normalize_identifier(uri)
 
 
 @dataclass

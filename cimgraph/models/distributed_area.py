@@ -36,7 +36,7 @@ class DistributedArea(GraphModel):
                 equipment = self.add_jsonld_to_graph(addr_eq)
                 equipment.EquipmentContainer = self.container
 
-            for unaddr_eq in topology_dict['AddressableEquipment']:
+            for unaddr_eq in topology_dict['UnaddressableEquipment']:
                 equipment = self.add_jsonld_to_graph(unaddr_eq)
                 equipment.EquipmentContainer = self.container
 
@@ -53,7 +53,7 @@ class DistributedArea(GraphModel):
                 equipment = self.add_jsonld_to_graph(addr_eq)
                 equipment.SubSchedulingArea = self.container
 
-            for unaddr_eq in topology_dict['AddressableEquipment']:
+            for unaddr_eq in topology_dict['UnaddressableEquipment']:
                 equipment = self.add_jsonld_to_graph(unaddr_eq)
                 equipment.SubSchedulingArea = self.container
 

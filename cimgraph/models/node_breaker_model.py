@@ -1,7 +1,6 @@
 from __future__ import annotations
 
 import logging
-from collections import defaultdict
 from dataclasses import dataclass, field
 
 from cimgraph.core import get_cim_profile
@@ -43,8 +42,6 @@ class NodeBreakerModel(GraphModel):
             self.cim = self.connection.cim
         else:
             _, self.cim = get_cim_profile()
-        self.incrementals['forwardDifferences'] = defaultdict(dict)
-        self.incrementals['reverseDifferences'] = defaultdict(dict)
         if self.connection is not None:    # Check if connection has been specified
             if self.distributed:    # Check if distributed flag is true
                 # Build distributed network model

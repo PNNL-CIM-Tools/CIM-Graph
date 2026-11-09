@@ -36,14 +36,12 @@ def test_write_xml_declares_the_cim18v17_namespaces(tmp_path, monkeypatch):
     """No namespaces argument: the header comes from cim18v17's NAMESPACES."""
     monkeypatch.setenv('CIMG_CIM_PROFILE', 'cim18v17')
     from cimgraph.core.env_vars import get_cim_profile
-    from cimgraph.databases import XMLFile
     from cimgraph.models import FeederModel
     from cimgraph.utils import write_xml
     get_cim_profile.cache_clear()
     _, cim = get_cim_profile()
 
-    network = FeederModel(connection=XMLFile(filename=str(tmp_path / 'missing.xml')),
-                          container=cim.Feeder(mRID='fdr_1'), distributed=False)
+    network = FeederModel(connection=None, container=cim.Feeder(mRID='fdr_1'), distributed=False)
     network.add_to_graph(cim.ACLineSegment(mRID='ln_1', name='line 1'))
     out = tmp_path / 'out.xml'
     write_xml(network, str(out))

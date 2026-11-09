@@ -16,13 +16,10 @@ _log = logging.getLogger(__name__)
 class BusBranchModel(GraphModel):
 
     def __post_init__(self):
-        self.incrementals['forwardDifferences'] = defaultdict(dict)
-        self.incrementals['reverseDifferences'] = defaultdict(dict)
         if self.connection is not None:
             self.cim = self.connection.cim
         else:
             _, self.cim = get_cim_profile()
-        self.__class_iter__ = defaultdict(dict)
         if not self.graph:
             self.graph = defaultdict(lambda: defaultdict(dict))
 

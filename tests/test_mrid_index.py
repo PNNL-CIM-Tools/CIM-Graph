@@ -1,17 +1,16 @@
 import os
-import tempfile
 import unittest
 
 os.environ['CIMG_CIM_PROFILE'] = 'cimhub_2026'
 
 import cimprofiles.cim18.cimhub_2026 as cim
-from cimgraph.databases import XMLFile, add_object_to_graph
+from cimgraph.databases import add_object_to_graph
 from cimgraph.models import BusBranchModel
 
 
 def new_network() -> BusBranchModel:
-    connection = XMLFile(filename=tempfile.mktemp(suffix='.xml'))
-    return BusBranchModel(connection=connection, container=cim.Feeder(mRID='fdr_1'),
+    # No connection: an in-memory model, built with add_to_graph
+    return BusBranchModel(connection=None, container=cim.Feeder(mRID='fdr_1'),
                           distributed=False)
 
 

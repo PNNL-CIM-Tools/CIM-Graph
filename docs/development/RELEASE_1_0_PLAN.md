@@ -206,6 +206,27 @@ Owns: `databases/graphdb/`, `databases/sparql_endpoint.py`, `databases/fileparse
 the header code), `models/` (except the incremental validation in WS1), `shacl/shacl_catalog_processor.py`,
 `data_profile/build_merged_profiles.py`, `utils/write_csv.py`.
 
+**Status (2026-11-08, uncommitted on `cimprofiles-0.6`): done. Regression tests are in
+`tests/test_correctness.py` (15 tests) and CIM-Profiles `tests/test_identity_str.py`.**
+
+| Item | Outcome |
+|---|---|
+| 2.1 | `_update_raw` returns `updater.query()`. |
+| 2.2 | Batches run sequentially, like `get_all_attributes` already did. Parallel queries would need one SPARQLWrapper per worker and parsing on the main thread; add that if profiling shows a need. |
+| 2.3 | Both `UnaddressableEquipment` loops fixed. |
+| 2.4 | `validate_attr_datatype` returns `(valid, datatypes, value)` and accepts objects of a subclass. `convert_datatype` no longer turns a CIMUnit into a bare float. `modify` raises `TypeError`, sets the converted value, and allows `None` for `Optional` fields. |
+| 2.6 | Remaining parts: `modify_incremental` records `None`/objects through `_difference_value`, `incremantal_row` uses `all(... is None)`, and `write_incremental` uses `with open`. |
+| 2.7 | XML and JSON-LD: the bare excepts are gone, so missing or malformed files raise (rdflib was fixed in 1.9). Tests that used a missing file as an empty model now pass `connection=None`. |
+| 2.8 | New `databases.reference_key(uri)`: the UUID in any serialization, else `normalize_identifier` text. The XML and JSON-LD `object_index` and every reference lookup use it. This is the start of 4.1. |
+| 2.9 | An enumeration needs `prefix:Enum.member` or a full IRI (including the old `#:` form in `ieee13.jsonld`) **and** an attribute whose datatype is that enum; anything else is a literal. `{"@value","@type"}` goes to `create_value` with the expanded datatype IRI. `_lookup_class` and `class_index` were replaced by `object_index`, which also fixes references to non-UUID `@id`s. |
+| 2.10 | `JSONLDFile` reads a list of files into `self.items`. `self.data` is gone. |
+| 2.11 | Closed by 1.8. |
+| 2.12 | Closed: the tool now lives in CIM-Profiles (`python -m cimprofiles.build_merged_profiles`), which declares pyyaml and reads its config next to the module. |
+| 2.13 | `utils/write_csv.py` and its export removed. |
+| 2.14 | Fixed in CIM-Profiles `identity.py`: `_json_value` builds the dump and it is serialized once. |
+| 2.15 | `incrementals` and `__class_iter__` have real defaults on `GraphModel` (subclass re-initialization removed). `first`/`next` return `None` when there is nothing more, `find_by_attribute` compares whole values (units in base SI), and `from_incremental` raises for non-`.xml`. |
+| 2.16 | New `incremental_builder.sync_inverse_references`, used by `create`, `modify` and `delete`. It moves a single-valued end off its previous object and skips ends missing from the profile. `clean_inverse_reference` lost its blanket `except`, and `get_attr_inverse` lost its bare `except`. |
+
 | # | Bug | Where | Fix | Test |
 |---|---|---|---|---|
 | 2.1 | GraphDB `upload()`/`update()` never sends the update: `_update_raw` builds `updater` and then calls `self.connection_obj.query()` | `graphdb/graphdb.py:55` | `return updater.query()` | Unit test with a mocked SPARQLWrapper asserting the `/statements` endpoint is hit |

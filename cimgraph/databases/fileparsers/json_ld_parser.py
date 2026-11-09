@@ -1,16 +1,19 @@
 from __future__ import annotations
 
-import enum
 import json
 import logging
+import re
 from collections import defaultdict
 from uuid import UUID
 
-from cimgraph.core import (get_cim_profile, get_iec61970_552, get_namespace,
-                           get_validation_log_level)
-from cimgraph.databases import ConnectionInterface, Graph, QueryResponse
+from cimgraph.core.attribute_utils import get_attr_datatype
+from cimgraph.databases import ConnectionInterface, Graph, QueryResponse, reference_key
 
 _log = logging.getLogger(__name__)
+
+# An enumeration value: 'prefix:Enum.member' or a full IRI '...#Enum.member' (older
+# cimgraph releases wrote '...#:Enum.member')
+_ENUM_VALUE = re.compile(r'(?:[A-Za-z][\w.-]*:|.*#:?)([A-Za-z_]\w*)\.(\w+)')
 
 
 class JSONLDFile(ConnectionInterface):
@@ -26,37 +29,28 @@ class JSONLDFile(ConnectionInterface):
         self.connect()
 
     def connect(self):
-        if self.filename is not None:
-            try:
-                with open(self.filename, 'r', encoding='utf-8') as f:
-                    self.data = json.load(f)
-
-                # Extract namespaces from @context
-                self.extract_namespaces()
-
-            except FileNotFoundError:
-                _log.warning(f'File {self.filename} not found. Defaulting to empty network graph')
-                self.data = None
-            except json.JSONDecodeError as e:
-                _log.error(f'Invalid JSON in {self.filename}: {e}')
-                self.data = None
-
-            self.class_index = {}
-            self.graph = defaultdict(lambda: defaultdict(dict))
-        else:
+        if self.filename is None:
             raise ValueError('filename must be specified')
+        # filename may be one file or a list of files loaded into one graph. A missing
+        # or malformed file raises: a partial model would look complete.
+        filenames = [self.filename] if isinstance(self.filename, str) else list(self.filename)
+        self.items = []
+        for filename in filenames:
+            with open(filename, 'r', encoding='utf-8') as f:
+                data = json.load(f)
+            self.extract_namespaces(data)
+            self.items.extend(data.get('@graph', []))
+        # @id text -> object read with it, so references find their objects
+        self.object_index = {}
+        self.graph = defaultdict(lambda: defaultdict(dict))
 
-    def extract_namespaces(self) -> None:
+    def extract_namespaces(self, data: dict) -> None:
         """
         Extract namespace declarations from the JSON-LD @context.
 
         Updates self.namespaces with prefix -> URI mappings from the @context.
         """
-        if self.data is None:
-            _log.warning('No data loaded, cannot extract namespaces')
-            return
-
-        context = self.data.get('@context', {})
+        context = data.get('@context', {})
         if isinstance(context, dict):
             for prefix, uri in context.items():
                 if isinstance(uri, str) and not prefix.startswith('@'):
@@ -68,7 +62,7 @@ class JSONLDFile(ConnectionInterface):
             _log.warning(f'@context is not a dictionary: {type(context)}')
 
     def disconnect(self):
-        del self.data
+        del self.items
         del self.graph
 
     def execute(self, query_message: str) -> QueryResponse:
@@ -76,11 +70,7 @@ class JSONLDFile(ConnectionInterface):
 
     def get_object(self, mRID: str, graph=None) -> object:
         obj = None
-        if self.data is None:
-            return None
-
-        graph_data = self.data.get('@graph', [])
-        for item in graph_data:
+        for item in self.items:
             obj_id = item.get('@id', '')
             if mRID in obj_id:
                 obj = self.parse_node(item)
@@ -104,19 +94,13 @@ class JSONLDFile(ConnectionInterface):
         if graph is not None:
             self.graph = graph
 
-        if self.data is not None:
-            graph_data = self.data.get('@graph', [])
+        # First pass: create all nodes/objects, so references can find any of them
+        for item in self.items:
+            self.parse_node(item)
 
-            # First pass: create all nodes/objects
-            for item in graph_data:
-                self.parse_node(item)
-
-            # Second pass: create all edges/relationships
-            for item in graph_data:
-                self.parse_edges(item)
-        else:
-            _log.warning('No data found in JSON-LD file')
-            self.graph = defaultdict(lambda: defaultdict(dict))
+        # Second pass: create all edges/relationships
+        for item in self.items:
+            self.parse_edges(item)
 
         return self.graph
 
@@ -140,23 +124,10 @@ class JSONLDFile(ConnectionInterface):
 
         # Extract class name from @type (e.g., "cim:ACLineSegment" -> "ACLineSegment")
         class_name = self._extract_class_name(obj_type)
-        if class_name is None:
-            _log.log(self.log_level, f'Unable to extract class name from @type: {obj_type}')
-            return None
-
-        # Extract URI from @id (e.g., "urn:uuid:12345" -> "12345")
-        uri = self._extract_uri(obj_id)
-
         if class_name in self.cim.__all__:
             cim_class = getattr(self.cim, class_name)
-            obj = self.create_object(self.graph, cim_class, uri)
-
-            # Store multiple variations of the URI for lookup
-            normalized_uri = uri.strip('#').strip('_').lower()
-            self.class_index[normalized_uri] = cim_class
-            self.class_index[obj.uri()] = cim_class
-            if uri != obj.uri():
-                self.class_index[uri] = cim_class
+            obj = self.create_object(self.graph, cim_class, obj_id)
+            self.object_index[reference_key(obj_id)] = obj
         else:
             _log.log(self.log_level, f'{class_name} not in data profile')
 
@@ -180,16 +151,7 @@ class JSONLDFile(ConnectionInterface):
             return
 
         cim_class = getattr(self.cim, class_name)
-        uri = self._extract_uri(obj_id)
-
-        try:
-            identifier = UUID(uri.strip('#').strip('_').lower())
-        except:
-            identifier = uri
-
-        if identifier not in self.graph[cim_class]:
-            _log.warning(f'Object {identifier} not found in graph during edge parsing')
-            return
+        identifier = self.object_index[reference_key(obj_id)].identifier
 
         # Process all attributes except @id and @type
         for key, value in item.items():
@@ -207,7 +169,8 @@ class JSONLDFile(ConnectionInterface):
 
         Args:
             attribute: The attribute name (e.g., "IdentifiedObject.name")
-            value: The value to set (can be a string, dict, or list)
+            value: a reference ({"@id"}), a typed literal ({"@value", "@type"}), an
+                enumeration value ("cim:PhaseCode.ABC"), a literal, or a list of these
             cim_class: The CIM class type
             identifier: The object identifier
 
@@ -218,62 +181,70 @@ class JSONLDFile(ConnectionInterface):
         if association is None:
             return None
 
-        # Handle different value types
-        if isinstance(value, dict):
-            # This is a reference to another object
-            edge_id = value.get('@id', '')
-            if edge_id:
-                edge_uri = self._extract_uri(edge_id)
-
-                # Try multiple variations to find the class
-                edge_class = self._lookup_class(edge_uri)
-
-                if edge_class is None:
-                    _log.log(self.log_level, f'Object with ID {edge_uri} not found for {attribute}')
-                    return None
-
-                try:
-                    self.create_edge(self.graph, cim_class, identifier, attribute, edge_class, edge_uri)
-
-                    # Create reverse edge if inverse relationship exists
-                    try:
-                        reverse = cim_class.__dataclass_fields__[association].metadata['inverse']
-                        self.create_edge(self.graph, edge_class, edge_uri, reverse,
-                                       cim_class, self.graph[cim_class][identifier].uri())
-                    except (KeyError, AttributeError):
-                        # No inverse relationship defined, which is normal for some attributes
-                        pass
-                    except Exception as e:
-                        _log.log(self.log_level, f'Could not create inverse for {cim_class.__name__} association {association}: {e}')
-
-                except Exception as e:
-                    _log.error(f'Error creating edge for {attribute}: {e}')
-        elif isinstance(value, str):
-            # Check if it's an enum or a literal value
-            if ':' in value and '.' in value:
-                # Likely an enum (e.g., "cim:WindingConnection.D")
-                try:
-                    enum_text = value.split(':')[-1]
-                    enum_class = enum_text.split('.')[0]
-                    enum_value = enum_text.split('.')[1]
-                    edge_enum = self.profile_enum(enum_class, enum_value)
-                    if edge_enum is None:
-                        raise ValueError(f'{enum_class} is not an enumeration in the profile')
-                    setattr(self.graph[cim_class][identifier], association, edge_enum)
-                except Exception as e:
-                    _log.log(self.log_level, f'Failed to parse enum {value}: {e}')
-            else:
-                # It's a literal value
-                self.create_value(self.graph, cim_class, identifier, attribute, value)
-        elif isinstance(value, list):
-            # Handle list of values
+        if isinstance(value, list):
             for item in value:
                 self.parse_value(attribute, item, cim_class, identifier)
+        elif isinstance(value, dict) and '@id' in value:
+            self._parse_reference(value['@id'], attribute, association, cim_class, identifier)
+        elif isinstance(value, dict) and '@value' in value:
+            datatype_uri = self._expand_curie(value.get('@type'))
+            self.create_value(self.graph, cim_class, identifier, attribute,
+                              str(value['@value']), datatype_uri)
+        elif isinstance(value, str) and self._parse_enum(value, association, cim_class, identifier):
+            pass
         else:
-            # Handle other primitive types (bool, int, float)
+            # A literal: a string, or a bool/int/float JSON value
             self.create_value(self.graph, cim_class, identifier, attribute, str(value))
 
         return value
+
+    def _parse_reference(self, edge_id: str, attribute: str, association: str,
+                         cim_class: type, identifier: UUID) -> None:
+        """Set the association to the object with @id edge_id, and its inverse."""
+        edge_object = self.object_index.get(reference_key(edge_id))
+        if edge_object is None:
+            _log.log(self.log_level, f'Object with ID {edge_id} not found for {attribute}')
+            return
+        edge_class = type(edge_object)
+        self.create_edge(self.graph, cim_class, identifier, attribute,
+                         edge_class, edge_object.identifier)
+        reverse = cim_class.__dataclass_fields__[association].metadata.get('inverse')
+        if reverse is not None:
+            self.create_edge(self.graph, edge_class, edge_object.identifier, reverse,
+                             cim_class, identifier)
+
+    def _parse_enum(self, value: str, association: str, cim_class: type,
+                    identifier: UUID) -> bool:
+        """
+        Set the attribute to the enumeration member value names, and return True, if value
+        is 'prefix:Enum.member' (or a full IRI) and the attribute's datatype is that
+        profile enumeration. Any other string (a name such as 'Line 1: 12.47kV', a
+        timestamp) returns False, to be read as a literal.
+        """
+        match = _ENUM_VALUE.fullmatch(value)
+        if match is None:
+            return False
+        enum_class, member = match.groups()
+        if enum_class not in get_attr_datatype(cim_class, association):
+            return False
+        try:
+            edge_enum = self.profile_enum(enum_class, member)
+        except ValueError as error:
+            _log.log(self.log_level, f'Could not parse enumeration {value}: {error}')
+            return True
+        if edge_enum is None:
+            return False
+        setattr(self.graph[cim_class][identifier], association, edge_enum)
+        return True
+
+    def _expand_curie(self, curie: str | None) -> str | None:
+        """'cim:Voltage.kV' -> the full IRI, for a prefix declared in @context."""
+        if curie is None:
+            return None
+        prefix, _, local = curie.partition(':')
+        if local and prefix in self.namespaces:
+            return self.namespaces[prefix] + local
+        return curie
 
     def _extract_class_name(self, obj_type: str) -> str | None:
         """
@@ -288,63 +259,6 @@ class JSONLDFile(ConnectionInterface):
         if ':' in obj_type:
             return obj_type.split(':')[-1]
         return obj_type if obj_type else None
-
-    def _extract_uri(self, obj_id: str) -> str:
-        """
-        Extract URI from @id value.
-
-        Args:
-            obj_id: The @id value (e.g., "urn:uuid:12345-67890")
-
-        Returns:
-            Extracted URI (e.g., "12345-67890")
-        """
-        # Remove common prefixes
-        uri = obj_id
-        if 'urn:uuid:' in uri:
-            uri = uri.replace('urn:uuid:', '')
-        elif 'uuid:' in uri:
-            uri = uri.replace('uuid:', '')
-        elif '#' in uri:
-            uri = uri.split('#')[-1]
-
-        return uri.strip('#').strip('_')
-
-    def _lookup_class(self, uri: str) -> type | None:
-        """
-        Look up a class in the class_index, trying multiple URI variations.
-
-        Args:
-            uri: The URI to look up
-
-        Returns:
-            The CIM class type or None if not found
-        """
-        # Try the URI as provided
-        if uri in self.class_index:
-            return self.class_index[uri]
-
-        # Try lowercase
-        normalized = uri.lower()
-        if normalized in self.class_index:
-            return self.class_index[normalized]
-
-        # Try uppercase
-        upper = uri.upper()
-        if upper in self.class_index:
-            return self.class_index[upper]
-
-        # Try with underscore prefix
-        with_underscore = '_' + uri
-        if with_underscore in self.class_index:
-            return self.class_index[with_underscore]
-
-        # Try lowercase with underscore
-        with_underscore_lower = '_' + normalized
-        if with_underscore_lower in self.class_index:
-            return self.class_index[with_underscore_lower]
-
-        return None
 
     def _extract_attribute_name(self, key: str) -> str | None:
         """

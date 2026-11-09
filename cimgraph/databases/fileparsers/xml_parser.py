@@ -10,7 +10,7 @@ from defusedxml.ElementTree import parse
 from cimgraph.core import (get_cim_profile, get_iec61970_552, get_namespace, get_use_units,
                            get_validation_log_level, set_model_scope)
 from cimprofiles.identity import Identity, read_identifier
-from cimgraph.databases import ConnectionInterface, Graph, QueryResponse
+from cimgraph.databases import ConnectionInterface, Graph, QueryResponse, reference_key
 from cimgraph.databases.fileparsers.metadata import HEADER_CLASSES, parse_model_header
 
 _log = logging.getLogger(__name__)
@@ -50,25 +50,22 @@ class XMLFile(ConnectionInterface):
             self.trees = []
             self.roots = []
             self.model_headers = []
+            # A missing or malformed file raises (FileNotFoundError, ParseError, or a
+            # defusedxml error for entities): a partial model would look complete.
             for fname in filenames:
-                try:
-                    tree = parse(fname)
-                    self.trees.append(tree)
-                    self.roots.append(tree.getroot())
-                    # Extract namespaces from this file's XML header and merge.
-                    # Note: 'rdf' is stored with curly braces for backward compat.
-                    for prefix, uri in self.extract_namespaces_from_header(fname).items():
-                        if prefix == 'rdf':
-                            self.rdf = '{' + uri + '}'
-                        self.namespaces[prefix] = uri
-                except:
-                    _log.warning(f'File {fname} not found. Skipping.')
+                tree = parse(fname)
+                self.trees.append(tree)
+                self.roots.append(tree.getroot())
+                # Extract namespaces from this file's XML header and merge.
+                # Note: 'rdf' is stored with curly braces for backward compat.
+                for prefix, uri in self.extract_namespaces_from_header(fname).items():
+                    if prefix == 'rdf':
+                        self.rdf = '{' + uri + '}'
+                    self.namespaces[prefix] = uri
 
             # Back-compat: single-file consumers still read self.tree / self.root.
             self.tree = self.trees[0] if self.trees else None
             self.root = self.roots[0] if self.roots else None
-            if not self.roots:
-                _log.warning('No files could be parsed. Defaulting to empty network graph')
             # rdf:ID/rdf:about text -> object read with it, so edges in a later pass
             # get the identifier each object got under its own part's model scope
             self.object_index = {}
@@ -100,37 +97,32 @@ class XMLFile(ConnectionInterface):
 
         namespaces = {}
 
-        try:
-            # Read the file to extract namespace declarations
-            with open(filename, 'r', encoding='utf-8') as f:
-                # Read only the first few KB to find the root element
-                content = f.read(8192)  # Read first 8KB which should contain the root element
+        # Read the file to extract namespace declarations
+        with open(filename, 'r', encoding='utf-8') as f:
+            # Read only the first few KB to find the root element
+            content = f.read(8192)  # Read first 8KB which should contain the root element
 
-            # Pattern to match xmlns:prefix="uri" or xmlns="uri"
-            # This regex captures both prefixed and default namespaces
-            xmlns_pattern = r'xmlns(?::([a-zA-Z0-9_-]+))?=["\']([^"\']+)["\']'
+        # Pattern to match xmlns:prefix="uri" or xmlns="uri"
+        # This regex captures both prefixed and default namespaces
+        xmlns_pattern = r'xmlns(?::([a-zA-Z0-9_-]+))?=["\']([^"\']+)["\']'
 
-            matches = re.finditer(xmlns_pattern, content)
+        matches = re.finditer(xmlns_pattern, content)
 
-            for match in matches:
-                prefix = match.group(1)  # The namespace prefix (None for default namespace)
-                uri = match.group(2)     # The namespace URI
+        for match in matches:
+            prefix = match.group(1)  # The namespace prefix (None for default namespace)
+            uri = match.group(2)     # The namespace URI
 
-                if prefix:
-                    # Prefixed namespace like xmlns:cim="..."
-                    # Store WITHOUT curly braces for ElementTree find/findall compatibility
-                    namespaces[prefix] = uri
-                    _log.debug(f'Found namespace: {prefix} -> {uri}')
-                else:
-                    # Default namespace like xmlns="..."
-                    namespaces['default'] = uri
-                    _log.debug(f'Found default namespace: {uri}')
+            if prefix:
+                # Prefixed namespace like xmlns:cim="..."
+                # Store WITHOUT curly braces for ElementTree find/findall compatibility
+                namespaces[prefix] = uri
+                _log.debug(f'Found namespace: {prefix} -> {uri}')
+            else:
+                # Default namespace like xmlns="..."
+                namespaces['default'] = uri
+                _log.debug(f'Found default namespace: {uri}')
 
-            _log.info(f'Extracted {len(namespaces)} namespaces from XML header')
-
-        except Exception as e:
-            _log.error(f'Error extracting namespaces: {e}')
-
+        _log.info(f'Extracted {len(namespaces)} namespaces from XML header')
         return namespaces
 
     def disconnect(self):
@@ -229,24 +221,12 @@ class XMLFile(ConnectionInterface):
             cim_class = getattr(self.cim, class_name)
             if 'about' in str(element.attrib.keys()):
                 uri = element.get(f'{self.rdf}about')
-                uri = uri.split(':')[-1]  # Extract UUID from the full URI
-
             elif 'ID' in str(element.attrib.keys()):
                 uri = element.get(f'{self.rdf}ID')
-                uri = uri.split(':')[-1]  # Extract UUID from the full URI
-
             else:
-                _log.error(f'Unable to parse {element}. Elements must be rdf:ID or rdf:about')
-                uri = element
-            # try:
-            #     identifier = UUID(uri.strip('_').lower())
-            # except:
-            #     _log.warning(f'Unable to parse URI. Check the IEC61970-301 serialization')
-
-            # _log.warning(f'{cim_class.__name__}, {uri}')
+                raise ValueError(f'{class_name} element has neither rdf:ID nor rdf:about')
             obj = self.create_object(self.graph, cim_class, uri)
-            self.object_index[obj.uri()] = obj
-            self.object_index[uri] = obj
+            self.object_index[reference_key(uri)] = obj
 
         else:
             _log.log(self.log_level, f'{class_name} not in data profile')
@@ -266,8 +246,7 @@ class XMLFile(ConnectionInterface):
                 uri = element.get(f'{self.rdf}about')
             elif 'ID' in str(element.attrib.keys()):
                 uri = element.get(f'{self.rdf}ID')
-            uri = uri.split(':')[-1]  # Extract UUID from the full URI
-            identifier = self.object_index[uri].identifier
+            identifier = self.object_index[reference_key(uri)].identifier
             for sub_element in element:
                 if 'Identity.identifier' not in sub_element.tag:
                     self.parse_value(sub_element, cim_class, identifier)
@@ -283,16 +262,12 @@ class XMLFile(ConnectionInterface):
         # Check for rdf:datatype attribute
         datatype_uri = sub_element.attrib.get(f'{self.rdf}datatype', None)
 
-        try:
-            edge_uri = sub_element.attrib[f'{self.rdf}resource'].split('uuid:')[-1].strip('#')
-        except:
-            edge_uri = None
+        edge_uri = sub_element.attrib.get(f'{self.rdf}resource')
 
         if edge_uri is not None:
-            # ... existing edge handling code ...
-            # (keep all your existing edge handling logic here)
+            # A resource in a declared namespace is an enumeration value, else an object
             if (edge_uri.split('#')[0] + '#') not in self.namespaces.values():
-                edge_object = self.object_index.get(edge_uri)
+                edge_object = self.object_index.get(reference_key(edge_uri))
                 if edge_object is None:
                     _log.log(self.log_level, f'Object with ID {edge_uri} not found for {sub_tag}')
                     return None
@@ -349,3 +324,4 @@ class XMLFile(ConnectionInterface):
         from cimgraph.utils.write_xml import write_graph_xml
 
         write_graph_xml(graph, self.filename)
+

@@ -20,6 +20,11 @@ class Property(NamedTuple):
     value: Any      # a single value (list attributes yield one Property per item)
 
 def convert_datatype(value, attribute_type):
+    """Convert a text or number value to the attribute's bool, int or float datatype where
+    it parses; anything else is returned unchanged for the caller to validate."""
+    if isinstance(value, CIMUnit):
+        return value  # already a typed quantity; float() would drop its unit
+
     if 'bool' in attribute_type:
         if 'true' in str(value).lower()  or str(value).lower() == '1':
             value = True
@@ -29,16 +34,14 @@ def convert_datatype(value, attribute_type):
     elif 'int' in attribute_type:
         try:
             value = int(float(value))
-        except:
+        except (TypeError, ValueError):
             pass
-            # _log.warning(f'{value} is not an integer')
 
     if 'float' in attribute_type:
         try:
             value = float(value)
-        except:
+        except (TypeError, ValueError):
             pass
-            # _log.warning(f'{value} is not a float')
     return value
 
 def get_attr_field(cim_class:dataclass, attribute:str):
@@ -60,20 +63,24 @@ def get_attr_datatype(cim_class:dataclass, attribute:str) -> list[str]:
             datatype = [datatype]
     return datatype
 
-def validate_attr_datatype(cim_class:dataclass, attribute:str, value:any) -> bool:
+def validate_attr_datatype(cim_class:dataclass, attribute:str, value:any) -> tuple[bool, list[str], any]:
+    """
+    Return (valid, datatypes, value): value converted to the attribute's datatype where
+    it can be (e.g. '1.5' to 1.5), and whether it fits. An object fits an association
+    to any of its base classes, e.g. a Terminal fits an ACDCTerminal attribute.
+    """
     attr_datatype = get_attr_datatype(cim_class, attribute)
     valid = True
 
     value = convert_datatype(value, attr_datatype)
-    value_datatype = value.__class__.__name__
 
-    if value_datatype == 'list':
+    if isinstance(value, list):
         for item in value:
             item_check, _, _ = validate_attr_datatype(cim_class, attribute, item)
             if not item_check:
                 valid = False
     else:
-        valid = value_datatype in attr_datatype
+        valid = any(parent.__name__ in attr_datatype for parent in type(value).__mro__)
 
     return valid, attr_datatype, value
 
@@ -88,13 +95,12 @@ def get_attr_field_type(cim_class:dataclass, attribute:str):
     field_type = attr_field.type.split('[')[0]
     return field_type
 
-def get_attr_inverse(cim_class:dataclass, attribute:str):
-    try:
-        attr_field = get_attr_field(cim_class, attribute)
-        inverse = attr_field.metadata['inverse']
-    except:
-        inverse = None
-    return inverse
+def get_attr_inverse(cim_class:dataclass, attribute:str) -> str | None:
+    """'Class.attribute' of the association's other end, or None if it has none."""
+    attr_field = get_attr_field(cim_class, attribute)
+    if attr_field is None:
+        return None
+    return attr_field.metadata.get('inverse')
 
 def get_attr_serialize(cim_class:dataclass, attribute:str) -> bool:
     attr_field = get_attr_field(cim_class, attribute)

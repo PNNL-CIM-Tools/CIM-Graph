@@ -99,3 +99,46 @@ All of these change UUIDs or comparisons that existing code may rely on:
   `cimgraph.core.attribute_utils.diff_attributes` to compare attribute values.
 - `add_object_to_graph` raises when two different objects share an identifier, instead of
   silently dropping one.
+
+### Data-loss and correctness fixes
+
+Breaking:
+
+- `XMLFile` and `JSONLDFile` raise when a file is missing (`FileNotFoundError`) or malformed
+  (`ParseError`, `json.JSONDecodeError`). They used to log a warning and return an empty or
+  partial graph. For an empty in-memory model, pass `connection=None` to the model.
+- `GraphModel.modify` validates the value against the attribute's datatype and raises
+  `TypeError` (the check never ran before). Text is converted (`'12.5'` to `12.5`), an object
+  fits an association to any of its base classes, and `None` clears an optional attribute.
+- `GraphModel.create`, `modify` and `delete` keep both ends of an association in sync:
+  `create(cim.Terminal, ConductingEquipment=line)` adds the terminal to `line.Terminals`.
+- `GraphModel.find_by_attribute` matches whole values (`'L1'` no longer finds `'L10'`). Use
+  `find_by_condition` for partial matches.
+- `GraphModel.first` returns `None` for a class with no objects (was `[]`), and `next` returns
+  `None` after the last object (it raised `StopIteration`).
+- `GraphModel.from_incremental` raises `ValueError` for a file that is not `.xml`.
+- `cimgraph.utils.write_csv` is removed. It could not run.
+
+Fixes:
+
+- `GraphDBConnection.update` and `upload` send the update to the `/statements` endpoint. They
+  re-ran the last query instead.
+- `get_all_edges` on SPARQL endpoints runs its batches one at a time. Threads shared one
+  connection object and the graph, so batches could be skipped or run twice.
+- `DistributedArea.build_from_topo_message` reads `UnaddressableEquipment`. It read
+  `AddressableEquipment` twice, so unaddressable equipment was lost.
+- The XML reader resolves references written in any identifier style. A reference to an
+  `rdf:about="#_<uuid>"` object was dropped.
+- JSON-LD reading:
+  - Names and timestamps that contain `:` and `.` are kept. They were dropped as failed
+    enumerations. A value is an enumeration only if the attribute's datatype is that enumeration.
+  - Typed literals (`{"@value": "2.5", "@type": "cim:Length.km"}`) are read, with units.
+  - References to non-UUID `@id`s resolve.
+  - `JSONLDFile(filename=[...])` reads a list of files into one graph, like `XMLFile`.
+- Incrementals:
+  - Recording a change from `None` to an object no longer raises.
+  - Unit and list values can be written.
+- Every `GraphModel`, including `DistributedArea`, starts with empty `forwardDifferences` and
+  `reverseDifferences`.
+- `Identity.__str__` (cimprofiles) builds its JSON in one step, so a name containing `"` or `[`
+  no longer breaks `pprint` and dumps.

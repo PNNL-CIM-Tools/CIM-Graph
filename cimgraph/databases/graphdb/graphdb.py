@@ -52,4 +52,4 @@ class GraphDBConnection(SPARQLEndpointConnection):
         updater = SPARQLWrapper(self.url.rstrip('/') + '/statements')
         updater.setQuery(update_message)
         updater.setMethod(POST)
-        return self.connection_obj.query()
+        return updater.query()

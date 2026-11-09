@@ -1,10 +1,8 @@
 from __future__ import annotations
 
-import concurrent.futures
 import json
 import logging
 import math
-import os
 from abc import abstractmethod
 from collections import defaultdict
 from uuid import UUID
@@ -451,22 +449,14 @@ class SPARQLEndpointConnection(ConnectionInterface):
             graph (dict): Graph structure.
             cim_class (type): The CIM class for which to retrieve edges.
         """
-        def process_batch(eq_mrids):
+        # Batches run one at a time: they share one connection object (setQuery, then
+        # query) and write to the shared graph, so threads would race on both.
+        uuid_list = list(graph[cim_class].keys())
+        for index in range(math.ceil(len(uuid_list) / 100)):
+            eq_mrids = uuid_list[index * 100:(index + 1) * 100]
             sparql_message = sparql.get_all_edges_sparql(graph, cim_class, eq_mrids)
             query_output = self.execute(sparql_message)
             self.edge_query_parser(query_output, graph, cim_class)
-
-        # Create list of all nodes within graph to be expanded
-        uuid_list = list(graph[cim_class].keys())
-        # Parallel process in batches of 100 uuids per query
-        num_batches = math.ceil(len(uuid_list) / 100)
-        eq_mrids_batches = [uuid_list[i * 100:(i + 1) * 100] for i in range(num_batches)]
-
-        with concurrent.futures.ThreadPoolExecutor(max_workers=os.cpu_count()) as executor:
-            futures = [executor.submit(process_batch, batch)
-                      for batch in eq_mrids_batches]
-            for future in concurrent.futures.as_completed(futures):
-                future.result()
 
     def get_all_attributes(self, graph: Graph, cim_class: type) -> None:
         """

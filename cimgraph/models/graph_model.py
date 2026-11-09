@@ -29,8 +29,9 @@ class GraphModel():
     distributed: bool = field(default=False)
     graph: dict[type, dict[UUID, object]] = field(default_factory=dict)
     cim: ModuleType = field(default=None)
-    incrementals: defaultdict[str, dict[str, any]] = field(default_factory=defaultdict)
-    __class_iter__: defaultdict[type, iter] = field(default_factory=defaultdict)
+    incrementals: dict[str, dict[type, dict]] = field(default_factory=lambda: {
+        'forwardDifferences': defaultdict(dict), 'reverseDifferences': defaultdict(dict)})
+    __class_iter__: dict[type, Iterator] = field(default_factory=dict)
     __mrid_index__: dict[str, Identity] = field(default_factory=dict)
     __mrid_count__: int = field(default=-1)  # objects in graph when the index was built
     # System bases for per-unit conversion, filled by set_default_bases once self.cim and the graph are known
@@ -194,21 +195,18 @@ class GraphModel():
         '''Iterate through all nodes of a specific type with proper typing.'''
         return iter(self.graph.get(cim_class, {}).values())
 
-    def first(self, cim_class:type):
-        '''Get first '''
-        values = self.list_by_class(cim_class)
-        if values:
-            self.__class_iter__[cim_class] = iter(values)
-            return next(self.__class_iter__[cim_class])
-        else:
-            return []
+    def first(self, cim_class:type[T]) -> T | None:
+        '''The first object of the class (in list_by_class order), or None if there are
+        none. Restarts the iteration that next() continues.'''
+        self.__class_iter__[cim_class] = iter(self.list_by_class(cim_class))
+        return self.next(cim_class)
 
-    def next(self, cim_class:type[T]) -> object[T]:
-        '''Get next'''
-        if not self.__class_iter__[cim_class]:
+    def next(self, cim_class:type[T]) -> T | None:
+        '''The object after the one last returned by first() or next(), or None after
+        the last one. Starts with first() if the class has not been iterated yet.'''
+        if cim_class not in self.__class_iter__:
             return self.first(cim_class)
-        else:
-            return next(self.__class_iter__[cim_class])
+        return next(self.__class_iter__[cim_class], None)
 
 
     # -------------------------------------------------------------------------
@@ -253,13 +251,16 @@ class GraphModel():
         ]
 
     def find_by_attribute(self, cim_class:type[T], attribute:str, value:any) -> list[T]:
-        '''Searches the graph to find all object instances with matching value'''
+        '''Objects of the class whose attribute equals value (converted to the attribute's
+        datatype, so '12.5' finds 12.5), or, for a list attribute, contains it. A number
+        matches a unit attribute in its base SI unit. Use find_by_condition for partial
+        matches.'''
         matching = []
         valid, attr_datatype, value = validate_attr_datatype(cim_class, attribute, value)
         if not valid:
             _log.warning(f'{attribute} with {value} should have datatype {attr_datatype}')
         for cim_object in self.graph.get(cim_class, {}).values():
-            if str(value) in str(getattr(cim_object, attribute)):
+            if _attribute_matches(getattr(cim_object, attribute), value):
                 matching.append(cim_object)
         return matching
 
@@ -307,8 +308,10 @@ class GraphModel():
         # Create and return an instance of the dataclass
         new_object:Identity = cim_class(**kwargs)
 
-        # Add to graph
+        # Add to graph, then point the other end of each given association at it
         self.add_to_graph(new_object)
+        for attribute, value in kwargs.items():
+            sync_inverse_references(new_object, attribute, None, value)
 
         # Add to list of incremental messages
         new_obj_incremental(new_object, self.incrementals)
@@ -325,8 +328,9 @@ class GraphModel():
         '''
         Create new object from incremental message
         '''
-        if '.xml' in filename.lower():
-            message = read_incremental_xml(filename)
+        if not filename.lower().endswith('.xml'):
+            raise ValueError(f'{filename}: only RDF/XML difference files (.xml) can be read')
+        message = read_incremental_xml(filename)
         valid_message = validate_incremental(message, self.connection, self.graph)
         # TODO: Delete objects from incremental
         # TODO: Add objects from incremental
@@ -345,39 +349,11 @@ class GraphModel():
         if obj is None:
             return
 
-        cim_class = obj.__class__
+        # Remove every reference to the object from the other end of its associations
+        for attr_field in fields(obj):
+            sync_inverse_references(obj, attr_field.name, getattr(obj, attr_field.name), None)
 
-        # Step 1: Find and clean up all references to this object
-        obj_id = obj.identifier
-        if obj_id is None:
-            obj_id = id(obj)  # Fallback to using object id if no mRID exists
-
-        # First, iterate over fields of the object to find inverse references
-        for field in fields(obj):
-            # Check if this field has metadata about inverse relationships
-            if field.metadata.get('type') == 'Association' and 'inverse' in field.metadata:
-                # Get the value of this field
-                value = getattr(obj, field.name)
-
-                if value is not None:
-                    try:
-                        inverse_ref = field.metadata['inverse']
-                        target_attr = inverse_ref.split('.')[1]
-
-                        # Handle different cardinality cases
-                        if isinstance(value, (list, set)):
-                            # Many-to-many or one-to-many
-                            for related_obj in value:
-                                clean_inverse_reference(related_obj, target_attr, obj)
-                        else:
-                            # One-to-one or many-to-one
-                            clean_inverse_reference(value, target_attr, obj)
-                    except:
-                        _log.warning(f'Error cleaning inverse reference for {field.name} in {cim_class.__name__}')
-
-
-        if obj_id in self.graph[cim_class]:
-            del self.graph[cim_class][obj_id]
+        self.graph.get(obj.__class__, {}).pop(obj.identifier, None)
 
     def modify(self, cim_object:Identity, attribute:str, value:any, incremental_file:str=None) -> None:
         if not isinstance(cim_object, Identity):
@@ -388,9 +364,13 @@ class GraphModel():
             raise TypeError(f"{cim_class.__name__} not in CIM profile")
         if attribute not in cim_class.__dataclass_fields__:
             raise TypeError(f"{cim_class.__name__}.{attribute} not in CIM profile")
-        cim_class = cim_object.__class__
-        if not validate_attr_datatype(cim_class, attribute, value):
-            raise TypeError(f'{value} does not match datatype of {attribute}')
+        if value is None:
+            if not cim_class.__dataclass_fields__[attribute].type.startswith('Optional'):
+                raise TypeError(f'{cim_class.__name__}.{attribute} cannot be None')
+        else:
+            valid, attr_datatype, value = validate_attr_datatype(cim_class, attribute, value)
+            if not valid:
+                raise TypeError(f'{value!r} does not match datatype {attr_datatype} of {attribute}')
 
         # Get old value for reverse difference
         base_value = self.incrementals['reverseDifferences'].get(cim_class, {}).get(cim_object.uri(), {}).get(attribute, {})
@@ -399,8 +379,10 @@ class GraphModel():
         else:
             old_value = getattr(cim_object, attribute)
 
-        # Set new value
+        # Set new value, and move the other end of an association
+        current_value = getattr(cim_object, attribute)
         setattr(cim_object, attribute, value)
+        sync_inverse_references(cim_object, attribute, current_value, value)
         # Create incremental
         modify_incremental(cim_object, attribute, old_value, value, self.incrementals)
         # Write single incremental to file if specificied
@@ -457,6 +439,14 @@ class GraphModel():
                 _log.warning(f'Unknown object of type {type(obj)}')
         dump = json.dumps(dump, indent=4)
         return dump
+
+
+def _attribute_matches(attribute_value: any, value: any) -> bool:
+    if isinstance(attribute_value, list):
+        return value in attribute_value
+    if isinstance(attribute_value, CIMUnit) and isinstance(value, (int, float)):
+        return float(attribute_value) == value
+    return attribute_value == value
 
 
 def _object_count(graph: Graph) -> int:

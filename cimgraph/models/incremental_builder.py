@@ -230,12 +230,15 @@ def modify_incremental(cim_object:Identity, attribute:str, old_value:any, new_va
 
     add_to_incremental(cim_class, uuid, differences)
 
-    if isinstance(new_value, Identity):
-        differences['forwardDifferences'][cim_class][uuid][attribute] = new_value.uri()
-        differences['reverseDifferences'][cim_class][uuid][attribute] = old_value.uri()
-    else:
-        differences['forwardDifferences'][cim_class][uuid][attribute] = new_value
-        differences['reverseDifferences'][cim_class][uuid][attribute] = old_value
+    differences['forwardDifferences'][cim_class][uuid][attribute] = _difference_value(new_value)
+    differences['reverseDifferences'][cim_class][uuid][attribute] = _difference_value(old_value)
+
+
+def _difference_value(value: any) -> any:
+    """A referenced object is recorded by its URI; None and other values as they are."""
+    if isinstance(value, Identity):
+        return value.uri()
+    return value
 
 
 
@@ -244,7 +247,7 @@ def modify_incremental(cim_object:Identity, attribute:str, old_value:any, new_va
 
 def incremantal_row(cim_class:type, uri:str, difference:dict) -> str:
 
-    if set(difference.values()) == {None}:
+    if all(value is None for value in difference.values()):
         return ''
 
     # Difference models refer to existing objects, so always use rdf:about
@@ -264,56 +267,91 @@ def write_incremental(reverse:dict, forward:dict, filename:str):
     '''
     indent = '  '
 
-    f = open(filename, 'w', encoding='utf-8')
     header = '<?xml version="1.0" encoding="utf-8"?>\n'
     header += '<rdf:RDF'
     for prefix in NAMESPACES:
         header += f' xmlns:{prefix}="{NAMESPACES[prefix]}"'
     header += '>\n'
-    f.write(header)
-    f.write('<dm:DifferenceModel xmlns:dm="http://iec.ch/2002/schema/CIM_difference_model#">\n')
-    # f.write('<dm:DifferenceModel about="">\n')
-    f.write(indent + '<dm:forwardDifferences rdf:parseType="Statements">\n')
-    if forward is not None:
-        for cim_class in forward:
-            for uri in forward[cim_class]:
-                row = incremantal_row(cim_class, uri, forward[cim_class][uri])
-                f.write(row)
-    f.write(indent + '</dm:forwardDifferences>\n')
-    f.write(indent + '<dm:reverseDifferences rdf:parseType="Statements">\n')
-    if reverse is not None:
-        for cim_class in reverse:
-            for uri in reverse[cim_class]:
-                row = incremantal_row(cim_class, uri, reverse[cim_class][uri])
-                f.write(row)
-    f.write(indent + '</dm:reverseDifferences>\n')
-    f.write('</dm:DifferenceModel>\n')
-    f.write('</rdf:RDF>')
-    f.close()
+    with open(filename, 'w', encoding='utf-8') as f:
+        f.write(header)
+        f.write('<dm:DifferenceModel xmlns:dm="http://iec.ch/2002/schema/CIM_difference_model#">\n')
+        f.write(indent + '<dm:forwardDifferences rdf:parseType="Statements">\n')
+        if forward is not None:
+            for cim_class in forward:
+                for uri in forward[cim_class]:
+                    f.write(incremantal_row(cim_class, uri, forward[cim_class][uri]))
+        f.write(indent + '</dm:forwardDifferences>\n')
+        f.write(indent + '<dm:reverseDifferences rdf:parseType="Statements">\n')
+        if reverse is not None:
+            for cim_class in reverse:
+                for uri in reverse[cim_class]:
+                    f.write(incremantal_row(cim_class, uri, reverse[cim_class][uri]))
+        f.write(indent + '</dm:reverseDifferences>\n')
+        f.write('</dm:DifferenceModel>\n')
+        f.write('</rdf:RDF>')
 
 
 
 def clean_inverse_reference(related_obj: any, attr_name: str, obj_to_remove: any) -> None:
     """
-    Clean up an inverse reference from a related object to the object being deleted.
-
-    Args:
-        related_obj: The object that might have references to the object being deleted
-        attr_name: The attribute name on the related object that contains the reference
-        obj_to_remove: The object being deleted
+    Remove obj_to_remove from related_obj.attr_name: from the list, or clear the reference.
+    A related value that is not a CIM object, or whose class has no attr_name in this
+    profile (CIMTool profiles may keep only one end of an association), is left alone.
     """
-    if related_obj is None:
+    if not isinstance(related_obj, Identity) or attr_name not in related_obj.__dataclass_fields__:
         return
-    try:
-        related_value = getattr(related_obj, attr_name)
+    related_value = getattr(related_obj, attr_name)
+    if isinstance(related_value, list):
+        if obj_to_remove in related_value:
+            related_value.remove(obj_to_remove)
+    elif related_value is obj_to_remove:
+        setattr(related_obj, attr_name, None)
 
-        # Handle collection (list/set) references
-        if isinstance(related_value, list) and obj_to_remove in related_value:
-            related_value.remove(obj_to_remove)
-        elif isinstance(related_value, set) and obj_to_remove in related_value:
-            related_value.remove(obj_to_remove)
-        # Handle direct references
-        elif related_value is obj_to_remove:
-            setattr(related_obj, attr_name, None)
-    except Exception as e:
-        _log.warning(f'Unable to remove {attr_name} from {related_obj} and {obj_to_remove} due to error \n {e}')
+
+def add_inverse_reference(related_obj: any, attr_name: str, obj_to_add: Identity,
+                          attribute: str) -> None:
+    """
+    Make related_obj.attr_name refer to obj_to_add, the inverse of obj_to_add.attribute
+    referring to related_obj. A single-valued end that referred to another object is moved,
+    and that object's attribute no longer lists related_obj. Same skip rules as
+    clean_inverse_reference.
+    """
+    if not isinstance(related_obj, Identity) or attr_name not in related_obj.__dataclass_fields__:
+        return
+    if 'list' in related_obj.__dataclass_fields__[attr_name].type:
+        related_list = getattr(related_obj, attr_name)
+        if obj_to_add not in related_list:
+            related_list.append(obj_to_add)
+        return
+    previous = getattr(related_obj, attr_name)
+    if previous is not None and previous is not obj_to_add:
+        clean_inverse_reference(previous, attribute, related_obj)
+    setattr(related_obj, attr_name, obj_to_add)
+
+
+def sync_inverse_references(obj: Identity, attribute: str, old_value: any, new_value: any) -> None:
+    """
+    Update the inverse end of association obj.attribute after it changed from old_value
+    to new_value (each None, an object or a list of objects). No-op for attributes that
+    are not associations with an inverse.
+    """
+    attr_field = obj.__dataclass_fields__[attribute]
+    inverse = attr_field.metadata.get('inverse')
+    if inverse is None:
+        return
+    inverse_attr = inverse.split('.')[1]
+    old_objects = _as_list(old_value)
+    new_objects = _as_list(new_value)
+    for related in old_objects:
+        if not any(related is new for new in new_objects):
+            clean_inverse_reference(related, inverse_attr, obj)
+    for related in new_objects:
+        add_inverse_reference(related, inverse_attr, obj, attribute)
+
+
+def _as_list(value: any) -> list:
+    if value is None:
+        return []
+    if isinstance(value, list):
+        return list(value)
+    return [value]
