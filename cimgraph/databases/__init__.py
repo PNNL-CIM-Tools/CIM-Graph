@@ -6,6 +6,7 @@ import os
 import re
 from abc import ABC, abstractmethod
 from dataclasses import dataclass, field, is_dataclass
+from enum import Enum
 from functools import cache
 from uuid import UUID
 
@@ -138,6 +139,20 @@ class ConnectionInterface(ABC):
 
         self._check_attribute_cache[cache_key] = association
         return association
+
+    def profile_enum(self, class_name: str, value: str) -> Enum | None:
+        """
+        Return the member of the profile enumeration class_name with this value, or None
+        if class_name is not an enumeration in the profile. Names come from the data
+        being read, so only Enum classes listed in the profile are ever looked up.
+        Raises ValueError if value is not a member of the enumeration.
+        """
+        if class_name not in self.cim.__all__:
+            return None
+        enum_class = getattr(self.cim, class_name)
+        if not (isinstance(enum_class, type) and issubclass(enum_class, Enum)):
+            return None
+        return enum_class(value)
 
 
     def create_value(self, graph: dict[type, dict[str, object]],

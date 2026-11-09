@@ -13,13 +13,9 @@ def get_all_nodes_sparql(container: object) -> str:
         query_message: query string that can be used in blazegraph connection or STOMP client
     """
     container_class = container.__class__.__name__
-    container_mRID = container.mRID
     namespace = get_namespace()
 
-    try:
-        container_uri = rdf_identifier(container)
-    except:
-        container_uri = container.mRID
+    container_uri = rdf_identifier(container)
 
     if get_iec61970_552() == '552-NEW':
         split = 'urn:uuid:'

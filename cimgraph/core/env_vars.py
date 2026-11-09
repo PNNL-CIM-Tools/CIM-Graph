@@ -24,8 +24,6 @@ DEFAULT_URL = 'http://localhost:8889/bigdata/namespace/kb/sparql'
 DEFAULT_DATABASE = 'powergridmodel'
 DEFAULT_HOST = 'localhost'
 DEFAULT_PORT = 61613
-DEFAULT_USERNAME = 'system'
-DEFAULT_PASSWORD = 'manager'
 DEFAULT_IEC61970_301 = 8
 DEFAULT_IEC61970_552 = '552-NEW'
 IEC61970_552_STYLES = ('552-NEW', '552-LEGACY', 'CGMES')
@@ -202,27 +200,23 @@ def get_use_units() -> bool:
 @cache
 def get_username() -> str:
     """
-    Returns the CIM profile to be used for object graph
-    Returns:
-        username: str
+    Returns the database username from CIMG_USERNAME. There is no default: raises
+    ValueError if it is not set, rather than trying a well-known username.
     """
     username = os.getenv('CIMG_USERNAME')
-    if username is None:
-        _log.warning('CIMG_USERNAME environment variable is not set.')
-        username = DEFAULT_USERNAME
+    if not username:
+        raise ValueError('CIMG_USERNAME environment variable is not set')
     return username
 
 @cache
 def get_password() -> str:
     """
-    Returns the CIM profile to be used for object graph
-    Returns:
-        password: str
+    Returns the database password from CIMG_PASSWORD. There is no default: raises
+    ValueError if it is not set, rather than trying a well-known password.
     """
     password = os.getenv('CIMG_PASSWORD')
-    if password is None:
-        _log.warning('CIMG_PASSWORD environment variable is not set.')
-        password = DEFAULT_PASSWORD
+    if not password:
+        raise ValueError('CIMG_PASSWORD environment variable is not set')
     return password
 
 @cache

@@ -1,6 +1,7 @@
 import base64
 import enum
 import logging
+import re
 import sys
 from dataclasses import Field, fields, is_dataclass
 
@@ -13,6 +14,10 @@ _log = logging.getLogger(__name__)
 
 
 INDENT = '    '
+
+# Path steps: 'attr[index]' or '[index]' on objects, '__subclasses__()[index]' on classes
+_INDEXED_STEP = re.compile(r'(\w*)\[(-?\d+)\]')
+_SUBCLASS_STEP = re.compile(r'__subclasses__\(\)\[(-?\d+)\]')
 WRAP = 22
 
 
@@ -336,6 +341,20 @@ def get_mermaid(root: object | type | list, show_attributes: bool = True, show_i
     return ''
 
 
+def _object_path_step(edge: object, step: str) -> object:
+    """Follow one path step from an object ('attr' or 'attr[index]') or a list ('[index]')."""
+    indexed = _INDEXED_STEP.fullmatch(step)
+    if isinstance(edge, list):
+        if indexed is None or indexed.group(1):
+            raise ValueError(f'Path step {step!r} on a list must be "[index]"')
+        return edge[int(indexed.group(2))]
+    name = indexed.group(1) if indexed else step
+    if name not in edge.__dataclass_fields__:
+        raise ValueError(f'{edge.__class__.__name__} has no attribute {name!r} in path')
+    value = getattr(edge, name)
+    return value[int(indexed.group(2))] if indexed else value
+
+
 def add_object_path_mermaid(root: object, path: str, mermaid: str) -> str:
     """Add a path representation to an existing mermaid diagram of an object."""
     edge = root
@@ -346,14 +365,9 @@ def add_object_path_mermaid(root: object, path: str, mermaid: str) -> str:
 
     for attr in path:
         if isinstance(edge, Identity):
-            if '[' in attr:
-                attr_list = attr.split('[')
-                attr_value = getattr(edge, attr_list[0])
-                next_edge = eval(f'attr_value[{attr_list[1]}')
-            else:
-                next_edge = getattr(edge, attr)
+            next_edge = _object_path_step(edge, attr)
         elif isinstance(edge, list):
-            next_edge = eval(f'edge{attr}')
+            next_edge = _object_path_step(edge, attr)
             edge = previous_edge
             attr = previous_attr
 
@@ -380,10 +394,13 @@ def add_class_path_mermaid(root: type, path: str | list[str], mermaid: str,
     if isinstance(path, str):
         path = path.split('.')
     for attr in path:
-        if '__subclasses__' in attr:
-            next_class = eval(f'edge.{attr}')
+        subclass = _SUBCLASS_STEP.fullmatch(attr)
+        if subclass is not None:
+            next_class = edge.__subclasses__()[int(subclass.group(1))]
             mermaid += INDENT + f'{edge.__name__} <|-- {next_class.__name__} : inherits from\n'
         else:
+            if attr not in edge.__dataclass_fields__:
+                raise ValueError(f'{edge.__name__} has no attribute {attr!r} in path')
             mermaid += class_assc_mermaid(edge, attr, serialize_only=serialize_only)
             next_class_name = _inner_type(edge.__dataclass_fields__[attr].type)
             next_class = getattr(sys.modules[edge.__module__], next_class_name)

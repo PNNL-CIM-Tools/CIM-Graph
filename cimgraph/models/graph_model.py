@@ -458,31 +458,6 @@ class GraphModel():
         dump = json.dumps(dump, indent=4)
         return dump
 
-    # -------------------------------------------------------------------------
-    # Methods for SHACL validation and access control GraphModel.graph
-    # -------------------------------------------------------------------------
-
-    def export_with_shacl(self, shacl_file: str) -> 'GraphModel':
-        """Export a filtered graph based on SHACL permissions"""
-        # Imported here: cimgraph.shacl needs rdflib, the optional `rdflib` extra
-        from cimgraph.shacl import SHACLExportFilter
-        export_filter = SHACLExportFilter(shacl_file, self.cim)
-        return export_filter.create_filtered_graph(self)
-
-    def export_with_shacl_and_serialize(self, shacl_file: str, output_file: str,
-                           format: str = 'xml') -> None:
-        """Export and serialize filtered graph in one step"""
-        filtered_graph = self.export_with_shacl(shacl_file)
-
-        if format.lower() == 'xml':
-            from cimgraph.utils import write_xml
-            write_xml(filtered_graph, output_file)
-        elif format.lower() in ['jsonld', 'json-ld']:
-            from cimgraph.utils import write_json_ld
-            write_json_ld(filtered_graph, output_file)
-        else:
-            raise ValueError(f"Unsupported format: {format}")
-
 
 def _object_count(graph: Graph) -> int:
     return sum(len(objects) for objects in graph.values())

@@ -58,6 +58,30 @@ Owns: `queries/`, `core/serialization.py` escaping, `fileparsers/metadata.py`, `
 `models/incremental_builder.py` (validation parts), `shacl/shacl_exporter.py`, `.github/workflows/`,
 `docker-compose.yml`, `core/env_vars.py` (credentials).
 
+**Status (2026-11-08, uncommitted on `cimprofiles-0.6`): done in the repo. Regression tests are
+in `tests/test_security.py` (45 tests).**
+
+| Item | Outcome |
+|---|---|
+| 1.1 | New `core/validation.py`: `validate_identifier` / `validate_attribute`, called in the SPARQL and Cypher builders that interpolate raw strings. Removed the `container.mRID` bare-except fallbacks. Object-derived identifiers are always UUID text, so they were already safe. **Cypher `$param` binding is deferred to WS3b:** reads go through `execute_read`, and `execute_with_params` uses `execute_write`. |
+| 1.2 | `validate_incremental` / `modify_from_incremental` rewritten around `_graph_object`, `_difference_object` and `_converted_value`. No per-URI state can leak between objects. Attributes are checked against the class and its MRO, values are converted, and `modify` raises on unvalidated input. Also fixed 2.5, 2.6's `NAMESPACES` mutation and env-profile validation, and the 2-tuple unpack bug in `validate_attr_datatype`'s list branch. |
+| 1.3 | `resolve_part_paths` raises `ValueError` when an `accessURL` leaves the metadata directory. Checked before `exists()`, so files outside it can't be probed either. |
+| 1.4 | `eval()` removed from `utils/mermaid.py`. Path steps are parsed by regex; only dataclass fields, `[int]` and `__subclasses__()[int]` are allowed. |
+| 1.5 | String references must be valid IRI text (`validate_iri_text`). `rdf:resource` values are XML-escaped, and SPARQL literals escape `\n`/`\r`. |
+| 1.6 | All six parser enum lookups go through `ConnectionInterface.profile_enum`, which only returns members of `Enum` classes in the profile's `__all__`. |
+| 1.7 | `get_username` / `get_password` raise when unset (no `system`/`manager`). GridAPPS-D passes credentials to `GridAPPSD(...)` instead of `os.environ`. The compose file binds to localhost, requires Neo4j auth, and turns APOC file import/export off. |
+| 1.8 | **Resolved by removal:** `cimgraph/shacl/` (the exporter and catalog processor) and `GraphModel.export_with_shacl*` were deleted, at the maintainer's decision (the ABAC experiment is retired). Also closes 2.11. |
+| 1.9 | `RDFlibConnection` requires a local file and parses it as RDF/XML. Also closes 2.7 for rdflib (no more "not found → empty graph"). |
+| 1.10 | Trusted Publishing via `uv publish --trusted-publishing always`, in a separate `publish` job with `environment: pypi` and `id-token: write`. Top-level `contents: read`; all actions pinned to commit SHAs; tj-actions replaced by `git diff`. **Maintainer action is required on PyPI and GitHub** (see below). |
+| 1.11 | Lock upgraded: urllib3 2.8.0, certifi, virtualenv 21.15.6, filelock, tornado. `pip-audit` is clean on Python ≥3.11. On 3.10, tornado 6.5.10 and filelock 4.1.0 have no fixed release; both come only through the `dev` extra. |
+| 1.12 | Verified: every value is parameterized, and table and column names come from `information_schema` or profile metadata checked against the schema. Hardening suggestion for the MySQL owner: reject names containing `"` or `'` in `build_schema`. |
+
+Maintainer actions for 1.10, before the next release run:
+1. On PyPI (`cim-graph` → Publishing), add a GitHub trusted publisher for each of
+   `release.yml`, `dev-pre-release.yml` and `dispatch-pypi.yml`, with environment `pypi`.
+2. In GitHub repo settings, create the `pypi` environment (optionally with required reviewers).
+3. Delete the `PYPI_TOKEN` repository secret and revoke the token on PyPI.
+
 ### 1.1 Query injection (High)
 - **Where:**
   - `queries/sparql/get_object.py:32` and `get_triple.py:31` (`VALUES ?identifier {"%s"}' % mRID`)
@@ -188,13 +212,13 @@ the header code), `models/` (except the incremental validation in WS1), `shacl/s
 | 2.2 | `get_all_edges` thread race: batches share one stateful SPARQLWrapper (`setQuery` then `query`), and threads write unlocked to shared graph dicts | `sparql_endpoint.py:465` | Run sequentially (simplest), or give each worker its own SPARQLWrapper and merge results on the main thread | Fake `_execute_raw_query` that records queries: every batch is run exactly once |
 | 2.3 | `DistributedArea` loops over `AddressableEquipment` twice, so unaddressable equipment is lost | `models/distributed_area.py` (4 occurrences) | The second loop of each pair uses `UnaddressableEquipment` | Topology-message fixture (`tests/topo_message.json`) |
 | 2.4 | `GraphModel.modify` never validates: `validate_attr_datatype` returns a 3-tuple, which is always truthy | `models/graph_model.py:310`, `core/attribute_utils.py:63` | `valid, _, value = validate_attr_datatype(...)`; fix the `-> bool` annotation | `modify(line, 'length', 'not-a-number')` raises |
-| 2.5 | `.strip('urn:uuid:')` strips characters, not the prefix, so UUIDs ending in those characters get truncated | `models/incremental_builder.py:71` | `removeprefix('urn:uuid:')` | A UUID ending in `d` survives |
+| 2.5 | **Done in WS1 (1.2).** `.strip('urn:uuid:')` strips characters, not the prefix, so UUIDs ending in those characters get truncated | `models/incremental_builder.py:71` | `removeprefix('urn:uuid:')` | A UUID ending in `d` survives |
 | 2.6 | Incremental builder: mutates global `NAMESPACES['dm']`; validates against the env profile instead of `connection.cim`; `old_value.uri()` on `None`; `set()` of unhashable values; `open()` without a context manager | `models/incremental_builder.py` | Local namespace copy, `connection.cim`, None guard, list instead of set, `with open` | Round-trip `tests/test_models` incremental fixture |
 | 2.7 | File parsers treat every failure as "not found" and return an empty graph | `xml_parser.py:65`, `json_ld_parser.py` connect, `rdflib.py` load | Remove the bare except and let `FileNotFoundError` / `ParseError` / `EntitiesForbidden` raise | Malformed file raises; missing file raises |
 | 2.8 | XML `rdf:about="#_<uuid>"` fails: `parse_nodes` doesn't strip `#` but `parse_edges` does | `xml_parser.py::parse_nodes` | Normalize through one helper (4.1) | 552-OLD fixture with `rdf:ID` + `rdf:about="#_..."` loads |
 | 2.9 | JSON-LD drops any string containing both `:` and `.` (names, timestamps) as a failed enum; typed literals (`{"@value","@type"}`) are dropped | `json_ld_parser.py:253` and the reference branch | Enums only when the value matches `<Enum>.<member>` and the enum is in the profile (1.6); handle `@value`/`@type` and units | `"Line 1: 12.47kV"` and an ISO timestamp round-trip |
 | 2.10 | `JSONLDFile` annotated `str \| list[str]` but raises on a list | `json_ld_parser.py:18,31` | Support lists like `XMLFile` | Two-file load |
-| 2.11 | `format='xml'` calls `_create_xml_catalog`, which doesn't exist | `shacl/shacl_catalog_processor.py:170` | Implement it or remove the option | |
+| 2.11 | **Closed: `cimgraph/shacl/` removed in WS1 (1.8).** `format='xml'` calls `_create_xml_catalog`, which doesn't exist | `shacl/shacl_catalog_processor.py:170` | Implement it or remove the option | |
 | 2.12 | `build_merged_profiles.py` broke when it moved into the package: `_REPO_ROOT` resolves to `cimgraph/`; imports undeclared `yaml`; mutates `sys.path` | `data_profile/build_merged_profiles.py:35-38` | Fix paths, make it a dev-only tool or declare pyyaml, drop the `sys.path` hack; also `merge.py:29` still points at `scripts/` | Run the CLI |
 | 2.13 | `write_csv` is broken (wrong kwarg, `.values()` on a str, writes to cwd, `os.remove` under a bare except) | `utils/write_csv.py` | Remove it before 1.0 (nobody can be using it) | |
 | 2.14 | `Identity.__str__` builds JSON by string replace, so a `"` in a name breaks `pprint` and dumps | `data_profile/identity.py` `__str__` | Build a dict and `json.dumps` it | Name containing `"[` |

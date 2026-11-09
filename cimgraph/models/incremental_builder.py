@@ -2,16 +2,15 @@ from __future__ import annotations
 
 import logging
 from collections import defaultdict
-from dataclasses import fields, is_dataclass
+from dataclasses import fields
 from uuid import UUID
 
 from defusedxml.ElementTree import parse
 
 from cimgraph.core.attribute_utils import field_properties, validate_attr_datatype
 from cimgraph.core.serialization import property_to_xml, rdf_id_text, rdf_xml_identifiers
-from cimprofiles.identity import Identity
-from cimgraph.databases import (ConnectionInterface, get_cim_profile, get_iec61970_552,
-                                get_namespace)
+from cimprofiles.identity import Identity, as_uuid, normalize_identifier
+from cimgraph.databases import ConnectionInterface, get_iec61970_552, get_namespace
 
 _log = logging.getLogger(__name__)
 
@@ -46,29 +45,28 @@ def read_incremental_xml(filename) -> dict:
     # Parse the XML string
     root = parse(filename)
 
-
-    # Find the DifferenceModel element
-    diff_model = root.find('.//dm:DifferenceModel', NAMESPACES)
+    # Find the DifferenceModel element, falling back to the alternate namespace.
+    # Use a local copy so the fallback doesn't change NAMESPACES for later reads and writes.
+    namespaces = dict(NAMESPACES)
+    diff_model = root.find('.//dm:DifferenceModel', namespaces)
     if diff_model is None:
-        # Fall back to the alternate namespace in the XML
-        NAMESPACES['dm'] = 'http://iec.ch/TC57/61970-552/DifferenceModel#'
-        diff_model = root.find('.//dm:DifferenceModel', NAMESPACES)
+        namespaces['dm'] = 'http://iec.ch/TC57/61970-552/DifferenceModel#'
+        diff_model = root.find('.//dm:DifferenceModel', namespaces)
 
     if diff_model is None:
         raise ValueError('Could not find DifferenceModel element')
 
     # Process forward and reverse differences
     for diff_type in ['forwardDifferences', 'reverseDifferences']:
-        diff_element = diff_model.find(f'dm:{diff_type}', NAMESPACES)
+        diff_element = diff_model.find(f'dm:{diff_type}', namespaces)
 
         if diff_element is not None:
             # Find all Description elements under this difference type
-            descriptions = diff_element.findall('rdf:Description', NAMESPACES)
+            descriptions = diff_element.findall('rdf:Description', namespaces)
 
             for desc in descriptions:
-                # Get the URI (remove the leading '#' if present)
-                uri = desc.get(f'{{{NAMESPACES["rdf"]}}}about')
-                uri = uri.strip('#').strip('urn:uuid:')
+                # Get the identifier without its '#', '_' or 'urn:uuid:' serialization prefix
+                uri = normalize_identifier(desc.get(f'{{{namespaces["rdf"]}}}about'))
 
                 # Process each attribute in the Description
                 for child in desc:
@@ -85,135 +83,88 @@ def read_incremental_xml(filename) -> dict:
 
 
 
+def _graph_object(uri: str, graph: dict[type, dict[UUID, object]]) -> object | None:
+    """Return the graph object whose identifier is the difference URI, if any."""
+    identifier = as_uuid(uri)
+    for objects in graph.values():
+        if identifier in objects:
+            return objects[identifier]
+    return None
+
+
+def _difference_object(uri: str, connection: ConnectionInterface,
+                       graph: dict[type, dict[UUID, object]]) -> object | None:
+    """Return the object a difference refers to: from the graph, else from the connection."""
+    if as_uuid(uri) is None:
+        return None
+    obj = _graph_object(uri, graph)
+    if obj is None:
+        obj = connection.get_object(mRID=uri, graph=graph)
+    return obj
+
+
+def _converted_value(obj: object, attribute: str, value: object) -> object:
+    """
+    Return a difference value converted to the datatype of the object's attribute.
+    Raises ValueError if the 'Class.attribute' name or the value does not fit the object.
+    """
+    class_name, _, attr = attribute.rpartition('.')
+    cim_class = obj.__class__
+    if attr not in cim_class.__dataclass_fields__:
+        raise ValueError(f'{cim_class.__name__} has no attribute {attribute}')
+    if class_name and class_name not in [parent.__name__ for parent in cim_class.__mro__]:
+        raise ValueError(f'{cim_class.__name__} does not inherit from {class_name}')
+    valid, attr_datatype, value = validate_attr_datatype(cim_class, attr, value)
+    if not valid:
+        raise ValueError(f'{attribute} value {value!r} should have datatype {attr_datatype}')
+    return value
+
+
 def validate_incremental(message:dict, connection:ConnectionInterface,
                         graph:dict[type, dict[UUID, object]]) -> dict:
-    '''
-    Validate CIM incremental against classes and attributes in profile
-    '''
-    get_cim_profile.cache_clear()
-    cim_profile, cim = get_cim_profile()
-
-    for uri in message['reverseDifferences']:
-        try:
-            identifier = UUID(uri.strip('_').lower())
-        except:
-            _log.warning(f'Invalid UUID string {uri}')
-            message['reverseDifferences'][uri] = {}
-            # del message['reverseDifferences'][uri]
-            continue
-        found = False
-        for cim_class in graph:
-            if identifier in graph[cim_class]:
-                found = True
-                obj = graph[cim_class][identifier]
-                break
-        if not found:
-            obj = connection.get_object(mRID=uri)
+    """
+    Drop the differences that don't fit the model, so modify_from_incremental can apply the
+    rest. A URI's differences are dropped as a whole, with an error logged, when its object
+    can't be found or any of its attributes or values don't fit the object's class. A reverse
+    value that differs from the current value is only a warning.
+    """
+    for direction in ('reverseDifferences', 'forwardDifferences'):
+        for uri, differences in message[direction].items():
+            obj = _difference_object(uri, connection, graph)
             if obj is None:
-                _log.warning(f'Could not find any objects with reverse difference mRID {uri}')
-                message['reverseDifferences'][uri] = {}
-                # del message['reverseDifferences'][uri]
+                _log.error(f'Dropping {direction} for {uri}: no object with that mRID')
+                message[direction][uri] = {}
                 continue
-        for attribute in message['reverseDifferences'][uri]:
-            parent = attribute.split('.')[0]
-            try:
-                parent = getattr(cim, parent)
-            except:
-                _log.warning(f'{parent} not found in CIM profile {cim_profile}' )
-            if parent not in obj.__class__.__mro__:
-                _log.warning(f'{obj.__class__.__name__} does not inherit from {parent}' )
-
-            attr = attribute.split('.')[1]
-            old_value = message['reverseDifferences'][uri][attribute]
-            current_value = getattr(obj, attr)
-            if attr not in obj.__class__.__dataclass_fields__:
-                _log.warning(f'{obj.__class__.__name__} does not have attribute {attribute}' )
-                message['reverseDifferences'][uri] = {}
-
-            valid, attr_datatype, old_value = validate_attr_datatype(obj.__class__, attr, old_value)
-            if not valid:
-                _log.warning(f'{attribute} with reverse value {old_value} should have datatype {attr_datatype}')
-            if current_value != old_value:
-                _log.warning(f'Current value {current_value} does not match reverse {old_value}')
-
-
-
-    for uri in message['forwardDifferences']:
-        try:
-            identifier = UUID(uri.strip('_').lower())
-        except:
-            _log.warning(f'Invalid UUID string {uri}')
-            message['forwardDifferences'][uri] = {}
-
-        for cim_class in graph:
-            if identifier in graph[cim_class]:
-                found = True
-                obj = graph[cim_class][identifier]
-                break
-        if not found:
-            obj = connection.get_object(mRID=uri)
-
-
-        for attribute in message['forwardDifferences'][uri]:
-            parent = attribute.split('.')[0]
-            validated = True
-            try:
-                parent = getattr(cim, parent)
-            except:
-                validated = False
-                _log.warning(f'{parent} not found in CIM profile {cim_profile}' )
-
-            if parent not in obj.__class__.__mro__ and obj is not None:
-                validated = False
-                _log.warning(f'{obj.__class__.__name__} does not inherit from {parent}' )
-
-            attr = attribute.split('.')[1]
-            new_value = message['forwardDifferences'][uri][attribute]
-            if obj is not None:
-                if attr not in obj.__class__.__dataclass_fields__:
-                    validated = False
-                    _log.warning(f'{obj.__class__.__name__} does not have attribute {attribute}' )
-                    # del message['forwardDifferences'][uri]
-                valid, attr_datatype, new_value = validate_attr_datatype(obj.__class__, attr, new_value)
-                if not valid:
-                    validated = False
-                    _log.warning(f'{attribute} with forward value {new_value} should have datatype {attr_datatype}')
-
-            elif is_dataclass(parent):
-                if attr not in parent.__dataclass_fields__:
-                    validated = False
-                    _log.warning(f'{parent.__name__} does not have attribute {attribute}' )
-                    # del message['forwardDifferences'][uri]
-                valid, attr_datatype, new_value = validate_attr_datatype(parent, attr, new_value)
-
-                if not valid:
-                    _log.warning(f'{attribute} with forward value {new_value} should have datatype {attr_datatype}')
-            if not validated:
-                message['forwardDifferences'][uri] = {}
-                # del message['forwardDifferences'][uri]
-
+            for attribute, value in differences.items():
+                try:
+                    value = _converted_value(obj, attribute, value)
+                except ValueError as error:
+                    _log.error(f'Dropping {direction} for {uri}: {error}')
+                    message[direction][uri] = {}
+                    break
+                current_value = getattr(obj, attribute.rpartition('.')[2])
+                if direction == 'reverseDifferences' and current_value != value:
+                    _log.warning(f'Current value {current_value} does not match reverse {value}')
     return message
 
 
 def modify_from_incremental(message:dict, connection:ConnectionInterface,
-                        graph:dict[type, dict[UUID, object]]):
+                        graph:dict[type, dict[UUID, object]]) -> list[object]:
+    """
+    Apply the forward differences to objects in the graph and return the modified objects.
+    Raises ValueError for a difference that doesn't fit the model; run validate_incremental
+    first to drop those. Creating new objects from a difference is not supported yet.
+    """
     modified = []
-    obj = None
-    for uri in message['forwardDifferences']:
-        identifier = UUID(uri.strip('_').lower())
-        for cim_class in graph:
-            if identifier in graph[cim_class]:
-                obj = graph[cim_class][identifier]
-                break
-        if obj is not None:
-            for attribute in message['forwardDifferences'][uri]:
-                attr = attribute.split('.')[1]
-                new_value = message['forwardDifferences'][uri][attribute]
-                setattr(obj,attr,new_value)
-                modified.append(obj)
-        else:
-            # TODO: Create new object
-            pass
+    for uri, differences in message['forwardDifferences'].items():
+        if not differences:
+            continue
+        obj = _graph_object(uri, graph)
+        if obj is None:
+            raise ValueError(f'No object with mRID {uri} in the graph for its forward differences')
+        for attribute, value in differences.items():
+            setattr(obj, attribute.rpartition('.')[2], _converted_value(obj, attribute, value))
+        modified.append(obj)
     return modified
 
 

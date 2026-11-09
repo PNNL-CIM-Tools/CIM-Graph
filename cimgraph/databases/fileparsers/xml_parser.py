@@ -311,11 +311,13 @@ class XMLFile(ConnectionInterface):
                     enum_text = enum_text.split('>')[0]
                     enum_class = enum_text.split('.')[0]
                     enum_value = enum_text.split('.')[1]
-                    edge_enum = getattr(self.cim, enum_class)(enum_value)
-                    if association is not None:
+                    edge_enum = self.profile_enum(enum_class, enum_value)
+                    if edge_enum is None:
+                        _log.log(self.log_level, f'{enum_class} is not an enumeration in the profile')
+                    elif association is not None:
                         value = setattr(self.graph[cim_class][identifier], association, edge_enum)
-                except:
-                    pass
+                except (IndexError, ValueError) as error:
+                    _log.log(self.log_level, f'Could not parse enumeration {edge_uri}: {error}')
         else:
             if association is not None:
                 # Pass datatype to create_value

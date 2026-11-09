@@ -35,7 +35,7 @@ sparql = ["SPARQLWrapper>=2.0.0"]                    # BlazegraphConnection, Gra
 neo4j = ["neo4j>=5.10.0", "nest-asyncio>=1.5.8"]     # Neo4jConnection
 mysql = ["mysql-connector-python>=9.2.0"]            # MySQLConnection
 gridappsd = ["gridappsd-python>=2026.2.1"]           # GridappsdConnection
-rdflib = ["rdflib>=7.0.0", "oxrdflib>=0.3.6"]        # RDFlibConnection, cimgraph.shacl
+rdflib = ["rdflib>=7.0.0", "oxrdflib>=0.3.6"]        # RDFlibConnection
 all = ["cim-graph[sparql,neo4j,mysql,gridappsd,rdflib]"]
 dev = [
     "cim-graph[all]",

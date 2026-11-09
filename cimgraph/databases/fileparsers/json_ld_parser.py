@@ -256,7 +256,9 @@ class JSONLDFile(ConnectionInterface):
                     enum_text = value.split(':')[-1]
                     enum_class = enum_text.split('.')[0]
                     enum_value = enum_text.split('.')[1]
-                    edge_enum = getattr(self.cim, enum_class)(enum_value)
+                    edge_enum = self.profile_enum(enum_class, enum_value)
+                    if edge_enum is None:
+                        raise ValueError(f'{enum_class} is not an enumeration in the profile')
                     setattr(self.graph[cim_class][identifier], association, edge_enum)
                 except Exception as e:
                     _log.log(self.log_level, f'Failed to parse enum {value}: {e}')

@@ -3,6 +3,7 @@ from __future__ import annotations
 import json
 import logging
 import math
+from pathlib import Path
 from uuid import UUID
 
 from rdflib import Graph, Namespace
@@ -42,16 +43,14 @@ class RDFlibConnection(SPARQLEndpointConnection):
         else:
             self.connection_obj = Graph()
 
-        # Load file if specified
+        # Load file if specified. Only local CIM RDF/XML files: rdflib would otherwise
+        # fetch URLs and guess the format (JSON-LD can pull in remote @context documents).
         if self.filename is not None:
-            try:
-                self.connection_obj.parse(self.filename)
-                self.connection_obj.bind('cim', Namespace(self.namespace))
-                self.connection_obj.bind('rdf', RDF)
-            except Exception as e:
-                _log.warning(
-                    f'File {self.filename} not found. Defaulting to empty network graph. Error: {e}')
-                self.filename = None
+            if not Path(self.filename).is_file():
+                raise FileNotFoundError(f'{self.filename} is not a local file')
+            self.connection_obj.parse(self.filename, format='xml')
+            self.connection_obj.bind('cim', Namespace(self.namespace))
+            self.connection_obj.bind('rdf', RDF)
 
     def _execute_raw_query(self, query_message: str):
         """
@@ -179,7 +178,10 @@ class RDFlibConnection(SPARQLEndpointConnection):
                         self.create_value(graph, cim_class, identifier, attribute, value)
 
                 elif is_enumeration:
-                    edge_enum = getattr(self.cim, enum_class)(enum_value)
+                    edge_enum = self.profile_enum(enum_class, enum_value)
+                    if edge_enum is None:
+                        _log.warning(f'{enum_class} is not an enumeration in the profile')
+                        continue
                     association = self.check_attribute(cim_class, attribute)
                     if association is not None:
                         setattr(graph[cim_class][identifier], association, edge_enum)

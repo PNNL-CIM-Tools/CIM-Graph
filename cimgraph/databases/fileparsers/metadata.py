@@ -153,6 +153,7 @@ def resolve_part_paths(meta: MetadataGraph, base_dir: str | Path) -> list[Path]:
         Existing local part paths, in distribution order.
 
     Raises:
+        ValueError: if an ``accessURL`` resolves outside *base_dir*.
         FileNotFoundError: if a resolved local part file does not exist.
     """
     base = Path(base_dir)
@@ -175,6 +176,13 @@ def resolve_part_paths(meta: MetadataGraph, base_dir: str | Path) -> list[Path]:
         # resolves relative to the metadata file's directory.
         relative = url.replace('\\', '/').lstrip('/')
         part_path = (base / relative).resolve()
+        # Checked before exists() so a crafted accessURL can neither load nor probe
+        # files outside the metadata file's directory.
+        if not part_path.is_relative_to(base.resolve()):
+            raise ValueError(
+                f'Metadata distribution {dist.uuid} accessURL {url!r} points outside '
+                f'the metadata directory {base}'
+            )
         if not part_path.exists():
             raise FileNotFoundError(
                 f'Metadata distribution {dist.uuid} references {url!r}, resolved '

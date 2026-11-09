@@ -339,8 +339,8 @@ class Neo4jConnection(ConnectionInterface):
                     enum_class = enum_text.split('.')[0]
                     enum_value = enum_text.split('.')[1]
 
-                    if enum_class in self.cim.__all__:  # if enumeration
-                        edge_enum = getattr(self.cim, enum_class)(enum_value)
+                    edge_enum = self.profile_enum(enum_class, enum_value)
+                    if edge_enum is not None:  # if enumeration
                         new_edges.append(edge_enum)
                         association = self.check_attribute(
                             cim_class, attribute)

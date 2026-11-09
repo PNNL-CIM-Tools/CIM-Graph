@@ -63,7 +63,7 @@ need their driver extra:
 | `neo4j` | neo4j, nest-asyncio | `Neo4jConnection` |
 | `mysql` | mysql-connector-python | `MySQLConnection` |
 | `gridappsd` | gridappsd-python | `GridappsdConnection` |
-| `rdflib` | rdflib, oxrdflib | `RDFlibConnection`, `cimgraph.shacl` |
+| `rdflib` | rdflib, oxrdflib | `RDFlibConnection` |
 | `all` | all of the above | |
 
 ```bash
@@ -158,8 +158,8 @@ __Optional__ (defaults are in [example.env](https://github.com/PNNL-CIM-Tools/CI
 | `CIMG_HOST` | `localhost` | Database host |
 | `CIMG_PORT` | `61613` | Database port |
 | `CIMG_DATABASE` | `powergridmodel` | Database name |
-| `CIMG_USERNAME` | `system` | Database username |
-| `CIMG_PASSWORD` | `manager` | Database password |
+| `CIMG_USERNAME` | none (required) | Database username for Neo4j, MySQL and GridAPPS-D |
+| `CIMG_PASSWORD` | none (required) | Database password for Neo4j, MySQL and GridAPPS-D |
 
 Not all variables are required — each connection driver uses only the subset it needs.
 

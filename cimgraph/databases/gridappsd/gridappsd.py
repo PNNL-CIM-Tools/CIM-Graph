@@ -3,7 +3,6 @@ from __future__ import annotations
 import json
 import logging
 import math
-import os
 from collections import defaultdict
 from uuid import UUID
 
@@ -41,13 +40,10 @@ class GridappsdConnection(ConnectionInterface):
 
     def connect(self):
         if not self.gapps:
-            os.environ['GRIDAPPSD_ADDRESS'] = self.host
-            os.environ['GRIDAPPSD_PORT'] = str(self.port)
-            os.environ['GRIDAPPSD_USER'] = self.username
-            os.environ['GRIDAPPSD_PASSWORD'] = self.password
-            os.environ['GRIDAPPSD_DATABASE'] = self.database
-            os.environ['GRIDAPPSD_URL'] = self.url
-            self.gapps = GridAPPSD()
+            # Pass the connection settings directly rather than through os.environ,
+            # so the credentials aren't inherited by every subprocess.
+            self.gapps = GridAPPSD(address=(self.host, str(self.port)),
+                                   username=self.username, password=self.password)
 
     def disconnect(self):
         self.gapps.disconnect()
@@ -303,8 +299,8 @@ class GridappsdConnection(ConnectionInterface):
                     enum_class = enum_text.split('.')[0]
                     enum_value = enum_text.split('.')[1]
 
-                    if enum_class in self.cim.__all__:  # if enumeration
-                        edge_enum = getattr(self.cim, enum_class)(enum_value)
+                    edge_enum = self.profile_enum(enum_class, enum_value)
+                    if edge_enum is not None:  # if enumeration
                         new_edges.append(edge_enum)
                         association = self.check_attribute(
                             cim_class, attribute)

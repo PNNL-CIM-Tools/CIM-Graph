@@ -4,6 +4,7 @@ from uuid import UUID
 
 from cimgraph.databases import get_iec61970_552, get_url
 from cimgraph.core.serialization import rdf_identifier
+from cimgraph.core.validation import validate_attribute
 
 
 def get_triple_cypher(subject:object, attribute:str) -> str:
@@ -17,6 +18,7 @@ def get_triple_cypher(subject:object, attribute:str) -> str:
         query_message: query string that can be used in Neo4J
     """
 
+    attribute = validate_attribute(attribute)
     if get_iec61970_552() == '552-NEW':
         split = 'urn:uuid:'
     else:

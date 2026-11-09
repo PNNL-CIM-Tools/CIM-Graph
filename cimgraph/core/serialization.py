@@ -15,6 +15,7 @@ from cimprofiles.merge import merge_namespaces
 
 from cimgraph.core.attribute_utils import Property, iter_properties
 from cimgraph.core.env_vars import get_iec61970_552, get_namespace, get_url
+from cimgraph.core.validation import validate_iri_text
 
 RDF_NAMESPACE = 'http://www.w3.org/1999/02/22-rdf-syntax-ns#'
 MD_NAMESPACE = 'http://iec.ch/TC57/61970-552/ModelDescription/1#'
@@ -86,11 +87,14 @@ def mrid_text(obj, mrid: str, style: str | None = None) -> str:
 def _reference_text(value, style: str | None = None) -> str:
     """
     A reference is a resolved CIM object or a string: a bare uri() or the raw text of an
-    unresolved reference. UUIDs get the style's form once; other strings are kept as-is.
+    unresolved reference. UUIDs get the style's form once; other strings are kept as-is,
+    and must be valid IRI text so they cannot break out of rdf:resource or a SPARQL IRI.
     """
     if not isinstance(value, str):
         return rdf_identifier(value, style)
-    return rdf_id_text(normalize_identifier(value), style) if as_uuid(value) else value
+    if as_uuid(value):
+        return rdf_id_text(normalize_identifier(value), style)
+    return validate_iri_text(value)
 
 
 def _with_style_mrid(obj, prop: Property, style: str | None = None) -> Property:
@@ -122,7 +126,7 @@ def property_to_xml(prop: Property, namespaces: dict, rdf_resource: str) -> str:
     """Render one Property as an RDF/XML property element."""
     tag = f'{_prefix(namespaces, prop.namespace)}:{prop.name}'
     if prop.kind == 'reference':
-        return f'  <{tag} rdf:resource="{rdf_resource}{_reference_text(prop.value)}"/>\n'
+        return f'  <{tag} rdf:resource="{escape(rdf_resource + _reference_text(prop.value))}"/>\n'
     if prop.kind == 'enum':
         return f'  <{tag} rdf:resource="{prop.namespace}{prop.value}"/>\n'
     if prop.kind == 'unit':
@@ -176,7 +180,10 @@ def object_to_json_ld(obj, namespaces: dict | None = None) -> dict:
 
 
 def _sparql_literal(text: str) -> str:
-    return '"' + text.replace('\\', '\\\\').replace('"', '\\"') + '"'
+    """Quote text as a SPARQL string literal, escaping characters a "..." literal cannot hold."""
+    for char, escaped in (('\\', '\\\\'), ('"', '\\"'), ('\n', '\\n'), ('\r', '\\r')):
+        text = text.replace(char, escaped)
+    return '"' + text + '"'
 
 
 def object_to_sparql_triples(obj) -> list[str]:
