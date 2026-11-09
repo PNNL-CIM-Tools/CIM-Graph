@@ -281,17 +281,19 @@ pip install uv
 Clone the repository and install with UV:
 
 ```bash
+git clone https://github.com/PNNL-CIM-Tools/CIM-Profiles.git
 git clone https://github.com/PNNL-CIM-Tools/CIM-Graph.git
 cd CIM-Graph
-uv sync
+uv sync --all-extras
 ```
 
-This will create a virtual environment in `.venv/` and install all dependencies.
+This creates a virtual environment in `.venv/` with every database driver and the development
+tools (pytest, pre-commit). Until the 1.0 release, CIM-Graph is built against the CIM-Profiles
+checkout next to it.
 
-To include development dependencies:
-```bash
-uv sync --extra dev
-```
+Run the tests that need no database with `uv run pytest -m "not integration"`. Tests marked
+`integration` run against the services in `docker-compose.yml` and are skipped when a service
+is not running.
 
 Activate the virtual environment:
 ```bash

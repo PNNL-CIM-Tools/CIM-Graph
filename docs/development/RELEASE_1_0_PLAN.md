@@ -258,6 +258,17 @@ Owns: `pyproject.toml`, `uv.lock`, `.github/workflows/` (CI parts; coordinate wi
 `.pre-commit-config.yaml`, `tests/conftest.py`, `cimgraph/databases/__init__.py` (import block only),
 `cimgraph/utils/__init__.py`, `databases/neo4j/neo4j.py` (async parts).
 
+**Status (2026-11-08, uncommitted on `cimprofiles-0.6`): 3a done; 3b done except Neo4j; 3c
+partly done.**
+
+| Item | Outcome |
+|---|---|
+| 3a pytest | `[tool.pytest.ini_options]`: `testpaths`, `integration(service)` marker. `tests/conftest.py` skips a marked test when nothing listens on the service's port (`SERVICES`). Only tests that connect are marked: the query-building and env-var tests in the service files run offline (173 offline tests). `test_mysql.py` uses the marker instead of its own check. |
+| 3a CI | `.github/workflows/ci.yml`: tests on 3.10–3.14 (`uv sync --locked --all-extras`), a `--resolution lowest-direct` job, and ruff `E9,F63,F7,F82` only (the full lint is WS5). It runs on pull requests and is called (`workflow_call`) by `release.yml`, `dev-pre-release.yml` and `dispatch-pypi.yml`, whose build needs it. CIM-Profiles is checked out next to CIM-Graph at `CIM_PROFILES_REF` (`rc2`) for `[tool.uv.sources]`; drop that with the sources block. All three Python environments verified locally (3.13, 3.14, lowest-direct). |
+| 3a strays | `tests/timing.py` and `tests/uuid_test.ipynb` removed. |
+| 3b | Lazy adapter imports and per-driver extras were already done (CHANGELOG). The `dev` extra is now a `[dependency-groups]` group. The unused cimhub_2023 imports in `feeder_model.py` and `neo4j.py` are gone. **Open: Neo4j sync driver** (drop `nest_asyncio`, whose event-loop-policy calls warn on 3.14 and break on 3.16). Needs a live Neo4j or the 4.8 canned-response tests to verify. |
+| 3c | PEP 639 `license = "BSD-3-Clause"` + `license-files`, `hatchling>=1.27`, a real `description`, 3.13/3.14 classifiers, `requires-python = ">=3.10"`. The wheel already leaves out the profile markdown (profiles are in cimprofiles; 341 kB, 96 files). Pre-commit gained `check-added-large-files` and the CI ruff check. **Open for the maintainer:** the `1.0.0rc1` bump and `5 - Production/Stable` (at the rc), and moving `ieee9500bal.xml` (38 MB) to LFS or a download, which rewrites history or changes the test fixture. |
+
 ### 3a. Test gate (do first)
 - `pyproject.toml`: add
   `[tool.pytest.ini_options] testpaths = ["tests"]` and

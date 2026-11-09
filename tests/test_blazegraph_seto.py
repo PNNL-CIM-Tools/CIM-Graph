@@ -2,6 +2,8 @@ import os
 import unittest
 from uuid import UUID
 
+import pytest
+
 import cimprofiles.cim17.cimhub_2023 as cim
 from cimgraph import utils
 from cimgraph.databases import BlazegraphConnection
@@ -59,6 +61,7 @@ class TestBlazegraphSETO(unittest.TestCase):
         expected_str = '\n        PREFIX r:  <http://www.w3.org/1999/02/22-rdf-syntax-ns#>\n        PREFIX cim:  <http://iec.ch/TC57/CIM100#>\n        SELECT DISTINCT ?identifier ?obj_class\n        WHERE {\n          \n    VALUES ?identifier {"49AD8E07-3BF9-A4E2-CB8F-C3722F837B62"}\n        bind(iri(concat("urn:uuid:", ?identifier)) as ?eq)\n\n        ?eq a ?classraw.\n        bind(strafter(str(?classraw),"http://iec.ch/TC57/CIM100#") as ?obj_class)\n        }\n        ORDER by  ?identifier\n        '
         self.assertEqual(query, expected_str)
 
+    @pytest.mark.integration('blazegraph')
     def test_get_object(self):
         database = BlazegraphConnection()
         feeder = database.get_object(mRID=self.feeder_mrid)
@@ -71,6 +74,7 @@ class TestBlazegraphSETO(unittest.TestCase):
         expected_str = '\n        PREFIX r:  <http://www.w3.org/1999/02/22-rdf-syntax-ns#>\n        PREFIX cim:  <http://iec.ch/TC57/CIM100#>\n        SELECT DISTINCT ?ConnectivityNode ?Terminal ?Equipment\n        WHERE {\n          \n        VALUES ?identifier {"49AD8E07-3BF9-A4E2-CB8F-C3722F837B62"}\n        bind(iri(concat("urn:uuid:", ?identifier)) as ?c).\n             {\n\n        ?node cim:ConnectivityNode.ConnectivityNodeContainer ?c.\n        ?t cim:Terminal.ConnectivityNode ?node.\n        ?t cim:Terminal.ConductingEquipment ?eq.\n        ?eq a ?eq_cls.\n\n        bind(strafter(str(?node),"urn:uuid:") as ?ConnectivityNode).\n        bind(strafter(str(?t),"urn:uuid:") as ?Terminal).\n        bind(strafter(str(?eq),"urn:uuid:") as ?eq_id).\n\n        bind(concat("{\\"@id\\":\\"", str(?eq_id),"\\",\\"@type\\":\\"",strafter(str(?eq_cls),"http://iec.ch/TC57/CIM100#"), "\\"}") as ?Equipment)\n        }\n        \n        UNION\n        {\n        {?eq cim:Equipment.EquipmentContainer ?c.}\n        UNION\n        {?eq cim:Equipment.AdditionalEquipmentContainer ?c.}\n        OPTIONAL {\n            ?t cim:Terminal.ConductingEquipment ?eq.\n            ?t cim:Terminal.ConnectivityNode ?node.\n            }\n        ?eq a ?eq_cls.\n\n        bind(strafter(str(?node),"urn:uuid:") as ?ConnectivityNode).\n        bind(strafter(str(?t),"urn:uuid:") as ?Terminal).\n        bind(strafter(str(?eq),"urn:uuid:") as ?eq_id).\n\n        bind(concat("{\\"@id\\":\\"", str(?eq_id),"\\",\\"@type\\":\\"",strafter(str(?eq_cls),"http://iec.ch/TC57/CIM100#"), "\\"}") as ?Equipment)\n        }\n        }\n        ORDER by ?ConnectivityNode\n        '
         self.assertEqual(query, expected_str)
 
+    @pytest.mark.integration('blazegraph')
     def test_get_feeder_model(self):
         database = BlazegraphConnection()
         feeder = cim.Feeder(mRID=self.feeder_mrid)
@@ -78,6 +82,7 @@ class TestBlazegraphSETO(unittest.TestCase):
         initial_keys = len(network.graph.keys())
         self.assertEqual(initial_keys, 14)
 
+    @pytest.mark.integration('blazegraph')
     def test_get_all_line_data(self):
         database = BlazegraphConnection()
         feeder = cim.Feeder(mRID=self.feeder_mrid)
@@ -100,6 +105,7 @@ class TestBlazegraphSETO(unittest.TestCase):
         self.assertEqual(phase.ACLineSegment, line)
 
 
+    @pytest.mark.integration('blazegraph')
     def test_merged_profile_feeder_model(self):
         """Test FeederModel with a merged connectivity+electrical profile."""
         from cimgraph.core.env_vars import get_cim_profile

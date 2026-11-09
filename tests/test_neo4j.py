@@ -1,5 +1,7 @@
 import os
 import unittest
+
+import pytest
 from uuid import UUID
 
 import cimprofiles.cim17.cimhub_2023 as cim
@@ -63,6 +65,7 @@ class TestNeo4J(unittest.TestCase):
         expected_str = '\nMATCH(n)\nWHERE n.uri = "urn:uuid:49AD8E07-3BF9-A4E2-CB8F-C3722F837B62"\nRETURN DISTINCT n.uri as identifier,\nlabels(n)[1] as class'
         self.assertEqual(query, expected_str)
 
+    @pytest.mark.integration('neo4j')
     def test_get_object(self):
         database = Neo4jConnection()
         feeder = database.get_object(mRID=self.feeder_mrid)
@@ -76,6 +79,7 @@ class TestNeo4J(unittest.TestCase):
         expected_str = 'MATCH (container:Feeder)\nWHERE container.uri = "urn:uuid:49AD8E07-3BF9-A4E2-CB8F-C3722F837B62"\nMATCH (eq) - [:`Equipment.EquipmentContainer`] - (container)\nOPTIONAL MATCH (cnode) - [:`Terminal.ConnectivityNode`] - (term:Terminal) - [:`Terminal.ConductingEquipment`] -> (eq)\nRETURN DISTINCT\nREPLACE(cnode.uri, "urn:uuid:", "") as ConnectivityNode,\nREPLACE(term.uri, "urn:uuid:", "") as Terminal,\nREPLACE(eq.uri, "urn:uuid:", "") as eq_id,\nLABELS(eq)[1] as eq_class'
         self.assertEqual(query, expected_str)
 
+    @pytest.mark.integration('neo4j')
     def test_get_feeder_model(self):
         database = Neo4jConnection()
         feeder = cim.Feeder(mRID=self.feeder_mrid)
@@ -85,6 +89,7 @@ class TestNeo4J(unittest.TestCase):
         database.disconnect()
 
 
+    @pytest.mark.integration('neo4j')
     def test_get_all_line_data(self):
         database = Neo4jConnection()
         feeder = cim.Feeder(mRID=self.feeder_mrid)

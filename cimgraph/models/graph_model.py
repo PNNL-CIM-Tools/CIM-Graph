@@ -17,7 +17,7 @@ from cimgraph.models.incremental_builder import *
 
 _log = logging.getLogger(__name__)
 
-jsonld = dict['@id':str(UUID),'@type':str(type)]
+jsonld = dict[str, str]  # {'@id': identifier, '@type': class name}
 Graph = dict[type, dict[UUID, object]]
 T = TypeVar('T')
 

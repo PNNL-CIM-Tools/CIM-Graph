@@ -5,6 +5,8 @@ import pytest
 from cimgraph.databases.gridappsd import GridappsdConnection
 from cimgraph.models import FeederModel, GraphModel
 
+pytestmark = pytest.mark.integration('gridappsd')
+
 
 @pytest.fixture
 def env_setup():

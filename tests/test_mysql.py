@@ -1,6 +1,7 @@
 import os
-import socket
 import unittest
+
+import pytest
 
 from cimgraph import utils
 from cimgraph.databases import MySQLConnection, XMLFile
@@ -18,14 +19,6 @@ ENV = {
     'CIMG_DATABASE': 'tier5_ieee13',
     'CIMG_USE_UNITS': 'true',
 }
-
-
-def mysql_is_running() -> bool:
-    try:
-        socket.create_connection((ENV['CIMG_HOST'], int(ENV['CIMG_PORT'])), timeout=1).close()
-        return True
-    except OSError:
-        return False
 
 
 class TestSqlSchema(unittest.TestCase):
@@ -73,7 +66,7 @@ class TestSqlSchema(unittest.TestCase):
         self.assertEqual(self.schema.associations, {('Terminal', 'ConductingEquipment'): 'Switch'})
 
 
-@unittest.skipUnless(mysql_is_running(), 'MySQL tier5_ieee13 database is not running')
+@pytest.mark.integration('mysql')
 class TestMySQLConnection(unittest.TestCase):
 
     def setUp(self):

@@ -39,12 +39,27 @@ released on its own cycle. cim-graph depends on it, so nothing extra needs insta
 | `neo4j` | `Neo4jConnection` |
 | `mysql` | `MySQLConnection` |
 | `gridappsd` | `GridappsdConnection` |
-| `rdflib` | `RDFlibConnection`, `cimgraph.shacl` |
+| `rdflib` | `RDFlibConnection` |
 | `all` | everything |
 
 Using a connection without its driver raises an `ImportError` naming the extra to install.
 `requests` (used by `cimgraph.utils.mermaid`) is now a direct dependency. The unused
 `mermaid-python` dependency was dropped.
+
+The `dev` extra is now a `dev` dependency group, which is not published with the package.
+`uv sync` installs it; `uv sync --all-extras` adds every driver. Python 3.13 and 3.14 are
+supported, and `requires-python` no longer has an upper bound.
+
+### Tests and CI
+
+- Tests that need a live database are marked `@pytest.mark.integration('<service>')`. They are
+  skipped when nothing listens on the service's port (`tests/conftest.py`), and
+  `pytest -m "not integration"` runs only the rest.
+- New `.github/workflows/ci.yml` runs on pull requests and gates the release workflows:
+  - the offline tests on Python 3.10–3.14;
+  - the offline tests with the lowest declared version of every direct dependency;
+  - a ruff check for syntax errors and undefined names.
+- Pre-commit also rejects new files over 500 kB and runs the same ruff check.
 
 ### Identifiers (breaking)
 

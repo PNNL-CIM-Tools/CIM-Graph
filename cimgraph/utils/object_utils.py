@@ -6,7 +6,6 @@ from cimgraph.databases import create_graph_object
 
 _log = logging.getLogger(__name__)
 
-jsonld = dict['@id':str(UUID),'@type':str(type)]
 Graph = dict[type, dict[UUID, object]]
 
 

@@ -38,9 +38,12 @@ jobs:
           else
             echo "any_changed=true" >> "$GITHUB_OUTPUT"
           fi
+  ci:
+    uses: ./.github/workflows/ci.yml
+
   build:
     runs-on: ubuntu-latest
-    needs: check-changes
+    needs: [check-changes, ci]
     if: needs.check-changes.outputs.any_changed == 'true' || github.event.inputs.force == 'true'
     permissions:
       contents: write  # push the version commit and create the GitHub release

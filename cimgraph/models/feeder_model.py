@@ -3,7 +3,6 @@ import logging
 from collections import defaultdict
 from dataclasses import dataclass, field
 
-import cimprofiles.cim17.cimhub_2023 as cim
 from cimgraph.core import get_cim_profile
 from cimgraph.models.distributed_area import DistributedArea
 from cimgraph.models.graph_model import GraphModel

@@ -1,0 +1,91 @@
+---
+name: CI
+
+# Pull requests run this directly; pushes to develop and main run it through the release
+# workflows (dev-pre-release.yml, release.yml), which only build and publish when it passes.
+on:
+  pull_request:
+  workflow_call:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+env:
+  # Until 1.0, cim-graph is built against the CIM-Profiles checkout next to it
+  # ([tool.uv.sources] in pyproject.toml). Drop this and the second checkout with that block.
+  CIM_PROFILES_REF: rc2
+
+jobs:
+  test:
+    name: test (Python ${{ matrix.python-version }})
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version: ['3.10', '3.11', '3.12', '3.13', '3.14']
+    steps:
+      - name: Checkout CIM-Graph
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+        with:
+          path: CIM-Graph
+
+      - name: Checkout CIM-Profiles
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+        with:
+          repository: PNNL-CIM-Tools/CIM-Profiles
+          ref: ${{ env.CIM_PROFILES_REF }}
+          path: CIM-Profiles
+
+      - name: Install UV
+        uses: astral-sh/setup-uv@20cfd1bf945f4377ade1205e4dbc17946fc9a30d # v10.0.1
+        with:
+          enable-cache: true
+
+      - name: Install
+        working-directory: CIM-Graph
+        run: uv sync --locked --all-extras --python ${{ matrix.python-version }}
+
+      - name: Test (no databases)
+        working-directory: CIM-Graph
+        run: uv run pytest -m "not integration"
+
+  lowest-direct:
+    # The lowest version of every direct dependency, so the declared minimums stay true
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout CIM-Graph
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+        with:
+          path: CIM-Graph
+
+      - name: Checkout CIM-Profiles
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+        with:
+          repository: PNNL-CIM-Tools/CIM-Profiles
+          ref: ${{ env.CIM_PROFILES_REF }}
+          path: CIM-Profiles
+
+      - name: Install UV
+        uses: astral-sh/setup-uv@20cfd1bf945f4377ade1205e4dbc17946fc9a30d # v10.0.1
+
+      - name: Install
+        working-directory: CIM-Graph
+        run: uv sync --all-extras --python 3.10 --resolution lowest-direct
+
+      - name: Test (no databases)
+        working-directory: CIM-Graph
+        run: uv run --resolution lowest-direct pytest -m "not integration"
+
+  lint:
+    # Syntax errors and undefined names only, until the WS5 lint clean-up
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+
+      - name: Install UV
+        uses: astral-sh/setup-uv@20cfd1bf945f4377ade1205e4dbc17946fc9a30d # v10.0.1
+
+      - name: Ruff
+        run: uvx ruff@0.17.4 check cimgraph tests --select E9,F63,F7,F82

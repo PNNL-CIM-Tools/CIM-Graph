@@ -10,7 +10,6 @@ import nest_asyncio
 from neo4j import AsyncGraphDatabase, GraphDatabase
 from neo4j.exceptions import DriverError, Neo4jError
 
-import cimprofiles.cim17.cimhub_2023 as cim
 import cimgraph.queries.cypher as cypher
 from cimgraph.core import (get_cim_profile, get_database, get_iec61970_552, get_namespace,
                            get_password, get_url, get_username)
@@ -208,7 +207,7 @@ class Neo4jConnection(ConnectionInterface):
             # If equipment class is in data profile, add it to the graph also
             if eq_class in self.cim.__all__:
                 eq_class = getattr(self.cim, eq_class)
-                equipment:cim.ConductingEquipment = self.create_object(graph, eq_class, eq_id)
+                equipment = self.create_object(graph, eq_class, eq_id)
             else:
                 # If it is not in the profile, log it as a missing class
                 _log.warning(
@@ -216,8 +215,8 @@ class Neo4jConnection(ConnectionInterface):
                 continue
             if node_id:
                 # Add each object to graph
-                node:cim.ConnectivityNode = self.create_object(graph, self.cim.ConnectivityNode, node_id)
-                terminal:cim.Terminal = self.create_object(graph, self.cim.Terminal, terminal_id)
+                node = self.create_object(graph, self.cim.ConnectivityNode, node_id)
+                terminal = self.create_object(graph, self.cim.Terminal, terminal_id)
 
                 # Associate the node and equipment with the terminal
                 if terminal not in equipment.Terminals:

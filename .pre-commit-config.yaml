@@ -12,6 +12,7 @@ repos:
   - id: end-of-file-fixer
   - id: trailing-whitespace
   - id: check-merge-conflict
+  - id: check-added-large-files  # new files over 500 kB (large test models belong outside git)
   - id: no-commit-to-branch  # blocks main commits.  To bypass do git commit --allow-empty
 
 - repo: https://github.com/PyCQA/isort
@@ -23,3 +24,10 @@ repos:
     entry: isort
     language: python
     types: [ python ]
+
+- repo: https://github.com/astral-sh/ruff-pre-commit
+  rev: v0.17.4
+  hooks:
+  - id: ruff-check
+    # Syntax errors and undefined names only, as in CI, until the WS5 lint clean-up
+    args: [--select, 'E9,F63,F7,F82']
