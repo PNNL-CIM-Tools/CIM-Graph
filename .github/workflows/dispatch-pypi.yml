@@ -47,12 +47,12 @@ jobs:
           path: dist/
 
   publish:
-    # Separate job so only this one, which runs no build code, can mint a PyPI token
+    # Separate job so only this one, which runs no build code, can read the PyPI token.
+    # TEMPORARY: API token (secrets.PYPI_TOKEN) until the PyPI project's Trusted Publisher
+    # ownership is sorted out; then restore `id-token: write` and `--trusted-publishing always`.
     runs-on: ubuntu-latest
     needs: build
     environment: pypi
-    permissions:
-      id-token: write  # PyPI Trusted Publishing (OIDC); no long-lived API token
     steps:
       - name: Download distributions
         uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333 # v8
@@ -64,4 +64,6 @@ jobs:
         uses: astral-sh/setup-uv@20cfd1bf945f4377ade1205e4dbc17946fc9a30d # v10.0.1
 
       - name: Publish to PyPI
-        run: uv publish --trusted-publishing always
+        run: uv publish
+        env:
+          UV_PUBLISH_TOKEN: ${{ secrets.PYPI_TOKEN }}
