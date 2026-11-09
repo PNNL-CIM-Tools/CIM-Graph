@@ -77,8 +77,9 @@ in `tests/test_security.py` (45 tests).**
 | 1.12 | Verified: every value is parameterized, and table and column names come from `information_schema` or profile metadata checked against the schema. Hardening suggestion for the MySQL owner: reject names containing `"` or `'` in `build_schema`. |
 
 Maintainer actions for 1.10, before the next release run:
-1. On PyPI (`cim-graph` → Publishing), add a GitHub trusted publisher for each of
-   `release.yml`, `dev-pre-release.yml` and `dispatch-pypi.yml`, with environment `pypi`.
+1. On PyPI (`cim-graph` → Publishing), add a GitHub trusted publisher for `release.yml`
+   with environment `pypi`, and remove the misspelled `disptach-pypi.yml` one.
+   `dev-pre-release.yml` and `dispatch-pypi.yml` were merged into `release.yml`.
 2. In GitHub repo settings, create the `pypi` environment (optionally with required reviewers).
 3. Delete the `PYPI_TOKEN` repository secret and revoke the token on PyPI.
 
@@ -263,7 +264,7 @@ Owns: `pyproject.toml`, `uv.lock`, `.github/workflows/` (CI parts; coordinate wi
 | Item | Outcome |
 |---|---|
 | 3a pytest | `[tool.pytest.ini_options]`: `testpaths`, `integration(service)` marker. `tests/conftest.py` skips a marked test when nothing listens on the service's port (`SERVICES`). Only tests that connect are marked: the query-building and env-var tests in the service files run offline (173 offline tests). `test_mysql.py` uses the marker instead of its own check. |
-| 3a CI | `.github/workflows/ci.yml`: tests on 3.10–3.14 (`uv sync --locked --all-extras`), a `--resolution lowest-direct` job, and ruff `E9,F63,F7,F82` only (the full lint is WS5). It runs on pull requests and is called (`workflow_call`) by `release.yml`, `dev-pre-release.yml` and `dispatch-pypi.yml`, whose build needs it. CIM-Profiles is checked out next to CIM-Graph at `CIM_PROFILES_REF` (`rc2`) for `[tool.uv.sources]`; drop that with the sources block. All three Python environments verified locally (3.13, 3.14, lowest-direct). |
+| 3a CI | `.github/workflows/ci.yml`: tests on 3.10–3.14 (`uv sync --locked --all-extras`), a `--resolution lowest-direct` job, and ruff `E9,F63,F7,F82` only (the full lint is WS5). It runs on pull requests and is called (`workflow_call`) by `release.yml`, whose build needs it. CIM-Profiles is checked out next to CIM-Graph at `CIM_PROFILES_REF` (`rc2`) for `[tool.uv.sources]`; drop that with the sources block. All three Python environments verified locally (3.13, 3.14, lowest-direct). |
 | 3a strays | `tests/timing.py` and `tests/uuid_test.ipynb` removed. |
 | 3b | Lazy adapter imports and per-driver extras were already done (CHANGELOG). The `dev` extra is now a `[dependency-groups]` group. The unused cimhub_2023 imports in `feeder_model.py` and `neo4j.py` are gone. Neo4j no longer needs `nest_asyncio` and keeps its async batching (see WS4). `get_all_attributes` still runs the edge query as well as the property query, with `expand_graph=False`: since #159 it sets associations as references, the same as the SPARQL connections. |
 | 3c | PEP 639 `license = "BSD-3-Clause"` + `license-files`, `hatchling>=1.27`, a real `description`, 3.13/3.14 classifiers, `requires-python = ">=3.10"`. The wheel already leaves out the profile markdown (profiles are in cimprofiles; 341 kB, 96 files). Pre-commit gained `check-added-large-files` and the CI ruff check. **Open for the maintainer:** the `1.0.0rc1` bump and `5 - Production/Stable` (at the rc), and moving `ieee9500bal.xml` (38 MB) to LFS or a download, which rewrites history or changes the test fixture. |
@@ -314,8 +315,9 @@ Owns: `pyproject.toml`, `uv.lock`, `.github/workflows/` (CI parts; coordinate wi
   `pip install cim-graph[neo4j]`.
 
 ### 3c. Release mechanics
-- `release.yml` only strips the prerelease suffix, so 0.5.0a12 would become 0.5.0. Bump by hand
-  to `1.0.0rc1` on `develop`.
+- Set `1.0.0rc1` by hand on `develop` (`uv version 1.0.0rc1`, which also updates `uv.lock`).
+  `.github/scripts/release_version.sh` publishes an unreleased version as it is, then bumps
+  develop to rc2, rc3, …; merging to main publishes 1.0.0.
 - Classifiers:
   - `5 - Production/Stable`
   - add 3.13 and 3.14
