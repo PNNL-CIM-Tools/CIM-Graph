@@ -212,7 +212,9 @@ the header code), `models/` (except the incremental validation in WS1), `shacl/s
 | Item | Outcome |
 |---|---|
 | 2.1 | `_update_raw` returns `updater.query()`. |
-| 2.2 | Batches run sequentially, like `get_all_attributes` already did. Parallel queries would need one SPARQLWrapper per worker and parsing on the main thread; add that if profiling shows a need. |
+| 2.2 | `SPARQLEndpointConnection.run_batch_queries` runs the batch queries on up to `MAX_PARALLEL_QUERIES` threads (`BATCH_SIZE` and the limit are in `databases/__init__.py`). Results are parsed in order on the calling thread. `_execute_raw_query` must be thread-safe: Blazegraph and GraphDB make one SPARQLWrapper per call. `get_all_attributes` shares the same path. Neo4j's runner awaits instead of calling `asyncio.run`, behind a semaphore. RDFlib (in-process) and GridAPPS-D (one STOMP client) stay sequential. |
+| #159 | `ConnectionInterface.create_reference` is used by every adapter's `expand_graph=False` branch. It links an object already in the graph, else stores `read_identifier` text, which the shared serializer writes as a reference. The SPARQL and RDFlib `get_all_attributes_sparql` now return the edges query, because the old queries never bound `?edge`/`?edge_class` (and RDFlib's never selected `?identifier`). |
+| #160 | `ConnectionInterface.enum_from_iri` replaces the four enum copies (this is 4.2): the namespace must be the enum's declared `__namespace__` or `CIMG_NAMESPACE`. The edge queries take the class after `#`, not after the cim namespace. RDFlib takes the attribute's local name, and skips only `rdf:type` (it skipped every attribute containing "type"). |
 | 2.3 | Both `UnaddressableEquipment` loops fixed. |
 | 2.4 | `validate_attr_datatype` returns `(valid, datatypes, value)` and accepts objects of a subclass. `convert_datatype` no longer turns a CIMUnit into a bare float. `modify` raises `TypeError`, sets the converted value, and allows `None` for `Optional` fields. |
 | 2.6 | Remaining parts: `modify_incremental` records `None`/objects through `_difference_value`, `incremantal_row` uses `all(... is None)`, and `write_incremental` uses `with open`. |
@@ -321,7 +323,7 @@ Owns: `databases/*` adapters, `queries/*` (after WS1 lands its validation).
   (`strip('_').lower()`, `split(':')[-1]`, `strip('#')`, …) in `databases/__init__.py`,
   `sparql_endpoint.py`, `neo4j.py`, `rdflib.py`, `xml_parser.py` and `json_ld_parser.py`.
   Also drop JSON-LD `_lookup_class`'s five case/underscore fallbacks.
-- **4.2 One enum-detection routine** replaces the four copies (`sparql_endpoint.py`,
+- **4.2 Done with #160 (see WS2).** One enum-detection routine replaces the four copies (`sparql_endpoint.py`,
   `rdflib.py`, `neo4j.py`, `gridappsd.py`). The current `split('.')[1]` raises `IndexError` on
   some literals, and Blazegraph hard-codes the GMDM namespace. Shares the gating from 1.6.
 - **4.3 GridAPPS-D subclasses `SPARQLEndpointConnection`.** About 250 duplicated lines have

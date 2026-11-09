@@ -193,7 +193,7 @@ class GridappsdConnection(ConnectionInterface):
             sparql_message = sparql.get_all_attributes_sparql(graph, cim_class, eq_mrids)
             #execute sparql query
             query_output = self.execute(sparql_message)
-            self.edge_query_parser(query_output, graph, cim_class)
+            self.edge_query_parser(query_output, graph, cim_class, expand_graph=False)
 
     # -------------------------------------------------------------------------
     # Methods for parsing query results
@@ -291,21 +291,16 @@ class GridappsdConnection(ConnectionInterface):
                                          attribute, edge_class, edge_mRID)
                         new_edges.append(edge_object)
                     else:
-                        self.create_value(graph, cim_class, identifier, attribute, value)
+                        new_edges.append(self.create_reference(graph, cim_class, identifier,
+                                                               attribute, edge_class, edge_mRID))
 
-                elif self.namespace in value:  #check if enumeration
-                    enum_text = value.split(self.namespace)[1]
-                    enum_text = enum_text.split('>')[0]
-                    enum_class = enum_text.split('.')[0]
-                    enum_value = enum_text.split('.')[1]
-
-                    edge_enum = self.profile_enum(enum_class, enum_value)
-                    if edge_enum is not None:  # if enumeration
-                        new_edges.append(edge_enum)
-                        association = self.check_attribute(
-                            cim_class, attribute)
-                        if association is not None:
-                            setattr(graph[cim_class][identifier], association, edge_enum)
+                elif (edge_enum := self.enum_from_iri(value)) is not None:
+                    # An enumeration value, in the cim or an extension namespace
+                    new_edges.append(edge_enum)
+                    association = self.check_attribute(
+                        cim_class, attribute)
+                    if association is not None:
+                        setattr(graph[cim_class][identifier], association, edge_enum)
                 else:
                     association = self.check_attribute(cim_class, attribute)
                     if association is not None:

@@ -1,5 +1,6 @@
 """Regression tests for the WS2 data-loss and correctness fixes (docs/development/RELEASE_1_0_PLAN.md)."""
 import json
+from uuid import UUID
 from xml.etree.ElementTree import ParseError
 
 import pytest
@@ -97,8 +98,19 @@ def test_graphdb_update_is_sent_to_the_statements_endpoint(monkeypatch):
 
 # 2.2 get_all_edges batches
 
-def test_get_all_edges_runs_every_batch_once():
-    connection = _RecordingEndpoint()
+def test_get_all_edges_runs_every_batch_once_in_parallel():
+    import threading
+    both_running = threading.Barrier(2, timeout=5)
+
+    class OverlappingEndpoint(_RecordingEndpoint):
+        def _execute_raw_query(self, query_message):
+            if len(self.queries) < 2:
+                self.queries.append(query_message)
+                both_running.wait()  # raises BrokenBarrierError unless two batches overlap
+                return {'results': {'bindings': []}}
+            return super()._execute_raw_query(query_message)
+
+    connection = OverlappingEndpoint()
     lines = [cim.ACLineSegment(name=f'line {index}') for index in range(250)]
     graph = {cim.ACLineSegment: {line.identifier: line for line in lines}}
 
@@ -300,3 +312,92 @@ def test_create_modify_and_delete_keep_inverse_associations():
     network.delete(terminal)
     assert line_3.Terminals == []
     assert terminal.identifier not in network.graph[cim.Terminal]
+
+
+# Issue #159: get_all_attributes writes associations as references
+
+def _edge_binding(identifier, attribute, edge_id, edge_class, value=None):
+    return {'identifier': identifier, 'attribute': attribute, 'value': value or edge_id,
+            'edge': json.dumps({'@id': edge_id, '@type': edge_class})}
+
+
+def test_get_all_attributes_sets_references_without_adding_objects():
+    from cimgraph.core.serialization import object_to_xml
+    from cimprofiles.identity import read_identifier
+    connection = _RecordingEndpoint()
+    location = cim.Location(name='loc')
+    line = cim.ACLineSegment(name='line')
+    terminal = cim.Terminal(name='t1')
+    graph = {cim.ACLineSegment: {line.identifier: line}, cim.Location: {location.identifier: location}}
+    output = {'results': {'bindings': [
+        _edge_binding(line.uri(), 'ConductingEquipment.BaseVoltage', LINE_ID.upper(), 'BaseVoltage'),
+        _edge_binding(line.uri(), 'PowerSystemResource.Location', location.uri(), 'Location'),
+        _edge_binding(line.uri(), 'ConductingEquipment.Terminals', terminal.uri(), 'Terminal'),
+        _edge_binding(line.uri(), 'ACLineSegment.PerLengthImpedance', '_IMP_1', 'PerLengthPhaseImpedance'),
+    ]}}
+
+    connection.edge_query_parser(output, graph, cim.ACLineSegment, expand_graph=False)
+
+    assert set(graph) == {cim.ACLineSegment, cim.Location}
+    assert line.BaseVoltage == LINE_ID.upper()
+    assert line.Location is location  # already in the graph, so linked
+    assert line.Terminals == [terminal.uri()]
+    assert line.PerLengthImpedance == str(read_identifier('PerLengthPhaseImpedance', '_IMP_1'))
+    xml = object_to_xml(line)
+    assert f'<cim:ConductingEquipment.BaseVoltage rdf:resource="urn:uuid:{LINE_ID.upper()}"/>' in xml
+    assert f'rdf:resource="urn:uuid:{line.PerLengthImpedance}"' in xml
+
+
+def test_attribute_queries_name_extension_classes():
+    from cimgraph.queries import sparql
+    line = cim.ACLineSegment(name='line')
+    query = sparql.get_all_attributes_sparql({cim.ACLineSegment: {line.identifier: line}},
+                                             cim.ACLineSegment, [line.identifier])
+    assert '?edge' in query and 'strafter(str(?classraw),"#")' in query
+
+
+# Issue #160: enumerations in extension namespaces
+
+def test_enum_iris_are_matched_to_the_enumeration_namespace(monkeypatch):
+    monkeypatch.setenv('CIMG_CIM_PROFILE', 'cimhub_2026')
+    monkeypatch.setenv('CIMG_NAMESPACE', 'http://cim.ucaiug.io/CIM101/draft#')
+    get_cim_profile.cache_clear()
+    import cimprofiles.cim18.cimhub_2026 as cim18
+    connection = _RecordingEndpoint()
+    gad = 'http://gridappsd.org/CIM/extension#'
+
+    assert connection.enum_from_iri(f'{gad}BatteryTypeKind.leadAcid') is cim18.BatteryTypeKind.leadAcid
+    assert connection.enum_from_iri(f'<{gad}BatteryTypeKind.leadAcid>') is cim18.BatteryTypeKind.leadAcid
+    phase = next(iter(cim18.PhaseCode))
+    assert connection.enum_from_iri(f'{phase.__namespace__}PhaseCode.{phase.value}') is phase
+    assert connection.enum_from_iri(f'http://cim.ucaiug.io/CIM101/draft#PhaseCode.{phase.value}') is phase
+    for not_an_enum in (f'http://example.com/other#BatteryTypeKind.leadAcid', f'{gad}ACLineSegment.r',
+                        'Line 1: 12.47kV', '12.5', '2024-05-01T12:30:00.5Z'):
+        assert connection.enum_from_iri(not_an_enum) is None
+
+    battery = cim18.BatteryInfo(name='battery')
+    graph = {cim18.BatteryInfo: {battery.identifier: battery}}
+    connection.edge_query_parser({'results': {'bindings': [
+        {'identifier': battery.uri(), 'attribute': 'BatteryInfo.batteryType',
+         'value': f'{gad}BatteryTypeKind.leadAcid'}]}}, graph, cim18.BatteryInfo)
+    assert battery.batteryType is cim18.BatteryTypeKind.leadAcid
+
+
+def test_rdflib_get_all_attributes_keeps_the_graph_and_its_links(monkeypatch):
+    pytest.importorskip('rdflib')
+    from cimgraph.databases import RDFlibConnection
+    monkeypatch.setenv('CIMG_IEC61970_552', '552-NEW')
+    monkeypatch.setenv('CIMG_USE_UNITS', 'false')
+    connection = RDFlibConnection(filename='tests/test_models/ieee13.xml')
+    network = FeederModel(connection=connection, distributed=False,
+                          container=cim.Feeder(mRID='49AD8E07-3BF9-A4E2-CB8F-C3722F837B62'))
+    sizes = {cim_class: len(objects) for cim_class, objects in network.graph.items()}
+
+    network.get_all_attributes(cim.ACLineSegment)
+    network.get_all_attributes(cim.Terminal)
+
+    assert {cim_class: len(objects) for cim_class, objects in network.graph.items()} == sizes
+    line = network.graph[cim.ACLineSegment][UUID('0bbd0ea3-f665-465b-86fd-fc8b8466ad53')]
+    assert line.name == '645646' and isinstance(line.Location, str)
+    assert all(isinstance(terminal.ConductingEquipment, cim.ConductingEquipment)
+               for terminal in network.graph[cim.Terminal].values())

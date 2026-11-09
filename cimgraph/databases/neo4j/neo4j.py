@@ -15,7 +15,7 @@ import cimgraph.queries.cypher as cypher
 from cimgraph.core import (get_cim_profile, get_database, get_iec61970_552, get_namespace,
                            get_password, get_url, get_username)
 from cimgraph.core.serialization import RDF_XML_CLOSE, object_to_xml, profile_namespaces, rdf_xml_open
-from cimgraph.databases import ConnectionInterface, Graph, QueryResponse
+from cimgraph.databases import MAX_PARALLEL_QUERIES, ConnectionInterface, Graph, QueryResponse
 
 nest_asyncio.apply()
 
@@ -274,11 +274,18 @@ class Neo4jConnection(ConnectionInterface):
 
     async def get_all_edges_async(self, mrid_list, graph: dict[type, dict[str, object]],
                                   cim_class: type):
-        for f in asyncio.as_completed([
-                self.edge_query_runner(mrid_list, index, graph, cim_class, True)
-                for index in range(math.ceil(len(mrid_list) / 100))
-        ]):
-            await f
+        await self._run_batches(mrid_list, graph, cim_class, expand_graph=True)
+
+    async def _run_batches(self, mrid_list, graph: dict[type, dict[str, object]],
+                           cim_class: type, expand_graph: bool):
+        """Run edge_query_runner for every batch of 100, up to MAX_PARALLEL_QUERIES at once."""
+        limit = asyncio.Semaphore(MAX_PARALLEL_QUERIES)
+
+        async def run_batch(index):
+            async with limit:
+                await self.edge_query_runner(mrid_list, index, graph, cim_class, expand_graph)
+
+        await asyncio.gather(*(run_batch(index) for index in range(math.ceil(len(mrid_list) / 100))))
 
     async def edge_query_runner(self, mrid_list: list[str], index: int,
                                 graph: dict[type, dict[str, object]],
@@ -288,14 +295,14 @@ class Neo4jConnection(ConnectionInterface):
         eq_mrids = mrid_list[index * 100:(index + 1) * 100]
         #generate cypher message from graph and CIM class name
         cypher_message = cypher.get_all_edges_cypher(graph, cim_class, eq_mrids)
-        #async_execute cypher query
-        query_output = asyncio.run(self.async_execute(cypher_message))
+        # Awaited, so the batches' queries overlap; parsing runs on the event loop's
+        # thread between awaits, so batches never change the graph at the same time
+        query_output = await self.async_execute(cypher_message)
         self.edge_query_parser(query_output, graph, cim_class, expand_graph)
 
         #generate cypher message from graph and CIM class name
         cypher_message = cypher.get_all_properties_cypher(graph, cim_class, eq_mrids)
-        #async_execute cypher query
-        query_output = asyncio.run(self.async_execute(cypher_message))
+        query_output = await self.async_execute(cypher_message)
         self.property_query_parser(query_output,graph,cim_class)
 
 
@@ -330,22 +337,18 @@ class Neo4jConnection(ConnectionInterface):
                                         attribute, edge_class, edge_value)
                     new_edges.append(edge_object)
                 else:
-                    self.create_value(graph, cim_class, identifier, attribute, edge_value)
+                    new_edges.append(self.create_reference(graph, cim_class, identifier,
+                                                           attribute, edge_class, edge_value))
 
             else:
-                if self.namespace in edge_value: # Check if enumeration
-                    enum_text = edge_value.split(self.namespace)[1]
-                    enum_text = enum_text.split('>')[0]
-                    enum_class = enum_text.split('.')[0]
-                    enum_value = enum_text.split('.')[1]
-
-                    edge_enum = self.profile_enum(enum_class, enum_value)
-                    if edge_enum is not None:  # if enumeration
-                        new_edges.append(edge_enum)
-                        association = self.check_attribute(
-                            cim_class, attribute)
-                        if association is not None:
-                            setattr(graph[cim_class][identifier], association, edge_enum)
+                # An enumeration value, in the cim or an extension namespace
+                edge_enum = self.enum_from_iri(edge_value)
+                if edge_enum is not None:
+                    new_edges.append(edge_enum)
+                    association = self.check_attribute(
+                        cim_class, attribute)
+                    if association is not None:
+                        setattr(graph[cim_class][identifier], association, edge_enum)
                 else:
                     association = self.check_attribute(cim_class, attribute)
                     if association is not None:
@@ -382,11 +385,7 @@ class Neo4jConnection(ConnectionInterface):
 
     async def get_all_attributes_async(self, mrid_list, graph: dict[type, dict[str, object]],
                                   cim_class: type):
-        for f in asyncio.as_completed([
-                self.edge_query_runner(mrid_list, index, graph, cim_class, False)
-                for index in range(math.ceil(len(mrid_list) / 100))
-        ]):
-            await f
+        await self._run_batches(mrid_list, graph, cim_class, expand_graph=False)
 
     def upload(self, graph: Graph, batch_size: int = 100) -> None:
         """

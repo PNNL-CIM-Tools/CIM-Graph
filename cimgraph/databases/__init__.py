@@ -20,6 +20,14 @@ _log = logging.getLogger(__name__)
 
 Graph = dict[type, dict[UUID, object]]
 
+# Objects per edge or attribute query, and how many of those queries a database
+# connection runs at once
+BATCH_SIZE = 100
+MAX_PARALLEL_QUERIES = 8
+
+# An enumeration value IRI: '<namespace>Enum.member', namespace ending in '#' or '/'
+_ENUM_IRI = re.compile(r'<?(.*[#/])([A-Za-z_]\w*)\.(\w+)>?')
+
 
 def add_object_to_graph(graph: Graph, obj: object) -> None:
     """
@@ -167,6 +175,23 @@ class ConnectionInterface(ABC):
         return enum_class(value)
 
 
+    def enum_from_iri(self, iri: str) -> Enum | None:
+        """
+        Return the profile enumeration member an IRI names ('<namespace>Enum.member'), or
+        None if it names none. The namespace must be the one the enumeration is declared
+        in (cim, or an extension such as gad or eu), or CIMG_NAMESPACE, the namespace the
+        data's cim classes are read with. Raises ValueError for a value that is not a
+        member of a profile enumeration.
+        """
+        match = _ENUM_IRI.fullmatch(iri)
+        if match is None:
+            return None
+        namespace, class_name, value = match.groups()
+        member = self.profile_enum(class_name, value)
+        if member is None or namespace not in (member.__namespace__, self.namespace):
+            return None
+        return member
+
     def create_value(self, graph: dict[type, dict[str, object]],
                     cim_class: type, identifier: UUID | str, attribute: str,
                     value: str, datatype_uri: str = None) -> bool|int|float|str|object:
@@ -311,6 +336,31 @@ class ConnectionInterface(ABC):
             else:
                 _log.warning(f'{cim_class.__name__} does not have attribute {association}')
         return edge_object
+
+    def create_reference(self, graph: Graph, cim_class: type, identifier: UUID,
+                         attribute: str, edge_class: type, edge_id: str) -> object | str | None:
+        """
+        Like create_edge, but never adds an object to the graph, for get_all_attributes:
+        the association is set to the referenced object if it is already in the graph,
+        else to its identifier text, which writers serialize as a reference (rdf:resource,
+        @id). The text is the UUID the object gets when it is read (read_identifier), in
+        the case it was written in.
+        """
+        association = self.check_attribute(cim_class, attribute)
+        if association is None:
+            return None
+        edge_identifier = read_identifier(edge_class.__name__, edge_id)
+        reference = graph.get(edge_class, {}).get(edge_identifier)
+        if reference is None:
+            reference = normalize_identifier(edge_id) if as_uuid(edge_id) else str(edge_identifier)
+        obj = graph[cim_class][identifier]
+        if 'list' in cim_class.__dataclass_fields__[association].type:
+            references = getattr(obj, association)
+            if not any(item is reference or item == reference for item in references):
+                references.append(reference)
+        else:
+            setattr(obj, association, reference)
+        return reference
 
     def create_object(self, graph:Graph,
                       class_type:type, uri:str | UUID) -> object:

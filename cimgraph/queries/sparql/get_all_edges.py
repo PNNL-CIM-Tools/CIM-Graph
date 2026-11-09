@@ -57,12 +57,12 @@ def get_all_edges_sparql(graph:dict[type, dict[UUID, object]], cim_class: type, 
         {bind(if(?uri = "", ?val, ?uri) as ?value)}
 
         OPTIONAL {?val a ?classraw.
-                  bind(strafter(str(?classraw),"%s") as ?edge_class)
+                  bind(strafter(str(?classraw),"#") as ?edge_class)
                   {bind(strafter(str(?val),"%s") as ?uri)}
 
                   bind(concat("{\\"@id\\":\\"", ?uri,"\\",\\"@type\\":\\"", ?edge_class, "\\"}") as ?edge)}
         }
 
         ORDER by  ?identifier ?attribute
-        """ % (class_name, split, get_namespace(), split)
+        """ % (class_name, split, split)
     return query_message

@@ -2,68 +2,14 @@ from __future__ import annotations
 
 from uuid import UUID
 
-from cimgraph.core import get_cim_profile, get_iec61970_552, get_namespace, get_url
-from cimgraph.core.serialization import rdf_identifier
+from cimgraph.queries.rdflib.get_all_edges import get_all_edges_sparql
 
 
-def get_all_attributes_sparql(graph:dict[type, dict[UUID, object]], cim_class: str, uuid_list: list[UUID]) -> str:
+def get_all_attributes_sparql(graph: dict[type, dict[UUID, object]], cim_class: type,
+                              uuid_list: list[UUID]) -> str:
     """
-    Generates SPARQL query string for a given catalog of objects and feeder id
-    Args:
-        feeder_mrid (str | Feeder object): The mRID of the feeder or feeder object
-        graph (dict[type, dict[str, object]]): The typed catalog of CIM objects organized by
-            class type and object mRID
-    Returns:
-        query_message: query string that can be used in blazegraph connection or STOMP client
+    Return the query for every attribute and association of the objects in uuid_list.
+    It is the get_all_edges query: get_all_attributes needs each referenced object's
+    class too, to write the association as the reference the object is read with.
     """
-    namespace = get_namespace()
-    iec61970_552 = get_iec61970_552()
-    class_name = cim_class.__name__
-
-    if iec61970_552 == '552-NEW':
-        split = 'urn:uuid:'
-    else:
-        split = 'rdf:id:'
-
-    query_message = """
-        PREFIX r:  <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
-        PREFIX cim:  <%s>""" % namespace
-
-    query_message += """
-        SELECT DISTINCT ?mRID ?attr ?val ?edge_class ?edge_mRID ?eq
-        WHERE {
-          ?eq r:type cim:%s.""" % class_name
-    # query_message += """
-    #     VALUES ?fdrid {"%s"}
-    #     {?fdr cim:IdentifiedObject.mRID ?fdrid.
-    #     {?eq (cim:|!cim:)?  [ cim:Equipment.EquipmentContainer ?fdr]}
-    #      UNION
-    #      {[cim:Equipment.EquipmentContainer ?fdr] (cim:|!cim:)?  ?eq}}.
-    #       """ %feeder_mrid
-
-    query_message += """
-    VALUES ?identifier {"""
-    # add all equipment mRID
-    for uuid in uuid_list:
-        query_message += ' "%s" \n' % rdf_identifier(graph[cim_class][uuid])
-    query_message += '               }'
-    query_message += f'''
-        bind(iri(concat("{split}", ?identifier)) as ?eq)'''
-
-    # add all attributes
-    query_message += """
-        {?eq (cim:|!cim:) ?val.
-         ?eq ?attr ?val.}
-        UNION
-        {?val (cim:|!cim:) ?eq.
-         ?val ?attr ?eq.}
-
-        # {bind(strafter(str(?attr),"#") as ?attribute).}
-        # {bind(strafter(str(?val),"%s") as ?uri).}
-        # {bind(if(?uri = "", ?val, ?uri) as ?value).}
-        }
-
-
-        ORDER by  ?identifier ?attribute
-        """ % split
-    return query_message
+    return get_all_edges_sparql(graph, cim_class, uuid_list)
