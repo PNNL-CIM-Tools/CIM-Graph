@@ -103,4 +103,3 @@ class ModelAuthority(IdentifiedObject):
     @property
     def __maxOccurs__(self):
         return 'unbounded'
-
