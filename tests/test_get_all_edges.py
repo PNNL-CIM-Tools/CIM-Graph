@@ -5,6 +5,8 @@ import pytest
 from cimgraph.databases.gridappsd import GridappsdConnection
 from cimgraph.models import FeederModel, GraphModel
 
+pytestmark = pytest.mark.integration('gridappsd')
+
 
 @pytest.fixture
 def env_setup():
@@ -60,8 +62,8 @@ def network(env_setup, request) -> GraphModel:
 def cim():
     cim_profile = 'cimhub_2023'
     # cim_profile = 'rc4_2021'
-    # import cimgraph.data_profile.rc4_2021 as cim
-    import cimgraph.data_profile.cimhub_2023 as cim
+    # import cimprofiles.cim17.gridappsd_rc4_2021 as cim
+    import cimprofiles.cim17.cimhub_2023 as cim
     return cim
 
 

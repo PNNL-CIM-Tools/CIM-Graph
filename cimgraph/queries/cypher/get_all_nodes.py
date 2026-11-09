@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+from cimgraph.core.serialization import rdf_identifier
 from cimgraph.databases import get_iec61970_552, get_namespace, get_url
 
 
@@ -12,7 +13,7 @@ def get_all_nodes_from_container(container: object):
         query_message: query string that can be used in blazegraph connection or STOMP client
     """
     container_class = container.__class__.__name__
-    uri = container.uri()
+    uri = rdf_identifier(container)
 
     if get_iec61970_552() == '552-NEW':
         split = 'urn:uuid:'

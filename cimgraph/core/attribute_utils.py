@@ -1,0 +1,188 @@
+
+from __future__ import annotations
+
+import logging
+from dataclasses import dataclass
+from enum import Enum
+from functools import cache
+from typing import Any, Iterator, NamedTuple
+
+from cimprofiles.units import CIMUnit
+
+_log = logging.getLogger(__name__)
+
+
+class Property(NamedTuple):
+    """One serializable value of a CIM object attribute."""
+    name: str       # RDF property name, e.g. 'ACLineSegment.length'
+    namespace: str  # namespace of the attribute
+    kind: str       # 'literal', 'unit', 'enum', or 'reference'
+    value: Any      # a single value (list attributes yield one Property per item)
+
+def convert_datatype(value, attribute_type):
+    """Convert a text or number value to the attribute's bool, int or float datatype where
+    it parses; anything else is returned unchanged for the caller to validate."""
+    if isinstance(value, CIMUnit):
+        return value  # already a typed quantity; float() would drop its unit
+
+    if 'bool' in attribute_type:
+        if 'true' in str(value).lower()  or str(value).lower() == '1':
+            value = True
+        elif 'false' in str(value).lower() or str(value).lower() == '0':
+            value = False
+
+    elif 'int' in attribute_type:
+        try:
+            value = int(float(value))
+        except (TypeError, ValueError):
+            pass
+
+    if 'float' in attribute_type:
+        try:
+            value = float(value)
+        except (TypeError, ValueError):
+            pass
+    return value
+
+def get_attr_field(cim_class:dataclass, attribute:str):
+    if attribute not in cim_class.__dataclass_fields__:
+        _log.warning(f"{cim_class.__name__}.{attribute} not in CIM profile")
+        return None
+    else:
+        return cim_class.__dataclass_fields__[attribute]
+
+
+def get_attr_datatype(cim_class:dataclass, attribute:str) -> list[str]:
+    datatype = [None]
+    if attribute in cim_class.__dataclass_fields__:
+        attr_field = cim_class.__dataclass_fields__[attribute]
+        datatype = attr_field.type.split('[')[1].split(']')[0]
+        if '|' in datatype:
+            datatype = datatype.replace(' ','').split('|')
+        else:
+            datatype = [datatype]
+    return datatype
+
+def validate_attr_datatype(cim_class:dataclass, attribute:str, value:any) -> tuple[bool, list[str], any]:
+    """
+    Return (valid, datatypes, value): value converted to the attribute's datatype where
+    it can be (e.g. '1.5' to 1.5), and whether it fits. An object fits an association
+    to any of its base classes, e.g. a Terminal fits an ACDCTerminal attribute.
+    """
+    attr_datatype = get_attr_datatype(cim_class, attribute)
+    valid = True
+
+    value = convert_datatype(value, attr_datatype)
+
+    if isinstance(value, list):
+        for item in value:
+            item_check, _, _ = validate_attr_datatype(cim_class, attribute, item)
+            if not item_check:
+                valid = False
+    else:
+        valid = any(parent.__name__ in attr_datatype for parent in type(value).__mro__)
+
+    return valid, attr_datatype, value
+
+
+def get_attr_uml_type(cim_class:dataclass, attribute:str):
+    attr_field = get_attr_field(cim_class, attribute)
+    uml_type = attr_field.metadata['type']
+    return uml_type
+
+def get_attr_field_type(cim_class:dataclass, attribute:str):
+    attr_field = get_attr_field(cim_class, attribute)
+    field_type = attr_field.type.split('[')[0]
+    return field_type
+
+def get_attr_inverse(cim_class:dataclass, attribute:str) -> str | None:
+    """'Class.attribute' of the association's other end, or None if it has none."""
+    attr_field = get_attr_field(cim_class, attribute)
+    if attr_field is None:
+        return None
+    return attr_field.metadata.get('inverse')
+
+def get_attr_serialize(cim_class:dataclass, attribute:str) -> bool:
+    attr_field = get_attr_field(cim_class, attribute)
+    return attr_field.metadata['serialize']
+
+@cache
+def get_attr_declaring_class(cim_class:dataclass, attribute:str) -> type:
+    """Return the class in the inheritance chain that declares the attribute."""
+    for parent in cim_class.__mro__[:-1]:
+        if attribute in parent.__annotations__:
+            return parent
+    raise AttributeError(f'{cim_class.__name__}.{attribute} not declared in class hierarchy')
+
+@cache
+def get_serialized_attributes(cim_class:dataclass) -> tuple[str, ...]:
+    """
+    Return the attributes of a class that are written when serializing, in
+    inheritance order (most-derived class first). Follows the serialize
+    metadata, so each association is written from one end only.
+    """
+    attributes = []
+    for parent in cim_class.__mro__[:-1]:
+        for attribute in parent.__annotations__:
+            if attribute == 'identifier' or attribute in attributes:
+                continue
+            if get_attr_serialize(cim_class, attribute):
+                attributes.append(attribute)
+    return tuple(attributes)
+
+def field_properties(cim_class:dataclass, attribute:str, value:Any) -> list[Property]:
+    """Classify an attribute value into Properties. Lists yield one Property per item."""
+    if value is None or value == []:
+        return []
+    attr_field = get_attr_field(cim_class, attribute)
+    name = f'{get_attr_declaring_class(cim_class, attribute).__name__}.{attribute}'
+    namespace = attr_field.metadata['namespace']
+    is_association = attr_field.metadata['type'] == 'Association'
+
+    values = value if isinstance(value, list) else [value]
+    properties = []
+    for item in values:
+        if is_association:
+            kind = 'reference'
+        elif isinstance(item, CIMUnit):
+            kind = 'unit'
+        elif isinstance(item, Enum):
+            kind = 'enum'
+        else:
+            kind = 'literal'
+        properties.append(Property(name, namespace, kind, item))
+    return properties
+
+def _same_value(a_value:Any, b_value:Any) -> bool:
+    """Lists compare without order (CIM associations are unordered); all else uses ==."""
+    if isinstance(a_value, list) and isinstance(b_value, list):
+        return (len(a_value) == len(b_value)
+                and all(item in b_value for item in a_value)
+                and all(item in a_value for item in b_value))
+    return a_value == b_value
+
+def diff_attributes(a:object, b:object) -> dict[str, tuple[Any, Any]]:
+    """
+    Compare the attribute values of two objects of the same class, one level deep.
+
+    References compare by identifier (Identity equality) and are never recursed
+    into, units compare by value (1 kV == 1000 V), and lists ignore order.
+
+    Returns:
+        {attribute: (a_value, b_value)} for every attribute that differs.
+    """
+    if type(a) is not type(b):
+        raise TypeError(f'Cannot compare {type(a).__name__} with {type(b).__name__}')
+    differences = {}
+    for attribute in a.__dataclass_fields__:
+        a_value = getattr(a, attribute)
+        b_value = getattr(b, attribute)
+        if not _same_value(a_value, b_value):
+            differences[attribute] = (a_value, b_value)
+    return differences
+
+def iter_properties(obj:object) -> Iterator[Property]:
+    """Yield every serializable Property of a CIM object."""
+    cim_class = obj.__class__
+    for attribute in get_serialized_attributes(cim_class):
+        yield from field_properties(cim_class, attribute, getattr(obj, attribute))

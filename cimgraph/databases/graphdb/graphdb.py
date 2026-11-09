@@ -20,7 +20,6 @@ class GraphDBConnection(SPARQLEndpointConnection):
     """
 
     def __init__(self) -> None:
-        get_url.cache_clear()
         super().__init__()
 
         # Set GraphDB-specific URL
@@ -36,10 +35,13 @@ class GraphDBConnection(SPARQLEndpointConnection):
         self.connection_obj.setReturnFormat(JSON)
 
     def _execute_raw_query(self, query_message: str):
-        """Execute query using SPARQLWrapper and return JSON results."""
-        self.connection_obj.setQuery(query_message)
-        self.connection_obj.setMethod(POST)
-        return self.connection_obj.query().convert()
+        """Execute query using SPARQLWrapper and return JSON results. Each call gets its
+        own SPARQLWrapper (it holds the query), so batches can run in parallel threads."""
+        query = SPARQLWrapper(self.url)
+        query.setReturnFormat(JSON)
+        query.setQuery(query_message)
+        query.setMethod(POST)
+        return query.query().convert()
 
     def _parse_result_field(self, result: dict, field_name: str) -> str:
         """Extract field value from SPARQLWrapper dict-based result format."""
@@ -52,4 +54,4 @@ class GraphDBConnection(SPARQLEndpointConnection):
         updater = SPARQLWrapper(self.url.rstrip('/') + '/statements')
         updater.setQuery(update_message)
         updater.setMethod(POST)
-        return self.connection_obj.query()
+        return updater.query()

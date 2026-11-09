@@ -2,6 +2,8 @@ from __future__ import annotations
 
 from uuid import UUID
 
+from cimgraph.core.serialization import rdf_identifier
+from cimgraph.core.validation import validate_attribute
 from cimgraph.databases import get_iec61970_552, get_url
 
 
@@ -16,13 +18,14 @@ def get_triple_cypher(subject:object, attribute:str) -> str:
         query_message: query string that can be used in Neo4J
     """
 
+    attribute = validate_attribute(attribute)
     if get_iec61970_552() == '552-NEW':
         split = 'urn:uuid:'
     else:
         split = f'{get_url()}#'
 
     query_message = f'''MATCH (n:{subject.__class__.__name__})
-WHERE n.uri = "{split+subject.uri()}"
+WHERE n.uri = "{split+rdf_identifier(subject)}"
 OPTIONAL MATCH (n) - [:`{attribute}`] - (m)
 RETURN DISTINCT
 n.uri as identifier,

@@ -1,7 +1,6 @@
 from __future__ import annotations
 
 import logging
-from collections import defaultdict
 from dataclasses import dataclass, field
 
 from cimgraph.core import get_cim_profile
@@ -43,8 +42,6 @@ class NodeBreakerModel(GraphModel):
             self.cim = self.connection.cim
         else:
             _, self.cim = get_cim_profile()
-        self.incrementals['forwardDifferences'] = defaultdict(dict)
-        self.incrementals['reverseDifferences'] = defaultdict(dict)
         if self.connection is not None:    # Check if connection has been specified
             if self.distributed:    # Check if distributed flag is true
                 # Build distributed network model
@@ -53,7 +50,8 @@ class NodeBreakerModel(GraphModel):
                 # Otherwise build centralized network model
                 self.initialize_centralized_model(self.container)
         else:    # Log error thant no connection was specified
-            _log.error('A ConnectionInterface must be specified')
+            _log.debug('No ConnectionInterface: in-memory model, built with add_to_graph')
+        self.set_default_bases()    # after loading: the graph's BasePower sets base_power
 
     def initialize_centralized_model(self, container: object) -> None:
         # Pass self.graph so objects the caller already built are preserved
