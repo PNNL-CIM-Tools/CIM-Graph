@@ -3,7 +3,8 @@ name: Release
 
 # Every merge to develop publishes the next pre-release (0.6.0a1 -> 0.6.0a2) and every merge to
 # main the stable version (0.6.0a2 -> 0.6.0); .github/scripts/release_version.sh has the rules.
-# A run commits the new version, tags it, creates the GitHub release and publishes to PyPI.
+# A run computes the new version, tags the triggering commit, creates the GitHub release and
+# publishes to PyPI.
 # Pushes that change no Python file or pyproject.toml are skipped; a manual run on develop or
 # main always releases.
 #
@@ -62,14 +63,14 @@ jobs:
     runs-on: ubuntu-latest
     needs: ci
     permissions:
-      contents: write  # push the version commit and create the GitHub release
+      contents: write  # create the GitHub release
     steps:
-      - name: Checkout CIM-Graph  # zizmor: ignore[artipacked]
-        # Keeps its credentials to push the version commit; only dist/ is uploaded
+      - name: Checkout CIM-Graph
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
         with:
           path: CIM-Graph
           fetch-depth: 0  # tags, for release_version.sh
+          persist-credentials: false
 
       - name: Checkout CIM-Profiles
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
@@ -93,27 +94,12 @@ jobs:
         working-directory: CIM-Graph
         run: uv build
 
-      - name: Commit version
-        id: commit
-        working-directory: CIM-Graph
-        env:
-          VERSION: ${{ steps.version.outputs.version }}
-        run: |
-          if ! git diff --quiet; then
-            git config user.name 'gridappsd[bot]'
-            git config user.email 'gridappsd[bot]@users.noreply.github.com'
-            git commit -am "Bump version to $VERSION"
-            # Fails if the branch moved since this run started; the newer run releases it
-            git push origin "HEAD:refs/heads/$GITHUB_REF_NAME"
-          fi
-          echo "sha=$(git rev-parse HEAD)" >> "$GITHUB_OUTPUT"
-
       - name: Create GitHub release
         working-directory: CIM-Graph
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           VERSION: ${{ steps.version.outputs.version }}
-          SHA: ${{ steps.commit.outputs.sha }}
+          SHA: ${{ github.sha }}
           PRERELEASE: ${{ github.ref_name == 'develop' }}
         run: |
           gh release create "v$VERSION" dist/*.tar.gz dist/*.whl --target "$SHA" \
