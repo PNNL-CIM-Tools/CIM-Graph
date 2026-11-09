@@ -1,6 +1,6 @@
 [project]
 name = "cim-graph"
-version = "0.6.0a1"
+version = "0.6.0"
 description = "Typed in-memory graphs of IEC CIM power system models, read from and written to CIM XML, JSON-LD, SPARQL and graph databases"
 authors = [
     {name = "A. Anderson", email = "19935503+AAndersn@users.noreply.github.com"},

@@ -1,6 +1,6 @@
 # Changelog
 
-## 0.6.0a1 (unreleased)
+## 0.6.0 (unreleased)
 
 ### Profiles moved to `cimprofiles`
 

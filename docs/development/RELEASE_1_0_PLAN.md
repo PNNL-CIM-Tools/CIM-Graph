@@ -315,9 +315,11 @@ Owns: `pyproject.toml`, `uv.lock`, `.github/workflows/` (CI parts; coordinate wi
   `pip install cim-graph[neo4j]`.
 
 ### 3c. Release mechanics
-- Set `1.0.0rc1` by hand on `develop` (`uv version 1.0.0rc1`, which also updates `uv.lock`).
-  `.github/scripts/release_version.sh` publishes an unreleased version as it is, then bumps
-  develop to rc2, rc3, …; merging to main publishes 1.0.0.
+- Set the target to `1.0.0` in a PR to `develop` (`uv version 1.0.0`, which also updates
+  `uv.lock`). Develop then publishes 1.0.0a1, a2, … and merging to main publishes 1.0.0; see
+  `.github/scripts/release_version.sh`. The version is never committed by CI, because the
+  rulesets on develop and main reject unsigned pushes. Release candidates (rc1) are not
+  supported yet: the script only makes alphas.
 - Classifiers:
   - `5 - Production/Stable`
   - add 3.13 and 3.14
