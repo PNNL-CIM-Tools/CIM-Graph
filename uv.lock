@@ -317,12 +317,11 @@ wheels = [
 
 [[package]]
 name = "cim-graph"
-version = "0.6.0a1"
+version = "0.6.0"
 source = { editable = "." }
 dependencies = [
-    { name = "cimprofiles" },
+    { name = "cim-profiles" },
     { name = "defusedxml" },
-    { name = "requests" },
 ]
 
 [package.optional-dependencies]
@@ -357,19 +356,19 @@ dev = [
     { name = "ipykernel" },
     { name = "pre-commit" },
     { name = "pytest" },
+    { name = "requests" },
 ]
 
 [package.metadata]
 requires-dist = [
     { name = "cim-graph", extras = ["sparql", "neo4j", "mysql", "gridappsd", "rdflib"], marker = "extra == 'all'" },
-    { name = "cimprofiles", editable = "../CIM-Profiles" },
+    { name = "cim-profiles", specifier = ">=0.1.0a1,<0.2" },
     { name = "defusedxml", specifier = ">=0.7.1" },
     { name = "gridappsd-python", marker = "extra == 'gridappsd'", specifier = ">=2026.2.1" },
     { name = "mysql-connector-python", marker = "extra == 'mysql'", specifier = ">=9.2.0" },
     { name = "neo4j", marker = "extra == 'neo4j'", specifier = ">=5.10.0" },
     { name = "oxrdflib", marker = "extra == 'rdflib'", specifier = ">=0.3.6" },
     { name = "rdflib", marker = "extra == 'rdflib'", specifier = ">=7.0.0" },
-    { name = "requests", specifier = ">=2.31" },
     { name = "sparqlwrapper", marker = "extra == 'sparql'", specifier = ">=2.0.0" },
 ]
 provides-extras = ["sparql", "neo4j", "mysql", "gridappsd", "rdflib", "all"]
@@ -380,24 +379,20 @@ dev = [
     { name = "ipykernel", specifier = ">=6.27.1" },
     { name = "pre-commit", specifier = ">=2.17.0" },
     { name = "pytest", specifier = ">=8.3.5" },
+    { name = "requests", specifier = ">=2.31" },
 ]
 
 [[package]]
-name = "cimprofiles"
-version = "0.1.0"
-source = { editable = "../CIM-Profiles" }
+name = "cim-profiles"
+version = "0.1.0a1"
+source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "pint", version = "0.24.4", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version < '3.11'" },
     { name = "pint", version = "0.25.3", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version >= '3.11'" },
 ]
-
-[package.metadata]
-requires-dist = [{ name = "pint", specifier = ">=0.24.4" }]
-
-[package.metadata.requires-dev]
-dev = [
-    { name = "pytest", specifier = ">=8.3.5" },
-    { name = "pyyaml", specifier = ">=6.0" },
+sdist = { url = "https://files.pythonhosted.org/packages/ec/01/a6dc49012821f5aa9bb213a4937dc1d27861c28f6c634c6c905a8028e2b2/cim_profiles-0.1.0a1.tar.gz", hash = "sha256:50cb37503850687bf2810e38d8097b043db1255dc18a4a0e4b4c532a0f66c0b5", size = 2528400, upload-time = "2026-11-09T22:44:23.602Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/cc/af/453cf7af6ffa6146dea47effb296ddf399af7190186c4bd6bc44d85566a2/cim_profiles-0.1.0a1-py3-none-any.whl", hash = "sha256:5032bbba1f5a457b030a92c15819899b585c693d4cc09b3e127d45de1937ff1e", size = 2604149, upload-time = "2026-11-09T22:44:21.799Z" },
 ]
 
 [[package]]
