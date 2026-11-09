@@ -5,6 +5,8 @@ import logging
 import os
 import re
 from abc import ABC, abstractmethod
+from collections.abc import Callable
+from concurrent.futures import ThreadPoolExecutor
 from dataclasses import dataclass, field, is_dataclass
 from enum import Enum
 from functools import cache
@@ -25,6 +27,17 @@ Graph = dict[type, dict[UUID, object]]
 # connection runs at once
 BATCH_SIZE = 100
 MAX_PARALLEL_QUERIES = 8
+
+
+def run_queries_in_parallel(execute: Callable[[str], QueryResponse],
+                            queries: list[str]) -> list[QueryResponse]:
+    """Run the queries with execute, up to MAX_PARALLEL_QUERIES at once, and return their
+    results in the same order. execute must be thread-safe; parse the results (which
+    changes the graph) on the calling thread."""
+    if len(queries) <= 1:
+        return [execute(query) for query in queries]
+    with ThreadPoolExecutor(max_workers=min(MAX_PARALLEL_QUERIES, len(queries))) as executor:
+        return list(executor.map(execute, queries))
 
 # An enumeration value IRI: '<namespace>Enum.member', namespace ending in '#' or '/'
 _ENUM_IRI = re.compile(r'<?(.*[#/])([A-Za-z_]\w*)\.(\w+)>?')
@@ -158,12 +171,11 @@ class ConnectionInterface(ABC):
         raise RuntimeError('Must have implemented query in the inherited class')
 
     def __init__(self):
-        # clear cached env variables
-        get_namespace.cache_clear()
-        get_cim_profile.cache_clear()
-        get_iec61970_552.cache_clear()
-        get_validation_log_level.cache_clear()
-        get_use_units.cache_clear()
+        # Every connection reads the CIMG_* environment variables as they are now
+        for getter in (get_namespace, get_cim_profile, get_iec61970_552, get_validation_log_level,
+                       get_use_units, get_url, get_host, get_port, get_username, get_password,
+                       get_database):
+            getter.cache_clear()
 
         self.cim_profile, self.cim = get_cim_profile()
         self.namespace = get_namespace()

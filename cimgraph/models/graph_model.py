@@ -47,7 +47,7 @@ class GraphModel():
         distributed: a boolean to indicate if the graph is distributed
     Optional Args:
         base_power: system power base (cim.ApparentPower), default the graph's BasePower, else CIMG_SYSTEM_MVA_BASE or 100 MVA
-        base_frequency: system frequency (cim.Frequency), default 60 Hz
+        base_frequency: system frequency (cim.Frequency), default the graph's BaseFrequency, else 60 Hz
     Returns:
         none
     Methods:
@@ -64,27 +64,33 @@ class GraphModel():
         """Fill unset base_power/base_frequency once self.cim and self.graph
         are known (call it after the graph is loaded). base_power is the
         graph's BasePower.basePower (PSS/E SBASE, MATPOWER baseMVA), else
-        CIMG_SYSTEM_MVA_BASE or 100 MVA. A model has one system base: several
-        BasePower objects that disagree, or one that disagrees with an
-        explicit base_power, raise rather than leave pu values on the wrong
-        base. The CIMUnit classes are per profile, and a profile part may
+        CIMG_SYSTEM_MVA_BASE or 100 MVA; base_frequency is the graph's
+        BaseFrequency.frequency (a 50 Hz model), else 60 Hz. A model has one
+        system base of each: several objects that disagree, or one that
+        disagrees with an explicit base, raise rather than leave values on the
+        wrong base. The CIMUnit classes are per profile, and a profile part may
         lack one (cim18gmdm has no Frequency); that base then stays None."""
-        base_power_cls = getattr(self.cim, 'BasePower', None)
-        graph_bases = []
-        if base_power_cls is not None:
-            graph_bases = [bp for bp in self.graph.get(base_power_cls, {}).values() if bp.basePower is not None]
-        if self.base_power is None and graph_bases:
-            self.base_power = graph_bases[0].basePower
-        for base in graph_bases:
-            if not math.isclose(base.basePower.to('VA'), self.base_power.to('VA')):
-                raise ValueError(
-                    f"BasePower {base.mRID!r} ({base.basePower.to('MVA')} MVA) disagrees with the "
-                    f"model's system base ({self.base_power.to('MVA')} MVA): a model has one system base"
-                )
+        self.base_power = self._graph_base('BasePower', 'basePower', 'VA', self.base_power)
+        self.base_frequency = self._graph_base('BaseFrequency', 'frequency', 'Hz', self.base_frequency)
         if self.base_power is None and hasattr(self.cim, 'ApparentPower'):
             self.base_power = self.cim.ApparentPower(get_system_mva_base(), 'MVA')
         if self.base_frequency is None and hasattr(self.cim, 'Frequency'):
             self.base_frequency = self.cim.Frequency(DEFAULT_FREQUENCY_HZ, 'Hz')
+
+    def _graph_base(self, class_name: str, attribute: str, unit: str, explicit: CIMUnit | None) -> CIMUnit | None:
+        """The explicit base, else the first graph object's; every graph object must agree with it."""
+        base_class = getattr(self.cim, class_name, None)
+        objects = [] if base_class is None else [
+            obj for obj in self.graph.get(base_class, {}).values() if getattr(obj, attribute) is not None]
+        base = explicit if explicit is not None else (getattr(objects[0], attribute) if objects else None)
+        for obj in objects:
+            value = getattr(obj, attribute)
+            if not math.isclose(value.to(unit), base.to(unit)):
+                raise ValueError(
+                    f"{class_name} {obj.mRID!r} ({value.to(unit)} {unit}) disagrees with the "
+                    f"model's system base ({base.to(unit)} {unit}): a model has one system base"
+                )
+        return base
 
     # -------------------------------------------------------------------------
     # Methods to add objects to GraphModel.graph

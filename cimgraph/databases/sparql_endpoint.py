@@ -6,13 +6,12 @@ import math
 from abc import abstractmethod
 from collections import defaultdict
 from collections.abc import Callable
-from concurrent.futures import ThreadPoolExecutor
 
 from cimprofiles.identity import read_identifier
 
 import cimgraph.queries.sparql as sparql
-from cimgraph.databases import (BATCH_SIZE, MAX_PARALLEL_QUERIES, ConnectionInterface, Graph,
-                                QueryResponse)
+from cimgraph.databases import (BATCH_SIZE, ConnectionInterface, Graph, QueryResponse,
+                                run_queries_in_parallel)
 
 _log = logging.getLogger(__name__)
 
@@ -424,10 +423,7 @@ class SPARQLEndpointConnection(ConnectionInterface):
         """Run the queries, up to MAX_PARALLEL_QUERIES at once, and return their results
         in the same order."""
         self.connect()
-        if len(queries) <= 1:
-            return [self._execute_raw_query(query) for query in queries]
-        with ThreadPoolExecutor(max_workers=min(MAX_PARALLEL_QUERIES, len(queries))) as executor:
-            return list(executor.map(self._execute_raw_query, queries))
+        return run_queries_in_parallel(self._execute_raw_query, queries)
 
     def _expand_by_batches(self, graph: Graph, cim_class: type,
                            build_query: Callable, expand_graph: bool) -> None:

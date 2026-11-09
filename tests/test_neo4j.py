@@ -85,7 +85,7 @@ class TestNeo4J(unittest.TestCase):
         feeder = cim.Feeder(mRID=self.feeder_mrid)
         network = FeederModel(connection=database, container=feeder, distributed=False)
         initial_keys = len(network.graph.keys())
-        self.assertEqual(initial_keys, 13)
+        self.assertEqual(initial_keys, 14)
         database.disconnect()
 
 
@@ -99,7 +99,7 @@ class TestNeo4J(unittest.TestCase):
         utils.get_all_line_data(network)
         # check size of graph
         total_keys = len(network.graph.keys())
-        self.assertEqual(total_keys, 21)
+        self.assertEqual(total_keys, 19)  # for tests/test_models/ieee13.xml (seed_databases.py)
         # check value of line 645646
         self.assertEqual(line.name, '645646')
         self.assertEqual(line.length, 91.44)

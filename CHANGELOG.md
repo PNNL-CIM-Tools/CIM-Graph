@@ -60,6 +60,23 @@ supported, and `requires-python` no longer has an upper bound.
   - the offline tests with the lowest declared version of every direct dependency;
   - a ruff check for syntax errors and undefined names.
 - Pre-commit also rejects new files over 500 kB and runs the same ruff check.
+- `docker-compose.yml` now runs Blazegraph, GraphDB 10 and Neo4j 5.26 with no stored data, and
+  `tests/seed_databases.py` loads `tests/test_models/ieee13.xml` into each with the database's
+  own RDF loader. CI runs the integration tests against them. `tests/test_backends_match_xml.py`
+  checks that every object each database adapter reads matches what `XMLFile` reads.
+
+### Database adapters
+
+- `Neo4jConnection` uses the synchronous neo4j driver: `nest-asyncio` is no longer a
+  dependency, and importing the adapter no longer patches asyncio for the whole process (which
+  broke on Python 3.16). `get_all_edges` runs its batches on threads, like the SPARQL
+  connections (`databases.run_queries_in_parallel`). `async_execute`, `get_all_edges_async`,
+  `get_all_attributes_async`, `edge_query_runner`, `query_tx` and `query_tx_with_params` are
+  removed. `disconnect()` is safe to call when not connected.
+- `Neo4jConnection.create_new_graph` adds the container to the graph, as the other connections do.
+- Every connection reads all `CIMG_*` connection settings (URL, host, port, user, password,
+  database) as they are when it is created. `BlazegraphConnection` kept the URL of the first
+  connection, and `GridappsdConnection` the database of the previous one.
 
 ### Identifiers (breaking)
 
@@ -119,6 +136,10 @@ All of these change UUIDs or comparisons that existing code may rely on:
 
 Breaking:
 
+- `set_default_bases` takes `base_frequency` from the graph's `BaseFrequency.frequency`, as
+  it already took `base_power` from `BasePower`. A 50 Hz model used to get 60 Hz. Several
+  BaseFrequency objects that disagree, or one that disagrees with an explicit
+  `base_frequency`, raise `ValueError`.
 - `XMLFile` and `JSONLDFile` raise when a file is missing (`FileNotFoundError`) or malformed
   (`ParseError`, `json.JSONDecodeError`). They used to log a warning and return an empty or
   partial graph. For an empty in-memory model, pass `connection=None` to the model.

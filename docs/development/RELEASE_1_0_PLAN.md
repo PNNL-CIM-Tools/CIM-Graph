@@ -258,15 +258,14 @@ Owns: `pyproject.toml`, `uv.lock`, `.github/workflows/` (CI parts; coordinate wi
 `.pre-commit-config.yaml`, `tests/conftest.py`, `cimgraph/databases/__init__.py` (import block only),
 `cimgraph/utils/__init__.py`, `databases/neo4j/neo4j.py` (async parts).
 
-**Status (2026-11-08, uncommitted on `cimprofiles-0.6`): 3a done; 3b done except Neo4j; 3c
-partly done.**
+**Status (2026-11-09, uncommitted on `cimprofiles-0.6`): 3a and 3b done; 3c partly done.**
 
 | Item | Outcome |
 |---|---|
 | 3a pytest | `[tool.pytest.ini_options]`: `testpaths`, `integration(service)` marker. `tests/conftest.py` skips a marked test when nothing listens on the service's port (`SERVICES`). Only tests that connect are marked: the query-building and env-var tests in the service files run offline (173 offline tests). `test_mysql.py` uses the marker instead of its own check. |
 | 3a CI | `.github/workflows/ci.yml`: tests on 3.10–3.14 (`uv sync --locked --all-extras`), a `--resolution lowest-direct` job, and ruff `E9,F63,F7,F82` only (the full lint is WS5). It runs on pull requests and is called (`workflow_call`) by `release.yml`, `dev-pre-release.yml` and `dispatch-pypi.yml`, whose build needs it. CIM-Profiles is checked out next to CIM-Graph at `CIM_PROFILES_REF` (`rc2`) for `[tool.uv.sources]`; drop that with the sources block. All three Python environments verified locally (3.13, 3.14, lowest-direct). |
 | 3a strays | `tests/timing.py` and `tests/uuid_test.ipynb` removed. |
-| 3b | Lazy adapter imports and per-driver extras were already done (CHANGELOG). The `dev` extra is now a `[dependency-groups]` group. The unused cimhub_2023 imports in `feeder_model.py` and `neo4j.py` are gone. **Open: Neo4j sync driver** (drop `nest_asyncio`, whose event-loop-policy calls warn on 3.14 and break on 3.16). Needs a live Neo4j or the 4.8 canned-response tests to verify. |
+| 3b | Lazy adapter imports and per-driver extras were already done (CHANGELOG). The `dev` extra is now a `[dependency-groups]` group. The unused cimhub_2023 imports in `feeder_model.py` and `neo4j.py` are gone. Neo4j now uses the sync driver (`nest_asyncio` dropped; see WS4). `get_all_attributes` still runs the edge query as well as the property query, with `expand_graph=False`: since #159 it sets associations as references, the same as the SPARQL connections. |
 | 3c | PEP 639 `license = "BSD-3-Clause"` + `license-files`, `hatchling>=1.27`, a real `description`, 3.13/3.14 classifiers, `requires-python = ">=3.10"`. The wheel already leaves out the profile markdown (profiles are in cimprofiles; 341 kB, 96 files). Pre-commit gained `check-added-large-files` and the CI ruff check. **Open for the maintainer:** the `1.0.0rc1` bump and `5 - Production/Stable` (at the rc), and moving `ieee9500bal.xml` (38 MB) to LFS or a download, which rewrites history or changes the test fixture. |
 
 ### 3a. Test gate (do first)
@@ -331,6 +330,17 @@ partly done.**
 ## WS4 — Adapter interface consistency
 
 Owns: `databases/*` adapters, `queries/*` (after WS1 lands its validation).
+
+**Status (2026-11-09, uncommitted on `cimprofiles-0.6`): started.**
+
+| Item | Outcome |
+|---|---|
+| Test databases | `docker-compose.yml`: Blazegraph (`lyrasis/blazegraph:2.1.5`, port 8889), GraphDB 10.8 (11.x needs a license file), Neo4j 5.26 with n10s. No volumes. `tests/seed_databases.py` loads `ieee13.xml` with each database's own loader (SPARQL Graph Store POST; a GraphDB repository with the `empty` ruleset; n10s `handleVocabUris: 'IGNORE'`, the labels the Cypher queries expect). CI job `integration`. GridAPPS-D (needs its platform, which uses port 8889 too) and MySQL (owner's `tier5_ieee13`; `test_matches_xml_file` reads a missing `ieee13_2021.xml`) are not included. The old hand-loaded `docker/` data directories are unused. |
+| Cross-backend test | `tests/test_backends_match_xml.py`: after `get_all_data`, every object from Blazegraph, GraphDB and Neo4j matches `XMLFile` (`diff_attributes`), 493 objects each. Two known differences are allowed: `OperationalLimitSet.Terminal`/`.ConnectivityNode` (the file gives one set several terminals; the profile allows one, so the reader keeps whichever comes last), and references left as text keep the database's case (Blazegraph returns `urn:uuid:` IRIs in lowercase). The count expectations in `test_blazegraph_seto.py`, `test_graphdb.py` and `test_neo4j.py` are now this file's (19 classes, was 21 for GridAPPS-D's data). |
+| 4.4 | Done: `create_new_graph` adds the container (Neo4j did not). `ConnectionInterface.__init__` clears every `CIMG_*` cache, replacing the per-adapter subsets (Blazegraph kept a stale URL, GridAPPS-D a stale database). Remaining: `get_all_edges`/`get_all_attributes` on file backends, `create_distributed_graph`, `get_from_triple`, and `update`/`get_edges_query`/`build_graph_from_list` in the base class. |
+| 4.5 | Partly: `Neo4jConnection.disconnect()` is safe to call twice. |
+| 3b Neo4j | Sync driver: `execute_query` with `RoutingControl.READ`/`WRITE` (needs neo4j ≥ 5.8; tested on the minimum 5.10.0). Batches run on threads through `databases.run_queries_in_parallel`, shared with `SPARQLEndpointConnection.run_batch_queries`. |
+| Follow-up | A reader that gets a second, different value for a single-valued association overwrites the first silently (the OperationalLimitSet case). Decide whether to warn. |
 
 - **4.1 One `normalize_identifier(uri) -> UUID | str`** replaces about 8 variants
   (`strip('_').lower()`, `split(':')[-1]`, `strip('#')`, …) in `databases/__init__.py`,

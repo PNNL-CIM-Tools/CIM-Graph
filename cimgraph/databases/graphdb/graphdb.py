@@ -20,7 +20,6 @@ class GraphDBConnection(SPARQLEndpointConnection):
     """
 
     def __init__(self) -> None:
-        get_url.cache_clear()
         super().__init__()
 
         # Set GraphDB-specific URL

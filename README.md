@@ -60,7 +60,7 @@ need their driver extra:
 | Extra | Installs | For |
 |---|---|---|
 | `sparql` | SPARQLWrapper | `BlazegraphConnection`, `GraphDBConnection` |
-| `neo4j` | neo4j, nest-asyncio | `Neo4jConnection` |
+| `neo4j` | neo4j | `Neo4jConnection` |
 | `mysql` | mysql-connector-python | `MySQLConnection` |
 | `gridappsd` | gridappsd-python | `GridappsdConnection` |
 | `rdflib` | rdflib, oxrdflib | `RDFlibConnection` |
@@ -292,8 +292,18 @@ tools (pytest, pre-commit). Until the 1.0 release, CIM-Graph is built against th
 checkout next to it.
 
 Run the tests that need no database with `uv run pytest -m "not integration"`. Tests marked
-`integration` run against the services in `docker-compose.yml` and are skipped when a service
-is not running.
+`integration` are skipped when their database is not running. To run them against Blazegraph,
+GraphDB and Neo4j:
+
+```bash
+docker compose up -d --wait
+uv run python tests/seed_databases.py   # loads tests/test_models/ieee13.xml into each
+uv run pytest -m integration
+docker compose down
+```
+
+The GridAPPS-D tests need the GridAPPS-D platform instead, and the MySQL tests a
+`tier5_ieee13` database.
 
 Activate the virtual environment:
 ```bash

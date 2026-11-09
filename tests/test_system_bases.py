@@ -74,3 +74,40 @@ class TestBasePowerFromGraph(unittest.TestCase):
             FeederModel(container=None, connection=XMLFile(self._write_model(
                 cim.BasePower(mRID='sbase', basePower=cim.ApparentPower(50, 'MVA')))),
                 distributed=False, base_power=cim.ApparentPower(100, 'MVA'))
+
+
+class TestBaseFrequencyFromGraph(unittest.TestCase):
+    """A model's BaseFrequency (a 50 Hz deck's) is its system frequency: it must
+    not be left at the 60 Hz default (UPSTREAM_REQUESTS U14 in CIMHub)."""
+
+    @staticmethod
+    def _graph(*hertz):
+        frequencies = [cim.BaseFrequency(mRID=f'bf_{i}', frequency=cim.Frequency(f, 'Hz')) for i, f in enumerate(hertz)]
+        return {cim.BaseFrequency: {bf.identifier: bf for bf in frequencies}}
+
+    def test_graph_base_frequency_sets_the_system_frequency(self):
+        for model_class in (FeederModel, BusBranchModel, NodeBreakerModel):
+            network = model_class(container=None, connection=None, graph=self._graph(50))
+            self.assertEqual(network.base_frequency.to('Hz'), 50)
+
+    def test_xml_base_frequency_sets_the_system_frequency(self):
+        import tempfile
+        from cimgraph.databases import XMLFile
+        from cimgraph.utils import write_xml
+        source = NodeBreakerModel(container=None, connection=None, distributed=False, graph=self._graph(50))
+        path = os.path.join(tempfile.mkdtemp(), 'model.xml')
+        write_xml(source, path)
+        network = FeederModel(container=None, connection=XMLFile(path), distributed=False)
+        self.assertEqual(network.base_frequency.to('Hz'), 50)
+
+    def test_disagreeing_base_frequencies_raise(self):
+        with self.assertRaisesRegex(ValueError, "BaseFrequency 'bf_1'.*disagrees with the model"):
+            FeederModel(container=None, connection=None, graph=self._graph(50, 60))
+        with self.assertRaisesRegex(ValueError, 'disagrees with the model'):
+            FeederModel(container=None, connection=None, graph=self._graph(50),
+                        base_frequency=cim.Frequency(60, 'Hz'))
+
+    def test_explicit_base_frequency_agreeing_with_the_graph_is_kept(self):
+        network = FeederModel(container=None, connection=None, graph=self._graph(50),
+                              base_frequency=cim.Frequency(50, 'Hz'))
+        self.assertEqual(network.base_frequency.to('Hz'), 50)

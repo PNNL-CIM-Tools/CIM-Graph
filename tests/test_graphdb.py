@@ -92,7 +92,7 @@ class TestGraphDB(unittest.TestCase):
         utils.get_all_line_data(network)
         # check size of graph
         total_keys = len(network.graph.keys())
-        self.assertEqual(total_keys, 21)
+        self.assertEqual(total_keys, 19)  # for tests/test_models/ieee13.xml (seed_databases.py)
         # check value of line 645646
         self.assertEqual(line.name, '645646')
         self.assertEqual(line.length, 91.44)

@@ -19,11 +19,6 @@ _log = logging.getLogger(__name__)
 class GridappsdConnection(ConnectionInterface):
 
     def __init__(self):
-        get_url.cache_clear()
-        get_host.cache_clear()
-        get_port.cache_clear()
-        get_username.cache_clear()
-        get_password.cache_clear()
         super().__init__()
         self.host = get_host()
         self.port = get_port()

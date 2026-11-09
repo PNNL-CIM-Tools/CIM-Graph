@@ -77,6 +77,49 @@ jobs:
         working-directory: CIM-Graph
         run: uv run --resolution lowest-direct pytest -m "not integration"
 
+  integration:
+    # Blazegraph, GraphDB and Neo4j from docker-compose.yml, seeded with IEEE 13. The GridAPPS-D
+    # and MySQL tests skip: their services are not part of it.
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout CIM-Graph
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+        with:
+          path: CIM-Graph
+
+      - name: Checkout CIM-Profiles
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+        with:
+          repository: PNNL-CIM-Tools/CIM-Profiles
+          ref: ${{ env.CIM_PROFILES_REF }}
+          path: CIM-Profiles
+
+      - name: Install UV
+        uses: astral-sh/setup-uv@20cfd1bf945f4377ade1205e4dbc17946fc9a30d # v10.0.1
+        with:
+          enable-cache: true
+
+      - name: Start databases
+        working-directory: CIM-Graph
+        run: docker compose up -d --wait
+
+      - name: Install
+        working-directory: CIM-Graph
+        run: uv sync --locked --all-extras --python 3.12
+
+      - name: Seed databases
+        working-directory: CIM-Graph
+        run: uv run python tests/seed_databases.py
+
+      - name: Test (databases)
+        working-directory: CIM-Graph
+        run: uv run pytest -m integration
+
+      - name: Database logs
+        if: failure()
+        working-directory: CIM-Graph
+        run: docker compose logs
+
   lint:
     # Syntax errors and undefined names only, until the WS5 lint clean-up
     runs-on: ubuntu-latest

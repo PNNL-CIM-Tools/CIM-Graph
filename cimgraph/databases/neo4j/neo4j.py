@@ -1,22 +1,16 @@
 from __future__ import annotations
 
-import asyncio
 import logging
-import math
 from collections import defaultdict
 from uuid import UUID
 
-import nest_asyncio
-from neo4j import AsyncGraphDatabase, GraphDatabase
-from neo4j.exceptions import DriverError, Neo4jError
+from neo4j import GraphDatabase, RoutingControl
 
 import cimgraph.queries.cypher as cypher
-from cimgraph.core import (get_cim_profile, get_database, get_iec61970_552, get_namespace,
-                           get_password, get_url, get_username)
+from cimgraph.core import get_database, get_password, get_url, get_username
 from cimgraph.core.serialization import RDF_XML_CLOSE, object_to_xml, profile_namespaces, rdf_xml_open
-from cimgraph.databases import MAX_PARALLEL_QUERIES, ConnectionInterface, Graph, QueryResponse
-
-nest_asyncio.apply()
+from cimgraph.databases import (BATCH_SIZE, ConnectionInterface, Graph, QueryResponse,
+                                run_queries_in_parallel)
 
 _log = logging.getLogger(__name__)
 
@@ -28,10 +22,6 @@ class Neo4jConnection(ConnectionInterface):
     """
 
     def __init__(self):
-        get_url.cache_clear()
-        get_username.cache_clear()
-        get_password.cache_clear()
-        get_database.cache_clear()
         super().__init__()
         self.url = get_url()
         self.username = get_username()
@@ -42,62 +32,39 @@ class Neo4jConnection(ConnectionInterface):
 
     def connect(self):
         """
-        Establish a connection to the Neo4J endpoint.
+        Establish a connection to the Neo4J endpoint. The driver is thread-safe and
+        shared by the queries that get_all_edges runs in parallel.
         """
-        # Create a neo4j driver object if it does not exist
-        if not self.driver:
-            # Use Async driver for bettter performance
-            # if self.use_async:
-                self.driver = AsyncGraphDatabase.driver(self.url, auth=(self.username, self.password))
-                asyncio.run(self.driver.verify_connectivity())
-                # else:
-                #     self.driver = GraphDatabase.driver(self.url, auth=(self.username, self.password))
-                #     self.driver.verify_connectivity()
-                #     self.session = self.driver.session(database=self.database)
+        if self.driver is None:
+            self.driver = GraphDatabase.driver(self.url, auth=(self.username, self.password))
+            self.driver.verify_connectivity()
 
     def disconnect(self):
         """
-        Disconnect from the Neo4J endpoint.
+        Disconnect from the Neo4J endpoint. Safe to call when not connected.
         """
-        asyncio.run(self.driver.close())
-        self.driver = None
+        if self.driver is not None:
+            self.driver.close()
+            self.driver = None
 
     def execute(self, query_message: str) -> QueryResponse:
         """
-        Execute a given cypher query on the Neo4J endpoint.
-        If performing concurrent calls with the Async driver, use the
-        async_execute() method instead.
+        Execute a read-only cypher query on the Neo4J endpoint.
 
         Args:
             query_message (str): The cypher query to be executed.
 
         Returns:
-            query_output (QueryResponse): The response from the query execution.
-        """
-        records = asyncio.run(self.async_execute(query_message))
-        return records
-
-    async def async_execute(self, query_message: str) -> QueryResponse:
-        """
-        Execute a given cypher query on the Neo4J endpoint with the Async driver.
-        Call using query_output = asyncio.run(self.async_execute(cypher_message))
-
-        Args:
-            query_message (str): The cypher query to be executed.
-
-        Returns:
-            query_output (QueryResponse): The response from the query execution.
+            query_output (QueryResponse): one dict per record.
         """
         self.connect()
-
-        async with self.driver.session(database=self.database) as session:
-            result = await session.execute_read(lambda tx: self.query_tx(tx, query_message))
-
-        return result
+        records, _, _ = self.driver.execute_query(
+            query_message, database_=self.database, routing_=RoutingControl.READ)
+        return [record.data() for record in records]
 
     def execute_with_params(self, query_message: str, **params) -> QueryResponse:
         """
-        Execute a cypher query with bound parameters.
+        Execute a cypher query that writes, with bound parameters.
 
         Required for payloads that contain quotes or newlines (e.g. RDF sent to
         n10s.rdf.import.inline), where string interpolation would corrupt the
@@ -108,36 +75,13 @@ class Neo4jConnection(ConnectionInterface):
             **params: values bound to those placeholders.
 
         Returns:
-            query_output (QueryResponse): The response from the query execution.
-        """
-        return asyncio.run(self.async_execute_with_params(query_message, **params))
-
-    async def async_execute_with_params(self, query_message: str, **params) -> QueryResponse:
-        """
-        Async form of execute_with_params(). Uses execute_write since the
-        parameterized queries we send (n10s imports) mutate the graph.
+            query_output (QueryResponse): one dict per record.
         """
         self.connect()
-
-        async with self.driver.session(database=self.database) as session:
-            return await session.execute_write(
-                lambda tx: self.query_tx_with_params(tx, query_message, **params)
-            )
-
-    async def query_tx_with_params(self, tx, query_message, **params):
-        """
-        Lambda transform for parameterized async query execution
-        """
-        result = await tx.run(query_message, **params)
-        return await result.data()
-
-    async def query_tx(self, tx, query_message):
-        """
-        Lambda transform for async query execution
-        """
-        result = await tx.run(query_message)
-        records = await result.data()
-        return records
+        records, _, _ = self.driver.execute_query(
+            query_message, parameters_=params, database_=self.database,
+            routing_=RoutingControl.WRITE)
+        return [record.data() for record in records]
 
     def get_object(self, mRID: str, graph: dict = None) -> object:
         """
@@ -176,9 +120,8 @@ class Neo4jConnection(ConnectionInterface):
     def create_new_graph(self, container: object, graph:Graph = None) -> Graph:
         if graph is None:
             graph = defaultdict(lambda: defaultdict(dict))
-        # Generate cypher message from correct loaders>cypher python script based on class name
+        self.add_to_graph(graph=graph, obj=container)
         cypher_message = cypher.get_all_nodes_from_container(container)
-        # async_execute cypher query
         query_output = self.execute(cypher_message)
         self.parse_node_query(graph, query_output)
 
@@ -235,7 +178,7 @@ class Neo4jConnection(ConnectionInterface):
         self.add_to_graph(graph=graph, obj=area)
 
         if not isinstance(area, self.cim.SubSchedulingArea):
-            _log.error(f'Area object is not a SubSchedulingArea')
+            _log.error('Area object is not a SubSchedulingArea')
             raise TypeError('Area object is not a SubSchedulingArea')
 
         cypher_message = cypher.get_all_nodes_from_area(area)
@@ -260,51 +203,39 @@ class Neo4jConnection(ConnectionInterface):
 
     def get_edges_query(self, graph: dict[type, dict[str, object]], cim_class: type) -> str:
 
-        eq_mrids = list(graph[cim_class].keys())[0:100]
+        eq_mrids = list(graph[cim_class].keys())[0:BATCH_SIZE]
         cypher_message = cypher.get_all_edges_cypher(graph, cim_class, eq_mrids)
 
         return cypher_message
 
     def get_all_edges(self, graph: dict[type, dict[str, object]], cim_class: type) -> None:
+        """Expand the graph by one edge for every object of cim_class: associated objects
+        are added to the graph, and attributes are set."""
+        self._expand_by_batches(graph, cim_class, expand_graph=True)
+
+    def get_all_attributes(self, graph: dict[type, dict[str, object]], cim_class: type) -> None:
+        """Set the attributes of every object of cim_class. Associations are set to the
+        referenced objects' identifier text (create_reference), not to new objects."""
+        self._expand_by_batches(graph, cim_class, expand_graph=False)
+
+    def _expand_by_batches(self, graph: Graph, cim_class: type, expand_graph: bool) -> None:
+        """
+        Query the relationships and the properties of every object of cim_class,
+        BATCH_SIZE objects per query. The queries are built before any result is parsed
+        and run in parallel; parsing, which changes the graph, stays on this thread.
+        """
+        self.connect()
         uuid_list = list(graph[cim_class].keys())
-
-        asyncio.run(self.get_all_edges_async(uuid_list, graph, cim_class))
-
-
-    async def get_all_edges_async(self, mrid_list, graph: dict[type, dict[str, object]],
-                                  cim_class: type):
-        await self._run_batches(mrid_list, graph, cim_class, expand_graph=True)
-
-    async def _run_batches(self, mrid_list, graph: dict[type, dict[str, object]],
-                           cim_class: type, expand_graph: bool):
-        """Run edge_query_runner for every batch of 100, up to MAX_PARALLEL_QUERIES at once."""
-        limit = asyncio.Semaphore(MAX_PARALLEL_QUERIES)
-
-        async def run_batch(index):
-            async with limit:
-                await self.edge_query_runner(mrid_list, index, graph, cim_class, expand_graph)
-
-        await asyncio.gather(*(run_batch(index) for index in range(math.ceil(len(mrid_list) / 100))))
-
-    async def edge_query_runner(self, mrid_list: list[str], index: int,
-                                graph: dict[type, dict[str, object]],
-                                cim_class: type, expand_graph:bool):
-
-        # Run a batch of 100 UUIDs at a time
-        eq_mrids = mrid_list[index * 100:(index + 1) * 100]
-        #generate cypher message from graph and CIM class name
-        cypher_message = cypher.get_all_edges_cypher(graph, cim_class, eq_mrids)
-        # Awaited, so the batches' queries overlap; parsing runs on the event loop's
-        # thread between awaits, so batches never change the graph at the same time
-        query_output = await self.async_execute(cypher_message)
-        self.edge_query_parser(query_output, graph, cim_class, expand_graph)
-
-        #generate cypher message from graph and CIM class name
-        cypher_message = cypher.get_all_properties_cypher(graph, cim_class, eq_mrids)
-        query_output = await self.async_execute(cypher_message)
-        self.property_query_parser(query_output,graph,cim_class)
-
-
+        batches = [uuid_list[start:start + BATCH_SIZE]
+                   for start in range(0, len(uuid_list), BATCH_SIZE)]
+        edge_queries = [cypher.get_all_edges_cypher(graph, cim_class, batch) for batch in batches]
+        property_queries = [cypher.get_all_properties_cypher(graph, cim_class, batch)
+                            for batch in batches]
+        outputs = run_queries_in_parallel(self.execute, edge_queries + property_queries)
+        for query_output in outputs[:len(batches)]:
+            self.edge_query_parser(query_output, graph, cim_class, expand_graph)
+        for query_output in outputs[len(batches):]:
+            self.property_query_parser(query_output, graph, cim_class)
 
     def edge_query_parser(self, query_output: QueryResponse,
                           graph: Graph, cim_class: type, expand_graph=True):
@@ -375,16 +306,6 @@ class Neo4jConnection(ConnectionInterface):
                     if association is not None:
                         self.create_value(graph, cim_class, identifier, attribute, properties[attribute])
 
-
-    def get_all_attributes(self, graph, cim_class):
-        uuid_list = list(graph[cim_class].keys())
-
-        asyncio.run(self.get_all_attributes_async(uuid_list, graph, cim_class))
-
-
-    async def get_all_attributes_async(self, mrid_list, graph: dict[type, dict[str, object]],
-                                  cim_class: type):
-        await self._run_batches(mrid_list, graph, cim_class, expand_graph=False)
 
     def upload(self, graph: Graph, batch_size: int = 100) -> None:
         """

@@ -35,7 +35,7 @@ dependencies = [
 # SPARQLEndpointConnection need none of them.
 [project.optional-dependencies]
 sparql = ["SPARQLWrapper>=2.0.0"]                    # BlazegraphConnection, GraphDBConnection
-neo4j = ["neo4j>=5.10.0", "nest-asyncio>=1.5.8"]     # Neo4jConnection
+neo4j = ["neo4j>=5.10.0"]                            # Neo4jConnection
 mysql = ["mysql-connector-python>=9.2.0"]            # MySQLConnection
 gridappsd = ["gridappsd-python>=2026.2.1"]           # GridappsdConnection
 rdflib = ["rdflib>=7.0.0", "oxrdflib>=0.3.6"]        # RDFlibConnection

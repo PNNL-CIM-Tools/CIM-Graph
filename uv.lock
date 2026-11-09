@@ -330,7 +330,6 @@ all = [
     { name = "gridappsd-python" },
     { name = "mysql-connector-python" },
     { name = "neo4j" },
-    { name = "nest-asyncio" },
     { name = "oxrdflib" },
     { name = "rdflib" },
     { name = "sparqlwrapper" },
@@ -343,7 +342,6 @@ mysql = [
 ]
 neo4j = [
     { name = "neo4j" },
-    { name = "nest-asyncio" },
 ]
 rdflib = [
     { name = "oxrdflib" },
@@ -369,7 +367,6 @@ requires-dist = [
     { name = "gridappsd-python", marker = "extra == 'gridappsd'", specifier = ">=2026.2.1" },
     { name = "mysql-connector-python", marker = "extra == 'mysql'", specifier = ">=9.2.0" },
     { name = "neo4j", marker = "extra == 'neo4j'", specifier = ">=5.10.0" },
-    { name = "nest-asyncio", marker = "extra == 'neo4j'", specifier = ">=1.5.8" },
     { name = "oxrdflib", marker = "extra == 'rdflib'", specifier = ">=0.3.6" },
     { name = "rdflib", marker = "extra == 'rdflib'", specifier = ">=7.0.0" },
     { name = "requests", specifier = ">=2.31" },
@@ -830,15 +827,6 @@ dependencies = [
 sdist = { url = "https://files.pythonhosted.org/packages/ce/f4/aaa4ac19adae4b01bc742b63afd2672a77e7351566f02721e713e4b863ee/neo4j-6.2.0.tar.gz", hash = "sha256:e1e246b65b572bd8ea97f9e0e721b7d40a5ce53e53d0007c29aef63e4f9124d9", size = 241459, upload-time = "2026-05-04T07:35:41.428Z" }
 wheels = [
     { url = "https://files.pythonhosted.org/packages/e6/cf/1c3795866cefaac6e648d4e98c373cafd97810f6e317c307371007ab4abb/neo4j-6.2.0-py3-none-any.whl", hash = "sha256:b87abdd13a5cc2e3bd51026926c2f20ac38fa3febe98c340520dce19e97388d0", size = 327824, upload-time = "2026-05-04T07:35:39.604Z" },
-]
-
-[[package]]
-name = "nest-asyncio"
-version = "1.6.0"
-source = { registry = "https://pypi.org/simple" }
-sdist = { url = "https://files.pythonhosted.org/packages/83/f8/51569ac65d696c8ecbee95938f89d4abf00f47d58d48f6fbabfe8f0baefe/nest_asyncio-1.6.0.tar.gz", hash = "sha256:6f172d5449aca15afd6c646851f4e31e02c598d553a667e38cafa997cfec55fe", size = 7418, upload-time = "2024-01-21T14:25:19.227Z" }
-wheels = [
-    { url = "https://files.pythonhosted.org/packages/a0/c4/c2971a3ba4c6103a3d10c4b0f24f461ddc027f0f09763220cf35ca1401b3/nest_asyncio-1.6.0-py3-none-any.whl", hash = "sha256:87af6efd6b5e897c81050477ef65c62e2b2f35d51703cae01aff2905b1852e1c", size = 5195, upload-time = "2024-01-21T14:25:17.223Z" },
 ]
 
 [[package]]
