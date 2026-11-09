@@ -5,8 +5,6 @@ import logging
 import os
 import re
 from abc import ABC, abstractmethod
-from collections.abc import Callable
-from concurrent.futures import ThreadPoolExecutor
 from dataclasses import dataclass, field, is_dataclass
 from enum import Enum
 from functools import cache
@@ -27,17 +25,6 @@ Graph = dict[type, dict[UUID, object]]
 # connection runs at once
 BATCH_SIZE = 100
 MAX_PARALLEL_QUERIES = 8
-
-
-def run_queries_in_parallel(execute: Callable[[str], QueryResponse],
-                            queries: list[str]) -> list[QueryResponse]:
-    """Run the queries with execute, up to MAX_PARALLEL_QUERIES at once, and return their
-    results in the same order. execute must be thread-safe; parse the results (which
-    changes the graph) on the calling thread."""
-    if len(queries) <= 1:
-        return [execute(query) for query in queries]
-    with ThreadPoolExecutor(max_workers=min(MAX_PARALLEL_QUERIES, len(queries))) as executor:
-        return list(executor.map(execute, queries))
 
 # An enumeration value IRI: '<namespace>Enum.member', namespace ending in '#' or '/'
 _ENUM_IRI = re.compile(r'<?(.*[#/])([A-Za-z_]\w*)\.(\w+)>?')

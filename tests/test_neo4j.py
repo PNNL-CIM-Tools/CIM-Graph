@@ -1,8 +1,9 @@
+import asyncio
 import os
 import unittest
+from uuid import UUID
 
 import pytest
-from uuid import UUID
 
 import cimprofiles.cim17.cimhub_2023 as cim
 from cimgraph import utils
@@ -64,6 +65,21 @@ class TestNeo4J(unittest.TestCase):
         query = cypher.get_object_cypher(mRID=self.feeder_mrid)
         expected_str = '\nMATCH(n)\nWHERE n.uri = "urn:uuid:49AD8E07-3BF9-A4E2-CB8F-C3722F837B62"\nRETURN DISTINCT n.uri as identifier,\nlabels(n)[1] as class'
         self.assertEqual(query, expected_str)
+
+    @pytest.mark.integration('neo4j')
+    def test_sync_methods_work_inside_a_running_event_loop(self):
+        """As in Jupyter: the connection runs its queries on its own event loop."""
+        database = Neo4jConnection()
+
+        async def notebook_cell():
+            return database.get_object(mRID=self.feeder_mrid)
+
+        feeder = asyncio.run(notebook_cell())
+        self.assertIsInstance(feeder, cim.Feeder)
+        database.disconnect()
+        database.disconnect()  # safe when not connected
+        self.assertIsInstance(database.get_object(mRID=self.feeder_mrid), cim.Feeder)
+        database.disconnect()
 
     @pytest.mark.integration('neo4j')
     def test_get_object(self):

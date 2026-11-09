@@ -67,12 +67,12 @@ supported, and `requires-python` no longer has an upper bound.
 
 ### Database adapters
 
-- `Neo4jConnection` uses the synchronous neo4j driver: `nest-asyncio` is no longer a
-  dependency, and importing the adapter no longer patches asyncio for the whole process (which
-  broke on Python 3.16). `get_all_edges` runs its batches on threads, like the SPARQL
-  connections (`databases.run_queries_in_parallel`). `async_execute`, `get_all_edges_async`,
-  `get_all_attributes_async`, `edge_query_runner`, `query_tx` and `query_tx_with_params` are
-  removed. `disconnect()` is safe to call when not connected.
+- `Neo4jConnection` no longer needs `nest-asyncio`, and importing it no longer patches asyncio
+  for the whole process (which breaks on Python 3.16). It keeps the async driver and its
+  batched `get_all_edges`. Its coroutines now run on the connection's own event loop in a
+  background thread, so the synchronous methods also work where a loop is already running
+  (Jupyter). `async_execute` and the other coroutines must be awaited only on that loop.
+  `disconnect()` stops the loop and is safe to call when not connected.
 - `Neo4jConnection.create_new_graph` adds the container to the graph, as the other connections do.
 - Every connection reads all `CIMG_*` connection settings (URL, host, port, user, password,
   database) as they are when it is created. `BlazegraphConnection` kept the URL of the first
