@@ -335,7 +335,7 @@ Owns: `databases/*` adapters, `queries/*` (after WS1 lands its validation).
 
 | Item | Outcome |
 |---|---|
-| Test databases | `docker-compose.yml`: Blazegraph (`lyrasis/blazegraph:2.1.5`, port 8889), GraphDB 10.8 (11.x needs a license file), Neo4j 5.26 with n10s. No volumes. `tests/seed_databases.py` loads `ieee13.xml` with each database's own loader (SPARQL Graph Store POST; a GraphDB repository with the `empty` ruleset; n10s `handleVocabUris: 'IGNORE'`, the labels the Cypher queries expect). CI job `integration`. GridAPPS-D (needs its platform, which uses port 8889 too) and MySQL (owner's `tier5_ieee13`; `test_matches_xml_file` reads a missing `ieee13_2021.xml`) are not included. The old hand-loaded `docker/` data directories are unused. |
+| Test databases | `docker-compose.yml`: Blazegraph (`lyrasis/blazegraph:2.1.5`, port 8889), GraphDB 10.8 (**decided: 10.8 is the last GraphDB version we target**, the last with a Docker image that runs without a license; 11.0 removed the built-in Free license. 10.8 has Talk to Your Graph 2.0 with OpenAI only, `graphdb.openai.api-key`; other LLMs and the MCP server need 11.1), Neo4j 5.26 with n10s. No volumes. `tests/seed_databases.py` loads `ieee13.xml` with each database's own loader (SPARQL Graph Store POST; a GraphDB repository with the `empty` ruleset; n10s `handleVocabUris: 'IGNORE'`, the labels the Cypher queries expect). CI job `integration`. GridAPPS-D (needs its platform, which uses port 8889 too) and MySQL (owner's `tier5_ieee13`; `test_matches_xml_file` reads a missing `ieee13_2021.xml`) are not included. The old hand-loaded `docker/` data directories are unused. |
 | Cross-backend test | `tests/test_backends_match_xml.py`: after `get_all_data`, every object from Blazegraph, GraphDB and Neo4j matches `XMLFile` (`diff_attributes`), 493 objects each. Two known differences are allowed: `OperationalLimitSet.Terminal`/`.ConnectivityNode` (the file gives one set several terminals; the profile allows one, so the reader keeps whichever comes last), and references left as text keep the database's case (Blazegraph returns `urn:uuid:` IRIs in lowercase). The count expectations in `test_blazegraph_seto.py`, `test_graphdb.py` and `test_neo4j.py` are now this file's (19 classes, was 21 for GridAPPS-D's data). |
 | 4.4 | Done: `create_new_graph` adds the container (Neo4j did not). `ConnectionInterface.__init__` clears every `CIMG_*` cache, replacing the per-adapter subsets (Blazegraph kept a stale URL, GridAPPS-D a stale database). Remaining: `get_all_edges`/`get_all_attributes` on file backends, `create_distributed_graph`, `get_from_triple`, and `update`/`get_edges_query`/`build_graph_from_list` in the base class. |
 | 4.5 | Partly: `Neo4jConnection.disconnect()` is safe to call twice. |
@@ -373,8 +373,15 @@ Owns: `databases/*` adapters, `queries/*` (after WS1 lands its validation).
 - **4.6 SPARQL datatypes.** The edge and attribute queries select `datatype(?value)` and pass
   `datatype_uri` to `create_value`, so units work on every backend and not just XML.
 - **4.7 Query layer.**
-  - Delete `queries/ontotext/*` (never imported), `queries/rdflib/get_all_nodes.py` (never
-    called), the empty `queries/jsonld_sql/` and `databases/piwebapi/`.
+  - **Benchmarked `get_all_edges_ontotext` (2026-11-09): no gain, delete it.** As written it is
+    malformed (undefined `path:` prefix, `?eq` used before its `BIND`, selects an unbound
+    `?mRID`, filters on an unbound `?val`). Fixed (bind `path:startNode`/`path:endNode`, take the
+    end that is not the source), it returns exactly the standard query's rows. On IEEE 9500 in
+    GraphDB 10.8 it is no faster: `get_all_data` 46.9/47.8 s against 46.9/55.1 s, and the edge
+    queries alone 12.4/9.2 s against 10.2/13.4 s (269 batches, 228,329 rows).
+  - ~~Delete `queries/ontotext/*` (never imported), `queries/rdflib/get_all_nodes.py` (never
+    called), the empty `queries/jsonld_sql/`~~ done (2026-11-09). `databases/piwebapi/` stays:
+    a PI Web API adapter is on the wishlist.
   - Hoist the batch size of 100 (hard-coded in 8 places) to one constant.
   - Import config getters from `cimgraph.core`, not `cimgraph.databases`; this fixes the
     circular import.

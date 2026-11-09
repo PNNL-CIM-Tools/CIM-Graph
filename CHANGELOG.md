@@ -67,6 +67,11 @@ supported, and `requires-python` no longer has an upper bound.
 
 ### Database adapters
 
+- Removed unused query modules: `cimgraph.queries.ontotext` (`get_all_edges_ontotext`, which was
+  malformed and, once fixed, no faster than the standard query on IEEE 9500;
+  `get_all_nodes_ontotext`), `cimgraph.queries.rdflib.get_all_nodes_sparql` (never called:
+  `RDFlibConnection` uses the `queries.sparql` node query), and the empty
+  `cimgraph.queries.jsonld_sql`.
 - `Neo4jConnection` no longer needs `nest-asyncio`, and importing it no longer patches asyncio
   for the whole process (which breaks on Python 3.16). It keeps the async driver and its
   batched `get_all_edges`. Its coroutines now run on the connection's own event loop in a
