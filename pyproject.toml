@@ -27,8 +27,6 @@ dependencies = [
     # CIM profiles, Identity and units; versioned separately (pins loosen at 1.0)
     "cim-profiles>=0.1.0a1,<0.2",
     "defusedxml>=0.7.1",
-    # utils.mermaid renders diagrams through mermaid.ink
-    "requests>=2.31",
 ]
 
 # Database drivers, one extra per connection family. XMLFile, JSONLDFile and
@@ -48,6 +46,7 @@ dev = [
     "pre-commit>=2.17.0",
     "graphviz>=0.19.1",
     "ipykernel>=6.27.1",
+    "requests>=2.31",  # tests/seed_databases.py
 ]
 
 [project.urls]
@@ -62,11 +61,6 @@ build-backend = "hatchling.build"
 
 [tool.hatch.build.targets.wheel]
 packages = ["cimgraph"]
-
-# Local development against a CIM-Profiles checkout next to this repo.
-# REMOVE before publishing cim-graph: it must resolve cimprofiles from PyPI.
-[tool.uv.sources]
-cimprofiles = { path = "../CIM-Profiles", editable = true }
 
 [tool.hatch.build.targets.sdist]
 include = [

@@ -43,8 +43,7 @@ released on its own cycle. cim-graph depends on it, so nothing extra needs insta
 | `all` | everything |
 
 Using a connection without its driver raises an `ImportError` naming the extra to install.
-`requests` (used by `cimgraph.utils.mermaid`) is now a direct dependency. The unused
-`mermaid-python` dependency was dropped.
+`requests` and the unused `mermaid-python` are no longer dependencies.
 
 The `dev` extra is now a `dev` dependency group, which is not published with the package.
 `uv sync` installs it; `uv sync --all-extras` adds every driver. Python 3.13 and 3.14 are
@@ -199,6 +198,8 @@ Breaking:
   `sync_inverse_references`, `clean_inverse_reference` and `add_inverse_reference` take the
   `differences` to record into.
 - `cimgraph.utils.write_csv` is removed. It could not run.
+- `cimgraph.utils.download_mermaid` is removed. Rendering through mermaid.ink never worked
+  reliably; render the text from `get_mermaid` with any Mermaid tool instead.
 
 Fixes:
 

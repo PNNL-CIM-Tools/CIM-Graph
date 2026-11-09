@@ -302,7 +302,7 @@ Owns: `pyproject.toml`, `uv.lock`, `.github/workflows/` (CI parts; coordinate wi
     - `[gridappsd]`
     - `[all]`
   - Remove `mermaid-python` (unused).
-  - Declare `requests`, or import it lazily in `mermaid.download_mermaid`.
+  - Drop `requests`: `mermaid.download_mermaid` (mermaid.ink) was removed.
   - Move dev tools to `[dependency-groups]`.
 - Neo4j: switch to the sync `GraphDatabase` driver.
   - Drop `nest_asyncio` and the nested `asyncio.run` calls in `edge_query_runner`.
