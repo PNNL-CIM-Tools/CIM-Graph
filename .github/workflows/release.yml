@@ -1,127 +1,129 @@
 ---
-name: Release Package
+name: Release
+
+# Every merge to develop publishes the next pre-release (0.6.0a1 -> 0.6.0a2) and every merge to
+# main the stable version (0.6.0a2 -> 0.6.0); .github/scripts/release_version.sh has the rules.
+# A run commits the new version, tags it, creates the GitHub release and publishes to PyPI.
+# Pushes that change no Python file or pyproject.toml are skipped; a manual run on develop or
+# main always releases.
+#
+# PyPI Trusted Publishing must name this file (release.yml) and the environment pypi.
 
 on:
   push:
     branches:
+      - develop
       - main
   workflow_dispatch:
-    inputs:
-      force:
-        description: 'Force deploy'
-        required: false
-        default: false
-        type: boolean
 
 permissions:
   contents: read
+
+# One release per branch at a time, so each run bumps the version the previous one committed
+concurrency:
+  group: release-${{ github.ref }}
+  cancel-in-progress: false
+
+env:
+  CIM_PROFILES_REF: rc2  # as in ci.yml: uv.lock is re-locked against this checkout
 
 jobs:
   check-changes:
     runs-on: ubuntu-latest
     outputs:
-      any_changed: ${{ steps.changed-files.outputs.any_changed }}
+      release: ${{ steps.changes.outputs.release }}
     steps:
       - name: Checkout repository
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
         with:
           fetch-depth: 0
+          persist-credentials: false
 
       - name: Check for changed Python files
-        id: changed-files
+        id: changes
         env:
+          EVENT: ${{ github.event_name }}
           BEFORE: ${{ github.event.before }}
           AFTER: ${{ github.sha }}
         run: |
-          # A diff that can't run (no previous commit, e.g. a manual run) counts as changed
-          if git diff --quiet "$BEFORE" "$AFTER" -- '*.py'; then
-            echo "any_changed=false" >> "$GITHUB_OUTPUT"
+          # A diff that can't run (no previous commit, e.g. a new branch) counts as changed
+          if [[ $EVENT == workflow_dispatch ]] || ! git diff --quiet "$BEFORE" "$AFTER" -- '*.py' pyproject.toml; then
+            echo "release=true" >> "$GITHUB_OUTPUT"
           else
-            echo "any_changed=true" >> "$GITHUB_OUTPUT"
+            echo "release=false" >> "$GITHUB_OUTPUT"
           fi
 
   ci:
+    needs: check-changes
+    if: needs.check-changes.outputs.release == 'true'
     uses: ./.github/workflows/ci.yml
 
   build:
     runs-on: ubuntu-latest
-    needs: [check-changes, ci]
-    if: needs.check-changes.outputs.any_changed == 'true' || github.event.inputs.force == 'true'
+    needs: ci
     permissions:
       contents: write  # push the version commit and create the GitHub release
     steps:
-      - name: Checkout repository
+      - name: Checkout CIM-Graph  # zizmor: ignore[artipacked]
+        # Keeps its credentials to push the version commit; only dist/ is uploaded
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
         with:
-          fetch-depth: 0
+          path: CIM-Graph
+          fetch-depth: 0  # tags, for release_version.sh
 
-      - name: Set up Python
-        uses: actions/setup-python@6d4fd22b20465ccc0f7354476588e8df7c9ca0e0 # v7
+      - name: Checkout CIM-Profiles
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
         with:
-          python-version: '3.10'
+          repository: PNNL-CIM-Tools/CIM-Profiles
+          ref: ${{ env.CIM_PROFILES_REF }}
+          path: CIM-Profiles
+          persist-credentials: false
 
       - name: Install UV
         uses: astral-sh/setup-uv@20cfd1bf945f4377ade1205e4dbc17946fc9a30d # v10.0.1
         with:
           enable-cache: true
 
-      - name: Finalize version
-        id: finalize-version
-        run: |
-          echo "Finalizing version..."
-
-          # Get current version from pyproject.toml
-          CURRENT_VERSION=$(grep '^version = ' pyproject.toml | sed 's/version = "\(.*\)"/\1/')
-          echo "From: $CURRENT_VERSION"
-
-          # Strip prerelease suffix if present (e.g., 0.4.3a8 -> 0.4.3)
-          if [[ $CURRENT_VERSION =~ ^([0-9]+\.[0-9]+\.[0-9]+)(a|b|rc)[0-9]+$ ]]; then
-            NEW_VERSION="${BASH_REMATCH[1]}"
-            echo "Stripping prerelease suffix"
-          else
-            # Already a stable version, no change needed
-            NEW_VERSION="$CURRENT_VERSION"
-            echo "Already a stable version"
-          fi
-
-          echo "To: $NEW_VERSION"
-
-          # Update pyproject.toml
-          sed -i "s/version = \"$CURRENT_VERSION\"/version = \"$NEW_VERSION\"/" pyproject.toml
-
-          NEW_TAG="v${NEW_VERSION}"
-          echo "NEW_TAG=${NEW_TAG}" >> $GITHUB_ENV
-          echo "NEW_VERSION=${NEW_VERSION}" >> $GITHUB_ENV
+      - name: Set version
+        id: version
+        working-directory: CIM-Graph
+        run: echo "version=$(bash .github/scripts/release_version.sh "$GITHUB_REF_NAME")" >> "$GITHUB_OUTPUT"
 
       - name: Build package
-        run: |
-          uv build
+        working-directory: CIM-Graph
+        run: uv build
 
-      - name: Commit finalized version
-        run: |
-          git config --global user.name 'gridappsd[bot]'
-          git config --global user.email 'gridappsd[bot]@users.noreply.github.com'
-          git commit -am "Release version ${{ env.NEW_VERSION }}"
-          git push origin main
-
-      - name: Create Release
-        uses: ncipollo/release-action@339a81892b84b4eeb0f6e744e4574d79d0d9b8dd # v1.21.0
+      - name: Commit version
+        id: commit
+        working-directory: CIM-Graph
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          artifacts: "dist/*.gz,dist/*.whl"
-          artifactErrorsFailBuild: true
-          generateReleaseNotes: true
-          commit: ${{ github.ref }}
-          prerelease: false
-          tag: ${{ env.NEW_TAG }}
-          token: ${{ secrets.GITHUB_TOKEN }}
+          VERSION: ${{ steps.version.outputs.version }}
+        run: |
+          if ! git diff --quiet; then
+            git config user.name 'gridappsd[bot]'
+            git config user.email 'gridappsd[bot]@users.noreply.github.com'
+            git commit -am "Bump version to $VERSION"
+            # Fails if the branch moved since this run started; the newer run releases it
+            git push origin "HEAD:refs/heads/$GITHUB_REF_NAME"
+          fi
+          echo "sha=$(git rev-parse HEAD)" >> "$GITHUB_OUTPUT"
+
+      - name: Create GitHub release
+        working-directory: CIM-Graph
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          VERSION: ${{ steps.version.outputs.version }}
+          SHA: ${{ steps.commit.outputs.sha }}
+          PRERELEASE: ${{ github.ref_name == 'develop' }}
+        run: |
+          gh release create "v$VERSION" dist/*.tar.gz dist/*.whl --target "$SHA" \
+            --generate-notes --prerelease="$PRERELEASE"
 
       - name: Upload distributions
         uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7
         with:
           name: dist
-          path: dist/
+          path: CIM-Graph/dist/
 
   publish:
     # Separate job so only this one, which runs no build code, can mint a PyPI token

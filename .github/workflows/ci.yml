@@ -1,8 +1,8 @@
 ---
 name: CI
 
-# Pull requests run this directly; pushes to develop and main run it through the release
-# workflows (dev-pre-release.yml, release.yml), which only build and publish when it passes.
+# Pull requests run this directly; pushes to develop and main run it through release.yml,
+# which only builds and publishes when it passes.
 on:
   pull_request:
   workflow_call:
@@ -28,11 +28,13 @@ jobs:
       - name: Checkout CIM-Graph
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
         with:
+          persist-credentials: false
           path: CIM-Graph
 
       - name: Checkout CIM-Profiles
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
         with:
+          persist-credentials: false
           repository: PNNL-CIM-Tools/CIM-Profiles
           ref: ${{ env.CIM_PROFILES_REF }}
           path: CIM-Profiles
@@ -57,11 +59,13 @@ jobs:
       - name: Checkout CIM-Graph
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
         with:
+          persist-credentials: false
           path: CIM-Graph
 
       - name: Checkout CIM-Profiles
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
         with:
+          persist-credentials: false
           repository: PNNL-CIM-Tools/CIM-Profiles
           ref: ${{ env.CIM_PROFILES_REF }}
           path: CIM-Profiles
@@ -85,11 +89,13 @@ jobs:
       - name: Checkout CIM-Graph
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
         with:
+          persist-credentials: false
           path: CIM-Graph
 
       - name: Checkout CIM-Profiles
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
         with:
+          persist-credentials: false
           repository: PNNL-CIM-Tools/CIM-Profiles
           ref: ${{ env.CIM_PROFILES_REF }}
           path: CIM-Profiles
@@ -126,6 +132,8 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+        with:
+          persist-credentials: false
 
       - name: Install UV
         uses: astral-sh/setup-uv@20cfd1bf945f4377ade1205e4dbc17946fc9a30d # v10.0.1
