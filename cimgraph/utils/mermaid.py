@@ -1,11 +1,9 @@
-import base64
 import enum
 import logging
 import re
 import sys
 from dataclasses import Field, fields, is_dataclass
 
-import requests
 from cimprofiles.identity import Identity
 from cimprofiles.units import CIMUnit
 
@@ -443,35 +441,3 @@ def add_mermaid_path(root: object | type, path: str | list[str], mermaid: str,
         return add_class_path_mermaid(root, path, mermaid, show_attributes, show_inherited,
                                       serialize_only=serialize_only)
     return mermaid
-
-
-def download_mermaid(mermaid: str, filename: str, timeout: int = 30) -> bool:
-    """Download a Mermaid diagram from mermaid.ink and save as an image."""
-    try:
-        graphbytes = mermaid.encode('ascii')
-        base64_string = base64.b64encode(graphbytes).decode('ascii')
-        url = 'https://mermaid.ink/img/' + base64_string
-
-        with requests.get(url, stream=True, timeout=timeout) as response:
-            response.raise_for_status()
-            with open(filename, 'wb') as file:
-                for chunk in response.iter_content(chunk_size=16384):
-                    if chunk:
-                        file.write(chunk)
-        return True
-
-    except requests.exceptions.Timeout:
-        _log.error(f'Timeout error downloading diagram to {filename}')
-        return False
-    except requests.exceptions.HTTPError as e:
-        _log.error(f'HTTP Error {e.response.status_code} downloading diagram to {filename}')
-        return False
-    except requests.exceptions.ConnectionError:
-        _log.error(f'Connection error downloading diagram to {filename}')
-        return False
-    except requests.exceptions.RequestException as e:
-        _log.error(f'Error downloading diagram to {filename}: {str(e)}')
-        return False
-    except Exception as e:
-        _log.error(f'Unexpected error downloading diagram to {filename}: {str(e)}')
-        return None

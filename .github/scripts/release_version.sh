@@ -1,51 +1,45 @@
 #!/usr/bin/env bash
-# Set the version a release run publishes, in pyproject.toml and uv.lock, and print it.
+# Print the version a release run publishes, and write it to pyproject.toml for the build.
 # Run from the CIM-Graph checkout: release_version.sh develop|main
 #
-#   develop  the next pre-release: 0.6.0a1 -> 0.6.0a2 (and b1 -> b2, rc1 -> rc2). Once the
-#            stable 0.6.0 is out, or from a stable version: 0.6.0 -> 0.6.1a1.
-#   main     the stable version: 0.6.0a2 -> 0.6.0. Fails if that is already released.
+# pyproject.toml holds the next release target X.Y.Z. The published version is derived from
+# what is already released (PyPI and the v* git tags) and is never committed, so nothing
+# pushes to the protected branches:
 #
-# A version that is not released yet (no git tag, not on PyPI) is published as it is, so a
-# version set by hand, e.g. 1.0.0rc1, goes out unchanged.
+#   develop  the next free alpha of the target: 0.6.0a1 released -> 0.6.0a2
+#   main     the target itself: 0.6.0
+#
+# Once the target is released, both branches move on to the next patch (0.6.1a1, 0.6.1).
+# Bump the target in a PR for a minor or major release.
 set -euo pipefail
 
 branch=$1
-prerelease='(a|b|rc)[0-9]+$'
+if [[ $branch != develop && $branch != main ]]; then
+    echo "::error::Releases run from develop or main, not $branch" >&2
+    exit 1
+fi
 
-released() {
-    git rev-parse --quiet --verify "refs/tags/v$1" > /dev/null \
-        || curl --silent --fail --output /dev/null "https://pypi.org/pypi/cim-graph/$1/json"
-}
+target=$(uv version --short)
+if [[ ! $target =~ ^[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
+    echo "::error::pyproject.toml version must be the next release target X.Y.Z, got $target" >&2
+    exit 1
+fi
 
-bump() {
-    uv version --no-sync "$@" > /dev/null  # writes pyproject.toml and re-locks uv.lock
-}
+# Tags cover a release this workflow made moments ago that PyPI's JSON API does not show yet
+pypi=$(curl --silent --fail https://pypi.org/pypi/cim-graph/json | jq -r '.releases | keys[]')
+released=$(printf '%s\n' "$pypi"; git tag --list 'v*' | sed 's/^v//')
 
-version=$(uv version --short)
-case $branch in
-    develop)
-        if released "$version"; then
-            if [[ $version =~ $prerelease ]] && ! released "$(uv version --short --bump stable --dry-run)"; then
-                declare -A kinds=([a]=alpha [b]=beta [rc]=rc)
-                bump --bump "${kinds[${BASH_REMATCH[1]}]}"
-            else
-                bump --bump patch --bump alpha
-            fi
-        fi
-        ;;
-    main)
-        if [[ $version =~ $prerelease ]]; then
-            bump --bump stable
-        fi
-        if released "$(uv version --short)"; then
-            echo "::error::$(uv version --short) is already released: set the next version in pyproject.toml" >&2
-            exit 1
-        fi
-        ;;
-    *)
-        echo "::error::Releases run from develop or main, not $branch" >&2
-        exit 1
-        ;;
-esac
-uv version --short
+while grep --quiet --line-regexp --fixed-strings "$target" <<< "$released"; do
+    target=$(uv version --bump patch --frozen --short)
+done
+
+if [[ $branch == main ]]; then
+    version=$target
+else
+    last_alpha=$(grep --extended-regexp "^${target//./\\.}a[0-9]+$" <<< "$released" \
+                 | sed 's/.*a//' | sort --numeric-sort | tail -1 || true)
+    version="${target}a$(( ${last_alpha:-0} + 1 ))"
+fi
+
+uv version "$version" --frozen > /dev/null
+echo "$version"
