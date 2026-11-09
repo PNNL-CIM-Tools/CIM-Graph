@@ -64,7 +64,7 @@ in `tests/test_security.py` (45 tests).**
 | Item | Outcome |
 |---|---|
 | 1.1 | New `core/validation.py`: `validate_identifier` / `validate_attribute`, called in the SPARQL and Cypher builders that interpolate raw strings. Removed the `container.mRID` bare-except fallbacks. Object-derived identifiers are always UUID text, so they were already safe. **Cypher `$param` binding is deferred to WS3b:** reads go through `execute_read`, and `execute_with_params` uses `execute_write`. |
-| 1.2 | `validate_incremental` / `modify_from_incremental` rewritten around `_graph_object`, `_difference_object` and `_converted_value`. No per-URI state can leak between objects. Attributes are checked against the class and its MRO, values are converted, and `modify` raises on unvalidated input. Also fixed 2.5, 2.6's `NAMESPACES` mutation and env-profile validation, and the 2-tuple unpack bug in `validate_attr_datatype`'s list branch. |
+| 1.2 | `validate_incremental` / `modify_from_incremental` rewritten around `_graph_object`, `_difference_object` and `_converted_value`. No per-URI state can leak between objects. Attributes are checked against the class and its MRO, values are converted, and `modify` raises on unvalidated input. Also fixed 2.5, 2.6's `NAMESPACES` mutation and env-profile validation, and the 2-tuple unpack bug in `validate_attr_datatype`'s list branch. Later replaced by `apply_incremental` (see Diff models in WS2), which keeps these checks and also rejects the whole file instead of dropping parts of it. |
 | 1.3 | `resolve_part_paths` raises `ValueError` when an `accessURL` leaves the metadata directory. Checked before `exists()`, so files outside it can't be probed either. |
 | 1.4 | `eval()` removed from `utils/mermaid.py`. Path steps are parsed by regex; only dataclass fields, `[int]` and `__subclasses__()[int]` are allowed. |
 | 1.5 | String references must be valid IRI text (`validate_iri_text`). `rdf:resource` values are XML-escaped, and SPARQL literals escape `\n`/`\r`. |
@@ -215,6 +215,8 @@ the header code), `models/` (except the incremental validation in WS1), `shacl/s
 | 2.2 | `SPARQLEndpointConnection.run_batch_queries` runs the batch queries on up to `MAX_PARALLEL_QUERIES` threads (`BATCH_SIZE` and the limit are in `databases/__init__.py`). Results are parsed in order on the calling thread. `_execute_raw_query` must be thread-safe: Blazegraph and GraphDB make one SPARQLWrapper per call. `get_all_attributes` shares the same path. Neo4j's runner awaits instead of calling `asyncio.run`, behind a semaphore. RDFlib (in-process) and GridAPPS-D (one STOMP client) stay sequential. |
 | #159 | `ConnectionInterface.create_reference` is used by every adapter's `expand_graph=False` branch. It links an object already in the graph, else stores `read_identifier` text, which the shared serializer writes as a reference. The SPARQL and RDFlib `get_all_attributes_sparql` now return the edges query, because the old queries never bound `?edge`/`?edge_class` (and RDFlib's never selected `?identifier`). |
 | #160 | `ConnectionInterface.enum_from_iri` replaces the four enum copies (this is 4.2): the namespace must be the enum's declared `__namespace__` or `CIMG_NAMESPACE`. The edge queries take the class after `#`, not after the cim namespace. RDFlib takes the attribute's local name, and skips only `rdf:type` (it skipped every attribute containing "type"). |
+| #155 | `clean_inverse_reference` replaces an association list instead of removing from it in place, so `for point in location.PositionPoints: network.delete(point)` deletes every point (it deleted every other one, leaving the rest orphaned). `delete` raises for a non-object or an object not in the graph instead of doing nothing. `utils.create_object` calls the new `databases.create_graph_object`, shared with `ConnectionInterface.create_object`; it keyed non-UUID IDs by their text. |
+| Diff models | `create`/`modify`/`delete` record straight into `GraphModel.incrementals` with `incremental_builder.record_change`/`record_created`/`record_deleted`, all through `record_difference`: the reverse keeps each attribute's value before its first change, the forward its current value, a change back cancels, and creation/deletion is `rdf:type` None ↔ class (a typed element), so create-then-delete leaves nothing. Only serialized ends are recorded; `sync_inverse_references` records the other objects' ends. Every `incremental_file` (create, modify, delete, from_incremental) writes the full set, as `write_all_incrementals` does. Lists write only added/removed items. `read_incremental_xml` reads typed elements, `rdf:resource` and repeated properties. `from_incremental` is `apply_incremental(model, message)`: it checks everything first (raises, nothing changed), then creates, modifies and deletes through the model, so the result and `incrementals` match the model that wrote the file (round-trip test). `validate_incremental`/`modify_from_incremental` are removed; `profile_enum`/`enum_from_iri` are module functions in `databases` (the connection methods delegate) so models without a connection read enumerations. |
 | 2.3 | Both `UnaddressableEquipment` loops fixed. |
 | 2.4 | `validate_attr_datatype` returns `(valid, datatypes, value)` and accepts objects of a subclass. `convert_datatype` no longer turns a CIMUnit into a bare float. `modify` raises `TypeError`, sets the converted value, and allows `None` for `Optional` fields. |
 | 2.6 | Remaining parts: `modify_incremental` records `None`/objects through `_difference_value`, `incremantal_row` uses `all(... is None)`, and `write_incremental` uses `with open`. |
@@ -226,7 +228,7 @@ the header code), `models/` (except the incremental validation in WS1), `shacl/s
 | 2.12 | Closed: the tool now lives in CIM-Profiles (`python -m cimprofiles.build_merged_profiles`), which declares pyyaml and reads its config next to the module. |
 | 2.13 | `utils/write_csv.py` and its export removed. |
 | 2.14 | Fixed in CIM-Profiles `identity.py`: `_json_value` builds the dump and it is serialized once. |
-| 2.15 | `incrementals` and `__class_iter__` have real defaults on `GraphModel` (subclass re-initialization removed). `first`/`next` return `None` when there is nothing more, `find_by_attribute` compares whole values (units in base SI), and `from_incremental` raises for non-`.xml`. |
+| 2.15 | `incrementals` and `_class_iter` (was `__class_iter__`; now `init=False, repr=False`, as are `_mrid_index` and `_mrid_count`) have real defaults on `GraphModel` (subclass re-initialization removed). `first`/`next` return `None` when there is nothing more (after which `next` starts over, and it skips deleted objects), `find_by_attribute` compares whole values (units in base SI), and `from_incremental` raises for non-`.xml`. |
 | 2.16 | New `incremental_builder.sync_inverse_references`, used by `create`, `modify` and `delete`. It moves a single-valued end off its previous object and skips ends missing from the profile. `clean_inverse_reference` lost its blanket `except`, and `get_attr_inverse` lost its bare `except`. |
 
 | # | Bug | Where | Fix | Test |
@@ -381,13 +383,13 @@ Owns: `databases/*` adapters, `queries/*` (after WS1 lands its validation).
   - `get_undefined_handling`
   - `core/model_authority.py` (unused, non-Identity `IdentifiedObject`)
   - the bogus `jsonld = dict['@id':...]` aliases
-  - `utils.create_object` (duplicates `ConnectionInterface.create_object`)
+  - `utils.create_object` (now a thin wrapper of `databases.create_graph_object`)
   - no-op `distributed=True` on BusBranch/NodeBreaker (raise instead)
   - `NodeBreakerModel.aggregate_lower_areas`
 - **Rename before freezing:**
   - `__dumps__` → `dumps`
-  - `__class_iter__` → private
-  - drop the stateful `first()`/`next()` in favour of `iter_by_class`/`list_by_class`
+  - ~~`__class_iter__` → private~~ done (`_class_iter`, see 2.15)
+  - ~~drop the stateful `first()`/`next()`~~ kept, at the maintainer's decision: `first()` returns the same object every time the same file is read, for sanity checks (fixed in 2.15)
   - `incremantal_row` typo
   - `pprint` returns a string
 - **Consolidate `__post_init__`** from Feeder/BusBranch/NodeBreaker into `GraphModel`, with one

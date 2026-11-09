@@ -8,6 +8,7 @@ from abc import ABC, abstractmethod
 from dataclasses import dataclass, field, is_dataclass
 from enum import Enum
 from functools import cache
+from types import ModuleType
 from uuid import UUID
 
 from cimgraph.core import (get_cim_profile, get_database, get_host, get_iec61970_301,
@@ -46,6 +47,55 @@ def add_object_to_graph(graph: Graph, obj: object) -> None:
             f'object in the graph (existing name={getattr(existing, "name", None)!r}, '
             f'mRID={getattr(existing, "mRID", None)!r}; new name={getattr(obj, "name", None)!r}, '
             f'mRID={getattr(obj, "mRID", None)!r})')
+
+
+def profile_enum(cim: ModuleType, class_name: str, value: str) -> Enum | None:
+    """
+    Return the member of the profile enumeration class_name with this value, or None
+    if class_name is not an enumeration in the profile. Names come from the data
+    being read, so only Enum classes listed in the profile are ever looked up.
+    Raises ValueError if value is not a member of the enumeration.
+    """
+    if class_name not in cim.__all__:
+        return None
+    enum_class = getattr(cim, class_name)
+    if not (isinstance(enum_class, type) and issubclass(enum_class, Enum)):
+        return None
+    return enum_class(value)
+
+
+def enum_from_iri(cim: ModuleType, iri: str, namespace: str) -> Enum | None:
+    """
+    Return the profile enumeration member an IRI names ('<namespace>Enum.member'), or
+    None if it names none. The namespace must be the one the enumeration is declared
+    in (cim, or an extension such as gad or eu), or namespace, the one the data's cim
+    classes are read with (CIMG_NAMESPACE). Raises ValueError for a value that is not a
+    member of a profile enumeration.
+    """
+    match = _ENUM_IRI.fullmatch(iri)
+    if match is None:
+        return None
+    iri_namespace, class_name, value = match.groups()
+    member = profile_enum(cim, class_name, value)
+    if member is None or iri_namespace not in (member.__namespace__, namespace):
+        return None
+    return member
+
+
+def create_graph_object(graph: Graph, class_type: type, uri: str | UUID) -> object:
+    """
+    Return the object of class_type with this RDF ID, mRID or identifier from the graph,
+    else create it and add it to the graph. The graph is keyed by the identifier the
+    object gets (read_identifier), also for non-UUID IDs, so lookups and delete find it.
+    """
+    if isinstance(uri, UUID):
+        identifier = uri
+    else:
+        identifier = read_identifier(class_type.__name__, uri)
+    objects = graph.setdefault(class_type, {})
+    if identifier not in objects:
+        objects[identifier] = class_type(identifier=uri)
+    return objects[identifier]
 
 
 def reference_key(uri: str) -> UUID | str:
@@ -161,36 +211,12 @@ class ConnectionInterface(ABC):
         return association
 
     def profile_enum(self, class_name: str, value: str) -> Enum | None:
-        """
-        Return the member of the profile enumeration class_name with this value, or None
-        if class_name is not an enumeration in the profile. Names come from the data
-        being read, so only Enum classes listed in the profile are ever looked up.
-        Raises ValueError if value is not a member of the enumeration.
-        """
-        if class_name not in self.cim.__all__:
-            return None
-        enum_class = getattr(self.cim, class_name)
-        if not (isinstance(enum_class, type) and issubclass(enum_class, Enum)):
-            return None
-        return enum_class(value)
-
+        """The member of the profile enumeration class_name with this value (see profile_enum)."""
+        return profile_enum(self.cim, class_name, value)
 
     def enum_from_iri(self, iri: str) -> Enum | None:
-        """
-        Return the profile enumeration member an IRI names ('<namespace>Enum.member'), or
-        None if it names none. The namespace must be the one the enumeration is declared
-        in (cim, or an extension such as gad or eu), or CIMG_NAMESPACE, the namespace the
-        data's cim classes are read with. Raises ValueError for a value that is not a
-        member of a profile enumeration.
-        """
-        match = _ENUM_IRI.fullmatch(iri)
-        if match is None:
-            return None
-        namespace, class_name, value = match.groups()
-        member = self.profile_enum(class_name, value)
-        if member is None or namespace not in (member.__namespace__, self.namespace):
-            return None
-        return member
+        """The profile enumeration member an IRI names (see enum_from_iri)."""
+        return enum_from_iri(self.cim, iri, self.namespace)
 
     def create_value(self, graph: dict[type, dict[str, object]],
                     cim_class: type, identifier: UUID | str, attribute: str,
@@ -364,32 +390,9 @@ class ConnectionInterface(ABC):
 
     def create_object(self, graph:Graph,
                       class_type:type, uri:str | UUID) -> object:
-        """
-        Method for creating new objects and adding them to the graph
-        Required Args:
-            graph: an LPG graph from a GraphModel object
-            class_type: a dataclass type, such as cim.ACLineSegment
-            uri: the RDF ID or mRID of the object, or its identifier
-        Returns:
-            obj: a dataclass instance with the correct identifier
-        """
-        # The graph is keyed by the identifier the object gets, also for non-UUID IDs
-        if isinstance(uri, UUID):
-            identifier = uri
-        else:
-            identifier = read_identifier(class_type.__name__, uri)
-
-        # Check if object exists in graph
-        if class_type in graph and identifier in graph[class_type]:
-            obj = graph[class_type][identifier]
-
-        # If not there, create a new object and add to graph
-        else:
-            obj = class_type(identifier = uri)
-            # obj.uuid(uri = uri)
-            graph.setdefault(class_type, {})[identifier] = obj
-
-        return obj
+        """The object of class_type with this RDF ID, mRID or identifier: from the graph,
+        else a new one added to it (see create_graph_object)."""
+        return create_graph_object(graph, class_type, uri)
 
     def add_to_graph(self, obj: object, graph: Graph) -> None:
         """

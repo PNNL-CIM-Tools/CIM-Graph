@@ -115,8 +115,48 @@ Breaking:
 - `GraphModel.find_by_attribute` matches whole values (`'L1'` no longer finds `'L10'`). Use
   `find_by_condition` for partial matches.
 - `GraphModel.first` returns `None` for a class with no objects (was `[]`), and `next` returns
-  `None` after the last object (it raised `StopIteration`).
+  `None` after the last object (it raised `StopIteration`); the call after that starts over.
+  `next` skips objects deleted since `first`.
+- `GraphModel.delete` raises `TypeError` for anything but a CIM object (e.g. the class
+  `cim.PositionPoint`) and `ValueError` for an object that is not in the graph. It used to do
+  nothing. (#155)
+- `GraphModel`'s internal state (`_class_iter`, `_mrid_index`, `_mrid_count`, formerly
+  `__class_iter__`, `__mrid_index__`, `__mrid_count__`) is no longer a constructor argument or
+  part of its repr.
 - `GraphModel.from_incremental` raises `ValueError` for a file that is not `.xml`.
+- CIM difference models. `GraphModel.incrementals` holds every `create`, `modify` and `delete`
+  since the model was loaded, and every difference file written is that full set:
+  `incremental_file` of `create`, `modify`, `delete` (new) and `from_incremental` (new) writes
+  the same file as `write_all_incrementals`. (It wrote only the changed object's entry.)
+  - `delete` records the deletion (it recorded nothing). A deleted object is a typed element
+    (`<cim:Terminal rdf:about=...>`) in the reverse differences, with its values from before
+    any change; references to it from other objects are recorded as removed.
+  - A created object is a typed element in the forward differences, so its class is known
+    (it was an `rdf:Description`). An object created and then deleted leaves no difference.
+  - A value changed back to its original leaves no difference, and the reverse difference
+    keeps the value from before the first change.
+  - An association is recorded on the end that is serialized: `modify(line, 'Terminals', [t])`
+    records `Terminal.ConductingEquipment` on `t`. A list writes only the added items forward
+    and the removed items reverse.
+  - The file declares the namespaces of its classes' profiles, also extension namespaces,
+    and the `DifferenceModel` has an `rdf:about`. `NAMESPACES` in `incremental_builder` is
+    now only `rdf` and `dm`; its `cim` entry was read once at import.
+- `GraphModel.from_incremental` applies a difference file: it creates, modifies and deletes
+  objects through `create`, `modify` and `delete`, so the inverse associations and
+  `incrementals` are as if the changes had been made on the model. Applying the file another
+  model wrote gives the same objects and the same `incrementals`. Every difference is checked
+  first: an unknown class, object, attribute or referenced object, or a value that does not fit
+  its attribute, raises `ValueError` and the model is not changed. (It dropped such differences
+  with an error and applied the rest, and could not create or delete objects.) A reverse value
+  that differs from the current value is a warning. Enumerations and unit values are read.
+- `read_incremental_xml` reads references and enumerations (`rdf:resource`; they were
+  `None`), repeated properties as lists, and the class of typed elements.
+- Removed from `cimgraph.models.incremental_builder`: `validate_incremental` and
+  `modify_from_incremental` (use `apply_incremental(model, message)` or
+  `GraphModel.from_incremental`), `new_obj_incremental`, `del_obj_difference`,
+  `modify_incremental`, `add_to_incremental`, `incremantal_row` and `REVERSE_NS`.
+  `sync_inverse_references`, `clean_inverse_reference` and `add_inverse_reference` take the
+  `differences` to record into.
 - `cimgraph.utils.write_csv` is removed. It could not run.
 
 Fixes:
@@ -140,6 +180,12 @@ Fixes:
   queries take the class name after `#`, so references to extension classes (`gad:BatteryInfo`)
   are no longer dropped. Blazegraph's hard-coded GMDM namespace list and the
   `SPARQLEndpointConnection._get_namespaces` hook are removed. (#160)
+- `GraphModel.delete` no longer makes a loop over an association skip objects:
+  `for point in location.PositionPoints: network.delete(point)` deleted only every other point,
+  and left the rest in the graph without a Location. The association list is now replaced, not
+  changed in place. `cimgraph.utils.create_object` keys the graph by the object's identifier,
+  as the readers do; for a non-UUID ID it used the ID text, so `delete` could not find the
+  object. (#155)
 - `DistributedArea.build_from_topo_message` reads `UnaddressableEquipment`. It read
   `AddressableEquipment` twice, so unaddressable equipment was lost.
 - The XML reader resolves references written in any identifier style. A reference to an

@@ -2,6 +2,8 @@ import json
 import logging
 from uuid import UUID
 
+from cimgraph.databases import create_graph_object
+
 _log = logging.getLogger(__name__)
 
 jsonld = dict['@id':str(UUID),'@type':str(type)]
@@ -24,34 +26,13 @@ def create_object(class_type:type, uri:str, graph:Graph = None) -> object:
     """
     Method for creating new objects and adding them to the graph
     Required Args:
-        graph: an LPG graph from a GraphModel object
         class_type: a dataclass type, such as cim.ACLineSegment
         uri: the RDF ID or mRID of the object
+    Optional Args:
+        graph: an LPG graph from a GraphModel object, default a new graph
     Returns:
-        obj: a dataclass instance with the correct identifier
+        obj: the object from the graph, else a new one added to it under its identifier
     """
-    # Convert uri string to a uuid
-    try:
-        identifier = UUID(uri.strip('_').lower())
-    except:
-        _log.warning(f'URI {uri} for object {class_type.__name__} is not a valid UUID')
-        identifier = uri
-
     if graph is None:
         graph = {}
-
-    # Add class type to graph keys if not there
-    if class_type not in graph:
-        graph[class_type] = {}
-
-    # Check if object exists in graph
-    if identifier in graph[class_type]:
-        obj = graph[class_type][identifier]
-
-    # If not there, create a new object and add to graph
-    else:
-        obj = class_type()
-        obj.uuid(uri = uri)
-        graph[class_type][identifier] = obj
-
-    return obj
+    return create_graph_object(graph, class_type, uri)

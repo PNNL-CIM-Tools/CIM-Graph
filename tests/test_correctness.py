@@ -284,13 +284,21 @@ def test_find_by_attribute_matches_whole_values():
 def test_first_and_next_iterate_and_end_with_none():
     network = _network()
     assert network.first(cim.Breaker) is None
-    lines = sorted((network.create(cim.ACLineSegment, name=name) for name in ('a', 'b')),
+    lines = sorted((network.create(cim.ACLineSegment, name=name) for name in ('a', 'b', 'c')),
                    key=lambda line: line.uri())
 
     assert network.next(cim.ACLineSegment) is lines[0]  # next() without first() starts over
-    assert network.next(cim.ACLineSegment) is lines[1]
+    network.delete(lines[1])
+    assert network.next(cim.ACLineSegment) is lines[2]  # the deleted object is skipped
     assert network.next(cim.ACLineSegment) is None
+    assert network.next(cim.ACLineSegment) is lines[0]  # after None, next() starts over
     assert network.first(cim.ACLineSegment) is lines[0]
+
+
+def test_model_internal_state_is_not_a_constructor_argument():
+    with pytest.raises(TypeError):
+        FeederModel(connection=None, container=cim.Feeder(name='fdr'), _class_iter={})
+    assert '_mrid_index' not in repr(_network())
 
 
 # 2.16 inverse associations
@@ -401,3 +409,195 @@ def test_rdflib_get_all_attributes_keeps_the_graph_and_its_links(monkeypatch):
     assert line.name == '645646' and isinstance(line.Location, str)
     assert all(isinstance(terminal.ConductingEquipment, cim.ConductingEquipment)
                for terminal in network.graph[cim.Terminal].values())
+
+
+# Issue #155: delete
+
+def test_delete_removes_every_point_of_a_location(tmp_path):
+    from cimgraph.utils import create_object
+    points = ''.join(f'<cim:PositionPoint rdf:ID="_PP_{index}"><cim:PositionPoint.Location '
+                     f'rdf:resource="#_LOC_1"/></cim:PositionPoint>\n' for index in range(3))
+    path = _write_xml(tmp_path / 'points.xml', '''
+<cim:Location rdf:ID="_LOC_1"><cim:IdentifiedObject.name>loc</cim:IdentifiedObject.name></cim:Location>
+''' + points)
+    network = FeederModel(connection=XMLFile(filename=path), container=cim.Feeder(name='fdr'),
+                          distributed=False)
+    location = network.first(cim.Location)
+    created = create_object(cim.PositionPoint, '_PP_9', network.graph)  # a non-UUID ID
+
+    for point in location.PositionPoints:  # delete must not make this loop skip points
+        network.delete(point)
+    network.delete(created)
+
+    assert network.graph[cim.PositionPoint] == {} and location.PositionPoints == []
+
+
+def test_delete_rejects_classes_and_objects_not_in_the_graph():
+    network = _network()
+    with pytest.raises(TypeError):
+        network.delete(cim.PositionPoint)
+    with pytest.raises(ValueError, match='not in the graph'):
+        network.delete(cim.PositionPoint())
+
+
+# CIM difference writers
+
+def _read_differences(network, tmp_path, write=None):
+    from cimgraph.models.incremental_builder import read_incremental_xml
+    path = str(tmp_path / 'changes.xml')
+    (write or network.write_all_incrementals)(path)
+    return read_incremental_xml(path), open(path).read()
+
+
+def test_differences_of_created_and_deleted_objects(tmp_path):
+    network = _network()
+    line = network.create(cim.ACLineSegment, name='line')
+    old_terminal = network.create(cim.Terminal, name='old', ConductingEquipment=line)
+    network.incrementals = {'forwardDifferences': {}, 'reverseDifferences': {}}  # as if loaded
+
+    terminal = network.create(cim.Terminal, name='new', ConductingEquipment=line)
+    network.delete(old_terminal)
+    temporary = network.create(cim.Breaker, name='temporary')
+    network.delete(temporary)  # created and deleted: no difference
+    differences, xml = _read_differences(network, tmp_path)
+
+    assert differences['forwardDifferences'][terminal.uri()] == {
+        'rdf:type': 'Terminal', 'IdentifiedObject.name': 'new',
+        'IdentifiedObject.mRID': terminal.mRID,
+        'Terminal.ConductingEquipment': f'urn:uuid:{line.uri()}'}
+    assert differences['reverseDifferences'][old_terminal.uri()]['rdf:type'] == 'Terminal'
+    assert set(differences['forwardDifferences']) == {terminal.uri()}
+    assert set(differences['reverseDifferences']) == {old_terminal.uri()}
+    assert f'<cim:Terminal rdf:about="urn:uuid:{terminal.uri()}">' in xml
+    assert temporary.uri() not in xml
+
+
+def test_deleting_a_referenced_object_removes_the_references(tmp_path):
+    network = _network()
+    line = network.create(cim.ACLineSegment, name='line')
+    terminal = network.create(cim.Terminal, name='t1', ConductingEquipment=line)
+    network.incrementals = {'forwardDifferences': {}, 'reverseDifferences': {}}
+
+    network.delete(line)
+    differences, _ = _read_differences(network, tmp_path)
+
+    assert terminal.ConductingEquipment is None
+    assert differences['reverseDifferences'][terminal.uri()] == {
+        'Terminal.ConductingEquipment': f'urn:uuid:{line.uri()}'}
+    assert differences['reverseDifferences'][line.uri()]['rdf:type'] == 'ACLineSegment'
+    assert differences['forwardDifferences'] == {}
+
+
+def test_modify_records_the_serialized_end_and_cancels_changes_back(tmp_path):
+    network = _network()
+    line_1 = network.create(cim.ACLineSegment, name='line 1')
+    line_2 = network.create(cim.ACLineSegment, name='line 2')
+    breaker = network.create(cim.Breaker, name='brk', open=False)
+    terminal = network.create(cim.Terminal, name='t1', ConductingEquipment=line_1)
+    network.incrementals = {'forwardDifferences': {}, 'reverseDifferences': {}}
+
+    network.modify(breaker, 'open', True)
+    network.modify(breaker, 'open', False)  # back to the original value: no difference
+    network.modify(line_2, 'Terminals', [terminal])  # written from Terminal.ConductingEquipment
+    differences, _ = _read_differences(network, tmp_path)
+
+    assert differences['forwardDifferences'] == {
+        terminal.uri(): {'Terminal.ConductingEquipment': f'urn:uuid:{line_2.uri()}'}}
+    assert differences['reverseDifferences'] == {
+        terminal.uri(): {'Terminal.ConductingEquipment': f'urn:uuid:{line_1.uri()}'}}
+
+
+def test_incremental_file_holds_every_change_so_far(tmp_path):
+    network = _network()
+    line = network.create(cim.ACLineSegment, name='line', length=cim.Length(5, 'm'))
+    path = str(tmp_path / 'changes.xml')
+
+    network.modify(line, 'length', cim.Length(10, 'm'), incremental_file=path)
+
+    from cimgraph.models.incremental_builder import read_incremental_xml
+    differences = read_incremental_xml(path)
+    assert differences['forwardDifferences'][line.uri()]['rdf:type'] == 'ACLineSegment'
+    assert differences['forwardDifferences'][line.uri()]['Conductor.length'] == '10.0'
+
+
+def test_list_differences_write_only_added_and_removed_items(tmp_path):
+    network = _network()
+    ends = [network.create(cim.TransformerEnd, name=f'end {index}') for index in range(3)]
+    mesh = network.create(cim.TransformerMeshImpedance, name='mesh', ToTransformerEnd=ends[:2])
+    network.incrementals = {'forwardDifferences': {}, 'reverseDifferences': {}}
+
+    network.modify(mesh, 'ToTransformerEnd', [ends[1], ends[2]])
+    differences, _ = _read_differences(network, tmp_path)
+
+    assert differences['forwardDifferences'][mesh.uri()] == {
+        'TransformerMeshImpedance.ToTransformerEnd': f'urn:uuid:{ends[2].uri()}'}
+    assert differences['reverseDifferences'][mesh.uri()] == {
+        'TransformerMeshImpedance.ToTransformerEnd': f'urn:uuid:{ends[0].uri()}'}
+
+
+_BASE_MODEL = '''
+<cim:ACLineSegment rdf:ID="_L1"><cim:IdentifiedObject.name>L1</cim:IdentifiedObject.name><cim:Conductor.length>5</cim:Conductor.length></cim:ACLineSegment>
+<cim:ACLineSegment rdf:ID="_L2"><cim:IdentifiedObject.name>L2</cim:IdentifiedObject.name></cim:ACLineSegment>
+<cim:Terminal rdf:ID="_T1"><cim:IdentifiedObject.name>T1</cim:IdentifiedObject.name><cim:Terminal.ConductingEquipment rdf:resource="#_L1"/></cim:Terminal>
+<cim:Breaker rdf:ID="_B1"><cim:IdentifiedObject.name>B1</cim:IdentifiedObject.name><cim:Switch.open>false</cim:Switch.open></cim:Breaker>
+<cim:Location rdf:ID="_LOC"><cim:IdentifiedObject.name>loc</cim:IdentifiedObject.name></cim:Location>
+<cim:PositionPoint rdf:ID="_PP1"><cim:PositionPoint.Location rdf:resource="#_LOC"/><cim:PositionPoint.sequenceNumber>1</cim:PositionPoint.sequenceNumber></cim:PositionPoint>
+<cim:PositionPoint rdf:ID="_PP2"><cim:PositionPoint.Location rdf:resource="#_LOC"/><cim:PositionPoint.sequenceNumber>2</cim:PositionPoint.sequenceNumber></cim:PositionPoint>
+'''
+
+
+def _load(path) -> FeederModel:
+    return FeederModel(connection=XMLFile(filename=path), container=cim.Feeder(name='fdr'),
+                       distributed=False)
+
+
+def _by_name(network, cim_class, name):
+    return network.find_by_attribute(cim_class, 'name', name)[0]
+
+
+def test_from_incremental_repeats_the_changes_of_another_model(tmp_path, monkeypatch):
+    from cimgraph.core.attribute_utils import diff_attributes
+    monkeypatch.setenv('CIMG_USE_UNITS', 'true')
+    base = _write_xml(tmp_path / 'base.xml', _BASE_MODEL)
+    edited = _load(base)
+    line_1, line_2 = _by_name(edited, cim.ACLineSegment, 'L1'), _by_name(edited, cim.ACLineSegment, 'L2')
+    edited.create(cim.Terminal, name='T2', sequenceNumber=2, ConductingEquipment=line_2)
+    edited.create(cim.ACLineSegmentPhase, name='L2a', phase=cim.SinglePhaseKind.A, ACLineSegment=line_2)
+    edited.modify(_by_name(edited, cim.Breaker, 'B1'), 'open', True)
+    edited.modify(line_2, 'length', cim.Length(10, 'm'))
+    edited.modify(_by_name(edited, cim.Terminal, 'T1'), 'ConductingEquipment', line_2)
+    edited.delete(line_1)
+    edited.delete(edited.graph[cim.PositionPoint][next(iter(edited.graph[cim.PositionPoint]))])
+    edited.delete(_by_name(edited, cim.Location, 'loc'))  # the other point keeps no Location
+    path = str(tmp_path / 'changes.xml')
+    edited.write_all_incrementals(path)
+
+    applied = _load(base)
+    changed = applied.from_incremental(path)
+
+    assert {type(obj).__name__ for obj in changed} >= {'Terminal', 'ACLineSegmentPhase', 'Breaker'}
+    assert applied.incrementals == edited.incrementals
+    assert {cim_class: set(objects) for cim_class, objects in applied.graph.items() if objects} == \
+           {cim_class: set(objects) for cim_class, objects in edited.graph.items() if objects}
+    for cim_class, objects in edited.graph.items():
+        for identifier, obj in objects.items():
+            assert diff_attributes(obj, applied.graph[cim_class][identifier]) == {}
+    assert _by_name(applied, cim.ACLineSegment, 'L2').length.to('m') == 10
+
+
+def test_from_incremental_changes_nothing_if_a_difference_does_not_fit(tmp_path):
+    base = _write_xml(tmp_path / 'base.xml', _BASE_MODEL)
+    edited = _load(base)
+    edited.create(cim.Terminal, name='T2')
+    edited.modify(_by_name(edited, cim.Breaker, 'B1'), 'open', True)
+    path = str(tmp_path / 'changes.xml')
+    edited.write_all_incrementals(path)
+    text = open(path).read().replace('<cim:Switch.open>true', '<cim:Switch.open>maybe')
+    open(path, 'w').write(text)
+
+    applied = _load(base)
+    with pytest.raises(ValueError, match="open value 'maybe'"):
+        applied.from_incremental(path)
+
+    assert applied.incrementals == {'forwardDifferences': {}, 'reverseDifferences': {}}
+    assert len(applied.graph[cim.Terminal]) == 1

@@ -64,61 +64,49 @@ def test_node_list_builder_rejects_breakout():
 
 # 1.2 Incremental builder trusts message contents
 
-class _NoObjectsConnection:
-    """A connection that finds nothing, so differences only match objects in the graph."""
-
-    def get_object(self, mRID, graph=None):
-        return None
-
-
 def _message(forward=None, reverse=None):
     from collections import defaultdict
     return {'forwardDifferences': defaultdict(dict, forward or {}),
             'reverseDifferences': defaultdict(dict, reverse or {})}
 
 
-def _breaker_graph(name='B1'):
+def _breaker_model(monkeypatch, name='B1'):
+    from cimgraph.core import get_cim_profile
+    from cimgraph.models import FeederModel
+    monkeypatch.setenv('CIMG_CIM_PROFILE', 'cimhub_2023')
+    get_cim_profile.cache_clear()
+    network = FeederModel(connection=None, container=cim.Feeder(name='fdr'), distributed=False)
     breaker = cim.Breaker(name=name, normalOpen=False)
-    return breaker, {cim.Breaker: {breaker.identifier: breaker}}
+    network.add_to_graph(breaker)
+    return network, breaker
 
 
-def test_unknown_mrid_differences_are_not_applied_to_previous_object():
+def test_unknown_mrid_differences_are_not_applied_to_previous_object(monkeypatch):
     from uuid import uuid4
 
-    from cimgraph.models.incremental_builder import modify_from_incremental, validate_incremental
-    breaker, graph = _breaker_graph()
+    from cimgraph.models.incremental_builder import apply_incremental
+    network, breaker = _breaker_model(monkeypatch)
     message = _message(forward={
         breaker.uri(): {'IdentifiedObject.name': 'B2'},
         str(uuid4()): {'IdentifiedObject.name': 'evil'},
     })
-    valid = validate_incremental(message, _NoObjectsConnection(), graph)
-    assert modify_from_incremental(valid, _NoObjectsConnection(), graph) == [breaker]
-    assert breaker.name == 'B2'
+    with pytest.raises(ValueError, match='not in the model'):
+        apply_incremental(network, message)
+    assert breaker.name == 'B1'  # nothing is applied when any difference does not fit
 
 
-def test_values_are_converted_and_bad_differences_dropped():
-    from cimgraph.models.incremental_builder import modify_from_incremental, validate_incremental
-    breaker, graph = _breaker_graph()
+def test_values_are_converted_and_bad_differences_rejected(monkeypatch):
+    from cimgraph.models.incremental_builder import apply_incremental
+    network, breaker = _breaker_model(monkeypatch)
     message = _message(forward={breaker.uri(): {'Switch.normalOpen': 'true'}})
-    modify_from_incremental(validate_incremental(message, _NoObjectsConnection(), graph),
-                            _NoObjectsConnection(), graph)
+    assert apply_incremental(network, message) == [breaker]
     assert breaker.normalOpen is True
 
     for bad in ({'Switch.notAField': 'x'}, {'Switch.normalOpen': 'maybe'},
-                {'ACLineSegment.name': 'x'}):
-        message = _message(forward={breaker.uri(): bad})
-        assert validate_incremental(message, _NoObjectsConnection(), graph)['forwardDifferences'] == {
-            breaker.uri(): {}}
-
-
-def test_modify_rejects_unvalidated_differences():
-    from cimgraph.models.incremental_builder import modify_from_incremental
-    breaker, graph = _breaker_graph()
-    for bad in ({'Switch.__class__': 'x'}, {'Switch.normalOpen': 'maybe'}):
+                {'ACLineSegment.name': 'x'}, {'Switch.__class__': 'x'}):
         with pytest.raises(ValueError):
-            modify_from_incremental(_message(forward={breaker.uri(): bad}),
-                                    _NoObjectsConnection(), graph)
-    assert breaker.normalOpen is False
+            apply_incremental(network, _message(forward={breaker.uri(): bad}))
+    assert breaker.normalOpen is True and type(breaker) is cim.Breaker
 
 
 def test_read_incremental_keeps_full_uuid(tmp_path):

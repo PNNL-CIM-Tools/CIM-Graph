@@ -3,7 +3,6 @@ from __future__ import annotations
 import json
 import logging
 import math
-from collections import defaultdict
 from dataclasses import dataclass, field, fields, is_dataclass
 from types import ModuleType
 from typing import Iterator, TypeVar, cast
@@ -29,11 +28,12 @@ class GraphModel():
     distributed: bool = field(default=False)
     graph: dict[type, dict[UUID, object]] = field(default_factory=dict)
     cim: ModuleType = field(default=None)
-    incrementals: dict[str, dict[type, dict]] = field(default_factory=lambda: {
-        'forwardDifferences': defaultdict(dict), 'reverseDifferences': defaultdict(dict)})
-    __class_iter__: dict[type, Iterator] = field(default_factory=dict)
-    __mrid_index__: dict[str, Identity] = field(default_factory=dict)
-    __mrid_count__: int = field(default=-1)  # objects in graph when the index was built
+    # Every create, modify and delete since the model was loaded (see incremental_builder)
+    incrementals: dict[str, dict[type, dict]] = field(default_factory=new_differences)
+    # Internal state, not constructor arguments
+    _class_iter: dict[type, Iterator] = field(default_factory=dict, init=False, repr=False)
+    _mrid_index: dict[str, Identity] = field(default_factory=dict, init=False, repr=False)
+    _mrid_count: int = field(default=-1, init=False, repr=False)  # objects in graph when the index was built
     # System bases for per-unit conversion, filled by set_default_bases once self.cim and the graph are known
     base_power: CIMUnit = field(default=None)       # cim.ApparentPower
     base_frequency: CIMUnit = field(default=None)   # cim.Frequency
@@ -97,7 +97,7 @@ class GraphModel():
             _check_mrid_unique(index, obj)
             add_object_to_graph(self.graph, obj)
             _index_mrid(index, obj)
-            self.__mrid_count__ = _object_count(self.graph)
+            self._mrid_count = _object_count(self.graph)
         else:
             add_object_to_graph(graph, obj)
 
@@ -191,22 +191,33 @@ class GraphModel():
         values = sorted(values, key=lambda x: x.uri())
         return values
 
-    def iter_by_class(self, cim_class) -> iter:
+    def iter_by_class(self, cim_class:type[T]) -> Iterator[T]:
         '''Iterate through all nodes of a specific type with proper typing.'''
         return iter(self.graph.get(cim_class, {}).values())
 
     def first(self, cim_class:type[T]) -> T | None:
-        '''The first object of the class (in list_by_class order), or None if there are
-        none. Restarts the iteration that next() continues.'''
-        self.__class_iter__[cim_class] = iter(self.list_by_class(cim_class))
+        '''The first object of the class (in list_by_class order, so the same object every
+        time the same file is read: a quick sanity check), or None if there are none.
+        Restarts the iteration that next() continues.'''
+        self._class_iter[cim_class] = iter(self.list_by_class(cim_class))
         return self.next(cim_class)
 
     def next(self, cim_class:type[T]) -> T | None:
-        '''The object after the one last returned by first() or next(), or None after
-        the last one. Starts with first() if the class has not been iterated yet.'''
-        if cim_class not in self.__class_iter__:
+        '''
+        The object after the one last returned by first() or next(), or None after the
+        last one; the call after that starts over. Starts with first() if the class is
+        not being iterated. Objects deleted during the iteration are skipped, objects
+        added to the graph after first() are not returned. There is one iteration per
+        class for the whole model, so use list_by_class for nested or concurrent loops.
+        '''
+        if cim_class not in self._class_iter:
             return self.first(cim_class)
-        return next(self.__class_iter__[cim_class], None)
+        objects = self.graph.get(cim_class, {})
+        for obj in self._class_iter[cim_class]:
+            if objects.get(obj.identifier) is obj:
+                return obj
+        del self._class_iter[cim_class]
+        return None
 
 
     # -------------------------------------------------------------------------
@@ -225,15 +236,15 @@ class GraphModel():
         in the graph (the same rule as for its identifier).
         '''
         count = _object_count(self.graph)
-        if count != self.__mrid_count__:
+        if count != self._mrid_count:
             index = {}
             for objects in self.graph.values():
                 for obj in objects.values():
                     _check_mrid_unique(index, obj)
                     _index_mrid(index, obj)
-            self.__mrid_index__ = index
-            self.__mrid_count__ = count
-        return self.__mrid_index__
+            self._mrid_index = index
+            self._mrid_count = count
+        return self._mrid_index
 
     def find_by_mRID(self, mRID: str) -> Identity | None:
         '''The object in the graph with this mRID, or None. Unlike get_object, this
@@ -277,10 +288,12 @@ class GraphModel():
 
     def create(self, cim_class: type, incremental_file: str = None, **kwargs: any) -> Identity:
         """
-        Create an instance of a dataclass from keyword arguments.
+        Create an instance of a dataclass from keyword arguments, add it to the graph,
+        and record it in self.incrementals.
 
         Args:
             cim_class: The dataclass type to instantiate
+            incremental_file: Write every difference recorded so far to this file
             **kwargs: Attribute names and values for the dataclass instance
 
         Returns:
@@ -310,52 +323,63 @@ class GraphModel():
 
         # Add to graph, then point the other end of each given association at it
         self.add_to_graph(new_object)
+        record_created(self.incrementals, new_object)
         for attribute, value in kwargs.items():
-            sync_inverse_references(new_object, attribute, None, value)
-
-        # Add to list of incremental messages
-        new_obj_incremental(new_object, self.incrementals)
-
-        if incremental_file is not None:
-            forward = {}
-            forward[cim_class] = {}
-            forward[cim_class][new_object.uri()] = self.incrementals['forwardDifferences'][cim_class][new_object.uri()]
-            write_incremental(reverse=None, forward=forward, filename=incremental_file)
-
+            sync_inverse_references(new_object, attribute, None, value, self.incrementals)
+        self._write_incrementals(incremental_file)
         return new_object
 
-    def from_incremental(self, filename:str) -> list[object]:
+    def from_incremental(self, filename:str, incremental_file:str=None) -> list[object]:
         '''
-        Create new object from incremental message
+        Apply an RDF/XML difference file to the model: create, modify and delete its
+        objects with create, modify and delete, so the model and self.incrementals are as
+        if the changes had been made here. Nothing is changed if any difference does not
+        fit the model (ValueError); see incremental_builder.apply_incremental.
+        Returns the created and modified objects.
         '''
         if not filename.lower().endswith('.xml'):
             raise ValueError(f'{filename}: only RDF/XML difference files (.xml) can be read')
-        message = read_incremental_xml(filename)
-        valid_message = validate_incremental(message, self.connection, self.graph)
-        # TODO: Delete objects from incremental
-        # TODO: Add objects from incremental
-        modified = modify_from_incremental(valid_message, self.connection, self.graph)
-        return modified
+        changed = apply_incremental(self, read_incremental_xml(filename))
+        self._write_incrementals(incremental_file)
+        return changed
 
 
-    def delete(self, obj:Identity) -> None:
+    def delete(self, obj:Identity, incremental_file:str=None) -> None:
         """
         Delete an object from a typed property graph dictionary and remove all references to it.
 
         Args:
-            obj: The object to delete
-        """
+            obj: The object to delete, or None to do nothing
+            incremental_file: Write every difference recorded so far to this file
 
+        Raises:
+            TypeError: If obj is not a CIM object (e.g. a class such as cim.Terminal)
+            ValueError: If obj is not in the graph
+        """
         if obj is None:
             return
+        if not isinstance(obj, Identity):
+            raise TypeError(f'{obj!r} is not a CIM object')
+        objects = self.graph.get(obj.__class__, {})
+        if objects.get(obj.identifier) is not obj:
+            raise ValueError(f'{obj.__class__.__name__} {obj.identifier} '
+                             f'(name={getattr(obj, "name", None)!r}) is not in the graph')
 
         # Remove every reference to the object from the other end of its associations
+        record_deleted(self.incrementals, obj)
         for attr_field in fields(obj):
-            sync_inverse_references(obj, attr_field.name, getattr(obj, attr_field.name), None)
+            sync_inverse_references(obj, attr_field.name, getattr(obj, attr_field.name), None,
+                                    self.incrementals)
 
-        self.graph.get(obj.__class__, {}).pop(obj.identifier, None)
+        del objects[obj.identifier]
+        self._write_incrementals(incremental_file)
 
     def modify(self, cim_object:Identity, attribute:str, value:any, incremental_file:str=None) -> None:
+        """
+        Set an attribute (validated and converted to its datatype), update the other end
+        of an association, and record the change in self.incrementals. incremental_file:
+        write every difference recorded so far to this file.
+        """
         if not isinstance(cim_object, Identity):
             raise TypeError(f"{cim_object} is not a CIM-Graph dataclass")
         # Verify that class_type is in CIM profile
@@ -372,34 +396,23 @@ class GraphModel():
             if not valid:
                 raise TypeError(f'{value!r} does not match datatype {attr_datatype} of {attribute}')
 
-        # Get old value for reverse difference
-        base_value = self.incrementals['reverseDifferences'].get(cim_class, {}).get(cim_object.uri(), {}).get(attribute, {})
-        if base_value != {}:
-            old_value = base_value
-        else:
-            old_value = getattr(cim_object, attribute)
-
         # Set new value, and move the other end of an association
         current_value = getattr(cim_object, attribute)
         setattr(cim_object, attribute, value)
-        sync_inverse_references(cim_object, attribute, current_value, value)
-        # Create incremental
-        modify_incremental(cim_object, attribute, old_value, value, self.incrementals)
-        # Write single incremental to file if specificied
-        if incremental_file is not None:
-            forward = {}
-            reverse = {}
-            forward[cim_class] = {}
-            reverse[cim_class] = {}
-            forward[cim_class][cim_object.uri()] = self.incrementals['forwardDifferences'][cim_class][cim_object.uri()]
-            reverse[cim_class][cim_object.uri()] = self.incrementals['reverseDifferences'][cim_class][cim_object.uri()]
-            write_incremental(reverse=reverse, forward=forward, filename=incremental_file)
+        record_change(self.incrementals, cim_object, attribute, current_value, value)
+        sync_inverse_references(cim_object, attribute, current_value, value, self.incrementals)
+        self._write_incrementals(incremental_file)
 
+    def _write_incrementals(self, incremental_file: str | None) -> None:
+        if incremental_file is not None:
+            self.write_all_incrementals(incremental_file)
 
     def write_all_incrementals(self, incremental_file:str):
-            write_incremental(reverse=self.incrementals['reverseDifferences'],
-                            forward=self.incrementals['forwardDifferences'],
-                             filename=incremental_file)
+        """Write the differences of every create, modify and delete since the model was
+        loaded: each attribute's value then (reverse) and now (forward)."""
+        write_incremental(reverse=self.incrementals['reverseDifferences'],
+                          forward=self.incrementals['forwardDifferences'],
+                          filename=incremental_file)
 
 
 
