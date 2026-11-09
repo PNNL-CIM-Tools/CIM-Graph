@@ -2,6 +2,7 @@ from __future__ import annotations
 
 from uuid import UUID
 
+from cimgraph.core.validation import validate_identifier
 from cimgraph.databases import get_iec61970_552, get_namespace, get_url
 
 
@@ -29,7 +30,7 @@ def get_object_sparql(mRID: str) -> str:
           """
 
     query_message += '''
-    VALUES ?identifier {"%s"}''' %mRID
+    VALUES ?identifier {"%s"}''' % validate_identifier(mRID)
     # add all equipment mRID
 
     query_message += f'''

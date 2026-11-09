@@ -1,8 +1,11 @@
+import asyncio
 import os
 import unittest
 from uuid import UUID
 
-import cimgraph.data_profile.cimhub_2023 as cim
+import cimprofiles.cim17.cimhub_2023 as cim
+import pytest
+
 from cimgraph import utils
 from cimgraph.databases import Neo4jConnection
 from cimgraph.models import FeederModel
@@ -63,6 +66,22 @@ class TestNeo4J(unittest.TestCase):
         expected_str = '\nMATCH(n)\nWHERE n.uri = "urn:uuid:49AD8E07-3BF9-A4E2-CB8F-C3722F837B62"\nRETURN DISTINCT n.uri as identifier,\nlabels(n)[1] as class'
         self.assertEqual(query, expected_str)
 
+    @pytest.mark.integration('neo4j')
+    def test_sync_methods_work_inside_a_running_event_loop(self):
+        """As in Jupyter: the connection runs its queries on its own event loop."""
+        database = Neo4jConnection()
+
+        async def notebook_cell():
+            return database.get_object(mRID=self.feeder_mrid)
+
+        feeder = asyncio.run(notebook_cell())
+        self.assertIsInstance(feeder, cim.Feeder)
+        database.disconnect()
+        database.disconnect()  # safe when not connected
+        self.assertIsInstance(database.get_object(mRID=self.feeder_mrid), cim.Feeder)
+        database.disconnect()
+
+    @pytest.mark.integration('neo4j')
     def test_get_object(self):
         database = Neo4jConnection()
         feeder = database.get_object(mRID=self.feeder_mrid)
@@ -76,15 +95,17 @@ class TestNeo4J(unittest.TestCase):
         expected_str = 'MATCH (container:Feeder)\nWHERE container.uri = "urn:uuid:49AD8E07-3BF9-A4E2-CB8F-C3722F837B62"\nMATCH (eq) - [:`Equipment.EquipmentContainer`] - (container)\nOPTIONAL MATCH (cnode) - [:`Terminal.ConnectivityNode`] - (term:Terminal) - [:`Terminal.ConductingEquipment`] -> (eq)\nRETURN DISTINCT\nREPLACE(cnode.uri, "urn:uuid:", "") as ConnectivityNode,\nREPLACE(term.uri, "urn:uuid:", "") as Terminal,\nREPLACE(eq.uri, "urn:uuid:", "") as eq_id,\nLABELS(eq)[1] as eq_class'
         self.assertEqual(query, expected_str)
 
+    @pytest.mark.integration('neo4j')
     def test_get_feeder_model(self):
         database = Neo4jConnection()
         feeder = cim.Feeder(mRID=self.feeder_mrid)
         network = FeederModel(connection=database, container=feeder, distributed=False)
         initial_keys = len(network.graph.keys())
-        self.assertEqual(initial_keys, 13)
+        self.assertEqual(initial_keys, 14)
         database.disconnect()
 
 
+    @pytest.mark.integration('neo4j')
     def test_get_all_line_data(self):
         database = Neo4jConnection()
         feeder = cim.Feeder(mRID=self.feeder_mrid)
@@ -94,7 +115,7 @@ class TestNeo4J(unittest.TestCase):
         utils.get_all_line_data(network)
         # check size of graph
         total_keys = len(network.graph.keys())
-        self.assertEqual(total_keys, 21)
+        self.assertEqual(total_keys, 19)  # for tests/test_models/ieee13.xml (seed_databases.py)
         # check value of line 645646
         self.assertEqual(line.name, '645646')
         self.assertEqual(line.length, 91.44)

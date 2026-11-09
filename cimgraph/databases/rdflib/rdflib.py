@@ -3,8 +3,9 @@ from __future__ import annotations
 import json
 import logging
 import math
-from uuid import UUID
+from pathlib import Path
 
+from cimprofiles.identity import read_identifier
 from rdflib import Graph, Namespace
 from rdflib.namespace import RDF
 
@@ -42,16 +43,14 @@ class RDFlibConnection(SPARQLEndpointConnection):
         else:
             self.connection_obj = Graph()
 
-        # Load file if specified
+        # Load file if specified. Only local CIM RDF/XML files: rdflib would otherwise
+        # fetch URLs and guess the format (JSON-LD can pull in remote @context documents).
         if self.filename is not None:
-            try:
-                self.connection_obj.parse(self.filename)
-                self.connection_obj.bind('cim', Namespace(self.namespace))
-                self.connection_obj.bind('rdf', RDF)
-            except Exception as e:
-                _log.warning(
-                    f'File {self.filename} not found. Defaulting to empty network graph. Error: {e}')
-                self.filename = None
+            if not Path(self.filename).is_file():
+                raise FileNotFoundError(f'{self.filename} is not a local file')
+            self.connection_obj.parse(self.filename, format='xml')
+            self.connection_obj.bind('cim', Namespace(self.namespace))
+            self.connection_obj.bind('rdf', RDF)
 
     def _execute_raw_query(self, query_message: str):
         """
@@ -143,47 +142,42 @@ class RDFlibConnection(SPARQLEndpointConnection):
         """
         for result in query_output['results']['bindings']:
             attr = self._parse_result_field(result, 'attr')
+            if attr is None or attr == str(RDF.type):
+                continue
 
-            if attr is not None and 'type' not in attr:
-                is_enumeration = False
+            uri = self._parse_result_field(result, 'identifier')
+            identifier = read_identifier(cim_class.__name__, uri)
+            # The attribute's local name: it may be in an extension namespace
+            attribute = attr.rpartition('#')[2]
+            value = str(self._parse_result_field(result, 'val'))
 
-                identifier = UUID(self._parse_result_field(result, 'identifier').strip('_').lower())
-                attribute = str(attr).split(self.namespace)[1]
-                value = str(self._parse_result_field(result, 'val'))
-
-                # Check if enumeration
-                if self.namespace in value:
-                    enum_text = value.split(self.namespace)[1]
-                    enum_text = enum_text.split('>')[0]
-                    enum_class = enum_text.split('.')[0]
-                    enum_value = enum_text.split('.')[1]
-                    is_enumeration = True
-
-                # Check if association (edge to another object)
-                edge_class = self._parse_result_field(result, 'edge_class')
-                if edge_class is not None:
-                    if self.iec61970_552 == '552-NEW':
-                        edge_mRID = value.split('uuid:')[1]
-                    else:
-                        edge_mRID = value.split('#')[1]
-
-                    if edge_class in self.cim.__all__:
-                        edge_class = getattr(self.cim, edge_class)
-                    else:
-                        _log.warning(f'unknown class {edge_class}')
-                        continue
-
-                    if expand_graph:
-                        self.create_edge(graph, cim_class, identifier, attribute, edge_class, edge_mRID)
-                    else:
-                        self.create_value(graph, cim_class, identifier, attribute, value)
-
-                elif is_enumeration:
-                    edge_enum = getattr(self.cim, enum_class)(enum_value)
-                    association = self.check_attribute(cim_class, attribute)
-                    if association is not None:
-                        setattr(graph[cim_class][identifier], association, edge_enum)
+            # An association (edge to another object)
+            edge_class = self._parse_result_field(result, 'edge_class')
+            if edge_class is not None:
+                if self.iec61970_552 == '552-NEW':
+                    edge_mRID = value.split('uuid:')[1]
                 else:
-                    association = self.check_attribute(cim_class, attribute)
-                    if association is not None:
-                        self.create_value(graph, cim_class, identifier, attribute, value)
+                    edge_mRID = value.split('#')[1]
+
+                if edge_class in self.cim.__all__:
+                    edge_class = getattr(self.cim, edge_class)
+                else:
+                    _log.warning(f'unknown class {edge_class}')
+                    continue
+
+                if expand_graph:
+                    self.create_edge(graph, cim_class, identifier, attribute, edge_class, edge_mRID)
+                else:
+                    self.create_reference(graph, cim_class, identifier, attribute,
+                                          edge_class, edge_mRID)
+                continue
+
+            # An enumeration value, in the cim or an extension namespace
+            edge_enum = self.enum_from_iri(value)
+            association = self.check_attribute(cim_class, attribute)
+            if association is None:
+                continue
+            if edge_enum is not None:
+                setattr(graph[cim_class][identifier], association, edge_enum)
+            else:
+                self.create_value(graph, cim_class, identifier, attribute, value)

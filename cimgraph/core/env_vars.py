@@ -5,6 +5,13 @@ import types
 import warnings
 from functools import cache
 
+from cimprofiles import profile_module
+# The model-scope getters live in cimprofiles because Identity reads them. Import, never copy:
+# set_model_scope() must clear the same @cache that Identity uses.
+from cimprofiles.env_vars import (DEFAULT_MODEL_AUTHORITY, DEFAULT_MODEL_NAME,
+                                  DEFAULT_VALIDATION_LOG_LEVEL, get_model_authority,
+                                  get_model_name, get_validation_log_level)
+
 _log = logging.getLogger(__name__)
 
 # Memo for merged modules: spec string → ModuleType.
@@ -12,22 +19,39 @@ _log = logging.getLogger(__name__)
 _merge_memo: dict[str, types.ModuleType] = {}
 
 DEFAULT_NAMESPACE = 'http://iec.ch/TC57/CIM100#'
-DEFAULT_CIM_PROFILE = 'cimhub_2026'
+DEFAULT_CIM_PROFILE = 'cim18v17'
 DEFAULT_URL = 'http://localhost:8889/bigdata/namespace/kb/sparql'
 DEFAULT_DATABASE = 'powergridmodel'
 DEFAULT_HOST = 'localhost'
 DEFAULT_PORT = 61613
-DEFAULT_USERNAME = 'system'
-DEFAULT_PASSWORD = 'manager'
 DEFAULT_IEC61970_301 = 8
 DEFAULT_IEC61970_552 = '552-NEW'
-DEFAULT_USE_UNITS = 'false'
-DEFAULT_VALIDATION_LOG_LEVEL = 'WARNING'
+IEC61970_552_STYLES = ('552-NEW', '552-LEGACY', 'CGMES')
+DEFAULT_USE_UNITS = 'true'
 DEFAULT_ALLOW_UNDEFINED_ATTRIBUTES = 'false'
+DEFAULT_MVA_BASE = 100
+DEFAULT_FREQUENCY_HZ = 60
+
+_LEGACY_PROFILE_PREFIX = 'cimgraph.data_profile.'
 
 
 def _qualify(path: str) -> str:
-    return path if '.' in path else 'cimgraph.data_profile.' + path
+    """
+    Returns the full module path of a profile. A short name, optionally with a
+    sub-profile ('cimhub_2023', 'cim18gmdm.connectivity'), is looked up in
+    cimprofiles.PROFILE_PACKAGES, and so is a pre-0.6 'cimgraph.data_profile.' path,
+    so every spelling gives the same module and the same merge-memo key (otherwise
+    two spellings would build two sets of merged classes whose objects miss each
+    other's graph keys).
+    """
+    if path.startswith('cimprofiles.'):
+        return path
+    if path.startswith(_LEGACY_PROFILE_PREFIX):
+        qualified = profile_module(path[len(_LEGACY_PROFILE_PREFIX):])
+        warnings.warn(f'CIMG_CIM_PROFILE path {path!r} is deprecated; use {qualified!r}',
+                      DeprecationWarning, stacklevel=3)
+        return qualified
+    return profile_module(path)
 
 
 @cache
@@ -35,9 +59,11 @@ def get_cim_profile() -> tuple[str, types.ModuleType]:
     """Return (cim_profile_str, cim_module) for the active CIM profile.
 
     CIMG_CIM_PROFILE may be:
-    - A single module path: 'cimhub_2023' or 'cimgraph.data_profile.cimhub_2023'
-    - A comma-separated list of sub-profile paths that are merged at runtime:
-      'cimgraph.data_profile.cim18gmdm.connectivity,cimgraph.data_profile.cim18gmdm.electrical'
+    - A single profile: 'cimhub_2023' or 'cimprofiles.cim17.cimhub_2023'
+    - A comma-separated list of sub-profiles that are merged at runtime:
+      'cim18gmdm.connectivity,cim18gmdm.electrical'
+
+    The pre-0.6 'cimgraph.data_profile.' paths are still accepted.
 
     Merged modules are memoised in _merge_memo (not in the @cache) so that the
     same spec string always returns the same module object even when cache_clear()
@@ -47,17 +73,17 @@ def get_cim_profile() -> tuple[str, types.ModuleType]:
     if cim_profile is None:
         raise ValueError('CIMG_CIM_PROFILE environment variable is not set.')
 
-    parts = [p.strip() for p in cim_profile.split(',') if p.strip()]
+    parts = [_qualify(p.strip()) for p in cim_profile.split(',') if p.strip()]
 
     if len(parts) == 1:
-        cim = importlib.import_module(_qualify(parts[0]))
+        cim = importlib.import_module(parts[0])
         return cim_profile, cim
 
     # Comma-spec: build or retrieve a merged module.
     spec_key = ','.join(parts)
     if spec_key not in _merge_memo:
-        from cimgraph.data_profile.merge import merge_profiles
-        mods = [importlib.import_module(_qualify(p)) for p in parts]
+        from cimprofiles.merge import merge_profiles
+        mods = [importlib.import_module(p) for p in parts]
         _merge_memo[spec_key] = merge_profiles(*mods)
     return spec_key, _merge_memo[spec_key]
 
@@ -82,15 +108,18 @@ def get_iec61970_552() -> str:
     Reads ``CIMG_IEC61970_552`` (preferred) or the legacy ``CIMG_IEC61970_301``.
 
     Returns:
-        ``'552-NEW'``    — use ``rdf:about=urn:uuid:`` (IEC 61970-552 ed. 2, default)
-        ``'552-LEGACY'`` — use ``rdf:ID=_`` (IEC 61970-552 ed. 1)
+        ``'552-NEW'``    — ``rdf:about="urn:uuid:<uuid>"``, mRID ``<uuid>`` (IEC 61970-552 ed. 2,
+        default)
+        ``'552-LEGACY'`` — ``rdf:ID="_<uuid>"``, references ``#_<uuid>``, mRID ``_<uuid>``
+        (IEC 61970-552 ed. 1)
+        ``'CGMES'``      — ``rdf:ID="_<uuid>"``, references ``#_<uuid>``, mRID ``<uuid>``
     """
     val = os.getenv('CIMG_IEC61970_552')
     if val is not None:
         val = val.strip()
-        if val not in ('552-NEW', '552-LEGACY'):
+        if val not in IEC61970_552_STYLES:
             raise ValueError(
-                f"CIMG_IEC61970_552 must be '552-NEW' or '552-LEGACY', got {val!r}"
+                f'CIMG_IEC61970_552 must be one of {IEC61970_552_STYLES}, got {val!r}'
             )
         return val
 
@@ -171,27 +200,23 @@ def get_use_units() -> bool:
 @cache
 def get_username() -> str:
     """
-    Returns the CIM profile to be used for object graph
-    Returns:
-        username: str
+    Returns the database username from CIMG_USERNAME. There is no default: raises
+    ValueError if it is not set, rather than trying a well-known username.
     """
     username = os.getenv('CIMG_USERNAME')
-    if username is None:
-        _log.warning('CIMG_USERNAME environment variable is not set.')
-        username = DEFAULT_USERNAME
+    if not username:
+        raise ValueError('CIMG_USERNAME environment variable is not set')
     return username
 
 @cache
 def get_password() -> str:
     """
-    Returns the CIM profile to be used for object graph
-    Returns:
-        password: str
+    Returns the database password from CIMG_PASSWORD. There is no default: raises
+    ValueError if it is not set, rather than trying a well-known password.
     """
     password = os.getenv('CIMG_PASSWORD')
-    if password is None:
-        _log.warning('CIMG_PASSWORD environment variable is not set.')
-        password = DEFAULT_PASSWORD
+    if not password:
+        raise ValueError('CIMG_PASSWORD environment variable is not set')
     return password
 
 @cache
@@ -216,17 +241,6 @@ def get_port() -> int:
     return int(port)
 
 @cache
-def get_validation_log_level() -> str:
-    '''
-    Returns the log level used for validation warnings
-    Returns:
-        log_level: str
-    '''
-    log_level = getattr(logging, os.environ.get('CIMG_VALIDATION_LOG_LEVEL',
-                        DEFAULT_VALIDATION_LOG_LEVEL).upper(), logging.WARNING)
-    return log_level
-
-@cache
 def get_undefined_handling() -> str:
     '''
     Returns the log level used for validation warnings
@@ -236,3 +250,27 @@ def get_undefined_handling() -> str:
     handling = os.environ.get('CIMG_ALLOW_UNDEFINED_ATTRIBUTES',
                         DEFAULT_ALLOW_UNDEFINED_ATTRIBUTES)
     return handling.lower() == 'true'
+
+def set_model_scope(authority: str, model_name: str) -> None:
+    """
+    Sets CIMG_MODEL_AUTHORITY and CIMG_MODEL_NAME so that UUIDs seeded from now on,
+    and the header of the next export, use this model authority and model name.
+    """
+    if (authority, model_name) != (get_model_authority(), get_model_name()):
+        _log.info(f'Setting model scope to authority {authority!r}, model name {model_name!r}')
+    os.environ['CIMG_MODEL_AUTHORITY'] = authority
+    os.environ['CIMG_MODEL_NAME'] = model_name
+    get_model_authority.cache_clear()
+    get_model_name.cache_clear()
+
+
+@cache
+def get_system_mva_base() -> float:
+    """System-wide MVA base for per-unit <--> ohm conversion, from
+    CIMG_SYSTEM_MVA_BASE, else DEFAULT_MVA_BASE (100 MVA).
+    """
+    value = os.getenv('CIMG_SYSTEM_MVA_BASE')
+    if value is None:
+        _log.info(f'CIMG_SYSTEM_MVA_BASE is not set. Using {DEFAULT_MVA_BASE} MVA default')
+        return float(DEFAULT_MVA_BASE)
+    return float(value)

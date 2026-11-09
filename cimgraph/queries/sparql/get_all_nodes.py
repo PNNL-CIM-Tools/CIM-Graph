@@ -2,7 +2,10 @@ from __future__ import annotations
 
 import logging
 
-import cimgraph.data_profile.cim17v40 as cim
+import cimprofiles.cim17.cim17v40 as cim
+
+from cimgraph.core.serialization import rdf_identifier
+from cimgraph.core.validation import validate_identifier
 from cimgraph.databases import get_iec61970_552, get_namespace, get_url
 
 _log = logging.getLogger(__name__)
@@ -18,10 +21,7 @@ def get_all_nodes_from_container(container: cim.EquipmentContainer) -> str:
         query_message: query string that can be used in blazegraph connection or STOMP client
     """
 
-    try:
-        container_uri = container.uri()
-    except:
-        container_uri = container.mRID
+    container_uri = rdf_identifier(container)
 
     if get_iec61970_552() == '552-NEW':
         split = 'urn:uuid:'
@@ -101,7 +101,7 @@ def get_all_nodes_from_list(mrid_list: list[str], namespace: str) -> str:
         VALUES ?ConnectivityNode {"""
     # add all equipment mRID
     for mrid in mrid_list:
-        query_message += f' "{mrid}" \n'
+        query_message += f' "{validate_identifier(mrid)}" \n'
     query_message += '               }'
 
     # add all attributes
@@ -133,10 +133,7 @@ def get_all_nodes_from_area(area: object) -> str:
     """
 
     area_class = area.__class__.__name__
-    try:
-        container_uri = area.uri()
-    except:
-        container_uri = area.mRID
+    container_uri = rdf_identifier(area)
 
     if get_iec61970_552() == '552-NEW':
         split = 'urn:uuid:'

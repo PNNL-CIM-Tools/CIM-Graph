@@ -1,20 +1,43 @@
-version: '2'
+# Databases for the integration tests (pytest -m integration). Local development only, not a
+# production deployment: ports bind to localhost and the credentials are the tests' own.
+#
+#   docker compose up -d --wait
+#   uv run python tests/seed_databases.py     # loads tests/test_models/ieee13.xml into each
+#   uv run pytest -m integration
+#   docker compose down                       # no volumes: the next up starts empty
+#
+# GridAPPS-D tests need the GridAPPS-D platform (gridappsd-docker), which has its own
+# Blazegraph on port 8889: stop the blazegraph service here before starting it.
 
 services:
 
-  neo4j-apoc:
-    image: neo4j:5.22-community
+  blazegraph:
+    image: lyrasis/blazegraph:2.1.5
     ports:
-      - 7474:7474
-      - 7687:7687
+      - 127.0.0.1:8889:8080  # http://localhost:8889/bigdata/namespace/kb/sparql
+    healthcheck:
+      test: [CMD-SHELL, 'wget -q -O /dev/null http://localhost:8080/bigdata/status || exit 1']
+      interval: 5s
+      retries: 24
+
+  graphdb:
+    image: ontotext/graphdb:10.8.14  # 11.x needs a license file; 10.x runs as Free without one
+    ports:
+      - 127.0.0.1:7200:7200  # repository powergrid_models, created by the seed script
+    healthcheck:
+      test: [CMD-SHELL, 'curl -sf http://localhost:7200/rest/repositories || exit 1']
+      interval: 5s
+      retries: 24
+
+  neo4j:
+    image: neo4j:5.26-community
+    ports:
+      - 127.0.0.1:7474:7474
+      - 127.0.0.1:7687:7687
     environment:
-      - NEO4J_PLUGINS= ["apoc", "n10s"]
-      - NEO4J_AUTH=none
-      - NEO4J_dbms_memory_transaction_total_max=10g
-      - NEO4J_server_memory_heap_max__size=10g
-      - NEO4J_apoc_export_file_enabled=true
-      - NEO4J_apoc_import_file_enabled=true
-      - NEO4J_apoc_import_file_use__neo4j__config=true
-    volumes:
-      - ./docker/neo4j/data:/data
-      - ./docker/neo4j/plugins:/plugins
+      - NEO4J_AUTH=neo4j/test1234  # matches tests/test_neo4j.py
+      - NEO4J_PLUGINS=["n10s"]     # RDF import (Neo4jConnection.upload and the seed script)
+    healthcheck:
+      test: [CMD-SHELL, 'cypher-shell -u neo4j -p test1234 "RETURN 1" || exit 1']
+      interval: 5s
+      retries: 36

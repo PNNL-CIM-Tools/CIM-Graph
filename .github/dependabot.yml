@@ -1,19 +1,34 @@
+---
+# Requires develop as the repository's default branch: Dependabot opens all PRs
+# against it, and security updates ignore these options when target-branch is
+# set. Minor/patch bumps and security fixes are grouped into one PR each;
+# majors get their own PR for review.
 version: 2
 updates:
   - package-ecosystem: "github-actions"
     directory: "/"
     schedule:
-      interval: "weekly"
+      interval: "monthly"
+    cooldown:
+      default-days: 7
     groups:
       actions:
-        patterns:
-          - "*"
+        patterns: ["*"]
+        update-types: ["minor", "patch"]
 
   - package-ecosystem: "uv"
     directory: "/"
     schedule:
-      interval: "weekly"
+      interval: "monthly"
+    cooldown:
+      default-days: 7
+    allow:
+      # No scheduled bumps of transitive (lockfile-only) deps
+      - dependency-type: "direct"
     groups:
-      python-deps:
-        patterns:
-          - "*"
+      python:
+        patterns: ["*"]
+        update-types: ["minor", "patch"]
+      python-security:
+        applies-to: security-updates
+        patterns: ["*"]

@@ -3,7 +3,6 @@ from __future__ import annotations
 import json
 import logging
 import math
-import os
 from collections import defaultdict
 from uuid import UUID
 
@@ -20,11 +19,6 @@ _log = logging.getLogger(__name__)
 class GridappsdConnection(ConnectionInterface):
 
     def __init__(self):
-        get_url.cache_clear()
-        get_host.cache_clear()
-        get_port.cache_clear()
-        get_username.cache_clear()
-        get_password.cache_clear()
         super().__init__()
         self.host = get_host()
         self.port = get_port()
@@ -41,13 +35,10 @@ class GridappsdConnection(ConnectionInterface):
 
     def connect(self):
         if not self.gapps:
-            os.environ['GRIDAPPSD_ADDRESS'] = self.host
-            os.environ['GRIDAPPSD_PORT'] = str(self.port)
-            os.environ['GRIDAPPSD_USER'] = self.username
-            os.environ['GRIDAPPSD_PASSWORD'] = self.password
-            os.environ['GRIDAPPSD_DATABASE'] = self.database
-            os.environ['GRIDAPPSD_URL'] = self.url
-            self.gapps = GridAPPSD()
+            # Pass the connection settings directly rather than through os.environ,
+            # so the credentials aren't inherited by every subprocess.
+            self.gapps = GridAPPSD(address=(self.host, str(self.port)),
+                                   username=self.username, password=self.password)
 
     def disconnect(self):
         self.gapps.disconnect()
@@ -197,7 +188,7 @@ class GridappsdConnection(ConnectionInterface):
             sparql_message = sparql.get_all_attributes_sparql(graph, cim_class, eq_mrids)
             #execute sparql query
             query_output = self.execute(sparql_message)
-            self.edge_query_parser(query_output, graph, cim_class)
+            self.edge_query_parser(query_output, graph, cim_class, expand_graph=False)
 
     # -------------------------------------------------------------------------
     # Methods for parsing query results
@@ -295,21 +286,16 @@ class GridappsdConnection(ConnectionInterface):
                                          attribute, edge_class, edge_mRID)
                         new_edges.append(edge_object)
                     else:
-                        self.create_value(graph, cim_class, identifier, attribute, value)
+                        new_edges.append(self.create_reference(graph, cim_class, identifier,
+                                                               attribute, edge_class, edge_mRID))
 
-                elif self.namespace in value:  #check if enumeration
-                    enum_text = value.split(self.namespace)[1]
-                    enum_text = enum_text.split('>')[0]
-                    enum_class = enum_text.split('.')[0]
-                    enum_value = enum_text.split('.')[1]
-
-                    if enum_class in self.cim.__all__:  # if enumeration
-                        edge_enum = getattr(self.cim, enum_class)(enum_value)
-                        new_edges.append(edge_enum)
-                        association = self.check_attribute(
-                            cim_class, attribute)
-                        if association is not None:
-                            setattr(graph[cim_class][identifier], association, edge_enum)
+                elif (edge_enum := self.enum_from_iri(value)) is not None:
+                    # An enumeration value, in the cim or an extension namespace
+                    new_edges.append(edge_enum)
+                    association = self.check_attribute(
+                        cim_class, attribute)
+                    if association is not None:
+                        setattr(graph[cim_class][identifier], association, edge_enum)
                 else:
                     association = self.check_attribute(cim_class, attribute)
                     if association is not None:

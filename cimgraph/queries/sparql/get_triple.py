@@ -1,5 +1,7 @@
 from __future__ import annotations
 
+from cimgraph.core.serialization import rdf_identifier
+from cimgraph.core.validation import validate_attribute
 from cimgraph.databases import get_iec61970_552, get_namespace, get_url
 
 
@@ -11,7 +13,8 @@ def get_triple_sparql(obj:object, attribute:str) -> str:
     Returns:
         query_message: query string that can be used in blazegraph connection or STOMP client
     """
-    mrid = obj.uri()
+    mrid = rdf_identifier(obj)
+    attribute = validate_attribute(attribute)
 
     if get_iec61970_552() == '552-NEW':
         split = 'urn:uuid:'

@@ -6,8 +6,12 @@ import os
 import re
 from abc import ABC, abstractmethod
 from dataclasses import dataclass, field, is_dataclass
+from enum import Enum
 from functools import cache
+from types import ModuleType
 from uuid import UUID
+
+from cimprofiles.identity import as_uuid, normalize_identifier, read_identifier
 
 from cimgraph.core import (get_cim_profile, get_database, get_host, get_iec61970_301,
                            get_iec61970_552, get_namespace, get_password, get_port,
@@ -17,6 +21,95 @@ from cimgraph.core import (get_cim_profile, get_database, get_host, get_iec61970
 _log = logging.getLogger(__name__)
 
 Graph = dict[type, dict[UUID, object]]
+
+# Objects per edge or attribute query, and how many of those queries a database
+# connection runs at once
+BATCH_SIZE = 100
+MAX_PARALLEL_QUERIES = 8
+
+# An enumeration value IRI: '<namespace>Enum.member', namespace ending in '#' or '/'
+_ENUM_IRI = re.compile(r'<?(.*[#/])([A-Za-z_]\w*)\.(\w+)>?')
+
+
+def add_object_to_graph(graph: Graph, obj: object) -> None:
+    """
+    Add an object to the graph under its identifier. Re-adding the same
+    instance is a no-op. A different instance with the same identifier is a
+    collision (e.g. two objects seeded from the same mRID or name) and raises
+    instead of silently dropping one of them.
+    """
+    objects = graph.setdefault(type(obj), {})
+    existing = objects.get(obj.identifier)
+    if existing is None:
+        objects[obj.identifier] = obj
+    elif existing is not obj:
+        raise ValueError(
+            f'{type(obj).__name__} identifier {obj.identifier} is already used by another '
+            f'object in the graph (existing name={getattr(existing, "name", None)!r}, '
+            f'mRID={getattr(existing, "mRID", None)!r}; new name={getattr(obj, "name", None)!r}, '
+            f'mRID={getattr(obj, "mRID", None)!r})')
+
+
+def profile_enum(cim: ModuleType, class_name: str, value: str) -> Enum | None:
+    """
+    Return the member of the profile enumeration class_name with this value, or None
+    if class_name is not an enumeration in the profile. Names come from the data
+    being read, so only Enum classes listed in the profile are ever looked up.
+    Raises ValueError if value is not a member of the enumeration.
+    """
+    if class_name not in cim.__all__:
+        return None
+    enum_class = getattr(cim, class_name)
+    if not (isinstance(enum_class, type) and issubclass(enum_class, Enum)):
+        return None
+    return enum_class(value)
+
+
+def enum_from_iri(cim: ModuleType, iri: str, namespace: str) -> Enum | None:
+    """
+    Return the profile enumeration member an IRI names ('<namespace>Enum.member'), or
+    None if it names none. The namespace must be the one the enumeration is declared
+    in (cim, or an extension such as gad or eu), or namespace, the one the data's cim
+    classes are read with (CIMG_NAMESPACE). Raises ValueError for a value that is not a
+    member of a profile enumeration.
+    """
+    match = _ENUM_IRI.fullmatch(iri)
+    if match is None:
+        return None
+    iri_namespace, class_name, value = match.groups()
+    member = profile_enum(cim, class_name, value)
+    if member is None or iri_namespace not in (member.__namespace__, namespace):
+        return None
+    return member
+
+
+def create_graph_object(graph: Graph, class_type: type, uri: str | UUID) -> object:
+    """
+    Return the object of class_type with this RDF ID, mRID or identifier from the graph,
+    else create it and add it to the graph. The graph is keyed by the identifier the
+    object gets (read_identifier), also for non-UUID IDs, so lookups and delete find it.
+    """
+    if isinstance(uri, UUID):
+        identifier = uri
+    else:
+        identifier = read_identifier(class_type.__name__, uri)
+    objects = graph.setdefault(class_type, {})
+    if identifier not in objects:
+        objects[identifier] = class_type(identifier=uri)
+    return objects[identifier]
+
+
+def reference_key(uri: str) -> UUID | str:
+    """
+    Key for looking up an object read from a file by its rdf:ID, rdf:about, @id or a
+    reference to it, whichever form each is written in ('_x', '#_x', 'urn:uuid:x'): the
+    UUID it contains, in any case, else its normalize_identifier text.
+    """
+    identifier = as_uuid(uri)
+    if identifier is not None:
+        return identifier
+    return normalize_identifier(uri)
+
 
 @dataclass
 class QueryResponse:
@@ -66,12 +159,11 @@ class ConnectionInterface(ABC):
         raise RuntimeError('Must have implemented query in the inherited class')
 
     def __init__(self):
-        # clear cached env variables
-        get_namespace.cache_clear()
-        get_cim_profile.cache_clear()
-        get_iec61970_552.cache_clear()
-        get_validation_log_level.cache_clear()
-        get_use_units.cache_clear()
+        # Every connection reads the CIMG_* environment variables as they are now
+        for getter in (get_namespace, get_cim_profile, get_iec61970_552, get_validation_log_level,
+                       get_use_units, get_url, get_host, get_port, get_username, get_password,
+                       get_database):
+            getter.cache_clear()
 
         self.cim_profile, self.cim = get_cim_profile()
         self.namespace = get_namespace()
@@ -118,6 +210,13 @@ class ConnectionInterface(ABC):
         self._check_attribute_cache[cache_key] = association
         return association
 
+    def profile_enum(self, class_name: str, value: str) -> Enum | None:
+        """The member of the profile enumeration class_name with this value (see profile_enum)."""
+        return profile_enum(self.cim, class_name, value)
+
+    def enum_from_iri(self, iri: str) -> Enum | None:
+        """The profile enumeration member an IRI names (see enum_from_iri)."""
+        return enum_from_iri(self.cim, iri, self.namespace)
 
     def create_value(self, graph: dict[type, dict[str, object]],
                     cim_class: type, identifier: UUID | str, attribute: str,
@@ -233,14 +332,11 @@ class ConnectionInterface(ABC):
 
     def create_edge(self, graph: dict[type, dict[str, object]],
                     cim_class: type, identifier: UUID | str, attribute: str,
-                    edge_class: type, edge_mRID: str) -> object:
+                    edge_class: type, edge_mRID: str | UUID) -> object:
 
         # Normalize identifier to UUID so it matches the key stored by create_object.
         if isinstance(identifier, str):
-            try:
-                identifier = UUID(identifier.strip('_').lower())
-            except ValueError:
-                pass
+            identifier = read_identifier(cim_class.__name__, identifier)
 
         edge_object = None
         association = self.check_attribute(cim_class, attribute)
@@ -267,34 +363,36 @@ class ConnectionInterface(ABC):
                 _log.warning(f'{cim_class.__name__} does not have attribute {association}')
         return edge_object
 
-    def create_object(self, graph:Graph,
-                      class_type:type, uri:str) -> object:
+    def create_reference(self, graph: Graph, cim_class: type, identifier: UUID,
+                         attribute: str, edge_class: type, edge_id: str) -> object | str | None:
         """
-        Method for creating new objects and adding them to the graph
-        Required Args:
-            graph: an LPG graph from a GraphModel object
-            class_type: a dataclass type, such as cim.ACLineSegment
-            uri: the RDF ID or mRID of the object
-        Returns:
-            obj: a dataclass instance with the correct identifier
+        Like create_edge, but never adds an object to the graph, for get_all_attributes:
+        the association is set to the referenced object if it is already in the graph,
+        else to its identifier text, which writers serialize as a reference (rdf:resource,
+        @id). The text is the UUID the object gets when it is read (read_identifier), in
+        the case it was written in.
         """
-        # Convert uri string to a UUID object for use as dictionary key
-        try:
-            identifier = UUID(uri.strip('_').lower())
-        except:
-            identifier = uri
-
-        # Check if object exists in graph
-        if class_type in graph and identifier in graph[class_type]:
-            obj = graph[class_type][identifier]
-
-        # If not there, create a new object and add to graph
+        association = self.check_attribute(cim_class, attribute)
+        if association is None:
+            return None
+        edge_identifier = read_identifier(edge_class.__name__, edge_id)
+        reference = graph.get(edge_class, {}).get(edge_identifier)
+        if reference is None:
+            reference = normalize_identifier(edge_id) if as_uuid(edge_id) else str(edge_identifier)
+        obj = graph[cim_class][identifier]
+        if 'list' in cim_class.__dataclass_fields__[association].type:
+            references = getattr(obj, association)
+            if not any(item is reference or item == reference for item in references):
+                references.append(reference)
         else:
-            obj = class_type(identifier = uri)
-            # obj.uuid(uri = uri)
-            graph.setdefault(class_type, {})[identifier] = obj
+            setattr(obj, association, reference)
+        return reference
 
-        return obj
+    def create_object(self, graph:Graph,
+                      class_type:type, uri:str | UUID) -> object:
+        """The object of class_type with this RDF ID, mRID or identifier: from the graph,
+        else a new one added to it (see create_graph_object)."""
+        return create_graph_object(graph, class_type, uri)
 
     def add_to_graph(self, obj: object, graph: Graph) -> None:
         """
@@ -304,19 +402,35 @@ class ConnectionInterface(ABC):
         Returns:
             none
         """
-        # Add class type to graph if not there
-        if type(obj) not in graph:
-            graph[type(obj)] = {}
-
-        # Add instance to graph keys if not there
-        if obj.identifier not in graph[type(obj)]:
-            graph[type(obj)][obj.identifier] = obj
+        add_object_to_graph(graph, obj)
 
 
-from cimgraph.databases.blazegraph import BlazegraphConnection
 from cimgraph.databases.fileparsers import JSONLDFile, XMLFile
-from cimgraph.databases.graphdb import GraphDBConnection
-from cimgraph.databases.gridappsd import GridappsdConnection
-from cimgraph.databases.neo4j import Neo4jConnection
-from cimgraph.databases.rdflib import RDFlibConnection
 from cimgraph.databases.sparql_endpoint import SPARQLEndpointConnection
+
+# Connections whose drivers are optional extras, imported on first use:
+# name -> (module, extra that installs its driver)
+_OPTIONAL_CONNECTIONS = {
+    'BlazegraphConnection': ('cimgraph.databases.blazegraph', 'sparql'),
+    'GraphDBConnection': ('cimgraph.databases.graphdb', 'sparql'),
+    'GridappsdConnection': ('cimgraph.databases.gridappsd', 'gridappsd'),
+    'MySQLConnection': ('cimgraph.databases.mysql', 'mysql'),
+    'Neo4jConnection': ('cimgraph.databases.neo4j', 'neo4j'),
+    'RDFlibConnection': ('cimgraph.databases.rdflib', 'rdflib'),
+}
+
+
+def __getattr__(name: str):
+    if name not in _OPTIONAL_CONNECTIONS:
+        raise AttributeError(f'module {__name__!r} has no attribute {name!r}')
+    module_name, extra = _OPTIONAL_CONNECTIONS[name]
+    try:
+        module = importlib.import_module(module_name)
+    except ModuleNotFoundError as error:
+        # Only a missing third-party driver means "install the extra"; a missing
+        # cimgraph or cimprofiles module is a real bug and propagates unchanged.
+        if error.name is None or error.name.split('.')[0] in ('cimgraph', 'cimprofiles'):
+            raise
+        raise ImportError(f'{name} needs {error.name!r}, from the {extra!r} extra: '
+                          f'pip install "cim-graph[{extra}]"') from error
+    return getattr(module, name)

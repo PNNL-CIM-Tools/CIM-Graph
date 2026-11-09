@@ -1,6 +1,8 @@
 import os
 import unittest
 
+import pytest
+
 from cimgraph.databases.gridappsd import GridappsdConnection
 
 
@@ -56,9 +58,11 @@ class TestGridappsdDatasource(unittest.TestCase):
         self.assertEqual(connection.iec61970_552, '552-NEW', 'IEC61970_552 mismatch')
         self.assertFalse(connection.use_units, 'USE_UNITS mismatch')
 
+    @pytest.mark.integration('gridappsd')
     def test_connection_established(self):
         # Overwrite for this test the profile.
-        import cimgraph.data_profile.cim17v40 as cim
+        import cimprofiles.cim17.cim17v40 as cim
+
         from cimgraph.models import FeederModel
         os.environ['CIMG_CIM_PROFILE'] = 'cim17v40'
 

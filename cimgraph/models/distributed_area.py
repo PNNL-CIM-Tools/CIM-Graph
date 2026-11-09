@@ -14,6 +14,7 @@ class DistributedArea(GraphModel):
     def __post_init__(self):
         self.cim_profile = self.connection.cim_profile
         self.cim = self.connection.cim
+        self.set_default_bases()
         self.graph = {}
         self.add_to_graph(self.container)
         self.distributed_areas = []
@@ -35,7 +36,7 @@ class DistributedArea(GraphModel):
                 equipment = self.add_jsonld_to_graph(addr_eq)
                 equipment.EquipmentContainer = self.container
 
-            for unaddr_eq in topology_dict['AddressableEquipment']:
+            for unaddr_eq in topology_dict['UnaddressableEquipment']:
                 equipment = self.add_jsonld_to_graph(unaddr_eq)
                 equipment.EquipmentContainer = self.container
 
@@ -52,7 +53,7 @@ class DistributedArea(GraphModel):
                 equipment = self.add_jsonld_to_graph(addr_eq)
                 equipment.SubSchedulingArea = self.container
 
-            for unaddr_eq in topology_dict['AddressableEquipment']:
+            for unaddr_eq in topology_dict['UnaddressableEquipment']:
                 equipment = self.add_jsonld_to_graph(unaddr_eq)
                 equipment.SubSchedulingArea = self.container
 

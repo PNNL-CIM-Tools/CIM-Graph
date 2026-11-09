@@ -1,16 +1,18 @@
 from __future__ import annotations
 
-import concurrent.futures
 import json
 import logging
 import math
-import os
 from abc import abstractmethod
 from collections import defaultdict
-from uuid import UUID
+from collections.abc import Callable
+from concurrent.futures import ThreadPoolExecutor
+
+from cimprofiles.identity import read_identifier
 
 import cimgraph.queries.sparql as sparql
-from cimgraph.databases import ConnectionInterface, Graph, QueryResponse
+from cimgraph.databases import (BATCH_SIZE, MAX_PARALLEL_QUERIES, ConnectionInterface, Graph,
+                                QueryResponse)
 
 _log = logging.getLogger(__name__)
 
@@ -29,8 +31,10 @@ class SPARQLEndpointConnection(ConnectionInterface):
     - _parse_result_field(): Extract field values from query results
     - _update_raw(): Execute an update statement
 
-    Subclasses may optionally override:
-    - _get_namespaces(): Return list of namespaces for enumeration parsing
+    get_all_edges and get_all_attributes run their batch queries in parallel threads, so
+    _execute_raw_query must be safe to call from several threads at once (give each call
+    its own client object, or override run_batch_queries). Results are parsed on the
+    calling thread.
     """
 
     def __init__(self):
@@ -94,22 +98,6 @@ class SPARQLEndpointConnection(ConnectionInterface):
             str: The response from the update statement
         """
         raise NotImplementedError('Subclass must implement _update_raw()')
-
-    # -------------------------------------------------------------------------
-    # Hook methods - Optional overrides for customization
-    # -------------------------------------------------------------------------
-
-    def _get_namespaces(self) -> list[str]:
-        """
-        Return list of namespaces to check for enumeration parsing.
-
-        Default implementation returns single namespace.
-        Override in subclass to support multiple namespaces (e.g., Blazegraph).
-
-        Returns:
-            list[str]: List of namespace URIs
-        """
-        return [self.namespace]
 
     # -------------------------------------------------------------------------
     # Connection management methods
@@ -367,16 +355,14 @@ class SPARQLEndpointConnection(ConnectionInterface):
             attribute_value = self._parse_result_field(result, 'attribute')
 
             if attribute_value is not None and attribute_value != 'type':
-                parsed = False
                 uri = self._parse_result_field(result, 'identifier')
-                identifier = UUID(uri.strip('_').lower())
+                identifier = read_identifier(cim_class.__name__, uri)
                 attribute = attribute_value
                 value = self._parse_result_field(result, 'value')
 
-                # Check if this is an association (edge to another object)
+                # An association (edge to another object)
                 edge_json = self._parse_result_field(result, 'edge')
                 if edge_json is not None:
-                    parsed = True
                     edge = json.loads(edge_json)
                     edge_mRID = edge['@id']
                     edge_class = edge['@type']
@@ -392,31 +378,24 @@ class SPARQLEndpointConnection(ConnectionInterface):
                                                       attribute, edge_class, edge_mRID)
                         new_edges.append(edge_object)
                     else:
-                        self.create_value(graph, cim_class, identifier, attribute, value)
+                        new_edges.append(self.create_reference(graph, cim_class, identifier,
+                                                               attribute, edge_class, edge_mRID))
+                    continue
 
-                # Check if this is an enumeration
-                if value is not None:
-                    for namespace in self._get_namespaces():
-                        if namespace in value:
-                            parsed = True
-                            enum_text = value.split(namespace)[1]
-                            enum_text = enum_text.split('>')[0]
-                            enum_class = enum_text.split('.')[0]
-                            enum_value = enum_text.split('.')[1]
-
-                            if enum_class in self.cim.__all__:
-                                edge_enum = getattr(self.cim, enum_class)(enum_value)
-                                new_edges.append(edge_enum)
-                                association = self.check_attribute(cim_class, attribute)
-                                if association is not None:
-                                    setattr(graph[cim_class][identifier], association, edge_enum)
-
-                # If not parsed as edge or enumeration, treat as simple value
-                if not parsed:
+                # An enumeration value, in the cim or an extension namespace
+                edge_enum = self.enum_from_iri(value) if value is not None else None
+                if edge_enum is not None:
+                    new_edges.append(edge_enum)
                     association = self.check_attribute(cim_class, attribute)
                     if association is not None:
-                        new_edges.append(value)
-                        self.create_value(graph, cim_class, identifier, attribute, value)
+                        setattr(graph[cim_class][identifier], association, edge_enum)
+                    continue
+
+                # Otherwise a simple value
+                association = self.check_attribute(cim_class, attribute)
+                if association is not None:
+                    new_edges.append(value)
+                    self.create_value(graph, cim_class, identifier, attribute, value)
 
         return new_edges
 
@@ -437,9 +416,31 @@ class SPARQLEndpointConnection(ConnectionInterface):
         Returns:
             str: SPARQL query string.
         """
-        eq_mrids = list(graph[cim_class].keys())[0:100]
+        eq_mrids = list(graph[cim_class].keys())[0:BATCH_SIZE]
         sparql_message = sparql.get_all_edges_sparql(graph, cim_class, eq_mrids)
         return sparql_message
+
+    def run_batch_queries(self, queries: list[str]) -> list[QueryResponse]:
+        """Run the queries, up to MAX_PARALLEL_QUERIES at once, and return their results
+        in the same order."""
+        self.connect()
+        if len(queries) <= 1:
+            return [self._execute_raw_query(query) for query in queries]
+        with ThreadPoolExecutor(max_workers=min(MAX_PARALLEL_QUERIES, len(queries))) as executor:
+            return list(executor.map(self._execute_raw_query, queries))
+
+    def _expand_by_batches(self, graph: Graph, cim_class: type,
+                           build_query: Callable, expand_graph: bool) -> None:
+        """
+        Query every object of cim_class, BATCH_SIZE objects per query, and parse the
+        results into the graph. The queries are built before any result is parsed and
+        run in parallel; parsing, which changes the graph, stays on this thread.
+        """
+        uuid_list = list(graph[cim_class].keys())
+        queries = [build_query(graph, cim_class, uuid_list[start:start + BATCH_SIZE])
+                   for start in range(0, len(uuid_list), BATCH_SIZE)]
+        for query_output in self.run_batch_queries(queries):
+            self.edge_query_parser(query_output, graph, cim_class, expand_graph=expand_graph)
 
     def get_all_edges(self, graph: Graph, cim_class: type) -> None:
         """
@@ -451,40 +452,21 @@ class SPARQLEndpointConnection(ConnectionInterface):
             graph (dict): Graph structure.
             cim_class (type): The CIM class for which to retrieve edges.
         """
-        def process_batch(eq_mrids):
-            sparql_message = sparql.get_all_edges_sparql(graph, cim_class, eq_mrids)
-            query_output = self.execute(sparql_message)
-            self.edge_query_parser(query_output, graph, cim_class)
-
-        # Create list of all nodes within graph to be expanded
-        uuid_list = list(graph[cim_class].keys())
-        # Parallel process in batches of 100 uuids per query
-        num_batches = math.ceil(len(uuid_list) / 100)
-        eq_mrids_batches = [uuid_list[i * 100:(i + 1) * 100] for i in range(num_batches)]
-
-        with concurrent.futures.ThreadPoolExecutor(max_workers=os.cpu_count()) as executor:
-            futures = [executor.submit(process_batch, batch)
-                      for batch in eq_mrids_batches]
-            for future in concurrent.futures.as_completed(futures):
-                future.result()
+        self._expand_by_batches(graph, cim_class, sparql.get_all_edges_sparql, expand_graph=True)
 
     def get_all_attributes(self, graph: Graph, cim_class: type) -> None:
         """
         Retrieve all attributes for a given CIM class in the graph.
 
-        Associated objects are added to the graph as strings instead of new CIM objects.
+        Associations are set to the referenced objects' identifier text instead of new
+        CIM objects (create_reference), and are written as references.
 
         Args:
             graph (dict): Graph structure.
             cim_class (type): The CIM class for which to retrieve attributes.
         """
-        mrid_list = list(graph[cim_class].keys())
-
-        for index in range(math.ceil(len(mrid_list) / 100)):
-            eq_mrids = mrid_list[index * 100:(index + 1) * 100]
-            sparql_message = sparql.get_all_attributes_sparql(graph, cim_class, eq_mrids)
-            query_output = self.execute(sparql_message)
-            self.edge_query_parser(query_output, graph, cim_class, expand_graph=False)
+        self._expand_by_batches(graph, cim_class, sparql.get_all_attributes_sparql,
+                                expand_graph=False)
 
     # -------------------------------------------------------------------------
     # Upload methods

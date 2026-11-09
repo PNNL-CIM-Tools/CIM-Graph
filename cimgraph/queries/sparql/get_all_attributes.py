@@ -2,59 +2,14 @@ from __future__ import annotations
 
 from uuid import UUID
 
-from cimgraph.databases import get_iec61970_552, get_namespace, get_url
+from cimgraph.queries.sparql.get_all_edges import get_all_edges_sparql
 
 
-def get_all_attributes_sparql(graph:dict[type, dict[UUID, object]], cim_class: str, uuid_list: list[UUID]) -> str:
+def get_all_attributes_sparql(graph: dict[type, dict[UUID, object]], cim_class: type,
+                              uuid_list: list[UUID]) -> str:
     """
-    Generates SPARQL query string for a given catalog of objects and feeder id
-    Args:
-        feeder_mrid (str | Feeder object): The mRID of the feeder or feeder object
-        graph (dict[type, dict[str, object]]): The typed catalog of CIM objects organized by
-            class type and object mRID
-    Returns:
-        query_message: query string that can be used in blazegraph connection or STOMP client
+    Return the query for every attribute and association of the objects in uuid_list.
+    It is the get_all_edges query: get_all_attributes needs each referenced object's
+    class too, to write the association as the reference the object is read with.
     """
-    class_name = cim_class.__name__
-
-    if get_iec61970_552() == '552-NEW':
-        split = 'urn:uuid:'
-    else:
-        split = f'{get_url()}#'
-
-    query_message = """
-        PREFIX r:  <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
-        PREFIX cim:  <%s>""" % get_namespace()
-
-    query_message += """
-        SELECT DISTINCT ?identifier ?attribute ?value ?edge
-        WHERE {
-          """
-
-    query_message += """
-    VALUES ?identifier {"""
-    # add all equipment mRID
-    for uuid in uuid_list:
-        query_message += ' "%s" \n' % graph[cim_class][uuid].uri()
-    query_message += '               }'
-    query_message += f'''
-        bind(iri(concat("{split}", ?identifier)) as ?eq)'''
-
-    query_message += """
-
-        ?eq r:type cim:%s.
-
-        {?eq (cim:|!cim:) ?val.
-         ?eq ?attr ?val.}
-        UNION
-        {?val (cim:|!cim:) ?eq.
-         ?val ?attr ?eq.}
-
-        {bind(strafter(str(?attr),"#") as ?attribute)}
-        {bind(strafter(str(?val),"%s") as ?uri)}
-        {bind(if(?uri = "", ?val, ?uri) as ?value)}
-        }
-
-        ORDER by  ?identifier ?attribute
-        """ % (class_name, split)
-    return query_message
+    return get_all_edges_sparql(graph, cim_class, uuid_list)

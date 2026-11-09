@@ -2,6 +2,7 @@ from __future__ import annotations
 
 from uuid import UUID
 
+from cimgraph.core.validation import validate_identifier
 from cimgraph.databases import get_iec61970_552, get_namespace, get_url
 
 
@@ -20,6 +21,7 @@ def get_object_cypher(mRID: str) -> str:
     else:
         split = f'{get_url()}#'
 
+    mRID = validate_identifier(mRID)
     query_message = f'''
 MATCH(n)
 WHERE n.uri = "{split+mRID}"

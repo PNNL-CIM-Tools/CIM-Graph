@@ -2,20 +2,22 @@ from __future__ import annotations
 
 import json
 import logging
-from collections import defaultdict
+import math
 from dataclasses import dataclass, field, fields, is_dataclass
 from types import ModuleType
 from typing import Iterator, TypeVar, cast
 from uuid import UUID
 
-from cimgraph.data_profile.identity import Identity
-from cimgraph.databases import ConnectionInterface
+from cimprofiles.identity import Identity
+from cimprofiles.units import CIMUnit
+
+from cimgraph.core.env_vars import DEFAULT_FREQUENCY_HZ, get_system_mva_base
+from cimgraph.databases import ConnectionInterface, add_object_to_graph
 from cimgraph.models.incremental_builder import *
-from cimgraph.shacl import SHACLCatalogProcessor, SHACLExportFilter
 
 _log = logging.getLogger(__name__)
 
-jsonld = dict['@id':str(UUID),'@type':str(type)]
+jsonld = dict[str, str]  # {'@id': identifier, '@type': class name}
 Graph = dict[type, dict[UUID, object]]
 T = TypeVar('T')
 
@@ -26,8 +28,15 @@ class GraphModel():
     distributed: bool = field(default=False)
     graph: dict[type, dict[UUID, object]] = field(default_factory=dict)
     cim: ModuleType = field(default=None)
-    incrementals: defaultdict[str, dict[str, any]] = field(default_factory=defaultdict)
-    __class_iter__: defaultdict[type, iter] = field(default_factory=defaultdict)
+    # Every create, modify and delete since the model was loaded (see incremental_builder)
+    incrementals: dict[str, dict[type, dict]] = field(default_factory=new_differences)
+    # Internal state, not constructor arguments
+    _class_iter: dict[type, Iterator] = field(default_factory=dict, init=False, repr=False)
+    _mrid_index: dict[str, Identity] = field(default_factory=dict, init=False, repr=False)
+    _mrid_count: int = field(default=-1, init=False, repr=False)  # objects in graph when the index was built
+    # System bases for per-unit conversion, filled by set_default_bases once self.cim and the graph are known
+    base_power: CIMUnit = field(default=None)       # cim.ApparentPower
+    base_frequency: CIMUnit = field(default=None)   # cim.Frequency
     # __queried_objects__: defaultdict[UUID] = field(default_factory=defaultdict)
     """
     Underlying root class for all knowledge graph models, inlcuding
@@ -36,6 +45,9 @@ class GraphModel():
         container: a CIM container object inheriting from ConnectivityNodeContainer
         connection: a ConnectionInterface object, such as BlazegraphConnection
         distributed: a boolean to indicate if the graph is distributed
+    Optional Args:
+        base_power: system power base (cim.ApparentPower), default the graph's BasePower, else CIMG_SYSTEM_MVA_BASE or 100 MVA
+        base_frequency: system frequency (cim.Frequency), default the graph's BaseFrequency, else 60 Hz
     Returns:
         none
     Methods:
@@ -44,19 +56,56 @@ class GraphModel():
         graph[cim.ClassName]: access to graph dictionary sorted by class and mRID
         pprint(cim.ClassName): pretty-print method for showing graph of a class type
         get_edges_query(cim.ClassName): returns query text for debugging
+        find_by_mRID(mRID): the object in the graph with that mRID
+        list_identities(): identifier, mRID, name and class of every object
     """
+
+    def set_default_bases(self) -> None:
+        """Fill unset base_power/base_frequency once self.cim and self.graph
+        are known (call it after the graph is loaded). base_power is the
+        graph's BasePower.basePower (PSS/E SBASE, MATPOWER baseMVA), else
+        CIMG_SYSTEM_MVA_BASE or 100 MVA; base_frequency is the graph's
+        BaseFrequency.frequency (a 50 Hz model), else 60 Hz. A model has one
+        system base of each: several objects that disagree, or one that
+        disagrees with an explicit base, raise rather than leave values on the
+        wrong base. The CIMUnit classes are per profile, and a profile part may
+        lack one (cim18gmdm has no Frequency); that base then stays None."""
+        self.base_power = self._graph_base('BasePower', 'basePower', 'VA', self.base_power)
+        self.base_frequency = self._graph_base('BaseFrequency', 'frequency', 'Hz', self.base_frequency)
+        if self.base_power is None and hasattr(self.cim, 'ApparentPower'):
+            self.base_power = self.cim.ApparentPower(get_system_mva_base(), 'MVA')
+        if self.base_frequency is None and hasattr(self.cim, 'Frequency'):
+            self.base_frequency = self.cim.Frequency(DEFAULT_FREQUENCY_HZ, 'Hz')
+
+    def _graph_base(self, class_name: str, attribute: str, unit: str, explicit: CIMUnit | None) -> CIMUnit | None:
+        """The explicit base, else the first graph object's; every graph object must agree with it."""
+        base_class = getattr(self.cim, class_name, None)
+        objects = [] if base_class is None else [
+            obj for obj in self.graph.get(base_class, {}).values() if getattr(obj, attribute) is not None]
+        base = explicit if explicit is not None else (getattr(objects[0], attribute) if objects else None)
+        for obj in objects:
+            value = getattr(obj, attribute)
+            if not math.isclose(value.to(unit), base.to(unit)):
+                raise ValueError(
+                    f"{class_name} {obj.mRID!r} ({value.to(unit)} {unit}) disagrees with the "
+                    f"model's system base ({base.to(unit)} {unit}): a model has one system base"
+                )
+        return base
 
     # -------------------------------------------------------------------------
     # Methods to add objects to GraphModel.graph
     # -------------------------------------------------------------------------
 
     def add_to_graph(self, obj: object, graph: dict[type, dict[UUID, object]] = None) -> None:
-        if graph is None:
-            graph = self.graph
-        if type(obj) not in graph:
-            graph[type(obj)] = {}
-        if obj.identifier not in graph[type(obj)]:
-            graph[type(obj)][obj.identifier] = obj
+        if graph is None or graph is self.graph:
+            # Kept current here so building a model never rescans the graph
+            index = self.mrid_index()
+            _check_mrid_unique(index, obj)
+            add_object_to_graph(self.graph, obj)
+            _index_mrid(index, obj)
+            self._mrid_count = _object_count(self.graph)
+        else:
+            add_object_to_graph(graph, obj)
 
     def add_jsonld_to_graph(self, json_ld: jsonld, graph = None) -> object:
         if type(json_ld) == str:
@@ -148,39 +197,87 @@ class GraphModel():
         values = sorted(values, key=lambda x: x.uri())
         return values
 
-    def iter_by_class(self, cim_class) -> iter:
+    def iter_by_class(self, cim_class:type[T]) -> Iterator[T]:
         '''Iterate through all nodes of a specific type with proper typing.'''
         return iter(self.graph.get(cim_class, {}).values())
 
-    def first(self, cim_class:type):
-        '''Get first '''
-        values = self.list_by_class(cim_class)
-        if values:
-            self.__class_iter__[cim_class] = iter(values)
-            return next(self.__class_iter__[cim_class])
-        else:
-            return []
+    def first(self, cim_class:type[T]) -> T | None:
+        '''The first object of the class (in list_by_class order, so the same object every
+        time the same file is read: a quick sanity check), or None if there are none.
+        Restarts the iteration that next() continues.'''
+        self._class_iter[cim_class] = iter(self.list_by_class(cim_class))
+        return self.next(cim_class)
 
-    def next(self, cim_class:type[T]) -> object[T]:
-        '''Get next'''
-        if not self.__class_iter__[cim_class]:
+    def next(self, cim_class:type[T]) -> T | None:
+        '''
+        The object after the one last returned by first() or next(), or None after the
+        last one; the call after that starts over. Starts with first() if the class is
+        not being iterated. Objects deleted during the iteration are skipped, objects
+        added to the graph after first() are not returned. There is one iteration per
+        class for the whole model, so use list_by_class for nested or concurrent loops.
+        '''
+        if cim_class not in self._class_iter:
             return self.first(cim_class)
-        else:
-            return next(self.__class_iter__[cim_class])
+        objects = self.graph.get(cim_class, {})
+        for obj in self._class_iter[cim_class]:
+            if objects.get(obj.identifier) is obj:
+                return obj
+        del self._class_iter[cim_class]
+        return None
 
 
     # -------------------------------------------------------------------------
     # Methods to search GraphModel.graph
     # -------------------------------------------------------------------------
 
+    def mrid_index(self) -> dict[str, Identity]:
+        '''
+        mRID -> object for every object in the graph that has an mRID. CIM 18 makes
+        the mRID a freeform string unique within the model, so two different objects
+        with the same mRID raise ValueError.
+
+        add_to_graph keeps the index current. Objects that readers and queries put
+        in the graph directly are picked up by a rebuild whenever the number of
+        objects has changed, so an object's mRID must not be reassigned once it is
+        in the graph (the same rule as for its identifier).
+        '''
+        count = _object_count(self.graph)
+        if count != self._mrid_count:
+            index = {}
+            for objects in self.graph.values():
+                for obj in objects.values():
+                    _check_mrid_unique(index, obj)
+                    _index_mrid(index, obj)
+            self._mrid_index = index
+            self._mrid_count = count
+        return self._mrid_index
+
+    def find_by_mRID(self, mRID: str) -> Identity | None:
+        '''The object in the graph with this mRID, or None. Unlike get_object, this
+        never queries the database.'''
+        return self.mrid_index().get(mRID)
+
+    def list_identities(self) -> list[dict[str, str | None]]:
+        '''identifier, mRID, name and class of every object in the graph, e.g. to
+        search a model. The mRID is listed separately because it need not be a UUID.'''
+        return [
+            {'identifier': str(obj.identifier), 'mRID': getattr(obj, 'mRID', None),
+             'name': getattr(obj, 'name', None), 'class': cim_class.__name__}
+            for cim_class, objects in self.graph.items()
+            for obj in objects.values()
+        ]
+
     def find_by_attribute(self, cim_class:type[T], attribute:str, value:any) -> list[T]:
-        '''Searches the graph to find all object instances with matching value'''
+        '''Objects of the class whose attribute equals value (converted to the attribute's
+        datatype, so '12.5' finds 12.5), or, for a list attribute, contains it. A number
+        matches a unit attribute in its base SI unit. Use find_by_condition for partial
+        matches.'''
         matching = []
         valid, attr_datatype, value = validate_attr_datatype(cim_class, attribute, value)
         if not valid:
             _log.warning(f'{attribute} with {value} should have datatype {attr_datatype}')
         for cim_object in self.graph.get(cim_class, {}).values():
-            if str(value) in str(getattr(cim_object, attribute)):
+            if _attribute_matches(getattr(cim_object, attribute), value):
                 matching.append(cim_object)
         return matching
 
@@ -197,10 +294,12 @@ class GraphModel():
 
     def create(self, cim_class: type, incremental_file: str = None, **kwargs: any) -> Identity:
         """
-        Create an instance of a dataclass from keyword arguments.
+        Create an instance of a dataclass from keyword arguments, add it to the graph,
+        and record it in self.incrementals.
 
         Args:
             cim_class: The dataclass type to instantiate
+            incremental_file: Write every difference recorded so far to this file
             **kwargs: Attribute names and values for the dataclass instance
 
         Returns:
@@ -228,79 +327,65 @@ class GraphModel():
         # Create and return an instance of the dataclass
         new_object:Identity = cim_class(**kwargs)
 
-        # Add to graph
+        # Add to graph, then point the other end of each given association at it
         self.add_to_graph(new_object)
-
-        # Add to list of incremental messages
-        new_obj_incremental(new_object, self.incrementals)
-
-        if incremental_file is not None:
-            forward = {}
-            forward[cim_class] = {}
-            forward[cim_class][new_object.uri()] = self.incrementals['forwardDifferences'][cim_class][new_object.uri()]
-            write_incremental(reverse=None, forward=forward, filename=incremental_file)
-
+        record_created(self.incrementals, new_object)
+        for attribute, value in kwargs.items():
+            sync_inverse_references(new_object, attribute, None, value, self.incrementals)
+        self._write_incrementals(incremental_file)
         return new_object
 
-    def from_incremental(self, filename:str) -> list[object]:
+    def from_incremental(self, filename:str, incremental_file:str=None) -> list[object]:
         '''
-        Create new object from incremental message
+        Apply an RDF/XML difference file to the model: create, modify and delete its
+        objects with create, modify and delete, so the model and self.incrementals are as
+        if the changes had been made here. Nothing is changed if any difference does not
+        fit the model (ValueError); see incremental_builder.apply_incremental.
+        Returns the created and modified objects.
         '''
-        if '.xml' in filename.lower():
-            message = read_incremental_xml(filename)
-        valid_message = validate_incremental(message, self.connection, self.graph)
-        # TODO: Delete objects from incremental
-        # TODO: Add objects from incremental
-        modified = modify_from_incremental(valid_message, self.connection, self.graph)
-        return modified
+        if not filename.lower().endswith('.xml'):
+            raise ValueError(f'{filename}: only RDF/XML difference files (.xml) can be read')
+        changed = apply_incremental(self, read_incremental_xml(filename))
+        self._write_incrementals(incremental_file)
+        return changed
 
 
-    def delete(self, obj:Identity) -> None:
+    def delete(self, obj:Identity, incremental_file:str=None) -> None:
         """
         Delete an object from a typed property graph dictionary and remove all references to it.
 
         Args:
-            obj: The object to delete
-        """
+            obj: The object to delete, or None to do nothing
+            incremental_file: Write every difference recorded so far to this file
 
+        Raises:
+            TypeError: If obj is not a CIM object (e.g. a class such as cim.Terminal)
+            ValueError: If obj is not in the graph
+        """
         if obj is None:
             return
+        if not isinstance(obj, Identity):
+            raise TypeError(f'{obj!r} is not a CIM object')
+        objects = self.graph.get(obj.__class__, {})
+        if objects.get(obj.identifier) is not obj:
+            raise ValueError(f'{obj.__class__.__name__} {obj.identifier} '
+                             f'(name={getattr(obj, "name", None)!r}) is not in the graph')
 
-        cim_class = obj.__class__
+        # Remove every reference to the object from the other end of its associations
+        record_deleted(self.incrementals, obj)
+        for attr_field in fields(obj):
+            sync_inverse_references(obj, attr_field.name, getattr(obj, attr_field.name), None,
+                                    self.incrementals)
 
-        # Step 1: Find and clean up all references to this object
-        obj_id = obj.identifier
-        if obj_id is None:
-            obj_id = id(obj)  # Fallback to using object id if no mRID exists
-
-        # First, iterate over fields of the object to find inverse references
-        for field in fields(obj):
-            # Check if this field has metadata about inverse relationships
-            if field.metadata.get('type') == 'Association' and 'inverse' in field.metadata:
-                # Get the value of this field
-                value = getattr(obj, field.name)
-
-                if value is not None:
-                    try:
-                        inverse_ref = field.metadata['inverse']
-                        target_attr = inverse_ref.split('.')[1]
-
-                        # Handle different cardinality cases
-                        if isinstance(value, (list, set)):
-                            # Many-to-many or one-to-many
-                            for related_obj in value:
-                                clean_inverse_reference(related_obj, target_attr, obj)
-                        else:
-                            # One-to-one or many-to-one
-                            clean_inverse_reference(value, target_attr, obj)
-                    except:
-                        _log.warning(f'Error cleaning inverse reference for {field.name} in {cim_class.__name__}')
-
-
-        if obj_id in self.graph[cim_class]:
-            del self.graph[cim_class][obj_id]
+        del objects[obj.identifier]
+        self._write_incrementals(incremental_file)
 
     def modify(self, cim_object:Identity, attribute:str, value:any, incremental_file:str=None) -> None:
+        """
+        Set an attribute (validated and converted to its datatype), update the other end
+        of an association, and record the change in self.incrementals. incremental_file:
+        write every difference recorded so far to this file.
+        """
         if not isinstance(cim_object, Identity):
             raise TypeError(f"{cim_object} is not a CIM-Graph dataclass")
         # Verify that class_type is in CIM profile
@@ -309,36 +394,31 @@ class GraphModel():
             raise TypeError(f"{cim_class.__name__} not in CIM profile")
         if attribute not in cim_class.__dataclass_fields__:
             raise TypeError(f"{cim_class.__name__}.{attribute} not in CIM profile")
-        cim_class = cim_object.__class__
-        if not validate_attr_datatype(cim_class, attribute, value):
-            raise TypeError(f'{value} does not match datatype of {attribute}')
-
-        # Get old value for reverse difference
-        base_value = self.incrementals['reverseDifferences'].get(cim_class, {}).get(cim_object.uri(), {}).get(attribute, {})
-        if base_value != {}:
-            old_value = base_value
+        if value is None:
+            if not cim_class.__dataclass_fields__[attribute].type.startswith('Optional'):
+                raise TypeError(f'{cim_class.__name__}.{attribute} cannot be None')
         else:
-            old_value = getattr(cim_object, attribute)
+            valid, attr_datatype, value = validate_attr_datatype(cim_class, attribute, value)
+            if not valid:
+                raise TypeError(f'{value!r} does not match datatype {attr_datatype} of {attribute}')
 
-        # Set new value
+        # Set new value, and move the other end of an association
+        current_value = getattr(cim_object, attribute)
         setattr(cim_object, attribute, value)
-        # Create incremental
-        modify_incremental(cim_object, attribute, old_value, value, self.incrementals)
-        # Write single incremental to file if specificied
-        if incremental_file is not None:
-            forward = {}
-            reverse = {}
-            forward[cim_class] = {}
-            reverse[cim_class] = {}
-            forward[cim_class][cim_object.uri()] = self.incrementals['forwardDifferences'][cim_class][cim_object.uri()]
-            reverse[cim_class][cim_object.uri()] = self.incrementals['reverseDifferences'][cim_class][cim_object.uri()]
-            write_incremental(reverse=reverse, forward=forward, filename=incremental_file)
+        record_change(self.incrementals, cim_object, attribute, current_value, value)
+        sync_inverse_references(cim_object, attribute, current_value, value, self.incrementals)
+        self._write_incrementals(incremental_file)
 
+    def _write_incrementals(self, incremental_file: str | None) -> None:
+        if incremental_file is not None:
+            self.write_all_incrementals(incremental_file)
 
     def write_all_incrementals(self, incremental_file:str):
-            write_incremental(reverse=self.incrementals['reverseDifferences'],
-                            forward=self.incrementals['forwardDifferences'],
-                             filename=incremental_file)
+        """Write the differences of every create, modify and delete since the model was
+        loaded: each attribute's value then (reverse) and now (forward)."""
+        write_incremental(reverse=self.incrementals['reverseDifferences'],
+                          forward=self.incrementals['forwardDifferences'],
+                          filename=incremental_file)
 
 
 
@@ -379,25 +459,30 @@ class GraphModel():
         dump = json.dumps(dump, indent=4)
         return dump
 
-    # -------------------------------------------------------------------------
-    # Methods for SHACL validation and access control GraphModel.graph
-    # -------------------------------------------------------------------------
 
-    def export_with_shacl(self, shacl_file: str) -> 'GraphModel':
-        """Export a filtered graph based on SHACL permissions"""
-        export_filter = SHACLExportFilter(shacl_file, self.cim)
-        return export_filter.create_filtered_graph(self)
+def _attribute_matches(attribute_value: any, value: any) -> bool:
+    if isinstance(attribute_value, list):
+        return value in attribute_value
+    if isinstance(attribute_value, CIMUnit) and isinstance(value, (int, float)):
+        return float(attribute_value) == value
+    return attribute_value == value
 
-    def export_with_shacl_and_serialize(self, shacl_file: str, output_file: str,
-                           format: str = 'xml') -> None:
-        """Export and serialize filtered graph in one step"""
-        filtered_graph = self.export_with_shacl(shacl_file)
 
-        if format.lower() == 'xml':
-            from cimgraph.utils import write_xml
-            write_xml(filtered_graph, output_file)
-        elif format.lower() in ['jsonld', 'json-ld']:
-            from cimgraph.utils import write_json_ld
-            write_json_ld(filtered_graph, output_file)
-        else:
-            raise ValueError(f"Unsupported format: {format}")
+def _object_count(graph: Graph) -> int:
+    return sum(len(objects) for objects in graph.values())
+
+
+def _check_mrid_unique(index: dict[str, Identity], obj: object) -> None:
+    mRID = getattr(obj, 'mRID', None)
+    existing = index.get(mRID) if mRID is not None else None
+    if existing is not None and existing is not obj:
+        raise ValueError(
+            f'mRID {mRID!r} of {type(obj).__name__} {getattr(obj, "name", None)!r} is already '
+            f'used by {type(existing).__name__} {getattr(existing, "name", None)!r} '
+            f'(an mRID must be unique within the model)')
+
+
+def _index_mrid(index: dict[str, Identity], obj: object) -> None:
+    mRID = getattr(obj, 'mRID', None)
+    if mRID is not None:
+        index[mRID] = obj

@@ -3,7 +3,6 @@ import logging
 from collections import defaultdict
 from dataclasses import dataclass, field
 
-import cimgraph.data_profile.cimhub_2023 as cim
 from cimgraph.core import get_cim_profile
 from cimgraph.models.distributed_area import DistributedArea
 from cimgraph.models.graph_model import GraphModel
@@ -37,13 +36,10 @@ class FeederModel(GraphModel):
     distributed_areas: list[DistributedArea] | None = None
 
     def __post_init__(self):
-        self.incrementals['forwardDifferences'] = defaultdict(dict)
-        self.incrementals['reverseDifferences'] = defaultdict(dict)
         if self.connection is not None:
             self.cim = self.connection.cim
         else:
             _, self.cim = get_cim_profile()
-        self.__class_iter__ = defaultdict(dict)
         if not self.graph:
             self.graph = defaultdict(lambda: defaultdict(dict))
 
@@ -55,7 +51,8 @@ class FeederModel(GraphModel):
                 # Otherwise build centralized network model
                 self.__initialize_centralized_model()
         else:    # Log error thant no connection was specified
-            _log.error('A ConnectionInterface must be specified')
+            _log.debug('No ConnectionInterface: in-memory model, built with add_to_graph')
+        self.set_default_bases()    # after loading: the graph's BasePower sets base_power
 
 
 
