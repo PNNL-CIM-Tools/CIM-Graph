@@ -154,6 +154,7 @@ __Optional__ (defaults are in [example.env](https://github.com/PNNL-CIM-Tools/CI
 | `CIMG_MODEL_AUTHORITY` | `https://github.com/PNNL-CIM-Tools/CIM-Graph` | Model authority URI (e.g. a utility's). `uuid5(NAMESPACE_URL, authority)` is the namespace of every UUID seeded from names or non-UUID mRIDs, and the identifier of the ModelAuthority written in exported file headers |
 | `CIMG_MODEL_NAME` | `''` | Stable model identifier within the authority (e.g. a feeder) mixed into seeded UUIDs |
 | `CIMG_VALIDATION_LOG_LEVEL` | `WARNING` | Log level for schema-mismatch warnings during XML parse |
+| `CIMG_ALLOW_REMOTE_CONTEXT` | `false` | Allow fetching JSON-LD contexts and unit vocabularies that are not in the cimprofiles offline cache (HTTPS only). When false, a JSON-LD file that names an uncached document fails to load |
 | `CIMG_URL` | Blazegraph default | Full database URL |
 | `CIMG_HOST` | `localhost` | Database host |
 | `CIMG_PORT` | `61613` | Database port |

@@ -6,6 +6,9 @@ import re
 from collections import defaultdict
 from uuid import UUID
 
+from cimprofiles.jsonld import document_prefixes, load_vocabulary_units, profile_jsonld
+
+from cimgraph.core import get_allow_remote_context
 from cimgraph.core.attribute_utils import get_attr_datatype
 from cimgraph.databases import ConnectionInterface, Graph, QueryResponse, reference_key
 
@@ -15,12 +18,27 @@ _log = logging.getLogger(__name__)
 # cimgraph releases wrote '...#:Enum.member')
 _ENUM_VALUE = re.compile(r'(?:[A-Za-z][\w.-]*:|.*#:?)([A-Za-z_]\w*)\.(\w+)')
 
+DCAT_DATASET = 'http://www.w3.org/ns/dcat#Dataset'
+DCT_CONFORMS_TO = 'http://purl.org/dc/terms/conformsTo'
+HEADER_NAMESPACES = ('http://www.w3.org/ns/dcat#', 'http://purl.org/dc/terms/')
+
 
 class JSONLDFile(ConnectionInterface):
+    """
+    Read CIM JSON-LD files (CGMES draft style, e.g. Nordic44) into a graph.
+
+    - ``@context`` may be inline, a URL or a list. URLs resolve from the cimprofiles
+      offline cache; others are fetched only with CIMG_ALLOW_REMOTE_CONTEXT=true.
+    - Numbers are in the units of the vocabularies the file's ``dcat:Dataset`` header
+      names in ``dct:conformsTo`` (e.g. CGMES Equipment: kV, MW). A file without one is
+      read with the profile's default units vocabulary.
+    - References are ``"urn:uuid:..."`` strings or ``{"@id": ...}`` objects.
+    """
 
     def __init__(self, filename: str | list[str], namespaces: dict = None):
         super().__init__()
         self.filename = filename
+        self.allow_fetch = get_allow_remote_context()
 
         self.namespaces = {}
         if namespaces is not None:
@@ -35,31 +53,66 @@ class JSONLDFile(ConnectionInterface):
         # or malformed file raises: a partial model would look complete.
         filenames = [self.filename] if isinstance(self.filename, str) else list(self.filename)
         self.items = []
+        vocabularies = []
         for filename in filenames:
             with open(filename, 'r', encoding='utf-8') as f:
                 data = json.load(f)
             self.extract_namespaces(data)
-            self.items.extend(data.get('@graph', []))
+            items = data.get('@graph', [])
+            self.items.extend(items)
+            vocabularies.extend(self._conforms_to(items) or self._default_vocabularies())
+        # 'Class.attribute' -> pint unit its numbers are written in
+        self.units = self._vocabulary_units(dict.fromkeys(vocabularies))
         # @id text -> object read with it, so references find their objects
         self.object_index = {}
         self.graph = defaultdict(lambda: defaultdict(dict))
 
     def extract_namespaces(self, data: dict) -> None:
-        """
-        Extract namespace declarations from the JSON-LD @context.
+        """Add the prefix -> namespace entries of the file's @context (inline or remote)."""
+        context = {'@context': data.get('@context', {})}
+        self.namespaces.update(document_prefixes(context, self.allow_fetch))
+        _log.info(f'Extracted {len(self.namespaces)} namespaces from @context')
 
-        Updates self.namespaces with prefix -> URI mappings from the @context.
-        """
-        context = data.get('@context', {})
-        if isinstance(context, dict):
-            for prefix, uri in context.items():
-                if isinstance(uri, str) and not prefix.startswith('@'):
-                    self.namespaces[prefix] = uri
-                    _log.debug(f'Found namespace: {prefix} -> {uri}')
+    def _is_header(self, obj_type: str | list[str]) -> bool:
+        """True for the DCAT/Dublin Core metadata nodes of a dataset header (not CIM objects)."""
+        types = obj_type if isinstance(obj_type, list) else [obj_type]
+        return any(self._expand_curie(t).startswith(HEADER_NAMESPACES) for t in types)
 
-            _log.info(f'Extracted {len(self.namespaces)} namespaces from @context')
-        else:
-            _log.warning(f'@context is not a dictionary: {type(context)}')
+    def _conforms_to(self, items: list[dict]) -> list[str]:
+        """The dct:conformsTo IRIs of the dcat:Dataset header nodes."""
+        iris = []
+        for item in items:
+            types = item.get('@type', [])
+            if DCAT_DATASET not in [self._expand_curie(t) for t in (types if isinstance(types, list) else [types])]:
+                continue
+            for key, value in item.items():
+                if self._expand_curie(key) != DCT_CONFORMS_TO:
+                    continue
+                for target in value if isinstance(value, list) else [value]:
+                    iris.append(self._expand_curie(target['@id'] if isinstance(target, dict) else target))
+        return iris
+
+    def _default_vocabularies(self) -> list[str]:
+        """
+        The profile's default units vocabularies, for a file whose header names none.
+        A profile without published JSON-LD documents (a runtime merge) has none: its
+        numbers are read in each CIMUnit's base unit.
+        """
+        try:
+            documents = profile_jsonld(self.cim.__name__)
+        except KeyError:
+            return []
+        return documents['conventions'][documents['default']]
+
+    def _vocabulary_units(self, iris) -> dict[str, str]:
+        """{'Class.attribute': pint unit} of the vocabularies; files must agree on each unit."""
+        units = {}
+        for iri in iris:
+            for name, unit in load_vocabulary_units(iri, self.allow_fetch).items():
+                if units.setdefault(name, unit) != unit:
+                    raise ValueError(f'{name} is in {units[name]} in one file and {unit} in {iri}: '
+                                     f'files loaded together must use the same units')
+        return units
 
     def disconnect(self):
         del self.items
@@ -121,6 +174,8 @@ class JSONLDFile(ConnectionInterface):
         if not obj_id or not obj_type:
             _log.error(f'Missing @id or @type in item: {item}')
             return None
+        if self._is_header(obj_type):
+            return None
 
         # Extract class name from @type (e.g., "cim:ACLineSegment" -> "ACLineSegment")
         class_name = self._extract_class_name(obj_type)
@@ -143,7 +198,7 @@ class JSONLDFile(ConnectionInterface):
         obj_id = item.get('@id', '')
         obj_type = item.get('@type', '')
 
-        if not obj_id or not obj_type:
+        if not obj_id or not obj_type or self._is_header(obj_type):
             return
 
         class_name = self._extract_class_name(obj_type)
@@ -169,8 +224,9 @@ class JSONLDFile(ConnectionInterface):
 
         Args:
             attribute: The attribute name (e.g., "IdentifiedObject.name")
-            value: a reference ({"@id"}), a typed literal ({"@value", "@type"}), an
-                enumeration value ("cim:PhaseCode.ABC"), a literal, or a list of these
+            value: a reference ("urn:uuid:..." or {"@id"}), a typed literal
+                ({"@value", "@type"}), an enumeration value ("cim:PhaseCode.ABC"), a
+                literal, or a list of these
             cim_class: The CIM class type
             identifier: The object identifier
 
@@ -181,22 +237,30 @@ class JSONLDFile(ConnectionInterface):
         if association is None:
             return None
 
+        input_unit = self.units.get(attribute)
         if isinstance(value, list):
             for item in value:
                 self.parse_value(attribute, item, cim_class, identifier)
         elif isinstance(value, dict) and '@id' in value:
             self._parse_reference(value['@id'], attribute, association, cim_class, identifier)
+        elif isinstance(value, str) and self._is_association(cim_class, association):
+            self._parse_reference(value, attribute, association, cim_class, identifier)
         elif isinstance(value, dict) and '@value' in value:
             datatype_uri = self._expand_curie(value.get('@type'))
             self.create_value(self.graph, cim_class, identifier, attribute,
-                              str(value['@value']), datatype_uri)
+                              str(value['@value']), datatype_uri, input_unit)
         elif isinstance(value, str) and self._parse_enum(value, association, cim_class, identifier):
             pass
         else:
             # A literal: a string, or a bool/int/float JSON value
-            self.create_value(self.graph, cim_class, identifier, attribute, str(value))
+            self.create_value(self.graph, cim_class, identifier, attribute, str(value),
+                              input_unit=input_unit)
 
         return value
+
+    @staticmethod
+    def _is_association(cim_class: type, association: str) -> bool:
+        return cim_class.__dataclass_fields__[association].metadata['type'] == 'Association'
 
     def _parse_reference(self, edge_id: str, attribute: str, association: str,
                          cim_class: type, identifier: UUID) -> None:
@@ -246,16 +310,19 @@ class JSONLDFile(ConnectionInterface):
             return self.namespaces[prefix] + local
         return curie
 
-    def _extract_class_name(self, obj_type: str) -> str | None:
+    def _extract_class_name(self, obj_type: str | list[str]) -> str | None:
         """
         Extract class name from @type value.
 
         Args:
-            obj_type: The @type value (e.g., "cim:ACLineSegment")
+            obj_type: The @type value (e.g., "cim:ACLineSegment"), or a list of types
+                (header nodes: ["dcat:Dataset", ...]), of which the first is used
 
         Returns:
             Class name (e.g., "ACLineSegment") or None if extraction fails
         """
+        if isinstance(obj_type, list):
+            obj_type = obj_type[0] if obj_type else ''
         if ':' in obj_type:
             return obj_type.split(':')[-1]
         return obj_type if obj_type else None

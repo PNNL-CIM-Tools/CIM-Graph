@@ -1,0 +1,83 @@
+{
+  "@context": "https://raw.githack.com/Sveino/Inst4CIM-KG/develop/rdf-improved/cim-context-new.jsonld",
+  "@graph": [
+    {
+      "@id": "urn:uuid:7b1e0c2a-1d3f-4b6e-9a51-000000000001",
+      "@type": ["dcat:Dataset", "http://www.w3.org/2004/03/trix/rdfg-1/Graph"],
+      "dct:conformsTo": "http://iec.ch/TC57/ns/CIM/CoreEquipment-EU/3.0",
+      "dct:description": "Small CGMES-style Equipment test model in the Nordic44 JSON-LD layout",
+      "dct:identifier": "7b1e0c2a-1d3f-4b6e-9a51-000000000001",
+      "dcat:isVersionOf": "https://github.com/PNNL-CIM-Tools/CIM-Graph/tests"
+    },
+    {
+      "@id": "urn:uuid:7b1e0c2a-1d3f-4b6e-9a51-000000000010",
+      "@type": "cim:BaseVoltage",
+      "cim:BaseVoltage.nominalVoltage": "420",
+      "cim:IdentifiedObject.mRID": "7b1e0c2a-1d3f-4b6e-9a51-000000000010",
+      "cim:IdentifiedObject.name": "420kV"
+    },
+    {
+      "@id": "urn:uuid:7b1e0c2a-1d3f-4b6e-9a51-000000000020",
+      "@type": "cim:ACLineSegment",
+      "cim:ACLineSegment.bch": "0.0002834467",
+      "cim:ACLineSegment.r": "3.1752",
+      "cim:ACLineSegment.x": "35.28",
+      "cim:ConductingEquipment.BaseVoltage": "urn:uuid:7b1e0c2a-1d3f-4b6e-9a51-000000000010",
+      "cim:Conductor.length": "12.5",
+      "cim:Equipment.normallyInService": "true",
+      "cim:IdentifiedObject.mRID": "7b1e0c2a-1d3f-4b6e-9a51-000000000020",
+      "cim:IdentifiedObject.name": "420NORTH-SOUTH 1"
+    },
+    {
+      "@id": "urn:uuid:7b1e0c2a-1d3f-4b6e-9a51-000000000021",
+      "@type": "cim:Terminal",
+      "cim:ACDCTerminal.sequenceNumber": "1",
+      "cim:IdentifiedObject.mRID": "7b1e0c2a-1d3f-4b6e-9a51-000000000021",
+      "cim:IdentifiedObject.name": "T1",
+      "cim:Terminal.ConductingEquipment": "urn:uuid:7b1e0c2a-1d3f-4b6e-9a51-000000000020",
+      "cim:Terminal.ConnectivityNode": "urn:uuid:7b1e0c2a-1d3f-4b6e-9a51-000000000030"
+    },
+    {
+      "@id": "urn:uuid:7b1e0c2a-1d3f-4b6e-9a51-000000000022",
+      "@type": "cim:Terminal",
+      "cim:ACDCTerminal.sequenceNumber": "2",
+      "cim:IdentifiedObject.mRID": "7b1e0c2a-1d3f-4b6e-9a51-000000000022",
+      "cim:IdentifiedObject.name": "T2",
+      "cim:Terminal.ConductingEquipment": "urn:uuid:7b1e0c2a-1d3f-4b6e-9a51-000000000020"
+    },
+    {
+      "@id": "urn:uuid:7b1e0c2a-1d3f-4b6e-9a51-000000000030",
+      "@type": "cim:ConnectivityNode",
+      "cim:IdentifiedObject.mRID": "7b1e0c2a-1d3f-4b6e-9a51-000000000030",
+      "cim:IdentifiedObject.name": "NORTH"
+    },
+    {
+      "@id": "urn:uuid:7b1e0c2a-1d3f-4b6e-9a51-000000000040",
+      "@type": "cim:SynchronousMachine",
+      "cim:IdentifiedObject.mRID": "7b1e0c2a-1d3f-4b6e-9a51-000000000040",
+      "cim:IdentifiedObject.name": "NORTH G1",
+      "cim:RotatingMachine.GeneratingUnit": "urn:uuid:7b1e0c2a-1d3f-4b6e-9a51-000000000041",
+      "cim:RotatingMachine.ratedS": "680",
+      "cim:SynchronousMachine.maxQ": "500",
+      "cim:SynchronousMachine.minQ": "-500",
+      "cim:SynchronousMachine.type": "cim:SynchronousMachineKind.generator"
+    },
+    {
+      "@id": "urn:uuid:7b1e0c2a-1d3f-4b6e-9a51-000000000041",
+      "@type": "cim:GeneratingUnit",
+      "cim:GeneratingUnit.maxOperatingP": "1050",
+      "cim:GeneratingUnit.minOperatingP": "0",
+      "cim:IdentifiedObject.mRID": "7b1e0c2a-1d3f-4b6e-9a51-000000000041",
+      "cim:IdentifiedObject.name": "NORTH G1 UNIT"
+    },
+    {
+      "@id": "urn:uuid:7b1e0c2a-1d3f-4b6e-9a51-000000000050",
+      "@type": "cim:OperationalLimitType",
+      "cim:IdentifiedObject.mRID": "7b1e0c2a-1d3f-4b6e-9a51-000000000050",
+      "cim:IdentifiedObject.name": "TATL",
+      "cim:OperationalLimitType.direction": "cim:OperationalLimitDirectionKind.high",
+      "cim:OperationalLimitType.isInfiniteDuration": "true",
+      "eu:OperationalLimitType.kind": "eu:LimitKind.tatl"
+    }
+  ]
+}

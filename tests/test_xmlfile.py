@@ -151,10 +151,16 @@ class TestXMLFile(unittest.TestCase):
             self.assertIn('<cim:ModelAuthority rdf:about="urn:uuid:', xml_text)
 
             with open(json_path, encoding='utf-8') as f:
-                graph = json.load(f)['@graph']
-            types = [node['@type'] for node in graph]
-            self.assertIn('md:FullModel', types)
-            self.assertIn('cim:ModelAuthority', types)
+                document = json.load(f)
+            self.assertEqual(document['@context'],
+                             'https://pnnl-cim-tools.github.io/CIM-Profiles/cimhub_2023/context.jsonld')
+            dataset, authority = document['@graph'][:2]
+            self.assertEqual(dataset['@type'], 'dcat:Dataset')
+            self.assertEqual(dataset['dcat:isVersionOf'], 'pnnl')
+            self.assertEqual(dataset['dct:description'], 'ieee13')
+            self.assertEqual(dataset['dct:conformsTo'],
+                             ['https://pnnl-cim-tools.github.io/CIM-Profiles/cimhub_2023/units-si.jsonld'])
+            self.assertEqual(authority['@type'], 'cim:ModelAuthority')
 
     def _use_model_scope(self, authority, model_name):
         set_model_scope(authority, model_name)

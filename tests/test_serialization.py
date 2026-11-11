@@ -43,11 +43,21 @@ class TestSerialization(unittest.TestCase):
                       ' '.join(triples))
         self.assertTrue(upload_triples_sparql(self.end).startswith('INSERT DATA {'))
 
+    def test_json_ld_unit_numbers(self):
+        """Values kept in their own unit are exact; converted ones drop the float noise."""
+        line = cim.ACLineSegment(name='line3', r=cim.Resistance(0.0008259265887218642),
+                                 length=cim.Length(1609, 'm'))
+        node = object_to_json_ld(line, units={'Conductor.length': 'km'})
+        self.assertEqual(node['cim:ACLineSegment.r'], '0.0008259265887218642')
+        self.assertEqual(node['cim:Conductor.length'], '1.609')
+        self.assertEqual(object_to_json_ld(line)['cim:Conductor.length'], '1609')
+
     def test_json_ld_repeated_properties_become_lists(self):
         location = cim.Location(name='loc')
         location.Measurements = [cim.Analog(name='a1'), cim.Analog(name='a2')]
         node = object_to_json_ld(location)
-        expected = [{'@id': f'urn:uuid:{m.uri()}'} for m in location.Measurements]
+        # References are bare IRIs; the context types them {"@type": "@id"}
+        expected = [f'urn:uuid:{m.uri()}' for m in location.Measurements]
         self.assertEqual(node['cim:Location.Measurements'], expected)
 
     def test_literals_are_escaped(self):

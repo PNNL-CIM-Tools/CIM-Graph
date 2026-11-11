@@ -2,6 +2,34 @@
 
 ## 0.6.0 (unreleased)
 
+### JSON-LD in the CGMES draft style, with QUDT units (#225)
+
+Requires `cim-profiles>=0.2`, which ships the contexts and unit vocabularies
+(`cimprofiles.jsonld`) and an offline cache of them.
+
+- `write_json_ld` writes the profile's published `@context` URL (e.g.
+  `https://pnnl-cim-tools.github.io/CIM-Profiles/cimhub_2023/context.jsonld`; `cgmes_3_0_0` uses
+  the Inst4CIM CGMES context) instead of an inline prefix map. A runtime-merged profile gets an
+  inline context built from its classes.
+- **Breaking:** references are written as `"urn:uuid:..."` strings, not `{"@id": ...}` objects
+  (the context types them `@id`), and the header is a `dcat:Dataset` node instead of
+  `md:FullModel`. The model authority is written as `dcat:isVersionOf`.
+- Numbers are written in the units of a units convention, named in the header's
+  `dct:conformsTo`. `write_json_ld(..., convention='distribution')` writes kW/kVAr/kVA, line
+  constants per km (ohm/km, uS/km) and wire sizes in mm. The default is the profile's default convention (base SI; MW/kV/km for
+  `cgmes_3_0_0`). A number kept in its own unit is written exactly, as in CIM XML; a converted
+  one to 15 significant digits.
+- `JSONLDFile` reads Nordic44-style files: a URL `@context`, `"urn:uuid:..."` string references,
+  and numbers in the units of the vocabularies the header names in `dct:conformsTo`. A file
+  without a header is read with the profile's default convention. Files loaded together must agree
+  on units.
+- Contexts and vocabularies that are not in the cimprofiles cache are fetched only with
+  `CIMG_ALLOW_REMOTE_CONTEXT=true`; otherwise reading the file fails and names the URL.
+- The CIM XML writer no longer adds an invalid `rdf:datatype="…UnitSymbol.*"` to unit values
+  (#224). CIM XML values are plain base SI numbers.
+- The readers read plain numbers for unit-only types (e.g. cim18v17 `Optional[ApparentPower]`),
+  which were previously kept as strings.
+
 ### Profiles moved to `cimprofiles`
 
 The CIM profiles and the object model they are built on (`Identity`, `CIMUnit`, profile merging)
