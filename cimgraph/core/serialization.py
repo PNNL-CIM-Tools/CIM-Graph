@@ -130,8 +130,8 @@ def property_to_xml(prop: Property, namespaces: dict, rdf_resource: str) -> str:
     if prop.kind == 'enum':
         return f'  <{tag} rdf:resource="{prop.namespace}{prop.value}"/>\n'
     if prop.kind == 'unit':
-        datatype = f'{prop.namespace}UnitSymbol.{str(prop.value.quantity.units)}'
-        return f'  <{tag} rdf:datatype="{datatype}">{prop.value.value}</{tag}>\n'
+        # CIM XML values are plain numbers in base SI units, which CIMUnit stores
+        return f'  <{tag}>{prop.value.value}</{tag}>\n'
     return f'  <{tag}>{escape(_literal_text(prop.value))}</{tag}>\n'
 
 

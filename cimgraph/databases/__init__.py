@@ -251,7 +251,8 @@ class ConnectionInterface(ABC):
                 except:
                     _log.log(self.log_level, f'{value} for {cim_class.__name__}.{association} is not an integer')
                 setattr(graph[cim_class][identifier], association, value)
-            elif 'float' in attribute_type:
+            elif 'float' in attribute_type or self._get_unit_class_from_type(attribute_type) is not None:
+                # A unit-only type (e.g. Optional[ApparentPower]) holds a plain base SI number
                 try:
                     value = float(value)
                 except:

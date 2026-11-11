@@ -26,8 +26,10 @@ class TestSerialization(unittest.TestCase):
         self.assertNotIn('ConductingEquipment.Terminals', object_to_xml(self.line))
 
     def test_units_enums_and_booleans(self):
-        self.assertIn(f'<cim:Conductor.length rdf:datatype="{CIM_NS}UnitSymbol.meter">91.44</cim:Conductor.length>',
-                      object_to_xml(self.line))
+        self.assertIn('<cim:Conductor.length>91.44</cim:Conductor.length>', object_to_xml(self.line))
+        # Entered in km, written as plain base SI meters with no rdf:datatype
+        line_km = cim.ACLineSegment(name='line2', length=cim.Length(0.09144, 'km'))
+        self.assertIn('<cim:Conductor.length>91.44</cim:Conductor.length>', object_to_xml(line_km))
         self.assertIn('<cim:ACDCTerminal.connected>true</cim:ACDCTerminal.connected>',
                       object_to_xml(self.terminal))
         enum_resource = f'{CIM_NS}WindingConnection.D'
