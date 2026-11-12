@@ -6,11 +6,13 @@ import re
 from collections import defaultdict
 from uuid import UUID
 
+from cimprofiles.identity import model_authority_namespace
 from cimprofiles.jsonld import document_prefixes, load_vocabulary_units, profile_jsonld
 
-from cimgraph.core import get_allow_remote_context
+from cimgraph.core import get_allow_remote_context, set_model_scope
 from cimgraph.core.attribute_utils import get_attr_datatype
 from cimgraph.databases import ConnectionInterface, Graph, QueryResponse, reference_key
+from cimgraph.databases.fileparsers.metadata import HEADER_CLASSES, ModelHeader
 
 _log = logging.getLogger(__name__)
 
@@ -20,6 +22,9 @@ _ENUM_VALUE = re.compile(r'(?:[A-Za-z][\w.-]*:|.*#:?)([A-Za-z_]\w*)\.(\w+)')
 
 DCAT_DATASET = 'http://www.w3.org/ns/dcat#Dataset'
 DCT_CONFORMS_TO = 'http://purl.org/dc/terms/conformsTo'
+DCT_DESCRIPTION = 'http://purl.org/dc/terms/description'
+DCT_ISSUED = 'http://purl.org/dc/terms/issued'
+DCAT_IS_VERSION_OF = 'http://www.w3.org/ns/dcat#isVersionOf'
 HEADER_NAMESPACES = ('http://www.w3.org/ns/dcat#', 'http://purl.org/dc/terms/')
 
 
@@ -33,6 +38,9 @@ class JSONLDFile(ConnectionInterface):
       names in ``dct:conformsTo`` (e.g. CGMES Equipment: kV, MW). A file without one is
       read with the profile's default units vocabulary.
     - References are ``"urn:uuid:..."`` strings or ``{"@id": ...}`` objects.
+    - Each file's ``dcat:Dataset`` header is read into ``model_headers``; its authority
+      (``dcat:isVersionOf``) and description set the model scope, as ``md:FullModel``
+      does for XMLFile.
     """
 
     def __init__(self, filename: str | list[str], namespaces: dict = None):
@@ -53,6 +61,8 @@ class JSONLDFile(ConnectionInterface):
         # or malformed file raises: a partial model would look complete.
         filenames = [self.filename] if isinstance(self.filename, str) else list(self.filename)
         self.items = []
+        self.model_headers = []
+        self._file_items = []   # each file's items, read under its own header's model scope
         vocabularies = []
         for filename in filenames:
             with open(filename, 'r', encoding='utf-8') as f:
@@ -60,7 +70,10 @@ class JSONLDFile(ConnectionInterface):
             self.extract_namespaces(data)
             items = data.get('@graph', [])
             self.items.extend(items)
-            vocabularies.extend(self._conforms_to(items) or self._default_vocabularies())
+            self._file_items.append(items)
+            datasets = [item for item in items if DCAT_DATASET in self._types(item)]
+            self.model_headers.append(self._model_header(datasets))
+            vocabularies.extend(self._conforms_to(datasets) or self._default_vocabularies())
         # 'Class.attribute' -> pint unit its numbers are written in
         self.units = self._vocabulary_units(dict.fromkeys(vocabularies))
         # @id text -> object read with it, so references find their objects
@@ -73,24 +86,57 @@ class JSONLDFile(ConnectionInterface):
         self.namespaces.update(document_prefixes(context, self.allow_fetch))
         _log.info(f'Extracted {len(self.namespaces)} namespaces from @context')
 
-    def _is_header(self, obj_type: str | list[str]) -> bool:
-        """True for the DCAT/Dublin Core metadata nodes of a dataset header (not CIM objects)."""
-        types = obj_type if isinstance(obj_type, list) else [obj_type]
-        return any(self._expand_curie(t).startswith(HEADER_NAMESPACES) for t in types)
+    def _types(self, item: dict) -> list[str]:
+        """The full IRIs of an item's @type (one type or a list)."""
+        types = item.get('@type', [])
+        return [self._expand_curie(t) for t in (types if isinstance(types, list) else [types])]
 
-    def _conforms_to(self, items: list[dict]) -> list[str]:
-        """The dct:conformsTo IRIs of the dcat:Dataset header nodes."""
-        iris = []
-        for item in items:
-            types = item.get('@type', [])
-            if DCAT_DATASET not in [self._expand_curie(t) for t in (types if isinstance(types, list) else [types])]:
+    def _is_header(self, obj_type: str | list[str]) -> bool:
+        """
+        True for the DCAT/Dublin Core metadata nodes of a dataset header, and for the
+        md:FullModel and cim:ModelAuthority header nodes older cimgraph releases wrote
+        (not CIM objects).
+        """
+        types = obj_type if isinstance(obj_type, list) else [obj_type]
+        return (any(self._expand_curie(t).startswith(HEADER_NAMESPACES) for t in types)
+                or self._extract_class_name(obj_type) in HEADER_CLASSES)
+
+    def _header_values(self, node: dict, iri: str) -> list[str]:
+        """The values of one header property: strings, or the text of {"@id"} / {"@value"} objects."""
+        values = []
+        for key, value in node.items():
+            if self._expand_curie(key) != iri:
                 continue
-            for key, value in item.items():
-                if self._expand_curie(key) != DCT_CONFORMS_TO:
-                    continue
-                for target in value if isinstance(value, list) else [value]:
-                    iris.append(self._expand_curie(target['@id'] if isinstance(target, dict) else target))
-        return iris
+            for target in value if isinstance(value, list) else [value]:
+                if isinstance(target, dict):
+                    target = target['@id'] if '@id' in target else target['@value']
+                values.append(target)
+        return values
+
+    def _conforms_to(self, datasets: list[dict]) -> list[str]:
+        """The dct:conformsTo IRIs of the dcat:Dataset header nodes."""
+        return [self._expand_curie(iri) for dataset in datasets
+                for iri in self._header_values(dataset, DCT_CONFORMS_TO)]
+
+    def _model_header(self, datasets: list[dict]) -> ModelHeader:
+        """
+        A file's dcat:Dataset header as the ModelHeader the XML reader reads from
+        md:FullModel: dct:issued (Model.created), dct:description (Model.description) and
+        dcat:isVersionOf, the model authority (Model.modelingAuthoritySet).
+        """
+        header = ModelHeader()
+        if not datasets:
+            return header
+        dataset = datasets[0]
+        header.full_model_uuid = dataset['@id'].removeprefix('urn:uuid:')
+        for attribute, iri in (('created', DCT_ISSUED), ('description', DCT_DESCRIPTION),
+                               ('authority', DCAT_IS_VERSION_OF)):
+            values = self._header_values(dataset, iri)
+            if values:
+                setattr(header, attribute, values[0])
+        if header.authority is not None:
+            header.authority_uuid = str(model_authority_namespace(header.authority))
+        return header
 
     def _default_vocabularies(self) -> list[str]:
         """
@@ -147,9 +193,14 @@ class JSONLDFile(ConnectionInterface):
         if graph is not None:
             self.graph = graph
 
-        # First pass: create all nodes/objects, so references can find any of them
-        for item in self.items:
-            self.parse_node(item)
+        # First pass: create all nodes/objects, so references can find any of them. Each
+        # file's header sets the model scope first (as in XMLFile), so UUIDs seeded from
+        # its non-UUID identifiers use the authority that issued them.
+        for header, items in zip(self.model_headers, self._file_items):
+            if header.authority is not None:
+                set_model_scope(header.authority, header.description or '')
+            for item in items:
+                self.parse_node(item)
 
         # Second pass: create all edges/relationships
         for item in self.items:

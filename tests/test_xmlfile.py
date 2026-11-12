@@ -7,9 +7,11 @@ from uuid import NAMESPACE_URL, UUID, uuid4, uuid5
 import cimprofiles.cim17.cimhub_2023 as cim
 
 from cimgraph.core import get_model_authority, get_model_name, set_model_scope
-from cimgraph.databases import XMLFile
+from cimgraph.databases import JSONLDFile, XMLFile
 from cimgraph.models import FeederModel
 from cimgraph.utils import write_json_ld, write_xml
+
+PNNL = 'https://www.pnnl.gov'
 
 
 class TestXMLFile(unittest.TestCase):
@@ -127,12 +129,7 @@ class TestXMLFile(unittest.TestCase):
             os.unlink(tmp_path)
 
     def test_writers_include_model_header(self):
-        os.environ['CIMG_MODEL_AUTHORITY'] = 'pnnl'
-        os.environ['CIMG_MODEL_NAME'] = 'ieee13'
-        get_model_authority.cache_clear()
-        get_model_name.cache_clear()
-        self.addCleanup(get_model_name.cache_clear)
-        self.addCleanup(get_model_authority.cache_clear)
+        self._use_model_scope(PNNL, 'ieee13')
         database = XMLFile(filename='tests/test_models/ieee13.xml')
         feeder = cim.Feeder(mRID=self.feeder_mrid)
         network = FeederModel(connection=database, container=feeder, distributed=False)
@@ -146,7 +143,7 @@ class TestXMLFile(unittest.TestCase):
             with open(xml_path, encoding='utf-8') as f:
                 xml_text = f.read()
             self.assertIn('<md:FullModel rdf:about="urn:uuid:', xml_text)
-            self.assertIn('<md:Model.modelingAuthoritySet>pnnl</md:Model.modelingAuthoritySet>', xml_text)
+            self.assertIn(f'<md:Model.modelingAuthoritySet>{PNNL}</md:Model.modelingAuthoritySet>', xml_text)
             self.assertIn('<md:Model.description>ieee13</md:Model.description>', xml_text)
             self.assertIn('<cim:ModelAuthority rdf:about="urn:uuid:', xml_text)
 
@@ -154,13 +151,43 @@ class TestXMLFile(unittest.TestCase):
                 document = json.load(f)
             self.assertEqual(document['@context'],
                              'https://pnnl-cim-tools.github.io/CIM-Profiles/cimhub_2023/context.jsonld')
-            dataset, authority = document['@graph'][:2]
+            dataset, first_object = document['@graph'][:2]
             self.assertEqual(dataset['@type'], 'dcat:Dataset')
-            self.assertEqual(dataset['dcat:isVersionOf'], 'pnnl')
+            self.assertEqual(dataset['dcat:isVersionOf'], PNNL)   # the context types it @id
             self.assertEqual(dataset['dct:description'], 'ieee13')
+            self.assertRegex(dataset['dct:issued'], r'^\d{4}-\d\d-\d\dT\d\d:\d\d:\d\dZ$')
             self.assertEqual(dataset['dct:conformsTo'],
                              ['https://pnnl-cim-tools.github.io/CIM-Profiles/cimhub_2023/units-si.jsonld'])
-            self.assertEqual(authority['@type'], 'cim:ModelAuthority')
+            # The authority is dcat:isVersionOf: no cim:ModelAuthority node, which no profile defines
+            self.assertNotIn('cim:ModelAuthority', [node['@type'] for node in document['@graph']])
+
+    def test_json_ld_writer_needs_an_authority_iri(self):
+        self._use_model_scope('pnnl', 'ieee13')
+        network = FeederModel(connection=XMLFile(filename='tests/test_models/ieee13.xml'),
+                              container=cim.Feeder(mRID=self.feeder_mrid), distributed=False)
+        with tempfile.TemporaryDirectory() as tmp_dir:
+            with self.assertRaisesRegex(ValueError, "'pnnl' is not an absolute IRI"):
+                write_json_ld(network, os.path.join(tmp_dir, 'out.jsonld'))
+
+    def test_json_ld_reader_restores_model_header(self):
+        self._use_model_scope(PNNL, 'ieee13')
+        network = FeederModel(connection=XMLFile(filename='tests/test_models/ieee13.xml'),
+                              container=cim.Feeder(mRID=self.feeder_mrid), distributed=False)
+
+        with tempfile.TemporaryDirectory() as tmp_dir:
+            json_path = os.path.join(tmp_dir, 'out.jsonld')
+            write_json_ld(network, json_path)
+
+            self._use_model_scope('https://someone.else', '')
+            reread = JSONLDFile(filename=json_path)
+            reread.create_new_graph(container=None)
+
+        header = reread.model_headers[0]
+        self.assertEqual(header.authority, PNNL)
+        self.assertEqual(header.description, 'ieee13')
+        self.assertEqual(header.authority_uuid, str(uuid5(NAMESPACE_URL, PNNL)))
+        self.assertIsNotNone(header.full_model_uuid)
+        self.assertEqual((get_model_authority(), get_model_name()), (PNNL, 'ieee13'))
 
     def _use_model_scope(self, authority, model_name):
         set_model_scope(authority, model_name)

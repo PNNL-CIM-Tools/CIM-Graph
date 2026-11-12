@@ -13,7 +13,9 @@ Requires `cim-profiles>=0.2`, which ships the contexts and unit vocabularies
   inline context built from its classes.
 - **Breaking:** references are written as `"urn:uuid:..."` strings, not `{"@id": ...}` objects
   (the context types them `@id`), and the header is a `dcat:Dataset` node instead of
-  `md:FullModel`. The model authority is written as `dcat:isVersionOf`.
+  `md:FullModel` and `cim:ModelAuthority` (which no profile defines). The model authority is
+  written as `dcat:isVersionOf`, an IRI, so `write_json_ld` fails when `CIMG_MODEL_AUTHORITY` is
+  not an absolute IRI (CIM XML still accepts any text).
 - Numbers are written in the units of a units convention, named in the header's
   `dct:conformsTo`. `write_json_ld(..., convention='distribution')` writes kW/kVAr/kVA, line
   constants per km (ohm/km, uS/km) and wire sizes in mm. The default is the profile's default convention (base SI; MW/kV/km for
@@ -22,7 +24,11 @@ Requires `cim-profiles>=0.2`, which ships the contexts and unit vocabularies
 - `JSONLDFile` reads Nordic44-style files: a URL `@context`, `"urn:uuid:..."` string references,
   and numbers in the units of the vocabularies the header names in `dct:conformsTo`. A file
   without a header is read with the profile's default convention. Files loaded together must agree
-  on units.
+  on units. Each file's `dcat:Dataset` header is read into `JSONLDFile.model_headers`, and its
+  authority and description set the model scope, as `md:FullModel` does for `XMLFile`.
+- The cimprofiles contexts type the header as the Inst4CIM CGMES context does
+  (`dct:conformsTo`, `dcat:isVersionOf` as IRIs; `dct:issued` as `xsd:dateTime`), matching
+  what DCAT tools such as statnett's KGraphPy expect.
 - Contexts and vocabularies that are not in the cimprofiles cache are fetched only with
   `CIMG_ALLOW_REMOTE_CONTEXT=true`; otherwise reading the file fails and names the URL.
 - The CIM XML writer no longer adds an invalid `rdf:datatype="…UnitSymbol.*"` to unit values

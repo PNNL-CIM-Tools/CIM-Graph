@@ -350,7 +350,7 @@ def test_jsonld_remote_context_fetched_when_allowed(tmp_path, monkeypatch):
     monkeypatch.setattr(urllib.request, 'urlopen', lambda request, timeout: io.BytesIO(body))
     load_document.cache_clear()
     try:
-        assert JSONLDFile(_jsonld_with_remote_context(tmp_path)).namespaces['ex'] == 'https://example.com/ns#'
+        assert JSONLDFile(_jsonld_with_remote_context(tmp_path)).namespaces['ex'] == 'https://gridappsd.org/ns#'
     finally:
         load_document.cache_clear()
         get_cim_profile.cache_clear()

@@ -8,7 +8,7 @@ import urllib.request
 import pytest
 from cimprofiles.units import CIMUnit
 
-from cimgraph.core import get_cim_profile
+from cimgraph.core import get_cim_profile, get_model_authority
 from cimgraph.core.attribute_utils import diff_attributes
 from cimgraph.databases import JSONLDFile, XMLFile
 from cimgraph.models import FeederModel, NodeBreakerModel
@@ -93,6 +93,11 @@ def test_cgmes_style_file_reads_in_vocabulary_units(profile):
     limit_type = _only(network, cim.OperationalLimitType)
     assert limit_type.direction is cim.OperationalLimitDirectionKind.high
     assert limit_type.kind is cim.LimitKind.tatl
+
+    (header,) = network.connection.model_headers
+    assert header.authority == 'https://github.com/PNNL-CIM-Tools/CIM-Graph/tests'
+    assert header.full_model_uuid == '7b1e0c2a-1d3f-4b6e-9a51-000000000001'
+    assert get_model_authority() == header.authority     # the file's scope, as for CIM XML
 
 
 def test_cgmes_round_trip_keeps_cgmes_units(profile, tmp_path):
@@ -202,6 +207,25 @@ def test_written_context_types_values_for_json_ld_processors(profile, tmp_path):
     length = graph.value(line, cim['Conductor.length'])
     assert length.datatype == rdflib.XSD.float and length.toPython() == 12.5
     assert isinstance(graph.value(line, cim['ConductingEquipment.BaseVoltage']), rdflib.URIRef)
+
+
+def test_our_context_types_the_dataset_header(profile, tmp_path):
+    """Our generated contexts type the header as the CGMES one does: references are IRIs."""
+    rdflib = pytest.importorskip('rdflib')
+    from cimprofiles.jsonld import load_document
+    cim = profile('cimhub_2023')
+    network = FeederModel(connection=XMLFile(filename=IEEE13), container=cim.Feeder(mRID=FEEDER_MRID),
+                          distributed=False)
+    path = tmp_path / 'ieee13.jsonld'
+    write_json_ld(network, str(path))
+
+    document = json.loads(path.read_text())
+    document['@context'] = load_document(document['@context'])['@context']  # offline copy
+    graph = rdflib.Graph().parse(data=json.dumps(document), format='json-ld')
+    (dataset,) = graph.subjects(rdflib.RDF.type, rdflib.namespace.DCAT.Dataset)
+    assert isinstance(graph.value(dataset, rdflib.namespace.DCTERMS.conformsTo), rdflib.URIRef)
+    assert isinstance(graph.value(dataset, rdflib.URIRef('http://www.w3.org/ns/dcat#isVersionOf')), rdflib.URIRef)
+    assert graph.value(dataset, rdflib.namespace.DCTERMS.issued).datatype == rdflib.XSD.dateTime
 
 
 def test_nordic44_equipment(profile, tmp_path):

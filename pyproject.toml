@@ -25,7 +25,7 @@ classifiers = [
 
 dependencies = [
     # CIM profiles, Identity and units; versioned separately (pins loosen at 1.0)
-    "cim-profiles>=0.1.0a1,<0.2",
+    "cim-profiles>=0.2.0a1,<0.3",
     "defusedxml>=0.7.1",
 ]
 

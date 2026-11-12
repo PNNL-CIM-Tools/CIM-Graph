@@ -3,6 +3,7 @@ from __future__ import annotations
 import json
 import logging
 from typing import TYPE_CHECKING
+from urllib.parse import urlsplit
 
 from cimprofiles.jsonld import document_prefixes, load_document, load_vocabulary_units, profile_jsonld
 from cimprofiles.jsonld.build import build_context
@@ -16,27 +17,29 @@ if TYPE_CHECKING:
 _log = logging.getLogger(__name__)
 
 
-def _header_json_ld(vocabularies: list[str]) -> list[dict]:
-    """The dcat:Dataset header node (CGMES 3 / IEC 61970-552 ed3 style) and the
-    cim:ModelAuthority node. dct:conformsTo names the units vocabularies of the numbers."""
+def _header_json_ld(vocabularies: list[str]) -> dict:
+    """
+    The dcat:Dataset header node (CGMES 3 / IEC 61970-552 ed3 style). The context types
+    dct:issued as a date and dcat:isVersionOf (the model authority) and dct:conformsTo (the
+    units vocabularies of the numbers) as IRIs, so the authority must be an absolute IRI.
+    """
     header = model_header()
+    if not urlsplit(header['authority']).scheme:
+        raise ValueError(f'Model authority {header["authority"]!r} is not an absolute IRI, which '
+                         f'dcat:isVersionOf needs; set CIMG_MODEL_AUTHORITY to a URI such as '
+                         f'https://example.com')
     dataset = {
         '@id': 'urn:uuid:' + header['full_model_uuid'],
         '@type': 'dcat:Dataset',
         'dct:identifier': header['full_model_uuid'],
-        'dct:issued': {'@value': header['created'], '@type': 'xsd:dateTime'},
+        'dct:issued': header['created'],
         'dcat:isVersionOf': header['authority'],
     }
     if header['model_name']:
         dataset['dct:description'] = header['model_name']
     if vocabularies:
         dataset['dct:conformsTo'] = vocabularies
-    model_authority = {
-        '@id': 'urn:uuid:' + header['authority_uuid'],
-        '@type': 'cim:ModelAuthority',
-        'cim:IdentifiedObject.name': header['authority'],
-    }
-    return [dataset, model_authority]
+    return dataset
 
 
 def _context_and_units(profile, convention: str | None) -> tuple[str | dict, list[str], dict[str, str]]:
@@ -91,7 +94,7 @@ def write_json_ld(network: GraphModel, filename: str, indent: int = 4,
     if isinstance(context, str):
         _check_prefixes(context, namespaces)
 
-    nodes = _header_json_ld(vocabularies)
+    nodes = [_header_json_ld(vocabularies)]
     for cim_class in sorted(network.graph, key=lambda cls: cls.__name__):
         for obj in sorted(network.graph[cim_class].values(), key=lambda obj: obj.uri()):
             nodes.append(object_to_json_ld(obj, namespaces, units))
