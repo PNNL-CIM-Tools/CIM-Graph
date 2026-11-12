@@ -5,9 +5,10 @@ import logging
 from typing import TYPE_CHECKING
 from urllib.parse import urlsplit
 
-from cimprofiles.jsonld import document_prefixes, load_document, load_vocabulary_units, profile_jsonld
+from cimprofiles.jsonld import document_prefixes, load_vocabulary_units, profile_jsonld
 from cimprofiles.jsonld.build import build_context
 
+from cimgraph.core import get_allow_remote_context
 from cimgraph.core.serialization import object_to_json_ld, profile_namespaces
 from cimgraph.utils.model_header import model_header
 
@@ -17,29 +18,59 @@ if TYPE_CHECKING:
 _log = logging.getLogger(__name__)
 
 
-def _header_json_ld(vocabularies: list[str]) -> dict:
+def _dataset_header(vocabularies: list[str], header: dict | None) -> dict:
     """
-    The dcat:Dataset header node (CGMES 3 / IEC 61970-552 ed3 style). The context types
-    dct:issued as a date and dcat:isVersionOf (the model authority) and dct:conformsTo (the
-    units vocabularies of the numbers) as IRIs, so the authority must be an absolute IRI.
+    The dcat:Dataset header (IEC 61970-552 ed3 / ENTSO-E metadata specification style).
+
+    - dct:issued, dct:identifier and @id: the export time and a new UUID, unless `header`
+      sets them (set @id "urn:uuid:<id>" and dct:identifier "<id>" together).
+    - md:Model.modelingAuthoritySet: CIMG_MODEL_AUTHORITY, the namespace of the UUIDs seeded
+      from names and non-UUID mRIDs, which the reader restores.
+    - dct:title: CIMG_MODEL_NAME, if set.
+    - dcat:distribution: this file, conforming to the units vocabularies of its numbers.
+    - `header`: further properties (e.g. dcat:isVersionOf, the model series IRI; dct:license;
+      extension terms and blank nodes), which replace the ones above. The units distribution
+      is the writer's: a dcat:distribution in `header` raises.
     """
-    header = model_header()
-    if not urlsplit(header['authority']).scheme:
-        raise ValueError(f'Model authority {header["authority"]!r} is not an absolute IRI, which '
-                         f'dcat:isVersionOf needs; set CIMG_MODEL_AUTHORITY to a URI such as '
-                         f'https://example.com')
+    header = header or {}
+    if 'dcat:distribution' in header:
+        raise ValueError('header must not set dcat:distribution: the writer writes the distribution '
+                         'naming the units vocabularies of the numbers; list other distributions '
+                         'in a separate catalog')
+    is_version_of = header.get('dcat:isVersionOf')
+    if is_version_of is not None and not urlsplit(is_version_of).scheme:
+        raise ValueError(f'dcat:isVersionOf {is_version_of!r} is not an absolute IRI')
+    values = model_header()
     dataset = {
-        '@id': 'urn:uuid:' + header['full_model_uuid'],
+        '@id': 'urn:uuid:' + values['full_model_uuid'],
         '@type': 'dcat:Dataset',
-        'dct:identifier': header['full_model_uuid'],
-        'dct:issued': header['created'],
-        'dcat:isVersionOf': header['authority'],
+        'dct:identifier': values['full_model_uuid'],
+        'dct:issued': values['created'],
+        'md:Model.modelingAuthoritySet': values['authority'],
     }
-    if header['model_name']:
-        dataset['dct:description'] = header['model_name']
+    if values['model_name']:
+        dataset['dct:title'] = values['model_name']
     if vocabularies:
-        dataset['dct:conformsTo'] = vocabularies
+        dataset['dcat:distribution'] = {'@type': 'dcat:Distribution', 'dct:conformsTo': vocabularies}
+    dataset.update(header)
     return dataset
+
+
+def _compact_prefixes(value) -> set[str]:
+    """The prefixes of the compact IRIs used as keys and @type values in a JSON-LD value."""
+    prefixes = set()
+    if isinstance(value, list):
+        for item in value:
+            prefixes |= _compact_prefixes(item)
+    elif isinstance(value, dict):
+        for key, item in value.items():
+            names = [key]
+            if key == '@type':
+                names += item if isinstance(item, list) else [item]
+            prefixes |= {name.partition(':')[0] for name in names
+                         if ':' in name and not name.startswith('@') and '//' not in name}
+            prefixes |= _compact_prefixes(item)
+    return prefixes
 
 
 def _context_and_units(profile, convention: str | None) -> tuple[str | dict, list[str], dict[str, str]]:
@@ -66,21 +97,31 @@ def _context_and_units(profile, convention: str | None) -> tuple[str | dict, lis
     return documents['context'], vocabularies, units
 
 
-def _check_prefixes(context: str, namespaces: dict[str, str]) -> None:
-    """Every prefix the nodes use must mean the same namespace in the published context."""
-    context_namespaces = document_prefixes(load_document(context))
+def _check_prefixes(context: list, namespaces: dict[str, str], header: dict) -> None:
+    """
+    The prefixes the objects use must mean the same namespace in the contexts, and every
+    prefix of the header must be defined by one of them (an undefined one would be read as
+    an IRI scheme).
+    """
+    context_namespaces = document_prefixes({'@context': context}, get_allow_remote_context())
     for prefix, namespace in namespaces.items():
         if prefix != 'rdf' and context_namespaces.get(prefix) != namespace:
-            raise ValueError(f'Prefix {prefix}: ({namespace}) is not defined that way by {context}')
+            raise ValueError(f'Prefix {prefix}: ({namespace}) is not defined that way by the context {context}')
+    undefined = _compact_prefixes(header) - set(context_namespaces)
+    if undefined:
+        raise ValueError(f'Header prefixes {sorted(undefined)} are not defined by the context {context}')
 
 
 def write_json_ld(network: GraphModel, filename: str, indent: int = 4,
-                  convention: str | None = None) -> None:
+                  convention: str | None = None, header: dict | None = None,
+                  contexts: list[str | dict] | None = None) -> None:
     """
-    Write the network graph to a JSON-LD file in the CGMES draft style: the profile's
-    published @context URL, a flat @graph, references as "urn:uuid:..." strings, and
-    numbers as strings in the units of a units convention (see cimprofiles.jsonld), which
-    the dcat:Dataset header names in dct:conformsTo.
+    Write the network graph to a JSON-LD file in the ENTSO-E metadata layout: the
+    top-level map is the dcat:Dataset header (see _dataset_header) and its @graph, a named
+    graph, holds the objects. As in the CGMES draft style, @context is the profile's
+    published context URL, references are "urn:uuid:..." strings, and numbers are strings
+    in the units of a units convention (see cimprofiles.jsonld), which the header's
+    dcat:distribution names in dct:conformsTo.
 
     Args:
         network (GraphModel): The network graph to be written.
@@ -88,17 +129,22 @@ def write_json_ld(network: GraphModel, filename: str, indent: int = 4,
         indent: JSON indentation.
         convention: Units convention name (e.g. 'si', 'distribution', 'cgmes'); default:
             the profile's default convention.
+        header: Properties added to (or replacing) those of the dcat:Dataset header.
+        contexts: Further contexts (URLs or inline maps) defining the header's other
+            prefixes, written after the profile's context.
     """
     namespaces = profile_namespaces(network.graph)
-    context, vocabularies, units = _context_and_units(network.cim, convention)
-    if isinstance(context, str):
-        _check_prefixes(context, namespaces)
+    profile_context, vocabularies, units = _context_and_units(network.cim, convention)
+    context = [profile_context, *(contexts or [])]
+    dataset = _dataset_header(vocabularies, header)
+    _check_prefixes(context, namespaces, dataset)
 
-    nodes = [_header_json_ld(vocabularies)]
+    nodes = []
     for cim_class in sorted(network.graph, key=lambda cls: cls.__name__):
         for obj in sorted(network.graph[cim_class].values(), key=lambda obj: obj.uri()):
             nodes.append(object_to_json_ld(obj, namespaces, units))
         _log.info(f'wrote {len(network.graph[cim_class])} {cim_class.__name__} objects')
 
+    document = {'@context': context[0] if len(context) == 1 else context, **dataset, '@graph': nodes}
     with open(filename, 'w', encoding='utf-8') as f:
-        json.dump({'@context': context, '@graph': nodes}, f, indent=indent)
+        json.dump(document, f, indent=indent)

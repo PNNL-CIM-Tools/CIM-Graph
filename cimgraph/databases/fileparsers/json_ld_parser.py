@@ -8,6 +8,7 @@ from uuid import UUID
 
 from cimprofiles.identity import model_authority_namespace
 from cimprofiles.jsonld import document_prefixes, load_vocabulary_units, profile_jsonld
+from cimprofiles.jsonld.documents import cache_index
 
 from cimgraph.core import get_allow_remote_context, set_model_scope
 from cimgraph.core.attribute_utils import get_attr_datatype
@@ -21,10 +22,12 @@ _log = logging.getLogger(__name__)
 _ENUM_VALUE = re.compile(r'(?:[A-Za-z][\w.-]*:|.*#:?)([A-Za-z_]\w*)\.(\w+)')
 
 DCAT_DATASET = 'http://www.w3.org/ns/dcat#Dataset'
-DCT_CONFORMS_TO = 'http://purl.org/dc/terms/conformsTo'
-DCT_DESCRIPTION = 'http://purl.org/dc/terms/description'
-DCT_ISSUED = 'http://purl.org/dc/terms/issued'
+DCAT_DISTRIBUTION = 'http://www.w3.org/ns/dcat#distribution'
 DCAT_IS_VERSION_OF = 'http://www.w3.org/ns/dcat#isVersionOf'
+DCT_CONFORMS_TO = 'http://purl.org/dc/terms/conformsTo'
+DCT_ISSUED = 'http://purl.org/dc/terms/issued'
+DCT_TITLE = 'http://purl.org/dc/terms/title'
+MD_MODELING_AUTHORITY_SET = 'http://iec.ch/TC57/61970-552/ModelDescription/1#Model.modelingAuthoritySet'
 HEADER_NAMESPACES = ('http://www.w3.org/ns/dcat#', 'http://purl.org/dc/terms/')
 
 
@@ -34,13 +37,17 @@ class JSONLDFile(ConnectionInterface):
 
     - ``@context`` may be inline, a URL or a list. URLs resolve from the cimprofiles
       offline cache; others are fetched only with CIMG_ALLOW_REMOTE_CONTEXT=true.
-    - Numbers are in the units of the vocabularies the file's ``dcat:Dataset`` header
-      names in ``dct:conformsTo`` (e.g. CGMES Equipment: kV, MW). A file without one is
-      read with the profile's default units vocabulary.
+    - The ``dcat:Dataset`` header is the top-level map (ENTSO-E metadata layout, as
+      write_json_ld writes) or a node in ``@graph`` (Nordic44 layout).
+    - Numbers are in the units of the vocabularies the header's ``dcat:distribution``
+      names in ``dct:conformsTo``. CGMES files (Nordic44) name them in the Dataset's own
+      ``dct:conformsTo`` (e.g. CGMES Equipment: kV, MW), which is used when no distribution
+      names any; of those, only cached vocabularies count, the others being profiles the
+      data conforms to. A file naming none is read with the profile's default units vocabulary.
     - References are ``"urn:uuid:..."`` strings or ``{"@id": ...}`` objects.
-    - Each file's ``dcat:Dataset`` header is read into ``model_headers``; its authority
-      (``dcat:isVersionOf``) and description set the model scope, as ``md:FullModel``
-      does for XMLFile.
+    - Each file's header is read into ``model_headers``; its authority
+      (``md:Model.modelingAuthoritySet``, else ``dcat:isVersionOf`` as CGMES files carry it)
+      and ``dct:title`` set the model scope, as ``md:FullModel`` does for XMLFile.
     """
 
     def __init__(self, filename: str | list[str], namespaces: dict = None):
@@ -71,9 +78,9 @@ class JSONLDFile(ConnectionInterface):
             items = data.get('@graph', [])
             self.items.extend(items)
             self._file_items.append(items)
-            datasets = [item for item in items if DCAT_DATASET in self._types(item)]
+            datasets = [item for item in [data, *items] if DCAT_DATASET in self._types(item)]
             self.model_headers.append(self._model_header(datasets))
-            vocabularies.extend(self._conforms_to(datasets) or self._default_vocabularies())
+            vocabularies.extend(self._units_vocabularies(datasets) or self._default_vocabularies())
         # 'Class.attribute' -> pint unit its numbers are written in
         self.units = self._vocabulary_units(dict.fromkeys(vocabularies))
         # @id text -> object read with it, so references find their objects
@@ -101,37 +108,58 @@ class JSONLDFile(ConnectionInterface):
         return (any(self._expand_curie(t).startswith(HEADER_NAMESPACES) for t in types)
                 or self._extract_class_name(obj_type) in HEADER_CLASSES)
 
+    def _property_values(self, node: dict, iri: str) -> list:
+        """The values of one property of a header node, as written (a list if repeated)."""
+        values = []
+        for key, value in node.items():
+            if self._expand_curie(key) == iri:
+                values.extend(value if isinstance(value, list) else [value])
+        return values
+
     def _header_values(self, node: dict, iri: str) -> list[str]:
         """The values of one header property: strings, or the text of {"@id"} / {"@value"} objects."""
         values = []
-        for key, value in node.items():
-            if self._expand_curie(key) != iri:
-                continue
-            for target in value if isinstance(value, list) else [value]:
-                if isinstance(target, dict):
-                    target = target['@id'] if '@id' in target else target['@value']
-                values.append(target)
+        for value in self._property_values(node, iri):
+            if isinstance(value, dict):
+                value = value['@id'] if '@id' in value else value['@value']
+            values.append(value)
         return values
 
-    def _conforms_to(self, datasets: list[dict]) -> list[str]:
-        """The dct:conformsTo IRIs of the dcat:Dataset header nodes."""
-        return [self._expand_curie(iri) for dataset in datasets
-                for iri in self._header_values(dataset, DCT_CONFORMS_TO)]
+    def _conforms_to(self, nodes: list[dict]) -> list[str]:
+        """The dct:conformsTo IRIs of header nodes."""
+        return [self._expand_curie(iri) for node in nodes
+                for iri in self._header_values(node, DCT_CONFORMS_TO)]
+
+    def _units_vocabularies(self, datasets: list[dict]) -> list[str]:
+        """
+        The units vocabularies of a file's numbers: the dct:conformsTo of the datasets'
+        embedded dcat:distribution nodes; else (CGMES files) the cached vocabularies among
+        the datasets' own dct:conformsTo.
+        """
+        distributions = [distribution for dataset in datasets
+                         for distribution in self._property_values(dataset, DCAT_DISTRIBUTION)
+                         if isinstance(distribution, dict)]
+        vocabularies = self._conforms_to(distributions)
+        if vocabularies:
+            return vocabularies
+        cached = cache_index()
+        return [iri for iri in self._conforms_to(datasets) if iri in cached]
 
     def _model_header(self, datasets: list[dict]) -> ModelHeader:
         """
         A file's dcat:Dataset header as the ModelHeader the XML reader reads from
-        md:FullModel: dct:issued (Model.created), dct:description (Model.description) and
-        dcat:isVersionOf, the model authority (Model.modelingAuthoritySet).
+        md:FullModel: dct:issued (Model.created), dct:title (Model.description, the model
+        name) and the model authority: md:Model.modelingAuthoritySet, else dcat:isVersionOf,
+        where CGMES files (and KGraphPy) put the modeling authority set.
         """
         header = ModelHeader()
         if not datasets:
             return header
         dataset = datasets[0]
         header.full_model_uuid = dataset['@id'].removeprefix('urn:uuid:')
-        for attribute, iri in (('created', DCT_ISSUED), ('description', DCT_DESCRIPTION),
-                               ('authority', DCAT_IS_VERSION_OF)):
-            values = self._header_values(dataset, iri)
+        for attribute, iris in (('created', [DCT_ISSUED]), ('description', [DCT_TITLE]),
+                                ('authority', [MD_MODELING_AUTHORITY_SET, DCAT_IS_VERSION_OF])):
+            values = [value for iri in iris for value in self._header_values(dataset, iri)]
             if values:
                 setattr(header, attribute, values[0])
         if header.authority is not None:

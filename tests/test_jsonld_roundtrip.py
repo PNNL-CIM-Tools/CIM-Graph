@@ -6,6 +6,7 @@ import urllib.error
 import urllib.request
 
 import pytest
+from cimprofiles.jsonld import profile_jsonld
 from cimprofiles.units import CIMUnit
 
 from cimgraph.core import get_cim_profile, get_model_authority
@@ -106,10 +107,10 @@ def test_cgmes_round_trip_keeps_cgmes_units(profile, tmp_path):
     path = tmp_path / 'eq.jsonld'
     write_json_ld(network, str(path))
 
-    document = json.loads(path.read_text())
+    document = json.loads(path.read_text())    # the top-level map is the dcat:Dataset header
     assert document['@context'] == CONTEXT_OLD
-    dataset = document['@graph'][0]
-    assert dataset['@type'] == 'dcat:Dataset' and EQ_VOCABULARY in dataset['dct:conformsTo']
+    assert document['@type'] == 'dcat:Dataset'
+    assert EQ_VOCABULARY in document['dcat:distribution']['dct:conformsTo']
     nodes = {node['@id']: node for node in document['@graph']}
     line = nodes['urn:uuid:7b1e0c2a-1d3f-4b6e-9a51-000000000020']
     assert line['cim:Conductor.length'] == '12.5'          # km, as in the source file
@@ -128,8 +129,7 @@ def test_distribution_round_trip_through_each_convention(profile, tmp_path, conv
     write_json_ld(xml_network, str(path), convention=convention)
 
     document = json.loads(path.read_text())
-    assert document['@graph'][0]['dct:conformsTo'] == [
-        f'https://pnnl-cim-tools.github.io/CIM-Profiles/cimhub_2023/units-{convention}.jsonld']
+    assert document['dcat:distribution']['dct:conformsTo'] == profile_jsonld('cimhub_2023')['conventions'][convention]
     load = next(iter(xml_network.graph[cim.EnergyConsumer].values()))
     written = next(node for node in document['@graph'] if node['@id'] == f'urn:uuid:{load.uri()}')
     assert float(written['cim:EnergyConsumer.p']) == pytest.approx(load.p.to(load_p))
@@ -175,56 +175,91 @@ def test_files_with_different_units_fail_together(profile, tmp_path):
     profile('cgmes_3_0_0')
     si_file = tmp_path / 'si.jsonld'
     document = json.loads(open(CGMES_FILE).read())
-    document['@graph'][0]['dct:conformsTo'] = 'https://pnnl-cim-tools.github.io/CIM-Profiles/cimhub_2023/units-si.jsonld'
+    document['@graph'][0]['dct:conformsTo'] = profile_jsonld('cimhub_2023')['conventions']['si']
     si_file.write_text(json.dumps(document))
     with pytest.raises(ValueError, match='must use the same units'):
         JSONLDFile([CGMES_FILE, str(si_file)])
 
 
-def test_unknown_vocabulary_fails_offline(profile, tmp_path, monkeypatch):
+def test_unknown_units_vocabulary_fails_offline(profile, tmp_path, monkeypatch):
+    """A distribution's conformsTo names the units of the numbers: guessing would be 1000x off."""
     profile('cgmes_3_0_0')
     monkeypatch.delenv('CIMG_ALLOW_REMOTE_CONTEXT', raising=False)
     document = json.loads(open(CGMES_FILE).read())
-    document['@graph'][0]['dct:conformsTo'] = 'https://example.org/my-units.jsonld'
+    document['@graph'][0]['dcat:distribution'] = {'@type': 'dcat:Distribution',
+                                                  'dct:conformsTo': 'https://example.org/my-units.jsonld'}
     path = tmp_path / 'unknown.jsonld'
     path.write_text(json.dumps(document))
     with pytest.raises(LookupError, match='my-units.jsonld'):
         JSONLDFile(str(path))
 
 
-def test_written_context_types_values_for_json_ld_processors(profile, tmp_path):
+def test_unknown_dataset_profile_is_not_a_units_vocabulary(profile, tmp_path, monkeypatch):
+    """A Dataset's own conformsTo may name profiles the data was validated against."""
+    profile('cgmes_3_0_0')
+    monkeypatch.delenv('CIMG_ALLOW_REMOTE_CONTEXT', raising=False)
+    document = json.loads(open(CGMES_FILE).read())
+    document['@graph'][0]['dct:conformsTo'] = [EQ_VOCABULARY, 'urn:iso:std:iec:61970-552:2016']
+    path = tmp_path / 'profiles.jsonld'
+    path.write_text(json.dumps(document))
+    assert JSONLDFile(str(path)).units['BaseVoltage.nominalVoltage'] == 'kV'
+
+
+def test_reader_takes_units_from_a_top_level_header(profile, tmp_path):
+    """The ENTSO-E layout: the header is the top-level map, the objects its @graph."""
+    profile('cimhub_2023')
+    distribution = profile_jsonld('cimhub_2023')['conventions']['distribution']
+    document = {'@context': profile_jsonld('cimhub_2023')['context'],
+                '@id': 'urn:uuid:7b1e0c2a-1d3f-4b6e-9a51-000000000099', '@type': 'dcat:Dataset',
+                'dcat:distribution': {'@type': 'dcat:Distribution', 'dct:conformsTo': distribution},
+                '@graph': [{'@id': 'urn:uuid:7b1e0c2a-1d3f-4b6e-9a51-000000000098',
+                            '@type': 'cim:EnergyConsumer', 'cim:EnergyConsumer.p': '1.5'}]}
+    path = tmp_path / 'top-level.jsonld'
+    path.write_text(json.dumps(document))
+    load = _only(_read(path), get_cim_profile()[1].EnergyConsumer)
+    assert load.p.to('kW') == 1.5
+
+
+def _rdf(path):
+    """A written file as RDF: the header in the default graph, the objects in the named graph."""
     rdflib = pytest.importorskip('rdflib')
     from cimprofiles.jsonld import load_document
+    document = json.loads(path.read_text())
+    document['@context'] = load_document(document['@context'])['@context']  # offline copy
+    return rdflib.Dataset(default_union=True).parse(data=json.dumps(document), format='json-ld')
+
+
+def test_written_context_types_values_for_json_ld_processors(profile, tmp_path):
+    rdflib = pytest.importorskip('rdflib')
     profile('cgmes_3_0_0')
     path = tmp_path / 'eq.jsonld'
     write_json_ld(_read(CGMES_FILE), str(path))
 
-    document = json.loads(path.read_text())
-    document['@context'] = load_document(document['@context'])['@context']  # offline copy
-    graph = rdflib.Graph().parse(data=json.dumps(document), format='json-ld')
+    graph = _rdf(path)
     cim = rdflib.Namespace('http://iec.ch/TC57/CIM100#')
     line = rdflib.URIRef('urn:uuid:7b1e0c2a-1d3f-4b6e-9a51-000000000020')
     length = graph.value(line, cim['Conductor.length'])
     assert length.datatype == rdflib.XSD.float and length.toPython() == 12.5
     assert isinstance(graph.value(line, cim['ConductingEquipment.BaseVoltage']), rdflib.URIRef)
+    dataset = rdflib.URIRef(json.loads(path.read_text())['@id'])
+    assert any(g.identifier == dataset for g in graph.graphs())      # the objects' named graph
 
 
 def test_our_context_types_the_dataset_header(profile, tmp_path):
     """Our generated contexts type the header as the CGMES one does: references are IRIs."""
     rdflib = pytest.importorskip('rdflib')
-    from cimprofiles.jsonld import load_document
     cim = profile('cimhub_2023')
     network = FeederModel(connection=XMLFile(filename=IEEE13), container=cim.Feeder(mRID=FEEDER_MRID),
                           distributed=False)
     path = tmp_path / 'ieee13.jsonld'
-    write_json_ld(network, str(path))
+    write_json_ld(network, str(path), header={'dcat:isVersionOf': 'https://example.org/models/ieee13'})
 
-    document = json.loads(path.read_text())
-    document['@context'] = load_document(document['@context'])['@context']  # offline copy
-    graph = rdflib.Graph().parse(data=json.dumps(document), format='json-ld')
-    (dataset,) = graph.subjects(rdflib.RDF.type, rdflib.namespace.DCAT.Dataset)
-    assert isinstance(graph.value(dataset, rdflib.namespace.DCTERMS.conformsTo), rdflib.URIRef)
-    assert isinstance(graph.value(dataset, rdflib.URIRef('http://www.w3.org/ns/dcat#isVersionOf')), rdflib.URIRef)
+    graph = _rdf(path)
+    dcat = rdflib.Namespace('http://www.w3.org/ns/dcat#')
+    (dataset,) = graph.subjects(rdflib.RDF.type, dcat.Dataset)
+    distribution = graph.value(dataset, dcat.distribution)
+    assert isinstance(graph.value(distribution, rdflib.namespace.DCTERMS.conformsTo), rdflib.URIRef)
+    assert graph.value(dataset, dcat.isVersionOf) == rdflib.URIRef('https://example.org/models/ieee13')
     assert graph.value(dataset, rdflib.namespace.DCTERMS.issued).datatype == rdflib.XSD.dateTime
 
 

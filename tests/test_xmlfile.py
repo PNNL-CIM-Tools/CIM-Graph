@@ -5,6 +5,7 @@ import unittest
 from uuid import NAMESPACE_URL, UUID, uuid4, uuid5
 
 import cimprofiles.cim17.cimhub_2023 as cim
+from cimprofiles.jsonld import profile_jsonld
 
 from cimgraph.core import get_model_authority, get_model_name, set_model_scope
 from cimgraph.databases import JSONLDFile, XMLFile
@@ -149,34 +150,81 @@ class TestXMLFile(unittest.TestCase):
 
             with open(json_path, encoding='utf-8') as f:
                 document = json.load(f)
-            self.assertEqual(document['@context'],
-                             'https://pnnl-cim-tools.github.io/CIM-Profiles/cimhub_2023/context.jsonld')
-            dataset, first_object = document['@graph'][:2]
-            self.assertEqual(dataset['@type'], 'dcat:Dataset')
-            self.assertEqual(dataset['dcat:isVersionOf'], PNNL)   # the context types it @id
-            self.assertEqual(dataset['dct:description'], 'ieee13')
-            self.assertRegex(dataset['dct:issued'], r'^\d{4}-\d\d-\d\dT\d\d:\d\d:\d\dZ$')
-            self.assertEqual(dataset['dct:conformsTo'],
-                             ['https://pnnl-cim-tools.github.io/CIM-Profiles/cimhub_2023/units-si.jsonld'])
-            # The authority is dcat:isVersionOf: no cim:ModelAuthority node, which no profile defines
-            self.assertNotIn('cim:ModelAuthority', [node['@type'] for node in document['@graph']])
+            published = profile_jsonld('cimhub_2023')   # versioned URLs: .../cimhub_2023/<X.Y>/...
+            self.assertEqual(document['@context'], published['context'])
+            # ENTSO-E layout: the top-level map is the dcat:Dataset, @graph its named graph
+            self.assertEqual(document['@type'], 'dcat:Dataset')
+            self.assertEqual(document['md:Model.modelingAuthoritySet'], PNNL)
+            self.assertEqual(document['dct:title'], 'ieee13')
+            self.assertRegex(document['dct:issued'], r'^\d{4}-\d\d-\d\dT\d\d:\d\d:\d\dZ$')
+            self.assertEqual(document['dcat:distribution'],
+                             {'@type': 'dcat:Distribution', 'dct:conformsTo': published['conventions']['si']})
+            self.assertNotIn('dcat:isVersionOf', document)   # the model series is the caller's
+            types = [node['@type'] for node in document['@graph']]
+            self.assertNotIn('dcat:Dataset', types)
+            self.assertNotIn('cim:ModelAuthority', types)     # no profile defines it
 
-    def test_json_ld_writer_needs_an_authority_iri(self):
-        self._use_model_scope('pnnl', 'ieee13')
-        network = FeederModel(connection=XMLFile(filename='tests/test_models/ieee13.xml'),
-                              container=cim.Feeder(mRID=self.feeder_mrid), distributed=False)
+    def _ieee13(self):
+        return FeederModel(connection=XMLFile(filename='tests/test_models/ieee13.xml'),
+                           container=cim.Feeder(mRID=self.feeder_mrid), distributed=False)
+
+    def test_json_ld_header_from_the_caller(self):
+        """A publisher sets the identity, series, title and its own terms; identical exports are identical."""
+        self._use_model_scope('pnnl', 'ieee13')    # any text: the authority is a literal
+        network = self._ieee13()
+        header = {'@id': 'urn:uuid:5a0c3a4e-0000-5000-8000-000000000001',
+                  'dct:identifier': '5a0c3a4e-0000-5000-8000-000000000001',
+                  'dct:issued': '2026-11-01T00:00:00Z',
+                  'dcat:isVersionOf': 'https://gridkitchen.example/models/ieee13',
+                  'dct:title': 'ieee13', 'dct:description': 'IEEE 13 node test feeder',
+                  'gk:feederCount': 1,
+                  'dqv:hasQualityMeasurement': [{'@type': 'dqv:QualityMeasurement', 'dqv:value': 'source'}]}
+        extension = {'gk': 'https://gridkitchen.example/ns#', 'dqv': 'http://www.w3.org/ns/dqv#'}
         with tempfile.TemporaryDirectory() as tmp_dir:
-            with self.assertRaisesRegex(ValueError, "'pnnl' is not an absolute IRI"):
-                write_json_ld(network, os.path.join(tmp_dir, 'out.jsonld'))
+            paths = [os.path.join(tmp_dir, f'{n}.jsonld') for n in (1, 2)]
+            for path in paths:
+                write_json_ld(network, path, header=header, contexts=[extension])
+            with open(paths[0], encoding='utf-8') as first, open(paths[1], encoding='utf-8') as second:
+                text = first.read()
+                self.assertEqual(text, second.read())
+            document = json.loads(text)
+
+            self.assertEqual(document['@context'], [profile_jsonld('cimhub_2023')['context'], extension])
+            for key, value in header.items():
+                self.assertEqual(document[key], value)
+            self.assertEqual(document['md:Model.modelingAuthoritySet'], 'pnnl')
+
+            self._use_model_scope('https://someone.else', '')
+            reread = JSONLDFile(filename=paths[0])
+            reread.create_new_graph(container=None)
+        (read_header,) = reread.model_headers
+        self.assertEqual((read_header.authority, read_header.description), ('pnnl', 'ieee13'))
+        self.assertEqual(read_header.full_model_uuid, '5a0c3a4e-0000-5000-8000-000000000001')
+        self.assertEqual((get_model_authority(), get_model_name()), ('pnnl', 'ieee13'))
+
+    def test_json_ld_header_checks(self):
+        self._use_model_scope(PNNL, 'ieee13')
+        network = self._ieee13()
+        with tempfile.TemporaryDirectory() as tmp_dir:
+            path = os.path.join(tmp_dir, 'out.jsonld')
+            with self.assertRaisesRegex(ValueError, r"prefixes \['gk'\] are not defined"):
+                write_json_ld(network, path, header={'gk:feederCount': 1})
+            with self.assertRaisesRegex(ValueError, r"prefixes \['dqv'\] are not defined"):
+                write_json_ld(network, path, header={'dct:x': [{'@type': 'dqv:QualityMeasurement'}]})
+            with self.assertRaisesRegex(ValueError, 'must not set dcat:distribution'):
+                write_json_ld(network, path, header={'dcat:distribution': {'@type': 'dcat:Distribution'}})
+            with self.assertRaisesRegex(ValueError, "'ieee13' is not an absolute IRI"):
+                write_json_ld(network, path, header={'dcat:isVersionOf': 'ieee13'})
 
     def test_json_ld_reader_restores_model_header(self):
         self._use_model_scope(PNNL, 'ieee13')
-        network = FeederModel(connection=XMLFile(filename='tests/test_models/ieee13.xml'),
-                              container=cim.Feeder(mRID=self.feeder_mrid), distributed=False)
+        network = self._ieee13()
 
         with tempfile.TemporaryDirectory() as tmp_dir:
             json_path = os.path.join(tmp_dir, 'out.jsonld')
-            write_json_ld(network, json_path)
+            # A series IRI is not the authority, and a description is not the model name
+            write_json_ld(network, json_path, header={'dcat:isVersionOf': 'https://example.org/series',
+                                                      'dct:description': 'a generated description'})
 
             self._use_model_scope('https://someone.else', '')
             reread = JSONLDFile(filename=json_path)

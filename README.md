@@ -151,7 +151,7 @@ __Optional__ (defaults are in [example.env](https://github.com/PNNL-CIM-Tools/CI
 |---|---|---|
 | `CIMG_NAMESPACE` | `http://iec.ch/TC57/CIM100#` | RDF namespace prefix for CIM classes |
 | `CIMG_IEC61970_552` | `552-NEW` | Identifier style for writing and querying. `552-NEW`: `rdf:about="urn:uuid:<uuid>"`, mRID `<uuid>`. `552-LEGACY`: `rdf:ID="_<uuid>"`, references `#_<uuid>`, mRID `_<uuid>`. `CGMES`: `rdf:ID="_<uuid>"`, references `#_<uuid>`, mRID `<uuid>`. A non-UUID mRID is always written as-is |
-| `CIMG_MODEL_AUTHORITY` | `https://github.com/PNNL-CIM-Tools/CIM-Graph` | Model authority URI (e.g. a utility's). `uuid5(NAMESPACE_URL, authority)` is the namespace of every UUID seeded from names or non-UUID mRIDs, and the identifier of the ModelAuthority written in exported CIM XML headers. JSON-LD writes it as `dcat:isVersionOf`, which needs an absolute IRI |
+| `CIMG_MODEL_AUTHORITY` | `https://github.com/PNNL-CIM-Tools/CIM-Graph` | Model authority URI (e.g. a utility's). `uuid5(NAMESPACE_URL, authority)` is the namespace of every UUID seeded from names or non-UUID mRIDs, and the identifier of the ModelAuthority written in exported CIM XML headers. JSON-LD writes it as `md:Model.modelingAuthoritySet` |
 | `CIMG_MODEL_NAME` | `''` | Stable model identifier within the authority (e.g. a feeder) mixed into seeded UUIDs |
 | `CIMG_VALIDATION_LOG_LEVEL` | `WARNING` | Log level for schema-mismatch warnings during XML parse |
 | `CIMG_ALLOW_REMOTE_CONTEXT` | `false` | Allow fetching JSON-LD contexts and unit vocabularies that are not in the cimprofiles offline cache (HTTPS only). When false, a JSON-LD file that names an uncached document fails to load |
