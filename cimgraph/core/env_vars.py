@@ -251,6 +251,14 @@ def get_undefined_handling() -> str:
                         DEFAULT_ALLOW_UNDEFINED_ATTRIBUTES)
     return handling.lower() == 'true'
 
+def get_allow_remote_context() -> bool:
+    """
+    Returns whether JSON-LD contexts and unit vocabularies that are not in the
+    cimprofiles offline cache may be fetched over HTTPS (CIMG_ALLOW_REMOTE_CONTEXT,
+    default false: a file naming an uncached document fails to load).
+    """
+    return os.environ.get('CIMG_ALLOW_REMOTE_CONTEXT', 'false').lower() == 'true'
+
 def set_model_scope(authority: str, model_name: str) -> None:
     """
     Sets CIMG_MODEL_AUTHORITY and CIMG_MODEL_NAME so that UUIDs seeded from now on,

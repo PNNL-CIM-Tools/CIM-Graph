@@ -12,6 +12,8 @@ from types import ModuleType
 from uuid import UUID
 
 from cimprofiles.identity import as_uuid, normalize_identifier, read_identifier
+from cimprofiles.units import from_unit
+from pint.errors import DimensionalityError
 
 from cimgraph.core import (get_cim_profile, get_database, get_host, get_iec61970_301,
                            get_iec61970_552, get_namespace, get_password, get_port,
@@ -220,7 +222,14 @@ class ConnectionInterface(ABC):
 
     def create_value(self, graph: dict[type, dict[str, object]],
                     cim_class: type, identifier: UUID | str, attribute: str,
-                    value: str, datatype_uri: str = None) -> bool|int|float|str|object:
+                    value: str, datatype_uri: str = None,
+                    input_unit: str = None) -> bool|int|float|str|object:
+        """
+        Set an attribute from its text. input_unit is the pint unit a number is written
+        in (e.g. 'kV' from a JSON-LD unit vocabulary); None means the CIMUnit class's own
+        unit (base SI). Unit values are CIMUnits with use_units, else floats in the
+        class's unit.
+        """
         association = self.check_attribute(cim_class, attribute)
         if association is not None and association != 'identifier':
             attribute_type = cim_class.__dataclass_fields__[association].type
@@ -251,19 +260,34 @@ class ConnectionInterface(ABC):
                 except:
                     _log.log(self.log_level, f'{value} for {cim_class.__name__}.{association} is not an integer')
                 setattr(graph[cim_class][identifier], association, value)
-            elif 'float' in attribute_type:
+            elif 'float' in attribute_type or self._get_unit_class_from_type(attribute_type) is not None:
+                # A unit-only type (e.g. Optional[ApparentPower]) holds a plain number
                 try:
                     value = float(value)
                 except:
                     _log.log(self.log_level, f'{value} for {cim_class.__name__}.{association} is not a float')
-                if self.use_units and isinstance(value, float):
-                    unit_class = self._get_unit_class_from_type(attribute_type)
-                    if unit_class is not None:
-                        value = unit_class(value)
+                unit_class = self._get_unit_class_from_type(attribute_type)
+                if unit_class is not None and isinstance(value, float):
+                    value = self._unit_value(unit_class, value, input_unit,
+                                             f'{cim_class.__name__}.{association}')
                 setattr(graph[cim_class][identifier], association, value)
             else:
                 setattr(graph[cim_class][identifier], association, value)
         return value
+
+    def _unit_value(self, unit_class: type, value: float, input_unit: str | None,
+                    name: str) -> float | object:
+        """A number written in input_unit, as a unit_class CIMUnit (use_units) or a float
+        in the class's unit. A unit of the wrong dimension (a profile and vocabulary that
+        disagree) raises."""
+        if input_unit is None:
+            return unit_class(value) if self.use_units else value  # already in the class's unit
+        try:
+            unit_value = from_unit(unit_class, value, input_unit)
+        except DimensionalityError as error:
+            raise ValueError(f'{name}: the file unit {input_unit!r} is not a unit of '
+                             f'{unit_class.__name__} ({error})') from None
+        return unit_value if self.use_units else float(unit_value)
 
     def _create_unit_from_datatype(self, datatype_uri: str, attribute_type: str,
                                    value: str) -> object | None:

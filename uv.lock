@@ -362,7 +362,7 @@ dev = [
 [package.metadata]
 requires-dist = [
     { name = "cim-graph", extras = ["sparql", "neo4j", "mysql", "gridappsd", "rdflib"], marker = "extra == 'all'" },
-    { name = "cim-profiles", specifier = ">=0.1.0a1,<0.2" },
+    { name = "cim-profiles", specifier = ">=0.2.0a1,<0.3" },
     { name = "defusedxml", specifier = ">=0.7.1" },
     { name = "gridappsd-python", marker = "extra == 'gridappsd'", specifier = ">=2026.2.1" },
     { name = "mysql-connector-python", marker = "extra == 'mysql'", specifier = ">=9.2.0" },
@@ -384,15 +384,15 @@ dev = [
 
 [[package]]
 name = "cim-profiles"
-version = "0.1.0a1"
+version = "0.2.0a1"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "pint", version = "0.24.4", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version < '3.11'" },
     { name = "pint", version = "0.25.3", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version >= '3.11'" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/ec/01/a6dc49012821f5aa9bb213a4937dc1d27861c28f6c634c6c905a8028e2b2/cim_profiles-0.1.0a1.tar.gz", hash = "sha256:50cb37503850687bf2810e38d8097b043db1255dc18a4a0e4b4c532a0f66c0b5", size = 2528400, upload-time = "2026-11-09T22:44:23.602Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/43/17/24619a03ac9e6f00c9fec1847d1f12c1b04f8ef62cd2d6e808fa42223cdf/cim_profiles-0.2.0a1.tar.gz", hash = "sha256:13019b001f7a5cd1579a075591d82f0e2f6351288be39234a39dba5bd588e23a", size = 3280000, upload-time = "2026-11-12T23:32:30.295Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/cc/af/453cf7af6ffa6146dea47effb296ddf399af7190186c4bd6bc44d85566a2/cim_profiles-0.1.0a1-py3-none-any.whl", hash = "sha256:5032bbba1f5a457b030a92c15819899b585c693d4cc09b3e127d45de1937ff1e", size = 2604149, upload-time = "2026-11-09T22:44:21.799Z" },
+    { url = "https://files.pythonhosted.org/packages/6b/68/18fc3b85e6a30615db865d3e6c19ffac6b7cc36c3a0d54063b1ba2f84322/cim_profiles-0.2.0a1-py3-none-any.whl", hash = "sha256:801aad4eb80d7047bc20a9af8f8f22e47d896c056c1dc3df78ba7a847af4fd21", size = 3386993, upload-time = "2026-11-12T23:32:28.202Z" },
 ]
 
 [[package]]

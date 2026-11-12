@@ -130,8 +130,8 @@ def property_to_xml(prop: Property, namespaces: dict, rdf_resource: str) -> str:
     if prop.kind == 'enum':
         return f'  <{tag} rdf:resource="{prop.namespace}{prop.value}"/>\n'
     if prop.kind == 'unit':
-        datatype = f'{prop.namespace}UnitSymbol.{str(prop.value.quantity.units)}'
-        return f'  <{tag} rdf:datatype="{datatype}">{prop.value.value}</{tag}>\n'
+        # CIM XML values are plain numbers in base SI units, which CIMUnit stores
+        return f'  <{tag}>{prop.value.value}</{tag}>\n'
     return f'  <{tag}>{escape(_literal_text(prop.value))}</{tag}>\n'
 
 
@@ -150,10 +150,35 @@ def object_to_xml(obj, namespaces: dict | None = None, write_identifier: bool = 
     return xml + f'</{tag}>\n'
 
 
-def object_to_json_ld(obj, namespaces: dict | None = None) -> dict:
-    """Render a CIM object as a JSON-LD node. Repeated properties become lists.
-    namespaces defaults to the object's profile_namespaces."""
+def _json_ld_reference(value) -> str:
+    """'urn:uuid:<uuid>' for a CIM object or UUID text; any other reference IRI as written.
+    The context types references {"@type": "@id"}, so the bare string is an IRI."""
+    if isinstance(value, str) and not as_uuid(value):
+        return validate_iri_text(value)
+    return f'urn:uuid:{_reference_text(value, "552-NEW")}'
+
+
+def _unit_text(value, unit: str | None) -> str:
+    """A unit value as JSON-LD text (CGMES JSON-LD writes numbers as strings), in *unit*
+    (None: its CIMUnit class's unit). A value kept in its own unit is written exactly, like
+    CIM XML (4160.0 -> '4160'); a converted one to 15 digits, which drops the conversion's
+    float noise (3.1752000000000002 -> '3.1752')."""
+    number = value.value if unit is None else value.to(unit)
+    if number != value.value:
+        return format(number, '.15g')
+    text = repr(number)
+    return text[:-2] if text.endswith('.0') else text
+
+
+def object_to_json_ld(obj, namespaces: dict | None = None, units: dict[str, str] | None = None) -> dict:
+    """
+    Render a CIM object as a JSON-LD node. Repeated properties become lists.
+    namespaces defaults to the object's profile_namespaces. units maps 'Class.attribute'
+    to the pint unit to write it in (from a units vocabulary); other unit values are
+    written in their CIMUnit class's unit.
+    """
     namespaces = namespaces or profile_namespaces([type(obj)])
+    units = units or {}
     # JSON-LD always identifies objects with urn:uuid: IRIs, as 552-NEW does
     node = {'@id': f'urn:uuid:{obj.uri()}',
             '@type': f'{_prefix(namespaces, obj.__namespace__)}:{obj.__class__.__name__}'}
@@ -162,11 +187,11 @@ def object_to_json_ld(obj, namespaces: dict | None = None) -> dict:
         prefix = _prefix(namespaces, prop.namespace)
         key = f'{prefix}:{prop.name}'
         if prop.kind == 'reference':
-            value = {'@id': f'urn:uuid:{_reference_text(prop.value, "552-NEW")}'}
+            value = _json_ld_reference(prop.value)
         elif prop.kind == 'enum':
             value = f'{prefix}:{prop.value}'
         elif prop.kind == 'unit':
-            value = str(prop.value.value)
+            value = _unit_text(prop.value, units.get(prop.name))
         else:
             value = _literal_text(prop.value)
 

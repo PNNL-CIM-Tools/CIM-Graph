@@ -2,6 +2,52 @@
 
 ## 0.6.0 (unreleased)
 
+### JSON-LD in the CGMES draft style, with QUDT units (#225)
+
+Requires `cim-profiles>=0.2`, which ships the contexts and unit vocabularies
+(`cimprofiles.jsonld`) and an offline cache of them.
+
+- `write_json_ld` writes the profile's published `@context` URL (e.g.
+  `https://pnnl-cim-tools.github.io/CIM-Profiles/cimhub_2023/0.2.0/context.jsonld`, versioned by
+  the stable cim-profiles release as CGMES versions its IRIs; `cgmes_3_0_0` uses the Inst4CIM CGMES
+  context) instead of an inline prefix map. A runtime-merged profile gets an
+  inline context built from its classes.
+- **Breaking:** references are written as `"urn:uuid:..."` strings, not `{"@id": ...}` objects
+  (the context types them `@id`), and the header is a `dcat:Dataset` instead of `md:FullModel`
+  and `cim:ModelAuthority` (which no profile defines), in the ENTSO-E metadata layout: the
+  top-level map is the dataset (typed `dcat:Dataset` and `rdfg:Graph`, as Nordic44 and KGraphPy
+  expect) and `@graph` its named graph. It carries `dct:identifier`, `dct:issued` (UTC, ending
+  with `Z`), the model authority as `md:Model.modelingAuthoritySet` and the model name as
+  `dct:title`.
+- `write_json_ld(..., header={...}, contexts=[...])`: a publisher adds header properties or
+  replaces ours (e.g. a stable `@id`/`dct:identifier` and `dct:issued`, so identical exports are
+  identical files; `dcat:isVersionOf`, the model series IRI; extension terms and blank nodes).
+  `contexts` are written after the profile's context and define the header's other prefixes; an
+  undefined header prefix fails.
+- Numbers are written in the units of a units convention, named in the header's
+  `dct:conformsTo` and in that of its `dcat:distribution` (the Dataset's own survives tools
+  such as KGraphPy that drop the distribution). `write_json_ld(..., convention='distribution')` writes kW/kVAr/kVA, line
+  constants per km (ohm/km, uS/km) and wire sizes in mm. The default is the profile's default convention (base SI; MW/kV/km for
+  `cgmes_3_0_0`). A number kept in its own unit is written exactly, as in CIM XML; a converted
+  one to 15 significant digits.
+- `JSONLDFile` reads these files and Nordic44-style ones (the header a node in `@graph`): a URL
+  `@context`, `"urn:uuid:..."` string references, and numbers in the units of the vocabularies
+  the header's distribution names, or, for CGMES files, the cached vocabularies among the
+  Dataset's own `dct:conformsTo` (other IRIs there are profiles, not units). A file naming none
+  is read with the profile's default convention. Files loaded together must agree on units. Each
+  file's header is read into `JSONLDFile.model_headers`, and its authority
+  (`md:Model.modelingAuthoritySet`, else `dcat:isVersionOf` as CGMES files carry it) and
+  `dct:title` set the model scope, as `md:FullModel` does for `XMLFile`.
+- The cimprofiles contexts type the header as the Inst4CIM CGMES context does
+  (`dct:conformsTo`, `dcat:isVersionOf` as IRIs; `dct:issued` as `xsd:dateTime`), matching
+  what DCAT tools such as statnett's KGraphPy expect.
+- Contexts and vocabularies that are not in the cimprofiles cache are fetched only with
+  `CIMG_ALLOW_REMOTE_CONTEXT=true`; otherwise reading the file fails and names the URL.
+- The CIM XML writer no longer adds an invalid `rdf:datatype="…UnitSymbol.*"` to unit values
+  (#224). CIM XML values are plain base SI numbers.
+- The readers read plain numbers for unit-only types (e.g. cim18v17 `Optional[ApparentPower]`),
+  which were previously kept as strings.
+
 ### Profiles moved to `cimprofiles`
 
 The CIM profiles and the object model they are built on (`Identity`, `CIMUnit`, profile merging)

@@ -314,3 +314,43 @@ def test_rdflib_connection_only_reads_local_files(filename, monkeypatch):
     with pytest.raises(FileNotFoundError):
         RDFlibConnection(filename=filename)
     get_cim_profile.cache_clear()
+
+
+# JSON-LD remote contexts and vocabularies are fetched only on opt-in
+
+def _jsonld_with_remote_context(tmp_path):
+    path = tmp_path / 'remote.jsonld'
+    path.write_text('{"@context": "https://gridappsd.org/context.jsonld", "@graph": []}', encoding='utf-8')
+    return str(path)
+
+
+def test_jsonld_remote_context_refused_by_default(tmp_path, monkeypatch):
+    from cimgraph.core import get_cim_profile
+    from cimgraph.databases import JSONLDFile
+    monkeypatch.setenv('CIMG_CIM_PROFILE', 'cimhub_2023')
+    monkeypatch.delenv('CIMG_ALLOW_REMOTE_CONTEXT', raising=False)
+    get_cim_profile.cache_clear()
+    with pytest.raises(LookupError, match='CIMG_ALLOW_REMOTE_CONTEXT'):
+        JSONLDFile(_jsonld_with_remote_context(tmp_path))
+    get_cim_profile.cache_clear()
+
+
+def test_jsonld_remote_context_fetched_when_allowed(tmp_path, monkeypatch):
+    import io
+    import urllib.request
+
+    from cimprofiles.jsonld.documents import load_document
+
+    from cimgraph.core import get_cim_profile
+    from cimgraph.databases import JSONLDFile
+    monkeypatch.setenv('CIMG_CIM_PROFILE', 'cimhub_2023')
+    monkeypatch.setenv('CIMG_ALLOW_REMOTE_CONTEXT', 'true')
+    get_cim_profile.cache_clear()
+    body = b'{"@context": {"ex": "https://gridappsd.org/ns#"}}'
+    monkeypatch.setattr(urllib.request, 'urlopen', lambda request, timeout: io.BytesIO(body))
+    load_document.cache_clear()
+    try:
+        assert JSONLDFile(_jsonld_with_remote_context(tmp_path)).namespaces['ex'] == 'https://gridappsd.org/ns#'
+    finally:
+        load_document.cache_clear()
+        get_cim_profile.cache_clear()
