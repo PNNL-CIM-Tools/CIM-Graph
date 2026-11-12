@@ -143,7 +143,13 @@ class JSONLDFile(ConnectionInterface):
         if vocabularies:
             return vocabularies
         cached = cache_index()
-        return [iri for iri in self._conforms_to(datasets) if iri in cached]
+        vocabularies = []
+        for iri in self._conforms_to(datasets):
+            if iri in cached:
+                vocabularies.append(iri)
+            else:
+                _log.info(f'dct:conformsTo {iri} is not a cached units vocabulary; read as a profile')
+        return vocabularies
 
     def _model_header(self, datasets: list[dict]) -> ModelHeader:
         """

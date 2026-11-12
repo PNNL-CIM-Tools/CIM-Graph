@@ -109,8 +109,9 @@ def test_cgmes_round_trip_keeps_cgmes_units(profile, tmp_path):
 
     document = json.loads(path.read_text())    # the top-level map is the dcat:Dataset header
     assert document['@context'] == CONTEXT_OLD
-    assert document['@type'] == 'dcat:Dataset'
-    assert EQ_VOCABULARY in document['dcat:distribution']['dct:conformsTo']
+    assert document['@type'] == ['dcat:Dataset', 'http://www.w3.org/2004/03/trix/rdfg-1/Graph']
+    assert EQ_VOCABULARY in document['dct:conformsTo']
+    assert document['dcat:distribution']['dct:conformsTo'] == document['dct:conformsTo']
     nodes = {node['@id']: node for node in document['@graph']}
     line = nodes['urn:uuid:7b1e0c2a-1d3f-4b6e-9a51-000000000020']
     assert line['cim:Conductor.length'] == '12.5'          # km, as in the source file
@@ -129,7 +130,7 @@ def test_distribution_round_trip_through_each_convention(profile, tmp_path, conv
     write_json_ld(xml_network, str(path), convention=convention)
 
     document = json.loads(path.read_text())
-    assert document['dcat:distribution']['dct:conformsTo'] == profile_jsonld('cimhub_2023')['conventions'][convention]
+    assert document['dct:conformsTo'] == profile_jsonld('cimhub_2023')['conventions'][convention]
     load = next(iter(xml_network.graph[cim.EnergyConsumer].values()))
     written = next(node for node in document['@graph'] if node['@id'] == f'urn:uuid:{load.uri()}')
     assert float(written['cim:EnergyConsumer.p']) == pytest.approx(load.p.to(load_p))
@@ -169,6 +170,19 @@ def test_cim18v17_flavor_round_trip(profile, tmp_path, name, convention, power_u
     assert written_impedance['cim:PerLengthSequenceImpedance.r'] == '0.2153'
     assert written_impedance['cim:PerLengthSequenceImpedance.bch'] == '3.2'
     assert _differences(_read(path), network) == []
+
+
+def test_units_survive_a_tool_that_drops_the_distribution(profile, tmp_path):
+    """KGraphPy's header validation removes dcat:distribution; the Dataset's conformsTo remains."""
+    cim = profile('cimhub_2023')
+    xml_network = FeederModel(connection=XMLFile(filename=IEEE13),
+                              container=cim.Feeder(mRID=FEEDER_MRID), distributed=False)
+    path = tmp_path / 'ieee13-distribution.jsonld'
+    write_json_ld(xml_network, str(path), convention='distribution')
+    document = json.loads(path.read_text())
+    del document['dcat:distribution']
+    path.write_text(json.dumps(document))
+    assert _differences(_read(path), xml_network) == []
 
 
 def test_files_with_different_units_fail_together(profile, tmp_path):

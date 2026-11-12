@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import json
 import logging
+import re
 from typing import TYPE_CHECKING
 from urllib.parse import urlsplit
 
@@ -17,6 +18,11 @@ if TYPE_CHECKING:
 
 _log = logging.getLogger(__name__)
 
+# The type of a dataset whose @graph is a named graph, as Nordic44 and KGraphPy write it
+RDFG_GRAPH = 'http://www.w3.org/2004/03/trix/rdfg-1/Graph'
+# dct:issued as KGraphPy requires it: one xsd:dateTime in UTC, ending with Z
+_UTC_DATETIME = re.compile(r'\d{4}-\d\d-\d\dT\d\d:\d\d:\d\d(\.\d+)?Z')
+
 
 def _dataset_header(vocabularies: list[str], header: dict | None) -> dict:
     """
@@ -27,7 +33,10 @@ def _dataset_header(vocabularies: list[str], header: dict | None) -> dict:
     - md:Model.modelingAuthoritySet: CIMG_MODEL_AUTHORITY, the namespace of the UUIDs seeded
       from names and non-UUID mRIDs, which the reader restores.
     - dct:title: CIMG_MODEL_NAME, if set.
-    - dcat:distribution: this file, conforming to the units vocabularies of its numbers.
+    - dct:conformsTo, and the dct:conformsTo of dcat:distribution (this file): the units
+      vocabularies of its numbers. The Dataset's own is what survives tools that drop the
+      distribution (KGraphPy) and what CGMES files use.
+    - @type: dcat:Dataset and rdfg:Graph, as the dataset is the named graph of the objects.
     - `header`: further properties (e.g. dcat:isVersionOf, the model series IRI; dct:license;
       extension terms and blank nodes), which replace the ones above. The units distribution
       is the writer's: a dcat:distribution in `header` raises.
@@ -37,13 +46,16 @@ def _dataset_header(vocabularies: list[str], header: dict | None) -> dict:
         raise ValueError('header must not set dcat:distribution: the writer writes the distribution '
                          'naming the units vocabularies of the numbers; list other distributions '
                          'in a separate catalog')
+    issued = header.get('dct:issued')
+    if issued is not None and not _UTC_DATETIME.fullmatch(issued):
+        raise ValueError(f'dct:issued {issued!r} is not a UTC date-time such as 2026-11-01T00:00:00Z')
     is_version_of = header.get('dcat:isVersionOf')
     if is_version_of is not None and not urlsplit(is_version_of).scheme:
         raise ValueError(f'dcat:isVersionOf {is_version_of!r} is not an absolute IRI')
     values = model_header()
     dataset = {
         '@id': 'urn:uuid:' + values['full_model_uuid'],
-        '@type': 'dcat:Dataset',
+        '@type': ['dcat:Dataset', RDFG_GRAPH],
         'dct:identifier': values['full_model_uuid'],
         'dct:issued': values['created'],
         'md:Model.modelingAuthoritySet': values['authority'],
@@ -51,6 +63,7 @@ def _dataset_header(vocabularies: list[str], header: dict | None) -> dict:
     if values['model_name']:
         dataset['dct:title'] = values['model_name']
     if vocabularies:
+        dataset['dct:conformsTo'] = vocabularies
         dataset['dcat:distribution'] = {'@type': 'dcat:Distribution', 'dct:conformsTo': vocabularies}
     dataset.update(header)
     return dataset

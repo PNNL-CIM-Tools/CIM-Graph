@@ -8,23 +8,25 @@ Requires `cim-profiles>=0.2`, which ships the contexts and unit vocabularies
 (`cimprofiles.jsonld`) and an offline cache of them.
 
 - `write_json_ld` writes the profile's published `@context` URL (e.g.
-  `https://pnnl-cim-tools.github.io/CIM-Profiles/cimhub_2023/0.2/context.jsonld`, versioned by
-  the cim-profiles minor release as CGMES versions its IRIs; `cgmes_3_0_0` uses the Inst4CIM CGMES
+  `https://pnnl-cim-tools.github.io/CIM-Profiles/cimhub_2023/0.2.0/context.jsonld`, versioned by
+  the stable cim-profiles release as CGMES versions its IRIs; `cgmes_3_0_0` uses the Inst4CIM CGMES
   context) instead of an inline prefix map. A runtime-merged profile gets an
   inline context built from its classes.
 - **Breaking:** references are written as `"urn:uuid:..."` strings, not `{"@id": ...}` objects
   (the context types them `@id`), and the header is a `dcat:Dataset` instead of `md:FullModel`
   and `cim:ModelAuthority` (which no profile defines), in the ENTSO-E metadata layout: the
-  top-level map is the dataset and `@graph` its named graph. It carries `dct:identifier`,
-  `dct:issued`, the model authority as `md:Model.modelingAuthoritySet` and the model name as
+  top-level map is the dataset (typed `dcat:Dataset` and `rdfg:Graph`, as Nordic44 and KGraphPy
+  expect) and `@graph` its named graph. It carries `dct:identifier`, `dct:issued` (UTC, ending
+  with `Z`), the model authority as `md:Model.modelingAuthoritySet` and the model name as
   `dct:title`.
 - `write_json_ld(..., header={...}, contexts=[...])`: a publisher adds header properties or
   replaces ours (e.g. a stable `@id`/`dct:identifier` and `dct:issued`, so identical exports are
   identical files; `dcat:isVersionOf`, the model series IRI; extension terms and blank nodes).
   `contexts` are written after the profile's context and define the header's other prefixes; an
   undefined header prefix fails.
-- Numbers are written in the units of a units convention, named in the `dct:conformsTo` of the
-  header's `dcat:distribution`. `write_json_ld(..., convention='distribution')` writes kW/kVAr/kVA, line
+- Numbers are written in the units of a units convention, named in the header's
+  `dct:conformsTo` and in that of its `dcat:distribution` (the Dataset's own survives tools
+  such as KGraphPy that drop the distribution). `write_json_ld(..., convention='distribution')` writes kW/kVAr/kVA, line
   constants per km (ohm/km, uS/km) and wire sizes in mm. The default is the profile's default convention (base SI; MW/kV/km for
   `cgmes_3_0_0`). A number kept in its own unit is written exactly, as in CIM XML; a converted
   one to 15 significant digits.

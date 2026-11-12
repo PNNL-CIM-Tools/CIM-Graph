@@ -153,10 +153,11 @@ class TestXMLFile(unittest.TestCase):
             published = profile_jsonld('cimhub_2023')   # versioned URLs: .../cimhub_2023/<X.Y>/...
             self.assertEqual(document['@context'], published['context'])
             # ENTSO-E layout: the top-level map is the dcat:Dataset, @graph its named graph
-            self.assertEqual(document['@type'], 'dcat:Dataset')
+            self.assertEqual(document['@type'], ['dcat:Dataset', 'http://www.w3.org/2004/03/trix/rdfg-1/Graph'])
             self.assertEqual(document['md:Model.modelingAuthoritySet'], PNNL)
             self.assertEqual(document['dct:title'], 'ieee13')
             self.assertRegex(document['dct:issued'], r'^\d{4}-\d\d-\d\dT\d\d:\d\d:\d\dZ$')
+            self.assertEqual(document['dct:conformsTo'], published['conventions']['si'])
             self.assertEqual(document['dcat:distribution'],
                              {'@type': 'dcat:Distribution', 'dct:conformsTo': published['conventions']['si']})
             self.assertNotIn('dcat:isVersionOf', document)   # the model series is the caller's
@@ -215,6 +216,8 @@ class TestXMLFile(unittest.TestCase):
                 write_json_ld(network, path, header={'dcat:distribution': {'@type': 'dcat:Distribution'}})
             with self.assertRaisesRegex(ValueError, "'ieee13' is not an absolute IRI"):
                 write_json_ld(network, path, header={'dcat:isVersionOf': 'ieee13'})
+            with self.assertRaisesRegex(ValueError, 'is not a UTC date-time'):
+                write_json_ld(network, path, header={'dct:issued': '2026-11-01'})
 
     def test_json_ld_reader_restores_model_header(self):
         self._use_model_scope(PNNL, 'ieee13')
