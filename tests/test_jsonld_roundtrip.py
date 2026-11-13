@@ -240,7 +240,9 @@ def _rdf(path):
     from cimprofiles.jsonld import load_document
     document = json.loads(path.read_text())
     document['@context'] = load_document(document['@context'])['@context']  # offline copy
-    return rdflib.Dataset(default_union=True).parse(data=json.dumps(document), format='json-ld')
+    dataset = rdflib.Dataset(default_union=True)
+    dataset.parse(data=json.dumps(document), format='json-ld')   # rdflib 7.0 returns the default graph
+    return dataset
 
 
 def test_written_context_types_values_for_json_ld_processors(profile, tmp_path):
