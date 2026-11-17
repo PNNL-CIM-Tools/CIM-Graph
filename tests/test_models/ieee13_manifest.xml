@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- A package manifest in the ENTSO-E metadata layout (Metadata for Dataset and Distribution
+     Specification v2.4.0), with the cim18v17 metadata classes: one frame model in RDF/XML
+     (two parts, a file:// path and a relative IRI), JSON-LD and .cimtbl, and one boundary. -->
+<rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:dcat="http://www.w3.org/ns/dcat#"
+         xmlns:dcterms="http://purl.org/dc/terms/" xmlns:spdx="http://spdx.org/rdf/terms#"
+         xmlns:md="http://iec.ch/TC57/61970-552/ModelDescription/1#" xmlns:cim="http://cim.ucaiug.io/cim101/draft#">
+<dcat:Catalog rdf:about="urn:uuid:7b1e0c2a-1d3f-4b6e-9a51-000000000100">
+  <dcterms:identifier>7b1e0c2a-1d3f-4b6e-9a51-000000000100</dcterms:identifier>
+  <dcterms:title>IEEE 13 package</dcterms:title>
+  <dcat:dataset rdf:resource="urn:uuid:7b1e0c2a-1d3f-4b6e-9a51-000000000101"/>
+  <dcat:dataset rdf:resource="urn:uuid:7b1e0c2a-1d3f-4b6e-9a51-000000000102"/>
+</dcat:Catalog>
+<dcat:Dataset rdf:about="urn:uuid:7b1e0c2a-1d3f-4b6e-9a51-000000000101">
+  <rdf:type rdf:resource="http://cim.ucaiug.io/cim101/draft#FrameModel"/>
+  <dcterms:identifier>7b1e0c2a-1d3f-4b6e-9a51-000000000101</dcterms:identifier>
+  <dcterms:title>IEEE 13 feeder</dcterms:title>
+  <dcterms:issued>2026-11-16T00:00:00Z</dcterms:issued>
+  <dcat:version>1.0.0</dcat:version>
+  <dcterms:spatial rdf:resource="urn:uuid:7b1e0c2a-1d3f-4b6e-9a51-000000000110"/>
+  <dcterms:requires rdf:resource="urn:uuid:7b1e0c2a-1d3f-4b6e-9a51-000000000102"/>
+  <md:Model.modelingAuthoritySet>https://github.com/PNNL-CIM-Tools/CIM-Graph</md:Model.modelingAuthoritySet>
+  <cim:FrameModel.represents rdf:resource="urn:uuid:7b1e0c2a-1d3f-4b6e-9a51-000000000110"/>
+  <cim:FrameModel.perimeter rdf:resource="urn:uuid:7b1e0c2a-1d3f-4b6e-9a51-000000000102"/>
+  <dcat:distribution rdf:resource="urn:uuid:7b1e0c2a-1d3f-4b6e-9a51-000000000121"/>
+  <dcat:distribution rdf:resource="urn:uuid:7b1e0c2a-1d3f-4b6e-9a51-000000000122"/>
+  <dcat:distribution rdf:resource="urn:uuid:7b1e0c2a-1d3f-4b6e-9a51-000000000123"/>
+  <dcat:distribution rdf:resource="urn:uuid:7b1e0c2a-1d3f-4b6e-9a51-000000000124"/>
+</dcat:Dataset>
+<dcat:Distribution rdf:about="urn:uuid:7b1e0c2a-1d3f-4b6e-9a51-000000000121">
+  <dcat:accessURL rdf:resource="file://ieee13.xml"/>
+  <dcat:mediaType rdf:resource="https://www.iana.org/assignments/media-types/application/rdf+xml"/>
+  <dcat:byteSize>293948</dcat:byteSize>
+  <spdx:checksum>
+    <spdx:Checksum>
+      <spdx:algorithm rdf:resource="http://spdx.org/rdf/terms#checksumAlgorithm_sha256"/>
+      <spdx:checksumValue>a4e2b3d3bcdfc88d07252f0f00a8935f2cb1e8cb0bc3c9bdc399d35635a79ca7</spdx:checksumValue>
+    </spdx:Checksum>
+  </spdx:checksum>
+  <dcterms:conformsTo rdf:resource="urn:iso:std:iec:61970-552:2016"/>
+</dcat:Distribution>
+<dcat:Distribution rdf:about="urn:uuid:7b1e0c2a-1d3f-4b6e-9a51-000000000122">
+  <dcat:accessURL rdf:resource="ieee13_assets.xml"/>
+  <dcat:mediaType rdf:resource="https://www.iana.org/assignments/media-types/application/rdf+xml"/>
+  <dcterms:conformsTo rdf:resource="urn:iso:std:iec:61970-552:2016"/>
+</dcat:Distribution>
+<dcat:Distribution rdf:about="urn:uuid:7b1e0c2a-1d3f-4b6e-9a51-000000000123">
+  <dcat:accessURL rdf:resource="ieee13.jsonld"/>
+  <dcat:mediaType rdf:resource="https://www.iana.org/assignments/media-types/application/ld+json"/>
+  <dcterms:conformsTo rdf:resource="urn:iso:std:iec:61970-553:draft:ed-1"/>
+</dcat:Distribution>
+<dcat:Distribution rdf:about="urn:uuid:7b1e0c2a-1d3f-4b6e-9a51-000000000124">
+  <dcat:accessURL rdf:resource="file://cimtbl/ieee13.cimtbl"/>
+  <dcat:mediaType rdf:resource="https://www.iana.org/assignments/media-types/text/plain"/>
+</dcat:Distribution>
+<dcat:Dataset rdf:about="urn:uuid:7b1e0c2a-1d3f-4b6e-9a51-000000000102">
+  <rdf:type rdf:resource="http://cim.ucaiug.io/cim101/draft#BoundaryModel"/>
+  <dcterms:title>IEEE 13 boundary</dcterms:title>
+  <dcterms:spatial rdf:resource="urn:uuid:7b1e0c2a-1d3f-4b6e-9a51-000000000111"/>
+</dcat:Dataset>
+<cim:Frame rdf:about="urn:uuid:7b1e0c2a-1d3f-4b6e-9a51-000000000110">
+  <cim:Frame.connectsTo rdf:resource="urn:uuid:7b1e0c2a-1d3f-4b6e-9a51-000000000111"/>
+</cim:Frame>
+<cim:Boundary rdf:about="urn:uuid:7b1e0c2a-1d3f-4b6e-9a51-000000000111">
+  <cim:Boundary.separates rdf:resource="urn:uuid:7b1e0c2a-1d3f-4b6e-9a51-000000000110"/>
+</cim:Boundary>
+</rdf:RDF>

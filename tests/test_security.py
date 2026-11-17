@@ -131,14 +131,16 @@ def test_read_incremental_keeps_full_uuid(tmp_path):
 
 # 1.3 Path traversal in 557 metadata
 
-@pytest.mark.parametrize('access_url', ['../secret.xml', '..\\secret.xml', 'parts/../../secret.xml'])
+@pytest.mark.parametrize('access_url', ['../secret.xml', '..\\secret.xml', 'parts/../../secret.xml',
+                                        'file://../secret.xml', 'file:///../secret.xml'])
 def test_metadata_access_url_cannot_leave_metadata_dir(tmp_path, access_url):
     from cimgraph.databases.fileparsers.metadata import (Distribution, MetadataGraph,
                                                          resolve_part_paths)
     (tmp_path / 'secret.xml').write_text('<rdf:RDF/>')  # exists, so only containment can stop it
     package = tmp_path / 'package'
     package.mkdir()
-    meta = MetadataGraph(distributions=[Distribution(uuid='d1', access_url=access_url)])
+    meta = MetadataGraph(distributions=[Distribution(uuid='d1', access_url=access_url,
+                                                     media_type='application/rdf+xml')])
     with pytest.raises(ValueError, match='outside'):
         resolve_part_paths(meta, package)
 
