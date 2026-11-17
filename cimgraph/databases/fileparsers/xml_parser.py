@@ -11,7 +11,8 @@ from defusedxml.ElementTree import parse
 from cimgraph.core import (get_cim_profile, get_iec61970_552, get_namespace, get_use_units,
                            get_validation_log_level, set_model_scope)
 from cimgraph.databases import ConnectionInterface, Graph, QueryResponse, reference_key
-from cimgraph.databases.fileparsers.metadata import HEADER_CLASSES, parse_model_header
+from cimgraph.databases.fileparsers.metadata import (is_header_element, parse_metadata,
+                                                     parse_model_header, resolve_part_paths)
 
 _log = logging.getLogger(__name__)
 
@@ -26,7 +27,6 @@ class XMLFile(ConnectionInterface):
         # Resolve it into a list of part paths to load into one graph.
         self.metadata_graph = None
         if metadata is not None:
-            from cimgraph.databases.fileparsers.metadata import parse_metadata, resolve_part_paths
             self.metadata_graph = parse_metadata(metadata)
             base_dir = Path(metadata).resolve().parent
             filename = [str(p) for p in resolve_part_paths(self.metadata_graph, base_dir)]
@@ -199,6 +199,8 @@ class XMLFile(ConnectionInterface):
         return self.graph
 
     def parse_nodes(self, element:object) -> Identity:
+        if is_header_element(element):
+            return None  # file header, read by parse_model_header
         obj = None
         class_name = None
         try:
@@ -213,8 +215,6 @@ class XMLFile(ConnectionInterface):
         if class_name is None:
             _log.error(f'Unable to parse {element}. This may be caused by an invalid namespace')
             return None
-        if class_name in HEADER_CLASSES:
-            return None  # file header, read by parse_model_header
 
         if class_name in self.cim.__all__:
             # print(class_name)
@@ -236,9 +236,9 @@ class XMLFile(ConnectionInterface):
     def parse_edges(self, element):
 
         # class_name = element.tag.split('{'+self.namespace+'}')[1]
-        class_name = element.tag.split('}')[1]
-        if class_name in HEADER_CLASSES:
+        if is_header_element(element):
             return  # file header, read by parse_model_header
+        class_name = element.tag.split('}')[1]
 
         if class_name in self.cim.__all__:
             cim_class = getattr(self.cim, class_name)

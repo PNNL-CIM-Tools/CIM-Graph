@@ -239,7 +239,9 @@ def _rdf(path):
     rdflib = pytest.importorskip('rdflib')
     from cimprofiles.jsonld import load_document
     document = json.loads(path.read_text())
-    document['@context'] = load_document(document['@context'])['@context']  # offline copy
+    contexts = document['@context'] if isinstance(document['@context'], list) else [document['@context']]
+    document['@context'] = [load_document(context)['@context'] if isinstance(context, str) else context
+                            for context in contexts]   # offline copies
     dataset = rdflib.Dataset(default_union=True)
     dataset.parse(data=json.dumps(document), format='json-ld')   # rdflib 7.0 returns the default graph
     return dataset
@@ -297,3 +299,37 @@ def test_nordic44_equipment(profile, tmp_path):
     written = tmp_path / 'written.jsonld'
     write_json_ld(network, str(written))
     assert _differences(_read(written), network) == []
+
+
+def test_xml_and_json_ld_headers_carry_the_same_triples(profile, tmp_path):
+    """write_xml(header=...) and write_json_ld(header=...) describe the dataset alike."""
+    rdflib = pytest.importorskip('rdflib')
+    from cimgraph.utils import write_xml
+    cim = profile('cimhub_2023')
+    network = FeederModel(connection=XMLFile(filename=IEEE13), container=cim.Feeder(mRID=FEEDER_MRID),
+                          distributed=False)
+    header = {'@id': 'urn:uuid:5a0c3a4e-0000-5000-8000-000000000001',
+              'dct:identifier': '5a0c3a4e-0000-5000-8000-000000000001', 'dct:issued': '2026-11-01T00:00:00Z',
+              'dcat:isVersionOf': 'https://example.org/models/ieee13', 'dct:title': 'ieee13',
+              'dct:license': {'@id': 'https://spdx.org/licenses/BSD-3-Clause.html'}, 'gk:feederCount': 1,
+              'dct:publisher': {'@id': 'https://www.pnnl.gov/', '@type': 'foaf:Organization', 'foaf:name': 'PNNL'}}
+    extension = {'gk': 'https://gridkitchen.example/ns#', 'foaf': 'http://xmlns.com/foaf/0.1/'}
+    write_xml(network, str(tmp_path / 'out.xml'), header=header, contexts=[extension])
+    write_json_ld(network, str(tmp_path / 'out.jsonld'), convention='si', header=header, contexts=[extension])
+
+    def described(graph, subject):
+        """(predicate, object) pairs of a subject, blank nodes replaced by their own pairs."""
+        pairs = set()
+        for predicate, value in graph.predicate_objects(subject):
+            if isinstance(value, rdflib.BNode):
+                value = frozenset(described(graph, value))
+            pairs.add((predicate, value))
+        return pairs
+
+    dataset = rdflib.URIRef(header['@id'])
+    xml = rdflib.Graph().parse(str(tmp_path / 'out.xml'), format='xml')
+    json_ld = _rdf(tmp_path / 'out.jsonld')
+    named_graph = (rdflib.RDF.type, rdflib.URIRef('http://www.w3.org/2004/03/trix/rdfg-1/Graph'))
+    assert described(xml, dataset) == described(json_ld, dataset) - {named_graph}
+    publisher = rdflib.URIRef('https://www.pnnl.gov/')
+    assert described(xml, publisher) == described(json_ld, publisher)

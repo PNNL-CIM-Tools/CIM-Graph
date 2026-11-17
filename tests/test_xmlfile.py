@@ -240,6 +240,62 @@ class TestXMLFile(unittest.TestCase):
         self.assertIsNotNone(header.full_model_uuid)
         self.assertEqual((get_model_authority(), get_model_name()), (PNNL, 'ieee13'))
 
+    def test_xml_dataset_header_from_the_caller(self):
+        """write_xml(header=...) writes the ENTSO-E dcat:Dataset block in place of md:FullModel;
+        identical exports are identical, and the reader restores the model scope from it."""
+        self._use_model_scope(PNNL, 'ieee13')
+        network = self._ieee13()
+        header = {'@id': 'urn:uuid:5a0c3a4e-0000-5000-8000-000000000001',
+                  'dct:identifier': '5a0c3a4e-0000-5000-8000-000000000001',
+                  'dct:issued': '2026-11-01T00:00:00Z', 'dct:title': 'ieee13 <test>',
+                  'dcat:isVersionOf': {'@id': 'https://gridkitchen.example/models/ieee13'},
+                  'dct:license': {'@id': 'https://spdx.org/licenses/BSD-3-Clause.html'},
+                  'gk:feederCount': 1}
+        extension = {'gk': 'https://gridkitchen.example/ns#'}
+        si = profile_jsonld('cimhub_2023')['conventions']['si']
+        with tempfile.TemporaryDirectory() as tmp_dir:
+            paths = [os.path.join(tmp_dir, f'{n}.xml') for n in (1, 2)]
+            for path in paths:
+                write_xml(network, path, header=header, contexts=[extension])
+            with open(paths[0], encoding='utf-8') as first, open(paths[1], encoding='utf-8') as second:
+                text = first.read()
+                self.assertEqual(text, second.read())
+
+            self.assertIn('<dcat:Dataset rdf:about="urn:uuid:5a0c3a4e-0000-5000-8000-000000000001">', text)
+            self.assertIn('<dcat:isVersionOf rdf:resource="https://gridkitchen.example/models/ieee13"/>', text)
+            self.assertIn('<dct:title>ieee13 &lt;test&gt;</dct:title>', text)
+            self.assertIn('<dct:issued rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">'
+                          '2026-11-01T00:00:00Z</dct:issued>', text)
+            self.assertIn(f'<dct:conformsTo rdf:resource="{si[0]}"/>', text)   # CIM XML numbers are SI
+            self.assertIn('<gk:feederCount rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1<', text)
+            self.assertIn('xmlns:gk="https://gridkitchen.example/ns#"', text)
+            self.assertNotIn('md:FullModel', text)
+            self.assertNotIn('cim:ModelAuthority', text)
+            self.assertNotIn('rdfg-1/Graph', text)       # not a named graph in RDF/XML
+
+            self._use_model_scope('https://someone.else', '')
+            reread = XMLFile(filename=paths[0])
+            reread.create_new_graph(container=None)
+        (read_header,) = reread.model_headers
+        self.assertEqual((read_header.authority, read_header.description), (PNNL, 'ieee13 <test>'))
+        self.assertEqual(read_header.full_model_uuid, '5a0c3a4e-0000-5000-8000-000000000001')
+        self.assertEqual(read_header.created, '2026-11-01T00:00:00Z')
+        self.assertEqual((get_model_authority(), get_model_name()), (PNNL, 'ieee13 <test>'))
+        self.assertNotIn('Dataset', {cim_class.__name__ for cim_class in reread.graph})
+        self.assertEqual(sum(map(len, reread.graph.values())), sum(map(len, network.graph.values())))
+
+    def test_xml_dataset_header_checks(self):
+        self._use_model_scope(PNNL, 'ieee13')
+        network = self._ieee13()
+        with tempfile.TemporaryDirectory() as tmp_dir:
+            path = os.path.join(tmp_dir, 'out.xml')
+            with self.assertRaisesRegex(ValueError, 'needs write_model_header=True'):
+                write_xml(network, path, write_model_header=False, header={})
+            with self.assertRaisesRegex(ValueError, r"prefixes \['gk'\] are not defined"):
+                write_xml(network, path, header={'gk:feederCount': 1})
+            with self.assertRaisesRegex(ValueError, 'must be a compact IRI'):
+                write_xml(network, path, header={'https://example.org/ns#count': 1})
+
     def _use_model_scope(self, authority, model_name):
         set_model_scope(authority, model_name)
         self.addCleanup(get_model_name.cache_clear)
