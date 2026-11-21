@@ -10,10 +10,10 @@ from cimprofiles.identity import model_authority_namespace
 from cimprofiles.jsonld import document_prefixes, load_vocabulary_units, profile_jsonld
 from cimprofiles.jsonld.documents import cache_index
 
-from cimgraph.core import get_allow_remote_context, set_model_scope
+from cimgraph.core import get_allow_remote_context
 from cimgraph.core.attribute_utils import get_attr_datatype
 from cimgraph.databases import ConnectionInterface, Graph, QueryResponse, reference_key
-from cimgraph.databases.fileparsers.metadata import HEADER_CLASSES, ModelHeader
+from cimgraph.databases.fileparsers.metadata import HEADER_CLASSES, ModelHeader, use_model_scope
 
 _log = logging.getLogger(__name__)
 
@@ -202,12 +202,20 @@ class JSONLDFile(ConnectionInterface):
         pass
 
     def get_object(self, mRID: str, graph=None) -> object:
-        obj = None
-        for item in self.items:
-            obj_id = item.get('@id', '')
-            if mRID in obj_id:
-                obj = self.parse_node(item)
-        return obj
+        """
+        The object whose @id is mRID, from any loaded file, or None. Both are compared
+        in any of their forms ('urn:uuid:x', '#_x', '_x', 'x'), and UUIDs in any case.
+        The object is read into self.graph (the graph argument is unused: it is the
+        model's graph once create_new_graph has run).
+        """
+        key = reference_key(mRID)
+        for header, items in zip(self.model_headers, self._file_items):
+            for item in items:
+                obj_id = item.get('@id')
+                if obj_id and reference_key(obj_id) == key and not self._is_header(item.get('@type', '')):
+                    use_model_scope(header)   # the identifier create_new_graph gives it
+                    return self.parse_node(item)
+        return None
 
     def get_from_triple(self, subject: object, predicate: str, graph: Graph = None) -> list[object]:
         if graph is None:
@@ -218,21 +226,27 @@ class JSONLDFile(ConnectionInterface):
         return results
 
     def create_distributed_graph(self, area: object, graph: dict = None) -> Graph:
-        _log.error('distributed models not supported for JSON-LD file read')
-        if graph is None:
-            graph = defaultdict(lambda: defaultdict(dict))
-        return graph
+        # A file has no query to select one area's equipment, terminals and nodes, and
+        # JSONLDFile.get_all_edges is a no-op, so the area hierarchy cannot be walked.
+        raise NotImplementedError(
+            f'JSONLDFile does not support distributed models (area {area.uri()}): write the '
+            'model as CIM XML (write_xml) and load that with RDFlibConnection(filename=...), '
+            'which does, or build the model with distributed=False.')
 
     def create_new_graph(self, container: object, graph: dict = None) -> Graph:
         if graph is not None:
             self.graph = graph
 
+        # Add the model's container first, so the first pass fills in that instance (as
+        # the other connections do) instead of reading a second copy of it.
+        if container is not None:
+            self.add_to_graph(obj=container, graph=self.graph)
+
         # First pass: create all nodes/objects, so references can find any of them. Each
         # file's header sets the model scope first (as in XMLFile), so UUIDs seeded from
         # its non-UUID identifiers use the authority that issued them.
         for header, items in zip(self.model_headers, self._file_items):
-            if header.authority is not None:
-                set_model_scope(header.authority, header.description or '')
+            use_model_scope(header)
             for item in items:
                 self.parse_node(item)
 
@@ -320,6 +334,10 @@ class JSONLDFile(ConnectionInterface):
         """
         association = self.check_attribute(cim_class, attribute)
         if association is None:
+            for item in value if isinstance(value, list) else [value]:
+                if isinstance(item, dict):    # a reference or a typed literal
+                    item = item.get('@id', item.get('@value'))
+                self.set_undefined_attribute(self.graph, cim_class, identifier, attribute, item)
             return None
 
         input_unit = self.units.get(attribute)

@@ -1,6 +1,8 @@
+import json
 import os
+import tempfile
 import unittest
-from uuid import UUID
+from uuid import UUID, uuid4
 
 import cimprofiles.cim17.cimhub_2023 as cim
 
@@ -76,6 +78,38 @@ class TestJSONLDFile(unittest.TestCase):
                break
         self.assertEqual(phase.name, '645646_C')
         self.assertEqual(phase.ACLineSegment, line)
+
+    def test_get_object_matches_the_identifier_exactly(self):
+        database = JSONLDFile(filename='tests/test_models/ieee13.jsonld')   # "@id": "urn:uuid:<UPPER>"
+        feeder = database.get_object(self.feeder_mrid)
+        self.assertIsInstance(feeder, cim.Feeder)
+        for form in (self.feeder_mrid.lower(), f'_{self.feeder_mrid.lower()}',
+                     f'#_{self.feeder_mrid}', f'urn:uuid:{self.feeder_mrid.lower()}'):
+            self.assertIs(database.get_object(form), feeder, form)
+        # A part of an identifier is not the identifier
+        self.assertIsNone(database.get_object(self.feeder_mrid[:8]))
+        self.assertIsNone(database.get_object('0'))
+
+    def test_get_object_searches_every_file(self):
+        document = {'@context': {'cim': 'http://ucaiug.org/ns/CIM#'},
+                    '@graph': [{'@id': '_LINE_B', '@type': 'cim:ACLineSegment',
+                                'cim:IdentifiedObject.name': 'LINE_B'}]}
+        with tempfile.TemporaryDirectory() as tmp_dir:
+            path = os.path.join(tmp_dir, 'part.jsonld')
+            with open(path, 'w', encoding='utf-8') as f:
+                json.dump(document, f)
+            database = JSONLDFile(filename=['tests/test_models/ieee13.jsonld', path])
+        line = database.get_object('LINE_B')
+        self.assertIsInstance(line, cim.ACLineSegment)
+        self.assertIsNone(database.get_object('LINE'))
+        graph = database.create_new_graph(container=None)
+        self.assertIs(graph[cim.ACLineSegment][line.identifier], line)
+        self.assertEqual(line.name, 'LINE_B')
+
+    def test_create_distributed_graph_is_not_supported(self):
+        database = JSONLDFile(filename='tests/test_models/ieee13.jsonld')
+        with self.assertRaisesRegex(NotImplementedError, 'RDFlibConnection'):
+            database.create_distributed_graph(area=cim.FeederArea(mRID=str(uuid4())), graph={})
 
 
 if __name__ == '__main__':

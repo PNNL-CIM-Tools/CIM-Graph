@@ -344,7 +344,7 @@ class Neo4jConnection(ConnectionInterface):
                     association = self.check_attribute(cim_class, attribute)
                     if association is not None:
                         new_edges.append(edge_value)
-                        self.create_value(graph, cim_class, identifier, attribute, edge_value)
+                    self.create_value(graph, cim_class, identifier, attribute, edge_value)
         return new_edges
 
     def property_query_parser(self, query_output: QueryResponse,
@@ -363,9 +363,7 @@ class Neo4jConnection(ConnectionInterface):
             properties = result['attributes']
             for attribute in properties.keys():
                 if attribute != 'uri':
-                    association = self.check_attribute(cim_class, attribute)
-                    if association is not None:
-                        self.create_value(graph, cim_class, identifier, attribute, properties[attribute])
+                    self.create_value(graph, cim_class, identifier, attribute, properties[attribute])
 
 
     def upload(self, graph: Graph, batch_size: int = 100) -> None:

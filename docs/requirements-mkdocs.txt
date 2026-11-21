@@ -3,7 +3,7 @@ mkdocs>=1.5.3
 mkdocs-material>=9.5.0
 
 # Jupyter notebook support
-mkdocs-jupyter>=0.24.6
+mkdocs-jupyter>=0.27.0  # markdown_cell_processor; needs Python 3.12+
 nbconvert>=7.14.0
 jupyter>=1.0.0
 

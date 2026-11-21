@@ -38,7 +38,8 @@ class BusBranchModel(GraphModel):
         self.graph = self.connection.create_new_graph(container, self.graph)
 
     def initialize_distributed_model(self, container) -> None:
-        pass
+        raise NotImplementedError('BusBranchModel does not support distributed=True; '
+                                  'use distributed=False')
         # if len(self.distributed_hierarchy) > 0:
         #     for container_class in self.distributed_hierarchy:
         #         container_type = container_class.__class__.__name__

@@ -395,7 +395,7 @@ class SPARQLEndpointConnection(ConnectionInterface):
                 association = self.check_attribute(cim_class, attribute)
                 if association is not None:
                     new_edges.append(value)
-                    self.create_value(graph, cim_class, identifier, attribute, value)
+                self.create_value(graph, cim_class, identifier, attribute, value)
 
         return new_edges
 

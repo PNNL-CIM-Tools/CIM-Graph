@@ -67,3 +67,45 @@ def test_single_class_has_header_and_no_inherited_by_default():
     assert 'class ACLineSegmentPhase{' in out
     # Default show_inherited=False → don't list parent fields as attribute lines
     assert '+ mRID' not in out
+
+
+def test_object_path_ending_in_name_shows_the_name_once():
+    node = cim.ConnectivityNode(name='bus1')
+    terminal = cim.Terminal(name='t1', ConnectivityNode=node)
+    switch = cim.LoadBreakSwitch(name='sw1', Terminals=[terminal])
+
+    out = utils.get_mermaid_path(switch, 'Terminals[0].ConnectivityNode.name')
+
+    assert out.count('name: bus1') == 1
+
+
+def test_object_path_ending_in_a_unit_value_shows_it():
+    voltage = cim.BaseVoltage(name='bv', nominalVoltage=cim.Voltage(4.16, 'kV'))
+    node = cim.ConnectivityNode(name='bus1')
+    terminal = cim.Terminal(name='t1', ConnectivityNode=node)
+    switch = cim.LoadBreakSwitch(name='sw1', Terminals=[terminal], BaseVoltage=voltage)
+
+    out = utils.get_mermaid_path(switch, 'BaseVoltage.nominalVoltage')
+
+    assert 'nominalVoltage: 4160 volt' in out
+
+
+def test_unit_values_are_fixed_point_unless_small():
+    from cimgraph.utils.mermaid import _format_value
+
+    assert _format_value(cim.ActivePower(1155, 'kW')) == '1155000 watt'
+    assert _format_value(cim.Length(30.479999999999997)) == '30.48 meter'
+    assert _format_value(cim.Susceptance(5.6e-6)) == '5.6e-06 siemens'
+
+
+def test_long_class_names_wrap_at_a_word_start():
+    from cimgraph.utils.mermaid import _wrap
+
+    assert _wrap('LoadResponseCharacteristic') == ['LoadResponse', 'Characteristic']
+    assert _wrap('a' * 30) == ['a' * 22, 'a' * 8]
+
+
+def test_class_diagram_sets_the_layout():
+    out = utils.get_mermaid(cim.ACLineSegment, layout='elk')
+
+    assert out.startswith('%%{init: {"theme":"neutral", "layout":"elk"}}%%')

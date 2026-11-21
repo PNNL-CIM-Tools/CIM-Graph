@@ -95,6 +95,29 @@ class TestNeo4J(unittest.TestCase):
         expected_str = 'MATCH (container:Feeder)\nWHERE container.uri = "urn:uuid:49AD8E07-3BF9-A4E2-CB8F-C3722F837B62"\nMATCH (eq) - [:`Equipment.EquipmentContainer`] - (container)\nOPTIONAL MATCH (cnode) - [:`Terminal.ConnectivityNode`] - (term:Terminal) - [:`Terminal.ConductingEquipment`] -> (eq)\nRETURN DISTINCT\nREPLACE(cnode.uri, "urn:uuid:", "") as ConnectivityNode,\nREPLACE(term.uri, "urn:uuid:", "") as Terminal,\nREPLACE(eq.uri, "urn:uuid:", "") as eq_id,\nLABELS(eq)[1] as eq_class'
         self.assertEqual(query, expected_str)
 
+    def test_get_triple_cypher_does_not_name_the_attribute_as_a_key(self):
+        """Neo4j warns about each relationship type or property key the query names that is
+        not in the database, and a predicate is only ever stored as one of the two."""
+        line = cim.ACLineSegment(mRID='0BBD0EA3-F665-465B-86FD-FC8B8466AD53')
+        query = cypher.get_triple_cypher(line, 'IdentifiedObject.name')
+        self.assertNotIn('`', query)
+        self.assertIn('type(r) = "IdentifiedObject.name"', query)
+        self.assertIn('properties(n)["IdentifiedObject.name"]', query)
+
+    @pytest.mark.integration('neo4j')
+    def test_get_from_triple(self):
+        database = Neo4jConnection()
+        line = database.get_object(mRID='0BBD0EA3-F665-465B-86FD-FC8B8466AD53')
+        feeder = database.get_object(mRID=self.feeder_mrid)
+        with self.assertNoLogs('neo4j.notifications', level='WARNING'):
+            names = database.get_from_triple(line, 'IdentifiedObject.name')
+            containers = database.get_from_triple(line, 'Equipment.EquipmentContainer')
+            feeder_areas = database.get_from_triple(feeder, 'Feeder.FeederArea')
+        self.assertEqual(names, ['645646'])
+        self.assertEqual(containers, [feeder])
+        self.assertEqual(feeder_areas, [])  # ieee13.xml has no FeederArea
+        database.disconnect()
+
     @pytest.mark.integration('neo4j')
     def test_get_feeder_model(self):
         database = Neo4jConnection()

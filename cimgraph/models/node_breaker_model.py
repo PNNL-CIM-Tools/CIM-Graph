@@ -61,9 +61,8 @@ class NodeBreakerModel(GraphModel):
             self.add_to_graph(container)
 
     def initialize_distributed_model(self, container: object) -> None:
-        self.graph = {}
-        self.add_to_graph(self.container)
-        self.distributed_areas = {}
+        raise NotImplementedError('NodeBreakerModel does not support distributed=True; '
+                                  'use distributed=False')
 
         # if container.__class__ == self.cim.GeographicalRegion:
         #     self.get_all_edges(self.cim.GeographicalRegion)

@@ -47,6 +47,7 @@ plugins:
       ignore_h1_titles: True
       show_input: True
       theme: dark
+      markdown_cell_processor: mkdocs  # resolves .ipynb and image links between pages
 
 markdown_extensions:
   # Python Markdown

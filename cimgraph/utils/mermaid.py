@@ -19,10 +19,23 @@ WRAP = 22
 
 
 def _wrap(text: str) -> list[str]:
-    """Split a string into WRAP-length chunks (1 chunk if short)."""
+    """Split a string longer than WRAP in two, at the last CamelCase word start if there is one."""
     if len(text) <= WRAP:
         return [text]
-    return [text[:WRAP], text[WRAP:]]
+    split = WRAP
+    for index in range(WRAP, 0, -1):
+        if text[index].isupper():
+            split = index
+            break
+    return [text[:split], text[split:]]
+
+
+def _init_line(theme: str, layout: str | None = None) -> str:
+    """Mermaid config directive for the diagram theme and, optionally, layout engine."""
+    config = '"theme":"' + str(theme) + '"'
+    if layout is not None:
+        config += ', "layout":"' + str(layout) + '"'
+    return '%%{init: {' + config + '}}%%\n'
 
 
 def _inner_type(attr_type: str) -> str:
@@ -86,12 +99,16 @@ def _is_list(field_obj: Field) -> bool:
 def _format_value(edge: object) -> str:
     """String form of an attribute value, rounding CIMUnit magnitudes to fit the diagram.
 
-    CIMUnit stores full float precision (e.g. 30.479999999999997 meter); round to
-    4 decimals and strip trailing zeros so labels stay compact.
+    CIMUnit stores full float precision (e.g. 30.479999999999997 meter): values of 1
+    or more are rounded to 4 decimals in fixed point (1155000 W, not 1.155e+06), and
+    smaller ones keep 4 significant digits (5.6e-06 S, not 0).
     """
     if isinstance(edge, CIMUnit):
-        magnitude = round(float(edge), 4)
-        number = f'{magnitude:g}'
+        value = float(edge)
+        if abs(value) >= 1:
+            number = f'{value:.4f}'.rstrip('0').rstrip('.')
+        else:
+            number = f'{value:.4g}'
         unit = str(edge).split(' ', 1)[1] if ' ' in str(edge) else ''
         return f'{number} {unit}'.rstrip()
     return str(edge)
@@ -305,7 +322,7 @@ def get_mermaid(root: object | type | list, show_attributes: bool = True, show_i
         return object_mermaid(root)
 
     if is_dataclass(root) or isinstance(root, enum.EnumMeta):
-        mermaid = '%%{init: {"theme":"' + str(theme) + '"}}%%\n'
+        mermaid = _init_line(theme, layout)
         mermaid += 'classDiagram\n'
         mermaid += class_mermaid(root, show_attributes, show_inherited, serialize_only=serialize_only)
         mermaid += class_all_assc_mermaid(root, show_inherited, serialize_only=serialize_only)
@@ -314,7 +331,7 @@ def get_mermaid(root: object | type | list, show_attributes: bool = True, show_i
     if isinstance(root, list):
         types_in_root = set(map(type, root))
         if types_in_root <= {type, enum.EnumMeta}:
-            mermaid = '%%{init: {"theme":"' + str(theme) + '"}}%%\n'
+            mermaid = _init_line(theme, layout)
             mermaid += 'classDiagram\n'
             for value in root:
                 mermaid += class_mermaid(value, show_attributes, show_inherited,
@@ -373,7 +390,9 @@ def add_object_path_mermaid(root: object, path: str, mermaid: str) -> str:
             next_short_uri = next_edge.uri().split('-')[0]
             mermaid += INDENT + f'{short_uri} -- "{attr}" --> {next_short_uri}\n'
             mermaid += _flowchart_node(next_edge)
-        elif isinstance(next_edge, (str, float, bool, int, enum.Enum)):
+        elif attr == 'name':
+            pass  # the node label already shows the name
+        elif isinstance(next_edge, (str, float, bool, int, enum.Enum, CIMUnit)):
             mermaid = mermaid[:-4]  # strip trailing '`")\n' to append inside the node
             mermaid += short_attr_mermaid(edge, attr, num_indent=2)
             mermaid += '`")\n'
@@ -413,14 +432,14 @@ def get_mermaid_path(root: object | type, path: str | list[str],
                      serialize_only: bool = False) -> str:
     """Generate a mermaid diagram of a specified path starting from a root object or class."""
     if isinstance(root, Identity):
-        mermaid = '%%{init: {"theme":"' + str(theme) + '"}}%%\n'
+        mermaid = _init_line(theme)
         mermaid += f'flowchart {direction}\n'
         mermaid += _flowchart_node(root)
         return add_object_path_mermaid(root, path, mermaid)
     if isinstance(root, enum.EnumMeta):
         return ''
     if is_dataclass(root):
-        mermaid = '%%{init: {"theme":"' + str(theme) + '"}}%%\n'
+        mermaid = _init_line(theme)
         mermaid += 'classDiagram\n'
         mermaid += class_mermaid(root, show_attributes, show_inherited, serialize_only=serialize_only)
         return add_class_path_mermaid(root, path, mermaid, show_attributes, show_inherited,

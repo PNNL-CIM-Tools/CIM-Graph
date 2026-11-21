@@ -41,9 +41,9 @@ Key features:
 
 ## Requirements
 
-CIM-Graph requires a python version >=3.10 and <4. No testing has been done with other versions.
+CIM-Graph requires Python 3.10 or newer, and is tested on Python 3.10 to 3.14.
 
-Support is currently offered for opening XML, JSON-LD, and CSV files
+Support is currently offered for opening CIM XML and JSON-LD files.
 
 Support is currently offered for GridAPPS-D, Blazegraph, Neo4J, GraphDB, and MySQL databases using the CIMTool SQL schema. More databases will be added in the future.
 
@@ -282,15 +282,13 @@ pip install uv
 Clone the repository and install with UV:
 
 ```bash
-git clone https://github.com/PNNL-CIM-Tools/CIM-Profiles.git
 git clone https://github.com/PNNL-CIM-Tools/CIM-Graph.git
 cd CIM-Graph
 uv sync --all-extras
 ```
 
 This creates a virtual environment in `.venv/` with every database driver and the development
-tools (pytest, pre-commit). Until the 1.0 release, CIM-Graph is built against the CIM-Profiles
-checkout next to it.
+tools (pytest, pre-commit).
 
 Run the tests that need no database with `uv run pytest -m "not integration"`. Tests marked
 `integration` are skipped when their database is not running. To run them against Blazegraph,

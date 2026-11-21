@@ -11,6 +11,7 @@ from rdflib.namespace import RDF
 
 import cimgraph.queries.rdflib as rdflib_sparql
 from cimgraph.databases import Graph as GraphType
+from cimgraph.databases import get_url
 from cimgraph.databases.sparql_endpoint import SPARQLEndpointConnection
 
 _log = logging.getLogger(__name__)
@@ -48,7 +49,11 @@ class RDFlibConnection(SPARQLEndpointConnection):
         if self.filename is not None:
             if not Path(self.filename).is_file():
                 raise FileNotFoundError(f'{self.filename} is not a local file')
-            self.connection_obj.parse(self.filename, format='xml')
+            # 552-LEGACY and CGMES files name objects rdf:ID="_<uuid>" / rdf:resource="#_<uuid>",
+            # which resolve against the base URI. The queries build those IRIs as CIMG_URL#_<uuid>,
+            # so parse with that base. 552-NEW urn:uuid: IRIs are absolute and ignore the base.
+            public_id = None if self.iec61970_552 == '552-NEW' else get_url()
+            self.connection_obj.parse(self.filename, format='xml', publicID=public_id)
             self.connection_obj.bind('cim', Namespace(self.namespace))
             self.connection_obj.bind('rdf', RDF)
 
@@ -176,6 +181,7 @@ class RDFlibConnection(SPARQLEndpointConnection):
             edge_enum = self.enum_from_iri(value)
             association = self.check_attribute(cim_class, attribute)
             if association is None:
+                self.set_undefined_attribute(graph, cim_class, identifier, attribute, value)
                 continue
             if edge_enum is not None:
                 setattr(graph[cim_class][identifier], association, edge_enum)

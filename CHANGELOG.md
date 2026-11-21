@@ -1,11 +1,12 @@
 # Changelog
 
-## 0.6.0 (unreleased)
+## 0.6.1 (unreleased)
+
+Requires `cim-profiles>=0.2.0a6,<0.3` (was `>=0.1.0a1,<0.2`), which ships the JSON-LD contexts
+and unit vocabularies (`cimprofiles.jsonld`) with an offline cache of them, and adds the
+`cim18v17_distribution` and `cim18v17_transmission` profiles.
 
 ### JSON-LD in the CGMES draft style, with QUDT units (#225)
-
-Requires `cim-profiles>=0.2`, which ships the contexts and unit vocabularies
-(`cimprofiles.jsonld`) and an offline cache of them.
 
 - `write_json_ld` writes the profile's published `@context` URL (e.g.
   `https://pnnl-cim-tools.github.io/CIM-Profiles/cimhub_2023/0.2.0/context.jsonld`, versioned by
@@ -23,30 +24,130 @@ Requires `cim-profiles>=0.2`, which ships the contexts and unit vocabularies
   replaces ours (e.g. a stable `@id`/`dct:identifier` and `dct:issued`, so identical exports are
   identical files; `dcat:isVersionOf`, the model series IRI; extension terms and blank nodes).
   `contexts` are written after the profile's context and define the header's other prefixes; an
-  undefined header prefix fails.
+  undefined header prefix fails. `header` may not set `dcat:distribution`, and a `dct:issued`
+  that is not a UTC date-time ending in `Z` or a `dcat:isVersionOf` that is not an absolute IRI
+  raises `ValueError`.
 - Numbers are written in the units of a units convention, named in the header's
   `dct:conformsTo` and in that of its `dcat:distribution` (the Dataset's own survives tools
-  such as KGraphPy that drop the distribution). `write_json_ld(..., convention='distribution')` writes kW/kVAr/kVA, line
-  constants per km (ohm/km, uS/km) and wire sizes in mm. The default is the profile's default convention (base SI; MW/kV/km for
-  `cgmes_3_0_0`). A number kept in its own unit is written exactly, as in CIM XML; a converted
-  one to 15 significant digits.
+  such as KGraphPy that drop the distribution). `write_json_ld(..., convention='distribution')`
+  writes kW/kVAr/kVA, line constants per km (ohm/km, uS/km) and wire sizes in mm. The default is
+  the profile's default convention (base SI; MW/kV/km for `cgmes_3_0_0`). A number kept in its
+  own unit is written exactly, as in CIM XML; a converted one to 15 significant digits.
 - `JSONLDFile` reads these files and Nordic44-style ones (the header a node in `@graph`): a URL
-  `@context`, `"urn:uuid:..."` string references, and numbers in the units of the vocabularies
-  the header's distribution names, or, for CGMES files, the cached vocabularies among the
-  Dataset's own `dct:conformsTo` (other IRIs there are profiles, not units). A file naming none
-  is read with the profile's default convention. Files loaded together must agree on units. Each
-  file's header is read into `JSONLDFile.model_headers`, and its authority
-  (`md:Model.modelingAuthoritySet`, else `dcat:isVersionOf` as CGMES files carry it) and
-  `dct:title` set the model scope, as `md:FullModel` does for `XMLFile`.
+  `@context`, `"urn:uuid:..."` string references (`{"@id": ...}` objects still read), and
+  numbers in the units of the vocabularies the header's distribution names, or, for CGMES files,
+  the cached vocabularies among the Dataset's own `dct:conformsTo` (other IRIs there are
+  profiles, not units). A file naming none is read with the profile's default convention. Files
+  loaded together must agree on units. Each file's header is read into
+  `JSONLDFile.model_headers`, and its authority (`md:Model.modelingAuthoritySet`, else
+  `dcat:isVersionOf` as CGMES files carry it) and `dct:title` set the model scope, as
+  `md:FullModel` does for `XMLFile`.
 - The cimprofiles contexts type the header as the Inst4CIM CGMES context does
   (`dct:conformsTo`, `dcat:isVersionOf` as IRIs; `dct:issued` as `xsd:dateTime`), matching
   what DCAT tools such as statnett's KGraphPy expect.
 - Contexts and vocabularies that are not in the cimprofiles cache are fetched only with
   `CIMG_ALLOW_REMOTE_CONTEXT=true`; otherwise reading the file fails and names the URL.
+
+### CIM XML
+
 - The CIM XML writer no longer adds an invalid `rdf:datatype="…UnitSymbol.*"` to unit values
   (#224). CIM XML values are plain base SI numbers.
+- `write_xml(..., header={...}, contexts=[...])` writes the `dcat:Dataset` header of the
+  ENTSO-E metadata layout in place of `md:FullModel` and `cim:ModelAuthority`: the same
+  properties `write_json_ld` writes, with the same `header` and `contexts` rules, as RDF/XML
+  (not typed `rdfg:Graph`). Its `dct:conformsTo` names the profile's `si` units vocabulary.
+  Values the contexts type `@id`, and `{"@id": ...}` objects, are written as `rdf:resource`;
+  others as literals with the context's datatype. `header={}` writes the default dataset
+  header; `header` with `write_model_header=False` raises `ValueError`. `write_graph_xml` takes
+  the same arguments plus `profile` (default: the active profile).
+- `XMLFile` reads a `dcat:Dataset` header into `model_headers` (`dct:issued`, `dct:title`, and
+  the authority from `md:Model.modelingAuthoritySet`, else `dcat:isVersionOf`) and sets the
+  model scope from it, as from `md:FullModel`. DCAT and Dublin Core elements in a part file are
+  skipped as header, not read as CIM objects.
+
+### Package metadata: frame and boundary datasets
+
+- `XMLFile(metadata=...)` and `parse_metadata` read the DCAT layout of the ENTSO-E Metadata for
+  Dataset and Distribution Specification (v2.4.0): a `dcat:Catalog` of `dcat:Dataset`s typed with
+  the cim18v17 metadata classes (`cim:FrameModel`, `cim:BoundaryModel`, `cim:GridAssembly`, ...),
+  their `dcat:Distribution` files (`dcat:accessURL`, `dcat:mediaType`, an `spdx:Checksum` node,
+  `dcterms:conformsTo`), and the `cim:Frame` and `cim:Boundary` resources. The earlier 557
+  sketch (`dcat:Distribution.accessURL`, ...) still reads.
+- `MetadataGraph` gains `catalog_uuid` and `grid_resources` (`GridResource`: `cim_class` and
+  `cim_properties` such as `Frame.connectsTo`, `Boundary.separates`).
+- **Breaking:** `MetadataGraph.datasets` holds `Dataset` objects (`types`, `identifier`, `title`,
+  `issued`, `version`, `spatial`, `requires`, `distributions`, and `cim_properties` such as
+  `FrameModel.perimeter`) instead of dicts. `Distribution.byte_size` is an `int`, and
+  `Distribution.checksum_algorithm` is new. A dataset's `dcat:distribution` sets its files'
+  `dataset_uuid`.
+- **Breaking:** `resolve_part_paths` loads only RDF/XML distributions (`dcat:mediaType`
+  `application/rdf+xml`, as text or an IANA IRI); JSON-LD, `.cimtbl` and distributions without
+  a media type are skipped. `file://` access URLs are package paths
+  (`file://BoundaryData/EQBD.xml` is `BoundaryData/EQBD.xml` beside the metadata file), and a
+  file listed twice loads once. An RDF/XML distribution without an `accessURL`, or metadata with
+  no local RDF/XML file, raises `ValueError`; it used to be skipped with a warning, which could
+  load an empty graph.
+
+### Undefined attributes
+
+- `CIMG_ALLOW_UNDEFINED_ATTRIBUTES=true` keeps a property the profile does not define (e.g.
+  `ACLineSegment.vendorRating`) on the object as text, `line.vendorRating == '42.5'`, instead of
+  logging and dropping it. Every reader does this. The value is not typed: a reference or
+  enumeration is its identifier text, and a repeated property is a list of texts. `pprint` and
+  `to_dict` show it; `write_xml` and `write_json_ld` do not write it. The variable existed but
+  had no effect.
+
+### Profiles outside `cimprofiles`
+
+- `CIMG_CIM_PROFILE` accepts any importable module path (e.g. `my_package.my_profile`), so a
+  custom profile no longer has to live in `cimprofiles`. Short names still resolve through
+  `cimprofiles.PROFILE_PACKAGES`, and a name that is neither raises the `ValueError` listing the
+  known profiles.
+
+### Fixes
+
 - The readers read plain numbers for unit-only types (e.g. cim18v17 `Optional[ApparentPower]`),
   which were previously kept as strings.
+- `NodeBreakerModel(distributed=True)` and `BusBranchModel(distributed=True)` raise
+  `NotImplementedError`. They were stubs that built an empty or partial graph without saying so.
+- Mermaid diagrams (`cimgraph.utils.mermaid`):
+  - a `get_mermaid_path` path ending in `.name` no longer shows the name twice, and one ending in
+    a unit value (e.g. `BaseVoltage.nominalVoltage`) is no longer dropped;
+  - unit values are written in fixed point (`1155000 watt`, not `1.155e+06 watt`), and values
+    below 1 keep 4 significant digits;
+  - `get_mermaid(..., layout=...)` sets the layout engine; it was ignored;
+  - long class names wrap at a word boundary (`LoadResponse` / `Characteristic`).
+- `utils.get_all_data` fetches a class again when new objects of it are found, so objects reached
+  late (e.g. Locations, other Feeders) get their attributes.
+- `XMLFile` and `JSONLDFile`:
+  - `get_object` matches the identifier exactly, in any form (`urn:uuid:`, `#_`, `_` or bare,
+    UUIDs in any case), and searches every loaded file. It was a case-sensitive substring match
+    on the first file, so a partial identifier that used to match now returns `None`.
+  - The container is the object in the graph, so `network.container` has its attributes.
+  - `create_distributed_graph` raises `NotImplementedError`; it logged an error and returned
+    nothing.
+  - `XMLFile.get_from_triple` returns `[]` for a predicate the file does not write, so a
+    distributed `FeederModel` on a file without a `FeederArea` raises its "No FeederArea
+    defined" `ValueError` instead of an `AttributeError`.
+- `RDFlibConnection` reads `552-LEGACY` and `CGMES` (`rdf:ID="_<uuid>"`) files. They were
+  parsed against the file's URI, so a model read from one held only its container.
+- `MySQLConnection` matches mRIDs stored with or without the leading `_` in every
+  `CIMG_IEC61970_552` style. With the default `552-NEW`, a model from a CIMTool database
+  (e.g. `tier5_ieee13`) came back empty.
+- `Neo4jConnection.get_from_triple` no longer logs a server warning on every call, and returns
+  `[]` for a predicate with no value instead of raising `TypeError`.
+- `GridappsdConnection` no longer reads `CIMG_URL` (unused) or warns when it is unset, and
+  `disconnect()` is safe to call when not connected.
+
+### Documentation
+
+- The documentation notebooks are rewritten for 0.6: `cimprofiles` imports, the driver extras,
+  and outputs re-run against the current code, offline where possible. New pages cover the JSON-LD
+  and RDFLib readers, the file writers, Mermaid diagrams and distributed areas.
+- Links between notebook pages and to their images work on the built site
+  (`markdown_cell_processor: mkdocs`).
+
+## 0.6.0 (2026-11-09)
 
 ### Profiles moved to `cimprofiles`
 
@@ -170,7 +271,7 @@ All of these change UUIDs or comparisons that existing code may rely on:
   | `CGMES` | `rdf:ID="_<uuid>"` | `#_<uuid>` | `<uuid>` |
 
   A non-UUID mRID is written as-is. The same rule builds the IRIs in SPARQL and Cypher queries
-  and the MySQL `mRID` keys. Fixes: 552-NEW no longer writes `urn:uuid:_…` for objects read from
+  (MySQL lookups match either form; see 0.6.1). Fixes: 552-NEW no longer writes `urn:uuid:_…` for objects read from
   legacy files, `cim:Identity.identifier` never carries an underscore, and legacy/CGMES file
   headers (`md:FullModel`, `cim:ModelAuthority`) get valid `rdf:ID`s.
 - **`Identity.uri()` returns the bare UUID** (no underscore), uppercase if it was read uppercase

@@ -10,7 +10,7 @@ from gridappsd import GridAPPSD
 
 import cimgraph.queries.sparql as sparql
 from cimgraph.core import (get_cim_profile, get_database, get_host, get_iec61970_552,
-                           get_namespace, get_password, get_port, get_url, get_username)
+                           get_namespace, get_password, get_port, get_username)
 from cimgraph.databases import ConnectionInterface, Graph, QueryResponse
 
 _log = logging.getLogger(__name__)
@@ -25,7 +25,6 @@ class GridappsdConnection(ConnectionInterface):
         self.username = get_username()
         self.password = get_password()
         self.use_units = False
-        self.url = get_url()
         self.database = get_database()
         self.gapps = None
 
@@ -41,7 +40,10 @@ class GridappsdConnection(ConnectionInterface):
                                    username=self.username, password=self.password)
 
     def disconnect(self):
-        self.gapps.disconnect()
+        """Disconnect from the GridAPPS-D platform. Safe to call when not connected."""
+        if self.gapps is not None:
+            self.gapps.disconnect()
+            self.gapps = None
 
     def execute(self, query_message: str) -> QueryResponse:
         self.connect()
@@ -300,5 +302,5 @@ class GridappsdConnection(ConnectionInterface):
                     association = self.check_attribute(cim_class, attribute)
                     if association is not None:
                         new_edges.append(value)
-                        self.create_value(graph, cim_class, identifier, attribute, value)
+                    self.create_value(graph, cim_class, identifier, attribute, value)
         return new_edges

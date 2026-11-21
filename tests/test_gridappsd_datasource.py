@@ -1,5 +1,6 @@
 import os
 import unittest
+from unittest import mock
 
 import pytest
 
@@ -48,7 +49,6 @@ class TestGridappsdDatasource(unittest.TestCase):
         connection = GridappsdConnection()
         self.assertIsInstance(connection, GridappsdConnection, 'Connection should be an instance of GridappsdConnection')
         self.assertEqual(connection.cim_profile, 'cimhub_2023', 'CIM profile mismatch')
-        self.assertEqual(connection.url, 'http://localhost:8889/bigdata/namespace/kb/sparql', 'URL mismatch')
         self.assertEqual(connection.database, 'powergridmodel', 'Database mismatch')
         self.assertEqual(connection.host, 'localhost', 'Host mismatch')
         self.assertEqual(connection.port, 61613, 'Port mismatch')
@@ -57,6 +57,28 @@ class TestGridappsdDatasource(unittest.TestCase):
         self.assertEqual(connection.namespace, 'http://iec.ch/TC57/CIM100#', 'Namespace mismatch')
         self.assertEqual(connection.iec61970_552, '552-NEW', 'IEC61970_552 mismatch')
         self.assertFalse(connection.use_units, 'USE_UNITS mismatch')
+
+    def test_does_not_need_cimg_url(self):
+        """The platform is reached through CIMG_HOST and CIMG_PORT, so no CIMG_URL warning."""
+        os.environ.pop('CIMG_URL')
+        with self.assertNoLogs('cimgraph', level='WARNING'):
+            GridappsdConnection()
+
+    def test_disconnect_when_not_connected(self):
+        connection = GridappsdConnection()
+        connection.disconnect()
+        connection.disconnect()
+        self.assertIsNone(connection.gapps)
+
+    def test_disconnect_closes_the_platform_connection(self):
+        connection = GridappsdConnection()
+        gapps = mock.Mock()
+        connection.gapps = gapps
+        connection.disconnect()
+        gapps.disconnect.assert_called_once_with()
+        self.assertIsNone(connection.gapps)
+        connection.disconnect()  # safe to call again
+        gapps.disconnect.assert_called_once_with()
 
     @pytest.mark.integration('gridappsd')
     def test_connection_established(self):
