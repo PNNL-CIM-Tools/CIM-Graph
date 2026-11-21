@@ -1,11 +1,12 @@
 import importlib
+import importlib.util
 import logging
 import os
 import types
 import warnings
 from functools import cache
 
-from cimprofiles import profile_module
+from cimprofiles import PROFILE_PACKAGES, profile_module
 # The model-scope getters live in cimprofiles because Identity reads them. Import, never copy:
 # set_model_scope() must clear the same @cache that Identity uses.
 from cimprofiles.env_vars import (DEFAULT_MODEL_AUTHORITY, DEFAULT_MODEL_NAME,
@@ -42,16 +43,21 @@ def _qualify(path: str) -> str:
     cimprofiles.PROFILE_PACKAGES, and so is a pre-0.6 'cimgraph.data_profile.' path,
     so every spelling gives the same module and the same merge-memo key (otherwise
     two spellings would build two sets of merged classes whose objects miss each
-    other's graph keys).
+    other's graph keys). Any other name is a module path ('cimprofiles.cim17.cimhub_2023',
+    'my_package.my_profile'), used as given if its top-level package is importable.
     """
-    if path.startswith('cimprofiles.'):
-        return path
     if path.startswith(_LEGACY_PROFILE_PREFIX):
         qualified = profile_module(path[len(_LEGACY_PROFILE_PREFIX):])
         warnings.warn(f'CIMG_CIM_PROFILE path {path!r} is deprecated; use {qualified!r}',
                       DeprecationWarning, stacklevel=3)
         return qualified
-    return profile_module(path)
+    top_level = path.partition('.')[0]
+    if top_level in PROFILE_PACKAGES:
+        return profile_module(path)
+    if importlib.util.find_spec(top_level) is None:
+        raise ValueError(f'Unknown CIM profile {path!r}: not an importable module path, '
+                         f'nor one of the known profiles: {", ".join(PROFILE_PACKAGES)}')
+    return path
 
 
 @cache
@@ -194,7 +200,7 @@ def get_use_units() -> bool:
     use_units = os.getenv('CIMG_USE_UNITS')
     if use_units is None:
         use_units = DEFAULT_USE_UNITS
-        _log.debug('CIMG_USE_UNITS environment variable is not set. Defaulting to false.')
+        _log.debug('CIMG_USE_UNITS environment variable is not set. Defaulting to %s.', DEFAULT_USE_UNITS)
     return use_units.lower() == 'true'
 
 @cache

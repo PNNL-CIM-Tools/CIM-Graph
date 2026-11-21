@@ -135,7 +135,7 @@ class FeederModel(GraphModel):
 
             if not new_edges:
                 error_message = f'No FeederArea defined for Feeder {self.container.uri()}. '
-                error_message += 'Rebuild the model with the create_distributed_feeder() method'
+                error_message += 'Rebuild the model with the create_distributed_feeder() method '
                 error_message += 'from the CIM-Graph-Topology-Processor library.'
                 _log.error(error_message)
                 raise ValueError(error_message)

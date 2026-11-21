@@ -15,6 +15,23 @@ from cimgraph.utils import write_json_ld, write_xml
 PNNL = 'https://www.pnnl.gov'
 
 
+def _part_xml(authority, line_id):
+    """A part file with a model header and one line whose rdf:ID is not a UUID."""
+    return f'''<?xml version="1.0" encoding="utf-8"?>
+<rdf:RDF xmlns:cim="http://iec.ch/TC57/CIM100#"
+    xmlns:md="http://iec.ch/TC57/61970-552/ModelDescription/1#"
+    xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+<md:FullModel rdf:about="urn:uuid:{uuid4()}">
+  <md:Model.description>feeder_1</md:Model.description>
+  <md:Model.modelingAuthoritySet>{authority}</md:Model.modelingAuthoritySet>
+</md:FullModel>
+<cim:ACLineSegment rdf:ID="{line_id}">
+  <cim:IdentifiedObject.name>{line_id}</cim:IdentifiedObject.name>
+</cim:ACLineSegment>
+</rdf:RDF>
+'''
+
+
 class TestXMLFile(unittest.TestCase):
 
     def setUp(self):
@@ -333,26 +350,12 @@ class TestXMLFile(unittest.TestCase):
         self.assertEqual((get_model_authority(), get_model_name()), ('pnnl', 'ieee13'))
 
     def test_each_part_seeds_with_its_own_authority(self):
-        def part(authority, line_id):
-            return f'''<?xml version="1.0" encoding="utf-8"?>
-<rdf:RDF xmlns:cim="http://iec.ch/TC57/CIM100#"
-    xmlns:md="http://iec.ch/TC57/61970-552/ModelDescription/1#"
-    xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
-<md:FullModel rdf:about="urn:uuid:{uuid4()}">
-  <md:Model.description>feeder_1</md:Model.description>
-  <md:Model.modelingAuthoritySet>{authority}</md:Model.modelingAuthoritySet>
-</md:FullModel>
-<cim:ACLineSegment rdf:ID="{line_id}">
-  <cim:IdentifiedObject.name>{line_id}</cim:IdentifiedObject.name>
-</cim:ACLineSegment>
-</rdf:RDF>
-'''
         with tempfile.TemporaryDirectory() as tmp_dir:
             paths = []
             for authority, line_id in (('utility_a', 'LINE_A'), ('utility_b', 'LINE_B')):
                 path = os.path.join(tmp_dir, f'{authority}.xml')
                 with open(path, 'w', encoding='utf-8') as f:
-                    f.write(part(authority, line_id))
+                    f.write(_part_xml(authority, line_id))
                 paths.append(path)
             database = XMLFile(filename=paths)
             self.addCleanup(get_model_name.cache_clear)
@@ -363,6 +366,80 @@ class TestXMLFile(unittest.TestCase):
         for authority, line_id in (('utility_a', 'LINE_A'), ('utility_b', 'LINE_B')):
             set_model_scope(authority, 'feeder_1')
             self.assertEqual(lines[line_id], cim.ACLineSegment(identifier=line_id).identifier)
+
+    def test_get_object_matches_the_identifier_exactly(self):
+        database = XMLFile(filename='tests/test_models/ieee13.xml')   # rdf:about="urn:uuid:<UPPER>"
+        feeder = database.get_object(self.feeder_mrid)
+        self.assertIsInstance(feeder, cim.Feeder)
+        for form in (self.feeder_mrid.lower(), f'_{self.feeder_mrid.lower()}',
+                     f'#_{self.feeder_mrid}', f'urn:uuid:{self.feeder_mrid.lower()}'):
+            self.assertIs(database.get_object(form), feeder, form)
+        # A part of an identifier is not the identifier
+        self.assertIsNone(database.get_object(self.feeder_mrid[:8]))
+        self.assertIsNone(database.get_object('0'))
+
+    def test_get_object_returns_the_graph_object(self):
+        network = self._ieee13()
+        line_uuid = UUID('0bbd0ea3-f665-465b-86fd-fc8b8466ad53')
+        self.assertIs(network.get_object(str(line_uuid)), network.graph[cim.ACLineSegment][line_uuid])
+
+    def test_get_object_searches_every_part(self):
+        with tempfile.TemporaryDirectory() as tmp_dir:
+            paths = []
+            for authority, line_id in (('utility_a', 'LINE_A'), ('utility_b', 'LINE_B')):
+                path = os.path.join(tmp_dir, f'{authority}.xml')
+                with open(path, 'w', encoding='utf-8') as f:
+                    f.write(_part_xml(authority, line_id))
+                paths.append(path)
+            database = XMLFile(filename=paths)
+            self.addCleanup(get_model_name.cache_clear)
+            self.addCleanup(get_model_authority.cache_clear)
+            line = database.get_object('_LINE_B')
+            self.assertIsNone(database.get_object('LINE'))
+            graph = database.create_new_graph(container=None)
+
+        # The identifier create_new_graph gives the line, seeded with its part's authority
+        set_model_scope('utility_b', 'feeder_1')
+        self.assertEqual(line.identifier, cim.ACLineSegment(identifier='LINE_B').identifier)
+        self.assertIs(graph[cim.ACLineSegment][line.identifier], line)
+
+    def test_get_object_skips_elements_without_an_id(self):
+        with tempfile.TemporaryDirectory() as tmp_dir:
+            path = os.path.join(tmp_dir, 'part.xml')
+            with open(path, 'w', encoding='utf-8') as f:
+                # after the line, where a stale rdf:ID would make it match 'LINE_A'
+                f.write(_part_xml('utility_a', 'LINE_A').replace(
+                    '</rdf:RDF>', '<cim:NotInTheProfile/>\n</rdf:RDF>'))
+            database = XMLFile(filename=path)
+            self.addCleanup(get_model_name.cache_clear)
+            self.addCleanup(get_model_authority.cache_clear)
+            self.assertIsInstance(database.get_object('LINE_A'), cim.ACLineSegment)
+            self.assertIsNone(database.get_object('LINE_B'))
+
+    def test_get_from_triple_without_the_predicate_is_empty(self):
+        network = self._ieee13()
+        self.assertEqual(network.connection.get_from_triple(network.container, 'Feeder.FeederArea'), [])
+        self.assertEqual(network.connection.get_from_triple(network.container, 'IdentifiedObject.name'),
+                         ['ieee13nodeckt'])
+
+    def test_distributed_feeder_needs_a_feeder_area(self):
+        database = XMLFile(filename='tests/test_models/ieee13.xml')
+        with self.assertRaisesRegex(ValueError, r'No FeederArea defined .* method from the'):
+            FeederModel(connection=database, container=cim.Feeder(mRID=self.feeder_mrid), distributed=True)
+
+    def test_create_distributed_graph_is_not_supported(self):
+        database = XMLFile(filename='tests/test_models/ieee13.xml')
+        with self.assertRaisesRegex(NotImplementedError, 'RDFlibConnection'):
+            database.create_distributed_graph(area=cim.FeederArea(mRID=str(uuid4())), graph={})
+
+    def test_container_is_the_graph_object(self):
+        for connection in (XMLFile(filename='tests/test_models/ieee13.xml'),
+                           JSONLDFile(filename='tests/test_models/ieee13.jsonld')):
+            feeder = cim.Feeder(mRID=self.feeder_mrid)
+            network = FeederModel(connection=connection, container=feeder, distributed=False)
+            self.assertIs(network.graph[cim.Feeder][feeder.identifier], feeder, type(connection).__name__)
+            self.assertEqual(len(network.graph[cim.Feeder]), 1)
+            self.assertEqual(feeder.name, 'ieee13nodeckt')
 
 
 if __name__ == '__main__':

@@ -134,25 +134,17 @@ def get_all_data(network: GraphModel):
         cim.GeographicalRegion, cim.LoadResponseCharacteristic
     ]
 
-    # Do recursive search for missing data
-    all_classes = []
-    parsed_classes = []
-    for class_type in list(network.graph.keys()):
-        all_classes.append(class_type.__name__)
-
-    while set(parsed_classes) != set(all_classes):
-        for class_name in all_classes:
-            if class_name not in parsed_classes:
-                class_type = getattr(cim, class_name)
-                if class_type not in attr_only:
-                    # print('edges', class_name)
-                    network.get_all_edges(class_type)
-
-                else:
-                    # print('attributes', class_name)
-                    network.get_all_attributes(class_type)
-
-                parsed_classes.append(class_name)
-                all_classes = []
-                for class_type in list(network.graph.keys()):
-                    all_classes.append(class_type.__name__)
+    # Fetch every class in the graph, and fetch a class again whenever new objects of it
+    # were found since its last fetch, until every object has been fetched.
+    fetched_counts: dict[type, int] = {}
+    while True:
+        pending = [class_type for class_type, objects in list(network.graph.items())
+                   if len(objects) > fetched_counts.get(class_type, 0)]
+        if not pending:
+            break
+        for class_type in pending:
+            fetched_counts[class_type] = len(network.graph[class_type])
+            if class_type in attr_only:
+                network.get_all_attributes(class_type)
+            else:
+                network.get_all_edges(class_type)

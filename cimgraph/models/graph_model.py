@@ -462,7 +462,7 @@ class GraphModel():
 
 def _attribute_matches(attribute_value: any, value: any) -> bool:
     if isinstance(attribute_value, list):
-        return value in attribute_value
+        return any(_attribute_matches(item, value) for item in attribute_value)
     if isinstance(attribute_value, CIMUnit) and isinstance(value, (int, float)):
         return float(attribute_value) == value
     return attribute_value == value

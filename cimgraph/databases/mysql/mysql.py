@@ -5,18 +5,26 @@ from collections import defaultdict
 from enum import Enum
 
 import mysql.connector
+from cimprofiles.identity import as_uuid
 
 from cimgraph.core import get_database, get_host, get_password, get_port, get_username
-from cimgraph.core.serialization import mrid_text
 from cimgraph.databases import ConnectionInterface, Graph
 from cimgraph.databases.mysql.schema import SqlSchema, build_schema
 
 _log = logging.getLogger(__name__)
 
 
-def _database_mrid(obj) -> str:
-    """The object's key in the database's "mRID" column, in the CIMG_IEC61970_552 style."""
-    return mrid_text(obj, getattr(obj, 'mRID', None) or obj.uri())
+def _database_mrids(obj) -> list[str]:
+    """
+    The texts the object's key can have in the database's "mRID" column. The database keeps
+    each mRID as written in its source model, so a UUID is stored with or without the
+    leading '_' of 552-LEGACY rdf:IDs, whatever CIMG_IEC61970_552 is set to. Querying both
+    forms matches the stored one. A non-UUID mRID is stored as-is.
+    """
+    mrid = getattr(obj, 'mRID', None) or obj.uri()
+    if as_uuid(mrid) != obj.identifier:
+        return [mrid]
+    return [obj.uri(), '_' + obj.uri()]
 
 BATCH_SIZE = 100
 
@@ -167,8 +175,9 @@ class MySQLConnection(ConnectionInterface):
         association = self.check_attribute(subject.__class__, predicate)
         if association is None:
             return []
-        return self._load(graph, subject.__class__, {_database_mrid(subject): subject.identifier},
-                          expand_graph=True, only_field=association)
+        identifiers = {mrid: subject.identifier for mrid in _database_mrids(subject)}
+        return self._load(graph, subject.__class__, identifiers, expand_graph=True,
+                          only_field=association)
 
     # -------------------------------------------------------------------------
     # Graph creation methods
@@ -182,7 +191,7 @@ class MySQLConnection(ConnectionInterface):
         if graph is None:
             graph = defaultdict(lambda: defaultdict(dict))
         self.add_to_graph(graph=graph, obj=container)
-        self._add_equipment_and_nodes(graph, 'EquipmentContainer', _database_mrid(container))
+        self._add_equipment_and_nodes(graph, 'EquipmentContainer', _database_mrids(container))
         return graph
 
     def create_distributed_graph(self, area: object, graph: Graph = None) -> Graph:
@@ -195,15 +204,16 @@ class MySQLConnection(ConnectionInterface):
         if not isinstance(area, self.cim.SubSchedulingArea):
             raise TypeError('Area object is not a SubSchedulingArea')
         self.add_to_graph(graph=graph, obj=area)
-        self._add_equipment_and_nodes(graph, 'SubSchedulingArea', _database_mrid(area))
+        self._add_equipment_and_nodes(graph, 'SubSchedulingArea', _database_mrids(area))
         return graph
 
-    def _add_equipment_and_nodes(self, graph: Graph, column: str, mrid: str) -> None:
-        """Add equipment where Equipment.<column> = mrid, plus their terminals and nodes."""
+    def _add_equipment_and_nodes(self, graph: Graph, column: str, mrids: list[str]) -> None:
+        """Add equipment where Equipment.<column> is one of mrids, plus their terminals and
+        nodes."""
         rows = self.execute(
             'SELECT e."mRID" AS equipment, t."mRID" AS terminal, t."ConnectivityNode" AS node '
             'FROM "Equipment" e LEFT JOIN "Terminal" t ON t."ConductingEquipment" = e."mRID" '
-            f'WHERE e."{column}" = %s', (mrid,))
+            f'WHERE e."{column}" IN ({_placeholders(mrids)})', tuple(mrids))
         classes = self._resolve_classes(['Equipment'], [row['equipment'] for row in rows])
 
         for row in rows:
@@ -249,8 +259,12 @@ class MySQLConnection(ConnectionInterface):
                           for table in self.schema.ancestry(cim_class.__name__))
 
     def _identifiers(self, graph: Graph, cim_class: type) -> dict:
-        """Map the database mRID of each object of cim_class to its graph identifier."""
-        return {_database_mrid(obj): identifier for identifier, obj in graph[cim_class].items()}
+        """Map each database mRID text an object of cim_class can have to its graph identifier."""
+        identifiers = {}
+        for identifier, obj in graph[cim_class].items():
+            for mrid in _database_mrids(obj):
+                identifiers[mrid] = identifier
+        return identifiers
 
     def _forward_query(self, table: str, batch: list[str]) -> str:
         return f'SELECT * FROM "{table}" WHERE "mRID" IN ({_placeholders(batch)})'

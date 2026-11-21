@@ -78,6 +78,30 @@ def test_bare_profile_name_resolves_to_cimprofiles(monkeypatch):
     assert cim is cimprofiles.cim18.cimhub_2026
 
 
+def test_profile_outside_cimprofiles_resolves_by_module_path(monkeypatch, tmp_path):
+    package = tmp_path / 'my_profiles'
+    package.mkdir()
+    (package / '__init__.py').write_text('')
+    (package / 'custom.py').write_text('from cimprofiles.cim17.cimhub_2023 import *\n')
+    monkeypatch.syspath_prepend(str(tmp_path))
+
+    monkeypatch.setenv('CIMG_CIM_PROFILE', 'my_profiles.custom')
+    get_cim_profile.cache_clear()
+    _, cim = get_cim_profile()
+    get_cim_profile.cache_clear()
+
+    assert cim.__name__ == 'my_profiles.custom'
+    assert hasattr(cim, 'ACLineSegment')
+
+
+def test_unknown_profile_name_lists_the_known_profiles(monkeypatch):
+    monkeypatch.setenv('CIMG_CIM_PROFILE', 'cimhub_2032')
+    get_cim_profile.cache_clear()
+    with pytest.raises(ValueError, match='Unknown CIM profile .*cimhub_2026'):
+        get_cim_profile()
+    get_cim_profile.cache_clear()
+
+
 def test_set_model_scope_reaches_identity(monkeypatch):
     import cimprofiles.cim18.cimhub_2026 as cim
 

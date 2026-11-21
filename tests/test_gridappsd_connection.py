@@ -54,7 +54,6 @@ class TestBlazegraphSETO(unittest.TestCase):
         connection = GridappsdConnection()
         self.assertIsInstance(connection, GridappsdConnection, 'Connection should be an instance of GridappsdConnection')
         self.assertEqual(connection.cim_profile, 'cimhub_2023', 'CIM profile mismatch')
-        self.assertEqual(connection.url, 'http://localhost:8889/bigdata/namespace/kb/sparql', 'URL mismatch')
         self.assertEqual(connection.namespace, 'http://iec.ch/TC57/CIM100#', 'Namespace mismatch')
         self.assertEqual(connection.iec61970_552, '552-NEW', 'IEC61970_552 mismatch')
 

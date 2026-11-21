@@ -9,10 +9,11 @@ from cimprofiles.identity import Identity, read_identifier
 from defusedxml.ElementTree import parse
 
 from cimgraph.core import (get_cim_profile, get_iec61970_552, get_namespace, get_use_units,
-                           get_validation_log_level, set_model_scope)
+                           get_validation_log_level)
 from cimgraph.databases import ConnectionInterface, Graph, QueryResponse, reference_key
-from cimgraph.databases.fileparsers.metadata import (is_header_element, parse_metadata,
-                                                     parse_model_header, resolve_part_paths)
+from cimgraph.databases.fileparsers.metadata import (ModelHeader, is_header_element,
+                                                     parse_metadata, parse_model_header,
+                                                     resolve_part_paths, use_model_scope)
 
 _log = logging.getLogger(__name__)
 
@@ -133,41 +134,56 @@ class XMLFile(ConnectionInterface):
     def execute(self, query_message: str) -> QueryResponse:
         pass
 
+    def element_uri(self, element) -> str | None:
+        """The rdf:about of an element, else its rdf:ID, else None."""
+        uri = element.get(f'{self.rdf}about')
+        if uri is None:
+            uri = element.get(f'{self.rdf}ID')
+        return uri
+
+    @staticmethod
+    def use_part_scope(root) -> ModelHeader:
+        """Read a part file's header and set the model scope from it (use_model_scope)."""
+        header = parse_model_header(root)
+        use_model_scope(header)
+        return header
+
     def get_object(self, mRID:str, graph = None) -> object:
-        obj = None
-        for element in self.root:
-            if 'about' in str(element.attrib.keys()):
-                uri = element.get(f'{self.rdf}about')
-            elif 'ID' in str(element.attrib.keys()):
-                uri = element.get(f'{self.rdf}ID')
-            if mRID in uri:
-                obj = self.parse_nodes(element)
-        return obj
+        """
+        The object whose rdf:about or rdf:ID is mRID, from any loaded file, or None.
+        Both are compared in any of their forms ('urn:uuid:x', '#_x', '_x', 'x'), and
+        UUIDs in any case. The object is read into self.graph (the graph argument is
+        unused: it is the model's graph once create_new_graph has run).
+        """
+        key = reference_key(mRID)
+        for root in self.roots:
+            for element in root:
+                uri = self.element_uri(element)
+                if uri is not None and not is_header_element(element) and reference_key(uri) == key:
+                    self.use_part_scope(root)   # the identifier create_new_graph gives it
+                    return self.parse_nodes(element)
+        return None
 
     def get_from_triple(self, subject:Identity, predicate:str, graph: Graph = None) -> list[object]:
-        if graph is None:
-            graph = defaultdict(lambda: defaultdict(dict))
+        """Values of the subject's predicate in any loaded file: [] if none is written.
+        References resolve only to objects create_new_graph has read."""
         results = []
         class_type = subject.__class__
-        elements = self.tree.findall(f'.//cim:{class_type.__name__}', self.namespaces)
-        for element in elements:
-            if 'about' in str(element.attrib.keys()):
-                uri = element.get(f'{self.rdf}about')
-            elif 'ID' in str(element.attrib.keys()):
-                uri = element.get(f'{self.rdf}ID')
-            if read_identifier(class_type.__name__, uri) == subject.identifier:
-                value = element.find(f'.//cim:{predicate}', self.namespaces)
-                results.append(self.parse_value(value, class_type, subject.identifier))
+        for root in self.roots:
+            for element in root.findall(f'.//cim:{class_type.__name__}', self.namespaces):
+                if read_identifier(class_type.__name__, self.element_uri(element)) != subject.identifier:
+                    continue
+                for value in element.findall(f'cim:{predicate}', self.namespaces):
+                    results.append(self.parse_value(value, class_type, subject.identifier))
         return results
 
-
-
-
     def create_distributed_graph(self, area: object, graph: dict = None) -> Graph:
-        _log.error('distributed models not supported for XML file read')
-        if graph is None:
-            graph = defaultdict(lambda: defaultdict(dict))
-
+        # A file has no query to select one area's equipment, terminals and nodes, and
+        # XMLFile.get_all_edges is a no-op, so the area hierarchy cannot be walked.
+        raise NotImplementedError(
+            f'XMLFile does not support distributed models (area {area.uri()}): load the file '
+            'with RDFlibConnection(filename=...), which does, or build the model with '
+            'distributed=False.')
 
     def create_new_graph(self, container: object, graph:dict = None) -> Graph:
         if graph is not None:
@@ -178,16 +194,17 @@ class XMLFile(ConnectionInterface):
             self.graph = defaultdict(lambda: defaultdict(dict))
             return self.graph
 
+        # Add the model's container first, so pass 1 fills in that instance (as the
+        # other connections do) instead of reading a second copy of it.
+        if container is not None:
+            self.add_to_graph(obj=container, graph=self.graph)
+
         # Pass 1: create all node objects across every part file, so edges in
         # later passes can resolve targets defined in any file. Each part's header
-        # sets the model scope first, so UUIDs seeded from its non-UUID mRIDs use
-        # the authority that issued them.
+        # sets the model scope first (use_part_scope).
         self.model_headers = []
         for root in self.roots:
-            header = parse_model_header(root)
-            self.model_headers.append(header)
-            if header.authority is not None:
-                set_model_scope(header.authority, header.description or '')
+            self.model_headers.append(self.use_part_scope(root))
             for element in root:
                 self.parse_nodes(element)
 
@@ -219,11 +236,8 @@ class XMLFile(ConnectionInterface):
         if class_name in self.cim.__all__:
             # print(class_name)
             cim_class = getattr(self.cim, class_name)
-            if 'about' in str(element.attrib.keys()):
-                uri = element.get(f'{self.rdf}about')
-            elif 'ID' in str(element.attrib.keys()):
-                uri = element.get(f'{self.rdf}ID')
-            else:
+            uri = self.element_uri(element)
+            if uri is None:
                 raise ValueError(f'{class_name} element has neither rdf:ID nor rdf:about')
             obj = self.create_object(self.graph, cim_class, uri)
             self.object_index[reference_key(uri)] = obj
@@ -242,10 +256,7 @@ class XMLFile(ConnectionInterface):
 
         if class_name in self.cim.__all__:
             cim_class = getattr(self.cim, class_name)
-            if 'about' in str(element.attrib.keys()):
-                uri = element.get(f'{self.rdf}about')
-            elif 'ID' in str(element.attrib.keys()):
-                uri = element.get(f'{self.rdf}ID')
+            uri = self.element_uri(element)
             identifier = self.object_index[reference_key(uri)].identifier
             for sub_element in element:
                 if 'Identity.identifier' not in sub_element.tag:
@@ -274,6 +285,8 @@ class XMLFile(ConnectionInterface):
                 edge_class = type(edge_object)
                 edge_uuid = edge_object.identifier
                 value = self.create_edge(self.graph, cim_class, identifier, sub_tag, edge_class, edge_uuid)
+                if association is None:    # undefined in the profile: no inverse to set
+                    return value
                 try:
                     reverse = cim_class.__dataclass_fields__[association].metadata['inverse']
                     self.create_edge(self.graph, edge_class, edge_uuid, reverse,
@@ -287,17 +300,18 @@ class XMLFile(ConnectionInterface):
                     enum_class = enum_text.split('.')[0]
                     enum_value = enum_text.split('.')[1]
                     edge_enum = self.profile_enum(enum_class, enum_value)
-                    if edge_enum is None:
+                    if association is None:
+                        self.set_undefined_attribute(self.graph, cim_class, identifier, sub_tag,
+                                                     enum_text)
+                    elif edge_enum is None:
                         _log.log(self.log_level, f'{enum_class} is not an enumeration in the profile')
-                    elif association is not None:
+                    else:
                         value = setattr(self.graph[cim_class][identifier], association, edge_enum)
                 except (IndexError, ValueError) as error:
                     _log.log(self.log_level, f'Could not parse enumeration {edge_uri}: {error}')
         else:
-            if association is not None:
-                # Pass datatype to create_value
-                value = self.create_value(self.graph, cim_class, identifier, sub_tag,
-                                        sub_element.text, datatype_uri)
+            value = self.create_value(self.graph, cim_class, identifier, sub_tag,
+                                      sub_element.text, datatype_uri)
         return value
 
     def parse_node_query(self, graph: dict, query_output: dict) -> Graph:

@@ -1,4 +1,5 @@
 import os
+import sqlite3
 import unittest
 
 import pytest
@@ -64,6 +65,76 @@ class TestSqlSchema(unittest.TestCase):
     def test_associations(self):
         # Enum keys are plain columns; the unsupported compound key is dropped
         self.assertEqual(self.schema.associations, {('Terminal', 'ConductingEquipment'): 'Switch'})
+
+
+# A small CIMTool-style database for offline tests: one feeder holding one line with two
+# terminals and nodes, keyed by mRIDs stored with a leading underscore like tier5_ieee13.
+# Each table: (parent table, {association column: target table}, rows of (mRID, values...)).
+LINE_MRID = '_0BBD0EA3-F665-465B-86FD-FC8B8466AD53'
+TABLES = {
+    'IdentifiedObject': (None, {'name': None}, [
+        (FEEDER_MRID, 'ieee13'), (LINE_MRID, '645646'),
+        ('_T1', 't1'), ('_T2', 't2'), ('_N1', 'n1'), ('_N2', 'n2')]),
+    'Feeder': ('IdentifiedObject', {}, [(FEEDER_MRID,)]),
+    'Equipment': ('IdentifiedObject', {'EquipmentContainer': 'Feeder'}, [(LINE_MRID, FEEDER_MRID)]),
+    'ACLineSegment': ('Equipment', {}, [(LINE_MRID,)]),
+    'ConnectivityNode': ('IdentifiedObject', {}, [('_N1',), ('_N2',)]),
+    'Terminal': ('IdentifiedObject', {'ConductingEquipment': 'Equipment',
+                                      'ConnectivityNode': 'ConnectivityNode'},
+                 [('_T1', LINE_MRID, '_N1'), ('_T2', LINE_MRID, '_N2')]),
+}
+# Terminal and node mRIDs must be UUIDs to be read as the same objects in every style
+UUIDS = {'_T1': '_1F8A2C0E-2B9C-4C59-9E0A-5D0D6B7E8A01', '_T2': '_1F8A2C0E-2B9C-4C59-9E0A-5D0D6B7E8A02',
+         '_N1': '_1F8A2C0E-2B9C-4C59-9E0A-5D0D6B7E8A03', '_N2': '_1F8A2C0E-2B9C-4C59-9E0A-5D0D6B7E8A04'}
+
+
+def _sqlite_connection(monkeypatch, style: str) -> MySQLConnection:
+    """A MySQLConnection reading TABLES from an in-memory SQLite database (which also
+    takes double-quoted identifiers), in the given CIMG_IEC61970_552 style."""
+    for key, value in {**ENV, 'CIMG_IEC61970_552': style}.items():
+        monkeypatch.setenv(key, value)
+    database = sqlite3.connect(':memory:')
+    column_rows, key_rows = [], []
+    for table, (parent, columns, rows) in TABLES.items():
+        names = ['mRID', *columns]
+        database.execute(f'CREATE TABLE "{table}" ({", ".join(f"{name!r}" for name in names)})')
+        values = [tuple(UUIDS.get(value, value) for value in row) for row in rows]
+        database.executemany(f'INSERT INTO "{table}" VALUES ({", ".join("?" * len(names))})', values)
+        column_rows += [{'TABLE_NAME': table, 'COLUMN_NAME': name} for name in names]
+        references = {'mRID': parent, **columns}
+        key_rows += [{'TABLE_NAME': table, 'COLUMN_NAME': column, 'REFERENCED_TABLE_NAME': target,
+                      'REFERENCED_COLUMN_NAME': 'mRID'}
+                     for column, target in references.items() if target is not None]
+
+    def execute(query_message: str, params: tuple = ()) -> list[dict]:
+        cursor = database.execute(query_message.replace('%s', '?'), params)
+        names = [description[0] for description in cursor.description]
+        return [dict(zip(names, row)) for row in cursor.fetchall()]
+
+    connection = MySQLConnection()
+    connection.connection = database  # connect() then uses it instead of a MySQL server
+    connection.schema = build_schema(column_rows, key_rows)
+    monkeypatch.setattr(connection, 'execute', execute)
+    return connection
+
+
+@pytest.mark.parametrize('style', ['552-NEW', '552-LEGACY', 'CGMES'])
+def test_lookups_match_the_stored_mrid_in_every_style(monkeypatch, style):
+    """The mRID column keeps the source model's '_<uuid>' whatever CIMG_IEC61970_552 is."""
+    connection = _sqlite_connection(monkeypatch, style)
+    cim = connection.cim
+    feeder = connection.get_object(FEEDER_MRID)
+    network = FeederModel(connection=connection, container=feeder, distributed=False)
+    line = network.first(cim.ACLineSegment)
+    assert len(network.list_by_class(cim.Terminal)) == 2
+    assert len(network.list_by_class(cim.ConnectivityNode)) == 2
+
+    assert network.get_from_triple(line, 'IdentifiedObject.name') == ['645646']
+    terminals = network.get_from_triple(line, 'ConductingEquipment.Terminals')
+    assert len(terminals) == 2 and set(terminals) == set(line.Terminals)
+    network.get_all_attributes(cim.Terminal)
+    assert sorted(terminal.name for terminal in line.Terminals) == ['t1', 't2']
+    connection.disconnect()
 
 
 @pytest.mark.integration('mysql')

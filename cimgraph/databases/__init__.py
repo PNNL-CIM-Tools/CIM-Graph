@@ -164,7 +164,7 @@ class ConnectionInterface(ABC):
         # Every connection reads the CIMG_* environment variables as they are now
         for getter in (get_namespace, get_cim_profile, get_iec61970_552, get_validation_log_level,
                        get_use_units, get_url, get_host, get_port, get_username, get_password,
-                       get_database):
+                       get_database, get_undefined_handling):
             getter.cache_clear()
 
         self.cim_profile, self.cim = get_cim_profile()
@@ -172,6 +172,7 @@ class ConnectionInterface(ABC):
         self.iec61970_552 = get_iec61970_552()
         self.log_level = get_validation_log_level()
         self.use_units = get_use_units()
+        self.allow_undefined = get_undefined_handling()
 
     def check_attribute(self, cim_class:type, attribute:str) -> str:
         # Cache lookup — same (class, attribute) always gives same result
@@ -186,6 +187,8 @@ class ConnectionInterface(ABC):
         attr_class = attribute.split('.')[0]
         attr_link = attribute.split('.')[1]
         association = None
+        # With CIMG_ALLOW_UNDEFINED_ATTRIBUTES, a property missing from the profile is expected
+        log_level = logging.DEBUG if getattr(self, 'allow_undefined', False) else self.log_level
 
         if attr_link in cim_class.__dataclass_fields__:
             association = attr_link
@@ -194,7 +197,7 @@ class ConnectionInterface(ABC):
                 from_class = getattr(self.cim, attr_class)
 
                 if attr_link not in from_class.__dataclass_fields__:
-                    _log.log(self.log_level, f'Association {attr_link} missing from class {attr_class} in data profile')
+                    _log.log(log_level, f'Association {attr_link} missing from class {attr_class} in data profile')
 
                 else:
                     try:
@@ -203,11 +206,11 @@ class ConnectionInterface(ABC):
                         if reverse_assc in cim_class.__dataclass_fields__:
                             association = reverse_assc
                         else:
-                            _log.log(self.log_level,f'Association {reverse_assc} missing from class {cim_class.__name__} in data profile')
+                            _log.log(log_level,f'Association {reverse_assc} missing from class {cim_class.__name__} in data profile')
                     except:
-                        _log.log(self.log_level,f'Unable to find inverse of {attribute} for {cim_class.__name__}')
+                        _log.log(log_level,f'Unable to find inverse of {attribute} for {cim_class.__name__}')
             except:
-                _log.log(self.log_level,f'Unable to find {attribute} for {cim_class.__name__}')
+                _log.log(log_level,f'Unable to find {attribute} for {cim_class.__name__}')
 
         self._check_attribute_cache[cache_key] = association
         return association
@@ -219,6 +222,33 @@ class ConnectionInterface(ABC):
     def enum_from_iri(self, iri: str) -> Enum | None:
         """The profile enumeration member an IRI names (see enum_from_iri)."""
         return enum_from_iri(self.cim, iri, self.namespace)
+
+    def set_undefined_attribute(self, graph: Graph, cim_class: type, identifier: UUID | str,
+                                attribute: str, value: object) -> None:
+        """
+        With CIMG_ALLOW_UNDEFINED_ATTRIBUTES=true, sets a property the profile does not define
+        ('ACLineSegment.vendorRating') on the object as its text, so reading keeps it. It is not
+        typed (a reference or enumeration is its identifier text), a repeated property becomes a
+        list of texts, and the writers do not write it. Does nothing otherwise.
+        """
+        if not self.allow_undefined:
+            return
+        name = attribute.split('.')[-1]
+        if hasattr(cim_class, name):
+            # A method or an inherited name: never shadow it
+            _log.log(self.log_level, f'Undefined {attribute} would shadow '
+                     f'{cim_class.__name__}.{name}; not set')
+            return
+        obj = graph[cim_class][identifier]
+        text = str(value)
+        previous = obj.__dict__.get(name)
+        if previous is None:
+            setattr(obj, name, text)
+        elif isinstance(previous, list):
+            if text not in previous:
+                previous.append(text)
+        elif previous != text:
+            setattr(obj, name, [previous, text])
 
     def create_value(self, graph: dict[type, dict[str, object]],
                     cim_class: type, identifier: UUID | str, attribute: str,
@@ -273,6 +303,8 @@ class ConnectionInterface(ABC):
                 setattr(graph[cim_class][identifier], association, value)
             else:
                 setattr(graph[cim_class][identifier], association, value)
+        elif association is None:
+            self.set_undefined_attribute(graph, cim_class, identifier, attribute, value)
         return value
 
     def _unit_value(self, unit_class: type, value: float, input_unit: str | None,
@@ -385,6 +417,8 @@ class ConnectionInterface(ABC):
                     setattr(graph[cim_class][identifier], association, edge_object)
             else:
                 _log.warning(f'{cim_class.__name__} does not have attribute {association}')
+        else:
+            self.set_undefined_attribute(graph, cim_class, identifier, attribute, edge_mRID)
         return edge_object
 
     def create_reference(self, graph: Graph, cim_class: type, identifier: UUID,
@@ -398,6 +432,7 @@ class ConnectionInterface(ABC):
         """
         association = self.check_attribute(cim_class, attribute)
         if association is None:
+            self.set_undefined_attribute(graph, cim_class, identifier, attribute, edge_id)
             return None
         edge_identifier = read_identifier(edge_class.__name__, edge_id)
         reference = graph.get(edge_class, {}).get(edge_identifier)

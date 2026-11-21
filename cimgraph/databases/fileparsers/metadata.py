@@ -28,6 +28,8 @@ from urllib.parse import unquote, urlsplit
 from cimprofiles.identity import model_authority_namespace
 from defusedxml.ElementTree import fromstring, parse
 
+from cimgraph.core import set_model_scope
+
 _log = logging.getLogger(__name__)
 
 RDF = 'http://www.w3.org/1999/02/22-rdf-syntax-ns#'
@@ -349,6 +351,13 @@ class ModelHeader:
     description: str | None = None
     authority: str | None = None
     authority_uuid: str | None = None
+
+
+def use_model_scope(header: ModelHeader) -> None:
+    """Set the model scope from a file's header if it names an authority, so UUIDs seeded
+    from the file's non-UUID IDs use the authority that issued them."""
+    if header.authority is not None:
+        set_model_scope(header.authority, header.description or '')
 
 
 def _local_name(tag: str) -> str:

@@ -281,6 +281,15 @@ def test_find_by_attribute_matches_whole_values():
     assert network.find_by_attribute(cim.ACLineSegment, 'name', 'L1') == [line_1]
 
 
+def test_attribute_matching_compares_unit_lists_by_number():
+    from cimgraph.models.graph_model import _attribute_matches
+
+    voltages = [cim.Voltage(4.16, 'kV'), cim.Voltage(480)]
+    assert _attribute_matches(voltages, 4160.0)
+    assert not _attribute_matches(voltages, 12470.0)
+    assert _attribute_matches(['L1', 'L2'], 'L2')
+
+
 def test_first_and_next_iterate_and_end_with_none():
     network = _network()
     assert network.first(cim.Breaker) is None
