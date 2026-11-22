@@ -78,8 +78,8 @@ sequenceDiagram
             se ->> se: create_value(...)
         end
     end
-    se -->>- gm: 
-    gm -->>- Caller: 
+    se -->>- gm:
+    gm -->>- Caller:
 ```
 
 - **Only this end is set.** The parser sets the association on the object that was queried. The query's UNION

@@ -13,8 +13,7 @@ from cimgraph.core import get_cim_profile
 from cimgraph.databases import XMLFile
 from cimgraph.models import FeederModel
 from cimgraph.models.incremental_builder import apply_incremental
-from cimgraph.models.incremental_json import (read_incremental_gridappsd,
-                                              read_incremental_jsonld,
+from cimgraph.models.incremental_json import (read_incremental_gridappsd, read_incremental_jsonld,
                                               write_incremental_gridappsd,
                                               write_incremental_jsonld)
 

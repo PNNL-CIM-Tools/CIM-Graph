@@ -180,7 +180,7 @@ def read_incremental_gridappsd(message: dict) -> dict:
     if forward is None and reverse is None:
         raise ValueError(
             "No 'forward_differences' or 'reverse_differences' in the message. A GridAPPS-D "
-            "difference message holds them under input.message, or is that inner message.")
+            'difference message holds them under input.message, or is that inner message.')
     return {
         'forwardDifferences': _difference_of(forward or [], 'forward_differences'),
         'reverseDifferences': _difference_of(reverse or [], 'reverse_differences'),

@@ -22,11 +22,11 @@ sequenceDiagram
     ib ->> other: clean_inverse_reference(bv_12kv): drop line from its list
     ib ->> other: add_inverse_reference(bv_4kv): append line
     ib ->> ib: record_change for each other object changed
-    ib -->>- gm: 
+    ib -->>- gm:
     opt incremental_file given
         gm ->> ib: write_incremental(reverse, forward, file)
     end
-    gm -->>- Caller: 
+    gm -->>- Caller:
 ```
 
 | Method | Checks | Then |
@@ -90,7 +90,7 @@ sequenceDiagram
         s ->> au: iter_properties(obj): serialized fields only,<br/>each a reference, unit, enumeration or literal
         s -->>- w: the object's XML
     end
-    w -->>- Caller: 
+    w -->>- Caller:
 ```
 
 - **The output is stable.** Classes are written by name and objects by URI, so writing the same graph twice

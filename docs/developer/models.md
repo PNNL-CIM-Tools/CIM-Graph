@@ -36,9 +36,9 @@ sequenceDiagram
     gm ->> gm: _check_mrid_unique(index, obj)<br/>another object with this mRID → ValueError
     gm ->>+ db: add_object_to_graph(graph, obj)
     db ->> db: graph[type(obj)][obj.identifier] = obj<br/>same instance → no-op<br/>another instance, same identifier → ValueError
-    db -->>- gm: 
+    db -->>- gm:
     gm ->> gm: _index_mrid(index, obj), _mrid_count = object count
-    gm -->>- Caller: 
+    gm -->>- Caller:
 ```
 
 `find_by_mRID(mRID)` reads that index and never queries the connection; `get_object` is the call that asks the
@@ -78,7 +78,7 @@ sequenceDiagram
     Caller ->>+ m: get_all_edges(cim.ACLineSegment)
     m ->> c: get_all_edges(graph, cim.ACLineSegment)<br/>(only if the class is in the graph)
     c ->> g: every attribute and association of each line,<br/>new neighbours created as objects
-    m -->>- Caller: 
+    m -->>- Caller:
 ```
 
 What `create_new_graph` returns depends on the connection:
@@ -119,7 +119,7 @@ sequenceDiagram
     f ->>+ a: build_from_area()
     a ->> c: get_all_edges(graph, cim.FeederArea)
     a ->> c: create_distributed_graph(area, graph)<br/>(the area's equipment, Terminals, nodes)
-    a -->>- f: 
+    a -->>- f:
     loop each SwitchArea of the feeder area, then each of its SecondaryAreas
         f ->> a: DistributedArea(...), build_from_area()
         f ->> f: append to the parent area's distributed_areas
