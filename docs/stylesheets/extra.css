@@ -1,17 +1,261 @@
-:root  > * {
-    --md-primary-fg-color:        #d57826;
-    --md-primary-fg-color--light: #d57826;
-    --md-primary-fg-color--dark:  #d57826;
-  }
-/* Maximum space for text block */
-.md-grid {
-    max-width: 90%; /* or 100%, if you want to stretch to full-width */
+/* PNNL CIM tools docs theme, shared with CIM-Tables' docs/stylesheets/extra.css:
+   a quiet, light header with one accent (the CIM tools orange), roomier type,
+   and soft code and card surfaces. Written against Material for MkDocs' CSS
+   variables only; keep the two copies in step. */
+
+:root {
+  --ct-accent: #d57826;
+  --ct-accent-strong: #b8621a;
+  --ct-accent-soft: rgba(213, 120, 38, 0.10);
+  --ct-surface: #f7f7f8;
+  --ct-border: rgba(15, 23, 42, 0.09);
+  --ct-text-muted: #5b6270;
+  --ct-radius: 10px;
+  --ct-shadow: 0 1px 2px rgba(15, 23, 42, 0.04), 0 4px 16px rgba(15, 23, 42, 0.05);
 }
 
-.md-sidebar__title,
-.md-nav__title {
-    font-weight: bold !important; /* Make it bold */
-    color: #d57826 !important;  /* Change text color */
-    border-bottom: 1px solid gray !important;  /* Add white border */
-    padding: 5px; /* Add some spacing inside the border */
+[data-md-color-scheme="default"] {
+  --md-primary-fg-color: #ffffff;
+  --md-primary-fg-color--light: #ffffff;
+  --md-primary-fg-color--dark: #f4f4f5;
+  --md-primary-bg-color: #18181b;
+  --md-primary-bg-color--light: #52525b;
+  --md-accent-fg-color: var(--ct-accent-strong);
+  --md-accent-fg-color--transparent: var(--ct-accent-soft);
+  --md-typeset-a-color: var(--ct-accent-strong);
+  --md-default-fg-color: #18181b;
+  --md-code-bg-color: var(--ct-surface);
 }
+
+[data-md-color-scheme="slate"] {
+  --md-hue: 230;
+  --md-default-bg-color: #101114;
+  --md-default-bg-color--light: rgba(16, 17, 20, 0.7);
+  --md-primary-fg-color: #101114;
+  --md-primary-fg-color--light: #101114;
+  --md-primary-fg-color--dark: #0b0c0e;
+  --md-primary-bg-color: #ececef;
+  --md-primary-bg-color--light: #a1a1aa;
+  --md-accent-fg-color: #f0a35e;
+  --md-accent-fg-color--transparent: rgba(240, 163, 94, 0.12);
+  --md-typeset-a-color: #f0a35e;
+  --md-code-bg-color: #17181c;
+  --md-footer-bg-color: #0b0c0e;
+  --md-footer-bg-color--dark: #08090a;
+  --ct-accent: #f0a35e;
+  --ct-accent-strong: #f0a35e;
+  --ct-accent-soft: rgba(240, 163, 94, 0.12);
+  --ct-surface: #17181c;
+  --ct-border: rgba(255, 255, 255, 0.08);
+  --ct-text-muted: #a1a1aa;
+  --ct-shadow: none;
+}
+
+/* ---- layout ---------------------------------------------------------- */
+
+.md-grid { max-width: 1320px; }
+.md-typeset { font-size: 0.8rem; line-height: 1.7; }
+.md-typeset h1 { font-weight: 700; letter-spacing: -0.02em; color: var(--md-default-fg-color); }
+.md-typeset h2 { font-weight: 650; letter-spacing: -0.01em; margin-top: 2.2em; }
+.md-typeset h3 { font-weight: 600; }
+
+/* ---- header and tabs: flat, with a hairline instead of a colour bar --- */
+
+.md-header,
+.md-tabs {
+  background-color: var(--md-default-bg-color);
+  color: var(--md-default-fg-color);
+}
+.md-header { box-shadow: none; border-bottom: 1px solid var(--ct-border); }
+.md-header--shadow { box-shadow: none; }
+.md-header__button.md-logo { color: var(--ct-accent); }
+.md-header__title { font-weight: 650; }
+.md-tabs { border-bottom: 1px solid var(--ct-border); }
+.md-tabs__link { font-size: 0.72rem; font-weight: 500; opacity: 0.75; }
+.md-tabs__link--active,
+.md-tabs__link:hover { opacity: 1; color: var(--ct-accent-strong); }
+.md-tabs__item--active { box-shadow: inset 0 -2px 0 var(--ct-accent); }
+
+.md-search__form { border-radius: 8px; background-color: var(--ct-surface); }
+.md-search__input { color: var(--md-default-fg-color); }
+.md-search__input::placeholder { color: var(--ct-text-muted); }
+.md-search__icon { color: var(--ct-text-muted); }
+
+/* ---- sidebar --------------------------------------------------------- */
+
+.md-nav { font-size: 0.72rem; }
+.md-nav__item--section > .md-nav__link {
+  font-size: 0.64rem;
+  font-weight: 650;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--ct-text-muted);
+}
+.md-nav__link--active {
+  color: var(--ct-accent-strong);
+  font-weight: 600;
+}
+.md-sidebar--primary .md-nav__link--active {
+  background: var(--ct-accent-soft);
+  border-radius: 6px;
+  margin-left: -0.5em;
+  padding-left: 0.5em;
+}
+
+/* ---- code: one hairline box per block, the filename as its header ---- */
+
+.md-typeset pre > code {
+  border: 1px solid var(--ct-border);
+  border-radius: var(--ct-radius);
+}
+.md-typeset .highlight .filename {
+  display: block;
+  border: 1px solid var(--ct-border);
+  border-bottom: 0;
+  border-radius: var(--ct-radius) var(--ct-radius) 0 0;
+  font-size: 0.68rem;
+  font-weight: 600;
+  background: var(--ct-surface);
+}
+.md-typeset .highlight .filename + pre { margin-top: 0; }
+.md-typeset .highlight .filename + pre > code { border-top-left-radius: 0; border-top-right-radius: 0; }
+.md-typeset :not(pre) > code {
+  border-radius: 5px;
+  padding: 0.1em 0.35em;
+  border: 1px solid var(--ct-border);
+}
+
+/* ---- notebooks (mkdocs-jupyter): no In/Out prompts, outputs as soft panels ---- */
+
+.jupyter-wrapper .jp-InputPrompt,
+.jupyter-wrapper .jp-OutputPrompt { display: none !important; }
+.jupyter-wrapper .jp-Cell { padding: 0; }
+.jupyter-wrapper .jp-InputArea-editor,
+.jupyter-wrapper .jp-CodeMirrorEditor {
+  border: 1px solid var(--ct-border) !important;
+  border-radius: var(--ct-radius);
+  background: var(--md-code-bg-color) !important;
+}
+.jupyter-wrapper .jp-Cell-outputWrapper {
+  margin: 0 0 1.2rem;
+  border-left: 3px solid var(--ct-accent);
+  border-radius: 0 var(--ct-radius) var(--ct-radius) 0;
+  background: var(--ct-surface);
+}
+.jupyter-wrapper .jp-OutputArea-output pre {
+  font-size: 0.68rem;
+  background: transparent;
+  color: var(--md-default-fg-color);
+}
+
+/* ---- mermaid: theme-coloured lines and boxes ---- */
+
+/* Material sets these on :root > *, so they are overridden there */
+:root > * {
+  --md-mermaid-font-family: var(--md-text-font-family), sans-serif;
+  --md-mermaid-edge-color: var(--ct-text-muted);
+  --md-mermaid-node-bg-color: var(--ct-accent-soft);
+  --md-mermaid-node-fg-color: var(--md-default-fg-color);
+  --md-mermaid-label-bg-color: var(--md-default-bg-color);
+  --md-mermaid-label-fg-color: var(--md-default-fg-color);
+  --md-mermaid-sequence-actor-bg-color: var(--ct-surface);
+  --md-mermaid-sequence-actor-fg-color: var(--md-default-fg-color);
+  --md-mermaid-sequence-actor-border-color: var(--ct-accent);
+  --md-mermaid-sequence-actor-line-color: var(--ct-border);
+  --md-mermaid-sequence-actorman-bg-color: var(--ct-surface);
+  --md-mermaid-sequence-actorman-line-color: var(--ct-accent);
+  --md-mermaid-sequence-box-bg-color: var(--ct-surface);
+  --md-mermaid-sequence-message-fg-color: var(--md-default-fg-color);
+  --md-mermaid-sequence-message-line-color: var(--ct-text-muted);
+  --md-mermaid-sequence-loop-bg-color: var(--ct-accent-soft);
+  --md-mermaid-sequence-loop-fg-color: var(--md-default-fg-color);
+  --md-mermaid-sequence-loop-border-color: var(--ct-accent);
+  --md-mermaid-sequence-label-bg-color: var(--ct-accent-soft);
+  --md-mermaid-sequence-label-fg-color: var(--md-default-fg-color);
+  --md-mermaid-sequence-note-bg-color: var(--ct-surface);
+  --md-mermaid-sequence-note-fg-color: var(--md-default-fg-color);
+  --md-mermaid-sequence-note-border-color: var(--ct-border);
+  --md-mermaid-sequence-number-bg-color: var(--ct-accent);
+  --md-mermaid-sequence-number-fg-color: #fff;
+}
+
+/* ---- tables and admonitions ----------------------------------------- */
+
+.md-typeset table:not([class]) {
+  border: 1px solid var(--ct-border);
+  border-radius: var(--ct-radius);
+  overflow: hidden;
+  box-shadow: none;
+  font-size: 0.74rem;
+}
+.md-typeset table:not([class]) td,
+.md-typeset table:not([class]) th { padding: 0.55em 1em; }
+.md-typeset table:not([class]) th {
+  background: var(--ct-surface);
+  font-weight: 600;
+}
+.md-typeset .admonition,
+.md-typeset details {
+  border-radius: var(--ct-radius);
+  border-width: 1px;
+  box-shadow: none;
+  font-size: 0.76rem;
+}
+
+/* ---- home page ------------------------------------------------------- */
+
+.ct-hero {
+  padding: 2.5rem 0 1.5rem;
+}
+.ct-hero h1 {
+  font-size: 2.4rem;
+  line-height: 1.15;
+  margin: 0 0 0.6rem;
+}
+.ct-hero h1 .ct-accent { color: var(--ct-accent); }
+.ct-hero .ct-lede {
+  font-size: 1.05rem;
+  color: var(--ct-text-muted);
+  max-width: 40rem;
+  margin: 0 0 1.4rem;
+}
+.md-typeset .md-button {
+  color: var(--ct-accent-strong);
+  border-color: var(--ct-border);
+}
+.md-typeset .md-button:hover,
+.md-typeset .md-button:focus {
+  color: var(--ct-accent-strong);
+  background: var(--ct-accent-soft);
+  border-color: var(--ct-accent);
+}
+.md-typeset .ct-hero .md-button {
+  border-radius: 8px;
+  font-weight: 600;
+  padding: 0.55em 1.3em;
+  margin: 0 0.4rem 0.4rem 0;
+}
+.md-typeset .ct-hero .md-button--primary {
+  background: var(--ct-accent);
+  border-color: var(--ct-accent);
+  color: #fff;
+}
+.md-typeset .ct-hero .md-button--primary:hover {
+  background: var(--ct-accent-strong);
+  border-color: var(--ct-accent-strong);
+}
+
+/* Material's "grid cards" */
+.md-typeset .grid.cards > ul > li,
+.md-typeset .grid > .card {
+  border: 1px solid var(--ct-border);
+  border-radius: var(--ct-radius);
+  box-shadow: var(--ct-shadow);
+  transition: border-color 0.15s, transform 0.15s;
+}
+.md-typeset .grid.cards > ul > li:hover,
+.md-typeset .grid > .card:hover {
+  border-color: var(--ct-accent);
+  transform: translateY(-1px);
+}
+.md-typeset .grid.cards .lg { color: var(--ct-accent); }
