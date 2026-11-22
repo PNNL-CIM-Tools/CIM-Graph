@@ -1,5 +1,6 @@
 import importlib
 import logging
+from collections import defaultdict
 from dataclasses import dataclass, field
 from uuid import UUID
 
@@ -14,15 +15,16 @@ class DistributedArea(GraphModel):
     def __post_init__(self):
         self.cim_profile = self.connection.cim_profile
         self.cim = self.connection.cim
-        self.set_default_bases()
-        self.graph = {}
+        self.graph = defaultdict(lambda: defaultdict(dict))
         self.add_to_graph(self.container)
         self.distributed_areas = []
         self.boundaries = []
+        # base_power/base_frequency are set by the build methods, once the area's graph is loaded
 
     def build_from_area(self) -> None:
         self.get_all_edges(self.container.__class__)
         self.connection.create_distributed_graph(area=self.container, graph=self.graph)
+        self.set_default_bases()    # after loading: the graph's BasePower sets base_power
 
 
     # Build the distributed model from a topology message from GridAPPS-D
@@ -59,3 +61,5 @@ class DistributedArea(GraphModel):
 
             for meas in topology_dict['Measurements']:
                 self.add_jsonld_to_graph(meas)
+
+        self.set_default_bases()    # after loading: the graph's BasePower sets base_power
