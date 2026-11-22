@@ -18,9 +18,9 @@ it into areas. After that, every model grows the same way, one `get_all_edges` c
 | `incrementals` | every `create`, `modify` and `delete` since loading (see [Editing and writing](editing.md)) |
 | `base_power`, `base_frequency` | the system bases, from `set_default_bases` |
 
-`graph` is keyed by exact class: `graph[cim.Breaker]` holds breakers, and no subclasses. `FeederModel` and
-`BusBranchModel` replace an empty graph with a `defaultdict`, so `network.graph[cim.X]` is `{}` for a class the
-model doesn't have.
+`graph` is keyed by exact class: `graph[cim.Breaker]` holds breakers, and no subclasses. Every model class
+replaces an empty graph with a `defaultdict`, so `network.graph[cim.X]` is `{}` for a class the model doesn't
+have.
 
 ### Adding an object
 
@@ -47,7 +47,8 @@ up the next time it is read, because the object count has changed.
 
 ### System bases
 
-Every model class calls `set_default_bases()` last in `__post_init__`, after the graph is loaded. The
+Every model class calls `set_default_bases()` once its graph is loaded: last in `__post_init__`, or for a
+`DistributedArea` at the end of `build_from_area()` / `build_from_topo_message()`. The
 `base_power` comes from the graph's `BasePower.basePower`, else `CIMG_SYSTEM_MVA_BASE` (default 100 MVA). The
 `base_frequency` comes from `BaseFrequency.frequency`, else 60 Hz. If two objects disagree with each other, or
 one disagrees with a base passed in explicitly, it raises: a model has one system base of each.
@@ -113,12 +114,12 @@ sequenceDiagram
     f ->>+ c: get_from_triple(feeder, 'Feeder.FeederArea')
     c -->>- f: [feeder_area] (none → ValueError: run the topology processor)
     f ->>+ a: DistributedArea(container=feeder_area, distributed=True)
-    a ->> a: set_default_bases(), a graph holding the container
+    a ->> a: a graph holding the container
     a -->>- f: feeder area model
-    f ->> a: get_all_edges(cim.FeederArea)
     f ->>+ a: build_from_area()
     a ->> c: get_all_edges(graph, cim.FeederArea)
     a ->> c: create_distributed_graph(area, graph)<br/>(the area's equipment, Terminals, nodes)
+    a ->> a: set_default_bases()
     a -->>- f:
     loop each SwitchArea of the feeder area, then each of its SecondaryAreas
         f ->> a: DistributedArea(...), build_from_area()

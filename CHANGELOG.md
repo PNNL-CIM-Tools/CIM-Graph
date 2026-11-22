@@ -138,6 +138,15 @@ and unit vocabularies (`cimprofiles.jsonld`) with an offline cache of them, and 
   `[]` for a predicate with no value instead of raising `TypeError`.
 - `GridappsdConnection` no longer reads `CIMG_URL` (unused) or warns when it is unset, and
   `disconnect()` is safe to call when not connected.
+- Distributed models (#232):
+  - A `DistributedArea` takes its system bases from its own graph once it is loaded, at the end of
+    `build_from_area()` and `build_from_topo_message()`. Before, it set them before loading, so
+    every area got the default 100 MVA even when it held a `BasePower`; until it is built, its
+    `base_power` and `base_frequency` are now `None`.
+  - A distributed `FeederModel` queries each FeederArea's and SwitchArea's edges once; they were
+    fetched twice.
+- `NodeBreakerModel` and `DistributedArea` graphs return `{}` for a class they have no objects of,
+  as `FeederModel` and `BusBranchModel` do; `network.graph[cim.X]` raised `KeyError`.
 
 ### Documentation
 

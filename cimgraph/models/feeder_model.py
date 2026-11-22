@@ -147,7 +147,6 @@ class FeederModel(GraphModel):
                                                 distributed=True)
 
             # Initialize DistributedArea with equipment, nodes, terminals, and measurements
-            feeder_area_model.get_all_edges(self.cim.FeederArea)
             feeder_area_model.build_from_area()
             # Append to distributed_areas field of FeederModel GraphModel.
             self.distributed_areas.append(feeder_area_model)
@@ -158,7 +157,6 @@ class FeederModel(GraphModel):
                                                 connection=self.connection,
                                                 distributed=True)
                 # Initialize DistributedArea with equipment, nodes, terminals, and measurements
-                switch_area_model.get_all_edges(self.cim.SwitchArea)
                 switch_area_model.build_from_area()
                 # Add switch area context object to list of dist areas for feeder area context
                 feeder_area_model.distributed_areas.append(switch_area_model)

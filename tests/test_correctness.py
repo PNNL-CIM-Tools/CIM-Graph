@@ -9,7 +9,7 @@ import pytest
 from cimgraph.core import get_cim_profile
 from cimgraph.databases import JSONLDFile, XMLFile
 from cimgraph.databases.sparql_endpoint import SPARQLEndpointConnection
-from cimgraph.models import DistributedArea, FeederModel
+from cimgraph.models import BusBranchModel, DistributedArea, FeederModel, NodeBreakerModel
 
 NS = 'http://iec.ch/TC57/CIM100#'
 RDF = 'http://www.w3.org/1999/02/22-rdf-syntax-ns#'
@@ -138,6 +138,74 @@ def test_topology_message_keeps_unaddressable_equipment():
     assert area.graph[cim.ACLineSegment][line.identifier].EquipmentContainer is feeder
     assert area.graph[cim.Breaker][breaker.identifier].EquipmentContainer is feeder
     assert area.incrementals == {'forwardDifferences': {}, 'reverseDifferences': {}}
+
+
+class _AreaEndpoint(_RecordingEndpoint):
+    """Serves one FeederArea → SwitchArea → SecondaryArea hierarchy, records which classes
+    get_all_edges is asked for, and puts base_power_object in every area's graph."""
+
+    def __init__(self, feeder_area=None, base_power_object=None):
+        super().__init__()
+        self.feeder_area = feeder_area
+        self.base_power_object = base_power_object
+        self.edge_classes = []
+
+    def get_from_triple(self, subject, predicate, graph=None):
+        return [self.feeder_area]
+
+    def get_all_edges(self, graph, cim_class):
+        self.edge_classes.append(cim_class)
+
+    def create_distributed_graph(self, area, graph=None):
+        if self.base_power_object is not None:
+            self.add_to_graph(graph=graph, obj=self.base_power_object)
+        return graph
+
+
+def test_distributed_area_takes_the_base_power_in_its_graph():
+    base_power = cim.BasePower(name='sbase', basePower=cim.ApparentPower(10, 'MVA'))
+    area = DistributedArea(container=cim.FeederArea(name='area'),
+                           connection=_AreaEndpoint(base_power_object=base_power), distributed=True)
+
+    area.build_from_area()
+
+    assert area.base_power.to('MVA') == pytest.approx(10)
+
+
+def test_distributed_area_from_a_topology_message_has_bases():
+    feeder = cim.Feeder(name='fdr')
+    area = DistributedArea(container=feeder, connection=_RecordingEndpoint())
+
+    area.build_from_topo_message({'@id': feeder.uri(), '@type': 'Feeder', 'AddressableEquipment': [],
+                                  'UnaddressableEquipment': [], 'Measurements': []})
+
+    assert area.base_power.to('MVA') == pytest.approx(100)
+
+
+def test_distributed_feeder_queries_each_area_once():
+    secondary_area = cim.SecondaryArea(name='secondary')
+    switch_area = cim.SwitchArea(name='switch', SecondaryAreas=[secondary_area])
+    feeder_area = cim.FeederArea(name='feeder area', SwitchAreas=[switch_area])
+    connection = _AreaEndpoint(feeder_area=feeder_area)
+
+    FeederModel(container=cim.Feeder(name='fdr'), connection=connection, distributed=True)
+
+    assert sorted(cls.__name__ for cls in connection.edge_classes) == [
+        'FeederArea', 'SecondaryArea', 'SwitchArea']
+
+
+@pytest.mark.parametrize('connection', [None, 'ieee13'])
+def test_every_model_graph_returns_empty_for_an_absent_class(connection):
+    if connection == 'ieee13':
+        connection = XMLFile(filename='tests/test_models/ieee13.xml')
+    models = [FeederModel(container=cim.Feeder(name='fdr'), connection=connection),
+              NodeBreakerModel(container=None, connection=connection),
+              BusBranchModel(container=None, connection=connection)]
+    for model in models:
+        assert model.graph[cim.Bay] == {}, type(model).__name__
+
+    area = DistributedArea(container=cim.FeederArea(name='area'), connection=_AreaEndpoint())
+    assert area.graph[cim.Bay] == {}
 
 
 # 2.4 modify validates
