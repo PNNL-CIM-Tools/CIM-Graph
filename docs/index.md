@@ -1,81 +1,125 @@
-# CIMantic Graphs Library Documentation
+---
+title: CIMantic Graphs
+hide:
+  - navigation
+  - toc
+---
 
-CIMantic Graphs is an open-source library for creating, parsing, and editing CIM power system models using in-memory knowledge graphs to reduce the burden and learning curve associated with using the Common Information Model.
+<div class="ct-hero" markdown>
 
-![CIM Graph Structure](./04_graph_models/images/4_1_property_graph.svg)
+# CIM power-system models as <span class="ct-accent">Python objects</span>
 
-## Key Features
+<p class="ct-lede"><code>cim-graph</code> reads IEC CIM models from CIM XML, JSON-LD or a graph database into an
+in-memory knowledge graph of typed CIM objects. You navigate it by following associations, edit it, and write it
+back out. The same API works for distribution feeders, node-breaker and bus-branch transmission models, and
+distributed areas.</p>
 
-* **Single API method** to obtain data for any CIM class. No more custom database queries.
-* **Single API method** to obtain data for EMS node-breaker transmission models, bus-branch planning models, and distribution feeder models.
-* **Single API method** for both centralized and distributed architectures.
-* **Multiple database support** with no changes to upper-level graph data or API calls. Only need to change host/port specified in ConnectionParameters data object.
-* **Create CIM models from scratch** with full object-oriented interface.
-* **Open-source data engineering tool** for management of CIM models.
-* **Knowledge graph approach** based on semantic understanding of CIM.
-* **Object-oriented data structure** with enforcement of CIM Schema.
-* **Data profiles** generated directly from Enterprise Architect UML.
-* **Custom profile support** using CIMTool.
-* **Direct creation/editing/parsing** of CIM XML, JSON-LD.
-* **API support** for centralized/distributed transmission + distribution models.
+[Quick start](01_overview/1_1_overview.ipynb){ .md-button .md-button--primary }
+[Install](01_overview/1_2_installation.ipynb){ .md-button }
+[Developer docs](developer/index.md){ .md-button }
 
-## Installation
-
-To install CIMantic Graphs, clone the github repository or use pip install:
-
-```bash
-pip install cim-graph
-# database drivers are extras, e.g.:
-pip install "cim-graph[sparql]"
-```
-
-## Quick Start
+</div>
 
 ```python
-import cimprofiles.cim17.cim17v40 as cim
-from cimgraph.databases.blazegraph import BlazegraphConnection
+import os
+os.environ['CIMG_CIM_PROFILE'] = 'cimhub_2023'
+
+import cimprofiles.cim17.cimhub_2023 as cim
+from cimgraph.databases import XMLFile
 from cimgraph.models import FeederModel
+from cimgraph.utils import write_json_ld
 
-# Connect to database
-database = BlazegraphConnection()
+feeder = cim.Feeder(mRID='49AD8E07-3BF9-A4E2-CB8F-C3722F837B62')  # IEEE 13-bus
+network = FeederModel(connection=XMLFile('ieee13.xml'), container=feeder)
 
-# Create a feeder model
-feeder = database.get_object(mRID="49AD8E07-3BF9-A4E2-CB8F-C3722F837B62")
-network = FeederModel(connection=database, container=feeder, distributed=False)
-
-# Query for all line data
-network.get_all_edges(cim.ACLineSegment)
-
-# Access graph data
+network.get_all_edges(cim.ACLineSegment)  # every line's attributes and neighbours
 for line in network.graph[cim.ACLineSegment].values():
-    print(f"Line: {line.name}, Length: {line.length}")
+    print(line.name, f"{line.length.to('ft'):.0f} ft")
+
+write_json_ld(network, 'ieee13.jsonld')
 ```
 
-## Documentation Sections
+```text
+650632 2000 ft
+632670 667 ft
+670671 1333 ft
+...
+```
 
-### Overview
-Get started with CIMantic Graphs, learn about installation, project structure, and how to contribute.
+To read the model from Blazegraph instead of a file, swap `XMLFile(...)` for `BlazegraphConnection()`; nothing
+else in the code changes. With a database, `get_all_edges` is the call that fetches the lines. A file is read
+whole, so there it has nothing left to fetch.
 
-### CIM Profiles
-Learn how to work with different CIM profiles, build custom profiles, and use CIM objects.
+<div class="grid cards" markdown>
 
-### Databases
-Connect to various databases including Blazegraph, Neo4j, GraphDB, MySQL, and GridAPPS-D. Also learn how to parse XML and JSON-LD files.
+-   :material-file-tree-outline:{ .lg .middle } __The profile is the schema__
 
-### Graph Models
-Understand the different graph model types: FeederModel for distribution, NodeBreakerModel for transmission, and BusBranchModel for planning studies.
+    ---
 
-### Utils & Shortcuts
-Discover utility functions for file writing, bulk data queries, and automatic mermaid diagram generation.
+    Every CIM class is a Python dataclass generated from the UML: typed attributes, associations with their
+    inverses, and enumerations. Pick a profile with one environment variable, or merge several.
 
-## Support & Contributing
+    [:octicons-arrow-right-24: CIM profiles](02_cim_profiles/2_1_profiles_overview.ipynb)
 
-- **GitHub Repository**: [PNNL-CIM-Tools/CIM-Graph](https://github.com/PNNL-CIM-Tools/CIM-Graph)
-- **PyPI Package**: [cim-graph](https://pypi.org/project/cim-graph/)
-- **Issue Tracker**: [GitHub Issues](https://github.com/PNNL-CIM-Tools/CIM-Graph/issues)
+-   :material-database-sync-outline:{ .lg .middle } __One API, many sources__
 
-## License
+    ---
 
-This project is maintained by Pacific Northwest National Laboratory and is available under the terms specified in the repository license.
+    CIM XML, JSON-LD, RDFLib, Blazegraph, GraphDB, Neo4j, MySQL and GridAPPS-D all sit behind the same
+    connection interface.
 
-![CIM Graph Logo](./images/CIM_Graph_Logo.png)
+    [:octicons-arrow-right-24: Choosing a connection](03_databases/3_1_databases_overview.ipynb)
+
+-   :material-transmission-tower:{ .lg .middle } __Feeders, substations, buses__
+
+    ---
+
+    `FeederModel`, `NodeBreakerModel` and `BusBranchModel` start from a container and expand the graph one
+    association at a time. Use them centralized, or split into distributed areas.
+
+    [:octicons-arrow-right-24: Graph models](04_graph_models/4_1_graph_models.ipynb)
+
+-   :material-ruler:{ .lg .middle } __Units, not bare numbers__
+
+    ---
+
+    Physical quantities are `CIMUnit`s stored in SI: `cim.Length(1.2, 'km')` in, `.to('ft')` out. There is no
+    hand-written `1e3` anywhere.
+
+    [:octicons-arrow-right-24: Units](02_cim_profiles/2_5_using_units.ipynb)
+
+-   :material-file-compare:{ .lg .middle } __Edits you can send__
+
+    ---
+
+    `create`, `modify` and `delete` keep both ends of each association in step and record every change, which
+    you can write out as a CIM difference model.
+
+    [:octicons-arrow-right-24: Editing a model](02_cim_profiles/2_4_using_incrementals.ipynb)
+
+-   :material-identifier:{ .lg .middle } __Stable identities__
+
+    ---
+
+    An ID that isn't a UUID gets one seeded from the model's authority and name and the object's mRID, so the
+    same source always gives the same UUIDs. The IEC 61970-552 identifier styles are supported, both new and legacy.
+
+    [:octicons-arrow-right-24: Objects and identity](02_cim_profiles/2_3_using_objects.ipynb)
+
+</div>
+
+## Where it fits
+
+```mermaid
+flowchart LR
+    uml["<b>CIM UML</b><br/>Enterprise Architect,<br/>CIMTool profiles"] --> profiles["<b>cim-profiles</b><br/>CIM classes and units"]
+    profiles --> cimgraph["<b>cim-graph</b><br/>the model in memory"]
+    sources[("<b>CIM XML, JSON-LD,</b><br/>graph databases")] <--> cimgraph
+    cimgraph --> tables["<b>cim-tables</b><br/>.cimtbl text models"]
+    cimgraph --> builder["<b>CIM-Builder</b><br/>model builders"]
+    cimgraph --> hub["<b>CIMHub</b><br/>format converters"]
+```
+
+`cim-graph` is the hub of the PNNL CIM tools. [CIM-Tables](https://pnnl-cim-tools.github.io/CIM-Tables/) writes
+models as plain-text tables, CIM-Builder builds them in code, and CIMHub converts them to and from other formats
+such as OpenDSS.

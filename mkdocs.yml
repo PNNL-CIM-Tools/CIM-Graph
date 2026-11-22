@@ -1,56 +1,88 @@
 site_name: CIMantic Graphs
 site_url: https://pnnl-cim-tools.github.io/CIM-Graph/
 site_description: Open-source library for creating, parsing, and editing CIM power system models using in-memory knowledge graphs
-site_author: Alex Anderson & CIMantic Graphs Team
+site_author: PNNL CIM Tools
 repo_url: https://github.com/PNNL-CIM-Tools/CIM-Graph
 repo_name: PNNL-CIM-Tools/CIM-Graph
+edit_uri: edit/develop/docs/
+copyright: Copyright &copy; 2026 Battelle Memorial Institute. BSD 3-Clause.
 
-# Copyright
-copyright: Copyright &copy; 2025 Battelle Memorial Institute, All rights reserved.
-
+# The look is shared with CIM-Tables' site: keep theme, features and
+# docs/stylesheets/extra.css in step with PNNL-CIM-Tools/CIM-Tables.
 theme:
   name: material
+  icon:
+    logo: material/hexagon-multiple-outline
+    repo: fontawesome/brands/github
+  favicon: assets/favicon.svg
+  font:
+    text: Inter
+    code: JetBrains Mono
   palette:
-    # Palette toggle for light mode
-    - scheme: default
-      primary: indigo
-      accent: indigo
+    - media: "(prefers-color-scheme)"
       toggle:
-        icon: material/brightness-7
-        name: Switch to dark mode
-    # Palette toggle for dark mode
-    - scheme: slate
-      primary: indigo
-      accent: indigo
-      toggle:
-        icon: material/brightness-4
+        icon: material/brightness-auto
         name: Switch to light mode
+    - media: "(prefers-color-scheme: light)"
+      scheme: default
+      primary: custom
+      accent: custom
+      toggle:
+        icon: material/weather-sunny
+        name: Switch to dark mode
+    - media: "(prefers-color-scheme: dark)"
+      scheme: slate
+      primary: custom
+      accent: custom
+      toggle:
+        icon: material/weather-night
+        name: Switch to system preference
   features:
     - navigation.tabs
-    - navigation.tabs.sticky
     - navigation.sections
-    - navigation.expand
+    - navigation.indexes
+    - navigation.path
+    - navigation.instant
+    - navigation.instant.progress
+    - navigation.tracking
     - navigation.top
     - navigation.footer
     - search.suggest
     - search.highlight
     - content.code.copy
     - content.code.annotate
+    - content.tabs.link
+    - content.action.edit
     - toc.follow
 
 plugins:
   - search
   - mkdocs-jupyter:
-      include_source: True
-      execute: false
+      include_source: true
+      execute: false          # outputs are stored in the notebooks (see Developer docs > Building the docs)
       allow_errors: false
-      ignore_h1_titles: True
-      show_input: True
-      theme: dark
+      ignore_h1_titles: true
+      show_input: true
       markdown_cell_processor: mkdocs  # resolves .ipynb and image links between pages
 
+# Sphinx/ReadTheDocs leftovers and maintainer notes: not part of the site
+exclude_docs: |
+  conf.py
+  index.rst
+  Makefile
+  make.bat
+  requirements.txt
+  requirements-mkdocs.txt
+  .readthedocs.yaml
+  MKDOCS_SETUP.md
+  development/
+  *.xml
+
+validation:
+  anchors: warn          # --strict fails on a link to a missing heading
+  unrecognized_links: warn
+
 markdown_extensions:
-  # Python Markdown
   - abbr
   - admonition
   - attr_list
@@ -61,13 +93,9 @@ markdown_extensions:
   - toc:
       permalink: true
       toc_depth: 3
-
-  # Python Markdown Extensions
   - pymdownx.arithmatex:
       generic: true
-  - pymdownx.betterem:
-      smart_enable: all
-  - pymdownx.caret
+  - pymdownx.betterem
   - pymdownx.details
   - pymdownx.emoji:
       emoji_index: !!python/name:material.extensions.emoji.twemoji
@@ -78,8 +106,6 @@ markdown_extensions:
       pygments_lang_class: true
   - pymdownx.inlinehilite
   - pymdownx.keys
-  - pymdownx.mark
-  - pymdownx.smartsymbols
   - pymdownx.superfences:
       custom_fences:
         - name: mermaid
@@ -89,7 +115,6 @@ markdown_extensions:
       alternate_style: true
   - pymdownx.tasklist:
       custom_checkbox: true
-  - pymdownx.tilde
 
 extra:
   social:
@@ -97,44 +122,49 @@ extra:
       link: https://github.com/PNNL-CIM-Tools/CIM-Graph
     - icon: fontawesome/brands/python
       link: https://pypi.org/project/cim-graph/
-  version:
-    provider: mike
 
 extra_css:
   - stylesheets/extra.css
 
-# Page tree
 nav:
   - Home: index.md
-  - Overview:
-      - Overview & Quick Start: 01_overview/1_1_overview.ipynb
-      - Installation: 01_overview/1_2_installation.ipynb
-      - Structure: 01_overview/1_3_structure.ipynb
+  - User guide:
+      - guide/index.md
+      - Getting started:
+          - Overview and quick start: 01_overview/1_1_overview.ipynb
+          - Installation: 01_overview/1_2_installation.ipynb
+      - CIM objects:
+          - CIM profiles: 02_cim_profiles/2_1_profiles_overview.ipynb
+          - Objects, identity and associations: 02_cim_profiles/2_3_using_objects.ipynb
+          - Units: 02_cim_profiles/2_5_using_units.ipynb
+          - Editing a model (incrementals): 02_cim_profiles/2_4_using_incrementals.ipynb
+      - Graph models:
+          - Graph models: 04_graph_models/4_1_graph_models.ipynb
+          - Feeder model: 04_graph_models/4_2_feeder_model.ipynb
+          - Node-breaker model: 04_graph_models/4_3_node_breaker.ipynb
+          - Bus-branch model: 04_graph_models/4_4_bus_branch.ipynb
+          - Distributed areas: 04_graph_models/4_5_distributed_area.ipynb
+      - Files and databases:
+          - Choosing a connection: 03_databases/3_1_databases_overview.ipynb
+          - Environment variables: 03_databases/3_2_env_variables.ipynb
+          - CIM XML files: 03_databases/3_8_xml_file_parser.ipynb
+          - JSON-LD files: 03_databases/3_9_jsonld_file_parser.ipynb
+          - RDFLib: 03_databases/3_10_rdflib_parser.ipynb
+          - Blazegraph: 03_databases/3_3_blazegraph.ipynb
+          - GraphDB: 03_databases/3_5_graphdb.ipynb
+          - Neo4j: 03_databases/3_4_neo4j.ipynb
+          - MySQL: 03_databases/3_6_mysql.ipynb
+          - GridAPPS-D: 03_databases/3_7_gridappsd.ipynb
+      - Utilities:
+          - Writing files: 05_utils/5_1_file_writers.ipynb
+          - Loading all data: 05_utils/5_2_get_all_data.ipynb
+          - Mermaid diagrams: 05_utils/5_3_mermaid.ipynb
+  - Developer docs:
+      - developer/index.md
+      - Profiles and identity: developer/profiles.md
+      - Building a model: developer/models.md
+      - Connections: developer/connections.md
+      - Editing and writing: developer/editing.md
+      - Package structure: 01_overview/1_3_structure.ipynb
+      - Building profiles: 02_cim_profiles/2_2_building_profiles.ipynb
       - Contributing: 01_overview/1_4_contributing.ipynb
-  - CIM Profiles:
-      - Profiles Overview: 02_cim_profiles/2_1_profiles_overview.ipynb
-      - Building Profiles: 02_cim_profiles/2_2_building_profiles.ipynb
-      - Using Objects: 02_cim_profiles/2_3_using_objects.ipynb
-      - Using Incrementals: 02_cim_profiles/2_4_using_incrementals.ipynb
-      - Using Units: 02_cim_profiles/2_5_using_units.ipynb
-  - Databases:
-      - Databases Overview: 03_databases/3_1_databases_overview.ipynb
-      - Environment Variables: 03_databases/3_2_env_variables.ipynb
-      - Blazegraph: 03_databases/3_3_blazegraph.ipynb
-      - Neo4j: 03_databases/3_4_neo4j.ipynb
-      - GraphDB: 03_databases/3_5_graphdb.ipynb
-      - MySQL: 03_databases/3_6_mysql.ipynb
-      - GridAPPS-D: 03_databases/3_7_gridappsd.ipynb
-      - XML File Parser: 03_databases/3_8_xml_file_parser.ipynb
-      - JSON-LD File Parser: 03_databases/3_9_jsonld_file_parser.ipynb
-      - RDFLib Parser: 03_databases/3_10_rdflib_parser.ipynb
-  - Graph Models:
-      - Graph Models Overview: 04_graph_models/4_1_graph_models.ipynb
-      - Feeder Model: 04_graph_models/4_2_feeder_model.ipynb
-      - Node Breaker: 04_graph_models/4_3_node_breaker.ipynb
-      - Bus Branch: 04_graph_models/4_4_bus_branch.ipynb
-      - Distributed Area: 04_graph_models/4_5_distributed_area.ipynb
-  - Utils & Shortcuts:
-      - File Writers: 05_utils/5_1_file_writers.ipynb
-      - Get All Data: 05_utils/5_2_get_all_data.ipynb
-      - Mermaid Diagrams: 05_utils/5_3_mermaid.ipynb
