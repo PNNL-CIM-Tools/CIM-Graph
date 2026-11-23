@@ -12,9 +12,15 @@ from cimprofiles.units import CIMUnit
 _log = logging.getLogger(__name__)
 
 
+# W3C vocabularies CIM borrows terms from, and their prefixes. Their terms keep the W3C
+# name (dct:issued), where a CIM property is named by its declaring class
+# (cim:IdentifiedObject.name).
+W3C_PREFIXES = {'http://purl.org/dc/terms/': 'dct', 'http://www.w3.org/ns/dcat#': 'dcat'}
+
+
 class Property(NamedTuple):
     """One serializable value of a CIM object attribute."""
-    name: str       # RDF property name, e.g. 'ACLineSegment.length'
+    name: str       # RDF property name, e.g. 'ACLineSegment.length', or 'issued' (W3C term)
     namespace: str  # namespace of the attribute
     kind: str       # 'literal', 'unit', 'enum', or 'reference'
     value: Any      # a single value (list attributes yield one Property per item)
@@ -50,6 +56,13 @@ def get_attr_field(cim_class:dataclass, attribute:str):
         return None
     else:
         return cim_class.__dataclass_fields__[attribute]
+
+
+def is_w3c_term(cim_class:dataclass, attribute:str) -> bool:
+    """Whether the attribute is a field of the class in a W3C vocabulary (W3C_PREFIXES),
+    read and written by its bare name ('issued')."""
+    attr_field = cim_class.__dataclass_fields__.get(attribute)
+    return attr_field is not None and attr_field.metadata.get('namespace') in W3C_PREFIXES
 
 
 def get_attr_datatype(cim_class:dataclass, attribute:str) -> list[str]:
@@ -135,8 +148,11 @@ def field_properties(cim_class:dataclass, attribute:str, value:Any) -> list[Prop
     if value is None or value == []:
         return []
     attr_field = get_attr_field(cim_class, attribute)
-    name = f'{get_attr_declaring_class(cim_class, attribute).__name__}.{attribute}'
     namespace = attr_field.metadata['namespace']
+    if namespace in W3C_PREFIXES:
+        name = attribute
+    else:
+        name = f'{get_attr_declaring_class(cim_class, attribute).__name__}.{attribute}'
     is_association = attr_field.metadata['type'] == 'Association'
 
     values = value if isinstance(value, list) else [value]

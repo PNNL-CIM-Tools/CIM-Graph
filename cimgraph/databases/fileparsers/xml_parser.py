@@ -141,10 +141,9 @@ class XMLFile(ConnectionInterface):
             uri = element.get(f'{self.rdf}ID')
         return uri
 
-    @staticmethod
-    def use_part_scope(root) -> ModelHeader:
+    def use_part_scope(self, root) -> ModelHeader:
         """Read a part file's header and set the model scope from it (use_model_scope)."""
-        header = parse_model_header(root)
+        header = parse_model_header(root, self.cim)
         use_model_scope(header)
         return header
 
@@ -159,7 +158,7 @@ class XMLFile(ConnectionInterface):
         for root in self.roots:
             for element in root:
                 uri = self.element_uri(element)
-                if uri is not None and not is_header_element(element) and reference_key(uri) == key:
+                if uri is not None and not is_header_element(element, self.cim) and reference_key(uri) == key:
                     self.use_part_scope(root)   # the identifier create_new_graph gives it
                     return self.parse_nodes(element)
         return None
@@ -216,7 +215,7 @@ class XMLFile(ConnectionInterface):
         return self.graph
 
     def parse_nodes(self, element:object) -> Identity:
-        if is_header_element(element):
+        if is_header_element(element, self.cim):
             return None  # file header, read by parse_model_header
         obj = None
         class_name = None
@@ -250,7 +249,7 @@ class XMLFile(ConnectionInterface):
     def parse_edges(self, element):
 
         # class_name = element.tag.split('{'+self.namespace+'}')[1]
-        if is_header_element(element):
+        if is_header_element(element, self.cim):
             return  # file header, read by parse_model_header
         class_name = element.tag.split('}')[1]
 
@@ -289,8 +288,9 @@ class XMLFile(ConnectionInterface):
                     return value
                 try:
                     reverse = cim_class.__dataclass_fields__[association].metadata['inverse']
-                    self.create_edge(self.graph, edge_class, edge_uuid, reverse,
-                                        cim_class, identifier)
+                    if reverse:    # '' (as on dct:conformsTo): the association has no inverse
+                        self.create_edge(self.graph, edge_class, edge_uuid, reverse,
+                                         cim_class, identifier)
                 except Exception as e:
                     _log.log(self.log_level, f'Could not identify inverse for {cim_class.__name__} association {association}')
             else:

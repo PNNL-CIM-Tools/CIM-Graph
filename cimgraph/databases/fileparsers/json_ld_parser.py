@@ -13,7 +13,8 @@ from cimprofiles.jsonld.documents import cache_index
 from cimgraph.core import get_allow_remote_context
 from cimgraph.core.attribute_utils import get_attr_datatype
 from cimgraph.databases import ConnectionInterface, Graph, QueryResponse, reference_key
-from cimgraph.databases.fileparsers.metadata import HEADER_CLASSES, ModelHeader, use_model_scope
+from cimgraph.databases.fileparsers.metadata import (HEADER_CLASSES, ModelHeader, is_profile_class,
+                                                      use_model_scope)
 
 _log = logging.getLogger(__name__)
 
@@ -102,11 +103,18 @@ class JSONLDFile(ConnectionInterface):
         """
         True for the DCAT/Dublin Core metadata nodes of a dataset header, and for the
         md:FullModel and cim:ModelAuthority header nodes older cimgraph releases wrote
-        (not CIM objects).
+        (not CIM objects). A class the profile declares in the type's namespace
+        (gad:ModelAuthority, dct:PeriodOfTime) is an object.
         """
         types = obj_type if isinstance(obj_type, list) else [obj_type]
-        return (any(self._expand_curie(t).startswith(HEADER_NAMESPACES) for t in types)
-                or self._extract_class_name(obj_type) in HEADER_CLASSES)
+        for type_iri in map(self._expand_curie, types):
+            # The local name after the namespace, or after the prefix of an undeclared one
+            local = re.split('[#/:]', type_iri)[-1]
+            namespace = type_iri[:len(type_iri) - len(local)]
+            if ((local in HEADER_CLASSES or namespace in HEADER_NAMESPACES)
+                    and not is_profile_class(self.cim, namespace, local)):
+                return True
+        return False
 
     def _property_values(self, node: dict, iri: str) -> list:
         """The values of one property of a header node, as written (a list if repeated)."""
@@ -376,7 +384,7 @@ class JSONLDFile(ConnectionInterface):
         self.create_edge(self.graph, cim_class, identifier, attribute,
                          edge_class, edge_object.identifier)
         reverse = cim_class.__dataclass_fields__[association].metadata.get('inverse')
-        if reverse is not None:
+        if reverse:    # '' (as on dct:conformsTo) or None: the association has no inverse
             self.create_edge(self.graph, edge_class, edge_object.identifier, reverse,
                              cim_class, identifier)
 

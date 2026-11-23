@@ -23,6 +23,7 @@ from __future__ import annotations
 import logging
 from dataclasses import dataclass, field
 from pathlib import Path
+from types import ModuleType
 from urllib.parse import unquote, urlsplit
 
 from cimprofiles.identity import model_authority_namespace
@@ -332,14 +333,26 @@ def resolve_part_paths(meta: MetadataGraph, base_dir: str | Path) -> list[Path]:
 HEADER_CLASSES = ('FullModel', 'ModelAuthority')
 
 
-def is_header_element(element) -> bool:
+def is_profile_class(cim: ModuleType, namespace: str, local: str) -> bool:
+    """Whether the profile declares the class local in namespace, such as dct:PeriodOfTime."""
+    if local not in cim.__all__:
+        return False
+    # __namespace__ is a property that returns its class's namespace: read it without an object
+    class_namespace = getattr(getattr(cim, local), '__namespace__', None)
+    return isinstance(class_namespace, property) and class_namespace.fget(None) == namespace
+
+
+def is_header_element(element, cim: ModuleType) -> bool:
     """
     True for the header elements of a CIMXML part file, which are not CIM objects: md:FullModel,
     cim:ModelAuthority, and the dcat:Dataset header (with any other DCAT / Dublin Core element)
-    of the ENTSO-E metadata layout.
+    of the ENTSO-E metadata layout. A class the profile declares in the element's namespace
+    (gad:ModelAuthority, dct:PeriodOfTime) is an object.
     """
     namespace, local = _split(element.tag)
-    return local in HEADER_CLASSES or namespace in (DCAT, DCTERMS)
+    if local not in HEADER_CLASSES and namespace not in (DCAT, DCTERMS):
+        return False
+    return not is_profile_class(cim, namespace, local)
 
 
 @dataclass
@@ -375,8 +388,9 @@ def _child_values(el) -> dict[str, str]:
     return {_local_name(child.tag): child.get(_RDF_RESOURCE) or (child.text or '').strip() for child in el}
 
 
-def parse_model_header(root) -> ModelHeader:
-    """Read the header elements of a parsed part file.
+def parse_model_header(root, cim: ModuleType | None = None) -> ModelHeader:
+    """Read the header elements of a parsed part file. With the profile cim, a ModelAuthority
+    the profile declares (gad:ModelAuthority, see is_header_element) is an object, not the header.
 
     - ``md:FullModel``: the authority is ``md:Model.modelingAuthoritySet``, falling back to the
       ``cim:ModelAuthority`` name; the model name written by cimgraph is ``md:Model.description``.
@@ -400,7 +414,7 @@ def parse_model_header(root) -> ModelHeader:
             header.created = values.get('issued')
             header.description = values.get('title')
             header.authority = values.get('Model.modelingAuthoritySet') or values.get('isVersionOf')
-        elif name == 'ModelAuthority':
+        elif name == 'ModelAuthority' and (cim is None or is_header_element(el, cim)):
             header.authority_uuid = _header_uuid(el)
             authority_name = _child_values(el).get('IdentifiedObject.name')
 
