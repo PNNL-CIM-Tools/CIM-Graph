@@ -14,7 +14,7 @@ from cimgraph.core import get_allow_remote_context
 from cimgraph.core.attribute_utils import get_attr_datatype
 from cimgraph.databases import ConnectionInterface, Graph, QueryResponse, reference_key
 from cimgraph.databases.fileparsers.metadata import (HEADER_CLASSES, ModelHeader, is_profile_class,
-                                                      use_model_scope)
+                                                     use_model_scope)
 
 _log = logging.getLogger(__name__)
 
