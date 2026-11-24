@@ -37,6 +37,7 @@ flowchart LR
 | `updaters/incremental_builder.py` | recording differences, inverse sync, reading and writing difference models |
 | `updaters/incremental_json.py` | GridAPPS-D difference messages |
 | `updaters/measurement_json.py` | measurement value streams (`Analog`/`Discrete` values) as JSON |
+| `updaters/measurement_updater.py` | applying a measurement stream to the fields CIMHub's getters read (equipment `p`/`q`, tap step, switch state) and the state variables (`SvVoltage`, `SvPowerFlow`, `SvTapStep`, `SvSwitch`) |
 | `databases/__init__.py` | `ConnectionInterface` and the shared object, value and edge creators; lazy loading of optional backends |
 | `databases/sparql_endpoint.py` | `SPARQLEndpointConnection`: everything shared by Blazegraph and GraphDB |
 | `databases/<backend>/` | one connection per database: `blazegraph`, `graphdb`, `neo4j`, `mysql`, `rdflib`, `gridappsd` |
