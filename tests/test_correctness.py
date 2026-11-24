@@ -231,7 +231,7 @@ def test_modify_validates_and_converts_values():
 # 2.6 incremental builder
 
 def test_incrementals_record_references_and_unit_values(tmp_path):
-    from cimgraph.models.incremental_builder import read_incremental_xml
+    from cimgraph.updaters.incremental_builder import read_incremental_xml
     network = _network()
     line = network.create(cim.ACLineSegment, name='line')
     terminal = network.create(cim.Terminal, name='t1')
@@ -521,7 +521,7 @@ def test_delete_rejects_classes_and_objects_not_in_the_graph():
 # CIM difference writers
 
 def _read_differences(network, tmp_path, write=None):
-    from cimgraph.models.incremental_builder import read_incremental_xml
+    from cimgraph.updaters.incremental_builder import read_incremental_xml
     path = str(tmp_path / 'changes.xml')
     (write or network.write_all_incrementals)(path)
     return read_incremental_xml(path), open(path).read()
@@ -592,7 +592,7 @@ def test_incremental_file_holds_every_change_so_far(tmp_path):
 
     network.modify(line, 'length', cim.Length(10, 'm'), incremental_file=path)
 
-    from cimgraph.models.incremental_builder import read_incremental_xml
+    from cimgraph.updaters.incremental_builder import read_incremental_xml
     differences = read_incremental_xml(path)
     assert differences['forwardDifferences'][line.uri()]['rdf:type'] == 'ACLineSegment'
     assert differences['forwardDifferences'][line.uri()]['Conductor.length'] == '10.0'

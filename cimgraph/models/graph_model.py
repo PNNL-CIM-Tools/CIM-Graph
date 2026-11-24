@@ -11,9 +11,13 @@ from uuid import UUID
 from cimprofiles.identity import Identity
 from cimprofiles.units import CIMUnit
 
+from cimgraph.core.attribute_utils import validate_attr_datatype
 from cimgraph.core.env_vars import DEFAULT_FREQUENCY_HZ, get_system_mva_base
 from cimgraph.databases import ConnectionInterface, add_object_to_graph
-from cimgraph.models.incremental_builder import *
+from cimgraph.updaters.incremental_builder import (apply_incremental, new_differences,
+                                                   read_incremental_xml, record_change,
+                                                   record_created, record_deleted,
+                                                   sync_inverse_references, write_incremental)
 
 _log = logging.getLogger(__name__)
 
@@ -28,7 +32,7 @@ class GraphModel():
     distributed: bool = field(default=False)
     graph: dict[type, dict[UUID, object]] = field(default_factory=dict)
     cim: ModuleType = field(default=None)
-    # Every create, modify and delete since the model was loaded (see incremental_builder)
+    # Every create, modify and delete since the model was loaded (see cimgraph.updaters.incremental_builder)
     incrementals: dict[str, dict[type, dict]] = field(default_factory=new_differences)
     # Internal state, not constructor arguments
     _class_iter: dict[type, Iterator] = field(default_factory=dict, init=False, repr=False)

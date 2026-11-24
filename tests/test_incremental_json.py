@@ -1,4 +1,4 @@
-"""JSON difference messages (cimgraph.models.incremental_json).
+"""JSON difference messages (cimgraph.updaters.incremental_json).
 
 The property these tests pin is that a JSON difference means what an RDF/XML one
 means: a model changed, published and applied through JSON ends up in the same
@@ -6,16 +6,20 @@ state, and with the same ``incrementals``, as one changed directly -- which is
 what ``test_from_incremental_repeats_the_changes_of_another_model`` pins for the
 file path.
 """
+import importlib
+import sys
+
 import cimprofiles.cim17.cimhub_2023 as cim
 import pytest
 
 from cimgraph.core import get_cim_profile
 from cimgraph.databases import XMLFile
 from cimgraph.models import FeederModel
-from cimgraph.models.incremental_builder import apply_incremental
-from cimgraph.models.incremental_json import (read_incremental_gridappsd, read_incremental_jsonld,
-                                              write_incremental_gridappsd,
-                                              write_incremental_jsonld)
+from cimgraph.updaters.incremental_builder import apply_incremental
+from cimgraph.updaters.incremental_json import (read_incremental_gridappsd,
+                                                read_incremental_jsonld,
+                                                write_incremental_gridappsd,
+                                                write_incremental_jsonld)
 
 NS = 'http://iec.ch/TC57/CIM100#'
 RDF = 'http://www.w3.org/1999/02/22-rdf-syntax-ns#'
@@ -251,3 +255,13 @@ def test_jsonld_raises_rather_than_returning_an_empty_difference(function):
     'nothing changed'."""
     with pytest.raises(NotImplementedError, match='#230'):
         function({}) if function is read_incremental_jsonld else function({}, {})
+
+
+@pytest.mark.parametrize('name', ['incremental_builder', 'incremental_json'])
+def test_the_old_import_paths_still_work_with_a_warning(name, monkeypatch):
+    """cimgraph.models.<name> moved to cimgraph.updaters; the old path re-exports it for one release."""
+    module = importlib.import_module(f'cimgraph.updaters.{name}')
+    monkeypatch.delitem(sys.modules, f'cimgraph.models.{name}', raising=False)
+    with pytest.warns(DeprecationWarning, match=f'moved to cimgraph.updaters.{name}'):
+        old = importlib.import_module(f'cimgraph.models.{name}')
+    assert all(getattr(old, attribute) is getattr(module, attribute) for attribute in module.__all__)

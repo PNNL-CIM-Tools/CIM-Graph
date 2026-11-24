@@ -84,7 +84,7 @@ def _breaker_model(monkeypatch, name='B1'):
 def test_unknown_mrid_differences_are_not_applied_to_previous_object(monkeypatch):
     from uuid import uuid4
 
-    from cimgraph.models.incremental_builder import apply_incremental
+    from cimgraph.updaters.incremental_builder import apply_incremental
     network, breaker = _breaker_model(monkeypatch)
     message = _message(forward={
         breaker.uri(): {'IdentifiedObject.name': 'B2'},
@@ -96,7 +96,7 @@ def test_unknown_mrid_differences_are_not_applied_to_previous_object(monkeypatch
 
 
 def test_values_are_converted_and_bad_differences_rejected(monkeypatch):
-    from cimgraph.models.incremental_builder import apply_incremental
+    from cimgraph.updaters.incremental_builder import apply_incremental
     network, breaker = _breaker_model(monkeypatch)
     message = _message(forward={breaker.uri(): {'Switch.normalOpen': 'true'}})
     assert apply_incremental(network, message) == [breaker]
@@ -110,7 +110,7 @@ def test_values_are_converted_and_bad_differences_rejected(monkeypatch):
 
 
 def test_read_incremental_keeps_full_uuid(tmp_path):
-    from cimgraph.models.incremental_builder import read_incremental_xml
+    from cimgraph.updaters.incremental_builder import read_incremental_xml
     uri = '7ea8f6d8-0e1d-4c43-a3e4-2a0e0c0a000d'
     path = tmp_path / 'diff.xml'
     path.write_text(f'''<?xml version="1.0" encoding="utf-8"?>

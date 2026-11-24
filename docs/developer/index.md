@@ -11,7 +11,7 @@ flowchart LR
     queries["<b>query builders</b><br/>queries/sparql, cypher, rdflib"] --> conn
     conn -- "creates objects,<br/>sets attributes and edges" --> model["<b>graph model</b><br/>models/<br/>FeederModel, ..."]
     model --> utils["<b>writers and helpers</b><br/>utils/<br/>write_xml, mermaid, ..."]
-    model -- "create / modify / delete" --> incr["<b>incrementals</b><br/>models/incremental_builder.py"]
+    model -- "create / modify / delete" --> incr["<b>incrementals</b><br/>updaters/incremental_builder.py"]
 ```
 
 | Page | Covers |
@@ -34,8 +34,9 @@ flowchart LR
 | `core/validation.py` | regex guards on identifiers, attribute names and IRIs before they go into a query |
 | `models/graph_model.py` | `GraphModel`: the graph, the mRID index, search, `create`/`modify`/`delete`, `upload` |
 | `models/feeder_model.py`, `node_breaker_model.py`, `bus_branch_model.py`, `distributed_area.py` | each model's start-up from its container |
-| `models/incremental_builder.py` | recording differences, inverse sync, reading and writing difference models |
-| `models/incremental_json.py` | GridAPPS-D difference messages |
+| `updaters/incremental_builder.py` | recording differences, inverse sync, reading and writing difference models |
+| `updaters/incremental_json.py` | GridAPPS-D difference messages |
+| `updaters/measurement_json.py` | measurement value streams (`Analog`/`Discrete` values) as JSON |
 | `databases/__init__.py` | `ConnectionInterface` and the shared object, value and edge creators; lazy loading of optional backends |
 | `databases/sparql_endpoint.py` | `SPARQLEndpointConnection`: everything shared by Blazegraph and GraphDB |
 | `databases/<backend>/` | one connection per database: `blazegraph`, `graphdb`, `neo4j`, `mysql`, `rdflib`, `gridappsd` |

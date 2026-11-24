@@ -3,6 +3,7 @@ from __future__ import annotations
 import json
 import logging
 import math
+import re
 from pathlib import Path
 
 from cimprofiles.identity import read_identifier
@@ -152,8 +153,9 @@ class RDFlibConnection(SPARQLEndpointConnection):
 
             uri = self._parse_result_field(result, 'identifier')
             identifier = read_identifier(cim_class.__name__, uri)
-            # The attribute's local name: it may be in an extension namespace
-            attribute = attr.rpartition('#')[2]
+            # The attribute's local name: it may be in an extension namespace, or in a W3C
+            # vocabulary whose namespace ends in '/' (http://purl.org/dc/terms/issued)
+            attribute = re.split('[#/]', attr)[-1]
             value = str(self._parse_result_field(result, 'val'))
 
             # An association (edge to another object)

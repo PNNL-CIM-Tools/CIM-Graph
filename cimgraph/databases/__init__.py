@@ -19,6 +19,7 @@ from cimgraph.core import (get_cim_profile, get_database, get_host, get_iec61970
                            get_iec61970_552, get_namespace, get_password, get_port,
                            get_undefined_handling, get_url, get_use_units, get_username,
                            get_validation_log_level)
+from cimgraph.core.attribute_utils import is_w3c_term
 
 _log = logging.getLogger(__name__)
 
@@ -184,12 +185,20 @@ class ConnectionInterface(ABC):
         except KeyError:
             pass
 
-        attr_class = attribute.split('.')[0]
-        attr_link = attribute.split('.')[1]
         association = None
         # With CIMG_ALLOW_UNDEFINED_ATTRIBUTES, a property missing from the profile is expected
         log_level = logging.DEBUG if getattr(self, 'allow_undefined', False) else self.log_level
 
+        if '.' not in attribute:
+            # A W3C vocabulary term ('issued' of dct:issued) is named without its class
+            if is_w3c_term(cim_class, attribute):
+                association = attribute
+            else:
+                _log.log(log_level, f'{attribute} is not a W3C vocabulary term of {cim_class.__name__}')
+            self._check_attribute_cache[cache_key] = association
+            return association
+
+        attr_class, _, attr_link = attribute.partition('.')
         if attr_link in cim_class.__dataclass_fields__:
             association = attr_link
         else:

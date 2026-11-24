@@ -88,6 +88,47 @@ and unit vocabularies (`cimprofiles.jsonld`) with an offline cache of them, and 
   no local RDF/XML file, raises `ValueError`; it used to be skipped with a warning, which could
   load an empty graph.
 
+### W3C vocabulary terms and «compound» fields
+
+- A field in a W3C vocabulary (`http://purl.org/dc/terms/`, `http://www.w3.org/ns/dcat#`) is
+  written by its bare W3C name, with the `dct:` and `dcat:` prefixes, in RDF/XML, JSON-LD and
+  SPARQL: `dct:issued`, `dct:temporal`, `dct:conformsTo`, `dct:creator` on a cim18v17
+  `GridDataset`, and `dcat:startDate`/`dcat:endDate` on `dct:PeriodOfTime`. CIM and extension
+  properties stay `Class.property`. Before, these came out as `dcterms:GridDataset.issued`,
+  which is not a DCT term. `XMLFile` and `JSONLDFile` read the bare names back to the field,
+  on any subclass that has it, and `RDFlibConnection` takes a predicate's local name after a
+  `/` as well as a `#`.
+- In RDF/XML, and in SPARQL triples, `dct:issued` is typed `xsd:dateTime` and
+  `dcat:startDate`/`dcat:endDate` are typed `xsd:dateTimeStamp`, as the JSON-LD contexts type
+  them, so both formats give the same triples.
+- A «compound» field (`dct:temporal`, `CatalogAssetType.quantity`) is a reference to its own resource
+  with a `urn:uuid` IRI, not a nested blank node. Add the compound object to the graph to
+  write it.
+- A top-level header-like element or node (`dct:`, `dcat:`, `FullModel`, `ModelAuthority`) whose
+  class the profile declares in that namespace (`dct:PeriodOfTime`, `dct:Standard`, the cim18v17
+  `gad:ModelAuthority` of a Grid Kitchen `assembly.xml`) is read as an object, not as file
+  header, so `GridModel.ModelAuthority` and `Frame.ModelAuthority` resolve. Such a
+  `ModelAuthority` no longer sets the file's model authority either.
+- An association whose `inverse` is `''` no longer tries to set an inverse when it is read.
+
+### `cimgraph.updaters`: incrementals and measurement streams
+
+- `incremental_builder` and `incremental_json` moved from `cimgraph.models` to the new
+  `cimgraph.updaters`, so `cimgraph.models` holds only `GraphModel` and its subclasses, and
+  what changes a model lives in `updaters`. The old import paths still work for this release,
+  with a `DeprecationWarning`, and are removed in the next one.
+- `incremental_builder` has an `__all__`: its own constants and functions. A star import of it
+  no longer also binds the names it imports (`validate_attr_datatype`, `defaultdict`, ...);
+  import those from their own modules. `GraphModel` imports the names it uses explicitly.
+- New `updaters.measurement_json`: `write_measurement_stream(values, *, source=None,
+  timestamp=None)` builds a measurement stream message from `AnalogValue` and `DiscreteValue`
+  objects, in the CIM4NoUtility payload shape (each `Analog`/`Discrete` with its values,
+  `timeStamp`, `sensorAccuracy`, `MeasurementValueSource`, and the `unitMultiplier`/`unitSymbol`
+  enumeration IRIs). A `CIMUnit` value is converted to its Analog's unit with `.to()`.
+  `read_measurement_stream(message)` gives the readings keyed by measurement mRID, with
+  references as mRIDs and values as given. Both raise rather than write or read an empty
+  message; a value without a measurement, value or `timeStamp` is a `ValueError`.
+
 ### Undefined attributes
 
 - `CIMG_ALLOW_UNDEFINED_ATTRIBUTES=true` keeps a property the profile does not define (e.g.

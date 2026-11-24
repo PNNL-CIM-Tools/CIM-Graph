@@ -11,14 +11,16 @@ from typing import Iterable
 from xml.sax.saxutils import escape
 
 from cimprofiles.identity import as_uuid, normalize_identifier
+from cimprofiles.jsonld.build import HEADER_TERMS
 from cimprofiles.merge import merge_namespaces
 
-from cimgraph.core.attribute_utils import Property, iter_properties
+from cimgraph.core.attribute_utils import W3C_PREFIXES, Property, iter_properties
 from cimgraph.core.env_vars import get_iec61970_552, get_namespace, get_url
 from cimgraph.core.validation import validate_iri_text
 
 RDF_NAMESPACE = 'http://www.w3.org/1999/02/22-rdf-syntax-ns#'
 MD_NAMESPACE = 'http://iec.ch/TC57/61970-552/ModelDescription/1#'
+XSD_NAMESPACE = 'http://www.w3.org/2001/XMLSchema#'
 
 # The file format's own namespaces. CIM and extension prefixes come from the profile
 # (profile_namespaces).
@@ -32,14 +34,17 @@ def profile_namespaces(classes: Iterable[type]) -> dict[str, str]:
     Return the {prefix: namespace URI} map for serializing objects of these CIM classes:
     the NAMESPACES declared by each profile module that defines one (cimantic-graphs.xsl
     output; a merged profile's classes live in the merged module), then
-    SERIALIZATION_NAMESPACES. A graph dict passes as its classes.
+    SERIALIZATION_NAMESPACES. A graph dict passes as its classes. W3C vocabularies get
+    their usual prefixes (dct:, not a profile's dcterms:), which the JSON-LD contexts type
+    their terms with (dct:issued is an xsd:dateTime).
     """
     modules = sorted({sys.modules[cls.__module__] for cls in classes}, key=lambda module: module.__name__)
     for module in modules:
         if not hasattr(module, 'NAMESPACES'):
             raise ValueError(f'Profile module {module.__name__} declares no NAMESPACES; '
                              f'regenerate the profile (or its parts) with the cimantic-graphs CIMTool builder')
-    return merge_namespaces(*(module.NAMESPACES for module in modules), SERIALIZATION_NAMESPACES)
+    namespaces = merge_namespaces(*(module.NAMESPACES for module in modules), SERIALIZATION_NAMESPACES)
+    return {W3C_PREFIXES.get(uri, prefix): uri for prefix, uri in namespaces.items()}
 
 
 def _prefix(namespaces: dict, namespace: str) -> str:
@@ -48,6 +53,19 @@ def _prefix(namespaces: dict, namespace: str) -> str:
         if uri == namespace:
             return prefix
     raise KeyError(f'Namespace {namespace} has no prefix in the profile NAMESPACES')
+
+
+def _literal_datatype(prop: Property) -> str | None:
+    """The XSD datatype IRI of a W3C term's literal, as the JSON-LD contexts type it
+    (HEADER_TERMS: dct:issued is an xsd:dateTime), so RDF/XML and SPARQL state the same
+    triple. None for other literals, which are plain."""
+    prefix = W3C_PREFIXES.get(prop.namespace)
+    if prop.kind != 'literal' or prefix is None:
+        return None
+    coercion = HEADER_TERMS.get(f'{prefix}:{prop.name}', {}).get('@type', '')
+    if not coercion.startswith('xsd:'):
+        return None
+    return XSD_NAMESPACE + coercion.removeprefix('xsd:')
 
 
 def _literal_text(value) -> str:
@@ -132,7 +150,9 @@ def property_to_xml(prop: Property, namespaces: dict, rdf_resource: str) -> str:
     if prop.kind == 'unit':
         # CIM XML values are plain numbers in base SI units, which CIMUnit stores
         return f'  <{tag}>{prop.value.value}</{tag}>\n'
-    return f'  <{tag}>{escape(_literal_text(prop.value))}</{tag}>\n'
+    datatype = _literal_datatype(prop)
+    attribute = f' rdf:datatype="{datatype}"' if datatype else ''
+    return f'  <{tag}{attribute}>{escape(_literal_text(prop.value))}</{tag}>\n'
 
 
 def object_to_xml(obj, namespaces: dict | None = None, write_identifier: bool = True) -> str:
@@ -230,5 +250,8 @@ def object_to_sparql_triples(obj) -> list[str]:
             value = _sparql_literal(str(prop.value.value))
         else:
             value = _sparql_literal(_literal_text(prop.value))
+            datatype = _literal_datatype(prop)
+            if datatype:
+                value += f'^^<{datatype}>'
         triples.append(f'{subject} {predicate} {value} .')
     return triples
