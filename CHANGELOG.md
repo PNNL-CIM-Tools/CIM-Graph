@@ -111,6 +111,24 @@ and unit vocabularies (`cimprofiles.jsonld`) with an offline cache of them, and 
   `ModelAuthority` no longer sets the file's model authority either.
 - An association whose `inverse` is `''` no longer tries to set an inverse when it is read.
 
+### `cimgraph.updaters`: incrementals and measurement streams
+
+- `incremental_builder` and `incremental_json` moved from `cimgraph.models` to the new
+  `cimgraph.updaters`, so `cimgraph.models` holds only `GraphModel` and its subclasses, and
+  what changes a model lives in `updaters`. The old import paths still work for this release,
+  with a `DeprecationWarning`, and are removed in the next one.
+- `incremental_builder` has an `__all__`: its own constants and functions. A star import of it
+  no longer also binds the names it imports (`validate_attr_datatype`, `defaultdict`, ...);
+  import those from their own modules. `GraphModel` imports the names it uses explicitly.
+- New `updaters.measurement_json`: `write_measurement_stream(values, *, source=None,
+  timestamp=None)` builds a measurement stream message from `AnalogValue` and `DiscreteValue`
+  objects, in the CIM4NoUtility payload shape (each `Analog`/`Discrete` with its values,
+  `timeStamp`, `sensorAccuracy`, `MeasurementValueSource`, and the `unitMultiplier`/`unitSymbol`
+  enumeration IRIs). A `CIMUnit` value is converted to its Analog's unit with `.to()`.
+  `read_measurement_stream(message)` gives the readings keyed by measurement mRID, with
+  references as mRIDs and values as given. Both raise rather than write or read an empty
+  message; a value without a measurement, value or `timeStamp` is a `ValueError`.
+
 ### Undefined attributes
 
 - `CIMG_ALLOW_UNDEFINED_ATTRIBUTES=true` keeps a property the profile does not define (e.g.
