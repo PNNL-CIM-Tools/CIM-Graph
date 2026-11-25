@@ -201,7 +201,7 @@ def _find_object(model, objects: dict, uri: str) -> Identity:
         if obj is None and model.connection is not None:
             obj = model.connection.get_object(mRID=uri, graph=model.graph)
         if obj is None:
-            raise ValueError(f'The difference refers to {uri}, which is not in the model')
+            raise ValueError(f'{uri} is not in the model')
         objects[uri] = obj
     return objects[uri]
 

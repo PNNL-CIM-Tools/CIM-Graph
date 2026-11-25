@@ -125,9 +125,36 @@ and unit vocabularies (`cimprofiles.jsonld`) with an offline cache of them, and 
   objects, in the CIM4NoUtility payload shape (each `Analog`/`Discrete` with its values,
   `timeStamp`, `sensorAccuracy`, `MeasurementValueSource`, and the `unitMultiplier`/`unitSymbol`
   enumeration IRIs). A `CIMUnit` value is converted to its Analog's unit with `.to()`.
-  `read_measurement_stream(message)` gives the readings keyed by measurement mRID, with
-  references as mRIDs and values as given. Both raise rather than write or read an empty
+  `read_measurement_stream(message)` gives the readings keyed by measurement identifier, with
+  references as identifiers and values as given. The payload calls the key `mRID`, as
+  CIM4NoUtility does, but writes `uri()` in it. Both raise rather than write or read an empty
   message; a value without a measurement, value or `timeStamp` is a `ValueError`.
+- New `updaters.measurement_updater`: `apply_measurements(model, readings)` writes each
+  measurement's latest value to the field CIMHub's getters read, and to its state variable:
+  - `PhaseVoltage`/`Angle` go to the node's `SvVoltage`, reached through
+    `Terminal.TopologicalNode`;
+  - `ThreePhaseActivePower`/`ThreePhaseReactivePower` go to a `RotatingMachine`'s,
+    `PowerElectronicsConnection`'s or `EnergyConsumer`'s own `p`/`q`, and to the
+    measurement terminal's `SvPowerFlow`. A line or transformer terminal gets the
+    `SvPowerFlow` only;
+  - `TapPosition` goes to `TapChanger.step` and `SvTapStep.position`;
+  - `SwitchPosition` goes to `Switch.open` and `SvSwitch.open`, where 1 is open and 0 is
+    closed.
+  - `StateOfCharge`, a fraction from 0 to 1, goes to `BatteryUnit.storedE` as that
+    fraction of `ratedE`. It is the one derived value, and the relation is an assumption.
+    A battery with no positive `ratedE` raises.
+
+  Each owner keeps one balanced state variable, created when it has none. SvStatus and
+  SvInjection are not written, because no measurement type gives them.
+
+  Values are converted from the measurement's unit by the target's `CIMUnit` class. It writes
+  through `modify`/`create`, so `model.incrementals` records the change. As `apply_incremental`
+  does, it checks every reading before applying any, and raises `ValueError` with the model
+  unchanged for:
+  - an unknown measurement;
+  - a stream attribute that is not the model's;
+  - a target that does not resolve;
+  - a value that does not fit.
 
 ### Undefined attributes
 

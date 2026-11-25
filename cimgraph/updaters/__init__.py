@@ -7,4 +7,6 @@ read, write and apply changes to one:
   difference model
 - ``incremental_json``: differences as GridAPPS-D JSON messages
 - ``measurement_json``: measurement values (``Analog`` / ``Discrete``) as a JSON stream
+- ``measurement_updater``: a measurement stream applied to a model's equipment fields and
+  state variables
 """

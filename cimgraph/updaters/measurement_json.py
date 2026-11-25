@@ -22,6 +22,9 @@ interpret them::
      "Discrete": [{..., "DiscreteValues": [{"value": 0, "timeStamp": "..."}]}]}
 
 Values carry no mRID of their own: a reading is identified by its measurement and time.
+Every ``mRID`` key, the measurement's and its references', holds the object's identifier
+(``uri()``), not its ``mRID`` attribute. CIM4NoUtility names the key ``mRID``, but an
+object's ``mRID`` can differ from its identifier.
 As in CIM4NoUtility, ``Measurement.Terminal`` is written as ``ACDCTerminal`` and
 ``Measurement.PowerSystemResource`` as ``PowerSystemResources``.
 
@@ -115,8 +118,8 @@ def _measurement_unit(measurement) -> str:
     symbol = getattr(measurement, 'unitSymbol', None)
     if symbol is None:
         raise ValueError(f'{type(measurement).__name__} {measurement.uri()} has no unitSymbol, so '
-                         f'a CIMUnit value cannot be converted to its unit. Set the unitSymbol '
-                         f'(and unitMultiplier), or give the value as a number.')
+                         f'its values have no unit to convert from or to. Set its unitSymbol '
+                         f'(and unitMultiplier).')
     multiplier = getattr(measurement, 'unitMultiplier', None)
     if multiplier is None or multiplier.value == 'none':
         return symbol.value
@@ -216,10 +219,12 @@ def _reading_value(item: dict, where: str) -> dict:
 
 
 def read_measurement_stream(message: dict) -> dict:
-    """Read a measurement stream message into its readings, keyed by measurement mRID.
+    """Read a measurement stream message into its readings, keyed by measurement identifier.
 
-    The message is the shape :func:`write_measurement_stream` builds. Each reading is the
-    measurement's payload attributes, with references as their mRIDs, its ``class``
+    The message is the shape :func:`write_measurement_stream` builds. Its ``mRID`` keys carry
+    identifiers (``uri()``): ``mRID`` is CIM4NoUtility's name for the key, and an object's
+    ``mRID`` attribute can differ from its identifier. Each reading is the measurement's
+    payload attributes, with references as their identifiers, its ``class``
     ('Analog' or 'Discrete') and its ``values``::
 
         {'56f7f828-...': {'class': 'Analog', 'measurementType': 'ThreePhaseActivePower',
