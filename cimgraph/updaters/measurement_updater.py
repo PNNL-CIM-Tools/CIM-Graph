@@ -81,12 +81,8 @@ from pint.errors import DimensionalityError
 
 from cimgraph.core.attribute_utils import get_attr_datatype, validate_attr_datatype
 from cimgraph.updaters.incremental_builder import _find_object
-from cimgraph.updaters.measurement_json import (
-    MEASUREMENT_ATTRIBUTES,
-    _entry,
-    _measurement_unit,
-    _plain,
-)
+from cimgraph.updaters.measurement_json import (MEASUREMENT_ATTRIBUTES, _entry, _measurement_unit,
+                                                _plain)
 
 __all__ = [
     'apply_measurements',

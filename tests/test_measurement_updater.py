@@ -15,10 +15,7 @@ import pytest
 from cimgraph.core import get_cim_profile
 from cimgraph.models import BusBranchModel
 from cimgraph.updaters.incremental_builder import new_differences
-from cimgraph.updaters.measurement_json import (
-    read_measurement_stream,
-    write_measurement_stream,
-)
+from cimgraph.updaters.measurement_json import read_measurement_stream, write_measurement_stream
 from cimgraph.updaters.measurement_updater import apply_measurements
 
 TIME = '2026-11-24T10:00:00Z'
