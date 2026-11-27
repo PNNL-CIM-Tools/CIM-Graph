@@ -65,7 +65,10 @@ It is converted by the target attribute's CIMUnit class. A TapPosition is a posi
 has no unit.
 
 **Values.** A measurement's latest value, by timeStamp, is applied. The earlier values in
-the message are superseded.
+the message are superseded. Several measurements may set one attribute when their values,
+converted to its datatype, are equal: in a node-breaker model each busbar section has its
+own voltage sensor, and the sections closed switches join are one TopologicalNode. The
+attribute is set once. Measurements that set one attribute to different values raise.
 
 SvStatus and SvInjection are not written: no measurementType gives a piece of equipment's
 in-service status or a node's injection.
@@ -230,10 +233,23 @@ def _missing_target(measurement, equipment_classes: tuple[str, ...], state_class
                       f'{measured}; it needs {needs}')
 
 
+def _same_value(first: object, second: object) -> bool:
+    """Whether two target values are equal; CIMUnits by their quantity, since CIMUnit has no __eq__."""
+    if isinstance(first, CIMUnit) and isinstance(second, CIMUnit):
+        return type(first) is type(second) and first.quantity == second.quantity
+    return first == second
+
+
 def _add_change(changes: dict, key: tuple, value: object, measurement, target: str) -> None:
-    if key in changes:
-        raise ValueError(f'{_describe(measurement)} and another measurement both set {target}')
-    changes[key] = value
+    """Record that the measurement sets the target to the value. Measurements that set one
+    target must agree: it is set once."""
+    if key not in changes:
+        changes[key] = (value, measurement)
+        return
+    earlier_value, earlier = changes[key]
+    if not _same_value(earlier_value, value):
+        raise ValueError(f'{_describe(measurement)} sets {target} to {value!r}, but '
+                         f'{_describe(earlier)} sets it to {earlier_value!r}')
 
 
 def _balanced_state(owner, state_class: str, attributes: dict[str, object]) -> Identity | None:
@@ -266,13 +282,13 @@ def apply_measurements(model, readings: dict) -> list[Identity]:
     - a measurementType with no target, or a measurement that reaches neither its
       equipment nor its state variable's owner;
     - a value that does not fit its target;
-    - two measurements that set one attribute.
+    - two measurements that set one attribute to different values.
 
     Returns the modified and created objects.
     """
     objects = {}  # identifier -> object, for every measurement the readings name
-    equipment_values = {}  # (equipment identifier, attribute) -> value
-    state_values = {}  # (owner identifier, state class, attribute) -> value
+    equipment_values = {}  # (equipment identifier, attribute) -> (value, measurement)
+    state_values = {}  # (owner identifier, state class, attribute) -> (value, measurement)
     owners = {}  # identifier -> equipment or state variable owner
     for identifier, reading in readings.items():
         measurement = _measurement(model, objects, identifier, reading)
@@ -306,13 +322,13 @@ def apply_measurements(model, readings: dict) -> list[Identity]:
             owners[owner.uri()] = owner
 
     states = {}  # (owner identifier, state class) -> {attribute: value}
-    for (owner_uri, state_class, attribute), value in state_values.items():
+    for (owner_uri, state_class, attribute), (value, _) in state_values.items():
         states.setdefault((owner_uri, state_class), {})[attribute] = value
     existing = {key: _balanced_state(owners[key[0]], key[1], attributes)
                 for key, attributes in states.items()}
 
     changed = {}  # identifier -> object
-    for (uri, attribute), value in equipment_values.items():
+    for (uri, attribute), (value, _) in equipment_values.items():
         model.modify(owners[uri], attribute, value)
         changed[uri] = owners[uri]
     for (owner_uri, state_class), attributes in states.items():

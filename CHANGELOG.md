@@ -162,7 +162,10 @@ and unit vocabularies (`cimprofiles.jsonld`) with an offline cache of them, and 
   - an unknown measurement;
   - a stream attribute that is not the model's;
   - a target that does not resolve;
-  - a value that does not fit.
+  - a value that does not fit;
+  - measurements that set one attribute to different values. Measurements whose values agree
+    set it once, e.g. the voltage sensors of busbar sections that closed switches join into
+    one TopologicalNode.
 
 ### Undefined attributes
 
