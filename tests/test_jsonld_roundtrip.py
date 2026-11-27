@@ -9,7 +9,7 @@ import pytest
 from cimprofiles.jsonld import profile_jsonld
 from cimprofiles.units import CIMUnit
 
-from cimgraph.core import get_cim_profile, get_model_authority
+from cimgraph.core import get_cim_profile, get_model_authority, get_model_name
 from cimgraph.core.attribute_utils import diff_attributes
 from cimgraph.databases import JSONLDFile, XMLFile
 from cimgraph.models import FeederModel, NodeBreakerModel
@@ -96,8 +96,36 @@ def test_cgmes_style_file_reads_in_vocabulary_units(profile):
     assert limit_type.kind is cim.LimitKind.tatl
 
     (header,) = network.connection.model_headers
-    assert header.authority == 'https://github.com/PNNL-CIM-Tools/CIM-Graph/tests'
     assert header.full_model_uuid == '7b1e0c2a-1d3f-4b6e-9a51-000000000001'
+
+
+@pytest.fixture
+def model_scope(monkeypatch):
+    """A known model scope, restored after the test."""
+    monkeypatch.setenv('CIMG_MODEL_AUTHORITY', 'https://example.org/authority')
+    monkeypatch.setenv('CIMG_MODEL_NAME', 'before')
+    get_model_authority.cache_clear()
+    get_model_name.cache_clear()
+    yield
+    get_model_authority.cache_clear()
+    get_model_name.cache_clear()
+
+
+def test_a_model_series_is_not_the_model_authority(profile, model_scope, caplog):
+    """The CGMES file has dcat:isVersionOf and no md:Model.modelingAuthoritySet: the scope stays."""
+    profile('cgmes_3_0_0')
+    with caplog.at_level('WARNING', logger='cimgraph.databases.fileparsers.metadata'):
+        (header,) = _read(CGMES_FILE).connection.model_headers
+    assert header.authority is None
+    assert get_model_authority() == 'https://example.org/authority'
+    assert 'has no md:Model.modelingAuthoritySet; the model scope stays' in caplog.text
+
+
+def test_cgmes_files_can_take_the_authority_from_is_version_of(profile, model_scope, monkeypatch):
+    profile('cgmes_3_0_0')
+    monkeypatch.setenv('CIMG_AUTHORITY_FROM_IS_VERSION_OF', 'true')
+    (header,) = _read(CGMES_FILE).connection.model_headers
+    assert header.authority == 'https://github.com/PNNL-CIM-Tools/CIM-Graph/tests'
     assert get_model_authority() == header.authority     # the file's scope, as for CIM XML
 
 
@@ -312,8 +340,16 @@ def test_xml_and_json_ld_headers_carry_the_same_triples(profile, tmp_path):
               'dct:identifier': '5a0c3a4e-0000-5000-8000-000000000001', 'dct:issued': '2026-11-01T00:00:00Z',
               'dcat:isVersionOf': 'https://example.org/models/ieee13', 'dct:title': 'ieee13',
               'dct:license': {'@id': 'https://spdx.org/licenses/BSD-3-Clause.html'}, 'gk:feederCount': 1,
-              'dct:publisher': {'@id': 'https://www.pnnl.gov/', '@type': 'foaf:Organization', 'foaf:name': 'PNNL'}}
-    extension = {'gk': 'https://gridkitchen.example/ns#', 'foaf': 'http://xmlns.com/foaf/0.1/'}
+              'dct:publisher': {'@id': 'https://www.pnnl.gov/', '@type': 'foaf:Organization', 'foaf:name': 'PNNL'},
+              # The ENTSO-E header terms: language-tagged text, typed dates and adms:, prov:, md: IRIs
+              'dct:description': {'@value': 'Reference data', '@language': 'en'},
+              'adms:versionNotes': {'@value': 'First release.', '@language': 'en'},
+              'dcat:startDate': '2026-11-24T00:00:00Z',
+              'adms:status': {'@id': 'http://purl.org/adms/status/Completed'},
+              'prov:wasAttributedTo': {'@id': 'https://www.pnnl.gov/'},
+              'md:Model.modelingAuthoritySet': {'@id': 'https://example.org/authority/utility'}}
+    extension = {'gk': 'https://gridkitchen.example/ns#', 'foaf': 'http://xmlns.com/foaf/0.1/',
+                 'adms': 'http://www.w3.org/ns/adms#', 'prov': 'http://www.w3.org/ns/prov#'}
     write_xml(network, str(tmp_path / 'out.xml'), header=header, contexts=[extension])
     write_json_ld(network, str(tmp_path / 'out.jsonld'), convention='si', header=header, contexts=[extension])
 

@@ -107,8 +107,11 @@ class _HeaderXML:
             return f'{pad}<{tag} rdf:resource={quoteattr(self.expand(iri))}/>\n'
         if isinstance(value, dict) and '@value' not in value:
             return f'{pad}<{tag}>\n{self.node(value, pad + "  ")}{pad}</{tag}>\n'
+        language = None
         if isinstance(value, dict):
-            value, coercion = value['@value'], value.get('@type')
+            value, coercion, language = value['@value'], value.get('@type'), value.get('@language')
+        if language is not None:   # a language-tagged string has no datatype
+            return f'{pad}<{tag} xml:lang={quoteattr(language)}>{escape(value)}</{tag}>\n'
         datatype = coercion and self.expand(coercion)
         if not isinstance(value, str):
             datatype = datatype or next(iri for kind, iri in _NATIVE_DATATYPES if isinstance(value, kind))
@@ -155,8 +158,10 @@ def write_graph_xml(graph: dict, filename: str, write_identifier: bool = True,
         header: Write the dcat:Dataset header of the ENTSO-E metadata layout in place of
             md:FullModel: the node write_json_ld writes (see dataset_header), with these
             properties in JSON-LD compact form, e.g. {'dcat:isVersionOf': {'@id': iri}}.
-            Values the contexts type as @id, and {"@id"} objects, are written as rdf:resource.
-            Set dct:identifier, @id and dct:issued for byte-stable output.
+            Values the contexts type as @id, and {"@id"} objects, are written as rdf:resource;
+            {"@value", "@language"} objects with xml:lang, other typed values with rdf:datatype.
+            With dct:identifier, @id and dct:issued set, the output depends only on the graph,
+            the header and the model scope (dct:title, md:Model.modelingAuthoritySet, unless set).
         contexts: Further JSON-LD contexts defining the header's other prefixes.
         profile: The CIM profile module of the graph's classes (default: the active
             profile), whose context types the header.

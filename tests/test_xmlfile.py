@@ -3,12 +3,14 @@ import os
 import tempfile
 import unittest
 from uuid import NAMESPACE_URL, UUID, uuid4, uuid5
+from xml.etree import ElementTree
 
 import cimprofiles.cim17.cimhub_2023 as cim
 from cimprofiles.jsonld import profile_jsonld
 
 from cimgraph.core import get_model_authority, get_model_name, set_model_scope
 from cimgraph.databases import JSONLDFile, XMLFile
+from cimgraph.databases.fileparsers.metadata import is_header_element
 from cimgraph.models import FeederModel
 from cimgraph.utils import write_json_ld, write_xml
 
@@ -25,6 +27,27 @@ def _part_xml(authority, line_id):
   <md:Model.description>feeder_1</md:Model.description>
   <md:Model.modelingAuthoritySet>{authority}</md:Model.modelingAuthoritySet>
 </md:FullModel>
+<cim:ACLineSegment rdf:ID="{line_id}">
+  <cim:IdentifiedObject.name>{line_id}</cim:IdentifiedObject.name>
+</cim:ACLineSegment>
+</rdf:RDF>
+'''
+
+
+def _dataset_part_xml(authority, line_id, extra_type=''):
+    """A part file with a dcat:Dataset header (ENTSO-E layout), its md:Model.modelingAuthoritySet
+    unless authority is None, and one line whose rdf:ID is not a UUID."""
+    authority_set = '' if authority is None else (
+        f'\n  <md:Model.modelingAuthoritySet>{authority}</md:Model.modelingAuthoritySet>')
+    return f'''<?xml version="1.0" encoding="utf-8"?>
+<rdf:RDF xmlns:cim="http://iec.ch/TC57/CIM100#"
+    xmlns:dcat="http://www.w3.org/ns/dcat#" xmlns:dct="http://purl.org/dc/terms/"
+    xmlns:md="http://iec.ch/TC57/61970-552/ModelDescription/1#"
+    xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+<dcat:Dataset rdf:about="urn:uuid:{uuid4()}">{extra_type}
+  <dct:title>{line_id}.xml</dct:title>
+  <dcat:isVersionOf rdf:resource="https://gridkitchen.example/parts/x/{line_id}"/>{authority_set}
+</dcat:Dataset>
 <cim:ACLineSegment rdf:ID="{line_id}">
   <cim:IdentifiedObject.name>{line_id}</cim:IdentifiedObject.name>
 </cim:ACLineSegment>
@@ -212,13 +235,13 @@ class TestXMLFile(unittest.TestCase):
                 self.assertEqual(document[key], value)
             self.assertEqual(document['md:Model.modelingAuthoritySet'], 'pnnl')
 
-            self._use_model_scope('https://someone.else', '')
+            self._use_model_scope('https://someone.else', 'utility')
             reread = JSONLDFile(filename=paths[0])
             reread.create_new_graph(container=None)
         (read_header,) = reread.model_headers
         self.assertEqual((read_header.authority, read_header.description), ('pnnl', 'ieee13'))
         self.assertEqual(read_header.full_model_uuid, '5a0c3a4e-0000-5000-8000-000000000001')
-        self.assertEqual((get_model_authority(), get_model_name()), ('pnnl', 'ieee13'))
+        self.assertEqual((get_model_authority(), get_model_name()), ('pnnl', 'utility'))
 
     def test_json_ld_header_checks(self):
         self._use_model_scope(PNNL, 'ieee13')
@@ -246,7 +269,7 @@ class TestXMLFile(unittest.TestCase):
             write_json_ld(network, json_path, header={'dcat:isVersionOf': 'https://example.org/series',
                                                       'dct:description': 'a generated description'})
 
-            self._use_model_scope('https://someone.else', '')
+            self._use_model_scope('https://someone.else', 'utility')
             reread = JSONLDFile(filename=json_path)
             reread.create_new_graph(container=None)
 
@@ -255,7 +278,7 @@ class TestXMLFile(unittest.TestCase):
         self.assertEqual(header.description, 'ieee13')
         self.assertEqual(header.authority_uuid, str(uuid5(NAMESPACE_URL, PNNL)))
         self.assertIsNotNone(header.full_model_uuid)
-        self.assertEqual((get_model_authority(), get_model_name()), (PNNL, 'ieee13'))
+        self.assertEqual((get_model_authority(), get_model_name()), (PNNL, 'utility'))
 
     def test_xml_dataset_header_from_the_caller(self):
         """write_xml(header=...) writes the ENTSO-E dcat:Dataset block in place of md:FullModel;
@@ -290,14 +313,14 @@ class TestXMLFile(unittest.TestCase):
             self.assertNotIn('cim:ModelAuthority', text)
             self.assertNotIn('rdfg-1/Graph', text)       # not a named graph in RDF/XML
 
-            self._use_model_scope('https://someone.else', '')
+            self._use_model_scope('https://someone.else', 'utility')
             reread = XMLFile(filename=paths[0])
             reread.create_new_graph(container=None)
         (read_header,) = reread.model_headers
         self.assertEqual((read_header.authority, read_header.description), (PNNL, 'ieee13 <test>'))
         self.assertEqual(read_header.full_model_uuid, '5a0c3a4e-0000-5000-8000-000000000001')
         self.assertEqual(read_header.created, '2026-11-01T00:00:00Z')
-        self.assertEqual((get_model_authority(), get_model_name()), (PNNL, 'ieee13 <test>'))
+        self.assertEqual((get_model_authority(), get_model_name()), (PNNL, 'utility'))
         self.assertNotIn('Dataset', {cim_class.__name__ for cim_class in reread.graph})
         self.assertEqual(sum(map(len, reread.graph.values())), sum(map(len, network.graph.values())))
 
@@ -312,6 +335,122 @@ class TestXMLFile(unittest.TestCase):
                 write_xml(network, path, header={'gk:feederCount': 1})
             with self.assertRaisesRegex(ValueError, 'must be a compact IRI'):
                 write_xml(network, path, header={'https://example.org/ns#count': 1})
+
+    def test_dataset_header_output_depends_only_on_graph_and_header(self):
+        """With @id, dct:identifier and dct:issued set, writing again, at another time and in
+        another model scope, gives the same bytes, in XML and JSON-LD."""
+        self._use_model_scope(PNNL, 'ieee13')
+        network = self._ieee13()
+        header = {'@id': 'urn:uuid:5a0c3a4e-0000-5000-8000-000000000001',
+                  'dct:identifier': '5a0c3a4e-0000-5000-8000-000000000001',
+                  'dct:issued': '2026-11-01T00:00:00Z', 'dct:title': 'reference',
+                  'dct:description': {'@value': 'Reference data', '@language': 'en'},
+                  'adms:versionNotes': {'@value': 'First release.', '@language': 'en'},
+                  'dcat:startDate': '2026-11-24T00:00:00Z',
+                  'adms:status': {'@id': 'http://purl.org/adms/status/Completed'},
+                  'prov:wasAttributedTo': {'@id': 'https://www.pnnl.gov/'},
+                  'md:Model.modelingAuthoritySet': {'@id': 'https://example.org/authority/utility'}}
+        extension = {'adms': 'http://www.w3.org/ns/adms#', 'prov': 'http://www.w3.org/ns/prov#'}
+        with tempfile.TemporaryDirectory() as tmp_dir:
+            texts = {}
+            for scope in ((PNNL, 'ieee13'), ('https://someone.else', 'other')):
+                self._use_model_scope(*scope)
+                for suffix, write in (('xml', write_xml), ('jsonld', write_json_ld)):
+                    path = os.path.join(tmp_dir, f'{scope[1]}.{suffix}')
+                    write(network, path, header=header, contexts=[extension])
+                    with open(path, 'rb') as f:
+                        texts.setdefault(suffix, []).append(f.read())
+        for suffix, (first, second) in texts.items():
+            self.assertEqual(first, second, suffix)
+
+        xml_text = texts['xml'][0].decode()
+        self.assertIn('<dct:description xml:lang="en">Reference data</dct:description>', xml_text)
+        self.assertIn('<adms:versionNotes xml:lang="en">First release.</adms:versionNotes>', xml_text)
+        self.assertIn('<dcat:startDate rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTimeStamp">'
+                      '2026-11-24T00:00:00Z</dcat:startDate>', xml_text)
+        self.assertIn('<adms:status rdf:resource="http://purl.org/adms/status/Completed"/>', xml_text)
+        self.assertIn('<prov:wasAttributedTo rdf:resource="https://www.pnnl.gov/"/>', xml_text)
+        self.assertIn('<md:Model.modelingAuthoritySet rdf:resource="https://example.org/authority/utility"/>',
+                      xml_text)
+        self.assertIn('xmlns:adms="http://www.w3.org/ns/adms#"', xml_text)
+        self.assertIn('xmlns:prov="http://www.w3.org/ns/prov#"', xml_text)
+
+    def test_parts_with_dataset_headers_load_together(self):
+        """Parts whose dcat:Dataset headers carry one authority load as one model; a header
+        that is also a gad:GridAssembly is still a header. Their dct:titles are file names, not
+        the model name: UUIDs seed with the authority and the model name set beforehand."""
+        grid_assembly = '\n  <rdf:type rdf:resource="http://gridappsd.org/CIM/extension#GridAssembly"/>'
+        with tempfile.TemporaryDirectory() as tmp_dir:
+            paths = []
+            for line_id, extra_type in (('LINE_A', ''), ('LINE_B', grid_assembly)):
+                path = os.path.join(tmp_dir, f'{line_id}.xml')
+                with open(path, 'w', encoding='utf-8') as f:
+                    f.write(_dataset_part_xml('utility_a', line_id, extra_type))
+                paths.append(path)
+            self._use_model_scope('utility_a', 'utility')
+            database = XMLFile(filename=paths)
+            graph = database.create_new_graph(container=None)
+            grid_assembly_header = ElementTree.parse(paths[1]).getroot()[0]
+        self.assertTrue(is_header_element(grid_assembly_header, cim))
+
+        self.assertEqual([header.authority for header in database.model_headers], ['utility_a', 'utility_a'])
+        self.assertEqual({cim_class.__name__ for cim_class in graph}, {'ACLineSegment'})
+        lines = {line.name: line.identifier for line in graph[cim.ACLineSegment].values()}
+        set_model_scope('utility_a', 'utility')
+        self.assertEqual(lines, {line_id: cim.ACLineSegment(identifier=line_id).identifier
+                                 for line_id in ('LINE_A', 'LINE_B')})
+
+    def test_json_ld_parts_with_dataset_headers_load_together(self):
+        """As test_parts_with_dataset_headers_load_together, for JSON-LD."""
+        with tempfile.TemporaryDirectory() as tmp_dir:
+            paths = []
+            for line_id, types in (('LINE_A', ['dcat:Dataset']), ('LINE_B', ['dcat:Dataset', 'gad:GridAssembly'])):
+                document = {'@context': {'cim': 'http://iec.ch/TC57/CIM100#', 'dcat': 'http://www.w3.org/ns/dcat#',
+                                         'dct': 'http://purl.org/dc/terms/', 'gad': 'http://gridappsd.org/CIM/extension#',
+                                         'md': 'http://iec.ch/TC57/61970-552/ModelDescription/1#'},
+                            '@id': f'urn:uuid:{uuid4()}', '@type': types, 'dct:title': f'{line_id}.jsonld',
+                            'dcat:isVersionOf': {'@id': f'https://gridkitchen.example/parts/x/{line_id}'},
+                            'md:Model.modelingAuthoritySet': 'utility_a',
+                            '@graph': [{'@id': line_id, '@type': 'cim:ACLineSegment',
+                                        'cim:IdentifiedObject.name': line_id}]}
+                path = os.path.join(tmp_dir, f'{line_id}.jsonld')
+                with open(path, 'w', encoding='utf-8') as f:
+                    json.dump(document, f)
+                paths.append(path)
+            self._use_model_scope('utility_a', 'utility')
+            database = JSONLDFile(filename=paths)
+            graph = database.create_new_graph(container=None)
+        self.assertTrue(database._is_header(['gad:GridAssembly', 'dcat:Dataset']))
+
+        self.assertEqual([header.authority for header in database.model_headers], ['utility_a', 'utility_a'])
+        self.assertEqual({cim_class.__name__ for cim_class in graph}, {'ACLineSegment'})
+        lines = {line.name: line.identifier for line in graph[cim.ACLineSegment].values()}
+        set_model_scope('utility_a', 'utility')
+        self.assertEqual(lines, {line_id: cim.ACLineSegment(identifier=line_id).identifier
+                                 for line_id in ('LINE_A', 'LINE_B')})
+
+    def test_a_model_series_is_not_the_model_authority(self):
+        """A dcat:Dataset header without md:Model.modelingAuthoritySet leaves the scope as it is,
+        unless CIMG_AUTHORITY_FROM_IS_VERSION_OF opts in to its dcat:isVersionOf."""
+        series = 'https://gridkitchen.example/parts/x/LINE_A'
+        with tempfile.TemporaryDirectory() as tmp_dir:
+            path = os.path.join(tmp_dir, 'part.xml')
+            with open(path, 'w', encoding='utf-8') as f:
+                f.write(_dataset_part_xml(None, 'LINE_A'))
+            self._use_model_scope('utility_a', 'feeder_1')
+            with self.assertLogs('cimgraph.databases.fileparsers.metadata', 'WARNING') as logs:
+                database = XMLFile(filename=path)
+                database.create_new_graph(container=None)
+            self.assertIsNone(database.model_headers[0].authority)
+            self.assertEqual((get_model_authority(), get_model_name()), ('utility_a', 'feeder_1'))
+            self.assertIn(f'from dcat:isVersionOf {series!r}', logs.output[0])
+
+            os.environ['CIMG_AUTHORITY_FROM_IS_VERSION_OF'] = 'true'
+            self.addCleanup(os.environ.pop, 'CIMG_AUTHORITY_FROM_IS_VERSION_OF')
+            database = XMLFile(filename=path)
+            database.create_new_graph(container=None)
+        self.assertEqual(database.model_headers[0].authority, series)
+        self.assertEqual(get_model_authority(), series)
 
     def _use_model_scope(self, authority, model_name):
         set_model_scope(authority, model_name)

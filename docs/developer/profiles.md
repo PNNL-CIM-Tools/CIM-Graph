@@ -90,10 +90,10 @@ sequenceDiagram
 
     loop each part file (root)
         x ->>+ md: parse_model_header(root)
-        md -->>- x: ModelHeader(authority, description, ...)
+        md -->>- x: ModelHeader(authority, model_name, ...)
         x ->> md: use_model_scope(header)
         opt the header names an authority
-            md ->> env: set_model_scope(authority, description)
+            md ->> env: set_model_scope(authority, model_name)<br/>a dcat:Dataset keeps the current model name
         end
         loop each element
             x ->> id: read_identifier(class, rdf:ID)<br/>seeded under this part's scope

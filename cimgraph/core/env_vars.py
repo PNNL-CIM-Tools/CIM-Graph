@@ -265,6 +265,15 @@ def get_allow_remote_context() -> bool:
     """
     return os.environ.get('CIMG_ALLOW_REMOTE_CONTEXT', 'false').lower() == 'true'
 
+def get_authority_from_is_version_of() -> bool:
+    """
+    Returns whether a dcat:Dataset file header without md:Model.modelingAuthoritySet takes
+    its model authority (the namespace of seeded UUIDs) from dcat:isVersionOf, as CGMES
+    files such as Nordic44 put it there (CIMG_AUTHORITY_FROM_IS_VERSION_OF, default false:
+    isVersionOf names a model series, and the model scope is left unchanged).
+    """
+    return os.environ.get('CIMG_AUTHORITY_FROM_IS_VERSION_OF', 'false').lower() == 'true'
+
 def set_model_scope(authority: str, model_name: str) -> None:
     """
     Sets CIMG_MODEL_AUTHORITY and CIMG_MODEL_NAME so that UUIDs seeded from now on,

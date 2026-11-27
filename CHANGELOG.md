@@ -39,9 +39,13 @@ and unit vocabularies (`cimprofiles.jsonld`) with an offline cache of them, and 
   the cached vocabularies among the Dataset's own `dct:conformsTo` (other IRIs there are
   profiles, not units). A file naming none is read with the profile's default convention. Files
   loaded together must agree on units. Each file's header is read into
-  `JSONLDFile.model_headers`, and its authority (`md:Model.modelingAuthoritySet`, else
-  `dcat:isVersionOf` as CGMES files carry it) and `dct:title` set the model scope, as
-  `md:FullModel` does for `XMLFile`.
+  `JSONLDFile.model_headers`, and its authority (`md:Model.modelingAuthoritySet`) sets the
+  model scope, as `md:FullModel` does for `XMLFile`. Its `dct:title` is the file name (under the
+  ENTSO-E rules), read as `ModelHeader.description`; the model name stays as it is
+  (`ModelHeader.model_name` is None), so every part of a model seeds UUIDs alike. `dcat:isVersionOf`
+  names a model series, so it is taken as the authority, as CGMES files (Nordic44) carry it,
+  only with `CIMG_AUTHORITY_FROM_IS_VERSION_OF=true`; a header without an authority leaves the
+  model scope as it is, with a warning.
 - The cimprofiles contexts type the header as the Inst4CIM CGMES context does
   (`dct:conformsTo`, `dcat:isVersionOf` as IRIs; `dct:issued` as `xsd:dateTime`), matching
   what DCAT tools such as statnett's KGraphPy expect.
@@ -57,12 +61,16 @@ and unit vocabularies (`cimprofiles.jsonld`) with an offline cache of them, and 
   properties `write_json_ld` writes, with the same `header` and `contexts` rules, as RDF/XML
   (not typed `rdfg:Graph`). Its `dct:conformsTo` names the profile's `si` units vocabulary.
   Values the contexts type `@id`, and `{"@id": ...}` objects, are written as `rdf:resource`;
-  others as literals with the context's datatype. `header={}` writes the default dataset
+  `{"@value": ..., "@language": ...}` objects with `xml:lang`; others as literals with the
+  context's datatype. With `@id`, `dct:identifier` and `dct:issued` set, the file depends only on
+  the graph, the header and the model scope (`dct:title` and `md:Model.modelingAuthoritySet`,
+  which the header may set), in XML and JSON-LD. `header={}` writes the default dataset
   header; `header` with `write_model_header=False` raises `ValueError`. `write_graph_xml` takes
   the same arguments plus `profile` (default: the active profile).
 - `XMLFile` reads a `dcat:Dataset` header into `model_headers` (`dct:issued`, `dct:title`, and
-  the authority from `md:Model.modelingAuthoritySet`, else `dcat:isVersionOf`) and sets the
-  model scope from it, as from `md:FullModel`. DCAT and Dublin Core elements in a part file are
+  the authority from `md:Model.modelingAuthoritySet`; `dcat:isVersionOf` only as JSONLDFile
+  does) and sets the model authority from it, keeping the model name, as JSONLDFile does. A `dcat:Dataset` element with
+  another `rdf:type` (`gad:GridAssembly`) is still the header. DCAT and Dublin Core elements in a part file are
   skipped as header, not read as CIM objects.
 
 ### Package metadata: frame and boundary datasets
