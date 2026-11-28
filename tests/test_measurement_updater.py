@@ -169,6 +169,30 @@ def test_a_measurement_is_found_by_its_identifier_not_its_mrid(grid):
     assert grid.machine.p.to('MW') == pytest.approx(20)
 
 
+def _second_busbar_sensors(grid):
+    """The voltage and angle sensors of another busbar section at the bus node, as each section
+    of a node-breaker bus has its own, and closed switches join the sections into one node."""
+    busbar = cim.BusbarSection(mRID='BB2')
+    terminal = cim.Terminal(mRID='BB2_T1', ConductingEquipment=busbar, TopologicalNode=grid.bus_node)
+    at_bus = {'PowerSystemResource': busbar, 'Terminal': terminal}
+    voltage = cim.Analog(mRID='BB2_V', measurementType='PhaseVoltage', unitMultiplier=cim.UnitMultiplier.k,
+                         unitSymbol=cim.UnitSymbol.V, **at_bus)
+    angle = cim.Analog(mRID='BB2_A', measurementType='Angle', unitMultiplier=cim.UnitMultiplier.none,
+                       unitSymbol=cim.UnitSymbol.deg, **at_bus)
+    for obj in (busbar, terminal, voltage, angle):
+        grid.network.add_to_graph(obj)
+    return voltage, angle
+
+
+def test_measurements_that_agree_set_their_attribute_once(grid):
+    voltage, angle = _second_busbar_sensors(grid)
+    readings = _readings((grid.voltage, 115.2), (grid.angle, -3.5), (voltage, 115.2), (angle, -3.5))
+    (state,) = apply_measurements(grid.network, readings)
+    assert _balanced(grid.bus_node, 'SvVoltage') is state
+    assert (state.v.to('kV'), state.angle.to('deg')) == (pytest.approx(115.2), pytest.approx(-3.5))
+    assert list(grid.network.incrementals['forwardDifferences'][cim.SvVoltage]) == [state.uri()]
+
+
 def _unknown(grid):
     readings = _readings((grid.machine_p, 50), (grid.voltage, 115.2))
     readings['00000000-0000-4000-8000-000000000000'] = readings.pop(grid.voltage.uri())
@@ -187,6 +211,11 @@ def _two_for_one_attribute(grid):
                        unitSymbol=cim.UnitSymbol.W, PowerSystemResource=grid.machine)
     grid.network.add_to_graph(other)
     return _readings((grid.machine_p, 50), (other, 51))
+
+
+def _two_node_voltages(grid):
+    voltage, _ = _second_busbar_sensors(grid)
+    return _readings((grid.machine_p, 50), (grid.voltage, 115.2), (voltage, 115.3))
 
 
 def _phase_loads(grid):
@@ -228,7 +257,10 @@ def _swapped_type(grid, measurement, measurement_type):
     (lambda grid: _readings((grid.machine_p, 50), (grid.state_of_charge, 50)), 'is not a fraction from 0 to 1'),
     (_no_rated_energy, 'ratedE is None'),
     (lambda grid: _swapped_type(grid, grid.load_p, 'StateOfCharge'), 'needs a BatteryUnit'),
-    (_two_for_one_attribute, 'and another measurement both set p of SynchronousMachine'),
+    (_two_for_one_attribute, 'sets p of SynchronousMachine .* to 51000000.0 watt, '
+                             'but Analog .* sets it to 50000000.0'),
+    (_two_node_voltages, 'sets SvVoltage.v of TopologicalNode .* to 115300.0 volt, '
+                         'but Analog .* sets it to 115200.0'),
     (_phase_loads, 'EnergyConsumerPhase with p or q'),
 ])
 def test_a_stream_that_does_not_fit_raises_and_changes_nothing(grid, readings, error):

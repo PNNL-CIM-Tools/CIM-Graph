@@ -216,8 +216,10 @@ def test_xml_reference_is_escaped_or_rejected():
 
     with pytest.raises(ValueError):
         reference('x"/><cim:Evil rdf:about="y')
-    assert 'rdf:resource="#http://example.com/a?b=1&amp;c=2"' in reference(
+    # An external IRI is written as it is; an identifier gets the 552 style's '#'
+    assert 'rdf:resource="http://example.com/a?b=1&amp;c=2"' in reference(
         'http://example.com/a?b=1&c=2')
+    assert 'rdf:resource="#_LINE_650632"' in reference('_LINE_650632')
 
 
 # 1.6 Enum lookup by an unchecked name from the data

@@ -2,9 +2,11 @@
 
 ## 0.6.1 (unreleased)
 
-Requires `cim-profiles>=0.2.0a6,<0.3` (was `>=0.1.0a1,<0.2`), which ships the JSON-LD contexts
-and unit vocabularies (`cimprofiles.jsonld`) with an offline cache of them, and adds the
-`cim18v17_distribution` and `cim18v17_transmission` profiles.
+Requires `cim-profiles>=0.2.0a11,<0.3` (was `>=0.1.0a1,<0.2`), which ships the JSON-LD contexts
+and unit vocabularies (`cimprofiles.jsonld`) with an offline cache of them, adds the
+`cim18v17_distribution` and `cim18v17_transmission` profiles, and re-parents the cim18v17
+metadata classes under `md:Model` (`md:FullModel` is the parent of `gad:GridAssembly`;
+`gad:GridDataset` and `GridModel.ModelAuthority` are gone).
 
 ### JSON-LD in the CGMES draft style, with QUDT units (#225)
 
@@ -39,9 +41,13 @@ and unit vocabularies (`cimprofiles.jsonld`) with an offline cache of them, and 
   the cached vocabularies among the Dataset's own `dct:conformsTo` (other IRIs there are
   profiles, not units). A file naming none is read with the profile's default convention. Files
   loaded together must agree on units. Each file's header is read into
-  `JSONLDFile.model_headers`, and its authority (`md:Model.modelingAuthoritySet`, else
-  `dcat:isVersionOf` as CGMES files carry it) and `dct:title` set the model scope, as
-  `md:FullModel` does for `XMLFile`.
+  `JSONLDFile.model_headers`, and its authority (`md:Model.modelingAuthoritySet`) sets the
+  model scope, as `md:FullModel` does for `XMLFile`. Its `dct:title` is the file name (under the
+  ENTSO-E rules), read as `ModelHeader.description`; the model name stays as it is
+  (`ModelHeader.model_name` is None), so every part of a model seeds UUIDs alike. `dcat:isVersionOf`
+  names a model series, so it is taken as the authority, as CGMES files (Nordic44) carry it,
+  only with `CIMG_AUTHORITY_FROM_IS_VERSION_OF=true`; a header without an authority leaves the
+  model scope as it is, with a warning.
 - The cimprofiles contexts type the header as the Inst4CIM CGMES context does
   (`dct:conformsTo`, `dcat:isVersionOf` as IRIs; `dct:issued` as `xsd:dateTime`), matching
   what DCAT tools such as statnett's KGraphPy expect.
@@ -57,12 +63,16 @@ and unit vocabularies (`cimprofiles.jsonld`) with an offline cache of them, and 
   properties `write_json_ld` writes, with the same `header` and `contexts` rules, as RDF/XML
   (not typed `rdfg:Graph`). Its `dct:conformsTo` names the profile's `si` units vocabulary.
   Values the contexts type `@id`, and `{"@id": ...}` objects, are written as `rdf:resource`;
-  others as literals with the context's datatype. `header={}` writes the default dataset
+  `{"@value": ..., "@language": ...}` objects with `xml:lang`; others as literals with the
+  context's datatype. With `@id`, `dct:identifier` and `dct:issued` set, the file depends only on
+  the graph, the header and the model scope (`dct:title` and `md:Model.modelingAuthoritySet`,
+  which the header may set), in XML and JSON-LD. `header={}` writes the default dataset
   header; `header` with `write_model_header=False` raises `ValueError`. `write_graph_xml` takes
   the same arguments plus `profile` (default: the active profile).
 - `XMLFile` reads a `dcat:Dataset` header into `model_headers` (`dct:issued`, `dct:title`, and
-  the authority from `md:Model.modelingAuthoritySet`, else `dcat:isVersionOf`) and sets the
-  model scope from it, as from `md:FullModel`. DCAT and Dublin Core elements in a part file are
+  the authority from `md:Model.modelingAuthoritySet`; `dcat:isVersionOf` only as JSONLDFile
+  does) and sets the model authority from it, keeping the model name, as JSONLDFile does. A `dcat:Dataset` element with
+  another `rdf:type` (`gad:GridAssembly`) is still the header. DCAT and Dublin Core elements in a part file are
   skipped as header, not read as CIM objects.
 
 ### Package metadata: frame and boundary datasets
@@ -88,16 +98,27 @@ and unit vocabularies (`cimprofiles.jsonld`) with an offline cache of them, and 
   no local RDF/XML file, raises `ValueError`; it used to be skipped with a warning, which could
   load an empty graph.
 
-### W3C vocabulary terms and «compound» fields
+### Header vocabulary terms and «compound» fields
 
-- A field in a W3C vocabulary (`http://purl.org/dc/terms/`, `http://www.w3.org/ns/dcat#`) is
-  written by its bare W3C name, with the `dct:` and `dcat:` prefixes, in RDF/XML, JSON-LD and
-  SPARQL: `dct:issued`, `dct:temporal`, `dct:conformsTo`, `dct:creator` on a cim18v17
-  `GridDataset`, and `dcat:startDate`/`dcat:endDate` on `dct:PeriodOfTime`. CIM and extension
-  properties stay `Class.property`. Before, these came out as `dcterms:GridDataset.issued`,
-  which is not a DCT term. `XMLFile` and `JSONLDFile` read the bare names back to the field,
-  on any subclass that has it, and `RDFlibConnection` takes a predicate's local name after a
-  `/` as well as a `#`.
+- A field in a header vocabulary (Dublin Core, DCAT, ADMS, PROV and ENTSO-E's
+  `https://cim4.eu/ns/Metadata-European#`; `BARE_TERM_PREFIXES` in `cimgraph.core.attribute_utils`,
+  which replaces `W3C_PREFIXES`) is written by its bare name, with the `dct:`, `dcat:`,
+  `adms:`, `prov:` and `eumd:` prefixes, in RDF/XML, JSON-LD and SPARQL: `dct:issued`,
+  `dcat:version`, `adms:versionNotes`, `eumd:processType` on the cim18v17 `md:Model` children
+  (`FrameModel`, `GridAssembly`, ...), and `dcat:startDate`/`dcat:endDate` on `dct:PeriodOfTime`.
+  IEC 61970-552's `md:` terms (`md:Model.modelingAuthoritySet`), CIM and extension properties
+  stay `Class.property`. Before, these came out as `dcterms:GridDataset.issued` or
+  `adms:Model.versionNotes`, which are not terms of those vocabularies. `XMLFile` and
+  `JSONLDFile` read the bare names back to the field, on any subclass that has it, and
+  `RDFlibConnection` takes a predicate's local name after a `/` as well as a `#`.
+  `is_w3c_term` is now `is_bare_term`.
+- The RDF/XML writer writes the identifier of an object whose profile puts it in Dublin Core
+  (`md:Model` and its children) as `dct:identifier`, not `cim:Identity.identifier`.
+- A reference to a resource outside the model, an absolute IRI that is not a UUID (a licence,
+  `eumd:processType`'s process, a `dct:conformsTo` profile), is kept as its IRI text when read by
+  `XMLFile` or `JSONLDFile`, and written back as it is. The RDF/XML and SPARQL writers used to
+  prefix such a string with `urn:uuid:` or `#`. Other unresolved references are dropped with a
+  log message, as before.
 - In RDF/XML, and in SPARQL triples, `dct:issued` is typed `xsd:dateTime` and
   `dcat:startDate`/`dcat:endDate` are typed `xsd:dateTimeStamp`, as the JSON-LD contexts type
   them, so both formats give the same triples.
@@ -107,8 +128,11 @@ and unit vocabularies (`cimprofiles.jsonld`) with an offline cache of them, and 
 - A top-level header-like element or node (`dct:`, `dcat:`, `FullModel`, `ModelAuthority`) whose
   class the profile declares in that namespace (`dct:PeriodOfTime`, `dct:Standard`, the cim18v17
   `gad:ModelAuthority` of a Grid Kitchen `assembly.xml`) is read as an object, not as file
-  header, so `GridModel.ModelAuthority` and `Frame.ModelAuthority` resolve. Such a
-  `ModelAuthority` no longer sets the file's model authority either.
+  header, so `Frame.ModelAuthority` resolves. Such a `ModelAuthority` no longer sets the
+  file's model authority either. `md:FullModel` and `dcat:Dataset` are always the header,
+  although the cim18v17 metadata profile declares both: a part file's body never holds one
+  (`gad:GridAssembly`, a `FullModel`, has its own type), so `write_xml`'s default `md:FullModel`
+  header is not read back as an object.
 - An association whose `inverse` is `''` no longer tries to set an inverse when it is read.
 
 ### `cimgraph.updaters`: incrementals and measurement streams
@@ -154,7 +178,10 @@ and unit vocabularies (`cimprofiles.jsonld`) with an offline cache of them, and 
   - an unknown measurement;
   - a stream attribute that is not the model's;
   - a target that does not resolve;
-  - a value that does not fit.
+  - a value that does not fit;
+  - measurements that set one attribute to different values. Measurements whose values agree
+    set it once, e.g. the voltage sensors of busbar sections that closed switches join into
+    one TopologicalNode.
 
 ### Undefined attributes
 

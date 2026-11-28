@@ -29,7 +29,7 @@ from urllib.parse import unquote, urlsplit
 from cimprofiles.identity import model_authority_namespace
 from defusedxml.ElementTree import fromstring, parse
 
-from cimgraph.core import set_model_scope
+from cimgraph.core import get_authority_from_is_version_of, get_model_name, set_model_scope
 
 _log = logging.getLogger(__name__)
 
@@ -342,35 +342,72 @@ def is_profile_class(cim: ModuleType, namespace: str, local: str) -> bool:
     return isinstance(class_namespace, property) and class_namespace.fget(None) == namespace
 
 
-def is_header_element(element, cim: ModuleType) -> bool:
+def is_header_type(cim: ModuleType, namespace: str, local: str) -> bool:
     """
-    True for the header elements of a CIMXML part file, which are not CIM objects: md:FullModel,
-    cim:ModelAuthority, and the dcat:Dataset header (with any other DCAT / Dublin Core element)
-    of the ENTSO-E metadata layout. A class the profile declares in the element's namespace
-    (gad:ModelAuthority, dct:PeriodOfTime) is an object.
+    True for the types of a part file's header, which are not CIM objects: md:FullModel,
+    cim:ModelAuthority, and the dcat:Dataset header (with any other DCAT / Dublin Core type)
+    of the ENTSO-E metadata layout.
+    - md:FullModel and dcat:Dataset are always the header, even in a profile that declares
+      them (cim18v17's metadata does, as the parents of gad:GridAssembly and the W3C
+      Dataset): a part file's body never holds one, and a GridAssembly has its own type.
+    - Otherwise, a class the profile declares in the type's namespace (gad:ModelAuthority,
+      dct:PeriodOfTime) is an object.
     """
-    namespace, local = _split(element.tag)
+    if local == 'FullModel' or (namespace, local) == (DCAT, 'Dataset'):
+        return True
     if local not in HEADER_CLASSES and namespace not in (DCAT, DCTERMS):
         return False
     return not is_profile_class(cim, namespace, local)
 
 
+def is_header_element(element, cim: ModuleType) -> bool:
+    """True for a header element of a CIMXML part file (see is_header_type)."""
+    namespace, local = _split(element.tag)
+    return is_header_type(cim, namespace, local)
+
+
 @dataclass
 class ModelHeader:
-    """The header of one CIMXML part file: ``md:FullModel`` and ``cim:ModelAuthority``, or ``dcat:Dataset``."""
+    """The header of one CIMXML part file: ``md:FullModel`` and ``cim:ModelAuthority``, or ``dcat:Dataset``.
+
+    ``description`` is ``md:Model.description``, or a dcat:Dataset's ``dct:title`` (under the
+    ENTSO-E rules, its file name). ``model_name`` is the model name UUIDs are seeded with:
+    ``md:Model.description``, and None for a dcat:Dataset, which keeps the current one.
+    """
 
     full_model_uuid: str | None = None
     created: str | None = None
     description: str | None = None
+    model_name: str | None = None
     authority: str | None = None
     authority_uuid: str | None = None
 
 
 def use_model_scope(header: ModelHeader) -> None:
     """Set the model scope from a file's header if it names an authority, so UUIDs seeded
-    from the file's non-UUID IDs use the authority that issued them."""
+    from the file's non-UUID IDs use the authority that issued them. A header without a
+    model name (a dcat:Dataset) keeps the current model name."""
     if header.authority is not None:
-        set_model_scope(header.authority, header.description or '')
+        model_name = get_model_name() if header.model_name is None else header.model_name
+        set_model_scope(header.authority, model_name)
+
+
+def dataset_authority(dataset: str | None, authority_set: str | None, is_version_of: str | None) -> str | None:
+    """
+    The model authority of a dcat:Dataset header: its md:Model.modelingAuthoritySet.
+    dcat:isVersionOf names the model series, not an authority, so it is read as one only
+    with CIMG_AUTHORITY_FROM_IS_VERSION_OF=true (CGMES files such as Nordic44 put the
+    modeling authority set there). Without an authority the model scope stays as it is,
+    with a warning.
+    """
+    if authority_set is not None:
+        return authority_set
+    if is_version_of is not None and get_authority_from_is_version_of():
+        return is_version_of
+    _log.warning('dcat:Dataset header %s has no md:Model.modelingAuthoritySet; the model scope stays '
+                 'as it is (set CIMG_AUTHORITY_FROM_IS_VERSION_OF=true to take it from dcat:isVersionOf %r)',
+                 dataset, is_version_of)
+    return None
 
 
 def _local_name(tag: str) -> str:
@@ -395,8 +432,8 @@ def parse_model_header(root, cim: ModuleType | None = None) -> ModelHeader:
     - ``md:FullModel``: the authority is ``md:Model.modelingAuthoritySet``, falling back to the
       ``cim:ModelAuthority`` name; the model name written by cimgraph is ``md:Model.description``.
     - ``dcat:Dataset`` (ENTSO-E layout, as write_xml(header=...) writes it): ``dcterms:issued``,
-      ``dcterms:title`` (the model name) and the authority, ``md:Model.modelingAuthoritySet``
-      else ``dcat:isVersionOf``, as JSONLDFile reads them.
+      ``dcterms:title`` (the file name, as description; never the model name) and the
+      authority (see dataset_authority), as JSONLDFile reads them. Its other ``rdf:type`` (``gad:GridAssembly``) does not matter.
     """
     header = ModelHeader()
     authority_name = None
@@ -407,13 +444,15 @@ def parse_model_header(root, cim: ModuleType | None = None) -> ModelHeader:
             header.full_model_uuid = _header_uuid(el)
             header.created = values.get('Model.created')
             header.description = values.get('Model.description')
+            header.model_name = header.description or ''
             header.authority = values.get('Model.modelingAuthoritySet')
         elif el.tag == f'{{{DCAT}}}Dataset':
             values = _child_values(el)
             header.full_model_uuid = _header_uuid(el)
             header.created = values.get('issued')
             header.description = values.get('title')
-            header.authority = values.get('Model.modelingAuthoritySet') or values.get('isVersionOf')
+            header.authority = dataset_authority(header.full_model_uuid, values.get('Model.modelingAuthoritySet'),
+                                                 values.get('isVersionOf'))
         elif name == 'ModelAuthority' and (cim is None or is_header_element(el, cim)):
             header.authority_uuid = _header_uuid(el)
             authority_name = _child_values(el).get('IdentifiedObject.name')

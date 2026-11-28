@@ -13,8 +13,8 @@ from cimprofiles.jsonld.documents import cache_index
 from cimgraph.core import get_allow_remote_context
 from cimgraph.core.attribute_utils import get_attr_datatype
 from cimgraph.databases import ConnectionInterface, Graph, QueryResponse, reference_key
-from cimgraph.databases.fileparsers.metadata import (HEADER_CLASSES, ModelHeader, is_profile_class,
-                                                     use_model_scope)
+from cimgraph.databases.fileparsers.metadata import (ModelHeader, dataset_authority,
+                                                     is_header_type, use_model_scope)
 
 _log = logging.getLogger(__name__)
 
@@ -29,7 +29,6 @@ DCT_CONFORMS_TO = 'http://purl.org/dc/terms/conformsTo'
 DCT_ISSUED = 'http://purl.org/dc/terms/issued'
 DCT_TITLE = 'http://purl.org/dc/terms/title'
 MD_MODELING_AUTHORITY_SET = 'http://iec.ch/TC57/61970-552/ModelDescription/1#Model.modelingAuthoritySet'
-HEADER_NAMESPACES = ('http://www.w3.org/ns/dcat#', 'http://purl.org/dc/terms/')
 
 
 class JSONLDFile(ConnectionInterface):
@@ -47,8 +46,9 @@ class JSONLDFile(ConnectionInterface):
       data conforms to. A file naming none is read with the profile's default units vocabulary.
     - References are ``"urn:uuid:..."`` strings or ``{"@id": ...}`` objects.
     - Each file's header is read into ``model_headers``; its authority
-      (``md:Model.modelingAuthoritySet``, else ``dcat:isVersionOf`` as CGMES files carry it)
-      and ``dct:title`` set the model scope, as ``md:FullModel`` does for XMLFile.
+      (``md:Model.modelingAuthoritySet``; ``dcat:isVersionOf``, as CGMES files carry it, only
+      with CIMG_AUTHORITY_FROM_IS_VERSION_OF=true) sets the model scope, as ``md:FullModel``
+      does for XMLFile. ``dct:title`` is the file name, so the model name stays as it is.
     """
 
     def __init__(self, filename: str | list[str], namespaces: dict = None):
@@ -103,16 +103,14 @@ class JSONLDFile(ConnectionInterface):
         """
         True for the DCAT/Dublin Core metadata nodes of a dataset header, and for the
         md:FullModel and cim:ModelAuthority header nodes older cimgraph releases wrote
-        (not CIM objects). A class the profile declares in the type's namespace
-        (gad:ModelAuthority, dct:PeriodOfTime) is an object.
+        (not CIM objects); see is_header_type. One header type makes the node a header.
         """
         types = obj_type if isinstance(obj_type, list) else [obj_type]
         for type_iri in map(self._expand_curie, types):
             # The local name after the namespace, or after the prefix of an undeclared one
             local = re.split('[#/:]', type_iri)[-1]
             namespace = type_iri[:len(type_iri) - len(local)]
-            if ((local in HEADER_CLASSES or namespace in HEADER_NAMESPACES)
-                    and not is_profile_class(self.cim, namespace, local)):
+            if is_header_type(self.cim, namespace, local):
                 return True
         return False
 
@@ -132,6 +130,10 @@ class JSONLDFile(ConnectionInterface):
                 value = value['@id'] if '@id' in value else value['@value']
             values.append(value)
         return values
+
+    def _first_header_value(self, node: dict, iri: str) -> str | None:
+        values = self._header_values(node, iri)
+        return values[0] if values else None
 
     def _conforms_to(self, nodes: list[dict]) -> list[str]:
         """The dct:conformsTo IRIs of header nodes."""
@@ -162,20 +164,20 @@ class JSONLDFile(ConnectionInterface):
     def _model_header(self, datasets: list[dict]) -> ModelHeader:
         """
         A file's dcat:Dataset header as the ModelHeader the XML reader reads from
-        md:FullModel: dct:issued (Model.created), dct:title (Model.description, the model
-        name) and the model authority: md:Model.modelingAuthoritySet, else dcat:isVersionOf,
-        where CGMES files (and KGraphPy) put the modeling authority set.
+        md:FullModel: dct:issued (Model.created), dct:title (description; the file name, not
+        the model name, which the header leaves unset) and the model authority (see dataset_authority): md:Model.modelingAuthoritySet,
+        or dcat:isVersionOf, where CGMES files (and KGraphPy) put it, only when opted in.
         """
         header = ModelHeader()
         if not datasets:
             return header
         dataset = datasets[0]
         header.full_model_uuid = dataset['@id'].removeprefix('urn:uuid:')
-        for attribute, iris in (('created', [DCT_ISSUED]), ('description', [DCT_TITLE]),
-                                ('authority', [MD_MODELING_AUTHORITY_SET, DCAT_IS_VERSION_OF])):
-            values = [value for iri in iris for value in self._header_values(dataset, iri)]
-            if values:
-                setattr(header, attribute, values[0])
+        header.created = self._first_header_value(dataset, DCT_ISSUED)
+        header.description = self._first_header_value(dataset, DCT_TITLE)
+        header.authority = dataset_authority(dataset['@id'],
+                                             self._first_header_value(dataset, MD_MODELING_AUTHORITY_SET),
+                                             self._first_header_value(dataset, DCAT_IS_VERSION_OF))
         if header.authority is not None:
             header.authority_uuid = str(model_authority_namespace(header.authority))
         return header
@@ -375,10 +377,13 @@ class JSONLDFile(ConnectionInterface):
 
     def _parse_reference(self, edge_id: str, attribute: str, association: str,
                          cim_class: type, identifier: UUID) -> None:
-        """Set the association to the object with @id edge_id, and its inverse."""
+        """Set the association to the object with @id edge_id, and its inverse, or to an
+        external IRI (see set_external_reference)."""
         edge_object = self.object_index.get(reference_key(edge_id))
         if edge_object is None:
-            _log.log(self.log_level, f'Object with ID {edge_id} not found for {attribute}')
+            if not self.set_external_reference(self.graph, cim_class, identifier, association,
+                                               self._expand_curie(edge_id)):
+                _log.log(self.log_level, f'Object with ID {edge_id} not found for {attribute}')
             return
         edge_class = type(edge_object)
         self.create_edge(self.graph, cim_class, identifier, attribute,

@@ -279,7 +279,9 @@ class XMLFile(ConnectionInterface):
             if (edge_uri.split('#')[0] + '#') not in self.namespaces.values():
                 edge_object = self.object_index.get(reference_key(edge_uri))
                 if edge_object is None:
-                    _log.log(self.log_level, f'Object with ID {edge_uri} not found for {sub_tag}')
+                    if association is None or not self.set_external_reference(
+                            self.graph, cim_class, identifier, association, edge_uri):
+                        _log.log(self.log_level, f'Object with ID {edge_uri} not found for {sub_tag}')
                     return None
                 edge_class = type(edge_object)
                 edge_uuid = edge_object.identifier

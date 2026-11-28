@@ -31,7 +31,9 @@ def write_json_ld(network: GraphModel, filename: str, indent: int = 4,
         indent: JSON indentation.
         convention: Units convention name (e.g. 'si', 'distribution', 'cgmes'); default:
             the profile's default convention.
-        header: Properties added to (or replacing) those of the dcat:Dataset header.
+        header: Properties added to (or replacing) those of the dcat:Dataset header. With
+            dct:identifier, @id and dct:issued set, the output depends only on the graph, the
+            header and the model scope (dct:title, md:Model.modelingAuthoritySet, unless set).
         contexts: Further contexts (URLs or inline maps) defining the header's other
             prefixes, written after the profile's context.
     """

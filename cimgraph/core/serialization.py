@@ -14,9 +14,9 @@ from cimprofiles.identity import as_uuid, normalize_identifier
 from cimprofiles.jsonld.build import HEADER_TERMS
 from cimprofiles.merge import merge_namespaces
 
-from cimgraph.core.attribute_utils import W3C_PREFIXES, Property, iter_properties
+from cimgraph.core.attribute_utils import BARE_TERM_PREFIXES, Property, iter_properties
 from cimgraph.core.env_vars import get_iec61970_552, get_namespace, get_url
-from cimgraph.core.validation import validate_iri_text
+from cimgraph.core.validation import is_external_iri, validate_iri_text
 
 RDF_NAMESPACE = 'http://www.w3.org/1999/02/22-rdf-syntax-ns#'
 MD_NAMESPACE = 'http://iec.ch/TC57/61970-552/ModelDescription/1#'
@@ -34,7 +34,7 @@ def profile_namespaces(classes: Iterable[type]) -> dict[str, str]:
     Return the {prefix: namespace URI} map for serializing objects of these CIM classes:
     the NAMESPACES declared by each profile module that defines one (cimantic-graphs.xsl
     output; a merged profile's classes live in the merged module), then
-    SERIALIZATION_NAMESPACES. A graph dict passes as its classes. W3C vocabularies get
+    SERIALIZATION_NAMESPACES. A graph dict passes as its classes. Bare-term vocabularies get
     their usual prefixes (dct:, not a profile's dcterms:), which the JSON-LD contexts type
     their terms with (dct:issued is an xsd:dateTime).
     """
@@ -44,7 +44,7 @@ def profile_namespaces(classes: Iterable[type]) -> dict[str, str]:
             raise ValueError(f'Profile module {module.__name__} declares no NAMESPACES; '
                              f'regenerate the profile (or its parts) with the cimantic-graphs CIMTool builder')
     namespaces = merge_namespaces(*(module.NAMESPACES for module in modules), SERIALIZATION_NAMESPACES)
-    return {W3C_PREFIXES.get(uri, prefix): uri for prefix, uri in namespaces.items()}
+    return {BARE_TERM_PREFIXES.get(uri, prefix): uri for prefix, uri in namespaces.items()}
 
 
 def _prefix(namespaces: dict, namespace: str) -> str:
@@ -56,10 +56,10 @@ def _prefix(namespaces: dict, namespace: str) -> str:
 
 
 def _literal_datatype(prop: Property) -> str | None:
-    """The XSD datatype IRI of a W3C term's literal, as the JSON-LD contexts type it
+    """The XSD datatype IRI of a bare term's literal, as the JSON-LD contexts type it
     (HEADER_TERMS: dct:issued is an xsd:dateTime), so RDF/XML and SPARQL state the same
     triple. None for other literals, which are plain."""
-    prefix = W3C_PREFIXES.get(prop.namespace)
+    prefix = BARE_TERM_PREFIXES.get(prop.namespace)
     if prop.kind != 'literal' or prefix is None:
         return None
     coercion = HEADER_TERMS.get(f'{prefix}:{prop.name}', {}).get('@type', '')
@@ -115,6 +115,24 @@ def _reference_text(value, style: str | None = None) -> str:
     return validate_iri_text(value)
 
 
+def _resource_iri(value, rdf_resource: str) -> str:
+    """A reference as an rdf:resource or SPARQL IRI: an external IRI (a licence) as written,
+    else rdf_resource and the object's or UUID's identifier in the 552 style's form."""
+    if is_external_iri(value):
+        return validate_iri_text(value)
+    return rdf_resource + _reference_text(value)
+
+
+def _identifier_tag(obj, namespaces: dict) -> str:
+    """The property element of an object's identifier: dct:identifier where the profile puts
+    the identifier in a bare-term vocabulary (md:Model and its children), else
+    cim:Identity.identifier."""
+    namespace = type(obj).__dataclass_fields__['identifier'].metadata.get('namespace')
+    if namespace in BARE_TERM_PREFIXES:
+        return f'{_prefix(namespaces, namespace)}:identifier'
+    return 'cim:Identity.identifier'
+
+
 def _with_style_mrid(obj, prop: Property, style: str | None = None) -> Property:
     if prop.name == 'IdentifiedObject.mRID' and isinstance(prop.value, str):
         return prop._replace(value=mrid_text(obj, prop.value, style))
@@ -144,7 +162,7 @@ def property_to_xml(prop: Property, namespaces: dict, rdf_resource: str) -> str:
     """Render one Property as an RDF/XML property element."""
     tag = f'{_prefix(namespaces, prop.namespace)}:{prop.name}'
     if prop.kind == 'reference':
-        return f'  <{tag} rdf:resource="{escape(rdf_resource + _reference_text(prop.value))}"/>\n'
+        return f'  <{tag} rdf:resource="{escape(_resource_iri(prop.value, rdf_resource))}"/>\n'
     if prop.kind == 'enum':
         return f'  <{tag} rdf:resource="{prop.namespace}{prop.value}"/>\n'
     if prop.kind == 'unit':
@@ -164,7 +182,8 @@ def object_to_xml(obj, namespaces: dict | None = None, write_identifier: bool = 
     tag = f'{_prefix(namespaces, obj.__namespace__)}:{obj.__class__.__name__}'
     xml = f'<{tag} {rdf_about}{rdf_identifier(obj)}">\n'
     if write_identifier:
-        xml += f'  <cim:Identity.identifier>{obj.uri()}</cim:Identity.identifier>\n'
+        identifier_tag = _identifier_tag(obj, namespaces)
+        xml += f'  <{identifier_tag}>{obj.uri()}</{identifier_tag}>\n'
     for prop in iter_properties(obj):
         xml += property_to_xml(_with_style_mrid(obj, prop), namespaces, rdf_resource)
     return xml + f'</{tag}>\n'
@@ -243,7 +262,7 @@ def object_to_sparql_triples(obj) -> list[str]:
         prop = _with_style_mrid(obj, prop)
         predicate = f'<{prop.namespace}{prop.name}>'
         if prop.kind == 'reference':
-            value = f'<{rdf_resource}{_reference_text(prop.value)}>'
+            value = f'<{_resource_iri(prop.value, rdf_resource)}>'
         elif prop.kind == 'enum':
             value = f'<{prop.namespace}{prop.value}>'
         elif prop.kind == 'unit':
