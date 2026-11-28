@@ -342,17 +342,28 @@ def is_profile_class(cim: ModuleType, namespace: str, local: str) -> bool:
     return isinstance(class_namespace, property) and class_namespace.fget(None) == namespace
 
 
-def is_header_element(element, cim: ModuleType) -> bool:
+def is_header_type(cim: ModuleType, namespace: str, local: str) -> bool:
     """
-    True for the header elements of a CIMXML part file, which are not CIM objects: md:FullModel,
-    cim:ModelAuthority, and the dcat:Dataset header (with any other DCAT / Dublin Core element)
-    of the ENTSO-E metadata layout. A class the profile declares in the element's namespace
-    (gad:ModelAuthority, dct:PeriodOfTime) is an object.
+    True for the types of a part file's header, which are not CIM objects: md:FullModel,
+    cim:ModelAuthority, and the dcat:Dataset header (with any other DCAT / Dublin Core type)
+    of the ENTSO-E metadata layout.
+    - md:FullModel and dcat:Dataset are always the header, even in a profile that declares
+      them (cim18v17's metadata does, as the parents of gad:GridAssembly and the W3C
+      Dataset): a part file's body never holds one, and a GridAssembly has its own type.
+    - Otherwise, a class the profile declares in the type's namespace (gad:ModelAuthority,
+      dct:PeriodOfTime) is an object.
     """
-    namespace, local = _split(element.tag)
+    if local == 'FullModel' or (namespace, local) == (DCAT, 'Dataset'):
+        return True
     if local not in HEADER_CLASSES and namespace not in (DCAT, DCTERMS):
         return False
     return not is_profile_class(cim, namespace, local)
+
+
+def is_header_element(element, cim: ModuleType) -> bool:
+    """True for a header element of a CIMXML part file (see is_header_type)."""
+    namespace, local = _split(element.tag)
+    return is_header_type(cim, namespace, local)
 
 
 @dataclass

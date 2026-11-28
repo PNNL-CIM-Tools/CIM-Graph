@@ -19,7 +19,8 @@ from cimgraph.core import (get_cim_profile, get_database, get_host, get_iec61970
                            get_iec61970_552, get_namespace, get_password, get_port,
                            get_undefined_handling, get_url, get_use_units, get_username,
                            get_validation_log_level)
-from cimgraph.core.attribute_utils import is_w3c_term
+from cimgraph.core.attribute_utils import is_bare_term
+from cimgraph.core.validation import is_external_iri
 
 _log = logging.getLogger(__name__)
 
@@ -190,11 +191,11 @@ class ConnectionInterface(ABC):
         log_level = logging.DEBUG if getattr(self, 'allow_undefined', False) else self.log_level
 
         if '.' not in attribute:
-            # A W3C vocabulary term ('issued' of dct:issued) is named without its class
-            if is_w3c_term(cim_class, attribute):
+            # A bare term ('issued' of dct:issued; BARE_TERM_PREFIXES) is named without its class
+            if is_bare_term(cim_class, attribute):
                 association = attribute
             else:
-                _log.log(log_level, f'{attribute} is not a W3C vocabulary term of {cim_class.__name__}')
+                _log.log(log_level, f'{attribute} is not a bare vocabulary term of {cim_class.__name__}')
             self._check_attribute_cache[cache_key] = association
             return association
 
@@ -394,6 +395,25 @@ class ConnectionInterface(ABC):
         self._unit_class_cache[attribute_type] = result
         return result
 
+
+    def set_external_reference(self, graph: Graph, cim_class: type, identifier: UUID,
+                               association: str, iri: str) -> bool:
+        """
+        Keep a reference that names no object as its IRI text, and return True, if it is an
+        external IRI (is_external_iri: a licence, a process, a profile), which no object can
+        be. The writers write it back as it is. Any other unresolved reference (a UUID of an
+        object in another file) returns False and is not kept.
+        """
+        if not is_external_iri(iri):
+            return False
+        obj = graph[cim_class][identifier]
+        current = getattr(obj, association)
+        if isinstance(current, list):
+            if iri not in current:
+                current.append(iri)
+        else:
+            setattr(obj, association, iri)
+        return True
 
     def create_edge(self, graph: dict[type, dict[str, object]],
                     cim_class: type, identifier: UUID | str, attribute: str,

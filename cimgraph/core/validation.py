@@ -2,6 +2,8 @@ from __future__ import annotations
 
 import re
 
+from cimprofiles.identity import as_uuid
+
 # Identifier characters allowed in an XML rdf:ID (NCName letters, digits, '_', '.', '-').
 # Covers UUIDs with or without a leading underscore and legacy IDs such as '_LINE_650632'.
 # Excludes quotes, backticks, braces and whitespace, so a valid identifier cannot break
@@ -35,6 +37,21 @@ def validate_attribute(value: str) -> str:
 # Characters an RDF IRI may not contain (RFC 3987 / SPARQL IRIREF); any of them would
 # also break out of an rdf:resource attribute or a SPARQL <...> IRI.
 _IRI_FORBIDDEN = re.compile(r'[<>"{}|^`\\\x00-\x20]')
+
+
+# An absolute IRI starts with its scheme and ':' (RFC 3986), e.g. 'https:' or 'urn:'
+_IRI_SCHEME = re.compile(r'[A-Za-z][A-Za-z0-9+.\-]*:')
+
+
+def is_external_iri(value: object) -> bool:
+    """
+    Whether a reference is an absolute IRI that is not a UUID, such as a licence
+    ('https://creativecommons.org/licenses/by/4.0/') or a reference-data concept: a resource
+    outside the model, which no CIM object can be (an object's identifier is a UUID).
+    'urn:uuid:<uuid>' is a UUID, not an external IRI.
+    """
+    return (isinstance(value, str) and _IRI_SCHEME.match(value) is not None
+            and as_uuid(value) is None)
 
 
 def validate_iri_text(value: str) -> str:

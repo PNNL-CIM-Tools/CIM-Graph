@@ -13,9 +13,8 @@ from cimprofiles.jsonld.documents import cache_index
 from cimgraph.core import get_allow_remote_context
 from cimgraph.core.attribute_utils import get_attr_datatype
 from cimgraph.databases import ConnectionInterface, Graph, QueryResponse, reference_key
-from cimgraph.databases.fileparsers.metadata import (HEADER_CLASSES, ModelHeader,
-                                                     dataset_authority, is_profile_class,
-                                                     use_model_scope)
+from cimgraph.databases.fileparsers.metadata import (ModelHeader, dataset_authority,
+                                                     is_header_type, use_model_scope)
 
 _log = logging.getLogger(__name__)
 
@@ -30,7 +29,6 @@ DCT_CONFORMS_TO = 'http://purl.org/dc/terms/conformsTo'
 DCT_ISSUED = 'http://purl.org/dc/terms/issued'
 DCT_TITLE = 'http://purl.org/dc/terms/title'
 MD_MODELING_AUTHORITY_SET = 'http://iec.ch/TC57/61970-552/ModelDescription/1#Model.modelingAuthoritySet'
-HEADER_NAMESPACES = ('http://www.w3.org/ns/dcat#', 'http://purl.org/dc/terms/')
 
 
 class JSONLDFile(ConnectionInterface):
@@ -105,16 +103,14 @@ class JSONLDFile(ConnectionInterface):
         """
         True for the DCAT/Dublin Core metadata nodes of a dataset header, and for the
         md:FullModel and cim:ModelAuthority header nodes older cimgraph releases wrote
-        (not CIM objects). A class the profile declares in the type's namespace
-        (gad:ModelAuthority, dct:PeriodOfTime) is an object.
+        (not CIM objects); see is_header_type. One header type makes the node a header.
         """
         types = obj_type if isinstance(obj_type, list) else [obj_type]
         for type_iri in map(self._expand_curie, types):
             # The local name after the namespace, or after the prefix of an undeclared one
             local = re.split('[#/:]', type_iri)[-1]
             namespace = type_iri[:len(type_iri) - len(local)]
-            if ((local in HEADER_CLASSES or namespace in HEADER_NAMESPACES)
-                    and not is_profile_class(self.cim, namespace, local)):
+            if is_header_type(self.cim, namespace, local):
                 return True
         return False
 
@@ -381,10 +377,13 @@ class JSONLDFile(ConnectionInterface):
 
     def _parse_reference(self, edge_id: str, attribute: str, association: str,
                          cim_class: type, identifier: UUID) -> None:
-        """Set the association to the object with @id edge_id, and its inverse."""
+        """Set the association to the object with @id edge_id, and its inverse, or to an
+        external IRI (see set_external_reference)."""
         edge_object = self.object_index.get(reference_key(edge_id))
         if edge_object is None:
-            _log.log(self.log_level, f'Object with ID {edge_id} not found for {attribute}')
+            if not self.set_external_reference(self.graph, cim_class, identifier, association,
+                                               self._expand_curie(edge_id)):
+                _log.log(self.log_level, f'Object with ID {edge_id} not found for {attribute}')
             return
         edge_class = type(edge_object)
         self.create_edge(self.graph, cim_class, identifier, attribute,
